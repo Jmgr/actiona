@@ -35,10 +35,6 @@
 #include <windows.h>
 #endif
 
-static void cleanup()
-{
-}
-
 int main(int argc, char **argv)
 {
 	QT_REQUIRE_VERSION(argc, argv, "4.6.2");
@@ -75,8 +71,6 @@ int main(int argc, char **argv)
 #ifdef QT_WS_WIN
 	AllowSetForegroundWindow(ASFW_ANY);
 #endif
-
-	qAddPostRoutine(cleanup);
 
 #ifdef QT_WS_WIN
 	// This is needed so that relative paths will work on Windows regardless of where the app is launched from.
