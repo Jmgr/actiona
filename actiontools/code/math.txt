@@ -1,0 +1,27 @@
+Math
+Math.E
+Math.LN10
+Math.LN2
+Math.LOG10E
+Math.LOG2E
+Math.PI
+Math.SQRT1_2
+Math.SQRT2
+Math.abs(x)
+Math.acos(x)
+Math.asin(x)
+Math.atan(x)
+Math.atan2(y, x)
+Math.ceil(x)
+Math.cos(x)
+Math.exp(x)
+Math.floor(x)
+Math.log(x)
+Math.max(x, y)
+Math.min(x, y)
+Math.pow(x, y)
+Math.random()
+Math.round(x)
+Math.sin(x)
+Math.sqrt(x)
+Math.tan(x)

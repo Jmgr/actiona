@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>code/keywords.txt</file>
+        <file>code/math.txt</file>
+        <file>images/cross.png</file>
+        <file>images/monitor_u.png</file>
+        <file>images/monitor_c.png</file>
+        <file>images/monitor_d.png</file>
+        <file>images/monitor_l.png</file>
+        <file>images/monitor_ld.png</file>
+        <file>images/monitor_lu.png</file>
+        <file>images/monitor_r.png</file>
+        <file>images/monitor_rd.png</file>
+        <file>images/monitor_ru.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/sleep.png</file>
+        <file>icons/goto.png</file>
+        <file>icons/loop.png</file>
+        <file>icons/code.png</file>
+    </qresource>
+</RCC>
