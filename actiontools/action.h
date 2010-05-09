@@ -173,9 +173,11 @@ scriptEngine->globalObject().setProperty(#CLASSNAME, scriptEngine->evaluate("new
 	for(int enumeratorIndex = 0; enumeratorIndex < object->metaObject()->enumeratorCount(); ++enumeratorIndex) \
 	{ \
 		const QMetaEnum &metaEnum = object->metaObject()->enumerator(enumeratorIndex); \
+		QScriptValue enumObject = scriptEngine->newObject(); \
+		scriptObject.setProperty(metaEnum.name(), enumObject); \
 		for(int keyIndex = 0; keyIndex < metaEnum.keyCount(); ++keyIndex) \
 		{ \
-			scriptObject.setProperty(metaEnum.key(keyIndex), metaEnum.value(keyIndex)); \
+			enumObject.setProperty(metaEnum.key(keyIndex), metaEnum.value(keyIndex)); \
 		} \
 	} \
 }

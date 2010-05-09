@@ -197,11 +197,15 @@ void MainWindow::postInit()
 			{
 				const QMetaEnum &enumerator = actionMetaObject->enumerator(enumIndex);
 				
+				QStandardItem *enumNameItem = new QStandardItem(actionInterface->icon(), enumerator.name());
+				
 				for(int keyIndex = 0; keyIndex < enumerator.keyCount(); ++keyIndex)
 				{
 					QStandardItem *enumItem = new QStandardItem(actionInterface->icon(), enumerator.key(keyIndex));//TODO : Add a smaller icon
-					actionItem->appendRow(enumItem);//TODO : Add the enums after their name
+					enumNameItem->appendRow(enumItem);
 				}
+
+				actionItem->appendRow(enumNameItem);
 			}
 			
 			mCompletionModel->appendRow(actionItem);
@@ -210,12 +214,22 @@ void MainWindow::postInit()
 		delete action;
 	}
 	
-	//TODO : Correct the completion so that its inserted at the cursor position
 	//Add the script keywords
 	foreach(const QString &keyword, keywords)
 	{
-		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/bg.png"), keyword));//TODO : Choose a correct icon
+		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), keyword));
 	}
+	
+	//Add our functions
+	QStandardItem *scriptItem = new QStandardItem(QIcon(":/icons/keywords.png"), "Script");//TODO : Find an icon to put here (and to the following)
+	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "nextLine"));
+	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "stopExecution()"));
+	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "setVariable(name, value)"));
+	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "variable(name)"));
+	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "print(text)"));
+	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "printWarning(text)"));
+	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "printError(text)"));
+	mCompletionModel->appendRow(scriptItem);
 	
 	fillNewActionTreeWidget(ui->newActionTreeWidget);
 

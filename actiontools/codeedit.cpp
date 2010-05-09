@@ -375,17 +375,17 @@ namespace ActionTools
 
 	QString CodeEdit::textUnderCursor() const
 	{
-		QTextCursor tc = textCursor();
-		tc.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
-		if(tc.selectedText() == ".")
-		{
-			tc.movePosition(QTextCursor::Left);
-			tc.select(QTextCursor::WordUnderCursor);
-			return tc.selectedText() + ".";
-		}
-		
-		tc.select(QTextCursor::WordUnderCursor);
-		return tc.selectedText();
+		QTextCursor cursor = textCursor();
+	
+		int curpos = cursor.position();
+		QString text = cursor.block().text().left(curpos);
+	
+		QStringList wordList = text.split(QRegExp("[^\\w\\.]"));
+	
+		if (wordList.isEmpty())
+			return QString();
+	
+		return wordList.last();
 	}
 
 	void CodeEdit::autoComplete()

@@ -14,7 +14,7 @@
    <string>Actionaz</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="actionaz.qrc">
+   <iconset resource="gui.qrc">
     <normaloff>:/icons/logo.png</normaloff>:/icons/logo.png</iconset>
   </property>
   <property name="dockOptions">
@@ -115,7 +115,7 @@
          <string>Remove</string>
         </property>
         <property name="icon">
-         <iconset resource="actionaz.qrc">
+         <iconset resource="gui.qrc">
           <normaloff>:/icons/delete_cursor.png</normaloff>:/icons/delete_cursor.png</iconset>
         </property>
        </widget>
@@ -281,7 +281,7 @@
     </size>
    </property>
    <property name="windowIcon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/new_action.png</normaloff>:/icons/new_action.png</iconset>
    </property>
    <property name="features">
@@ -406,7 +406,7 @@
   </widget>
   <action name="actionNew">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/new.png</normaloff>:/icons/new.png</iconset>
    </property>
    <property name="text">
@@ -418,7 +418,7 @@
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/open.png</normaloff>:/icons/open.png</iconset>
    </property>
    <property name="text">
@@ -430,7 +430,7 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/open.png</normaloff>:/icons/open.png</iconset>
    </property>
    <property name="text">
@@ -442,7 +442,7 @@
   </action>
   <action name="actionSave_as">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/open.png</normaloff>:/icons/open.png</iconset>
    </property>
    <property name="text">
@@ -454,7 +454,7 @@
   </action>
   <action name="actionSave_copy_as">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/open.png</normaloff>:/icons/open.png</iconset>
    </property>
    <property name="text">
@@ -463,7 +463,7 @@
   </action>
   <action name="actionQuit">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/quit.png</normaloff>:/icons/quit.png</iconset>
    </property>
    <property name="text">
@@ -477,7 +477,7 @@
   </action>
   <action name="actionExport_executable">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/sfx.png</normaloff>:/icons/sfx.png</iconset>
    </property>
    <property name="text">
@@ -491,7 +491,7 @@
   </action>
   <action name="actionCut">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/cut.png</normaloff>:/icons/cut.png</iconset>
    </property>
    <property name="text">
@@ -503,7 +503,7 @@
   </action>
   <action name="actionCopy">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/copy.png</normaloff>:/icons/copy.png</iconset>
    </property>
    <property name="text">
@@ -515,7 +515,7 @@
   </action>
   <action name="actionPaste">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/paste.png</normaloff>:/icons/paste.png</iconset>
    </property>
    <property name="text">
@@ -527,7 +527,7 @@
   </action>
   <action name="actionExecute">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/execute.png</normaloff>:/icons/execute.png</iconset>
    </property>
    <property name="text">
@@ -539,7 +539,7 @@
   </action>
   <action name="actionExecute_selection">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/execute_sel.png</normaloff>:/icons/execute_sel.png</iconset>
    </property>
    <property name="text">
@@ -551,7 +551,7 @@
   </action>
   <action name="actionNew_action">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/new_action.png</normaloff>:/icons/new_action.png</iconset>
    </property>
    <property name="text">
@@ -560,7 +560,7 @@
   </action>
   <action name="actionEdit_action">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/edit_action.png</normaloff>:/icons/edit_action.png</iconset>
    </property>
    <property name="text">
@@ -569,7 +569,7 @@
   </action>
   <action name="actionDelete_action">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/delete_cursor.png</normaloff>:/icons/delete_cursor.png</iconset>
    </property>
    <property name="text">
@@ -581,7 +581,7 @@
   </action>
   <action name="actionDelete_all_actions">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/delete_all_actions.png</normaloff>:/icons/delete_all_actions.png</iconset>
    </property>
    <property name="text">
@@ -601,7 +601,7 @@
   </action>
   <action name="actionMove_up">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
    </property>
    <property name="text">
@@ -613,7 +613,7 @@
   </action>
   <action name="actionMove_down">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
    </property>
    <property name="text">
@@ -625,7 +625,7 @@
   </action>
   <action name="actionCheck_for_updates">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/update.png</normaloff>:/icons/update.png</iconset>
    </property>
    <property name="text">
@@ -637,7 +637,7 @@
   </action>
   <action name="actionSettings">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/options.png</normaloff>:/icons/options.png</iconset>
    </property>
    <property name="text">
@@ -654,7 +654,7 @@
   </action>
   <action name="actionCreate_shortcut">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/shortcut.png</normaloff>:/icons/shortcut.png</iconset>
    </property>
    <property name="text">
@@ -668,7 +668,7 @@
   </action>
   <action name="actionParameters">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/text.png</normaloff>:/icons/text.png</iconset>
    </property>
    <property name="text">
@@ -680,7 +680,7 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/about.png</normaloff>:/icons/about.png</iconset>
    </property>
    <property name="text">
@@ -700,7 +700,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/new_action.png</normaloff>:/icons/new_action.png</iconset>
    </property>
    <property name="text">
@@ -712,7 +712,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/distance.png</normaloff>:/icons/distance.png</iconset>
    </property>
    <property name="text">
@@ -721,7 +721,7 @@
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/undo.png</normaloff>:/icons/undo.png</iconset>
    </property>
    <property name="text">
@@ -733,7 +733,7 @@
   </action>
   <action name="actionRedo">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/redo.png</normaloff>:/icons/redo.png</iconset>
    </property>
    <property name="text">
@@ -745,7 +745,7 @@
   </action>
   <action name="actionGlobal_code">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/text.png</normaloff>:/icons/text.png</iconset>
    </property>
    <property name="text">
@@ -757,7 +757,7 @@
   </action>
   <action name="actionSet_action_color">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/keywords.png</normaloff>:/icons/keywords.png</iconset>
    </property>
    <property name="text">
@@ -822,7 +822,7 @@
   </action>
   <action name="actionJump_to_line">
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/move.png</normaloff>:/icons/move.png</iconset>
    </property>
    <property name="text">
@@ -837,7 +837,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="actionaz.qrc">
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/line.png</normaloff>:/icons/line.png</iconset>
    </property>
    <property name="text">
@@ -879,7 +879,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="actionaz.qrc"/>
+  <include location="gui.qrc"/>
  </resources>
  <connections>
   <connection>

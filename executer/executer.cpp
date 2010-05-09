@@ -167,19 +167,6 @@ bool Executer::startExecution(bool onlySelection)
 	mScript->clearVariables();
 
 	//TODO : Install actionaz specific stuff here
-
-	QScriptValue printFun = mScriptEngine.newFunction(printFunction);
-	printFun.setData(mScriptEngine.newQObject(this));
-	mScriptEngine.globalObject().setProperty("print", printFun);
-
-	printFun = mScriptEngine.newFunction(printWarningFunction);
-	printFun.setData(mScriptEngine.newQObject(this));
-	mScriptEngine.globalObject().setProperty("printWarning", printFun);
-
-	printFun = mScriptEngine.newFunction(printErrorFunction);
-	printFun.setData(mScriptEngine.newQObject(this));
-	mScriptEngine.globalObject().setProperty("printError", printFun);
-
 	QScriptValue script = mScriptEngine.newObject();
 	mScriptEngine.globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
 	script.setProperty("nextLine", mScriptEngine.newVariant(QVariant(1)));
@@ -195,6 +182,18 @@ bool Executer::startExecution(bool onlySelection)
 	QScriptValue variableFun = mScriptEngine.newFunction(variableFunction);
 	variableFun.setData(mScriptEngine.newQObject(this));
 	script.setProperty("variable", variableFun);
+	
+	QScriptValue printFun = mScriptEngine.newFunction(printFunction);
+	printFun.setData(mScriptEngine.newQObject(this));
+	script.setProperty("print", printFun);
+
+	printFun = mScriptEngine.newFunction(printWarningFunction);
+	printFun.setData(mScriptEngine.newQObject(this));
+	script.setProperty("printWarning", printFun);
+
+	printFun = mScriptEngine.newFunction(printErrorFunction);
+	printFun.setData(mScriptEngine.newQObject(this));
+	script.setProperty("printError", printFun);
 
 	bool initSucceeded = true;
 
