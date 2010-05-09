@@ -22,6 +22,7 @@
 #include "codehighlighter.h"
 #include "linenumberarea.h"
 #include "scriptcompleter.h"
+#include "keywords.h"
 
 #include <QAbstractItemView>
 #include <QScrollBar>
@@ -119,7 +120,7 @@ namespace ActionTools
 			for(int actionIndex = 0; actionIndex < standardItemCompletionModel->rowCount(); ++actionIndex)
 			{
 				QStandardItem *item = standardItemCompletionModel->item(actionIndex, 0);
-				if(!item)
+				if(!item || static_cast<ScriptElementType>(item->data().toInt()) != ScriptElementAction)
 					continue;
 
 				mHighlighter->addAction(item->text());

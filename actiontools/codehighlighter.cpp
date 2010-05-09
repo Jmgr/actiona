@@ -19,8 +19,10 @@
 */
 
 #include "codehighlighter.h"
+#include "keywords.h"
 
 #include <QFile>
+#include <QDebug>
 
 namespace ActionTools
 {
@@ -28,70 +30,84 @@ namespace ActionTools
 		: QSyntaxHighlighter(parent)
 	{
 		HighlightingRule rule;
+		QTextCharFormat format;
 
-		keywordFormat.setForeground(Qt::darkBlue);
-		keywordFormat.setFontWeight(QFont::Bold);
-		QStringList keywordPatterns;
-
-		QFile file(":/code/keywords.txt");
-		if(file.open(QFile::ReadOnly))
+		//Used keywords
+		format.setForeground(Qt::darkBlue);
+		format.setFontWeight(QFont::Bold);
+		rule.format = format;
+	
+		foreach(const QString &keyword, usedKeywords)
 		{
-			while(!file.atEnd())
-			{
-				QByteArray line = file.readLine();
-				if(!line.isEmpty())
-					keywordPatterns << "\\b" + line.trimmed() + "\\b";
-			}
-		}
-
-		foreach(const QString &pattern, keywordPatterns)
-		{
-			rule.pattern = QRegExp(pattern);
-			rule.format = keywordFormat;
-			highlightingRules.append(rule);
+			rule.pattern = QRegExp("\\b" + keyword + "\\b");
+			mHighlightingRules.append(rule);
 		}
 		
-		actionFormat.setFontWeight(QFont::Bold);
-		
-		classFormat.setFontWeight(QFont::Bold);
-		classFormat.setForeground(Qt::darkMagenta);
-		rule.pattern = QRegExp("\\bQ[A-Za-z]+\\b");
-		rule.format = classFormat;
-		highlightingRules.append(rule);
+		//Reserved keywords
+		format.setForeground(Qt::red);
+		format.setFontWeight(QFont::Bold);
+		rule.format = format;
 
-		singleLineCommentFormat.setForeground(Qt::red);
+		foreach(const QString &keyword, reservedKeywords)
+		{
+			rule.pattern = QRegExp("\\b" + keyword + "\\b");
+			mHighlightingRules.append(rule);
+		}
+		
+		format = QTextCharFormat();
+		
+		//Actions
+		mActionFormat.setForeground(Qt::darkMagenta);
+		mActionFormat.setFontWeight(QFont::Bold);
+		
+		//Operators
+		format.setForeground(Qt::red);
+		rule.pattern = QRegExp("[\\-\\+\\*/=%\\^!~<>\\?:,&\\|]");
+		rule.format = format;
+		mHighlightingRules.append(rule);
+		
+		//Numbers
+		format.setForeground(Qt::darkCyan);
+		rule.pattern = QRegExp("\\b[\\d]+\\.?[\\d]*\\b");
+		rule.format = format;
+		mHighlightingRules.append(rule);
+
+		//Single line comments
+		format.setForeground(Qt::darkGreen);
 		rule.pattern = QRegExp("//[^\n]*");
-		rule.format = singleLineCommentFormat;
-		highlightingRules.append(rule);
+		rule.format = format;
+		mHighlightingRules.append(rule);
+		
+		//Multi line comments
+		mMultiLineCommentFormat.setForeground(Qt::darkGreen);
 
-		multiLineCommentFormat.setForeground(Qt::red);
-
-		quotationFormat.setForeground(Qt::darkGreen);
+		//Quotes
+		format.setForeground(Qt::darkRed);
 		rule.pattern = QRegExp("\".*\"");
-		rule.format = quotationFormat;
-		highlightingRules.append(rule);
+		rule.format = format;
+		mHighlightingRules.append(rule);
 
-		functionFormat.setFontItalic(true);
-		functionFormat.setForeground(Qt::blue);
+		//Functions
+		format.setForeground(Qt::blue);
 		rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
-		rule.format = functionFormat;
-		highlightingRules.append(rule);
+		rule.format = format;
+		mHighlightingRules.append(rule);
 
-		commentStartExpression = QRegExp("/\\*");
-		commentEndExpression = QRegExp("\\*/");
+		mCommentStartExpression = QRegExp("/\\*");
+		mCommentEndExpression = QRegExp("\\*/");
 	}
 	
 	void CodeHighlighter::addAction(const QString &actionName)
 	{
 		HighlightingRule rule;
 		rule.pattern = QRegExp(QString("\\b%1\\b").arg(actionName));
-		rule.format = actionFormat;
-		highlightingRules.append(rule);
+		rule.format = mActionFormat;
+		mHighlightingRules.append(rule);
 	}
 
 	void CodeHighlighter::highlightBlock(const QString &text)
 	{
-		foreach(const HighlightingRule &rule, highlightingRules)
+		foreach(const HighlightingRule &rule, mHighlightingRules)
 		{
 			QRegExp expression(rule.pattern);
 			int index = expression.indexIn(text);
@@ -106,11 +122,11 @@ namespace ActionTools
 
 		int startIndex = 0;
 		if(previousBlockState() != 1)
-		startIndex = commentStartExpression.indexIn(text);
+			startIndex = mCommentStartExpression.indexIn(text);
 
 		while(startIndex >= 0)
 		{
-			int endIndex = commentEndExpression.indexIn(text, startIndex);
+			int endIndex = mCommentEndExpression.indexIn(text, startIndex);
 			int commentLength;
 			if (endIndex == -1)
 			{
@@ -119,10 +135,10 @@ namespace ActionTools
 			}
 			else
 			{
-				commentLength = endIndex - startIndex + commentEndExpression.matchedLength();
+				commentLength = endIndex - startIndex + mCommentEndExpression.matchedLength();
 			}
-			setFormat(startIndex, commentLength, multiLineCommentFormat);
-			startIndex = commentStartExpression.indexIn(text, startIndex + commentLength);
+			setFormat(startIndex, commentLength, mMultiLineCommentFormat);
+			startIndex = mCommentStartExpression.indexIn(text, startIndex + commentLength);
 		}
 	}
 }

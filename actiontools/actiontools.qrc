@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>code/keywords.txt</file>
-        <file>code/math.txt</file>
         <file>images/cross.png</file>
         <file>images/monitor_u.png</file>
         <file>images/monitor_c.png</file>

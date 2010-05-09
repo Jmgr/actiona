@@ -29,7 +29,8 @@ SOURCES += pch.cpp \
     subparameter.cpp \
     actionbuffer.cpp \
     actionexecution.cpp \
-    scriptcompleter.cpp
+    scriptcompleter.cpp \
+    keywords.cpp
 HEADERS += actiontools_global.h \
     actionpackinterface.h \
     pch.h \
@@ -55,7 +56,8 @@ HEADERS += actiontools_global.h \
     actionexecution.h \
     settings.h \
     stringlistpair.h \
-    scriptcompleter.h
+    scriptcompleter.h \
+    keywords.h
 PRECOMPILED_HEADER = pch.h
 win32:LIBS += -luser32 \
     -ladvapi32 \

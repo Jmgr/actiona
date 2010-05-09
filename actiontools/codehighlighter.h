@@ -47,18 +47,13 @@ namespace ActionTools
 			QRegExp pattern;
 			QTextCharFormat format;
 		};
-		QVector<HighlightingRule> highlightingRules;
+		QVector<HighlightingRule> mHighlightingRules;
 
-		QRegExp commentStartExpression;
-		QRegExp commentEndExpression;
+		QRegExp mCommentStartExpression;
+		QRegExp mCommentEndExpression;
 
-		QTextCharFormat keywordFormat;
-		QTextCharFormat classFormat;
-		QTextCharFormat singleLineCommentFormat;
-		QTextCharFormat multiLineCommentFormat;
-		QTextCharFormat quotationFormat;
-		QTextCharFormat functionFormat;
-		QTextCharFormat actionFormat;
+		QTextCharFormat mMultiLineCommentFormat;
+		QTextCharFormat mActionFormat;
 
 		Q_DISABLE_COPY(CodeHighlighter)
 	};

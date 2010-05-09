@@ -21,8 +21,24 @@
 #ifndef KEYWORDS_H
 #define KEYWORDS_H
 
+#include "actiontools_global.h"
+
 #include <QStringList>
 
-extern const QStringList keywords;
+class QStandardItemModel;
+
+namespace ActionTools
+{
+	enum ScriptElementType
+	{
+		ScriptElementOther,
+		ScriptElementAction
+	};
+	
+	extern const QStringList usedKeywords;
+	extern const QStringList reservedKeywords;
+	
+	void ACTIONTOOLSSHARED_EXPORT addEcmaScriptObjects(QStandardItemModel *model);
+}
 
 #endif // KEYWORDS_H

@@ -208,17 +208,15 @@ void MainWindow::postInit()
 				actionItem->appendRow(enumNameItem);
 			}
 			
+			actionItem->setData(static_cast<int>(ActionTools::ScriptElementAction));
 			mCompletionModel->appendRow(actionItem);
 		}
 		
 		delete action;
 	}
 	
-	//Add the script keywords
-	foreach(const QString &keyword, keywords)
-	{
-		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), keyword));
-	}
+	//Add Ecmascript stuff
+	ActionTools::addEcmaScriptObjects(mCompletionModel);
 	
 	//Add our functions
 	QStandardItem *scriptItem = new QStandardItem(QIcon(":/icons/keywords.png"), "Script");//TODO : Find an icon to put here (and to the following)
@@ -229,6 +227,7 @@ void MainWindow::postInit()
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "print(text)"));
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "printWarning(text)"));
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "printError(text)"));
+	scriptItem->setData(static_cast<int>(ActionTools::ScriptElementAction));
 	mCompletionModel->appendRow(scriptItem);
 	
 	fillNewActionTreeWidget(ui->newActionTreeWidget);

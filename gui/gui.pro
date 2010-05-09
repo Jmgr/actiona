@@ -27,8 +27,7 @@ SOURCES += main.cpp \
     updater.cpp \
     global.cpp \
     changelogdialog.cpp \
-    scriptcontentdialog.cpp \
-    keywords.cpp
+    scriptcontentdialog.cpp
 HEADERS += mainwindow.h \
     pch.h \
     global.h \
@@ -45,8 +44,7 @@ HEADERS += mainwindow.h \
     newactiondialog.h \
     updater.h \
     changelogdialog.h \
-    scriptcontentdialog.h \
-    keywords.h
+    scriptcontentdialog.h
 INCLUDEPATH += . \
     src \
     ../tools \
