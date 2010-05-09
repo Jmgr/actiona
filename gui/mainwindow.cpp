@@ -75,6 +75,7 @@ MainWindow::MainWindow(QSplashScreen *splashScreen, QWidget *parent)
 #endif
 
 	ui->actionsDockWidget->setWidget(ui->newActionTreeWidget);
+
 	ui->scriptView->setIconSize(QSize(16, 16));
 
 	QItemSelectionModel *oldModel = ui->scriptView->selectionModel();
