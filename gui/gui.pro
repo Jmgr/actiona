@@ -67,11 +67,11 @@ LIBS += -L.. \
     -ltools \
     -lactiontools \
     -lexecuter
-RESOURCES += actionaz.qrc
-win32:RC_FILE = actionaz.rc
+RESOURCES += gui.qrc
+win32:RC_FILE = gui.rc
 UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated
 OBJECTS_DIR = generated
-TRANSLATIONS = locale/actionaz_en.ts \
-    locale/actionaz_fr.ts
+TRANSLATIONS = locale/gui_en.ts \
+    locale/gui_fr.ts

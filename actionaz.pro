@@ -4,7 +4,7 @@ CONFIG = ordered
 SUBDIRS += tools \
 	actiontools \
 	executer \
-	actionaz \
+	gui \
 	actions/actionpackinternal \
 	actions/actionpackwindows \
 	actions/actionpackmouse \
