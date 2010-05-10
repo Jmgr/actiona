@@ -173,7 +173,6 @@ namespace ActionTools
 
 		if(!toEvaluate.isCode())
 		{
-			//TODO : evaluate, and replace vars
 			QString value(toEvaluate.value().toString());
 
 			QRegExp regExp("\\$([a-zA-Z0-9]+)\\$");
