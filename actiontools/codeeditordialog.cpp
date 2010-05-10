@@ -35,8 +35,6 @@ namespace ActionTools
 		
 		ui->editor->setCompletionModel(completionModel);
 
-		connect(ui->editor, SIGNAL(textChanged()), this, SLOT(textChanged()));
-
 		QSettings settings;
 
 		QAction *swapCodeAction = new QAction(this);

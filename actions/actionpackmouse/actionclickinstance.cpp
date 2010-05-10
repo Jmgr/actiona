@@ -184,7 +184,7 @@ void ActionClickInstance::startExecution(ActionTools::Script *script, QScriptEng
 	SetCursorPos(previousPosition.x, previousPosition.y);
 #endif
 #ifdef Q_WS_MAC
-	//TODO : Mac
+	//TODO_MAC
 #endif
 
 	QTimer::singleShot(1, this, SIGNAL(executionEnded()));

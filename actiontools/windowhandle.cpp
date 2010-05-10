@@ -41,7 +41,7 @@ namespace ActionTools
 	QString WindowHandle::title() const
 	{
 #ifdef Q_WS_MAC
-		return "";//TODO
+		return "";//TODO_MAC
 #else
 		return QxtWindowSystem::windowTitle(mValue);
 #endif
@@ -68,14 +68,14 @@ namespace ActionTools
 		return back;
 #endif
 #ifdef Q_WS_MAC
-		return "";//TODO
+		return "";//TODO_MAC
 #endif
 	}
 
 	QRect WindowHandle::rect() const
 	{
 #ifdef Q_WS_MAC
-		return QRect();//TODO
+		return QRect();//TODO_MAC
 #else
 		return QxtWindowSystem::windowGeometry(mValue);
 #endif
@@ -119,7 +119,7 @@ namespace ActionTools
 		return back;
 #endif
 #ifdef Q_WS_MAC
-		return 0;//TODO
+		return 0;//TODO_MAC
 #endif
 	}
 
@@ -148,7 +148,7 @@ namespace ActionTools
 	WindowHandle WindowHandle::foregroundWindow()
 	{
 #ifdef Q_WS_MAC
-		return WindowHandle();//TODO
+		return WindowHandle();//TODO_MAC
 #else
 		return QxtWindowSystem::activeWindow();
 #endif

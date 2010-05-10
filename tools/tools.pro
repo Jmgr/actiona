@@ -46,7 +46,7 @@ HEADERS += version.h \
 	7z/Types.h \
 	sevenziparchive.h \
 	updateclient.h
-INCLUDEPATH += src
+INCLUDEPATH += src 
 UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated

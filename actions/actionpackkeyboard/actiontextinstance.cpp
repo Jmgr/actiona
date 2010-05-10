@@ -49,7 +49,7 @@ void ActionTextInstance::startExecution(ActionTools::Script *script, QScriptEngi
 
 #endif
 #ifdef Q_WS_MAC
-	//TODO : Mac
+	//TODO_MAC
 #endif
 
 	QTimer::singleShot(1, this, SIGNAL(executionEnded()));
