@@ -37,8 +37,6 @@
 
 int main(int argc, char **argv)
 {
-	QT_REQUIRE_VERSION(argc, argv, "4.6.2");
-
 	QxtApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 

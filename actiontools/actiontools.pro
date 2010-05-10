@@ -20,8 +20,6 @@ SOURCES += pch.cpp \
     script.cpp \
     crossplatform.cpp \
     windowhandle.cpp \
-    recorder.cpp \
-    recorderthread.cpp \
     keyinput.cpp \
     windowskeys.cpp \
     keytypes.cpp \
@@ -46,8 +44,6 @@ HEADERS += actiontools_global.h \
     script.h \
     crossplatform.h \
     windowhandle.h \
-    recorder.h \
-    recorderthread.h \
     keyinput.h \
     keytypes.h \
     keytypesdef.h \

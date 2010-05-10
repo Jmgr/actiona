@@ -110,20 +110,6 @@
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QCheckBox" name="hook">
-     <property name="text">
-      <string>CheckBox</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="test">
-     <property name="text">
-      <string>Test</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>

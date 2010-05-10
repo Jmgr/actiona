@@ -62,10 +62,7 @@ namespace ActionTools
 	private slots:
 		void on_codePushButton_toggled(bool checked);
 		void on_checkSyntax_clicked();
-		void on_hook_toggled(bool checked);
-		void on_test_clicked();
 		void swapCode();
-		void textChanged();
 
 	private:
 		void showSyntaxCheckError();

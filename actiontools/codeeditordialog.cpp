@@ -20,20 +20,16 @@
 
 #include "codeeditordialog.h"
 #include "ui_codeeditordialog.h"
-#include "recorder.h"
 
 #include <QtScript>
 #include <QSettings>
 #include <QMessageBox>
-
-//#include <windows.h>//TMP
 
 namespace ActionTools
 {
 	CodeEditorDialog::CodeEditorDialog(QAbstractItemModel *completionModel, QWidget *parent)
 		: QDialog(parent),
 		ui(new Ui::CodeEditorDialog)
-//		mRecorder(new Recorder(this))
 	{
 		ui->setupUi(this);
 		
@@ -130,97 +126,9 @@ namespace ActionTools
 			showSyntaxCheckError();
 	}
 
-	void CodeEditorDialog::on_hook_toggled(bool checked)
-	{
-		Q_UNUSED(checked);
-	}
-/*
-	void kbdSimule(TCHAR *psz)
-	{
-	INPUT npt;
-	npt.ki.dwExtraInfo = npt.ki.time = 0;
-	npt.type = INPUT_KEYBOARD;
-	npt.ki.wVk = 0;
-	while(*psz) {
-	#ifdef UNICODE
-	npt.ki.wScan = (WORD) *psz;
-	#else
-	npt.ki.wScan = (WORD) (BYTE) *psz;
-	#endif
-	npt.ki.dwFlags = KEYEVENTF_UNICODE;
-	SendInput(1, &npt, sizeof(INPUT));
-	npt.ki.dwFlags = KEYEVENTF_UNICODE| KEYEVENTF_KEYUP;
-	SendInput(1, &npt, sizeof(INPUT));
-	psz++;
-	}
-   }
-*/
-	void CodeEditorDialog::on_test_clicked()
-	{
-		ui->editor->setFocus();
-
-//		kbdSimule(L"ש&$פי");
-		//QString t("א");
-	//	wchar_t buffer[] = L"ש&$י";
-		//t.toWCharArray(buffer);
-
-//TMP
-/*
-		INPUT inputfn;
-		inputfn.type = INPUT_KEYBOARD;
-		inputfn.ki.wVk = 0;
-		inputfn.ki.wScan = 6;
-		inputfn.ki.time = 0;
-		inputfn.ki.dwExtraInfo = GetMessageExtraInfo();
-		inputfn.ki.dwFlags = KEYEVENTF_UNICODE;
-		if(!SendInput(1, &inputfn, sizeof(INPUT)))
-			qDebug() << "Fail : " << GetLastError();
-			*/
-/*
-		inputfn.ki.dwFlags = KEYEVENTF_KEYUP | KEYEVENTF_UNICODE;
-		if(!SendInput(1, &inputfn, sizeof(INPUT)))
-			qDebug() << "Fail : " << GetLastError();
-			*/
-	}
-
 	void CodeEditorDialog::swapCode()
 	{
 		setCode(!ui->editor->isCode());
-	}
-
-	void CodeEditorDialog::textChanged()
-	{
-		/*
-		const QString &text = ui->editor->toPlainText();
-
-		//ui->errorList->clear();
-		QScriptSyntaxCheckResult result = QScriptEngine::checkSyntax(text);
-		if(result.state() != QScriptSyntaxCheckResult::Valid)
-		{
-			int line = result.errorLineNumber();
-			if(line != -1)
-			{
-				moveCursorToLine(line);
-				QTextCursor cur = ui->editor->textCursor();
-				cur.movePosition(QTextCursor::EndOfLine, QTextCursor::MoveAnchor);
-				QTextCharFormat cf;
-				cf.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
-				cf.setUnderlineColor(Qt::red);
-				cur.setCharFormat(cf);
-				//TODO
-				//ui->errorList->addItem(QString("%1 : %2").arg(line).arg(result.errorMessage()));
-			}
-		}
-		else
-		{
-			QScriptEngine e;
-			e.evaluate(text);
-			if(e.hasUncaughtException())
-			{
-				//ui->errorList->addItem(QString("%1 : %2").arg(e.uncaughtExceptionLineNumber()).arg(e.uncaughtException().toString()));
-			}
-		}
-		*/
 	}
 
 	void CodeEditorDialog::showSyntaxCheckError()
