@@ -152,12 +152,10 @@ namespace ActionTools
 		if(mCompleter->widget() != this)
 			return;
 
-		QTextCursor tc = textCursor();
+		QTextCursor cursor = textCursor();
 		int extra = completion.length() - mCompleter->completionPrefix().length();
-		tc.movePosition(QTextCursor::Left);
-		tc.movePosition(QTextCursor::EndOfWord);
-		tc.insertText(completion.right(extra));
-		setTextCursor(tc);
+		cursor.insertText(completion.right(extra));
+		setTextCursor(cursor);
 	}
 
 	void CodeEdit::updateLineNumberAreaWidth(int newBlockCount)
