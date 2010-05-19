@@ -14,7 +14,7 @@
    <string>About Actionaz</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="actionaz.qrc">
+   <iconset resource="gui.qrc">
     <normaloff>:/icons/about.png</normaloff>:/icons/about.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -422,7 +422,7 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources>
-  <include location="actionaz.qrc"/>
+  <include location="gui.qrc"/>
  </resources>
  <connections>
   <connection>

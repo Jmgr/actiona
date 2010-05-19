@@ -14,7 +14,7 @@
    <string>Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="actionaz.qrc">
+   <iconset resource="gui.qrc">
     <normaloff>:/icons/options.png</normaloff>:/icons/options.png</iconset>
   </property>
   <layout class="QVBoxLayout">
@@ -532,7 +532,7 @@ p, li { white-space: pre-wrap; }
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="actionaz.qrc"/>
+  <include location="gui.qrc"/>
  </resources>
  <connections>
   <connection>

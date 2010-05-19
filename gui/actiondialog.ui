@@ -36,7 +36,7 @@
       <string notr="true"/>
      </property>
      <property name="pixmap">
-      <pixmap resource="actionaz.qrc">:/icons/warning.png</pixmap>
+      <pixmap resource="gui.qrc">:/icons/warning.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -130,7 +130,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="actionaz.qrc"/>
+  <include location="gui.qrc"/>
  </resources>
  <connections>
   <connection>
