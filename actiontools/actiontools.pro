@@ -11,8 +11,7 @@ DESTDIR = ..
 FORMS += codeeditordialog.ui
 include(widgets.pri)
 include(parameters.pri)
-SOURCES += pch.cpp \
-    actionfactory.cpp \
+SOURCES += actionfactory.cpp \
     action.cpp \
     actioninterface.cpp \
     codeeditordialog.cpp \
@@ -31,7 +30,6 @@ SOURCES += pch.cpp \
     keywords.cpp
 HEADERS += actiontools_global.h \
     actionpackinterface.h \
-    pch.h \
     actionfactory.h \
     actioninterface.h \
     action.h \

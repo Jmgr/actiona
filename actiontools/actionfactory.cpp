@@ -21,7 +21,6 @@
 #include "actionfactory.h"
 #include "actionpackinterface.h"
 #include "actioninterface.h"
-#include "pch.h"
 
 #include <QPluginLoader>
 #include <QDir>
@@ -140,7 +139,7 @@ namespace ActionTools
 		{
 			if(actionInterface(interface->id()))
 			{
-				emit packLoadError(tr("%1 : action <b>%2</b> already loaded").arg(shortFilename).arg(interface->id()));
+				emit packLoadError(tr("%1 : <b>%2</b> already loaded").arg(shortFilename).arg(interface->id()));
 				continue;
 			}
 

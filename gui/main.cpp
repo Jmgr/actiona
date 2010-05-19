@@ -18,7 +18,6 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "pch.h"
 #include "mainwindow.h"
 #include "action.h"
 #include "parameter.h"
@@ -30,6 +29,8 @@
 
 #include <QxtApplication>
 #include <QxtCommandOptions>
+#include <QDir>
+#include <QSplashScreen>
 
 #ifdef QT_WS_WIN
 #include <windows.h>

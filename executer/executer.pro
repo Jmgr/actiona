@@ -9,7 +9,6 @@ FORMS += executionwindow.ui
 SOURCES += executer.cpp \
     executionwindow.cpp
 HEADERS += executer_global.h \
-    executer_pch.h \
     executer.h \
     executionwindow.h \
     scriptagent.h

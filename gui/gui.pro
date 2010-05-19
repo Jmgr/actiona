@@ -12,7 +12,6 @@ unix:TARGET = actionaz.bin
 DESTDIR = ..
 SOURCES += main.cpp \
     mainwindow.cpp \
-    pch.cpp \
     scriptmodel.cpp \
     deleteactionpushbutton.cpp \
     actiondialog.cpp \
@@ -29,7 +28,6 @@ SOURCES += main.cpp \
     changelogdialog.cpp \
     scriptcontentdialog.cpp
 HEADERS += mainwindow.h \
-    pch.h \
     global.h \
     scriptmodel.h \
     deleteactionpushbutton.h \

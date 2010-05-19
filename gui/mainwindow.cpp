@@ -18,7 +18,6 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "pch.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -46,6 +45,18 @@
 #include <QSplashScreen>
 #include <QInputDialog>
 #include <QStandardItemModel>
+#include <QTimer>
+#include <QUndoGroup>
+#include <QMessageBox>
+#include <QSettings>
+#include <QFileDialog>
+#include <QColorDialog>
+#include <QDesktopServices>
+#include <QDir>
+#include <QFileInfo>
+#include <QBuffer>
+#include <QNetworkProxy>
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QSplashScreen *splashScreen, QWidget *parent)
 	: QMainWindow(parent),

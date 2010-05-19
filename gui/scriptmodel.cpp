@@ -31,6 +31,7 @@
 #include <QFont>
 #include <QPalette>
 #include <QApplication>
+#include <QMimeData>
 
 ScriptModel::ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory *actionFactory, QObject *parent)
 	: QAbstractTableModel(parent),

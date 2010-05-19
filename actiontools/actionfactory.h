@@ -23,7 +23,6 @@
 
 #include "actiontools_global.h"
 #include "actioninterface.h"
-#include "pch.h"
 
 namespace ActionTools
 {
