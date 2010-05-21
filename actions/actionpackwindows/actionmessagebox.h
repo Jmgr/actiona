@@ -72,7 +72,7 @@ public:
 		type->setTooltip(tr("The message box type"));
 		type->setItems(ActionMessageBoxInstance::types);
 		type->setOption("default", ActionMessageBoxInstance::types.second.at(ActionMessageBoxInstance::OkButton));
-		addElement(type);
+		addElement(type, 1);
 
 		ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition(			ActionTools::ElementDefinition::INPUT,
 																								"ifyesno",
@@ -97,7 +97,7 @@ public:
 		ifNo->setOption("default", ActionMessageBoxInstance::types.second.at(0));
 		yesNoGroup->addMember(ifNo);
 
-		addElement(yesNoGroup);
+		addElement(yesNoGroup, 1);
 	}
 
 	QString name() const							{ return QObject::tr("Message Box"); }
@@ -113,6 +113,7 @@ public:
 	QString email() const							{ return "jmgr@jmgr.info"; }
 	QPixmap icon() const							{ return QPixmap(":/icons/msg.png"); }
 	void scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionMessageBox) }
+	QStringList tabs() const						{ return QStringList() << tr("Classic") << tr("Advanced"); }
 
 private:
 	Q_DISABLE_COPY(ActionMessageBox)

@@ -56,7 +56,6 @@ FORMS += mainwindow.ui \
     newactiondialog.ui \
     changelogdialog.ui \
     scriptcontentdialog.ui
-PRECOMPILED_HEADER = pch.h
 win32:LIBS += -luser32 \
     -ladvapi32
 LIBS += -L.. \

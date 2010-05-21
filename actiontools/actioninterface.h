@@ -24,6 +24,7 @@
 #include <QString>
 #include <QPixmap>
 #include <QList>
+#include <QDebug>
 
 #include "actiontools_global.h"
 #include "version.h"
@@ -68,7 +69,7 @@ namespace ActionTools
 		enum Flags
 		{
 			WorksOnWindows =    1 << 1,
-			WorksOnGnuLinux =  1 << 2,
+			WorksOnGnuLinux =	1 << 2,
 			WorksOnMac =	    1 << 3,
 			Official =			1 << 4
 		};
@@ -89,12 +90,24 @@ namespace ActionTools
 		virtual QString email() const													{ return QString(); }
 		virtual QPixmap icon() const = 0;
 		virtual void scriptInit(QScriptEngine *scriptEngine)							{ Q_UNUSED(scriptEngine); }
+		virtual QStringList tabs() const												{ return QStringList(); }
 
 		ActionPackInterface *pack() const												{ return mPack; }
 		const QList<ElementDefinition *> &elements() const								{ return mElements; }
 
 	protected:
-		void addElement(ElementDefinition *element)										{ mElements.append(element); }
+		void addElement(ElementDefinition *element, int tab = 0)
+		{
+			if(tab > 0 && tabs().count() > 0)
+			{
+				if(tab < tabs().count())
+					element->setTab(tab);
+				else
+					qWarning("Trying to add an element with an incorrect tab number");
+			}
+
+			mElements.append(element);
+		}
 
 	private:
 		ActionPackInterface *mPack;

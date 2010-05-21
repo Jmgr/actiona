@@ -22,6 +22,7 @@
 #define ACTIONDIALOG_H
 
 #include <QDialog>
+#include <QVector>
 
 namespace Ui
 {
@@ -37,6 +38,7 @@ namespace ActionTools
 }
 
 class QAbstractItemModel;
+class QFormLayout;
 
 class ActionDialog : public QDialog
 {
@@ -58,6 +60,12 @@ private slots:
 	void postInit();
 
 private:
+	enum
+	{
+		InputParameters,
+		OutputParameters
+	};
+	
 	void addGroup(ActionTools::GroupDefinition *group);
 	QLayout *addParameter(ActionTools::ParameterDefinition *parameter);
 	void changeEvent(QEvent *event);
@@ -71,6 +79,7 @@ private:
 	int mCurrentLine;
 	int mCurrentColumn;
 	QAbstractItemModel *mCompletionModel;
+	QVector<QFormLayout *> mParameterLayouts[2];
 
 	Q_DISABLE_COPY(ActionDialog)
 };

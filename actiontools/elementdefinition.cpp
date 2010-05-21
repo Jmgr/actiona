@@ -26,7 +26,8 @@ namespace ActionTools
 		: QObject(parent),
 		mName(name),
 		mTranslatedName(translatedName),
-		mCategory(category)
+		mCategory(category),
+		mTab(0)
 	{
 	}
 }

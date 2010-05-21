@@ -34,6 +34,8 @@
 #include <QTimer>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QMessageBox>
+#include <QFormLayout>
 
 ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::Action *action, QWidget *parent)
 	: QDialog(parent),
@@ -59,6 +61,55 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	QString website = actionInterface->website();
 	Tools::Version version = actionInterface->version();
 	ActionTools::ActionInterface::Status status = actionInterface->status();
+	const QStringList &tabs = actionInterface->tabs();
+
+	int tabCount = tabs.count();
+	if(tabCount == 0)
+		tabCount = 1;
+	
+	for(int parameterType = 0; parameterType < 2; ++parameterType)
+	{
+		for(int i = 0; i < tabCount; ++i)
+			mParameterLayouts[parameterType].append(new QFormLayout);
+	}
+	
+	if(tabs.count() > 0)
+	{
+		QTabWidget *tabWidget = new QTabWidget(this);
+		
+		int tabIndex = 0;
+		foreach(const QString &tab, tabs)
+		{
+			QWidget *widget = new QWidget;
+			QVBoxLayout *layout = new QVBoxLayout(widget);
+			
+			QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), widget);
+			inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][tabIndex]);
+			QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), widget);
+			outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][tabIndex]);
+			
+			layout->addWidget(inputParametersGroupBox);
+			layout->addWidget(outputParametersGroupBox);
+			
+			widget->setLayout(layout);
+			
+			tabWidget->addTab(widget, tab);
+			
+			++tabIndex;
+		}
+		
+		ui->parametersLayout->addWidget(tabWidget);
+	}
+	else
+	{
+		QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), this);
+		inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][0]);
+		QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), this);
+		outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][0]);
+		
+		ui->parametersLayout->addWidget(inputParametersGroupBox);
+		ui->parametersLayout->addWidget(outputParametersGroupBox);
+	}
 
 	if(!author.isEmpty())
 	{
@@ -100,7 +151,10 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	{
 		if(ActionTools::ParameterDefinition *currentParameter = qobject_cast<ActionTools::ParameterDefinition *>(element))
 		{
-			parameterLayout = (currentParameter->category() == ActionTools::ParameterDefinition::INPUT ? ui->inputParametersLayout : ui->outputParametersLayout);
+			int parameterType = (currentParameter->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);
+			
+			parameterLayout = mParameterLayouts[parameterType][currentParameter->tab()];
+			
 			parameterLayout->addRow(currentParameter->translatedName() + " :", addParameter(currentParameter));
 		}
 		else if(ActionTools::GroupDefinition *currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
@@ -112,11 +166,15 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		if(ActionTools::GroupDefinition *currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
 			currentGroup->init();
 	}
-
-	if(ui->inputParametersLayout->count() == 0)
-		ui->inputParametersLayout->addRow(new QLabel(tr("<i><center>No parameters</center></i>"), this));
-	if(ui->outputParametersLayout->count() == 0)
-		ui->outputParametersLayout->addRow(new QLabel(tr("<i><center>No parameters</center></i>"), this));
+	
+	for(int parameterType = 0; parameterType < 2; ++parameterType)
+	{
+		for(int i = 0; i < tabCount; ++i)
+		{
+			if(mParameterLayouts[parameterType].at(i)->count() == 0)
+				mParameterLayouts[parameterType].at(i)->addRow(new QLabel(tr("<i><center>None</center></i>"), this));
+		}
+	}
 
 	adjustSize();
 }
@@ -197,7 +255,8 @@ void ActionDialog::addGroup(ActionTools::GroupDefinition *group)
 		groupLayout->addRow(QString(parameter->translatedName() + " :"), addParameter(parameter));
 	}
 
-	QFormLayout *parameterLayout = (group->category() == ActionTools::ParameterDefinition::INPUT ? ui->inputParametersLayout : ui->outputParametersLayout);
+	int parameterType = (group->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);
+	QFormLayout *parameterLayout = mParameterLayouts[parameterType][group->tab()];
 	parameterLayout->addRow(groupBox);
 }
 

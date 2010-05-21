@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Edit action</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,1,1,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,1,0,0">
    <property name="spacing">
     <number>3</number>
    </property>
@@ -61,40 +61,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Input parameters</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <property name="spacing">
-       <number>5</number>
-      </property>
-      <property name="margin">
-       <number>5</number>
-      </property>
-      <item>
-       <layout class="QFormLayout" name="inputParametersLayout"/>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Output parameters</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <property name="spacing">
-       <number>5</number>
-      </property>
-      <property name="margin">
-       <number>5</number>
-      </property>
-      <item>
-       <layout class="QFormLayout" name="outputParametersLayout"/>
-      </item>
-     </layout>
-    </widget>
+    <layout class="QVBoxLayout" name="parametersLayout"/>
    </item>
    <item>
     <widget class="Line" name="line_2">
@@ -108,7 +75,7 @@
      <item>
       <widget class="QLabel" name="actionInfo">
        <property name="text">
-        <string notr="true">[Action autor &amp; infos]</string>
+        <string notr="true">[Action author &amp; infos]</string>
        </property>
        <property name="openExternalLinks">
         <bool>true</bool>

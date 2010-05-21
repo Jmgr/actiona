@@ -43,17 +43,20 @@ namespace ActionTools
 		QString name() const									{ return mName; }
 		QString tooltip() const									{ return mTooltip; }
 		Category category() const								{ return mCategory; }
+		int tab() const											{ return mTab; }
 
 		void setTranslatedName(const QString &translatedName)   { mTranslatedName = translatedName; }
 		void setName(const QString &name)						{ mName = name; }
 		void setTooltip(const QString &tooltip)					{ mTooltip = tooltip; }
 		void setCategory(Category category)						{ mCategory = category; }
+		void setTab(int tab)									{ mTab = tab; }
 
 	private:
 		QString mName;
 		QString mTranslatedName;
 		QString mTooltip;
 		Category mCategory;
+		int mTab;
 
 		Q_DISABLE_COPY(ElementDefinition)
 	};
