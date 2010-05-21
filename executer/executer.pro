@@ -18,7 +18,6 @@ INCLUDEPATH += src \
 LIBS += -L.. \
     -ltools \
     -lactiontools
-PRECOMPILED_HEADER = executer_pch.h
 UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated

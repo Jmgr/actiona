@@ -52,7 +52,6 @@ HEADERS += actiontools_global.h \
     stringlistpair.h \
     scriptcompleter.h \
     keywords.h
-PRECOMPILED_HEADER = pch.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32
