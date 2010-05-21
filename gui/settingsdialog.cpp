@@ -64,6 +64,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	int screen = settings.value("actions/executionWindowScreen", QVariant(0)).toInt();
 	int position = settings.value("actions/executionWindowPosition", QVariant(0)).toInt();
 	ui->executionWindowPosition->setPosition(screen, position);
+	ui->consoleWindowGroup->setChecked(settings.value("actions/showConsoleWindow", QVariant(true)).toBool());
 	screen = settings.value("actions/consoleWindowScreen", QVariant(0)).toInt();
 	position = settings.value("actions/consoleWindowPosition", QVariant(1)).toInt();
 	ui->consoleWindowPosition->setPosition(screen, position);
