@@ -30,6 +30,7 @@
 
 class QMenu;
 class QAbstractItemModel;
+class QToolButton;
 
 namespace ActionTools
 {
@@ -44,9 +45,12 @@ namespace ActionTools
 		bool isMultiline() const										{ return mMultiline; }
 		bool isCode() const												{ return mCode; }
 		bool isEmbedded() const											{ return mEmbedded; }
+		
+		QToolButton *codeButton() const									{ return mCodeButton; }
+		QToolButton *editorButton() const								{ return mEditorButton; }
 
 		void setCode(bool code);
-		void setEmbedded(bool embedded)									{ mEmbedded = embedded; }
+		void setEmbedded(bool embedded);
 
 		void setAllowTextCodeChange(bool allowTextCodeChange);
 
@@ -66,8 +70,11 @@ namespace ActionTools
 
 	protected:
 		void contextMenuEvent(QContextMenuEvent *event);
+		void resizeEvent(QResizeEvent *event);
 
 	private:
+		void resizeButtons();
+		
 		void mouseMoveEvent(QMouseEvent *event);
 		void multilineCheck(const QString &text);
 
@@ -83,6 +90,8 @@ namespace ActionTools
 		QAction *mOpenEditor;
 		QRegExp mRegExp;
 		QAbstractItemModel *mCompletionModel;
+		QToolButton *mCodeButton;
+		QToolButton *mEditorButton;
 
 		Q_DISABLE_COPY(CodeLineEdit)
 	};

@@ -10,5 +10,7 @@
         <file>images/monitor_r.png</file>
         <file>images/monitor_rd.png</file>
         <file>images/monitor_ru.png</file>
+        <file>images/code.png</file>
+        <file>images/editor.png</file>
     </qresource>
 </RCC>

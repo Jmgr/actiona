@@ -23,6 +23,7 @@
 
 #include <QPainter>
 #include <QAbstractItemView>
+#include <QToolButton>
 
 namespace ActionTools
 {
@@ -83,6 +84,8 @@ namespace ActionTools
 		connect(codeLineEdit, SIGNAL(codeChanged(bool)), this, SIGNAL(codeChanged(bool)));
 
 		addActions(codeLineEdit->actions());
+		
+		setMinimumWidth(sizeHint().width() + codeLineEdit->codeButton()->maximumWidth() + codeLineEdit->editorButton()->maximumWidth() + 50);
 	}
 
 	CodeLineEdit *CodeComboBox::codeLineEdit() const

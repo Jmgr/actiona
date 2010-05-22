@@ -31,6 +31,7 @@
 #include <QSettings>
 #include <QRegExpValidator>
 #include <QDebug>
+#include <QToolButton>
 
 namespace ActionTools
 {
@@ -43,11 +44,15 @@ namespace ActionTools
 		mSwitchTextCode(new QAction(tr("Set to text/code"), this)),
 		mOpenEditor(new QAction(tr("Open editor"), this)),
 		mRegExp(regexpValidation),
-		mCompletionModel(0)
+		mCompletionModel(0),
+		mCodeButton(new QToolButton(this)),
+		mEditorButton(new QToolButton(this))
 	{
 		connect(this, SIGNAL(textChanged(const QString &)), this, SLOT(textChanged(const QString &)));
 		connect(mSwitchTextCode, SIGNAL(triggered()), this, SLOT(reverseCode()));
 		connect(mOpenEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
+		connect(mCodeButton, SIGNAL(clicked()), this, SLOT(reverseCode()));
+		connect(mEditorButton, SIGNAL(clicked()), this, SLOT(openEditor()));
 
 		QSettings settings;
 
@@ -58,6 +63,16 @@ namespace ActionTools
 
 		addAction(mSwitchTextCode);
 		addAction(mOpenEditor);
+		
+		mCodeButton->setIcon(QIcon(":/images/code.png"));
+		mCodeButton->setMaximumWidth(14);
+		mCodeButton->setToolTip(tr("Click here to switch text/code"));
+		
+		mEditorButton->setIcon(QIcon(":/images/editor.png"));
+		mEditorButton->setMaximumWidth(18);
+		mEditorButton->setToolTip(tr("Click here to open the editor"));
+		
+		setEmbedded(false);
 	}
 	
 	void CodeLineEdit::setCode(bool code)
@@ -87,11 +102,33 @@ namespace ActionTools
 		
 		emit codeChanged(mCode);
 	}
+	
+	void CodeLineEdit::setEmbedded(bool embedded)
+	{
+		mEmbedded = embedded;
+		
+		int w = (mAllowTextCodeChange ? mCodeButton->maximumWidth() + mEditorButton->maximumWidth() : mEditorButton->maximumWidth());
+	
+		if(embedded)
+			setStyleSheet(QString("QLineEdit { padding-right: %1px; }").arg(w));
+		else
+			setStyleSheet(QString("QLineEdit { padding-right: %1px; min-height: %2px; }").arg(w).arg(sizeHint().height()));
+
+		resizeButtons();
+		update();
+	}
 
 	void CodeLineEdit::setAllowTextCodeChange(bool allowTextCodeChange)
 	{
 		mAllowTextCodeChange = allowTextCodeChange;
 		mSwitchTextCode->setEnabled(mAllowTextCodeChange);
+		
+		mCodeButton->setVisible(allowTextCodeChange);
+		
+		setEmbedded(mEmbedded);
+		
+		resizeButtons();
+		update();
 	}
 
 	void CodeLineEdit::addShortcuts(QMenu *menu)
@@ -150,6 +187,33 @@ namespace ActionTools
 		delete menu;
 
 		event->accept();
+	}
+	
+	void CodeLineEdit::resizeEvent(QResizeEvent *event)
+	{
+		resizeButtons();
+		
+		QLineEdit::resizeEvent(event);
+	}
+	
+	void CodeLineEdit::resizeButtons()
+	{
+		QRect codeButtonGeometry;
+		QRect editorButtonGeometry;
+		
+		codeButtonGeometry.setX(rect().right() - mCodeButton->maximumWidth() + (mEmbedded ? 1 : 0));
+		codeButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
+		codeButtonGeometry.setWidth(mCodeButton->maximumWidth());
+		codeButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
+		
+		mCodeButton->setGeometry(codeButtonGeometry);
+		
+		editorButtonGeometry.setX(rect().right() - mEditorButton->maximumWidth() - (mAllowTextCodeChange ? codeButtonGeometry.width() : 0) + (mEmbedded ? 2 : 1));
+		editorButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
+		editorButtonGeometry.setWidth(mEditorButton->maximumWidth());
+		editorButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
+		
+		mEditorButton->setGeometry(editorButtonGeometry);
 	}
 
 	void CodeLineEdit::mouseMoveEvent(QMouseEvent *event)
