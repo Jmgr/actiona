@@ -27,6 +27,7 @@
 #include "actiongoto.h"
 #include "actionloop.h"
 #include "actionnoop.h"
+#include "actionstop.h"
 
 #include <QtCore/qplugin.h>
 
@@ -48,6 +49,7 @@ public:
 		addActionInterface(new ActionGoto(this));
 		addActionInterface(new ActionLoop(this));
 		addActionInterface(new ActionNoop(this));
+		addActionInterface(new ActionStop(this));
 	}
 
 	QString id() const								{ return tr("internal"); }

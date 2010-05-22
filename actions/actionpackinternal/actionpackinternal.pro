@@ -2,7 +2,9 @@ include(../common_actions.pri)
 TARGET = ActionPackInternal
 QT += script
 SOURCES += 
-HEADERS += actionpackinternal.h
+HEADERS += actionpackinternal.h \
+    actionstop.h \
+    actionstopinstance.h
 RESOURCES += actionpackinternal.qrc
 
 # Pause
