@@ -5,7 +5,11 @@ HEADERS += actionpacksystem.h \
     actiongetclipboard.h \
     actiongetclipboardinstance.h \
     actionsetclipboard.h \
-    actionsetclipboardinstance.h
+    actionsetclipboardinstance.h \
+    actioncommand.h \
+    actioncommandinstance.h \
+    actionkillprocess.h \
+    actionkillprocessinstance.h
 RESOURCES += actionpacksystem.qrc
 HEADERS += 
-SOURCES += 
+SOURCES += actionkillprocessinstance.cpp

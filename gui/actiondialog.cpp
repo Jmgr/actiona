@@ -67,6 +67,8 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	if(tabCount == 0)
 		tabCount = 1;
 	
+	QVector<QGroupBox *> groupBoxes[2];
+	
 	for(int parameterType = 0; parameterType < 2; ++parameterType)
 	{
 		for(int i = 0; i < tabCount; ++i)
@@ -85,8 +87,10 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 			
 			QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), widget);
 			inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][tabIndex]);
+			groupBoxes[InputParameters].append(inputParametersGroupBox);
 			QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), widget);
 			outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][tabIndex]);
+			groupBoxes[OutputParameters].append(outputParametersGroupBox);
 			
 			layout->addWidget(inputParametersGroupBox);
 			layout->addWidget(outputParametersGroupBox);
@@ -104,8 +108,10 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	{
 		QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), this);
 		inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][0]);
+		groupBoxes[InputParameters].append(inputParametersGroupBox);
 		QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), this);
 		outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][0]);
+		groupBoxes[OutputParameters].append(outputParametersGroupBox);
 		
 		ui->parametersLayout->addWidget(inputParametersGroupBox);
 		ui->parametersLayout->addWidget(outputParametersGroupBox);
@@ -172,7 +178,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		for(int i = 0; i < tabCount; ++i)
 		{
 			if(mParameterLayouts[parameterType].at(i)->count() == 0)
-				mParameterLayouts[parameterType].at(i)->addRow(new QLabel(tr("<i><center>None</center></i>"), this));
+				groupBoxes[parameterType][i]->hide();
 		}
 	}
 

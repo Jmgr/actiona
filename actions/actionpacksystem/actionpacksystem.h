@@ -24,6 +24,8 @@
 #include "actionpackinterface.h"
 #include "actiongetclipboard.h"
 #include "actionsetclipboard.h"
+#include "actioncommand.h"
+#include "actionkillprocess.h"
 
 #include <QtCore/qplugin.h>
 
@@ -42,6 +44,8 @@ public:
 	{
 		addActionInterface(new ActionGetClipboard(this));
 		addActionInterface(new ActionSetClipboard(this));
+		addActionInterface(new ActionCommand(this));
+		addActionInterface(new ActionKillProcess(this));
 	}
 
 	QString id() const							{ return tr("system"); }

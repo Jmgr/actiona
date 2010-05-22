@@ -56,13 +56,7 @@ namespace ActionTools
 		
 		buffer = mResult.toString();
 		
-		if(buffer.isEmpty())
-		{
-			mErrorMessage = tr("Unable to create a variable with an empty name.");
-			emit evaluationError(Action::Error, mErrorMessage);
-			return false;
-		}
-		if(!buffer.contains(QRegExp("^[a-zA-Z0-9]+$")))
+		if(!buffer.isEmpty() && !buffer.contains(QRegExp("^[a-zA-Z0-9]+$")))
 		{
 			mErrorMessage = tr("A variable name can only contain alphanumeric characters.");
 			emit evaluationError(Action::Error, mErrorMessage);

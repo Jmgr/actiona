@@ -113,7 +113,7 @@ public:
 	QString email() const							{ return "jmgr@jmgr.info"; }
 	QPixmap icon() const							{ return QPixmap(":/icons/msg.png"); }
 	void scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionMessageBox) }
-	QStringList tabs() const						{ return QStringList() << tr("Classic") << tr("Advanced"); }
+	QStringList tabs() const						{ return QStringList() << tr("Standard") << tr("Advanced"); }
 
 private:
 	Q_DISABLE_COPY(ActionMessageBox)

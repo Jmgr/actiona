@@ -73,7 +73,7 @@ namespace ActionTools
 		void setOption(const QString &name, const QVariant &value)			{ mOptions.insert(name, value); }
 		QVariant option(const QString &name) const							{ return mOptions.value(name); }
 		
-		void setVariable(const QString &name, const QVariant &value)		{ mVariables.insert(name, value); }
+		void setVariable(const QString &name, const QVariant &value)		{ if(!name.isEmpty()) mVariables.insert(name, value); }
 		const QHash<QString, QVariant> &variables() const					{ return mVariables;  }
 		QVariant variable(const QString &name) const						{ return mVariables.value(name); }
 		void clearVariables()												{ mVariables.clear(); }
