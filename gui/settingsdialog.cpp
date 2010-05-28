@@ -74,7 +74,6 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 		QKeySequence(settings.value("actions/switchTextCode", QKeySequence("Ctrl+Shift+C")).toString()));
 	ui->openEditorKey->setKeySequence(
 		QKeySequence(settings.value("actions/openEditorKey", QKeySequence("Ctrl+Shift+V")).toString()));
-	ui->openEditorMouseEvent->setCurrentIndex(settings.value("actions/openEditorMouseEvent", QVariant(ActionTools::Settings::OPEN_EDITOR_DOUBLE_CLICK)).toInt());
 	ui->checkCodeSyntaxAutomatically->setChecked(settings.value("actions/checkCodeSyntaxAutomatically", QVariant(true)).toBool());
 
 	//NETWORK
@@ -184,7 +183,6 @@ void SettingsDialog::accept()
 	settings.setValue("actions/stopExecutionHotkey", QVariant::fromValue(ui->stopExecutionHotkey->keySequence()));
 	settings.setValue("actions/switchTextCode", QVariant::fromValue(ui->switchTextCode->keySequence()));
 	settings.setValue("actions/openEditorKey", QVariant::fromValue(ui->openEditorKey->keySequence()));
-	settings.setValue("actions/openEditorMouseEvent", QVariant(ui->openEditorMouseEvent->currentIndex()));
 	settings.setValue("actions/checkCodeSyntaxAutomatically", QVariant(ui->checkCodeSyntaxAutomatically->isChecked()));
 
 	//NETWORK

@@ -24,8 +24,10 @@
 #include "actiontools_global.h"
 
 #include <QStringList>
+#include <QIcon>
 
 class QStandardItemModel;
+class QMetaObject;
 
 namespace ActionTools
 {
@@ -38,7 +40,8 @@ namespace ActionTools
 	extern const QStringList usedKeywords;
 	extern const QStringList reservedKeywords;
 	
-	void ACTIONTOOLSSHARED_EXPORT addEcmaScriptObjects(QStandardItemModel *model);
+	void ACTIONTOOLSSHARED_EXPORT addEcmaScriptObjectsKeywords(QStandardItemModel *model);
+	void ACTIONTOOLSSHARED_EXPORT addClassKeywords(const QMetaObject *metaObject, const QString &name, const QIcon &icon, QStandardItemModel *model, const QStringList &ignoreList = QStringList());
 }
 
 #endif // KEYWORDS_H

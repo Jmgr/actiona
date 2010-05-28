@@ -79,7 +79,6 @@ namespace ActionTools
 		void multilineCheck(const QString &text);
 
 		void mouseDoubleClickEvent(QMouseEvent *event);
-		void mouseReleaseEvent(QMouseEvent *event);
 		void paintEvent(QPaintEvent *event);
 
 		bool mCode;

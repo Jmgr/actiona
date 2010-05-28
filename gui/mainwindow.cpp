@@ -161,74 +161,16 @@ void MainWindow::postInit()
 	{
 		ActionTools::ActionInterface *actionInterface =	mActionFactory->actionInterface(actionInterfaceIndex);
 		ActionTools::Action *action = actionInterface->newAction();
-		const QMetaObject *actionMetaObject = action->metaObject();
-		QStandardItem *actionItem = 0;
+		QStringList ignoreList(QStringList() << "deleteLater" << "startExecution" << "stopExecution");
 		
-		//Add all methods
-		for(int methodIndex = 0; methodIndex < actionMetaObject->methodCount(); ++methodIndex)
-		{
-			const QMetaMethod &method = actionMetaObject->method(methodIndex);
-			
-			if(method.access() != QMetaMethod::Public || method.methodType() != QMetaMethod::Slot)
-				continue;
-			
-			QString signature(method.signature());
-			if(signature.startsWith("deleteLater") ||
-			   signature.startsWith("startExecution") || 
-			   signature.startsWith("stopExecution"))
-				continue;
-			
-			QString methodName(signature.left(signature.indexOf("(")));
-			methodName += "(";
-			
-			bool firstParameter = true;
-			foreach(const QByteArray &parameter, method.parameterNames())
-			{
-				if(firstParameter)
-					firstParameter = false;
-				else
-					methodName += ", ";
-				
-				methodName += parameter;
-			}
-			
-			methodName += ")";
-
-			if(!actionItem)
-				actionItem = new QStandardItem(actionInterface->icon(), actionInterface->id());
-			
-			QStandardItem *methodItem = new QStandardItem(actionInterface->icon(), methodName);//TODO : Add a smaller icon
-			actionItem->appendRow(methodItem);
-		}
-		
-		//Add all enums
-		if(actionItem)//Only add enums if a valid method has been added
-		{
-			for(int enumIndex = 0; enumIndex < actionMetaObject->enumeratorCount(); ++enumIndex)
-			{
-				const QMetaEnum &enumerator = actionMetaObject->enumerator(enumIndex);
-				
-				QStandardItem *enumNameItem = new QStandardItem(actionInterface->icon(), enumerator.name());
-				
-				for(int keyIndex = 0; keyIndex < enumerator.keyCount(); ++keyIndex)
-				{
-					QStandardItem *enumItem = new QStandardItem(actionInterface->icon(), enumerator.key(keyIndex));//TODO : Add a smaller icon
-					enumNameItem->appendRow(enumItem);
-				}
-
-				actionItem->appendRow(enumNameItem);
-			}
-			
-			actionItem->setData(static_cast<int>(ActionTools::ScriptElementAction));
-			mCompletionModel->appendRow(actionItem);
-		}
-		
+		ActionTools::addClassKeywords(action->metaObject(), actionInterface->id(), actionInterface->icon(), mCompletionModel, ignoreList);
+	
 		delete action;
 	}
 	
 	//Add Ecmascript stuff
-	ActionTools::addEcmaScriptObjects(mCompletionModel);
-	
+	ActionTools::addEcmaScriptObjectsKeywords(mCompletionModel);
+
 	//Add our functions
 	QStandardItem *scriptItem = new QStandardItem(QIcon(":/icons/keywords.png"), "Script");//TODO : Find an icon to put here (and to the following)
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "nextLine"));

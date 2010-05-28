@@ -228,23 +228,8 @@ namespace ActionTools
 	{
 		Q_UNUSED(event);
 
-		QSettings settings;
-		int openEditorMouseEvent = settings.value("actions/openEditorMouseEvent", QVariant(Settings::OPEN_EDITOR_DOUBLE_CLICK)).toInt();
-
-		if(openEditorMouseEvent == Settings::OPEN_EDITOR_DOUBLE_CLICK || openEditorMouseEvent == Settings::OPEN_EDITOR_BOTH)
+		if(mMultiline)
 			emit openEditor();
-	}
-
-	void CodeLineEdit::mouseReleaseEvent(QMouseEvent *event)
-	{
-		if(event->button() == Qt::MidButton)
-		{
-			QSettings settings;
-			int openEditorMouseEvent = settings.value("actions/openEditorMouseEvent", QVariant(Settings::OPEN_EDITOR_DOUBLE_CLICK)).toInt();
-
-			if(openEditorMouseEvent == Settings::OPEN_EDITOR_MIDDLE_CLICK || openEditorMouseEvent == Settings::OPEN_EDITOR_BOTH)
-				emit openEditor();
-		}
 	}
 
 	void CodeLineEdit::paintEvent(QPaintEvent *event)
@@ -278,24 +263,7 @@ namespace ActionTools
 				QPalette pal = palette();
 				pal.setCurrentColorGroup(QPalette::Disabled);
 
-				QSettings settings;
-				int openEditorEvent = settings.value("actions/openEditorMouseEvent", QVariant(ActionTools::Settings::OPEN_EDITOR_DOUBLE_CLICK)).toInt();
-				QString openEditorMessage;
-
-				switch(openEditorEvent)
-				{
-				case Settings::OPEN_EDITOR_DOUBLE_CLICK:
-					openEditorMessage = tr("Double click to edit");
-					break;
-				case Settings::OPEN_EDITOR_MIDDLE_CLICK:
-					openEditorMessage = tr("Middle click to edit");
-					break;
-				case Settings::OPEN_EDITOR_BOTH:
-					openEditorMessage = tr("Double or middle click to edit");
-					break;
-				}
-
-				style()->drawItemText(&painter, rect(), Qt::AlignCenter, pal, false, openEditorMessage, QPalette::Text);
+				style()->drawItemText(&painter, rect(), Qt::AlignCenter, pal, false, tr("Double-click to edit"), QPalette::Text);
 			}
 
 			if(mCode)

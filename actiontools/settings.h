@@ -42,13 +42,6 @@ namespace ActionTools
 			PROXY_TYPE_HTTP,
 			PROXY_TYPE_SOCKS5
 		};
-
-		enum
-		{
-			OPEN_EDITOR_DOUBLE_CLICK,
-			OPEN_EDITOR_MIDDLE_CLICK,
-			OPEN_EDITOR_BOTH
-		};
 	}
 }
 
