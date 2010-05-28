@@ -901,6 +901,8 @@ void MainWindow::wantToAddAction(int row, const QString &actionId)
 	ActionTools::Action *action = interface->newAction();
 	if(!action)
 		return;
+	
+	update();//X11 : Update here to fix a bug with the cursor staying in the "drop mode" during the action dialog
 
 	if(editAction(action))
 	{
