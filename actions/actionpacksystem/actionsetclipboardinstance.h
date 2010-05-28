@@ -32,17 +32,15 @@ class ActionSetClipboardInstance : public ActionTools::Action
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionSetClipboard)
-
 	ActionSetClipboardInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent)											{}
 	ActionSetClipboardInstance(QObject *parent = 0)
 		: ActionTools::Action(0, parent)													{}
 	~ActionSetClipboardInstance()															{}
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 		QString value;
 
 		if(!actionExecution.evaluateString(value, "value"))

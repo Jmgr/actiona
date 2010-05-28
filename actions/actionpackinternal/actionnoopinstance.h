@@ -29,19 +29,14 @@ class ActionNoopInstance : public ActionTools::Action
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionNoop)
-
 	ActionNoopInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent)										{}
 	ActionNoopInstance(QObject *parent = 0)
 		: ActionTools::Action(0, parent)												{}
 	~ActionNoopInstance()																{}
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+	void startExecution()
 	{
-		Q_UNUSED(script);
-		Q_UNUSED(scriptEngine);
-
 		emit executionEnded();
 	}
 

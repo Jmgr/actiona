@@ -37,8 +37,6 @@ class ActionCommandInstance : public ActionTools::Action
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionCommand)
-
 	ActionCommandInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent), mProcess(new QProcess(this))
 	{
@@ -51,10 +49,9 @@ public:
 	}
 	~ActionCommandInstance()																	{}
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+	void startExecution()
 	{
-		mScript = script;
-		ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 		QString command;
 		QString parameters;
 		QString workingDirectory;
@@ -78,11 +75,11 @@ public:
 #ifdef Q_WS_WIN
 		_PROCESS_INFORMATION *processInformation = mProcess->pid();
 		if(processInformation)
-			script->setVariable(processId, QString::number(processInformation->dwProcessId));
+			script()->setVariable(processId, QString::number(processInformation->dwProcessId));
 		else
-			script->setVariable(processId, "0");
+			script()->setVariable(processId, "0");
 #else
-		script->setVariable(processId, QString::number(mProcess->pid()));
+		script()->setVariable(processId, QString::number(mProcess->pid()));
 #endif
 	}
 	
@@ -131,21 +128,21 @@ public slots:
 private slots:
 	void processFinished(int exitCode, QProcess::ExitStatus exitStatus)
 	{
-		mScript->setVariable(mExitCodeVariable, QString::number(exitCode));
+		script()->setVariable(mExitCodeVariable, QString::number(exitCode));
 		
 		QString output = QString::fromUtf8(mProcess->readAllStandardOutput());
-		mScript->setVariable(mOutputVariable, output.trimmed());
+		script()->setVariable(mOutputVariable, output.trimmed());
 		
 		QString errorOutput = QString::fromUtf8(mProcess->readAllStandardError());
-		mScript->setVariable(mErrorOutputVariable, errorOutput.trimmed());
+		script()->setVariable(mErrorOutputVariable, errorOutput.trimmed());
 		
 		switch(exitStatus)
 		{
 		case QProcess::NormalExit:
-			mScript->setVariable(mExitStatusVariable, "normal");
+			script()->setVariable(mExitStatusVariable, "normal");
 			break;
 		case QProcess::CrashExit:
-			mScript->setVariable(mExitStatusVariable, "crash");
+			script()->setVariable(mExitStatusVariable, "crash");
 			break;
 		}
 		
@@ -158,7 +155,6 @@ private:
 	QString mOutputVariable;
 	QString mErrorOutputVariable;
 	QString mExitStatusVariable;
-	ActionTools::Script *mScript;
 	
 	Q_DISABLE_COPY(ActionCommandInstance)
 };

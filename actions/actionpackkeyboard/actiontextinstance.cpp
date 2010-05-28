@@ -31,9 +31,9 @@
 
 #include <QTimer>
 
-void ActionTextInstance::startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+void ActionTextInstance::startExecution()
 {
-	ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+	ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 
 	QString text;
 

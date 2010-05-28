@@ -29,19 +29,15 @@ class ActionStopInstance : public ActionTools::Action
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionStop)
-
 	ActionStopInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent)										{}
 	ActionStopInstance(QObject *parent = 0)
 		: ActionTools::Action(0, parent)												{}
 	~ActionStopInstance()																{}
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+	void startExecution()
 	{
-		Q_UNUSED(script);
-		
-		scriptEngine->evaluate("Script.stopExecution()");
+		scriptEngine()->evaluate("Script.stopExecution()");
 
 		emit executionEnded();
 	}

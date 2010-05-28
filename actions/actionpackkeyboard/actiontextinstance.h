@@ -29,15 +29,13 @@ class ActionTextInstance : public ActionTools::Action
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionText)
-
 	ActionTextInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent)										{}
 	ActionTextInstance(QObject *parent = 0)
 		: ActionTools::Action(0, parent)												{}
 	~ActionTextInstance()																{}
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine);
+	void startExecution();
 
 private:
 	Q_DISABLE_COPY(ActionTextInstance)

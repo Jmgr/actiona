@@ -89,7 +89,7 @@ namespace ActionTools
 		virtual QString website() const													{ return QString(); }
 		virtual QString email() const													{ return QString(); }
 		virtual QPixmap icon() const = 0;
-		virtual void scriptInit(QScriptEngine *scriptEngine)							{ Q_UNUSED(scriptEngine); }
+		virtual Action *scriptInit(QScriptEngine *scriptEngine) = 0;
 		virtual QStringList tabs() const												{ return QStringList(); }
 
 		ActionPackInterface *pack() const												{ return mPack; }

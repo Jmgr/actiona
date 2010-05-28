@@ -32,8 +32,6 @@ class ActionKillProcessInstance : public ActionTools::Action
 	Q_ENUMS(KillMode)
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionKillProcess)
-			
 	enum KillMode
 	{
 		Graceful = ActionTools::CrossPlatform::Graceful,
@@ -49,9 +47,9 @@ public:
 	
 	static ActionTools::StringListPair killModes;
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 		int processId;
 		
 		if(!actionExecution.evaluateInteger(processId, "processId"))

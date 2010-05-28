@@ -62,19 +62,19 @@ public:
 		addElement(variable);
 	}
 
-	QString name() const							{ return QObject::tr("Text input"); }
-	QString id() const								{ return metaObject()->className(); }
-	Flag flags() const								{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const						{ return QObject::tr("Ask the user to enter some text"); }
-	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()				{ return new ActionTextInputInstance(this, 0); }
-	Status status() const							{ return Alpha; }
-	Category category() const						{ return Windows; }
-	QString author() const							{ return "Jmgr"; }
-	QString website() const							{ return "www.jmgr.info"; }
-	QString email() const							{ return "jmgr@jmgr.info"; }
-	QPixmap icon() const							{ return QPixmap(":/icons/msg.png"); }
-	void scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionTextInput) }
+	QString name() const											{ return QObject::tr("Text input"); }
+	QString id() const												{ return metaObject()->className(); }
+	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const										{ return QObject::tr("Ask the user to enter some text"); }
+	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
+	ActionTools::Action *newAction()								{ return new ActionTextInputInstance(this, 0); }
+	Status status() const											{ return Alpha; }
+	Category category() const										{ return Windows; }
+	QString author() const											{ return "The Actionaz Team"; }
+	QString website() const											{ return "www.actionaz.eu"; }
+	QString email() const											{ return "jmgr@jmgr.info"; }
+	QPixmap icon() const											{ return QPixmap(":/icons/msg.png"); }
+	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionTextInput) }
 
 private:
 	Q_DISABLE_COPY(ActionTextInput)

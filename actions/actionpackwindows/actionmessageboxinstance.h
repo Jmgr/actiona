@@ -26,8 +26,6 @@
 
 #include <QMessageBox>
 
-class QScriptEngine;
-
 class ActionMessageBoxInstance : public ActionTools::Action
 {
 	Q_OBJECT
@@ -36,8 +34,6 @@ class ActionMessageBoxInstance : public ActionTools::Action
 	Q_ENUMS(Result)
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionMessageBox)
-
 	enum Icon
 	{
 		None,
@@ -65,7 +61,7 @@ public:
 	static ActionTools::StringListPair icons;
 	static ActionTools::StringListPair types;
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine);
+	void startExecution();
 	void stopExecution();
 
 private:
@@ -79,7 +75,6 @@ public slots:
 
 private:
 	QMessageBox *mMessageBox;
-	QScriptEngine *mScriptEngine;
 	QString mIfYesAction;
 	QString mIfYesLine;
 	QString mIfNoAction;

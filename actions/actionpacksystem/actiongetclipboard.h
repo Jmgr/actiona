@@ -48,19 +48,19 @@ public:
 		addElement(output);
 	}
 
-	QString name() const							{ return QObject::tr("Get clipboard"); }
-	QString id() const								{ return metaObject()->className(); }
-	Flag flags() const								{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const						{ return QObject::tr("Get the clipboard contents"); }
-	Tools::Version version() const					{ return Tools::Version(1, 0, 0); }
-	ActionTools::Action *newAction()				{ return new ActionGetClipboardInstance(this, 0); }
-	Status status() const							{ return Stable; }
-	Category category() const						{ return System; }
-	QString author() const							{ return "Jmgr"; }
-	QString website() const							{ return "www.jmgr.info"; }
-	QString email() const							{ return "jmgr@jmgr.info"; }
-	QPixmap icon() const							{ return QPixmap(":/icons/clipboard.png"); }
-	void scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionGetClipboard) }
+	QString name() const											{ return QObject::tr("Get clipboard"); }
+	QString id() const												{ return metaObject()->className(); }
+	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const										{ return QObject::tr("Get the clipboard contents"); }
+	Tools::Version version() const									{ return Tools::Version(1, 0, 0); }
+	ActionTools::Action *newAction()								{ return new ActionGetClipboardInstance(this, 0); }
+	Status status() const											{ return Stable; }
+	Category category() const										{ return System; }
+	QString author() const											{ return "The Actionaz Team"; }
+	QString website() const											{ return "www.actionaz.eu"; }
+	QString email() const											{ return "jmgr@jmgr.info"; }
+	QPixmap icon() const											{ return QPixmap(":/icons/clipboard.png"); }
+	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionGetClipboard) }
 
 private:
 	Q_DISABLE_COPY(ActionGetClipboard)

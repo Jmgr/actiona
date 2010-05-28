@@ -33,17 +33,15 @@ class ActionGetClipboardInstance : public ActionTools::Action
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionGetClipboard)
-
 	ActionGetClipboardInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent)												{}
 	ActionGetClipboardInstance(QObject *parent = 0)
 		: ActionTools::Action(0, parent)														{}
 	~ActionGetClipboardInstance()																{}
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 		QString variable;
 
 		if(!actionExecution.evaluateVariable(variable, "variable"))
@@ -51,7 +49,7 @@ public:
 
 		QClipboard *clipboard = QApplication::clipboard();
 		
-		script->setVariable(variable, clipboard->text());
+		script()->setVariable(variable, clipboard->text());
 
 		emit executionEnded();
 	}

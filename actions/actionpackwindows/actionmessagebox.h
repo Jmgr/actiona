@@ -100,20 +100,20 @@ public:
 		addElement(yesNoGroup, 1);
 	}
 
-	QString name() const							{ return QObject::tr("Message Box"); }
-	QString id() const								{ return metaObject()->className(); }
-	Flag flags() const								{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const						{ return QObject::tr("Shows a message box"); }
-	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()				{ return new ActionMessageBoxInstance(this, 0); }
-	Status status() const							{ return Alpha; }
-	Category category() const						{ return Windows; }
-	QString author() const							{ return "Jmgr"; }
-	QString website() const							{ return "www.jmgr.info"; }
-	QString email() const							{ return "jmgr@jmgr.info"; }
-	QPixmap icon() const							{ return QPixmap(":/icons/msg.png"); }
-	void scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionMessageBox) }
-	QStringList tabs() const						{ return QStringList() << tr("Standard") << tr("Advanced"); }
+	QString name() const											{ return QObject::tr("Message Box"); }
+	QString id() const												{ return metaObject()->className(); }
+	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const										{ return QObject::tr("Shows a message box"); }
+	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
+	ActionTools::Action *newAction()								{ return new ActionMessageBoxInstance(this, 0); }
+	Status status() const											{ return Alpha; }
+	Category category() const										{ return Windows; }
+	QString author() const											{ return "The Actionaz Team"; }
+	QString website() const											{ return "www.actionaz.eu"; }
+	QString email() const											{ return "jmgr@jmgr.info"; }
+	QPixmap icon() const											{ return QPixmap(":/icons/msg.png"); }
+	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionMessageBox) }
+	QStringList tabs() const										{ return QStringList() << tr("Standard") << tr("Advanced"); }
 
 private:
 	Q_DISABLE_COPY(ActionMessageBox)

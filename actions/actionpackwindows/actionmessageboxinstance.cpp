@@ -35,15 +35,13 @@ ActionTools::StringListPair ActionMessageBoxInstance::types = qMakePair(
 
 ActionMessageBoxInstance::ActionMessageBoxInstance(ActionTools::ActionInterface *interface, QObject *parent)
 	: ActionTools::Action(interface, parent),
-	mMessageBox(0),
-	mScriptEngine(0)
+	mMessageBox(0)
 {
 }
 
 ActionMessageBoxInstance::ActionMessageBoxInstance(QObject *parent)
 	: ActionTools::Action(0, parent),
-	mMessageBox(0),
-	mScriptEngine(0)
+	mMessageBox(0)
 {
 }
 
@@ -51,11 +49,9 @@ ActionMessageBoxInstance::~ActionMessageBoxInstance()
 {
 }
 
-void ActionMessageBoxInstance::startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+void ActionMessageBoxInstance::startExecution()
 {
-	mScriptEngine = scriptEngine;
-
-	ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+	ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 	QString message;
 	QString title;
 	int icon;
@@ -122,11 +118,11 @@ QMessageBox::Icon ActionMessageBoxInstance::messageBoxIcon(Icon icon) const
 
 void ActionMessageBoxInstance::buttonClicked()
 {
-	QScriptValue script = mScriptEngine->globalObject().property("Script");
+	QScriptValue script = scriptEngine()->globalObject().property("Script");
 	if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::Yes) && mIfYesAction == "goto")
-		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(mIfYesLine)));
+		script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfYesLine)));
 	else if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::No) && mIfNoAction == "goto")
-		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(mIfYesLine)));
+		script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfYesLine)));
 
 	mMessageBox->disconnect();
 	mMessageBox->deleteLater();

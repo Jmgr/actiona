@@ -56,19 +56,19 @@ public:
 		addElement(count);
 	}
 
-	QString name() const							{ return QObject::tr("Loop"); }
-	QString id() const								{ return metaObject()->className(); }
-	Flag flags() const								{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const						{ return QObject::tr("Go to a script line a specific number of times"); }
-	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()				{ return new ActionLoopInstance(this, 0); }
-	Status status() const							{ return Alpha; }
-	Category category() const						{ return Internal; }
-	QString author() const							{ return "Jmgr"; }
-	QString website() const							{ return "www.jmgr.info"; }
-	QString email() const							{ return "jmgr@jmgr.info"; }
-	QPixmap icon() const							{ return QPixmap(":/icons/loop.png"); }
-	void scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionLoop) }
+	QString name() const											{ return QObject::tr("Loop"); }
+	QString id() const												{ return metaObject()->className(); }
+	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const										{ return QObject::tr("Go to a script line a specific number of times"); }
+	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
+	ActionTools::Action *newAction()								{ return new ActionLoopInstance(this, 0); }
+	Status status() const											{ return Alpha; }
+	Category category() const										{ return Internal; }
+	QString author() const											{ return "The Actionaz Team"; }
+	QString website() const											{ return "www.actionaz.eu"; }
+	QString email() const											{ return "jmgr@jmgr.info"; }
+	QPixmap icon() const											{ return QPixmap(":/icons/loop.png"); }
+	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionLoop) }
 
 private:
 	Q_DISABLE_COPY(ActionLoop)

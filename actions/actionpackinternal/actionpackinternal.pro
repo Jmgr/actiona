@@ -4,7 +4,9 @@ QT += script
 SOURCES += 
 HEADERS += actionpackinternal.h \
     actionstop.h \
-    actionstopinstance.h
+    actionstopinstance.h \
+    actionvariable.h \
+    actionvariableinstance.h
 RESOURCES += actionpackinternal.qrc
 
 # Pause

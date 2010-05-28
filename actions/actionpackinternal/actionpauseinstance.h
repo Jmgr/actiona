@@ -31,17 +31,15 @@ class ActionPauseInstance : public ActionTools::Action
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionPause)
-
 	ActionPauseInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent)										{}
 	ActionPauseInstance(QObject *parent = 0)
 		: ActionTools::Action(0, parent)												{}
 	~ActionPauseInstance()																{}
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 		int duration;
 
 		if(!actionExecution.evaluateInteger(duration, "duration"))

@@ -24,7 +24,7 @@
 #include <QStyleOptionButton>
 #include <QMouseEvent>
 #include <QxtApplication>
-#include <QMessageBox>//TMP
+#include <QMessageBox>
 #include <QDebug>
 
 #ifdef Q_WS_X11

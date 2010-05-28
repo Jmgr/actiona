@@ -30,8 +30,6 @@ class ActionClickInstance : public ActionTools::Action
 	Q_ENUMS(Button)
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionClick)
-
 	enum Button
 	{
 		LeftButton,
@@ -47,7 +45,7 @@ public:
 
 	static ActionTools::StringListPair buttons;
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine);
+	void startExecution();
 
 private:
 	Q_DISABLE_COPY(ActionClickInstance)

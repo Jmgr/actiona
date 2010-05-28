@@ -47,19 +47,19 @@ public:
 		addElement(line);
 	}
 
-	QString name() const							{ return QObject::tr("Goto"); }
-	QString id() const								{ return metaObject()->className(); }
-	Flag flags() const								{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const						{ return QObject::tr("Go to a script line"); }
-	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()				{ return new ActionGotoInstance(this, 0); }
-	Status status() const							{ return Alpha; }
-	Category category() const						{ return Internal; }
-	QString author() const							{ return "Jmgr"; }
-	QString website() const							{ return "www.jmgr.info"; }
-	QString email() const							{ return "jmgr@jmgr.info"; }
-	QPixmap icon() const							{ return QPixmap(":/icons/goto.png"); }
-	void scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionGoto) }
+	QString name() const											{ return QObject::tr("Goto"); }
+	QString id() const												{ return metaObject()->className(); }
+	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const										{ return QObject::tr("Go to a script line"); }
+	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
+	ActionTools::Action *newAction()								{ return new ActionGotoInstance(this, 0); }
+	Status status() const											{ return Alpha; }
+	Category category() const										{ return Internal; }
+	QString author() const											{ return "The Actionaz Team"; }
+	QString website() const											{ return "www.actionaz.eu"; }
+	QString email() const											{ return "jmgr@jmgr.info"; }
+	QPixmap icon() const											{ return QPixmap(":/icons/goto.png"); }
+	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionGoto) }
 
 private:
 	Q_DISABLE_COPY(ActionGoto)

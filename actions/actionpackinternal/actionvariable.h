@@ -18,11 +18,14 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONSTOP_H
-#define ACTIONSTOP_H
+#ifndef ACTIONVARIABLE_H
+#define ACTIONVARIABLE_H
 
 #include "actioninterface.h"
-#include "actionstopinstance.h"
+#include "actionvariableinstance.h"
+#include "variableparameterdefinition.h"
+#include "textparameterdefinition.h"
+#include "listparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -30,32 +33,45 @@ namespace ActionTools
 	class Action;
 }
 
-class ActionStop : public QObject, public ActionTools::ActionInterface
+class ActionVariable : public QObject, public ActionTools::ActionInterface
 {
    Q_OBJECT
 
 public:
-	explicit ActionStop(ActionTools::ActionPackInterface *pack)
+	explicit ActionVariable(ActionTools::ActionPackInterface *pack)
 	: ActionInterface(pack)
 	{
+		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::ElementDefinition::OUTPUT,
+																								"variable",
+																								tr("Variable"),
+																								this);
+		variable->setTooltip(tr("The variable name"));
+		addElement(variable);
+		
+		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::ElementDefinition::INPUT,
+																								"value",
+																								tr("Value"),
+																								this);
+		value->setTooltip(tr("The variable's new value"));
+		addElement(value);
 	}
 
-	QString name() const											{ return QObject::tr("Stop"); }
+	QString name() const											{ return QObject::tr("Variable"); }
 	QString id() const												{ return metaObject()->className(); }
 	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Stop the script execution"); }
+	QString description() const										{ return QObject::tr("Set the value of a variable"); }
 	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionStopInstance(this, 0); }
+	ActionTools::Action *newAction()								{ return new ActionVariableInstance(this, 0); }
 	Status status() const											{ return Stable; }
 	Category category() const										{ return Internal; }
 	QString author() const											{ return "The Actionaz Team"; }
 	QString website() const											{ return "www.actionaz.eu"; }
 	QString email() const											{ return "jmgr@jmgr.info"; }
 	QPixmap icon() const											{ return QPixmap(":/icons/goto.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionStop) }
+	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionVariable) }
 
 private:
-	Q_DISABLE_COPY(ActionStop)
+	Q_DISABLE_COPY(ActionVariable)
 };
 
-#endif // ACTIONSTOP_H
+#endif // ACTIONVARIABLE_H

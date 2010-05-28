@@ -38,9 +38,9 @@ ActionTools::StringListPair ActionClickInstance::buttons = qMakePair(
 		QStringList() << "left" << "middle" << "right",
 		QStringList() << tr("Left") << tr("Middle") << tr("Right"));
 
-void ActionClickInstance::startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+void ActionClickInstance::startExecution()
 {
-	ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+	ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 
 	int button;
 	int amount;

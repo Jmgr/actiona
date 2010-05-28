@@ -49,7 +49,7 @@ namespace ActionTools
 	class ActionData : public QSharedData
 	{
 	public:
-		ActionData() : interface(0), enabled(true), selected(false)			{}
+		ActionData() : interface(0), enabled(true), selected(false), script(0), scriptEngine(0)		{}
 		ActionData(const ActionData &other)
 			: QSharedData(other),
 			parametersData(other.parametersData),
@@ -58,7 +58,9 @@ namespace ActionTools
 			label(other.label),
 			color(other.color),
 			enabled(other.enabled),
-			selected(other.selected)										{}
+			selected(other.selected),
+			script(other.script),
+			scriptEngine(other.scriptEngine)														{}
 
 		ParametersData parametersData;
 		ActionInterface *interface;
@@ -67,6 +69,8 @@ namespace ActionTools
 		QColor color;
 		bool enabled;
 		bool selected;
+		Script *script;
+		QScriptEngine *scriptEngine;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT Action : public QObject
@@ -108,6 +112,8 @@ namespace ActionTools
 		SubParameter subParameter(const QString &parameterName, const QString &subParameterName) const
 																			{ return parameter(parameterName).subParameter(subParameterName); }
 		virtual void reset()												{}
+		
+		void setupExecution(QScriptEngine *scriptEngine, Script *script)	{ d->scriptEngine = scriptEngine; d->script = script; }
 
 		void copyActionDataFrom(const Action &other)
 		{
@@ -118,9 +124,13 @@ namespace ActionTools
 			setEnabled(other.isEnabled());
 			setSelected(other.isSelected());
 		}
+		
+	protected:
+		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }
+		Script *script() const												{ return d->script; }
 
 	public slots:
-		virtual void startExecution(Script *script, QScriptEngine *scriptEngine)	{ Q_UNUSED(script); Q_UNUSED(scriptEngine); }
+		virtual void startExecution()										{}
 		virtual void stopExecution()										{}
 
 	signals:
@@ -143,31 +153,9 @@ namespace ActionTools
 Q_DECLARE_METATYPE(ActionTools::Action)
 Q_DECLARE_METATYPE(ActionTools::Action::ExecutionException)
 
-/*
-#define SCRIPT_CONSTRUCTOR(CLASSNAME) \
-static QScriptValue ScriptConstructor(QScriptContext *context, QScriptEngine *engine) \
-{ return engine->newQObject(new CLASSNAME##Instance(context->argument(0).toQObject()), QScriptEngine::ScriptOwnership); }
-*/
-#define SCRIPT_CONSTRUCTOR(CLASSNAME)
-
-/*
-#define SCRIPT_INIT(CLASSNAME) { \
-QScriptValue ctor = scriptEngine->newFunction(&CLASSNAME##Instance::ScriptConstructor); \
-QScriptValue metaObject = scriptEngine->newQMetaObject(&CLASSNAME##Instance::staticMetaObject, ctor); \
-scriptEngine->globalObject().setProperty(#CLASSNAME, metaObject); }
-*/
-/*
-#define SCRIPT_INIT(CLASSNAME) { \
-QScriptValue ctor = scriptEngine->newFunction(&CLASSNAME##Instance::ScriptConstructor); \
-QScriptValue metaObject = scriptEngine->newQMetaObject(&CLASSNAME##Instance::staticMetaObject, ctor); \
-scriptEngine->globalObject().setProperty(#CLASSNAME "Class", metaObject); \
-scriptEngine->globalObject().setProperty(#CLASSNAME, scriptEngine->evaluate("new " #CLASSNAME "Class()")); \
-}
-*/
-
 #define SCRIPT_INIT(CLASSNAME) \
 { \
-	QObject *object = new CLASSNAME##Instance(); \
+	ActionTools::Action *object = new CLASSNAME##Instance(); \
 	QScriptValue scriptObject = scriptEngine->newQObject(object, QScriptEngine::ScriptOwnership, QScriptEngine::ExcludeSuperClassContents | QScriptEngine::ExcludeDeleteLater); \
 	scriptEngine->globalObject().setProperty(#CLASSNAME, scriptObject); \
 	for(int enumeratorIndex = 0; enumeratorIndex < object->metaObject()->enumeratorCount(); ++enumeratorIndex) \
@@ -180,6 +168,7 @@ scriptEngine->globalObject().setProperty(#CLASSNAME, scriptEngine->evaluate("new
 			enumObject.setProperty(metaEnum.key(keyIndex), metaEnum.value(keyIndex)); \
 		} \
 	} \
+	return object; \
 }
 
 #endif // ACTION_H

@@ -29,17 +29,15 @@ class ActionCodeInstance : public ActionTools::Action
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionCode)
-
 	ActionCodeInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent)										{}
 	ActionCodeInstance(QObject *parent = 0)
 		: ActionTools::Action(0, parent)												{}
 	~ActionCodeInstance()																{}
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 		QString code;
 
 		if(!actionExecution.evaluateString(code, "code"))

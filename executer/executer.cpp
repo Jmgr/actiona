@@ -130,31 +130,6 @@ QScriptValue stopExecutionFunction(QScriptContext *context, QScriptEngine *engin
 	return engine->undefinedValue();
 }
 
-QScriptValue setVariableFunction(QScriptContext *context, QScriptEngine *engine)
-{
-	if(context->argumentCount() < 2)
-		return engine->undefinedValue();
-	
-	QScriptValue calleeData = context->callee().data();
-	Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
-	
-	executer->script()->setVariable(context->argument(0).toString(), context->argument(1).toString());
-	
-	return engine->undefinedValue();
-}
-
-QScriptValue variableFunction(QScriptContext *context, QScriptEngine *engine)
-{
-	if(context->argumentCount() < 1)
-		return engine->undefinedValue();
-	
-	QScriptValue calleeData = context->callee().data();
-	Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
-	ActionTools::Script *script = executer->script();
-	
-	return QScriptValue(script->variable(context->argument(0).toString()).toString());
-}
-
 bool Executer::startExecution(bool onlySelection)
 {
 	mScriptAgent->setContext(ScriptAgent::Unknown);
@@ -174,14 +149,6 @@ bool Executer::startExecution(bool onlySelection)
 	QScriptValue stopExecutionFun = mScriptEngine.newFunction(stopExecutionFunction);
 	stopExecutionFun.setData(mScriptEngine.newQObject(this));
 	script.setProperty("stopExecution", stopExecutionFun);
-	
-	QScriptValue setVariableFun = mScriptEngine.newFunction(setVariableFunction);
-	setVariableFun.setData(mScriptEngine.newQObject(this));
-	script.setProperty("setVariable", setVariableFun);
-	
-	QScriptValue variableFun = mScriptEngine.newFunction(variableFunction);
-	variableFun.setData(mScriptEngine.newQObject(this));
-	script.setProperty("variable", variableFun);
 	
 	QScriptValue printFun = mScriptEngine.newFunction(printFunction);
 	printFun.setData(mScriptEngine.newQObject(this));
@@ -204,13 +171,15 @@ bool Executer::startExecution(bool onlySelection)
 	{
 		ActionTools::ActionInterface *actionInterface = mActionFactory->actionInterface(actionIndex);
 
-		actionInterface->scriptInit(&mScriptEngine);
+		ActionTools::Action *action = actionInterface->scriptInit(&mScriptEngine);
+		action->setupExecution(&mScriptEngine, mScript);
 	}
 	
 	for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
 	{
 		ActionTools::Action *action = mScript->actionAt(actionIndex);
 		action->reset();
+		action->setupExecution(&mScriptEngine, mScript);
 	}
 
 	mScriptAgent->setContext(ScriptAgent::Parameters);
@@ -458,5 +427,5 @@ void Executer::executeCurrentAction()
 	connect(action, SIGNAL(executionEnded()), this, SLOT(actionExecutionEnded()));
 	connect(action, SIGNAL(executionException(ActionTools::Action::ExecutionException,QString)), this, SLOT(executionException(ActionTools::Action::ExecutionException,QString)));
 
-	action->startExecution(mScript, &mScriptEngine);
+	action->startExecution();
 }

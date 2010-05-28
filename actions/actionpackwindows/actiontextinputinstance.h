@@ -24,26 +24,18 @@
 #include "actionexecution.h"
 #include "action.h"
 
-class QScriptEngine;
 class QInputDialog;
-
-namespace ActionTools
-{
-	class Script;
-}
 
 class ActionTextInputInstance : public ActionTools::Action
 {
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionTextInput)
-
 	ActionTextInputInstance(ActionTools::ActionInterface *interface, QObject *parent = 0);
 	ActionTextInputInstance(QObject *parent = 0);
 	~ActionTextInputInstance();
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine);
+	void startExecution();
 	void stopExecution();
 
 private slots:
@@ -52,8 +44,6 @@ private slots:
 	
 private:
 	QInputDialog *mInputDialog;
-	QScriptEngine *mScriptEngine;
-	ActionTools::Script *mScript;
 	QString mVariable;
 
 	Q_DISABLE_COPY(ActionTextInputInstance)

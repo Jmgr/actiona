@@ -29,15 +29,13 @@ class ActionLoopInstance : public ActionTools::Action
 	Q_OBJECT
 
 public:
-	SCRIPT_CONSTRUCTOR(ActionLoop)
-
 	ActionLoopInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent), mInitialized(false), mCounter(0)		{}
 	ActionLoopInstance(QObject *parent = 0)
 		: ActionTools::Action(0, parent), mInitialized(false), mCounter(0)				{}
 	~ActionLoopInstance()																{}
 
-	void startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+	void startExecution()
 	{
 		if(mInitialized && mCounter == 0)
 		{
@@ -45,7 +43,7 @@ public:
 			return;
 		}
 		
-		ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 		QString line;
 		int count;
 

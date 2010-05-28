@@ -18,38 +18,52 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONGOTOINSTANCE_H
-#define ACTIONGOTOINSTANCE_H
+#ifndef ACTIONVARIABLEINSTANCE_H
+#define ACTIONVARIABLEINSTANCE_H
 
 #include "actionexecution.h"
 #include "action.h"
+#include "script.h"
 
-class ActionGotoInstance : public ActionTools::Action
+class ActionVariableInstance : public ActionTools::Action
 {
 	Q_OBJECT
 
 public:
-	ActionGotoInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
+	ActionVariableInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
 		: ActionTools::Action(interface, parent)										{}
-	ActionGotoInstance(QObject *parent = 0)
+	ActionVariableInstance(QObject *parent = 0)
 		: ActionTools::Action(0, parent)												{}
-	~ActionGotoInstance()																{}
+	~ActionVariableInstance()															{}
 
 	void startExecution()
 	{
 		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
-		QString line;
+		QString variable;
+		QString value;
 
-		if(!actionExecution.evaluateString(line, "line"))
+		if(!actionExecution.evaluateString(variable, "variable") ||
+		   !actionExecution.evaluateString(value, "value"))
 			return;
-
-		actionExecution.setNextLine(line);
+		
+		script()->setVariable(variable, value);
 
 		emit executionEnded();
 	}
+	
+public slots:
+	void setVariable(const QString &name, const QVariant &value)
+	{
+		script()->setVariable(name, value);
+	}
+
+	QVariant variable(const QString &name)
+	{
+		return script()->variable(name);
+	}
 
 private:
-	Q_DISABLE_COPY(ActionGotoInstance)
+	Q_DISABLE_COPY(ActionVariableInstance)
 };
 
-#endif // ACTIONGOTOINSTANCE_H
+#endif // ACTIONVARIABLEINSTANCE_H

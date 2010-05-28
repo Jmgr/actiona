@@ -27,17 +27,13 @@
 
 ActionTextInputInstance::ActionTextInputInstance(ActionTools::ActionInterface *interface, QObject *parent)
 	: ActionTools::Action(interface, parent),
-	mInputDialog(0),
-	mScriptEngine(0),
-	mScript(0)
+	mInputDialog(0)
 {
 }
 
 ActionTextInputInstance::ActionTextInputInstance(QObject *parent)
 	: ActionTools::Action(0, parent),
-	mInputDialog(0),
-	mScriptEngine(0),
-	mScript(0)
+	mInputDialog(0)
 {
 }
 
@@ -45,12 +41,9 @@ ActionTextInputInstance::~ActionTextInputInstance()
 {
 }
 
-void ActionTextInputInstance::startExecution(ActionTools::Script *script, QScriptEngine *scriptEngine)
+void ActionTextInputInstance::startExecution()
 {
-	mScriptEngine = scriptEngine;
-	mScript = script;
-
-	ActionTools::ActionExecution actionExecution(this, script, scriptEngine);
+	ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
 	QString question;
 	QString defaultValue;
 	
@@ -87,7 +80,7 @@ void ActionTextInputInstance::stopExecution()
 
 void ActionTextInputInstance::textEntered(const QString &value)
 {
-	mScript->setVariable(mVariable, value);
+	script()->setVariable(mVariable, value);
 	
 	mInputDialog->disconnect();
 	mInputDialog->deleteLater();
