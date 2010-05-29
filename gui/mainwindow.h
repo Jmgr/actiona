@@ -129,6 +129,7 @@ private slots:
 	void editAction(const QModelIndex &index);
 	void wantToAddAction(const QString &actionId);
 	void wantToAddAction(int row, const QString &actionId);
+	void addAction();
 	void openRecentFile();
 	void newActionDoubleClicked(QTreeWidgetItem *item, int column);
 	void actionEnabled();
@@ -186,6 +187,8 @@ private:
 	QStandardItemModel *mCompletionModel;
 	QString mStartScript;
 	QxtCommandOptions *mCommandOptions;
+	int mAddActionRow;
+	QString mAddAction;
 
 	Q_DISABLE_COPY(MainWindow)
 };

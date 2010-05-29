@@ -76,7 +76,8 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 	mUndoGroup(new QUndoGroup(this)),
 	mCompletionModel(new QStandardItemModel(this)),
 	mStartScript(startScript),
-	mCommandOptions(commandOptions)
+	mCommandOptions(commandOptions),
+	mAddActionRow(0)
 {
 	ui->setupUi(this);
 
@@ -924,7 +925,15 @@ void MainWindow::wantToAddAction(const QString &actionId)
 
 void MainWindow::wantToAddAction(int row, const QString &actionId)
 {
-	ActionTools::ActionInterface *interface = mActionFactory->actionInterface(actionId);
+	QTimer::singleShot(0, this, SLOT(addAction()));
+	
+	mAddActionRow = row;
+	mAddAction = actionId;
+}
+
+void MainWindow::addAction()	
+{
+	ActionTools::ActionInterface *interface = mActionFactory->actionInterface(mAddAction);
 	if(!interface)
 		return;
 
@@ -932,15 +941,12 @@ void MainWindow::wantToAddAction(int row, const QString &actionId)
 	if(!action)
 		return;
 	
-	update();//TODO : This dont work !
-	//X11 :Update here to fix a bug with the cursor staying in the "drop mode" during the action dialog
-
 	if(editAction(action))
 	{
-		if(row == mScript->actionCount())
+		if(mAddActionRow == mScript->actionCount())
 			ui->scriptView->scrollToBottom();
 
-		mScriptModel->insertAction(row, ActionTools::ActionBuffer(actionId, *action));
+		mScriptModel->insertAction(mAddActionRow, ActionTools::ActionBuffer(mAddAction, *action));
 	}
 
 	delete action;//Always delete it, since the model creates a copy of it...
