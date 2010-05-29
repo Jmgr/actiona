@@ -88,7 +88,9 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->proxyType->setCurrentIndex(settings.value("network/proxyType", QVariant(ActionTools::Settings::PROXY_TYPE_HTTP)).toInt());
 
 	connect(mTimeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
-	connect(ui->showTaskbarIcon, SIGNAL(clicked(bool)), systemTrayIcon, SLOT(setVisible(bool)));
+	
+	if(systemTrayIcon)
+		connect(ui->showTaskbarIcon, SIGNAL(clicked(bool)), systemTrayIcon, SLOT(setVisible(bool)));
 }
 
 SettingsDialog::~SettingsDialog()
@@ -201,7 +203,8 @@ void SettingsDialog::done(int result)
 {
 	QSettings settings;
 
-	mSystemTrayIcon->setVisible(settings.value("general/showTaskbarIcon", QVariant(true)).toBool());
+	if(mSystemTrayIcon)
+		mSystemTrayIcon->setVisible(settings.value("general/showTaskbarIcon", QVariant(true)).toBool());
 
 	QDialog::done(result);
 }

@@ -64,6 +64,7 @@ class QProgressDialog;
 class Executer;
 class QUndoGroup;
 class QStandardItemModel;
+class QxtCommandOptions;
 
 #include <QNetworkReply>
 #include <QSystemTrayIcon>
@@ -72,7 +73,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow(QSplashScreen *splashScreen, QWidget *parent = 0);
+	MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashScreen, const QString &startScript);
 	~MainWindow();
 
 protected:
@@ -183,6 +184,8 @@ private:
 	QUndoGroup *mUndoGroup;
 	QPoint mPreviousWindowPosition;
 	QStandardItemModel *mCompletionModel;
+	QString mStartScript;
+	QxtCommandOptions *mCommandOptions;
 
 	Q_DISABLE_COPY(MainWindow)
 };

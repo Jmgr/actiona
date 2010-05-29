@@ -31,6 +31,8 @@
 #include <QxtCommandOptions>
 #include <QDir>
 #include <QSplashScreen>
+#include <QDebug>
+#include <QTextStream>
 
 #ifdef QT_WS_WIN
 #include <windows.h>
@@ -40,32 +42,41 @@ int main(int argc, char **argv)
 {
 	QxtApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
-
+	
+	//QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+	
 	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
-	options.add("nosplash", "disable the splash screen");//TODO
+	options.add("nosplash", QObject::tr("disable the splash screen"));
 	options.alias("nosplash", "s");
-	options.add("notrayicon", "disable the tray icon");//TODO
+	options.add("notrayicon", QObject::tr("disable the tray icon"));
 	options.alias("notrayicon", "t");
-	options.add("noexecutionwindow", "do not show the execution window");//TODO
+	options.add("noexecutionwindow", QObject::tr("do not show the execution window"));
 	options.alias("noexecutionwindow", "E");
-	options.add("noconsolewindow", "do not show the console window");//TODO
+	options.add("noconsolewindow", QObject::tr("do not show the console window"));
 	options.alias("noconsolewindow", "C");
-	options.add("execute", "execute the current script");//TODO
+	options.add("execute", QObject::tr("execute the current script"));
 	options.alias("execute", "e");
-	options.add("exitatend", "close Actionaz after execution");//TODO
+	options.add("exitatend", QObject::tr("close Actionaz after execution - requires execute"));
 	options.alias("exitatend", "x");
-	options.add("help", "show this help test");
+	options.add("help", QObject::tr("show this help text"));
 	options.alias("help", "h");
 	options.parse(QCoreApplication::arguments());
-	if(options.count("help") || options.showUnrecognizedWarning())
+	if(options.count("help") || options.showUnrecognizedWarning() || (options.count("exitatend") && !options.count("execute")))
 	{
-	     options.showUsage();
-	     return -1;
+		QTextStream stream(stdout);
+		stream << QObject::tr("usage : ") << QCoreApplication::arguments().at(0) << " " << QObject::tr("[parameters]") << " " << QObject::tr("[filename]") << "\n";
+		stream << QObject::tr("Parameters are :") << "\n";
+		stream << options.getUsage();
+		stream.flush();
+		return -1;
 	}
-
-	//QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+	
+	QString startScript;
+	const QStringList &positionalParameters = options.positional();
+	if(positionalParameters.count() > 0)
+		startScript = positionalParameters.at(0);
 
 #ifdef QT_WS_WIN
 	AllowSetForegroundWindow(ASFW_ANY);
@@ -75,9 +86,7 @@ int main(int argc, char **argv)
 	// This is needed so that relative paths will work on Windows regardless of where the app is launched from.
 	QDir::setCurrent(app.applicationDirPath());
 #endif
-
-	//QApplication::setStyle(new QCleanlooksStyle);
-
+	
 	app.addLibraryPath(QDir::currentPath() + "/actions");
 
 	qRegisterMetaType<ActionTools::Action>("Action");
@@ -99,18 +108,24 @@ int main(int argc, char **argv)
 	qRegisterMetaTypeStreamOperators<Tools::ActionPackInfo>("Tools::ActionPackInfo");
 	qRegisterMetaTypeStreamOperators<Tools::ActionPackInfoList>("Tools::ActionPackInfoList");
 
-	app.setOrganizationName("Jmgr.info");
-	app.setOrganizationDomain("jmgr.info");
+	app.setOrganizationName("Actionaz");
+	app.setOrganizationDomain("actionaz.eu");
 	app.setApplicationName("Actionaz");
 	app.setApplicationVersion(Global::ACTIONAZ_VERSION.toString());
 
-	QSplashScreen *splash = new QSplashScreen(QPixmap(":/images/start.png"), Qt::WindowStaysOnTopHint);
-	splash->show();
-	app.processEvents();
+	QSplashScreen *splash = 0;
+	if(!options.count("nosplash") && !options.count("execute"))
+	{
+		splash = new QSplashScreen(QPixmap(":/images/start.png"), Qt::WindowStaysOnTopHint);
+		splash->show();
+		app.processEvents();
+	}
 
-	MainWindow mainWindow(splash);
+	MainWindow mainWindow(&options, splash, startScript);
 	mainWindow.setWindowOpacity(0.0);
-	mainWindow.show();
+	
+	if(!options.count("execute"))
+		mainWindow.show();
 
 	try
 	{

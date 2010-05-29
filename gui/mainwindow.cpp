@@ -57,9 +57,10 @@
 #include <QBuffer>
 #include <QNetworkProxy>
 #include <QCloseEvent>
+#include <QxtCommandOptions>
 
-MainWindow::MainWindow(QSplashScreen *splashScreen, QWidget *parent)
-	: QMainWindow(parent),
+MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashScreen, const QString &startScript)
+	: QMainWindow(0),
 	ui(new Ui::MainWindow),
 	mOpacity(0.0f),
 	mOpacityTimer(new QTimer(this)),
@@ -67,13 +68,15 @@ MainWindow::MainWindow(QSplashScreen *splashScreen, QWidget *parent)
 	mActionFactory(new ActionTools::ActionFactory(this)),
 	mScript(new ActionTools::Script(mActionFactory)),
 	mScriptModel(new ScriptModel(mScript, mActionFactory, this)),
-	mSystemTrayIcon(new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
+	mSystemTrayIcon(commandOptions->count("notrayicon") ? 0 : new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
 	mSplashScreen(splashScreen),
 	mExecuter(0),
 	mWasNewActionDockShown(false),
 	mWasConsoleDockShown(false),
 	mUndoGroup(new QUndoGroup(this)),
-	mCompletionModel(new QStandardItemModel(this))
+	mCompletionModel(new QStandardItemModel(this)),
+	mStartScript(startScript),
+	mCommandOptions(commandOptions)
 {
 	ui->setupUi(this);
 
@@ -121,7 +124,8 @@ MainWindow::MainWindow(QSplashScreen *splashScreen, QWidget *parent)
 	connect(ui->scriptView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(actionSelectionChanged()));
 	connect(mScriptModel, SIGNAL(scriptEdited()), this, SLOT(scriptEdited()));
 	connect(ui->newActionTreeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(newActionDoubleClicked(QTreeWidgetItem*,int)));
-	connect(mSystemTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(systemTrayIconActivated(QSystemTrayIcon::ActivationReason)));
+	if(mSystemTrayIcon)
+		connect(mSystemTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(systemTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 	connect(mActionFactory, SIGNAL(packLoadError(QString)), this, SLOT(packLoadError(QString)));
 	connect(ui->consoleWidget, SIGNAL(itemDoubleClicked(int)), this, SLOT(logItemDoubleClicked(int)));
 
@@ -199,8 +203,11 @@ void MainWindow::postInit()
 	ActionTools::CrossPlatform::setForegroundWindow(this);
 #endif
 
-	mSplashScreen->close();
-	mSplashScreen->deleteLater();
+	if(mSplashScreen)
+	{
+		mSplashScreen->close();
+		mSplashScreen->deleteLater();
+	}
 
 	if(mPackLoadErrors.count() > 0)
 	{
@@ -218,19 +225,32 @@ void MainWindow::postInit()
 	}
 
 	setCurrentFile(QString());
-
+	
 	QSettings settings;
-	if(settings.value("general/reopenLastScript", QVariant(false)).toBool())
+	if(!mStartScript.isEmpty())
 	{
-		QString lastFilename = settings.value("general/lastScript", QString()).toString();
-
-		if(!lastFilename.isEmpty())
+		if(!loadFile(mStartScript, false))
 		{
-			if(!loadFile(lastFilename, false))
+			QMessageBox::warning(this, tr("Open script"), tr("Unable to open the script because the file is not readable or you don't have enough rights."));
+			
+			if(mCommandOptions->count("execute"))
+				QApplication::quit();
+		}
+	}
+	else
+	{
+		if(settings.value("general/reopenLastScript", QVariant(false)).toBool())
+		{
+			QString lastFilename = settings.value("general/lastScript", QString()).toString();
+	
+			if(!lastFilename.isEmpty())
 			{
-				settings.setValue("general/lastScript", QString());
-
-				QMessageBox::warning(this, tr("Open last script"), tr("Unable to open the last script because the file is not readable or you don't have enough rights."));
+				if(!loadFile(lastFilename, false))
+				{
+					settings.setValue("general/lastScript", QString());
+	
+					QMessageBox::warning(this, tr("Open last script"), tr("Unable to open the last script because the file is not readable or you don't have enough rights."));
+				}
 			}
 		}
 	}
@@ -246,6 +266,9 @@ void MainWindow::postInit()
 		else
 			settings.setValue("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER));
 	}
+	
+	if(mCommandOptions->count("execute"))
+		execute(false);
 }
 
 void MainWindow::opacityOpenUpdate()
@@ -716,7 +739,8 @@ void MainWindow::readSettings()
 	restoreGeometry(settings.value("geometry").toByteArray());
 	restoreState(settings.value("windowState").toByteArray());
 	mMaxRecentFiles = settings.value("general/maxRecentFiles", 5).toInt();
-	mSystemTrayIcon->setVisible(settings.value("general/showTaskbarIcon", true).toBool());
+	if(mSystemTrayIcon)
+		mSystemTrayIcon->setVisible(settings.value("general/showTaskbarIcon", true).toBool());
 
 	QList<QVariant> customColors = settings.value("customColors").toList();
 	for(int colorIndex = 0; colorIndex < customColors.count(); ++colorIndex)
@@ -732,7 +756,8 @@ void MainWindow::writeSettings()
 	settings.setValue("geometry", saveGeometry());
 	settings.setValue("windowState", saveState());
 	settings.setValue("general/maxRecentFiles", mMaxRecentFiles);
-	settings.setValue("general/showTaskbarIcon", mSystemTrayIcon->isVisible());
+	if(mSystemTrayIcon)
+		settings.setValue("general/showTaskbarIcon", mSystemTrayIcon->isVisible());
 
 	QList<QVariant> customColors;
 	for(int colorIndex = 0; colorIndex < QColorDialog::customCount(); ++colorIndex)
@@ -814,6 +839,11 @@ void MainWindow::execute(bool onlySelection)
 	int consoleWindowScreen = settings.value("actions/consoleWindowScreen", QVariant(0)).toInt();
 
 	delete mExecuter;
+	
+	if(mCommandOptions->count("noexecutionwindow"))
+		showExecutionWindow = false;
+	if(mCommandOptions->count("noconsolewindow"))
+		showConsoleWindow = false;
 
 	mExecuter = new Executer(mScript,
 									  mActionFactory,
@@ -902,7 +932,8 @@ void MainWindow::wantToAddAction(int row, const QString &actionId)
 	if(!action)
 		return;
 	
-	update();//X11 : Update here to fix a bug with the cursor staying in the "drop mode" during the action dialog
+	update();//TODO : This dont work !
+	//X11 :Update here to fix a bug with the cursor staying in the "drop mode" during the action dialog
 
 	if(editAction(action))
 	{
@@ -964,12 +995,17 @@ void MainWindow::scriptExecutionStopped()
 
 	ui->consoleWidget->updateClearButton();
 
-	show();
-
-	ui->actionsDockWidget->setVisible(mWasNewActionDockShown);
-	ui->consoleDockWidget->setVisible(mWasConsoleDockShown);
-
-	QTimer::singleShot(50, this, SLOT(postExecution()));
+	if(mCommandOptions->count("exitatend"))
+		QApplication::quit();
+	else
+	{
+		show();
+	
+		ui->actionsDockWidget->setVisible(mWasNewActionDockShown);
+		ui->consoleDockWidget->setVisible(mWasConsoleDockShown);
+	
+		QTimer::singleShot(50, this, SLOT(postExecution()));
+	}
 }
 
 void MainWindow::postExecution()
