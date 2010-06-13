@@ -77,9 +77,12 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 	mCompletionModel(new QStandardItemModel(this)),
 	mStartScript(startScript),
 	mCommandOptions(commandOptions),
-	mAddActionRow(0)
+	mAddActionRow(0),
+	mStopExecutionAction(new QAction(tr("S&top execution"), this))
 {
 	ui->setupUi(this);
+	
+	mStopExecutionAction->setEnabled(false);
 	
 	if(mSystemTrayIcon)
 	{
@@ -87,8 +90,9 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 		trayMenu->addAction(ui->actionExecute);
 		trayMenu->addAction(ui->actionExecute_selection);
 		trayMenu->addSeparator();
+		trayMenu->addAction(mStopExecutionAction);
+		trayMenu->addSeparator();
 		trayMenu->addAction(ui->actionQuit);
-		//TODO : Add stop execution
 		
 		mSystemTrayIcon->setToolTip(tr("Actionaz - ready"));
 		mSystemTrayIcon->setContextMenu(trayMenu);
@@ -142,6 +146,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 		connect(mSystemTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(systemTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 	connect(mActionFactory, SIGNAL(packLoadError(QString)), this, SLOT(packLoadError(QString)));
 	connect(ui->consoleWidget, SIGNAL(itemDoubleClicked(int)), this, SLOT(logItemDoubleClicked(int)));
+	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
 
 	setWindowTitle("Actionaz[*]");//Set this to fix some warnings about the [*] placeholder
 
@@ -887,6 +892,7 @@ void MainWindow::execute(bool onlySelection)
 		
 		ui->actionExecute->setEnabled(false);
 		ui->actionExecute_selection->setEnabled(false);
+		mStopExecutionAction->setEnabled(true);
 	}
 	else
 	{
@@ -1008,6 +1014,12 @@ void MainWindow::packLoadError(const QString &error)
 	mPackLoadErrors << error;
 }
 
+void MainWindow::stopExecution()
+{
+	if(mExecuter)
+		mExecuter->stopExecution();
+}
+	
 void MainWindow::scriptExecutionStopped()
 {
 	mExecuter->deleteLater();
@@ -1036,6 +1048,7 @@ void MainWindow::scriptExecutionStopped()
 		
 		ui->actionExecute->setEnabled(true);
 		ui->actionExecute_selection->setEnabled(false);
+		mStopExecutionAction->setEnabled(false);
 	}
 }
 

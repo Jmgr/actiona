@@ -134,6 +134,7 @@ private slots:
 	void newActionDoubleClicked(QTreeWidgetItem *item, int column);
 	void actionEnabled();
 	void packLoadError(const QString &error);
+	void stopExecution();
 
 	void scriptExecutionStopped();
 	void postExecution();
@@ -189,6 +190,7 @@ private:
 	QxtCommandOptions *mCommandOptions;
 	int mAddActionRow;
 	QString mAddAction;
+	QAction *mStopExecutionAction;
 
 	Q_DISABLE_COPY(MainWindow)
 };
