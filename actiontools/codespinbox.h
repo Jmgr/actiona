@@ -54,6 +54,9 @@ namespace ActionTools
 		QValidator::State validate(QString &text, int &pos) const;
 		QString textFromValue(int value) const;
 		void contextMenuEvent(QContextMenuEvent *event);
+		
+		QString mPrefix;
+		QString mSuffix;
 
 		Q_DISABLE_COPY(CodeSpinBox)
 	};

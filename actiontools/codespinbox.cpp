@@ -24,6 +24,7 @@
 #include <QMenu>
 #include <QContextMenuEvent>
 #include <QStyleOptionSpinBox>
+#include <QDebug>
 
 namespace ActionTools
 {
@@ -74,12 +75,31 @@ namespace ActionTools
 	{
 		if(!code)
 		{
+			if(mPrefix.isEmpty())
+				mPrefix = prefix();
+			if(mSuffix.isEmpty())
+				mSuffix = suffix();
+
+			setPrefix(mPrefix);
+			setSuffix(mSuffix);
+			
 			setButtonSymbols(QAbstractSpinBox::UpDownArrows);
 			setValue(text().toInt());
 			codeLineEdit()->textChanged(codeLineEdit()->text());
 		}
 		else
+		{
 			setButtonSymbols(QAbstractSpinBox::NoButtons);
+			
+			mPrefix = prefix();
+			mSuffix = suffix();
+
+			setPrefix(QString());
+			setSuffix(QString());
+			
+			QString currentText = QString::number(value());
+			codeLineEdit()->setText(currentText);
+		}
 	}
 
 	QValidator::State CodeSpinBox::validate(QString &text, int &pos) const
