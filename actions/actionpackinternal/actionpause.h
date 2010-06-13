@@ -46,8 +46,6 @@ public:
 																								tr("Duration"),
 																								this);
 
-		//TODO : Update the numberparameterdef to remove the prefix/suffix when in code mode
-
 		duration->setTooltip(tr("The duration of the pause"));
 		duration->setSuffix(tr(" ms", "milliseconds"));
 		duration->setMinimum(0);
