@@ -1,10 +1,12 @@
 include(../common.pri)
+unix:!mac{
+  QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN
+  QMAKE_RPATH=
+}
 QT += xml \
     network \
     script
-CONFIG += qxt \
-    mobility
-MOBILITY += systeminfo
+CONFIG += qxt
 QXT += core \
     gui
 win32:TARGET = actionaz

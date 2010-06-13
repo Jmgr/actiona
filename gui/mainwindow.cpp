@@ -80,6 +80,19 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 	mAddActionRow(0)
 {
 	ui->setupUi(this);
+	
+	if(mSystemTrayIcon)
+	{
+		QMenu *trayMenu = new QMenu(this);
+		trayMenu->addAction(ui->actionExecute);
+		trayMenu->addAction(ui->actionExecute_selection);
+		trayMenu->addSeparator();
+		trayMenu->addAction(ui->actionQuit);
+		//TODO : Add stop execution
+		
+		mSystemTrayIcon->setToolTip(tr("Actionaz - ready"));
+		mSystemTrayIcon->setContextMenu(trayMenu);
+	}
 
 	mUndoGroup->addStack(mScriptModel->undoStack());
 	mScriptModel->undoStack()->setActive(true);
@@ -868,6 +881,12 @@ void MainWindow::execute(bool onlySelection)
 		mWasConsoleDockShown = !ui->consoleDockWidget->isHidden();
 		ui->actionsDockWidget->hide();
 		ui->consoleDockWidget->hide();
+		
+		if(mSystemTrayIcon)
+			mSystemTrayIcon->setToolTip(tr("Actionaz - executing"));
+		
+		ui->actionExecute->setEnabled(false);
+		ui->actionExecute_selection->setEnabled(false);
 	}
 	else
 	{
@@ -1011,6 +1030,12 @@ void MainWindow::scriptExecutionStopped()
 		ui->consoleDockWidget->setVisible(mWasConsoleDockShown);
 	
 		QTimer::singleShot(50, this, SLOT(postExecution()));
+		
+		if(mSystemTrayIcon)
+			mSystemTrayIcon->setToolTip(tr("Actionaz - ready"));
+		
+		ui->actionExecute->setEnabled(true);
+		ui->actionExecute_selection->setEnabled(false);
 	}
 }
 
