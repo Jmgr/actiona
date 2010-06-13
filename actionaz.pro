@@ -9,4 +9,6 @@ SUBDIRS += tools \
 	actions/actionpackwindows \
 	actions/actionpackmouse \
 	actions/actionpackkeyboard \
-	actions/actionpacksystem
+	actions/actionpacksystem \
+	actions/actionpackdata \
+	actions/actionpackother
