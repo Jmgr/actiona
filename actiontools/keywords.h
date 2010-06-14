@@ -27,7 +27,7 @@
 #include <QIcon>
 
 class QStandardItemModel;
-class QMetaObject;
+struct QMetaObject;
 
 namespace ActionTools
 {
