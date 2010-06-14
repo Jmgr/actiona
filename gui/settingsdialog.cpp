@@ -43,6 +43,11 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	mSystemTrayIcon(systemTrayIcon)
 {
 	ui->setupUi(this);
+	
+#ifdef ACT_NO_UPDATER
+	ui->updatesCheck->setVisible(false);
+	ui->updatesCheckLabel->setVisible(false);
+#endif
 
 	connect(mNetworkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(proxyTestFinished(QNetworkReply*)));
 

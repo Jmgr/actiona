@@ -14,14 +14,14 @@
    <string>Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="gui.qrc">
+   <iconset>
     <normaloff>:/icons/options.png</normaloff>:/icons/options.png</iconset>
   </property>
   <layout class="QVBoxLayout">
    <item>
     <widget class="QTabWidget" name="settingsTab">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="icon">
@@ -320,7 +320,7 @@ p, li { white-space: pre-wrap; }
         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
        </property>
        <item row="0" column="0">
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="updatesCheckLabel">
          <property name="text">
           <string>Check for updates :</string>
          </property>
@@ -505,9 +505,7 @@ p, li { white-space: pre-wrap; }
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="gui.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>useAProxy</sender>

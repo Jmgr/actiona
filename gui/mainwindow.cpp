@@ -82,6 +82,10 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 {
 	ui->setupUi(this);
 	
+#ifdef ACT_NO_UPDATER
+	ui->actionCheck_for_updates->setVisible(false);
+#endif
+	
 	mStopExecutionAction->setEnabled(false);
 	
 	if(mSystemTrayIcon)
@@ -638,8 +642,10 @@ void MainWindow::on_actionJump_to_line_triggered()
 
 void MainWindow::on_actionCheck_for_updates_triggered()
 {
+#ifndef ACT_NO_UPDATER
 	Updater *updater = new Updater(this);
 	updater->checkNewProgramVersion(true);
+#endif
 }
 
 void MainWindow::on_actionCreate_shortcut_triggered()

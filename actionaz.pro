@@ -1,6 +1,10 @@
 TEMPLATE = subdirs
 CONFIG = ordered
 
+contains(DEFINES, ACT_NO_UPDATER){
+message(** No updater will be built **)
+}
+
 SUBDIRS += tools \
 	actiontools \
 	executer \
