@@ -18,6 +18,12 @@
 	Contact : jmgr@jmgr.info
 */
 
+#include <QtGlobal>
+
+#ifdef Q_WS_X11
+#include <libnotify/notify.h>
+#endif
+
 #include "mainwindow.h"
 #include "action.h"
 #include "parameter.h"
@@ -42,6 +48,10 @@ int main(int argc, char **argv)
 {
 	QxtApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
+
+#ifdef Q_WS_X11
+	notify_init("Actionaz");
+#endif
 	
 	//QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 	
@@ -80,9 +90,6 @@ int main(int argc, char **argv)
 
 #ifdef QT_WS_WIN
 	AllowSetForegroundWindow(ASFW_ANY);
-#endif
-
-#ifdef QT_WS_WIN
 	// This is needed so that relative paths will work on Windows regardless of where the app is launched from.
 	QDir::setCurrent(app.applicationDirPath());
 #endif

@@ -26,6 +26,7 @@
 #include "actionsetclipboard.h"
 #include "actioncommand.h"
 #include "actionkillprocess.h"
+#include "actionnotify.h"
 
 #include <QtCore/qplugin.h>
 
@@ -46,6 +47,7 @@ public:
 		addActionInterface(new ActionSetClipboard(this));
 		addActionInterface(new ActionCommand(this));
 		addActionInterface(new ActionKillProcess(this));
+		addActionInterface(new ActionNotify(this));
 	}
 
 	QString id() const							{ return tr("system"); }

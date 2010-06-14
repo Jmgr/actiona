@@ -9,8 +9,7 @@ QT += xml \
 CONFIG += qxt
 QXT += core \
     gui
-win32:TARGET = actionaz
-unix:TARGET = actionaz
+TARGET = actionaz
 DESTDIR = ..
 SOURCES += main.cpp \
     mainwindow.cpp \
@@ -72,5 +71,5 @@ RCC_DIR = generated
 OBJECTS_DIR = generated
 TRANSLATIONS = locale/gui_en.ts \
     locale/gui_fr.ts
-CONFIG += link_pkgconfig
-PKGCONFIG += libnotify
+unix:!mac:CONFIG += link_pkgconfig
+unix:!mac:PKGCONFIG += libnotify

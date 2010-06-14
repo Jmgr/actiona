@@ -9,7 +9,12 @@ HEADERS += actionpacksystem.h \
     actioncommand.h \
     actioncommandinstance.h \
     actionkillprocess.h \
-    actionkillprocessinstance.h
+    actionkillprocessinstance.h \
+    actionnotify.h \
+    actionnotifyinstance.h
 RESOURCES += actionpacksystem.qrc
 HEADERS += 
-SOURCES += actionkillprocessinstance.cpp
+SOURCES += actionkillprocessinstance.cpp \
+    actionnotifyinstance.cpp
+unix:!mac:CONFIG += link_pkgconfig
+unix:!mac:PKGCONFIG += libnotify
