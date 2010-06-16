@@ -20,8 +20,6 @@ SUBDIRS += tools \
 	gui \
 	actions/actionpackinternal \
 	actions/actionpackwindows \
-	actions/actionpackmouse \
-	actions/actionpackkeyboard \
+	actions/actionpackdevice \
 	actions/actionpacksystem \
-	actions/actionpackdata \
 	actions/actionpackother
