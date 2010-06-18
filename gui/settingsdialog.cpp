@@ -164,10 +164,7 @@ void SettingsDialog::accept()
 
 	QxtGlobalShortcut *globalShortcut = new QxtGlobalShortcut(this);
 	if(!globalShortcut->setShortcut(ui->stopExecutionHotkey->keySequence()))
-	{
-		//TODO
 		QMessageBox::question(this, tr("Execution shortcut"), tr("Unable to set the execution shortcut"));
-	}
 	globalShortcut->deleteLater();
 
 	QSettings settings;

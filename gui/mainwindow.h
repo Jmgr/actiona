@@ -24,21 +24,6 @@
 #include <QMainWindow>
 #include <QModelIndex>
 
-/*
-  Note for X11 Clipboard action :
-  Lastly, the X11 clipboard is event driven, i.e. the clipboard will not function properly
-  if the event loop is not running. Similarly, it is recommended that the contents of
-  the clipboard are stored or retrieved in direct response to user-input events,
-  e.g. mouse button or key presses and releases.
-  ******************************************************************************************************************
-  ******You should not store or retrieve the clipboard contents in response to timer or non-user-input events.******
-  ******************************************************************************************************************
-  Note for X11 :
-  Remember to allow choosing between the copy/paste buffer and the selection buffer
-  Note for Mac :
-  Allow setting the search buffer
-  */
-
 namespace Ui
 {
 	class MainWindow;
@@ -135,6 +120,7 @@ private slots:
 	void actionEnabled();
 	void packLoadError(const QString &error);
 	void stopExecution();
+	void startOrStopExecution();
 
 	void scriptExecutionStopped();
 	void postExecution();

@@ -40,6 +40,7 @@
 #include "scriptcontentdialog.h"
 #include "keywords.h"
 #include "modeltest.h"
+#include "globalshortcutmanager.h"
 
 #include <QSystemTrayIcon>
 #include <QSplashScreen>
@@ -290,6 +291,10 @@ void MainWindow::postInit()
 			settings.setValue("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER));
 	}
 	
+	const QString &startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
+	if(!startStopExecutionHotkey.isEmpty())
+		GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
+	
 	if(mCommandOptions->count("execute"))
 		execute(false);
 }
@@ -453,7 +458,15 @@ void MainWindow::on_actionSettings_triggered()
 
 			updateRecentFileActions();
 		}
+		
+		QString startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
+		if(!startStopExecutionHotkey.isEmpty())
+		{
+			GlobalShortcutManager::clear();
+			GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
+		}
 	}
+
 	delete settingsDialog;
 }
 
@@ -1024,6 +1037,14 @@ void MainWindow::stopExecution()
 {
 	if(mExecuter)
 		mExecuter->stopExecution();
+}
+
+void MainWindow::startOrStopExecution()
+{
+	if(!ui->actionExecute->isEnabled()) // Executing
+		stopExecution();
+	else if(ui->actionExecute->isEnabled())
+		execute(false);
 }
 	
 void MainWindow::scriptExecutionStopped()
