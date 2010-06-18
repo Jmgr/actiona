@@ -75,7 +75,7 @@ public:
 
 	QString name() const											{ return QObject::tr("Notify"); }
 	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnGnuLinux | Official; }//TODO : Check if available under windows
+	Flag flags() const												{ return WorksOnGnuLinux | Official; }
 	QString description() const										{ return QObject::tr("Shows a message using the notify system"); }
 	Tools::Version version() const									{ return Tools::Version(1, 0, 0); }
 	ActionTools::Action *newAction()								{ return new ActionNotifyInstance(this, 0); }
