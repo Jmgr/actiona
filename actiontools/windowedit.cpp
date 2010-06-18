@@ -21,8 +21,6 @@
 #include "windowedit.h"
 #include "ui_windowedit.h"
 
-//TODO : This is complete crap. Why almost copy & paste for each XXXEdit ? -> Need to find a better way to do this
-
 namespace ActionTools
 {
 	WindowEdit::WindowEdit(QWidget *parent)

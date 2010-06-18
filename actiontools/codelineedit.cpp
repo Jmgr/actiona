@@ -226,10 +226,10 @@ namespace ActionTools
 
 	void CodeLineEdit::mouseDoubleClickEvent(QMouseEvent *event)
 	{
-		Q_UNUSED(event);
-
 		if(mMultiline)
 			emit openEditor();
+			
+		QLineEdit::mouseDoubleClickEvent(event);
 	}
 
 	void CodeLineEdit::paintEvent(QPaintEvent *event)
