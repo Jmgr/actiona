@@ -92,13 +92,13 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 #endif
 {
 	ui->setupUi(this);
-	
+
 #ifdef ACT_NO_UPDATER
 	ui->actionCheck_for_updates->setVisible(false);
 #endif
-	
+
 	mStopExecutionAction->setEnabled(false);
-	
+
 	if(mSystemTrayIcon)
 	{
 		QMenu *trayMenu = new QMenu(this);
@@ -108,7 +108,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 		trayMenu->addAction(mStopExecutionAction);
 		trayMenu->addSeparator();
 		trayMenu->addAction(ui->actionQuit);
-		
+
 		mSystemTrayIcon->setToolTip(tr("Actionaz - ready"));
 		mSystemTrayIcon->setContextMenu(trayMenu);
 	}
@@ -198,19 +198,19 @@ void MainWindow::postInit()
 	mPackLoadErrors.clear();
 
 	mActionFactory->loadActionPacks();
-	
+
 	//Create one instance of every action to build the completion model
 	for(int actionInterfaceIndex = 0; actionInterfaceIndex < mActionFactory->actionCount(); ++actionInterfaceIndex)
 	{
 		ActionTools::ActionInterface *actionInterface =	mActionFactory->actionInterface(actionInterfaceIndex);
 		ActionTools::Action *action = actionInterface->newAction();
 		QStringList ignoreList(QStringList() << "deleteLater" << "startExecution" << "stopExecution");
-		
+
 		ActionTools::addClassKeywords(action->metaObject(), actionInterface->id(), actionInterface->icon(), mCompletionModel, ignoreList);
-	
+
 		delete action;
 	}
-	
+
 	//Add Ecmascript stuff
 	ActionTools::addEcmaScriptObjectsKeywords(mCompletionModel);
 
@@ -225,7 +225,7 @@ void MainWindow::postInit()
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "printError(text)"));
 	scriptItem->setData(static_cast<int>(ActionTools::ScriptElementAction));
 	mCompletionModel->appendRow(scriptItem);
-	
+
 	fillNewActionTreeWidget(ui->newActionTreeWidget);
 
 	statusBar()->showMessage(tr("Ready, loaded %1 actions from %2 packs").arg(mActionFactory->actionCount()).arg(mActionFactory->packCount()));
@@ -264,7 +264,7 @@ void MainWindow::postInit()
 	}
 
 	setCurrentFile(QString());
-	
+
 	QSettings settings;
 	if(!mStartScript.isEmpty())
 	{
@@ -279,7 +279,7 @@ void MainWindow::postInit()
 		if(settings.value("general/reopenLastScript", QVariant(false)).toBool())
 		{
 			QString lastFilename = settings.value("general/lastScript", QString()).toString();
-	
+
 			if(!lastFilename.isEmpty())
 			{
 				if(!loadFile(lastFilename))
@@ -300,7 +300,7 @@ void MainWindow::postInit()
 		else
 			settings.setValue("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER));
 	}
-	
+
 	int checkFrequency = settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)).toInt();
 	if(!mCommandOptions->count("execute") && checkFrequency != ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)
 	{
@@ -328,20 +328,20 @@ void MainWindow::postInit()
 				break;
 			}
 		}
-		
+
 		if(check)
 		{
 			settings.setValue("network/lastCheck", QDateTime::currentDateTime());
-			
+
 			checkForUpdate(true);
 		}
 	}
 #endif
-	
+
 	const QString &startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
 	if(!startStopExecutionHotkey.isEmpty())
 		GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
-	
+
 	if(mCommandOptions->count("execute"))
 		execute(false);
 }
@@ -387,7 +387,7 @@ void MainWindow::on_actionSave_copy_as_triggered()
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save copy"), QString(), tr("Actionaz script (*.act)"));
 	if(fileName.isEmpty())
 		return;
-	
+
 	QFileInfo fileInfo(fileName);
 	if(fileInfo.suffix().isEmpty())
 		fileName += ".act";
@@ -509,7 +509,7 @@ void MainWindow::on_actionSettings_triggered()
 
 			updateRecentFileActions();
 		}
-		
+
 		QString startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
 		if(!startStopExecutionHotkey.isEmpty())
 		{
@@ -752,7 +752,7 @@ void MainWindow::on_actionImport_script_content_triggered()
 
 			scriptEdited();
 		}
-		
+
 		checkReadResult(result);
 	}
 
@@ -916,16 +916,16 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 				QMessageBox::warning(this, tr("Load script"), tr("This script was created with an older version of Actionaz.\nIt will be updated when you save it.\nYour version : %1\nScript version : %2")
 									 .arg(Global::SCRIPT_VERSION.toString()).arg(mScript->scriptVersion().toString()));
 			}
-			
+
 			if(mScript->missingActions().count() > 0)
 			{
 				QString missingActions(tr("Script loaded, some actions are missing :<ul>"));
-				
+
 				foreach(const QString &missingAction, mScript->missingActions())
-					missingActions += "<li>" + missingAction + "</li>";							
-							
+					missingActions += "<li>" + missingAction + "</li>";
+
 				missingActions += "</ul>";
-				
+
 				QMessageBox::warning(this, tr("Load script"), missingActions);
 			}
 		}
@@ -956,7 +956,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 void MainWindow::checkForUpdate(bool silent)
 {
 	mUpdaterProgressDialog->setRange(0, 0);
-	mUpdaterProgressDialog->setLabelText(tr("Checking is an update is available..."));
+	mUpdaterProgressDialog->setLabelText(tr("Checking if an update is available..."));
 	mUpdaterProgressDialog->setMinimumDuration(0);
 	mUpdaterProgressDialog->open(this, SLOT(updateCanceled()));
 	mSilentUpdate = silent;
@@ -989,7 +989,7 @@ void MainWindow::execute(bool onlySelection)
 	int consoleWindowScreen = settings.value("actions/consoleWindowScreen", QVariant(0)).toInt();
 
 	delete mExecuter;
-	
+
 	if(mCommandOptions->count("noexecutionwindow"))
 		showExecutionWindow = false;
 	if(mCommandOptions->count("noconsolewindow"))
@@ -1017,10 +1017,10 @@ void MainWindow::execute(bool onlySelection)
 		mWasConsoleDockShown = !ui->consoleDockWidget->isHidden();
 		ui->actionsDockWidget->hide();
 		ui->consoleDockWidget->hide();
-		
+
 		if(mSystemTrayIcon)
 			mSystemTrayIcon->setToolTip(tr("Actionaz - executing"));
-		
+
 		ui->actionExecute->setEnabled(false);
 		ui->actionExecute_selection->setEnabled(false);
 		mStopExecutionAction->setEnabled(true);
@@ -1082,12 +1082,12 @@ void MainWindow::wantToAddAction(const QString &actionId)
 void MainWindow::wantToAddAction(int row, const QString &actionId)
 {
 	QTimer::singleShot(0, this, SLOT(addAction()));
-	
+
 	mAddActionRow = row;
 	mAddAction = actionId;
 }
 
-void MainWindow::addAction()	
+void MainWindow::addAction()
 {
 	ActionTools::ActionInterface *interface = mActionFactory->actionInterface(mAddAction);
 	if(!interface)
@@ -1096,7 +1096,7 @@ void MainWindow::addAction()
 	ActionTools::Action *action = interface->newAction();
 	if(!action)
 		return;
-	
+
 	if(editAction(action))
 	{
 		if(mAddActionRow == mScript->actionCount())
@@ -1158,7 +1158,7 @@ void MainWindow::startOrStopExecution()
 	else if(ui->actionExecute->isEnabled())
 		execute(false);
 }
-	
+
 void MainWindow::scriptExecutionStopped()
 {
 	mExecuter->deleteLater();
@@ -1176,15 +1176,15 @@ void MainWindow::scriptExecutionStopped()
 	else
 	{
 		show();
-	
+
 		ui->actionsDockWidget->setVisible(mWasNewActionDockShown);
 		ui->consoleDockWidget->setVisible(mWasConsoleDockShown);
-	
+
 		QTimer::singleShot(50, this, SLOT(postExecution()));
-		
+
 		if(mSystemTrayIcon)
 			mSystemTrayIcon->setToolTip(tr("Actionaz - ready"));
-		
+
 		ui->actionExecute->setEnabled(true);
 		ui->actionExecute_selection->setEnabled(false);
 		mStopExecutionAction->setEnabled(false);
@@ -1233,21 +1233,21 @@ void MainWindow::logItemDoubleClicked(int itemRow)
 #ifndef ACT_NO_UPDATER
 void MainWindow::updateError(const QString &message)
 {
+	mUpdaterProgressDialog->hide();
+
 	if(mSilentUpdate)
 		return;
-	
-	mUpdaterProgressDialog->hide();
-	
+
 	QMessageBox::warning(this, tr("Update"), tr("An error occured while checking for a new version :\n%1").arg(message));
 }
 
 void MainWindow::updateNoResult()
 {
+	mUpdaterProgressDialog->hide();
+
 	if(mSilentUpdate)
 		return;
-	
-	mUpdaterProgressDialog->hide();
-	
+
 	QMessageBox::information(this, tr("Update"), tr("No new version is available."));
 }
 
@@ -1260,18 +1260,18 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 			 const QString &hash)
 {
 	mUpdaterProgressDialog->hide();
-	
+
 	if(version <= Global::ACTIONAZ_VERSION)
 	{
 		if(!mSilentUpdate)
 			QMessageBox::information(this, tr("Update"), tr("No new version is available."));
 		return;
 	}
-	
+
 	ChangelogDialog changelogDialog(this);
 	changelogDialog.setVersion(version);
 	changelogDialog.setReleaseDate(releaseDate);
-	
+
 	if(type == "major")
 		changelogDialog.setType(tr("Major"));
 	else if(type == "release")
@@ -1281,10 +1281,10 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 
 	changelogDialog.setChangelog(changelog);
 	changelogDialog.exec();
-	
+
 	if(changelogDialog.changelogAction() == ChangelogDialog::None)
 		return;
-	
+
 	QString updateFilename;
 	if(changelogDialog.changelogAction() == ChangelogDialog::DownloadOnly)
 	{
@@ -1298,10 +1298,10 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 		updateFilename = QDir::temp().filePath(QFileInfo(filename).fileName());
 		mInstallAfterUpdateDownload = true;
 	}
-	
+
 	if(updateFilename.isEmpty())
 		return;
-	
+
 	mUpdateFile.setFileName(updateFilename);
 	if(!mUpdateFile.open(QIODevice::WriteOnly))
 	{
@@ -1309,17 +1309,17 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 
 		return;
 	}
-	
+
 	mUpdateFileSize = size;
 	mUpdateFileHash = hash;
 	mHashCalculator.reset();
-	
+
 	mUpdateDownloadNetworkReply = mNetworkAccessManager->get(QNetworkRequest(filename));
-	
+
 	connect(mUpdateDownloadNetworkReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(updateDownloadProgress(qint64,qint64)));
 	connect(mUpdateDownloadNetworkReply, SIGNAL(finished()), this, SLOT(updateDownloadFinished()));
 	connect(mUpdateDownloadNetworkReply, SIGNAL(readyRead()), this, SLOT(updateDownloadDataAvailable()));
-	
+
 	mUpdaterProgressDialog->setLabelText(tr("Downloading file..."));
 	mUpdaterProgressDialog->setWindowTitle(tr("Update download"));
 	mUpdaterProgressDialog->open(this, SLOT(updateDownloadCanceled()));
@@ -1340,7 +1340,7 @@ void MainWindow::updateDownloadFinished()
 {
 	mUpdaterProgressDialog->hide();
 	mUpdateFile.close();
-	
+
 	if(mUpdateDownloadNetworkReply->error() != QNetworkReply::NoError)
 	{
 		QString errorMessage;
@@ -1364,20 +1364,20 @@ void MainWindow::updateDownloadFinished()
 			errorMessage = tr("Connection error.");
 			break;
 		}
-		
+
 		mUpdateDownloadNetworkReply->deleteLater();
 		mUpdateDownloadNetworkReply = 0;
-		
+
 		if(!errorMessage.isEmpty())
 			QMessageBox::warning(this, tr("Update download"), tr("An error occured while downloading the file.\nError message : %1").arg(errorMessage));
 		return;
 	}
-	
+
 	if(QFileInfo(mUpdateFile).size() != mUpdateFileSize || mHashCalculator.result().toHex() != mUpdateFileHash)
 		QMessageBox::warning(this, tr("Update download"), tr("The downloaded file is corrupted. Try again later."));
 	else
 		QTimer::singleShot(1, this, SLOT(postDownloadOperation()));
-	
+
 	mUpdateDownloadNetworkReply->deleteLater();
 	mUpdateDownloadNetworkReply = 0;
 }
@@ -1393,12 +1393,12 @@ void MainWindow::updateDownloadCanceled()
 {
 	if(!mUpdateDownloadNetworkReply)
 		return;
-	
+
 	mUpdateDownloadNetworkReply->disconnect();
 	mUpdateDownloadNetworkReply->abort();
 	mUpdateDownloadNetworkReply->deleteLater();
 	mUpdateDownloadNetworkReply = 0;
-	
+
 	mUpdateFile.close();
 	mUpdateFile.remove();
 }
@@ -1491,7 +1491,7 @@ bool MainWindow::loadFile(const QString &fileName)
 	QApplication::restoreOverrideCursor();
 
 	loadFile.close();
-	
+
 	if(result == ActionTools::Script::ReadSuccess)
 	{
 		QSettings settings;
@@ -1506,7 +1506,7 @@ bool MainWindow::loadFile(const QString &fileName)
 
 		setCurrentFile(fileName);
 	}
-	
+
 	return checkReadResult(result);
 }
 
@@ -1603,7 +1603,7 @@ bool MainWindow::saveAs()
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save script"), QString(), tr("Actionaz script (*.act)"));
 	if(fileName.isEmpty())
 		return false;
-	
+
 	QFileInfo fileInfo(fileName);
 	if(fileInfo.suffix().isEmpty())
 		fileName += ".act";
