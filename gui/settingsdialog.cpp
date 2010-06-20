@@ -30,7 +30,6 @@
 #include <QMessageBox>
 #include <QTimer>
 #include <QSystemTrayIcon>
-#include <QxtGlobalShortcut>
 
 SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	: QDialog(parent),
@@ -43,7 +42,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	mSystemTrayIcon(systemTrayIcon)
 {
 	ui->setupUi(this);
-	
+
 #ifdef ACT_NO_UPDATER
 	ui->updatesCheck->setVisible(false);
 	ui->updatesCheckLabel->setVisible(false);
@@ -93,7 +92,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->proxyType->setCurrentIndex(settings.value("network/proxyType", QVariant(ActionTools::Settings::PROXY_TYPE_HTTP)).toInt());
 
 	connect(mTimeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
-	
+
 	if(systemTrayIcon)
 		connect(ui->showTaskbarIcon, SIGNAL(clicked(bool)), systemTrayIcon, SLOT(setVisible(bool)));
 }
@@ -161,11 +160,6 @@ void SettingsDialog::accept()
 		QMessageBox::warning(this, tr("Settings"), tr("You have set the same key sequence for switching text/code mode and opening the editor, please choose a different one."));
 		return;
 	}
-
-	QxtGlobalShortcut *globalShortcut = new QxtGlobalShortcut(this);
-	if(!globalShortcut->setShortcut(ui->stopExecutionHotkey->keySequence()))
-		QMessageBox::question(this, tr("Execution shortcut"), tr("Unable to set the execution shortcut"));
-	globalShortcut->deleteLater();
 
 	QSettings settings;
 
