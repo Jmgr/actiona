@@ -27,8 +27,7 @@ namespace Global
 {
 	const Tools::Version	ACTIONAZ_VERSION =	Tools::Version(0, 0, 1);
 	const Tools::Version	SCRIPT_VERSION =	Tools::Version(0, 0, 1);
-	const QString			UPDATE_IP =			"jmgr.eu";
-	const int				UPDATE_PORT =		43682;
+	const QString			UPDATE_URL =		"http://updates.jmgr.eu/";
 
 	QString currentLanguage();
 	QString currentOS();

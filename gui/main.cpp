@@ -31,7 +31,6 @@
 #include "actionbuffer.h"
 #include "global.h"
 #include "version.h"
-#include "actioninfo.h"
 #include "globalshortcutmanager.h"
 
 #include <QxtApplication>
@@ -110,18 +109,12 @@ int main(int argc, char **argv)
 	qRegisterMetaType<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaType<ActionTools::ActionBuffer>("ActionBuffer");
 	qRegisterMetaType<Tools::Version>("Tools::Version");
-	qRegisterMetaType<Tools::ActionInfo>("Tools::ActionInfo");
-	qRegisterMetaType<Tools::ActionPackInfo>("Tools::ActionPackInfo");
-	qRegisterMetaType<Tools::ActionPackInfoList>("Tools::ActionPackInfoList");
 
 	qRegisterMetaTypeStreamOperators<ActionTools::Action>("Action");
 	qRegisterMetaTypeStreamOperators<ActionTools::Parameter>("Parameter");
 	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaTypeStreamOperators<ActionTools::ActionBuffer>("ActionBuffer");
 	qRegisterMetaTypeStreamOperators<Tools::Version>("Tools::Version");
-	qRegisterMetaTypeStreamOperators<Tools::ActionInfo>("Tools::ActionInfo");
-	qRegisterMetaTypeStreamOperators<Tools::ActionPackInfo>("Tools::ActionPackInfo");
-	qRegisterMetaTypeStreamOperators<Tools::ActionPackInfoList>("Tools::ActionPackInfoList");
 
 	app.setOrganizationName("Actionaz");
 	app.setOrganizationDomain("actionaz.eu");

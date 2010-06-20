@@ -41,6 +41,7 @@
 #include "keywords.h"
 #include "modeltest.h"
 #include "globalshortcutmanager.h"
+#include "changelogdialog.h"
 
 #include <QSystemTrayIcon>
 #include <QSplashScreen>
@@ -59,6 +60,8 @@
 #include <QNetworkProxy>
 #include <QCloseEvent>
 #include <QxtCommandOptions>
+#include <QProgressDialog>
+#include <QProcess>
 
 MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashScreen, const QString &startScript)
 	: QMainWindow(0),
@@ -80,6 +83,13 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 	mCommandOptions(commandOptions),
 	mAddActionRow(0),
 	mStopExecutionAction(new QAction(tr("S&top execution"), this))
+#ifndef ACT_NO_UPDATER
+	,mNetworkAccessManager(new QNetworkAccessManager(this)),
+	mUpdateDownloadNetworkReply(0),
+	mUpdater(new Tools::Updater(mNetworkAccessManager, Global::UPDATE_URL, this)),
+	mUpdaterProgressDialog(new QProgressDialog(this)),
+	mHashCalculator(QCryptographicHash::Md5)
+#endif
 {
 	ui->setupUi(this);
 	
@@ -152,6 +162,11 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 	connect(mActionFactory, SIGNAL(packLoadError(QString)), this, SLOT(packLoadError(QString)));
 	connect(ui->consoleWidget, SIGNAL(itemDoubleClicked(int)), this, SLOT(logItemDoubleClicked(int)));
 	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
+#ifndef ACT_NO_UPDATER
+	connect(mUpdater, SIGNAL(error(QString)), this, SLOT(updateError(QString)));
+	connect(mUpdater, SIGNAL(noResult()), this, SLOT(updateNoResult()));
+	connect(mUpdater, SIGNAL(success(Tools::Version,QDate,QString,QString,QString,int,QString)), this, SLOT(updateSuccess(Tools::Version,QDate,QString,QString,QString,int,QString)));
+#endif
 
 	setWindowTitle("Actionaz[*]");//Set this to fix some warnings about the [*] placeholder
 
@@ -273,6 +288,7 @@ void MainWindow::postInit()
 		}
 	}
 
+#ifndef ACT_NO_UPDATER
 	if(settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)) == ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)
 	{
 		if(QMessageBox::question(this,
@@ -284,6 +300,43 @@ void MainWindow::postInit()
 		else
 			settings.setValue("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER));
 	}
+	
+	int checkFrequency = settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)).toInt();
+	if(!mCommandOptions->count("execute") && checkFrequency != ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)
+	{
+		QDateTime lastCheck = settings.value("network/lastCheck", QDateTime()).toDateTime();
+		bool check = false;
+		if(lastCheck == QDateTime())
+			check = true;
+		else
+		{
+			switch(checkFrequency)
+			{
+			case ActionTools::Settings::CHECK_FOR_UPDATES_DAY:
+				if(lastCheck.daysTo(QDateTime::currentDateTime()) >= 1)
+					check = true;
+				break;
+			case ActionTools::Settings::CHECK_FOR_UPDATES_WEEK:
+				if(lastCheck.daysTo(QDateTime::currentDateTime()) >= 7)
+					check = true;
+				break;
+			case ActionTools::Settings::CHECK_FOR_UPDATES_MONTH:
+				if(lastCheck.daysTo(QDateTime::currentDateTime()) >= 30)
+					check = true;
+				break;
+			default:
+				break;
+			}
+		}
+		
+		if(check)
+		{
+			settings.setValue("network/lastCheck", QDateTime::currentDateTime());
+			
+			checkForUpdate(true);
+		}
+	}
+#endif
 	
 	const QString &startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
 	if(!startStopExecutionHotkey.isEmpty())
@@ -654,8 +707,7 @@ void MainWindow::on_actionJump_to_line_triggered()
 void MainWindow::on_actionCheck_for_updates_triggered()
 {
 #ifndef ACT_NO_UPDATER
-	Updater *updater = new Updater(this);
-	updater->checkNewProgramVersion(true);
+	checkForUpdate(false);
 #endif
 }
 
@@ -899,6 +951,18 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 		return false;
 	}
 }
+
+#ifndef ACT_NO_UPDATER
+void MainWindow::checkForUpdate(bool silent)
+{
+	mUpdaterProgressDialog->setRange(0, 0);
+	mUpdaterProgressDialog->setLabelText(tr("Checking is an update is available..."));
+	mUpdaterProgressDialog->setMinimumDuration(0);
+	mUpdaterProgressDialog->open(this, SLOT(updateCanceled()));
+	mSilentUpdate = silent;
+	mUpdater->checkForUpdates("actionaz", Global::ACTIONAZ_VERSION, Tools::Updater::Installer, Global::currentOS(), Global::currentLanguage());
+}
+#endif
 
 void MainWindow::updateUndoRedoStatus()
 {
@@ -1165,6 +1229,194 @@ void MainWindow::logItemDoubleClicked(int itemRow)
 		break;
 	}
 }
+
+#ifndef ACT_NO_UPDATER
+void MainWindow::updateError(const QString &message)
+{
+	if(mSilentUpdate)
+		return;
+	
+	mUpdaterProgressDialog->hide();
+	
+	QMessageBox::warning(this, tr("Update"), tr("An error occured while checking for a new version :\n%1").arg(message));
+}
+
+void MainWindow::updateNoResult()
+{
+	if(mSilentUpdate)
+		return;
+	
+	mUpdaterProgressDialog->hide();
+	
+	QMessageBox::information(this, tr("Update"), tr("No new version is available."));
+}
+
+void MainWindow::updateSuccess(const Tools::Version &version,
+			 const QDate &releaseDate,
+			 const QString &type,
+			 const QString &changelog,
+			 const QString &filename,
+			 int size,
+			 const QString &hash)
+{
+	mUpdaterProgressDialog->hide();
+	
+	if(version <= Global::ACTIONAZ_VERSION)
+	{
+		if(!mSilentUpdate)
+			QMessageBox::information(this, tr("Update"), tr("No new version is available."));
+		return;
+	}
+	
+	ChangelogDialog changelogDialog(this);
+	changelogDialog.setVersion(version);
+	changelogDialog.setReleaseDate(releaseDate);
+	
+	if(type == "major")
+		changelogDialog.setType(tr("Major"));
+	else if(type == "release")
+		changelogDialog.setType(tr("Release"));
+	else
+		changelogDialog.setType(tr("Bugfix"));
+
+	changelogDialog.setChangelog(changelog);
+	changelogDialog.exec();
+	
+	if(changelogDialog.changelogAction() == ChangelogDialog::None)
+		return;
+	
+	QString updateFilename;
+	if(changelogDialog.changelogAction() == ChangelogDialog::DownloadOnly)
+	{
+		updateFilename = QFileDialog::getSaveFileName(	this,
+									tr("Select where to save the installation file"),
+									QDir(QDesktopServices::storageLocation(QDesktopServices::DesktopLocation)).filePath(QFileInfo(filename).fileName()));
+		mInstallAfterUpdateDownload = false;
+	}
+	else if(changelogDialog.changelogAction() == ChangelogDialog::DownloadAndInstall)
+	{
+		updateFilename = QDir::temp().filePath(QFileInfo(filename).fileName());
+		mInstallAfterUpdateDownload = true;
+	}
+	
+	if(updateFilename.isEmpty())
+		return;
+	
+	mUpdateFile.setFileName(updateFilename);
+	if(!mUpdateFile.open(QIODevice::WriteOnly))
+	{
+		QMessageBox::warning(this, tr("Download update"), tr("Unable to save the update file."));
+
+		return;
+	}
+	
+	mUpdateFileSize = size;
+	mUpdateFileHash = hash;
+	mHashCalculator.reset();
+	
+	mUpdateDownloadNetworkReply = mNetworkAccessManager->get(QNetworkRequest(filename));
+	
+	connect(mUpdateDownloadNetworkReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(updateDownloadProgress(qint64,qint64)));
+	connect(mUpdateDownloadNetworkReply, SIGNAL(finished()), this, SLOT(updateDownloadFinished()));
+	connect(mUpdateDownloadNetworkReply, SIGNAL(readyRead()), this, SLOT(updateDownloadDataAvailable()));
+	
+	mUpdaterProgressDialog->setLabelText(tr("Downloading file..."));
+	mUpdaterProgressDialog->setWindowTitle(tr("Update download"));
+	mUpdaterProgressDialog->open(this, SLOT(updateDownloadCanceled()));
+}
+
+void MainWindow::updateCanceled()
+{
+	mUpdater->cancel();
+}
+
+void MainWindow::updateDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+	mUpdaterProgressDialog->setValue(bytesReceived);
+	mUpdaterProgressDialog->setMaximum(bytesTotal);
+}
+
+void MainWindow::updateDownloadFinished()
+{
+	mUpdaterProgressDialog->hide();
+	mUpdateFile.close();
+	
+	if(mUpdateDownloadNetworkReply->error() != QNetworkReply::NoError)
+	{
+		QString errorMessage;
+		switch(mUpdateDownloadNetworkReply->error())
+		{
+		case QNetworkReply::ConnectionRefusedError:
+			errorMessage = tr("Connection to the server was refused.");
+			break;
+		case QNetworkReply::HostNotFoundError:
+			errorMessage = tr("Unable to establish a connection to the server.");
+			break;
+		case QNetworkReply::TimeoutError:
+			errorMessage = tr("Connection timeout.");
+			break;
+		case QNetworkReply::OperationCanceledError:
+			break;
+		case QNetworkReply::ContentNotFoundError:
+			errorMessage = tr("Serverside error.");
+			break;
+		default:
+			errorMessage = tr("Connection error.");
+			break;
+		}
+		
+		mUpdateDownloadNetworkReply->deleteLater();
+		mUpdateDownloadNetworkReply = 0;
+		
+		if(!errorMessage.isEmpty())
+			QMessageBox::warning(this, tr("Update download"), tr("An error occured while downloading the file.\nError message : %1").arg(errorMessage));
+		return;
+	}
+	
+	if(QFileInfo(mUpdateFile).size() != mUpdateFileSize || mHashCalculator.result().toHex() != mUpdateFileHash)
+		QMessageBox::warning(this, tr("Update download"), tr("The downloaded file is corrupted. Try again later."));
+	else
+		QTimer::singleShot(1, this, SLOT(postDownloadOperation()));
+	
+	mUpdateDownloadNetworkReply->deleteLater();
+	mUpdateDownloadNetworkReply = 0;
+}
+
+void MainWindow::updateDownloadDataAvailable()
+{
+	const QByteArray &data = mUpdateDownloadNetworkReply->readAll();
+	mUpdateFile.write(data);
+	mHashCalculator.addData(data);
+}
+
+void MainWindow::updateDownloadCanceled()
+{
+	if(!mUpdateDownloadNetworkReply)
+		return;
+	
+	mUpdateDownloadNetworkReply->disconnect();
+	mUpdateDownloadNetworkReply->abort();
+	mUpdateDownloadNetworkReply->deleteLater();
+	mUpdateDownloadNetworkReply = 0;
+	
+	mUpdateFile.close();
+	mUpdateFile.remove();
+}
+
+void MainWindow::postDownloadOperation()
+{
+	if(mInstallAfterUpdateDownload)
+	{
+		mUpdateFile.setPermissions(mUpdateFile.permissions() | QFile::ExeOwner);
+		if(QProcess::startDetached(mUpdateFile.fileName()))
+			QApplication::quit();
+		else
+			QMessageBox::warning(this, tr("Update"), tr("Unable to execute the downloaded file."));
+	}
+	else
+		QDesktopServices::openUrl(QUrl("file:///" + QFileInfo(mUpdateFile.fileName()).dir().path(), QUrl::TolerantMode));
+}
+#endif
 
 bool MainWindow::editAction(ActionTools::Action *action, const QString &field, const QString &subField, int line, int column)
 {

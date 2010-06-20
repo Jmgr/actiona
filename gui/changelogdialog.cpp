@@ -18,6 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
+#ifndef ACT_NO_UPDATER
+
 #include "changelogdialog.h"
 #include "ui_changelogdialog.h"
 
@@ -39,9 +41,9 @@ void ChangelogDialog::setVersion(const Tools::Version &version)
 	ui->versionNumber->setText(version.toString());
 }
 
-void ChangelogDialog::setReleaseDate(const QString &releaseDate)
+void ChangelogDialog::setReleaseDate(const QDate &releaseDate)
 {
-	ui->releaseDate->setText(releaseDate);
+	ui->releaseDate->setText(releaseDate.toString(Qt::DefaultLocaleLongDate));
 }
 
 void ChangelogDialog::setType(const QString &type)
@@ -81,3 +83,5 @@ void ChangelogDialog::on_downloadButton_clicked()
 
 	accept();
 }
+
+#endif

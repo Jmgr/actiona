@@ -18,12 +18,15 @@
 	Contact : jmgr@jmgr.info
 */
 
+#ifndef ACT_NO_UPDATER
+
 #ifndef CHANGELOGDIALOG_H
 #define CHANGELOGDIALOG_H
 
 #include "version.h"
 
 #include <QDialog>
+#include <QDate>
 
 namespace Ui
 {
@@ -46,7 +49,7 @@ public:
 	~ChangelogDialog();
 
 	void setVersion(const Tools::Version &version);
-	void setReleaseDate(const QString &releaseDate);
+	void setReleaseDate(const QDate &releaseDate);
 	void setType(const QString &type);
 	void setChangelog(const QString &changelog);
 
@@ -65,3 +68,5 @@ private:
 };
 
 #endif // CHANGELOGDIALOG_H
+
+#endif

@@ -1,8 +1,8 @@
 include(../common.pri)
 include(globalshortcut/globalshortcut.pri)
-unix:!mac{
-  QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN
-  QMAKE_RPATH=
+unix:!mac { 
+    QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN
+    QMAKE_RPATH = 
 }
 QT += xml \
     network \
@@ -25,7 +25,6 @@ SOURCES += main.cpp \
     scripttableview.cpp \
     scriptmodelundocommands.cpp \
     newactiondialog.cpp \
-    updater.cpp \
     global.cpp \
     changelogdialog.cpp \
     scriptcontentdialog.cpp
@@ -42,7 +41,6 @@ HEADERS += mainwindow.h \
     scripttableview.h \
     scriptmodelundocommands.h \
     newactiondialog.h \
-    updater.h \
     changelogdialog.h \
     scriptcontentdialog.h
 INCLUDEPATH += . \

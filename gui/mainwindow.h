@@ -25,6 +25,10 @@
 
 #include <QMainWindow>
 #include <QModelIndex>
+#ifndef ACT_NO_UPDATER
+#include <QCryptographicHash>
+#include <QFile>
+#endif
 
 namespace Ui
 {
@@ -35,6 +39,11 @@ namespace ActionTools
 {
 	class ActionFactory;
 	class Action;
+}
+
+namespace Tools
+{
+	class Updater;
 }
 
 class QToolBox;
@@ -51,6 +60,7 @@ class Executer;
 class QUndoGroup;
 class QStandardItemModel;
 class QxtCommandOptions;
+class QNetworkAccessManager;
 
 #include <QNetworkReply>
 #include <QSystemTrayIcon>
@@ -122,10 +132,26 @@ private slots:
 	void packLoadError(const QString &error);
 	void stopExecution();
 	void startOrStopExecution();
-
 	void scriptExecutionStopped();
 	void postExecution();
 	void logItemDoubleClicked(int itemRow);
+#ifndef ACT_NO_UPDATER
+	void updateError(const QString &message);
+	void updateNoResult();
+	void updateSuccess(const Tools::Version &version,
+				 const QDate &releaseDate,
+				 const QString &type,
+				 const QString &changelog,
+				 const QString &filename,
+				 int size,
+				 const QString &hash);
+	void updateCanceled();
+	void updateDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+	void updateDownloadFinished();
+	void updateDownloadDataAvailable();
+	void updateDownloadCanceled();
+	void postDownloadOperation();
+#endif
 
 private:
 	void updateUndoRedoStatus();
@@ -151,6 +177,9 @@ private:
 	void updateRecentFileActions();
 	void updateProxySettings();
 	bool checkReadResult(ActionTools::Script::ReadResult result);
+#ifndef ACT_NO_UPDATER
+	void checkForUpdate(bool silent);
+#endif
 
 	Ui::MainWindow *ui;
 	float mOpacity;
@@ -164,9 +193,7 @@ private:
 	ScriptModel *mScriptModel;
 	QSystemTrayIcon *mSystemTrayIcon;
 	QSplashScreen *mSplashScreen;
-	QNetworkReply *mReply;
 	QFile *mFile;
-	QProgressDialog *mProg;
 	QStringList mPackLoadErrors;
 	Executer *mExecuter;
 	bool mWasNewActionDockShown;
@@ -179,6 +206,18 @@ private:
 	int mAddActionRow;
 	QString mAddAction;
 	QAction *mStopExecutionAction;
+#ifndef ACT_NO_UPDATER
+	QNetworkAccessManager *mNetworkAccessManager;
+	QNetworkReply *mUpdateDownloadNetworkReply;
+	Tools::Updater *mUpdater;
+	bool mSilentUpdate;
+	QProgressDialog *mUpdaterProgressDialog;
+	bool mInstallAfterUpdateDownload;
+	QFile mUpdateFile;
+	int mUpdateFileSize;
+	QString mUpdateFileHash;
+	QCryptographicHash mHashCalculator;
+#endif
 
 	Q_DISABLE_COPY(MainWindow)
 };
