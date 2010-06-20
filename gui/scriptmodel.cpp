@@ -77,9 +77,11 @@ void ScriptModel::setActionsColor(const QList<int> &rows, const QColor &color)
 void ScriptModel::insertAction(int row, const ActionTools::ActionBuffer &actionBuffer)
 {
 	mUndoStack->push(new InsertNewActionCommand(row, actionBuffer, this));
-
+	
 	mSelectionModel->select(index(row, 0), QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
 	mSelectionModel->setCurrentIndex(index(row, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+	
+	emit scriptEdited();
 }
 
 void ScriptModel::removeActions(const QList<int> &rows)

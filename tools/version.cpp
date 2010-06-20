@@ -117,7 +117,7 @@ namespace Tools
 
 		const QStringList versionNumbers = regExp.capturedTexts();
 
-		if(versionNumbers.count() != newNumberCount)
+		if((versionNumbers.count() - 1) != newNumberCount)
 		{
 			d->major = d->minor = d->micro = d->nano = 0;
 			return false;

@@ -1,5 +1,6 @@
 include(../common.pri)
-QT += script
+QT += script \
+    xmlpatterns
 CONFIG += qxt
 QXT += core \
     gui
@@ -27,7 +28,8 @@ SOURCES += actionfactory.cpp \
     actionbuffer.cpp \
     actionexecution.cpp \
     scriptcompleter.cpp \
-    keywords.cpp
+    keywords.cpp \
+    messagehandler.cpp
 HEADERS += actiontools_global.h \
     actionpackinterface.h \
     actionfactory.h \
@@ -51,7 +53,8 @@ HEADERS += actiontools_global.h \
     settings.h \
     stringlistpair.h \
     scriptcompleter.h \
-    keywords.h
+    keywords.h \
+    messagehandler.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32

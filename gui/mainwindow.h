@@ -21,6 +21,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "script.h"
+
 #include <QMainWindow>
 #include <QModelIndex>
 
@@ -32,7 +34,6 @@ namespace Ui
 namespace ActionTools
 {
 	class ActionFactory;
-	class Script;
 	class Action;
 }
 
@@ -133,7 +134,7 @@ private:
 	bool editAction(ActionTools::Action *action, const QString &field = QString(), const QString &subField = QString(), int line = -1, int column = -1);
 	void openParametersDialog(int parameter = -1, int line = -1, int column = -1);
 	QList<int> selectedRows() const;
-	bool loadFile(const QString &fileName, bool verbose = true);
+	bool loadFile(const QString &fileName);
 	bool saveFile(const QString &fileName, bool copy = false);
 	void setCurrentFile(const QString &fileName);
 	void closeEvent(QCloseEvent *event);
@@ -149,6 +150,7 @@ private:
 	void writeSettings();
 	void updateRecentFileActions();
 	void updateProxySettings();
+	bool checkReadResult(ActionTools::Script::ReadResult result);
 
 	Ui::MainWindow *ui;
 	float mOpacity;

@@ -12,5 +12,6 @@
         <file>images/monitor_ru.png</file>
         <file>images/code.png</file>
         <file>images/editor.png</file>
+        <file>script.xsd</file>
     </qresource>
 </RCC>

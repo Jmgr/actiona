@@ -20,14 +20,17 @@
 
 #include "scriptcontentdialog.h"
 #include "ui_scriptcontentdialog.h"
+#include "script.h"
 
 #include <QClipboard>
 #include <QApplication>
+#include <QMessageBox>
 
-ScriptContentDialog::ScriptContentDialog(Type type, QWidget *parent)
+ScriptContentDialog::ScriptContentDialog(Type type, ActionTools::Script *script, QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::ScriptContentDialog),
-	mType(type)
+	mType(type),
+	mScript(script)
 {
     ui->setupUi(this);
 
@@ -49,6 +52,45 @@ ScriptContentDialog::ScriptContentDialog(Type type, QWidget *parent)
 ScriptContentDialog::~ScriptContentDialog()
 {
     delete ui;
+}
+
+void ScriptContentDialog::accept()
+{
+	if(mType == Read)
+	{
+		QDialog::accept();
+		
+		return;
+	}
+	
+	QString content = ui->scriptContent->toPlainText();
+	if(!content.isEmpty() && !mScript->validateContent(content))
+	{
+		if(!mScript->statusMessage().isEmpty())
+		{
+			QMessageBox messageBox(tr("Script error"), tr("Unable to validate the script content.%1Line : %2<br>Column : %3")
+								   .arg(mScript->statusMessage())
+								   .arg(mScript->line())
+								   .arg(mScript->column()), QMessageBox::Warning, QMessageBox::Ok, 0, 0, this);
+			messageBox.setTextFormat(Qt::RichText);
+			messageBox.exec();
+			
+			ui->scriptContent->moveCursor(QTextCursor::Start);
+			for(int i=1; i < mScript->line(); ++i)
+				ui->scriptContent->moveCursor(QTextCursor::Down);
+			
+			for(int i=1; i < mScript->column(); ++i)
+				ui->scriptContent->moveCursor(QTextCursor::Right);
+		}
+		else
+		{
+			
+		}
+	
+		return;
+	}
+	
+	QDialog::accept();
 }
 
 void ScriptContentDialog::on_clipboardButton_clicked()

@@ -253,10 +253,8 @@ void MainWindow::postInit()
 	QSettings settings;
 	if(!mStartScript.isEmpty())
 	{
-		if(!loadFile(mStartScript, false))
+		if(!loadFile(mStartScript))
 		{
-			QMessageBox::warning(this, tr("Open script"), tr("Unable to open the script because the file is not readable or you don't have enough rights."));
-			
 			if(mCommandOptions->count("execute"))
 				QApplication::quit();
 		}
@@ -269,12 +267,8 @@ void MainWindow::postInit()
 	
 			if(!lastFilename.isEmpty())
 			{
-				if(!loadFile(lastFilename, false))
-				{
+				if(!loadFile(lastFilename))
 					settings.setValue("general/lastScript", QString());
-	
-					QMessageBox::warning(this, tr("Open last script"), tr("Unable to open the last script because the file is not readable or you don't have enough rights."));
-				}
 			}
 		}
 	}
@@ -340,6 +334,10 @@ void MainWindow::on_actionSave_copy_as_triggered()
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save copy"), QString(), tr("Actionaz script (*.act)"));
 	if(fileName.isEmpty())
 		return;
+	
+	QFileInfo fileInfo(fileName);
+	if(fileInfo.suffix().isEmpty())
+		fileName += ".act";
 
 	saveFile(fileName, true);
 }
@@ -687,7 +685,7 @@ void MainWindow::on_actionCreate_shortcut_triggered()
 
 void MainWindow::on_actionImport_script_content_triggered()
 {
-	ScriptContentDialog *scriptContentDialog = new ScriptContentDialog(ScriptContentDialog::Write, this);
+	ScriptContentDialog *scriptContentDialog = new ScriptContentDialog(ScriptContentDialog::Write, mScript, this);
 	if(scriptContentDialog->exec() == QDialog::Accepted)
 	{
 		QByteArray newContent(scriptContentDialog->text().toUtf8());
@@ -695,12 +693,15 @@ void MainWindow::on_actionImport_script_content_triggered()
 
 		buffer.open(QIODevice::ReadOnly);
 
-		if(mScript->read(&buffer))
+		ActionTools::Script::ReadResult result = mScript->read(&buffer, Global::SCRIPT_VERSION);
+		if(result == ActionTools::Script::ReadSuccess)
 		{
 			mScriptModel->update();
 
 			scriptEdited();
 		}
+		
+		checkReadResult(result);
 	}
 
 	delete scriptContentDialog;
@@ -713,7 +714,7 @@ void MainWindow::on_actionExport_script_content_triggered()
 
 	mScript->write(&buffer, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
 
-	ScriptContentDialog *scriptContentDialog = new ScriptContentDialog(ScriptContentDialog::Read, this);
+	ScriptContentDialog *scriptContentDialog = new ScriptContentDialog(ScriptContentDialog::Read, mScript, this);
 	scriptContentDialog->setText(buffer.buffer());
 	scriptContentDialog->exec();
 	delete scriptContentDialog;
@@ -850,6 +851,53 @@ void MainWindow::updateProxySettings()
 	}
 	else
 		QNetworkProxy::setApplicationProxy(QNetworkProxy());
+}
+
+bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
+{
+	switch(result)
+	{
+	case ActionTools::Script::ReadSuccess:
+		{
+			if(mScript->scriptVersion() < Global::SCRIPT_VERSION)
+			{
+				QMessageBox::warning(this, tr("Load script"), tr("This script was created with an older version of Actionaz.\nIt will be updated when you save it.\nYour version : %1\nScript version : %2")
+									 .arg(Global::SCRIPT_VERSION.toString()).arg(mScript->scriptVersion().toString()));
+			}
+			
+			if(mScript->missingActions().count() > 0)
+			{
+				QString missingActions(tr("Script loaded, some actions are missing :<ul>"));
+				
+				foreach(const QString &missingAction, mScript->missingActions())
+					missingActions += "<li>" + missingAction + "</li>";							
+							
+				missingActions += "</ul>";
+				
+				QMessageBox::warning(this, tr("Load script"), missingActions);
+			}
+		}
+		return true;
+	case ActionTools::Script::ReadInternal:
+		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script due to an internal error."));
+		return false;
+	case ActionTools::Script::ReadBadSchema:
+		{
+			QMessageBox messageBox(tr("Load script"), tr("Unable to load the script because it has an incorrect schema.%1Line : %2<br>Column : %3")
+								   .arg(mScript->statusMessage())
+								   .arg(mScript->line())
+								   .arg(mScript->column()), QMessageBox::Warning, QMessageBox::Ok, 0, 0, this);
+			messageBox.setTextFormat(Qt::RichText);
+			messageBox.exec();
+		}
+		return false;
+	case ActionTools::Script::ReadBadScriptVersion:
+		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because it was created with a more recent version of Actionaz.\nPlease update your version of Actionaz to load this script.\nYour version : %1\nScript version : %2")
+							 .arg(Global::SCRIPT_VERSION.toString()).arg(mScript->scriptVersion().toString()));
+		return false;
+	default:
+		return false;
+	}
 }
 
 void MainWindow::updateUndoRedoStatus()
@@ -1174,25 +1222,25 @@ QList<int> MainWindow::selectedRows() const
 	return selectedRows;
 }
 
-bool MainWindow::loadFile(const QString &fileName, bool verbose)
+bool MainWindow::loadFile(const QString &fileName)
 {
 	QFile loadFile(fileName);
-	if(!loadFile.open(QIODevice::ReadOnly))
+	QFileInfo loadFileInfo(loadFile);
+	if(!loadFileInfo.isReadable() || !loadFile.open(QIODevice::ReadOnly))
 	{
-		if(verbose)
-			QMessageBox::warning(this, tr("Open script"), tr("Unable to open the script because the file is not readable or you don't have enough rights."));
+		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because the file is not readable or you don't have enough rights."));
 		return false;
 	}
 
 	QApplication::setOverrideCursor(Qt::WaitCursor);
 
-	bool result = mScript->read(&loadFile);
+	ActionTools::Script::ReadResult result = mScript->read(&loadFile, Global::SCRIPT_VERSION);
 
 	QApplication::restoreOverrideCursor();
 
 	loadFile.close();
-
-	if(result)
+	
+	if(result == ActionTools::Script::ReadSuccess)
 	{
 		QSettings settings;
 
@@ -1206,8 +1254,8 @@ bool MainWindow::loadFile(const QString &fileName, bool verbose)
 
 		setCurrentFile(fileName);
 	}
-
-	return result;
+	
+	return checkReadResult(result);
 }
 
 bool MainWindow::saveFile(const QString &fileName, bool copy)
@@ -1303,6 +1351,10 @@ bool MainWindow::saveAs()
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save script"), QString(), tr("Actionaz script (*.act)"));
 	if(fileName.isEmpty())
 		return false;
+	
+	QFileInfo fileInfo(fileName);
+	if(fileInfo.suffix().isEmpty())
+		fileName += ".act";
 
 	return saveFile(fileName);
 }

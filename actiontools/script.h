@@ -21,14 +21,14 @@
 #ifndef SCRIPT_H
 #define SCRIPT_H
 
-#include <QObject>
 #include "actiontools_global.h"
 #include "version.h"
 #include "scriptparameter.h"
 
-class QIODevice;
-
 #include <QVariant>
+#include <QStringList>
+
+class QIODevice;
 
 namespace ActionTools
 {
@@ -40,6 +40,14 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
+		enum ReadResult
+		{
+			ReadSuccess,			// Ok
+			ReadInternal,			// Internal error
+			ReadBadSchema,			// Did not pass schema validation
+			ReadBadScriptVersion	// Script version is newer than ours
+		};
+		
 		Script(ActionFactory *actionFactory, QObject *parent = 0);
 		~Script();
 
@@ -60,7 +68,16 @@ namespace ActionTools
 		bool hasEnabledActions() const;
 
 		bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion);
-		bool read(QIODevice *device);
+		ReadResult read(QIODevice *device, const Tools::Version &scriptVersion);
+		bool validateContent(const QString &content);
+		const QString &statusMessage() const								{ return mStatusMessage; }
+		int line() const													{ return mLine; }
+		int column() const													{ return mColumn; }		
+		const QString &programName() const									{ return mProgramName; }
+		const Tools::Version &programVersion() const						{ return mProgramVersion; }
+		const Tools::Version &scriptVersion() const							{ return mScriptVersion; }
+		const QString &os() const											{ return mOs; }
+		const QStringList &missingActions() const							{ return mMissingActions; }
 
 		void addParameter(const ScriptParameter &parameter)					{ mParameters.append(parameter); }
 		int parameterCount() const											{ return mParameters.count(); }
@@ -70,9 +87,6 @@ namespace ActionTools
 
 		QStringList labels() const;
 
-		void setOption(const QString &name, const QVariant &value)			{ mOptions.insert(name, value); }
-		QVariant option(const QString &name) const							{ return mOptions.value(name); }
-		
 		void setVariable(const QString &name, const QVariant &value)		{ if(!name.isEmpty()) mVariables.insert(name, value); }
 		const QHash<QString, QVariant> &variables() const					{ return mVariables;  }
 		QVariant variable(const QString &name) const						{ return mVariables.value(name); }
@@ -83,8 +97,15 @@ namespace ActionTools
 		QList<ScriptParameter> mParameters;
 		QList<Action *> mActions;
 		ActionFactory *mActionFactory;
-		QVariantHash mOptions;
 		QHash<QString, QVariant> mVariables;
+		QString mStatusMessage;
+		int mLine;
+		int mColumn;
+		QString mProgramName;
+		Tools::Version mProgramVersion;
+		Tools::Version mScriptVersion;
+		QString mOs;
+		QStringList mMissingActions;
 
 		Q_DISABLE_COPY(Script)
 	};

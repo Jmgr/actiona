@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="scriptfile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="settings">
+					<xs:complexType>
+						<xs:attribute name="program" type="xs:string" use="required"/>
+						<xs:attribute name="version" type="xs:string" use="required"/>
+						<xs:attribute name="scriptVersion" type="xs:string" use="required"/>
+						<xs:attribute name="os" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="actions">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="action" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="version" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="parameters">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="name" type="xs:string" use="required"/>
+											<xs:attribute name="code" type="xs:boolean" use="required"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="script">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="action" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="subParameter" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="xs:string">
+																	<xs:attribute name="name" type="xs:string" use="required"/>
+																	<xs:attribute name="code" type="xs:boolean" use="required"/>
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="color" type="xs:string" use="optional"/>
+									<xs:attribute name="enabled" type="xs:boolean" use="optional"/>
+									<xs:attribute name="code" type="xs:boolean" use="optional"/>
+									<xs:attribute name="comment" type="xs:string" use="optional"/>
+									<xs:attribute name="label" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

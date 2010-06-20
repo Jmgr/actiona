@@ -18,47 +18,30 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTCONTENTDIALOG_H
-#define SCRIPTCONTENTDIALOG_H
+#ifndef MESSAGEHANDLER_H
+#define MESSAGEHANDLER_H
 
-#include <QDialog>
-
-namespace Ui
-{
-    class ScriptContentDialog;
-}
+#include <QAbstractMessageHandler>
 
 namespace ActionTools
 {
-	class Script;
+	class MessageHandler : public QAbstractMessageHandler
+	{
+	public:
+		MessageHandler() : QAbstractMessageHandler(0)				{}
+		
+		QString statusMessage() const								{ return mDescription; }
+		int line() const											{ return mSourceLocation.line(); }
+		int column() const											{ return mSourceLocation.column(); }
+		
+	protected:
+		void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation);
+		
+	private:
+		QtMsgType mMessageType;
+		QString mDescription;
+		QSourceLocation mSourceLocation;
+	};
 }
 
-class ScriptContentDialog : public QDialog
-{
-    Q_OBJECT
-
-public:
-	enum Type
-	{
-		Read,
-		Write
-	};
-
-	ScriptContentDialog(Type type, ActionTools::Script *script, QWidget *parent = 0);
-    ~ScriptContentDialog();
-	
-	void accept();
-
-	void setText(const QString &text);
-	QString text() const;
-
-private slots:
-	void on_clipboardButton_clicked();
-
-private:
-    Ui::ScriptContentDialog *ui;
-	Type mType;
-	ActionTools::Script *mScript;
-};
-
-#endif // SCRIPTCONTENTDIALOG_H
+#endif // MESSAGEHANDLER_H

@@ -32,6 +32,7 @@
 #include "global.h"
 #include "version.h"
 #include "actioninfo.h"
+#include "globalshortcutmanager.h"
 
 #include <QxtApplication>
 #include <QxtCommandOptions>
@@ -44,10 +45,17 @@
 #include <windows.h>
 #endif
 
+void cleanup()
+{
+	GlobalShortcutManager::clear();
+}
+
 int main(int argc, char **argv)
 {
 	QxtApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
+	
+	qAddPostRoutine(cleanup);
 
 #ifdef Q_WS_X11
 	notify_init("Actionaz");
