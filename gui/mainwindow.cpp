@@ -92,6 +92,8 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 #endif
 {
 	ui->setupUi(this);
+	
+	setUnifiedTitleAndToolBarOnMac(true);
 
 #ifdef ACT_NO_UPDATER
 	ui->actionCheck_for_updates->setVisible(false);

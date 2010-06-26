@@ -2,7 +2,6 @@ include(../common.pri)
 include(globalshortcut/globalshortcut.pri)
 unix:!mac { 
     QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN
-    QMAKE_RPATH = 
 }
 QT += xml \
     network \
