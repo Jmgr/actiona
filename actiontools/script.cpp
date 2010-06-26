@@ -138,17 +138,6 @@ namespace ActionTools
 		return -1;
 	}
 
-	bool Script::isActionUsed(const QString &actionId) const
-	{
-		foreach(Action *action, mActions)
-		{
-			if(action->interface()->id() == actionId)
-				return true;
-		}
-
-		return false;
-	}
-
 	bool Script::hasEnabledActions() const
 	{
 		foreach(Action *action, mActions)
@@ -159,19 +148,43 @@ namespace ActionTools
 
 		return false;
 	}
-
-	bool Script::isActionUsed(int actionIndex) const
+	
+	QStringList Script::usedActions() const
 	{
-		if(actionIndex < 0 || actionIndex >= mActionFactory->actionCount())
-			return false;
-
+		QStringList result;
+		int actionCount = mActionFactory->actionCount();
+		QStringList actions;
+		
+		for(int actionIndex = 0; actionIndex < actionCount; ++actionIndex)
+			actions << mActionFactory->actionInterface(actionIndex)->id();
+		
+		//First add all the actions contained in the script, then search in all data fields that are in code mode
 		foreach(Action *action, mActions)
 		{
-			if(action->interface() == mActionFactory->actionInterface(actionIndex))
-				return true;
+			result << action->interface()->id();
+			
+			const ParametersData &parametersData = action->parametersData();
+			foreach(const Parameter &parameter, parametersData)
+			{
+				foreach(const SubParameter &subParameter, parameter.subParameters())
+				{
+					if(subParameter.isCode())
+					{
+						const QString &value = subParameter.value().toString();
+						
+						foreach(const QString &actionId, actions)
+						{
+							if(value.contains(actionId))
+								result << actionId;
+						}
+					}
+				}
+			}
 		}
-
-		return false;
+		
+		result.removeDuplicates();
+		
+		return result;
 	}
 
 	bool Script::write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion)
@@ -204,11 +217,10 @@ namespace ActionTools
 
 		stream.writeStartElement("actions");
 
-		int actionInterfaceCount = mActionFactory->actionCount();
-		for(int actionIndex = 0; actionIndex < actionInterfaceCount; ++actionIndex)
+		foreach(const QString &action, usedActions())
 		{
-			ActionInterface *actionInterface = mActionFactory->actionInterface(actionIndex);
-
+			ActionInterface *actionInterface = mActionFactory->actionInterface(action);
+			
 			stream.writeStartElement("action");
 			stream.writeAttribute("name", actionInterface->id());
 			stream.writeAttribute("version", actionInterface->version().toString());

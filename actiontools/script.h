@@ -63,9 +63,9 @@ namespace ActionTools
 		void moveAction(int startLine, int endLine);
 		int actionCount() const												{ return mActions.count(); }
 		int labelLine(const QString &label) const;
-		bool isActionUsed(const QString &actionId) const;
-		bool isActionUsed(int actionIndex) const;
 		bool hasEnabledActions() const;
+		
+		QStringList usedActions() const;
 
 		bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion);
 		ReadResult read(QIODevice *device, const Tools::Version &scriptVersion);
