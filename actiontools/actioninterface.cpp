@@ -25,9 +25,7 @@ namespace ActionTools
 	QString ActionInterface::CategoryName[CategoryCount] =
 	{
 		QObject::tr("Windows"),
-		QObject::tr("Mouse"),
-		QObject::tr("Keyboard"),
-		QObject::tr("Data"),
+		QObject::tr("Device"),
 		QObject::tr("System"),
 		QObject::tr("Internal"),
 		QObject::tr("Other")

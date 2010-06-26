@@ -54,9 +54,7 @@ namespace ActionTools
 		{
 			None = -1,
 			Windows,
-			Mouse,
-			Keyboard,
-			Data,
+			Device,
 			System,
 			Internal,
 			Other,

@@ -54,7 +54,7 @@ public:
 	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
 	ActionTools::Action *newAction()								{ return new ActionTextInstance(this, 0); }
 	Status status() const											{ return Alpha; }
-	Category category() const										{ return Keyboard; }
+	Category category() const										{ return Device; }
 	QString author() const											{ return "The Actionaz Team"; }
 	QString website() const											{ return "www.actionaz.eu"; }
 	QString email() const											{ return "jmgr@jmgr.info"; }
