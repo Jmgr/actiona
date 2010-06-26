@@ -1,0 +1,11 @@
+Makefile*
+*.exe
+*.ilk
+*.pdb
+*.user
+*.user.*
+*.dll
+*.exp
+*.lib
+generated
+
