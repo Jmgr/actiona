@@ -1,3 +1,23 @@
+/*
+	Actionaz
+	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+
+	Actionaz is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Actionaz is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+	Contact : jmgr@jmgr.info
+*/
+
 #ifndef EXECUTER_H
 #define EXECUTER_H
 
@@ -39,11 +59,11 @@ public:
 	~Executer();
 
 	ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
-	ActionTools::ConsoleWidget *consoleWidget() const		{ return mConsoleWidget; }
-	ScriptAgent *scriptAgent() const				{ return mScriptAgent; }
+	ActionTools::ConsoleWidget *consoleWidget() const	{ return mConsoleWidget; }
+	ScriptAgent *scriptAgent() const					{ return mScriptAgent; }
 
-	int currentActionIndex() const					{ return mCurrentActionIndex; }
-	ActionTools::Script *script() const				{ return mScript; }
+	int currentActionIndex() const						{ return mCurrentActionIndex; }
+	ActionTools::Script *script() const					{ return mScript; }
 
 public slots:
 	bool startExecution(bool onlySelection);
@@ -60,6 +80,7 @@ private slots:
 	void executionException(ActionTools::Action::ExecutionException exceptionType,
 							const QString &message);
 	void actionExecutionEnded();
+	void disableAction(bool disable);
 	void startNextAction();
 
 private:
@@ -74,6 +95,7 @@ private:
 
 	ExecuteActionResult canExecuteAction(int index) const;
 	void executeCurrentAction();
+	void addClassToScript(QObject *classPointer, const QString &name);
 
 	ActionTools::Script *mScript;
 	ActionTools::ActionFactory *mActionFactory;
@@ -91,6 +113,7 @@ private:
 	QScriptEngine mScriptEngine;
 	bool mExecuteOnlySelection;
 	ScriptAgent *mScriptAgent;
+	QList<bool> mActionEnabled;
 
 	Q_DISABLE_COPY(Executer)
 };

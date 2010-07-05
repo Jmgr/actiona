@@ -7,11 +7,13 @@ TARGET = executer
 DESTDIR = ..
 FORMS += executionwindow.ui
 SOURCES += executer.cpp \
-    executionwindow.cpp
+    executionwindow.cpp \
+    executionenvironment.cpp
 HEADERS += executer_global.h \
     executer.h \
     executionwindow.h \
-    scriptagent.h
+    scriptagent.h \
+    executionenvironment.h
 INCLUDEPATH += src \
     ../tools \
     ../actiontools

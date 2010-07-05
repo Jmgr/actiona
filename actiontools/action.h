@@ -83,6 +83,50 @@ namespace ActionTools
 			Warning,
 			Error
 		};
+		/*
+		enum ExecutionEventType
+		{
+			BadParameterEvent,			//Bad parameter (parameter not found or invalid value)
+			CodeErrorEvent,				//Error while evaluating the code
+			
+			UserEvent = 32				//Action defined event
+		};
+		enum ExecutionEventActionType
+		{
+			ContinueAction,				//Continue script execution
+			FailAction,					//Show an error message and stop execution (default)
+			DeactivateAction,			//Deactivate the failing action and continue
+			GotoLineAction,				//Goto a line
+			AskToContinueAction,		//Show a message box asking to continue, if not, fail
+			
+			UserAction = 32				//Action defined event action
+		};
+		
+		struct UserEvent
+		{
+			int type;
+			
+		};
+		
+		void addUserEvent(const QString &id, const QString &name);
+		*/
+		//TODO
+		
+		/*
+		 EventDefinition
+		 {
+			QString name;				//Translated name, if user event
+			int event;
+			int action;
+			QVariant actionParameter;
+		 }
+		 Event
+		 {
+			int event;
+			int action;
+			QVariant message;
+		 }
+		 */
 
 		Action(ActionInterface *interface = 0, QObject *parent = 0);
 		Action(const Action &other) : QObject(), d(other.d)					{}
@@ -137,6 +181,7 @@ namespace ActionTools
 		void executionException(ActionTools::Action::ExecutionException exceptionType,
 								const QString &message);
 		void executionEnded();
+		void disableAction(bool disable = true);
 
 	private:
 		void setParameterDefaultValue(ParameterDefinition *parameter);

@@ -45,6 +45,7 @@
 #include "sevenziparchivewrite.h"
 #include "actionpackinterface.h"
 #include "sfxscriptdialog.h"
+#include "executionenvironment.h"
 
 #include <QSystemTrayIcon>
 #include <QSplashScreen>
@@ -217,6 +218,10 @@ void MainWindow::postInit()
 
 		delete action;
 	}
+	
+	//Add Environment class
+	ExecutionEnvironment executionEnvironment;
+	ActionTools::addClassKeywords(executionEnvironment.metaObject(), "Environment", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
 
 	//Add Ecmascript stuff
 	ActionTools::addEcmaScriptObjectsKeywords(mCompletionModel);
@@ -225,8 +230,6 @@ void MainWindow::postInit()
 	QStandardItem *scriptItem = new QStandardItem(QIcon(":/icons/keywords.png"), "Script");//TODO : Find an icon to put here (and to the following)
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "nextLine"));
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "stopExecution()"));
-	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "setVariable(name, value)"));
-	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "variable(name)"));
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "print(text)"));
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "printWarning(text)"));
 	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "printError(text)"));

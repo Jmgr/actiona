@@ -1,3 +1,23 @@
+/*
+	Actionaz
+	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+
+	Actionaz is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Actionaz is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+	Contact : jmgr@jmgr.info
+*/
+
 #include "executer.h"
 #include "script.h"
 #include "actionfactory.h"
@@ -5,6 +25,7 @@
 #include "consolewidget.h"
 #include "scriptparameter.h"
 #include "action.h"
+#include "executionenvironment.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -161,6 +182,8 @@ bool Executer::startExecution(bool onlySelection)
 	printFun = mScriptEngine.newFunction(printErrorFunction);
 	printFun.setData(mScriptEngine.newQObject(this));
 	script.setProperty("printError", printFun);
+	
+	addClassToScript(new ExecutionEnvironment(), "Environment");
 
 	bool initSucceeded = true;
 
@@ -180,8 +203,9 @@ bool Executer::startExecution(bool onlySelection)
 		ActionTools::Action *action = mScript->actionAt(actionIndex);
 		action->reset();
 		action->setupExecution(&mScriptEngine, mScript);
+		mActionEnabled.append(true);
 	}
-
+	
 	mScriptAgent->setContext(ScriptAgent::Parameters);
 
 	for(int parameterIndex = 0; parameterIndex < mScript->parameterCount(); ++parameterIndex)
@@ -335,6 +359,11 @@ void Executer::actionExecutionEnded()
 	QTimer::singleShot(1, this, SLOT(startNextAction()));
 }
 
+void Executer::disableAction(bool disable)
+{
+	mActionEnabled[mCurrentActionIndex] = !disable;
+}
+
 void Executer::startNextAction()
 {
 	QString nextLineString = mScriptEngine.evaluate("Script.nextLine").toString();
@@ -388,7 +417,7 @@ Executer::ExecuteActionResult Executer::canExecuteAction(int index) const
 	if(!action)
 		return InvalidAction;
 
-	if(!action->isEnabled())
+	if(!mActionEnabled[index] || !action->isEnabled())
 		return DisabledAction;
 
 	if(mExecuteOnlySelection && !action->isSelected())
@@ -426,6 +455,23 @@ void Executer::executeCurrentAction()
 
 	connect(action, SIGNAL(executionEnded()), this, SLOT(actionExecutionEnded()));
 	connect(action, SIGNAL(executionException(ActionTools::Action::ExecutionException,QString)), this, SLOT(executionException(ActionTools::Action::ExecutionException,QString)));
+	connect(action, SIGNAL(disableAction(bool)), this, SLOT(disableAction(bool)));
 
 	action->startExecution();
+}
+
+void Executer::addClassToScript(QObject *classPointer, const QString &name)
+{
+	QScriptValue scriptObject = mScriptEngine.newQObject(classPointer, QScriptEngine::ScriptOwnership, QScriptEngine::ExcludeSuperClassContents | QScriptEngine::ExcludeDeleteLater);
+	mScriptEngine.globalObject().setProperty(name, scriptObject);
+	for(int enumeratorIndex = 0; enumeratorIndex < classPointer->metaObject()->enumeratorCount(); ++enumeratorIndex)
+	{
+		const QMetaEnum &metaEnum = classPointer->metaObject()->enumerator(enumeratorIndex);
+		QScriptValue enumObject = mScriptEngine.newObject();
+		scriptObject.setProperty(metaEnum.name(), enumObject);
+		for(int keyIndex = 0; keyIndex < metaEnum.keyCount(); ++keyIndex)
+		{
+			enumObject.setProperty(metaEnum.key(keyIndex), metaEnum.value(keyIndex));
+		}
+	}
 }
