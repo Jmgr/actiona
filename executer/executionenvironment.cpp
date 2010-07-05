@@ -30,6 +30,7 @@
 
 #ifdef Q_WS_WIN
 #include <windows.h>
+#include <LMCons.h>
 #endif
 
 ExecutionEnvironment::ExecutionEnvironment(QObject *parent)
@@ -65,7 +66,7 @@ QScriptValue ExecutionEnvironment::availableGeometry(int screen) const
 	value.setProperty("y", engine()->newVariant(geometry.y()));
 	value.setProperty("width", engine()->newVariant(geometry.width()));
 	value.setProperty("height", engine()->newVariant(geometry.height()));
-	
+
 	return value;
 }
 
@@ -77,7 +78,7 @@ QScriptValue ExecutionEnvironment::screenGeometry(int screen) const
 	value.setProperty("y", engine()->newVariant(geometry.y()));
 	value.setProperty("width", engine()->newVariant(geometry.width()));
 	value.setProperty("height", engine()->newVariant(geometry.height()));
-	
+
 	return value;
 }
 
@@ -99,9 +100,10 @@ QString ExecutionEnvironment::currentDirectory() const
 QString ExecutionEnvironment::username() const
 {
 #ifdef Q_WS_WIN
-	wchar_t buffer[256];
-	GetUserName(buffer, 256);
-	
+	TCHAR buffer[UNLEN+1];
+	DWORD size = sizeof(buffer);
+	GetUserName(buffer, &size);
+
 	return QString::fromWCharArray(buffer);
 #else
 	return QString::fromAscii(std::getenv("USER"));
