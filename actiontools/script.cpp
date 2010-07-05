@@ -148,21 +148,21 @@ namespace ActionTools
 
 		return false;
 	}
-	
-	QStringList Script::usedActions() const
+
+	QSet<int> Script::usedActions() const
 	{
-		QStringList result;
+		QSet<int> result;
 		int actionCount = mActionFactory->actionCount();
 		QStringList actions;
-		
+
 		for(int actionIndex = 0; actionIndex < actionCount; ++actionIndex)
 			actions << mActionFactory->actionInterface(actionIndex)->id();
-		
+
 		//First add all the actions contained in the script, then search in all data fields that are in code mode
 		foreach(Action *action, mActions)
 		{
-			result << action->interface()->id();
-			
+			result << action->interface()->index();
+
 			const ParametersData &parametersData = action->parametersData();
 			foreach(const Parameter &parameter, parametersData)
 			{
@@ -171,19 +171,17 @@ namespace ActionTools
 					if(subParameter.isCode())
 					{
 						const QString &value = subParameter.value().toString();
-						
-						foreach(const QString &actionId, actions)
+
+						for(int actionIdIndex = 0; actionIdIndex < actions.count(); ++actionIdIndex)
 						{
-							if(value.contains(actionId))
-								result << actionId;
+							if(value.contains(actions.at(actionIdIndex)))
+								result << actionIdIndex;
 						}
 					}
 				}
 			}
 		}
-		
-		result.removeDuplicates();
-		
+
 		return result;
 	}
 
@@ -212,15 +210,15 @@ namespace ActionTools
 		stream.writeAttribute("version", programVersion.toString());
 		stream.writeAttribute("scriptVersion", scriptVersion.toString());
 		stream.writeAttribute("os", osName);
-		
+
 		stream.writeEndElement();
 
 		stream.writeStartElement("actions");
 
-		foreach(const QString &action, usedActions())
+		foreach(int actionIndex, usedActions())
 		{
-			ActionInterface *actionInterface = mActionFactory->actionInterface(action);
-			
+			ActionInterface *actionInterface = mActionFactory->actionInterface(actionIndex);
+
 			stream.writeStartElement("action");
 			stream.writeAttribute("name", actionInterface->id());
 			stream.writeAttribute("version", actionInterface->version().toString());
@@ -299,16 +297,16 @@ namespace ActionTools
 		mActions.clear();
 		mParameters.clear();
 		mMissingActions.clear();
-		
+
 		MessageHandler messageHandler;
-		
+
 		QFile schemaFile(":/script.xsd");
 		if(!schemaFile.open(QIODevice::ReadOnly))
 			return ReadInternal;
-		
+
 		QXmlSchema schema;
 		schema.setMessageHandler(&messageHandler);
-		
+
 		if(!schema.load(&schemaFile))
 			return ReadInternal;
 
@@ -318,23 +316,23 @@ namespace ActionTools
 			mStatusMessage = messageHandler.statusMessage();
 			mLine = messageHandler.line();
 			mColumn = messageHandler.column();
-			
+
 			return ReadBadSchema;
 		}
-		
+
 		device->reset();
-		
+
 		QXmlStreamReader stream(device);
 		while(!stream.atEnd() && !stream.hasError())
 		{
 			stream.readNext();
-			
+
 			if(stream.isStartDocument())
 				continue;
-			
+
 			if(!stream.isStartElement())
 				continue;
-				
+
 			if(stream.name() == "settings")
 			{
 				const QXmlStreamAttributes &attributes = stream.attributes();
@@ -342,23 +340,23 @@ namespace ActionTools
 				mProgramVersion = Tools::Version(attributes.value("version").toString());
 				mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
 				mOs = attributes.value("os").toString();
-				
+
 				if(mScriptVersion > scriptVersion)
 					return ReadBadScriptVersion;
 			}
 			else if(stream.name() == "actions")
 			{
 				stream.readNext();
-				
+
 				for(;!stream.isEndElement() || stream.name() != "actions";stream.readNext())
 				{
 					if(!stream.isStartElement())
 						continue;
-				
+
 					const QXmlStreamAttributes &attributes = stream.attributes();
 					QString name = attributes.value("name").toString();
 					//TODO : Do something with the action version
-					
+
 					ActionInterface *actionInterface = mActionFactory->actionInterface(name);
 					if(!actionInterface)
 						mMissingActions << name;
@@ -367,7 +365,7 @@ namespace ActionTools
 			else if(stream.name() == "parameters")
 			{
 				stream.readNext();
-				
+
 				for(;!stream.isEndElement() || stream.name() != "parameters";stream.readNext())
 				{
 					if(!stream.isStartElement())
@@ -377,14 +375,14 @@ namespace ActionTools
 					ScriptParameter scriptParameter(	attributes.value("name").toString(),
 														stream.readElementText(),
 														QVariant(attributes.value("code").toString()).toBool());
-	
+
 					mParameters.append(scriptParameter);
 				}
 			}
 			else if(stream.name() == "script")
 			{
 				stream.readNext();
-				
+
 				for(;!stream.isEndElement() || stream.name() != "script";stream.readNext())
 				{
 					if(!stream.isStartElement())
@@ -396,16 +394,16 @@ namespace ActionTools
 					QString comment = attributes.value("comment").toString();
 					QColor color = QColor(attributes.value("color").toString());
 					bool enabled = (attributes.hasAttribute("enabled") ? QVariant(attributes.value("enabled").toString()).toBool() : true);
-					
+
 					//Add a new action
 					Action *newAction = mActionFactory->newAction(name);
 					if(!newAction)
 						continue;
-					
+
 					ParametersData parametersData;
-					
+
 					stream.readNext();
-					
+
 					for(;!stream.isEndElement() || stream.name() != "action";stream.readNext())
 					{
 						if(!stream.isStartElement())
@@ -413,35 +411,35 @@ namespace ActionTools
 
 						const QXmlStreamAttributes &attributes = stream.attributes();
 						const QString &parameterName = attributes.value("name").toString();
-						
+
 						Parameter parameterData;
-						
+
 						stream.readNext();
-						
+
 						for(;!stream.isEndElement() || stream.name() != "parameter";stream.readNext())
 						{
 							if(!stream.isStartElement())
 								continue;
-							
+
 							const QXmlStreamAttributes &attributes = stream.attributes();
 							QString subParameterName = attributes.value("name").toString();
 							SubParameter subParameterData;
 
 							subParameterData.setCode(QVariant(stream.attributes().value("code").toString()).toBool());
 							subParameterData.setValue(stream.readElementText());
-							
+
 							parameterData.subParameters().insert(subParameterName, subParameterData);
 						}
-						
+
 						parametersData.insert(parameterName, parameterData);
 					}
-					
+
 					newAction->setLabel(label);
 					newAction->setComment(comment);
 					newAction->setParametersData(parametersData);
 					newAction->setColor(color);
 					newAction->setEnabled(enabled);
-	
+
 					appendAction(newAction);
 				}
 			}
@@ -449,24 +447,24 @@ namespace ActionTools
 
 		return ReadSuccess;
 	}
-	
+
 	bool Script::validateContent(const QString &content)
 	{
 		QByteArray byteArray(content.toAscii());
 		QBuffer buffer(&byteArray);
 		buffer.open(QIODevice::ReadOnly);
-		
+
 		mStatusMessage.clear();
-		
+
 		MessageHandler messageHandler;
-		
+
 		QFile schemaFile(":/script.xsd");
 		if(!schemaFile.open(QIODevice::ReadOnly))
 			return false;
-		
+
 		QXmlSchema schema;
 		schema.setMessageHandler(&messageHandler);
-		
+
 		if(!schema.load(&schemaFile))
 			return false;
 
@@ -476,10 +474,10 @@ namespace ActionTools
 			mStatusMessage = messageHandler.statusMessage();
 			mLine = messageHandler.line();
 			mColumn = messageHandler.column();
-			
+
 			return false;
 		}
-		
+
 		return true;
 	}
 

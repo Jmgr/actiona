@@ -5,6 +5,7 @@ HEADERS += actionpackdevice.h
 RESOURCES += actionpackdevice.qrc
 unix:LIBS += -lXtst
 win32:LIBS += -luser32
+win32:CONFIG -= embed_manifest_dll
 
 # Text
 HEADERS += actiontext.h \

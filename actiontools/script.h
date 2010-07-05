@@ -47,7 +47,7 @@ namespace ActionTools
 			ReadBadSchema,			// Did not pass schema validation
 			ReadBadScriptVersion	// Script version is newer than ours
 		};
-		
+
 		Script(ActionFactory *actionFactory, QObject *parent = 0);
 		~Script();
 
@@ -64,15 +64,15 @@ namespace ActionTools
 		int actionCount() const												{ return mActions.count(); }
 		int labelLine(const QString &label) const;
 		bool hasEnabledActions() const;
-		
-		QStringList usedActions() const;
+
+		QSet<int> usedActions() const;
 
 		bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion);
 		ReadResult read(QIODevice *device, const Tools::Version &scriptVersion);
 		bool validateContent(const QString &content);
 		const QString &statusMessage() const								{ return mStatusMessage; }
 		int line() const													{ return mLine; }
-		int column() const													{ return mColumn; }		
+		int column() const													{ return mColumn; }
 		const QString &programName() const									{ return mProgramName; }
 		const Tools::Version &programVersion() const						{ return mProgramVersion; }
 		const Tools::Version &scriptVersion() const							{ return mScriptVersion; }

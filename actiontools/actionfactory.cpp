@@ -38,6 +38,11 @@ namespace ActionTools
 		clear();
 	}
 
+	bool actionInterfaceLessThan(const ActionInterface *s1, const ActionInterface *s2)
+	{
+		return s1->name() < s2->name();
+	}
+
 	void ActionFactory::loadActionPacks()
 	{
 		clear();
@@ -56,6 +61,11 @@ namespace ActionTools
 
 		foreach(const QString actionFilename, actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename));
+
+		qSort(mActions.begin(), mActions.end(), actionInterfaceLessThan);
+
+		for(int index = 0; index < mActions.count(); ++index)
+			mActions.at(index)->setIndex(index);
 	}
 
 	ActionInterface *ActionFactory::actionInterface(const QString &actionId) const
@@ -158,6 +168,8 @@ namespace ActionTools
 
 			mActions << interface;
 		}
+
+		actionPackInterface->setFilename(filename);
 
 		mActionPacks << actionPackInterface;
 	}

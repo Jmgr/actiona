@@ -77,10 +77,10 @@ void ScriptModel::setActionsColor(const QList<int> &rows, const QColor &color)
 void ScriptModel::insertAction(int row, const ActionTools::ActionBuffer &actionBuffer)
 {
 	mUndoStack->push(new InsertNewActionCommand(row, actionBuffer, this));
-	
+
 	mSelectionModel->select(index(row, 0), QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
 	mSelectionModel->setCurrentIndex(index(row, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
-	
+
 	emit scriptEdited();
 }
 
@@ -294,6 +294,9 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 					finalValue = labelString;
 			}
 
+			if(labelString == action->label() || labelString == lineNumber)
+				return true;
+
 			mUndoStack->push(new ChangeLabelCommand(finalValue, index.row(), this));
 
 			emit scriptEdited();
@@ -302,6 +305,9 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 	}
 	else if(index.column() == ColumnComment)
 	{
+		if(value.toString() == action->comment())
+			return true;
+
 		mUndoStack->push(new ChangeCommentCommand(value.toString(), index.row(), this));
 
 		emit scriptEdited();

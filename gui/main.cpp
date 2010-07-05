@@ -53,15 +53,15 @@ int main(int argc, char **argv)
 {
 	QxtApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
-	
+
 	qAddPostRoutine(cleanup);
 
 #ifdef Q_WS_X11
 	notify_init("Actionaz");
 #endif
-	
+
 	//QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
-	
+
 	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 		stream.flush();
 		return -1;
 	}
-	
+
 	QString startScript;
 	const QStringList &positionalParameters = options.positional();
 	if(positionalParameters.count() > 0)
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 	// This is needed so that relative paths will work on Windows regardless of where the app is launched from.
 	QDir::setCurrent(app.applicationDirPath());
 #endif
-	
+
 	app.addLibraryPath(QDir::currentPath() + "/actions");
 
 	qRegisterMetaType<ActionTools::Action>("Action");
@@ -131,7 +131,7 @@ int main(int argc, char **argv)
 
 	MainWindow mainWindow(&options, splash, startScript);
 	mainWindow.setWindowOpacity(0.0);
-	
+
 	if(!options.count("execute"))
 		mainWindow.show();
 
