@@ -112,7 +112,7 @@ namespace ActionTools
 		SubParameter subParameter(const QString &parameterName, const QString &subParameterName) const
 																			{ return parameter(parameterName).subParameter(subParameterName); }
 		virtual void reset()												{}
-		
+
 		void setupExecution(QScriptEngine *scriptEngine, Script *script)	{ d->scriptEngine = scriptEngine; d->script = script; }
 
 		void copyActionDataFrom(const Action &other)
@@ -124,7 +124,7 @@ namespace ActionTools
 			setEnabled(other.isEnabled());
 			setSelected(other.isSelected());
 		}
-		
+
 	protected:
 		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }
 		Script *script() const												{ return d->script; }

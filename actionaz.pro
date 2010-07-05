@@ -8,7 +8,9 @@ unix:!mac {
 	!system(pkg-config --exists 'xtst') {
 		error(Please install libxtst-dev)
 }
-} 
+}
+
+win32-g++:error(Mingw is currently not supported, please use the Microsoft compiler suite)
 
 contains(DEFINES, ACT_NO_UPDATER){
 message(** No updater will be built **)

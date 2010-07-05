@@ -46,7 +46,10 @@ namespace ActionTools
 		virtual Tools::Version version() const = 0;
 
 		//Returns an instance of each plugin interface
-		const ActionInterfaceList &actionsInterfaces() const { return mActionInterfaces; }
+		const ActionInterfaceList &actionsInterfaces() const	{ return mActionInterfaces; }
+
+		void setFilename(const QString &filename)				{ mFilename = filename; }
+		const QString &filename() const							{ return mFilename; }
 
 	protected:
 		void addActionInterface(ActionInterface *actionInterface)
@@ -56,6 +59,7 @@ namespace ActionTools
 
 	private:
 		ActionInterfaceList mActionInterfaces;
+		QString mFilename;
 
 		Q_DISABLE_COPY(ActionPackInterface)
 	};

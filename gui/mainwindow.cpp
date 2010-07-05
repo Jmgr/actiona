@@ -42,6 +42,9 @@
 #include "modeltest.h"
 #include "globalshortcutmanager.h"
 #include "changelogdialog.h"
+#include "sevenziparchivewrite.h"
+#include "actionpackinterface.h"
+#include "sfxscriptdialog.h"
 
 #include <QSystemTrayIcon>
 #include <QSplashScreen>
@@ -62,6 +65,8 @@
 #include <QxtCommandOptions>
 #include <QProgressDialog>
 #include <QProcess>
+#include <QTemporaryFile>
+#include <QListWidget>
 
 MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashScreen, const QString &startScript)
 	: QMainWindow(0),
@@ -92,7 +97,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 #endif
 {
 	ui->setupUi(this);
-	
+
 	setUnifiedTitleAndToolBarOnMac(true);
 
 #ifdef ACT_NO_UPDATER
@@ -291,7 +296,7 @@ void MainWindow::postInit()
 	}
 
 #ifndef ACT_NO_UPDATER
-	if(settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)) == ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)
+	if(!mCommandOptions->count("execute") && settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)) == ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)
 	{
 		if(QMessageBox::question(this,
 								 tr("Automatic updates"),
@@ -487,11 +492,194 @@ void MainWindow::on_actionClear_triggered()
 void MainWindow::on_actionExport_executable_triggered()
 {
 #ifdef Q_WS_WIN
-	QString filter(tr("Executable file (*.exe)"));
+	QSettings settings;
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Choose the SFX script destination"), settings.value("sfxScript/destination").toString(), "Executable file (*.exe)");
+	if(fileName.isEmpty())
+		return;
 
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save executable script"), QString(), filter);
+	QFileInfo outFileInfo(fileName);
+	if(outFileInfo.exists() && !outFileInfo.isWritable())
+	{
+		QMessageBox::warning(this, tr("Create SFX script"), tr("The output file you selected is not writeable."));
+		return;
+	}
 
-	//TODO
+	settings.setValue("sfxScript/destination", fileName);
+
+	SFXScriptDialog sfxScriptDialog(this);
+	if(!sfxScriptDialog.exec())
+		return;
+
+	QString parameters("es");//Execute the current script & disable splash screen
+	if(sfxScriptDialog.disableTrayIcon())
+		parameters += "t";
+	if(!sfxScriptDialog.showConsole())
+		parameters += "C";
+	if(!sfxScriptDialog.showExecutionWindow())
+		parameters += "E";
+	if(sfxScriptDialog.closeAfterExecution())
+		parameters += "x";
+
+	const QString archivePath = QDir::temp().filePath("archive.7z");
+	const QString sfxPath = QDir::current().filePath("sfx/7zsd.sfx");
+	const QString scriptPath = QDir::temp().filePath("script.act");
+
+	QFileInfo archiveFileInfo(archivePath);
+	if(archiveFileInfo.exists() && !archiveFileInfo.isWritable())
+	{
+		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to write to %1.").arg(archivePath));
+		return;
+	}
+
+	QFile file(scriptPath);
+	if(!file.open(QIODevice::WriteOnly))
+	{
+		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to open %1 for writing.").arg(scriptPath));
+		return;
+	}
+	mScript->write(&file, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
+	file.close();
+
+	QProgressDialog progressDialog(tr("Creating SFX script"), QString(), 0, 21, this);
+	progressDialog.setValue(0);
+	progressDialog.setVisible(true);
+	QApplication::processEvents();
+
+	//Write the config file
+	QString configFile;
+	QTextStream configFileStream(&configFile);
+	configFileStream << ";!@Install@!UTF-8!" << "\r\n";
+	configFileStream << "ExecuteFile=\"actionaz.exe\"" << "\r\n";
+	configFileStream << QString("ExecuteParameters=\"-%1 script.act\"").arg(parameters) << "\r\n";
+	configFileStream << "GUIMode=\"2\"" << "\r\n";
+	configFileStream << ";!@InstallEnd@!";
+
+	progressDialog.setValue(progressDialog.value() + 1);
+	QApplication::processEvents();
+
+	QFile::remove(archivePath);
+	Tools::SevenZipArchiveWrite archive(archivePath);
+	QStringList archiveFiles = QStringList()
+								<< "actionaz.exe"
+								<< "tools.dll"
+								<< "actiontools.dll"
+								<< "executer.dll"
+								<< scriptPath
+#ifdef QT_DEBUG
+								<< "QtCored4.dll"
+								<< "QtGuid4.dll"
+								<< "QtNetworkd4.dll"
+								<< "QtScriptd4.dll"
+								<< "QtSqld4.dll"
+								<< "QtXmld4.dll"
+								<< "QtXmlPatternsd4.dll"
+								<< "QxtCored.dll"
+								<< "QxtGuid.dll"
+								<< "Microsoft.VC90.DebugCRT.manifest"
+								<< "msvcp90d.dll"
+								<< "msvcr90d.dll";
+#else
+								<< "QtCore4.dll"
+								<< "QtGui4.dll"
+								<< "QtNetwork4.dll"
+								<< "QtScript4.dll"
+								<< "QtSql4.dll"
+								<< "QtXml4.dll"
+								<< "QtXmlPatterns4.dll"
+								<< "QxtCore.dll"
+								<< "QxtGui.dll"
+								<< "Microsoft.VC90.CRT.manifest"
+								<< "msvcp90.dll"
+								<< "msvcr90.dll";
+#endif
+
+	foreach(const QString &archiveFile, archiveFiles)
+	{
+		progressDialog.setLabelText(QObject::tr("Adding %1...").arg(QFileInfo(archiveFile).fileName()));
+		progressDialog.setValue(progressDialog.value() + 1);
+		QApplication::processEvents();
+		if(!archive.addFile(QDir::current().filePath(archiveFile)))
+		{
+			QFile::remove(archivePath);
+			QFile::remove(scriptPath);
+			QMessageBox::warning(this, tr("Create SFX script"), tr("Failed to add %1 to the SFX archive.").arg(archiveFile));
+			return;
+		}
+	}
+
+	progressDialog.setLabelText(tr("Adding actions..."));
+
+	QSet<ActionTools::ActionPackInterface *> addedPacks;
+	for(int index = 0; index < mActionFactory->actionCount(); ++index)
+	{
+		ActionTools::ActionInterface *actionInterface = mActionFactory->actionInterface(index);
+		if(!actionInterface)
+			continue;
+
+		if(addedPacks.contains(actionInterface->pack()))
+			continue;
+
+		addedPacks.insert(actionInterface->pack());
+
+		if(!archive.addFile(QDir::current().relativeFilePath(actionInterface->pack()->filename())))
+		{
+			QFile::remove(archivePath);
+			QFile::remove(scriptPath);
+			QMessageBox::warning(this, tr("Create SFX script"), tr("Failed to add the action pack %1 to the SFX archive.").arg(actionInterface->pack()->filename()));
+			return;
+		}
+	}
+
+	progressDialog.setValue(progressDialog.value() + 1);
+	QApplication::processEvents();
+
+	QFile outFile(fileName);
+	if(!outFile.open(QIODevice::WriteOnly))
+	{
+		QFile::remove(archivePath);
+		QFile::remove(scriptPath);
+		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to open %1 for writing.").arg(fileName));
+		return;
+	}
+
+	//Copy the sfx stub
+	QFile sfxStubFile(sfxPath);
+	if(!sfxStubFile.open(QIODevice::ReadOnly))
+	{
+		QFile::remove(archivePath);
+		QFile::remove(scriptPath);
+		QFile::remove(fileName);
+		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to open %1 for reading.").arg(sfxPath));
+		return;
+	}
+	outFile.write(sfxStubFile.readAll());
+	sfxStubFile.close();
+
+	progressDialog.setValue(progressDialog.value() + 1);
+
+	//Copy the config file
+	outFile.write(configFile.toAscii());
+
+	progressDialog.setValue(progressDialog.value() + 1);
+
+	//Copy the archive
+	QFile archiveFile(archivePath);
+	if(!archiveFile.open(QIODevice::ReadOnly))
+	{
+		QFile::remove(archivePath);
+		QFile::remove(scriptPath);
+		QFile::remove(fileName);
+		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to open %1 for reading.").arg(archivePath));
+		return;
+	}
+	outFile.write(archiveFile.readAll());
+	archiveFile.close();
+
+	outFile.close();
+	progressDialog.close();
+
+	QFile::remove(archivePath);
+	QFile::remove(scriptPath);
 #endif
 }
 

@@ -72,7 +72,7 @@ namespace ActionTools
 			Official =			1 << 4
 		};
 
-		explicit ActionInterface(ActionPackInterface *pack) : mPack(pack)	{}
+		explicit ActionInterface(ActionPackInterface *pack) : mPack(pack), mIndex(-1)	{}
 		virtual ~ActionInterface() { qDeleteAll(mElements); }
 
 		virtual QString name() const = 0;
@@ -89,6 +89,9 @@ namespace ActionTools
 		virtual QPixmap icon() const = 0;
 		virtual Action *scriptInit(QScriptEngine *scriptEngine) = 0;
 		virtual QStringList tabs() const												{ return QStringList(); }
+
+		void setIndex(int index)														{ mIndex = index; }
+		int index() const																{ return mIndex; }
 
 		ActionPackInterface *pack() const												{ return mPack; }
 		const QList<ElementDefinition *> &elements() const								{ return mElements; }
@@ -110,6 +113,7 @@ namespace ActionTools
 	private:
 		ActionPackInterface *mPack;
 		QList<ElementDefinition *> mElements;
+		int mIndex;
 
 		Q_DISABLE_COPY(ActionInterface)
 	};
