@@ -8,4 +8,8 @@ Makefile*
 *.exp
 *.lib
 generated
-
+*.so*
+*.log*
+*.cache*
+*.qm
+actionaz
