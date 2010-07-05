@@ -23,5 +23,4 @@ RCC_DIR = generated
 OBJECTS_DIR = generated
 TRANSLATIONS = locale/tools_en.ts \
 	locale/tools_fr.ts
-DEFINES += _UNICODE
-LIBS += User32.lib
+win32:LIBS += User32.lib
