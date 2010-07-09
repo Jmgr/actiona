@@ -77,16 +77,16 @@ namespace ActionTools
 
 		virtual QString name() const = 0;
 		virtual QString id() const = 0;
-		virtual Flag flags() const = 0;
-		virtual QString description() const = 0;
+		virtual Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac; }
+		virtual QString description() const												{ return QObject::tr("No description"); }
 		virtual Tools::Version version() const = 0;
 		virtual Action *newAction() = 0;
 		virtual Status status() const = 0;
 		virtual Category category() const = 0;
-		virtual QString author() const													{ return QString(); }
+		virtual QString author() const													{ return (flags() & Official) ? QObject::tr("The Actionaz Team") : QString(); }
 		virtual QString website() const													{ return QString(); }
 		virtual QString email() const													{ return QString(); }
-		virtual QPixmap icon() const = 0;
+		virtual QPixmap icon() const													{ return QPixmap(); }
 		virtual Action *scriptInit(QScriptEngine *scriptEngine) = 0;
 		virtual QStringList tabs() const												{ return QStringList(); }
 

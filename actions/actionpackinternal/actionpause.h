@@ -61,9 +61,6 @@ public:
 	ActionTools::Action *newAction()								{ return new ActionPauseInstance(this, 0); }
 	Status status() const											{ return Alpha; }
 	Category category() const										{ return Internal; }
-	QString author() const											{ return "The Actionaz Team"; }
-	QString website() const											{ return "www.actionaz.eu"; }
-	QString email() const											{ return "jmgr@jmgr.info"; }
 	QPixmap icon() const											{ return QPixmap(":/icons/sleep.png"); }
 	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionPause) }
 

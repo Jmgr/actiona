@@ -76,9 +76,6 @@ public:
 	ActionTools::Action *newAction()								{ return new ActionKillProcessInstance(this, 0); }
 	Status status() const											{ return Stable; }
 	Category category() const										{ return System; }
-	QString author() const											{ return "The Actionaz Team"; }
-	QString website() const											{ return "www.actionaz.eu"; }
-	QString email() const											{ return "jmgr@jmgr.info"; }
 	QPixmap icon() const											{ return QPixmap(":/icons/clipboard.png"); }
 	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionKillProcess) }
 	QStringList tabs() const										{ return QStringList() << tr("Standard") << tr("Advanced"); }
