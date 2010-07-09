@@ -46,6 +46,7 @@
 #include "actionpackinterface.h"
 #include "sfxscriptdialog.h"
 #include "executionenvironment.h"
+#include "executionalgorithms.h"
 
 #include <QSystemTrayIcon>
 #include <QSplashScreen>
@@ -219,10 +220,12 @@ void MainWindow::postInit()
 		delete action;
 	}
 	
-	//Add Environment class
+	//Add Environment & Algorithms class
 	ExecutionEnvironment executionEnvironment;
 	ActionTools::addClassKeywords(executionEnvironment.metaObject(), "Environment", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
-
+	ExecutionAlgorithms executionAlgorithms;
+	ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
+	
 	//Add Ecmascript stuff
 	ActionTools::addEcmaScriptObjectsKeywords(mCompletionModel);
 

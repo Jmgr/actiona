@@ -26,6 +26,7 @@
 #include <QUrl>
 #include <QScriptEngine>
 #include <QDir>
+#include <QDateTime>
 #include <cstdlib>
 
 #ifdef Q_WS_WIN
@@ -108,4 +109,14 @@ QString ExecutionEnvironment::username() const
 #else
 	return QString::fromAscii(std::getenv("USER"));
 #endif
+}
+
+QString ExecutionEnvironment::variable(const QString &name) const
+{
+	return QString::fromAscii(std::getenv(name.toAscii()));
+}
+
+uint ExecutionEnvironment::timestamp() const
+{
+	return QDateTime::currentDateTime().toTime_t();
 }

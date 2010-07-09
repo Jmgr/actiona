@@ -8,12 +8,14 @@ DESTDIR = ..
 FORMS += executionwindow.ui
 SOURCES += executer.cpp \
 	executionwindow.cpp \
-	executionenvironment.cpp
+	executionenvironment.cpp \
+    executionalgorithms.cpp
 HEADERS += executer_global.h \
 	executer.h \
 	executionwindow.h \
 	scriptagent.h \
-	executionenvironment.h
+	executionenvironment.h \
+    executionalgorithms.h
 INCLUDEPATH += src \
 	../tools \
 	../actiontools

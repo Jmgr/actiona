@@ -26,6 +26,7 @@
 #include "scriptparameter.h"
 #include "action.h"
 #include "executionenvironment.h"
+#include "executionalgorithms.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -184,6 +185,7 @@ bool Executer::startExecution(bool onlySelection)
 	script.setProperty("printError", printFun);
 	
 	addClassToScript(new ExecutionEnvironment(), "Environment");
+	addClassToScript(new ExecutionAlgorithms(), "Algorithms");
 
 	bool initSucceeded = true;
 

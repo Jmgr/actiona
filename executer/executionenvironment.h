@@ -51,22 +51,18 @@ public:
     explicit ExecutionEnvironment(QObject *parent = 0);
 
 public slots:
-	//QDesktopServices
 	QString storageLocationPath(StorageLocation location) const;
 	QString storageLocationName(StorageLocation location) const;
 	void openUrl(const QString &url) const;
-	
-	//QDesktopWidget
 	int screenCount() const;
 	QScriptValue availableGeometry(int screen = -1) const;
 	QScriptValue screenGeometry(int screen = -1) const;
 	int primaryScreen() const;
 	bool isVirtualDesktop() const;
-	
-	//QDir
 	QString currentDirectory() const;
-	
 	QString username() const;
+	QString variable(const QString &name) const;
+	uint timestamp() const;
 };
 
 #endif // EXECUTIONENVIRONMENT_H
