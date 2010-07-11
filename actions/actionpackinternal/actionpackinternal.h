@@ -29,6 +29,7 @@
 #include "actionnoopdefinition.h"
 #include "actionstopdefinition.h"
 #include "actionvariabledefinition.h"
+#include "actiontimeconditiondefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -52,6 +53,7 @@ public:
 		addActionDefinition(new ActionNoopDefinition(this));
 		addActionDefinition(new ActionStopDefinition(this));
 		addActionDefinition(new ActionVariableDefinition(this));
+		addActionDefinition(new ActionTimeConditionDefinition(this));
 	}
 
 	QString id() const								{ return tr("internal"); }
