@@ -93,9 +93,13 @@ namespace ActionTools
 			
 			mPrefix = prefix();
 			mSuffix = suffix();
+			
+			int previousWidth = width();
 
 			setPrefix(QString());
 			setSuffix(QString());
+			
+			setMinimumWidth(previousWidth);//This is a hack to fix widget size under KDE, but a better fix has to be found
 			
 			QString currentText = QString::number(value());
 			codeLineEdit()->setText(currentText);
