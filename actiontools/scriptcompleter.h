@@ -39,11 +39,6 @@ namespace ActionTools
 	protected:
 		QStringList splitPath(const QString &path) const;
 		QString pathFromIndex(const QModelIndex &index) const;
-	
-	signals:
-	
-	public slots:
-	
 	};
 }
 
