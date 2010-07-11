@@ -8,7 +8,9 @@ HEADERS += actionpackinternal.h \
 	actionvariabledefinition.h \
 	actionvariableinstance.h \
     actiontimeconditiondefinition.h \
-    actiontimeconditioninstance.h
+    actiontimeconditioninstance.h \
+    actionexitdefinition.h \
+    actionexitinstance.h
 RESOURCES += actionpackinternal.qrc
 
 # Pause

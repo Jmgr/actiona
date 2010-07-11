@@ -112,7 +112,7 @@ void ActionMessageBoxInstance::buttonClicked()
 	if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::Yes) && mIfYesAction == "goto")
 		script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfYesLine)));
 	else if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::No) && mIfNoAction == "goto")
-		script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfYesLine)));
+		script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfNoLine)));
 
 	mMessageBox->disconnect();
 	mMessageBox->deleteLater();

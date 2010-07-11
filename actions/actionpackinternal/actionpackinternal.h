@@ -30,6 +30,7 @@
 #include "actionstopdefinition.h"
 #include "actionvariabledefinition.h"
 #include "actiontimeconditiondefinition.h"
+#include "actionexitdefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -54,6 +55,7 @@ public:
 		addActionDefinition(new ActionStopDefinition(this));
 		addActionDefinition(new ActionVariableDefinition(this));
 		addActionDefinition(new ActionTimeConditionDefinition(this));
+		addActionDefinition(new ActionExitDefinition(this));
 	}
 
 	QString id() const								{ return tr("internal"); }
