@@ -22,18 +22,15 @@
 #define ACTIONNOOPINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
-class ActionNoopInstance : public ActionTools::Action
+class ActionNoopInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionNoopInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent)										{}
-	ActionNoopInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent)												{}
-	~ActionNoopInstance()																{}
+	ActionNoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)										{}
 
 	void startExecution()
 	{

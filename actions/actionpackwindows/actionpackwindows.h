@@ -21,27 +21,27 @@
 #ifndef ACTIONPACKWINDOWS_H
 #define ACTIONPACKWINDOWS_H
 
-#include "actionpackinterface.h"
-#include "actionmessagebox.h"
-#include "actiontextinput.h"
+#include "actionpack.h"
+#include "actionmessageboxdefinition.h"
+#include "actiontextinputdefinition.h"
 
 #include <QtCore/qplugin.h>
 
 namespace ActionTools
 {
-	class ActionInterface;
+	class ActionDefinition;
 }
 
-class ActionPackWindows : public QObject, public ActionTools::ActionPackInterface
+class ActionPackWindows : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
-	Q_INTERFACES(ActionTools::ActionPackInterface)
+	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
 	ActionPackWindows()
 	{
-		addActionInterface(new ActionMessageBox(this));
-		addActionInterface(new ActionTextInput(this));
+		addActionDefinition(new ActionMessageBoxDefinition(this));
+		addActionDefinition(new ActionTextInputDefinition(this));
 	}
 
 	QString id() const							{ return tr("windows"); }

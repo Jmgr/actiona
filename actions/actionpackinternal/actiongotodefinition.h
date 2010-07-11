@@ -18,26 +18,26 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONGOTO_H
-#define ACTIONGOTO_H
+#ifndef ACTIONGOTODEFINITION_H
+#define ACTIONGOTODEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actiongotoinstance.h"
 #include "lineparameterdefinition.h"
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionGoto : public QObject, public ActionTools::ActionInterface
+class ActionGotoDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionGoto(ActionTools::ActionPackInterface *pack)
-	: ActionGoto::ActionInterface(pack)
+	explicit ActionGotoDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition(	ActionTools::ElementDefinition::INPUT,
 																								"line",
@@ -47,19 +47,18 @@ public:
 		addElement(line);
 	}
 
-	QString name() const											{ return QObject::tr("Goto"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Go to a script line"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionGotoInstance(this, 0); }
-	Status status() const											{ return Alpha; }
-	Category category() const										{ return Internal; }
-	QPixmap icon() const											{ return QPixmap(":/icons/goto.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionGoto) }
+	QString name() const													{ return QObject::tr("Goto"); }
+	QString id() const														{ return "ActionGoto"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Go to a script line"); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionGotoInstance(this); }
+	Status status() const													{ return Alpha; }
+	Category category() const												{ return Internal; }
+	QPixmap icon() const													{ return QPixmap(":/icons/goto.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionGoto)
+	Q_DISABLE_COPY(ActionGotoDefinition)
 };
 
-#endif // ACTIONGOTO_H
+#endif // ACTIONGOTODEFINITION_H

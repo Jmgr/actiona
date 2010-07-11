@@ -21,27 +21,27 @@
 #ifndef ACTIONPACKDEVICE_H
 #define ACTIONPACKDEVICE_H
 
-#include "actionpackinterface.h"
-#include "actiontext.h"
-#include "actionclick.h"
+#include "actionpack.h"
+#include "actiontextdefinition.h"
+#include "actionclickdefinition.h"
 
 #include <QtCore/qplugin.h>
 
 namespace ActionTools
 {
-	class ActionInterface;
+	class ActionDefinition;
 }
 
-class ActionPackDevice : public QObject, public ActionTools::ActionPackInterface
+class ActionPackDevice : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
-	Q_INTERFACES(ActionTools::ActionPackInterface)
+	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
 	ActionPackDevice()
 	{
-		addActionInterface(new ActionText(this));
-		addActionInterface(new ActionClick(this));
+		addActionDefinition(new ActionTextDefinition(this));
+		addActionDefinition(new ActionClickDefinition(this));
 	}
 
 	QString id() const							{ return tr("device"); }

@@ -18,27 +18,27 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONGETCLIPBOARD_H
-#define ACTIONGETCLIPBOARD_H
+#ifndef ACTIONGETCLIPBOARDDEFINITION_H
+#define ACTIONGETCLIPBOARDDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actiongetclipboardinstance.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionGetClipboard : public QObject, public ActionTools::ActionInterface
+class ActionGetClipboardDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionGetClipboard(ActionTools::ActionPackInterface *pack)
-	: ActionGetClipboard::ActionInterface(pack)
+	explicit ActionGetClipboardDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition( ActionTools::ElementDefinition::OUTPUT,
 																								"variable",
@@ -48,19 +48,18 @@ public:
 		addElement(output);
 	}
 
-	QString name() const											{ return QObject::tr("Get clipboard"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Get the clipboard contents"); }
-	Tools::Version version() const									{ return Tools::Version(1, 0, 0); }
-	ActionTools::Action *newAction()								{ return new ActionGetClipboardInstance(this, 0); }
-	Status status() const											{ return Stable; }
-	Category category() const										{ return System; }
-	QPixmap icon() const											{ return QPixmap(":/icons/clipboard.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionGetClipboard) }
+	QString name() const													{ return QObject::tr("Get clipboard"); }
+	QString id() const														{ return "ActionGetClipboard"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Get the clipboard contents"); }
+	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionGetClipboardInstance(this); }
+	Status status() const													{ return Stable; }
+	Category category() const												{ return System; }
+	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionGetClipboard)
+	Q_DISABLE_COPY(ActionGetClipboardDefinition)
 };
 
-#endif // ACTIONGETCLIPBOARD_H
+#endif // ACTIONGETCLIPBOARDDEFINITION_H

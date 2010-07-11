@@ -18,10 +18,10 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONNOTIFY_H
-#define ACTIONNOTIFY_H
+#ifndef ACTIONNOTIFYDEFINITION_H
+#define ACTIONNOTIFYDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actionnotifyinstance.h"
 #include "textparameterdefinition.h"
 #include "numberparameterdefinition.h"
@@ -29,17 +29,17 @@
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionNotify : public QObject, public ActionTools::ActionInterface
+class ActionNotifyDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionNotify(ActionTools::ActionPackInterface *pack)
-	: ActionInterface(pack)
+	explicit ActionNotifyDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition( ActionTools::ElementDefinition::INPUT,
 																								"title",
@@ -73,20 +73,19 @@ public:
 		addElement(icon, 1);
 	}
 
-	QString name() const											{ return QObject::tr("Notify"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnGnuLinux | Official; }
-	QString description() const										{ return QObject::tr("Shows a message using the notify system"); }
-	Tools::Version version() const									{ return Tools::Version(1, 0, 0); }
-	ActionTools::Action *newAction()								{ return new ActionNotifyInstance(this, 0); }
-	Status status() const											{ return Stable; }
-	Category category() const										{ return System; }
-	QPixmap icon() const											{ return QPixmap(":/icons/clipboard.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionNotify) }
-	QStringList tabs() const										{ return QStringList() << tr("Standard") << tr("Advanced"); }
+	QString name() const													{ return QObject::tr("Notify"); }
+	QString id() const														{ return "ActionNotify"; }
+	Flag flags() const														{ return WorksOnGnuLinux | Official; }
+	QString description() const												{ return QObject::tr("Shows a message using the notify system"); }
+	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionNotifyInstance(this); }
+	Status status() const													{ return Stable; }
+	Category category() const												{ return System; }
+	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+	QStringList tabs() const												{ return QStringList() << tr("Standard") << tr("Advanced"); }
 
 private:
-	Q_DISABLE_COPY(ActionNotify)
+	Q_DISABLE_COPY(ActionNotifyDefinition)
 };
 
-#endif // ACTIONNOTIFY_H
+#endif // ACTIONNOTIFYDEFINITION_H

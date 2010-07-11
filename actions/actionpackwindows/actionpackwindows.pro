@@ -3,12 +3,11 @@ TARGET = ActionPackWindows
 QT += script
 SOURCES += actiontextinputinstance.cpp
 HEADERS += actionpackwindows.h \
-	actiontextinput.h \
+	actiontextinputdefinition.h \
 	actiontextinputinstance.h
 RESOURCES += actionpackwindows.qrc
-win32:CONFIG -= embed_manifest_dll
 
 # MessageBox
 SOURCES += actionmessageboxinstance.cpp
-HEADERS += actionmessagebox.h \
+HEADERS += actionmessageboxdefinition.h \
 	actionmessageboxinstance.h

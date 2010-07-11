@@ -38,7 +38,7 @@ namespace Ui
 namespace ActionTools
 {
 	class ActionFactory;
-	class Action;
+	class ActionInstance;
 }
 
 namespace Tools
@@ -157,7 +157,7 @@ private:
 	void updateUndoRedoStatus();
 	void execute(bool onlySelection);
 	void fillNewActionTreeWidget(NewActionTreeWidget *widget);
-	bool editAction(ActionTools::Action *action, const QString &field = QString(), const QString &subField = QString(), int line = -1, int column = -1);
+	bool editAction(ActionTools::ActionInstance *actionInstance, const QString &field = QString(), const QString &subField = QString(), int line = -1, int column = -1);
 	void openParametersDialog(int parameter = -1, int line = -1, int column = -1);
 	QList<int> selectedRows() const;
 	bool loadFile(const QString &fileName);

@@ -21,7 +21,7 @@
 #include "datetimeparameterdefinition.h"
 #include "subparameter.h"
 #include "codedatetimeedit.h"
-#include "action.h"
+#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -41,14 +41,14 @@ namespace ActionTools
 		addEditor(mDateTimeEdit);
 	}
 
-	void DateTimeParameterDefinition::load(const Action *action)
+	void DateTimeParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mDateTimeEdit->setFromSubParameter(action->subParameter(name(), "value"));
+		mDateTimeEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
 	}
 
-	void DateTimeParameterDefinition::save(Action *action)
+	void DateTimeParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "value", mDateTimeEdit->isCode(), mDateTimeEdit->text());
+		actionInstance->setSubParameter(name(), "value", mDateTimeEdit->isCode(), mDateTimeEdit->text());
 	}
 
 	void DateTimeParameterDefinition::setDefaultValues(Parameter &data)

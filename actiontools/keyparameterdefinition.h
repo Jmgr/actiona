@@ -36,8 +36,8 @@ namespace ActionTools
 		KeyParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
-		void load(const Action *action);
-		void save(Action *action);
+		void load(const ActionInstance *actionInstance);
+		void save(ActionInstance *actionInstance);
 		void setDefaultValues(Parameter &data);
 
 	private:

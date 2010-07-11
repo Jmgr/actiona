@@ -22,7 +22,7 @@
 #include "ui_mainwindow.h"
 
 #include "actionfactory.h"
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actionbuffer.h"
 #include "script.h"
 #include "scriptmodel.h"
@@ -43,7 +43,7 @@
 #include "globalshortcutmanager.h"
 #include "changelogdialog.h"
 #include "sevenziparchivewrite.h"
-#include "actionpackinterface.h"
+#include "actionpack.h"
 #include "sfxscriptdialog.h"
 #include "executionenvironment.h"
 #include "executionalgorithms.h"
@@ -209,15 +209,15 @@ void MainWindow::postInit()
 	mActionFactory->loadActionPacks();
 
 	//Create one instance of every action to build the completion model
-	for(int actionInterfaceIndex = 0; actionInterfaceIndex < mActionFactory->actionCount(); ++actionInterfaceIndex)
+	for(int actionDefinitionIndex = 0; actionDefinitionIndex < mActionFactory->actionDefinitionCount(); ++actionDefinitionIndex)
 	{
-		ActionTools::ActionInterface *actionInterface =	mActionFactory->actionInterface(actionInterfaceIndex);
-		ActionTools::Action *action = actionInterface->newAction();
+		ActionTools::ActionDefinition *actionDefinition =	mActionFactory->actionDefinition(actionDefinitionIndex);
+		ActionTools::ActionInstance *actionInstance = actionDefinition->newActionInstance();
 		QStringList ignoreList(QStringList() << "deleteLater" << "startExecution" << "stopExecution");
 
-		ActionTools::addClassKeywords(action->metaObject(), actionInterface->id(), actionInterface->icon(), mCompletionModel, ignoreList);
+		ActionTools::addClassKeywords(actionInstance->metaObject(), actionDefinition->id(), actionDefinition->icon(), mCompletionModel, ignoreList);
 
-		delete action;
+		delete actionInstance;
 	}
 	
 	//Add Environment & Algorithms class
@@ -241,7 +241,7 @@ void MainWindow::postInit()
 
 	fillNewActionTreeWidget(ui->newActionTreeWidget);
 
-	statusBar()->showMessage(tr("Ready, loaded %1 actions from %2 packs").arg(mActionFactory->actionCount()).arg(mActionFactory->packCount()));
+	statusBar()->showMessage(tr("Ready, loaded %1 actions from %2 packs").arg(mActionFactory->actionDefinitionCount()).arg(mActionFactory->packCount()));
 
 	ui->actionActions_window->setChecked(ui->actionsDockWidget->isVisible());
 	ui->actionConsole_window->setChecked(ui->consoleDockWidget->isVisible());
@@ -615,23 +615,23 @@ void MainWindow::on_actionExport_executable_triggered()
 
 	progressDialog.setLabelText(tr("Adding actions..."));
 
-	QSet<ActionTools::ActionPackInterface *> addedPacks;
+	QSet<ActionTools::ActionPack *> addedPacks;
 	for(int index = 0; index < mActionFactory->actionCount(); ++index)
 	{
-		ActionTools::ActionInterface *actionInterface = mActionFactory->actionInterface(index);
-		if(!actionInterface)
+		ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(index);
+		if(!actionDefinition)
 			continue;
 
-		if(addedPacks.contains(actionInterface->pack()))
+		if(addedPacks.contains(actionDefinition->pack()))
 			continue;
 
-		addedPacks.insert(actionInterface->pack());
+		addedPacks.insert(actionDefinition->pack());
 
-		if(!archive.addFile(QDir::current().relativeFilePath(actionInterface->pack()->filename())))
+		if(!archive.addFile(QDir::current().relativeFilePath(actionDefinition->pack()->filename())))
 		{
 			QFile::remove(archivePath);
 			QFile::remove(scriptPath);
-			QMessageBox::warning(this, tr("Create SFX script"), tr("Failed to add the action pack %1 to the SFX archive.").arg(actionInterface->pack()->filename()));
+			QMessageBox::warning(this, tr("Create SFX script"), tr("Failed to add the action pack %1 to the SFX archive.").arg(actionDefinition->pack()->filename()));
 			return;
 		}
 	}
@@ -753,21 +753,21 @@ void MainWindow::on_actionExecute_selection_triggered()
 	//Unselect all
 	for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
 	{
-		ActionTools::Action *action = mScript->actionAt(actionIndex);
-		if(!action)
+		ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
+		if(!actionInstance)
 			continue;
 
-		action->setSelected(false);
+		actionInstance->setSelected(false);
 	}
 
 	//Set the current selection
 	foreach(int row, selection)
 	{
-		ActionTools::Action *action = mScript->actionAt(row);
-		if(!action)
+		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
+		if(!actionInstance)
 			continue;
 
-		action->setSelected(true);
+		actionInstance->setSelected(true);
 	}
 
 	execute(true);
@@ -817,13 +817,13 @@ void MainWindow::on_actionSet_action_color_triggered()
 	if(selection.count() == 0)
 		return;
 
-	ActionTools::Action *firstAction = mScript->actionAt(selection.at(0));
-	if(!firstAction)
+	ActionTools::ActionInstance *firstActionInstance = mScript->actionAt(selection.at(0));
+	if(!firstActionInstance)
 		return;
 
-	QColorDialog *colorDialog = new QColorDialog(firstAction->color(), this);
+	QColorDialog *colorDialog = new QColorDialog(firstActionInstance->color(), this);
 	colorDialog->setOptions(QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
-	colorDialog->setCurrentColor(firstAction->color());
+	colorDialog->setCurrentColor(firstActionInstance->color());
 
 	if(colorDialog->exec() == QDialog::Accepted)
 		mScriptModel->setActionsColor(selection, colorDialog->currentColor());
@@ -858,7 +858,7 @@ void MainWindow::on_actionDisable_selection_triggered()
 
 void MainWindow::on_actionNew_action_triggered()
 {
-	if(mActionFactory->actionCount() == 0)
+	if(mActionFactory->actionDefinitionCount() == 0)
 		return;
 
 	NewActionDialog *dialog = new NewActionDialog(mActionFactory, this);
@@ -1235,28 +1235,28 @@ void MainWindow::execute(bool onlySelection)
 
 void MainWindow::fillNewActionTreeWidget(NewActionTreeWidget *widget)
 {
-	for(int i = 0; i < ActionTools::ActionInterface::CategoryCount; ++i)
+	for(int i = 0; i < ActionTools::ActionDefinition::CategoryCount; ++i)
 	{
-		QTreeWidgetItem *item = new QTreeWidgetItem(QStringList(ActionTools::ActionInterface::CategoryName[i]));
+		QTreeWidgetItem *item = new QTreeWidgetItem(QStringList(ActionTools::ActionDefinition::CategoryName[i]));
 
 		widget->addTopLevelItem(item);
 
-		if(mActionFactory->actionCount(static_cast<ActionTools::ActionInterface::Category>(i)) == 0)
+		if(mActionFactory->actionDefinitionCount(static_cast<ActionTools::ActionDefinition::Category>(i)) == 0)
 			item->setFlags(Qt::NoItemFlags);
 		else
 			item->setFlags(Qt::ItemIsEnabled);
 	}
 
-	for(int i = 0; i < mActionFactory->actionCount(); ++i)
+	for(int i = 0; i < mActionFactory->actionDefinitionCount(); ++i)
 	{
-		ActionTools::ActionInterface *actionInterface = mActionFactory->actionInterface(i);
+		ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(i);
 
-		QTreeWidgetItem *parentItem = widget->topLevelItem(actionInterface->category());
-		QTreeWidgetItem *item = new QTreeWidgetItem(parentItem, QStringList(actionInterface->name()));
+		QTreeWidgetItem *parentItem = widget->topLevelItem(actionDefinition->category());
+		QTreeWidgetItem *item = new QTreeWidgetItem(parentItem, QStringList(actionDefinition->name()));
 
-		item->setIcon(0, actionInterface->icon());
-		item->setToolTip(0, actionInterface->description());
-		item->setData(0, NewActionTreeWidget::ActionIdRole, actionInterface->id());
+		item->setIcon(0, actionDefinition->icon());
+		item->setToolTip(0, actionDefinition->description());
+		item->setData(0, NewActionTreeWidget::ActionIdRole, actionDefinition->id());
 	}
 
 	widget->expandAll();
@@ -1285,23 +1285,23 @@ void MainWindow::wantToAddAction(int row, const QString &actionId)
 
 void MainWindow::addAction()
 {
-	ActionTools::ActionInterface *interface = mActionFactory->actionInterface(mAddAction);
-	if(!interface)
+	ActionTools::ActionDefinition *definition = mActionFactory->actionDefinition(mAddAction);
+	if(!definition)
 		return;
 
-	ActionTools::Action *action = interface->newAction();
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = definition->newActionInstance();
+	if(!actionInstance)
 		return;
 
-	if(editAction(action))
+	if(editAction(actionInstance))
 	{
 		if(mAddActionRow == mScript->actionCount())
 			ui->scriptView->scrollToBottom();
 
-		mScriptModel->insertAction(mAddActionRow, ActionTools::ActionBuffer(mAddAction, *action));
+		mScriptModel->insertAction(mAddActionRow, ActionTools::ActionBuffer(mAddAction, *actionInstance));
 	}
 
-	delete action;//Always delete it, since the model creates a copy of it...
+	delete actionInstance;//Always delete it, since the model creates a copy of it...
 }
 
 void MainWindow::openRecentFile()
@@ -1614,16 +1614,16 @@ void MainWindow::postDownloadOperation()
 }
 #endif
 
-bool MainWindow::editAction(ActionTools::Action *action, const QString &field, const QString &subField, int line, int column)
+bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, const QString &field, const QString &subField, int line, int column)
 {
-	if(!action)
+	if(!actionInstance)
 		return false;
 
-	if(action->interface()->elements().count() == 0)
+	if(actionInstance->definition()->elements().count() == 0)
 		return true;
 
-	ActionTools::ParametersData previousData = action->parametersData();
-	ActionDialog *dialog = new ActionDialog(mCompletionModel, mScript, action, this);
+	ActionTools::ParametersData previousData = actionInstance->parametersData();
+	ActionDialog *dialog = new ActionDialog(mCompletionModel, mScript, actionInstance, this);
 	dialog->setCurrentField(field, subField);
 	dialog->setCurrentLine(line);
 	dialog->setCurrentColumn(column);
@@ -1631,7 +1631,7 @@ bool MainWindow::editAction(ActionTools::Action *action, const QString &field, c
 
 	if(result == QDialog::Accepted)
 	{
-		if(previousData != action->parametersData())
+		if(previousData != actionInstance->parametersData())
 			scriptEdited();
 	}
 
@@ -1821,11 +1821,11 @@ void MainWindow::actionSelectionChanged(int selectionCount)
 	bool hasSelectionEnabledActions = false;
 	foreach(int row, selectedRows())
 	{
-		ActionTools::Action *action = mScript->actionAt(row);
-		if(!action)
+		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
+		if(!actionInstance)
 			continue;
 
-		if(action->isEnabled())
+		if(actionInstance->isEnabled())
 		{
 			hasSelectionEnabledActions = true;
 			break;

@@ -22,18 +22,15 @@
 #define ACTIONSTOPINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
-class ActionStopInstance : public ActionTools::Action
+class ActionStopInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionStopInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent)										{}
-	ActionStopInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent)												{}
-	~ActionStopInstance()																{}
+	ActionStopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)										{}
 
 	void startExecution()
 	{

@@ -21,7 +21,7 @@
 #include "listparameterdefinition.h"
 #include "subparameter.h"
 #include "codecombobox.h"
-#include "action.h"
+#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -52,16 +52,16 @@ namespace ActionTools
 		emit editorBuilt();
 	}
 
-	void ListParameterDefinition::load(const Action *action)
+	void ListParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		const SubParameter &subParameter = action->subParameter(name(), "value");
+		const SubParameter &subParameter = actionInstance->subParameter(name(), "value");
 		mComboBox->setCode(subParameter.isCode());
 		mComboBox->setEditText(translatedNameFromOriginalName(subParameter.value().toString()));
 	}
 
-	void ListParameterDefinition::save(Action *action)
+	void ListParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "value", mComboBox->isCode(), originalNameFromTranslatedName(mComboBox->currentText()));
+		actionInstance->setSubParameter(name(), "value", mComboBox->isCode(), originalNameFromTranslatedName(mComboBox->currentText()));
 	}
 
 	void ListParameterDefinition::setDefaultValues(Parameter &data)

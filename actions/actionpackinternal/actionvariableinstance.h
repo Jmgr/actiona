@@ -22,19 +22,16 @@
 #define ACTIONVARIABLEINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "script.h"
 
-class ActionVariableInstance : public ActionTools::Action
+class ActionVariableInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionVariableInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent)										{}
-	ActionVariableInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent)												{}
-	~ActionVariableInstance()															{}
+	ActionVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)										{}
 
 	void startExecution()
 	{

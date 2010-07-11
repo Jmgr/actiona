@@ -23,7 +23,7 @@
 
 #include "actiontools_global.h"
 #include "subparameter.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "stringlistpair.h"
 
 #include <QObject>
@@ -39,7 +39,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ActionExecution(Action *action, Script *script, QScriptEngine *scriptEngine);
+		ActionExecution(ActionInstance *actionInstance, Script *script, QScriptEngine *scriptEngine);
 		~ActionExecution();
 
 		bool evaluateString(QString &buffer,
@@ -72,11 +72,11 @@ namespace ActionTools
 		QString errorMessage()						{ return mErrorMessage; }
 
 	signals:
-		void evaluationError(	ActionTools::Action::ExecutionException exceptionType,
+		void evaluationError(	ActionTools::ActionInstance::ExecutionException exceptionType,
 								const QString &message);
 
 	private:
-		Action *mAction;
+		ActionInstance *mActionInstance;
 		Script *mScript;
 		QScriptEngine *mScriptEngine;
 		QString mErrorMessage;

@@ -19,8 +19,8 @@
 */
 
 #include "script.h"
-#include "action.h"
-#include "actioninterface.h"
+#include "actioninstance.h"
+#include "actiondefinition.h"
 #include "actionfactory.h"
 #include "parameter.h"
 #include "subparameter.h"
@@ -45,41 +45,41 @@ namespace ActionTools
 
 	Script::~Script()
 	{
-		qDeleteAll(mActions);
+		qDeleteAll(mActionInstances);
 	}
 
-	Action *Script::appendAction(const QString &actionId)
+	ActionInstance *Script::appendAction(const QString &actionDefinitionId)
 	{
-		Action *action = mActionFactory->newAction(actionId);
-		if(!action)
+		ActionInstance *actionInstance = mActionFactory->newActionInstance(actionDefinitionId);
+		if(!actionInstance)
 			return 0;
 
-		appendAction(action);
+		appendAction(actionInstance);
 
-		return action;
+		return actionInstance;
 	}
 
-	Action *Script::actionAt(int line) const
+	ActionInstance *Script::actionAt(int line) const
 	{
-		if(line < 0 || line >= mActions.size())
+		if(line < 0 || line >= mActionInstances.size())
 			return 0;
 
-		return mActions.at(line);
+		return mActionInstances.at(line);
 	}
 
-	void Script::insertAction(int line, Action *action)
+	void Script::insertAction(int line, ActionInstance *actionInstance)
 	{
-		mActions.insert(line, action);
+		mActionInstances.insert(line, actionInstance);
 	}
 
-	void Script::setAction(int line, Action *action)
+	void Script::setAction(int line, ActionInstance *actionInstance)
 	{
-		if(line < 0 || line >= mActions.size())
+		if(line < 0 || line >= mActionInstances.size())
 			return;
 
-		delete mActions.at(line);
+		delete mActionInstances.at(line);
 
-		mActions[line] = action;
+		mActionInstances[line] = actionInstance;
 	}
 
 	void Script::removeActions(int line, int count)
@@ -93,15 +93,15 @@ namespace ActionTools
 
 	void Script::removeAction(int line)
 	{
-		if(line < 0 || line >= mActions.size())
+		if(line < 0 || line >= mActionInstances.size())
 			return;
 
-		delete mActions.takeAt(line);
+		delete mActionInstances.takeAt(line);
 	}
 
-	void Script::removeAction(Action *action)
+	void Script::removeAction(ActionInstance *actionInstance)
 	{
-		int index = mActions.indexOf(action);
+		int index = mActionInstances.indexOf(actionInstance);
 
 		if(index == -1)
 			return;
@@ -111,27 +111,27 @@ namespace ActionTools
 
 	void Script::removeAll()
 	{
-		qDeleteAll(mActions);
-		mActions.clear();
+		qDeleteAll(mActionInstances);
+		mActionInstances.clear();
 	}
 
 	void Script::moveAction(int startLine, int endLine)
 	{
-		if(startLine < 0 || startLine >= mActions.count() ||
+		if(startLine < 0 || startLine >= mActionInstances.count() ||
 		   endLine < 0 || startLine == endLine)
 		return;
 
-		if(endLine >= mActions.count())
-			mActions.append(mActions.takeAt(startLine));
+		if(endLine >= mActionInstances.count())
+			mActionInstances.append(mActionInstances.takeAt(startLine));
 		else
-			mActions.move(startLine, endLine);
+			mActionInstances.move(startLine, endLine);
 	}
 
 	int Script::labelLine(const QString &label) const
 	{
-		for(int i = 0; i < mActions.count(); ++i)
+		for(int i = 0; i < mActionInstances.count(); ++i)
 		{
-			if(mActions.at(i)->label() == label)
+			if(mActionInstances.at(i)->label() == label)
 				return i;
 		}
 
@@ -140,9 +140,9 @@ namespace ActionTools
 
 	bool Script::hasEnabledActions() const
 	{
-		foreach(Action *action, mActions)
+		foreach(ActionInstance *actionInstance, mActionInstances)
 		{
-			if(action->isEnabled())
+			if(actionInstance->isEnabled())
 				return true;
 		}
 
@@ -152,18 +152,18 @@ namespace ActionTools
 	QSet<int> Script::usedActions() const
 	{
 		QSet<int> result;
-		int actionCount = mActionFactory->actionCount();
+		int actionCount = mActionFactory->actionDefinitionCount();
 		QStringList actions;
 
 		for(int actionIndex = 0; actionIndex < actionCount; ++actionIndex)
-			actions << mActionFactory->actionInterface(actionIndex)->id();
+			actions << mActionFactory->actionDefinition(actionIndex)->id();
 
 		//First add all the actions contained in the script, then search in all data fields that are in code mode
-		foreach(Action *action, mActions)
+		foreach(ActionInstance *actionInstance, mActionInstances)
 		{
-			result << action->interface()->index();
+			result << actionInstance->definition()->index();
 
-			const ParametersData &parametersData = action->parametersData();
+			const ParametersData &parametersData = actionInstance->parametersData();
 			foreach(const Parameter &parameter, parametersData)
 			{
 				foreach(const SubParameter &subParameter, parameter.subParameters())
@@ -217,11 +217,11 @@ namespace ActionTools
 
 		foreach(int actionIndex, usedActions())
 		{
-			ActionInterface *actionInterface = mActionFactory->actionInterface(actionIndex);
+			ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionIndex);
 
 			stream.writeStartElement("action");
-			stream.writeAttribute("name", actionInterface->id());
-			stream.writeAttribute("version", actionInterface->version().toString());
+			stream.writeAttribute("name", actionDefinition->id());
+			stream.writeAttribute("version", actionDefinition->version().toString());
 			stream.writeEndElement();
 		}
 
@@ -242,21 +242,21 @@ namespace ActionTools
 
 		stream.writeStartElement("script");
 
-		foreach(Action *action, mActions)
+		foreach(ActionInstance *actionInstance, mActionInstances)
 		{
 			stream.writeStartElement("action");
-			stream.writeAttribute("name", action->interface()->id());
+			stream.writeAttribute("name", actionInstance->definition()->id());
 
-			if(!action->label().isEmpty())
-				stream.writeAttribute("label", action->label());
-			if(!action->comment().isEmpty())
-				stream.writeAttribute("comment", action->comment());
-			if(action->color().isValid() && action->color() != Qt::transparent)
-				stream.writeAttribute("color", action->color().name());
-			if(!action->isEnabled())
-				stream.writeAttribute("enabled", QVariant(action->isEnabled()).toString());
+			if(!actionInstance->label().isEmpty())
+				stream.writeAttribute("label", actionInstance->label());
+			if(!actionInstance->comment().isEmpty())
+				stream.writeAttribute("comment", actionInstance->comment());
+			if(actionInstance->color().isValid() && actionInstance->color() != Qt::transparent)
+				stream.writeAttribute("color", actionInstance->color().name());
+			if(!actionInstance->isEnabled())
+				stream.writeAttribute("enabled", QVariant(actionInstance->isEnabled()).toString());
 
-			const ParametersData &parametersData = action->parametersData();
+			const ParametersData &parametersData = actionInstance->parametersData();
 			foreach(const QString &parameter, parametersData.keys())
 			{
 				const Parameter &parameterData = parametersData.value(parameter);
@@ -293,8 +293,8 @@ namespace ActionTools
 
 	Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion)
 	{
-		qDeleteAll(mActions);
-		mActions.clear();
+		qDeleteAll(mActionInstances);
+		mActionInstances.clear();
 		mParameters.clear();
 		mMissingActions.clear();
 
@@ -357,8 +357,8 @@ namespace ActionTools
 					QString name = attributes.value("name").toString();
 					//TODO : Do something with the action version
 
-					ActionInterface *actionInterface = mActionFactory->actionInterface(name);
-					if(!actionInterface)
+					ActionDefinition *actionDefinition = mActionFactory->actionDefinition(name);
+					if(!actionDefinition)
 						mMissingActions << name;
 				}
 			}
@@ -396,8 +396,8 @@ namespace ActionTools
 					bool enabled = (attributes.hasAttribute("enabled") ? QVariant(attributes.value("enabled").toString()).toBool() : true);
 
 					//Add a new action
-					Action *newAction = mActionFactory->newAction(name);
-					if(!newAction)
+					ActionInstance *actionInstance = mActionFactory->newActionInstance(name);
+					if(!actionInstance)
 						continue;
 
 					ParametersData parametersData;
@@ -434,13 +434,13 @@ namespace ActionTools
 						parametersData.insert(parameterName, parameterData);
 					}
 
-					newAction->setLabel(label);
-					newAction->setComment(comment);
-					newAction->setParametersData(parametersData);
-					newAction->setColor(color);
-					newAction->setEnabled(enabled);
+					actionInstance->setLabel(label);
+					actionInstance->setComment(comment);
+					actionInstance->setParametersData(parametersData);
+					actionInstance->setColor(color);
+					actionInstance->setEnabled(enabled);
 
-					appendAction(newAction);
+					appendAction(actionInstance);
 				}
 			}
 		}
@@ -485,10 +485,10 @@ namespace ActionTools
 	{
 		QStringList back;
 
-		foreach(const Action *action, mActions)
+		foreach(const ActionInstance *actionInstance, mActionInstances)
 		{
-			if(!action->label().isEmpty())
-				back << action->label();
+			if(!actionInstance->label().isEmpty())
+				back << actionInstance->label();
 		}
 
 		return back;

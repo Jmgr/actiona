@@ -18,10 +18,10 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONMESSAGEBOX_H
-#define ACTIONMESSAGEBOX_H
+#ifndef ACTIONMESSAGEBOXDEFINITION_H
+#define ACTIONMESSAGEBOXDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actionmessageboxinstance.h"
 #include "textparameterdefinition.h"
 #include "listparameterdefinition.h"
@@ -30,17 +30,17 @@
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionMessageBox : public QObject, public ActionTools::ActionInterface
+class ActionMessageBoxDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionMessageBox(ActionTools::ActionPackInterface *pack)
-	: ActionMessageBox::ActionInterface(pack)
+	explicit ActionMessageBoxDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
 																								"message",
@@ -100,20 +100,19 @@ public:
 		addElement(yesNoGroup, 1);
 	}
 
-	QString name() const											{ return QObject::tr("Message Box"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Shows a message box"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionMessageBoxInstance(this, 0); }
-	Status status() const											{ return Alpha; }
-	Category category() const										{ return Windows; }
-	QPixmap icon() const											{ return QPixmap(":/icons/msg.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionMessageBox) }
-	QStringList tabs() const										{ return QStringList() << tr("Standard") << tr("Advanced"); }
+	QString name() const													{ return QObject::tr("Message Box"); }
+	QString id() const														{ return "ActionMessageBox"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Shows a message box"); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionMessageBoxInstance(this); }
+	Status status() const													{ return Alpha; }
+	Category category() const												{ return Windows; }
+	QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
+	QStringList tabs() const												{ return QStringList() << tr("Standard") << tr("Advanced"); }
 
 private:
-	Q_DISABLE_COPY(ActionMessageBox)
+	Q_DISABLE_COPY(ActionMessageBoxDefinition)
 };
 
-#endif // ACTIONMESSAGEBOX_H
+#endif // ACTIONMESSAGEBOXDEFINITION_H

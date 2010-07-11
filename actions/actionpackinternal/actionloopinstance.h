@@ -22,18 +22,15 @@
 #define ACTIONLOOPINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
-class ActionLoopInstance : public ActionTools::Action
+class ActionLoopInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionLoopInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent), mInitialized(false), mCounter(0)		{}
-	ActionLoopInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent), mInitialized(false), mCounter(0)				{}
-	~ActionLoopInstance()																{}
+	ActionLoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent), mInitialized(false), mCounter(0)		{}
 
 	void startExecution()
 	{

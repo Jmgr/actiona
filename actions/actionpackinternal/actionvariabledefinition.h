@@ -18,10 +18,10 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONVARIABLE_H
-#define ACTIONVARIABLE_H
+#ifndef ACTIONVARIABLEDEFINITION_H
+#define ACTIONVARIABLEDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actionvariableinstance.h"
 #include "variableparameterdefinition.h"
 #include "textparameterdefinition.h"
@@ -29,17 +29,17 @@
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionVariable : public QObject, public ActionTools::ActionInterface
+class ActionVariableDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionVariable(ActionTools::ActionPackInterface *pack)
-	: ActionInterface(pack)
+	explicit ActionVariableDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::ElementDefinition::OUTPUT,
 																								"variable",
@@ -56,19 +56,18 @@ public:
 		addElement(value);
 	}
 
-	QString name() const											{ return QObject::tr("Variable"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Set the value of a variable"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionVariableInstance(this, 0); }
-	Status status() const											{ return Stable; }
-	Category category() const										{ return Internal; }
-	QPixmap icon() const											{ return QPixmap(":/icons/goto.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionVariable) }
+	QString name() const													{ return QObject::tr("Variable"); }
+	QString id() const														{ return "ActionVariable"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Set the value of a variable"); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionVariableInstance(this); }
+	Status status() const													{ return Stable; }
+	Category category() const												{ return Internal; }
+	QPixmap icon() const													{ return QPixmap(":/icons/goto.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionVariable)
+	Q_DISABLE_COPY(ActionVariableDefinition)
 };
 
-#endif // ACTIONVARIABLE_H
+#endif // ACTIONVARIABLEDEFINITION_H

@@ -18,27 +18,27 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONLOOP_H
-#define ACTIONLOOP_H
+#ifndef ACTIONLOOPDEFINITION_H
+#define ACTIONLOOPDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actionloopinstance.h"
 #include "lineparameterdefinition.h"
 #include "numberparameterdefinition.h"
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionLoop : public QObject, public ActionTools::ActionInterface
+class ActionLoopDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionLoop(ActionTools::ActionPackInterface *pack)
-	: ActionLoop::ActionInterface(pack)
+	explicit ActionLoopDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition(	ActionTools::ElementDefinition::INPUT,
 																								"line",
@@ -56,19 +56,18 @@ public:
 		addElement(count);
 	}
 
-	QString name() const											{ return QObject::tr("Loop"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Go to a script line a specific number of times"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionLoopInstance(this, 0); }
-	Status status() const											{ return Alpha; }
-	Category category() const										{ return Internal; }
-	QPixmap icon() const											{ return QPixmap(":/icons/loop.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionLoop) }
+	QString name() const													{ return QObject::tr("Loop"); }
+	QString id() const														{ return "ActionLoop"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Go to a script line a specific number of times"); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionLoopInstance(this); }
+	Status status() const													{ return Alpha; }
+	Category category() const												{ return Internal; }
+	QPixmap icon() const													{ return QPixmap(":/icons/loop.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionLoop)
+	Q_DISABLE_COPY(ActionLoopDefinition)
 };
 
-#endif // ACTIONLOOP_H
+#endif // ACTIONLOOPDEFINITION_H

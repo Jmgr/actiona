@@ -22,11 +22,11 @@
 #define ACTIONMESSAGEBOXINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
 #include <QMessageBox>
 
-class ActionMessageBoxInstance : public ActionTools::Action
+class ActionMessageBoxInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 	Q_ENUMS(Icon)
@@ -54,9 +54,7 @@ public:
 		No
 	};
 
-	ActionMessageBoxInstance(ActionTools::ActionInterface *interface, QObject *parent = 0);
-	ActionMessageBoxInstance(QObject *parent = 0);
-	~ActionMessageBoxInstance();
+	ActionMessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
 	static ActionTools::StringListPair icons;
 	static ActionTools::StringListPair types;

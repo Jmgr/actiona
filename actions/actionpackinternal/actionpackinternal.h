@@ -21,37 +21,37 @@
 #ifndef ACTIONPACKINTERNAL_H
 #define ACTIONPACKINTERNAL_H
 
-#include "actionpackinterface.h"
-#include "actionpause.h"
-#include "actioncode.h"
-#include "actiongoto.h"
-#include "actionloop.h"
-#include "actionnoop.h"
-#include "actionstop.h"
-#include "actionvariable.h"
+#include "actionpack.h"
+#include "actionpausedefinition.h"
+#include "actioncodedefinition.h"
+#include "actiongotodefinition.h"
+#include "actionloopdefinition.h"
+#include "actionnoopdefinition.h"
+#include "actionstopdefinition.h"
+#include "actionvariabledefinition.h"
 
 #include <QtCore/qplugin.h>
 
 namespace ActionTools
 {
-	class ActionInterface;
+	class ActionDefinition;
 }
 
-class ActionPackInternal : public QObject, public ActionTools::ActionPackInterface
+class ActionPackInternal : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
-	Q_INTERFACES(ActionTools::ActionPackInterface)
+	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
 	ActionPackInternal()
 	{
-		addActionInterface(new ActionPause(this));
-		addActionInterface(new ActionCode(this));
-		addActionInterface(new ActionGoto(this));
-		addActionInterface(new ActionLoop(this));
-		addActionInterface(new ActionNoop(this));
-		addActionInterface(new ActionStop(this));
-		addActionInterface(new ActionVariable(this));
+		addActionDefinition(new ActionPauseDefinition(this));
+		addActionDefinition(new ActionCodeDefinition(this));
+		addActionDefinition(new ActionGotoDefinition(this));
+		addActionDefinition(new ActionLoopDefinition(this));
+		addActionDefinition(new ActionNoopDefinition(this));
+		addActionDefinition(new ActionStopDefinition(this));
+		addActionDefinition(new ActionVariableDefinition(this));
 	}
 
 	QString id() const								{ return tr("internal"); }

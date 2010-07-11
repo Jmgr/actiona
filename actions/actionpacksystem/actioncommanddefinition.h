@@ -18,10 +18,10 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONCOMMAND_H
-#define ACTIONCOMMAND_H
+#ifndef ACTIONCOMMANDDEFINITION_H
+#define ACTIONCOMMANDDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actioncommandinstance.h"
 #include "textparameterdefinition.h"
 #include "fileparameterdefinition.h"
@@ -29,17 +29,17 @@
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionCommand : public QObject, public ActionTools::ActionInterface
+class ActionCommandDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionCommand(ActionTools::ActionPackInterface *pack)
-	: ActionInterface(pack)
+	explicit ActionCommandDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::TextParameterDefinition *command = new ActionTools::TextParameterDefinition( ActionTools::ElementDefinition::INPUT,
 																								"command",
@@ -100,20 +100,19 @@ public:
 		addElement(exitStatus, 1);
 	}
 
-	QString name() const											{ return QObject::tr("Command"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Executes a command"); }
-	Tools::Version version() const									{ return Tools::Version(1, 0, 0); }
-	ActionTools::Action *newAction()								{ return new ActionCommandInstance(this, 0); }
-	Status status() const											{ return Stable; }
-	Category category() const										{ return System; }
-	QPixmap icon() const											{ return QPixmap(":/icons/clipboard.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionCommand) }
-	QStringList tabs() const										{ return QStringList() << tr("Standard") << tr("Advanced"); }
+	QString name() const													{ return QObject::tr("Command"); }
+	QString id() const														{ return "ActionCommand"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Executes a command"); }
+	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionCommandInstance(this); }
+	Status status() const													{ return Stable; }
+	Category category() const												{ return System; }
+	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+	QStringList tabs() const												{ return QStringList() << tr("Standard") << tr("Advanced"); }
 
 private:
-	Q_DISABLE_COPY(ActionCommand)
+	Q_DISABLE_COPY(ActionCommandDefinition)
 };
 
-#endif // ACTIONCOMMAND_H
+#endif // ACTIONCOMMANDDEFINITION_H

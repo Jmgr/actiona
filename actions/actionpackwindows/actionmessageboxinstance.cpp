@@ -33,19 +33,9 @@ ActionTools::StringListPair ActionMessageBoxInstance::types = qMakePair(
 		QStringList() << "ok" << "yesno",
 		QStringList() << tr("Ok") << tr("Yes-No"));
 
-ActionMessageBoxInstance::ActionMessageBoxInstance(ActionTools::ActionInterface *interface, QObject *parent)
-	: ActionTools::Action(interface, parent),
+ActionMessageBoxInstance::ActionMessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
+	: ActionTools::ActionInstance(definition, parent),
 	mMessageBox(0)
-{
-}
-
-ActionMessageBoxInstance::ActionMessageBoxInstance(QObject *parent)
-	: ActionTools::Action(0, parent),
-	mMessageBox(0)
-{
-}
-
-ActionMessageBoxInstance::~ActionMessageBoxInstance()
 {
 }
 

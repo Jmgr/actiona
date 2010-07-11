@@ -53,7 +53,7 @@ void ActionClickInstance::startExecution()
 
 	if(amount <= 0)
 	{
-		emit executionException(ActionTools::Action::Error, tr("Invalid click amount"));
+		emit executionException(ActionTools::ActionInstance::Error, tr("Invalid click amount"));
 		return;
 	}
 
@@ -61,7 +61,7 @@ void ActionClickInstance::startExecution()
 
 	if(stringCoordinates.count() != 2)
 	{
-		emit executionException(ActionTools::Action::Error, tr("Invalid click coordinates"));
+		emit executionException(ActionTools::ActionInstance::Error, tr("Invalid click coordinates"));
 		return;
 	}
 
@@ -73,7 +73,7 @@ void ActionClickInstance::startExecution()
 
 	if(!okX || !okY)
 	{
-		emit executionException(ActionTools::Action::Error, tr("Invalid click coordinates"));
+		emit executionException(ActionTools::ActionInstance::Error, tr("Invalid click coordinates"));
 		return;
 	}
 
@@ -81,7 +81,7 @@ void ActionClickInstance::startExecution()
 	Display *display = XOpenDisplay(0);
 	if(!display)
 	{
-		emit executionException(ActionTools::Action::Error, tr("Unable to emulate click : cannot open display"));
+		emit executionException(ActionTools::ActionInstance::Error, tr("Unable to emulate click : cannot open display"));
 		return;
 	}
 

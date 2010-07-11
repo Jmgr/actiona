@@ -21,33 +21,33 @@
 #ifndef ACTIONPACKSYSTEM_H
 #define ACTIONPACKSYSTEM_H
 
-#include "actionpackinterface.h"
-#include "actiongetclipboard.h"
-#include "actionsetclipboard.h"
-#include "actioncommand.h"
-#include "actionkillprocess.h"
-#include "actionnotify.h"
+#include "actionpack.h"
+#include "actiongetclipboarddefinition.h"
+#include "actionsetclipboarddefinition.h"
+#include "actioncommanddefinition.h"
+#include "actionkillprocessdefinition.h"
+#include "actionnotifydefinition.h"
 
 #include <QtCore/qplugin.h>
 
 namespace ActionTools
 {
-	class ActionInterface;
+	class ActionDefinition;
 }
 
-class ActionPackSystem : public QObject, public ActionTools::ActionPackInterface
+class ActionPackSystem : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
-	Q_INTERFACES(ActionTools::ActionPackInterface)
+	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
 	ActionPackSystem()
 	{
-		addActionInterface(new ActionGetClipboard(this));
-		addActionInterface(new ActionSetClipboard(this));
-		addActionInterface(new ActionCommand(this));
-		addActionInterface(new ActionKillProcess(this));
-		addActionInterface(new ActionNotify(this));
+		addActionDefinition(new ActionGetClipboardDefinition(this));
+		addActionDefinition(new ActionSetClipboardDefinition(this));
+		addActionDefinition(new ActionCommandDefinition(this));
+		addActionDefinition(new ActionKillProcessDefinition(this));
+		addActionDefinition(new ActionNotifyDefinition(this));
 	}
 
 	QString id() const							{ return tr("system"); }

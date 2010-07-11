@@ -13,8 +13,8 @@ FORMS += codeeditordialog.ui
 include(widgets.pri)
 include(parameters.pri)
 SOURCES += actionfactory.cpp \
-	action.cpp \
-	actioninterface.cpp \
+	actioninstance.cpp \
+	actiondefinition.cpp \
 	codeeditordialog.cpp \
 	codehighlighter.cpp \
 	script.cpp \
@@ -31,10 +31,10 @@ SOURCES += actionfactory.cpp \
 	keywords.cpp \
 	messagehandler.cpp
 HEADERS += actiontools_global.h \
-	actionpackinterface.h \
+	actionpack.h \
 	actionfactory.h \
-	actioninterface.h \
-	action.h \
+	actiondefinition.h \
+	actioninstance.h \
 	parameter.h \
 	subparameter.h \
 	scriptparameter.h \

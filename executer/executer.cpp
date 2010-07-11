@@ -24,7 +24,7 @@
 #include "executionwindow.h"
 #include "consolewidget.h"
 #include "scriptparameter.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "executionenvironment.h"
 #include "executionalgorithms.h"
 
@@ -191,20 +191,20 @@ bool Executer::startExecution(bool onlySelection)
 
 	mScriptAgent->setContext(ScriptAgent::ActionInit);
 
-	int actionCount = mActionFactory->actionCount();
+	int actionCount = mActionFactory->actionDefinitionCount();
 	for(int actionIndex = 0; actionIndex < actionCount; ++actionIndex)
 	{
-		ActionTools::ActionInterface *actionInterface = mActionFactory->actionInterface(actionIndex);
+		ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionIndex);
 
-		ActionTools::Action *action = actionInterface->scriptInit(&mScriptEngine);
-		action->setupExecution(&mScriptEngine, mScript);
+		ActionTools::ActionInstance *actionInstance = actionDefinition->scriptInit(&mScriptEngine);
+		actionInstance->setupExecution(&mScriptEngine, mScript);
 	}
 	
 	for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
 	{
-		ActionTools::Action *action = mScript->actionAt(actionIndex);
-		action->reset();
-		action->setupExecution(&mScriptEngine, mScript);
+		ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
+		actionInstance->reset();
+		actionInstance->setupExecution(&mScriptEngine, mScript);
 		mActionEnabled.append(true);
 	}
 	
@@ -339,7 +339,7 @@ void Executer::startFirstAction()
 	executeCurrentAction();
 }
 
-void Executer::executionException(ActionTools::Action::ExecutionException exceptionType,
+void Executer::executionException(ActionTools::ActionInstance::ExecutionException exceptionType,
 								  const QString &message)
 {
 	mConsoleWidget->addActionLine(tr("Line %1 : ").arg(mCurrentActionIndex+1) + message,
@@ -348,9 +348,9 @@ void Executer::executionException(ActionTools::Action::ExecutionException except
 								  mScriptEngine.evaluate("currentSubParameter").toString(),
 								  mScriptAgent->currentLine(),
 								  mScriptAgent->currentColumn(),
-								  (exceptionType == ActionTools::Action::Error) ? ActionTools::ConsoleWidget::Error : ActionTools::ConsoleWidget::Warning);
+								  (exceptionType == ActionTools::ActionInstance::Error) ? ActionTools::ConsoleWidget::Error : ActionTools::ConsoleWidget::Warning);
 
-	if(exceptionType == ActionTools::Action::Error)
+	if(exceptionType == ActionTools::ActionInstance::Error)
 		stopExecution();
 }
 
@@ -378,7 +378,7 @@ void Executer::startNextAction()
 
 	if(nextLine == mCurrentActionIndex)
 	{
-		executionException(ActionTools::Action::Error, tr("Incorrect Script.nextLine value : %1").arg(nextLineString));
+		executionException(ActionTools::ActionInstance::Error, tr("Incorrect Script.nextLine value : %1").arg(nextLineString));
 		return;
 	}
 
@@ -394,10 +394,10 @@ void Executer::startNextAction()
 			break;
 		}
 
-		executionException(ActionTools::Action::Error, tr("Incorrect Script.nextLine value : %1").arg(nextLineString));
+		executionException(ActionTools::ActionInstance::Error, tr("Incorrect Script.nextLine value : %1").arg(nextLineString));
 		return;
 	case InvalidAction:
-		executionException(ActionTools::Action::Error, tr("The action at line %1 is invalid").arg(nextLineString));
+		executionException(ActionTools::ActionInstance::Error, tr("The action at line %1 is invalid").arg(nextLineString));
 		return;
 	case DisabledAction:
 		mCurrentActionIndex = nextLine;
@@ -415,14 +415,14 @@ Executer::ExecuteActionResult Executer::canExecuteAction(int index) const
 	if(index < 0 || index >= mScript->actionCount())
 		return IncorrectLine;
 
-	ActionTools::Action *action = mScript->actionAt(index);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mScript->actionAt(index);
+	if(!actionInstance)
 		return InvalidAction;
 
-	if(!mActionEnabled[index] || !action->isEnabled())
+	if(!mActionEnabled[index] || !actionInstance->isEnabled())
 		return DisabledAction;
 
-	if(mExecuteOnlySelection && !action->isSelected())
+	if(mExecuteOnlySelection && !actionInstance->isSelected())
 		return UnselectedAction;
 
 	return CanExecute;
@@ -450,16 +450,16 @@ void Executer::executeCurrentAction()
 	QScriptValue script = mScriptEngine.globalObject().property("Script");
 	script.setProperty("nextLine", mScriptEngine.newVariant(QVariant(nextLine)));
 
-	ActionTools::Action *action = mScript->actionAt(mCurrentActionIndex);
+	ActionTools::ActionInstance *actionInstance = mScript->actionAt(mCurrentActionIndex);
 
-	mExecutionWindow->setCurrentActionName(action->interface()->name());
-	mExecutionWindow->setCurrentActionColor(action->color());
+	mExecutionWindow->setCurrentActionName(actionInstance->definition()->name());
+	mExecutionWindow->setCurrentActionColor(actionInstance->color());
 
-	connect(action, SIGNAL(executionEnded()), this, SLOT(actionExecutionEnded()));
-	connect(action, SIGNAL(executionException(ActionTools::Action::ExecutionException,QString)), this, SLOT(executionException(ActionTools::Action::ExecutionException,QString)));
-	connect(action, SIGNAL(disableAction(bool)), this, SLOT(disableAction(bool)));
+	connect(actionInstance, SIGNAL(executionEnded()), this, SLOT(actionExecutionEnded()));
+	connect(actionInstance, SIGNAL(executionException(ActionTools::ActionInstance::ExecutionException,QString)), this, SLOT(executionException(ActionTools::ActionInstance::ExecutionException,QString)));
+	connect(actionInstance, SIGNAL(disableAction(bool)), this, SLOT(disableAction(bool)));
 
-	action->startExecution();
+	actionInstance->startExecution();
 }
 
 void Executer::addClassToScript(QObject *classPointer, const QString &name)

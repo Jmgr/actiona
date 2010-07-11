@@ -22,18 +22,15 @@
 #define ACTIONCODEINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
-class ActionCodeInstance : public ActionTools::Action
+class ActionCodeInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionCodeInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent)										{}
-	ActionCodeInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent)												{}
-	~ActionCodeInstance()																{}
+	ActionCodeInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)										{}
 
 	void startExecution()
 	{

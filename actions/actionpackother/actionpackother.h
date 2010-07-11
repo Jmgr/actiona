@@ -21,19 +21,19 @@
 #ifndef ACTIONPACKOTHER_H
 #define ACTIONPACKOTHER_H
 
-#include "actionpackinterface.h"
+#include "actionpack.h"
 
 #include <QtCore/qplugin.h>
 
 namespace ActionTools
 {
-	class ActionInterface;
+	class ActionDefinition;
 }
 
-class ActionPackOther : public QObject, public ActionTools::ActionPackInterface
+class ActionPackOther : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
-	Q_INTERFACES(ActionTools::ActionPackInterface)
+	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
 	ActionPackOther()

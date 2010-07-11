@@ -20,9 +20,9 @@
 
 #include "actiondialog.h"
 #include "ui_actiondialog.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "script.h"
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "elementdefinition.h"
 #include "groupdefinition.h"
 #include "parameterdefinition.h"
@@ -37,10 +37,10 @@
 #include <QMessageBox>
 #include <QFormLayout>
 
-ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::Action *action, QWidget *parent)
+ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionInstance *actionInstance, QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::ActionDialog),
-        mAction(action),
+    mActionInstance(actionInstance),
 	mScript(script),
 	mCurrentLine(-1),
 	mCurrentColumn(-1),
@@ -48,20 +48,20 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 {
 	ui->setupUi(this);
 
-	ActionTools::ActionInterface *actionInterface(action->interface());
-	const QList<ActionTools::ElementDefinition *> elements(actionInterface->elements());
+	ActionTools::ActionDefinition *actionDefinition(actionInstance->definition());
+	const QList<ActionTools::ElementDefinition *> elements(actionDefinition->elements());
 
-	ui->actionIcon->setPixmap(actionInterface->icon());
-	ui->actionName->setText("<h2>" + actionInterface->name() + "</h2>");
-	ui->actionDescription->setText("<i>" + actionInterface->description() + "</i>");
+	ui->actionIcon->setPixmap(actionDefinition->icon());
+	ui->actionName->setText("<h2>" + actionDefinition->name() + "</h2>");
+	ui->actionDescription->setText("<i>" + actionDefinition->description() + "</i>");
 
 	QString informations;
-	QString author = actionInterface->author();
-	QString email = actionInterface->email();
-	QString website = actionInterface->website();
-	Tools::Version version = actionInterface->version();
-	ActionTools::ActionInterface::Status status = actionInterface->status();
-	const QStringList &tabs = actionInterface->tabs();
+	QString author = actionDefinition->author();
+	QString email = actionDefinition->email();
+	QString website = actionDefinition->website();
+	Tools::Version version = actionDefinition->version();
+	ActionTools::ActionDefinition::Status status = actionDefinition->status();
+	const QStringList &tabs = actionDefinition->tabs();
 
 	int tabCount = tabs.count();
 	if(tabCount == 0)
@@ -142,10 +142,10 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 	switch(status)
 	{
-	case ActionTools::ActionInterface::Alpha:	statusString = tr("Alpha"); break;
-	case ActionTools::ActionInterface::Beta:	statusString = tr("Beta"); break;
-	case ActionTools::ActionInterface::Testing:	statusString = tr("Testing"); break;
-	case ActionTools::ActionInterface::Stable:	statusString = tr("Stable"); break;
+	case ActionTools::ActionDefinition::Alpha:	statusString = tr("Alpha"); break;
+	case ActionTools::ActionDefinition::Beta:	statusString = tr("Beta"); break;
+	case ActionTools::ActionDefinition::Testing:	statusString = tr("Testing"); break;
+	case ActionTools::ActionDefinition::Stable:	statusString = tr("Stable"); break;
 	}
 
 	informations += QString(" (%1)").arg(statusString);
@@ -187,8 +187,8 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 ActionDialog::~ActionDialog()
 {
-	ActionTools::ActionInterface *actionInterface(mAction->interface());
-	const QList<ActionTools::ElementDefinition *> elements(actionInterface->elements());
+	ActionTools::ActionDefinition *actionDefinition(mActionInstance->definition());
+	const QList<ActionTools::ElementDefinition *> elements(actionDefinition->elements());
 	foreach(ActionTools::ElementDefinition *element, elements)
 	{
 		if(ActionTools::GroupDefinition *currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
@@ -201,7 +201,7 @@ ActionDialog::~ActionDialog()
 void ActionDialog::accept()
 {
 	foreach(ActionTools::ParameterDefinition *parameter, mParameters)
-		parameter->save(mAction);
+		parameter->save(mActionInstance);
 
 	QDialog::accept();
 }
@@ -229,7 +229,7 @@ void ActionDialog::postInit()
 
 				if(!mCurrentSubField.isEmpty())
 				{
-					QString value = mAction->subParameter(mCurrentField, mCurrentSubField).value().toString();
+					QString value = mActionInstance->subParameter(mCurrentField, mCurrentSubField).value().toString();
 					if(value.contains('\n'))//Multiline : open the editor
 					{
 						if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(editorWidget))
@@ -280,7 +280,7 @@ QLayout *ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter)
 		layout->addWidget(editor);
 	}
 
-	parameter->load(mAction);
+	parameter->load(mActionInstance);
 
 	mParameters.append(parameter);
 

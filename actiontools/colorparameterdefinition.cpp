@@ -21,7 +21,7 @@
 #include "colorparameterdefinition.h"
 #include "subparameter.h"
 #include "coloredit.h"
-#include "action.h"
+#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -41,14 +41,14 @@ namespace ActionTools
 		addEditor(mColorEdit);
 	}
 
-	void ColorParameterDefinition::load(const Action *action)
+	void ColorParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mColorEdit->setFromSubParameter(action->subParameter(name(), "value"));
+		mColorEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
 	}
 
-	void ColorParameterDefinition::save(Action *action)
+	void ColorParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "value", mColorEdit->isCode(), mColorEdit->text());
+		actionInstance->setSubParameter(name(), "value", mColorEdit->isCode(), mColorEdit->text());
 	}
 
 	void ColorParameterDefinition::setDefaultValues(Parameter &data)

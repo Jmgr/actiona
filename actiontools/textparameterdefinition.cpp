@@ -21,7 +21,7 @@
 #include "textparameterdefinition.h"
 #include "subparameter.h"
 #include "codelineedit.h"
-#include "action.h"
+#include "actioninstance.h"
 
 #include <QDebug>
 
@@ -51,14 +51,14 @@ namespace ActionTools
 		addEditor(mLineEdit);
 	}
 
-	void TextParameterDefinition::load(const Action *action)
+	void TextParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mLineEdit->setFromSubParameter(action->subParameter(name(), "value"));
+		mLineEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
 	}
 
-	void TextParameterDefinition::save(Action *action)
+	void TextParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "value", mLineEdit->isCode(), mLineEdit->text());
+		actionInstance->setSubParameter(name(), "value", mLineEdit->isCode(), mLineEdit->text());
 	}
 
 	void TextParameterDefinition::setDefaultValues(Parameter &data)

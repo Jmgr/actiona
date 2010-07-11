@@ -3,30 +3,29 @@ TARGET = ActionPackInternal
 QT += script
 SOURCES +=
 HEADERS += actionpackinternal.h \
-	actionstop.h \
+	actionstopdefinition.h \
 	actionstopinstance.h \
-	actionvariable.h \
+	actionvariabledefinition.h \
 	actionvariableinstance.h
 RESOURCES += actionpackinternal.qrc
-win32:CONFIG -= embed_manifest_dll
 
 # Pause
-HEADERS += actionpause.h \
+HEADERS += actionpausedefinition.h \
 	actionpauseinstance.h
 
 # Code
-HEADERS += actioncode.h \
+HEADERS += actioncodedefinition.h \
 	actioncodeinstance.h
 
 # Goto
-HEADERS += actiongoto.h \
+HEADERS += actiongotodefinition.h \
 	actiongotoinstance.h
 
 # Loop
-HEADERS += actionloop.h \
+HEADERS += actionloopdefinition.h \
 	actionloopinstance.h
 SOURCES +=
 
 # No-op
-HEADERS += actionnoop.h \
+HEADERS += actionnoopdefinition.h \
 	actionnoopinstance.h

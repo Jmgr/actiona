@@ -22,18 +22,16 @@
 #define ACTIONTEXTINPUTINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
 class QInputDialog;
 
-class ActionTextInputInstance : public ActionTools::Action
+class ActionTextInputInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionTextInputInstance(ActionTools::ActionInterface *interface, QObject *parent = 0);
-	ActionTextInputInstance(QObject *parent = 0);
-	~ActionTextInputInstance();
+	ActionTextInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
 	void startExecution();
 	void stopExecution();

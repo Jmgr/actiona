@@ -22,12 +22,12 @@
 #define ACTIONFACTORY_H
 
 #include "actiontools_global.h"
-#include "actioninterface.h"
+#include "actiondefinition.h"
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 
 	class ACTIONTOOLSSHARED_EXPORT ActionFactory : public QObject
 	{
@@ -38,11 +38,10 @@ namespace ActionTools
 		~ActionFactory();
 
 		void loadActionPacks();
-		ActionInterface *actionInterface(const QString &actionId) const;
-		ActionInterface *actionInterface(int index) const;
-		Action *newAction(const QString &actionId) const;
-		Action *newAction(ActionInterface *interface) const;
-		int actionCount(ActionInterface::Category category = ActionInterface::None) const;
+		ActionDefinition *actionDefinition(const QString &actionId) const;
+		ActionDefinition *actionDefinition(int index) const;
+		ActionInstance *newActionInstance(const QString &actionDefinitionId) const;
+		int actionDefinitionCount(ActionDefinition::Category category = ActionDefinition::None) const;
 		int packCount()	const					{ return mActionPacks.count(); }
 
 	signals:
@@ -52,8 +51,8 @@ namespace ActionTools
 		void clear();
 		void loadActionPack(const QString &filename);
 
-		QList<ActionInterface *> mActions;
-		QList<ActionPackInterface *> mActionPacks;
+		QList<ActionDefinition *> mActionDefinitions;
+		QList<ActionPack *> mActionPacks;
 
 		Q_DISABLE_COPY(ActionFactory)
 	};

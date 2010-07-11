@@ -21,7 +21,7 @@
 #include "numberparameterdefinition.h"
 #include "subparameter.h"
 #include "codespinbox.h"
-#include "action.h"
+#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -50,14 +50,14 @@ namespace ActionTools
 		addEditor(mSpinBox);
 	}
 
-	void NumberParameterDefinition::load(const Action *action)
+	void NumberParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mSpinBox->setFromSubParameter(action->subParameter(name(), "value"));
+		mSpinBox->setFromSubParameter(actionInstance->subParameter(name(), "value"));
 	}
 
-	void NumberParameterDefinition::save(Action *action)
+	void NumberParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "value", mSpinBox->isCode(), QString::number(mSpinBox->value()));
+		actionInstance->setSubParameter(name(), "value", mSpinBox->isCode(), QString::number(mSpinBox->value()));
 	}
 
 	void NumberParameterDefinition::setDefaultValues(Parameter &data)

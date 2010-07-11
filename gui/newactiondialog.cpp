@@ -21,7 +21,7 @@
 #include "newactiondialog.h"
 #include "ui_newactiondialog.h"
 #include "actionfactory.h"
-#include "actioninterface.h"
+#include "actiondefinition.h"
 
 NewActionDialog::NewActionDialog(ActionTools::ActionFactory *actionFactory, QWidget *parent)
 	: QDialog(parent),
@@ -76,33 +76,33 @@ void NewActionDialog::on_newActionTreeWidget_currentItemChanged(QTreeWidgetItem 
 	Q_UNUSED(previous)
 
 	const QString &actionId = current->data(0, NewActionTreeWidget::ActionIdRole).toString();
-	ActionTools::ActionInterface *actionInterface = mActionFactory->actionInterface(actionId);
-	if(!actionInterface)
+	ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionId);
+	if(!actionDefinition)
 		return;
 
-	ui->actionDescription->setText(actionInterface->description());
-	ui->versionLabel->setText(actionInterface->version().toString());
+	ui->actionDescription->setText(actionDefinition->description());
+	ui->versionLabel->setText(actionDefinition->version().toString());
 
 	QString status;
-	switch(actionInterface->status())
+	switch(actionDefinition->status())
 	{
-	case ActionTools::ActionInterface::Alpha:
+	case ActionTools::ActionDefinition::Alpha:
 		status = tr("Alpha");
 		break;
-	case ActionTools::ActionInterface::Beta:
+	case ActionTools::ActionDefinition::Beta:
 		status = tr("Beta");
 		break;
-	case ActionTools::ActionInterface::Testing:
+	case ActionTools::ActionDefinition::Testing:
 		status = tr("Testing");
 		break;
-	case ActionTools::ActionInterface::Stable:
+	case ActionTools::ActionDefinition::Stable:
 		status = tr("Stable");
 		break;
 	}
 	ui->statusLabel->setText(status);
 
 	QString official;
-	if(actionInterface->flags() & ActionTools::ActionInterface::Official)
+	if(actionDefinition->flags() & ActionTools::ActionDefinition::Official)
 		official = tr("Yes");
 	else
 		official = tr("No");

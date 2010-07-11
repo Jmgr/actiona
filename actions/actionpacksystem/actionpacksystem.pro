@@ -2,15 +2,15 @@ include(../common_actions.pri)
 TARGET = ActionPackSystem
 QT += script
 HEADERS += actionpacksystem.h \
-	actiongetclipboard.h \
+	actiongetclipboarddefinition.h \
 	actiongetclipboardinstance.h \
-	actionsetclipboard.h \
+	actionsetclipboarddefinition.h \
 	actionsetclipboardinstance.h \
-	actioncommand.h \
+	actioncommanddefinition.h \
 	actioncommandinstance.h \
-	actionkillprocess.h \
+	actionkillprocessdefinition.h \
 	actionkillprocessinstance.h \
-	actionnotify.h \
+	actionnotifydefinition.h \
 	actionnotifyinstance.h
 RESOURCES += actionpacksystem.qrc
 HEADERS +=
@@ -18,4 +18,3 @@ SOURCES += actionkillprocessinstance.cpp \
 	actionnotifyinstance.cpp
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
-win32:CONFIG -= embed_manifest_dll

@@ -22,21 +22,18 @@
 #define ACTIONSETCLIPBOARDINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
 #include <QApplication>
 #include <QClipboard>
 
-class ActionSetClipboardInstance : public ActionTools::Action
+class ActionSetClipboardInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionSetClipboardInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent)											{}
-	ActionSetClipboardInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent)													{}
-	~ActionSetClipboardInstance()															{}
+	ActionSetClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)											{}
 
 	void startExecution()
 	{

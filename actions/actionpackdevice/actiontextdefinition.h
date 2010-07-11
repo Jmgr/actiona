@@ -18,26 +18,26 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONTEXT_H
-#define ACTIONTEXT_H
+#ifndef ACTIONTEXTDEFINITION_H
+#define ACTIONTEXTDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actiontextinstance.h"
 #include "textparameterdefinition.h"
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionText : public QObject, public ActionTools::ActionInterface
+class ActionTextDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionText(ActionTools::ActionPackInterface *pack)
-	: ActionText::ActionInterface(pack)
+	explicit ActionTextDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::ElementDefinition::INPUT,
 																								"text",
@@ -47,19 +47,18 @@ public:
 		addElement(text);
 	}
 
-	QString name() const											{ return QObject::tr("Text"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Write some text"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionTextInstance(this, 0); }
-	Status status() const											{ return Alpha; }
-	Category category() const										{ return Device; }
-	QPixmap icon() const											{ return QPixmap(":/icons/key.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionText) }
+	QString name() const													{ return QObject::tr("Text"); }
+	QString id() const														{ return "ActionText"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Write some text"); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionTextInstance(this); }
+	Status status() const													{ return Alpha; }
+	Category category() const												{ return Device; }
+	QPixmap icon() const													{ return QPixmap(":/icons/key.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionText)
+	Q_DISABLE_COPY(ActionTextDefinition)
 };
 
-#endif // ACTIONTEXT_H
+#endif // ACTIONTEXTDEFINITION_H

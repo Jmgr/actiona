@@ -22,7 +22,7 @@
 #define ACTIONCOMMANDINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "script.h"
 
 #include <QProcess>
@@ -32,22 +32,16 @@
 #include <windows.h>
 #endif
 
-class ActionCommandInstance : public ActionTools::Action
+class ActionCommandInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionCommandInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent), mProcess(new QProcess(this))
+	ActionCommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent), mProcess(new QProcess(this))
 	{
 		connect(mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
 	}
-	ActionCommandInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent), mProcess(new QProcess(this))
-	{
-		connect(mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
-	}
-	~ActionCommandInstance()																	{}
 
 	void startExecution()
 	{

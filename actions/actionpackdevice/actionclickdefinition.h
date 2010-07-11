@@ -18,10 +18,10 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONCLICK_H
-#define ACTIONCLICK_H
+#ifndef ACTIONCLICKDEFINITION_H
+#define ACTIONCLICKDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actionclickinstance.h"
 #include "listparameterdefinition.h"
 #include "numberparameterdefinition.h"
@@ -31,17 +31,17 @@
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionClick : public QObject, public ActionTools::ActionInterface
+class ActionClickDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionClick(ActionTools::ActionPackInterface *pack)
-	: ActionClick::ActionInterface(pack)
+	explicit ActionClickDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
 																								"button",
@@ -70,19 +70,18 @@ public:
 		addElement(position);
 	}
 
-	QString name() const											{ return QObject::tr("Click"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Emulates a mouse click"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionClickInstance(this, 0); }
-	Status status() const											{ return Alpha; }
-	Category category() const										{ return Device; }
-	QPixmap icon() const											{ return QPixmap(":/icons/code.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionClick) }
+	QString name() const													{ return QObject::tr("Click"); }
+	QString id() const														{ return "ActionClick"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Emulates a mouse click"); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionClickInstance(this); }
+	Status status() const													{ return Alpha; }
+	Category category() const												{ return Device; }
+	QPixmap icon() const													{ return QPixmap(":/icons/code.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionClick)
+	Q_DISABLE_COPY(ActionClickDefinition)
 };
 
-#endif // ACTIONCLICK_H
+#endif // ACTIONCLICKDEFINITION_H

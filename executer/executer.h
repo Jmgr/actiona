@@ -22,7 +22,7 @@
 #define EXECUTER_H
 
 #include "executer_global.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "scriptagent.h"
 
 #include <QObject>
@@ -77,7 +77,7 @@ signals:
 
 private slots:
 	void startFirstAction();
-	void executionException(ActionTools::Action::ExecutionException exceptionType,
+	void executionException(ActionTools::ActionInstance::ExecutionException exceptionType,
 							const QString &message);
 	void actionExecutionEnded();
 	void disableAction(bool disable);

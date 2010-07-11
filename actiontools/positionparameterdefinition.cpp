@@ -20,7 +20,7 @@
 
 #include "positionparameterdefinition.h"
 #include "positionedit.h"
-#include "action.h"
+#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -40,14 +40,14 @@ namespace ActionTools
 		addEditor(mPositionEdit);
 	}
 
-	void PositionParameterDefinition::load(const Action *action)
+	void PositionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mPositionEdit->setFromSubParameter(action->subParameter(name(), "value"));
+		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
 	}
 
-	void PositionParameterDefinition::save(Action *action)
+	void PositionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "value", mPositionEdit->isCode(), mPositionEdit->text());
+		actionInstance->setSubParameter(name(), "value", mPositionEdit->isCode(), mPositionEdit->text());
 	}
 
 	void PositionParameterDefinition::setDefaultValues(Parameter &data)

@@ -18,10 +18,10 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPAUSE_H
-#define ACTIONPAUSE_H
+#ifndef ACTIONPAUSEDEFINITION_H
+#define ACTIONPAUSEDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "numberparameterdefinition.h"
 #include "actionpauseinstance.h"
 
@@ -29,17 +29,17 @@
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionPause : public QObject, public ActionTools::ActionInterface
+class ActionPauseDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionPause(ActionTools::ActionPackInterface *pack)
-	: ActionPause::ActionInterface(pack)
+	explicit ActionPauseDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition(ActionTools::ElementDefinition::INPUT,
 																								"duration",
@@ -53,19 +53,18 @@ public:
 		addElement(duration);
 	}
 
-	QString name() const											{ return QObject::tr("Pause"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Pauses the script execution"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionPauseInstance(this, 0); }
-	Status status() const											{ return Alpha; }
-	Category category() const										{ return Internal; }
-	QPixmap icon() const											{ return QPixmap(":/icons/sleep.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionPause) }
+	QString name() const													{ return QObject::tr("Pause"); }
+	QString id() const														{ return "ActionPause"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Pauses the script execution"); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionPauseInstance(this); }
+	Status status() const													{ return Alpha; }
+	Category category() const												{ return Internal; }
+	QPixmap icon() const													{ return QPixmap(":/icons/sleep.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionPause)
+	Q_DISABLE_COPY(ActionPauseDefinition)
 };
 
-#endif // ACTIONPAUSE_H
+#endif // ACTIONPAUSEDEFINITION_H

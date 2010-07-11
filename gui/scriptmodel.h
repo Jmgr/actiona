@@ -30,7 +30,7 @@
 namespace ActionTools
 {
 	class Script;
-	class Action;
+	class ActionInstance;
 	class ActionFactory;
 }
 

@@ -7,13 +7,13 @@
 
 namespace ActionTools
 {
-	ActionExecution::ActionExecution(Action *action, Script *script, QScriptEngine *scriptEngine)
-			: mAction(action),
+	ActionExecution::ActionExecution(ActionInstance *actionInstance, Script *script, QScriptEngine *scriptEngine)
+			: mActionInstance(actionInstance),
 			mScript(script),
 			mScriptEngine(scriptEngine)
 	{
-		connect(this, SIGNAL(evaluationError(ActionTools::Action::ExecutionException,QString)),
-				action, SIGNAL(executionException(ActionTools::Action::ExecutionException,QString)));
+		connect(this, SIGNAL(evaluationError(ActionTools::ActionInstance::ExecutionException,QString)),
+				actionInstance, SIGNAL(executionException(ActionTools::ActionInstance::ExecutionException,QString)));
 	}
 
 	ActionExecution::~ActionExecution()
@@ -27,7 +27,7 @@ namespace ActionTools
 		mParameterName = parameterName;
 		mSubParameterName = subParameterName;
 
-		const SubParameter &toEvaluate = mAction->subParameter(parameterName, subParameterName);
+		const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
 		if(toEvaluate.value().toString().isEmpty())
 		{
 			buffer = QString();
@@ -49,7 +49,7 @@ namespace ActionTools
 		mParameterName = parameterName;
 		mSubParameterName = subParameterName;
 
-		const SubParameter &toEvaluate = mAction->subParameter(parameterName, subParameterName);
+		const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
 		
 		if(!evaluate(toEvaluate))
 			return false;
@@ -59,7 +59,7 @@ namespace ActionTools
 		if(!buffer.isEmpty() && !buffer.contains(QRegExp("^[a-zA-Z0-9]+$")))
 		{
 			mErrorMessage = tr("A variable name can only contain alphanumeric characters.");
-			emit evaluationError(Action::Error, mErrorMessage);
+			emit evaluationError(ActionInstance::Error, mErrorMessage);
 			return false;
 		}
 
@@ -73,7 +73,7 @@ namespace ActionTools
 		mParameterName = parameterName;
 		mSubParameterName = subParameterName;
 
-		const SubParameter &toEvaluate = mAction->subParameter(parameterName, subParameterName);
+		const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
 
 		if(!evaluate(toEvaluate))
 			return false;
@@ -92,7 +92,7 @@ namespace ActionTools
 		mParameterName = parameterName;
 		mSubParameterName = subParameterName;
 
-		const SubParameter &toEvaluate = mAction->subParameter(parameterName, subParameterName);
+		const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
 		if(!evaluate(toEvaluate))
 			return false;
 
@@ -111,7 +111,7 @@ namespace ActionTools
 		mParameterName = parameterName;
 		mSubParameterName = subParameterName;
 
-		const SubParameter &toEvaluate = mAction->subParameter(parameterName, subParameterName);
+		const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
 		if(!evaluate(toEvaluate))
 			return false;
 
@@ -142,7 +142,7 @@ namespace ActionTools
 		if(!success || buffer < 0 || buffer >= listElements.first.count())
 		{
 			mErrorMessage = tr("\"%1\" is incorrect.").arg(toEvaluate.value().toString());
-			emit evaluationError(Action::Error, mErrorMessage);
+			emit evaluationError(ActionInstance::Error, mErrorMessage);
 			return false;
 		}
 
@@ -179,7 +179,7 @@ namespace ActionTools
 					if(!mScript->hasVariable(foundVariables.at(i)))
 					{
 						mErrorMessage = tr("Unknown variable : %1").arg(foundVariables.at(i));
-						emit evaluationError(Action::Error, mErrorMessage);
+						emit evaluationError(ActionInstance::Error, mErrorMessage);
 						return false;
 					}
 					
@@ -196,7 +196,7 @@ namespace ActionTools
 		if(result.isError())
 		{
 			mErrorMessage = result.toString();
-			emit evaluationError(Action::Error, mErrorMessage);
+			emit evaluationError(ActionInstance::Error, mErrorMessage);
 			return false;
 		}
 

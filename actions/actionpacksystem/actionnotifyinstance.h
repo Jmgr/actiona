@@ -22,18 +22,17 @@
 #define ACTIONNOTIFYINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "script.h"
 
 struct _NotifyNotification;
 
-class ActionNotifyInstance : public ActionTools::Action
+class ActionNotifyInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionNotifyInstance(ActionTools::ActionInterface *interface, QObject *parent = 0);
-	ActionNotifyInstance(QObject *parent = 0);
+	ActionNotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 	~ActionNotifyInstance();
 
 	void startExecution();

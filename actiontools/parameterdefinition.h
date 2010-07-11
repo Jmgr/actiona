@@ -32,7 +32,7 @@ class QWidget;
 
 namespace ActionTools
 {
-	class Action;
+	class ActionInstance;
 	class Script;
 
 	class ACTIONTOOLSSHARED_EXPORT ParameterDefinition : public ElementDefinition
@@ -44,8 +44,8 @@ namespace ActionTools
 		virtual ~ParameterDefinition()												{}
 
 		virtual void buildEditors(Script *script, QWidget *parent);
-		virtual void load(const Action *action) = 0;
-		virtual void save(Action *action) = 0;
+		virtual void load(const ActionInstance *actionInstance) = 0;
+		virtual void save(ActionInstance *actionInstance) = 0;
 		virtual void setDefaultValues(Parameter &data) = 0;
 
 		QList<QWidget *> editors() const											{ return mEditors; }

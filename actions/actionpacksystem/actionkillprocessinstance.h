@@ -22,11 +22,11 @@
 #define ACTIONKILLPROCESSINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "script.h"
 #include "crossplatform.h"
 
-class ActionKillProcessInstance : public ActionTools::Action
+class ActionKillProcessInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 	Q_ENUMS(KillMode)
@@ -39,11 +39,8 @@ public:
 		GracefulThenForceful = ActionTools::CrossPlatform::GracefulThenForceful
 	};
 
-	ActionKillProcessInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent)												{}
-	ActionKillProcessInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent)														{}
-	~ActionKillProcessInstance()																{}
+	ActionKillProcessInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)												{}
 	
 	static ActionTools::StringListPair killModes;
 

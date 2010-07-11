@@ -25,19 +25,9 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-ActionTextInputInstance::ActionTextInputInstance(ActionTools::ActionInterface *interface, QObject *parent)
-	: ActionTools::Action(interface, parent),
+ActionTextInputInstance::ActionTextInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
+	: ActionTools::ActionInstance(definition, parent),
 	mInputDialog(0)
-{
-}
-
-ActionTextInputInstance::ActionTextInputInstance(QObject *parent)
-	: ActionTools::Action(0, parent),
-	mInputDialog(0)
-{
-}
-
-ActionTextInputInstance::~ActionTextInputInstance()
 {
 }
 

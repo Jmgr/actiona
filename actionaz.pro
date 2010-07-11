@@ -2,6 +2,9 @@ TEMPLATE = subdirs
 CONFIG = ordered
 
 unix:!mac {
+	!system(pkg-config --exists 'x11') {
+		error(Please install pkg-config)	#Here whe assume that x11 is always present, so this is to check if pkg-config is installed
+}
 	!system(pkg-config --exists 'libnotify') {
 		error(Please install libnotify-dev)
 }

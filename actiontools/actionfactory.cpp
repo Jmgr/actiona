@@ -19,8 +19,8 @@
 */
 
 #include "actionfactory.h"
-#include "actionpackinterface.h"
-#include "actioninterface.h"
+#include "actionpack.h"
+#include "actiondefinition.h"
 
 #include <QPluginLoader>
 #include <QDir>
@@ -38,7 +38,7 @@ namespace ActionTools
 		clear();
 	}
 
-	bool actionInterfaceLessThan(const ActionInterface *s1, const ActionInterface *s2)
+	bool actionDefinitionLessThan(const ActionDefinition *s1, const ActionDefinition *s2)
 	{
 		return s1->name() < s2->name();
 	}
@@ -62,55 +62,50 @@ namespace ActionTools
 		foreach(const QString actionFilename, actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename));
 
-		qSort(mActions.begin(), mActions.end(), actionInterfaceLessThan);
+		qSort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
 
-		for(int index = 0; index < mActions.count(); ++index)
-			mActions.at(index)->setIndex(index);
+		for(int index = 0; index < mActionDefinitions.count(); ++index)
+			mActionDefinitions.at(index)->setIndex(index);
 	}
 
-	ActionInterface *ActionFactory::actionInterface(const QString &actionId) const
+	ActionDefinition *ActionFactory::actionDefinition(const QString &actionId) const
 	{
-		foreach(ActionInterface *actionInterface, mActions)
+		foreach(ActionDefinition *actionDefinition, mActionDefinitions)
 		{
-			if(actionInterface->id() == actionId)
-				return actionInterface;
+			if(actionDefinition->id() == actionId)
+				return actionDefinition;
 		}
 
 		return 0;
 	}
 
-	ActionInterface *ActionFactory::actionInterface(int index) const
+	ActionDefinition *ActionFactory::actionDefinition(int index) const
 	{
-		if(index < 0 || index >= mActions.count())
+		if(index < 0 || index >= mActionDefinitions.count())
 			return 0;
 
-		return mActions.at(index);
+		return mActionDefinitions.at(index);
 	}
 
-	Action *ActionFactory::newAction(const QString &actionId) const
+	ActionInstance *ActionFactory::newActionInstance(const QString &actionDefinitionId) const
 	{
-		ActionInterface *interface = actionInterface(actionId);
+		ActionDefinition *definition = actionDefinition(actionDefinitionId);
 
-		if(!interface)
+		if(!definition)
 			return 0;
 
-		return newAction(interface);
+		return definition->newActionInstance();
 	}
 
-	Action *ActionFactory::newAction(ActionInterface *interface) const
+	int ActionFactory::actionDefinitionCount(ActionDefinition::Category category) const
 	{
-		return interface->newAction();
-	}
-
-	int ActionFactory::actionCount(ActionInterface::Category category) const
-	{
-		if(category == ActionInterface::None)
-			return mActions.count();
+		if(category == ActionDefinition::None)
+			return mActionDefinitions.count();
 
 		int count = 0;
-		foreach(const ActionInterface *actionInterface, mActions)
+		foreach(const ActionDefinition *actionDefinition, mActionDefinitions)
 		{
-			if(actionInterface->category() == category)
+			if(actionDefinition->category() == category)
 				++count;
 		}
 
@@ -119,58 +114,58 @@ namespace ActionTools
 
 	void ActionFactory::clear()
 	{
-		qDeleteAll(mActions);
+		qDeleteAll(mActionDefinitions);
 		qDeleteAll(mActionPacks);
 
-		mActions.clear();
+		mActionDefinitions.clear();
 		mActionPacks.clear();
 	}
 
 	void ActionFactory::loadActionPack(const QString &filename)
 	{
 		QPluginLoader pluginLoader(filename);
-		QObject *actionPack = pluginLoader.instance();
+		QObject *actionPackObject = pluginLoader.instance();
 		QString shortFilename = QFileInfo(filename).baseName();
 
-		if(!actionPack)
+		if(!actionPackObject)
 		{
 			emit packLoadError(tr("%1 : \"%2\"").arg(shortFilename).arg(pluginLoader.errorString()));
 			return;
 		}
 
-		ActionPackInterface *actionPackInterface = qobject_cast<ActionPackInterface *>(actionPack);
-		if(!actionPackInterface)
+		ActionPack *actionPack = qobject_cast<ActionPack *>(actionPackObject);
+		if(!actionPack)
 		{
-			emit packLoadError(tr("%1 : bad interface version").arg(shortFilename));
+			emit packLoadError(tr("%1 : bad definition version").arg(shortFilename));
 			return;
 		}
 
-		foreach(ActionInterface *interface, actionPackInterface->actionsInterfaces())
+		foreach(ActionDefinition *definition, actionPack->actionsDefinitions())
 		{
-			if(actionInterface(interface->id()))
+			if(actionDefinition(definition->id()))
 			{
-				emit packLoadError(tr("%1 : <b>%2</b> already loaded").arg(shortFilename).arg(interface->id()));
+				emit packLoadError(tr("%1 : <b>%2</b> already loaded").arg(shortFilename).arg(definition->id()));
 				continue;
 			}
 
 		#ifdef Q_WS_WIN
-			if(!(interface->flags() & ActionInterface::WorksOnWindows))
+			if(!(definition->flags() & ActionDefinition::WorksOnWindows))
 				continue;
 		#endif
 		#ifdef Q_WS_X11
-			if(!(interface->flags() & ActionInterface::WorksOnGnuLinux))
+			if(!(definition->flags() & ActionDefinition::WorksOnGnuLinux))
 				continue;
 		#endif
 		#ifdef Q_WS_MAC
-			if(!(interface->flags() & ActionInterface::WorksOnMac))
+			if(!(definition->flags() & ActionDefinition::WorksOnMac))
 				continue;
 		#endif
 
-			mActions << interface;
+			mActionDefinitions << definition;
 		}
 
-		actionPackInterface->setFilename(filename);
+		actionPack->setFilename(filename);
 
-		mActionPacks << actionPackInterface;
+		mActionPacks << actionPack;
 	}
 }

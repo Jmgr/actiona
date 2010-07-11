@@ -22,18 +22,15 @@
 #define ACTIONTEXTINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
-class ActionTextInstance : public ActionTools::Action
+class ActionTextInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionTextInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent)										{}
-	ActionTextInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent)												{}
-	~ActionTextInstance()																{}
+	ActionTextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)										{}
 
 	void startExecution();
 

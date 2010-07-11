@@ -21,7 +21,7 @@
 #include "fileparameterdefinition.h"
 #include "subparameter.h"
 #include "fileedit.h"
-#include "action.h"
+#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -46,14 +46,14 @@ namespace ActionTools
 		addEditor(mFileEdit);
 	}
 
-	void FileParameterDefinition::load(const Action *action)
+	void FileParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mFileEdit->setFromSubParameter(action->subParameter(name(), "value"));
+		mFileEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
 	}
 
-	void FileParameterDefinition::save(Action *action)
+	void FileParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "value", mFileEdit->isCode(), mFileEdit->text());
+		actionInstance->setSubParameter(name(), "value", mFileEdit->isCode(), mFileEdit->text());
 	}
 
 	void FileParameterDefinition::setDefaultValues(Parameter &data)

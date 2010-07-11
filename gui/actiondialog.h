@@ -31,7 +31,7 @@ namespace Ui
 
 namespace ActionTools
 {
-	class Action;
+	class ActionInstance;
 	class GroupDefinition;
 	class ParameterDefinition;
 	class Script;
@@ -45,7 +45,7 @@ class ActionDialog : public QDialog
 	Q_OBJECT
 
 public:
-	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::Action *action, QWidget *parent = 0);
+	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionInstance *actionInstance, QWidget *parent = 0);
 	~ActionDialog();
 
 	void setCurrentField(const QString &field, const QString &subField)				{ mCurrentField = field; mCurrentSubField = subField; }
@@ -71,7 +71,7 @@ private:
 	void changeEvent(QEvent *event);
 
 	Ui::ActionDialog *ui;
-	ActionTools::Action *mAction;
+	ActionTools::ActionInstance *mActionInstance;
 	ActionTools::Script *mScript;
 	QList<ActionTools::ParameterDefinition *> mParameters;
 	QString mCurrentField;

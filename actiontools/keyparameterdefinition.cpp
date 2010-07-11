@@ -20,7 +20,7 @@
 
 #include "keyparameterdefinition.h"
 #include "keyedit.h"
-#include "action.h"
+#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -40,14 +40,14 @@ namespace ActionTools
 		addEditor(mKeyEdit);
 	}
 
-	void KeyParameterDefinition::load(const Action *action)
+	void KeyParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mKeyEdit->setFromSubParameter(action->subParameter(name(), "value"));
+		mKeyEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
 	}
 
-	void KeyParameterDefinition::save(Action *action)
+	void KeyParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "value", mKeyEdit->isCode(), mKeyEdit->text());
+		actionInstance->setSubParameter(name(), "value", mKeyEdit->isCode(), mKeyEdit->text());
 	}
 
 	void KeyParameterDefinition::setDefaultValues(Parameter &data)

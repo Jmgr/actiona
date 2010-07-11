@@ -18,27 +18,27 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONTEXTINPUT_H
-#define ACTIONTEXTINPUT_H
+#ifndef ACTIONTEXTINPUTDEFINITION_H
+#define ACTIONTEXTINPUTDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actiontextinputinstance.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionTextInput : public QObject, public ActionTools::ActionInterface
+class ActionTextInputDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionTextInput(ActionTools::ActionPackInterface *pack)
-	: ActionTextInput::ActionInterface(pack)
+	explicit ActionTextInputDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
 																								"question",
@@ -62,19 +62,18 @@ public:
 		addElement(variable);
 	}
 
-	QString name() const											{ return QObject::tr("Text input"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Ask the user to enter some text"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionTextInputInstance(this, 0); }
-	Status status() const											{ return Alpha; }
-	Category category() const										{ return Windows; }
-	QPixmap icon() const											{ return QPixmap(":/icons/msg.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionTextInput) }
+	QString name() const													{ return QObject::tr("Text input"); }
+	QString id() const														{ return "ActionTextInput"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Ask the user to enter some text"); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionTextInputInstance(this); }
+	Status status() const													{ return Alpha; }
+	Category category() const												{ return Windows; }
+	QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionTextInput)
+	Q_DISABLE_COPY(ActionTextInputDefinition)
 };
 
-#endif // ACTIONTEXTINPUT_H
+#endif // ACTIONTEXTINPUTDEFINITION_H

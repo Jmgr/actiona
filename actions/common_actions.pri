@@ -2,6 +2,7 @@ include(../common.pri)
 
 TEMPLATE = lib
 CONFIG += plugin dll
+win32:CONFIG -= embed_manifest_dll
 
 INCLUDEPATH += ../../tools \
 	../../actiontools

@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONINTERFACE_H
-#define ACTIONINTERFACE_H
+#ifndef ACTIONDEFINITION_H
+#define ACTIONDEFINITION_H
 
 #include <QString>
 #include <QPixmap>
@@ -34,10 +34,10 @@ class QScriptEngine;
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 
-	class ACTIONTOOLSSHARED_EXPORT ActionInterface
+	class ACTIONTOOLSSHARED_EXPORT ActionDefinition
 	{
 	public:
 		typedef int Flag;
@@ -72,51 +72,41 @@ namespace ActionTools
 			Official =			1 << 4
 		};
 
-		explicit ActionInterface(ActionPackInterface *pack) : mPack(pack), mIndex(-1)	{}
-		virtual ~ActionInterface() { qDeleteAll(mElements); }
+		explicit ActionDefinition(ActionPack *pack) : mPack(pack), mIndex(-1)	{}
+		virtual ~ActionDefinition() { qDeleteAll(mElements); }
 
 		virtual QString name() const = 0;
 		virtual QString id() const = 0;
 		virtual Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac; }
 		virtual QString description() const												{ return QObject::tr("No description"); }
 		virtual Tools::Version version() const = 0;
-		virtual Action *newAction() = 0;
+		virtual ActionInstance *newActionInstance() const = 0;
 		virtual Status status() const = 0;
 		virtual Category category() const = 0;
 		virtual QString author() const													{ return (flags() & Official) ? QObject::tr("The Actionaz Team") : QString(); }
 		virtual QString website() const													{ return QString(); }
 		virtual QString email() const													{ return QString(); }
 		virtual QPixmap icon() const													{ return QPixmap(); }
-		virtual Action *scriptInit(QScriptEngine *scriptEngine) = 0;
 		virtual QStringList tabs() const												{ return QStringList(); }
 
 		void setIndex(int index)														{ mIndex = index; }
 		int index() const																{ return mIndex; }
 
-		ActionPackInterface *pack() const												{ return mPack; }
+		ActionPack *pack() const														{ return mPack; }
 		const QList<ElementDefinition *> &elements() const								{ return mElements; }
+		
+		ActionInstance *scriptInit(QScriptEngine *scriptEngine) const;
 
 	protected:
-		void addElement(ElementDefinition *element, int tab = 0)
-		{
-			if(tab > 0 && tabs().count() > 0)
-			{
-				if(tab < tabs().count())
-					element->setTab(tab);
-				else
-					qWarning("Trying to add an element with an incorrect tab number");
-			}
-
-			mElements.append(element);
-		}
+		void addElement(ElementDefinition *element, int tab = 0);
 
 	private:
-		ActionPackInterface *mPack;
+		ActionPack *mPack;
 		QList<ElementDefinition *> mElements;
 		int mIndex;
 
-		Q_DISABLE_COPY(ActionInterface)
+		Q_DISABLE_COPY(ActionDefinition)
 	};
 }
 
-#endif // ACTIONINTERFACE_H
+#endif // ACTIONDEFINITION_H

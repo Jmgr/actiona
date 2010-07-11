@@ -20,8 +20,8 @@
 
 #include "scriptmodel.h"
 #include "script.h"
-#include "action.h"
-#include "actioninterface.h"
+#include "actioninstance.h"
+#include "actiondefinition.h"
 #include "actionfactory.h"
 
 #include <QIcon>
@@ -151,19 +151,19 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 	if(!index.isValid())
 		return QVariant();
 
-	ActionTools::Action *action = mScript->actionAt(index.row());
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mScript->actionAt(index.row());
+	if(!actionInstance)
 		return QVariant();
 
 	switch(role)
 	{
 	case ActionDataRole:
-		return QVariant::fromValue(*action);
+		return QVariant::fromValue(*actionInstance);
 	case ActionIdRole:
-		return action->interface()->id();
+		return actionInstance->definition()->id();
 	case Qt::BackgroundRole:
 		{
-			const QColor &color = action->color();
+			const QColor &color = actionInstance->color();
 
 			if(color.isValid())
 				return QBrush(color);
@@ -174,7 +174,7 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 		{
 			const QPalette &palette = QApplication::palette();
 
-			if(!action->isEnabled())
+			if(!actionInstance->isEnabled())
 				return QBrush(palette.color(QPalette::Disabled, QPalette::WindowText));
 
 			return QBrush();
@@ -187,17 +187,17 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 		switch(role)
 		{
 			case Qt::CheckStateRole:
-				return QVariant(action->isEnabled() ? Qt::Checked : Qt::Unchecked);
+				return QVariant(actionInstance->isEnabled() ? Qt::Checked : Qt::Unchecked);
 			case Qt::DisplayRole:
 			{
-				QString labelString = action->label();
+				QString labelString = actionInstance->label();
 				if(!labelString.isNull() && !labelString.isEmpty())
 					return labelString;
 
 				return QString("%1").arg(index.row() + 1, 3, 10, QChar('0'));
 			}
 			case Qt::EditRole:
-				return action->label();
+				return actionInstance->label();
 		}
 		break;
 	case ColumnActionName:
@@ -206,9 +206,9 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 			case Qt::ToolTipRole:
 				return tr("Double-clic to edit the action");
 			case Qt::DisplayRole:
-				return action->interface()->name();
+				return actionInstance->definition()->name();
 			case Qt::DecorationRole:
-				return QIcon(action->interface()->icon());
+				return QIcon(actionInstance->definition()->icon());
 			case Qt::TextAlignmentRole:
 				return Qt::AlignCenter;
 		}
@@ -218,7 +218,7 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 		{
 			case Qt::DisplayRole:
 			case Qt::EditRole:
-				return action->comment();
+				return actionInstance->comment();
 		}
 		break;
 	}
@@ -251,7 +251,7 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 
 	if(role == ActionIdRole)
 	{
-		mScript->setAction(index.row(), mActionFactory->newAction(value.toString()));
+		mScript->setAction(index.row(), mActionFactory->newActionInstance(value.toString()));
 
 		emit dataChanged(index, index);
 		emit scriptEdited();
@@ -259,13 +259,13 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 		return true;
 	}
 
-	ActionTools::Action *action = mScript->actionAt(index.row());
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mScript->actionAt(index.row());
+	if(!actionInstance)
 		return false;
 
 	if(role == ActionDataRole)
 	{
-		action->copyActionDataFrom(value.value<ActionTools::Action>());
+		actionInstance->copyActionDataFrom(value.value<ActionTools::ActionInstance>());
 
 		emit dataChanged(index, index);
 		emit scriptEdited();
@@ -294,7 +294,7 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 					finalValue = labelString;
 			}
 
-			if(labelString == action->label() || labelString == lineNumber)
+			if(labelString == actionInstance->label() || labelString == lineNumber)
 				return true;
 
 			mUndoStack->push(new ChangeLabelCommand(finalValue, index.row(), this));
@@ -305,7 +305,7 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 	}
 	else if(index.column() == ColumnComment)
 	{
-		if(value.toString() == action->comment())
+		if(value.toString() == actionInstance->comment())
 			return true;
 
 		mUndoStack->push(new ChangeCommentCommand(value.toString(), index.row(), this));
@@ -343,7 +343,7 @@ Qt::ItemFlags ScriptModel::flags(const QModelIndex &index) const
 QMap<int, QVariant> ScriptModel::itemData(const QModelIndex &index) const
 {
 	QMap<int, QVariant> roles = QAbstractTableModel::itemData(index);
-	roles.insert(ActionIdRole, mScript->actionAt(index.row())->interface()->id());
+	roles.insert(ActionIdRole, mScript->actionAt(index.row())->definition()->id());
 	roles.insert(ActionDataRole, QVariant::fromValue(*mScript->actionAt(index.row())));
 	return roles;
 }
@@ -377,13 +377,13 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 
 	foreach(int row, rowIdList)
 	{
-		ActionTools::Action *action = mScript->actionAt(row);
+		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
 
-		if(!action)
+		if(!actionInstance)
 			continue;
 
 		stream << row;
-		stream << ActionTools::ActionBuffer(action->interface()->id(), *action);
+		stream << ActionTools::ActionBuffer(actionInstance->definition()->id(), *actionInstance);
 	}
 
 	mimeDataPtr->setData("application/act.action", encodedData);

@@ -26,14 +26,8 @@
 
 #include "actionnotifyinstance.h"
 
-ActionNotifyInstance::ActionNotifyInstance(ActionTools::ActionInterface *interface, QObject *parent)
-	: ActionTools::Action(interface, parent),
-	mNotification(0)
-{
-}
-
-ActionNotifyInstance::ActionNotifyInstance(QObject *parent)
-	: ActionTools::Action(0, parent),
+ActionNotifyInstance::ActionNotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
+	: ActionTools::ActionInstance(definition, parent),
 	mNotification(0)
 {
 }
@@ -72,7 +66,7 @@ void ActionNotifyInstance::startExecution()
 	notify_notification_set_timeout(mNotification, timeout);
 	
 	if(!notify_notification_show(mNotification, 0))
-		emit executionException(ActionTools::Action::Error, tr("Unable to show the notification"));
+		emit executionException(ActionTools::ActionInstance::Error, tr("Unable to show the notification"));
 #endif
 
 	emit executionEnded();

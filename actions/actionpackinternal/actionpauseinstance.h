@@ -22,20 +22,17 @@
 #define ACTIONPAUSEINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
 #include <QTimer>
 
-class ActionPauseInstance : public ActionTools::Action
+class ActionPauseInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionPauseInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent)										{}
-	ActionPauseInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent)												{}
-	~ActionPauseInstance()																{}
+	ActionPauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)										{}
 
 	void startExecution()
 	{

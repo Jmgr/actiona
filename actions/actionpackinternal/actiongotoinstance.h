@@ -22,18 +22,15 @@
 #define ACTIONGOTOINSTANCE_H
 
 #include "actionexecution.h"
-#include "action.h"
+#include "actioninstance.h"
 
-class ActionGotoInstance : public ActionTools::Action
+class ActionGotoInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionGotoInstance(ActionTools::ActionInterface *interface, QObject *parent = 0)
-		: ActionTools::Action(interface, parent)										{}
-	ActionGotoInstance(QObject *parent = 0)
-		: ActionTools::Action(0, parent)												{}
-	~ActionGotoInstance()																{}
+	ActionGotoInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)										{}
 
 	void startExecution()
 	{

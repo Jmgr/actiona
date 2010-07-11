@@ -18,10 +18,10 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONKILLPROCESS_H
-#define ACTIONKILLPROCESS_H
+#ifndef ACTIONKILLPROCESSDEFINITION_H
+#define ACTIONKILLPROCESSDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actionkillprocessinstance.h"
 #include "textparameterdefinition.h"
 #include "numberparameterdefinition.h"
@@ -29,17 +29,17 @@
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionKillProcess : public QObject, public ActionTools::ActionInterface
+class ActionKillProcessDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionKillProcess(ActionTools::ActionPackInterface *pack)
-	: ActionInterface(pack)
+	explicit ActionKillProcessDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::TextParameterDefinition *processId = new ActionTools::TextParameterDefinition( ActionTools::ElementDefinition::INPUT,
 																								"processId",
@@ -68,20 +68,19 @@ public:
 		addElement(timeout, 1);
 	}
 
-	QString name() const											{ return QObject::tr("Kill process"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Kills a process"); }
-	Tools::Version version() const									{ return Tools::Version(1, 0, 0); }
-	ActionTools::Action *newAction()								{ return new ActionKillProcessInstance(this, 0); }
-	Status status() const											{ return Stable; }
-	Category category() const										{ return System; }
-	QPixmap icon() const											{ return QPixmap(":/icons/clipboard.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionKillProcess) }
-	QStringList tabs() const										{ return QStringList() << tr("Standard") << tr("Advanced"); }
+	QString name() const													{ return QObject::tr("Kill process"); }
+	QString id() const														{ return "ActionKillProcess"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Kills a process"); }
+	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionKillProcessInstance(this); }
+	Status status() const													{ return Stable; }
+	Category category() const												{ return System; }
+	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+	QStringList tabs() const												{ return QStringList() << tr("Standard") << tr("Advanced"); }
 
 private:
-	Q_DISABLE_COPY(ActionKillProcess)
+	Q_DISABLE_COPY(ActionKillProcessDefinition)
 };
 
-#endif // ACTIONKILLPROCESS_H
+#endif // ACTIONKILLPROCESSDEFINITION_H

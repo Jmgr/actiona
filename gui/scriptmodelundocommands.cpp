@@ -20,8 +20,8 @@
 
 #include "scriptmodelundocommands.h"
 #include "scriptmodel.h"
-#include "action.h"
-#include "actioninterface.h"
+#include "actioninstance.h"
+#include "actiondefinition.h"
 #include "script.h"
 
 //ChangeEnabledCommand
@@ -33,11 +33,11 @@ ChangeEnabledCommand::ChangeEnabledCommand(const QList<int> &rows, bool enabled,
 {
 	foreach(int row, mRows)
 	{
-		ActionTools::Action *action = mModel->mScript->actionAt(row);
-		if(!action)
+		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
+		if(!actionInstance)
 			continue;
 
-		mOld << action->isEnabled();
+		mOld << actionInstance->isEnabled();
 	}
 
 	setText(QObject::tr("Change the enabled status"));
@@ -47,11 +47,11 @@ void ChangeEnabledCommand::redo()
 {
 	foreach(int row, mRows)
 	{
-		ActionTools::Action *action = mModel->mScript->actionAt(row);
-		if(!action)
+		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
+		if(!actionInstance)
 			continue;
 
-		action->setEnabled(mNew);
+		actionInstance->setEnabled(mNew);
 
 		for(int column = 0; column < mModel->columnCount(); ++column)
 			mModel->emitDataChanged(mModel->index(row, column));
@@ -65,11 +65,11 @@ void ChangeEnabledCommand::undo()
 		int row = mRows.at(rowIndex);
 		bool enabled = mOld.at(rowIndex);
 
-		ActionTools::Action *action = mModel->mScript->actionAt(row);
-		if(!action)
+		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
+		if(!actionInstance)
 			continue;
 
-		action->setEnabled(enabled);
+		actionInstance->setEnabled(enabled);
 
 		for(int column = 0; column < mModel->columnCount(); ++column)
 			mModel->emitDataChanged(mModel->index(row, column));
@@ -85,11 +85,11 @@ ChangeColorCommand::ChangeColorCommand(const QList<int> &rows, const QColor &col
 {
 	foreach(int row, mRows)
 	{
-		ActionTools::Action *action = mModel->mScript->actionAt(row);
-		if(!action)
+		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
+		if(!actionInstance)
 			continue;
 
-		mOld << action->color();
+		mOld << actionInstance->color();
 	}
 
 	setText(QObject::tr("Change the color"));
@@ -99,11 +99,11 @@ void ChangeColorCommand::redo()
 {
 	foreach(int row, mRows)
 	{
-		ActionTools::Action *action = mModel->mScript->actionAt(row);
-		if(!action)
+		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
+		if(!actionInstance)
 			continue;
 
-		action->setColor(mNew);
+		actionInstance->setColor(mNew);
 
 		for(int column = 0; column < mModel->columnCount(); ++column)
 			mModel->emitDataChanged(mModel->index(row, column));
@@ -117,11 +117,11 @@ void ChangeColorCommand::undo()
 		int row = mRows.at(rowIndex);
 		const QColor &color = mOld.at(rowIndex);
 
-		ActionTools::Action *action = mModel->mScript->actionAt(row);
-		if(!action)
+		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
+		if(!actionInstance)
 			continue;
 
-		action->setColor(color);
+		actionInstance->setColor(color);
 
 		for(int column = 0; column < mModel->columnCount(); ++column)
 			mModel->emitDataChanged(mModel->index(row, column));
@@ -135,32 +135,32 @@ ChangeCommentCommand::ChangeCommentCommand(const QString &value, int row, Script
 	mNew(value),
 	mRow(row)
 {
-	ActionTools::Action *action = mModel->mScript->actionAt(mRow);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
+	if(!actionInstance)
 		return;
 
-	mOld = action->comment();
+	mOld = actionInstance->comment();
 
 	setText(QObject::tr("Change the comment from %1 to %2").arg(mOld).arg(mNew));
 }
 
 void ChangeCommentCommand::redo()
 {
-	ActionTools::Action *action = mModel->mScript->actionAt(mRow);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
+	if(!actionInstance)
 		return;
 
-	action->setComment(mNew);
+	actionInstance->setComment(mNew);
 	mModel->emitDataChanged(mModel->index(mRow, 2));
 }
 
 void ChangeCommentCommand::undo()
 {
-	ActionTools::Action *action = mModel->mScript->actionAt(mRow);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
+	if(!actionInstance)
 		return;
 
-	action->setComment(mOld);
+	actionInstance->setComment(mOld);
 	mModel->emitDataChanged(mModel->index(mRow, 2));
 }
 
@@ -171,32 +171,32 @@ ChangeLabelCommand::ChangeLabelCommand(const QString &value, int row, ScriptMode
 	mNew(value),
 	mRow(row)
 {
-	ActionTools::Action *action = mModel->mScript->actionAt(mRow);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
+	if(!actionInstance)
 		return;
 
-	mOld = action->label();
+	mOld = actionInstance->label();
 
 	setText(QObject::tr("Change the label from %1 to %2").arg(mOld).arg(mNew));
 }
 
 void ChangeLabelCommand::redo()
 {
-	ActionTools::Action *action = mModel->mScript->actionAt(mRow);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
+	if(!actionInstance)
 		return;
 
-	action->setLabel(mNew);
+	actionInstance->setLabel(mNew);
 	mModel->emitDataChanged(mModel->index(mRow, 0));
 }
 
 void ChangeLabelCommand::undo()
 {
-	ActionTools::Action *action = mModel->mScript->actionAt(mRow);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
+	if(!actionInstance)
 		return;
 
-	action->setLabel(mOld);
+	actionInstance->setLabel(mOld);
 	mModel->emitDataChanged(mModel->index(mRow, 0));
 }
 
@@ -206,11 +206,11 @@ ChangeDataCommand::ChangeDataCommand(const QModelIndex &index, const ActionTools
 	mModel(model),
 	mNew(value)
 {
-	ActionTools::Action *action = mModel->mScript->actionAt(mRow);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
+	if(!actionInstance)
 		return;
 
-	mOld = action->parametersData();
+	mOld = actionInstance->parametersData();
 	mRow = index.row();
 	mCol = index.column();
 
@@ -220,22 +220,22 @@ ChangeDataCommand::ChangeDataCommand(const QModelIndex &index, const ActionTools
 void ChangeDataCommand::redo()
 {
 	QModelIndex index = mModel->index(mRow, mCol);
-	ActionTools::Action *action = mModel->mScript->actionAt(mRow);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
+	if(!actionInstance)
 		return;
 
-	action->setParametersData(mNew);
+	actionInstance->setParametersData(mNew);
 	mModel->emitDataChanged(index);
 }
 
 void ChangeDataCommand::undo()
 {
 	QModelIndex index = mModel->index(mRow, mCol);
-	ActionTools::Action *action = mModel->mScript->actionAt(mRow);
-	if(!action)
+	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
+	if(!actionInstance)
 		return;
 
-	action->setParametersData(mOld);
+	actionInstance->setParametersData(mOld);
 	mModel->emitDataChanged(index);
 }
 
@@ -295,7 +295,7 @@ RemoveActionCommand::RemoveActionCommand(const QList<int> &rows, ScriptModel *mo
 {
 	foreach(int row, rows)
 	{
-		mActions << ActionTools::ActionBuffer(model->mScript->actionAt(row)->interface()->id(),
+		mActions << ActionTools::ActionBuffer(model->mScript->actionAt(row)->definition()->id(),
 											  *model->mScript->actionAt(row));
 	}
 

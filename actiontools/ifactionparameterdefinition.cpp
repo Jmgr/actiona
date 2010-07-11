@@ -23,7 +23,7 @@
 #include "codecombobox.h"
 #include "linecombobox.h"
 #include "codelineedit.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "script.h"
 
 namespace ActionTools
@@ -70,21 +70,21 @@ namespace ActionTools
 		connect(mActionEdit->codeLineEdit(), SIGNAL(codeChanged(bool)), this, SLOT(codeChanged(bool)));
 	}
 
-	void IfActionParameterDefinition::load(const Action *action)
+	void IfActionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		const SubParameter &actionSubParameter = action->subParameter(name(), "action");
+		const SubParameter &actionSubParameter = actionInstance->subParameter(name(), "action");
 		mActionEdit->setCode(actionSubParameter.isCode());
 		mActionEdit->setEditText(translatedNameFromOriginalName(actionSubParameter.value().toString()));
 
-		const SubParameter &lineSubParameter = action->subParameter(name(), "line");
+		const SubParameter &lineSubParameter = actionInstance->subParameter(name(), "line");
 		mLineEdit->setCode(lineSubParameter.isCode());
 		mLineEdit->setEditText(lineSubParameter.value().toString());
 	}
 
-	void IfActionParameterDefinition::save(Action *action)
+	void IfActionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "action", mActionEdit->isCode(), originalNameFromTranslatedName(mActionEdit->currentText()));
-		action->setSubParameter(name(), "line", mLineEdit->isCode(), mLineEdit->currentText());
+		actionInstance->setSubParameter(name(), "action", mActionEdit->isCode(), originalNameFromTranslatedName(mActionEdit->currentText()));
+		actionInstance->setSubParameter(name(), "line", mLineEdit->isCode(), mLineEdit->currentText());
 	}
 
 	void IfActionParameterDefinition::setDefaultValues(Parameter &data)

@@ -22,7 +22,7 @@
 #define ACTIONBUFFER_H
 
 #include "actiontools_global.h"
-#include "action.h"
+#include "actioninstance.h"
 
 #include <QSharedData>
 
@@ -40,13 +40,13 @@ namespace ActionTools
 		}
 
 		QString actionId;
-		Action action;
+		ActionInstance action;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ActionBuffer
 	{
 	public:
-		ActionBuffer(const QString &actionId, const Action &action)
+		ActionBuffer(const QString &actionId, const ActionInstance &action)
 		{
 			d = new ActionBufferData();
 			setActionId(actionId);
@@ -66,12 +66,12 @@ namespace ActionTools
 			: d(other.d)									{}
 
 		void setActionId(const QString &actionId)			{ d->actionId = actionId; }
-		void setAction(const Action &action)				{ d->action.copyActionDataFrom(action); }
-		void setActionFromVariant(const QVariant &variant)	{ d->action.copyActionDataFrom(variant.value<Action>()); }
+		void setAction(const ActionInstance &action)				{ d->action.copyActionDataFrom(action); }
+		void setActionFromVariant(const QVariant &variant)	{ d->action.copyActionDataFrom(variant.value<ActionInstance>()); }
 
 		QString actionId() const							{ return d->actionId; }
-		Action action() const								{ return d->action; }
-		QVariant actionAsVariant() const					{ return QVariant::fromValue<Action>(d->action); }
+		ActionInstance action() const								{ return d->action; }
+		QVariant actionAsVariant() const					{ return QVariant::fromValue<ActionInstance>(d->action); }
 
 	private:
 		QSharedDataPointer<ActionBufferData> d;

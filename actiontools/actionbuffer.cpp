@@ -33,7 +33,7 @@ namespace ActionTools
 	QDataStream &operator >> (QDataStream &s, ActionBuffer &actionBuffer)
 	{
 		QString actionId;
-		Action action;
+		ActionInstance action;
 
 		s >> actionId;
 		s >> action;

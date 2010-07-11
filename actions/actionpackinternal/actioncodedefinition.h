@@ -18,26 +18,26 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONCODE_H
-#define ACTIONCODE_H
+#ifndef ACTIONCODEDEFINITION_H
+#define ACTIONCODEDEFINITION_H
 
-#include "actioninterface.h"
+#include "actiondefinition.h"
 #include "actioncodeinstance.h"
 #include "textparameterdefinition.h"
 
 namespace ActionTools
 {
-	class ActionPackInterface;
-	class Action;
+	class ActionPack;
+	class ActionInstance;
 }
 
-class ActionCode : public QObject, public ActionTools::ActionInterface
+class ActionCodeDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionCode(ActionTools::ActionPackInterface *pack)
-	: ActionCode::ActionInterface(pack)
+	explicit ActionCodeDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
 	{
 		ActionTools::TextParameterDefinition *code = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
 																								"code",
@@ -48,19 +48,18 @@ public:
 		addElement(code);
 	}
 
-	QString name() const											{ return QObject::tr("Code"); }
-	QString id() const												{ return metaObject()->className(); }
-	Flag flags() const												{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
-	QString description() const										{ return QObject::tr("Evaluates some code"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
-	ActionTools::Action *newAction()								{ return new ActionCodeInstance(this, 0); }
-	Status status() const											{ return Alpha; }
-	Category category() const										{ return Internal; }
-	QPixmap icon() const											{ return QPixmap(":/icons/code.png"); }
-	ActionTools::Action *scriptInit(QScriptEngine *scriptEngine)	{ SCRIPT_INIT(ActionCode) }
+	QString name() const													{ return QObject::tr("Code"); }
+	QString id() const														{ return "ActionCode"; }
+	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	QString description() const												{ return QObject::tr("Evaluates some code"); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionCodeInstance(this); }
+	Status status() const													{ return Alpha; }
+	Category category() const												{ return Internal; }
+	QPixmap icon() const													{ return QPixmap(":/icons/code.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionCode)
+	Q_DISABLE_COPY(ActionCodeDefinition)
 };
 
-#endif // ACTIONCODE_H
+#endif // ACTIONCODEDEFINITION_H

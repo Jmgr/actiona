@@ -32,7 +32,7 @@ class QIODevice;
 
 namespace ActionTools
 {
-	class Action;
+	class ActionInstance;
 	class ActionFactory;
 
 	class ACTIONTOOLSSHARED_EXPORT Script : public QObject
@@ -51,17 +51,17 @@ namespace ActionTools
 		Script(ActionFactory *actionFactory, QObject *parent = 0);
 		~Script();
 
-		void appendAction(Action *action)									{ mActions.append(action); }
-		Action *appendAction(const QString &actionId);
-		Action *actionAt(int line) const;
-		void insertAction(int line, Action *action);
-		void setAction(int line, Action *action);
+		void appendAction(ActionInstance *actionInstance)					{ mActionInstances.append(actionInstance); }
+		ActionInstance *appendAction(const QString &actionDefinitionId);
+		ActionInstance *actionAt(int line) const;
+		void insertAction(int line, ActionInstance *actionInstance);
+		void setAction(int line, ActionInstance *actionInstance);
 		void removeActions(int line, int count);
 		void removeAction(int line);
-		void removeAction(Action *action);
+		void removeAction(ActionInstance *actionInstance);
 		void removeAll();
 		void moveAction(int startLine, int endLine);
-		int actionCount() const												{ return mActions.count(); }
+		int actionCount() const												{ return mActionInstances.count(); }
 		int labelLine(const QString &label) const;
 		bool hasEnabledActions() const;
 
@@ -95,7 +95,7 @@ namespace ActionTools
 
 	private:
 		QList<ScriptParameter> mParameters;
-		QList<Action *> mActions;
+		QList<ActionInstance *> mActionInstances;
 		ActionFactory *mActionFactory;
 		QHash<QString, QVariant> mVariables;
 		QString mStatusMessage;

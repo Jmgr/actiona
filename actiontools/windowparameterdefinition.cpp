@@ -21,7 +21,7 @@
 #include "windowparameterdefinition.h"
 #include "subparameter.h"
 #include "windowedit.h"
-#include "action.h"
+#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -41,14 +41,14 @@ namespace ActionTools
 		addEditor(mWindowEdit);
 	}
 
-	void WindowParameterDefinition::load(const Action *action)
+	void WindowParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mWindowEdit->setFromSubParameter(action->subParameter(name(), "value"));
+		mWindowEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
 	}
 
-	void WindowParameterDefinition::save(Action *action)
+	void WindowParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		action->setSubParameter(name(), "value", mWindowEdit->isCode(), mWindowEdit->text());
+		actionInstance->setSubParameter(name(), "value", mWindowEdit->isCode(), mWindowEdit->text());
 	}
 
 	void WindowParameterDefinition::setDefaultValues(Parameter &data)

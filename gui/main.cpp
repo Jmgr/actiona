@@ -25,7 +25,7 @@
 #endif
 
 #include "mainwindow.h"
-#include "action.h"
+#include "actioninstance.h"
 #include "parameter.h"
 #include "subparameter.h"
 #include "actionbuffer.h"
@@ -103,14 +103,14 @@ int main(int argc, char **argv)
 
 	app.addLibraryPath(QDir::currentPath() + "/actions");
 
-	qRegisterMetaType<ActionTools::Action>("Action");
-	qRegisterMetaType<ActionTools::Action::ExecutionException>("Action::ExecutionException");
+	qRegisterMetaType<ActionTools::ActionInstance>("Action");
+	qRegisterMetaType<ActionTools::ActionInstance::ExecutionException>("Action::ExecutionException");
 	qRegisterMetaType<ActionTools::Parameter>("Parameter");
 	qRegisterMetaType<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaType<ActionTools::ActionBuffer>("ActionBuffer");
 	qRegisterMetaType<Tools::Version>("Tools::Version");
 
-	qRegisterMetaTypeStreamOperators<ActionTools::Action>("Action");
+	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstance>("Action");
 	qRegisterMetaTypeStreamOperators<ActionTools::Parameter>("Parameter");
 	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaTypeStreamOperators<ActionTools::ActionBuffer>("ActionBuffer");
