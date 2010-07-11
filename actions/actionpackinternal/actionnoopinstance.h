@@ -21,7 +21,6 @@
 #ifndef ACTIONNOOPINSTANCE_H
 #define ACTIONNOOPINSTANCE_H
 
-#include "actionexecution.h"
 #include "actioninstance.h"
 
 class ActionNoopInstance : public ActionTools::ActionInstance

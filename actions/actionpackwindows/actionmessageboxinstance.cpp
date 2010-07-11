@@ -41,7 +41,7 @@ ActionMessageBoxInstance::ActionMessageBoxInstance(const ActionTools::ActionDefi
 
 void ActionMessageBoxInstance::startExecution()
 {
-	ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+	ActionTools::ActionInstanceExecutionHelper actionExecution(this, script(), scriptEngine());
 	QString message;
 	QString title;
 	int icon;

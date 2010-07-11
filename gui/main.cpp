@@ -28,7 +28,7 @@
 #include "actioninstance.h"
 #include "parameter.h"
 #include "subparameter.h"
-#include "actionbuffer.h"
+#include "actioninstancebuffer.h"
 #include "global.h"
 #include "version.h"
 #include "globalshortcutmanager.h"
@@ -103,17 +103,17 @@ int main(int argc, char **argv)
 
 	app.addLibraryPath(QDir::currentPath() + "/actions");
 
-	qRegisterMetaType<ActionTools::ActionInstance>("Action");
-	qRegisterMetaType<ActionTools::ActionInstance::ExecutionException>("Action::ExecutionException");
+	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
+	qRegisterMetaType<ActionTools::ActionInstance::ExecutionException>("ActionInstance::ExecutionException");
 	qRegisterMetaType<ActionTools::Parameter>("Parameter");
 	qRegisterMetaType<ActionTools::SubParameter>("SubParameter");
-	qRegisterMetaType<ActionTools::ActionBuffer>("ActionBuffer");
+	qRegisterMetaType<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");
 	qRegisterMetaType<Tools::Version>("Tools::Version");
 
-	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstance>("Action");
+	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaTypeStreamOperators<ActionTools::Parameter>("Parameter");
 	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
-	qRegisterMetaTypeStreamOperators<ActionTools::ActionBuffer>("ActionBuffer");
+	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");
 	qRegisterMetaTypeStreamOperators<Tools::Version>("Tools::Version");
 
 	app.setOrganizationName("Actionaz");

@@ -21,7 +21,7 @@
 #ifndef ACTIONLOOPINSTANCE_H
 #define ACTIONLOOPINSTANCE_H
 
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 class ActionLoopInstance : public ActionTools::ActionInstance
@@ -40,18 +40,18 @@ public:
 			return;
 		}
 		
-		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString line;
 		int count;
 
-		if(!actionExecution.evaluateString(line, "line"))
+		if(!actionInstanceExecutionHelper.evaluateString(line, "line"))
 			return;
 		
 		if(!mInitialized)
 		{
 			mInitialized = true;
 			
-			if(!actionExecution.evaluateInteger(count, "count"))
+			if(!actionInstanceExecutionHelper.evaluateInteger(count, "count"))
 				return;
 			
 			if(count <= 0)
@@ -63,7 +63,7 @@ public:
 			mCounter = count;
 		}
 
-		actionExecution.setNextLine(line);
+		actionInstanceExecutionHelper.setNextLine(line);
 
 		--mCounter;
 

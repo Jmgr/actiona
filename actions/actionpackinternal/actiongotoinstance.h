@@ -21,7 +21,7 @@
 #ifndef ACTIONGOTOINSTANCE_H
 #define ACTIONGOTOINSTANCE_H
 
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 class ActionGotoInstance : public ActionTools::ActionInstance
@@ -34,13 +34,13 @@ public:
 
 	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString line;
 
-		if(!actionExecution.evaluateString(line, "line"))
+		if(!actionInstanceExecutionHelper.evaluateString(line, "line"))
 			return;
 
-		actionExecution.setNextLine(line);
+		actionInstanceExecutionHelper.setNextLine(line);
 
 		emit executionEnded();
 	}

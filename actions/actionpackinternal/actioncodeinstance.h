@@ -21,7 +21,7 @@
 #ifndef ACTIONCODEINSTANCE_H
 #define ACTIONCODEINSTANCE_H
 
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 class ActionCodeInstance : public ActionTools::ActionInstance
@@ -34,10 +34,10 @@ public:
 
 	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString code;
 
-		if(!actionExecution.evaluateString(code, "code"))
+		if(!actionInstanceExecutionHelper.evaluateString(code, "code"))
 			return;
 
 		emit executionEnded();

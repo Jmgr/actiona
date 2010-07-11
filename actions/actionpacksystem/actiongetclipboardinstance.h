@@ -21,7 +21,7 @@
 #ifndef ACTIONGETCLIPBOARDINSTANCE_H
 #define ACTIONGETCLIPBOARDINSTANCE_H
 
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 
@@ -38,10 +38,10 @@ public:
 
 	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString variable;
 
-		if(!actionExecution.evaluateVariable(variable, "variable"))
+		if(!actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
 			return;
 
 		QClipboard *clipboard = QApplication::clipboard();

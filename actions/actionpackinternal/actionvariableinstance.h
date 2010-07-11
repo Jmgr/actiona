@@ -21,7 +21,7 @@
 #ifndef ACTIONVARIABLEINSTANCE_H
 #define ACTIONVARIABLEINSTANCE_H
 
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 
@@ -35,12 +35,12 @@ public:
 
 	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString variable;
 		QString value;
 
-		if(!actionExecution.evaluateString(variable, "variable") ||
-		   !actionExecution.evaluateString(value, "value"))
+		if(!actionInstanceExecutionHelper.evaluateString(variable, "variable") ||
+		   !actionInstanceExecutionHelper.evaluateString(value, "value"))
 			return;
 		
 		script()->setVariable(variable, value);

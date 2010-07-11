@@ -18,34 +18,29 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONCLICKINSTANCE_H
-#define ACTIONCLICKINSTANCE_H
+#include "actioninstancebuffer.h"
 
-#include "actioninstanceexecutionhelper.h"
-#include "actioninstance.h"
-
-class ActionClickInstance : public ActionTools::ActionInstance
+namespace ActionTools
 {
-	Q_OBJECT
-	Q_ENUMS(Button)
-
-public:
-	enum Button
+	QDataStream &operator << (QDataStream &s, const ActionInstanceBuffer &actionInstanceBuffer)
 	{
-		LeftButton,
-		MiddleButton,
-		RightButton
-	};
+		s << actionInstanceBuffer.actionInstanceId();
+		s << actionInstanceBuffer.action();
 
-	ActionClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)										{}
+		return s;
+	}
 
-	static ActionTools::StringListPair buttons;
+	QDataStream &operator >> (QDataStream &s, ActionInstanceBuffer &actionInstanceBuffer)
+	{
+		QString actionId;
+		ActionInstance action;
 
-	void startExecution();
+		s >> actionId;
+		s >> action;
 
-private:
-	Q_DISABLE_COPY(ActionClickInstance)
-};
+		actionInstanceBuffer.setActionInstanceId(actionId);
+		actionInstanceBuffer.setAction(action);
 
-#endif // ACTIONCLICKINSTANCE_H
+		return s;
+	}
+}

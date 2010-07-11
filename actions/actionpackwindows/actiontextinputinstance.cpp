@@ -19,6 +19,7 @@
 */
 
 #include "actiontextinputinstance.h"
+#include "actioninstanceexecutionhelper.h"
 #include "script.h"
 
 #include <QInputDialog>
@@ -33,7 +34,7 @@ ActionTextInputInstance::ActionTextInputInstance(const ActionTools::ActionDefini
 
 void ActionTextInputInstance::startExecution()
 {
-	ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+	ActionTools::ActionInstanceExecutionHelper actionExecution(this, script(), scriptEngine());
 	QString question;
 	QString defaultValue;
 	

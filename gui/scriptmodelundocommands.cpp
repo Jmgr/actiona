@@ -240,10 +240,10 @@ void ChangeDataCommand::undo()
 }
 
 //CopyActionCommand
-CopyActionCommand::CopyActionCommand(int row, const QList<ActionTools::ActionBuffer> &actionBuffers, ScriptModel *model)
+CopyActionCommand::CopyActionCommand(int row, const QList<ActionTools::ActionInstanceBuffer> &actionInstanceBuffers, ScriptModel *model)
 	: QUndoCommand(),
 	mRow(row),
-	mActionBuffers(actionBuffers),
+	mActionInstanceBuffers(actionInstanceBuffers),
 	mModel(model)
 {
 	setText(QObject::tr("Copy some actions"));
@@ -251,25 +251,25 @@ CopyActionCommand::CopyActionCommand(int row, const QList<ActionTools::ActionBuf
 
 void CopyActionCommand::redo()
 {
-	foreach(const ActionTools::ActionBuffer &actionBuffer, mActionBuffers)
+	foreach(const ActionTools::ActionInstanceBuffer &actionInstanceBuffer, mActionInstanceBuffers)
 	{
 		mModel->insertRow(mRow);
-		mModel->setData(mModel->index(mRow, 0), actionBuffer.actionId(), ScriptModel::ActionIdRole);
-		mModel->setData(mModel->index(mRow, 0), actionBuffer.actionAsVariant(), ScriptModel::ActionDataRole);
+		mModel->setData(mModel->index(mRow, 0), actionInstanceBuffer.actionInstanceId(), ScriptModel::ActionIdRole);
+		mModel->setData(mModel->index(mRow, 0), actionInstanceBuffer.actionAsVariant(), ScriptModel::ActionDataRole);
 	}
 }
 
 void CopyActionCommand::undo()
 {
-	for(int i = 0; i < mActionBuffers.count(); ++i)
+	for(int i = 0; i < mActionInstanceBuffers.count(); ++i)
 		mModel->removeRow(mRow);
 }
 
 //InsertActionCommand
-InsertNewActionCommand::InsertNewActionCommand(int row, const ActionTools::ActionBuffer &action, ScriptModel *model)
+InsertNewActionCommand::InsertNewActionCommand(int row, const ActionTools::ActionInstanceBuffer &actionInstanceBuffer, ScriptModel *model)
 	: QUndoCommand(),
 	mRow(row),
-	mAction(action),
+	mActionInstanceBuffer(actionInstanceBuffer),
 	mModel(model)
 {
 	setText(QObject::tr("Add an action"));
@@ -278,8 +278,8 @@ InsertNewActionCommand::InsertNewActionCommand(int row, const ActionTools::Actio
 void InsertNewActionCommand::redo()
 {
 	mModel->insertRow(mRow);
-	mModel->setData(mModel->index(mRow, 0), mAction.actionId(), ScriptModel::ActionIdRole);
-	mModel->setData(mModel->index(mRow, 0), mAction.actionAsVariant(), ScriptModel::ActionDataRole);
+	mModel->setData(mModel->index(mRow, 0), mActionInstanceBuffer.actionInstanceId(), ScriptModel::ActionIdRole);
+	mModel->setData(mModel->index(mRow, 0), mActionInstanceBuffer.actionAsVariant(), ScriptModel::ActionDataRole);
 }
 
 void InsertNewActionCommand::undo()
@@ -295,7 +295,7 @@ RemoveActionCommand::RemoveActionCommand(const QList<int> &rows, ScriptModel *mo
 {
 	foreach(int row, rows)
 	{
-		mActions << ActionTools::ActionBuffer(model->mScript->actionAt(row)->definition()->id(),
+		mActionInstanceBuffers << ActionTools::ActionInstanceBuffer(model->mScript->actionAt(row)->definition()->id(),
 											  *model->mScript->actionAt(row));
 	}
 
@@ -318,8 +318,8 @@ void RemoveActionCommand::undo()
 		int row = mRows.at(rowIndex);
 
 		mModel->insertRow(row);
-		mModel->setData(mModel->index(row, 0), mActions.at(rowIndex).actionId(), ScriptModel::ActionIdRole);
-		mModel->setData(mModel->index(row, 0), mActions.at(rowIndex).actionAsVariant(), ScriptModel::ActionDataRole);
+		mModel->setData(mModel->index(row, 0), mActionInstanceBuffers.at(rowIndex).actionInstanceId(), ScriptModel::ActionIdRole);
+		mModel->setData(mModel->index(row, 0), mActionInstanceBuffers.at(rowIndex).actionAsVariant(), ScriptModel::ActionDataRole);
 	}
 }
 

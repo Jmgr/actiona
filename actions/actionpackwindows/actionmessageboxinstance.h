@@ -21,7 +21,7 @@
 #ifndef ACTIONMESSAGEBOXINSTANCE_H
 #define ACTIONMESSAGEBOXINSTANCE_H
 
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 #include <QMessageBox>

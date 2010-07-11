@@ -21,7 +21,6 @@
 #ifndef ACTIONTEXTINPUTINSTANCE_H
 #define ACTIONTEXTINPUTINSTANCE_H
 
-#include "actionexecution.h"
 #include "actioninstance.h"
 
 class QInputDialog;

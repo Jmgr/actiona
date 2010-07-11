@@ -1,4 +1,4 @@
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "script.h"
 
 #include <QScriptValue>
@@ -7,7 +7,7 @@
 
 namespace ActionTools
 {
-	ActionExecution::ActionExecution(ActionInstance *actionInstance, Script *script, QScriptEngine *scriptEngine)
+	ActionInstanceExecutionHelper::ActionInstanceExecutionHelper(ActionInstance *actionInstance, Script *script, QScriptEngine *scriptEngine)
 			: mActionInstance(actionInstance),
 			mScript(script),
 			mScriptEngine(scriptEngine)
@@ -16,11 +16,11 @@ namespace ActionTools
 				actionInstance, SIGNAL(executionException(ActionTools::ActionInstance::ExecutionException,QString)));
 	}
 
-	ActionExecution::~ActionExecution()
+	ActionInstanceExecutionHelper::~ActionInstanceExecutionHelper()
 	{
 	}
 
-	bool ActionExecution::evaluateString(QString &buffer,
+	bool ActionInstanceExecutionHelper::evaluateString(QString &buffer,
 										const QString &parameterName,
 										const QString &subParameterName)
 	{
@@ -42,7 +42,7 @@ namespace ActionTools
 		return true;
 	}
 	
-	bool ActionExecution::evaluateVariable(QString &buffer,
+	bool ActionInstanceExecutionHelper::evaluateVariable(QString &buffer,
 										const QString &parameterName,
 										const QString &subParameterName)
 	{
@@ -66,7 +66,7 @@ namespace ActionTools
 		return true;
 	}
 
-	bool ActionExecution::evaluateInteger(int &buffer,
+	bool ActionInstanceExecutionHelper::evaluateInteger(int &buffer,
 										  const QString &parameterName,
 										  const QString &subParameterName)
 	{
@@ -85,7 +85,7 @@ namespace ActionTools
 		return result;
 	}
 
-	bool ActionExecution::evaluateFloat(float &buffer,
+	bool ActionInstanceExecutionHelper::evaluateFloat(float &buffer,
 										const QString &parameterName,
 										const QString &subParameterName)
 	{
@@ -103,7 +103,7 @@ namespace ActionTools
 		return result;
 	}
 
-	bool ActionExecution::evaluateListElement(int &buffer,
+	bool ActionInstanceExecutionHelper::evaluateListElement(int &buffer,
 											  const QString &parameterName,
 											  const QString &subParameterName,
 											  const StringListPair &listElements)
@@ -149,18 +149,18 @@ namespace ActionTools
 		return true;
 	}
 	
-	QString ActionExecution::nextLine() const
+	QString ActionInstanceExecutionHelper::nextLine() const
 	{
 		return mScriptEngine->evaluate("Script.nextLine").toString();
 	}
 	
-	void ActionExecution::setNextLine(const QString &nextLine)
+	void ActionInstanceExecutionHelper::setNextLine(const QString &nextLine)
 	{
 		QScriptValue scriptValue = mScriptEngine->globalObject().property("Script");
 		scriptValue.setProperty("nextLine", mScriptEngine->newVariant(QVariant(nextLine)));
 	}
 
-	bool ActionExecution::evaluate(const SubParameter &toEvaluate)
+	bool ActionInstanceExecutionHelper::evaluate(const SubParameter &toEvaluate)
 	{
 		mScriptEngine->globalObject().setProperty("currentParameter", mScriptEngine->newVariant(mParameterName), QScriptValue::ReadOnly);
 		mScriptEngine->globalObject().setProperty("currentSubParameter", mScriptEngine->newVariant(mSubParameterName), QScriptValue::ReadOnly);

@@ -21,7 +21,7 @@
 #ifndef ACTIONCOMMANDINSTANCE_H
 #define ACTIONCOMMANDINSTANCE_H
 
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 
@@ -45,20 +45,20 @@ public:
 
 	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString command;
 		QString parameters;
 		QString workingDirectory;
 		QString processId;
 
-		if(!actionExecution.evaluateString(command, "command") ||
-			!actionExecution.evaluateString(parameters, "parameters") ||
-			!actionExecution.evaluateString(workingDirectory, "workingDirectory") ||
-			!actionExecution.evaluateVariable(mExitCodeVariable, "exitCode") ||
-			!actionExecution.evaluateVariable(processId, "processId") ||
-			!actionExecution.evaluateVariable(mOutputVariable, "output") ||
-			!actionExecution.evaluateVariable(mErrorOutputVariable, "errorOutput") ||
-			!actionExecution.evaluateVariable(mExitStatusVariable, "exitStatus"))
+		if(!actionInstanceExecutionHelper.evaluateString(command, "command") ||
+			!actionInstanceExecutionHelper.evaluateString(parameters, "parameters") ||
+			!actionInstanceExecutionHelper.evaluateString(workingDirectory, "workingDirectory") ||
+			!actionInstanceExecutionHelper.evaluateVariable(mExitCodeVariable, "exitCode") ||
+			!actionInstanceExecutionHelper.evaluateVariable(processId, "processId") ||
+			!actionInstanceExecutionHelper.evaluateVariable(mOutputVariable, "output") ||
+			!actionInstanceExecutionHelper.evaluateVariable(mErrorOutputVariable, "errorOutput") ||
+			!actionInstanceExecutionHelper.evaluateVariable(mExitStatusVariable, "exitStatus"))
 			return;
 		
 		mProcess->setWorkingDirectory(workingDirectory);

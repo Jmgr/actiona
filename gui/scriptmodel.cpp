@@ -74,9 +74,9 @@ void ScriptModel::setActionsColor(const QList<int> &rows, const QColor &color)
 	emit scriptEdited();
 }
 
-void ScriptModel::insertAction(int row, const ActionTools::ActionBuffer &actionBuffer)
+void ScriptModel::insertAction(int row, const ActionTools::ActionInstanceBuffer &actionInstanceBuffer)
 {
-	mUndoStack->push(new InsertNewActionCommand(row, actionBuffer, this));
+	mUndoStack->push(new InsertNewActionCommand(row, actionInstanceBuffer, this));
 
 	mSelectionModel->select(index(row, 0), QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
 	mSelectionModel->setCurrentIndex(index(row, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
@@ -383,7 +383,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 			continue;
 
 		stream << row;
-		stream << ActionTools::ActionBuffer(actionInstance->definition()->id(), *actionInstance);
+		stream << ActionTools::ActionInstanceBuffer(actionInstance->definition()->id(), *actionInstance);
 	}
 
 	mimeDataPtr->setData("application/act.action", encodedData);
@@ -420,22 +420,22 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 			row = rowCount(QModelIndex());
 
 		QList<int> previousRows;
-		QList<ActionTools::ActionBuffer> actionBuffers;
+		QList<ActionTools::ActionInstanceBuffer> actionInstanceBuffers;
 
 		while(!stream.atEnd())
 		{
 			int previousRow;
-			ActionTools::ActionBuffer actionBuffer;
+			ActionTools::ActionInstanceBuffer actionInstanceBuffer;
 
 			stream >> previousRow;
-			stream >> actionBuffer;
+			stream >> actionInstanceBuffer;
 
 			previousRows << previousRow;
-			actionBuffers << actionBuffer;
+			actionInstanceBuffers << actionInstanceBuffer;
 		}
 
 		if(action == Qt::CopyAction)
-			mUndoStack->push(new CopyActionCommand(row, actionBuffers, this));
+			mUndoStack->push(new CopyActionCommand(row, actionInstanceBuffers, this));
 		else if(action == Qt::MoveAction)
 			mUndoStack->push(new MoveActionCommand(row, previousRows, this));
 

@@ -21,7 +21,6 @@
 #ifndef ACTIONSTOPINSTANCE_H
 #define ACTIONSTOPINSTANCE_H
 
-#include "actionexecution.h"
 #include "actioninstance.h"
 
 class ActionStopInstance : public ActionTools::ActionInstance

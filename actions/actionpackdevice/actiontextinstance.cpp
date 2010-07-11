@@ -19,6 +19,7 @@
 */
 
 #include "actiontextinstance.h"
+#include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>
@@ -33,7 +34,7 @@
 
 void ActionTextInstance::startExecution()
 {
-	ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+	ActionTools::ActionInstanceExecutionHelper actionExecution(this, script(), scriptEngine());
 
 	QString text;
 

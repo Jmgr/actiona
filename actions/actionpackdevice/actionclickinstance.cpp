@@ -40,7 +40,7 @@ ActionTools::StringListPair ActionClickInstance::buttons = qMakePair(
 
 void ActionClickInstance::startExecution()
 {
-	ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+	ActionTools::ActionInstanceExecutionHelper actionExecution(this, script(), scriptEngine());
 
 	int button;
 	int amount;

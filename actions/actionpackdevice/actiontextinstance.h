@@ -21,7 +21,6 @@
 #ifndef ACTIONTEXTINSTANCE_H
 #define ACTIONTEXTINSTANCE_H
 
-#include "actionexecution.h"
 #include "actioninstance.h"
 
 class ActionTextInstance : public ActionTools::ActionInstance

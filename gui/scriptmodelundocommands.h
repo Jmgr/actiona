@@ -25,7 +25,7 @@
 #include <QModelIndex>
 #include <QVariant>
 
-#include "actionbuffer.h"
+#include "actioninstancebuffer.h"
 
 class ScriptModel;
 
@@ -101,26 +101,26 @@ private:
 class CopyActionCommand : public QUndoCommand
 {
 public:
-	CopyActionCommand(int row, const QList<ActionTools::ActionBuffer> &actionBuffers, ScriptModel *model);
+	CopyActionCommand(int row, const QList<ActionTools::ActionInstanceBuffer> &actionInstanceBuffers, ScriptModel *model);
 	void redo();
 	void undo();
 
 private:
 	int mRow;
-	QList<ActionTools::ActionBuffer> mActionBuffers;
+	QList<ActionTools::ActionInstanceBuffer> mActionInstanceBuffers;
 	ScriptModel *mModel;
 };
 
 class InsertNewActionCommand : public QUndoCommand
 {
 public:
-	InsertNewActionCommand(int row, const ActionTools::ActionBuffer &action, ScriptModel *model);
+	InsertNewActionCommand(int row, const ActionTools::ActionInstanceBuffer &actionInstanceBuffer, ScriptModel *model);
 	void redo();
 	void undo();
 
 private:
 	int mRow;
-	ActionTools::ActionBuffer mAction;
+	ActionTools::ActionInstanceBuffer mActionInstanceBuffer;
 	ScriptModel *mModel;
 };
 
@@ -133,7 +133,7 @@ public:
 
 private:
 	QList<int> mRows;
-	QList<ActionTools::ActionBuffer> mActions;
+	QList<ActionTools::ActionInstanceBuffer> mActionInstanceBuffers;
 	ScriptModel *mModel;
 };
 

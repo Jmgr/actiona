@@ -21,7 +21,7 @@
 #ifndef ACTIONPAUSEINSTANCE_H
 #define ACTIONPAUSEINSTANCE_H
 
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 #include <QTimer>
@@ -36,10 +36,10 @@ public:
 
 	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		int duration;
 
-		if(!actionExecution.evaluateInteger(duration, "duration"))
+		if(!actionInstanceExecutionHelper.evaluateInteger(duration, "duration"))
 			return;
 
 		QTimer::singleShot(duration, this, SIGNAL(executionEnded()));

@@ -21,7 +21,7 @@
 #ifndef ACTIONKILLPROCESSINSTANCE_H
 #define ACTIONKILLPROCESSINSTANCE_H
 
-#include "actionexecution.h"
+#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 #include "crossplatform.h"
@@ -46,10 +46,10 @@ public:
 
 	void startExecution()
 	{
-		ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		int processId;
 		
-		if(!actionExecution.evaluateInteger(processId, "processId"))
+		if(!actionInstanceExecutionHelper.evaluateInteger(processId, "processId"))
 			return;
 		
 		if(processId != 0)

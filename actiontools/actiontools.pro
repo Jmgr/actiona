@@ -25,8 +25,8 @@ SOURCES += actionfactory.cpp \
 	keytypes.cpp \
 	parameter.cpp \
 	subparameter.cpp \
-	actionbuffer.cpp \
-	actionexecution.cpp \
+	actioninstancebuffer.cpp \
+	actioninstanceexecutionhelper.cpp \
 	scriptcompleter.cpp \
 	keywords.cpp \
 	messagehandler.cpp
@@ -48,8 +48,8 @@ HEADERS += actiontools_global.h \
 	keytypes.h \
 	keytypesdef.h \
 	windowskeys.h \
-	actionbuffer.h \
-	actionexecution.h \
+	actioninstancebuffer.h \
+	actioninstanceexecutionhelper.h \
 	settings.h \
 	stringlistpair.h \
 	scriptcompleter.h \

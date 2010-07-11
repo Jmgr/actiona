@@ -85,7 +85,7 @@ public slots:
 	void setActionsEnabled(bool enabled);
 	void setActionsEnabled(const QList<int> &rows, bool enabled);
 	void setActionsColor(const QList<int> &rows, const QColor &color);
-	void insertAction(int row, const ActionTools::ActionBuffer &actionBuffer);
+	void insertAction(int row, const ActionTools::ActionInstanceBuffer &actionInstanceBuffer);
 	void removeActions(const QList<int> &rows);
 	void moveActions(MoveDirection moveDirection, const QList<int> &rows);
 	void copyActions(const QList<int> &rows);

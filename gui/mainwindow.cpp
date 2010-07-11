@@ -23,7 +23,7 @@
 
 #include "actionfactory.h"
 #include "actiondefinition.h"
-#include "actionbuffer.h"
+#include "actioninstancebuffer.h"
 #include "script.h"
 #include "scriptmodel.h"
 #include "global.h"
@@ -1298,7 +1298,7 @@ void MainWindow::addAction()
 		if(mAddActionRow == mScript->actionCount())
 			ui->scriptView->scrollToBottom();
 
-		mScriptModel->insertAction(mAddActionRow, ActionTools::ActionBuffer(mAddAction, *actionInstance));
+		mScriptModel->insertAction(mAddActionRow, ActionTools::ActionInstanceBuffer(mAddAction, *actionInstance));
 	}
 
 	delete actionInstance;//Always delete it, since the model creates a copy of it...

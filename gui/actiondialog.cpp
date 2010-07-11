@@ -48,7 +48,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 {
 	ui->setupUi(this);
 
-	ActionTools::ActionDefinition *actionDefinition(actionInstance->definition());
+	const ActionTools::ActionDefinition *actionDefinition(actionInstance->definition());
 	const QList<ActionTools::ElementDefinition *> elements(actionDefinition->elements());
 
 	ui->actionIcon->setPixmap(actionDefinition->icon());
@@ -187,7 +187,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 ActionDialog::~ActionDialog()
 {
-	ActionTools::ActionDefinition *actionDefinition(mActionInstance->definition());
+	const ActionTools::ActionDefinition *actionDefinition(mActionInstance->definition());
 	const QList<ActionTools::ElementDefinition *> elements(actionDefinition->elements());
 	foreach(ActionTools::ElementDefinition *element, elements)
 	{

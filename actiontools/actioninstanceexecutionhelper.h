@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONEXECUTION_H
-#define ACTIONEXECUTION_H
+#ifndef ACTIONINSTANCEEXECUTIONHELPER_H
+#define ACTIONINSTANCEEXECUTIONHELPER_H
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -34,13 +34,13 @@ namespace ActionTools
 {
 	class Script;
 	
-	class ACTIONTOOLSSHARED_EXPORT ActionExecution : public QObject
+	class ACTIONTOOLSSHARED_EXPORT ActionInstanceExecutionHelper : public QObject
 	{
 		Q_OBJECT
 
 	public:
-		ActionExecution(ActionInstance *actionInstance, Script *script, QScriptEngine *scriptEngine);
-		~ActionExecution();
+		ActionInstanceExecutionHelper(ActionInstance *actionInstance, Script *script, QScriptEngine *scriptEngine);
+		~ActionInstanceExecutionHelper();
 
 		bool evaluateString(QString &buffer,
 							const QString &parameterName,
@@ -88,4 +88,4 @@ namespace ActionTools
 	};
 }
 
-#endif // ACTIONEXECUTION_H
+#endif // ACTIONINSTANCEEXECUTIONHELPER_H

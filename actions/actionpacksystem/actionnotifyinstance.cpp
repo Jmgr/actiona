@@ -25,6 +25,7 @@
 #endif
 
 #include "actionnotifyinstance.h"
+#include "actioninstanceexecutionhelper.h"
 
 ActionNotifyInstance::ActionNotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 	: ActionTools::ActionInstance(definition, parent),
@@ -45,16 +46,16 @@ ActionNotifyInstance::~ActionNotifyInstance()
 
 void ActionNotifyInstance::startExecution()
 {
-	ActionTools::ActionExecution actionExecution(this, script(), scriptEngine());
+	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 	QString title;
 	QString text;
 	int timeout;
 	QString icon;
 
-	if(!actionExecution.evaluateString(title, "title") ||
-	   !actionExecution.evaluateString(text, "text") ||
-	   !actionExecution.evaluateInteger(timeout, "timeout") ||
-	   !actionExecution.evaluateString(icon, "icon"))
+	if(!actionInstanceExecutionHelper.evaluateString(title, "title") ||
+	   !actionInstanceExecutionHelper.evaluateString(text, "text") ||
+	   !actionInstanceExecutionHelper.evaluateInteger(timeout, "timeout") ||
+	   !actionInstanceExecutionHelper.evaluateString(icon, "icon"))
 		return;
 
 #ifdef Q_WS_X11
