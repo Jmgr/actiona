@@ -219,13 +219,13 @@ void MainWindow::postInit()
 
 		delete actionInstance;
 	}
-	
+
 	//Add Environment & Algorithms class
 	ExecutionEnvironment executionEnvironment;
 	ActionTools::addClassKeywords(executionEnvironment.metaObject(), "Environment", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
 	ExecutionAlgorithms executionAlgorithms;
 	ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
-	
+
 	//Add Ecmascript stuff
 	ActionTools::addEcmaScriptObjectsKeywords(mCompletionModel);
 
@@ -616,7 +616,7 @@ void MainWindow::on_actionExport_executable_triggered()
 	progressDialog.setLabelText(tr("Adding actions..."));
 
 	QSet<ActionTools::ActionPack *> addedPacks;
-	for(int index = 0; index < mActionFactory->actionCount(); ++index)
+	for(int index = 0; index < mActionFactory->actionDefinitionCount(); ++index)
 	{
 		ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(index);
 		if(!actionDefinition)

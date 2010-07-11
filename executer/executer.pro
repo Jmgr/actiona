@@ -3,19 +3,20 @@ QT += script
 TEMPLATE = lib
 CONFIG += dll
 DEFINES += EXECUTER_LIBRARY
+win32:DEFINES += _CRT_SECURE_NO_WARNINGS
 TARGET = executer
 DESTDIR = ..
 FORMS += executionwindow.ui
 SOURCES += executer.cpp \
 	executionwindow.cpp \
 	executionenvironment.cpp \
-    executionalgorithms.cpp
+	executionalgorithms.cpp
 HEADERS += executer_global.h \
 	executer.h \
 	executionwindow.h \
 	scriptagent.h \
 	executionenvironment.h \
-    executionalgorithms.h
+	executionalgorithms.h
 INCLUDEPATH += src \
 	../tools \
 	../actiontools
