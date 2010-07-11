@@ -46,6 +46,7 @@ namespace ActionTools
 		//Reserved keywords
 		format.setForeground(Qt::red);
 		format.setFontWeight(QFont::Bold);
+		format.setFontStrikeOut(true);
 		rule.format = format;
 
 		foreach(const QString &keyword, reservedKeywords)
@@ -53,7 +54,7 @@ namespace ActionTools
 			rule.pattern = QRegExp("\\b" + keyword + "\\b");
 			mHighlightingRules.append(rule);
 		}
-		
+	
 		format = QTextCharFormat();
 		
 		//Actions
@@ -71,12 +72,6 @@ namespace ActionTools
 		rule.pattern = QRegExp("\\b[\\d]+\\.?[\\d]*\\b");
 		rule.format = format;
 		mHighlightingRules.append(rule);
-
-		//Single line comments
-		format.setForeground(Qt::darkGreen);
-		rule.pattern = QRegExp("//[^\n]*");
-		rule.format = format;
-		mHighlightingRules.append(rule);
 		
 		//Multi line comments
 		mMultiLineCommentFormat.setForeground(Qt::darkGreen);
@@ -92,6 +87,12 @@ namespace ActionTools
 		rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
 		rule.format = format;
 		mHighlightingRules.append(rule);
+		
+		//Single line comments
+		format.setForeground(Qt::darkGreen);
+		rule.pattern = QRegExp("//[^\n]*");
+		rule.format = format;
+		mHighlightingRules.append(rule);
 
 		mCommentStartExpression = QRegExp("/\\*");
 		mCommentEndExpression = QRegExp("\\*/");
@@ -102,7 +103,7 @@ namespace ActionTools
 		HighlightingRule rule;
 		rule.pattern = QRegExp(QString("\\b%1\\b").arg(actionName));
 		rule.format = mActionFormat;
-		mHighlightingRules.append(rule);
+		mHighlightingRules.prepend(rule);
 	}
 
 	void CodeHighlighter::highlightBlock(const QString &text)
@@ -128,15 +129,15 @@ namespace ActionTools
 		{
 			int endIndex = mCommentEndExpression.indexIn(text, startIndex);
 			int commentLength;
-			if (endIndex == -1)
+			
+			if(endIndex == -1)
 			{
 				setCurrentBlockState(1);
 				commentLength = text.length() - startIndex;
 			}
 			else
-			{
 				commentLength = endIndex - startIndex + mCommentEndExpression.matchedLength();
-			}
+
 			setFormat(startIndex, commentLength, mMultiLineCommentFormat);
 			startIndex = mCommentStartExpression.indexIn(text, startIndex + commentLength);
 		}

@@ -443,11 +443,11 @@ namespace ActionTools
 		if(!mCompleter || (ctrlOrShift && event->text().isEmpty()))
 			return;
 
-		static QString eow("~!@#$%^&*()_+{}|:\"<>?,/;'[]\\-="); // end of word
+		static QString endOfWord("~!@#$%^&*()_+{}|:\"<>?,/;'[]\\-=");
 		bool hasModifier = (event->modifiers() != Qt::NoModifier) && !ctrlOrShift;
 		QString completionPrefix = textUnderCursor();
 
-		if(!isShortcut && (hasModifier || event->text().isEmpty() || completionPrefix.length() < 1 || eow.contains(event->text().right(1))))
+		if(!isShortcut && (hasModifier || event->text().isEmpty() || completionPrefix.length() < 1 || endOfWord.contains(event->text().right(1))))
 		{
 			mCompleter->popup()->hide();
 			return;
