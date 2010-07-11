@@ -72,6 +72,8 @@ namespace ActionTools
 		mEditorButton->setMaximumWidth(18);
 		mEditorButton->setToolTip(tr("Click here to open the editor"));
 		
+		setMinimumWidth(minimumWidth() + 14 + 18);
+		
 		setEmbedded(false);
 	}
 	

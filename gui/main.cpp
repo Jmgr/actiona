@@ -104,17 +104,17 @@ int main(int argc, char **argv)
 	app.addLibraryPath(QDir::currentPath() + "/actions");
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
-	qRegisterMetaType<ActionTools::ActionInstance::ExecutionException>("ActionInstance::ExecutionException");
+	qRegisterMetaType<ActionTools::ActionInstance::ExecutionException>("ExecutionException");
 	qRegisterMetaType<ActionTools::Parameter>("Parameter");
 	qRegisterMetaType<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaType<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");
-	qRegisterMetaType<Tools::Version>("Tools::Version");
+	qRegisterMetaType<Tools::Version>("Version");
 
 	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaTypeStreamOperators<ActionTools::Parameter>("Parameter");
 	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");
-	qRegisterMetaTypeStreamOperators<Tools::Version>("Tools::Version");
+	qRegisterMetaTypeStreamOperators<Tools::Version>("Version");
 
 	app.setOrganizationName("Actionaz");
 	app.setOrganizationDomain("actionaz.eu");
