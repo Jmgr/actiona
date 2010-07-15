@@ -20,12 +20,14 @@
 
 #include <QtGlobal>
 
-#ifdef Q_WS_X11
-#include <libnotify/notify.h>
-#endif
-
 #include "actionnotifyinstance.h"
 #include "actioninstanceexecutionhelper.h"
+
+#ifdef Q_WS_X11
+#undef signals
+#include <libnotify/notify.h>
+#define signals
+#endif
 
 ActionNotifyInstance::ActionNotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 	: ActionTools::ActionInstance(definition, parent),

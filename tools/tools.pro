@@ -10,11 +10,13 @@ DEFINES += TOOLS_LIBRARY
 TARGET = tools
 DESTDIR = ..
 SOURCES += version.cpp \
-	updater.cpp
+	updater.cpp \
+    highresolutiontimer.cpp
 win32:SOURCES += sevenziparchivewrite.cpp
 HEADERS += version.h \
 	tools_global.h \
-	updater.h
+	updater.h \
+    highresolutiontimer.h
 win32:HEADERS += sevenziparchivewrite.h
 INCLUDEPATH += src
 UI_DIR = generated

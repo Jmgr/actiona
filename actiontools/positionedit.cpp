@@ -76,10 +76,17 @@ namespace ActionTools
 	{
 		codeLineEdit()->setCompletionModel(completionModel);
 	}
-
-	void PositionEdit::on_choose_positionChosen(QPoint pos)
+	
+	void PositionEdit::setPosition(QPoint position)
 	{
-		ui->position->setText(QString("%1:%2").arg(pos.x()).arg(pos.y()));
+		ui->position->setText(QString("%1:%2").arg(position.x()).arg(position.y()));
+	}
+
+	void PositionEdit::on_choose_positionChosen(QPoint position)
+	{
+		setPosition(position);
+		
+		emit positionChosen(position);
 	}
 
 	void PositionEdit::on_position_codeChanged(bool code)

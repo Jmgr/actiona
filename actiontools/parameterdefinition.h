@@ -47,6 +47,7 @@ namespace ActionTools
 		virtual void load(const ActionInstance *actionInstance) = 0;
 		virtual void save(ActionInstance *actionInstance) = 0;
 		virtual void setDefaultValues(Parameter &data) = 0;
+		virtual Qt::Orientation editorsOrientation() const							{ return Qt::Horizontal; }
 
 		QList<QWidget *> editors() const											{ return mEditors; }
 		QVariant option(QString name, QVariant defaultValue = QVariant()) const;

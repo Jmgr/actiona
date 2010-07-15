@@ -13,7 +13,8 @@ SOURCES += parameterdefinition.cpp \
     numberparameterdefinition.cpp \
     ifactionparameterdefinition.cpp \
     datetimeparameterdefinition.cpp \
-    variableparameterdefinition.cpp
+    variableparameterdefinition.cpp \
+	colorpositionparameterdefinition.cpp
 HEADERS += parameterdefinition.h \
     elementdefinition.h \
     groupdefinition.h \
@@ -29,4 +30,5 @@ HEADERS += parameterdefinition.h \
     numberparameterdefinition.h \
     ifactionparameterdefinition.h \
     datetimeparameterdefinition.h \
-    variableparameterdefinition.h
+    variableparameterdefinition.h \
+	colorpositionparameterdefinition.h

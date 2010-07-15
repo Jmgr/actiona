@@ -11,7 +11,9 @@ HEADERS += actionpacksystem.h \
 	actionkillprocessdefinition.h \
 	actionkillprocessinstance.h \
 	actionnotifydefinition.h \
-	actionnotifyinstance.h
+	actionnotifyinstance.h \
+    actionpixelcolordefinition.h \
+    actionpixelcolorinstance.h
 RESOURCES += actionpacksystem.qrc
 HEADERS +=
 SOURCES += actionkillprocessinstance.cpp \

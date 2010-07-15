@@ -154,6 +154,9 @@ QScriptValue stopExecutionFunction(QScriptContext *context, QScriptEngine *engin
 
 bool Executer::startExecution(bool onlySelection)
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer("Executer::startExecution");
+#endif
 	mScriptAgent->setContext(ScriptAgent::Unknown);
 
 	mExecuteOnlySelection = onlySelection;

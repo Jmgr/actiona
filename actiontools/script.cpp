@@ -187,6 +187,9 @@ namespace ActionTools
 
 	bool Script::write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion)
 	{
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("Script::write");
+#endif
 		QXmlStreamWriter stream(device);
 		stream.setAutoFormatting(true);
 
@@ -293,6 +296,9 @@ namespace ActionTools
 
 	Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion)
 	{
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("Script::read");
+#endif
 		qDeleteAll(mActionInstances);
 		mActionInstances.clear();
 		mParameters.clear();
@@ -307,20 +313,34 @@ namespace ActionTools
 		QXmlSchema schema;
 		schema.setMessageHandler(&messageHandler);
 
-		if(!schema.load(&schemaFile))
-			return ReadInternal;
-
-		QXmlSchemaValidator validator(schema);
-		if(!validator.validate(device))
 		{
-			mStatusMessage = messageHandler.statusMessage();
-			mLine = messageHandler.line();
-			mColumn = messageHandler.column();
+#ifdef ACT_PROFILE
+			Tools::HighResolutionTimer timer("loading schema file");
+#endif
+			if(!schema.load(&schemaFile))
+				return ReadInternal;
+		}
 
-			return ReadBadSchema;
+		{
+#ifdef ACT_PROFILE
+			Tools::HighResolutionTimer timer("validating file");
+#endif
+			QXmlSchemaValidator validator(schema);
+			if(!validator.validate(device))
+			{
+				mStatusMessage = messageHandler.statusMessage();
+				mLine = messageHandler.line();
+				mColumn = messageHandler.column();
+	
+				return ReadBadSchema;
+			}
 		}
 
 		device->reset();
+		
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer2("Reading content");
+#endif
 
 		QXmlStreamReader stream(device);
 		while(!stream.atEnd() && !stream.hasError())

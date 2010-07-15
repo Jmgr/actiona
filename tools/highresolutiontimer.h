@@ -18,40 +18,46 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "actiontextinstance.h"
-#include "actioninstanceexecutionhelper.h"
+#ifndef HIGHRESOLUTIONTIMER_H
+#define HIGHRESOLUTIONTIMER_H
 
-#ifdef Q_WS_X11
-#include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
-#endif
-#ifdef Q_WS_WIN
-#define WIN32_LEAN_AND_MEAN
+#include "tools_global.h"
+
+#ifdef QT_WS_WIN
 #include <windows.h>
+#else
+#include <sys/time.h>
 #endif
 
-#include <QTimer>
+#include <QString>
 
-void ActionTextInstance::startExecution()
+namespace Tools
 {
-	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-
-	QString text;
-
-	if(!actionInstanceExecutionHelper.evaluateString(text, "text"))
-		return;
-	
-	//TODO
-
-#ifdef Q_WS_X11
-	
+	class TOOLSSHARED_EXPORT HighResolutionTimer
+	{
+	public:
+		HighResolutionTimer(const QString &taskName = QString());
+		~HighResolutionTimer();
+		
+		void start();
+		void stop();
+		double elapsedMicroseconds();
+		double elapsedMilliseconds();
+		double elapsedSeconds();
+	private:
+		static int mLevel;
+		QString mSpaces;
+		bool mRunning;
+		QString mTaskName;
+#ifdef QT_WS_WIN
+		LARGE_INTEGER mTimeStart;
+		LARGE_INTEGER mTimeStop;
+		LARGE_INTEGER mFrequency;
+#else
+		timeval mTimeStart;
+		timeval mTimeStop;
 #endif
-#ifdef Q_WS_WIN
-
-#endif
-#ifdef Q_WS_MAC
-	//TODO_MAC
-#endif
-
-	QTimer::singleShot(1, this, SIGNAL(executionEnded()));
+	};
 }
+
+#endif // HIGHRESOLUTIONTIMER_H

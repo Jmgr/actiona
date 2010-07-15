@@ -54,10 +54,16 @@ namespace ActionTools
 		void setFromSubParameter(const SubParameter &subParameter);
 		void openEditor(int line = -1, int column = -1);
 		void setCompletionModel(QAbstractItemModel *completionModel);
-
+		
+	signals:
+		void positionChosen(QPoint position);
+		
+	public slots:
+		void setPosition(QPoint position);
+		
 	private slots:
 		void on_chooseByPosition_positionChosen(QPoint position);
-		void on_browse_clicked();
+		void on_choose_clicked();
 		void on_colorLineEdit_textChanged(const QString &text);
 		void on_colorLineEdit_codeChanged(bool code);
 		void onColorSelected();

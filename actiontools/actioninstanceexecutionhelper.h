@@ -58,6 +58,12 @@ namespace ActionTools
 								 const QString &parameterName,
 								 const QString &subParameterName,
 								 const StringListPair &listElements);
+		bool evaluatePoint(QPoint &buffer,
+						   const QString &parameterName,
+						   const QString &subParameterName = "value");
+		bool evaluateColor(QColor &buffer,
+						   const QString &parameterName,
+						   const QString &subParameterName = "value");
 		
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);

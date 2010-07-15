@@ -98,6 +98,10 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 	mHashCalculator(QCryptographicHash::Md5)
 #endif
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer("MainWindow constructor");
+#endif
+	
 	ui->setupUi(this);
 
 	setUnifiedTitleAndToolBarOnMac(true);
@@ -204,30 +208,49 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::postInit()
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer("postInit");
+#endif
+	
 	mPackLoadErrors.clear();
 
 	mActionFactory->loadActionPacks();
 
-	//Create one instance of every action to build the completion model
-	for(int actionDefinitionIndex = 0; actionDefinitionIndex < mActionFactory->actionDefinitionCount(); ++actionDefinitionIndex)
 	{
-		ActionTools::ActionDefinition *actionDefinition =	mActionFactory->actionDefinition(actionDefinitionIndex);
-		ActionTools::ActionInstance *actionInstance = actionDefinition->newActionInstance();
-		QStringList ignoreList(QStringList() << "deleteLater" << "startExecution" << "stopExecution");
-
-		ActionTools::addClassKeywords(actionInstance->metaObject(), actionDefinition->id(), actionDefinition->icon(), mCompletionModel, ignoreList);
-
-		delete actionInstance;
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("building completion model");
+#endif
+		//Create one instance of every action to build the completion model
+		for(int actionDefinitionIndex = 0; actionDefinitionIndex < mActionFactory->actionDefinitionCount(); ++actionDefinitionIndex)
+		{
+			ActionTools::ActionDefinition *actionDefinition =	mActionFactory->actionDefinition(actionDefinitionIndex);
+			ActionTools::ActionInstance *actionInstance = actionDefinition->newActionInstance();
+			QStringList ignoreList(QStringList() << "deleteLater" << "startExecution" << "stopExecution");
+	
+			ActionTools::addClassKeywords(actionInstance->metaObject(), actionDefinition->id(), actionDefinition->icon(), mCompletionModel, ignoreList);
+	
+			delete actionInstance;
+		}
 	}
 
-	//Add Environment & Algorithms class
-	ExecutionEnvironment executionEnvironment;
-	ActionTools::addClassKeywords(executionEnvironment.metaObject(), "Environment", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
-	ExecutionAlgorithms executionAlgorithms;
-	ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
-
-	//Add Ecmascript stuff
-	ActionTools::addEcmaScriptObjectsKeywords(mCompletionModel);
+	{
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("adding execution classes");
+#endif
+		//Add Environment & Algorithms class
+		ExecutionEnvironment executionEnvironment;
+		ActionTools::addClassKeywords(executionEnvironment.metaObject(), "Environment", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
+		ExecutionAlgorithms executionAlgorithms;
+		ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
+	}
+		
+	{
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("adding Ecmascript stuff");
+#endif
+		//Add Ecmascript stuff
+		ActionTools::addEcmaScriptObjectsKeywords(mCompletionModel);
+	}
 
 	//Add our functions
 	QStandardItem *scriptItem = new QStandardItem(QIcon(":/icons/keywords.png"), "Script");//TODO : Find an icon to put here (and to the following)
@@ -239,7 +262,12 @@ void MainWindow::postInit()
 	scriptItem->setData(static_cast<int>(ActionTools::ScriptElementAction));
 	mCompletionModel->appendRow(scriptItem);
 
-	fillNewActionTreeWidget(ui->newActionTreeWidget);
+	{
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("filling NewActionTreeWidget");
+#endif
+		fillNewActionTreeWidget(ui->newActionTreeWidget);
+	}
 
 	statusBar()->showMessage(tr("Ready, loaded %1 actions from %2 packs").arg(mActionFactory->actionDefinitionCount()).arg(mActionFactory->packCount()));
 
@@ -279,24 +307,30 @@ void MainWindow::postInit()
 	setCurrentFile(QString());
 
 	QSettings settings;
-	if(!mStartScript.isEmpty())
+	
 	{
-		if(!loadFile(mStartScript))
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("loading last file");
+#endif
+		if(!mStartScript.isEmpty())
 		{
-			if(mCommandOptions->count("execute"))
-				QApplication::quit();
-		}
-	}
-	else
-	{
-		if(settings.value("general/reopenLastScript", QVariant(false)).toBool())
-		{
-			QString lastFilename = settings.value("general/lastScript", QString()).toString();
-
-			if(!lastFilename.isEmpty())
+			if(!loadFile(mStartScript))
 			{
-				if(!loadFile(lastFilename))
-					settings.setValue("general/lastScript", QString());
+				if(mCommandOptions->count("execute"))
+					QApplication::quit();
+			}
+		}
+		else
+		{
+			if(settings.value("general/reopenLastScript", QVariant(false)).toBool())
+			{
+				QString lastFilename = settings.value("general/lastScript", QString()).toString();
+	
+				if(!lastFilename.isEmpty())
+				{
+					if(!loadFile(lastFilename))
+						settings.setValue("general/lastScript", QString());
+				}
 			}
 		}
 	}
@@ -995,6 +1029,9 @@ void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
 
 void MainWindow::scriptEdited()
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer("scriptEdited");
+#endif
 	scriptWasModified(true);
 	ui->scriptView->resizeColumnToContents(0);
 	ui->scriptView->resizeColumnToContents(1);
@@ -1191,17 +1228,22 @@ void MainWindow::execute(bool onlySelection)
 	if(mCommandOptions->count("noconsolewindow"))
 		showConsoleWindow = false;
 
-	mExecuter = new Executer(mScript,
-									  mActionFactory,
-									  showExecutionWindow,
-									  executionWindowPosition,
-									  executionWindowScreen,
-									  showConsoleWindow,
-									  consoleWindowPosition,
-									  consoleWindowScreen,
-									  stopExecutionHotkey,
-									  ui->consoleWidget->model(),
-									  this);
+	{
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("Creating executer");
+#endif
+		mExecuter = new Executer(mScript,
+										  mActionFactory,
+										  showExecutionWindow,
+										  executionWindowPosition,
+										  executionWindowScreen,
+										  showConsoleWindow,
+										  consoleWindowPosition,
+										  consoleWindowScreen,
+										  stopExecutionHotkey,
+										  ui->consoleWidget->model(),
+										  this);
+	}
 
 	connect(mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
 
@@ -1238,6 +1280,10 @@ void MainWindow::fillNewActionTreeWidget(NewActionTreeWidget *widget)
 	for(int i = 0; i < ActionTools::ActionDefinition::CategoryCount; ++i)
 	{
 		QTreeWidgetItem *item = new QTreeWidgetItem(QStringList(ActionTools::ActionDefinition::CategoryName[i]));
+		QFont boldFont;
+		
+		boldFont.setWeight(QFont::Bold);
+		item->setFont(0, boldFont);
 
 		widget->addTopLevelItem(item);
 
@@ -1672,6 +1718,9 @@ QList<int> MainWindow::selectedRows() const
 
 bool MainWindow::loadFile(const QString &fileName)
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer(QString("load file %1").arg(fileName));
+#endif
 	QFile loadFile(fileName);
 	QFileInfo loadFileInfo(loadFile);
 	if(!loadFileInfo.isReadable() || !loadFile.open(QIODevice::ReadOnly))
@@ -1691,7 +1740,7 @@ bool MainWindow::loadFile(const QString &fileName)
 	if(result == ActionTools::Script::ReadSuccess)
 	{
 		QSettings settings;
-
+	
 		settings.setValue("general/lastScript", fileName);
 
 		mScriptModel->update();
@@ -1708,6 +1757,9 @@ bool MainWindow::loadFile(const QString &fileName)
 
 bool MainWindow::saveFile(const QString &fileName, bool copy)
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer(QString("save file %1").arg(fileName));
+#endif
 	QFile saveFile(fileName);
 	if(!saveFile.open(QIODevice::WriteOnly))
 	{

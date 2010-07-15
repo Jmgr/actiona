@@ -46,6 +46,9 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	mCurrentColumn(-1),
 	mCompletionModel(completionModel)
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer("ActionDialog creation");
+#endif
 	ui->setupUi(this);
 
 	const ActionTools::ActionDefinition *actionDefinition(actionInstance->definition());
@@ -61,11 +64,11 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	QString website = actionDefinition->website();
 	Tools::Version version = actionDefinition->version();
 	ActionTools::ActionDefinition::Status status = actionDefinition->status();
-	const QStringList &tabs = actionDefinition->tabs();
+	QStringList tabs = actionDefinition->tabs();
+	if(tabs.count() == 0)
+		tabs << tr("Parameters");
 
 	int tabCount = tabs.count();
-	if(tabCount == 0)
-		tabCount = 1;
 	
 	QVector<QGroupBox *> groupBoxes[2];
 	
@@ -74,48 +77,44 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		for(int i = 0; i < tabCount; ++i)
 			mParameterLayouts[parameterType].append(new QFormLayout);
 	}
+
+	QTabWidget *tabWidget = new QTabWidget(this);
 	
-	if(tabs.count() > 0)
+	int tabIndex = 0;
+	foreach(const QString &tab, tabs)
 	{
-		QTabWidget *tabWidget = new QTabWidget(this);
+		QWidget *widget = new QWidget;
+		QVBoxLayout *layout = new QVBoxLayout(widget);
 		
-		int tabIndex = 0;
-		foreach(const QString &tab, tabs)
-		{
-			QWidget *widget = new QWidget;
-			QVBoxLayout *layout = new QVBoxLayout(widget);
-			
-			QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), widget);
-			inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][tabIndex]);
-			groupBoxes[InputParameters].append(inputParametersGroupBox);
-			QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), widget);
-			outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][tabIndex]);
-			groupBoxes[OutputParameters].append(outputParametersGroupBox);
-			
-			layout->addWidget(inputParametersGroupBox);
-			layout->addWidget(outputParametersGroupBox);
-			
-			widget->setLayout(layout);
-			
-			tabWidget->addTab(widget, tab);
-			
-			++tabIndex;
-		}
-		
-		ui->parametersLayout->addWidget(tabWidget);
-	}
-	else
-	{
-		QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), this);
-		inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][0]);
+		QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), widget);
+		inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][tabIndex]);
 		groupBoxes[InputParameters].append(inputParametersGroupBox);
-		QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), this);
-		outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][0]);
+		QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), widget);
+		outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][tabIndex]);
 		groupBoxes[OutputParameters].append(outputParametersGroupBox);
 		
-		ui->parametersLayout->addWidget(inputParametersGroupBox);
-		ui->parametersLayout->addWidget(outputParametersGroupBox);
+		layout->addWidget(inputParametersGroupBox);
+		layout->addWidget(outputParametersGroupBox);
+		
+		widget->setLayout(layout);
+		
+		tabWidget->addTab(widget, tab);
+		
+		++tabIndex;
 	}
+	
+	ui->parametersLayout->addWidget(tabWidget);
+	
+	QWidget *exceptionsWidget = new QWidget;
+	QVBoxLayout *exceptionsLayout = new QVBoxLayout(exceptionsWidget);
+	QLineEdit *exceptionLineEdit = new QLineEdit(exceptionsWidget);
+	
+	exceptionsLayout->addWidget(exceptionLineEdit);
+	exceptionsWidget->setLayout(exceptionsLayout);
+	
+	tabWidget->addTab(exceptionsWidget, tr("Exceptions"));
+	
+	//TODO : Add exceptions here
 
 	if(!author.isEmpty())
 	{
@@ -200,6 +199,9 @@ ActionDialog::~ActionDialog()
 
 void ActionDialog::accept()
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer("ActionDialog accept");
+#endif
 	foreach(ActionTools::ParameterDefinition *parameter, mParameters)
 		parameter->save(mActionInstance);
 
@@ -215,6 +217,9 @@ int ActionDialog::exec()
 
 void ActionDialog::postInit()
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer("ActionDialog postInit");
+#endif
 	if(!mCurrentField.isEmpty())
 	{
 		foreach(ActionTools::ParameterDefinition *parameterDefinition, mParameters)
@@ -268,7 +273,7 @@ void ActionDialog::addGroup(ActionTools::GroupDefinition *group)
 
 QLayout *ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter)
 {
-	QHBoxLayout *layout = new QHBoxLayout;
+	QBoxLayout *layout = new QBoxLayout(parameter->editorsOrientation() == Qt::Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom );
 	layout->setMargin(0);
 
 	parameter->buildEditors(mScript, this);

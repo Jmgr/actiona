@@ -20,10 +20,6 @@
 
 #include <QtGlobal>
 
-#ifdef Q_WS_X11
-#include <libnotify/notify.h>
-#endif
-
 #include "mainwindow.h"
 #include "actioninstance.h"
 #include "parameter.h"
@@ -40,6 +36,12 @@
 #include <QDebug>
 #include <QTextStream>
 
+#ifdef Q_WS_X11
+#undef signals
+#include <libnotify/notify.h>
+#define signals
+#endif
+
 #ifdef QT_WS_WIN
 #include <windows.h>
 #endif
@@ -51,6 +53,9 @@ void cleanup()
 
 int main(int argc, char **argv)
 {
+#ifdef ACT_PROFILE
+	Tools::HighResolutionTimer timer("Application run");
+#endif
 	QxtApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 

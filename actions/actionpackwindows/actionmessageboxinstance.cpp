@@ -41,7 +41,7 @@ ActionMessageBoxInstance::ActionMessageBoxInstance(const ActionTools::ActionDefi
 
 void ActionMessageBoxInstance::startExecution()
 {
-	ActionTools::ActionInstanceExecutionHelper actionExecution(this, script(), scriptEngine());
+	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 	QString message;
 	QString title;
 	int icon;
@@ -49,14 +49,14 @@ void ActionMessageBoxInstance::startExecution()
 	
 	mMessageBox = 0;
 
-	if(!actionExecution.evaluateString(message, "message") ||
-		!actionExecution.evaluateString(title, "title") ||
-		!actionExecution.evaluateListElement(icon, "icon", "value", icons) ||
-		!actionExecution.evaluateListElement(type, "type", "value", types) ||
-		!actionExecution.evaluateString(mIfYesAction, "ifyes", "action") ||
-		!actionExecution.evaluateString(mIfYesLine, "ifyes", "line") ||
-		!actionExecution.evaluateString(mIfNoAction, "ifno", "action") ||
-		!actionExecution.evaluateString(mIfNoLine, "ifno", "line"))
+	if(!actionInstanceExecutionHelper.evaluateString(message, "message") ||
+		!actionInstanceExecutionHelper.evaluateString(title, "title") ||
+		!actionInstanceExecutionHelper.evaluateListElement(icon, "icon", "value", icons) ||
+		!actionInstanceExecutionHelper.evaluateListElement(type, "type", "value", types) ||
+		!actionInstanceExecutionHelper.evaluateString(mIfYesAction, "ifyes", "action") ||
+		!actionInstanceExecutionHelper.evaluateString(mIfYesLine, "ifyes", "line") ||
+		!actionInstanceExecutionHelper.evaluateString(mIfNoAction, "ifno", "action") ||
+		!actionInstanceExecutionHelper.evaluateString(mIfNoLine, "ifno", "line"))
 		return;
 
 	mMessageBox = new QMessageBox();

@@ -34,15 +34,15 @@ ActionTextInputInstance::ActionTextInputInstance(const ActionTools::ActionDefini
 
 void ActionTextInputInstance::startExecution()
 {
-	ActionTools::ActionInstanceExecutionHelper actionExecution(this, script(), scriptEngine());
+	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 	QString question;
 	QString defaultValue;
 	
 	mInputDialog = 0;
 
-	if(!actionExecution.evaluateString(question, "question") ||
-		!actionExecution.evaluateString(defaultValue, "defaultValue") ||
-		!actionExecution.evaluateVariable(mVariable, "variable"))
+	if(!actionInstanceExecutionHelper.evaluateString(question, "question") ||
+		!actionInstanceExecutionHelper.evaluateString(defaultValue, "defaultValue") ||
+		!actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
 		return;
 
 	mInputDialog = new QInputDialog();

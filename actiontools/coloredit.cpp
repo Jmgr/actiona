@@ -80,8 +80,8 @@ namespace ActionTools
 	{
 		codeLineEdit()->setCompletionModel(completionModel);
 	}
-
-	void ColorEdit::on_chooseByPosition_positionChosen(QPoint position)
+	
+	void ColorEdit::setPosition(QPoint position)
 	{
 		QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), position.x(), position.y(), 1, 1);
 		QColor pixelColor = pixel.toImage().pixel(0, 0);
@@ -90,7 +90,14 @@ namespace ActionTools
 		on_colorLineEdit_textChanged(QString());
 	}
 
-	void ColorEdit::on_browse_clicked()
+	void ColorEdit::on_chooseByPosition_positionChosen(QPoint position)
+	{
+		setPosition(position);
+		
+		emit positionChosen(position);
+	}
+
+	void ColorEdit::on_choose_clicked()
 	{
 		mColorDialog->setCurrentColor(currentColor());
 		mColorDialog->open(this, SLOT(onColorSelected()));

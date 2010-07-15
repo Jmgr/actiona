@@ -3,6 +3,7 @@
 
 #include <QScriptValue>
 #include <QScriptEngine>
+#include <QPoint>
 #include <QDebug>
 
 namespace ActionTools
@@ -146,6 +147,64 @@ namespace ActionTools
 			return false;
 		}
 
+		return true;
+	}
+	
+	bool ActionInstanceExecutionHelper::evaluatePoint(QPoint &buffer,
+					   const QString &parameterName,
+					   const QString &subParameterName)
+	{
+		QString positionString;
+		
+		if(!evaluateString(positionString, parameterName, subParameterName))
+			return false;
+				
+		QStringList positionStringList = positionString.split(":");
+		if(positionStringList.count() != 2)
+		{
+			mErrorMessage = tr("\"%1\" is not a valid position.").arg(positionString);
+			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			return false;
+		}
+		
+		bool ok = true;
+		buffer = QPoint(positionStringList.at(0).toInt(&ok), positionStringList.at(1).toInt(&ok));
+		if(!ok)
+		{
+			mErrorMessage = tr("\"%1\" is not a valid position.").arg(positionString);
+			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			return false;
+		}
+		
+		return true;
+	}
+
+	bool ActionInstanceExecutionHelper::evaluateColor(QColor &buffer,
+					   const QString &parameterName,
+					   const QString &subParameterName)
+	{
+		QString colorString;
+		
+		if(!evaluateString(colorString, parameterName, subParameterName))
+			return false;
+				
+		QStringList colorStringList = colorString.split(":");
+		if(colorStringList.count() != 3)
+		{
+			mErrorMessage = tr("\"%1\" is not a valid color.").arg(colorString);
+			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			return false;
+		}
+		
+		bool ok = true;
+		buffer = QColor(colorStringList.at(0).toInt(&ok), colorStringList.at(1).toInt(&ok), colorStringList.at(2).toInt(&ok));
+		if(!ok)
+		{
+			mErrorMessage = tr("\"%1\" is not a valid color.").arg(colorString);
+			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			return false;
+		}
+		
 		return true;
 	}
 	

@@ -40,15 +40,15 @@ ActionTools::StringListPair ActionClickInstance::buttons = qMakePair(
 
 void ActionClickInstance::startExecution()
 {
-	ActionTools::ActionInstanceExecutionHelper actionExecution(this, script(), scriptEngine());
+	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 
 	int button;
 	int amount;
 	QString position;
 
-	if(!actionExecution.evaluateListElement(button, "button", "value", buttons) ||
-	   !actionExecution.evaluateInteger(amount, "amount") ||
-	   !actionExecution.evaluateString(position, "position"))
+	if(!actionInstanceExecutionHelper.evaluateListElement(button, "button", "value", buttons) ||
+	   !actionInstanceExecutionHelper.evaluateInteger(amount, "amount") ||
+	   !actionInstanceExecutionHelper.evaluateString(position, "position"))
 		return;
 
 	if(amount <= 0)

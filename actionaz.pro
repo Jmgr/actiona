@@ -18,6 +18,9 @@ win32-g++:error(Mingw is currently not supported, please use the Microsoft compi
 contains(DEFINES, ACT_NO_UPDATER){
 message(** No updater will be built **)
 }
+contains(DEFINES, ACT_PROFILE){
+message(** Profiling activated **)
+}
 
 SUBDIRS += tools \
 	actiontools \

@@ -45,6 +45,9 @@ namespace ActionTools
 
 	void ActionFactory::loadActionPacks()
 	{
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("ActionFactory loadActionPacks");
+#endif
 		clear();
 
 		QDir actionDirectory(QDir::currentPath() + "/actions/");
