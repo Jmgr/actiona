@@ -42,7 +42,8 @@
 #define signals
 #endif
 
-#ifdef QT_WS_WIN
+#ifdef Q_WS_WIN
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
 
@@ -100,10 +101,8 @@ int main(int argc, char **argv)
 	if(positionalParameters.count() > 0)
 		startScript = positionalParameters.at(0);
 
-#ifdef QT_WS_WIN
+#ifdef Q_WS_WIN
 	AllowSetForegroundWindow(ASFW_ANY);
-	// This is needed so that relative paths will work on Windows regardless of where the app is launched from.
-	QDir::setCurrent(app.applicationDirPath());
 #endif
 
 	app.addLibraryPath(QDir::currentPath() + "/actions");

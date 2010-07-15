@@ -25,12 +25,12 @@
 namespace Tools
 {
 	int HighResolutionTimer::mLevel = 0;
-	
+
 	HighResolutionTimer::HighResolutionTimer(const QString &taskName)
 		: mRunning(false),
 		mTaskName(taskName)
 	{
-#ifdef QT_WS_WIN
+#ifdef Q_WS_WIN
 		QueryPerformanceFrequency(&mFrequency);
 		mTimeStart.QuadPart = 0;
 		mTimeStop.QuadPart = 0;
@@ -38,7 +38,7 @@ namespace Tools
 		mTimeStart.tv_sec = mTimeStart.tv_usec = 0;
 		mTimeStop.tv_sec = mTimeStop.tv_usec = 0;
 #endif
-		
+
 		if(!mTaskName.isEmpty())
 		{
 			for(int i = 0; i < mLevel; ++i)
@@ -47,7 +47,7 @@ namespace Tools
 			++mLevel;
 		}
 	}
-	
+
 	HighResolutionTimer::~HighResolutionTimer()
 	{
 		if(!mTaskName.isEmpty())
@@ -56,11 +56,11 @@ namespace Tools
 			--mLevel;
 		}
 	}
-	
+
 	void HighResolutionTimer::start()
 	{
 		mRunning = true;
-#ifdef QT_WS_WIN
+#ifdef Q_WS_WIN
 		QueryPerformanceCounter(&mTimeStart);
 #else
 		gettimeofday(&mTimeStart, 0);
@@ -70,31 +70,31 @@ namespace Tools
 	void HighResolutionTimer::stop()
 	{
 		mRunning = false;
-#ifdef QT_WS_WIN
+#ifdef Q_WS_WIN
 		QueryPerformanceCounter(&mTimeStop);
 #else
 		gettimeofday(&mTimeStop, 0);
 #endif
 	}
-	
+
 	double HighResolutionTimer::elapsedMicroseconds()
 	{
 		double startTime, endTime;
-		
+
 		if(mRunning)
 			stop();
-		
-#ifdef QT_WS_WIN
+
+#ifdef Q_WS_WIN
 		startTime = mTimeStart.QuadPart * (1000000.0 / mFrequency.QuadPart);
 		endTime = mTimeStop.QuadPart * (1000000.0 / mFrequency.QuadPart);
 #else
 		startTime = (mTimeStart.tv_sec * 1000000.0) + mTimeStart.tv_usec;
 		endTime = (mTimeStop.tv_sec * 1000000.0) + mTimeStop.tv_usec;
 #endif
-		
+
 		return endTime - startTime;
 	}
-	
+
 	double HighResolutionTimer::elapsedMilliseconds()
 	{
 		return elapsedMicroseconds() * 0.001;

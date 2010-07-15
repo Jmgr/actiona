@@ -27,7 +27,6 @@
 #endif
 #ifdef Q_WS_WIN
 #define WIN32_LEAN_AND_MEAN
-#define _WIN32_WINNT 0x0500
 #include <windows.h>
 #endif
 
@@ -108,7 +107,7 @@ void ActionClickInstance::startExecution()
 		x11Button = Button1;
 		break;
 	}
-	
+
 	//TODO : Look why this doesn't work...
 
 	for(int i = 0; i < amount; ++i)

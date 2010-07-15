@@ -23,7 +23,10 @@
 
 #include "tools_global.h"
 
-#ifdef QT_WS_WIN
+#include <QtGlobal>
+
+#ifdef Q_WS_WIN
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #else
 #include <sys/time.h>
@@ -38,7 +41,7 @@ namespace Tools
 	public:
 		HighResolutionTimer(const QString &taskName = QString());
 		~HighResolutionTimer();
-		
+
 		void start();
 		void stop();
 		double elapsedMicroseconds();
@@ -49,7 +52,7 @@ namespace Tools
 		QString mSpaces;
 		bool mRunning;
 		QString mTaskName;
-#ifdef QT_WS_WIN
+#ifdef Q_WS_WIN
 		LARGE_INTEGER mTimeStart;
 		LARGE_INTEGER mTimeStop;
 		LARGE_INTEGER mFrequency;
