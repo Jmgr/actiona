@@ -48,7 +48,7 @@ void ActionWheelInstance::startExecution()
 		emit executionException(ActionTools::ActionInstance::Error, tr("Unable to emulate wheel : cannot open display"));
 		return;
 	}
-	
+
 	int button;
 	if(intensity < 0)
 	{
@@ -67,7 +67,19 @@ void ActionWheelInstance::startExecution()
 	XCloseDisplay(display);
 #endif
 #ifdef Q_WS_WIN
+	INPUT input;
 
+	input.type = INPUT_MOUSE;
+	input.mi.dwFlags = MOUSEEVENTF_WHEEL;
+	input.mi.time = 0;
+	input.mi.dwExtraInfo = 0;
+	input.mi.mouseData = intensity * WHEEL_DELTA;
+
+	if(!SendInput(1, &input, sizeof(INPUT)))
+	{
+		emit executionException(ActionTools::ActionInstance::Error, tr("Unable to emulate wheel : failed to send input"));
+		return;
+	}
 #endif
 #ifdef Q_WS_MAC
 	//TODO_MAC
