@@ -24,6 +24,7 @@
 #include "actionpack.h"
 #include "actiontextdefinition.h"
 #include "actionclickdefinition.h"
+#include "actionwheeldefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -42,6 +43,7 @@ public:
 	{
 		addActionDefinition(new ActionTextDefinition(this));
 		addActionDefinition(new ActionClickDefinition(this));
+		addActionDefinition(new ActionWheelDefinition(this));
 	}
 
 	QString id() const							{ return tr("device"); }

@@ -1,7 +1,9 @@
 include(../common_actions.pri)
 TARGET = ActionPackDevice
 QT += script
-HEADERS += actionpackdevice.h
+HEADERS += actionpackdevice.h \
+    actionwheeldefinition.h \
+    actionwheelinstance.h
 RESOURCES += actionpackdevice.qrc
 unix:LIBS += -lXtst
 win32:LIBS += -luser32
@@ -9,7 +11,8 @@ win32:LIBS += -luser32
 # Text
 HEADERS += actiontextdefinition.h \
 	actiontextinstance.h
-SOURCES += actiontextinstance.cpp
+SOURCES += actiontextinstance.cpp \
+    actionwheelinstance.cpp
 
 # Click
 HEADERS += actionclickdefinition.h \
