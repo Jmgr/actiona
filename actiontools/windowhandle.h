@@ -34,9 +34,11 @@ namespace ActionTools
 	{
 	public:
 		WindowHandle() : mValue(0)								{}
+		WindowHandle(WId handle)								{ mValue = handle; }
 
 		bool isValid() const									{ return (mValue != 0); }
 		void setInvalid()										{ mValue = 0; }
+		WId value() const										{ return mValue; }
 
 		operator bool() const									{ return isValid(); }
 		bool operator ==(const WindowHandle &other) const		{ return (other.mValue == mValue); }
@@ -46,13 +48,16 @@ namespace ActionTools
 		QString classname() const;
 		QRect rect() const;
 		int processId() const;
-		void kill() const;
-		void killCreator() const;
-
-		WindowHandle(WId handle)								{ mValue = handle; }
-		WId value() const										{ return mValue; }
+		bool close() const;
+		bool killCreator() const;
+		bool setForeground() const;
+		bool minimize() const;
+		bool maximize() const;
+		bool move(QPoint position) const;
+		bool resize(QSize size) const;
 
 		static WindowHandle foregroundWindow();
+		static WindowHandle findWindow(const QString &title);
 
 	private:
 		WId mValue;

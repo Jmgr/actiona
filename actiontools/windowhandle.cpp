@@ -123,25 +123,86 @@ namespace ActionTools
 #endif
 	}
 
-	void WindowHandle::kill() const
+	bool WindowHandle::close() const
 	{
 #ifdef Q_WS_WIN
-		SendNotifyMessage(mValue, WM_CLOSE, 0, 0);
+		return SendNotifyMessage(mValue, WM_CLOSE, 0, 0);
 #endif
 #ifdef Q_WS_X11
-		XDestroyWindow(QX11Info::display(), mValue);
+		return (XDestroyWindow(QX11Info::display(), mValue) == Success);
 #endif
 	}
 
-	void WindowHandle::killCreator() const
+	bool WindowHandle::killCreator() const
 	{
 #ifdef Q_WS_WIN
 		int id = processId();
 
-		CrossPlatform::killProcess(id);
+		return CrossPlatform::killProcess(id);
 #endif
 #ifdef Q_WS_X11
-		XKillClient(QX11Info::display(), mValue);
+		return (XKillClient(QX11Info::display(), mValue) == Success);
+#endif
+	}
+	
+	bool WindowHandle::setForeground() const
+	{
+#ifdef Q_WS_X11
+		return (XRaiseWindow(QX11Info::display(), mValue) == Success);
+#endif
+#ifdef Q_WS_WIN
+		if(IsIconic(mValue))
+			ShowWindow(mValue, SW_RESTORE);
+		else
+		{
+			if(!SetForegroundWindow(mValue))
+				return false;
+
+			if(!SetWindowPos(mValue, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE))
+				return false;
+		}
+		
+		return true;
+#endif
+	}
+	
+	bool WindowHandle::minimize() const
+	{
+#ifdef Q_WS_X11
+		return false;
+#endif
+#ifdef Q_WS_WIN
+		return SendMessage(mValue, WM_SYSCOMMAND, SC_MINIMIZE, 0);
+#endif
+	}
+	
+	bool WindowHandle::maximize() const
+	{
+#ifdef Q_WS_X11
+		return false;
+#endif
+#ifdef Q_WS_WIN
+		return SendMessage(mValue, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+#endif
+	}
+	
+	bool WindowHandle::move(QPoint position) const
+	{
+#ifdef Q_WS_X11
+		return (XMoveWindow(QX11Info::display(), mValue, position.x(), position.y()) == Success);
+#endif
+#ifdef Q_WS_WIN
+		return SetWindowPos(mValue, 0, position.x(), position.y(), 0, 0, SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSIZE);
+#endif
+	}
+	
+	bool WindowHandle::resize(QSize size) const
+	{
+#ifdef Q_WS_X11
+		return (XResizeWindow(QX11Info::display(), mValue, size.width(), size.height()) == Success);
+#endif
+#ifdef Q_WS_WIN
+		return SetWindowPos(mValue, 0, 0, 0, size.width(), size.height(), SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOMOVE);
 #endif
 	}
 
@@ -152,5 +213,10 @@ namespace ActionTools
 #else
 		return QxtWindowSystem::activeWindow();
 #endif
+	}
+	
+	WindowHandle WindowHandle::findWindow(const QString &title)
+	{
+		return QxtWindowSystem::findWindow(title);
 	}
 }
