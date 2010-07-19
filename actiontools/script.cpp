@@ -258,19 +258,19 @@ namespace ActionTools
 				stream.writeAttribute("color", actionInstance->color().name());
 			if(!actionInstance->isEnabled())
 				stream.writeAttribute("enabled", QVariant(actionInstance->isEnabled()).toString());
-			
+
 			const ExceptionActionInstancesHash &exceptionActionsHash = actionInstance->exceptionActionInstances();
 			foreach(ActionException::Exception exception, exceptionActionsHash.keys())
 			{
 				ActionException::ExceptionActionInstance exceptionActionInstance = exceptionActionsHash.value(exception);
-				
-				if(exceptionActionInstance.action == ActionException::StopExecutionExceptionAction)
+
+				if(exceptionActionInstance.action() == ActionException::StopExecutionExceptionAction)
 					continue;
-				
+
 				stream.writeStartElement("exception");
 				stream.writeAttribute("id", QString::number(static_cast<int>(exception)));
-				stream.writeAttribute("action", QString::number(static_cast<int>(exceptionActionInstance.action)));
-				stream.writeAttribute("line", exceptionActionInstance.line);
+				stream.writeAttribute("action", QString::number(static_cast<int>(exceptionActionInstance.action())));
+				stream.writeAttribute("line", exceptionActionInstance.line());
 				stream.writeEndElement();
 			}
 
@@ -346,13 +346,13 @@ namespace ActionTools
 				mStatusMessage = messageHandler.statusMessage();
 				mLine = messageHandler.line();
 				mColumn = messageHandler.column();
-	
+
 				return ReadBadSchema;
 			}
 		}
 
 		device->reset();
-		
+
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer2("Reading content");
 #endif
@@ -437,50 +437,48 @@ namespace ActionTools
 
 					ParametersData parametersData;
 					ExceptionActionInstancesHash exceptionActionsHash;
-					
+
 					stream.readNext();
 
 					for(;!stream.isEndElement() || stream.name() != "action";stream.readNext())
 					{
 						if(!stream.isStartElement())
 							continue;
-						
+
 						if(stream.name() == "exception")
 						{
 							const QXmlStreamAttributes &attributes = stream.attributes();
 							ActionException::Exception exceptionId = static_cast<ActionException::Exception>(attributes.value("id").toString().toInt());
-							ActionException::ExceptionActionInstance exceptionActionInstance;
-							
-							exceptionActionInstance.action = static_cast<ActionException::ExceptionAction>(attributes.value("action").toString().toInt());
-							exceptionActionInstance.line = attributes.value("line").toString();
-	
-							if(exceptionActionInstance.action != ActionException::StopExecutionExceptionAction)
+							ActionException::ExceptionActionInstance exceptionActionInstance(static_cast<ActionException::ExceptionAction>(attributes.value("action").toString().toInt()),
+																							 attributes.value("line").toString());
+
+							if(exceptionActionInstance.action() != ActionException::StopExecutionExceptionAction)
 								exceptionActionsHash.insert(exceptionId, exceptionActionInstance);
 						}
 						else if(stream.name() == "parameter")
 						{
 							const QXmlStreamAttributes &attributes = stream.attributes();
 							const QString &parameterName = attributes.value("name").toString();
-	
+
 							Parameter parameterData;
-	
+
 							stream.readNext();
-	
+
 							for(;!stream.isEndElement() || stream.name() != "parameter";stream.readNext())
 							{
 								if(!stream.isStartElement())
 									continue;
-	
+
 								const QXmlStreamAttributes &attributes = stream.attributes();
 								QString subParameterName = attributes.value("name").toString();
 								SubParameter subParameterData;
-	
+
 								subParameterData.setCode(QVariant(stream.attributes().value("code").toString()).toBool());
 								subParameterData.setValue(stream.readElementText());
-	
+
 								parameterData.subParameters().insert(subParameterName, subParameterData);
 							}
-	
+
 							parametersData.insert(parameterName, parameterData);
 						}
 					}

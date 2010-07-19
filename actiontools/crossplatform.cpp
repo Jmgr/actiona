@@ -160,7 +160,7 @@ namespace ActionTools
 		{
 			WindowHandle handle = wid;
 			if(handle.processId() == id)
-				handle.kill();
+				handle.close();
 		}
 
 		QTime time;

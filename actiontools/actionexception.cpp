@@ -29,57 +29,63 @@ namespace ActionTools
 		QObject::tr("Bad parameter"),
 		QObject::tr("Code error")
 	};
-	
+
 	QString ActionException::ExceptionActionName[ExceptionActionCount] =
 	{
 		QObject::tr("Stop execution"),
 		QObject::tr("Skip current action"),
 		QObject::tr("Goto a line")
 	};
-	
+
 	QDataStream &operator >> (QDataStream &s, ActionException::Exception &exception)
 	{
 		int newException;
-		
+
 		s >> newException;
-		
+
 		exception = static_cast<ActionException::Exception>(newException);
-		
+
 		return s;
 	}
 
 	QDataStream &operator >> (QDataStream &s, ActionException::ExceptionAction &exceptionAction)
 	{
 		int newExceptionAction;
-		
+
 		s >> newExceptionAction;
-		
+
 		exceptionAction = static_cast<ActionException::ExceptionAction>(newExceptionAction);
-		
+
 		return s;
 	}
-	
+
 	QDataStream &operator >> (QDataStream &s, ActionException::ExceptionActionInstance &exceptionActionInstance)
 	{
-		s >> exceptionActionInstance.action;
-		s >> exceptionActionInstance.line;
-		
+		ActionException::ExceptionAction action;
+		QString line;
+
+		s >> action;
+		s >> line;
+
+		exceptionActionInstance.setAction(action);
+		exceptionActionInstance.setLine(line);
+
 		return s;
 	}
-	
+
 	QDataStream &operator << (QDataStream &s, const ActionException::ExceptionActionInstance &exceptionActionInstance)
 	{
-		s << exceptionActionInstance.action;
-		s << exceptionActionInstance.line;
-		
+		s << exceptionActionInstance.action();
+		s << exceptionActionInstance.line();
+
 		return s;
 	}
-	
+
 	QDebug &operator << (QDebug &dbg, const ActionException::ExceptionActionInstance &exceptionActionInstance)
 	{
-		dbg.space() << exceptionActionInstance.action;
-		dbg.space() << exceptionActionInstance.line;
-		
+		dbg.space() << exceptionActionInstance.action();
+		dbg.space() << exceptionActionInstance.line();
+
 		return dbg.maybeSpace();
 	}
 }

@@ -34,7 +34,7 @@ namespace ActionTools
 		{
 			BadParameterException,
 			CodeErrorException,
-			
+
 			ExceptionCount,
 			UserException = 32
 		};
@@ -43,30 +43,43 @@ namespace ActionTools
 			StopExecutionExceptionAction,
 			SkipExceptionAction,
 			GotoLineExceptionAction,
-			
+
 			ExceptionActionCount
 		};
-		
-		struct ExceptionActionInstance
+
+		class ExceptionActionInstance
 		{
-			ExceptionAction action;
-			QString line;
+		public:
+			ExceptionActionInstance()
+				: mAction(StopExecutionExceptionAction)	{}
+			ExceptionActionInstance(ExceptionAction action, const QString &line)
+				: mAction(action), mLine(line)			{}
+
+			void setAction(ExceptionAction action)		{ mAction = action; }
+			void setLine(const QString &line)			{ mLine = line; }
+
+			ExceptionAction action() const				{ return mAction; }
+			QString line() const						{ return mLine; }
+
+		private:
+			ExceptionAction mAction;
+			QString mLine;
 		};
-		
+
 		ActionException(int id, const QString &name)
 			: mId(id), mName(name)								{}
-		
+
 		int id() const											{ return mId; }
 		QString name() const									{ return mName; }
-		
+
 		static QString ExceptionName[ExceptionCount];
 		static QString ExceptionActionName[ExceptionActionCount];
-		
+
 	private:
 		int mId;
 		QString mName;
 	};
-	
+
 	ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, ActionException::Exception &exception);
 	ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, ActionException::ExceptionAction &exceptionAction);
 	ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, ActionException::ExceptionActionInstance &exceptionActionInstance);
