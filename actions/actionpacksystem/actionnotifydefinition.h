@@ -62,7 +62,7 @@ public:
 		timeout->setTooltip(tr("The notification timeout"));
 		timeout->setMinimum(0);
 		timeout->setMaximum(INT_MAX);
-		timeout->setOption("default", 3000);
+		timeout->setDefaultValue(3000);
 		addElement(timeout, 1);
 		
 		ActionTools::FileParameterDefinition *icon = new ActionTools::FileParameterDefinition( ActionTools::ElementDefinition::INPUT,
@@ -71,6 +71,8 @@ public:
 																								 this);
 		icon->setTooltip(tr("The notification icon"));
 		addElement(icon, 1);
+		
+		addException(ActionNotifyInstance::UnableToShowNotificationException, tr("Show notification failure"));
 	}
 
 	QString name() const													{ return QObject::tr("Notify"); }

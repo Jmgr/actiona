@@ -238,9 +238,9 @@ void MainWindow::postInit()
 		Tools::HighResolutionTimer timer("adding execution classes");
 #endif
 		//Add Environment & Algorithms class
-		ExecutionEnvironment executionEnvironment;
+		Executer::ExecutionEnvironment executionEnvironment;
 		ActionTools::addClassKeywords(executionEnvironment.metaObject(), "Environment", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
-		ExecutionAlgorithms executionAlgorithms;
+		Executer::ExecutionAlgorithms executionAlgorithms;
 		ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
 	}
 		
@@ -1232,7 +1232,7 @@ void MainWindow::execute(bool onlySelection)
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Creating executer");
 #endif
-		mExecuter = new Executer(mScript,
+		mExecuter = new Executer::Executer(mScript,
 										  mActionFactory,
 										  showExecutionWindow,
 										  executionWindowPosition,
@@ -1469,6 +1469,15 @@ void MainWindow::logItemDoubleClicked(int itemRow)
 			editAction(mScript->actionAt(action), field, subField, line, column);
 		}
 		break;
+	case ActionTools::ConsoleWidget::Exception:
+		{
+			int action = item->data(ActionTools::ConsoleWidget::ActionRole).toInt();
+			int exception = item->data(ActionTools::ConsoleWidget::ExceptionRole).toInt();
+			editAction(mScript->actionAt(action), exception);
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -1673,6 +1682,27 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, const Q
 	dialog->setCurrentField(field, subField);
 	dialog->setCurrentLine(line);
 	dialog->setCurrentColumn(column);
+	int result = dialog->exec();
+
+	if(result == QDialog::Accepted)
+	{
+		if(previousData != actionInstance->parametersData())
+			scriptEdited();
+	}
+
+	delete dialog;
+
+	return (result == QDialog::Accepted);
+}
+
+bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exception)
+{
+	if(!actionInstance)
+		return false;
+	
+	ActionTools::ParametersData previousData = actionInstance->parametersData();
+	ActionDialog *dialog = new ActionDialog(mCompletionModel, mScript, actionInstance, this);
+	dialog->setCurrentException(exception);
 	int result = dialog->exec();
 
 	if(result == QDialog::Accepted)

@@ -26,6 +26,8 @@
 
 namespace ActionTools
 {
+	class ActionInstance;
+	
 	class ACTIONTOOLSSHARED_EXPORT ElementDefinition : public QObject
 	{
 		Q_OBJECT
@@ -38,6 +40,7 @@ namespace ActionTools
 		};
 
 		ElementDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent);
+		virtual ~ElementDefinition()							{}
 
 		QString translatedName() const							{ return mTranslatedName; }
 		QString name() const									{ return mName; }
@@ -50,6 +53,8 @@ namespace ActionTools
 		void setTooltip(const QString &tooltip)					{ mTooltip = tooltip; }
 		void setCategory(Category category)						{ mCategory = category; }
 		void setTab(int tab)									{ mTab = tab; }
+		
+		virtual void setDefaultValues(ActionInstance *actionInstance) = 0;
 
 	private:
 		QString mName;

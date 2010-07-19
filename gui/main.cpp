@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 	app.addLibraryPath(QDir::currentPath() + "/actions");
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
-	qRegisterMetaType<ActionTools::ActionInstance::ExecutionException>("ExecutionException");
+	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");
 	qRegisterMetaType<ActionTools::Parameter>("Parameter");
 	qRegisterMetaType<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaType<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");

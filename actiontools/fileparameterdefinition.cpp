@@ -55,9 +55,4 @@ namespace ActionTools
 	{
 		actionInstance->setSubParameter(name(), "value", mFileEdit->isCode(), mFileEdit->text());
 	}
-
-	void FileParameterDefinition::setDefaultValues(Parameter &data)
-	{
-		data.subParameters()["value"].setValue(option("default"));
-	}
 }

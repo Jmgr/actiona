@@ -21,14 +21,14 @@
 #ifndef ACTIONDEFINITION_H
 #define ACTIONDEFINITION_H
 
+#include "actiontools_global.h"
+#include "version.h"
+#include "actionexception.h"
+
 #include <QString>
 #include <QPixmap>
 #include <QList>
 #include <QDebug>
-
-#include "actiontools_global.h"
-#include "version.h"
-#include "elementdefinition.h"
 
 class QScriptEngine;
 
@@ -36,6 +36,7 @@ namespace ActionTools
 {
 	class ActionPack;
 	class ActionInstance;
+	class ElementDefinition;
 
 	class ACTIONTOOLSSHARED_EXPORT ActionDefinition
 	{
@@ -49,7 +50,6 @@ namespace ActionTools
 			Testing,
 			Stable
 		};
-
 		enum Category
 		{
 			None = -1,
@@ -61,9 +61,6 @@ namespace ActionTools
 
 			CategoryCount
 		};
-
-		static QString CategoryName[CategoryCount];
-
 		enum Flags
 		{
 			WorksOnWindows =    1 << 1,
@@ -73,7 +70,7 @@ namespace ActionTools
 		};
 
 		explicit ActionDefinition(ActionPack *pack) : mPack(pack), mIndex(-1)	{}
-		virtual ~ActionDefinition() { qDeleteAll(mElements); }
+		virtual ~ActionDefinition();
 
 		virtual QString name() const = 0;
 		virtual QString id() const = 0;
@@ -94,15 +91,20 @@ namespace ActionTools
 
 		ActionPack *pack() const														{ return mPack; }
 		const QList<ElementDefinition *> &elements() const								{ return mElements; }
+		const QList<ActionException *> &exceptions() const								{ return mExceptions; }
 		
 		ActionInstance *scriptInit(QScriptEngine *scriptEngine) const;
+		
+		static QString CategoryName[CategoryCount];
 
 	protected:
 		void addElement(ElementDefinition *element, int tab = 0);
+		void addException(int id, const QString &name)								{ mExceptions.append(new ActionException(id, name)); }
 
 	private:
 		ActionPack *mPack;
 		QList<ElementDefinition *> mElements;
+		QList<ActionException *> mExceptions;
 		int mIndex;
 
 		Q_DISABLE_COPY(ActionDefinition)

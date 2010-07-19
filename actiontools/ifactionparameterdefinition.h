@@ -40,9 +40,15 @@ namespace ActionTools
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
 		void save(ActionInstance *actionInstance);
-		void setDefaultValues(Parameter &data);
+		void setDefaultValues(ActionInstance *actionInstance);
 
-		void setAllowWait(bool allowWait)					{ mAllowWait = allowWait; }
+		void setAllowWait(bool allowWait)										{ mAllowWait = allowWait; }
+		
+		void setDefaultAction(const QString &action)							{ mDefaultAction = action; }
+		QString defaultAction(const QString &defaultValue = QString()) const	{ return (mDefaultAction.isEmpty()) ? defaultValue : mDefaultAction; }
+		
+		void setDefaultLine(const QString &line)								{ mDefaultLine = line; }
+		QString defaultLine() const												{ return mDefaultLine; }
 
 	private slots:
 		void codeChanged(bool code);
@@ -63,12 +69,16 @@ namespace ActionTools
 		};
 
 		void updateStatus(const QString &text);
+		QVariant defaultValue(QVariant defaultValue = QVariant()) const			{ Q_UNUSED(defaultValue); return QVariant(); }
+		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }
 
 		static StringListPair actions;
 
 		CodeComboBox *mActionEdit;
 		LineComboBox *mLineEdit;
 		bool mAllowWait;
+		QString mDefaultAction;
+		QString mDefaultLine;
 
 		Q_DISABLE_COPY(IfActionParameterDefinition)
 	};

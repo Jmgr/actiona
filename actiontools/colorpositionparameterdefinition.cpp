@@ -63,9 +63,9 @@ namespace ActionTools
 		actionInstance->setSubParameter(name(), "color", mColorEdit->isCode(), mColorEdit->text());
 	}
 
-	void ColorPositionParameterDefinition::setDefaultValues(Parameter &data)
+	void ColorPositionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		data.subParameters()["position"].setValue(option("defaultPosition"));
-		data.subParameters()["color"].setValue(option("defaultColor"));
+		actionInstance->setSubParameter(name(), "position", defaultPosition());
+		actionInstance->setSubParameter(name(), "color", defaultColor());
 	}
 }

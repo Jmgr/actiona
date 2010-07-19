@@ -23,47 +23,50 @@
 #include <QCryptographicHash>
 #include <cstdlib>
 
-ExecutionAlgorithms::ExecutionAlgorithms(QObject *parent)
-	: QObject(parent)
+namespace Executer
 {
-}
-
-QString ExecutionAlgorithms::md4(const QString &data) const
-{
-	return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md4).toHex();
-}
-
-QString ExecutionAlgorithms::md5(const QString &data) const
-{
-	return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex();
-}
-
-QString ExecutionAlgorithms::sha1(const QString &data) const
-{
-	return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1).toHex();
-}
-
-void ExecutionAlgorithms::setRandomSeed(uint seed) const
-{
-	qsrand(seed);
-}
-
-int ExecutionAlgorithms::randomMax() const
-{
-	return RAND_MAX;
-}
-
-int ExecutionAlgorithms::randomInt() const
-{
-	return qrand();
-}
-
-int ExecutionAlgorithms::randomInt(int min, int max) const
-{
-	return static_cast<int>(min + (static_cast<float>(qrand()) / RAND_MAX * (max - min + 1)));
-}
-
-float ExecutionAlgorithms::randomFloat(float min, float max) const
-{
-	return (qrand() / static_cast<float>(RAND_MAX)) * (max - min) + min;
+	ExecutionAlgorithms::ExecutionAlgorithms(QObject *parent)
+		: QObject(parent)
+	{
+	}
+	
+	QString ExecutionAlgorithms::md4(const QString &data) const
+	{
+		return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md4).toHex();
+	}
+	
+	QString ExecutionAlgorithms::md5(const QString &data) const
+	{
+		return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex();
+	}
+	
+	QString ExecutionAlgorithms::sha1(const QString &data) const
+	{
+		return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1).toHex();
+	}
+	
+	void ExecutionAlgorithms::setRandomSeed(uint seed) const
+	{
+		qsrand(seed);
+	}
+	
+	int ExecutionAlgorithms::randomMax() const
+	{
+		return RAND_MAX;
+	}
+	
+	int ExecutionAlgorithms::randomInt() const
+	{
+		return qrand();
+	}
+	
+	int ExecutionAlgorithms::randomInt(int min, int max) const
+	{
+		return static_cast<int>(min + (static_cast<float>(qrand()) / RAND_MAX * (max - min + 1)));
+	}
+	
+	float ExecutionAlgorithms::randomFloat(float min, float max) const
+	{
+		return (qrand() / static_cast<float>(RAND_MAX)) * (max - min) + min;
+	}
 }

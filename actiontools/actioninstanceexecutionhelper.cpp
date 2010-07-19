@@ -1,3 +1,23 @@
+/*
+	Actionaz
+	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+
+	Actionaz is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Actionaz is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+	Contact : jmgr@jmgr.info
+*/
+
 #include "actioninstanceexecutionhelper.h"
 #include "script.h"
 
@@ -13,8 +33,8 @@ namespace ActionTools
 			mScript(script),
 			mScriptEngine(scriptEngine)
 	{
-		connect(this, SIGNAL(evaluationError(ActionTools::ActionInstance::ExecutionException,QString)),
-				actionInstance, SIGNAL(executionException(ActionTools::ActionInstance::ExecutionException,QString)));
+		connect(this, SIGNAL(evaluationException(int,QString)),
+				actionInstance, SIGNAL(executionException(int,QString)));
 	}
 
 	ActionInstanceExecutionHelper::~ActionInstanceExecutionHelper()
@@ -60,7 +80,7 @@ namespace ActionTools
 		if(!buffer.isEmpty() && !buffer.contains(QRegExp("^[a-zA-Z0-9]+$")))
 		{
 			mErrorMessage = tr("A variable name can only contain alphanumeric characters.");
-			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
 
@@ -143,7 +163,7 @@ namespace ActionTools
 		if(!success || buffer < 0 || buffer >= listElements.first.count())
 		{
 			mErrorMessage = tr("\"%1\" is incorrect.").arg(toEvaluate.value().toString());
-			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
 
@@ -163,7 +183,7 @@ namespace ActionTools
 		if(positionStringList.count() != 2)
 		{
 			mErrorMessage = tr("\"%1\" is not a valid position.").arg(positionString);
-			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
 		
@@ -172,7 +192,7 @@ namespace ActionTools
 		if(!ok)
 		{
 			mErrorMessage = tr("\"%1\" is not a valid position.").arg(positionString);
-			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
 		
@@ -192,7 +212,7 @@ namespace ActionTools
 		if(colorStringList.count() != 3)
 		{
 			mErrorMessage = tr("\"%1\" is not a valid color.").arg(colorString);
-			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
 		
@@ -201,7 +221,7 @@ namespace ActionTools
 		if(!ok)
 		{
 			mErrorMessage = tr("\"%1\" is not a valid color.").arg(colorString);
-			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
 		
@@ -217,6 +237,12 @@ namespace ActionTools
 	{
 		QScriptValue scriptValue = mScriptEngine->globalObject().property("Script");
 		scriptValue.setProperty("nextLine", mScriptEngine->newVariant(QVariant(nextLine)));
+	}
+	
+	void ActionInstanceExecutionHelper::setCurrentParameter(const QString &parameterName, const QString &subParameterName)
+	{
+		mScriptEngine->globalObject().setProperty("currentParameter", mScriptEngine->newVariant(parameterName), QScriptValue::ReadOnly);
+		mScriptEngine->globalObject().setProperty("currentSubParameter", mScriptEngine->newVariant(subParameterName), QScriptValue::ReadOnly);
 	}
 
 	bool ActionInstanceExecutionHelper::evaluate(const SubParameter &toEvaluate)
@@ -238,7 +264,7 @@ namespace ActionTools
 					if(!mScript->hasVariable(foundVariables.at(i)))
 					{
 						mErrorMessage = tr("Unknown variable : %1").arg(foundVariables.at(i));
-						emit evaluationError(ActionInstance::Error, mErrorMessage);
+						emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 						return false;
 					}
 					
@@ -255,7 +281,7 @@ namespace ActionTools
 		if(result.isError())
 		{
 			mErrorMessage = result.toString();
-			emit evaluationError(ActionInstance::Error, mErrorMessage);
+			emit evaluationException(ActionException::CodeErrorException, mErrorMessage);
 			return false;
 		}
 

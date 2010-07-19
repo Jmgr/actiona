@@ -69,7 +69,7 @@ void ActionNotifyInstance::startExecution()
 	notify_notification_set_timeout(mNotification, timeout);
 	
 	if(!notify_notification_show(mNotification, 0))
-		emit executionException(ActionTools::ActionInstance::Error, tr("Unable to show the notification"));
+		emit executionException(UnableToShowNotificationException, tr("Unable to show the notification"));
 #endif
 
 	emit executionEnded();

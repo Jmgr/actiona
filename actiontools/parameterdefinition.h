@@ -26,7 +26,6 @@
 #include "parameter.h"
 
 #include <QList>
-#include <QVariantMap>
 
 class QWidget;
 
@@ -46,18 +45,20 @@ namespace ActionTools
 		virtual void buildEditors(Script *script, QWidget *parent);
 		virtual void load(const ActionInstance *actionInstance) = 0;
 		virtual void save(ActionInstance *actionInstance) = 0;
-		virtual void setDefaultValues(Parameter &data) = 0;
+		virtual void setDefaultValues(ActionInstance *actionInstance);
 		virtual Qt::Orientation editorsOrientation() const							{ return Qt::Horizontal; }
 
 		QList<QWidget *> editors() const											{ return mEditors; }
-		QVariant option(QString name, QVariant defaultValue = QVariant()) const;
-
+		
+		virtual QVariant defaultValue(QVariant defaultValue = QVariant()) const;
+		virtual void setDefaultValue(const QVariant &defaultValue)					{ mDefaultValue = defaultValue; }
+		
+	protected:
 		void addEditor(QWidget *editor);
-		void setOption(const QString &name, const QVariant &value)					{ mOptions.insert(name, value); }
-
+		
 	private:
 		QList<QWidget *> mEditors;
-		QVariantMap mOptions;
+		QVariant mDefaultValue;
 
 		Q_DISABLE_COPY(ParameterDefinition)
 	};

@@ -49,7 +49,7 @@ public:
 																								this);
 		button->setTooltip(tr("The button to simulate"));
 		button->setItems(ActionClickInstance::buttons);
-		button->setOption("default", ActionClickInstance::buttons.second.at(ActionClickInstance::LeftButton));
+		button->setDefaultValue(ActionClickInstance::buttons.second.at(ActionClickInstance::LeftButton));
 		addElement(button);
 
 		ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::ElementDefinition::INPUT,
@@ -59,7 +59,7 @@ public:
 		amount->setTooltip(tr("The amount of clicks to simulate"));
 		amount->setMinimum(1);
 		amount->setMaximum(INT_MAX);
-		amount->setOption("default", 1);
+		amount->setDefaultValue(1);
 		addElement(amount);
 
 		ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::ElementDefinition::INPUT,
@@ -68,6 +68,8 @@ public:
 																								 this);
 		position->setTooltip(tr("The screen position where to simulate a mouse click"));
 		addElement(position);
+		
+		addException(ActionClickInstance::FailedToSendInputException, tr("Send input failure"));
 	}
 
 	QString name() const													{ return QObject::tr("Click"); }

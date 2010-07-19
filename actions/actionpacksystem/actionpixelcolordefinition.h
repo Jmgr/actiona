@@ -70,7 +70,7 @@ public:
 																											tr("Time to wait"),
 																											this);
 		time->setTooltip(tr("The maximum duration to wait"));
-		time->setOption("default", 0);
+		time->setDefaultValue(0);
 		addElement(time, 1);
 		
 		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(	ActionTools::ElementDefinition::OUTPUT,

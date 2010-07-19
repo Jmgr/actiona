@@ -67,6 +67,8 @@ namespace ActionTools
 		
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);
+		
+		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
 
 		template<typename T>
 		bool checkRange(T value, T min, T max)		{ return (value >= min && value <= max); }
@@ -78,8 +80,8 @@ namespace ActionTools
 		QString errorMessage()						{ return mErrorMessage; }
 
 	signals:
-		void evaluationError(	ActionTools::ActionInstance::ExecutionException exceptionType,
-								const QString &message);
+		void evaluationException(	int exception,
+									const QString &message);
 
 	private:
 		ActionInstance *mActionInstance;

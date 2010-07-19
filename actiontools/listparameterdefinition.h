@@ -39,7 +39,6 @@ namespace ActionTools
 		virtual void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
 		void save(ActionInstance *actionInstance);
-		void setDefaultValues(Parameter &data);
 
 		CodeComboBox *codeComboBox() const										{ return mComboBox; }
 

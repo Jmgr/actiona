@@ -38,36 +38,24 @@ namespace ActionTools
 		if(definition)
 		{
 			foreach(ElementDefinition *element, definition->elements())
-			{
-				if(ParameterDefinition *parameter = dynamic_cast<ParameterDefinition *>(element))
-					setParameterDefaultValue(parameter);
-				else if(GroupDefinition *group = dynamic_cast<GroupDefinition *>(element))
-				{
-					foreach(ParameterDefinition *member, group->members())
-						setParameterDefaultValue(member);
-				}
-			}
+				element->setDefaultValues(this);
 		}
 	}
 
-	void ActionInstance::setParameterDefaultValue(ParameterDefinition *parameter)
+	QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance)
 	{
-		parameter->setDefaultValues(d->parametersData[parameter->name()]);
-	}
-
-	QDataStream &operator << (QDataStream &s, const ActionInstance &action)
-	{
-		s << action.label();
-		s << action.comment();
-		s << action.parametersData();
-		s << action.color();
-		s << action.isEnabled();
-		s << action.isSelected();
+		s << actionInstance.label();
+		s << actionInstance.comment();
+		s << actionInstance.parametersData();
+		s << actionInstance.color();
+		s << actionInstance.isEnabled();
+		s << actionInstance.isSelected();
+		s << actionInstance.exceptionActionInstances();
 
 		return s;
 	}
 
-	QDataStream &operator >> (QDataStream &s, ActionInstance &action)
+	QDataStream &operator >> (QDataStream &s, ActionInstance &actionInstance)
 	{
 		QString label;
 		QString comment;
@@ -75,6 +63,7 @@ namespace ActionTools
 		QColor color;
 		bool enabled;
 		bool selected;
+		ExceptionActionInstancesHash exceptionActionInstances;
 
 		s >> label;
 		s >> comment;
@@ -82,26 +71,29 @@ namespace ActionTools
 		s >> color;
 		s >> enabled;
 		s >> selected;
+		s >> exceptionActionInstances;
 
-		action.setLabel(label);
-		action.setComment(comment);
-		action.setParametersData(parametersData);
-		action.setColor(color);
-		action.setEnabled(enabled);
-		action.setSelected(selected);
+		actionInstance.setLabel(label);
+		actionInstance.setComment(comment);
+		actionInstance.setParametersData(parametersData);
+		actionInstance.setColor(color);
+		actionInstance.setEnabled(enabled);
+		actionInstance.setSelected(selected);
+		actionInstance.setExceptionActionInstances(exceptionActionInstances);
 
 		return s;
 	}
 
-	QDebug &operator << (QDebug &dbg, const ActionInstance &action)
+	QDebug &operator << (QDebug &dbg, const ActionInstance &actionInstance)
 	{
-		dbg.space() << "Id:" << action.definition()->id();
-		dbg.space() << "Label:" << action.label();
-		dbg.space() << "Comment:" << action.comment();
-		dbg.space() << "Color:" << action.color();
-		dbg.space() << "Enabled:" << action.isEnabled();
-		dbg.space() << "Selected:" << action.isSelected();
-		dbg.space() << "Data:" << action.parametersData();
+		dbg.space() << "Id:" << actionInstance.definition()->id();
+		dbg.space() << "Label:" << actionInstance.label();
+		dbg.space() << "Comment:" << actionInstance.comment();
+		dbg.space() << "Color:" << actionInstance.color();
+		dbg.space() << "Enabled:" << actionInstance.isEnabled();
+		dbg.space() << "Selected:" << actionInstance.isSelected();
+		dbg.space() << "Exception action instances:" << actionInstance.exceptionActionInstances();
+		dbg.space() << "Data:" << actionInstance.parametersData();
 
 		return dbg.maybeSpace();
 	}
@@ -111,6 +103,16 @@ namespace ActionTools
 		foreach(const QString &parameterName, parametersData.keys())
 		{
 			dbg.space() << parameterName << "=" << parametersData.value(parameterName);
+		}
+
+		return dbg.maybeSpace();
+	}
+	
+	QDebug &operator << (QDebug &dbg, const ExceptionActionInstancesHash &exceptionActionInstancesHash)
+	{
+		foreach(ActionException::Exception exception, exceptionActionInstancesHash.keys())
+		{
+			dbg.space() << exception << "=" << exceptionActionInstancesHash.value(exception);
 		}
 
 		return dbg.maybeSpace();

@@ -54,7 +54,7 @@ public:
 																								this);
 		killMode->setTooltip(tr("The kill mode"));
 		killMode->setItems(ActionKillProcessInstance::killModes);
-		killMode->setOption("default", ActionKillProcessInstance::killModes.second.at(ActionKillProcessInstance::GracefulThenForceful));
+		killMode->setDefaultValue(ActionKillProcessInstance::killModes.second.at(ActionKillProcessInstance::GracefulThenForceful));
 		addElement(killMode, 1);
 		
 		ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition( ActionTools::ElementDefinition::INPUT,
@@ -64,7 +64,7 @@ public:
 		timeout->setTooltip(tr("The timeout before doing a forceful kill"));
 		timeout->setMinimum(0);
 		timeout->setMaximum(INT_MAX);
-		timeout->setOption("default", 1000);
+		timeout->setDefaultValue(1000);
 		addElement(timeout, 1);
 	}
 

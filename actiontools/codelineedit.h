@@ -53,6 +53,7 @@ namespace ActionTools
 		void setEmbedded(bool embedded);
 
 		void setAllowTextCodeChange(bool allowTextCodeChange);
+		void setShowEditorButton(bool showEditorButton);
 
 		void setFromSubParameter(const SubParameter &subParameter)		{ if(mAllowTextCodeChange) setCode(subParameter.isCode()); setText(subParameter.value().toString()); }
 
@@ -84,6 +85,7 @@ namespace ActionTools
 		bool mCode;
 		bool mMultiline;
 		bool mAllowTextCodeChange;
+		bool mShowEditorButton;
 		bool mEmbedded;
 		QAction *mSwitchTextCode;
 		QAction *mOpenEditor;

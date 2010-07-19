@@ -20,20 +20,19 @@
 
 #include "actiondefinition.h"
 #include "actioninstance.h"
+#include "actionexception.h"
+#include "elementdefinition.h"
 
 #include <QScriptEngine>
 #include <QScriptValue>
 
 namespace ActionTools
 {
-	QString ActionDefinition::CategoryName[CategoryCount] =
+	ActionDefinition::~ActionDefinition()
 	{
-		QObject::tr("Windows"),
-		QObject::tr("Device"),
-		QObject::tr("System"),
-		QObject::tr("Internal"),
-		QObject::tr("Other")
-	};
+		qDeleteAll(mElements);
+		qDeleteAll(mExceptions);
+	}
 	
 	ActionInstance *ActionDefinition::scriptInit(QScriptEngine *scriptEngine) const
 	{
@@ -55,6 +54,15 @@ namespace ActionTools
 		
 		return actionInstance;
 	}
+	
+	QString ActionDefinition::CategoryName[CategoryCount] =
+	{
+		QObject::tr("Windows"),
+		QObject::tr("Device"),
+		QObject::tr("System"),
+		QObject::tr("Internal"),
+		QObject::tr("Other")
+	};
 	
 	void ActionDefinition::addElement(ElementDefinition *element, int tab)
 	{

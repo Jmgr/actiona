@@ -40,6 +40,7 @@ namespace ActionTools
 		mCode(false),
 		mMultiline(false),
 		mAllowTextCodeChange(true),
+		mShowEditorButton(true),
 		mEmbedded(false),
 		mSwitchTextCode(new QAction(tr("Set to text/code"), this)),
 		mOpenEditor(new QAction(tr("Open editor"), this)),
@@ -109,8 +110,13 @@ namespace ActionTools
 	{
 		mEmbedded = embedded;
 		
-		int w = (mAllowTextCodeChange ? mCodeButton->maximumWidth() + mEditorButton->maximumWidth() : mEditorButton->maximumWidth());
-	
+		int w = 0;
+		
+		if(mAllowTextCodeChange)
+			w += mCodeButton->maximumWidth();
+		if(mShowEditorButton)
+			w += mEditorButton->maximumWidth();
+		
 		if(embedded)
 			setStyleSheet(QString("QLineEdit { padding-right: %1px; }").arg(w));
 		else
@@ -126,6 +132,19 @@ namespace ActionTools
 		mSwitchTextCode->setEnabled(mAllowTextCodeChange);
 		
 		mCodeButton->setVisible(allowTextCodeChange);
+		
+		setEmbedded(mEmbedded);
+		
+		resizeButtons();
+		update();
+	}
+	
+	void CodeLineEdit::setShowEditorButton(bool showEditorButton)
+	{
+		mShowEditorButton = showEditorButton;
+		mOpenEditor->setEnabled(mShowEditorButton);
+		
+		mEditorButton->setVisible(showEditorButton);
 		
 		setEmbedded(mEmbedded);
 		
@@ -159,6 +178,9 @@ namespace ActionTools
 
 	void CodeLineEdit::openEditor(int line, int column)
 	{
+		if(!mShowEditorButton)
+			return;
+		
 		CodeEditorDialog *codeEditorDialog = new CodeEditorDialog(mCompletionModel, this);
 
 		codeEditorDialog->setText(text());
@@ -210,7 +232,10 @@ namespace ActionTools
 		
 		mCodeButton->setGeometry(codeButtonGeometry);
 		
-		editorButtonGeometry.setX(rect().right() - mEditorButton->maximumWidth() - (mAllowTextCodeChange ? codeButtonGeometry.width() : 0) + (mEmbedded ? 2 : 1));
+		editorButtonGeometry.setX(rect().right()
+								  - (mShowEditorButton ? mEditorButton->maximumWidth() : 0)
+								  - (mAllowTextCodeChange ? codeButtonGeometry.width() : 0)
+								  + (mEmbedded ? 2 : 1));
 		editorButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
 		editorButtonGeometry.setWidth(mEditorButton->maximumWidth());
 		editorButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));

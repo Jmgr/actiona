@@ -36,15 +36,9 @@ namespace ActionTools
 		ActionPack()			{}
 		virtual ~ActionPack()	{}
 
-		//Returns the id of the pack
 		virtual QString id() const = 0;
-
-		//Returns the name of the pack
 		virtual QString name() const = 0;
-
-		//Returns the pack version
 		virtual Tools::Version version() const = 0;
-
 		//Returns an instance of each plugin definition
 		const ActionDefinitionList &actionsDefinitions() const	{ return mActionDefinitions; }
 
@@ -66,6 +60,6 @@ namespace ActionTools
 }
 
 Q_DECLARE_INTERFACE(ActionTools::ActionPack,
-					"info.jmgr.actionaz.ActionPack/1.0")
+					"eu.actionaz.ActionPack/1.0")
 
 #endif // ACTIONPACK_H

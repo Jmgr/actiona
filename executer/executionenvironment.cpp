@@ -34,89 +34,92 @@
 #include <LMCons.h>
 #endif
 
-ExecutionEnvironment::ExecutionEnvironment(QObject *parent)
-	: QObject(parent)
+namespace Executer
 {
-}
-
-QString ExecutionEnvironment::storageLocationPath(StorageLocation location) const
-{
-	return QDesktopServices::storageLocation(static_cast<QDesktopServices::StandardLocation>(location));
-}
-
-QString ExecutionEnvironment::storageLocationName(StorageLocation location) const
-{
-	return QDesktopServices::displayName(static_cast<QDesktopServices::StandardLocation>(location));
-}
-
-void ExecutionEnvironment::openUrl(const QString &url) const
-{
-	QDesktopServices::openUrl(QUrl(url));
-}
-
-int ExecutionEnvironment::screenCount() const
-{
-	return QApplication::desktop()->screenCount();
-}
-
-QScriptValue ExecutionEnvironment::availableGeometry(int screen) const
-{
-	const QRect &geometry = QApplication::desktop()->availableGeometry(screen);
-	QScriptValue value = engine()->newObject();
-	value.setProperty("x", engine()->newVariant(geometry.x()));
-	value.setProperty("y", engine()->newVariant(geometry.y()));
-	value.setProperty("width", engine()->newVariant(geometry.width()));
-	value.setProperty("height", engine()->newVariant(geometry.height()));
-
-	return value;
-}
-
-QScriptValue ExecutionEnvironment::screenGeometry(int screen) const
-{
-	const QRect &geometry = QApplication::desktop()->screenGeometry(screen);
-	QScriptValue value = engine()->newObject();
-	value.setProperty("x", engine()->newVariant(geometry.x()));
-	value.setProperty("y", engine()->newVariant(geometry.y()));
-	value.setProperty("width", engine()->newVariant(geometry.width()));
-	value.setProperty("height", engine()->newVariant(geometry.height()));
-
-	return value;
-}
-
-int ExecutionEnvironment::primaryScreen() const
-{
-	return QApplication::desktop()->primaryScreen();
-}
-
-bool ExecutionEnvironment::isVirtualDesktop() const
-{
-	return QApplication::desktop()->isVirtualDesktop();
-}
-
-QString ExecutionEnvironment::currentDirectory() const
-{
-	return QDir::currentPath();
-}
-
-QString ExecutionEnvironment::username() const
-{
-#ifdef Q_WS_WIN
-	TCHAR buffer[UNLEN+1];
-	DWORD size = sizeof(buffer);
-	GetUserName(buffer, &size);
-
-	return QString::fromWCharArray(buffer);
-#else
-	return QString::fromAscii(std::getenv("USER"));
-#endif
-}
-
-QString ExecutionEnvironment::variable(const QString &name) const
-{
-	return QString::fromAscii(std::getenv(name.toAscii()));
-}
-
-uint ExecutionEnvironment::timestamp() const
-{
-	return QDateTime::currentDateTime().toTime_t();
+	ExecutionEnvironment::ExecutionEnvironment(QObject *parent)
+		: QObject(parent)
+	{
+	}
+	
+	QString ExecutionEnvironment::storageLocationPath(StorageLocation location) const
+	{
+		return QDesktopServices::storageLocation(static_cast<QDesktopServices::StandardLocation>(location));
+	}
+	
+	QString ExecutionEnvironment::storageLocationName(StorageLocation location) const
+	{
+		return QDesktopServices::displayName(static_cast<QDesktopServices::StandardLocation>(location));
+	}
+	
+	void ExecutionEnvironment::openUrl(const QString &url) const
+	{
+		QDesktopServices::openUrl(QUrl(url));
+	}
+	
+	int ExecutionEnvironment::screenCount() const
+	{
+		return QApplication::desktop()->screenCount();
+	}
+	
+	QScriptValue ExecutionEnvironment::availableGeometry(int screen) const
+	{
+		const QRect &geometry = QApplication::desktop()->availableGeometry(screen);
+		QScriptValue value = engine()->newObject();
+		value.setProperty("x", engine()->newVariant(geometry.x()));
+		value.setProperty("y", engine()->newVariant(geometry.y()));
+		value.setProperty("width", engine()->newVariant(geometry.width()));
+		value.setProperty("height", engine()->newVariant(geometry.height()));
+	
+		return value;
+	}
+	
+	QScriptValue ExecutionEnvironment::screenGeometry(int screen) const
+	{
+		const QRect &geometry = QApplication::desktop()->screenGeometry(screen);
+		QScriptValue value = engine()->newObject();
+		value.setProperty("x", engine()->newVariant(geometry.x()));
+		value.setProperty("y", engine()->newVariant(geometry.y()));
+		value.setProperty("width", engine()->newVariant(geometry.width()));
+		value.setProperty("height", engine()->newVariant(geometry.height()));
+	
+		return value;
+	}
+	
+	int ExecutionEnvironment::primaryScreen() const
+	{
+		return QApplication::desktop()->primaryScreen();
+	}
+	
+	bool ExecutionEnvironment::isVirtualDesktop() const
+	{
+		return QApplication::desktop()->isVirtualDesktop();
+	}
+	
+	QString ExecutionEnvironment::currentDirectory() const
+	{
+		return QDir::currentPath();
+	}
+	
+	QString ExecutionEnvironment::username() const
+	{
+	#ifdef Q_WS_WIN
+		TCHAR buffer[UNLEN+1];
+		DWORD size = sizeof(buffer);
+		GetUserName(buffer, &size);
+	
+		return QString::fromWCharArray(buffer);
+	#else
+		return QString::fromAscii(std::getenv("USER"));
+	#endif
+	}
+	
+	QString ExecutionEnvironment::variable(const QString &name) const
+	{
+		return QString::fromAscii(std::getenv(name.toAscii()));
+	}
+	
+	uint ExecutionEnvironment::timestamp() const
+	{
+		return QDateTime::currentDateTime().toTime_t();
+	}
 }

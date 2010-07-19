@@ -52,7 +52,8 @@ void ActionClickInstance::startExecution()
 
 	if(amount <= 0)
 	{
-		emit executionException(ActionTools::ActionInstance::Error, tr("Invalid click amount"));
+		actionInstanceExecutionHelper.setCurrentParameter("amount");
+		emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid click amount"));
 		return;
 	}
 
@@ -60,7 +61,8 @@ void ActionClickInstance::startExecution()
 
 	if(stringCoordinates.count() != 2)
 	{
-		emit executionException(ActionTools::ActionInstance::Error, tr("Invalid click coordinates"));
+		actionInstanceExecutionHelper.setCurrentParameter("position");
+		emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid click coordinates"));
 		return;
 	}
 
@@ -72,7 +74,8 @@ void ActionClickInstance::startExecution()
 
 	if(!okX || !okY)
 	{
-		emit executionException(ActionTools::ActionInstance::Error, tr("Invalid click coordinates"));
+		actionInstanceExecutionHelper.setCurrentParameter("position");
+		emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid click coordinates"));
 		return;
 	}
 
@@ -80,7 +83,7 @@ void ActionClickInstance::startExecution()
 	Display *display = XOpenDisplay(0);
 	if(!display)
 	{
-		emit executionException(ActionTools::ActionInstance::Error, tr("Unable to emulate click : cannot open display"));
+		emit executionException(FailedToSendInputException, tr("Unable to emulate click : cannot open display"));
 		return;
 	}
 
@@ -181,6 +184,7 @@ void ActionClickInstance::startExecution()
 	}
 
 	SetCursorPos(previousPosition.x, previousPosition.y);
+	//TODO : Send FailedToSendInputException on fail
 #endif
 #ifdef Q_WS_MAC
 	//TODO_MAC

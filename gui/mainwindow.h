@@ -46,6 +46,11 @@ namespace Tools
 	class Updater;
 }
 
+namespace Executer
+{
+	class Executer;
+}
+
 class QToolBox;
 class QSystemTrayIcon;
 class ScriptModel;
@@ -56,7 +61,6 @@ class NewActionTreeWidget;
 class QNetworkReply;
 class QFile;
 class QProgressDialog;
-class Executer;
 class QUndoGroup;
 class QStandardItemModel;
 class QxtCommandOptions;
@@ -158,6 +162,7 @@ private:
 	void execute(bool onlySelection);
 	void fillNewActionTreeWidget(NewActionTreeWidget *widget);
 	bool editAction(ActionTools::ActionInstance *actionInstance, const QString &field = QString(), const QString &subField = QString(), int line = -1, int column = -1);
+	bool editAction(ActionTools::ActionInstance *actionInstance, int exception);
 	void openParametersDialog(int parameter = -1, int line = -1, int column = -1);
 	QList<int> selectedRows() const;
 	bool loadFile(const QString &fileName);
@@ -195,7 +200,7 @@ private:
 	QSplashScreen *mSplashScreen;
 	QFile *mFile;
 	QStringList mPackLoadErrors;
-	Executer *mExecuter;
+	Executer::Executer *mExecuter;
 	bool mWasNewActionDockShown;
 	bool mWasConsoleDockShown;
 	QUndoGroup *mUndoGroup;

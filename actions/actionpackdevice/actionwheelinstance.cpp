@@ -45,7 +45,7 @@ void ActionWheelInstance::startExecution()
 	Display *display = XOpenDisplay(0);
 	if(!display)
 	{
-		emit executionException(ActionTools::ActionInstance::Error, tr("Unable to emulate wheel : cannot open display"));
+		emit executionException(FailedToSendInputException, tr("Unable to emulate wheel : cannot open display"));
 		return;
 	}
 
@@ -77,7 +77,7 @@ void ActionWheelInstance::startExecution()
 
 	if(!SendInput(1, &input, sizeof(INPUT)))
 	{
-		emit executionException(ActionTools::ActionInstance::Error, tr("Unable to emulate wheel : failed to send input"));
+		emit executionException(FailedToSendInputException, tr("Unable to emulate wheel : failed to send input"));
 		return;
 	}
 #endif

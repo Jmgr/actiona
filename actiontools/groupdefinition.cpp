@@ -50,6 +50,12 @@ namespace ActionTools
 		masterTextChanged(mMasterCodeComboBox->currentText());
 		masterCodeChanged(mMasterCodeComboBox->codeLineEdit()->isCode());
 	}
+	
+	void GroupDefinition::setDefaultValues(ActionInstance *actionInstance)
+	{
+		foreach(ParameterDefinition *parameterDefinition, members())
+			parameterDefinition->setDefaultValues(actionInstance);
+	}
 
 	void GroupDefinition::masterEditorBuilt()
 	{

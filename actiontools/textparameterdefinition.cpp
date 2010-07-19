@@ -60,9 +60,4 @@ namespace ActionTools
 	{
 		actionInstance->setSubParameter(name(), "value", mLineEdit->isCode(), mLineEdit->text());
 	}
-
-	void TextParameterDefinition::setDefaultValues(Parameter &data)
-	{
-		data.subParameters()["value"].setValue(option("default"));
-	}
 }

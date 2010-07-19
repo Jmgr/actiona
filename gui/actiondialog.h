@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QVector>
+#include <QList>
 
 namespace Ui
 {
@@ -39,6 +40,8 @@ namespace ActionTools
 
 class QAbstractItemModel;
 class QFormLayout;
+class QGridLayout;
+class QTabWidget;
 
 class ActionDialog : public QDialog
 {
@@ -51,6 +54,7 @@ public:
 	void setCurrentField(const QString &field, const QString &subField)				{ mCurrentField = field; mCurrentSubField = subField; }
 	void setCurrentLine(int currentLine)											{ mCurrentLine = currentLine; }
 	void setCurrentColumn(int currentColumn)										{ mCurrentColumn = currentColumn; }
+	void setCurrentException(int exception)											{ mCurrentException = exception; }
 
 public slots:
 	void accept();
@@ -58,6 +62,7 @@ public slots:
 
 private slots:
 	void postInit();
+	void currentExceptionActionChanged(int index);
 
 private:
 	enum
@@ -78,8 +83,13 @@ private:
 	QString mCurrentSubField;
 	int mCurrentLine;
 	int mCurrentColumn;
+	int mCurrentException;
 	QAbstractItemModel *mCompletionModel;
 	QVector<QFormLayout *> mParameterLayouts[2];
+	QGridLayout *mExceptionsLayout;
+	QTabWidget *mTabWidget;
+	QWidget *mExceptionsTabWidget;
+	QList<QWidget *> mParameterTabWidgets;
 
 	Q_DISABLE_COPY(ActionDialog)
 };

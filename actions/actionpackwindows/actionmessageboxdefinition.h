@@ -62,7 +62,7 @@ public:
 																								this);
 		icon->setTooltip(tr("The icon to use"));
 		icon->setItems(ActionMessageBoxInstance::icons);
-		icon->setOption("default", ActionMessageBoxInstance::icons.second.at(ActionMessageBoxInstance::None));
+		icon->setDefaultValue(ActionMessageBoxInstance::icons.second.at(ActionMessageBoxInstance::None));
 		addElement(icon);
 
 		ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(	ActionTools::ElementDefinition::INPUT,
@@ -71,7 +71,7 @@ public:
 																								this);
 		type->setTooltip(tr("The message box type"));
 		type->setItems(ActionMessageBoxInstance::types);
-		type->setOption("default", ActionMessageBoxInstance::types.second.at(ActionMessageBoxInstance::OkButton));
+		type->setDefaultValue(ActionMessageBoxInstance::types.second.at(ActionMessageBoxInstance::OkButton));
 		addElement(type, 1);
 
 		ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition(			ActionTools::ElementDefinition::INPUT,
@@ -86,7 +86,6 @@ public:
 																								tr("If yes"),
 																								this);
 		ifYes->setTooltip(tr("What to do if the yes button is pressed"));
-		ifYes->setOption("default", ActionMessageBoxInstance::types.second.at(0));
 		yesNoGroup->addMember(ifYes);
 
 		ActionTools::IfActionParameterDefinition *ifNo = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
@@ -94,7 +93,6 @@ public:
 																								tr("If no"),
 																								this);
 		ifNo->setTooltip(tr("What to do if the no button is pressed"));
-		ifNo->setOption("default", ActionMessageBoxInstance::types.second.at(0));
 		yesNoGroup->addMember(ifNo);
 
 		addElement(yesNoGroup, 1);

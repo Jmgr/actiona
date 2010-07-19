@@ -49,9 +49,4 @@ namespace ActionTools
 	{
 		actionInstance->setSubParameter(name(), "value", mKeyEdit->isCode(), mKeyEdit->text());
 	}
-
-	void KeyParameterDefinition::setDefaultValues(Parameter &data)
-	{
-		data.subParameters()["value"].setValue(option("default"));
-	}
 }

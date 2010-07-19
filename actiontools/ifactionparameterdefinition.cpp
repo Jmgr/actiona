@@ -87,10 +87,10 @@ namespace ActionTools
 		actionInstance->setSubParameter(name(), "line", mLineEdit->isCode(), mLineEdit->currentText());
 	}
 
-	void IfActionParameterDefinition::setDefaultValues(Parameter &data)
+	void IfActionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		data.subParameters()["action"].setValue(option("defaultAction", actions.second[DoNothing]));
-		data.subParameters()["line"].setValue(option("defaultLine"));
+		actionInstance->setSubParameter(name(), "action", defaultAction(actions.second[DoNothing]));
+		actionInstance->setSubParameter(name(), "line", defaultLine());
 	}
 
 	void IfActionParameterDefinition::codeChanged(bool code)

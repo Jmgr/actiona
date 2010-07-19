@@ -38,7 +38,6 @@ namespace ActionTools
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
 		void save(ActionInstance *actionInstance);
-		void setDefaultValues(Parameter &data);
 
 		void setPrefix(const QString &prefix)							{ mPrefix = prefix; }
 		void setSuffix(const QString &suffix)							{ mSuffix = suffix; }

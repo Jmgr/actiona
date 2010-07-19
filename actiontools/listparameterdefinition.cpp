@@ -23,6 +23,8 @@
 #include "codecombobox.h"
 #include "actioninstance.h"
 
+#include <QDebug>
+
 namespace ActionTools
 {
 	ListParameterDefinition::ListParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
@@ -55,6 +57,7 @@ namespace ActionTools
 	void ListParameterDefinition::load(const ActionInstance *actionInstance)
 	{
 		const SubParameter &subParameter = actionInstance->subParameter(name(), "value");
+
 		mComboBox->setCode(subParameter.isCode());
 		mComboBox->setEditText(translatedNameFromOriginalName(subParameter.value().toString()));
 	}
@@ -62,10 +65,5 @@ namespace ActionTools
 	void ListParameterDefinition::save(ActionInstance *actionInstance)
 	{
 		actionInstance->setSubParameter(name(), "value", mComboBox->isCode(), originalNameFromTranslatedName(mComboBox->currentText()));
-	}
-
-	void ListParameterDefinition::setDefaultValues(Parameter &data)
-	{
-		data.subParameters()["value"].setValue(option("default"));
 	}
 }

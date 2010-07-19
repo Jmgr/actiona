@@ -50,9 +50,4 @@ namespace ActionTools
 	{
 		actionInstance->setSubParameter(name(), "value", mWindowEdit->isCode(), mWindowEdit->text());
 	}
-
-	void WindowParameterDefinition::setDefaultValues(Parameter &data)
-	{
-		data.subParameters()["value"].setValue(option("default"));
-	}
 }

@@ -44,7 +44,7 @@ public:
 	QString id() const														{ return "ActionExit"; }
 	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
 	QString description() const												{ return QObject::tr("Exit Actionaz"); }
-	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
+	Tools::Version version() const									{ return Tools::Version(1, 0, 0); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionExitInstance(this); }
 	Status status() const													{ return Stable; }
 	Category category() const												{ return Internal; }

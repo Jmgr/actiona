@@ -23,6 +23,7 @@
 
 #include "actiontools_global.h"
 #include "parameter.h"
+#include "actionexception.h"
 
 #include <QObject>
 #include <QSharedData>
@@ -45,6 +46,7 @@ namespace ActionTools
 	class Script;
 
 	typedef QHash<QString, Parameter> ParametersData;
+	typedef QHash<ActionException::Exception, ActionException::ExceptionActionInstance> ExceptionActionInstancesHash;
 
 	class ActionInstanceData : public QSharedData
 	{
@@ -59,8 +61,9 @@ namespace ActionTools
 			color(other.color),
 			enabled(other.enabled),
 			selected(other.selected),
+			exceptionActionInstances(other.exceptionActionInstances),
 			script(other.script),
-			scriptEngine(other.scriptEngine)														{}
+			scriptEngine(other.scriptEngine)																	{}
 
 		ParametersData parametersData;
 		const ActionDefinition *definition;
@@ -69,6 +72,7 @@ namespace ActionTools
 		QColor color;
 		bool enabled;
 		bool selected;
+		ExceptionActionInstancesHash exceptionActionInstances;
 		Script *script;
 		QScriptEngine *scriptEngine;
 	};
@@ -78,59 +82,9 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		enum ExecutionException
-		{
-			Warning,
-			Error
-		};
-		/*
-		enum ExecutionEventType
-		{
-			BadParameterEvent,			//Bad parameter (parameter not found or invalid value)
-			CodeErrorEvent,				//Error while evaluating the code
-			
-			UserEvent = 32				//Action defined event
-		};
-		enum ExecutionEventActionType
-		{
-			ContinueAction,				//Continue script execution
-			FailAction,					//Show an error message and stop execution (default)
-			DeactivateAction,			//Deactivate the failing action and continue
-			GotoLineAction,				//Goto a line
-			AskToContinueAction,		//Show a message box asking to continue, if not, fail
-			
-			UserAction = 32				//Action defined event action
-		};
-		
-		struct UserEvent
-		{
-			int type;
-			
-		};
-		
-		void addUserEvent(const QString &id, const QString &name);
-		*/
-		//TODO
-		
-		/*
-		 EventDefinition
-		 {
-			QString name;				//Translated name, if user event
-			int event;
-			int action;
-			QVariant actionParameter;
-		 }
-		 Event
-		 {
-			int event;
-			int action;
-			QVariant message;
-		 }
-		 */
-
 		ActionInstance(const ActionDefinition *definition = 0, QObject *parent = 0);
 		ActionInstance(const ActionInstance &other) : QObject(), d(other.d)					{}
-		virtual ~ActionInstance()													{}
+		virtual ~ActionInstance()															{}
 
 		const ActionDefinition *definition() const							{ return d->definition; }
 
@@ -140,6 +94,9 @@ namespace ActionTools
 		QColor color() const												{ return d->color; }
 		bool isEnabled() const												{ return d->enabled; }
 		bool isSelected() const												{ return d->selected; }
+		ExceptionActionInstancesHash exceptionActionInstances() const				{ return d->exceptionActionInstances; }
+		ActionException::ExceptionActionInstance exceptionActionInstance(ActionException::Exception exception) const
+																			{ return d->exceptionActionInstances.value(exception); }
 
 		void setComment(const QString &comment)								{ d->comment = comment; }
 		void setLabel(const QString &label)									{ d->label = label; }
@@ -147,11 +104,17 @@ namespace ActionTools
 		void setColor(const QColor &color)									{ d->color = color; }
 		void setEnabled(bool enabled)										{ d->enabled = enabled; }
 		void setSelected(bool selected)										{ d->selected = selected; }
+		void setExceptionActionInstances(const ExceptionActionInstancesHash &exceptionActions)
+																			{ d->exceptionActionInstances = exceptionActions; }
+		void setExceptionActionInstance(ActionException::Exception exception, ActionException::ExceptionActionInstance exceptionActionInstance)
+																			{ d->exceptionActionInstances.insert(exception, exceptionActionInstance); }
 		void setParameter(const QString &name, const Parameter &parameter)	{ d->parametersData.insert(name, parameter); }
 		void setSubParameter(const QString &parameterName, const QString &subParameterName, const SubParameter &subParameter)
 																			{ d->parametersData[parameterName].setSubParameter(subParameterName, subParameter); }
 		void setSubParameter(const QString &parameterName, const QString &subParameterName, bool code, const QVariant &value)
 																			{ setSubParameter(parameterName, subParameterName, SubParameter(code, value)); }
+		void setSubParameter(const QString &parameterName, const QString &subParameterName, const QVariant &value)
+																			{ setSubParameter(parameterName, subParameterName, SubParameter(false, value)); }
 		Parameter parameter(const QString &name) const						{ return d->parametersData.value(name); }
 		SubParameter subParameter(const QString &parameterName, const QString &subParameterName) const
 																			{ return parameter(parameterName).subParameter(subParameterName); }
@@ -167,6 +130,7 @@ namespace ActionTools
 			setColor(other.color());
 			setEnabled(other.isEnabled());
 			setSelected(other.isSelected());
+			setExceptionActionInstances(other.exceptionActionInstances());
 		}
 
 	protected:
@@ -178,24 +142,21 @@ namespace ActionTools
 		virtual void stopExecution()										{}
 
 	signals:
-		void executionException(ActionTools::ActionInstance::ExecutionException exceptionType,
-								const QString &message);
+		void executionException(int exception, const QString &message);
 		void executionEnded();
 		void disableAction(bool disable = true);
 
 	private:
-		void setParameterDefaultValue(ParameterDefinition *parameter);
-
 		QSharedDataPointer<ActionInstanceData> d;
 	};
 
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const ActionInstance &action);
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, ActionInstance &action);
-	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ActionInstance &action);
+	ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance);
+	ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, ActionInstance &actionInstance);
+	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ActionInstance &actionInstance);
 	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ParametersData &parametersData);
+	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ExceptionActionInstancesHash &exceptionActionInstancesHash);
 }
 
 Q_DECLARE_METATYPE(ActionTools::ActionInstance)
-Q_DECLARE_METATYPE(ActionTools::ActionInstance::ExecutionException)
 
 #endif // ACTIONINSTANCE_H

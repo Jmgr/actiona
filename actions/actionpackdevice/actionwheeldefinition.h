@@ -47,6 +47,8 @@ public:
 		intensity->setMinimum(INT_MIN);
 		intensity->setMaximum(INT_MAX);
 		addElement(intensity);
+		
+		addException(ActionWheelInstance::FailedToSendInputException, tr("Send input failure"));
 	}
 
 	QString name() const													{ return QObject::tr("Wheel"); }

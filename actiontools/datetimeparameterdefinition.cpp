@@ -50,9 +50,4 @@ namespace ActionTools
 	{
 		actionInstance->setSubParameter(name(), "value", mDateTimeEdit->isCode(), mDateTimeEdit->text());
 	}
-
-	void DateTimeParameterDefinition::setDefaultValues(Parameter &data)
-	{
-		data.subParameters()["value"].setValue(option("default"));
-	}
 }

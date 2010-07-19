@@ -26,22 +26,25 @@
 #include <QObject>
 #include <QScriptable>
 
-class EXECUTERSHARED_EXPORT ExecutionAlgorithms : public QObject, protected QScriptable
+namespace Executer
 {
-    Q_OBJECT
+	class EXECUTERSHARED_EXPORT ExecutionAlgorithms : public QObject, protected QScriptable
+	{
+		Q_OBJECT
+		
+	public:
+		explicit ExecutionAlgorithms(QObject *parent = 0);
 	
-public:
-    explicit ExecutionAlgorithms(QObject *parent = 0);
-
-public slots:
-	QString md4(const QString &data) const;
-	QString md5(const QString &data) const;
-	QString sha1(const QString &data) const;
-	void setRandomSeed(uint seed) const;
-	int randomMax() const;
-	int randomInt() const;
-	int randomInt(int min, int max) const;
-	float randomFloat(float min, float max) const;
-};
+	public slots:
+		QString md4(const QString &data) const;
+		QString md5(const QString &data) const;
+		QString sha1(const QString &data) const;
+		void setRandomSeed(uint seed) const;
+		int randomMax() const;
+		int randomInt() const;
+		int randomInt(int min, int max) const;
+		float randomFloat(float min, float max) const;
+	};
+}
 
 #endif // EXECUTIONALGORITHMS_H

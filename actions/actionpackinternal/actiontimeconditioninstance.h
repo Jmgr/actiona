@@ -58,7 +58,8 @@ public:
 		mTestedDateTime = QDateTime::fromString(date, "dd/MM/yyyy hh:mm:ss");
 		if(!mTestedDateTime.isValid())
 		{
-			emit executionException(ActionTools::ActionInstance::Error, tr("Invalid date"));
+			actionInstanceExecutionHelper.setCurrentParameter("date");
+			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid date"));
 			return;
 		}
 		

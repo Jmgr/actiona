@@ -51,6 +51,8 @@ namespace ActionTools
 		void setMasterValues(const QStringList &masterValues)	{ mMasterValues = masterValues; }
 
 		void init();
+		
+		void setDefaultValues(ActionInstance *actionInstance);
 
 	private slots:
 		void masterEditorBuilt();

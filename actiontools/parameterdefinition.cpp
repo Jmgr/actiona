@@ -19,6 +19,7 @@
 */
 
 #include "parameterdefinition.h"
+#include "actioninstance.h"
 
 #include <QWidget>
 
@@ -37,9 +38,12 @@ namespace ActionTools
 		mEditors.clear();
 	}
 
-	QVariant ParameterDefinition::option(QString name, QVariant defaultValue) const
+	QVariant ParameterDefinition::defaultValue(QVariant defaultValue) const
 	{
-		return mOptions.value(name, defaultValue);
+		if(!mDefaultValue.isValid())
+			return defaultValue;
+			
+		return mDefaultValue;
 	}
 
 	void ParameterDefinition::addEditor(QWidget *editor)
@@ -47,5 +51,10 @@ namespace ActionTools
 		editor->setToolTip(tooltip());
 
 		mEditors.append(editor);
+	}
+	
+	void ParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
+	{
+		actionInstance->setSubParameter(name(), "value", defaultValue());
 	}
 }

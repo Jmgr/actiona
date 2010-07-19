@@ -27,42 +27,45 @@
 #include <QScriptable>
 #include <QScriptValue>
 
-class EXECUTERSHARED_EXPORT ExecutionEnvironment : public QObject, protected QScriptable
+namespace Executer
 {
-    Q_OBJECT
-	Q_ENUMS(StorageLocation)
-	
-public:
-	enum StorageLocation
+	class EXECUTERSHARED_EXPORT ExecutionEnvironment : public QObject, protected QScriptable
 	{
-		Desktop,
-		Documents,
-		Fonts,
-		Applications,
-		Music,
-		Movies,
-		Pictures,
-		Temp,
-		Home,
-		Data,
-		Cache
-	};
+		Q_OBJECT
+		Q_ENUMS(StorageLocation)
+		
+	public:
+		enum StorageLocation
+		{
+			Desktop,
+			Documents,
+			Fonts,
+			Applications,
+			Music,
+			Movies,
+			Pictures,
+			Temp,
+			Home,
+			Data,
+			Cache
+		};
+		
+		explicit ExecutionEnvironment(QObject *parent = 0);
 	
-    explicit ExecutionEnvironment(QObject *parent = 0);
-
-public slots:
-	QString storageLocationPath(StorageLocation location) const;
-	QString storageLocationName(StorageLocation location) const;
-	void openUrl(const QString &url) const;
-	int screenCount() const;
-	QScriptValue availableGeometry(int screen = -1) const;
-	QScriptValue screenGeometry(int screen = -1) const;
-	int primaryScreen() const;
-	bool isVirtualDesktop() const;
-	QString currentDirectory() const;
-	QString username() const;
-	QString variable(const QString &name) const;
-	uint timestamp() const;
-};
+	public slots:
+		QString storageLocationPath(StorageLocation location) const;
+		QString storageLocationName(StorageLocation location) const;
+		void openUrl(const QString &url) const;
+		int screenCount() const;
+		QScriptValue availableGeometry(int screen = -1) const;
+		QScriptValue screenGeometry(int screen = -1) const;
+		int primaryScreen() const;
+		bool isVirtualDesktop() const;
+		QString currentDirectory() const;
+		QString username() const;
+		QString variable(const QString &name) const;
+		uint timestamp() const;
+	};
+}
 
 #endif // EXECUTIONENVIRONMENT_H

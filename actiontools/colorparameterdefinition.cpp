@@ -50,9 +50,4 @@ namespace ActionTools
 	{
 		actionInstance->setSubParameter(name(), "value", mColorEdit->isCode(), mColorEdit->text());
 	}
-
-	void ColorParameterDefinition::setDefaultValues(Parameter &data)
-	{
-		data.subParameters()["value"].setValue(option("default"));
-	}
 }

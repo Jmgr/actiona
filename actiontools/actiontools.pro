@@ -29,7 +29,8 @@ SOURCES += actionfactory.cpp \
 	actioninstanceexecutionhelper.cpp \
 	scriptcompleter.cpp \
 	keywords.cpp \
-	messagehandler.cpp
+	messagehandler.cpp \
+    actionexception.cpp
 HEADERS += actiontools_global.h \
 	actionpack.h \
 	actionfactory.h \
@@ -54,7 +55,8 @@ HEADERS += actiontools_global.h \
 	stringlistpair.h \
 	scriptcompleter.h \
 	keywords.h \
-	messagehandler.h
+	messagehandler.h \
+    actionexception.h
 win32:LIBS += -luser32 \
 	-ladvapi32 \
 	-lgdi32

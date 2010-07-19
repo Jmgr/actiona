@@ -83,6 +83,23 @@ namespace ActionTools
 
 		addLine(message, item, User, type);
 	}
+	
+	void ConsoleWidget::addExceptionLine(const QString &message, int action, int exception, Type type)
+	{
+		QStandardItem *item = new QStandardItem();
+		
+		item->setData(action, ActionRole);
+		item->setData(exception, ExceptionRole);
+
+		addLine(message, item, Exception, type);
+	}
+	
+	void ConsoleWidget::addDesignErrorLine(const QString &message, Type type)
+	{
+		QStandardItem *item = new QStandardItem();
+
+		addLine(message, item, DesignError, type);
+	}
 
 	void ConsoleWidget::addStartSeparator()
 	{
@@ -181,7 +198,10 @@ namespace ActionTools
 		}
 
 		item->setText(message);
-		item->setToolTip(message);
+		if(source == DesignError)
+			item->setToolTip(message);
+		else
+			item->setToolTip(message + tr("\nDouble-click to show"));
 		item->setIcon(icon);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		item->setData(QVariant::fromValue<Source>(source), SourceRole);

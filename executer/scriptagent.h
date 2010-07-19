@@ -23,45 +23,48 @@
 
 #include <QScriptEngineAgent>
 
-class ScriptAgent : public QScriptEngineAgent
+namespace Executer
 {
-public:
-	enum Context
+	class ScriptAgent : public QScriptEngineAgent
 	{
-		Unknown,
-		ActionInit,
-		Parameters,
-		Actions
+	public:
+		enum Context
+		{
+			Unknown,
+			ActionInit,
+			Parameters,
+			Actions
+		};
+	
+		ScriptAgent(QScriptEngine *engine)
+			: QScriptEngineAgent(engine),
+			mCurrentParameter(-1),
+			mCurrentLine(-1),
+			mCurrentColumn(-1),
+			mContext(Unknown)												{}
+	
+		void setContext(Context context)									{ mContext = context; }
+		void setCurrentParameter(int currentParameter)						{ mCurrentParameter = currentParameter; }
+	
+		int currentLine() const												{ return mCurrentLine; }
+		int currentColumn() const											{ return mCurrentColumn; }
+		Context context() const												{ return mContext; }
+		int currentParameter() const										{ return mCurrentParameter; }
+	
+	private:
+		void positionChange(qint64 scriptId, int lineNumber, int columnNumber)
+		{
+			Q_UNUSED(scriptId);
+			mCurrentLine = lineNumber;
+			mCurrentColumn = columnNumber;
+		}
+	
+	private:
+		int mCurrentParameter;
+		int mCurrentLine;
+		int mCurrentColumn;
+		Context mContext;
 	};
-
-	ScriptAgent(QScriptEngine *engine)
-		: QScriptEngineAgent(engine),
-		mCurrentParameter(-1),
-		mCurrentLine(-1),
-		mCurrentColumn(-1),
-		mContext(Unknown)												{}
-
-	void setContext(Context context)									{ mContext = context; }
-	void setCurrentParameter(int currentParameter)						{ mCurrentParameter = currentParameter; }
-
-	int currentLine() const												{ return mCurrentLine; }
-	int currentColumn() const											{ return mCurrentColumn; }
-	Context context() const												{ return mContext; }
-	int currentParameter() const										{ return mCurrentParameter; }
-
-private:
-	void positionChange(qint64 scriptId, int lineNumber, int columnNumber)
-	{
-		Q_UNUSED(scriptId);
-		mCurrentLine = lineNumber;
-		mCurrentColumn = columnNumber;
-	}
-
-private:
-	int mCurrentParameter;
-	int mCurrentLine;
-	int mCurrentColumn;
-	Context mContext;
-};
+}
 
 #endif // SCRIPTAGENT_H

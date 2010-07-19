@@ -37,85 +37,90 @@ namespace ActionTools
 	class ConsoleWidget;
 }
 
-class ExecutionWindow;
 class QStandardItemModel;
 
-class EXECUTERSHARED_EXPORT Executer : public QObject
+namespace Executer
 {
-	Q_OBJECT
-
-public:
-	Executer(ActionTools::Script *script,
-			 ActionTools::ActionFactory *actionFactory,
-			 bool showExecutionWindow,
-			 int executionWindowPosition,
-			 int executionWindowScreen,
-			 bool showConsoleWindow,
-			 int consoleWindowPosition,
-			 int consoleWindowScreen,
-			 const QKeySequence &stopExecutionHotkey,
-			 QStandardItemModel *consoleModel,
-			 QObject *parent = 0);
-	~Executer();
-
-	ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
-	ActionTools::ConsoleWidget *consoleWidget() const	{ return mConsoleWidget; }
-	ScriptAgent *scriptAgent() const					{ return mScriptAgent; }
-
-	int currentActionIndex() const						{ return mCurrentActionIndex; }
-	ActionTools::Script *script() const					{ return mScript; }
-
-public slots:
-	bool startExecution(bool onlySelection);
-	void stopExecution();
-
-signals:
-	void executionStopped();
-	void scriptError(int actionIndex, const QString &parameter, const QString &error);
-	void actionStarted(int actionIndex);
-	void actionEnded(int actionIndex);
-
-private slots:
-	void startFirstAction();
-	void executionException(ActionTools::ActionInstance::ExecutionException exceptionType,
-							const QString &message);
-	void actionExecutionEnded();
-	void disableAction(bool disable);
-	void startNextAction();
-
-private:
-	enum ExecuteActionResult
+	class ExecutionWindow;
+	
+	class EXECUTERSHARED_EXPORT Executer : public QObject
 	{
-		CanExecute,
-		IncorrectLine,
-		InvalidAction,
-		DisabledAction,
-		UnselectedAction
+		Q_OBJECT
+	
+	public:
+		Executer(ActionTools::Script *script,
+				 ActionTools::ActionFactory *actionFactory,
+				 bool showExecutionWindow,
+				 int executionWindowPosition,
+				 int executionWindowScreen,
+				 bool showConsoleWindow,
+				 int consoleWindowPosition,
+				 int consoleWindowScreen,
+				 const QKeySequence &stopExecutionHotkey,
+				 QStandardItemModel *consoleModel,
+				 QObject *parent = 0);
+		~Executer();
+	
+		ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
+		ActionTools::ConsoleWidget *consoleWidget() const	{ return mConsoleWidget; }
+		ScriptAgent *scriptAgent() const					{ return mScriptAgent; }
+	
+		int currentActionIndex() const						{ return mCurrentActionIndex; }
+		ActionTools::Script *script() const					{ return mScript; }
+	
+	public slots:
+		bool startExecution(bool onlySelection);
+		void stopExecution();
+	
+	signals:
+		void executionStopped();
+		void scriptError(int actionIndex, const QString &parameter, const QString &error);
+		void actionStarted(int actionIndex);
+		void actionEnded(int actionIndex);
+	
+	private slots:
+		void startFirstAction();
+		void executionException(int exception,
+								const QString &message);
+		void actionExecutionEnded();
+		void disableAction(bool disable);
+		void startNextAction();
+	
+	private:
+		enum ExecuteActionResult
+		{
+			CanExecute,
+			IncorrectLine,
+			InvalidAction,
+			DisabledAction,
+			UnselectedAction
+		};
+	
+		ExecuteActionResult canExecuteAction(const QString &line) const;
+		ExecuteActionResult canExecuteAction(int index) const;
+		void executeCurrentAction();
+		void addClassToScript(QObject *classPointer, const QString &name);
+	
+		ActionTools::Script *mScript;
+		ActionTools::ActionFactory *mActionFactory;
+		bool mShowExecutionWindow;
+		int mExecutionWindowPosition;
+		int mExecutionWindowScreen;
+		bool mShowConsoleWindow;
+		int mConsoleWindowPosition;
+		int mConsoleWindowScreen;
+		QKeySequence mStopExecutionShortcut;
+		ExecutionWindow *mExecutionWindow;
+		ActionTools::ConsoleWidget *mConsoleWidget;
+		int mCurrentActionIndex;
+		bool mExecutionStarted;
+		QScriptEngine mScriptEngine;
+		bool mExecuteOnlySelection;
+		ScriptAgent *mScriptAgent;
+		QList<bool> mActionEnabled;
+	
+		Q_DISABLE_COPY(Executer)
 	};
-
-	ExecuteActionResult canExecuteAction(int index) const;
-	void executeCurrentAction();
-	void addClassToScript(QObject *classPointer, const QString &name);
-
-	ActionTools::Script *mScript;
-	ActionTools::ActionFactory *mActionFactory;
-	bool mShowExecutionWindow;
-	int mExecutionWindowPosition;
-	int mExecutionWindowScreen;
-	bool mShowConsoleWindow;
-	int mConsoleWindowPosition;
-	int mConsoleWindowScreen;
-	QKeySequence mStopExecutionShortcut;
-	ExecutionWindow *mExecutionWindow;
-	ActionTools::ConsoleWidget *mConsoleWidget;
-	int mCurrentActionIndex;
-	bool mExecutionStarted;
-	QScriptEngine mScriptEngine;
-	bool mExecuteOnlySelection;
-	ScriptAgent *mScriptAgent;
-	QList<bool> mActionEnabled;
-
-	Q_DISABLE_COPY(Executer)
-};
+}
 
 #endif // EXECUTER_H

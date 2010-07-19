@@ -36,6 +36,10 @@ public:
 		MiddleButton,
 		RightButton
 	};
+	enum Exceptions
+	{
+		FailedToSendInputException = ActionTools::ActionException::UserException
+	};
 
 	ActionClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 		: ActionTools::ActionInstance(definition, parent)										{}

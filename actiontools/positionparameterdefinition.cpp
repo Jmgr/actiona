@@ -49,9 +49,4 @@ namespace ActionTools
 	{
 		actionInstance->setSubParameter(name(), "value", mPositionEdit->isCode(), mPositionEdit->text());
 	}
-
-	void PositionParameterDefinition::setDefaultValues(Parameter &data)
-	{
-		data.subParameters()["value"].setValue(option("default"));
-	}
 }

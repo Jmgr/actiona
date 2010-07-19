@@ -24,6 +24,9 @@
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
 
+#include <QPoint>
+#include <QColor>
+
 namespace ActionTools
 {
 	class PositionEdit;
@@ -39,12 +42,23 @@ namespace ActionTools
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
 		void save(ActionInstance *actionInstance);
-		void setDefaultValues(Parameter &data);
+		void setDefaultValues(ActionInstance *actionInstance);
 		Qt::Orientation editorsOrientation() const								{ return Qt::Vertical; }
+		
+		void setDefaultPosition(const QPoint &position)							{ mDefaultPosition = position; }
+		QPoint defaultPosition() const											{ return mDefaultPosition; }
+		
+		void setDefaultColor(const QColor &color)								{ mDefaultColor = color; }
+		QColor defaultColor() const												{ return mDefaultColor; }
 
 	private:
+		QVariant defaultValue(QVariant defaultValue = QVariant()) const			{ Q_UNUSED(defaultValue); return QVariant(); }
+		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }
+		
 		PositionEdit *mPositionEdit;
 		ColorEdit *mColorEdit;
+		QPoint mDefaultPosition;
+		QColor mDefaultColor;
 
 		Q_DISABLE_COPY(ColorPositionParameterDefinition)
 	};

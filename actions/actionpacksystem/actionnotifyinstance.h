@@ -31,6 +31,11 @@ class ActionNotifyInstance : public ActionTools::ActionInstance
 	Q_OBJECT
 
 public:
+	enum Exceptions
+	{
+		UnableToShowNotificationException = ActionTools::ActionException::UserException
+	};
+	
 	ActionNotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 	~ActionNotifyInstance();
 

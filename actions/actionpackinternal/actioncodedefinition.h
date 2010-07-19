@@ -52,7 +52,7 @@ public:
 	QString id() const														{ return "ActionCode"; }
 	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
 	QString description() const												{ return QObject::tr("Evaluates some code"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
+	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionCodeInstance(this); }
 	Status status() const													{ return Alpha; }
 	Category category() const												{ return Internal; }
