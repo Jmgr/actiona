@@ -57,7 +57,7 @@ public:
 		QColor color = pixelColor(mPixelPosition.x(), mPixelPosition.y());
 		
 		if(!mVariable.isEmpty())
-			script()->setVariable(mVariable, color);
+			actionInstanceExecutionHelper.setVariable(mVariable, color);
 		
 		if(color == mPixelColor)
 		{

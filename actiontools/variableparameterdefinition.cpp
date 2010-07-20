@@ -28,9 +28,9 @@ namespace ActionTools
 	{
 		ParameterDefinition::buildEditors(script, parent);
 
-		mLineEdit = new CodeLineEdit(parent, QRegExp("^[a-zA-z0-9]*$"));
+		mLineEdit = new CodeLineEdit(parent, QRegExp("^[A-Za-z_][A-Za-z0-9_]*$"));
 		mLineEdit->setObjectName("value");
-	
+
 		//TODO
 		//Do nothing special here for now, but later we could add a variable list
 		

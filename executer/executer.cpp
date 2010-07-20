@@ -165,8 +165,6 @@ namespace Executer
 
 		mScriptEngine.setAgent(mScriptAgent);
 
-		mScript->clearVariables();
-
 		QScriptValue script = mScriptEngine.newObject();
 		mScriptEngine.globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
 		script.setProperty("nextLine", mScriptEngine.newVariant(QVariant(1)));

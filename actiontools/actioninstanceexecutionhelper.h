@@ -29,6 +29,7 @@
 #include <QObject>
 
 class QScriptEngine;
+class QRegExp;
 
 namespace ActionTools
 {
@@ -68,6 +69,9 @@ namespace ActionTools
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);
 		
+		void setVariable(const QString &name, const QVariant &value);
+		QVariant variable(const QString &name);
+		
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
 
 		template<typename T>
@@ -91,6 +95,7 @@ namespace ActionTools
 		QVariant mResult;
 		QString mParameterName;
 		QString mSubParameterName;
+		const QRegExp mNameRegExp;
 
 		bool evaluate(const SubParameter &toEvaluate);
 	};

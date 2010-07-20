@@ -71,7 +71,9 @@ void ActionTextInputInstance::stopExecution()
 
 void ActionTextInputInstance::textEntered(const QString &value)
 {
-	script()->setVariable(mVariable, value);
+	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+	
+	actionInstanceExecutionHelper.setVariable(mVariable, value);
 	
 	mInputDialog->disconnect();
 	mInputDialog->deleteLater();

@@ -31,7 +31,8 @@ namespace ActionTools
 	ActionInstanceExecutionHelper::ActionInstanceExecutionHelper(ActionInstance *actionInstance, Script *script, QScriptEngine *scriptEngine)
 			: mActionInstance(actionInstance),
 			mScript(script),
-			mScriptEngine(scriptEngine)
+			mScriptEngine(scriptEngine),
+			mNameRegExp("^[A-Za-z_][A-Za-z0-9_]*$")
 	{
 		connect(this, SIGNAL(evaluationException(int,QString)),
 				actionInstance, SIGNAL(executionException(int,QString)));
@@ -77,9 +78,9 @@ namespace ActionTools
 		
 		buffer = mResult.toString();
 		
-		if(!buffer.isEmpty() && !buffer.contains(QRegExp("^[a-zA-Z0-9]+$")))
+		if(!buffer.isEmpty() && !mNameRegExp.exactMatch(buffer))
 		{
-			mErrorMessage = tr("A variable name can only contain alphanumeric characters.");
+			mErrorMessage = tr("A variable name can only contain alphanumeric characters and cannot start with a digit.");
 			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
@@ -239,6 +240,20 @@ namespace ActionTools
 		scriptValue.setProperty("nextLine", mScriptEngine->newVariant(QVariant(nextLine)));
 	}
 	
+	void ActionInstanceExecutionHelper::setVariable(const QString &name, const QVariant &value)
+	{
+		if(mNameRegExp.exactMatch(name))
+			mScriptEngine->globalObject().setProperty(name, mScriptEngine->newVariant(value));
+	}
+
+	QVariant ActionInstanceExecutionHelper::variable(const QString &name)
+	{
+		if(!mNameRegExp.exactMatch(name))
+			return QVariant();
+			
+		return mScriptEngine->globalObject().property(name).toVariant();
+	}
+	
 	void ActionInstanceExecutionHelper::setCurrentParameter(const QString &parameterName, const QString &subParameterName)
 	{
 		mScriptEngine->globalObject().setProperty("currentParameter", mScriptEngine->newVariant(parameterName), QScriptValue::ReadOnly);
@@ -254,22 +269,23 @@ namespace ActionTools
 		{
 			QString value(toEvaluate.value().toString());
 
-			QRegExp regExp("\\$([a-zA-Z0-9]+)\\$");
-			if(regExp.indexIn(value) != -1)
-			{
-				const QStringList &foundVariables = regExp.capturedTexts();
-				
-				for(int i = 1; i < foundVariables.count(); ++i)
+			QRegExp regexpVariable("[^\\\\]\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
+			int position = 0;
+			
+			while((position = regexpVariable.indexIn(value, position)) != -1)
+			{	
+				const QString &foundVariable = regexpVariable.cap(1);
+				QScriptValue evaluationResult = mScriptEngine->globalObject().property(foundVariable);
+
+				if(!evaluationResult.isValid())
 				{
-					if(!mScript->hasVariable(foundVariables.at(i)))
-					{
-						mErrorMessage = tr("Unknown variable : %1").arg(foundVariables.at(i));
-						emit evaluationException(ActionException::BadParameterException, mErrorMessage);
-						return false;
-					}
-					
-					value.replace(QString("$%1$").arg(foundVariables.at(i)), mScript->variable(foundVariables.at(i)).toString());
+					mErrorMessage = tr("Variable %1 not found").arg(foundVariable);
+					emit evaluationException(ActionException::BadParameterException, mErrorMessage);
+					return false;
 				}
+				
+				value.replace(position + 1, foundVariable.length() + 1, evaluationResult.toString());
+				position += foundVariable.length() - 1;
 			}
 			
 			mResult = value;

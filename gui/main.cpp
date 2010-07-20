@@ -35,6 +35,7 @@
 #include <QSplashScreen>
 #include <QDebug>
 #include <QTextStream>
+#include <QTextCodec>
 
 #ifdef Q_WS_X11
 #undef signals
@@ -65,6 +66,9 @@ int main(int argc, char **argv)
 #ifdef Q_WS_X11
 	notify_init("Actionaz");
 #endif
+	
+	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	//QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 

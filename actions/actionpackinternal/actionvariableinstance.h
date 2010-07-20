@@ -43,20 +43,9 @@ public:
 		   !actionInstanceExecutionHelper.evaluateString(value, "value"))
 			return;
 		
-		script()->setVariable(variable, value);
+		actionInstanceExecutionHelper.setVariable(variable, value);
 
 		emit executionEnded();
-	}
-	
-public slots:
-	void setVariable(const QString &name, const QVariant &value)
-	{
-		script()->setVariable(name, value);
-	}
-
-	QVariant variable(const QString &name)
-	{
-		return script()->variable(name);
 	}
 
 private:

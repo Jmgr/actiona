@@ -87,17 +87,10 @@ namespace ActionTools
 
 		QStringList labels() const;
 
-		void setVariable(const QString &name, const QVariant &value)		{ if(!name.isEmpty()) mVariables.insert(name, value); }
-		const QHash<QString, QVariant> &variables() const					{ return mVariables;  }
-		QVariant variable(const QString &name) const						{ return mVariables.value(name); }
-		void clearVariables()												{ mVariables.clear(); }
-		bool hasVariable(const QString &name) const							{ return mVariables.find(name) != mVariables.end(); }
-
 	private:
 		QList<ScriptParameter> mParameters;
 		QList<ActionInstance *> mActionInstances;
 		ActionFactory *mActionFactory;
-		QHash<QString, QVariant> mVariables;
 		QString mStatusMessage;
 		int mLine;
 		int mColumn;

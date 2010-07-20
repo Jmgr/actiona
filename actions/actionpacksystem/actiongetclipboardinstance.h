@@ -46,7 +46,7 @@ public:
 
 		QClipboard *clipboard = QApplication::clipboard();
 		
-		script()->setVariable(variable, clipboard->text());
+		actionInstanceExecutionHelper.setVariable(variable, clipboard->text());
 
 		emit executionEnded();
 	}

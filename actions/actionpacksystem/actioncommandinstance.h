@@ -69,11 +69,11 @@ public:
 #ifdef Q_WS_WIN
 		_PROCESS_INFORMATION *processInformation = mProcess->pid();
 		if(processInformation)
-			script()->setVariable(processId, QString::number(processInformation->dwProcessId));
+			actionInstanceExecutionHelper.setVariable(processId, QString::number(processInformation->dwProcessId));
 		else
-			script()->setVariable(processId, "0");
+			actionInstanceExecutionHelper.setVariable(processId, "0");
 #else
-		script()->setVariable(processId, QString::number(mProcess->pid()));
+		actionInstanceExecutionHelper.setVariable(processId, QString::number(mProcess->pid()));
 #endif
 	}
 	
@@ -122,21 +122,22 @@ public slots:
 private slots:
 	void processFinished(int exitCode, QProcess::ExitStatus exitStatus)
 	{
-		script()->setVariable(mExitCodeVariable, QString::number(exitCode));
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+		actionInstanceExecutionHelper.setVariable(mExitCodeVariable, QString::number(exitCode));
 		
 		QString output = QString::fromUtf8(mProcess->readAllStandardOutput());
-		script()->setVariable(mOutputVariable, output.trimmed());
+		actionInstanceExecutionHelper.setVariable(mOutputVariable, output.trimmed());
 		
 		QString errorOutput = QString::fromUtf8(mProcess->readAllStandardError());
-		script()->setVariable(mErrorOutputVariable, errorOutput.trimmed());
+		actionInstanceExecutionHelper.setVariable(mErrorOutputVariable, errorOutput.trimmed());
 		
 		switch(exitStatus)
 		{
 		case QProcess::NormalExit:
-			script()->setVariable(mExitStatusVariable, "normal");
+			actionInstanceExecutionHelper.setVariable(mExitStatusVariable, "normal");
 			break;
 		case QProcess::CrashExit:
-			script()->setVariable(mExitStatusVariable, "crash");
+			actionInstanceExecutionHelper.setVariable(mExitStatusVariable, "crash");
 			break;
 		}
 		
