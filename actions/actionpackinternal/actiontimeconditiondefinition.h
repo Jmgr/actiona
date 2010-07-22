@@ -74,7 +74,7 @@ public:
 	QString id() const														{ return "ActionTimeCondition"; }
 	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
 	QString description() const												{ return QObject::tr("Check the current date time and do some action"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionTimeConditionInstance(this); }
 	Status status() const													{ return Stable; }
 	Category category() const												{ return Internal; }

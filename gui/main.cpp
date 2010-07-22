@@ -28,11 +28,11 @@
 #include "global.h"
 #include "version.h"
 #include "globalshortcutmanager.h"
+#include "progresssplashscreen.h"
 
 #include <QxtApplication>
 #include <QxtCommandOptions>
 #include <QDir>
-#include <QSplashScreen>
 #include <QDebug>
 #include <QTextStream>
 #include <QTextCodec>
@@ -129,10 +129,10 @@ int main(int argc, char **argv)
 	app.setApplicationName("Actionaz");
 	app.setApplicationVersion(Global::ACTIONAZ_VERSION.toString());
 
-	QSplashScreen *splash = 0;
+	ProgressSplashScreen *splash = 0;
 	if(!options.count("nosplash") && !options.count("execute"))
 	{
-		splash = new QSplashScreen(QPixmap(":/images/start.png"), Qt::WindowStaysOnTopHint);
+		splash = new ProgressSplashScreen(QPixmap(":/images/start.png"), Qt::WindowStaysOnTopHint);
 		splash->show();
 		app.processEvents();
 	}

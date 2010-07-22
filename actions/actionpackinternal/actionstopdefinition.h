@@ -44,7 +44,7 @@ public:
 	QString id() const														{ return "ActionStop"; }
 	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
 	QString description() const												{ return QObject::tr("Stop the script execution"); }
-	Tools::Version version() const									{ return Tools::Version(0, 0, 1); }
+	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionStopInstance(this); }
 	Status status() const													{ return Stable; }
 	Category category() const												{ return Internal; }

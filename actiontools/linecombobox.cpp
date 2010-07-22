@@ -23,20 +23,25 @@
 namespace ActionTools
 {
 	LineComboBox::LineComboBox(const QStringList &labels, int lineCount, QWidget *parent)
-		: CodeComboBox(parent),
-		mLabels(labels),
-		mLineCount(lineCount)
+		: CodeComboBox(parent)
 	{
-		if(mLabels.size() > 0)
+		setup(labels, lineCount);
+	}
+	
+	void LineComboBox::setup(const QStringList &labels, int lineCount)
+	{
+		clear();
+		
+		if(labels.size() > 0)
 		{
 			addItem(QObject::tr("Labels"), "header");
-			addItems(mLabels);
+			addItems(labels);
 		}
 
-		if(mLineCount > 0)
+		if(lineCount > 0)
 		{
 			addItem(QObject::tr("Lines"), "header");
-			for(int i=0;i<mLineCount;++i)
+			for(int i=0 ; i < lineCount ; ++i)
 				addItem(QString("%1").arg(i + 1, 3, 10, QChar('0')));
 		}
 	}

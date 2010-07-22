@@ -35,6 +35,7 @@ namespace ActionTools
 			: ListParameterDefinition(category, name, translatedName, parent)						{}
 
 		void buildEditors(Script *script, QWidget *parent);
+		void update(Script *script);
 	};
 }
 

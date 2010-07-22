@@ -47,9 +47,9 @@
 #include "sfxscriptdialog.h"
 #include "executionenvironment.h"
 #include "executionalgorithms.h"
+#include "progresssplashscreen.h"
 
 #include <QSystemTrayIcon>
-#include <QSplashScreen>
 #include <QInputDialog>
 #include <QStandardItemModel>
 #include <QTimer>
@@ -70,7 +70,7 @@
 #include <QTemporaryFile>
 #include <QListWidget>
 
-MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashScreen, const QString &startScript)
+MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript)
 	: QMainWindow(0),
 	ui(new Ui::MainWindow),
 	mOpacity(0.0f),
@@ -103,6 +103,13 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashS
 #endif
 	
 	ui->setupUi(this);
+	
+	if(mSplashScreen)
+	{
+		mSplashScreen->showMessage(tr("Creating main window..."));
+		mSplashScreen->setValue(0);
+		mSplashScreen->setMaximum(1);
+	}
 
 	setUnifiedTitleAndToolBarOnMac(true);
 
@@ -200,6 +207,9 @@ void MainWindow::postInit()
 #endif
 	
 	mPackLoadErrors.clear();
+	
+	if(mSplashScreen)
+		mSplashScreen->showMessage(tr("Loading actions..."));
 
 	mActionFactory->loadActionPacks();
 	
@@ -224,12 +234,28 @@ void MainWindow::postInit()
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("action dialogs creation");
 #endif
+		if(mSplashScreen)
+			mSplashScreen->setMaximum(mActionFactory->actionDefinitionCount() - 1);
+		
 		for(int actionDefinitionIndex = 0; actionDefinitionIndex < mActionFactory->actionDefinitionCount(); ++actionDefinitionIndex)
 		{
 			ActionTools::ActionDefinition *actionDefinition =	mActionFactory->actionDefinition(actionDefinitionIndex);
 			
+			if(mSplashScreen)
+			{
+				mSplashScreen->showMessage(tr("Creating action dialog %1...").arg(actionDefinition->name()));
+				mSplashScreen->setValue(actionDefinitionIndex);
+			}
+			
 			mActionDialogs.append(new ActionDialog(mCompletionModel, mScript, actionDefinition, this));
 		}
+	}
+	
+	if(mSplashScreen)
+	{
+		mSplashScreen->showMessage(tr("Please wait..."));
+		mSplashScreen->setValue(0);
+		mSplashScreen->setMaximum(1);
 	}
 
 	{
@@ -282,27 +308,6 @@ void MainWindow::postInit()
 	ActionTools::CrossPlatform::setForegroundWindow(this);
 #endif
 
-	if(mSplashScreen)
-	{
-		mSplashScreen->close();
-		mSplashScreen->deleteLater();
-	}
-
-	if(mPackLoadErrors.count() > 0)
-	{
-		QString message = tr("<b>Unable to load %n action(s) :</b>\n", "", mPackLoadErrors.count());
-		message += "<ul>";
-
-		foreach(const QString &error, mPackLoadErrors)
-		{
-			message += "<li>" + error + "</li>";
-		}
-
-		message += "</ul>";
-
-		QMessageBox::critical(this, tr("Error while loading actions"), message);
-	}
-
 	setCurrentFile(QString());
 
 	QSettings settings;
@@ -332,6 +337,27 @@ void MainWindow::postInit()
 				}
 			}
 		}
+	}
+	
+	if(mSplashScreen)
+	{
+		mSplashScreen->close();
+		mSplashScreen->deleteLater();
+	}
+	
+	if(mPackLoadErrors.count() > 0)
+	{
+		QString message = tr("<b>Unable to load %n action(s) :</b>\n", "", mPackLoadErrors.count());
+		message += "<ul>";
+
+		foreach(const QString &error, mPackLoadErrors)
+		{
+			message += "<li>" + error + "</li>";
+		}
+
+		message += "</ul>";
+
+		QMessageBox::critical(this, tr("Error while loading actions"), message);
 	}
 
 #ifndef ACT_NO_UPDATER

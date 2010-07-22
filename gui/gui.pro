@@ -27,7 +27,8 @@ SOURCES += main.cpp \
 	global.cpp \
 	changelogdialog.cpp \
 	scriptcontentdialog.cpp \
-    sfxscriptdialog.cpp
+    sfxscriptdialog.cpp \
+    progresssplashscreen.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -43,7 +44,8 @@ HEADERS += mainwindow.h \
 	newactiondialog.h \
 	changelogdialog.h \
 	scriptcontentdialog.h \
-    sfxscriptdialog.h
+    sfxscriptdialog.h \
+    progresssplashscreen.h
 INCLUDEPATH += . \
 	src \
 	../tools \

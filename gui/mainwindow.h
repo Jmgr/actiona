@@ -54,7 +54,7 @@ namespace Executer
 class QToolBox;
 class QSystemTrayIcon;
 class ScriptModel;
-class QSplashScreen;
+class ProgressSplashScreen;
 class QTreeWidget;
 class QTreeWidgetItem;
 class NewActionTreeWidget;
@@ -74,7 +74,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashScreen, const QString &startScript);
+	MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript);
 	~MainWindow();
 
 private slots:
@@ -195,7 +195,7 @@ private:
 	ActionTools::Script *mScript;
 	ScriptModel *mScriptModel;
 	QSystemTrayIcon *mSystemTrayIcon;
-	QSplashScreen *mSplashScreen;
+	ProgressSplashScreen *mSplashScreen;
 	QFile *mFile;
 	QStringList mPackLoadErrors;
 	Executer::Executer *mExecuter;

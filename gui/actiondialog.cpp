@@ -234,14 +234,6 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 ActionDialog::~ActionDialog()
 {
-	const ActionTools::ActionDefinition *actionDefinition(mActionInstance->definition());
-	const QList<ActionTools::ElementDefinition *> elements(actionDefinition->elements());
-	foreach(ActionTools::ElementDefinition *element, elements)
-	{
-		if(ActionTools::GroupDefinition *currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
-			currentGroup->setGroupBox(0);
-	}
-
 	delete ui;
 }
 
@@ -342,6 +334,7 @@ void ActionDialog::postInit()
 	}
 	foreach(ActionTools::ParameterDefinition *parameter, mParameters)
 	{
+		parameter->update(mScript);
 		parameter->load(mActionInstance);
 	}
 

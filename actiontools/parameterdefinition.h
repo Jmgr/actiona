@@ -53,6 +53,8 @@ namespace ActionTools
 		virtual QVariant defaultValue(QVariant defaultValue = QVariant()) const;
 		virtual void setDefaultValue(const QVariant &defaultValue)					{ mDefaultValue = defaultValue; }
 		
+		virtual void update(Script *script)											{ Q_UNUSED(script) }
+		
 	protected:
 		void addEditor(QWidget *editor);
 		
