@@ -71,7 +71,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
      <item>
       <widget class="QLabel" name="actionInfo">
        <property name="text">
@@ -82,6 +82,13 @@
        </property>
        <property name="openExternalLinks">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="ActionTools::HelpButton" name="pushButton">
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>
@@ -99,6 +106,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ActionTools::HelpButton</class>
+   <extends>QPushButton</extends>
+   <header>helpbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="gui.qrc"/>
  </resources>

@@ -44,7 +44,7 @@ namespace ActionTools
 		void setMaximum(int maximum)									{ mMaximum = maximum; }
 		void setMinimum(int minimum)									{ mMinimum = minimum; }
 		void setSingleStep(int singleStep)								{ mSingleStep = singleStep; }
-
+		
 	private:
 		CodeSpinBox *mSpinBox;
 		QString mPrefix;

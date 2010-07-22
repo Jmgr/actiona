@@ -13,5 +13,6 @@
         <file>images/code.png</file>
         <file>images/editor.png</file>
         <file>script.xsd</file>
+        <file>images/help.png</file>
     </qresource>
 </RCC>

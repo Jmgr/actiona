@@ -47,8 +47,8 @@ namespace ActionTools
 
 		addEditor(mColorEdit);
 		
-		connect(mPositionEdit, SIGNAL(positionChosen(QPoint)), mColorEdit, SLOT(choosePosition(QPoint)));
-		connect(mColorEdit, SIGNAL(positionChosen(QPoint)), mPositionEdit, SLOT(choosePosition(QPoint)));
+		connect(mPositionEdit, SIGNAL(positionChosen(QPoint)), mColorEdit, SLOT(setPosition(QPoint)));
+		connect(mColorEdit, SIGNAL(positionChosen(QPoint)), mPositionEdit, SLOT(setPosition(QPoint)));
 	}
 
 	void ColorPositionParameterDefinition::load(const ActionInstance *actionInstance)

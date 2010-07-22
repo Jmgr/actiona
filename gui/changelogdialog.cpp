@@ -56,20 +56,6 @@ void ChangelogDialog::setChangelog(const QString &changelog)
 	ui->changelog->setText(changelog);
 }
 
-void ChangelogDialog::changeEvent(QEvent *event)
-{
-	QDialog::changeEvent(event);
-
-	switch(event->type())
-	{
-	case QEvent::LanguageChange:
-		ui->retranslateUi(this);
-		break;
-	default:
-		break;
-	}
-}
-
 void ChangelogDialog::on_downloadAndInstallButton_clicked()
 {
 	mChangelogAction = DownloadAndInstall;

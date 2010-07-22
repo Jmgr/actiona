@@ -87,20 +87,7 @@ namespace ActionTools
 	{
 		return ui->codePushButton->isChecked();
 	}
-
-	void CodeEditorDialog::changeEvent(QEvent *e)
-	{
-		QDialog::changeEvent(e);
-		switch(e->type())
-		{
-		case QEvent::LanguageChange:
-			ui->retranslateUi(this);
-			break;
-		default:
-			break;
-		}
-	}
-
+	
 	void CodeEditorDialog::accept()
 	{
 		QSettings settings;

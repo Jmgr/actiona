@@ -37,7 +37,7 @@ namespace ActionTools
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
 		void save(ActionInstance *actionInstance);
-
+		
 	private:
 		PositionEdit *mPositionEdit;
 

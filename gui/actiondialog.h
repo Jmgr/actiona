@@ -32,6 +32,7 @@ namespace Ui
 
 namespace ActionTools
 {
+	class ActionDefinition;
 	class ActionInstance;
 	class GroupDefinition;
 	class ParameterDefinition;
@@ -48,18 +49,14 @@ class ActionDialog : public QDialog
 	Q_OBJECT
 
 public:
-	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionInstance *actionInstance, QWidget *parent = 0);
+	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, QWidget *parent = 0);
 	~ActionDialog();
-
-	void setCurrentField(const QString &field, const QString &subField)				{ mCurrentField = field; mCurrentSubField = subField; }
-	void setCurrentLine(int currentLine)											{ mCurrentLine = currentLine; }
-	void setCurrentColumn(int currentColumn)										{ mCurrentColumn = currentColumn; }
-	void setCurrentException(int exception)											{ mCurrentException = exception; }
 
 public slots:
 	void accept();
-	int exec();
-
+	int exec(ActionTools::ActionInstance *actionInstance, const QString &field, const QString &subField, int currentLine, int currentColumn);
+	int exec(ActionTools::ActionInstance *actionInstance, int exception);
+	
 private slots:
 	void postInit();
 	void currentExceptionActionChanged(int index);
@@ -73,7 +70,6 @@ private:
 	
 	void addGroup(ActionTools::GroupDefinition *group);
 	QLayout *addParameter(ActionTools::ParameterDefinition *parameter);
-	void changeEvent(QEvent *event);
 
 	Ui::ActionDialog *ui;
 	ActionTools::ActionInstance *mActionInstance;

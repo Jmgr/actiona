@@ -53,7 +53,6 @@ private slots:
 	void on_newActionTreeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 private:
-	void changeEvent(QEvent *event);
 	void accept();
 
 	Ui::NewActionDialog *ui;

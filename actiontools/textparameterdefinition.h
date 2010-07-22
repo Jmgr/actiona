@@ -41,7 +41,7 @@ namespace ActionTools
 		void save(ActionInstance *actionInstance);
 
 		void setCodeOnly(bool codeOnly)										{ mCodeOnly = codeOnly; }
-
+		
 	protected:
 		bool mCodeOnly;
 		CodeLineEdit *mLineEdit;

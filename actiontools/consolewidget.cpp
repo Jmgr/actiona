@@ -225,17 +225,4 @@ namespace ActionTools
 
 		mModel->appendRow(item);
 	}
-
-	void ConsoleWidget::changeEvent(QEvent *event)
-	{
-		QWidget::changeEvent(event);
-		switch(event->type())
-		{
-		case QEvent::LanguageChange:
-			ui->retranslateUi(this);
-			break;
-		default:
-			break;
-		}
-	}
 }

@@ -67,18 +67,4 @@ namespace Executer
 	
 		ui->currentActionLabel->setPalette(newPalette);
 	}
-	
-	void ExecutionWindow::changeEvent(QEvent *event)
-	{
-		QWidget::changeEvent(event);
-	
-		switch(event->type())
-		{
-		case QEvent::LanguageChange:
-			ui->retranslateUi(this);
-			break;
-		default:
-			break;
-		}
-	}
 }

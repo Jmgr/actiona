@@ -41,8 +41,6 @@ private slots:
 	void animate();
 
 private:
-	void changeEvent(QEvent *e);
-
 	Ui::AboutDialog *ui;
 	QList<QComboBox *> mComboBoxes;
 

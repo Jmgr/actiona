@@ -41,7 +41,7 @@ namespace ActionTools
 		void save(ActionInstance *actionInstance);
 
 		CodeComboBox *codeComboBox() const										{ return mComboBox; }
-
+		
 	signals:
 		void editorBuilt();
 

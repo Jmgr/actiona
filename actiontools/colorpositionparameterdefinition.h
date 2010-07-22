@@ -50,7 +50,7 @@ namespace ActionTools
 		
 		void setDefaultColor(const QColor &color)								{ mDefaultColor = color; }
 		QColor defaultColor() const												{ return mDefaultColor; }
-
+		
 	private:
 		QVariant defaultValue(QVariant defaultValue = QVariant()) const			{ Q_UNUSED(defaultValue); return QVariant(); }
 		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }

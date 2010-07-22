@@ -55,9 +55,6 @@ public:
 
 	ChangelogAction changelogAction() const					{ return mChangelogAction; }
 
-protected:
-	void changeEvent(QEvent *e);
-
 private slots:
 	void on_downloadAndInstallButton_clicked();
 	void on_downloadButton_clicked();

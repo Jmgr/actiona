@@ -98,7 +98,6 @@ namespace ActionTools
 		void init();
 		void addLine(const QString &message, QStandardItem *item, Source source, Type type = Information);
 		void addSeparator(QStandardItem *item);
-		void changeEvent(QEvent *event);
 
 		Ui::ConsoleWidget *ui;
 		QStandardItemModel *mModel;

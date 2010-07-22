@@ -109,20 +109,6 @@ void NewActionDialog::on_newActionTreeWidget_currentItemChanged(QTreeWidgetItem 
 	ui->officialLabel->setText(official);
 }
 
-void NewActionDialog::changeEvent(QEvent *event)
-{
-	QDialog::changeEvent(event);
-
-	switch(event->type())
-	{
-	case QEvent::LanguageChange:
-		ui->retranslateUi(this);
-		break;
-	default:
-		break;
-	}
-}
-
 void NewActionDialog::accept()
 {
 	QTreeWidgetItem *currentItem = ui->newActionTreeWidget->currentItem();

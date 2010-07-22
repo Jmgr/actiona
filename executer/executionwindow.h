@@ -47,8 +47,6 @@ namespace Executer
 		void canceled();
 	
 	private:
-		void changeEvent(QEvent *e);
-	
 		Ui::ExecutionWindow *ui;
 	};
 }

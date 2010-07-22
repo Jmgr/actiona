@@ -53,9 +53,6 @@ namespace ActionTools
 		QString text() const;
 		bool isCode() const;
 
-	protected:
-		void changeEvent(QEvent *e);
-
 	public slots:
 		void accept();
 

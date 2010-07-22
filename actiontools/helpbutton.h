@@ -18,32 +18,30 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COLORPARAMETERDEFINITION_H
-#define COLORPARAMETERDEFINITION_H
+#ifndef HELPBUTTON_H
+#define HELPBUTTON_H
 
-#include "parameterdefinition.h"
 #include "actiontools_global.h"
+
+#include <QPushButton>
 
 namespace ActionTools
 {
-	class ColorEdit;
-
-	class ACTIONTOOLSSHARED_EXPORT ColorParameterDefinition : public ParameterDefinition
+	class ACTIONTOOLSSHARED_EXPORT HelpButton : public QPushButton
 	{
 		Q_OBJECT
-
+		
 	public:
-		ColorParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent);
-
-		void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
+		explicit HelpButton(QWidget *parent = 0);
+		
+		void key(const QString &key)						{ mKey = key; }
+		
+	private slots:
+		void clicked();
 		
 	private:
-		ColorEdit *mColorEdit;
-
-		Q_DISABLE_COPY(ColorParameterDefinition)
+		QString mKey;
 	};
 }
 
-#endif // COLORPARAMETERDEFINITION_H
+#endif // HELPBUTTON_H

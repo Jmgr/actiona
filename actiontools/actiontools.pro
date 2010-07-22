@@ -30,7 +30,8 @@ SOURCES += actionfactory.cpp \
 	scriptcompleter.cpp \
 	keywords.cpp \
 	messagehandler.cpp \
-    actionexception.cpp
+    actionexception.cpp \
+    helpbutton.cpp
 HEADERS += actiontools_global.h \
 	actionpack.h \
 	actionfactory.h \
@@ -56,7 +57,8 @@ HEADERS += actiontools_global.h \
 	scriptcompleter.h \
 	keywords.h \
 	messagehandler.h \
-    actionexception.h
+    actionexception.h \
+    helpbutton.h
 win32:LIBS += -luser32 \
 	-ladvapi32 \
 	-lgdi32

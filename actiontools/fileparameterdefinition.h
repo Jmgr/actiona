@@ -42,7 +42,7 @@ namespace ActionTools
 		void setCaption(const QString &caption)						{ mCaption = caption; }
 		void setFilter(const QString &filter)						{ mFilter = filter; }
 		void setDirectory(const QString &directory)					{ mDirectory = directory; }
-
+		
 	private:
 		FileEdit *mFileEdit;
 		FileEdit::Mode mMode;

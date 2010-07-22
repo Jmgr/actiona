@@ -83,16 +83,3 @@ void AboutDialog::animate()
 			comboBox->setCurrentIndex(0);
 	}
 }
-
-void AboutDialog::changeEvent(QEvent *e)
-{
-	QDialog::changeEvent(e);
-	switch (e->type())
-	{
-	case QEvent::LanguageChange:
-		ui->retranslateUi(this);
-		break;
-	default:
-		break;
-	}
-}

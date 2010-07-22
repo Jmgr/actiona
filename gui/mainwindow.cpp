@@ -193,19 +193,6 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::changeEvent(QEvent *e)
-{
-	QMainWindow::changeEvent(e);
-	switch (e->type())
-	{
-	case QEvent::LanguageChange:
-		ui->retranslateUi(this);
-		break;
-	default:
-		break;
-	}
-}
-
 void MainWindow::postInit()
 {
 #ifdef ACT_PROFILE
@@ -215,7 +202,7 @@ void MainWindow::postInit()
 	mPackLoadErrors.clear();
 
 	mActionFactory->loadActionPacks();
-
+	
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("building completion model");
@@ -230,6 +217,18 @@ void MainWindow::postInit()
 			ActionTools::addClassKeywords(actionInstance->metaObject(), actionDefinition->id(), actionDefinition->icon(), mCompletionModel, ignoreList);
 	
 			delete actionInstance;
+		}
+	}
+	
+	{
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("action dialogs creation");
+#endif
+		for(int actionDefinitionIndex = 0; actionDefinitionIndex < mActionFactory->actionDefinitionCount(); ++actionDefinitionIndex)
+		{
+			ActionTools::ActionDefinition *actionDefinition =	mActionFactory->actionDefinition(actionDefinitionIndex);
+			
+			mActionDialogs.append(new ActionDialog(mCompletionModel, mScript, actionDefinition, this));
 		}
 	}
 
@@ -1678,19 +1677,20 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, const Q
 		return true;
 
 	ActionTools::ParametersData previousData = actionInstance->parametersData();
-	ActionDialog *dialog = new ActionDialog(mCompletionModel, mScript, actionInstance, this);
-	dialog->setCurrentField(field, subField);
-	dialog->setCurrentLine(line);
-	dialog->setCurrentColumn(column);
-	int result = dialog->exec();
-
+	
+	ActionDialog *dialog = mActionDialogs.at(actionInstance->definition()->index());
+	if(!dialog)
+	{
+		qWarning("Unable to create an ActionDialog");
+		return false;
+	}
+	
+	int result = dialog->exec(actionInstance, field, subField, line, column);
 	if(result == QDialog::Accepted)
 	{
 		if(previousData != actionInstance->parametersData())
 			scriptEdited();
 	}
-
-	delete dialog;
 
 	return (result == QDialog::Accepted);
 }
@@ -1701,10 +1701,15 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exc
 		return false;
 	
 	ActionTools::ParametersData previousData = actionInstance->parametersData();
-	ActionDialog *dialog = new ActionDialog(mCompletionModel, mScript, actionInstance, this);
-	dialog->setCurrentException(exception);
-	int result = dialog->exec();
 
+	ActionDialog *dialog = mActionDialogs.at(actionInstance->definition()->index());
+	if(!dialog)
+	{
+		qWarning("Unable to create an ActionDialog");
+		return false;
+	}
+
+	int result = dialog->exec(actionInstance, exception);
 	if(result == QDialog::Accepted)
 	{
 		if(previousData != actionInstance->parametersData())

@@ -65,6 +65,7 @@ class QUndoGroup;
 class QStandardItemModel;
 class QxtCommandOptions;
 class QNetworkAccessManager;
+class ActionDialog;
 
 #include <QNetworkReply>
 #include <QSystemTrayIcon>
@@ -75,9 +76,6 @@ class MainWindow : public QMainWindow
 public:
 	MainWindow(QxtCommandOptions *commandOptions, QSplashScreen *splashScreen, const QString &startScript);
 	~MainWindow();
-
-protected:
-	void changeEvent(QEvent *e);
 
 private slots:
 	void postInit();
@@ -211,6 +209,7 @@ private:
 	int mAddActionRow;
 	QString mAddAction;
 	QAction *mStopExecutionAction;
+	QList<ActionDialog *> mActionDialogs;
 #ifndef ACT_NO_UPDATER
 	QNetworkAccessManager *mNetworkAccessManager;
 	QNetworkReply *mUpdateDownloadNetworkReply;
