@@ -81,6 +81,11 @@ namespace ActionTools
 		codeLineEdit()->setCompletionModel(completionModel);
 	}
 	
+	void ColorEdit::setChooseByPositionButtonVisible(bool visible)
+	{
+		ui->chooseByPosition->setVisible(visible);
+	}
+	
 	void ColorEdit::setPosition(QPoint position)
 	{
 		QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), position.x(), position.y(), 1, 1);

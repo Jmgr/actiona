@@ -436,7 +436,9 @@ namespace Executer
 	{
 		mExecutionPaused = false;
 		
-		QString nextLineString = mScriptEngine.evaluate("Script.nextLine").toString();
+		QScriptValue script = mScriptEngine.globalObject().property("Script");
+		QString nextLineString = script.property("nextLine").toString();
+		
 		bool ok;
 		int nextLine = nextLineString.toInt(&ok);
 
@@ -444,19 +446,13 @@ namespace Executer
 			nextLine = mScript->labelLine(nextLineString);
 		else
 			--nextLine;
-
+	
 		switch(canExecuteAction(nextLine))
 		{
 		case CanExecute:
 			mCurrentActionIndex = nextLine;
 			break;
 		case IncorrectLine:
-			if(nextLine < 0)
-			{
-				mCurrentActionIndex = nextLine;
-				break;
-			}
-
 			executionException(ActionTools::ActionException::CodeErrorException, tr("Incorrect Script.nextLine value: %1").arg(nextLineString));
 			return;
 		case InvalidAction:

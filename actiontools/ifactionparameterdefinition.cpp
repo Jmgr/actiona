@@ -92,6 +92,11 @@ namespace ActionTools
 		actionInstance->setSubParameter(name(), "action", defaultAction(actions.second[DoNothing]));
 		actionInstance->setSubParameter(name(), "line", defaultLine());
 	}
+	
+	void IfActionParameterDefinition::update(Script *script)
+	{
+		mLineEdit->setup(script->labels(), script->actionCount());
+	}
 
 	void IfActionParameterDefinition::codeChanged(bool code)
 	{

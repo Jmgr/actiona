@@ -48,7 +48,6 @@ public:
 		   !actionInstanceExecutionHelper.evaluateString(mIfEqualLine, "ifEqual", "line") ||
 		   !actionInstanceExecutionHelper.evaluateString(mIfDifferentAction, "ifDifferent", "action") ||
 		   !actionInstanceExecutionHelper.evaluateString(mIfDifferentLine, "ifDifferent", "line") ||
-		   !actionInstanceExecutionHelper.evaluateInteger(mTimeToWait, "time") ||
 		   !actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
 			return;
 		
@@ -63,17 +62,17 @@ public:
 		{
 			action = mIfEqualAction;
 			line = mIfEqualLine;
+			actionInstanceExecutionHelper.setCurrentParameter("ifEqual", "line");
 		}
 		else
 		{
 			action = mIfDifferentAction;
 			line = mIfDifferentLine;
+			actionInstanceExecutionHelper.setCurrentParameter("ifDifferent", "line");
 		}
 		
 		if(action == "goto")
 			actionInstanceExecutionHelper.setNextLine(line);
-		
-		//TODO
 
 		emit executionEnded();
 	}
@@ -93,7 +92,6 @@ private:
 	QString mIfEqualLine;
 	QString mIfDifferentAction;
 	QString mIfDifferentLine;
-	int mTimeToWait;
 	QString mVariable;
 	
 	Q_DISABLE_COPY(ActionPixelColorInstance)

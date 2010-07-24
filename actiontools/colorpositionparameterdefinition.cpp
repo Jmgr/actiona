@@ -44,6 +44,7 @@ namespace ActionTools
 	
 		mColorEdit = new ColorEdit(parent);
 		mColorEdit->setObjectName("color");
+		mColorEdit->setChooseByPositionButtonVisible(false);
 
 		addEditor(mColorEdit);
 		

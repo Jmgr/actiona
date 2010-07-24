@@ -46,7 +46,7 @@ public:
 																												"pixel",
 																												tr("Pixel"),
 																												this);
-		pixel->setTooltip(tr("The pixel color and position to check"));
+		pixel->setTooltip(tr("The pixel position and color to check"));
 		addElement(pixel);
 		
 		ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition(	ActionTools::ElementDefinition::INPUT,
@@ -54,7 +54,6 @@ public:
 																											tr("If equal"),
 																											this);
 		ifEqual->setTooltip(tr("What to to if the pixel is from the specified color"));
-		ifEqual->setAllowWait(true);
 		addElement(ifEqual);
 		
 		ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
@@ -62,16 +61,7 @@ public:
 																											tr("If different"),
 																											this);
 		ifDifferent->setTooltip(tr("What to to if the pixel is not from the specified color"));
-		ifDifferent->setAllowWait(true);
 		addElement(ifDifferent);
-		
-		ActionTools::NumberParameterDefinition *time = new ActionTools::NumberParameterDefinition(			ActionTools::ElementDefinition::INPUT,
-																											"time",
-																											tr("Time to wait"),
-																											this);
-		time->setTooltip(tr("The maximum duration to wait"));
-		time->setDefaultValue(0);
-		addElement(time, 1);
 		
 		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(	ActionTools::ElementDefinition::OUTPUT,
 																											"variable",

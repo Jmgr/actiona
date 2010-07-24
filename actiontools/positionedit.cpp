@@ -76,7 +76,7 @@ namespace ActionTools
 	{
 		codeLineEdit()->setCompletionModel(completionModel);
 	}
-	
+
 	void PositionEdit::setPosition(QPoint position)
 	{
 		ui->position->setText(QString("%1:%2").arg(position.x()).arg(position.y()));

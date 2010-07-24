@@ -50,6 +50,8 @@ namespace ActionTools
 		void setDefaultLine(const QString &line)								{ mDefaultLine = line; }
 		QString defaultLine() const												{ return mDefaultLine; }
 		
+		void update(Script *script);
+		
 	private slots:
 		void codeChanged(bool code);
 		void textChanged(const QString &text);

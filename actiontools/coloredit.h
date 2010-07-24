@@ -54,6 +54,7 @@ namespace ActionTools
 		void setFromSubParameter(const SubParameter &subParameter);
 		void openEditor(int line = -1, int column = -1);
 		void setCompletionModel(QAbstractItemModel *completionModel);
+		void setChooseByPositionButtonVisible(bool visible);
 		
 	signals:
 		void positionChosen(QPoint position);
