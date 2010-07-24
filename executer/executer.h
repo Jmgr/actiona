@@ -29,6 +29,7 @@
 #include <QScriptEngine>
 #include <QPoint>
 #include <QKeySequence>
+#include <QTimer>
 
 namespace ActionTools
 {
@@ -79,12 +80,13 @@ namespace Executer
 		void actionEnded(int actionIndex);
 	
 	private slots:
-		void startFirstAction();
 		void executionException(int exception,
 								const QString &message);
 		void actionExecutionEnded();
 		void disableAction(bool disable);
 		void startNextAction();
+		void startActionExecution();
+		void actionExecutionTimeout();
 	
 	private:
 		enum ExecuteActionResult
@@ -114,10 +116,13 @@ namespace Executer
 		ActionTools::ConsoleWidget *mConsoleWidget;
 		int mCurrentActionIndex;
 		bool mExecutionStarted;
+		bool mExecutionPaused;
 		QScriptEngine mScriptEngine;
 		bool mExecuteOnlySelection;
 		ScriptAgent *mScriptAgent;
 		QList<bool> mActionEnabled;
+		QTimer mStartExecutionTimer;
+		QTimer mTimeoutTimer;
 	
 		Q_DISABLE_COPY(Executer)
 	};

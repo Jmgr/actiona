@@ -30,7 +30,6 @@
 
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QTimer>
 #include <QScriptContextInfo>
 #include <QAction>
 
@@ -61,10 +60,16 @@ namespace Executer
 		mConsoleWidget(new ActionTools::ConsoleWidget(consoleModel)),
 		mCurrentActionIndex(0),
 		mExecutionStarted(false),
+		mExecutionPaused(false),
 		mExecuteOnlySelection(false),
 		mScriptAgent(new ScriptAgent(&mScriptEngine))
 	{
 		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
+		connect(&mStartExecutionTimer, SIGNAL(timeout()), this, SLOT(startActionExecution()));
+		connect(&mTimeoutTimer, SIGNAL(timeout()), this, SLOT(actionExecutionTimeout()));
+		
+		mStartExecutionTimer.setSingleShot(true);
+		mTimeoutTimer.setSingleShot(true);
 
 		mConsoleWidget->setWindowFlags(Qt::Tool |
 					   Qt::WindowStaysOnTopHint |
@@ -309,7 +314,7 @@ namespace Executer
 
 		mScriptAgent->setContext(ScriptAgent::Actions);
 
-		QTimer::singleShot(0, this, SLOT(startFirstAction()));
+		executeCurrentAction();
 
 		return true;
 	}
@@ -318,11 +323,14 @@ namespace Executer
 	{
 		if(!mExecutionStarted)
 			return;
+		
+		mTimeoutTimer.stop();
 
 		if(mCurrentActionIndex >= 0 && mCurrentActionIndex < mScript->actionCount())
 		{
 			mScript->actionAt(mCurrentActionIndex)->disconnect();
-			mScript->actionAt(mCurrentActionIndex)->stopExecution();
+			if(!mExecutionPaused)
+				mScript->actionAt(mCurrentActionIndex)->stopExecution();
 		}
 
 		mExecutionWindow->hide();
@@ -334,12 +342,7 @@ namespace Executer
 
 		mScriptEngine.abortEvaluation();
 	}
-
-	void Executer::startFirstAction()
-	{
-		executeCurrentAction();
-	}
-
+	
 	void Executer::executionException(int exception,
 									  const QString &message)
 	{
@@ -400,13 +403,16 @@ namespace Executer
 			shouldStopExecution = true;
 		}
 
-		mConsoleWidget->addActionLine(tr("Script line %1: ").arg(mCurrentActionIndex+1) + message,
-									mCurrentActionIndex,
-									mScriptEngine.evaluate("currentParameter").toString(),
-									mScriptEngine.evaluate("currentSubParameter").toString(),
-									mScriptAgent->currentLine(),
-									mScriptAgent->currentColumn(),
-									exceptionType);
+		if(exception != ActionTools::ActionException::TimeoutException)
+		{
+			mConsoleWidget->addActionLine(tr("Script line %1: ").arg(mCurrentActionIndex+1) + message,
+										mCurrentActionIndex,
+										mScriptEngine.evaluate("currentParameter").toString(),
+										mScriptEngine.evaluate("currentSubParameter").toString(),
+										mScriptAgent->currentLine(),
+										mScriptAgent->currentColumn(),
+										exceptionType);
+		}
 
 		if(shouldStopExecution)
 			stopExecution();
@@ -414,9 +420,11 @@ namespace Executer
 
 	void Executer::actionExecutionEnded()
 	{
+		mTimeoutTimer.stop();
 		mScript->actionAt(mCurrentActionIndex)->disconnect();
 
-		QTimer::singleShot(1, this, SLOT(startNextAction()));
+		QTimer::singleShot(mScript->actionAt(mCurrentActionIndex)->pauseAfter(), this, SLOT(startNextAction()));
+		mExecutionPaused = true;
 	}
 
 	void Executer::disableAction(bool disable)
@@ -426,19 +434,16 @@ namespace Executer
 
 	void Executer::startNextAction()
 	{
+		mExecutionPaused = false;
+		
 		QString nextLineString = mScriptEngine.evaluate("Script.nextLine").toString();
 		bool ok;
 		int nextLine = nextLineString.toInt(&ok);
 
 		if(!ok)
-			nextLine = mScript->labelLine(nextLineString) + 1;
-		--nextLine;
-
-		if(nextLine == mCurrentActionIndex)
-		{
-			executionException(ActionTools::ActionException::CodeErrorException, tr("Incorrect Script.nextLine value: %1").arg(nextLineString));
-			return;
-		}
+			nextLine = mScript->labelLine(nextLineString);
+		else
+			--nextLine;
 
 		switch(canExecuteAction(nextLine))
 		{
@@ -467,6 +472,28 @@ namespace Executer
 
 		executeCurrentAction();
 	}
+	
+	void Executer::startActionExecution()
+	{
+		mExecutionPaused = false;
+		
+		int timeout = mScript->actionAt(mCurrentActionIndex)->timeout();
+		if(timeout > 0)
+		{
+			mTimeoutTimer.setInterval(timeout);
+			mTimeoutTimer.start();
+		}
+		
+		mScript->actionAt(mCurrentActionIndex)->startExecution();
+	}
+	
+	void Executer::actionExecutionTimeout()
+	{
+		mScript->actionAt(mCurrentActionIndex)->disconnect();
+		mScript->actionAt(mCurrentActionIndex)->stopExecution();
+		
+		executionException(ActionTools::ActionException::TimeoutException, QString());
+	}
 
 	Executer::ExecuteActionResult Executer::canExecuteAction(const QString &line) const
 	{
@@ -474,11 +501,9 @@ namespace Executer
 		int nextLine = line.toInt(&ok);
 
 		if(!ok)
-			nextLine = mScript->labelLine(line) + 1;
-		--nextLine;
-
-		if(nextLine == mCurrentActionIndex)
-			return IncorrectLine;
+			nextLine = mScript->labelLine(line);
+		else
+			--nextLine;
 
 		return canExecuteAction(nextLine);
 	}
@@ -532,7 +557,10 @@ namespace Executer
 		connect(actionInstance, SIGNAL(executionException(int,QString)), this, SLOT(executionException(int,QString)));
 		connect(actionInstance, SIGNAL(disableAction(bool)), this, SLOT(disableAction(bool)));
 
-		actionInstance->startExecution();
+		mStartExecutionTimer.setInterval(actionInstance->pauseBefore());
+		mStartExecutionTimer.start();
+		
+		mExecutionPaused = true;
 	}
 
 	void Executer::addClassToScript(QObject *classPointer, const QString &name)

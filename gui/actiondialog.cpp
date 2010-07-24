@@ -40,6 +40,7 @@
 #include <QFormLayout>
 #include <QGridLayout>
 #include <QComboBox>
+#include <QSpinBox>
 
 ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, QWidget *parent)
 	: QDialog(parent),
@@ -52,7 +53,11 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	mCompletionModel(completionModel),
 	mExceptionsLayout(new QGridLayout),
 	mTabWidget(new QTabWidget(this)),
-	mExceptionsTabWidget(new QWidget)
+	mExceptionsTabWidget(new QWidget),
+	mCommonTabWidget(new QWidget),
+	mPauseBeforeSpinBox(new QSpinBox(this)),
+	mPauseAfterSpinBox(new QSpinBox(this)),
+	mTimeoutSpinBox(new QSpinBox(this))
 {
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("ActionDialog creation " + actionDefinition->id());
@@ -104,7 +109,41 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	}
 
 	ui->parametersLayout->addWidget(mTabWidget);
-
+	
+	//Init of common parameters
+	QVBoxLayout *commonParametersLayout = new QVBoxLayout;
+	QGroupBox *inputCommonParametersGroupBox = new QGroupBox(tr("Input parameters"), mCommonTabWidget);
+	QFormLayout *inputCommonParametersLayout = new QFormLayout;
+	
+	mPauseBeforeSpinBox->setToolTip(tr("Pause before executing the action"));
+	mPauseAfterSpinBox->setToolTip(tr("Pause after executing the action"));
+	mTimeoutSpinBox->setToolTip(tr("Action maximal execution time"));
+	
+	mPauseBeforeSpinBox->setSingleStep(100);
+	mPauseAfterSpinBox->setSingleStep(100);
+	mTimeoutSpinBox->setSingleStep(100);
+	
+	mPauseBeforeSpinBox->setMaximum(INT_MAX);
+	mPauseAfterSpinBox->setMaximum(INT_MAX);
+	mTimeoutSpinBox->setMaximum(INT_MAX);
+	
+	mPauseBeforeSpinBox->setSuffix(tr(" ms", "milliseconds"));
+	mPauseAfterSpinBox->setSuffix(tr(" ms", "milliseconds"));
+	mTimeoutSpinBox->setSuffix(tr(" ms", "milliseconds"));
+	
+	mPauseBeforeSpinBox->setSpecialValueText(tr("No pause before"));
+	mPauseAfterSpinBox->setSpecialValueText(tr("No pause after"));
+	mTimeoutSpinBox->setSpecialValueText(tr("No timeout"));
+	
+	inputCommonParametersLayout->addRow(tr("Pause before:"), mPauseBeforeSpinBox);
+	inputCommonParametersLayout->addRow(tr("Pause after:"), mPauseAfterSpinBox);
+	inputCommonParametersLayout->addRow(tr("Timeout:"), mTimeoutSpinBox);
+	
+	inputCommonParametersGroupBox->setLayout(inputCommonParametersLayout);
+	commonParametersLayout->addWidget(inputCommonParametersGroupBox);
+	mCommonTabWidget->setLayout(commonParametersLayout);
+	mTabWidget->addTab(mCommonTabWidget, tr("Common"));
+	
 	//Init of exceptions
 	QStringList exceptionActionsNames;
 	for(int i = 0; i < ActionTools::ActionException::ExceptionActionCount; ++i)
@@ -220,13 +259,20 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 			currentGroup->init();
 	}
 
-	for(int parameterType = 0; parameterType < 2; ++parameterType)
+	for(int i = 0; i < tabCount; ++i)
 	{
-		for(int i = 0; i < tabCount; ++i)
+		int parameterCount = 0;
+		
+		for(int parameterType = 0; parameterType < 2; ++parameterType)
 		{
 			if(mParameterLayouts[parameterType].at(i)->count() == 0)
 				groupBoxes[parameterType][i]->hide();
+			else
+				++parameterCount;
 		}
+		
+		if(parameterCount == 0)
+			mParameterTabWidgets[i]->layout()->addWidget(new QLabel(tr("<i>No parameters</i>"), mParameterTabWidgets[i]));
 	}
 
 	adjustSize();
@@ -257,6 +303,10 @@ void ActionDialog::accept()
 													ActionTools::ActionException::ExceptionActionInstance(exceptionAction,
 																										  lineComboBox->currentText()));
 	}
+	
+	mActionInstance->setPauseBefore(mPauseBeforeSpinBox->value());
+	mActionInstance->setPauseAfter(mPauseAfterSpinBox->value());
+	mActionInstance->setTimeout(mTimeoutSpinBox->value());
 
 	QDialog::accept();
 }
@@ -316,20 +366,19 @@ void ActionDialog::postInit()
 			}
 		}
 	}
-	if(mCurrentException != -1)
+	for(int i = 0; i < mExceptionsLayout->rowCount(); ++i)
 	{
-		for(int i = 0; i < mExceptionsLayout->rowCount(); ++i)
-		{
-			QLabel *exceptionNameLabel = qobject_cast<QLabel *>(mExceptionsLayout->itemAtPosition(i, 0)->widget());
-			ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mExceptionsLayout->itemAtPosition(i, 2)->widget());
-			ActionTools::ActionException::Exception exception = static_cast<ActionTools::ActionException::Exception>(exceptionNameLabel->property("id").toInt());
+		QLabel *exceptionNameLabel = qobject_cast<QLabel *>(mExceptionsLayout->itemAtPosition(i, 0)->widget());
+		ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mExceptionsLayout->itemAtPosition(i, 2)->widget());
+		ActionTools::ActionException::Exception exception = static_cast<ActionTools::ActionException::Exception>(exceptionNameLabel->property("id").toInt());
 
-			if(exception == mCurrentException)
-			{
-				lineComboBox->setFocus();
-				mTabWidget->setCurrentWidget(mExceptionsTabWidget);
-				break;
-			}
+		lineComboBox->setup(mScript->labels(), mScript->actionCount());
+		
+		if(exception == mCurrentException)
+		{
+			lineComboBox->setFocus();
+			mTabWidget->setCurrentWidget(mExceptionsTabWidget);
+			break;
 		}
 	}
 	foreach(ActionTools::ParameterDefinition *parameter, mParameters)
@@ -363,6 +412,10 @@ void ActionDialog::postInit()
 		lineComboBox->codeLineEdit()->setText(exceptionActionInstance.line());
 		lineComboBox->setEnabled(exceptionActionInstance.action() == ActionTools::ActionException::GotoLineExceptionAction);
 	}
+	
+	mPauseBeforeSpinBox->setValue(mActionInstance->pauseBefore());
+	mPauseAfterSpinBox->setValue(mActionInstance->pauseAfter());
+	mTimeoutSpinBox->setValue(mActionInstance->timeout());
 }
 
 void ActionDialog::currentExceptionActionChanged(int index)

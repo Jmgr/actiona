@@ -43,6 +43,7 @@ class QAbstractItemModel;
 class QFormLayout;
 class QGridLayout;
 class QTabWidget;
+class QSpinBox;
 
 class ActionDialog : public QDialog
 {
@@ -85,7 +86,11 @@ private:
 	QGridLayout *mExceptionsLayout;
 	QTabWidget *mTabWidget;
 	QWidget *mExceptionsTabWidget;
+	QWidget *mCommonTabWidget;
 	QList<QWidget *> mParameterTabWidgets;
+	QSpinBox *mPauseBeforeSpinBox;
+	QSpinBox *mPauseAfterSpinBox;
+	QSpinBox *mTimeoutSpinBox;
 
 	Q_DISABLE_COPY(ActionDialog)
 };

@@ -27,7 +27,15 @@ namespace ActionTools
 	QString ActionException::ExceptionName[ExceptionCount] =
 	{
 		QObject::tr("Bad parameter"),
-		QObject::tr("Code error")
+		QObject::tr("Code error"),
+		QObject::tr("Timeout")
+	};
+	
+	ActionException::ExceptionAction ActionException::ExceptionDefaultAction[ExceptionCount] =
+	{
+		StopExecutionExceptionAction,
+		StopExecutionExceptionAction,
+		SkipExceptionAction
 	};
 
 	QString ActionException::ExceptionActionName[ExceptionActionCount] =

@@ -258,6 +258,12 @@ namespace ActionTools
 				stream.writeAttribute("color", actionInstance->color().name());
 			if(!actionInstance->isEnabled())
 				stream.writeAttribute("enabled", QVariant(actionInstance->isEnabled()).toString());
+			if(actionInstance->pauseBefore() != 0)
+				stream.writeAttribute("pauseBefore", QVariant(actionInstance->pauseBefore()).toString());
+			if(actionInstance->pauseAfter() != 0)
+				stream.writeAttribute("pauseAfter", QVariant(actionInstance->pauseAfter()).toString());
+			if(actionInstance->timeout() != 0)
+				stream.writeAttribute("timeout", QVariant(actionInstance->timeout()).toString());
 
 			const ExceptionActionInstancesHash &exceptionActionsHash = actionInstance->exceptionActionInstances();
 			foreach(ActionException::Exception exception, exceptionActionsHash.keys())
@@ -429,6 +435,9 @@ namespace ActionTools
 					QString comment = attributes.value("comment").toString();
 					QColor color = QColor(attributes.value("color").toString());
 					bool enabled = (attributes.hasAttribute("enabled") ? QVariant(attributes.value("enabled").toString()).toBool() : true);
+					int pauseBefore = attributes.value("pauseBefore").toString().toInt();
+					int pauseAfter = attributes.value("pauseAfter").toString().toInt();
+					int timeout = attributes.value("timeout").toString().toInt();
 
 					//Add a new action
 					ActionInstance *actionInstance = mActionFactory->newActionInstance(name);
@@ -489,6 +498,9 @@ namespace ActionTools
 					actionInstance->setColor(color);
 					actionInstance->setEnabled(enabled);
 					actionInstance->setExceptionActionInstances(exceptionActionsHash);
+					actionInstance->setPauseBefore(pauseBefore);
+					actionInstance->setPauseAfter(pauseAfter);
+					actionInstance->setTimeout(timeout);
 
 					appendAction(actionInstance);
 				}

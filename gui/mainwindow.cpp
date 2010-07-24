@@ -1699,9 +1699,6 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, const Q
 	if(!actionInstance)
 		return false;
 
-	if(actionInstance->definition()->elements().count() == 0)
-		return true;
-
 	ActionTools::ParametersData previousData = actionInstance->parametersData();
 	
 	ActionDialog *dialog = mActionDialogs.at(actionInstance->definition()->index());

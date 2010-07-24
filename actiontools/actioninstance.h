@@ -51,7 +51,7 @@ namespace ActionTools
 	class ActionInstanceData : public QSharedData
 	{
 	public:
-		ActionInstanceData() : definition(0), enabled(true), selected(false), script(0), scriptEngine(0)		{}
+		ActionInstanceData() : definition(0), enabled(true), selected(false), pauseBefore(0), pauseAfter(0), timeout(0), script(0), scriptEngine(0)		{}
 		ActionInstanceData(const ActionInstanceData &other)
 			: QSharedData(other),
 			parametersData(other.parametersData),
@@ -62,8 +62,11 @@ namespace ActionTools
 			enabled(other.enabled),
 			selected(other.selected),
 			exceptionActionInstances(other.exceptionActionInstances),
+			pauseBefore(other.pauseBefore),
+			pauseAfter(other.pauseAfter),
+			timeout(other.timeout),
 			script(other.script),
-			scriptEngine(other.scriptEngine)																	{}
+			scriptEngine(other.scriptEngine)																											{}
 
 		ParametersData parametersData;
 		const ActionDefinition *definition;
@@ -73,6 +76,9 @@ namespace ActionTools
 		bool enabled;
 		bool selected;
 		ExceptionActionInstancesHash exceptionActionInstances;
+		int pauseBefore;
+		int pauseAfter;
+		int timeout;
 		Script *script;
 		QScriptEngine *scriptEngine;
 	};
@@ -83,8 +89,8 @@ namespace ActionTools
 
 	public:
 		ActionInstance(const ActionDefinition *definition = 0, QObject *parent = 0);
-		ActionInstance(const ActionInstance &other) : QObject(), d(other.d)					{}
-		virtual ~ActionInstance()															{}
+		ActionInstance(const ActionInstance &other) : QObject(), d(other.d)	{}
+		virtual ~ActionInstance()											{}
 
 		const ActionDefinition *definition() const							{ return d->definition; }
 
@@ -94,9 +100,12 @@ namespace ActionTools
 		QColor color() const												{ return d->color; }
 		bool isEnabled() const												{ return d->enabled; }
 		bool isSelected() const												{ return d->selected; }
-		ExceptionActionInstancesHash exceptionActionInstances() const				{ return d->exceptionActionInstances; }
+		ExceptionActionInstancesHash exceptionActionInstances() const		{ return d->exceptionActionInstances; }
 		ActionException::ExceptionActionInstance exceptionActionInstance(ActionException::Exception exception) const
 																			{ return d->exceptionActionInstances.value(exception); }
+		int pauseBefore() const												{ return d->pauseBefore; }
+		int pauseAfter() const												{ return d->pauseAfter; }
+		int timeout() const													{ return d->timeout; }
 
 		void setComment(const QString &comment)								{ d->comment = comment; }
 		void setLabel(const QString &label)									{ d->label = label; }
@@ -108,6 +117,10 @@ namespace ActionTools
 																			{ d->exceptionActionInstances = exceptionActions; }
 		void setExceptionActionInstance(ActionException::Exception exception, ActionException::ExceptionActionInstance exceptionActionInstance)
 																			{ d->exceptionActionInstances.insert(exception, exceptionActionInstance); }
+		void setPauseBefore(int pauseBefore)								{ d->pauseBefore = pauseBefore; }
+		void setPauseAfter(int pauseAfter)									{ d->pauseAfter = pauseAfter; }
+		void setTimeout(int timeout)										{ d->timeout = timeout; }
+		
 		void setParameter(const QString &name, const Parameter &parameter)	{ d->parametersData.insert(name, parameter); }
 		void setSubParameter(const QString &parameterName, const QString &subParameterName, const SubParameter &subParameter)
 																			{ d->parametersData[parameterName].setSubParameter(subParameterName, subParameter); }
@@ -131,6 +144,9 @@ namespace ActionTools
 			setEnabled(other.isEnabled());
 			setSelected(other.isSelected());
 			setExceptionActionInstances(other.exceptionActionInstances());
+			setPauseBefore(other.pauseBefore());
+			setPauseAfter(other.pauseAfter());
+			setTimeout(other.timeout());
 		}
 
 	protected:

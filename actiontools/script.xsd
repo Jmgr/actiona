@@ -71,11 +71,13 @@
 										</xs:element>
 									</xs:sequence>
 									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="label" type="xs:string" use="optional"/>
+									<xs:attribute name="comment" type="xs:string" use="optional"/>
 									<xs:attribute name="color" type="xs:string" use="optional"/>
 									<xs:attribute name="enabled" type="xs:boolean" use="optional"/>
-									<xs:attribute name="code" type="xs:boolean" use="optional"/>
-									<xs:attribute name="comment" type="xs:string" use="optional"/>
-									<xs:attribute name="label" type="xs:string" use="optional"/>
+									<xs:attribute name="pauseBefore" type="xs:integer" use="optional"/>
+									<xs:attribute name="pauseAfter" type="xs:integer" use="optional"/>
+									<xs:attribute name="timeout" type="xs:integer" use="optional"/>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>

@@ -34,6 +34,7 @@ namespace ActionTools
 		{
 			BadParameterException,
 			CodeErrorException,
+			TimeoutException,
 
 			ExceptionCount,
 			UserException = 32
@@ -73,6 +74,7 @@ namespace ActionTools
 		QString name() const									{ return mName; }
 
 		static QString ExceptionName[ExceptionCount];
+		static ExceptionAction ExceptionDefaultAction[ExceptionCount];
 		static QString ExceptionActionName[ExceptionActionCount];
 
 	private:

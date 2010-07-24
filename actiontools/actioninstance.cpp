@@ -40,6 +40,14 @@ namespace ActionTools
 			foreach(ElementDefinition *element, definition->elements())
 				element->setDefaultValues(this);
 		}
+		
+		//Set the default exception action
+		for(int i = 0; i < ActionTools::ActionException::ExceptionCount; ++i)
+		{
+			
+			setExceptionActionInstance(static_cast<ActionTools::ActionException::Exception>(i),
+									   ActionTools::ActionException::ExceptionActionInstance(ActionTools::ActionException::ExceptionDefaultAction[i], QString()));
+		}
 	}
 
 	QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance)
@@ -51,6 +59,9 @@ namespace ActionTools
 		s << actionInstance.isEnabled();
 		s << actionInstance.isSelected();
 		s << actionInstance.exceptionActionInstances();
+		s << actionInstance.pauseBefore();
+		s << actionInstance.pauseAfter();
+		s << actionInstance.timeout();
 
 		return s;
 	}
@@ -64,6 +75,9 @@ namespace ActionTools
 		bool enabled;
 		bool selected;
 		ExceptionActionInstancesHash exceptionActionInstances;
+		int pauseBefore;
+		int pauseAfter;
+		int timeout;
 
 		s >> label;
 		s >> comment;
@@ -72,6 +86,9 @@ namespace ActionTools
 		s >> enabled;
 		s >> selected;
 		s >> exceptionActionInstances;
+		s >> pauseBefore;
+		s >> pauseAfter;
+		s >> timeout;
 
 		actionInstance.setLabel(label);
 		actionInstance.setComment(comment);
@@ -80,6 +97,9 @@ namespace ActionTools
 		actionInstance.setEnabled(enabled);
 		actionInstance.setSelected(selected);
 		actionInstance.setExceptionActionInstances(exceptionActionInstances);
+		actionInstance.setPauseBefore(pauseBefore);
+		actionInstance.setPauseAfter(pauseAfter);
+		actionInstance.setTimeout(timeout);
 
 		return s;
 	}
@@ -94,6 +114,9 @@ namespace ActionTools
 		dbg.space() << "Selected:" << actionInstance.isSelected();
 		dbg.space() << "Exception action instances:" << actionInstance.exceptionActionInstances();
 		dbg.space() << "Data:" << actionInstance.parametersData();
+		dbg.space() << "Pause before:" << actionInstance.pauseBefore();
+		dbg.space() << "Pause after:" << actionInstance.pauseAfter();
+		dbg.space() << "Timeout:" << actionInstance.timeout();
 
 		return dbg.maybeSpace();
 	}
