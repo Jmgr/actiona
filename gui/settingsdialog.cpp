@@ -142,10 +142,10 @@ void SettingsDialog::proxyTestFinished(QNetworkReply *reply)
 		QMessageBox::information(this, tr("Proxy test ended"), tr("The proxy test succeeded."));
 		break;
 	case QNetworkReply::ProxyAuthenticationRequiredError:
-		QMessageBox::warning(this, tr("Proxy test ended"), tr("The proxy test failed : invalid username or password."));
+		QMessageBox::warning(this, tr("Proxy test ended"), tr("The proxy test failed: invalid username or password."));
 		break;
 	default:
-		QMessageBox::warning(this, tr("Proxy test ended"), tr("The proxy test failed : incorrect proxy settings."));
+		QMessageBox::warning(this, tr("Proxy test ended"), tr("The proxy test failed: incorrect proxy settings."));
 		break;
 	}
 

@@ -93,8 +93,8 @@ int main(int argc, char **argv)
 	if(options.count("help") || options.showUnrecognizedWarning() || (options.count("exitatend") && !options.count("execute")))
 	{
 		QTextStream stream(stdout);
-		stream << QObject::tr("usage : ") << QCoreApplication::arguments().at(0) << " " << QObject::tr("[parameters]") << " " << QObject::tr("[filename]") << "\n";
-		stream << QObject::tr("Parameters are :") << "\n";
+		stream << QObject::tr("usage: ") << QCoreApplication::arguments().at(0) << " " << QObject::tr("[parameters]") << " " << QObject::tr("[filename]") << "\n";
+		stream << QObject::tr("Parameters are:") << "\n";
 		stream << options.getUsage();
 		stream.flush();
 		return -1;

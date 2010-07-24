@@ -83,7 +83,7 @@ void ActionClickInstance::startExecution()
 	Display *display = XOpenDisplay(0);
 	if(!display)
 	{
-		emit executionException(FailedToSendInputException, tr("Unable to emulate click : cannot open display"));
+		emit executionException(FailedToSendInputException, tr("Unable to emulate click: cannot open display"));
 		return;
 	}
 

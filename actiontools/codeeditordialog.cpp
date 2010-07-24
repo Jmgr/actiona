@@ -123,7 +123,7 @@ namespace ActionTools
 		if(ui->editor->lastSyntaxError().isEmpty())
 			message = tr("Syntax error detected.");
 		else
-			message = tr("Syntax error detected : %1").arg(ui->editor->lastSyntaxError());
+			message = tr("Syntax error detected: %1").arg(ui->editor->lastSyntaxError());
 
 		QMessageBox::warning(this, tr("Syntax error check"), message);
 	}

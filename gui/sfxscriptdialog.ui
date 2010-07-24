@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>191</width>
-    <height>117</height>
+    <width>249</width>
+    <height>145</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Disable tray icon :</string>
+      <string>Disable tray icon:</string>
      </property>
     </widget>
    </item>
@@ -34,7 +34,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Show console :</string>
+      <string>Show console:</string>
      </property>
     </widget>
    </item>
@@ -48,7 +48,7 @@
    <item row="2" column="0">
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>Show execution window :</string>
+      <string>Show execution window:</string>
      </property>
     </widget>
    </item>
@@ -62,7 +62,7 @@
    <item row="3" column="0">
     <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Close Actionaz after execution :</string>
+      <string>Close Actionaz after execution:</string>
      </property>
     </widget>
    </item>

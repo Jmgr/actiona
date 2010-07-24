@@ -208,7 +208,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 			int parameterType = (currentParameter->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);
 
 			QFormLayout *parameterLayout = mParameterLayouts[parameterType][currentParameter->tab()];
-			parameterLayout->addRow(currentParameter->translatedName() + " :", addParameter(currentParameter));
+			parameterLayout->addRow(currentParameter->translatedName() + tr(":"), addParameter(currentParameter));
 		}
 		else if(ActionTools::GroupDefinition *currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
 			addGroup(currentGroup);
@@ -399,7 +399,7 @@ void ActionDialog::addGroup(ActionTools::GroupDefinition *group)
 	foreach(ActionTools::ParameterDefinition *parameter, group->members())
 	{
 		parameter->setCategory(group->category());
-		groupLayout->addRow(QString(parameter->translatedName() + " :"), addParameter(parameter));
+		groupLayout->addRow(QString(parameter->translatedName() + tr(":")), addParameter(parameter));
 	}
 
 	int parameterType = (group->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);

@@ -14,14 +14,14 @@
    <string>Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="gui.qrc">
     <normaloff>:/icons/options.png</normaloff>:/icons/options.png</iconset>
   </property>
   <layout class="QVBoxLayout">
    <item>
     <widget class="QTabWidget" name="settingsTab">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="icon">
@@ -38,7 +38,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>Loading window :</string>
+          <string>Loading window:</string>
          </property>
         </widget>
        </item>
@@ -55,7 +55,7 @@
        <item row="1" column="0">
         <widget class="QLabel" name="label_13">
          <property name="text">
-          <string>Taskbar icon :</string>
+          <string>Taskbar icon:</string>
          </property>
         </widget>
        </item>
@@ -98,7 +98,7 @@ p, li { white-space: pre-wrap; }
        <item row="2" column="0">
         <widget class="QLabel" name="showWindowAfterExecutionLabel">
          <property name="text">
-          <string>Show window after execution :</string>
+          <string>Show window after execution:</string>
          </property>
         </widget>
        </item>
@@ -115,16 +115,13 @@ p, li { white-space: pre-wrap; }
        <item row="3" column="0">
         <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>Language :</string>
+          <string>Language:</string>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
         <widget class="QxtLanguageComboBox" name="language">
-         <property name="displayMode">
-          <enum>QxtLanguageComboBox::AvailableTranslations</enum>
-         </property>
-         <property name="translationPath">
+         <property name="translationPath" stdset="0">
           <string notr="true">locale</string>
          </property>
         </widget>
@@ -132,7 +129,7 @@ p, li { white-space: pre-wrap; }
        <item row="4" column="0">
         <widget class="QLabel" name="label_12">
          <property name="text">
-          <string>Console start/end separators :</string>
+          <string>Console start/end separators:</string>
          </property>
         </widget>
        </item>
@@ -149,7 +146,7 @@ p, li { white-space: pre-wrap; }
        <item row="5" column="0">
         <widget class="QLabel" name="label_14">
          <property name="text">
-          <string>Last opened script :</string>
+          <string>Last opened script:</string>
          </property>
         </widget>
        </item>
@@ -163,7 +160,7 @@ p, li { white-space: pre-wrap; }
        <item row="6" column="0">
         <widget class="QLabel" name="label_15">
          <property name="text">
-          <string>Maximum recent files :</string>
+          <string>Maximum recent files:</string>
          </property>
         </widget>
        </item>
@@ -197,7 +194,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>Execution window :</string>
+          <string>Execution window:</string>
          </property>
         </widget>
        </item>
@@ -225,13 +222,6 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
         </layout>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Console window :</string>
-         </property>
-        </widget>
        </item>
        <item row="1" column="1">
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -261,7 +251,7 @@ p, li { white-space: pre-wrap; }
        <item row="3" column="0">
         <widget class="QLabel" name="label_18">
          <property name="text">
-          <string>Stop execution hotkey :</string>
+          <string>Stop execution hotkey:</string>
          </property>
         </widget>
        </item>
@@ -271,7 +261,7 @@ p, li { white-space: pre-wrap; }
        <item row="4" column="0">
         <widget class="QLabel" name="label_19">
          <property name="text">
-          <string>Switch text/code key :</string>
+          <string>Switch text/code key:</string>
          </property>
         </widget>
        </item>
@@ -281,7 +271,7 @@ p, li { white-space: pre-wrap; }
        <item row="5" column="0">
         <widget class="QLabel" name="label_20">
          <property name="text">
-          <string>Open editor key :</string>
+          <string>Open editor key:</string>
          </property>
         </widget>
        </item>
@@ -291,7 +281,7 @@ p, li { white-space: pre-wrap; }
        <item row="6" column="0">
         <widget class="QLabel" name="label_17">
          <property name="text">
-          <string>Code syntax :</string>
+          <string>Code syntax:</string>
          </property>
         </widget>
        </item>
@@ -302,6 +292,13 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="checked">
           <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Console window:</string>
          </property>
         </widget>
        </item>
@@ -322,7 +319,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0">
         <widget class="QLabel" name="updatesCheckLabel">
          <property name="text">
-          <string>Check for updates :</string>
+          <string>Check for updates:</string>
          </property>
         </widget>
        </item>
@@ -356,7 +353,7 @@ p, li { white-space: pre-wrap; }
        <item row="1" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Proxy :</string>
+          <string>Proxy:</string>
          </property>
         </widget>
        </item>
@@ -505,7 +502,9 @@ p, li { white-space: pre-wrap; }
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="gui.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>useAProxy</sender>

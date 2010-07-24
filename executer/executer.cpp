@@ -220,7 +220,7 @@ namespace Executer
 
 			if(!nameRegExp.exactMatch(scriptParameter.name()))
 			{
-				mConsoleWidget->addScriptParameterLine(tr("Incorrect parameter name : \"%1\"").arg(scriptParameter.name()),
+				mConsoleWidget->addScriptParameterLine(tr("Incorrect parameter name: \"%1\"").arg(scriptParameter.name()),
 													   parameterIndex,
 													   -1,
 													   -1,
@@ -235,7 +235,7 @@ namespace Executer
 				QScriptValue result = mScriptEngine.evaluate(scriptParameter.value());
 				if(result.isError())
 				{
-					mConsoleWidget->addScriptParameterLine(tr("Error while evaluating parameter \"%1\", error message : \"%2\"")
+					mConsoleWidget->addScriptParameterLine(tr("Error while evaluating parameter \"%1\", error message: \"%2\"")
 														   .arg(scriptParameter.name())
 														   .arg(result.toString()),
 														   parameterIndex,
@@ -358,7 +358,7 @@ namespace Executer
 
 		if(!standardException && !customException)
 		{
-			mConsoleWidget->addDesignErrorLine(tr("Action design error : Invalid exception emitted (%1, line %2)")
+			mConsoleWidget->addDesignErrorLine(tr("Action design error: Invalid exception emitted (%1, line %2)")
 											   .arg(currentActionInstance->definition()->name())
 											   .arg(mCurrentActionIndex+1), ActionTools::ConsoleWidget::Error);
 			stopExecution();
@@ -382,7 +382,7 @@ namespace Executer
 
 				if(canExecuteAction(exceptionActionInstance.line()) != CanExecute)
 				{
-					mConsoleWidget->addExceptionLine(tr("Invalid exception line : %1").arg(exceptionActionInstance.line()), mCurrentActionIndex, exception, ActionTools::ConsoleWidget::Error);
+					mConsoleWidget->addExceptionLine(tr("Invalid exception line: %1").arg(exceptionActionInstance.line()), mCurrentActionIndex, exception, ActionTools::ConsoleWidget::Error);
 					shouldStopExecution = true;
 				}
 				else
@@ -400,7 +400,7 @@ namespace Executer
 			shouldStopExecution = true;
 		}
 
-		mConsoleWidget->addActionLine(tr("Script line %1 : ").arg(mCurrentActionIndex+1) + message,
+		mConsoleWidget->addActionLine(tr("Script line %1: ").arg(mCurrentActionIndex+1) + message,
 									mCurrentActionIndex,
 									mScriptEngine.evaluate("currentParameter").toString(),
 									mScriptEngine.evaluate("currentSubParameter").toString(),
@@ -436,7 +436,7 @@ namespace Executer
 
 		if(nextLine == mCurrentActionIndex)
 		{
-			executionException(ActionTools::ActionException::CodeErrorException, tr("Incorrect Script.nextLine value : %1").arg(nextLineString));
+			executionException(ActionTools::ActionException::CodeErrorException, tr("Incorrect Script.nextLine value: %1").arg(nextLineString));
 			return;
 		}
 
@@ -452,7 +452,7 @@ namespace Executer
 				break;
 			}
 
-			executionException(ActionTools::ActionException::CodeErrorException, tr("Incorrect Script.nextLine value : %1").arg(nextLineString));
+			executionException(ActionTools::ActionException::CodeErrorException, tr("Incorrect Script.nextLine value: %1").arg(nextLineString));
 			return;
 		case InvalidAction:
 			executionException(ActionTools::ActionException::CodeErrorException, tr("The action at line %1 is invalid").arg(nextLineString));

@@ -132,14 +132,14 @@ namespace ActionTools
 
 		if(!actionPackObject)
 		{
-			emit packLoadError(tr("%1 : \"%2\"").arg(shortFilename).arg(pluginLoader.errorString()));
+			emit packLoadError(tr("%1: \"%2\"").arg(shortFilename).arg(pluginLoader.errorString()));
 			return;
 		}
 
 		ActionPack *actionPack = qobject_cast<ActionPack *>(actionPackObject);
 		if(!actionPack)
 		{
-			emit packLoadError(tr("%1 : bad definition version").arg(shortFilename));
+			emit packLoadError(tr("%1: bad definition version").arg(shortFilename));
 			return;
 		}
 
@@ -147,7 +147,7 @@ namespace ActionTools
 		{
 			if(actionDefinition(definition->id()))
 			{
-				emit packLoadError(tr("%1 : <b>%2</b> already loaded").arg(shortFilename).arg(definition->id()));
+				emit packLoadError(tr("%1: <b>%2</b> already loaded").arg(shortFilename).arg(definition->id()));
 				continue;
 			}
 

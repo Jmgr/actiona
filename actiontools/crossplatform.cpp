@@ -291,7 +291,7 @@ namespace ActionTools
 		if(!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 					  0, mLastError, 0, (LPTSTR)&message, 0, 0))
 		{
-			qDebug() << "Error : " << mLastError << ", and error " << GetLastError() << " while trying to get the error message";
+			qDebug() << "Error: " << mLastError << ", and error " << GetLastError() << " while trying to get the error message";
 
 			mLastErrorString = QString();
 			return;
@@ -302,6 +302,6 @@ namespace ActionTools
 		LocalFree(message);
 #endif
 
-		qDebug() << "Error : " << mLastErrorString << " (" << mLastError << ")";
+		qDebug() << "Error: " << mLastErrorString << " (" << mLastError << ")";
 	}
 }

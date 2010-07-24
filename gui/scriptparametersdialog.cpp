@@ -161,7 +161,7 @@ void ScriptParametersDialog::accept()
 			QScriptSyntaxCheckResult result = scriptEngine.checkSyntax(valueLineEdit->text());
 			if(result.state() != QScriptSyntaxCheckResult::Valid)
 			{
-				QMessageBox::warning(this, tr("Script parameter error"), tr("The script parameter named \"%1\" contains an error : \"%2\", please correct it.")
+				QMessageBox::warning(this, tr("Script parameter error"), tr("The script parameter named \"%1\" contains an error: \"%2\", please correct it.")
 					.arg(nameLineEdit->text())
 					.arg(result.errorMessage()));
 				valueLineEdit->setFocus();

@@ -347,7 +347,7 @@ void MainWindow::postInit()
 	
 	if(mPackLoadErrors.count() > 0)
 	{
-		QString message = tr("<b>Unable to load %n action(s) :</b>\n", "", mPackLoadErrors.count());
+		QString message = tr("<b>Unable to load %n action(s):</b>\n", "", mPackLoadErrors.count());
 		message += "<ul>";
 
 		foreach(const QString &error, mPackLoadErrors)
@@ -943,7 +943,7 @@ void MainWindow::on_actionJump_to_line_triggered()
 
 	QInputDialog *inputDialog = new QInputDialog(this);
 	inputDialog->setWindowTitle(tr("Jump to line"));
-	inputDialog->setLabelText(tr("Line :"));
+	inputDialog->setLabelText(tr("Line:"));
 	inputDialog->setInputMode(QInputDialog::IntInput);
 	inputDialog->setIntRange(1, mScript->actionCount());
 
@@ -1171,13 +1171,13 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 		{
 			if(mScript->scriptVersion() < Global::SCRIPT_VERSION)
 			{
-				QMessageBox::warning(this, tr("Load script"), tr("This script was created with an older version of Actionaz.\nIt will be updated when you save it.\nYour version : %1\nScript version : %2")
+				QMessageBox::warning(this, tr("Load script"), tr("This script was created with an older version of Actionaz.\nIt will be updated when you save it.\nYour version: %1\nScript version: %2")
 									 .arg(Global::SCRIPT_VERSION.toString()).arg(mScript->scriptVersion().toString()));
 			}
 
 			if(mScript->missingActions().count() > 0)
 			{
-				QString missingActions(tr("Script loaded, some actions are missing :<ul>"));
+				QString missingActions(tr("Script loaded, some actions are missing:<ul>"));
 
 				foreach(const QString &missingAction, mScript->missingActions())
 					missingActions += "<li>" + missingAction + "</li>";
@@ -1193,7 +1193,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 		return false;
 	case ActionTools::Script::ReadBadSchema:
 		{
-			QMessageBox messageBox(tr("Load script"), tr("Unable to load the script because it has an incorrect schema.%1Line : %2<br>Column : %3")
+			QMessageBox messageBox(tr("Load script"), tr("Unable to load the script because it has an incorrect schema.%1Line: %2<br>Column: %3")
 								   .arg(mScript->statusMessage())
 								   .arg(mScript->line())
 								   .arg(mScript->column()), QMessageBox::Warning, QMessageBox::Ok, 0, 0, this);
@@ -1202,7 +1202,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 		}
 		return false;
 	case ActionTools::Script::ReadBadScriptVersion:
-		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because it was created with a more recent version of Actionaz.\nPlease update your version of Actionaz to load this script.\nYour version : %1\nScript version : %2")
+		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because it was created with a more recent version of Actionaz.\nPlease update your version of Actionaz to load this script.\nYour version: %1\nScript version: %2")
 							 .arg(Global::SCRIPT_VERSION.toString()).arg(mScript->scriptVersion().toString()));
 		return false;
 	default:
@@ -1514,7 +1514,7 @@ void MainWindow::updateError(const QString &message)
 	if(mSilentUpdate)
 		return;
 
-	QMessageBox::warning(this, tr("Update"), tr("An error occured while checking for a new version :\n%1").arg(message));
+	QMessageBox::warning(this, tr("Update"), tr("An error occured while checking for a new version:\n%1").arg(message));
 }
 
 void MainWindow::updateNoResult()
@@ -1645,7 +1645,7 @@ void MainWindow::updateDownloadFinished()
 		mUpdateDownloadNetworkReply = 0;
 
 		if(!errorMessage.isEmpty())
-			QMessageBox::warning(this, tr("Update download"), tr("An error occured while downloading the file.\nError message : %1").arg(errorMessage));
+			QMessageBox::warning(this, tr("Update download"), tr("An error occured while downloading the file.\nError message: %1").arg(errorMessage));
 		return;
 	}
 
