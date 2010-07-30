@@ -164,8 +164,20 @@ void ActionClickInstance::startExecution()
 #ifdef Q_WS_WIN
 	POINT previousPosition;
 
-	GetCursorPos(&previousPosition);
-	SetCursorPos(position.x(), position.y());
+	if(action == ClickAction)
+	{
+		if(!GetCursorPos(&previousPosition))
+		{
+			emit executionException(FailedToSendInputException, tr("Get cursor position failed"));
+			return;
+		}
+	}
+
+	if(!SetCursorPos(position.x(), position.y()))
+	{
+		emit executionException(FailedToSendInputException, tr("Set cursor position failed"));
+		return;
+	}
 
 	int winButton;
 	switch(static_cast<Button>(button))
@@ -218,12 +230,33 @@ void ActionClickInstance::startExecution()
 
 	for(int i = 0; i < amount; ++i)
 	{
-		SendInput(1, &pressInput, sizeof(INPUT));
-		SendInput(1, &releaseInput, sizeof(INPUT));
+		if(action == ClickAction || action == PressAction)
+		{
+			if(!SendInput(1, &pressInput, sizeof(INPUT)))
+			{
+				emit executionException(FailedToSendInputException, tr("Send input failed"));
+				return;
+			}
+		}
+
+		if(action == ClickAction || action == ReleaseAction)
+		{
+			if(!SendInput(1, &releaseInput, sizeof(INPUT)))
+			{
+				emit executionException(FailedToSendInputException, tr("Send input failed"));
+				return;
+			}
+		}
 	}
 
-	SetCursorPos(previousPosition.x, previousPosition.y);
-	//TODO : Send FailedToSendInputException on fail
+	if(action == ClickAction)
+	{
+		if(!SetCursorPos(previousPosition.x, previousPosition.y))
+		{
+			emit executionException(FailedToSendInputException, tr("Set cursor position failed"));
+			return;
+		}
+	}
 #endif
 #ifdef Q_WS_MAC
 	//TODO_MAC
