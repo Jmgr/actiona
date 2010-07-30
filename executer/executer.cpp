@@ -332,6 +332,12 @@ namespace Executer
 			if(!mExecutionPaused)
 				mScript->actionAt(mCurrentActionIndex)->stopExecution();
 		}
+		
+		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
+		{
+			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
+			actionInstance->stopLongTermExecution();
+		}
 
 		mExecutionWindow->hide();
 		mConsoleWidget->hide();

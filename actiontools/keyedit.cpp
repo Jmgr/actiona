@@ -19,83 +19,132 @@
 */
 
 #include "keyedit.h"
+#include "codecombobox.h"
+#include "codelineedit.h"
 
+#include <QCheckBox>
+#include <QHBoxLayout>
+#include <QEvent>
 #include <QKeyEvent>
-#include <QMenu>
 
 namespace ActionTools
 {
 	KeyEdit::KeyEdit(QWidget *parent)
-		: CodeLineEdit(parent)
+		: QWidget(parent),
+		mCodeComboBox(new CodeComboBox(this)),
+		mCtrlCheckBox(new QCheckBox(tr("Ctrl"), this)),
+		mAltCheckBox(new QCheckBox(tr("Alt"), this)),
+		mShiftCheckBox(new QCheckBox(tr("Shift"), this)),
+		mMetaCheckBox(new QCheckBox(tr("Meta"), this))
 	{
+		QHBoxLayout *modifiersLayout = new QHBoxLayout;
+		modifiersLayout->setMargin(0);
+		modifiersLayout->addWidget(mCtrlCheckBox);
+		modifiersLayout->addWidget(mAltCheckBox);
+		modifiersLayout->addWidget(mShiftCheckBox);
+		modifiersLayout->addWidget(mMetaCheckBox);
+		
+		QVBoxLayout *layout = new QVBoxLayout;
+		layout->setMargin(0);
+		layout->addWidget(mCodeComboBox);
+		layout->addLayout(modifiersLayout);
+		
+		setLayout(layout);
+		
+		mCodeComboBox->codeLineEdit()->installEventFilter(this);
+		mCodeComboBox->codeLineEdit()->setReadOnly(true);
+		mCodeComboBox->codeLineEdit()->setFocusProxy(this);
+		mCodeComboBox->installEventFilter(this);
+		mCodeComboBox->setFocusProxy(this);
+		setAttribute(Qt::WA_InputMethodEnabled);
 	}
 
-	void KeyEdit::setKeySequence(QKeySequence keySequence)
+	void KeyEdit::setKeySequence(const QKeySequence &keySequence)
 	{
+		if(keySequence == mKeySequence)
+			return;
+		
 		mKeySequence = keySequence;
-		setText(mKeySequence.toString(QKeySequence::NativeText));
+		
+		mCodeComboBox->codeLineEdit()->setText(mKeySequence.toString(QKeySequence::NativeText));
+	}
+	
+	bool KeyEdit::eventFilter(QObject *object, QEvent *event)
+	{
+		if(object == mCodeComboBox && event->type() == QEvent::ContextMenu)
+		{
+			//TODO
+			
+			event->accept();
+			return true;
+		}
+		
+		return QWidget::eventFilter(object, event);
+	}
+	
+	void KeyEdit::focusInEvent(QFocusEvent *event)
+	{
+		mCodeComboBox->event(event);
+		mCodeComboBox->codeLineEdit()->selectAll();
+		
+		QWidget::focusOutEvent(event);
 	}
 
-	void KeyEdit::contextMenuEvent(QContextMenuEvent *event)
+	void KeyEdit::focusOutEvent(QFocusEvent *event)
 	{
-		QMenu *menu = createStandardContextMenu();
-
-		menu->addSeparator();
-
-		addShortcuts(menu);
-
-		menu->addSeparator();
-
-		QMenu *keyMenu = menu->addMenu(tr("Special keys"));
-		for(int i = 1; i <= 12; ++i)
-			addKeyToMenu(keyMenu, QString("Alt+F%1").arg(i));
-		addKeyToMenu(keyMenu, "Return");
-		addKeyToMenu(keyMenu, "Escape");
-
-		menu->exec(event->globalPos());
-
-		delete menu;
-
-		event->accept();
+		mCodeComboBox->event(event);
+		
+		QWidget::focusOutEvent(event);
 	}
 
 	void KeyEdit::keyPressEvent(QKeyEvent *event)
 	{
-		if(isCode())
-		{
-			CodeLineEdit::keyPressEvent(event);
+		int key = event->key();
+		if (key == Qt::Key_Control || key == Qt::Key_Shift ||
+			key == Qt::Key_Meta || key == Qt::Key_Alt ||
+			key == Qt::Key_Super_L || key == Qt::Key_AltGr)
 			return;
-		}
-
-		Qt::KeyboardModifiers modifier = event->modifiers();
-		if(modifier & Qt::KeypadModifier)
-			modifier = Qt::NoModifier;
-
-		if(event->key() == Qt::Key_unknown ||
-		   event->key() == Qt::Key_Return ||
-		   event->key() == Qt::Key_Close ||
-		   event->key() == 0 ||
-		   event->text().isEmpty())
-		{
-			event->ignore();
-			return;
-		}
-
-		setKeySequence(QKeySequence(modifier + event->key()));
-		event->ignore();
+		
+		key |= translateModifiers(event->modifiers(), event->text());
+		
+		mKeySequence = QKeySequence(key);
+		
+		mCodeComboBox->codeLineEdit()->setText(mKeySequence.toString(QKeySequence::NativeText));
+		
+		event->accept();
 	}
 
-	void KeyEdit::menuKeyTriggered()
+	void KeyEdit::keyReleaseEvent(QKeyEvent *event)
 	{
-		QAction *action = qobject_cast<QAction *>(sender());
-		if(!action)
-			return;
-
-		setKeySequence(QKeySequence(action->text()));
+		mCodeComboBox->event(event);
 	}
-
-	void KeyEdit::addKeyToMenu(QMenu *menu, const QString &key)
+	
+	bool KeyEdit::event(QEvent *event)
 	{
-		connect(menu->addAction(key), SIGNAL(triggered()), this, SLOT(menuKeyTriggered()));
+		if(	event->type() == QEvent::Shortcut ||
+			event->type() == QEvent::ShortcutOverride  ||
+			event->type() == QEvent::KeyRelease)
+		{
+			event->accept();
+			return true;
+		}
+		
+		return QWidget::event(event);
+	}
+	
+	int KeyEdit::translateModifiers(Qt::KeyboardModifiers state, const QString &text) const
+	{
+		int result = 0;
+		
+		if ((state & Qt::ShiftModifier) && (text.size() == 0 || !text.at(0).isPrint() || text.at(0).isLetter() || text.at(0).isSpace()))
+			result |= Qt::SHIFT;
+		if (state & Qt::ControlModifier)
+			result |= Qt::CTRL;
+		if (state & Qt::MetaModifier)
+			result |= Qt::META;
+		if (state & Qt::AltModifier)
+			result |= Qt::ALT;
+		
+		return result;
 	}
 }
