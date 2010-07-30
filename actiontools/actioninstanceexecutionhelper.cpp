@@ -104,7 +104,14 @@ namespace ActionTools
 
 		buffer = mResult.toInt(&result);
 
-		return result;
+		if(!result)
+		{
+			mErrorMessage = tr("Expected an integer value.");
+			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
+			return false;
+		}
+
+		return true;
 	}
 
 	bool ActionInstanceExecutionHelper::evaluateFloat(float &buffer,
@@ -122,7 +129,14 @@ namespace ActionTools
 
 		buffer = mResult.toDouble(&result);
 
-		return result;
+		if(!result)
+		{
+			mErrorMessage = tr("Expected a decimal value.");
+			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
+			return false;
+		}
+
+		return true;
 	}
 
 	bool ActionInstanceExecutionHelper::evaluateListElement(int &buffer,
@@ -271,7 +285,7 @@ namespace ActionTools
 
 			QRegExp regexpVariable("[^\\\\]\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 			int position = 0;
-			
+
 			while((position = regexpVariable.indexIn(value, position)) != -1)
 			{	
 				const QString &foundVariable = regexpVariable.cap(1);

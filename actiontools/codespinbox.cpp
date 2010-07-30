@@ -71,6 +71,22 @@ namespace ActionTools
 		codeLineEdit()->setCompletionModel(completionModel);
 	}
 
+	QString CodeSpinBox::text()
+	{
+		QString currentPrefix = prefix();
+		QString currentSuffix = suffix();
+
+		setPrefix(QString());
+		setSuffix(QString());
+
+		QString value = codeLineEdit()->text();
+
+		setPrefix(currentPrefix);
+		setSuffix(currentSuffix);
+
+		return value;
+	}
+
 	void CodeSpinBox::codeChanged(bool code)
 	{
 		if(!code)

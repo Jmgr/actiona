@@ -58,6 +58,6 @@ namespace ActionTools
 
 	void NumberParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mSpinBox->isCode(), mSpinBox->codeLineEdit()->text());
+		actionInstance->setSubParameter(name(), "value", mSpinBox->isCode(), mSpinBox->text());
 	}
 }

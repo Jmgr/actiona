@@ -50,6 +50,7 @@ public:
 		duration->setSuffix(tr(" ms", "milliseconds"));
 		duration->setMinimum(0);
 		duration->setMaximum(INT_MAX);
+		duration->setDefaultValue(1000);
 		addElement(duration);
 	}
 
