@@ -131,16 +131,11 @@ namespace ActionTools
 		Parameter parameter(const QString &name) const						{ return d->parametersData.value(name); }
 		SubParameter subParameter(const QString &parameterName, const QString &subParameterName) const
 																			{ return parameter(parameterName).subParameter(subParameterName); }
-<<<<<<< HEAD
-		virtual void reset()												{}
-		virtual void scriptExecutionStopped()										{}
-=======
-		
+
 		virtual void reset()												{}//This is called when this action should reset its counter (for loops)
 		virtual void startExecution()										{}//This is called when the action should start its execution
 		virtual void stopExecution()										{}//This is called when the action should break its execution
 		virtual void stopLongTermExecution()								{}//This is called on script execution end, the action should stop its long term actions (ie continuous press of a key)
->>>>>>> f4184ba61c6789bbfbc63e2babc7fdbcb79c3e93
 
 		void setupExecution(QScriptEngine *scriptEngine, Script *script)	{ d->scriptEngine = scriptEngine; d->script = script; }
 

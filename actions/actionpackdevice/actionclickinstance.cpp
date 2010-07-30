@@ -214,7 +214,7 @@ void ActionClickInstance::startExecution()
 	mouseReleaseInput.mouseData = 0;
 	mouseReleaseInput.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
 	mouseReleaseInput.time = 0;
-	releaseInput.mi = mousePressInput;
+	releaseInput.mi = mouseReleaseInput;
 
 	for(int i = 0; i < amount; ++i)
 	{
@@ -297,7 +297,7 @@ void ActionClickInstance::scriptExecutionStopped()
 			mouseReleaseInput.mouseData = 0;
 			mouseReleaseInput.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
 			mouseReleaseInput.time = 0;
-			releaseInput.mi = mousePressInput;
+			releaseInput.mi = mouseReleaseInput;
 
 			SendInput(1, &releaseInput, sizeof(INPUT));
 #endif

@@ -339,12 +339,6 @@ namespace Executer
 			actionInstance->stopLongTermExecution();
 		}
 
-		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
-		{
-			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
-			actionInstance->scriptExecutionStopped();
-		}
-
 		mExecutionWindow->hide();
 		mConsoleWidget->hide();
 
