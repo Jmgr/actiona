@@ -333,6 +333,12 @@ namespace Executer
 				mScript->actionAt(mCurrentActionIndex)->stopExecution();
 		}
 
+		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
+		{
+			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
+			actionInstance->scriptExecutionStopped();
+		}
+
 		mExecutionWindow->hide();
 		mConsoleWidget->hide();
 
@@ -446,24 +452,29 @@ namespace Executer
 			nextLine = mScript->labelLine(nextLineString);
 		else
 			--nextLine;
-	
-		switch(canExecuteAction(nextLine))
+
+		if(nextLine < 0)//End of the script
+			mCurrentActionIndex = nextLine;
+		else
 		{
-		case CanExecute:
-			mCurrentActionIndex = nextLine;
-			break;
-		case IncorrectLine:
-			executionException(ActionTools::ActionException::CodeErrorException, tr("Incorrect Script.nextLine value: %1").arg(nextLineString));
-			return;
-		case InvalidAction:
-			executionException(ActionTools::ActionException::CodeErrorException, tr("The action at line %1 is invalid").arg(nextLineString));
-			return;
-		case DisabledAction:
-			mCurrentActionIndex = nextLine;
-			break;
-		case UnselectedAction:
-			mCurrentActionIndex = nextLine;
-			break;
+			switch(canExecuteAction(nextLine))
+			{
+			case CanExecute:
+				mCurrentActionIndex = nextLine;
+				break;
+			case IncorrectLine:
+				executionException(ActionTools::ActionException::CodeErrorException, tr("Incorrect Script.nextLine value: %1").arg(nextLineString));
+				return;
+			case InvalidAction:
+				executionException(ActionTools::ActionException::CodeErrorException, tr("The action at line %1 is invalid").arg(nextLineString));
+				return;
+			case DisabledAction:
+				mCurrentActionIndex = nextLine;
+				break;
+			case UnselectedAction:
+				mCurrentActionIndex = nextLine;
+				break;
+			}
 		}
 
 		executeCurrentAction();

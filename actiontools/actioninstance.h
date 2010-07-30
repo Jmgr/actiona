@@ -132,6 +132,7 @@ namespace ActionTools
 		SubParameter subParameter(const QString &parameterName, const QString &subParameterName) const
 																			{ return parameter(parameterName).subParameter(subParameterName); }
 		virtual void reset()												{}
+		virtual void scriptExecutionStopped()										{}
 
 		void setupExecution(QScriptEngine *scriptEngine, Script *script)	{ d->scriptEngine = scriptEngine; d->script = script; }
 

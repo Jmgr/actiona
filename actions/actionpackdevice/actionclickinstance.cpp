@@ -22,9 +22,9 @@
 #include "consolewidget.h"
 
 #ifdef Q_WS_X11
-#include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
+#include "xdisplayhelper.h"
 #endif
+
 #ifdef Q_WS_WIN
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -36,19 +36,29 @@
 ActionTools::StringListPair ActionClickInstance::buttons = qMakePair(
 		QStringList() << "left" << "middle" << "right",
 		QStringList() << tr("Left") << tr("Middle") << tr("Right"));
+ActionTools::StringListPair ActionClickInstance::actions = qMakePair(
+		QStringList() << "click" << "press" << "release",
+		QStringList() << tr("Press and release") << tr("Press") << tr("Release"));
+
+bool ActionClickInstance::mPressedButtonStatus[3] = {false};
 
 void ActionClickInstance::startExecution()
 {
 	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 
+	int action;
 	int button;
+	QPoint position;
 	int amount;
-	QString position;
 
-	if(!actionInstanceExecutionHelper.evaluateListElement(button, "button", "value", buttons) ||
-	   !actionInstanceExecutionHelper.evaluateInteger(amount, "amount") ||
-	   !actionInstanceExecutionHelper.evaluateString(position, "position"))
+	if(!actionInstanceExecutionHelper.evaluateListElement(action, "action", "value", actions) ||
+	   !actionInstanceExecutionHelper.evaluateListElement(button, "button", "value", buttons) ||
+	   !actionInstanceExecutionHelper.evaluatePoint(position, "position") ||
+	   !actionInstanceExecutionHelper.evaluateInteger(amount, "amount"))
 		return;
+
+	if(action != ClickAction)
+		amount = 1;
 
 	if(amount <= 0)
 	{
@@ -57,44 +67,50 @@ void ActionClickInstance::startExecution()
 		return;
 	}
 
-	QStringList stringCoordinates = position.split(QChar(':'));
-
-	if(stringCoordinates.count() != 2)
+	if(mPressedButtonStatus[button] && action != ReleaseAction)
 	{
-		actionInstanceExecutionHelper.setCurrentParameter("position");
-		emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid click coordinates"));
+		actionInstanceExecutionHelper.setCurrentParameter("action");
+		emit executionException(InvalidActionException, tr("Cannot press the button because it's already pressed"));
 		return;
 	}
 
-	QPoint coordinates;
-	bool okX, okY;
-
-	coordinates.setX(stringCoordinates.at(0).toInt(&okX));
-	coordinates.setY(stringCoordinates.at(1).toInt(&okY));
-
-	if(!okX || !okY)
+	if(!mPressedButtonStatus[button] && action == ReleaseAction)
 	{
-		actionInstanceExecutionHelper.setCurrentParameter("position");
-		emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid click coordinates"));
+		actionInstanceExecutionHelper.setCurrentParameter("action");
+		emit executionException(InvalidActionException, tr("Cannot release the button because it's not pressed"));
 		return;
 	}
 
 #ifdef Q_WS_X11
-	Display *display = XOpenDisplay(0);
-	if(!display)
+	ActionTools::XDisplayHelper xDisplayHelper;
+	if(!xDisplayHelper.display())
 	{
 		emit executionException(FailedToSendInputException, tr("Unable to emulate click: cannot open display"));
 		return;
 	}
 
-	Window rootWindow = DefaultRootWindow(display);
+	Window rootWindow = XRootWindow(xDisplayHelper.display(), XDefaultScreen(xDisplayHelper.display()));
 	int previousX, previousY;
 	Window unusedWindow;
 	int unusedInt;
 	unsigned int unusedUnsignedInt;
 
-	XQueryPointer(display, rootWindow, &unusedWindow, &unusedWindow, &previousX, &previousY, &unusedInt, &unusedInt, &unusedUnsignedInt);
-	XTestFakeMotionEvent(display, -1, coordinates.x(), coordinates.y(), 0);
+	if(action == ClickAction)
+	{
+		if(!XQueryPointer(xDisplayHelper.display(), rootWindow, &unusedWindow, &unusedWindow, &previousX, &previousY, &unusedInt, &unusedInt, &unusedUnsignedInt))
+		{
+			emit executionException(FailedToSendInputException, tr("Unable to emulate click: query pointer failed"));
+			return;
+		}
+	}
+
+	if(!XTestFakeMotionEvent(xDisplayHelper.display(), -1, position.x(), position.y(), CurrentTime))
+	{
+		emit executionException(FailedToSendInputException, tr("Unable to emulate click: fake motion event failed"));
+		return;
+	}
+
+	XFlush(xDisplayHelper.display());
 
 	int x11Button;
 	switch(static_cast<Button>(button))
@@ -111,22 +127,45 @@ void ActionClickInstance::startExecution()
 		break;
 	}
 
-	//TODO : Look why this doesn't work...
-
 	for(int i = 0; i < amount; ++i)
 	{
-		XTestFakeButtonEvent(display, x11Button, True, i+1);
-		XTestFakeButtonEvent(display, x11Button, False, i+2);
+		if(action == ClickAction || action == PressAction)
+		{
+			if(!XTestFakeButtonEvent(xDisplayHelper.display(), x11Button, True, CurrentTime))
+			{
+				emit executionException(FailedToSendInputException, tr("Unable to emulate click: fake button event failed"));
+				return;
+			}
+		}
+		if(action == ClickAction || action == ReleaseAction)
+		{
+			if(!XTestFakeButtonEvent(xDisplayHelper.display(), x11Button, False, CurrentTime))
+			{
+				emit executionException(FailedToSendInputException, tr("Unable to emulate click: fake button event failed"));
+				return;
+			}
+		}
+
+		XFlush(xDisplayHelper.display());
 	}
 
-	XTestFakeMotionEvent(display, -1, previousX, previousY, amount*2+1);
-	XCloseDisplay(display);
+	if(action == ClickAction)
+	{
+		if(!XTestFakeMotionEvent(xDisplayHelper.display(), -1, previousX, previousY, CurrentTime))
+		{
+			emit executionException(FailedToSendInputException, tr("Unable to emulate click: fake motion event failed"));
+			return;
+		}
+
+		XFlush(xDisplayHelper.display());
+	}
 #endif
+
 #ifdef Q_WS_WIN
 	POINT previousPosition;
 
 	GetCursorPos(&previousPosition);
-	SetCursorPos(coordinates.x(), coordinates.y());
+	SetCursorPos(position.x(), position.y());
 
 	int winButton;
 	switch(static_cast<Button>(button))
@@ -146,8 +185,8 @@ void ActionClickInstance::startExecution()
 	INPUT pressInput;
 	pressInput.type = INPUT_MOUSE;
 	MOUSEINPUT mousePressInput;
-	mousePressInput.dx = coordinates.x();
-	mousePressInput.dy = coordinates.y();
+	mousePressInput.dx = 0;
+	mousePressInput.dy = 0;
 	mousePressInput.mouseData = 0;
 	mousePressInput.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
 	mousePressInput.time = 0;
@@ -170,8 +209,8 @@ void ActionClickInstance::startExecution()
 	INPUT releaseInput;
 	releaseInput.type = INPUT_MOUSE;
 	MOUSEINPUT mouseReleaseInput;
-	mouseReleaseInput.dx = coordinates.x();
-	mouseReleaseInput.dy = coordinates.y();
+	mouseReleaseInput.dx = 0;
+	mouseReleaseInput.dy = 0;
 	mouseReleaseInput.mouseData = 0;
 	mouseReleaseInput.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
 	mouseReleaseInput.time = 0;
@@ -190,5 +229,78 @@ void ActionClickInstance::startExecution()
 	//TODO_MAC
 #endif
 
+	switch(action)
+	{
+	case PressAction:
+		mPressedButtonStatus[button] = true;
+		break;
+	case ReleaseAction:
+		mPressedButtonStatus[button] = false;
+		break;
+	default:
+		break;
+	}
+
 	QTimer::singleShot(1, this, SIGNAL(executionEnded()));
+}
+
+void ActionClickInstance::scriptExecutionStopped()
+{
+	//Release any pressed button, so that we don't end with an invalid state
+	for(int button = 0; button < 3; ++button)
+	{
+		if(mPressedButtonStatus[button])
+		{
+#ifdef Q_WS_X11
+			int x11Button;
+			switch(static_cast<Button>(button))
+			{
+			case MiddleButton:
+				x11Button = Button2;
+				break;
+			case RightButton:
+				x11Button = Button3;
+				break;
+			case LeftButton:
+			default:
+				x11Button = Button1;
+				break;
+			}
+
+			ActionTools::XDisplayHelper xDisplayHelper;
+			if(!XTestFakeButtonEvent(xDisplayHelper.display(), x11Button, False, CurrentTime))
+				continue;
+
+			XFlush(xDisplayHelper.display());
+#endif
+#ifdef Q_WS_WIN
+			int winButton;
+			switch(static_cast<Button>(button))
+			{
+			case MiddleButton:
+				winButton = MOUSEEVENTF_MIDDLEUP;
+				break;
+			case RightButton:
+				winButton = MOUSEEVENTF_RIGHTUP;
+				break;
+			case LeftButton:
+			default:
+				winButton = MOUSEEVENTF_LEFTUP;
+				break;
+			}
+
+			INPUT releaseInput;
+			releaseInput.type = INPUT_MOUSE;
+			MOUSEINPUT mouseReleaseInput;
+			mouseReleaseInput.dx = 0;
+			mouseReleaseInput.dy = 0;
+			mouseReleaseInput.mouseData = 0;
+			mouseReleaseInput.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
+			mouseReleaseInput.time = 0;
+			releaseInput.mi = mousePressInput;
+
+			SendInput(1, &releaseInput, sizeof(INPUT));
+#endif
+		}
+	}
 }

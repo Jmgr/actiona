@@ -3,18 +3,18 @@ TARGET = ActionPackDevice
 QT += script
 HEADERS += actionpackdevice.h \
     actionwheeldefinition.h \
-    actionwheelinstance.h
+	actionwheelinstance.h
 RESOURCES += actionpackdevice.qrc
 unix:LIBS += -lXtst
 win32:LIBS += -luser32
 
 # Text
 HEADERS += actiontextdefinition.h \
-	actiontextinstance.h
+    actiontextinstance.h
 SOURCES += actiontextinstance.cpp \
     actionwheelinstance.cpp
 
 # Click
 HEADERS += actionclickdefinition.h \
-	actionclickinstance.h
+    actionclickinstance.h
 SOURCES += actionclickinstance.cpp

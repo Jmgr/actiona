@@ -26,6 +26,7 @@
 #include "listparameterdefinition.h"
 #include "numberparameterdefinition.h"
 #include "positionparameterdefinition.h"
+#include "groupdefinition.h"
 
 #include <climits>
 
@@ -43,6 +44,15 @@ public:
 	explicit ActionClickDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
+		ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
+																								"action",
+																								tr("Action"),
+																								this);
+		action->setTooltip(tr("The action to simulate"));
+		action->setItems(ActionClickInstance::actions);
+		action->setDefaultValue(ActionClickInstance::actions.second.at(ActionClickInstance::ClickAction));
+		addElement(action);
+
 		ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
 																								"button",
 																								tr("Button"),
@@ -52,6 +62,20 @@ public:
 		button->setDefaultValue(ActionClickInstance::buttons.second.at(ActionClickInstance::LeftButton));
 		addElement(button);
 
+		ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::ElementDefinition::INPUT,
+																								"position",
+																								 tr("Position"),
+																								 this);
+		position->setTooltip(tr("The screen position where to simulate a mouse click"));
+		addElement(position);
+
+		ActionTools::GroupDefinition *clickGroup = new ActionTools::GroupDefinition(			ActionTools::ElementDefinition::INPUT,
+																								"click",
+																								tr("Click action"),
+																								this);
+		clickGroup->setMasterList(action);
+		clickGroup->setMasterValues(QStringList() << ActionClickInstance::actions.first.at(ActionClickInstance::ClickAction));
+
 		ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::ElementDefinition::INPUT,
 																								"amount",
 																								tr("Amount"),
@@ -60,16 +84,12 @@ public:
 		amount->setMinimum(1);
 		amount->setMaximum(INT_MAX);
 		amount->setDefaultValue(1);
-		addElement(amount);
+		clickGroup->addMember(amount);
 
-		ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"position",
-																								 tr("Position"),
-																								 this);
-		position->setTooltip(tr("The screen position where to simulate a mouse click"));
-		addElement(position);
+		addElement(clickGroup);
 		
 		addException(ActionClickInstance::FailedToSendInputException, tr("Send input failure"));
+		addException(ActionClickInstance::InvalidActionException, tr("Invalid action"));
 	}
 
 	QString name() const													{ return QObject::tr("Click"); }

@@ -28,6 +28,7 @@ class ActionClickInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 	Q_ENUMS(Button)
+	Q_ENUMS(Action)
 
 public:
 	enum Button
@@ -36,19 +37,30 @@ public:
 		MiddleButton,
 		RightButton
 	};
+	enum Action
+	{
+		ClickAction,
+		PressAction,
+		ReleaseAction
+	};
 	enum Exceptions
 	{
-		FailedToSendInputException = ActionTools::ActionException::UserException
+		FailedToSendInputException = ActionTools::ActionException::UserException,
+		InvalidActionException
 	};
 
 	ActionClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 		: ActionTools::ActionInstance(definition, parent)										{}
 
 	static ActionTools::StringListPair buttons;
+	static ActionTools::StringListPair actions;
 
 	void startExecution();
+	void scriptExecutionStopped();
 
 private:
+	static bool mPressedButtonStatus[3];
+
 	Q_DISABLE_COPY(ActionClickInstance)
 };
 
