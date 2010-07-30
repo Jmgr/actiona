@@ -21,6 +21,7 @@
 #include "keyparameterdefinition.h"
 #include "keyedit.h"
 #include "actioninstance.h"
+#include "codelineedit.h"
 
 namespace ActionTools
 {
@@ -42,11 +43,11 @@ namespace ActionTools
 
 	void KeyParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mKeyEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		//mKeyEdit->codeLineEdit()->setFromSubParameter(actionInstance->subParameter(name(), "value"));
 	}
 
 	void KeyParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mKeyEdit->isCode(), mKeyEdit->text());
+		//actionInstance->setSubParameter(name(), "value", mKeyEdit->codeLineEdit()->isCode(), mKeyEdit->codeLineEdit()->text());
 	}
 }

@@ -21,36 +21,45 @@
 #ifndef KEYEDIT_H
 #define KEYEDIT_H
 
-#include "codelineedit.h"
 #include "actiontools_global.h"
 
+#include <QWidget>
 #include <QKeySequence>
 
-class QMenu;
+class QCheckBox;
 
 namespace ActionTools
 {
-	class ACTIONTOOLSSHARED_EXPORT KeyEdit : public CodeLineEdit
+	class CodeComboBox;
+	
+	class ACTIONTOOLSSHARED_EXPORT KeyEdit : public QWidget
 	{
 		Q_OBJECT
 
 	public:
 		explicit KeyEdit(QWidget *parent = 0);
 
-		QKeySequence	keySequence() const							{return mKeySequence;}
-		void			setKeySequence(QKeySequence keySequence);
-
+		QKeySequence keySequence() const							{return mKeySequence;}
+		void setKeySequence(const QKeySequence &keySequence);
+		
+		bool eventFilter(QObject *object, QEvent *event);
+	
 	protected:
-		void contextMenuEvent(QContextMenuEvent *event);
+		void focusInEvent(QFocusEvent *event);
+		void focusOutEvent(QFocusEvent *event);
 		void keyPressEvent(QKeyEvent *event);
-
-	private slots:
-		void menuKeyTriggered();
+		void keyReleaseEvent(QKeyEvent *event);
+		bool event(QEvent *event);
 
 	private:
-		void addKeyToMenu(QMenu *menu, const QString &key);
-
+		int translateModifiers(Qt::KeyboardModifiers state, const QString &text) const;
+		
 		QKeySequence mKeySequence;
+		CodeComboBox *mCodeComboBox;
+		QCheckBox *mCtrlCheckBox;
+		QCheckBox *mAltCheckBox;
+		QCheckBox *mShiftCheckBox;
+		QCheckBox *mMetaCheckBox;
 
 		Q_DISABLE_COPY(KeyEdit)
 	};
