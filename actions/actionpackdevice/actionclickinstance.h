@@ -56,7 +56,7 @@ public:
 	static ActionTools::StringListPair actions;
 
 	void startExecution();
-	void scriptExecutionStopped();
+	void stopLongTermExecution();
 
 private:
 	static bool mPressedButtonStatus[3];

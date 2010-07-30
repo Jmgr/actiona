@@ -277,7 +277,7 @@ void ActionClickInstance::startExecution()
 	QTimer::singleShot(1, this, SIGNAL(executionEnded()));
 }
 
-void ActionClickInstance::scriptExecutionStopped()
+void ActionClickInstance::stopLongTermExecution()
 {
 	//Release any pressed button, so that we don't end with an invalid state
 	for(int button = 0; button < 3; ++button)
