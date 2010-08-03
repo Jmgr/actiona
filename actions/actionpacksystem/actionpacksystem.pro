@@ -13,10 +13,13 @@ HEADERS += actionpacksystem.h \
 	actionnotifydefinition.h \
 	actionnotifyinstance.h \
     actionpixelcolordefinition.h \
-    actionpixelcolorinstance.h
+	actionpixelcolorinstance.h \
+	actionreadfiledefinition.h \
+	actionreadfileinstance.h
 RESOURCES += actionpacksystem.qrc
 HEADERS +=
 SOURCES += actionkillprocessinstance.cpp \
-	actionnotifyinstance.cpp
+	actionnotifyinstance.cpp \
+	actionreadfileinstance.cpp
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify

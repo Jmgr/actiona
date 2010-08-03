@@ -70,8 +70,8 @@ public:
 																								tr("Type"),
 																								this);
 		type->setTooltip(tr("The message box type"));
-		type->setItems(ActionMessageBoxInstance::types);
-		type->setDefaultValue(ActionMessageBoxInstance::types.second.at(ActionMessageBoxInstance::OkButton));
+		type->setItems(ActionMessageBoxInstance::buttons);
+		type->setDefaultValue(ActionMessageBoxInstance::buttons.second.at(ActionMessageBoxInstance::OkButton));
 		addElement(type, 1);
 
 		ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition(			ActionTools::ElementDefinition::INPUT,
@@ -79,7 +79,7 @@ public:
 																								tr("Yes-No action"),
 																								this);
 		yesNoGroup->setMasterList(type);
-		yesNoGroup->setMasterValues(QStringList() << ActionMessageBoxInstance::types.first.at(ActionMessageBoxInstance::YesNoButtons));
+		yesNoGroup->setMasterValues(QStringList() << ActionMessageBoxInstance::buttons.first.at(ActionMessageBoxInstance::YesNoButtons));
 
 		ActionTools::IfActionParameterDefinition *ifYes = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
 																								"ifyes",

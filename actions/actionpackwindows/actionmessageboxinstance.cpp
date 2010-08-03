@@ -29,7 +29,7 @@ ActionTools::StringListPair ActionMessageBoxInstance::icons = qMakePair(
 		QStringList() << "none" << "information" << "question" << "warning" << "error",
 		QStringList() << tr("None") << tr("Information") << tr("Question") << tr("Warning") << tr("Error"));
 
-ActionTools::StringListPair ActionMessageBoxInstance::types = qMakePair(
+ActionTools::StringListPair ActionMessageBoxInstance::buttons = qMakePair(
 		QStringList() << "ok" << "yesno",
 		QStringList() << tr("Ok") << tr("Yes-No"));
 
@@ -44,15 +44,15 @@ void ActionMessageBoxInstance::startExecution()
 	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 	QString message;
 	QString title;
-	int icon;
-	int type;
+	Icon icon;
+	Buttons button;
 	
 	mMessageBox = 0;
 
 	if(!actionInstanceExecutionHelper.evaluateString(message, "message") ||
 		!actionInstanceExecutionHelper.evaluateString(title, "title") ||
 		!actionInstanceExecutionHelper.evaluateListElement(icon, "icon", "value", icons) ||
-		!actionInstanceExecutionHelper.evaluateListElement(type, "type", "value", types) ||
+		!actionInstanceExecutionHelper.evaluateListElement(button, "type", "value", buttons) ||
 		!actionInstanceExecutionHelper.evaluateString(mIfYesAction, "ifyes", "action") ||
 		!actionInstanceExecutionHelper.evaluateString(mIfYesLine, "ifyes", "line") ||
 		!actionInstanceExecutionHelper.evaluateString(mIfNoAction, "ifno", "action") ||
@@ -61,13 +61,12 @@ void ActionMessageBoxInstance::startExecution()
 
 	mMessageBox = new QMessageBox();
 
-	mMessageBox->setIcon(messageBoxIcon(static_cast<Icon>(icon)));
+	mMessageBox->setIcon(messageBoxIcon(icon));
 	mMessageBox->setWindowModality(Qt::NonModal);
 	mMessageBox->setText(message);
 	mMessageBox->setWindowTitle(title);
 
-	Buttons buttons = static_cast<Buttons>(type);
-	switch(buttons)
+	switch(button)
 	{
 	case OkButton:
 		mMessageBox->setStandardButtons(QMessageBox::Ok);

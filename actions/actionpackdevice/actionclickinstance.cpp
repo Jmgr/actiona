@@ -46,8 +46,8 @@ void ActionClickInstance::startExecution()
 {
 	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 
-	int action;
-	int button;
+	Action action;
+	Button button;
 	QPoint position;
 	int amount;
 

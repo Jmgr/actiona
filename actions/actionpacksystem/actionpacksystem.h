@@ -28,6 +28,7 @@
 #include "actionkillprocessdefinition.h"
 #include "actionnotifydefinition.h"
 #include "actionpixelcolordefinition.h"
+#include "actionreadfiledefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -50,6 +51,7 @@ public:
 		addActionDefinition(new ActionKillProcessDefinition(this));
 		addActionDefinition(new ActionNotifyDefinition(this));
 		addActionDefinition(new ActionPixelColorDefinition(this));
+		addActionDefinition(new ActionReadFileDefinition(this));
 	}
 
 	QString id() const							{ return tr("system"); }

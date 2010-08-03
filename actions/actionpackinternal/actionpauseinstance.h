@@ -42,6 +42,12 @@ public:
 		if(!actionInstanceExecutionHelper.evaluateInteger(duration, "duration"))
 			return;
 
+		if(duration < 0)
+		{
+			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid pause duration"));
+			return;
+		}
+
 		QTimer::singleShot(duration, this, SIGNAL(executionEnded()));
 	}
 

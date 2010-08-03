@@ -49,7 +49,7 @@ public:
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 
 		QString variable;
-		int comparison;
+		Comparison comparison;
 		QString value;
 		QString ifEqualAction;
 		QString ifEqualLine;
