@@ -81,22 +81,28 @@ void ActionReadFileInstance::startExecution()
 	--lastline;
 
 	QString result;
-	QTextStream stream(&file);
 
-	for(int line = 0; !stream.atEnd(); ++line)
+	if(mode == Full)
+		result = file.readAll();
+	else
 	{
-		QString readLine = stream.readLine();
+		QTextStream stream(&file);
 
-		if(mode == Full || (line >= firstline && line <= lastline))
+		for(int line = 0; !stream.atEnd(); ++line)
 		{
-			if(!result.isEmpty())
-				result += '\n';
+			QString readLine = stream.readLine();
 
-			result += readLine;
+			if(line >= firstline && line <= lastline)
+			{
+				if(!result.isEmpty())
+					result += '\n';
+
+				result += readLine;
+			}
+
+			if(line > lastline)
+				break;
 		}
-
-		if(mode == Selection && line > lastline)
-			break;
 	}
 
 	actionInstanceExecutionHelper.setVariable(variable, result);
