@@ -128,7 +128,7 @@ namespace Tools
 		QString type;
 		QString changelog;
 		QString filename;
-		int size;
+		int size = 0;
 		QString hash;
 		
 		for(;!stream.atEnd();stream.readNext())
