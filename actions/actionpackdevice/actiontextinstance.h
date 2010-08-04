@@ -28,6 +28,11 @@ class ActionTextInstance : public ActionTools::ActionInstance
 	Q_OBJECT
 
 public:
+	enum Exceptions
+	{
+		FailedToSendInputException = ActionTools::ActionException::UserException
+	};
+
 	ActionTextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 		: ActionTools::ActionInstance(definition, parent)										{}
 

@@ -45,6 +45,8 @@ public:
 																								this);
 		text->setTooltip(tr("The text to write"));
 		addElement(text);
+
+		addException(ActionTextInstance::FailedToSendInputException, tr("Send input failure"));
 	}
 
 	QString name() const													{ return QObject::tr("Text"); }

@@ -41,6 +41,9 @@
 #undef signals
 #include <libnotify/notify.h>
 #define signals
+
+#include "xdisplayhelper.h"
+#include "keysymhelper.h"
 #endif
 
 #ifdef Q_WS_WIN
@@ -128,6 +131,15 @@ int main(int argc, char **argv)
 	app.setOrganizationDomain("actionaz.eu");
 	app.setApplicationName("Actionaz");
 	app.setApplicationVersion(Global::ACTIONAZ_VERSION.toString());
+
+#ifdef Q_WS_X11
+	{
+		ActionTools::XDisplayHelper xDisplayHelper;
+
+		if(xDisplayHelper.display())
+			ActionTools::KeySymHelper::loadKeyCodes(xDisplayHelper.display());
+	}
+#endif
 
 	ProgressSplashScreen *splash = 0;
 	if(!options.count("nosplash") && !options.count("execute"))

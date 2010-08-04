@@ -31,14 +31,25 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT KeySymHelper
 	{
 	public:
+		static void loadKeyCodes(Display *display);
 		static KeySym wcharToKeySym(wchar_t c);
+		static int keySymToModifier(KeySym keySym);
+		static KeyCode keySymToKeyCode(KeySym keySym);
+		static const char *keyModifiers[];
 
-	private:
+		static const int NUM_KEY_MODIFIERS = 3;
 		static const int MAP_SIZE = 12285;
 		static const unsigned long MAX_KEYSYM = 65536;
-		static quint16 mWCharToKeySym[];
+		static const int MULTIKEY_MAP_SIZE = 1195;
+
+		static const quint16 multikeyMapChar[];
+		static const quint16 multikeyMapFirst[];
+		static const quint16 multikeyMapSecond[];
+
+	private:
+		static const quint16 mWCharToKeySym[];
 		static int mKeySymToModifier[MAX_KEYSYM];
-		static KeyCode mKeySymToKeycode[MAX_KEYSYM];
+		static KeyCode mKeySymToKeyCode[MAX_KEYSYM];
 	};
 }
 
