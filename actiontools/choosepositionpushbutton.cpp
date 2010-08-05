@@ -25,6 +25,9 @@
 #include <QMouseEvent>
 #include <QxtApplication>
 #include <QMessageBox>
+#include <QDesktopWidget>
+#include <QMainWindow>
+#include <QTimer>
 #include <QDebug>
 
 #ifdef Q_WS_X11
@@ -42,11 +45,21 @@ namespace ActionTools
 	ChoosePositionPushButton::ChoosePositionPushButton(QWidget *parent)
 	: QPushButton(parent),
 	mCrossIcon(new QPixmap(":/images/cross.png")),
-	mSearching(false)
+	mSearching(false),
+	mMainWindow(0)
 #ifdef Q_WS_WIN
 	,mPreviousCursor(NULL)
 #endif
 	{
+		foreach(QWidget *widget, QApplication::topLevelWidgets())
+		{
+			if(QMainWindow *mainWindow = qobject_cast<QMainWindow*>(widget))
+			{
+				mMainWindow = mainWindow;
+				break;
+			}
+		}
+		
 		setToolTip(tr("Target a position by clicking this button, moving the cursor to the desired position and releasing the mouse button."));
 	}
 
@@ -83,6 +96,9 @@ namespace ActionTools
 
 		mSearching = true;
 		update();
+		
+		if(mMainWindow)
+			mMainWindow->showMinimized();
 
 		QCursor newCursor(*mCrossIcon);
 
@@ -142,5 +158,8 @@ namespace ActionTools
 
 		qxtApp->removeNativeEventFilter(this);
 	#endif
+		
+		if(mMainWindow)
+			mMainWindow->showNormal();
 	}
 }

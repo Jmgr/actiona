@@ -26,6 +26,7 @@
 #include <QStyleOptionButton>
 #include <QDebug>
 #include <QMessageBox>
+#include <QMainWindow>
 #ifndef Q_WS_MAC
 #include <QxtWindowSystem>
 #endif
@@ -68,12 +69,22 @@ namespace ActionTools
 	ChooseWindowPushButton::ChooseWindowPushButton(QWidget *parent)
 		: QPushButton(parent),
 		mCrossIcon(new QPixmap(":/images/cross.png")),
-		mSearching(false)
+		mSearching(false),
+		mMainWindow(0)
 #ifdef Q_WS_WIN
 		,mPreviousCursor(NULL)
 		,mRectanglePen(CreatePen(PS_SOLID, 3, RGB(255, 0, 0)))
 #endif
 	{
+		foreach(QWidget *widget, QApplication::topLevelWidgets())
+		{
+			if(QMainWindow *mainWindow = qobject_cast<QMainWindow*>(widget))
+			{
+				mMainWindow = mainWindow;
+				break;
+			}
+		}
+		
 		setToolTip(tr("Target a window by clicking this button, moving the cursor to the wanted window and releasing the mouse button."));
 	}
 
@@ -120,6 +131,9 @@ namespace ActionTools
 #endif
 				mWindowIgnoreList.append(widget);
 		}
+		
+		if(mMainWindow)
+			mMainWindow->showMinimized();
 
 		qxtApp->installNativeEventFilter(this);
 
@@ -265,6 +279,9 @@ namespace ActionTools
 	#endif
 
 		qxtApp->removeNativeEventFilter(this);
+		
+		if(mMainWindow)
+			mMainWindow->showNormal();
 
 		emit searchEnded(mLastFoundWindow);
 	}

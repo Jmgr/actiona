@@ -25,6 +25,9 @@
 
 #include <QPushButton>
 #include <QxtNativeEventFilter>
+#include <QList>
+
+class QMainWindow;
 
 namespace ActionTools
 {
@@ -37,7 +40,7 @@ namespace ActionTools
 
 	signals:
 		void positionChosen(QPoint position);
-
+		
 	private:
 		void paintEvent(QPaintEvent *event);
 		void mousePressEvent(QMouseEvent *event);
@@ -52,6 +55,7 @@ namespace ActionTools
 		QPixmap *mCrossIcon;
 		bool mSearching;
 		QPoint mResult;
+		QMainWindow *mMainWindow;
 #ifdef Q_WS_WIN
 		HCURSOR mPreviousCursor;
 		HPEN	mRectanglePen;

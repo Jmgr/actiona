@@ -27,6 +27,8 @@
 #include <QPushButton>
 #include <QxtNativeEventFilter>
 
+class QMainWindow;
+
 namespace ActionTools
 {
 	class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton, public QxtNativeEventFilter
@@ -71,6 +73,7 @@ namespace ActionTools
 		QPixmap *mCrossIcon;
 		WindowHandle mLastFoundWindow;
 		bool mSearching;
+		QMainWindow *mMainWindow;
 #ifdef Q_WS_WIN
 		HCURSOR mPreviousCursor;
 		HPEN	mRectanglePen;
