@@ -125,6 +125,34 @@ void sendString(Display *display, const QString &string)
 }
 #endif
 
+#ifdef Q_WS_WIN
+void sendString(const QString &string)
+{
+	INPUT input[2];
+	wchar_t *wideString = new wchar_t[string.length()];
+
+	string.toWCharArray(wideString);
+
+	for(int i = 0; i < 2; ++i)
+	{
+		input[i].type = INPUT_KEYBOARD;
+		input[i].ki.wVk = 0;
+		input[i].ki.dwFlags = KEYEVENTF_UNICODE | (i == 0 ? 0 : KEYEVENTF_KEYUP);
+		input[i].ki.time = 0;
+		input[i].ki.dwExtraInfo = 0;
+	}
+
+	for(int i = 0; i < string.length(); ++i)
+	{
+		input[0].ki.wScan = input[1].ki.wScan = wideString[i];
+
+		SendInput(2, input, sizeof(INPUT));
+	}
+
+	delete [] wideString;
+}
+#endif
+
 void ActionTextInstance::startExecution()
 {
 	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
@@ -145,7 +173,7 @@ void ActionTextInstance::startExecution()
 	sendString(xDisplayHelper.display(), text);
 #endif
 #ifdef Q_WS_WIN
-
+	sendString(text);
 #endif
 #ifdef Q_WS_MAC
 	//TODO_MAC
