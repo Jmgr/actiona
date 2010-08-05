@@ -23,6 +23,7 @@
 
 #ifndef Q_WS_MAC
 #include <QxtWindowSystem>
+#include <QDebug>
 #endif
 
 #ifdef Q_WS_X11
@@ -129,7 +130,7 @@ namespace ActionTools
 		return SendNotifyMessage(mValue, WM_CLOSE, 0, 0);
 #endif
 #ifdef Q_WS_X11
-		return (XDestroyWindow(QX11Info::display(), mValue) == Success);
+		return XDestroyWindow(QX11Info::display(), mValue);
 #endif
 	}
 
@@ -141,14 +142,35 @@ namespace ActionTools
 		return CrossPlatform::killProcess(id);
 #endif
 #ifdef Q_WS_X11
-		return (XKillClient(QX11Info::display(), mValue) == Success);
+		return XKillClient(QX11Info::display(), mValue);
 #endif
 	}
 	
 	bool WindowHandle::setForeground() const
 	{
 #ifdef Q_WS_X11
-		return (XRaiseWindow(QX11Info::display(), mValue) == Success);
+		static Atom atomActiveWindow = None;
+		if(atomActiveWindow == None)
+			atomActiveWindow = XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW", False);
+		
+		if(atomActiveWindow == None)
+			return false;
+		
+		XEvent event;
+		memset(&event, 0, sizeof(event));
+		event.type = ClientMessage;
+		event.xclient.display = QX11Info::display();
+		event.xclient.window = mValue;
+		event.xclient.message_type = atomActiveWindow;
+		event.xclient.format = 32;
+		event.xclient.data.l[0] = 1;//Message from a normal application
+		event.xclient.data.l[1] = CurrentTime;
+		
+		XWindowAttributes windowAttributes;
+		if(!XGetWindowAttributes(QX11Info::display(), mValue, &windowAttributes))
+			return false;
+			
+		return XSendEvent(QX11Info::display(), windowAttributes.screen->root, False, SubstructureNotifyMask | SubstructureRedirectMask, &event);
 #endif
 #ifdef Q_WS_WIN
 		if(IsIconic(mValue))
@@ -169,7 +191,7 @@ namespace ActionTools
 	bool WindowHandle::minimize() const
 	{
 #ifdef Q_WS_X11
-		return false;
+		return XIconifyWindow(QX11Info::display(), mValue, DefaultScreen(QX11Info::display()));
 #endif
 #ifdef Q_WS_WIN
 		return SendMessage(mValue, WM_SYSCOMMAND, SC_MINIMIZE, 0);
@@ -179,7 +201,36 @@ namespace ActionTools
 	bool WindowHandle::maximize() const
 	{
 #ifdef Q_WS_X11
-		return false;
+		static Atom atomState = None;
+		if(atomState == None)
+			atomState = XInternAtom(QX11Info::display(), "_NET_WM_STATE", False);
+		static Atom atomMaximizeVert = None;
+		if(atomMaximizeVert == None)
+			atomMaximizeVert = XInternAtom(QX11Info::display(), "_NET_WM_STATE_MAXIMIZED_VERT", False);
+		static Atom atomMaximizeHorz = None;
+		if(atomMaximizeHorz == None)
+			atomMaximizeHorz = XInternAtom(QX11Info::display(), "_NET_WM_STATE_MAXIMIZED_HORZ", False);
+		
+		if(atomState == None || atomMaximizeVert == None || atomMaximizeHorz == None)
+			return false;
+		
+		XEvent event;
+		memset(&event, 0, sizeof(event));
+		event.type = ClientMessage;
+		event.xclient.display = QX11Info::display();
+		event.xclient.window = mValue;
+		event.xclient.message_type = atomState;
+		event.xclient.format = 32;
+		event.xclient.data.l[0] = 1;//_NET_WM_STATE_ADD
+		event.xclient.data.l[1] = atomMaximizeVert;
+		event.xclient.data.l[2] = atomMaximizeHorz;
+		event.xclient.data.l[3] = 1;//Message from a normal application
+		
+		XWindowAttributes windowAttributes;
+		if(!XGetWindowAttributes(QX11Info::display(), mValue, &windowAttributes))
+			return false;
+			
+		return XSendEvent(QX11Info::display(), windowAttributes.screen->root, False, SubstructureNotifyMask | SubstructureRedirectMask, &event);
 #endif
 #ifdef Q_WS_WIN
 		return SendMessage(mValue, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
@@ -189,7 +240,7 @@ namespace ActionTools
 	bool WindowHandle::move(QPoint position) const
 	{
 #ifdef Q_WS_X11
-		return (XMoveWindow(QX11Info::display(), mValue, position.x(), position.y()) == Success);
+		return XMoveWindow(QX11Info::display(), mValue, position.x(), position.y());
 #endif
 #ifdef Q_WS_WIN
 		return SetWindowPos(mValue, 0, position.x(), position.y(), 0, 0, SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSIZE);
@@ -199,24 +250,34 @@ namespace ActionTools
 	bool WindowHandle::resize(QSize size) const
 	{
 #ifdef Q_WS_X11
-		return (XResizeWindow(QX11Info::display(), mValue, size.width(), size.height()) == Success);
+		return XResizeWindow(QX11Info::display(), mValue, size.width(), size.height());
 #endif
 #ifdef Q_WS_WIN
 		return SetWindowPos(mValue, 0, 0, 0, size.width(), size.height(), SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOMOVE);
 #endif
 	}
 	
-	bool WindowHandle::isVisible() const
+	bool WindowHandle::show() const
 	{
 #ifdef Q_WS_X11
-		XWindowAttributes attributes;
-		if(XGetWindowAttributes(QX11Info::display(), mValue, &attributes) != Success)
-			return false;
-		
-		return (attributes.map_state == IsViewable);
+		return XMapWindow(QX11Info::display(), mValue);
 #endif
 #ifdef Q_WS_WIN
-		return IsWindowVisible(mValue);
+		ShowWindow(mValue, SW_SHOW);
+		
+		return true;
+#endif
+	}
+	
+	bool WindowHandle::hide() const
+	{
+#ifdef Q_WS_X11
+		return minimize();
+#endif
+#ifdef Q_WS_WIN
+		ShowWindow(mValue, SW_HIDE);
+		
+		return true;
 #endif
 	}
 

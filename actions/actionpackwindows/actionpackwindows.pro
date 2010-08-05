@@ -5,12 +5,15 @@ CONFIG += qxt
 QXT += core \
     gui
 SOURCES += actiontextinputinstance.cpp \
-    actionwindowconditioninstance.cpp
+    actionwindowconditioninstance.cpp \
+    actionwindowinstance.cpp
 HEADERS += actionpackwindows.h \
     actiontextinputdefinition.h \
     actiontextinputinstance.h \
     actionwindowconditiondefinition.h \
-    actionwindowconditioninstance.h
+    actionwindowconditioninstance.h \
+    actionwindowinstance.h \
+    actionwindowdefinition.h
 RESOURCES += actionpackwindows.qrc
 
 # MessageBox
