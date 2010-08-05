@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>820</width>
-    <height>285</height>
+    <width>865</width>
+    <height>298</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,6 +50,11 @@
           <item>
            <property name="text">
             <string>Jonathan &quot;Jmgr&quot; Mercier-Ganady</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Yann Huriez</string>
            </property>
           </item>
          </widget>
