@@ -51,6 +51,7 @@ namespace ActionTools
 	,mPreviousCursor(NULL)
 #endif
 	{
+#ifdef Q_WS_X11
 		foreach(QWidget *widget, QApplication::topLevelWidgets())
 		{
 			if(QMainWindow *mainWindow = qobject_cast<QMainWindow*>(widget))
@@ -59,7 +60,8 @@ namespace ActionTools
 				break;
 			}
 		}
-		
+#endif
+
 		setToolTip(tr("Target a position by clicking this button, moving the cursor to the desired position and releasing the mouse button."));
 	}
 
@@ -96,25 +98,31 @@ namespace ActionTools
 
 		mSearching = true;
 		update();
-		
+
+#ifdef Q_WS_X11
 		if(mMainWindow)
 			mMainWindow->showMinimized();
+#endif
+#ifdef Q_WS_WIN
+		foreach(QWidget *widget, qxtApp->topLevelWidgets())
+			widget->setWindowOpacity(0.0f);
+#endif
 
 		QCursor newCursor(*mCrossIcon);
 
-	#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN
 		mPreviousCursor = SetCursor(newCursor.handle());
-	#endif
-	#ifdef Q_WS_X11
+#endif
+#ifdef Q_WS_X11
 		qxtApp->installNativeEventFilter(this);
 
 		if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
-			None, newCursor.handle(), CurrentTime) != GrabSuccess)
+						None, newCursor.handle(), CurrentTime) != GrabSuccess)
 		{
 			QMessageBox::warning(this, tr("Choose a window"), tr("Unable to grab the pointer."));
 			event->ignore();
 		}
-	#endif
+#endif
 	}
 
 #ifdef Q_WS_WIN
@@ -149,17 +157,20 @@ namespace ActionTools
 		mSearching = false;
 		update();
 
-	#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN
 		if(mPreviousCursor)
 			SetCursor(mPreviousCursor);
-	#endif
-	#ifdef Q_WS_X11
+
+		foreach(QWidget *widget, qxtApp->topLevelWidgets())
+			widget->setWindowOpacity(1.0f);
+#endif
+#ifdef Q_WS_X11
 		XUngrabPointer(QX11Info::display(), CurrentTime);
 
 		qxtApp->removeNativeEventFilter(this);
-	#endif
-		
+
 		if(mMainWindow)
 			mMainWindow->showNormal();
+#endif
 	}
 }

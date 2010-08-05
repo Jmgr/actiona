@@ -76,6 +76,7 @@ namespace ActionTools
 		,mRectanglePen(CreatePen(PS_SOLID, 3, RGB(255, 0, 0)))
 #endif
 	{
+#ifdef Q_WS_X11
 		foreach(QWidget *widget, QApplication::topLevelWidgets())
 		{
 			if(QMainWindow *mainWindow = qobject_cast<QMainWindow*>(widget))
@@ -84,7 +85,8 @@ namespace ActionTools
 				break;
 			}
 		}
-		
+#endif
+
 		setToolTip(tr("Target a window by clicking this button, moving the cursor to the wanted window and releasing the mouse button."));
 	}
 
@@ -131,9 +133,15 @@ namespace ActionTools
 #endif
 				mWindowIgnoreList.append(widget);
 		}
-		
+
+#ifdef Q_WS_X11
 		if(mMainWindow)
 			mMainWindow->showMinimized();
+#endif
+#ifdef Q_WS_WIN
+		foreach(QWidget *widget, qxtApp->topLevelWidgets())
+			widget->setWindowOpacity(0.0f);
+#endif
 
 		qxtApp->installNativeEventFilter(this);
 
@@ -273,15 +281,18 @@ namespace ActionTools
 
 		if(mLastFoundWindow)
 			refreshWindow(mLastFoundWindow);
+
+		foreach(QWidget *widget, qxtApp->topLevelWidgets())
+			widget->setWindowOpacity(1.0f);
 	#endif
 	#ifdef Q_WS_X11
 		XUngrabPointer(QX11Info::display(), CurrentTime);
+
+		if(mMainWindow)
+			mMainWindow->showNormal();
 	#endif
 
 		qxtApp->removeNativeEventFilter(this);
-		
-		if(mMainWindow)
-			mMainWindow->showNormal();
 
 		emit searchEnded(mLastFoundWindow);
 	}
