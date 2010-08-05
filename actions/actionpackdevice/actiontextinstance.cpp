@@ -45,37 +45,45 @@ KeyCode keyToKeycode(Display *display, const char *key)
 	return XKeysymToKeycode(display, keySym);
 }
 
-void sendCharacter(Display *display, KeySym keySym)
+bool sendCharacter(Display *display, KeySym keySym)
 {
+	bool result = true;
 	KeyCode keyCode = ActionTools::KeySymHelper::keySymToKeyCode(keySym);
 	int shift = ActionTools::KeySymHelper::keySymToModifier(keySym) % 2;
 	const char *wrapKey = ActionTools::KeySymHelper::keyModifiers[
 			(ActionTools::KeySymHelper::keySymToModifier(keySym) - shift) / 2];
 
 	if(wrapKey)
-		XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), True, CurrentTime);
+		result &= (XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), True, CurrentTime) == Success);
 	if(shift)
-		XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), True, CurrentTime);
+		result &= (XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), True, CurrentTime) == Success);
 
-	XTestFakeKeyEvent(display, keyCode, True, CurrentTime);
-	XTestFakeKeyEvent(display, keyCode, False, CurrentTime);
+	result &= (XTestFakeKeyEvent(display, keyCode, True, CurrentTime) == Success);
+	result &= (XTestFakeKeyEvent(display, keyCode, False, CurrentTime) == Success);
 
 	if(shift)
-		XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), False, CurrentTime);
+		result &= (XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), False, CurrentTime) == Success);
 	if(wrapKey)
-		XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), False, CurrentTime);
+		result &= (XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), False, CurrentTime) == Success);
 
 	XFlush(display);
+	
+	return result;
 }
 
-void sendKey(Display *display, const char *key)
+bool sendKey(Display *display, const char *key)
 {
-	XTestFakeKeyEvent(display, keyToKeycode(display, key), True, CurrentTime);
-	XTestFakeKeyEvent(display, keyToKeycode(display, key), False, CurrentTime);
+	bool result = true;
+	
+	result &= (XTestFakeKeyEvent(display, keyToKeycode(display, key), True, CurrentTime) == Success);
+	result &= (XTestFakeKeyEvent(display, keyToKeycode(display, key), False, CurrentTime) == Success);
+	
+	return result;
 }
 
-void sendString(Display *display, const QString &string)
+bool sendString(Display *display, const QString &string)
 {
+	bool result = true;
 	KeySym keySym[2];
 	wchar_t wideString[string.length()];
 	wchar_t wcSinglecharStr[2] = {L'\0'};
@@ -114,14 +122,16 @@ void sendString(Display *display, const QString &string)
 		{
 			if(keySym[1])//Multi key sequence
 			{
-				sendKey(display, "Multi_key");
-				sendCharacter(display, keySym[0]);
-				sendCharacter(display, keySym[1]);
+				result &= sendKey(display, "Multi_key");
+				result &= sendCharacter(display, keySym[0]);
+				result &= sendCharacter(display, keySym[1]);
 			}
 			else//Single key
-				sendCharacter(display, keySym[0]);
+				result &= sendCharacter(display, keySym[0]);
 		}
 	}
+	
+	return result;
 }
 #endif
 
@@ -174,6 +184,8 @@ void ActionTextInstance::startExecution()
 	}
 
 	sendString(xDisplayHelper.display(), text);
+	//We should emit a warning here, but not an error
+	//For now, juste silently ignore any character that can't be emulated
 #endif
 #ifdef Q_WS_WIN
 	if(!sendString(text))
