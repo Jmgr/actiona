@@ -26,6 +26,7 @@
 #include "actionclickdefinition.h"
 #include "actionwheeldefinition.h"
 #include "actionkeydefinition.h"
+#include "actionmovecursordefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -46,6 +47,7 @@ public:
 		addActionDefinition(new ActionClickDefinition(this));
 		addActionDefinition(new ActionWheelDefinition(this));
 		addActionDefinition(new ActionKeyDefinition(this));
+		addActionDefinition(new ActionMoveCursorDefinition(this));
 	}
 
 	QString id() const							{ return tr("device"); }

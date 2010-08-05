@@ -5,7 +5,9 @@ HEADERS += actionpackdevice.h \
     actionwheeldefinition.h \
     actionwheelinstance.h \
     actionkeydefinition.h \
-    actionkeyinstance.h
+    actionkeyinstance.h \
+    actionmovecursorinstance.h \
+    actionmovecursordefinition.h
 RESOURCES += actionpackdevice.qrc
 unix:LIBS += -lXtst
 win32:LIBS += -luser32
