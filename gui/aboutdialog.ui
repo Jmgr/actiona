@@ -52,6 +52,11 @@
             <string>Jonathan &quot;Jmgr&quot; Mercier-Ganady</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>Yann Huriez</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item row="1" column="1">
