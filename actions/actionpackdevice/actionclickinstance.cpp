@@ -21,6 +21,8 @@
 #include "actionclickinstance.h"
 #include "consolewidget.h"
 
+#include <QDebug>
+
 #ifdef Q_WS_X11
 #include "xdisplayhelper.h"
 #endif
@@ -88,28 +90,9 @@ void ActionClickInstance::startExecution()
 		emit executionException(FailedToSendInputException, tr("Unable to emulate click: cannot open display"));
 		return;
 	}
-
-	Window rootWindow = XRootWindow(xDisplayHelper.display(), XDefaultScreen(xDisplayHelper.display()));
-	int previousX, previousY;
-	Window unusedWindow;
-	int unusedInt;
-	unsigned int unusedUnsignedInt;
-
-	if(action == ClickAction)
-	{
-		if(!XQueryPointer(xDisplayHelper.display(), rootWindow, &unusedWindow, &unusedWindow, &previousX, &previousY, &unusedInt, &unusedInt, &unusedUnsignedInt))
-		{
-			emit executionException(FailedToSendInputException, tr("Unable to emulate click: query pointer failed"));
-			return;
-		}
-	}
-
-	if(!XTestFakeMotionEvent(xDisplayHelper.display(), -1, position.x(), position.y(), CurrentTime))
-	{
-		emit executionException(FailedToSendInputException, tr("Unable to emulate click: fake motion event failed"));
-		return;
-	}
-
+	
+	//Note : we can't use XTestFakeMotionEvent because it's incompatible with Xinerama
+	XWarpPointer(xDisplayHelper.display(), None, DefaultRootWindow(xDisplayHelper.display()), 0, 0, 0, 0, position.x(), position.y());
 	XFlush(xDisplayHelper.display());
 
 	int x11Button;
@@ -148,37 +131,16 @@ void ActionClickInstance::startExecution()
 
 		XFlush(xDisplayHelper.display());
 	}
-
-	if(action == ClickAction)
-	{
-		if(!XTestFakeMotionEvent(xDisplayHelper.display(), -1, previousX, previousY, CurrentTime))
-		{
-			emit executionException(FailedToSendInputException, tr("Unable to emulate click: fake motion event failed"));
-			return;
-		}
-
-		XFlush(xDisplayHelper.display());
-	}
 #endif
 
 #ifdef Q_WS_WIN
-	POINT previousPosition;
+	QPoint previousPosition;
 
 	if(action == ClickAction)
-	{
-		if(!GetCursorPos(&previousPosition))
-		{
-			emit executionException(FailedToSendInputException, tr("Get cursor position failed"));
-			return;
-		}
-	}
-
-	if(!SetCursorPos(position.x(), position.y()))
-	{
-		emit executionException(FailedToSendInputException, tr("Set cursor position failed"));
-		return;
-	}
-
+		previousPosition = QCursor::pos();
+	
+	QCursor::setPos(position);
+	
 	int winButton;
 	switch(static_cast<Button>(button))
 	{
@@ -250,13 +212,7 @@ void ActionClickInstance::startExecution()
 	}
 
 	if(action == ClickAction)
-	{
-		if(!SetCursorPos(previousPosition.x, previousPosition.y))
-		{
-			emit executionException(FailedToSendInputException, tr("Set cursor position failed"));
-			return;
-		}
-	}
+		QCursor::setPos(previousPosition);
 #endif
 #ifdef Q_WS_MAC
 	//TODO_MAC
