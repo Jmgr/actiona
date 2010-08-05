@@ -126,10 +126,11 @@ void sendString(Display *display, const QString &string)
 #endif
 
 #ifdef Q_WS_WIN
-void sendString(const QString &string)
+bool sendString(const QString &string)
 {
 	INPUT input[2];
 	wchar_t *wideString = new wchar_t[string.length()];
+	bool result = true;
 
 	string.toWCharArray(wideString);
 
@@ -146,10 +147,12 @@ void sendString(const QString &string)
 	{
 		input[0].ki.wScan = input[1].ki.wScan = wideString[i];
 
-		SendInput(2, input, sizeof(INPUT));
+		result &= (SendInput(2, input, sizeof(INPUT)) != 0);
 	}
 
 	delete [] wideString;
+
+	return result;
 }
 #endif
 
@@ -173,7 +176,11 @@ void ActionTextInstance::startExecution()
 	sendString(xDisplayHelper.display(), text);
 #endif
 #ifdef Q_WS_WIN
-	sendString(text);
+	if(!sendString(text))
+	{
+		emit executionException(FailedToSendInputException, tr("Unable to send input"));
+		return;
+	}
 #endif
 #ifdef Q_WS_MAC
 	//TODO_MAC
