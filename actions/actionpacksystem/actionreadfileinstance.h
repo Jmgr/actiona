@@ -18,50 +18,37 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONCLICKINSTANCE_H
-#define ACTIONCLICKINSTANCE_H
+#ifndef ACTIONREADFILEINSTANCE_H
+#define ACTIONREADFILEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
+#include "stringlistpair.h"
 
-class ActionClickInstance : public ActionTools::ActionInstance
+class ActionReadFileInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
-	Q_ENUMS(Button)
-	Q_ENUMS(Action)
+	Q_ENUMS(Mode)
 
 public:
-	enum Button
+	enum Mode
 	{
-		LeftButton,
-		MiddleButton,
-		RightButton
-	};
-	enum Action
-	{
-		ClickAction,
-		PressAction,
-		ReleaseAction
+		Full,
+		Selection
 	};
 	enum Exceptions
 	{
-		FailedToSendInputException = ActionTools::ActionException::UserException,
-		InvalidActionException
+		CannotOpenFileException = ActionTools::ActionException::UserException
 	};
 
-	ActionClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)										{}
+	ActionReadFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)												{}
 
-	static ActionTools::StringListPair buttons;
-	static ActionTools::StringListPair actions;
+	static ActionTools::StringListPair modes;
 
 	void startExecution();
-	void stopLongTermExecution();
 
 private:
-	static bool mPressedButtonStatus[3];
-
-	Q_DISABLE_COPY(ActionClickInstance)
+	Q_DISABLE_COPY(ActionReadFileInstance)
 };
 
-#endif // ACTIONCLICKINSTANCE_H
+#endif // ACTIONREADFILEINSTANCE_H

@@ -42,13 +42,13 @@ namespace ActionTools
 	public:
 		GroupDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent = 0);
 
-		void addMember(ParameterDefinition *parameter)			{ mMembers.append(parameter); }
-		QList<ParameterDefinition *> members() const			{ return mMembers; }
+		void addMember(ParameterDefinition *parameter, int tab = 0)		{ parameter->setTab(tab); mMembers.append(parameter); }
+		QList<ParameterDefinition *> members() const					{ return mMembers; }
 
-		void setGroupBox(QGroupBox *groupBox)					{ mGroupBox = groupBox; }
+		void setGroupBox(QGroupBox *groupBox)							{ mGroupBox = groupBox; }
 
 		void setMasterList(ListParameterDefinition *masterList);
-		void setMasterValues(const QStringList &masterValues)	{ mMasterValues = masterValues; }
+		void setMasterValues(const QStringList &masterValues)			{ mMasterValues = masterValues; }
 
 		void init();
 		

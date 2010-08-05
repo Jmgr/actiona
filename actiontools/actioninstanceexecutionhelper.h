@@ -55,10 +55,55 @@ namespace ActionTools
 		bool evaluateFloat(float &buffer,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
-		bool evaluateListElement(int &buffer,
+
+		//I have to put this method here because it's a template method
+		template<typename T>
+		bool evaluateListElement(T &buffer,
 								 const QString &parameterName,
 								 const QString &subParameterName,
-								 const StringListPair &listElements);
+								 const StringListPair &listElements)
+		{
+			mParameterName = parameterName;
+			mSubParameterName = subParameterName;
+
+			const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
+			if(!evaluate(toEvaluate))
+				return false;
+
+			QString selectedItem = mResult.toString();
+
+			for(int i=0;i<listElements.first.size();++i)//Search in the non-translated items
+			{
+				if(listElements.first.at(i) == selectedItem)
+				{
+					buffer = static_cast<T>(i);
+					return true;
+				}
+			}
+
+			for(int i=0;i<listElements.second.size();++i)//Then search in the translated items
+			{
+				if(listElements.second.at(i) == selectedItem)
+				{
+					buffer = static_cast<T>(i);
+					return true;
+				}
+			}
+
+			bool success;
+
+			buffer = static_cast<T>(mResult.toInt(&success));
+
+			if(!success || buffer < 0 || buffer >= listElements.first.count())
+			{
+				mErrorMessage = tr("\"%1\" is incorrect.").arg(toEvaluate.value().toString());
+				emit evaluationException(ActionException::BadParameterException, mErrorMessage);
+				return false;
+			}
+
+			return true;
+		}
+
 		bool evaluatePoint(QPoint &buffer,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");

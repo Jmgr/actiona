@@ -22,6 +22,8 @@
 #include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_X11
+#include "xdisplayhelper.h"
+#include "keysymhelper.h"
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
 #endif
@@ -32,6 +34,128 @@
 
 #include <QTimer>
 
+#ifdef Q_WS_X11
+KeyCode keyToKeycode(Display *display, const char *key)
+{
+	KeySym keySym = XStringToKeysym(key);
+
+	if(keySym == NoSymbol)
+		return keyToKeycode(display, "space");
+
+	return XKeysymToKeycode(display, keySym);
+}
+
+void sendCharacter(Display *display, KeySym keySym)
+{
+	KeyCode keyCode = ActionTools::KeySymHelper::keySymToKeyCode(keySym);
+	int shift = ActionTools::KeySymHelper::keySymToModifier(keySym) % 2;
+	const char *wrapKey = ActionTools::KeySymHelper::keyModifiers[
+			(ActionTools::KeySymHelper::keySymToModifier(keySym) - shift) / 2];
+
+	if(wrapKey)
+		XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), True, CurrentTime);
+	if(shift)
+		XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), True, CurrentTime);
+
+	XTestFakeKeyEvent(display, keyCode, True, CurrentTime);
+	XTestFakeKeyEvent(display, keyCode, False, CurrentTime);
+
+	if(shift)
+		XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), False, CurrentTime);
+	if(wrapKey)
+		XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), False, CurrentTime);
+
+	XFlush(display);
+}
+
+void sendKey(Display *display, const char *key)
+{
+	XTestFakeKeyEvent(display, keyToKeycode(display, key), True, CurrentTime);
+	XTestFakeKeyEvent(display, keyToKeycode(display, key), False, CurrentTime);
+}
+
+void sendString(Display *display, const QString &string)
+{
+	KeySym keySym[2];
+	wchar_t wideString[string.length()];
+	wchar_t wcSinglecharStr[2] = {L'\0'};
+
+	string.toWCharArray(wideString);
+
+	for(int i = 0; wideString[i] != L'\0' && i < string.length(); ++i)
+	{
+		wcSinglecharStr[0] = wideString[i];
+
+		//KeySym lookup
+		keySym[0] = ActionTools::KeySymHelper::wcharToKeySym(wcSinglecharStr[0]);
+		keySym[1] = 0;
+
+		if(keySym[0] == 0 || ActionTools::KeySymHelper::keySymToKeyCode(keySym[0]) == 0)
+		{
+			//No keycode found -> try to find a Multi_key combination for this character
+			keySym[0] = 0;
+
+			for(int j = 0; j < ActionTools::KeySymHelper::MULTIKEY_MAP_SIZE; ++j)
+			{
+				if(wcSinglecharStr[0] == ActionTools::KeySymHelper::multikeyMapChar[j])//Found
+				{
+					keySym[0] = ActionTools::KeySymHelper::wcharToKeySym(ActionTools::KeySymHelper::multikeyMapFirst[j]);
+					keySym[1] = ActionTools::KeySymHelper::wcharToKeySym(ActionTools::KeySymHelper::multikeyMapSecond[j]);
+					if((ActionTools::KeySymHelper::keySymToKeyCode(keySym[0]) == 0)
+						|| (ActionTools::KeySymHelper::keySymToKeyCode(keySym[1]) == 0))
+						keySym[0] = 0;//Character not supported
+
+					break;
+				}
+			}
+		}
+
+		if(keySym[0])
+		{
+			if(keySym[1])//Multi key sequence
+			{
+				sendKey(display, "Multi_key");
+				sendCharacter(display, keySym[0]);
+				sendCharacter(display, keySym[1]);
+			}
+			else//Single key
+				sendCharacter(display, keySym[0]);
+		}
+	}
+}
+#endif
+
+#ifdef Q_WS_WIN
+bool sendString(const QString &string)
+{
+	INPUT input[2];
+	wchar_t *wideString = new wchar_t[string.length()];
+	bool result = true;
+
+	string.toWCharArray(wideString);
+
+	for(int i = 0; i < 2; ++i)
+	{
+		input[i].type = INPUT_KEYBOARD;
+		input[i].ki.wVk = 0;
+		input[i].ki.dwFlags = KEYEVENTF_UNICODE | (i == 0 ? 0 : KEYEVENTF_KEYUP);
+		input[i].ki.time = 0;
+		input[i].ki.dwExtraInfo = 0;
+	}
+
+	for(int i = 0; i < string.length(); ++i)
+	{
+		input[0].ki.wScan = input[1].ki.wScan = wideString[i];
+
+		result &= (SendInput(2, input, sizeof(INPUT)) != 0);
+	}
+
+	delete [] wideString;
+
+	return result;
+}
+#endif
+
 void ActionTextInstance::startExecution()
 {
 	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
@@ -40,14 +164,23 @@ void ActionTextInstance::startExecution()
 
 	if(!actionInstanceExecutionHelper.evaluateString(text, "text"))
 		return;
-	
-	//TODO
 
 #ifdef Q_WS_X11
-	
+	ActionTools::XDisplayHelper xDisplayHelper;
+	if(!xDisplayHelper.display())
+	{
+		emit executionException(FailedToSendInputException, tr("Unable to emulate keypress: cannot open display"));
+		return;
+	}
+
+	sendString(xDisplayHelper.display(), text);
 #endif
 #ifdef Q_WS_WIN
-
+	if(!sendString(text))
+	{
+		emit executionException(FailedToSendInputException, tr("Unable to send input"));
+		return;
+	}
 #endif
 #ifdef Q_WS_MAC
 	//TODO_MAC

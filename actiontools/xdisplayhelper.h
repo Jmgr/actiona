@@ -18,28 +18,31 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONTEXTINSTANCE_H
-#define ACTIONTEXTINSTANCE_H
+#ifndef XDISPLAYHELPER_H
+#define XDISPLAYHELPER_H
 
-#include "actioninstance.h"
+#include "actiontools_global.h"
 
-class ActionTextInstance : public ActionTools::ActionInstance
+#ifdef Q_WS_X11
+
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
+
+namespace ActionTools
 {
-	Q_OBJECT
-
-public:
-	enum Exceptions
+	class ACTIONTOOLSSHARED_EXPORT XDisplayHelper
 	{
-		FailedToSendInputException = ActionTools::ActionException::UserException
+	public:
+		XDisplayHelper()			{ mDisplay = XOpenDisplay(NULL); }
+		~XDisplayHelper()			{ if(mDisplay) XCloseDisplay(mDisplay); }
+
+		Display *display() const	{ return mDisplay; }
+
+	private:
+		Display *mDisplay;
 	};
+}
 
-	ActionTextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)										{}
+#endif
 
-	void startExecution();
-
-private:
-	Q_DISABLE_COPY(ActionTextInstance)
-};
-
-#endif // ACTIONTEXTINSTANCE_H
+#endif // XDISPLAYHELPER_H

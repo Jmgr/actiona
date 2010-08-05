@@ -57,7 +57,7 @@ public:
 	ActionMessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
 	static ActionTools::StringListPair icons;
-	static ActionTools::StringListPair types;
+	static ActionTools::StringListPair buttons;
 
 	void startExecution();
 	void stopExecution();

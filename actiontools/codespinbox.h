@@ -47,6 +47,8 @@ namespace ActionTools
 		void openEditor(int line = -1, int column = -1);
 		void setCompletionModel(QAbstractItemModel *completionModel);
 
+		QString text();
+
 	private slots:
 		void codeChanged(bool code);
 

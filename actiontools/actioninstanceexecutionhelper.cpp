@@ -104,7 +104,14 @@ namespace ActionTools
 
 		buffer = mResult.toInt(&result);
 
-		return result;
+		if(!result)
+		{
+			mErrorMessage = tr("Expected an integer value.");
+			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
+			return false;
+		}
+
+		return true;
 	}
 
 	bool ActionInstanceExecutionHelper::evaluateFloat(float &buffer,
@@ -122,55 +129,16 @@ namespace ActionTools
 
 		buffer = mResult.toDouble(&result);
 
-		return result;
-	}
-
-	bool ActionInstanceExecutionHelper::evaluateListElement(int &buffer,
-											  const QString &parameterName,
-											  const QString &subParameterName,
-											  const StringListPair &listElements)
-	{
-		mParameterName = parameterName;
-		mSubParameterName = subParameterName;
-
-		const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
-		if(!evaluate(toEvaluate))
-			return false;
-
-		QString selectedItem = mResult.toString();
-
-		for(int i=0;i<listElements.first.size();++i)//Search in the non-translated items
+		if(!result)
 		{
-			if(listElements.first.at(i) == selectedItem)
-			{
-				buffer = i;
-				return true;
-			}
-		}
-
-		for(int i=0;i<listElements.second.size();++i)//Then search in the translated items
-		{
-			if(listElements.second.at(i) == selectedItem)
-			{
-				buffer = i;
-				return true;
-			}
-		}
-
-		bool success;
-
-		buffer = mResult.toInt(&success);
-
-		if(!success || buffer < 0 || buffer >= listElements.first.count())
-		{
-			mErrorMessage = tr("\"%1\" is incorrect.").arg(toEvaluate.value().toString());
+			mErrorMessage = tr("Expected a decimal value.");
 			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
 
 		return true;
 	}
-	
+
 	bool ActionInstanceExecutionHelper::evaluatePoint(QPoint &buffer,
 					   const QString &parameterName,
 					   const QString &subParameterName)
@@ -269,13 +237,15 @@ namespace ActionTools
 		{
 			QString value(toEvaluate.value().toString());
 
-			QRegExp regexpVariable("[^\\\\]\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
+			QRegExp regexpVariable("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 			int position = 0;
-			
+
 			while((position = regexpVariable.indexIn(value, position)) != -1)
 			{	
-				const QString &foundVariable = regexpVariable.cap(1);
+				QString foundVariable = regexpVariable.cap(2);
 				QScriptValue evaluationResult = mScriptEngine->globalObject().property(foundVariable);
+
+				position += regexpVariable.cap(1).length();
 
 				if(!evaluationResult.isValid())
 				{
@@ -284,10 +254,12 @@ namespace ActionTools
 					return false;
 				}
 				
-				value.replace(position + 1, foundVariable.length() + 1, evaluationResult.toString());
-				position += foundVariable.length() - 1;
+				value.replace(position,
+							  foundVariable.length() + 1,
+							  evaluationResult.toString());
+				position += foundVariable.length() + 1;
 			}
-			
+
 			mResult = value;
 			
 			return true;

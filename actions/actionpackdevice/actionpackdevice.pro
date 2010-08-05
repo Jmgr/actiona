@@ -12,12 +12,12 @@ win32:LIBS += -luser32
 
 # Text
 HEADERS += actiontextdefinition.h \
-	actiontextinstance.h
+    actiontextinstance.h
 SOURCES += actiontextinstance.cpp \
     actionwheelinstance.cpp \
     actionkeyinstance.cpp
 
 # Click
 HEADERS += actionclickdefinition.h \
-	actionclickinstance.h
+    actionclickinstance.h
 SOURCES += actionclickinstance.cpp
