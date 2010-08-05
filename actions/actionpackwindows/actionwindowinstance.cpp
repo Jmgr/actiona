@@ -26,9 +26,8 @@
 #include <QRegExp>
 
 ActionTools::StringListPair ActionWindowInstance::actions = qMakePair(
-		QStringList() << "close" << "killProcess" << "setForeground" << "minimize" << "maximize" << "move" << "resize" << "show" << "hide",
-		QStringList() << tr("Close") << tr("Kill process") << tr("Set foreground") << tr("Minimize") << tr("Maximize") << tr("Move") << tr("Resize") << tr("Show")
-		<< tr("Hide"));
+		QStringList() << "close" << "killProcess" << "setForeground" << "minimize" << "maximize" << "move" << "resize",
+		QStringList() << tr("Close") << tr("Kill process") << tr("Set foreground") << tr("Minimize") << tr("Maximize") << tr("Move") << tr("Resize"));
 
 ActionWindowInstance::ActionWindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 	: ActionTools::ActionInstance(definition, parent)
@@ -38,17 +37,17 @@ ActionWindowInstance::ActionWindowInstance(const ActionTools::ActionDefinition *
 void ActionWindowInstance::startExecution()
 {
 	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-	
+
 	QString title;
 	Action action;
 	QPoint movePosition;
 	int resizeWidth;
 	int resizeHeight;
-	
+
 	if(!actionInstanceExecutionHelper.evaluateString(title, "title") ||
 		!actionInstanceExecutionHelper.evaluateListElement(action, actions, "action"))
 		return;
-	
+
 	if(action == Move)
 	{
 		if(!actionInstanceExecutionHelper.evaluatePoint(movePosition, "movePosition"))
@@ -60,10 +59,10 @@ void ActionWindowInstance::startExecution()
 			!actionInstanceExecutionHelper.evaluateInteger(resizeHeight, "resizeHeight"))
 			return;
 	}
-	
+
 	QRegExp titleRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix);
 	ActionTools::WindowHandle foundWindow;
-	
+
 	foreach(const WId &windowId, QxtWindowSystem::windows())
 	{
 		ActionTools::WindowHandle windowHandle(windowId);
@@ -73,16 +72,16 @@ void ActionWindowInstance::startExecution()
 			break;
 		}
 	}
-	
+
 	if(!foundWindow.isValid())
 	{
 		actionInstanceExecutionHelper.setCurrentParameter("title");
 		emit executionException(CannotFindWindowException, tr("Cannot find any window matching \"%1\"").arg(title));
 		return;
 	}
-	
+
 	bool result = true;
-	
+
 	switch(action)
 	{
 	case Close:
@@ -106,20 +105,14 @@ void ActionWindowInstance::startExecution()
 	case Resize:
 		result = foundWindow.resize(QSize(resizeWidth, resizeHeight));
 		break;
-	case Show:
-		result = foundWindow.show();
-		break;
-	case Hide:
-		result = foundWindow.hide();
-		break;
 	}
-	
+
 	if(!result)
 	{
 		actionInstanceExecutionHelper.setCurrentParameter("action");
 		emit executionException(ActionFailedException, tr("\"%1\" failed").arg(actions.second[action]));
 		return;
 	}
-	
+
 	emit executionEnded();
 }

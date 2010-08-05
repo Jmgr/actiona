@@ -30,7 +30,7 @@
 
 namespace ActionTools
 {
-	class WindowHandle
+	class ACTIONTOOLSSHARED_EXPORT WindowHandle
 	{
 	public:
 		WindowHandle() : mValue(0)								{}
@@ -55,12 +55,10 @@ namespace ActionTools
 		bool maximize() const;
 		bool move(QPoint position) const;
 		bool resize(QSize size) const;
-		bool show() const;
-		bool hide() const;
 
 		static WindowHandle foregroundWindow();
 		static WindowHandle findWindow(const QString &title);
-		
+
 	private:
 		WId mValue;
 	};

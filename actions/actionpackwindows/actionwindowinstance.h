@@ -38,22 +38,20 @@ public:
 		Minimize,
 		Maximize,
 		Move,
-		Resize,
-		Show,
-		Hide
+		Resize
 	};
 	enum Exceptions
 	{
 		CannotFindWindowException = ActionTools::ActionException::UserException,
 		ActionFailedException
 	};
-	
+
 	ActionWindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
 	static ActionTools::StringListPair actions;
-	
+
 	void startExecution();
-	
+
 private:
 	Q_DISABLE_COPY(ActionWindowInstance)
 };
