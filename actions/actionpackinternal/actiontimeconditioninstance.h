@@ -23,6 +23,7 @@
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
+#include "ifactionvalue.h"
 
 #include <QDateTime>
 #include <QTimer>
@@ -39,20 +40,14 @@ public:
 	{
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString date;
-		QString ifBeforeAction;
-		QString ifBeforeLine;
-		QString ifNowAction;
-		QString ifNowLine;
-		QString ifAfterAction;
-		QString ifAfterLine;
+		ActionTools::IfActionValue ifBefore;
+		ActionTools::IfActionValue ifNow;
+		ActionTools::IfActionValue ifAfter;
 
 		if(!actionInstanceExecutionHelper.evaluateString(date, "date") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifBeforeAction, "ifbefore", "action") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifBeforeLine, "ifbefore", "line") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifNowAction, "ifnow", "action") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifNowLine, "ifnow", "line") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifAfterAction, "ifafter", "action") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifAfterLine, "ifafter", "line"))
+		   !actionInstanceExecutionHelper.evaluateIfAction(ifBefore, "ifBefore") ||
+		   !actionInstanceExecutionHelper.evaluateIfAction(ifNow, "ifBefore") ||
+		   !actionInstanceExecutionHelper.evaluateIfAction(ifAfter, "ifNow"))
 			return;
 		
 		mTestedDateTime = QDateTime::fromString(date, "dd/MM/yyyy hh:mm:ss");
@@ -67,12 +62,12 @@ public:
 		QString line;
 		if(mTestedDateTime < QDateTime::currentDateTime())//Before
 		{
-			action = ifBeforeAction;
-			line = ifBeforeLine;
+			action = ifBefore.action();
+			line = ifBefore.line();
 		}
 		else if(mTestedDateTime > QDateTime::currentDateTime())//After
 		{
-			if(ifAfterAction == "wait")
+			if(ifAfter.action() == ActionTools::IfActionValue::WAIT)
 			{
 				connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkDateTime()));
 				mTimer.setInterval(1000);
@@ -81,16 +76,16 @@ public:
 				return;
 			}
 			
-			action = ifAfterAction;
-			line = ifAfterLine;
+			action = ifAfter.action();
+			line = ifAfter.line();
 		}
 		else//Now
 		{
-			action = ifNowAction;
-			line = ifNowLine;
+			action = ifNow.action();
+			line = ifNow.line();
 		}
 		
-		if(action == "goto")
+		if(action == ActionTools::IfActionValue::GOTO)
 			actionInstanceExecutionHelper.setNextLine(line);
 
 		emit executionEnded();

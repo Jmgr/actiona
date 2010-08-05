@@ -66,14 +66,14 @@ public:
 		addElement(value);
 
 		ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifequal",
+																								"ifEqual",
 																								tr("If equal"),
 																								this);
 		ifEqual->setTooltip(tr("What to do if the values are equal"));
 		addElement(ifEqual);
 
 		ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifdifferent",
+																								"ifDifferent",
 																								tr("If different"),
 																								this);
 		ifDifferent->setTooltip(tr("What to do if the values are different"));

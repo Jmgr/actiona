@@ -34,6 +34,7 @@ class QRegExp;
 namespace ActionTools
 {
 	class Script;
+	class IfActionValue;
 	
 	class ACTIONTOOLSSHARED_EXPORT ActionInstanceExecutionHelper : public QObject
 	{
@@ -55,13 +56,15 @@ namespace ActionTools
 		bool evaluateFloat(float &buffer,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
+		bool evaluateIfAction(IfActionValue &buffer,
+						   const QString &parameterName);
 
 		//I have to put this method here because it's a template method
 		template<typename T>
 		bool evaluateListElement(T &buffer,
+								 const StringListPair &listElements,
 								 const QString &parameterName,
-								 const QString &subParameterName,
-								 const StringListPair &listElements)
+								 const QString &subParameterName = "value")
 		{
 			mParameterName = parameterName;
 			mSubParameterName = subParameterName;

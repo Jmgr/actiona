@@ -55,6 +55,7 @@ namespace ActionTools
 		bool maximize() const;
 		bool move(QPoint position) const;
 		bool resize(QSize size) const;
+		bool isVisible() const;
 
 		static WindowHandle foregroundWindow();
 		static WindowHandle findWindow(const QString &title);

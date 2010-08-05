@@ -24,6 +24,7 @@
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
+#include "ifactionvalue.h"
 
 #include <QPoint>
 #include <QPixmap>
@@ -42,36 +43,40 @@ public:
 	{
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		
-		if(!actionInstanceExecutionHelper.evaluatePoint(mPixelPosition, "pixel", "position") ||
-		   !actionInstanceExecutionHelper.evaluateColor(mPixelColor, "pixel", "color") ||
-		   !actionInstanceExecutionHelper.evaluateString(mIfEqualAction, "ifEqual", "action") ||
-		   !actionInstanceExecutionHelper.evaluateString(mIfEqualLine, "ifEqual", "line") ||
-		   !actionInstanceExecutionHelper.evaluateString(mIfDifferentAction, "ifDifferent", "action") ||
-		   !actionInstanceExecutionHelper.evaluateString(mIfDifferentLine, "ifDifferent", "line") ||
-		   !actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
+		QPoint pixelPosition;
+		QColor pixelColorValue;
+		ActionTools::IfActionValue ifEqual;
+		ActionTools::IfActionValue ifDifferent;
+		QString variable;
+		
+		if(!actionInstanceExecutionHelper.evaluatePoint(pixelPosition, "pixel", "position") ||
+		   !actionInstanceExecutionHelper.evaluateColor(pixelColorValue, "pixel", "color") ||
+		   !actionInstanceExecutionHelper.evaluateIfAction(ifEqual, "ifEqual") ||
+		   !actionInstanceExecutionHelper.evaluateIfAction(ifDifferent, "ifDifferent") ||
+		   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
 			return;
 		
 		QString action;
 		QString line;
-		QColor color = pixelColor(mPixelPosition.x(), mPixelPosition.y());
+		QColor color = pixelColor(pixelPosition.x(), pixelPosition.y());
 		
-		if(!mVariable.isEmpty())
-			actionInstanceExecutionHelper.setVariable(mVariable, color);
+		if(!variable.isEmpty())
+			actionInstanceExecutionHelper.setVariable(variable, color);
 		
-		if(color == mPixelColor)
+		if(color == pixelColorValue)
 		{
-			action = mIfEqualAction;
-			line = mIfEqualLine;
+			action = ifEqual.action();
+			line = ifEqual.line();
 			actionInstanceExecutionHelper.setCurrentParameter("ifEqual", "line");
 		}
 		else
 		{
-			action = mIfDifferentAction;
-			line = mIfDifferentLine;
+			action = ifDifferent.action();
+			line = ifDifferent.line();
 			actionInstanceExecutionHelper.setCurrentParameter("ifDifferent", "line");
 		}
 		
-		if(action == "goto")
+		if(action == ActionTools::IfActionValue::GOTO)
 			actionInstanceExecutionHelper.setNextLine(line);
 
 		emit executionEnded();
@@ -86,14 +91,6 @@ public slots:
 	}
 	
 private:
-	QPoint mPixelPosition;
-	QColor mPixelColor;
-	QString mIfEqualAction;
-	QString mIfEqualLine;
-	QString mIfDifferentAction;
-	QString mIfDifferentLine;
-	QString mVariable;
-	
 	Q_DISABLE_COPY(ActionPixelColorInstance)
 };
 

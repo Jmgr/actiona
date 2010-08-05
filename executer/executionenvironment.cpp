@@ -20,6 +20,7 @@
 
 #include "executionenvironment.h"
 
+#include <QxtWindowSystem>
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QApplication>
@@ -121,5 +122,10 @@ namespace Executer
 	uint ExecutionEnvironment::timestamp() const
 	{
 		return QDateTime::currentDateTime().toTime_t();
+	}
+	
+	uint ExecutionEnvironment::idleTime() const
+	{
+		return QxtWindowSystem::idleTime();
 	}
 }

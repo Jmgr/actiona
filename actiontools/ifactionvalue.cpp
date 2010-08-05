@@ -18,32 +18,10 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONWINDOWCONDITIONINSTANCE_H
-#define ACTIONWINDOWCONDITIONINSTANCE_H
+#include "ifactionvalue.h"
 
-#include "actioninstance.h"
-#include "stringlistpair.h"
-
-class ActionWindowConditionInstance : public ActionTools::ActionInstance
+namespace ActionTools
 {
-	Q_OBJECT
-	Q_ENUMS(Condition)
-
-public:
-	enum Condition
-	{
-		Created,
-		Closed
-	};
-	
-	ActionWindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
-
-	static ActionTools::StringListPair conditions;
-	
-	void startExecution();
-	
-private:
-	Q_DISABLE_COPY(ActionWindowConditionInstance)
-};
-
-#endif // ACTIONWINDOWCONDITIONINSTANCE_H
+	const char *IfActionValue::WAIT = "wait";
+	const char *IfActionValue::GOTO = "goto";
+}

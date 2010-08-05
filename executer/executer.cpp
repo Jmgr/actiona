@@ -449,7 +449,15 @@ namespace Executer
 		int nextLine = nextLineString.toInt(&ok);
 
 		if(!ok)
+		{
 			nextLine = mScript->labelLine(nextLineString);
+			
+			if(nextLine == -1)
+			{
+				executionException(ActionTools::ActionException::CodeErrorException, tr("Unable to find the label named \"%1\"").arg(nextLineString));
+				return;
+			}
+		}
 		else
 			--nextLine;
 

@@ -51,12 +51,10 @@ void ActionMessageBoxInstance::startExecution()
 
 	if(!actionInstanceExecutionHelper.evaluateString(message, "message") ||
 		!actionInstanceExecutionHelper.evaluateString(title, "title") ||
-		!actionInstanceExecutionHelper.evaluateListElement(icon, "icon", "value", icons) ||
-		!actionInstanceExecutionHelper.evaluateListElement(button, "type", "value", buttons) ||
-		!actionInstanceExecutionHelper.evaluateString(mIfYesAction, "ifyes", "action") ||
-		!actionInstanceExecutionHelper.evaluateString(mIfYesLine, "ifyes", "line") ||
-		!actionInstanceExecutionHelper.evaluateString(mIfNoAction, "ifno", "action") ||
-		!actionInstanceExecutionHelper.evaluateString(mIfNoLine, "ifno", "line"))
+		!actionInstanceExecutionHelper.evaluateListElement(icon, icons, "icon") ||
+		!actionInstanceExecutionHelper.evaluateListElement(button, buttons, "type") ||
+		!actionInstanceExecutionHelper.evaluateIfAction(mIfYes, "ifYes") ||
+		!actionInstanceExecutionHelper.evaluateIfAction(mIfNo, "ifNo"))
 		return;
 
 	mMessageBox = new QMessageBox();
@@ -108,10 +106,10 @@ QMessageBox::Icon ActionMessageBoxInstance::messageBoxIcon(Icon icon) const
 void ActionMessageBoxInstance::buttonClicked()
 {
 	QScriptValue script = scriptEngine()->globalObject().property("Script");
-	if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::Yes) && mIfYesAction == "goto")
-		script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfYesLine)));
-	else if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::No) && mIfNoAction == "goto")
-		script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfNoLine)));
+	if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::Yes) && mIfYes.action() == ActionTools::IfActionValue::GOTO)
+		script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfYes.line())));
+	else if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::No) && mIfNo.action() == ActionTools::IfActionValue::GOTO)
+		script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfNo.line())));
 
 	mMessageBox->disconnect();
 	mMessageBox->deleteLater();

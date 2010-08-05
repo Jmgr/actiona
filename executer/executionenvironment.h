@@ -65,6 +65,7 @@ namespace Executer
 		QString username() const;
 		QString variable(const QString &name) const;
 		uint timestamp() const;
+		uint idleTime() const;
 	};
 }
 

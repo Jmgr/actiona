@@ -39,7 +39,7 @@ void ActionReadFileInstance::startExecution()
 
 	if(!actionInstanceExecutionHelper.evaluateString(filepath, "file") ||
 	   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable") ||
-	   !actionInstanceExecutionHelper.evaluateListElement(mode, "mode", "value", modes) ||
+	   !actionInstanceExecutionHelper.evaluateListElement(mode, modes, "mode") ||
 	   !actionInstanceExecutionHelper.evaluateInteger(firstline, "firstline") ||
 	   !actionInstanceExecutionHelper.evaluateInteger(lastline, "lastline"))
 		return;

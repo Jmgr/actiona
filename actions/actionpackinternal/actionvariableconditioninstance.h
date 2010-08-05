@@ -23,6 +23,7 @@
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
+#include "ifactionvalue.h"
 
 class ActionVariableConditionInstance : public ActionTools::ActionInstance
 {
@@ -51,18 +52,14 @@ public:
 		QString variable;
 		Comparison comparison;
 		QString value;
-		QString ifEqualAction;
-		QString ifEqualLine;
-		QString ifDifferentAction;
-		QString ifDifferentLine;
+		ActionTools::IfActionValue ifEqual;
+		ActionTools::IfActionValue ifDifferent;
 
 		if(!actionInstanceExecutionHelper.evaluateVariable(variable, "variable") ||
-		   !actionInstanceExecutionHelper.evaluateListElement(comparison, "comparison", "value", comparisons) ||
+		   !actionInstanceExecutionHelper.evaluateListElement(comparison, comparisons, "comparison") ||
 		   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifEqualAction, "ifequal", "action") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifEqualLine, "ifequal", "line") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifDifferentAction, "ifdifferent", "action") ||
-		   !actionInstanceExecutionHelper.evaluateString(ifDifferentLine, "ifdifferent", "line"))
+		   !actionInstanceExecutionHelper.evaluateIfAction(ifEqual, "ifEqual") ||
+		   !actionInstanceExecutionHelper.evaluateIfAction(ifDifferent, "ifDifferent"))
 			return;
 
 		bool ok;
@@ -132,10 +129,10 @@ public:
 			}
 		}
 
-		QString action = (equal ? ifEqualAction : ifDifferentAction);
-		QString line = (equal ? ifEqualLine : ifDifferentLine);
+		QString action = (equal ? ifEqual.action() : ifDifferent.action());
+		QString line = (equal ? ifEqual.line() : ifDifferent.line());
 
-		if(action == "goto")
+		if(action == ActionTools::IfActionValue::GOTO)
 			actionInstanceExecutionHelper.setNextLine(line);
 
 		emit executionEnded();

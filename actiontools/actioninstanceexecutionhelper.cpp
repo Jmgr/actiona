@@ -20,6 +20,7 @@
 
 #include "actioninstanceexecutionhelper.h"
 #include "script.h"
+#include "ifactionvalue.h"
 
 #include <QScriptValue>
 #include <QScriptEngine>
@@ -138,6 +139,17 @@ namespace ActionTools
 
 		return true;
 	}
+	
+	bool ActionInstanceExecutionHelper::evaluateIfAction(IfActionValue &buffer,
+										const QString &parameterName)
+	{
+		bool result = true;
+		
+		result &= evaluateString(buffer.action(), parameterName, "action");
+		result &= evaluateString(buffer.line(), parameterName, "line");
+
+		return result;
+	}
 
 	bool ActionInstanceExecutionHelper::evaluatePoint(QPoint &buffer,
 					   const QString &parameterName,
@@ -210,13 +222,13 @@ namespace ActionTools
 	
 	void ActionInstanceExecutionHelper::setVariable(const QString &name, const QVariant &value)
 	{
-		if(mNameRegExp.exactMatch(name))
+		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
 			mScriptEngine->globalObject().setProperty(name, mScriptEngine->newVariant(value));
 	}
 
 	QVariant ActionInstanceExecutionHelper::variable(const QString &name)
 	{
-		if(!mNameRegExp.exactMatch(name))
+		if(name.isEmpty() || !mNameRegExp.exactMatch(name))
 			return QVariant();
 			
 		return mScriptEngine->globalObject().property(name).toVariant();

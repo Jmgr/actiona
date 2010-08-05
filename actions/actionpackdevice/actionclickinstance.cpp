@@ -53,8 +53,8 @@ void ActionClickInstance::startExecution()
 	QPoint position;
 	int amount;
 
-	if(!actionInstanceExecutionHelper.evaluateListElement(action, "action", "value", actions) ||
-	   !actionInstanceExecutionHelper.evaluateListElement(button, "button", "value", buttons) ||
+	if(!actionInstanceExecutionHelper.evaluateListElement(action, actions, "action", "value") ||
+	   !actionInstanceExecutionHelper.evaluateListElement(button, buttons, "button", "value") ||
 	   !actionInstanceExecutionHelper.evaluatePoint(position, "position") ||
 	   !actionInstanceExecutionHelper.evaluateInteger(amount, "amount"))
 		return;

@@ -205,6 +205,20 @@ namespace ActionTools
 		return SetWindowPos(mValue, 0, 0, 0, size.width(), size.height(), SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOMOVE);
 #endif
 	}
+	
+	bool WindowHandle::isVisible() const
+	{
+#ifdef Q_WS_X11
+		XWindowAttributes attributes;
+		if(XGetWindowAttributes(QX11Info::display(), mValue, &attributes) != Success)
+			return false;
+		
+		return (attributes.map_state == IsViewable);
+#endif
+#ifdef Q_WS_WIN
+		return IsWindowVisible(mValue);
+#endif
+	}
 
 	WindowHandle WindowHandle::foregroundWindow()
 	{

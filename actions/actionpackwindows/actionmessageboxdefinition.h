@@ -82,14 +82,14 @@ public:
 		yesNoGroup->setMasterValues(QStringList() << ActionMessageBoxInstance::buttons.first.at(ActionMessageBoxInstance::YesNoButtons));
 
 		ActionTools::IfActionParameterDefinition *ifYes = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifyes",
+																								"ifYes",
 																								tr("If yes"),
 																								this);
 		ifYes->setTooltip(tr("What to do if the yes button is pressed"));
 		yesNoGroup->addMember(ifYes);
 
 		ActionTools::IfActionParameterDefinition *ifNo = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifno",
+																								"ifNo",
 																								tr("If no"),
 																								this);
 		ifNo->setTooltip(tr("What to do if the no button is pressed"));

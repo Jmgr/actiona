@@ -24,6 +24,7 @@
 #include "actionpack.h"
 #include "actionmessageboxdefinition.h"
 #include "actiontextinputdefinition.h"
+#include "actionwindowconditiondefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -42,6 +43,7 @@ public:
 	{
 		addActionDefinition(new ActionMessageBoxDefinition(this));
 		addActionDefinition(new ActionTextInputDefinition(this));
+		addActionDefinition(new ActionWindowConditionDefinition(this));
 	}
 
 	QString id() const							{ return tr("windows"); }

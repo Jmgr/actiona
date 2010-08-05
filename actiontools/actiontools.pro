@@ -32,7 +32,8 @@ SOURCES += actionfactory.cpp \
     messagehandler.cpp \
     actionexception.cpp \
     helpbutton.cpp \
-	keysymhelper.cpp
+	keysymhelper.cpp \
+    ifactionvalue.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -61,7 +62,8 @@ HEADERS += actiontools_global.h \
     actionexception.h \
     helpbutton.h \
     xdisplayhelper.h \
-	keysymhelper.h
+	keysymhelper.h \
+    ifactionvalue.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32

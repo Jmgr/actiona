@@ -48,21 +48,21 @@ public:
 		addElement(date);
 		
 		ActionTools::IfActionParameterDefinition *ifBefore = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifbefore",
+																								"ifBefore",
 																								tr("If before"),
 																								this);
 		ifBefore->setTooltip(tr("What to do if the date is in the past"));
 		addElement(ifBefore);
 		
 		ActionTools::IfActionParameterDefinition *ifNow = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifnow",
+																								"ifNow",
 																								tr("If now"),
 																								this);
 		ifNow->setTooltip(tr("What to do if the date is the current date"));
 		addElement(ifNow);
 		
 		ActionTools::IfActionParameterDefinition *ifAfter = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifafter",
+																								"ifAfter",
 																								tr("If after"),
 																								this);
 		ifAfter->setTooltip(tr("What to do if the date is in the future"));

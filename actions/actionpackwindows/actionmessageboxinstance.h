@@ -23,6 +23,7 @@
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
+#include "ifactionvalue.h"
 
 #include <QMessageBox>
 
@@ -73,10 +74,8 @@ public slots:
 
 private:
 	QMessageBox *mMessageBox;
-	QString mIfYesAction;
-	QString mIfYesLine;
-	QString mIfNoAction;
-	QString mIfNoLine;
+	ActionTools::IfActionValue mIfYes;
+	ActionTools::IfActionValue mIfNo;
 
 	Q_DISABLE_COPY(ActionMessageBoxInstance)
 };
