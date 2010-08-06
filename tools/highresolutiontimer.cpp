@@ -20,15 +20,14 @@
 
 #include "highresolutiontimer.h"
 
-#include <QDebug>
-
 namespace Tools
 {
 	int HighResolutionTimer::mLevel = 0;
 
 	HighResolutionTimer::HighResolutionTimer(const QString &taskName)
 		: mRunning(false),
-		mTaskName(taskName)
+		mTaskName(taskName),
+		mTextStream(stdout, QIODevice::WriteOnly)
 	{
 #ifdef Q_WS_WIN
 		QueryPerformanceFrequency(&mFrequency);
@@ -42,7 +41,10 @@ namespace Tools
 		if(!mTaskName.isEmpty())
 		{
 			for(int i = 0; i < mLevel; ++i)
-				mSpaces += ' ';
+				mTextStream << "-";
+			
+			mTextStream << ">Profiling [" << mTaskName << "] -> ";
+			
 			start();
 			++mLevel;
 		}
@@ -52,7 +54,7 @@ namespace Tools
 	{
 		if(!mTaskName.isEmpty())
 		{
-			qDebug() << mSpaces << "***** Task" << mTaskName << "stopped," << elapsedSeconds() << "s *****";
+			mTextStream << elapsedSeconds() << "s\n";
 			--mLevel;
 		}
 	}

@@ -33,6 +33,7 @@
 #endif
 
 #include <QString>
+#include <QTextStream>
 
 namespace Tools
 {
@@ -49,9 +50,9 @@ namespace Tools
 		double elapsedSeconds();
 	private:
 		static int mLevel;
-		QString mSpaces;
 		bool mRunning;
 		QString mTaskName;
+		QTextStream mTextStream;
 #ifdef Q_WS_WIN
 		LARGE_INTEGER mTimeStart;
 		LARGE_INTEGER mTimeStop;
