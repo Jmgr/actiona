@@ -40,7 +40,6 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mSpinBox = new CodeSpinBox(parent);
-		mSpinBox->setObjectName("value");
 
 		mSpinBox->setPrefix(mPrefix);
 		mSpinBox->setSuffix(mSuffix);

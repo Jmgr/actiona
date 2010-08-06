@@ -29,7 +29,6 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mComboBox = new LineComboBox(script->labels(), script->actionCount(), parent);
-		mComboBox->setObjectName("value");
 
 		addEditor(mComboBox);
 

@@ -38,7 +38,6 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mComboBox = new CodeComboBox(parent);
-		mComboBox->setObjectName("value");
 
 		//The second element of the pair are the translated values
 		for(int i=0; i<items().first.size(); ++i)

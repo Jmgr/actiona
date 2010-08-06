@@ -179,7 +179,7 @@ namespace ActionTools
 		mNativeKey[AltLeft] = XStringToKeysym("Alt_L");
 		mNativeKey[AltRight] = XStringToKeysym("Alt_R");
 		mNativeKey[MetaLeft] = XStringToKeysym("Super_L");//Hm, meta should be the Windows key...
-		mNativeKey[MetaRight] = XStringToKeysym("Super_L");
+		mNativeKey[MetaRight] = XStringToKeysym("Super_R");
 		mNativeKey[AltGr] = 0;
 #endif
 #ifdef Q_WS_WIN

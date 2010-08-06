@@ -53,14 +53,12 @@ namespace ActionTools
 		}
 
 		mActionEdit = new CodeComboBox(parent);
-		mActionEdit->setObjectName("action");
 
 		mActionEdit->addItems(mItems.second);
 
 		addEditor(mActionEdit);
 
 		mLineEdit = new LineComboBox(script->labels(), script->actionCount(), parent);
-		mLineEdit->setObjectName("line");
 
 		mLineEdit->setEnabled(false);
 

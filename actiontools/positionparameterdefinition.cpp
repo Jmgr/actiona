@@ -35,7 +35,6 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mPositionEdit = new PositionEdit(parent);
-		mPositionEdit->setObjectName("value");
 
 		addEditor(mPositionEdit);
 	}

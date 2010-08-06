@@ -36,7 +36,6 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mColorEdit = new ColorEdit(parent);
-		mColorEdit->setObjectName("value");
 
 		addEditor(mColorEdit);
 	}

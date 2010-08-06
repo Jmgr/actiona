@@ -38,12 +38,10 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 		
 		mPositionEdit = new PositionEdit(parent);
-		mPositionEdit->setObjectName("position");
 
 		addEditor(mPositionEdit);
 	
 		mColorEdit = new ColorEdit(parent);
-		mColorEdit->setObjectName("color");
 		mColorEdit->setChooseByPositionButtonVisible(false);
 
 		addEditor(mColorEdit);

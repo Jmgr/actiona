@@ -36,7 +36,6 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mKeyEdit = new KeyEdit(parent);
-		mKeyEdit->setObjectName("value");
 
 		addEditor(mKeyEdit);
 	}

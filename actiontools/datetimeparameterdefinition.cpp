@@ -36,7 +36,6 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mDateTimeEdit = new CodeDateTimeEdit(parent);
-		mDateTimeEdit->setObjectName("value");
 
 		addEditor(mDateTimeEdit);
 	}

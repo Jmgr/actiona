@@ -39,7 +39,6 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mLineEdit = new CodeLineEdit(parent);
-		mLineEdit->setObjectName("value");
 
 		if(mCodeOnly)
 		{

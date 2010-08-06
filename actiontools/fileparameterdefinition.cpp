@@ -36,7 +36,6 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mFileEdit = new FileEdit(parent);
-		mFileEdit->setObjectName("value");
 
 		mFileEdit->setMode(mMode);
 		mFileEdit->setCaption(mCaption);
