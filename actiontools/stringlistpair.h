@@ -23,6 +23,7 @@
 
 #include <QPair>
 #include <QStringList>
+#include <QMetaType>
 
 namespace ActionTools
 {

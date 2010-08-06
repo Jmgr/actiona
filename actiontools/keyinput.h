@@ -20,23 +20,54 @@
 
 #ifndef KEYINPUT_H
 #define KEYINPUT_H
-/*
-#include "keytypes.h"
 
-class KeyInput
+#include "actiontools_global.h"
+#include "stringlistpair.h"
+
+class QKeyEvent;
+
+namespace ActionTools
 {
-public:
-	KeyInput(int keycode, int scancode);
-
-	const char *keyName() const;
-
-	aKey key() const						{ return mKey; }
-	int scanCode() const					{ return mScanCode; }
-
-private:
-	aKey mKey;
-	int mScanCode;
-};
-*/
+	class ACTIONTOOLSSHARED_EXPORT KeyInput
+	{
+	public:
+		enum Key
+		{
+			InvalidKey,
+			ShiftLeft,
+			ShiftRight,
+			ControlLeft,
+			ControlRight,
+			AltLeft,
+			AltRight,
+			MetaLeft,
+			MetaRight,
+			AltGr,
+			
+			KeyCount
+		};
+		
+		KeyInput();
+		KeyInput(const KeyInput &other);
+		
+		QString toTranslatedText() const;
+		QString toPortableText() const;
+		
+		bool fromPortableText(const QString &key, bool isQtKey);
+		bool fromEvent(QKeyEvent *event);
+		
+		bool isQtKey() const						{ return mIsQtKey; }
+		
+		static void init();
+		
+	private:
+		static const StringListPair mKeyNames;
+		static bool mInitDone;
+		static unsigned long mNativeKey[KeyCount];
+		
+		bool mIsQtKey;
+		int mKey;
+	};
+}
 
 #endif // KEYINPUT_H

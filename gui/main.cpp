@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 			ActionTools::KeySymHelper::loadKeyCodes(xDisplayHelper.display());
 	}
 #endif
-
+	
 	ProgressSplashScreen *splash = 0;
 	if(!options.count("nosplash") && !options.count("execute"))
 	{

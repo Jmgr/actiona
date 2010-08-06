@@ -19,18 +19,153 @@
 */
 
 #include "keyinput.h"
-#include "windowskeys.h"
 
-/*
-KeyInput::KeyInput(int keycode, int scancode)
-	: mKey(aKeyNone),
-	mScanCode(scancode)
-{
-	mKey = windowsKeyToAKey(keycode);
-}
+#include <QKeyEvent>
+#include <QKeySequence>
+#include <QDebug>
 
-const char *KeyInput::keyName() const
+#ifdef Q_WS_X11
+#include <X11/Xlib.h>
+#include <QX11Info>
+#endif
+#ifdef Q_WS_WIN
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
+
+namespace ActionTools
 {
-	return aKeyNames[mKey];
+	const StringListPair KeyInput::mKeyNames = qMakePair(
+		QStringList() << "invalid" << "shiftLeft" << "shiftRight" << "controlLeft" << "controlRight" << "altLeft" << "altRight" << "metaLeft" << "metaRight" << "altGr",
+		QStringList() << QObject::tr("Invalid") << QObject::tr("Left shift") << QObject::tr("Right shift") << QObject::tr("Left control") << QObject::tr("Right control")
+		<< QObject::tr("Left alt") << QObject::tr("Right alt")
+#ifdef Q_WS_WIN
+		<< QObject::tr("Left Windows") << QObject::tr("Right Windows")
+#else
+		<< QObject::tr("Left meta") << QObject::tr("Right meta") << QObject::tr("AltGr")
+#endif
+	);
+	bool KeyInput::mInitDone = false;
+	unsigned long KeyInput::mNativeKey[] = {0};
+	
+	KeyInput::KeyInput()
+		: mIsQtKey(false),
+		mKey(InvalidKey)
+	{
+		init();
+	}
+	
+	QString KeyInput::toTranslatedText() const
+	{
+		if(mIsQtKey)
+		{
+			QKeySequence keySequence(mKey);
+			
+			return keySequence.toString(QKeySequence::NativeText);
+		}
+		
+		return mKeyNames.second[mKey];
+	}
+	
+	QString KeyInput::toPortableText() const
+	{
+		if(mIsQtKey)
+		{
+			QKeySequence keySequence(mKey);
+			
+			return keySequence.toString(QKeySequence::PortableText);
+		}
+		
+		return mKeyNames.first[mKey];
+	}
+	
+	bool KeyInput::fromPortableText(const QString &key, bool isQtKey)
+	{
+		mIsQtKey = isQtKey;
+		
+		if(mIsQtKey)
+		{
+			QKeySequence keySequence(key);
+
+			mKey = keySequence[0];
+			mKey &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
+
+			return true;
+		}
+		
+		for(int i = 0; i < KeyCount; ++i)
+		{
+			if(mKeyNames.first[i] == key)
+			{
+				mKey = i;
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	bool KeyInput::fromEvent(QKeyEvent *event)
+	{
+		mIsQtKey = true;
+		for(int i = 0; i < KeyCount; ++i)
+		{
+			if(event->nativeVirtualKey() == mNativeKey[i])
+			{
+				mKey = static_cast<Key>(i);
+				mIsQtKey = false;
+				break;
+			}
+		}
+
+		//Special cases
+		switch(event->key())
+		{
+		case Qt::Key_AltGr:
+			mKey = AltGr;
+			mIsQtKey = false;
+			break;
+		default:
+			break;
+		}
+		
+		if(mIsQtKey)
+			mKey = event->key();
+		
+		return true;
+	}
+	
+	void KeyInput::init()
+	{
+		if(mInitDone)
+			return;
+		
+		mInitDone = true;
+		
+		mNativeKey[InvalidKey] = 0;
+		
+#ifdef Q_WS_X11
+		mNativeKey[ShiftLeft] = XStringToKeysym("Shift_L");
+		mNativeKey[ShiftRight] = XStringToKeysym("Shift_R");
+		mNativeKey[ControlLeft] = XStringToKeysym("Control_L");
+		mNativeKey[ControlRight] = XStringToKeysym("Control_R");
+		mNativeKey[AltLeft] = XStringToKeysym("Alt_L");
+		mNativeKey[AltRight] = XStringToKeysym("Alt_R");
+		mNativeKey[MetaLeft] = XStringToKeysym("Super_L");//Hm, meta should be the Windows key...
+		mNativeKey[MetaRight] = XStringToKeysym("Super_L");
+		mNativeKey[AltGr] = 0;
+#endif
+#ifdef Q_WS_WIN
+		mNativeKey[ShiftLeft] = VK_LSHIFT;
+		mNativeKey[ShiftRight] = VK_RSHIFT;
+		mNativeKey[ControlLeft] = VK_LCONTROL;
+		mNativeKey[ControlRight] = VK_RCONTROL;
+		mNativeKey[AltLeft] = VK_LMENU;
+		mNativeKey[AltRight] = VK_RMENU;
+		mNativeKey[MetaLeft] = VK_LWIN;
+		mNativeKey[MetaRight] = VK_RWIN;
+		mNativeKey[AltGr] = 0;
+#endif
+	}
 }
-*/

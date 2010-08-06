@@ -21,8 +21,6 @@ SOURCES += actionfactory.cpp \
     crossplatform.cpp \
     windowhandle.cpp \
     keyinput.cpp \
-    windowskeys.cpp \
-    keytypes.cpp \
     parameter.cpp \
     subparameter.cpp \
     actioninstancebuffer.cpp \
@@ -49,9 +47,6 @@ HEADERS += actiontools_global.h \
     crossplatform.h \
     windowhandle.h \
     keyinput.h \
-    keytypes.h \
-    keytypesdef.h \
-    windowskeys.h \
     actioninstancebuffer.h \
     actioninstanceexecutionhelper.h \
     settings.h \

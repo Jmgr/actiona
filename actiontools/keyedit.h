@@ -22,17 +22,13 @@
 #define KEYEDIT_H
 
 #include "actiontools_global.h"
+#include "codecombobox.h"
 
-#include <QWidget>
 #include <QKeySequence>
-
-class QCheckBox;
 
 namespace ActionTools
 {
-	class CodeComboBox;
-	
-	class ACTIONTOOLSSHARED_EXPORT KeyEdit : public QWidget
+	class ACTIONTOOLSSHARED_EXPORT KeyEdit : public CodeComboBox
 	{
 		Q_OBJECT
 
@@ -41,25 +37,16 @@ namespace ActionTools
 
 		QKeySequence keySequence() const							{return mKeySequence;}
 		void setKeySequence(const QKeySequence &keySequence);
-		
-		bool eventFilter(QObject *object, QEvent *event);
 	
 	protected:
-		void focusInEvent(QFocusEvent *event);
-		void focusOutEvent(QFocusEvent *event);
 		void keyPressEvent(QKeyEvent *event);
 		void keyReleaseEvent(QKeyEvent *event);
-		bool event(QEvent *event);
 
 	private:
+		bool eventFilter(QObject *object, QEvent *event);
 		int translateModifiers(Qt::KeyboardModifiers state, const QString &text) const;
 		
 		QKeySequence mKeySequence;
-		CodeComboBox *mCodeComboBox;
-		QCheckBox *mCtrlCheckBox;
-		QCheckBox *mAltCheckBox;
-		QCheckBox *mShiftCheckBox;
-		QCheckBox *mMetaCheckBox;
 
 		Q_DISABLE_COPY(KeyEdit)
 	};
