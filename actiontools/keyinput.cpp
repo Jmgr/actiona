@@ -37,52 +37,53 @@ namespace ActionTools
 {
 	const StringListPair KeyInput::mKeyNames = qMakePair(
 		QStringList() << "invalid" << "shiftLeft" << "shiftRight" << "controlLeft" << "controlRight" << "altLeft" << "altRight" << "metaLeft" << "metaRight" << "altGr",
-		QStringList() << QObject::tr("Invalid") << QObject::tr("Left shift") << QObject::tr("Right shift") << QObject::tr("Left control") << QObject::tr("Right control")
-		<< QObject::tr("Left alt") << QObject::tr("Right alt")
+		QStringList() << QObject::tr("Invalid") << QObject::tr("Left Shift") << QObject::tr("Right Shift") << QObject::tr("Left Control") << QObject::tr("Right Control")
+		<< QObject::tr("Left Alt") << QObject::tr("Right Alt")
 #ifdef Q_WS_WIN
 		<< QObject::tr("Left Windows") << QObject::tr("Right Windows")
 #else
-		<< QObject::tr("Left meta") << QObject::tr("Right meta") << QObject::tr("AltGr")
+		<< QObject::tr("Left Meta") << QObject::tr("Right Meta")
 #endif
+		<< QObject::tr("Alt Gr")
 	);
 	bool KeyInput::mInitDone = false;
 	unsigned long KeyInput::mNativeKey[] = {0};
-	
+
 	KeyInput::KeyInput()
 		: mIsQtKey(false),
 		mKey(InvalidKey)
 	{
 		init();
 	}
-	
+
 	QString KeyInput::toTranslatedText() const
 	{
 		if(mIsQtKey)
 		{
 			QKeySequence keySequence(mKey);
-			
+
 			return keySequence.toString(QKeySequence::NativeText);
 		}
-		
+
 		return mKeyNames.second[mKey];
 	}
-	
+
 	QString KeyInput::toPortableText() const
 	{
 		if(mIsQtKey)
 		{
 			QKeySequence keySequence(mKey);
-			
+
 			return keySequence.toString(QKeySequence::PortableText);
 		}
-		
+
 		return mKeyNames.first[mKey];
 	}
-	
+
 	bool KeyInput::fromPortableText(const QString &key, bool isQtKey)
 	{
 		mIsQtKey = isQtKey;
-		
+
 		if(mIsQtKey)
 		{
 			QKeySequence keySequence(key);
@@ -92,23 +93,25 @@ namespace ActionTools
 
 			return true;
 		}
-		
+
 		for(int i = 0; i < KeyCount; ++i)
 		{
 			if(mKeyNames.first[i] == key)
 			{
 				mKey = i;
-				
+
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	bool KeyInput::fromEvent(QKeyEvent *event)
 	{
 		mIsQtKey = true;
+
+#ifdef Q_WS_X11
 		for(int i = 0; i < KeyCount; ++i)
 		{
 			if(event->nativeVirtualKey() == mNativeKey[i])
@@ -118,33 +121,56 @@ namespace ActionTools
 				break;
 			}
 		}
+#endif
 
-		//Special cases
 		switch(event->key())
 		{
+#ifdef Q_WS_X11
 		case Qt::Key_AltGr:
 			mKey = AltGr;
 			mIsQtKey = false;
 			break;
+#endif
+#ifdef Q_WS_WIN
+		case Qt::Key_Shift:
+		case Qt::Key_Control:
+		case Qt::Key_Alt:
+		case Qt::Key_Meta:
+		case Qt::Key_AltGr:
+			for(int i = 0; i < KeyCount; ++i)
+			{
+				if(HIBYTE(GetAsyncKeyState(mNativeKey[i])))
+				{
+					if(HIBYTE(GetAsyncKeyState(VK_RMENU)) && HIBYTE(GetAsyncKeyState(VK_LCONTROL)))
+						mKey = AltGr;
+					else
+						mKey = static_cast<Key>(i);
+
+					mIsQtKey = false;
+					break;
+				}
+			}
+			break;
+#endif
 		default:
 			break;
 		}
-		
+
 		if(mIsQtKey)
 			mKey = event->key();
-		
+
 		return true;
 	}
-	
+
 	void KeyInput::init()
 	{
 		if(mInitDone)
 			return;
-		
+
 		mInitDone = true;
-		
+
 		mNativeKey[InvalidKey] = 0;
-		
+
 #ifdef Q_WS_X11
 		mNativeKey[ShiftLeft] = XStringToKeysym("Shift_L");
 		mNativeKey[ShiftRight] = XStringToKeysym("Shift_R");
