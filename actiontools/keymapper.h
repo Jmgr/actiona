@@ -18,29 +18,20 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONTEXTINSTANCE_H
-#define ACTIONTEXTINSTANCE_H
+#ifndef KEYMAPPER_H
+#define KEYMAPPER_H
 
-#include "actioninstance.h"
+#include "actiontools_global.h"
 
-class ActionTextInstance : public ActionTools::ActionInstance
+#include <qnamespace.h>
+
+namespace ActionTools
 {
-	Q_OBJECT
-	Q_ENUMS(Action)
-
-public:
-	enum Exceptions
+	class ACTIONTOOLSSHARED_EXPORT KeyMapper
 	{
-		FailedToSendInputException = ActionTools::ActionException::UserException
+	public:
+		static int toNativeKey(Qt::Key key);
 	};
+}
 
-	ActionTextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)										{}
-
-	void startExecution();
-
-private:
-	Q_DISABLE_COPY(ActionTextInstance)
-};
-
-#endif // ACTIONTEXTINSTANCE_H
+#endif // KEYMAPPER_H

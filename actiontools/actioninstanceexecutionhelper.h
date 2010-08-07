@@ -53,6 +53,9 @@ namespace ActionTools
 		bool evaluateInteger(int &buffer,
 							 const QString &parameterName,
 							 const QString &subParameterName = "value");
+		bool evaluateBoolean(bool &buffer,
+							 const QString &parameterName,
+							 const QString &subParameterName = "value");
 		bool evaluateFloat(float &buffer,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");

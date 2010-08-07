@@ -54,17 +54,17 @@ bool sendCharacter(Display *display, KeySym keySym)
 			(ActionTools::KeySymHelper::keySymToModifier(keySym) - shift) / 2];
 
 	if(wrapKey)
-		result &= (XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), True, CurrentTime) == Success);
+		result &= XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), True, CurrentTime);
 	if(shift)
-		result &= (XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), True, CurrentTime) == Success);
+		result &= XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), True, CurrentTime);
 
-	result &= (XTestFakeKeyEvent(display, keyCode, True, CurrentTime) == Success);
-	result &= (XTestFakeKeyEvent(display, keyCode, False, CurrentTime) == Success);
+	result &= XTestFakeKeyEvent(display, keyCode, True, CurrentTime);
+	result &= XTestFakeKeyEvent(display, keyCode, False, CurrentTime);
 
 	if(shift)
-		result &= (XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), False, CurrentTime) == Success);
+		result &= XTestFakeKeyEvent(display, keyToKeycode(display, "Shift_L"), False, CurrentTime);
 	if(wrapKey)
-		result &= (XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), False, CurrentTime) == Success);
+		result &= XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), False, CurrentTime);
 
 	XFlush(display);
 	
@@ -75,8 +75,8 @@ bool sendKey(Display *display, const char *key)
 {
 	bool result = true;
 	
-	result &= (XTestFakeKeyEvent(display, keyToKeycode(display, key), True, CurrentTime) == Success);
-	result &= (XTestFakeKeyEvent(display, keyToKeycode(display, key), False, CurrentTime) == Success);
+	result &= XTestFakeKeyEvent(display, keyToKeycode(display, key), True, CurrentTime);
+	result &= XTestFakeKeyEvent(display, keyToKeycode(display, key), False, CurrentTime);
 	
 	return result;
 }

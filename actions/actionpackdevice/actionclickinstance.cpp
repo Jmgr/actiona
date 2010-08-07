@@ -39,8 +39,8 @@ ActionTools::StringListPair ActionClickInstance::buttons = qMakePair(
 		QStringList() << "left" << "middle" << "right",
 		QStringList() << tr("Left") << tr("Middle") << tr("Right"));
 ActionTools::StringListPair ActionClickInstance::actions = qMakePair(
-		QStringList() << "click" << "press" << "release",
-		QStringList() << tr("Press and release") << tr("Press") << tr("Release"));
+		QStringList() << "pressRelease" << "press" << "release",
+		QStringList() << tr("Click (press and release)") << tr("Press") << tr("Release"));
 
 bool ActionClickInstance::mPressedButtonStatus[3] = {false};
 

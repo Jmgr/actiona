@@ -48,17 +48,19 @@ namespace ActionTools
 		};
 		
 		KeyInput();
-		KeyInput(const KeyInput &other);
 		
 		QString toTranslatedText() const;
 		QString toPortableText() const;
 		
+		bool fromPortableText(const QString &key);
 		bool fromPortableText(const QString &key, bool isQtKey);
 		bool fromEvent(QKeyEvent *event);
 		
 		bool isQtKey() const						{ return mIsQtKey; }
+		int key() const								{ return mKey; }
 		
 		static void init();
+		static unsigned long nativeKey(int key)		{ return mNativeKey[key]; }
 		
 	private:
 		static const StringListPair mKeyNames;

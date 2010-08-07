@@ -20,7 +20,6 @@
 
 #include "keyedit.h"
 #include "codelineedit.h"
-#include "keyinput.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -33,92 +32,30 @@ namespace ActionTools
 		installEventFilter(this);
 	}
 
-	void KeyEdit::setKeySequence(const QKeySequence &keySequence)
+	void KeyEdit::setKeyInput(const KeyInput &keyInput)
 	{
-		if(keySequence == mKeySequence)
-			return;
+		mKeyInput = keyInput;
 		
-		mKeySequence = keySequence;
-		
-		codeLineEdit()->setText(mKeySequence.toString(QKeySequence::NativeText));
-	}
-
-	void KeyEdit::keyPressEvent(QKeyEvent *event)
-	{
-		/*int key = event->key();
-		
-		key |= translateModifiers(event->modifiers(), event->text());
-		
-		mKeySequence = QKeySequence(key);
-		
-		codeLineEdit()->setText(mKeySequence.toString(QKeySequence::NativeText));
-		
-		event->accept();*/
-		
-		mKeySequence = QKeySequence(event->key());
-		
-		codeLineEdit()->setText(mKeySequence.toString(QKeySequence::NativeText));
-	}
-
-	void KeyEdit::keyReleaseEvent(QKeyEvent *event)
-	{
-		//event->accept();
-		
-		return CodeComboBox::keyReleaseEvent(event);
+		codeLineEdit()->setText(mKeyInput.toTranslatedText());
 	}
 	
 	bool KeyEdit::eventFilter(QObject *object, QEvent *event)
 	{
+		if(isCode())
+			return QObject::eventFilter(object, event);
+		
 		if(event->type() == QEvent::KeyPress)
 		{
 			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 			
-			KeyInput keyInput;
+			if(!mKeyInput.fromEvent(keyEvent))
+				return false;
 			
-			if(!keyInput.fromEvent(keyEvent))
-				codeLineEdit()->setText("Failed");
-			else
-				codeLineEdit()->setText(keyInput.toTranslatedText());
+			codeLineEdit()->setText(mKeyInput.toTranslatedText());
 			
 			return true;
-		/*
-			int key = keyEvent->key();
-			
-			qDebug() << key;
-			if(key != Qt::Key_Shift)
-				key |= translateModifiers(keyEvent->modifiers(), keyEvent->text());
-			
-			qDebug() << key;
-			
-			if(key != Qt::Key_Shift)
-			mKeySequence = QKeySequence(key);
-			else
-				mKeySequence = QKeySequence("Shift");
-			
-			qDebug() << mKeySequence;
-			
-			codeLineEdit()->setText(mKeySequence.toString(QKeySequence::NativeText));
-			*/
 		}
 
 		return QObject::eventFilter(object, event);
-	}
-	
-	int KeyEdit::translateModifiers(Qt::KeyboardModifiers state, const QString &text) const
-	{
-		int result = 0;
-		
-		qDebug() << text;
-		
-		if ((state & Qt::ShiftModifier) && (text.size() == 0 || !text.at(0).isPrint() || text.at(0).isLetter() || text.at(0).isSpace()))
-			result |= Qt::SHIFT;
-		if (state & Qt::ControlModifier)
-			result |= Qt::CTRL;
-		if (state & Qt::MetaModifier)
-			result |= Qt::META;
-		if (state & Qt::AltModifier)
-			result |= Qt::ALT;
-		
-		return result;
 	}
 }

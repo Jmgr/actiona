@@ -24,24 +24,39 @@
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
+#include <QSet>
+
 class ActionKeyInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
+	enum Action
+	{
+		PressReleaseAction,
+		PressAction,
+		ReleaseAction
+	};
 	enum Exceptions
 	{
-		FailedToSendInputException = ActionTools::ActionException::UserException
+		FailedToSendInputException = ActionTools::ActionException::UserException,
+		InvalidActionException
 	};
 
 	ActionKeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 		: ActionTools::ActionInstance(definition, parent)										{}
+	
+	static ActionTools::StringListPair actions;
 
 	void startExecution();
-	void stopExecution();
 	void stopLongTermExecution();
 
 private:
+	static QSet<int> mPressedKeys;
+#ifdef Q_WS_WIN
+	static bool mAltGrPressed;
+#endif
+	
 	Q_DISABLE_COPY(ActionKeyInstance)
 };
 

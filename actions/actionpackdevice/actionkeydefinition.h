@@ -24,6 +24,7 @@
 #include "actiondefinition.h"
 #include "actionkeyinstance.h"
 #include "keyparameterdefinition.h"
+#include "listparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -45,8 +46,18 @@ public:
 																								this);
 		key->setTooltip(tr("The key to simulate"));
 		addElement(key);
+		
+		ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
+																								"action",
+																								tr("Action"),
+																								this);
+		action->setTooltip(tr("The action to simulate"));
+		action->setItems(ActionKeyInstance::actions);
+		action->setDefaultValue(ActionKeyInstance::actions.second.at(ActionKeyInstance::PressReleaseAction));
+		addElement(action);
 
 		addException(ActionKeyInstance::FailedToSendInputException, tr("Send input failure"));
+		addException(ActionKeyInstance::InvalidActionException, tr("Invalid action"));
 	}
 
 	QString name() const													{ return QObject::tr("Key"); }

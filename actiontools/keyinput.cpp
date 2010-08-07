@@ -25,7 +25,12 @@
 #include <QDebug>
 
 #ifdef Q_WS_X11
-#include <X11/Xlib.h>
+#define XK_MISCELLANY
+#define XK_LATIN1
+#define XK_KOREAN
+#define XK_XKB_KEYS
+#include <X11/keysymdef.h>
+#include <X11/XF86keysym.h>
 #include <QX11Info>
 #endif
 #ifdef Q_WS_WIN
@@ -37,7 +42,7 @@ namespace ActionTools
 {
 	const StringListPair KeyInput::mKeyNames = qMakePair(
 		QStringList() << "invalid" << "shiftLeft" << "shiftRight" << "controlLeft" << "controlRight" << "altLeft" << "altRight" << "metaLeft" << "metaRight" << "altGr",
-		QStringList() << QObject::tr("Invalid") << QObject::tr("Left Shift") << QObject::tr("Right Shift") << QObject::tr("Left Control") << QObject::tr("Right Control")
+		QStringList() << QString() << QObject::tr("Left Shift") << QObject::tr("Right Shift") << QObject::tr("Left Control") << QObject::tr("Right Control")
 		<< QObject::tr("Left Alt") << QObject::tr("Right Alt")
 #ifdef Q_WS_WIN
 		<< QObject::tr("Left Windows") << QObject::tr("Right Windows")
@@ -73,11 +78,34 @@ namespace ActionTools
 		if(mIsQtKey)
 		{
 			QKeySequence keySequence(mKey);
-
+			
 			return keySequence.toString(QKeySequence::PortableText);
 		}
-
+		
 		return mKeyNames.first[mKey];
+	}
+	
+	bool KeyInput::fromPortableText(const QString &key)
+	{
+		mIsQtKey = true;
+		
+		for(int i = 0; i < KeyCount; ++i)
+		{
+			if(mKeyNames.first[i] == key)
+			{
+				mKey = i;
+				mIsQtKey = false;
+
+				return true;
+			}
+		}
+		
+		QKeySequence keySequence(key);
+		
+		mKey = keySequence[0];
+		mKey &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
+		
+		return true;
 	}
 
 	bool KeyInput::fromPortableText(const QString &key, bool isQtKey)
@@ -125,12 +153,6 @@ namespace ActionTools
 
 		switch(event->key())
 		{
-#ifdef Q_WS_X11
-		case Qt::Key_AltGr:
-			mKey = AltGr;
-			mIsQtKey = false;
-			break;
-#endif
 #ifdef Q_WS_WIN
 		case Qt::Key_Shift:
 		case Qt::Key_Control:
@@ -155,7 +177,7 @@ namespace ActionTools
 		default:
 			break;
 		}
-
+		
 		if(mIsQtKey)
 			mKey = event->key();
 
@@ -172,15 +194,15 @@ namespace ActionTools
 		mNativeKey[InvalidKey] = 0;
 
 #ifdef Q_WS_X11
-		mNativeKey[ShiftLeft] = XStringToKeysym("Shift_L");
-		mNativeKey[ShiftRight] = XStringToKeysym("Shift_R");
-		mNativeKey[ControlLeft] = XStringToKeysym("Control_L");
-		mNativeKey[ControlRight] = XStringToKeysym("Control_R");
-		mNativeKey[AltLeft] = XStringToKeysym("Alt_L");
-		mNativeKey[AltRight] = XStringToKeysym("Alt_R");
-		mNativeKey[MetaLeft] = XStringToKeysym("Super_L");//Hm, meta should be the Windows key...
-		mNativeKey[MetaRight] = XStringToKeysym("Super_R");
-		mNativeKey[AltGr] = 0;
+		mNativeKey[ShiftLeft] = XK_Shift_L;
+		mNativeKey[ShiftRight] = XK_Shift_R;
+		mNativeKey[ControlLeft] = XK_Control_L;
+		mNativeKey[ControlRight] = XK_Control_R;
+		mNativeKey[AltLeft] = XK_Alt_L;
+		mNativeKey[AltRight] = XK_Alt_R;
+		mNativeKey[MetaLeft] = XK_Super_L;
+		mNativeKey[MetaRight] = XK_Super_R;
+		mNativeKey[AltGr] = XK_ISO_Level3_Shift;
 #endif
 #ifdef Q_WS_WIN
 		mNativeKey[ShiftLeft] = VK_LSHIFT;

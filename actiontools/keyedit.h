@@ -23,8 +23,7 @@
 
 #include "actiontools_global.h"
 #include "codecombobox.h"
-
-#include <QKeySequence>
+#include "keyinput.h"
 
 namespace ActionTools
 {
@@ -35,18 +34,13 @@ namespace ActionTools
 	public:
 		explicit KeyEdit(QWidget *parent = 0);
 
-		QKeySequence keySequence() const							{return mKeySequence;}
-		void setKeySequence(const QKeySequence &keySequence);
-	
-	protected:
-		void keyPressEvent(QKeyEvent *event);
-		void keyReleaseEvent(QKeyEvent *event);
+		const KeyInput &keyInput() const							{ return mKeyInput; }
+		void setKeyInput(const KeyInput &keyInput);
 
 	private:
 		bool eventFilter(QObject *object, QEvent *event);
-		int translateModifiers(Qt::KeyboardModifiers state, const QString &text) const;
-		
-		QKeySequence mKeySequence;
+
+		KeyInput mKeyInput;
 
 		Q_DISABLE_COPY(KeyEdit)
 	};

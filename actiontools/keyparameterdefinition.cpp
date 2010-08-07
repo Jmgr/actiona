@@ -23,6 +23,8 @@
 #include "actioninstance.h"
 #include "codelineedit.h"
 
+#include <QDebug>
+
 namespace ActionTools
 {
 	KeyParameterDefinition::KeyParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
@@ -42,11 +44,38 @@ namespace ActionTools
 
 	void KeyParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		//mKeyEdit->codeLineEdit()->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		const SubParameter &key = actionInstance->subParameter(name(), "key");
+		if(key.isCode())
+			mKeyEdit->codeLineEdit()->setFromSubParameter(key);
+		else
+		{
+			KeyInput keyInput;
+			
+			keyInput.fromPortableText(key.value().toString(), actionInstance->subParameter(name(), "isQtKey").value().toBool());
+			
+			mKeyEdit->setKeyInput(keyInput);
+		}
 	}
 
 	void KeyParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		//actionInstance->setSubParameter(name(), "value", mKeyEdit->codeLineEdit()->isCode(), mKeyEdit->codeLineEdit()->text());
+		if(mKeyEdit->isCode())
+		{
+			actionInstance->setSubParameter(name(), "key", mKeyEdit->isCode(), mKeyEdit->codeLineEdit()->text());
+			actionInstance->setSubParameter(name(), "isQtKey", QVariant(false));
+		}
+		else
+		{
+			const KeyInput &keyInput = mKeyEdit->keyInput();
+			actionInstance->setSubParameter(name(), "key", keyInput.toPortableText());
+			actionInstance->setSubParameter(name(), "isQtKey", QVariant(keyInput.isQtKey()));
+		}
+	}
+	
+	void KeyParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
+	{
+		Q_UNUSED(actionInstance)
+
+		//No default values for now
 	}
 }

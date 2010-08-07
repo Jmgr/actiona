@@ -114,6 +114,23 @@ namespace ActionTools
 
 		return true;
 	}
+	
+	bool ActionInstanceExecutionHelper::evaluateBoolean(bool &buffer,
+										  const QString &parameterName,
+										  const QString &subParameterName)
+	{
+		mParameterName = parameterName;
+		mSubParameterName = subParameterName;
+
+		const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
+
+		if(!evaluate(toEvaluate))
+			return false;
+
+		buffer = mResult.toBool();
+		
+		return true;
+	}
 
 	bool ActionInstanceExecutionHelper::evaluateFloat(float &buffer,
 										const QString &parameterName,

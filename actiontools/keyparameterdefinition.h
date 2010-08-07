@@ -38,8 +38,12 @@ namespace ActionTools
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
 		void save(ActionInstance *actionInstance);
+		void setDefaultValues(ActionInstance *actionInstance);
 		
 	private:
+		QVariant defaultValue(QVariant defaultValue = QVariant()) const			{ Q_UNUSED(defaultValue); return QVariant(); }
+		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }
+		
 		KeyEdit *mKeyEdit;
 
 		Q_DISABLE_COPY(KeyParameterDefinition)
