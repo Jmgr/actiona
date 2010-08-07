@@ -22,6 +22,7 @@
 #include "codelineedit.h"
 
 #include <QKeyEvent>
+#include <QKeySequence>
 #include <QDebug>
 
 namespace ActionTools
@@ -30,29 +31,40 @@ namespace ActionTools
 		: CodeComboBox(parent)
 	{
 		installEventFilter(this);
+
+		connect(this, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentIndexChanged(QString)));
+
+		QKeySequence keySequence(Qt::Key_Print);
+		addItem(keySequence.toString(QKeySequence::NativeText));
 	}
 
 	void KeyEdit::setKeyInput(const KeyInput &keyInput)
 	{
 		mKeyInput = keyInput;
-		
+
 		codeLineEdit()->setText(mKeyInput.toTranslatedText());
 	}
-	
+
+	void KeyEdit::currentIndexChanged(const QString &text)
+	{
+		//TODO : Doesn't work
+		mKeyInput.fromPortableText(text, true);
+	}
+
 	bool KeyEdit::eventFilter(QObject *object, QEvent *event)
 	{
 		if(isCode())
 			return QObject::eventFilter(object, event);
-		
+
 		if(event->type() == QEvent::KeyPress)
 		{
 			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-			
+
 			if(!mKeyInput.fromEvent(keyEvent))
-				return false;
-			
+				return true;
+
 			codeLineEdit()->setText(mKeyInput.toTranslatedText());
-			
+
 			return true;
 		}
 

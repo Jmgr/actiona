@@ -43,30 +43,46 @@ namespace ActionTools
 			MetaLeft,
 			MetaRight,
 			AltGr,
-			
+			Numpad0,
+			Numpad1,
+			Numpad2,
+			Numpad3,
+			Numpad4,
+			Numpad5,
+			Numpad6,
+			Numpad7,
+			Numpad8,
+			Numpad9,
+			NumpadMultiply,
+			NumpadAdd,
+			NumpadSeparator,
+			NumpadSubstract,
+			NumpadDecimal,
+			NumpadDivide,
+
 			KeyCount
 		};
-		
+
 		KeyInput();
-		
+
 		QString toTranslatedText() const;
 		QString toPortableText() const;
-		
+
 		bool fromPortableText(const QString &key);
 		bool fromPortableText(const QString &key, bool isQtKey);
 		bool fromEvent(QKeyEvent *event);
-		
+
 		bool isQtKey() const						{ return mIsQtKey; }
 		int key() const								{ return mKey; }
-		
+
 		static void init();
 		static unsigned long nativeKey(int key)		{ return mNativeKey[key]; }
-		
+
 	private:
 		static const StringListPair mKeyNames;
 		static bool mInitDone;
 		static unsigned long mNativeKey[KeyCount];
-		
+
 		bool mIsQtKey;
 		int mKey;
 	};

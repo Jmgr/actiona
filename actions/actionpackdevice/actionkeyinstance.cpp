@@ -85,32 +85,38 @@ void ActionKeyInstance::startExecution()
 
 		bool result = true;
 
-		INPUT input;
-		input.type = INPUT_KEYBOARD;
-		input.ki.wScan = 0;
-		input.ki.dwFlags = 0;
-		input.ki.time = 0;
-		input.ki.dwExtraInfo = 0;
+		INPUT input[2];
+
+		for(int i = 0; i < 2; ++i)
+		{
+			input[i].type = INPUT_KEYBOARD;
+			input[i].ki.dwFlags = 0;
+			input[i].ki.time = 0;
+			input[i].ki.dwExtraInfo = 0;
+		}
 
 		if(action == PressAction || action == PressReleaseAction)
 		{
-			//Press Ctrl
-			input.ki.wVk = VK_CONTROL;
-			result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
-			//Press Alt
-			input.ki.wVk = VK_MENU;
-			result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
+			//Press right alt
+			input[0].ki.wVk = VK_RMENU;
+
+			//Press left control
+			input[1].ki.wVk = VK_LCONTROL;
+
+			result &= (SendInput(2, input, sizeof(INPUT)) != 0);
 		}
 		if(action == ReleaseAction || action == PressReleaseAction)
 		{
-			input.ki.dwFlags = KEYEVENTF_KEYUP;
+			input[0].ki.dwFlags = KEYEVENTF_KEYUP;
+			input[1].ki.dwFlags = KEYEVENTF_KEYUP;
 
-			//Release Alt
-			input.ki.wVk = VK_MENU;
-			result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
-			//Release Ctrl
-			input.ki.wVk = VK_CONTROL;
-			result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
+			//Release left control
+			input[0].ki.wVk = VK_LCONTROL;
+
+			//Release right alt
+			input[1].ki.wVk = VK_RMENU;
+
+			result &= (SendInput(2, input, sizeof(INPUT)) != 0);
 		}
 
 		if(!result)

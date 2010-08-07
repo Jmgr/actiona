@@ -389,16 +389,16 @@ namespace ActionTools
 		Qt::Key_Insert,     //  45   0x2D   VK_INSERT           | Ins key
 		Qt::Key_Delete,     //  46   0x2E   VK_DELETE           | Del key
 		Qt::Key_Help,       //  47   0x2F   VK_HELP             | Help key
-		0,                  //  48   0x30   (VK_0)              | 0 key
-		0,                  //  49   0x31   (VK_1)              | 1 key
-		0,                  //  50   0x32   (VK_2)              | 2 key
-		0,                  //  51   0x33   (VK_3)              | 3 key
-		0,                  //  52   0x34   (VK_4)              | 4 key
-		0,                  //  53   0x35   (VK_5)              | 5 key
-		0,                  //  54   0x36   (VK_6)              | 6 key
-		0,                  //  55   0x37   (VK_7)              | 7 key
-		0,                  //  56   0x38   (VK_8)              | 8 key
-		0,                  //  57   0x39   (VK_9)              | 9 key
+		Qt::Key_0,          //  48   0x30   (VK_0)              | 0 key
+		Qt::Key_1,          //  49   0x31   (VK_1)              | 1 key
+		Qt::Key_2,          //  50   0x32   (VK_2)              | 2 key
+		Qt::Key_3,          //  51   0x33   (VK_3)              | 3 key
+		Qt::Key_4,          //  52   0x34   (VK_4)              | 4 key
+		Qt::Key_5,          //  53   0x35   (VK_5)              | 5 key
+		Qt::Key_6,          //  54   0x36   (VK_6)              | 6 key
+		Qt::Key_7,          //  55   0x37   (VK_7)              | 7 key
+		Qt::Key_8,          //  56   0x38   (VK_8)              | 8 key
+		Qt::Key_9,          //  57   0x39   (VK_9)              | 9 key
 		Qt::Key_unknown,    //  58   0x3A   -- unassigned --
 		Qt::Key_unknown,    //  59   0x3B   -- unassigned --
 		Qt::Key_unknown,    //  60   0x3C   -- unassigned --
@@ -406,32 +406,32 @@ namespace ActionTools
 		Qt::Key_unknown,    //  62   0x3E   -- unassigned --
 		Qt::Key_unknown,    //  63   0x3F   -- unassigned --
 		Qt::Key_unknown,    //  64   0x40   -- unassigned --
-		0,                  //  65   0x41   (VK_A)              | A key
-		0,                  //  66   0x42   (VK_B)              | B key
-		0,                  //  67   0x43   (VK_C)              | C key
-		0,                  //  68   0x44   (VK_D)              | D key
-		0,                  //  69   0x45   (VK_E)              | E key
-		0,                  //  70   0x46   (VK_F)              | F key
-		0,                  //  71   0x47   (VK_G)              | G key
-		0,                  //  72   0x48   (VK_H)              | H key
-		0,                  //  73   0x49   (VK_I)              | I key
-		0,                  //  74   0x4A   (VK_J)              | J key
-		0,                  //  75   0x4B   (VK_K)              | K key
-		0,                  //  76   0x4C   (VK_L)              | L key
-		0,                  //  77   0x4D   (VK_M)              | M key
-		0,                  //  78   0x4E   (VK_N)              | N key
-		0,                  //  79   0x4F   (VK_O)              | O key
-		0,                  //  80   0x50   (VK_P)              | P key
-		0,                  //  81   0x51   (VK_Q)              | Q key
-		0,                  //  82   0x52   (VK_R)              | R key
-		0,                  //  83   0x53   (VK_S)              | S key
-		0,                  //  84   0x54   (VK_T)              | T key
-		0,                  //  85   0x55   (VK_U)              | U key
-		0,                  //  86   0x56   (VK_V)              | V key
-		0,                  //  87   0x57   (VK_W)              | W key
-		0,                  //  88   0x58   (VK_X)              | X key
-		0,                  //  89   0x59   (VK_Y)              | Y key
-		0,                  //  90   0x5A   (VK_Z)              | Z key
+		Qt::Key_A,          //  65   0x41   (VK_A)              | A key
+		Qt::Key_B,          //  66   0x42   (VK_B)              | B key
+		Qt::Key_C,          //  67   0x43   (VK_C)              | C key
+		Qt::Key_D,          //  68   0x44   (VK_D)              | D key
+		Qt::Key_E,          //  69   0x45   (VK_E)              | E key
+		Qt::Key_F,          //  70   0x46   (VK_F)              | F key
+		Qt::Key_G,          //  71   0x47   (VK_G)              | G key
+		Qt::Key_H,          //  72   0x48   (VK_H)              | H key
+		Qt::Key_I,          //  73   0x49   (VK_I)              | I key
+		Qt::Key_J,          //  74   0x4A   (VK_J)              | J key
+		Qt::Key_K,          //  75   0x4B   (VK_K)              | K key
+		Qt::Key_L,          //  76   0x4C   (VK_L)              | L key
+		Qt::Key_M,          //  77   0x4D   (VK_M)              | M key
+		Qt::Key_N,          //  78   0x4E   (VK_N)              | N key
+		Qt::Key_O,          //  79   0x4F   (VK_O)              | O key
+		Qt::Key_P,          //  80   0x50   (VK_P)              | P key
+		Qt::Key_Q,          //  81   0x51   (VK_Q)              | Q key
+		Qt::Key_R,          //  82   0x52   (VK_R)              | R key
+		Qt::Key_S,          //  83   0x53   (VK_S)              | S key
+		Qt::Key_T,          //  84   0x54   (VK_T)              | T key
+		Qt::Key_U,          //  85   0x55   (VK_U)              | U key
+		Qt::Key_V,          //  86   0x56   (VK_V)              | V key
+		Qt::Key_W,          //  87   0x57   (VK_W)              | W key
+		Qt::Key_X,          //  88   0x58   (VK_X)              | X key
+		Qt::Key_Y,          //  89   0x59   (VK_Y)              | Y key
+		Qt::Key_Z,          //  90   0x5A   (VK_Z)              | Z key
 		Qt::Key_Meta,       //  91   0x5B   VK_LWIN             | Left Windows  - MS Natural kbd
 		Qt::Key_Meta,       //  92   0x5C   VK_RWIN             | Right Windows - MS Natural kbd
 		Qt::Key_Menu,       //  93   0x5D   VK_APPS             | Application key-MS Natural kbd
@@ -604,10 +604,10 @@ namespace ActionTools
 
 	int KeyMapper::toNativeKey(Qt::Key key)
 	{
+#ifdef Q_WS_X11
 		if(key >= Qt::Key_Space && key <= Qt::Key_AsciiTilde)//Ascii
 			return key;
 
-#ifdef Q_WS_X11
 		int i = 1;
 		while(KeyTbl[i])
 		{

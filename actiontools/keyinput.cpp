@@ -19,6 +19,7 @@
 */
 
 #include "keyinput.h"
+#include "keymapper.h"
 
 #include <QKeyEvent>
 #include <QKeySequence>
@@ -41,7 +42,9 @@
 namespace ActionTools
 {
 	const StringListPair KeyInput::mKeyNames = qMakePair(
-		QStringList() << "invalid" << "shiftLeft" << "shiftRight" << "controlLeft" << "controlRight" << "altLeft" << "altRight" << "metaLeft" << "metaRight" << "altGr",
+		QStringList() << "invalid" << "shiftLeft" << "shiftRight" << "controlLeft" << "controlRight" << "altLeft" << "altRight" << "metaLeft" << "metaRight" << "altGr"
+		<< "numpad0" << "numpad1" << "numpad2" << "numpad3" << "numpad4" << "numpad5" << "numpad6" << "numpad7" << "numpad8" << "numpad9"
+		<< "numpadMultiply" << "numpadAdd" << "numpadSeparator" << "numpadSubstract" << "numpadDecimal" << "numpadDivide",
 		QStringList() << QString() << QObject::tr("Left Shift") << QObject::tr("Right Shift") << QObject::tr("Left Control") << QObject::tr("Right Control")
 		<< QObject::tr("Left Alt") << QObject::tr("Right Alt")
 #ifdef Q_WS_WIN
@@ -49,8 +52,11 @@ namespace ActionTools
 #else
 		<< QObject::tr("Left Meta") << QObject::tr("Right Meta")
 #endif
-		<< QObject::tr("Alt Gr")
+		<< QObject::tr("Alt Gr") << QObject::tr("Numpad 0") << QObject::tr("Numpad 1") << QObject::tr("Numpad 2") << QObject::tr("Numpad 3") << QObject::tr("Numpad 4")
+		<< QObject::tr("Numpad 5") << QObject::tr("Numpad 6") << QObject::tr("Numpad 7") << QObject::tr("Numpad 8") << QObject::tr("Numpad 9")
+		<< QObject::tr("Numpad *") << QObject::tr("Numpad +") << QObject::tr("Numpad Separator") << QObject::tr("Numpad -") << QObject::tr("Numpad .") << QObject::tr("Numpad /")
 	);
+
 	bool KeyInput::mInitDone = false;
 	unsigned long KeyInput::mNativeKey[] = {0};
 
@@ -139,7 +145,8 @@ namespace ActionTools
 	{
 		mIsQtKey = true;
 
-#ifdef Q_WS_X11
+		qDebug() << event->nativeVirtualKey();
+
 		for(int i = 0; i < KeyCount; ++i)
 		{
 			if(event->nativeVirtualKey() == mNativeKey[i])
@@ -149,7 +156,6 @@ namespace ActionTools
 				break;
 			}
 		}
-#endif
 
 		switch(event->key())
 		{
@@ -180,12 +186,22 @@ namespace ActionTools
 
 		if(mIsQtKey)
 		{
-			QKeySequence keySequence(event->key());
+			if(event->modifiers() != Qt::NoModifier)
+				return false;
 
-			mKey = keySequence[0];
-			mKey &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
+			mKey = event->key();
 
-			//mKey = event->key();
+			if(!KeyMapper::toNativeKey(static_cast<Qt::Key>(mKey)))
+				return false;
+		}
+		else
+		{
+			if(!nativeKey(mKey)
+#ifdef Q_WS_WIN
+				&& mKey != AltGr
+#endif
+						)
+				return false;
 		}
 
 		return true;
@@ -210,6 +226,22 @@ namespace ActionTools
 		mNativeKey[MetaLeft] = XK_Super_L;
 		mNativeKey[MetaRight] = XK_Super_R;
 		mNativeKey[AltGr] = XK_ISO_Level3_Shift;
+		mNativeKey[Numpad0] = XK_KP_0;
+		mNativeKey[Numpad1] = XK_KP_1;
+		mNativeKey[Numpad2] = XK_KP_2;
+		mNativeKey[Numpad3] = XK_KP_3;
+		mNativeKey[Numpad4] = XK_KP_4;
+		mNativeKey[Numpad5] = XK_KP_5;
+		mNativeKey[Numpad6] = XK_KP_6;
+		mNativeKey[Numpad7] = XK_KP_7;
+		mNativeKey[Numpad8] = XK_KP_8;
+		mNativeKey[Numpad9] = XK_KP_9;
+		mNativeKey[NumpadMultiply] = XK_KP_Multiply;
+		mNativeKey[NumpadAdd] = XK_KP_Add;
+		mNativeKey[NumpadSeparator] = XK_KP_Separator;
+		mNativeKey[NumpadSubstract] = XK_KP_Subtract;
+		mNativeKey[NumpadDecimal] = XK_KP_Decimal;
+		mNativeKey[NumpadDivide] = XK_KP_Divide;
 #endif
 #ifdef Q_WS_WIN
 		mNativeKey[ShiftLeft] = VK_LSHIFT;
@@ -221,6 +253,22 @@ namespace ActionTools
 		mNativeKey[MetaLeft] = VK_LWIN;
 		mNativeKey[MetaRight] = VK_RWIN;
 		mNativeKey[AltGr] = 0;
+		mNativeKey[Numpad0] = VK_NUMPAD0;
+		mNativeKey[Numpad1] = VK_NUMPAD1;
+		mNativeKey[Numpad2] = VK_NUMPAD2;
+		mNativeKey[Numpad3] = VK_NUMPAD3;
+		mNativeKey[Numpad4] = VK_NUMPAD4;
+		mNativeKey[Numpad5] = VK_NUMPAD5;
+		mNativeKey[Numpad6] = VK_NUMPAD6;
+		mNativeKey[Numpad7] = VK_NUMPAD7;
+		mNativeKey[Numpad8] = VK_NUMPAD8;
+		mNativeKey[Numpad9] = VK_NUMPAD9;
+		mNativeKey[NumpadMultiply] = VK_MULTIPLY;
+		mNativeKey[NumpadAdd] = VK_ADD;
+		mNativeKey[NumpadSeparator] = VK_SEPARATOR;
+		mNativeKey[NumpadSubstract] = VK_SUBTRACT;
+		mNativeKey[NumpadDecimal] = VK_DECIMAL;
+		mNativeKey[NumpadDivide] = VK_DIVIDE;
 #endif
 	}
 }

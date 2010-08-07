@@ -37,6 +37,9 @@ namespace ActionTools
 		const KeyInput &keyInput() const							{ return mKeyInput; }
 		void setKeyInput(const KeyInput &keyInput);
 
+	private slots:
+		void currentIndexChanged(const QString &text);
+
 	private:
 		bool eventFilter(QObject *object, QEvent *event);
 
