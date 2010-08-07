@@ -62,10 +62,10 @@ void ActionKeyInstance::startExecution()
 	if(!actionInstanceExecutionHelper.evaluateString(key, "key", "key") ||
 	   !actionInstanceExecutionHelper.evaluateListElement(action, actions, "action"))
 		return;
-	
+
 	ActionTools::KeyInput keyInput;
 	keyInput.fromPortableText(key);
-	
+
 #ifdef Q_WS_WIN
 	if(keyInput.key() == ActionTools::KeyInput::AltGr)
 	{
@@ -75,70 +75,68 @@ void ActionKeyInstance::startExecution()
 			emit executionException(InvalidActionException, tr("Cannot press the key because it's already pressed"));
 			return;
 		}
-		
+
 		if(!mAltGrPressed && action == ReleaseAction)
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("action");
 			emit executionException(InvalidActionException, tr("Cannot press the key because it's already pressed"));
 			return;
 		}
-		
+
 		bool result = true;
-		
+
 		INPUT input;
 		input.type = INPUT_KEYBOARD;
-		KEYBDINPUT keyInput;
-		keyInput.wScan = 0;
-		keyInput.dwFlags = 0;
-		keyInput.time = 0;
-		keyInput.dwExtraInfo = 0;
-		input.ki = keyInput;
-		
+		input.ki.wScan = 0;
+		input.ki.dwFlags = 0;
+		input.ki.time = 0;
+		input.ki.dwExtraInfo = 0;
+
 		if(action == PressAction || action == PressReleaseAction)
 		{
 			//Press Ctrl
 			input.ki.wVk = VK_CONTROL;
-			result &= SendInput(1, &input, sizeof(INPUT));
+			result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 			//Press Alt
 			input.ki.wVk = VK_MENU;
-			result &= SendInput(1, &input, sizeof(INPUT));
+			result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 		}
 		if(action == ReleaseAction || action == PressReleaseAction)
 		{
-			keyInput.dwFlags = KEYEVENTF_KEYUP;
-			
+			input.ki.dwFlags = KEYEVENTF_KEYUP;
+
 			//Release Alt
 			input.ki.wVk = VK_MENU;
-			result &= SendInput(1, &input, sizeof(INPUT));
+			result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 			//Release Ctrl
 			input.ki.wVk = VK_CONTROL;
-			result &= SendInput(1, &input, sizeof(INPUT));
+			result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 		}
-		
+
 		if(!result)
 		{
 			emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
 			return;
 		}
-		
+
 		if(action == PressAction)
 			mAltGrPressed = true;
 		else if(action == ReleaseAction)
 			mAltGrPressed = false;
-		
+
 		emit executionEnded();
-		
+
 		return;
 	}
 #endif
-	
+
 	int nativeKey;
-	
+
 	if(keyInput.isQtKey())
 		nativeKey = ActionTools::KeyMapper::toNativeKey(static_cast<Qt::Key>(keyInput.key()));
 	else
 		nativeKey = ActionTools::KeyInput::nativeKey(keyInput.key());
-	
+
 	if(mPressedKeys.contains(nativeKey) && action != ReleaseAction)
 	{
 		actionInstanceExecutionHelper.setCurrentParameter("action");
@@ -152,9 +150,9 @@ void ActionKeyInstance::startExecution()
 		emit executionException(InvalidActionException, tr("Cannot release the key because it's not pressed"));
 		return;
 	}
-	
+
 	bool result = true;
-	
+
 #ifdef Q_WS_X11
 	ActionTools::XDisplayHelper xDisplayHelper;
 	if(action == PressAction || action == PressReleaseAction)
@@ -167,35 +165,33 @@ void ActionKeyInstance::startExecution()
 #ifdef Q_WS_WIN
 	INPUT input;
 	input.type = INPUT_KEYBOARD;
-	KEYBDINPUT keyInput;
-	keyInput.wVk = nativeKey;
-	keyInput.wScan = 0;
-	keyInput.dwFlags = 0;
-	keyInput.time = 0;
-	keyInput.dwExtraInfo = 0;
-	input.ki = keyInput;
-	
+	input.ki.wVk = nativeKey;
+	input.ki.wScan = 0;
+	input.ki.dwFlags = 0;
+	input.ki.time = 0;
+	input.ki.dwExtraInfo = 0;
+
 	if(action == PressAction || action == PressReleaseAction)
-		result &= SendInput(1, &input, sizeof(INPUT));
+		result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 	if(action == ReleaseAction || action == PressReleaseAction)
 	{
-		input.ki.keyInput.dwFlags = KEYEVENTF_KEYUP;
-		
-		result &= SendInput(1, &input, sizeof(INPUT));
+		input.ki.dwFlags = KEYEVENTF_KEYUP;
+
+		result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 	}
 #endif
-	
+
 	if(!result)
 	{
 		emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
 		return;
 	}
-	
+
 	if(action == PressAction)
 		mPressedKeys.insert(nativeKey);
 	else if(action == ReleaseAction)
 		mPressedKeys.remove(nativeKey);
-	
+
 	emit executionEnded();
 }
 
@@ -208,42 +204,42 @@ void ActionKeyInstance::stopLongTermExecution()
 		ActionTools::XDisplayHelper xDisplayHelper;
 		if(!XTestFakeButtonEvent(xDisplayHelper.display(), XKeysymToKeycode(xDisplayHelper.display(), nativeKey), False, CurrentTime))
 			continue;
-		
+
 		XFlush(xDisplayHelper.display());
 #endif
 #ifdef Q_WS_WIN
 		INPUT input;
 		input.type = INPUT_KEYBOARD;
-		KEYBDINPUT keyInput;
-		keyInput.wVk = nativeKey;
-		keyInput.wScan = 0;
-		keyInput.dwFlags = KEYEVENTF_KEYUP;
-		keyInput.time = 0;
-		keyInput.dwExtraInfo = 0;
-		input.ki = keyInput;
-		
+		input.ki.wVk = nativeKey;
+		input.ki.wScan = 0;
+		input.ki.dwFlags = KEYEVENTF_KEYUP;
+		input.ki.time = 0;
+		input.ki.dwExtraInfo = 0;
+
 		SendInput(1, &input, sizeof(INPUT));
 #endif
 	}
-	
+
+	mPressedKeys.clear();
+
 #ifdef Q_WS_WIN
 	if(mAltGrPressed)
 	{
 		INPUT input;
 		input.type = INPUT_KEYBOARD;
-		KEYBDINPUT keyInput;
-		keyInput.wVk = VK_MENU;
-		keyInput.wScan = 0;
-		keyInput.dwFlags = KEYEVENTF_KEYUP;
-		keyInput.time = 0;
-		keyInput.dwExtraInfo = 0;
-		input.ki = keyInput;
-		
+		input.ki.wVk = VK_MENU;
+		input.ki.wScan = 0;
+		input.ki.dwFlags = KEYEVENTF_KEYUP;
+		input.ki.time = 0;
+		input.ki.dwExtraInfo = 0;
+
 		SendInput(1, &input, sizeof(INPUT));
-		
+
 		input.ki.wVk = VK_CONTROL;
-		
+
 		SendInput(1, &input, sizeof(INPUT));
+
+		mAltGrPressed = false;
 	}
 #endif
 }

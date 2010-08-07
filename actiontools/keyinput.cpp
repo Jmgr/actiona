@@ -78,17 +78,17 @@ namespace ActionTools
 		if(mIsQtKey)
 		{
 			QKeySequence keySequence(mKey);
-			
+
 			return keySequence.toString(QKeySequence::PortableText);
 		}
-		
+
 		return mKeyNames.first[mKey];
 	}
-	
+
 	bool KeyInput::fromPortableText(const QString &key)
 	{
 		mIsQtKey = true;
-		
+
 		for(int i = 0; i < KeyCount; ++i)
 		{
 			if(mKeyNames.first[i] == key)
@@ -99,12 +99,12 @@ namespace ActionTools
 				return true;
 			}
 		}
-		
+
 		QKeySequence keySequence(key);
-		
+
 		mKey = keySequence[0];
 		mKey &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
-		
+
 		return true;
 	}
 
@@ -177,9 +177,16 @@ namespace ActionTools
 		default:
 			break;
 		}
-		
+
 		if(mIsQtKey)
-			mKey = event->key();
+		{
+			QKeySequence keySequence(event->key());
+
+			mKey = keySequence[0];
+			mKey &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
+
+			//mKey = event->key();
+		}
 
 		return true;
 	}

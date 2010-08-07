@@ -38,7 +38,7 @@ namespace ActionTools
 #ifdef Q_WS_X11
 	static const int KeyTbl[] = {
 		// misc keys
-		
+
 		XK_Escape,                  Qt::Key_Escape,
 		XK_Tab,                     Qt::Key_Tab,
 		XK_ISO_Left_Tab,            Qt::Key_Backtab,
@@ -51,9 +51,9 @@ namespace ActionTools
 		XK_Print,                   Qt::Key_Print,
 		0x1005FF60,                 Qt::Key_SysReq,         // hardcoded Sun SysReq
 		0x1007ff00,                 Qt::Key_SysReq,         // hardcoded X386 SysReq
-		
+
 		// cursor movement
-		
+
 		XK_Home,                    Qt::Key_Home,
 		XK_End,                     Qt::Key_End,
 		XK_Left,                    Qt::Key_Left,
@@ -62,9 +62,9 @@ namespace ActionTools
 		XK_Down,                    Qt::Key_Down,
 		XK_Prior,                   Qt::Key_PageUp,
 		XK_Next,                    Qt::Key_PageDown,
-		
+
 		// modifiers
-		
+
 		XK_Shift_L,                 Qt::Key_Shift,
 		XK_Shift_R,                 Qt::Key_Shift,
 		XK_Shift_Lock,              Qt::Key_Shift,
@@ -86,9 +86,9 @@ namespace ActionTools
 		0x1000FF74,                 Qt::Key_Backtab,        // hardcoded HP backtab
 		0x1005FF10,                 Qt::Key_F11,            // hardcoded Sun F36 (labeled F11)
 		0x1005FF11,                 Qt::Key_F12,            // hardcoded Sun F37 (labeled F12)
-		
+
 		// numeric and function keypad keys
-		
+
 		XK_KP_Space,                Qt::Key_Space,
 		XK_KP_Tab,                  Qt::Key_Tab,
 		XK_KP_Enter,                Qt::Key_Enter,
@@ -114,9 +114,9 @@ namespace ActionTools
 		XK_KP_Subtract,             Qt::Key_Minus,
 		XK_KP_Decimal,              Qt::Key_Period,
 		XK_KP_Divide,               Qt::Key_Slash,
-		
+
 		// International input method support keys
-		
+
 		// International & multi-key character composition
 		XK_ISO_Level3_Shift,        Qt::Key_AltGr,
 		XK_Multi_key,		Qt::Key_Multi_key,
@@ -124,11 +124,11 @@ namespace ActionTools
 		XK_SingleCandidate,		Qt::Key_SingleCandidate,
 		XK_MultipleCandidate,	Qt::Key_MultipleCandidate,
 		XK_PreviousCandidate,	Qt::Key_PreviousCandidate,
-		
+
 		// Misc Functions
 		XK_Mode_switch,		Qt::Key_Mode_switch,
 		XK_script_switch,		Qt::Key_Mode_switch,
-		
+
 		// Japanese keyboard support
 		XK_Kanji,			Qt::Key_Kanji,
 		XK_Muhenkan,		Qt::Key_Muhenkan,
@@ -154,7 +154,7 @@ namespace ActionTools
 		XK_Kanji_Bangou,		Qt::Key_Codeinput,
 		XK_Zen_Koho,		Qt::Key_MultipleCandidate,
 		XK_Mae_Koho,		Qt::Key_PreviousCandidate,
-		
+
 #ifdef XK_KOREAN
 		// Korean keyboard support
 		XK_Hangul,			Qt::Key_Hangul,
@@ -179,7 +179,7 @@ namespace ActionTools
 		//XK_Hangul_switch,		Qt::Key_Hangul_switch,
 		XK_Hangul_switch,		Qt::Key_Mode_switch,
 #endif  // XK_KOREAN
-		
+
 		// dead keys
 		XK_dead_grave,              Qt::Key_Dead_Grave,
 		XK_dead_acute,              Qt::Key_Dead_Acute,
@@ -200,7 +200,7 @@ namespace ActionTools
 		XK_dead_belowdot,           Qt::Key_Dead_Belowdot,
 		XK_dead_hook,               Qt::Key_Dead_Hook,
 		XK_dead_horn,               Qt::Key_Dead_Horn,
-		
+
 		// Special keys from X.org - This include multimedia keys,
 		// wireless/bluetooth/uwb keys, special launcher keys, etc.
 		XF86XK_Back,                Qt::Key_Back,
@@ -334,7 +334,7 @@ namespace ActionTools
 		XF86XK_LaunchB,             Qt::Key_LaunchD,
 		XF86XK_LaunchC,             Qt::Key_LaunchE,
 		XF86XK_LaunchD,             Qt::Key_LaunchF,
-		
+
 		0,                          0
 	};
 #endif
@@ -598,16 +598,15 @@ namespace ActionTools
 		Qt::Key_Zoom,       // 251   0xFB   VK_ZOOM             | Zoom key
 		Qt::Key_unknown,    // 252   0xFC   VK_NONAME           | Reserved
 		Qt::Key_unknown,    // 253   0xFD   VK_PA1              | PA1 key
-		Qt::Key_Clear,      // 254   0xFE   VK_OEM_CLEAR        | Clear key
-		KeyCount
+		Qt::Key_Clear       // 254   0xFE   VK_OEM_CLEAR        | Clear key
 	};
 #endif
-	
+
 	int KeyMapper::toNativeKey(Qt::Key key)
 	{
 		if(key >= Qt::Key_Space && key <= Qt::Key_AsciiTilde)//Ascii
 			return key;
-		
+
 #ifdef Q_WS_X11
 		int i = 1;
 		while(KeyTbl[i])
@@ -618,7 +617,7 @@ namespace ActionTools
 		}
 #endif
 #ifdef Q_WS_WIN
-		for(int i = 0; i < KeyCount; ++i)
+		for(int i = 0; i < 255; ++i)
 		{
 			if(KeyTbl[i] == key)
 				return i;

@@ -90,7 +90,7 @@ void ActionClickInstance::startExecution()
 		emit executionException(FailedToSendInputException, tr("Unable to emulate click: cannot open display"));
 		return;
 	}
-	
+
 	//Note : we can't use XTestFakeMotionEvent because it's incompatible with Xinerama
 	XWarpPointer(xDisplayHelper.display(), None, DefaultRootWindow(xDisplayHelper.display()), 0, 0, 0, 0, position.x(), position.y());
 	XFlush(xDisplayHelper.display());
@@ -138,9 +138,9 @@ void ActionClickInstance::startExecution()
 
 	if(action == ClickAction)
 		previousPosition = QCursor::pos();
-	
+
 	QCursor::setPos(position);
-	
+
 	int winButton;
 	switch(static_cast<Button>(button))
 	{
@@ -158,13 +158,11 @@ void ActionClickInstance::startExecution()
 
 	INPUT pressInput;
 	pressInput.type = INPUT_MOUSE;
-	MOUSEINPUT mousePressInput;
-	mousePressInput.dx = 0;
-	mousePressInput.dy = 0;
-	mousePressInput.mouseData = 0;
-	mousePressInput.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
-	mousePressInput.time = 0;
-	pressInput.mi = mousePressInput;
+	pressInput.mi.dx = 0;
+	pressInput.mi.dy = 0;
+	pressInput.mi.mouseData = 0;
+	pressInput.mi.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
+	pressInput.mi.time = 0;
 
 	switch(static_cast<Button>(button))
 	{
@@ -182,13 +180,11 @@ void ActionClickInstance::startExecution()
 
 	INPUT releaseInput;
 	releaseInput.type = INPUT_MOUSE;
-	MOUSEINPUT mouseReleaseInput;
-	mouseReleaseInput.dx = 0;
-	mouseReleaseInput.dy = 0;
-	mouseReleaseInput.mouseData = 0;
-	mouseReleaseInput.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
-	mouseReleaseInput.time = 0;
-	releaseInput.mi = mouseReleaseInput;
+	releaseInput.mi.dx = 0;
+	releaseInput.mi.dy = 0;
+	releaseInput.mi.mouseData = 0;
+	releaseInput.mi.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
+	releaseInput.mi.time = 0;
 
 	for(int i = 0; i < amount; ++i)
 	{
@@ -213,9 +209,6 @@ void ActionClickInstance::startExecution()
 
 	if(action == ClickAction)
 		QCursor::setPos(previousPosition);
-#endif
-#ifdef Q_WS_MAC
-	//TODO_MAC
 #endif
 
 	switch(action)
@@ -280,16 +273,16 @@ void ActionClickInstance::stopLongTermExecution()
 
 			INPUT releaseInput;
 			releaseInput.type = INPUT_MOUSE;
-			MOUSEINPUT mouseReleaseInput;
-			mouseReleaseInput.dx = 0;
-			mouseReleaseInput.dy = 0;
-			mouseReleaseInput.mouseData = 0;
-			mouseReleaseInput.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
-			mouseReleaseInput.time = 0;
-			releaseInput.mi = mouseReleaseInput;
+			releaseInput.mi.dx = 0;
+			releaseInput.mi.dy = 0;
+			releaseInput.mi.mouseData = 0;
+			releaseInput.mi.dwFlags = winButton | MOUSEEVENTF_ABSOLUTE;
+			releaseInput.mi.time = 0;
 
 			SendInput(1, &releaseInput, sizeof(INPUT));
 #endif
+
+			mPressedButtonStatus[button] = false;
 		}
 	}
 }

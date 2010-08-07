@@ -67,17 +67,17 @@ bool sendCharacter(Display *display, KeySym keySym)
 		result &= XTestFakeKeyEvent(display, keyToKeycode(display, wrapKey), False, CurrentTime);
 
 	XFlush(display);
-	
+
 	return result;
 }
 
 bool sendKey(Display *display, const char *key)
 {
 	bool result = true;
-	
+
 	result &= XTestFakeKeyEvent(display, keyToKeycode(display, key), True, CurrentTime);
 	result &= XTestFakeKeyEvent(display, keyToKeycode(display, key), False, CurrentTime);
-	
+
 	return result;
 }
 
@@ -130,7 +130,7 @@ bool sendString(Display *display, const QString &string)
 				result &= sendCharacter(display, keySym[0]);
 		}
 	}
-	
+
 	return result;
 }
 #endif
@@ -193,9 +193,6 @@ void ActionTextInstance::startExecution()
 		emit executionException(FailedToSendInputException, tr("Unable to send input"));
 		return;
 	}
-#endif
-#ifdef Q_WS_MAC
-	//TODO_MAC
 #endif
 
 	QTimer::singleShot(1, this, SIGNAL(executionEnded()));

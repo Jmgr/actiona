@@ -57,7 +57,7 @@ void ActionWheelInstance::startExecution()
 	}
 	else
 		button = Button4;
-	
+
 	bool result = true;
 
 	for(int i = 0; i < intensity; ++i)
@@ -65,9 +65,9 @@ void ActionWheelInstance::startExecution()
 		result &= XTestFakeButtonEvent(display, button, True, CurrentTime);
 		result &= XTestFakeButtonEvent(display, button, False, CurrentTime);
 	}
-	
+
 	XCloseDisplay(display);
-	
+
 	if(!result)
 	{
 		emit executionException(FailedToSendInputException, tr("Unable to emulate wheel: failed to send input"));
@@ -88,9 +88,6 @@ void ActionWheelInstance::startExecution()
 		emit executionException(FailedToSendInputException, tr("Unable to emulate wheel: failed to send input"));
 		return;
 	}
-#endif
-#ifdef Q_WS_MAC
-	//TODO_MAC
 #endif
 
 	emit executionEnded();
