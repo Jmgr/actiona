@@ -67,6 +67,10 @@ class QxtCommandOptions;
 class QNetworkAccessManager;
 class ActionDialog;
 
+#ifdef Q_WS_WIN
+#include <Shobjidl.h>
+#endif
+
 #include <QNetworkReply>
 #include <QSystemTrayIcon>
 
@@ -156,6 +160,15 @@ private slots:
 #endif
 
 private:
+	enum TaskbarStatus
+	{
+		NoProgress =		0 << 0,
+		Indeterminate =		1 << 0,
+		Normal =			1 << 1,
+		Error =				1 << 2,
+		Paused =			1 << 3
+	};
+
 	void updateUndoRedoStatus();
 	void execute(bool onlySelection);
 	void fillNewActionTreeWidget(NewActionTreeWidget *widget);
@@ -180,6 +193,8 @@ private:
 	void updateRecentFileActions();
 	void updateProxySettings();
 	bool checkReadResult(ActionTools::Script::ReadResult result);
+	void setTaskbarProgress(int value, int max);
+	void setTaskbarStatus(TaskbarStatus status);
 #ifndef ACT_NO_UPDATER
 	void checkForUpdate(bool silent);
 #endif
@@ -221,6 +236,9 @@ private:
 	int mUpdateFileSize;
 	QString mUpdateFileHash;
 	QCryptographicHash mHashCalculator;
+#endif
+#ifdef Q_WS_WIN
+	ITaskbarList3 *mTaskbarList;
 #endif
 
 	Q_DISABLE_COPY(MainWindow)

@@ -61,7 +61,8 @@ FORMS += mainwindow.ui \
 	scriptcontentdialog.ui \
     sfxscriptdialog.ui
 win32:LIBS += -luser32 \
-	-ladvapi32
+	-ladvapi32 \
+	-lole32
 LIBS += -L.. \
 	-ltools \
 	-lactiontools \

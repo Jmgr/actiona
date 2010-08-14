@@ -97,13 +97,28 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mUpdaterProgressDialog(new QProgressDialog(this)),
 	mHashCalculator(QCryptographicHash::Md5)
 #endif
+#ifdef Q_WS_WIN
+	,mTaskbarList(0)
+#endif
 {
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("MainWindow constructor");
 #endif
-	
+
 	ui->setupUi(this);
-	
+
+#ifdef Q_WS_WIN
+	CoInitialize(0);
+
+	HRESULT result = CoCreateInstance(CLSID_TaskbarList, 0, CLSCTX_INPROC_SERVER, IID_ITaskbarList3, reinterpret_cast<LPVOID*>(&mTaskbarList));
+	if(SUCCEEDED(result))
+		mTaskbarList->HrInit();
+	else
+		mTaskbarList = 0;
+#endif
+
+	setTaskbarStatus(Normal);
+
 	if(mSplashScreen)
 	{
 		mSplashScreen->showMessage(tr("Creating main window..."));
@@ -195,6 +210,13 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 
 MainWindow::~MainWindow()
 {
+#ifdef Q_WS_WIN
+	if(mTaskbarList)
+		mTaskbarList->Release();
+
+	CoUninitialize();
+#endif
+
 	delete mExecuter;
 
 	delete ui;
@@ -246,6 +268,8 @@ void MainWindow::postInit()
 				mSplashScreen->showMessage(tr("Creating action dialog %1...").arg(actionDefinition->name()));
 				mSplashScreen->setValue(actionDefinitionIndex);
 			}
+
+			setTaskbarProgress(actionDefinitionIndex, mActionFactory->actionDefinitionCount() - 1);
 			
 			mActionDialogs.append(new ActionDialog(mCompletionModel, mScript, actionDefinition, this));
 		}
@@ -257,6 +281,8 @@ void MainWindow::postInit()
 		mSplashScreen->setValue(0);
 		mSplashScreen->setMaximum(1);
 	}
+
+	setTaskbarStatus(NoProgress);
 
 	{
 #ifdef ACT_PROFILE
@@ -1208,6 +1234,26 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 	default:
 		return false;
 	}
+}
+
+void MainWindow::setTaskbarProgress(int value, int max)
+{
+#ifdef Q_WS_WIN
+	if(!mTaskbarList)
+		return;
+
+	mTaskbarList->SetProgressValue(winId(), value, max);
+#endif
+}
+
+void MainWindow::setTaskbarStatus(TaskbarStatus status)
+{
+#ifdef Q_WS_WIN
+	if(!mTaskbarList)
+		return;
+
+	mTaskbarList->SetProgressState(winId(), static_cast<TBPFLAG>(status));
+#endif
 }
 
 #ifndef ACT_NO_UPDATER
