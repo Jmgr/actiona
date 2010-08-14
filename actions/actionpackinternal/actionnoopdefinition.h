@@ -42,13 +42,11 @@ public:
 
 	QString name() const													{ return QObject::tr("No-op"); }
 	QString id() const														{ return "ActionNoop"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Does nothing"); }
-	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionNoopInstance(this); }
-	Status status() const													{ return Stable; }
 	Category category() const												{ return Internal; }
-	QPixmap icon() const													{ return QPixmap(":/icons/code.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/noop.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionNoopDefinition)

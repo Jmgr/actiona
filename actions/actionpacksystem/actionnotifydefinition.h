@@ -79,12 +79,10 @@ public:
 	QString id() const														{ return "ActionNotify"; }
 	Flag flags() const														{ return WorksOnGnuLinux | Official; }
 	QString description() const												{ return QObject::tr("Shows a message using the notify system"); }
-	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionNotifyInstance(this); }
-	Status status() const													{ return Stable; }
 	Category category() const												{ return System; }
 	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
-	QStringList tabs() const												{ return QStringList() << tr("Standard") << tr("Advanced"); }
+	QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 private:
 	Q_DISABLE_COPY(ActionNotifyDefinition)

@@ -58,13 +58,11 @@ public:
 
 	QString name() const													{ return QObject::tr("Variable"); }
 	QString id() const														{ return "ActionVariable"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Set the value of a variable"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionVariableInstance(this); }
-	Status status() const													{ return Stable; }
 	Category category() const												{ return Internal; }
-	QPixmap icon() const													{ return QPixmap(":/icons/goto.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/variable.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionVariableDefinition)

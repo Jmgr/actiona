@@ -49,13 +49,11 @@ public:
 
 	QString name() const													{ return QObject::tr("Move cursor"); }
 	QString id() const														{ return "ActionMoveCursor"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Move the mouse cursor"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionMoveCursorInstance(this); }
-	Status status() const													{ return Alpha; }
 	Category category() const												{ return Device; }
-	QPixmap icon() const													{ return QPixmap(":/icons/code.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionMoveCursorDefinition)

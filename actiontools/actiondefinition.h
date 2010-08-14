@@ -76,9 +76,9 @@ namespace ActionTools
 		virtual QString id() const = 0;
 		virtual Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac; }
 		virtual QString description() const												{ return QObject::tr("No description"); }
-		virtual Tools::Version version() const = 0;
+		virtual Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
 		virtual ActionInstance *newActionInstance() const = 0;
-		virtual Status status() const = 0;
+		virtual Status status() const													{ return Stable; }
 		virtual Category category() const = 0;
 		virtual QString author() const													{ return (flags() & Official) ? QObject::tr("The Actionaz Team") : QString(); }
 		virtual QString website() const													{ return QString(); }
@@ -96,6 +96,7 @@ namespace ActionTools
 		ActionInstance *scriptInit(QScriptEngine *scriptEngine) const;
 		
 		static QString CategoryName[CategoryCount];
+		static QStringList StandardTabs;
 
 	protected:
 		void addElement(ElementDefinition *element, int tab = 0);

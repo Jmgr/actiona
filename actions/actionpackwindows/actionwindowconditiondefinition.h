@@ -110,14 +110,12 @@ public:
 
 	QString name() const													{ return QObject::tr("Window condition"); }
 	QString id() const														{ return "ActionWindowCondition"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Checks for the state of a window"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionWindowConditionInstance(this); }
-	Status status() const													{ return Alpha; }
 	Category category() const												{ return Windows; }
 	QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
-	QStringList tabs() const												{ return QStringList() << tr("Standard") << tr("Advanced"); }
+	QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 private:
 	Q_DISABLE_COPY(ActionWindowConditionDefinition)

@@ -94,13 +94,11 @@ public:
 
 	QString name() const													{ return QObject::tr("Click"); }
 	QString id() const														{ return "ActionClick"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Emulates a mouse click"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionClickInstance(this); }
-	Status status() const													{ return Alpha; }
 	Category category() const												{ return Device; }
-	QPixmap icon() const													{ return QPixmap(":/icons/code.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/click.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionClickDefinition)

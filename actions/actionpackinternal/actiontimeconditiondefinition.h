@@ -72,13 +72,11 @@ public:
 
 	QString name() const													{ return QObject::tr("Time condition"); }
 	QString id() const														{ return "ActionTimeCondition"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Check the current date time and do some action"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionTimeConditionInstance(this); }
-	Status status() const													{ return Stable; }
 	Category category() const												{ return Internal; }
-	QPixmap icon() const													{ return QPixmap(":/icons/goto.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/timecondition.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionTimeConditionDefinition)

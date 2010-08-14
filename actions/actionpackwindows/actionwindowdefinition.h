@@ -108,11 +108,9 @@ public:
 
 	QString name() const													{ return QObject::tr("Window"); }
 	QString id() const														{ return "ActionWindow"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Do some action on a window"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionWindowInstance(this); }
-	Status status() const													{ return Alpha; }
 	Category category() const												{ return Windows; }
 	QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
 

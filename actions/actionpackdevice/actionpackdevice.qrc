@@ -1,6 +1,9 @@
 <RCC>
-    <qresource prefix="/">
-        <file>icons/key.png</file>
+    <qresource prefix="/actions">
         <file>icons/click.png</file>
+        <file>icons/key.png</file>
+        <file>icons/text.png</file>
+        <file>icons/wheel.png</file>
+        <file>icons/movecursor.png</file>
     </qresource>
 </RCC>

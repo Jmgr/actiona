@@ -1,8 +1,14 @@
 <RCC>
-    <qresource prefix="/">
-        <file>icons/sleep.png</file>
+    <qresource prefix="/actions">
+        <file>icons/code.png</file>
+        <file>icons/exit.png</file>
         <file>icons/goto.png</file>
         <file>icons/loop.png</file>
-        <file>icons/code.png</file>
+        <file>icons/noop.png</file>
+        <file>icons/pause.png</file>
+        <file>icons/stop.png</file>
+        <file>icons/timecondition.png</file>
+        <file>icons/variable.png</file>
+        <file>icons/variablecondition.png</file>
     </qresource>
 </RCC>

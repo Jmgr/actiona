@@ -64,11 +64,9 @@ public:
 
 	QString name() const													{ return QObject::tr("Text input"); }
 	QString id() const														{ return "ActionTextInput"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Ask the user to enter some text"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionTextInputInstance(this); }
-	Status status() const													{ return Alpha; }
 	Category category() const												{ return Windows; }
 	QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
 

@@ -56,13 +56,11 @@ public:
 
 	QString name() const													{ return QObject::tr("Pause"); }
 	QString id() const														{ return "ActionPause"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Pauses the script execution"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionPauseInstance(this); }
-	Status status() const													{ return Alpha; }
 	Category category() const												{ return Internal; }
-	QPixmap icon() const													{ return QPixmap(":/icons/sleep.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/pause.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionPauseDefinition)

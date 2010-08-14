@@ -62,13 +62,11 @@ public:
 
 	QString name() const													{ return QObject::tr("Key"); }
 	QString id() const														{ return "ActionKey"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Emulates a key press"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionKeyInstance(this); }
-	Status status() const													{ return Alpha; }
 	Category category() const												{ return Device; }
-	QPixmap icon() const													{ return QPixmap(":/icons/code.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/key.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionKeyDefinition)

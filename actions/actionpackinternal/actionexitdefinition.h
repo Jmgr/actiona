@@ -42,13 +42,11 @@ public:
 
 	QString name() const													{ return QObject::tr("Exit"); }
 	QString id() const														{ return "ActionExit"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Exit Actionaz"); }
-	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionExitInstance(this); }
-	Status status() const													{ return Stable; }
 	Category category() const												{ return Internal; }
-	QPixmap icon() const													{ return QPixmap(":/icons/code.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/exit.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionExitDefinition)

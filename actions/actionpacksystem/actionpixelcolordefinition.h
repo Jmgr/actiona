@@ -73,14 +73,12 @@ public:
 
 	QString name() const													{ return QObject::tr("Pixel color"); }
 	QString id() const														{ return "ActionPixelColor"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Check a pixel color on the screen"); }
-	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionPixelColorInstance(this); }
-	Status status() const													{ return Stable; }
 	Category category() const												{ return System; }
 	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
-	QStringList tabs() const												{ return QStringList() << tr("Standard") << tr("Advanced"); }
+	QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 private:
 	Q_DISABLE_COPY(ActionPixelColorDefinition)

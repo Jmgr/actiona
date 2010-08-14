@@ -49,13 +49,11 @@ public:
 
 	QString name() const													{ return QObject::tr("Goto"); }
 	QString id() const														{ return "ActionGoto"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Go to a script line"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionGotoInstance(this); }
-	Status status() const													{ return Alpha; }
 	Category category() const												{ return Internal; }
-	QPixmap icon() const													{ return QPixmap(":/icons/goto.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/goto.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionGotoDefinition)

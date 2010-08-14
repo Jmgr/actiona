@@ -50,11 +50,9 @@ public:
 
 	QString name() const													{ return QObject::tr("Get clipboard"); }
 	QString id() const														{ return "ActionGetClipboard"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Get the clipboard contents"); }
-	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionGetClipboardInstance(this); }
-	Status status() const													{ return Stable; }
 	Category category() const												{ return System; }
 	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 

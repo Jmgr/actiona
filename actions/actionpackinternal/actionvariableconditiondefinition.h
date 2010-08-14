@@ -82,13 +82,11 @@ public:
 
 	QString name() const													{ return QObject::tr("Variable condition"); }
 	QString id() const														{ return "ActionVariableCondition"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Check the value of a variable and do some action"); }
-	Tools::Version version() const											{ return Tools::Version(0, 0, 1); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionVariableConditionInstance(this); }
-	Status status() const													{ return Stable; }
 	Category category() const												{ return Internal; }
-	QPixmap icon() const													{ return QPixmap(":/icons/goto.png"); }
+	QPixmap icon() const													{ return QPixmap(":/actions/icons/variablecondition.png"); }
 
 private:
 	Q_DISABLE_COPY(ActionVariableConditionDefinition)

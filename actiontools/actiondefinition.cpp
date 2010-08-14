@@ -63,6 +63,8 @@ namespace ActionTools
 		QObject::tr("Internal"),
 		QObject::tr("Other")
 	};
+
+	QStringList ActionDefinition::StandardTabs = QStringList() << QObject::tr("Standard") << QObject::tr("Advanced");
 	
 	void ActionDefinition::addElement(ElementDefinition *element, int tab)
 	{

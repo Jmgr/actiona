@@ -70,14 +70,12 @@ public:
 
 	QString name() const													{ return QObject::tr("Kill process"); }
 	QString id() const														{ return "ActionKillProcess"; }
-	Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac | Official; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Kills a process"); }
-	Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionKillProcessInstance(this); }
-	Status status() const													{ return Stable; }
 	Category category() const												{ return System; }
 	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
-	QStringList tabs() const												{ return QStringList() << tr("Standard") << tr("Advanced"); }
+	QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 private:
 	Q_DISABLE_COPY(ActionKillProcessDefinition)
