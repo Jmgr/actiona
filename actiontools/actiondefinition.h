@@ -92,6 +92,8 @@ namespace ActionTools
 		ActionPack *pack() const														{ return mPack; }
 		const QList<ElementDefinition *> &elements() const								{ return mElements; }
 		const QList<ActionException *> &exceptions() const								{ return mExceptions; }
+
+		bool featureCheck(QStringList &missingFeatures) const							{ Q_UNUSED(missingFeatures) return true; }
 		
 		ActionInstance *scriptInit(QScriptEngine *scriptEngine) const;
 		
@@ -101,6 +103,9 @@ namespace ActionTools
 	protected:
 		void addElement(ElementDefinition *element, int tab = 0);
 		void addException(int id, const QString &name)								{ mExceptions.append(new ActionException(id, name)); }
+		bool featureCheckXTest(QStringList &missingFeatures) const;
+		bool featureCheckNotify(QStringList &missingFeatures) const;
+		bool featureCheck64BitOS(QStringList &missingFeatures) const;
 
 	private:
 		ActionPack *mPack;
