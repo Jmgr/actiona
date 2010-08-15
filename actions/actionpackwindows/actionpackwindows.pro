@@ -20,3 +20,7 @@ RESOURCES += actionpackwindows.qrc
 SOURCES += actionmessageboxinstance.cpp
 HEADERS += actionmessageboxdefinition.h \
     actionmessageboxinstance.h
+
+TRANSLATIONS = locale/actionpackwindows_en.ts \
+	locale/actionpackwindows_fr.ts \
+	locale/actionpackwindows_de.ts

@@ -28,7 +28,7 @@
 
 ActionTools::StringListPair ActionWindowConditionInstance::conditions = qMakePair(
 		QStringList() << "created" << "closed",
-		QStringList() << tr("Created") << tr("Closed"));
+		QStringList() << QObject::tr("Created") << QObject::tr("Closed"));
 
 ActionWindowConditionInstance::ActionWindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 	: ActionTools::ActionInstance(definition, parent)

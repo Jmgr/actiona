@@ -45,7 +45,7 @@
 
 ActionTools::StringListPair ActionKeyInstance::actions = qMakePair(
 		QStringList() << "pressRelease" << "press" << "release",
-		QStringList() << tr("Press and release") << tr("Press") << tr("Release"));
+		QStringList() << QObject::tr("Press and release") << QObject::tr("Press") << QObject::tr("Release"));
 
 QSet<int> ActionKeyInstance::mPressedKeys;
 #ifdef Q_WS_WIN

@@ -23,3 +23,7 @@ SOURCES += actiontextinstance.cpp \
 HEADERS += actionclickdefinition.h \
     actionclickinstance.h
 SOURCES += actionclickinstance.cpp
+
+TRANSLATIONS = locale/actionpackdevice_en.ts \
+	locale/actionpackdevice_fr.ts \
+	locale/actionpackdevice_de.ts

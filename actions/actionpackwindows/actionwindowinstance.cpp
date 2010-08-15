@@ -27,7 +27,7 @@
 
 ActionTools::StringListPair ActionWindowInstance::actions = qMakePair(
 		QStringList() << "close" << "killProcess" << "setForeground" << "minimize" << "maximize" << "move" << "resize",
-		QStringList() << tr("Close") << tr("Kill process") << tr("Set foreground") << tr("Minimize") << tr("Maximize") << tr("Move") << tr("Resize"));
+		QStringList() << QObject::tr("Close") << QObject::tr("Kill process") << QObject::tr("Set foreground") << QObject::tr("Minimize") << QObject::tr("Maximize") << QObject::tr("Move") << QObject::tr("Resize"));
 
 ActionWindowInstance::ActionWindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 	: ActionTools::ActionInstance(definition, parent)

@@ -26,7 +26,7 @@
 
 ActionTools::StringListPair ActionReadFileInstance::modes = qMakePair(
 		QStringList() << "full" << "selection",
-		QStringList() << tr("Read the entire file") << tr("Read only a selection"));
+		QStringList() << QObject::tr("Read the entire file") << QObject::tr("Read only a selection"));
 
 void ActionReadFileInstance::startExecution()
 {

@@ -22,4 +22,4 @@
 
 ActionTools::StringListPair ActionKillProcessInstance::killModes = qMakePair(
 		QStringList() << "graceful" << "forceful" << "gracefulThenForceful",
-		QStringList() << tr("Graceful") << tr("Forceful") << tr("Graceful then forceful"));
+		QStringList() << QObject::tr("Graceful") << QObject::tr("Forceful") << QObject::tr("Graceful then forceful"));

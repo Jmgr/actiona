@@ -35,3 +35,7 @@ SOURCES +=
 # No-op
 HEADERS += actionnoopdefinition.h \
     actionnoopinstance.h
+
+TRANSLATIONS = locale/actionpackinternal_en.ts \
+	locale/actionpackinternal_fr.ts \
+	locale/actionpackinternal_de.ts

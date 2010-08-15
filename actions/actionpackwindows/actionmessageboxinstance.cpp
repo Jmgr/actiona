@@ -27,11 +27,11 @@
 
 ActionTools::StringListPair ActionMessageBoxInstance::icons = qMakePair(
 		QStringList() << "none" << "information" << "question" << "warning" << "error",
-		QStringList() << tr("None") << tr("Information") << tr("Question") << tr("Warning") << tr("Error"));
+		QStringList() << QObject::tr("None") << QObject::tr("Information") << QObject::tr("Question") << QObject::tr("Warning") << QObject::tr("Error"));
 
 ActionTools::StringListPair ActionMessageBoxInstance::buttons = qMakePair(
 		QStringList() << "ok" << "yesno",
-		QStringList() << tr("Ok") << tr("Yes-No"));
+		QStringList() << QObject::tr("Ok") << QObject::tr("Yes-No"));
 
 ActionMessageBoxInstance::ActionMessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 	: ActionTools::ActionInstance(definition, parent),
