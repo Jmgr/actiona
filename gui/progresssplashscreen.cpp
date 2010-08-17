@@ -26,7 +26,7 @@
 ProgressSplashScreen::ProgressSplashScreen(const QPixmap &pixmap, Qt::WindowFlags f)
 	: QSplashScreen(pixmap, f),
 	mProgressBar(new QProgressBar(this)),
-	mOpacity(0.0f),
+	mOpacity(1.0f),
 	mOpacityTimer(new QTimer(this))
 {
 	init();
@@ -35,7 +35,7 @@ ProgressSplashScreen::ProgressSplashScreen(const QPixmap &pixmap, Qt::WindowFlag
 ProgressSplashScreen::ProgressSplashScreen(QWidget *parent, const QPixmap &pixmap, Qt::WindowFlags f)
 	: QSplashScreen(parent, pixmap, f),
 	mProgressBar(new QProgressBar(this)),
-	mOpacity(0.0f),
+	mOpacity(1.0f),
 	mOpacityTimer(new QTimer(this))
 {
 	init();
@@ -63,37 +63,19 @@ void ProgressSplashScreen::setValue(int value)
 
 void ProgressSplashScreen::fadeOut()
 {
-	mOpacityTimer->disconnect();
 	mOpacityTimer->start(25);
-	
-	connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityCloseUpdate()));
 }
 
 void ProgressSplashScreen::drawContents(QPainter *painter)
 {
 	Q_UNUSED(painter)
-	
+
 	mProgressBar->update();
 }
 
 void ProgressSplashScreen::messageChanged(const QString &message)
 {
 	mProgressBar->setFormat(message);
-}
-
-void ProgressSplashScreen::opacityOpenUpdate()
-{
-	if(mOpacity < 1.0f)
-	{
-		mOpacity += 0.06f;
-		setWindowOpacity(mOpacity);
-	}
-	else
-	{
-		setWindowOpacity(1.0f);
-		mOpacityTimer->stop();
-		mOpacityTimer->disconnect();
-	}
 }
 
 void ProgressSplashScreen::opacityCloseUpdate()
@@ -114,9 +96,9 @@ void ProgressSplashScreen::opacityCloseUpdate()
 void ProgressSplashScreen::init()
 {
 	connect(this, SIGNAL(messageChanged(QString)), this, SLOT(messageChanged(QString)));
-	
+
 	int progressBarHeight = static_cast<int>(mProgressBar->height() * 0.7f);
-	
+
 	resize(width(), height() + progressBarHeight);
 
 	mProgressBar->setStyleSheet("QProgressBar { border: 1px solid black; text-align: center; padding: 1px; background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fff, stop: 0.4999 #eee, stop: 0.5 #ddd, stop: 1 #eee ); color: black; }\n"
@@ -127,9 +109,7 @@ void ProgressSplashScreen::init()
 	mProgressBar->setValue(0);
 	mProgressBar->setAlignment(Qt::AlignCenter);
 	mProgressBar->setGeometry(0, height() - progressBarHeight, width(), progressBarHeight);
-	
-	mOpacityTimer->setSingleShot(false);
-	mOpacityTimer->start(25);
 
-	connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityOpenUpdate()));
+	mOpacityTimer->setSingleShot(false);
+	connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityCloseUpdate()));
 }

@@ -36,6 +36,7 @@
 #include <QDebug>
 #include <QTextStream>
 #include <QTextCodec>
+#include <QTime>
 
 #ifdef Q_WS_X11
 #undef signals
@@ -58,6 +59,10 @@ void cleanup()
 
 int main(int argc, char **argv)
 {
+#if (QT_VERSION < 0x040600)
+		#error("You need Qt 4.6.0 or later to compile Actionaz");
+#endif
+
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("Application run");
 #endif
@@ -69,7 +74,7 @@ int main(int argc, char **argv)
 #ifdef Q_WS_X11
 	notify_init("Actionaz");
 #endif
-	
+
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
@@ -140,13 +145,30 @@ int main(int argc, char **argv)
 			ActionTools::KeySymHelper::loadKeyCodes(xDisplayHelper.display());
 	}
 #endif
-	
+
 	ProgressSplashScreen *splash = 0;
 	if(!options.count("nosplash") && !options.count("execute"))
 	{
 		splash = new ProgressSplashScreen(QPixmap(":/images/start.png"), Qt::WindowStaysOnTopHint);
+		splash->setWindowOpacity(0.0f);
 		splash->show();
 		app.processEvents();
+
+		float splashScreenOpacity = 0.0f;
+		QTime splashScreenFadeTime;
+
+		splashScreenFadeTime.start();
+
+		while(splashScreenOpacity < 1.0f)
+		{
+			splashScreenOpacity = static_cast<float>(splashScreenFadeTime.elapsed()) * 0.003f;
+
+			if(splashScreenOpacity > 1.0f)
+				splashScreenOpacity = 1.0f;
+
+			splash->setWindowOpacity(splashScreenOpacity);
+			splash->repaint();
+		}
 	}
 
 	MainWindow mainWindow(&options, splash, startScript);
