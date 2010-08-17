@@ -332,8 +332,8 @@ void MainWindow::postInit()
 
 	if(mSplashScreen)
 	{
-		mSplashScreen->close();
-		mSplashScreen->deleteLater();
+		mSplashScreen->fadeOut();
+		mSplashScreen = 0;
 	}
 
 #ifdef Q_WS_X11

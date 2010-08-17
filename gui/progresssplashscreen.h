@@ -24,6 +24,7 @@
 #include <QSplashScreen>
 
 class QProgressBar;
+class QTimer;
 
 class ProgressSplashScreen : public QSplashScreen
 {
@@ -37,17 +38,22 @@ public:
 	void setMinimum(int minimum);
 	void setRange(int minimum, int maximum);
 	void setValue(int value);
+	void fadeOut();
 	
 protected:
 	void drawContents(QPainter *painter);
 	
 private slots:
 	void messageChanged(const QString &message);
+	void opacityOpenUpdate();
+	void opacityCloseUpdate();
 	
 private:
 	void init();
 	
 	QProgressBar *mProgressBar;
+	float mOpacity;
+	QTimer *mOpacityTimer;
 };
 
 #endif // PROGRESSSPLASHSCREEN_H

@@ -21,17 +21,22 @@
 #include "progresssplashscreen.h"
 
 #include <QProgressBar>
+#include <QTimer>
 
 ProgressSplashScreen::ProgressSplashScreen(const QPixmap &pixmap, Qt::WindowFlags f)
 	: QSplashScreen(pixmap, f),
-	mProgressBar(new QProgressBar(this))
+	mProgressBar(new QProgressBar(this)),
+	mOpacity(0.0f),
+	mOpacityTimer(new QTimer(this))
 {
 	init();
 }
 
 ProgressSplashScreen::ProgressSplashScreen(QWidget *parent, const QPixmap &pixmap, Qt::WindowFlags f)
 	: QSplashScreen(parent, pixmap, f),
-	mProgressBar(new QProgressBar(this))
+	mProgressBar(new QProgressBar(this)),
+	mOpacity(0.0f),
+	mOpacityTimer(new QTimer(this))
 {
 	init();
 }
@@ -56,6 +61,14 @@ void ProgressSplashScreen::setValue(int value)
 	mProgressBar->setValue(value);
 }
 
+void ProgressSplashScreen::fadeOut()
+{
+	mOpacityTimer->disconnect();
+	mOpacityTimer->start(25);
+	
+	connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityCloseUpdate()));
+}
+
 void ProgressSplashScreen::drawContents(QPainter *painter)
 {
 	Q_UNUSED(painter)
@@ -66,6 +79,36 @@ void ProgressSplashScreen::drawContents(QPainter *painter)
 void ProgressSplashScreen::messageChanged(const QString &message)
 {
 	mProgressBar->setFormat(message);
+}
+
+void ProgressSplashScreen::opacityOpenUpdate()
+{
+	if(mOpacity < 1.0f)
+	{
+		mOpacity += 0.06f;
+		setWindowOpacity(mOpacity);
+	}
+	else
+	{
+		setWindowOpacity(1.0f);
+		mOpacityTimer->stop();
+		mOpacityTimer->disconnect();
+	}
+}
+
+void ProgressSplashScreen::opacityCloseUpdate()
+{
+	if(mOpacity > 0.0f)
+	{
+		mOpacity -= 0.06f;
+		setWindowOpacity(mOpacity);
+	}
+	else
+	{
+		mOpacityTimer->stop();
+		close();
+		deleteLater();
+	}
 }
 
 void ProgressSplashScreen::init()
@@ -84,4 +127,9 @@ void ProgressSplashScreen::init()
 	mProgressBar->setValue(0);
 	mProgressBar->setAlignment(Qt::AlignCenter);
 	mProgressBar->setGeometry(0, height() - progressBarHeight, width(), progressBarHeight);
+	
+	mOpacityTimer->setSingleShot(false);
+	mOpacityTimer->start(25);
+
+	connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityOpenUpdate()));
 }
