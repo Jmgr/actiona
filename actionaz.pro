@@ -15,7 +15,7 @@ unix:!mac {
 
 win32-g++:error(Mingw is currently not supported, please use the Microsoft compiler suite)
 
-*-64{
+contains(QMAKE_HOST.arch, x86_64){
 message(** Buiding 64 bit version **)
 DEFINES += ACT_64_BIT
 } else {
