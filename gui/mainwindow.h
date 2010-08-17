@@ -176,7 +176,7 @@ private:
 	bool editAction(ActionTools::ActionInstance *actionInstance, int exception);
 	void openParametersDialog(int parameter = -1, int line = -1, int column = -1);
 	QList<int> selectedRows() const;
-	bool loadFile(const QString &fileName);
+	bool loadFile(const QString &fileName, bool verbose = true);
 	bool saveFile(const QString &fileName, bool copy = false);
 	void setCurrentFile(const QString &fileName);
 	void closeEvent(QCloseEvent *event);

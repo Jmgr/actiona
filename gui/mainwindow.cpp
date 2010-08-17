@@ -227,14 +227,14 @@ void MainWindow::postInit()
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("postInit");
 #endif
-	
+
 	mPackLoadErrors.clear();
-	
+
 	if(mSplashScreen)
 		mSplashScreen->showMessage(tr("Loading actions..."));
 
 	mActionFactory->loadActionPacks();
-	
+
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("building completion model");
@@ -245,24 +245,24 @@ void MainWindow::postInit()
 			ActionTools::ActionDefinition *actionDefinition =	mActionFactory->actionDefinition(actionDefinitionIndex);
 			ActionTools::ActionInstance *actionInstance = actionDefinition->newActionInstance();
 			QStringList ignoreList(QStringList() << "deleteLater" << "startExecution" << "stopExecution");
-	
+
 			ActionTools::addClassKeywords(actionInstance->metaObject(), actionDefinition->id(), actionDefinition->icon(), mCompletionModel, ignoreList);
-	
+
 			delete actionInstance;
 		}
 	}
-	
+
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("action dialogs creation");
 #endif
 		if(mSplashScreen)
 			mSplashScreen->setMaximum(mActionFactory->actionDefinitionCount() - 1);
-		
+
 		for(int actionDefinitionIndex = 0; actionDefinitionIndex < mActionFactory->actionDefinitionCount(); ++actionDefinitionIndex)
 		{
 			ActionTools::ActionDefinition *actionDefinition =	mActionFactory->actionDefinition(actionDefinitionIndex);
-			
+
 			if(mSplashScreen)
 			{
 				mSplashScreen->showMessage(tr("Creating action dialog %1...").arg(actionDefinition->name()));
@@ -270,11 +270,11 @@ void MainWindow::postInit()
 			}
 
 			setTaskbarProgress(actionDefinitionIndex, mActionFactory->actionDefinitionCount() - 1);
-			
+
 			mActionDialogs.append(new ActionDialog(mCompletionModel, mScript, actionDefinition, this));
 		}
 	}
-	
+
 	if(mSplashScreen)
 	{
 		mSplashScreen->showMessage(tr("Please wait..."));
@@ -294,7 +294,7 @@ void MainWindow::postInit()
 		Executer::ExecutionAlgorithms executionAlgorithms;
 		ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
 	}
-		
+
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("adding Ecmascript stuff");
@@ -330,6 +330,12 @@ void MainWindow::postInit()
 	updateUndoRedoStatus();
 	actionCountChanged();
 
+	if(mSplashScreen)
+	{
+		mSplashScreen->close();
+		mSplashScreen->deleteLater();
+	}
+
 #ifdef Q_WS_X11
 	ActionTools::CrossPlatform::setForegroundWindow(this);
 #endif
@@ -337,7 +343,7 @@ void MainWindow::postInit()
 	setCurrentFile(QString());
 
 	QSettings settings;
-	
+
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("loading last file");
@@ -355,22 +361,16 @@ void MainWindow::postInit()
 			if(settings.value("general/reopenLastScript", QVariant(false)).toBool())
 			{
 				QString lastFilename = settings.value("general/lastScript", QString()).toString();
-	
+
 				if(!lastFilename.isEmpty())
 				{
-					if(!loadFile(lastFilename))
+					if(!loadFile(lastFilename, false))
 						settings.setValue("general/lastScript", QString());
 				}
 			}
 		}
 	}
-	
-	if(mSplashScreen)
-	{
-		mSplashScreen->close();
-		mSplashScreen->deleteLater();
-	}
-	
+
 	if(mPackLoadErrors.count() > 0)
 	{
 		QString message = tr("<b>Unable to load %n action(s):</b>\n", "", mPackLoadErrors.count());
@@ -1352,7 +1352,7 @@ void MainWindow::fillNewActionTreeWidget(NewActionTreeWidget *widget)
 	{
 		QTreeWidgetItem *item = new QTreeWidgetItem(QStringList(ActionTools::ActionDefinition::CategoryName[i]));
 		QFont boldFont;
-		
+
 		boldFont.setWeight(QFont::Bold);
 		item->setFont(0, boldFont);
 
@@ -1746,14 +1746,14 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, const Q
 		return false;
 
 	ActionTools::ParametersData previousData = actionInstance->parametersData();
-	
+
 	ActionDialog *dialog = mActionDialogs.at(actionInstance->definition()->index());
 	if(!dialog)
 	{
 		qWarning("Unable to create an ActionDialog");
 		return false;
 	}
-	
+
 	int result = dialog->exec(actionInstance, field, subField, line, column);
 	if(result == QDialog::Accepted)
 	{
@@ -1768,7 +1768,7 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exc
 {
 	if(!actionInstance)
 		return false;
-	
+
 	ActionTools::ParametersData previousData = actionInstance->parametersData();
 
 	ActionDialog *dialog = mActionDialogs.at(actionInstance->definition()->index());
@@ -1820,7 +1820,7 @@ QList<int> MainWindow::selectedRows() const
 	return selectedRows;
 }
 
-bool MainWindow::loadFile(const QString &fileName)
+bool MainWindow::loadFile(const QString &fileName, bool verbose)
 {
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer(QString("load file %1").arg(fileName));
@@ -1829,7 +1829,8 @@ bool MainWindow::loadFile(const QString &fileName)
 	QFileInfo loadFileInfo(loadFile);
 	if(!loadFileInfo.isReadable() || !loadFile.open(QIODevice::ReadOnly))
 	{
-		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because the file is not readable or you don't have enough rights."));
+		if(verbose)
+			QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because the file is not readable or you don't have enough rights."));
 		return false;
 	}
 
@@ -1844,7 +1845,7 @@ bool MainWindow::loadFile(const QString &fileName)
 	if(result == ActionTools::Script::ReadSuccess)
 	{
 		QSettings settings;
-	
+
 		settings.setValue("general/lastScript", fileName);
 
 		mScriptModel->update();
