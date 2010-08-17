@@ -1243,6 +1243,9 @@ void MainWindow::setTaskbarProgress(int value, int max)
 		return;
 
 	mTaskbarList->SetProgressValue(winId(), value, max);
+#else
+	Q_UNUSED(value)
+	Q_UNUSED(max)
 #endif
 }
 
@@ -1253,6 +1256,8 @@ void MainWindow::setTaskbarStatus(TaskbarStatus status)
 		return;
 
 	mTaskbarList->SetProgressState(winId(), static_cast<TBPFLAG>(status));
+#else
+	Q_UNUSED(status)
 #endif
 }
 
