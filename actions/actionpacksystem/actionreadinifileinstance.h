@@ -36,7 +36,7 @@ public:
 		UnableToReadFileException = ActionTools::ActionException::UserException,
 		UnableToFindSectionException
 	};
-	
+
 	ActionReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 		: ActionTools::ActionInstance(definition, parent)											{}
 
@@ -53,38 +53,47 @@ public:
 		   !actionInstanceExecutionHelper.evaluateString(parameter, "parameter") ||
 		   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
 			return;
-		
+
 		rude::Config config;
+#ifdef Q_WS_WIN
+		if(!config.load(filename.toLatin1()))
+#else
 		if(!config.load(filename.toUtf8()))
+#endif
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("filename");
 			emit executionException(UnableToReadFileException, tr("Unable to read the file"));
 			return;
 		}
-		
+
 		if(!config.setSection(section.toLatin1(), false))
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("section");
-			emit executionException(UnableToFindSectionException, tr("Unable to find the section"));
+			emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
 			return;
 		}
-	
+
 		actionInstanceExecutionHelper.setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
-		
+
 		emit executionEnded();
 	}
-	
+
 public slots:
 	bool read(const QString &filename, const QString &section, const QString &parameter, QString &value)
 	{
 		rude::Config config;
-		
+
+#ifdef Q_WS_WIN
+		if(!config.load(filename.toLatin1()))
+			return false;
+#else
 		if(!config.load(filename.toUtf8()))
 			return false;
-		
+#endif
+
 		if(!config.setSection(section.toLatin1(), false))
 			return false;
-		
+
 		value = QString::fromLatin1(config.getStringValue(parameter.toLatin1()));
 
 		return true;

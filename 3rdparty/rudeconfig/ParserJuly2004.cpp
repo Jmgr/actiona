@@ -9,12 +9,12 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2, or (at your option)
 // any later version.
-// 
+//
 // RudeConfig is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with RudeConfig; (see COPYING) if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -51,6 +51,11 @@
 #define INCLUDED_CSTDIO
 #endif
 
+#ifndef INCLUDED_LOCALE
+#include <locale>
+#define INCLUDED_LOCALE
+#endif
+
 using namespace rude::config;
 using namespace std;
 
@@ -64,11 +69,13 @@ void ParserJuly2004::stripTrailing(std::string& buffer)
 {
 	int bufferLength = buffer.size();
 
+	locale loc;
+
 	for (int x = bufferLength - 1; x >= 0; x--)
 	{
 		char c = buffer[x];
 
-		if (isspace(c))
+		if (isspace(c, loc))
 		{
 			buffer.erase(x);
 		}
@@ -102,20 +109,22 @@ bool ParserJuly2004::chompEOL(std::istream& inputstream)
 
 bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 {
+	locale loc;
+
 	if (d_delimiter == '\\' || isEOL(d_delimiter) || d_delimiter == d_commentchar || d_delimiter == '[')
 	{
 		setError("110", "Illegal delimiter.");
 		return false;
 	}
 
-	if (d_commentchar == '\\' || d_commentchar == '"' || isspace(d_commentchar))
+	if (d_commentchar == '\\' || d_commentchar == '"' || isspace(d_commentchar, loc))
 	{
 		setError("111", "Illegal comment character.");
 		return false;
 	}
-	
+
 	register char c;
-		
+
 	// eof only gets set when error_flag is set on previous operation
 	// as such, you need to peek() at the end ot the while loop
 	// in order for eof to happen when you want it to!!
@@ -129,11 +138,11 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 		// '#' (d_commentchar) comment character
 		// any non-whitespace character
 
-		if(isspace(c))
+		if(isspace(c, loc))
 		{
 			std::string whitespace = "";
 
-			while(c != EOF && isspace(c))
+			while(c != EOF && isspace(c, loc))
 			{
 				whitespace += infile.get();
 				c = infile.peek();
@@ -145,14 +154,14 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 			// discard '[' character
 			//
 			infile.get();
-				
+
 			register SectionState sectionState = STARTSECTION;
 
 			std::string sectionID = "";
 			std::string comment = "";
-				
+
 			while (sectionState != ENDSECTION)
-			{						
+			{
 				switch (sectionState)
 				{
 					case STARTSECTION:
@@ -166,14 +175,14 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 							else if(isEOL(c))
 							{
 								setError("101", "End of line found before section ID");
-								sectionState = SECTIONERROR;								
+								sectionState = SECTIONERROR;
 							}
 							else if(c == ' ' || c == '\t')
 							{
 								// discard whitespace
 								//
 								infile.get();
-									
+
 								// LOOP
 							}
 							else if(c == ']')
@@ -181,7 +190,7 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 								// discard ']'
 								//
 								infile.get();
-								
+
 								sectionState = ENDSECTIONID;
 							}
 							else
@@ -201,7 +210,7 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 							else if(isEOL(c))
 							{
 								setError("103", "End of line found before end-of-section marker");
-								sectionState = SECTIONERROR;								
+								sectionState = SECTIONERROR;
 							}
 							else if(c == '\\')
 							{
@@ -220,7 +229,7 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 								// Strip Trailing Whitespace from ID
 								//
 								stripTrailing(sectionID);
-									
+
 								sectionState = ENDSECTIONID;
 							}
 							else
@@ -256,22 +265,22 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 							c = infile.peek();
 							if(c == EOF || isEOL(c))
 							{
-								sectionState = FOUNDIDONLY;				
+								sectionState = FOUNDIDONLY;
 							}
 							else if(d_commentchar != 0 && c == d_commentchar)
 							{
 								// discard '#'
 								//
 								infile.get();
-									
-								sectionState = SECTIONCOMMENT;								
+
+								sectionState = SECTIONCOMMENT;
 							}
 							else if(c == ' ' || c == '\t')
 							{
 								// discard whitespace
 								//
 								infile.get();
-									
+
 								// LOOP
 							}
 							else
@@ -294,8 +303,8 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 								// append to comment
 								//
 								comment += infile.get();
-									
-								// LOOP			
+
+								// LOOP
 							}
 							break;
 					}
@@ -328,7 +337,7 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 			// discard the comment character
 			//
 			infile.get();
-				
+
 			// put the rest of the line into a string
 			//
 			std::string line="";
@@ -343,7 +352,7 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 			}
 
 			chompEOL(infile);
-			
+
 			// PROCESS THE COMMENT LINE
 			//
 			stripTrailing(line);
@@ -357,14 +366,14 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 			std::string comment = "";
 
 			while (kvState != ENDKEYVALUE)
-			{						
-				
+			{
+
 				switch (kvState)
 				{
 					case KEY:
 					{
 							char c = infile.peek();
-							
+
 							if(c == EOF || isEOL(c))
 							{
 								kvState = ENDKV;
@@ -405,8 +414,8 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 								// append to key
 								//
 								key += infile.get();
-									
-								// LOOP			
+
+								// LOOP
 							}
 							break;
 					}
@@ -459,7 +468,7 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 							}
 							else
 							{
-								kvState = VALUE;	
+								kvState = VALUE;
 							}
 							break;
 					}
@@ -494,7 +503,7 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 							else
 							{
 								setError("109", "Illegal Character Found after quoted value.");
-								kvState = KVERROR;	
+								kvState = KVERROR;
 							}
 							break;
 					}
@@ -513,7 +522,7 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 								//
 								comment += infile.get();
 
-								// LOOP	
+								// LOOP
 							}
 							break;
 					}
@@ -601,9 +610,9 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 								// discard '#'
 								//
 								infile.get();
-								
+
 								stripTrailing(value);
-								
+
 								kvState = COMMENT;
 							}
 							else if(c == '\\')
@@ -641,18 +650,18 @@ bool ParserJuly2004::parse(std::istream& infile, AbstractOrganiser& organiser)
 
 								// SPECIAL CASE FOR ESCAPED CRLFs:
 								//
-								// if c is newline and next character is also newline, 
+								// if c is newline and next character is also newline,
 								// we keep both of them if they are different forms of newline
-								// 
+								//
 								char next_c = infile.peek();
 								if(isEOL(c) && isEOL(next_c) && (c != next_c))
 								{
 									value += infile.get();
-								} 
+								}
 								kvState = NONQUOTEVALUE;
 							}
 							break;
-					}				
+					}
 					case ENDKV:
 					{
 							chompEOL(infile);

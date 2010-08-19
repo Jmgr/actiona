@@ -9,17 +9,21 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2, or (at your option)
 // any later version.
-// 
+//
 // RudeConfig is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with RudeConfig; (see COPYING) if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 // 02111-1307, USA.
 //------------------------------------------------------------------------
+
+/*
+ Edited on 19/08/2010 by Jonathan Mercier-Ganady for Actionaz
+*/
 
 #include "Writer.h"
 
@@ -63,6 +67,11 @@
 #define INCLUDED_STRING
 #endif
 
+#ifndef INCLUDED_LOCALE
+#include <locale>
+#define INCLUDED_LOCALE
+#endif
+
 using namespace std;
 
 namespace rude{
@@ -80,7 +89,7 @@ Writer::~Writer()
 }
 
 
-void Writer::visitFile(const File& configfile) const
+void Writer::visitFile(const File& /*configfile*/) const
 {
 
 }
@@ -88,7 +97,7 @@ void Writer::visitFile(const File& configfile) const
 void Writer::visitSection(const Section& configsection) const
 {
 		std::string name = configsection.getSectionName();
-		
+
 		// if there is a section name, we print it out [between brackets]
 		//
 		if(name != "")
@@ -104,7 +113,7 @@ void Writer::visitSection(const Section& configsection) const
 					return;
 				}
 			}
-		
+
 			int position = 0;
 			size_t location;
 
@@ -125,9 +134,9 @@ void Writer::visitSection(const Section& configsection) const
 				name.insert(location,  "\\");
 				position = (int) location + 2;
 			}
-			
+
 			*d_outputstream << "[" << name << "]";
-			
+
 			// If the section name has a comment, we print it out after the section name
 			//
 			if(configsection.getSectionComment()[0] != 0 && d_commentchar)
@@ -173,7 +182,7 @@ void Writer::visitKeyValue(const KeyValue& dataline) const
 		string comment = dataline.getComment();
 
 		string commentchar(1,d_commentchar);
-		
+
 
 		if(dataline.isDeleted())
 		{
@@ -241,7 +250,7 @@ void Writer::visitKeyValue(const KeyValue& dataline) const
 						key.insert(location,  "\\");
 						position = (int) location + 2;
 					}
-					
+
 					position = 0;
 
 					while( (location = key.find(" ", position)) != string::npos )
@@ -249,9 +258,9 @@ void Writer::visitKeyValue(const KeyValue& dataline) const
 						// location points right at the '"'
 						key.insert(location,  "\\");
 						position = (int) location + 2;
-					}					
+					}
 
-				}				
+				}
 			}
 
 			// print the key
@@ -310,19 +319,19 @@ void Writer::visitKeyValue(const KeyValue& dataline) const
 
 
 
-			// if value starts with whitespace, ends with whitespace or contains the comment character or CRLF's, quote the value, 
+			// if value starts with whitespace, ends with whitespace or contains the comment character or CRLF's, quote the value,
 			//
 			int size = value.size();
 
-			if(		isspace(value[0]) || 
-						isspace(value[size-1]) || 
-						(value.find("\r", 0) != string::npos) || 
-						(value.find("\f", 0) != string::npos) || 
-						(value.find("\n", 0)!= string::npos) 
+			locale loc;
+
+			if(		isspace(value[0], loc) ||
+						isspace(value[size-1], loc) ||
+						(value.find("\r", 0) != string::npos) ||
+						(value.find("\f", 0) != string::npos) ||
+						(value.find("\n", 0)!= string::npos)
 			)
 			{
-
-
 				value.insert(0, "\"");
 				value += "\"";
 			}
@@ -331,13 +340,13 @@ void Writer::visitKeyValue(const KeyValue& dataline) const
 			// then each line must start with a comment character.
 			// The safest way is just to follow every newline character with a comment
 			//
-			if(		dataline.isDeleted() && ( 
-						(value.find("\r", 0) != string::npos) || 
-						(value.find("\f", 0) != string::npos) || 
+			if(		dataline.isDeleted() && (
+						(value.find("\r", 0) != string::npos) ||
+						(value.find("\f", 0) != string::npos) ||
 						(value.find("\n", 0)!= string::npos) )
 			  )
-			{	
-				position = 0;				
+			{
+				position = 0;
 
 				while( (location = value.find("\r", position)) != string::npos )
 				{
@@ -345,7 +354,7 @@ void Writer::visitKeyValue(const KeyValue& dataline) const
 					value.insert(location + 1,  commentchar);
 					position = (int) location + 2;
 				}
-				position = 0;				
+				position = 0;
 				while( (location = value.find("\f", position)) != string::npos )
 				{
 					// location points right at the '"'
@@ -353,14 +362,14 @@ void Writer::visitKeyValue(const KeyValue& dataline) const
 					position = (int) location + 2;
 				}
 
-				position = 0;				
+				position = 0;
 				while( (location = value.find("\n", position)) != string::npos )
 				{
 					// location points right at the '"'
 					value.insert(location + 1,  commentchar);
 					position = (int) location + 2;
 				}
-			}			
+			}
 
 			*d_outputstream << value;
 

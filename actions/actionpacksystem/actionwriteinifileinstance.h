@@ -35,7 +35,7 @@ public:
 	{
 		UnableToWriteFileException = ActionTools::ActionException::UserException
 	};
-	
+
 	ActionWriteIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 		: ActionTools::ActionInstance(definition, parent)											{}
 
@@ -52,7 +52,7 @@ public:
 		   !actionInstanceExecutionHelper.evaluateString(parameter, "parameter") ||
 		   !actionInstanceExecutionHelper.evaluateString(value, "value"))
 			return;
-		
+
 		if(!write(filename, section, parameter, value))
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("filename");
@@ -62,22 +62,26 @@ public:
 
 		emit executionEnded();
 	}
-	
+
 public slots:
 	bool write(const QString &filename, const QString &section, const QString &parameter, const QString &value)
 	{
 		rude::Config config;
-		
+
+#ifdef Q_WS_WIN
+		config.setConfigFile(filename.toLatin1());
+#else
 		config.setConfigFile(filename.toUtf8());
-		
+#endif
+
 		if(!config.setSection(section.toLatin1(), true))
 			return false;
-		
+
 		config.setStringValue(parameter.toLatin1(), value.toLatin1());
-		
+
 		if(!config.save())
 			return false;
-		
+
 		return true;
 	}
 
