@@ -1,0 +1,114 @@
+RudeConfig NEWS - User visible changes.
+See ChangeLog for more detailed information on internal changes
+See the end for copying conditions.
+
+_______________________________________________________________________________
+Release 5.0.5-1 - Matthew Flood 2007-02-01
+
+	- Renamed header include guards in config.h from 
+	  INCLUDED_CONFIG_H to INCLUDED_RUDE_CONFIG_H
+	  The new guards are less generic and safer to use overall. 
+
+_______________________________________________________________________________
+Release 5.0.4-3 - Matthew Flood 2007-02-01
+
+	- Minor amendments to build-related scripts
+
+_______________________________________________________________________________
+Release 5.0.4-2 - Matthew Flood 2007-02-01
+
+	- Minor amendments to build-related scripts
+
+_______________________________________________________________________________
+Release 5.0.4-1 - Matthew Flood 2007-01-19
+
+	- Created rudeconfig.3 MAN page
+ 		* To access the rudeconfig manual from your linux command prompt, 
+                  use the man command:
+                  
+                     $>man rudeconfig
+			OR
+		     $>man 3 rudeconfig
+
+_______________________________________________________________________________
+Release 5.0.3-1 - Matthew Flood 2006-07-31
+
+	- Changed versioning system again.  
+	- Minor changes to facilitate Windows builds
+		* changed #include's of  <cstring> to <string.h>
+		* added .c_str() to a string object to correct shorthand if statement ( a ? x : y )
+
+_______________________________________________________________________________
+Release 5.0.2-1 - Matthew Flood 2006-04-08
+
+	** Changed package versioning: 
+		now using the LIBRARY_VERSION - RELEASE_VERSION
+		RELEASE_VERSION will be set to 1 for each new LIBRARY_VERSION
+		
+	** Rolled the package into binary and source RPMs
+
+_______________________________________________________________________________
+Version 3.2 - Matthew Flood 2005-06-02
+
+	** The following instance method has been added, allowing you to discover the current
+	   filepath of the config object.  The name 'getConfigFile' was chosen to pair up with the already
+		existing method - setConfigFile(const char *filepath)  
+
+			const char *getConfigFile();
+
+_______________________________________________________________________________
+Version 3.1 - Matthew Flood 2005-05-18
+
+	** The following static methods have been added, allowing you to alter the 
+		default behavior of config objects before they are created.
+	
+			static void Config::setDefaultConfigFile(const char *filepath);
+			static const char *Config::getDefaultConfigFile();
+			
+			static void Config::setDefaultCommentCharacter(char c);
+			static char Config::getDefaultCommentCharacter();
+			static void Config::setDefaultDelimiter(char c);
+			static char Config::getDefaultDelimiter();
+			static void Config::setDefaultPreserveDeleted(bool shouldPreserve);
+			static bool Config::getDefaultPreserveDeleted();
+		
+
+	** When the method [ void load(const char *filename) ] is invoked, the filename passed in
+	as a parameter is now remembered - it becomes the default filename for the instance.  
+	This means that [ bool save(void) ] will always save to the file that was load()'ed.  
+	Previously, the only way to alter the default filename for an object was to 
+	call [ void setConfigFile( const char* filepath ) ].
+
+	** setStringValue() and getStringValue() are now deprecated.
+		Use getValue() and setValue() instead.
+
+_______________________________________________________________________________
+Version 3.0 - Matthew Flood 2005-05-05
+
+	** RudeConfig became open source and is distributed under the GNU Public License.
+		Commercial licenses are available for a fee, and allow the holder
+		to use the library in commercial applications. To obtain further details, 
+		see the AUTHORS file for contact information.
+
+_______________________________________________________________________________
+
+Copyright (C) 2005 Matthew Flood
+See file AUTHORS for contact information
+
+This file is part of RudeConfig.
+
+RudeConfig is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+RudeConfig is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with RudeConfig; (see COPYING) if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+02111-1307, USA.
+

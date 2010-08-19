@@ -30,7 +30,8 @@ contains(DEFINES, ACT_PROFILE){
 message(** Profiling activated **)
 }
 
-SUBDIRS += tools \
+SUBDIRS += 3rdparty \
+	tools \
 	actiontools \
 	executer \
 	gui \

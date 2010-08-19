@@ -29,6 +29,8 @@
 #include "actionnotifydefinition.h"
 #include "actionpixelcolordefinition.h"
 #include "actionreadfiledefinition.h"
+#include "actionwriteinifiledefinition.h"
+#include "actionreadinifiledefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -52,6 +54,8 @@ public:
 		addActionDefinition(new ActionNotifyDefinition(this));
 		addActionDefinition(new ActionPixelColorDefinition(this));
 		addActionDefinition(new ActionReadFileDefinition(this));
+		addActionDefinition(new ActionWriteIniFileDefinition(this));
+		addActionDefinition(new ActionReadIniFileDefinition(this));
 	}
 
 	QString id() const							{ return tr("system"); }
