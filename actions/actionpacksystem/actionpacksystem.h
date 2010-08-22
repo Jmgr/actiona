@@ -22,17 +22,10 @@
 #define ACTIONPACKSYSTEM_H
 
 #include "actionpack.h"
-#include "actiongetclipboarddefinition.h"
-#include "actionsetclipboarddefinition.h"
 #include "actioncommanddefinition.h"
 #include "actionkillprocessdefinition.h"
 #include "actionnotifydefinition.h"
 #include "actionpixelcolordefinition.h"
-#include "actionreadtextfiledefinition.h"
-#include "actionwriteinifiledefinition.h"
-#include "actionreadinifiledefinition.h"
-#include "actionreadregistrydefinition.h"
-#include "actionwriteregistrydefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -49,17 +42,10 @@ class ActionPackSystem : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackSystem()
 	{
-		addActionDefinition(new ActionGetClipboardDefinition(this));
-		addActionDefinition(new ActionSetClipboardDefinition(this));
 		addActionDefinition(new ActionCommandDefinition(this));
 		addActionDefinition(new ActionKillProcessDefinition(this));
 		addActionDefinition(new ActionNotifyDefinition(this));
 		addActionDefinition(new ActionPixelColorDefinition(this));
-		addActionDefinition(new ActionReadTextFileDefinition(this));
-		addActionDefinition(new ActionWriteIniFileDefinition(this));
-		addActionDefinition(new ActionReadIniFileDefinition(this));
-		addActionDefinition(new ActionReadRegistryDefinition(this));
-		addActionDefinition(new ActionWriteRegistryDefinition(this));
 	}
 
 	QString id() const							{ return tr("system"); }

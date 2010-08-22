@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONGETCLIPBOARDDEFINITION_H
-#define ACTIONGETCLIPBOARDDEFINITION_H
+#ifndef ACTIONREADCLIPBOARDDEFINITION_H
+#define ACTIONREADCLIPBOARDDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actiongetclipboardinstance.h"
+#include "actionreadclipboardinstance.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 
@@ -32,12 +32,12 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionGetClipboardDefinition : public QObject, public ActionTools::ActionDefinition
+class ActionReadClipboardDefinition : public QObject, public ActionTools::ActionDefinition
 {
    Q_OBJECT
 
 public:
-	explicit ActionGetClipboardDefinition(ActionTools::ActionPack *pack)
+	explicit ActionReadClipboardDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
 		ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition( ActionTools::ElementDefinition::OUTPUT,
@@ -48,16 +48,16 @@ public:
 		addElement(output);
 	}
 
-	QString name() const													{ return QObject::tr("Get clipboard"); }
-	QString id() const														{ return "ActionGetClipboard"; }
+	QString name() const													{ return QObject::tr("Read clipboard"); }
+	QString id() const														{ return "ActionReadClipboard"; }
 	Flag flags() const														{ return ActionDefinition::flags() | Official; }
-	QString description() const												{ return QObject::tr("Get the clipboard contents"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionGetClipboardInstance(this); }
-	Category category() const												{ return System; }
+	QString description() const												{ return QObject::tr("Read the clipboard contents"); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadClipboardInstance(this); }
+	Category category() const												{ return Data; }
 	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionGetClipboardDefinition)
+	Q_DISABLE_COPY(ActionReadClipboardDefinition)
 };
 
-#endif // ACTIONGETCLIPBOARDDEFINITION_H
+#endif // ACTIONREADCLIPBOARDDEFINITION_H

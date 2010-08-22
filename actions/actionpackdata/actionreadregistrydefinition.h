@@ -18,14 +18,14 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONWRITEREGISTRYDEFINITION_H
-#define ACTIONWRITEREGISTRYDEFINITION_H
+#ifndef ACTIONREADREGISTRYDEFINITION_H
+#define ACTIONREADREGISTRYDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionwriteregistryinstance.h"
 #include "actionreadregistryinstance.h"
 #include "listparameterdefinition.h"
 #include "textparameterdefinition.h"
+#include "variableparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -33,12 +33,12 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionWriteRegistryDefinition : public QObject, public ActionTools::ActionDefinition
+class ActionReadRegistryDefinition : public QObject, public ActionTools::ActionDefinition
 {
 	Q_OBJECT
 
 public:
-	explicit ActionWriteRegistryDefinition(ActionTools::ActionPack *pack)
+	explicit ActionReadRegistryDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 	{
 #ifdef Q_WS_WIN
@@ -46,7 +46,7 @@ public:
 																								"key",
 																								tr("Key"),
 																								this);
-		key->setTooltip(tr("The registry key to write to"));
+		key->setTooltip(tr("The registry key to read from"));
 		key->setItems(ActionReadRegistryInstance::keys);
 		key->setDefaultValue(ActionReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 		addElement(key);
@@ -55,38 +55,39 @@ public:
 																							   "subKey",
 																							   tr("Subkey"),
 																							   this);
-		subKey->setTooltip(tr("The registry subkey to write to"));
+		subKey->setTooltip(tr("The registry subkey to read from"));
 		addElement(subKey);
 
 		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition( ActionTools::ElementDefinition::INPUT,
 																							   "value",
 																							   tr("Value"),
 																							   this);
-		value->setTooltip(tr("The value to write to"));
+		value->setTooltip(tr("The value to read"));
 		addElement(value);
 
-		ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition( ActionTools::ElementDefinition::INPUT,
-																							   "data",
-																							   tr("Data"),
-																							   this);
-		data->setTooltip(tr("The data to write"));
-		addElement(data);
+		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition( ActionTools::ElementDefinition::OUTPUT,
+																										 "variable",
+																										 tr("Variable"),
+																										 this);
+		variable->setTooltip(tr("The variable where to save the value read from the registry"));
+		addElement(variable);
 
-		addException(ActionWriteRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
-		addException(ActionWriteRegistryInstance::CannotWriteValueException, tr("Cannot write value"));
+		addException(ActionReadRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
+		addException(ActionReadRegistryInstance::CannotFindValueException, tr("Cannot find value"));
+		addException(ActionReadRegistryInstance::InvalidValueType, tr("Invalid value type"));
 #endif
 	}
 
-	QString name() const													{ return QObject::tr("Write registry"); }
-	QString id() const														{ return "ActionWriteRegistry"; }
+	QString name() const													{ return QObject::tr("Read registry"); }
+	QString id() const														{ return "ActionReadRegistry"; }
 	Flag flags() const														{ return WorksOnWindows | Official; }
-	QString description() const												{ return QObject::tr("Writes an entry to the registry"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionWriteRegistryInstance(this); }
-	Category category() const												{ return System; }
+	QString description() const												{ return QObject::tr("Read an entry from the registry"); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadRegistryInstance(this); }
+	Category category() const												{ return Data; }
 	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
 private:
-	Q_DISABLE_COPY(ActionWriteRegistryDefinition)
+	Q_DISABLE_COPY(ActionReadRegistryDefinition)
 };
 
-#endif // ACTIONWRITEREGISTRYDEFINITION_H
+#endif // ACTIONREADREGISTRYDEFINITION_H

@@ -57,7 +57,7 @@ namespace ActionTools
 			Device,
 			System,
 			Internal,
-			Other,
+			Data,
 
 			CategoryCount
 		};

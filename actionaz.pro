@@ -39,4 +39,4 @@ SUBDIRS += 3rdparty \
 	actions/actionpackwindows \
 	actions/actionpackdevice \
 	actions/actionpacksystem \
-	actions/actionpackother
+	actions/actionpackdata

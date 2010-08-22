@@ -18,47 +18,49 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONSETCLIPBOARDINSTANCE_H
-#define ACTIONSETCLIPBOARDINSTANCE_H
+#ifndef ACTIONREADCLIPBOARDINSTANCE_H
+#define ACTIONREADCLIPBOARDINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
+#include "script.h"
 
 #include <QApplication>
 #include <QClipboard>
 
-class ActionSetClipboardInstance : public ActionTools::ActionInstance
+class ActionReadClipboardInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 
 public:
-	ActionSetClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)											{}
+	ActionReadClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		: ActionTools::ActionInstance(definition, parent)												{}
 
 	void startExecution()
 	{
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString value;
+		QString variable;
 
-		if(!actionInstanceExecutionHelper.evaluateString(value, "value"))
+		if(!actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
 			return;
 
 		QClipboard *clipboard = QApplication::clipboard();
-		clipboard->setText(value);
+		
+		actionInstanceExecutionHelper.setVariable(variable, clipboard->text());
 
 		emit executionEnded();
 	}
 	
 public slots:
-	void setValue(const QString &value)
+	QString read() const
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 		
-		clipboard->setText(value);
+		return clipboard->text();
 	}
 
 private:
-	Q_DISABLE_COPY(ActionSetClipboardInstance)
+	Q_DISABLE_COPY(ActionReadClipboardInstance)
 };
 
-#endif // ACTIONSETCLIPBOARDINSTANCE_H
+#endif // ACTIONREADCLIPBOARDINSTANCE_H

@@ -101,7 +101,7 @@ public:
 	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Read a plain text file"); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadTextFileInstance(this); }
-	Category category() const												{ return System; }
+	Category category() const												{ return Data; }
 	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 	QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

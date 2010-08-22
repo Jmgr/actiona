@@ -22,6 +22,13 @@
 #define ACTIONPACKOTHER_H
 
 #include "actionpack.h"
+#include "actionreadtextfiledefinition.h"
+#include "actionwriteinifiledefinition.h"
+#include "actionreadinifiledefinition.h"
+#include "actionreadregistrydefinition.h"
+#include "actionwriteregistrydefinition.h"
+#include "actionreadclipboarddefinition.h"
+#include "actionwriteclipboarddefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -38,6 +45,13 @@ class ActionPackOther : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackOther()
 	{
+		addActionDefinition(new ActionReadTextFileDefinition(this));
+		addActionDefinition(new ActionWriteIniFileDefinition(this));
+		addActionDefinition(new ActionReadIniFileDefinition(this));
+		addActionDefinition(new ActionReadRegistryDefinition(this));
+		addActionDefinition(new ActionWriteRegistryDefinition(this));
+		addActionDefinition(new ActionReadClipboardDefinition(this));
+		addActionDefinition(new ActionWriteClipboardDefinition(this));
 	}
 
 	QString id() const								{ return tr("other"); }

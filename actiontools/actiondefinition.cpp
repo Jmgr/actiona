@@ -62,7 +62,7 @@ namespace ActionTools
 		QObject::tr("Device"),
 		QObject::tr("System"),
 		QObject::tr("Internal"),
-		QObject::tr("Other")
+		QObject::tr("Data")
 	};
 
 	QStringList ActionDefinition::StandardTabs = QStringList() << QObject::tr("Standard") << QObject::tr("Advanced");

@@ -79,7 +79,7 @@ public:
 	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Write an entry in an INI file"); }
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionWriteIniFileInstance(this); }
-	Category category() const												{ return System; }
+	Category category() const												{ return Data; }
 	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
 private:
