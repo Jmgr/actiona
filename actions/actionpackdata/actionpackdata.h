@@ -29,6 +29,8 @@
 #include "actionwriteregistrydefinition.h"
 #include "actionreadclipboarddefinition.h"
 #include "actionwriteclipboarddefinition.h"
+#include "actionreadbinaryfiledefinition.h"
+#include "actionwritebinaryfiledefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -52,6 +54,8 @@ public:
 		addActionDefinition(new ActionWriteRegistryDefinition(this));
 		addActionDefinition(new ActionReadClipboardDefinition(this));
 		addActionDefinition(new ActionWriteClipboardDefinition(this));
+		addActionDefinition(new ActionReadBinaryFileDefinition(this));
+		addActionDefinition(new ActionWriteBinaryFileDefinition(this));
 	}
 
 	QString id() const								{ return tr("other"); }

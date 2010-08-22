@@ -79,24 +79,22 @@ public:
 	}
 
 public slots:
-	bool read(const QString &filename, const QString &section, const QString &parameter, QString &value)
+	QString read(const QString &filename, const QString &section, const QString &parameter) const
 	{
 		rude::Config config;
 
 #ifdef Q_WS_WIN
 		if(!config.load(filename.toLatin1()))
-			return false;
+			return QString();
 #else
 		if(!config.load(filename.toUtf8()))
-			return false;
+			return QString();
 #endif
 
 		if(!config.setSection(section.toLatin1(), false))
-			return false;
+			return QString();
 
-		value = QString::fromLatin1(config.getStringValue(parameter.toLatin1()));
-
-		return true;
+		return QString::fromLatin1(config.getStringValue(parameter.toLatin1()));
 	}
 
 private:

@@ -15,7 +15,11 @@ HEADERS += actionpackdata.h \
 	actionreadclipboarddefinition.h \
 	actionreadclipboardinstance.h \
 	actionwriteclipboarddefinition.h \
-	actionwriteclipboardinstance.h
+	actionwriteclipboardinstance.h \
+    actionreadbinaryfileinstance.h \
+    actionreadbinaryfiledefinition.h \
+    actionwritebinaryfileinstance.h \
+    actionwritebinaryfiledefinition.h
 SOURCES +=	actionreadtextfileinstance.cpp \
 	actionreadregistryinstance.cpp \
     actionwriteregistryinstance.cpp
