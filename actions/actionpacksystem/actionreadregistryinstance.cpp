@@ -34,6 +34,7 @@ ActionTools::StringListPair ActionReadRegistryInstance::keys = qMakePair(
 void ActionReadRegistryInstance::startExecution()
 {
 	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+#ifdef Q_WS_WIN
 	ActionTools::Registry::Key key;
 	QString subKey;
 	QString value;
@@ -45,7 +46,6 @@ void ActionReadRegistryInstance::startExecution()
 	   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
 		return;
 
-#ifdef Q_WS_WIN
 	QVariant resultValue;
 	switch(ActionTools::Registry::read(resultValue, key, subKey, value))
 	{

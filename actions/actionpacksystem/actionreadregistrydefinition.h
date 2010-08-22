@@ -41,6 +41,7 @@ public:
 	explicit ActionReadRegistryDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 	{
+#ifdef Q_WS_WIN
 		ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
 																								"key",
 																								tr("Key"),
@@ -74,6 +75,7 @@ public:
 		addException(ActionReadRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
 		addException(ActionReadRegistryInstance::CannotFindValueException, tr("Cannot find value"));
 		addException(ActionReadRegistryInstance::InvalidValueType, tr("Invalid value type"));
+#endif
 	}
 
 	QString name() const													{ return QObject::tr("Read registry"); }

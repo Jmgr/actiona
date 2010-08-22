@@ -30,6 +30,7 @@
 void ActionWriteRegistryInstance::startExecution()
 {
 	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+#ifdef Q_WS_WIN
 	ActionTools::Registry::Key key;
 	QString subKey;
 	QString value;
@@ -41,7 +42,6 @@ void ActionWriteRegistryInstance::startExecution()
 	   !actionInstanceExecutionHelper.evaluateVariant(data, "data"))
 		return;
 
-#ifdef Q_WS_WIN
 	switch(ActionTools::Registry::write(data, key, subKey, value))
 	{
 	case ActionTools::Registry::WriteCannotFindSubKey:

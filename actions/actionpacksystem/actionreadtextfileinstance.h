@@ -18,13 +18,13 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADFILEINSTANCE_H
-#define ACTIONREADFILEINSTANCE_H
+#ifndef ACTIONREADTEXTFILEINSTANCE_H
+#define ACTIONREADTEXTFILEINSTANCE_H
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
 
-class ActionReadFileInstance : public ActionTools::ActionInstance
+class ActionReadTextFileInstance : public ActionTools::ActionInstance
 {
 	Q_OBJECT
 	Q_ENUMS(Mode)
@@ -40,7 +40,7 @@ public:
 		CannotOpenFileException = ActionTools::ActionException::UserException
 	};
 
-	ActionReadFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+	ActionReadTextFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 		: ActionTools::ActionInstance(definition, parent)												{}
 
 	static ActionTools::StringListPair modes;
@@ -48,7 +48,7 @@ public:
 	void startExecution();
 
 private:
-	Q_DISABLE_COPY(ActionReadFileInstance)
+	Q_DISABLE_COPY(ActionReadTextFileInstance)
 };
 
-#endif // ACTIONREADFILEINSTANCE_H
+#endif // ACTIONREADTEXTFILEINSTANCE_H

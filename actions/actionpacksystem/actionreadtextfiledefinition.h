@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADFILEDEFINITION_H
-#define ACTIONREADFILEDEFINITION_H
+#ifndef ACTIONREADTEXTFILEDEFINITION_H
+#define ACTIONREADTEXTFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionreadfileinstance.h"
+#include "actionreadtextfileinstance.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "numberparameterdefinition.h"
@@ -35,12 +35,12 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionReadFileDefinition : public QObject, public ActionTools::ActionDefinition
+class ActionReadTextFileDefinition : public QObject, public ActionTools::ActionDefinition
 {
 	Q_OBJECT
 
 public:
-	explicit ActionReadFileDefinition(ActionTools::ActionPack *pack)
+	explicit ActionReadTextFileDefinition(ActionTools::ActionPack *pack)
         : ActionDefinition(pack)
 	{
 		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition( ActionTools::ElementDefinition::INPUT,
@@ -62,8 +62,8 @@ public:
 																								 tr("Mode"),
 																								 this);
 		mode->setTooltip(tr("The file read mode"));
-		mode->setItems(ActionReadFileInstance::modes);
-		mode->setDefaultValue(ActionReadFileInstance::modes.second.at(ActionReadFileInstance::Full));
+		mode->setItems(ActionReadTextFileInstance::modes);
+		mode->setDefaultValue(ActionReadTextFileInstance::modes.second.at(ActionReadTextFileInstance::Full));
 		addElement(mode, 1);
 
 		ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(		ActionTools::ElementDefinition::INPUT,
@@ -71,7 +71,7 @@ public:
 																							tr("Selection mode"),
 																							this);
 		selectionMode->setMasterList(mode);
-		selectionMode->setMasterValues(QStringList() << ActionReadFileInstance::modes.first.at(ActionReadFileInstance::Selection));
+		selectionMode->setMasterValues(QStringList() << ActionReadTextFileInstance::modes.first.at(ActionReadTextFileInstance::Selection));
 
 		ActionTools::NumberParameterDefinition *firstline = new ActionTools::NumberParameterDefinition( ActionTools::ElementDefinition::INPUT,
 																										"firstline",
@@ -93,20 +93,20 @@ public:
 
 		addElement(selectionMode, 1);
 
-		addException(ActionReadFileInstance::CannotOpenFileException, tr("Cannot read file"));
+		addException(ActionReadTextFileInstance::CannotOpenFileException, tr("Cannot read file"));
 	}
 
-	QString name() const													{ return QObject::tr("Read file"); }
-	QString id() const														{ return "ActionReadFile"; }
+	QString name() const													{ return QObject::tr("Read text file"); }
+	QString id() const														{ return "ActionReadTextFile"; }
 	Flag flags() const														{ return ActionDefinition::flags() | Official; }
 	QString description() const												{ return QObject::tr("Read a plain text file"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadFileInstance(this); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadTextFileInstance(this); }
 	Category category() const												{ return System; }
 	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 	QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 private:
-	Q_DISABLE_COPY(ActionReadFileDefinition)
+	Q_DISABLE_COPY(ActionReadTextFileDefinition)
 };
 
-#endif // ACTIONREADFILEDEFINITION_H
+#endif // ACTIONREADTEXTFILEDEFINITION_H

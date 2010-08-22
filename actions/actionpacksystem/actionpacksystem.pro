@@ -14,8 +14,8 @@ HEADERS += actionpacksystem.h \
 	actionnotifyinstance.h \
 	actionpixelcolordefinition.h \
 	actionpixelcolorinstance.h \
-	actionreadfiledefinition.h \
-	actionreadfileinstance.h \
+	actionreadtextfiledefinition.h \
+	actionreadtextfileinstance.h \
 	actionwriteinifiledefinition.h \
 	actionwriteinifileinstance.h \
 	actionreadinifiledefinition.h \
@@ -27,7 +27,7 @@ HEADERS += actionpacksystem.h \
 RESOURCES += actionpacksystem.qrc
 SOURCES += actionkillprocessinstance.cpp \
 	actionnotifyinstance.cpp \
-	actionreadfileinstance.cpp \
+	actionreadtextfileinstance.cpp \
 	actionreadregistryinstance.cpp \
     actionwriteregistryinstance.cpp
 INCLUDEPATH += ../../3rdparty/rudeconfig

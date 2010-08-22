@@ -18,17 +18,17 @@
         Contact : jmgr@jmgr.info
 */
 
-#include "actionreadfileinstance.h"
+#include "actionreadtextfileinstance.h"
 #include "actioninstanceexecutionhelper.h"
 
 #include <QFile>
 #include <QTextStream>
 
-ActionTools::StringListPair ActionReadFileInstance::modes = qMakePair(
+ActionTools::StringListPair ActionReadTextFileInstance::modes = qMakePair(
 		QStringList() << "full" << "selection",
 		QStringList() << QObject::tr("Read the entire file") << QObject::tr("Read only a selection"));
 
-void ActionReadFileInstance::startExecution()
+void ActionReadTextFileInstance::startExecution()
 {
 	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 	QString filepath;

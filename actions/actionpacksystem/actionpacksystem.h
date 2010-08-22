@@ -28,7 +28,7 @@
 #include "actionkillprocessdefinition.h"
 #include "actionnotifydefinition.h"
 #include "actionpixelcolordefinition.h"
-#include "actionreadfiledefinition.h"
+#include "actionreadtextfiledefinition.h"
 #include "actionwriteinifiledefinition.h"
 #include "actionreadinifiledefinition.h"
 #include "actionreadregistrydefinition.h"
@@ -55,7 +55,7 @@ public:
 		addActionDefinition(new ActionKillProcessDefinition(this));
 		addActionDefinition(new ActionNotifyDefinition(this));
 		addActionDefinition(new ActionPixelColorDefinition(this));
-		addActionDefinition(new ActionReadFileDefinition(this));
+		addActionDefinition(new ActionReadTextFileDefinition(this));
 		addActionDefinition(new ActionWriteIniFileDefinition(this));
 		addActionDefinition(new ActionReadIniFileDefinition(this));
 		addActionDefinition(new ActionReadRegistryDefinition(this));
