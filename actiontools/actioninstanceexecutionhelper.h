@@ -35,7 +35,7 @@ namespace ActionTools
 {
 	class Script;
 	class IfActionValue;
-	
+
 	class ACTIONTOOLSSHARED_EXPORT ActionInstanceExecutionHelper : public QObject
 	{
 		Q_OBJECT
@@ -44,6 +44,9 @@ namespace ActionTools
 		ActionInstanceExecutionHelper(ActionInstance *actionInstance, Script *script, QScriptEngine *scriptEngine);
 		~ActionInstanceExecutionHelper();
 
+		bool evaluateVariant(QVariant &buffer,
+							const QString &parameterName,
+							const QString &subParameterName = "value");
 		bool evaluateString(QString &buffer,
 							const QString &parameterName,
 							const QString &subParameterName = "value");
@@ -116,13 +119,13 @@ namespace ActionTools
 		bool evaluateColor(QColor &buffer,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
-		
+
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);
-		
+
 		void setVariable(const QString &name, const QVariant &value);
 		QVariant variable(const QString &name);
-		
+
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
 
 		template<typename T>

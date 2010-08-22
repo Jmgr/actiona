@@ -31,6 +31,8 @@
 #include "actionreadfiledefinition.h"
 #include "actionwriteinifiledefinition.h"
 #include "actionreadinifiledefinition.h"
+#include "actionreadregistrydefinition.h"
+#include "actionwriteregistrydefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -56,6 +58,8 @@ public:
 		addActionDefinition(new ActionReadFileDefinition(this));
 		addActionDefinition(new ActionWriteIniFileDefinition(this));
 		addActionDefinition(new ActionReadIniFileDefinition(this));
+		addActionDefinition(new ActionReadRegistryDefinition(this));
+		addActionDefinition(new ActionWriteRegistryDefinition(this));
 	}
 
 	QString id() const							{ return tr("system"); }

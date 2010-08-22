@@ -12,18 +12,24 @@ HEADERS += actionpacksystem.h \
 	actionkillprocessinstance.h \
 	actionnotifydefinition.h \
 	actionnotifyinstance.h \
-    actionpixelcolordefinition.h \
+	actionpixelcolordefinition.h \
 	actionpixelcolorinstance.h \
 	actionreadfiledefinition.h \
 	actionreadfileinstance.h \
-    actionwriteinifiledefinition.h \
-    actionwriteinifileinstance.h \
-    actionreadinifiledefinition.h \
-    actionreadinifileinstance.h
+	actionwriteinifiledefinition.h \
+	actionwriteinifileinstance.h \
+	actionreadinifiledefinition.h \
+	actionreadinifileinstance.h \
+	actionreadregistryinstance.h \
+	actionreadregistrydefinition.h \
+    actionwriteregistrydefinition.h \
+    actionwriteregistryinstance.h
 RESOURCES += actionpacksystem.qrc
 SOURCES += actionkillprocessinstance.cpp \
 	actionnotifyinstance.cpp \
-	actionreadfileinstance.cpp
+	actionreadfileinstance.cpp \
+	actionreadregistryinstance.cpp \
+    actionwriteregistryinstance.cpp
 INCLUDEPATH += ../../3rdparty/rudeconfig
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify

@@ -23,6 +23,7 @@
 #include "ifactionvalue.h"
 
 #include <QScriptValue>
+#include <QScriptValueIterator>
 #include <QScriptEngine>
 #include <QPoint>
 #include <QDebug>
@@ -43,6 +44,28 @@ namespace ActionTools
 	{
 	}
 
+	bool ActionInstanceExecutionHelper::evaluateVariant(QVariant &buffer,
+										const QString &parameterName,
+										const QString &subParameterName)
+	{
+		mParameterName = parameterName;
+		mSubParameterName = subParameterName;
+
+		const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
+		if(toEvaluate.value().toString().isEmpty())
+		{
+			buffer = QVariant();
+			return true;
+		}
+
+		if(!evaluate(toEvaluate))
+			return false;
+
+		buffer = mResult;
+
+		return true;
+	}
+
 	bool ActionInstanceExecutionHelper::evaluateString(QString &buffer,
 										const QString &parameterName,
 										const QString &subParameterName)
@@ -60,11 +83,16 @@ namespace ActionTools
 		if(!evaluate(toEvaluate))
 			return false;
 
-		buffer = mResult.toString();
+		if(mResult.type() == QVariant::StringList)
+			buffer = mResult.toStringList().join("\n");
+		else if(mResult.canConvert(QVariant::String))
+			buffer = mResult.toString();
+		else
+			buffer = tr("[Raw data]");
 
 		return true;
 	}
-	
+
 	bool ActionInstanceExecutionHelper::evaluateVariable(QString &buffer,
 										const QString &parameterName,
 										const QString &subParameterName)
@@ -73,12 +101,12 @@ namespace ActionTools
 		mSubParameterName = subParameterName;
 
 		const SubParameter &toEvaluate = mActionInstance->subParameter(parameterName, subParameterName);
-		
+
 		if(!evaluate(toEvaluate))
 			return false;
-		
+
 		buffer = mResult.toString();
-		
+
 		if(!buffer.isEmpty() && !mNameRegExp.exactMatch(buffer))
 		{
 			mErrorMessage = tr("A variable name can only contain alphanumeric characters and cannot start with a digit.");
@@ -114,7 +142,7 @@ namespace ActionTools
 
 		return true;
 	}
-	
+
 	bool ActionInstanceExecutionHelper::evaluateBoolean(bool &buffer,
 										  const QString &parameterName,
 										  const QString &subParameterName)
@@ -128,7 +156,7 @@ namespace ActionTools
 			return false;
 
 		buffer = mResult.toBool();
-		
+
 		return true;
 	}
 
@@ -156,12 +184,12 @@ namespace ActionTools
 
 		return true;
 	}
-	
+
 	bool ActionInstanceExecutionHelper::evaluateIfAction(IfActionValue &buffer,
 										const QString &parameterName)
 	{
 		bool result = true;
-		
+
 		result &= evaluateString(buffer.action(), parameterName, "action");
 		result &= evaluateString(buffer.line(), parameterName, "line");
 
@@ -173,10 +201,10 @@ namespace ActionTools
 					   const QString &subParameterName)
 	{
 		QString positionString;
-		
+
 		if(!evaluateString(positionString, parameterName, subParameterName))
 			return false;
-				
+
 		QStringList positionStringList = positionString.split(":");
 		if(positionStringList.count() != 2)
 		{
@@ -184,7 +212,7 @@ namespace ActionTools
 			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
-		
+
 		bool ok = true;
 		buffer = QPoint(positionStringList.at(0).toInt(&ok), positionStringList.at(1).toInt(&ok));
 		if(!ok)
@@ -193,7 +221,7 @@ namespace ActionTools
 			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -202,10 +230,10 @@ namespace ActionTools
 					   const QString &subParameterName)
 	{
 		QString colorString;
-		
+
 		if(!evaluateString(colorString, parameterName, subParameterName))
 			return false;
-				
+
 		QStringList colorStringList = colorString.split(":");
 		if(colorStringList.count() != 3)
 		{
@@ -213,7 +241,7 @@ namespace ActionTools
 			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
-		
+
 		bool ok = true;
 		buffer = QColor(colorStringList.at(0).toInt(&ok), colorStringList.at(1).toInt(&ok), colorStringList.at(2).toInt(&ok));
 		if(!ok)
@@ -222,21 +250,21 @@ namespace ActionTools
 			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	QString ActionInstanceExecutionHelper::nextLine() const
 	{
 		return mScriptEngine->evaluate("Script.nextLine").toString();
 	}
-	
+
 	void ActionInstanceExecutionHelper::setNextLine(const QString &nextLine)
 	{
 		QScriptValue scriptValue = mScriptEngine->globalObject().property("Script");
 		scriptValue.setProperty("nextLine", mScriptEngine->newVariant(QVariant(nextLine)));
 	}
-	
+
 	void ActionInstanceExecutionHelper::setVariable(const QString &name, const QVariant &value)
 	{
 		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
@@ -247,10 +275,10 @@ namespace ActionTools
 	{
 		if(name.isEmpty() || !mNameRegExp.exactMatch(name))
 			return QVariant();
-			
+
 		return mScriptEngine->globalObject().property(name).toVariant();
 	}
-	
+
 	void ActionInstanceExecutionHelper::setCurrentParameter(const QString &parameterName, const QString &subParameterName)
 	{
 		mScriptEngine->globalObject().setProperty("currentParameter", mScriptEngine->newVariant(parameterName), QScriptValue::ReadOnly);
@@ -270,7 +298,7 @@ namespace ActionTools
 			int position = 0;
 
 			while((position = regexpVariable.indexIn(value, position)) != -1)
-			{	
+			{
 				QString foundVariable = regexpVariable.cap(2);
 				QScriptValue evaluationResult = mScriptEngine->globalObject().property(foundVariable);
 
@@ -282,15 +310,34 @@ namespace ActionTools
 					emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 					return false;
 				}
-				
+
+				QVariant variantEvalutationResult = evaluationResult.toVariant();
+				QString stringEvalutationResult;
+
+				switch(variantEvalutationResult.type())
+				{
+				case QVariant::StringList:
+					stringEvalutationResult = variantEvalutationResult.toStringList().join("\n");
+					break;
+				case QVariant::ByteArray:
+					stringEvalutationResult = tr("[Raw data]");
+					break;
+				default:
+					if(variantEvalutationResult.canConvert(QVariant::String))
+						stringEvalutationResult = variantEvalutationResult.toString();
+					else
+						stringEvalutationResult = tr("[Raw data]");
+					break;
+				}
+
 				value.replace(position,
 							  foundVariable.length() + 1,
-							  evaluationResult.toString());
+							  stringEvalutationResult);
 				position += foundVariable.length() + 1;
 			}
 
 			mResult = value;
-			
+
 			return true;
 		}
 
@@ -302,7 +349,25 @@ namespace ActionTools
 			return false;
 		}
 
-		mResult = result.toVariant();
+		if(result.isArray())
+		{
+			QStringList stringList;
+
+			QScriptValueIterator it(result);
+			while(it.hasNext())
+			{
+				it.next();
+
+				stringList << it.value().toString();
+			}
+
+			mResult = stringList;
+		}
+		else
+			mResult = result.toVariant();
+
+		if(!mResult.isValid())
+			mResult = tr("[Raw data]");
 
 		return true;
 	}

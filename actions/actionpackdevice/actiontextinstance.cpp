@@ -139,10 +139,8 @@ bool sendString(Display *display, const QString &string)
 bool sendString(const QString &string)
 {
 	INPUT input[2];
-	wchar_t *wideString = new wchar_t[string.length()];
+	std::wstring wideString = string.toStdWString();
 	bool result = true;
-
-	string.toWCharArray(wideString);
 
 	for(int i = 0; i < 2; ++i)
 	{
@@ -159,8 +157,6 @@ bool sendString(const QString &string)
 
 		result &= (SendInput(2, input, sizeof(INPUT)) != 0);
 	}
-
-	delete [] wideString;
 
 	return result;
 }
