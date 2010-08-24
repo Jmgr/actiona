@@ -45,11 +45,11 @@ class QStandardItemModel;
 namespace Executer
 {
 	class ExecutionWindow;
-	
+
 	class EXECUTERSHARED_EXPORT Executer : public QObject
 	{
 		Q_OBJECT
-	
+
 	public:
 		Executer(ActionTools::Script *script,
 				 ActionTools::ActionFactory *actionFactory,
@@ -63,24 +63,24 @@ namespace Executer
 				 QStandardItemModel *consoleModel,
 				 QObject *parent = 0);
 		~Executer();
-	
+
 		ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
 		ActionTools::ConsoleWidget *consoleWidget() const	{ return mConsoleWidget; }
 		ScriptAgent *scriptAgent() const					{ return mScriptAgent; }
-	
+
 		int currentActionIndex() const						{ return mCurrentActionIndex; }
 		ActionTools::Script *script() const					{ return mScript; }
-	
+
 	public slots:
 		bool startExecution(bool onlySelection);
 		void stopExecution();
-	
+
 	signals:
 		void executionStopped();
 		void scriptError(int actionIndex, const QString &parameter, const QString &error);
-		void actionStarted(int actionIndex);
-		void actionEnded(int actionIndex);
-	
+		void actionStarted(int actionIndex, int maxActions);
+		void actionEnded(int actionIndex, int maxActions);
+
 	private slots:
 		void executionException(int exception,
 								const QString &message);
@@ -93,7 +93,7 @@ namespace Executer
 		void updateProgressDialog(const QString &caption);
 		void updateProgressDialog(int value);
 		void hideProgressDialog();
-	
+
 	private:
 		enum ExecuteActionResult
 		{
@@ -103,12 +103,12 @@ namespace Executer
 			DisabledAction,
 			UnselectedAction
 		};
-	
+
 		ExecuteActionResult canExecuteAction(const QString &line) const;
 		ExecuteActionResult canExecuteAction(int index) const;
 		void executeCurrentAction();
 		void addClassToScript(QObject *classPointer, const QString &name);
-	
+
 		ActionTools::Script *mScript;
 		ActionTools::ActionFactory *mActionFactory;
 		bool mShowExecutionWindow;
@@ -132,7 +132,8 @@ namespace Executer
 		QTime mTimeoutTime;
 		int mCurrentActionTimeout;
 		QProgressDialog *mProgressDialog;
-	
+		int mActiveActionsCount;
+
 		Q_DISABLE_COPY(Executer)
 	};
 }

@@ -64,12 +64,13 @@ namespace Executer
 		mExecuteOnlySelection(false),
 		mScriptAgent(new ScriptAgent(&mScriptEngine)),
 		mCurrentActionTimeout(0),
-		mProgressDialog(0)
+		mProgressDialog(0),
+		mActiveActionsCount(0)
 	{
 		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
 		connect(&mStartExecutionTimer, SIGNAL(timeout()), this, SLOT(startActionExecution()));
 		connect(&mTimeoutTimer, SIGNAL(timeout()), this, SLOT(updateTimeoutProgress()));
-		
+
 		mStartExecutionTimer.setSingleShot(true);
 		mTimeoutTimer.setSingleShot(false);
 		mTimeoutTimer.setInterval(10);
@@ -170,6 +171,7 @@ namespace Executer
 
 		mExecuteOnlySelection = onlySelection;
 		mCurrentActionIndex = 0;
+		mActiveActionsCount = 0;
 
 		mScriptEngine.setAgent(mScriptAgent);
 
@@ -215,6 +217,9 @@ namespace Executer
 			actionInstance->reset();
 			actionInstance->setupExecution(&mScriptEngine, mScript);
 			mActionEnabled.append(true);
+
+			if(canExecuteAction(actionIndex) == CanExecute)
+				++mActiveActionsCount;
 		}
 
 		mScriptAgent->setContext(ScriptAgent::Parameters);
@@ -326,7 +331,7 @@ namespace Executer
 	{
 		if(!mExecutionStarted)
 			return;
-		
+
 		mTimeoutTimer.stop();
 
 		if(mCurrentActionIndex >= 0 && mCurrentActionIndex < mScript->actionCount())
@@ -335,7 +340,7 @@ namespace Executer
 			if(!mExecutionPaused)
 				mScript->actionAt(mCurrentActionIndex)->stopExecution();
 		}
-		
+
 		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
 		{
 			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
@@ -353,7 +358,7 @@ namespace Executer
 
 		mScriptEngine.abortEvaluation();
 	}
-	
+
 	void Executer::executionException(int exception,
 									  const QString &message)
 	{
@@ -434,6 +439,8 @@ namespace Executer
 		mTimeoutTimer.stop();
 		mScript->actionAt(mCurrentActionIndex)->disconnect();
 
+		emit actionEnded(mCurrentActionIndex, mActiveActionsCount);
+
 		QTimer::singleShot(mScript->actionAt(mCurrentActionIndex)->pauseAfter(), this, SLOT(startNextAction()));
 		mExecutionPaused = true;
 	}
@@ -446,17 +453,17 @@ namespace Executer
 	void Executer::startNextAction()
 	{
 		mExecutionPaused = false;
-		
+
 		QScriptValue script = mScriptEngine.globalObject().property("Script");
 		QString nextLineString = script.property("nextLine").toString();
-		
+
 		bool ok;
 		int nextLine = nextLineString.toInt(&ok);
 
 		if(!ok)
 		{
 			nextLine = mScript->labelLine(nextLineString);
-			
+
 			if(nextLine == -1)
 			{
 				executionException(ActionTools::ActionException::CodeErrorException, tr("Unable to find the label named \"%1\"").arg(nextLineString));
@@ -492,11 +499,11 @@ namespace Executer
 
 		executeCurrentAction();
 	}
-	
+
 	void Executer::startActionExecution()
 	{
 		mExecutionPaused = false;
-		
+
 		mCurrentActionTimeout = mScript->actionAt(mCurrentActionIndex)->timeout();
 		if(mCurrentActionTimeout > 0)
 		{
@@ -509,35 +516,37 @@ namespace Executer
 		}
 		else
 			mExecutionWindow->setProgressVisible(false);
-		
+
+		emit actionStarted(mCurrentActionIndex, mActiveActionsCount);
+
 		mScript->actionAt(mCurrentActionIndex)->startExecution();
 	}
-	
+
 	void Executer::updateTimeoutProgress()
 	{
-		if(mTimeoutTime.elapsed() >= mCurrentActionTimeout)		
+		if(mTimeoutTime.elapsed() >= mCurrentActionTimeout)
 		{
 			mTimeoutTimer.stop();
 			mScript->actionAt(mCurrentActionIndex)->disconnect();
 			mScript->actionAt(mCurrentActionIndex)->stopExecution();
-			
+
 			executionException(ActionTools::ActionException::TimeoutException, QString());
 		}
-		
+
 		mExecutionWindow->setProgressValue(mTimeoutTime.elapsed());
 	}
-	
+
 	void Executer::showProgressDialog(const QString &title, int maximum)
 	{
 		if(!mProgressDialog)
 			mProgressDialog = new QProgressDialog(0, Qt::WindowStaysOnTopHint);
-		
+
 		connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(stopExecution()));
-		
+
 		mProgressDialog->setWindowTitle(title);
 		mProgressDialog->setMaximum(maximum);
 		mProgressDialog->setValue(0);
-		
+
 		mProgressDialog->show();
 	}
 
@@ -625,7 +634,7 @@ namespace Executer
 
 		mStartExecutionTimer.setInterval(actionInstance->pauseBefore());
 		mStartExecutionTimer.start();
-		
+
 		mExecutionPaused = true;
 	}
 
