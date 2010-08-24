@@ -42,6 +42,10 @@ namespace Executer
 		void setStopExecutionShortcut(const QKeySequence &keySequence);
 		void setCurrentActionName(const QString &actionName);
 		void setCurrentActionColor(const QColor &actionColor);
+		void setProgressVisible(bool visible);
+		void setProgressValue(int value);
+		void setProgressMinimum(int minimum);
+		void setProgressMaximum(int maximum);
 	
 	signals:
 		void canceled();

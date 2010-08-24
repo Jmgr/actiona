@@ -33,7 +33,9 @@ SOURCES += actionfactory.cpp \
 	keysymhelper.cpp \
     ifactionvalue.cpp \
     keymapper.cpp \
-    registry.cpp
+    registry.cpp \
+    devicecopythread.cpp \
+    datacopyactioninstance.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -62,7 +64,9 @@ HEADERS += actiontools_global.h \
 	keysymhelper.h \
     ifactionvalue.h \
     keymapper.h \
-    registry.h
+    registry.h \
+    devicecopythread.h \
+    datacopyactioninstance.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32

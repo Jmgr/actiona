@@ -22,11 +22,12 @@
 #define ACTIONWRITEBINARYFILEINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
-#include "actioninstance.h"
+#include "datacopyactioninstance.h"
 
 #include <QFile>
+#include <QBuffer>
 
-class ActionWriteBinaryFileInstance : public ActionTools::ActionInstance
+class ActionWriteBinaryFileInstance : public ActionTools::DataCopyActionInstance
 {
 	Q_OBJECT
 
@@ -37,7 +38,9 @@ public:
 	};
 
 	ActionWriteBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)											{}
+		: ActionTools::DataCopyActionInstance(definition, parent)
+	{
+	}
 
 	void startExecution()
 	{
@@ -49,18 +52,32 @@ public:
 		   !actionInstanceExecutionHelper.evaluateVariant(data, "data"))
 			return;
 		
-		QFile file(filename);
-		if(!file.open(QIODevice::WriteOnly))
+		mData = data.toByteArray();
+		mFile.setFileName(filename);
+		mDataBuffer.setBuffer(&mData);
+		
+		if(!DataCopyActionInstance::startCopy(&mDataBuffer, &mFile, mData.size()))
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("file");
 			emit executionException(UnableToWriteFileException, tr("Unable to write to the file \"%1\"").arg(filename));
 			return;
 		}
 		
-		file.write(data.toByteArray());
-		
-		emit executionEnded();
+		emit showProgressDialog("Writing file", 100);
+		emit updateProgressDialog("Writing in progress");
 	}
+
+private:
+	void clean()
+	{
+		DataCopyActionInstance::clean();
+		
+		mDataBuffer.buffer().clear();
+	}
+	
+	QFile mFile;
+	QByteArray mData;
+	QBuffer mDataBuffer;
 
 private:
 	Q_DISABLE_COPY(ActionWriteBinaryFileInstance)

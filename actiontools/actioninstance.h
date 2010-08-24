@@ -158,6 +158,10 @@ namespace ActionTools
 		Script *script() const												{ return d->script; }
 
 	signals:
+		void showProgressDialog(const QString &title, int maximum);
+		void updateProgressDialog(const QString &caption);
+		void updateProgressDialog(int value);
+		void hideProgressDialog();
 		void executionException(int exception, const QString &message);
 		void executionEnded();
 		void disableAction(bool disable = true);

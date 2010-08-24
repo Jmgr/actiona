@@ -30,6 +30,8 @@
 #include <QPoint>
 #include <QKeySequence>
 #include <QTimer>
+#include <QTime>
+#include <QProgressDialog>
 
 namespace ActionTools
 {
@@ -86,7 +88,11 @@ namespace Executer
 		void disableAction(bool disable);
 		void startNextAction();
 		void startActionExecution();
-		void actionExecutionTimeout();
+		void updateTimeoutProgress();
+		void showProgressDialog(const QString &title, int maximum);
+		void updateProgressDialog(const QString &caption);
+		void updateProgressDialog(int value);
+		void hideProgressDialog();
 	
 	private:
 		enum ExecuteActionResult
@@ -123,6 +129,9 @@ namespace Executer
 		QList<bool> mActionEnabled;
 		QTimer mStartExecutionTimer;
 		QTimer mTimeoutTimer;
+		QTime mTimeoutTime;
+		int mCurrentActionTimeout;
+		QProgressDialog *mProgressDialog;
 	
 		Q_DISABLE_COPY(Executer)
 	};

@@ -62,14 +62,17 @@ namespace Executer
 		mExecutionStarted(false),
 		mExecutionPaused(false),
 		mExecuteOnlySelection(false),
-		mScriptAgent(new ScriptAgent(&mScriptEngine))
+		mScriptAgent(new ScriptAgent(&mScriptEngine)),
+		mCurrentActionTimeout(0),
+		mProgressDialog(0)
 	{
 		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
 		connect(&mStartExecutionTimer, SIGNAL(timeout()), this, SLOT(startActionExecution()));
-		connect(&mTimeoutTimer, SIGNAL(timeout()), this, SLOT(actionExecutionTimeout()));
+		connect(&mTimeoutTimer, SIGNAL(timeout()), this, SLOT(updateTimeoutProgress()));
 		
 		mStartExecutionTimer.setSingleShot(true);
-		mTimeoutTimer.setSingleShot(true);
+		mTimeoutTimer.setSingleShot(false);
+		mTimeoutTimer.setInterval(10);
 
 		mConsoleWidget->setWindowFlags(Qt::Tool |
 					   Qt::WindowStaysOnTopHint |
@@ -339,6 +342,8 @@ namespace Executer
 			actionInstance->stopLongTermExecution();
 		}
 
+		delete mProgressDialog;
+		mProgressDialog = 0;
 		mExecutionWindow->hide();
 		mConsoleWidget->hide();
 
@@ -492,22 +497,64 @@ namespace Executer
 	{
 		mExecutionPaused = false;
 		
-		int timeout = mScript->actionAt(mCurrentActionIndex)->timeout();
-		if(timeout > 0)
+		mCurrentActionTimeout = mScript->actionAt(mCurrentActionIndex)->timeout();
+		if(mCurrentActionTimeout > 0)
 		{
-			mTimeoutTimer.setInterval(timeout);
 			mTimeoutTimer.start();
+			mTimeoutTime.start();
+			mExecutionWindow->setProgressVisible(true);
+			mExecutionWindow->setProgressMinimum(0);
+			mExecutionWindow->setProgressMaximum(mCurrentActionTimeout);
+			mExecutionWindow->setProgressValue(0);
 		}
+		else
+			mExecutionWindow->setProgressVisible(false);
 		
 		mScript->actionAt(mCurrentActionIndex)->startExecution();
 	}
 	
-	void Executer::actionExecutionTimeout()
+	void Executer::updateTimeoutProgress()
 	{
-		mScript->actionAt(mCurrentActionIndex)->disconnect();
-		mScript->actionAt(mCurrentActionIndex)->stopExecution();
+		if(mTimeoutTime.elapsed() >= mCurrentActionTimeout)		
+		{
+			mTimeoutTimer.stop();
+			mScript->actionAt(mCurrentActionIndex)->disconnect();
+			mScript->actionAt(mCurrentActionIndex)->stopExecution();
+			
+			executionException(ActionTools::ActionException::TimeoutException, QString());
+		}
 		
-		executionException(ActionTools::ActionException::TimeoutException, QString());
+		mExecutionWindow->setProgressValue(mTimeoutTime.elapsed());
+	}
+	
+	void Executer::showProgressDialog(const QString &title, int maximum)
+	{
+		if(!mProgressDialog)
+			mProgressDialog = new QProgressDialog(0, Qt::WindowStaysOnTopHint);
+		
+		connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(stopExecution()));
+		
+		mProgressDialog->setWindowTitle(title);
+		mProgressDialog->setMaximum(maximum);
+		mProgressDialog->setValue(0);
+		
+		mProgressDialog->show();
+	}
+
+	void Executer::updateProgressDialog(const QString &caption)
+	{
+		mProgressDialog->setLabelText(caption);
+	}
+
+	void Executer::updateProgressDialog(int value)
+	{
+		mProgressDialog->setValue(value);
+	}
+
+	void Executer::hideProgressDialog()
+	{
+		delete mProgressDialog;
+		mProgressDialog = 0;
 	}
 
 	Executer::ExecuteActionResult Executer::canExecuteAction(const QString &line) const
@@ -571,6 +618,10 @@ namespace Executer
 		connect(actionInstance, SIGNAL(executionEnded()), this, SLOT(actionExecutionEnded()));
 		connect(actionInstance, SIGNAL(executionException(int,QString)), this, SLOT(executionException(int,QString)));
 		connect(actionInstance, SIGNAL(disableAction(bool)), this, SLOT(disableAction(bool)));
+		connect(actionInstance, SIGNAL(showProgressDialog(QString,int)), this, SLOT(showProgressDialog(QString,int)));
+		connect(actionInstance, SIGNAL(updateProgressDialog(int)), this, SLOT(updateProgressDialog(int)));
+		connect(actionInstance, SIGNAL(updateProgressDialog(QString)), this, SLOT(updateProgressDialog(QString)));
+		connect(actionInstance, SIGNAL(hideProgressDialog()), this, SLOT(hideProgressDialog()));
 
 		mStartExecutionTimer.setInterval(actionInstance->pauseBefore());
 		mStartExecutionTimer.start();

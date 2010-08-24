@@ -22,11 +22,12 @@
 #define ACTIONREADBINARYFILEINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
-#include "actioninstance.h"
+#include "datacopyactioninstance.h"
 
 #include <QFile>
+#include <QBuffer>
 
-class ActionReadBinaryFileInstance : public ActionTools::ActionInstance
+class ActionReadBinaryFileInstance : public ActionTools::DataCopyActionInstance
 {
 	Q_OBJECT
 
@@ -37,32 +38,53 @@ public:
 	};
 
 	ActionReadBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)											{}
+		: ActionTools::DataCopyActionInstance(definition, parent)
+	{
+	}
 
 	void startExecution()
 	{
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString filename;
-		QString variable;
 
 		if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
-		   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
+		   !actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
 			return;
 		
-		QFile file(filename);
-		if(!file.open(QIODevice::ReadOnly))
+		mFile.setFileName(filename);
+
+		if(!DataCopyActionInstance::startCopy(&mFile, &mResult, mFile.size()))
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("file");
 			emit executionException(UnableToReadFileException, tr("Unable to read the file \"%1\"").arg(filename));
 			return;
 		}
 		
-		actionInstanceExecutionHelper.setVariable(variable, file.readAll());
+		emit showProgressDialog("Reading file", 100);
+		emit updateProgressDialog("Reading in progress");
+	}
+
+private slots:
+	void done()
+	{
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+		actionInstanceExecutionHelper.setVariable(mVariable, mResult.buffer());
 		
-		emit executionEnded();
+		DataCopyActionInstance::done();
 	}
 
 private:
+	void clean()
+	{
+		DataCopyActionInstance::clean();
+		
+		mResult.buffer().clear();
+	}
+	
+	QFile mFile;
+	QBuffer mResult;
+	QString mVariable;
+	
 	Q_DISABLE_COPY(ActionReadBinaryFileInstance)
 };
 

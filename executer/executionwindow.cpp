@@ -67,4 +67,26 @@ namespace Executer
 	
 		ui->currentActionLabel->setPalette(newPalette);
 	}
+	
+	void ExecutionWindow::setProgressVisible(bool visible)
+	{
+		ui->timeoutProgressBar->setVisible(visible);
+	
+		adjustSize();
+	}
+
+	void ExecutionWindow::setProgressValue(int value)
+	{
+		ui->timeoutProgressBar->setValue(value);
+	}
+
+	void ExecutionWindow::setProgressMinimum(int minimum)
+	{
+		ui->timeoutProgressBar->setMinimum(minimum);
+	}
+
+	void ExecutionWindow::setProgressMaximum(int maximum)	
+	{
+		ui->timeoutProgressBar->setMaximum(maximum);
+	}
 }
