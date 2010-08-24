@@ -165,9 +165,9 @@ namespace ActionTools
 		#endif
 
 			QStringList missingFeatures;
-			if(!definition->featureCheck(missingFeatures))
+			if(!definition->requirementCheck(missingFeatures))
 			{
-				emit packLoadError(tr("%1: <b>%2</b> cannot be loaded:<br><ul><li>%3</ul>")
+				emit packLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
 								   .arg(shortFilename)
 								   .arg(definition->id())
 								   .arg(missingFeatures.join("<li>")));//TODO

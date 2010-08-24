@@ -63,6 +63,7 @@ FORMS += mainwindow.ui \
 win32:LIBS += -luser32 \
 	-ladvapi32 \
 	-lole32
+unix:LIBS += -lXtst
 LIBS += -L.. \
 	-ltools \
 	-lactiontools \

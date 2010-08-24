@@ -54,6 +54,7 @@ public:
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionMoveCursorInstance(this); }
 	Category category() const												{ return Device; }
 	QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
+	bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 
 private:
 	Q_DISABLE_COPY(ActionMoveCursorDefinition)

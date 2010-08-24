@@ -99,7 +99,7 @@ public:
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionClickInstance(this); }
 	Category category() const												{ return Device; }
 	QPixmap icon() const													{ return QPixmap(":/actions/icons/click.png"); }
-	bool featureCheck(QStringList &missingFeatures) const					{ return featureCheckXTest(missingFeatures); }
+	bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 
 private:
 	Q_DISABLE_COPY(ActionClickDefinition)

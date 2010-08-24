@@ -70,6 +70,7 @@ HEADERS += actiontools_global.h \
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32
+unix:LIBS += -lXtst
 UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated

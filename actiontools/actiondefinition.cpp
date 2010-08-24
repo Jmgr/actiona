@@ -27,6 +27,12 @@
 #include <QScriptValue>
 #include <QSysInfo>
 
+#ifdef Q_WS_X11
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
+#include "xdisplayhelper.h"
+#endif
+
 namespace ActionTools
 {
 	ActionDefinition::~ActionDefinition()
@@ -80,41 +86,23 @@ namespace ActionTools
 		mElements.append(element);
 	}
 
-	bool ActionDefinition::featureCheckXTest(QStringList &missingFeatures) const
+	bool ActionDefinition::requirementCheckXTest(QStringList &missingRequirements) const
 	{
 #ifdef Q_WS_X11
-		//TODO
-
-		return true;
-#else
-		Q_UNUSED(missingFeatures)
-
-		return true;
-#endif
-	}
-
-	bool ActionDefinition::featureCheckNotify(QStringList &missingFeatures) const
-	{
-#ifdef Q_WS_X11
-		//TODO
-
-		return true;
-#else
-		Q_UNUSED(missingFeatures)
-
-		return true;
-#endif
-	}
-
-	bool ActionDefinition::featureCheck64BitOS(QStringList &missingFeatures) const
-	{
-		if(QSysInfo::WordSize < 64)
+		int unused;
+		XDisplayHelper xDisplayHelper;
+		
+		if(!XTestQueryExtension(xDisplayHelper.display(), &unused, &unused, &unused, &unused))
 		{
-			missingFeatures.append(QObject::tr("This action needs an operating system running on 64 bits"));
-
+			missingRequirements << QObject::tr("missing XTest extension");
 			return false;
 		}
+		
+		return true;
+#else
+		Q_UNUSED(missingRequirements)
 
 		return true;
+#endif
 	}
 }

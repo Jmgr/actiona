@@ -67,6 +67,7 @@ public:
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionKeyInstance(this); }
 	Category category() const												{ return Device; }
 	QPixmap icon() const													{ return QPixmap(":/actions/icons/key.png"); }
+	bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 
 private:
 	Q_DISABLE_COPY(ActionKeyDefinition)

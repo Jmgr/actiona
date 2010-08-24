@@ -58,6 +58,7 @@ public:
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionWheelInstance(this); }
 	Category category() const												{ return Device; }
 	QPixmap icon() const													{ return QPixmap(":/actions/icons/wheel.png"); }
+	bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 
 private:
 	Q_DISABLE_COPY(ActionWheelDefinition)

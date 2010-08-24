@@ -56,6 +56,7 @@ public:
 	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionTextInstance(this); }
 	Category category() const												{ return Device; }
 	QPixmap icon() const													{ return QPixmap(":/actions/icons/text.png"); }
+	bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 
 private:
 	Q_DISABLE_COPY(ActionTextDefinition)
