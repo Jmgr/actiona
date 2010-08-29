@@ -30,7 +30,7 @@
 #include <QPoint>
 #include <QKeySequence>
 #include <QTimer>
-#include <QTime>
+#include <QDateTime>
 #include <QProgressDialog>
 
 namespace ActionTools
@@ -51,18 +51,19 @@ namespace Executer
 		Q_OBJECT
 
 	public:
-		Executer(ActionTools::Script *script,
-				 ActionTools::ActionFactory *actionFactory,
-				 bool showExecutionWindow,
-				 int executionWindowPosition,
-				 int executionWindowScreen,
-				 bool showConsoleWindow,
-				 int consoleWindowPosition,
-				 int consoleWindowScreen,
-				 const QKeySequence &stopExecutionHotkey,
-				 QStandardItemModel *consoleModel,
-				 QObject *parent = 0);
+		Executer();
 		~Executer();
+		
+		void setup(ActionTools::Script *script,
+				   ActionTools::ActionFactory *actionFactory,
+				   bool showExecutionWindow,
+				   int executionWindowPosition,
+				   int executionWindowScreen,
+				   bool showConsoleWindow,
+				   int consoleWindowPosition,
+				   int consoleWindowScreen,
+				   const QKeySequence &stopExecutionHotkey,
+				   QStandardItemModel *consoleModel);
 
 		ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
 		ActionTools::ConsoleWidget *consoleWidget() const	{ return mConsoleWidget; }
@@ -70,10 +71,13 @@ namespace Executer
 
 		int currentActionIndex() const						{ return mCurrentActionIndex; }
 		ActionTools::Script *script() const					{ return mScript; }
+		
+		static bool isExecuterRunning()						{ return (mExecutionStatus != Stopped); }
 
 	public slots:
 		bool startExecution(bool onlySelection);
 		void stopExecution();
+		void pauseExecution();
 
 	signals:
 		void executionStopped();
@@ -88,7 +92,7 @@ namespace Executer
 		void disableAction(bool disable);
 		void startNextAction();
 		void startActionExecution();
-		void updateTimeoutProgress();
+		void updateTimerProgress();
 		void showProgressDialog(const QString &title, int maximum);
 		void updateProgressDialog(const QString &caption);
 		void updateProgressDialog(int value);
@@ -103,7 +107,15 @@ namespace Executer
 			DisabledAction,
 			UnselectedAction
 		};
+		enum ExecutionStatus
+		{
+			Stopped,
+			PrePause,
+			Executing,
+			PostPause
+		};
 
+		ActionTools::ActionInstance *currentActionInstance() const;
 		ExecuteActionResult canExecuteAction(const QString &line) const;
 		ExecuteActionResult canExecuteAction(int index) const;
 		void executeCurrentAction();
@@ -122,17 +134,18 @@ namespace Executer
 		ActionTools::ConsoleWidget *mConsoleWidget;
 		int mCurrentActionIndex;
 		bool mExecutionStarted;
-		bool mExecutionPaused;
+		bool mExecutionEnded;
 		QScriptEngine mScriptEngine;
 		bool mExecuteOnlySelection;
 		ScriptAgent *mScriptAgent;
 		QList<bool> mActionEnabled;
-		QTimer mStartExecutionTimer;
-		QTimer mTimeoutTimer;
-		QTime mTimeoutTime;
-		int mCurrentActionTimeout;
+		QTimer mExecutionTimer;
+		qint64 mExecutionTime;
 		QProgressDialog *mProgressDialog;
 		int mActiveActionsCount;
+		bool mExecutionPaused;
+		bool mHasExecuted;
+		static ExecutionStatus mExecutionStatus;
 
 		Q_DISABLE_COPY(Executer)
 	};

@@ -74,6 +74,8 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->consoleWindowPosition->setPosition(screen, position);
 	ui->stopExecutionHotkey->setKeySequence(
 		QKeySequence(settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString()));
+	ui->pauseExecutionHotkey->setKeySequence(
+		QKeySequence(settings.value("actions/pauseExecutionHotkey", QKeySequence("Ctrl+Alt+W")).toString()));
 	ui->switchTextCode->setKeySequence(
 		QKeySequence(settings.value("actions/switchTextCode", QKeySequence("Ctrl+Shift+C")).toString()));
 	ui->openEditorKey->setKeySequence(
@@ -179,6 +181,7 @@ void SettingsDialog::accept()
 	settings.setValue("actions/consoleWindowPosition", ui->consoleWindowPosition->position());
 	settings.setValue("actions/consoleWindowScreen", ui->consoleWindowPosition->screen());
 	settings.setValue("actions/stopExecutionHotkey", QVariant::fromValue(ui->stopExecutionHotkey->keySequence()));
+	settings.setValue("actions/pauseExecutionHotkey", QVariant::fromValue(ui->pauseExecutionHotkey->keySequence()));
 	settings.setValue("actions/switchTextCode", QVariant::fromValue(ui->switchTextCode->keySequence()));
 	settings.setValue("actions/openEditorKey", QVariant::fromValue(ui->openEditorKey->keySequence()));
 	settings.setValue("actions/checkCodeSyntaxAutomatically", QVariant(ui->checkCodeSyntaxAutomatically->isChecked()));

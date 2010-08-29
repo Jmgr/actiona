@@ -25,13 +25,17 @@ namespace Executer
 {
 	ExecutionWindow::ExecutionWindow(QWidget *parent)
 		: QWidget(parent),
-		ui(new Ui::ExecutionWindow)
+		ui(new Ui::ExecutionWindow),
+		mPaused(false)
 	{
 		ui->setupUi(this);
+		
+		setProgressEnabled(false);
 	
 		setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 	
 		connect(ui->cancelPushButton, SIGNAL(clicked()), this, SIGNAL(canceled()));
+		connect(ui->pausePushButton, SIGNAL(clicked()), this, SIGNAL(paused()));
 	}
 	
 	ExecutionWindow::~ExecutionWindow()
@@ -68,10 +72,15 @@ namespace Executer
 		ui->currentActionLabel->setPalette(newPalette);
 	}
 	
-	void ExecutionWindow::setProgressVisible(bool visible)
+	void ExecutionWindow::setProgressEnabled(bool enabled)
 	{
-		ui->timeoutProgressBar->setVisible(visible);
-	
+		ui->timeoutProgressBar->setVisible(enabled);
+		if(!enabled)
+		{
+			ui->timeoutProgressBar->setMaximum(100);
+			ui->timeoutProgressBar->setValue(100);
+		}
+		
 		adjustSize();
 	}
 
@@ -88,5 +97,20 @@ namespace Executer
 	void ExecutionWindow::setProgressMaximum(int maximum)	
 	{
 		ui->timeoutProgressBar->setMaximum(maximum);
+	}
+	
+	void ExecutionWindow::setPauseStatus(bool paused)
+	{
+		mPaused = paused;
+		
+		if(mPaused)
+			ui->pausePushButton->setIcon(QIcon(":/images/play.png"));
+		else
+			ui->pausePushButton->setIcon(QIcon(":/images/pause.png"));
+	}
+	
+	void Executer::ExecutionWindow::on_pausePushButton_clicked()
+	{
+		setPauseStatus(!mPaused);
 	}
 }

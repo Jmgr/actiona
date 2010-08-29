@@ -22,6 +22,7 @@
 #define MAINWINDOW_H
 
 #include "script.h"
+#include "executer.h"
 
 #include <QMainWindow>
 #include <QModelIndex>
@@ -44,11 +45,6 @@ namespace ActionTools
 namespace Tools
 {
 	class Updater;
-}
-
-namespace Executer
-{
-	class Executer;
 }
 
 class QToolBox;
@@ -138,6 +134,7 @@ private slots:
 	void packLoadError(const QString &error);
 	void stopExecution();
 	void startOrStopExecution();
+	void pauseOrResumeExecution();
 	void scriptExecutionStopped();
 	void postExecution();
 	void logItemDoubleClicked(int itemRow);
@@ -213,7 +210,7 @@ private:
 	ProgressSplashScreen *mSplashScreen;
 	QFile *mFile;
 	QStringList mPackLoadErrors;
-	Executer::Executer *mExecuter;
+	Executer::Executer mExecuter;
 	bool mWasNewActionDockShown;
 	bool mWasConsoleDockShown;
 	QUndoGroup *mUndoGroup;

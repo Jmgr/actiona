@@ -21,7 +21,10 @@
 #ifndef SCRIPTAGENT_H
 #define SCRIPTAGENT_H
 
+#include "crossplatform.h"
+
 #include <QScriptEngineAgent>
+#include <QApplication>
 
 namespace Executer
 {
@@ -41,10 +44,12 @@ namespace Executer
 			mCurrentParameter(-1),
 			mCurrentLine(-1),
 			mCurrentColumn(-1),
-			mContext(Unknown)												{}
+			mContext(Unknown),
+			mPaused(false)													{}
 	
 		void setContext(Context context)									{ mContext = context; }
 		void setCurrentParameter(int currentParameter)						{ mCurrentParameter = currentParameter; }
+		void pause(bool pause)												{ mPaused = pause; }
 	
 		int currentLine() const												{ return mCurrentLine; }
 		int currentColumn() const											{ return mCurrentColumn; }
@@ -57,6 +62,13 @@ namespace Executer
 			Q_UNUSED(scriptId);
 			mCurrentLine = lineNumber;
 			mCurrentColumn = columnNumber;
+			
+			while(mPaused)
+			{
+				QApplication::processEvents();
+				
+				ActionTools::CrossPlatform::sleep(10);
+			}
 		}
 	
 	private:
@@ -64,6 +76,7 @@ namespace Executer
 		int mCurrentLine;
 		int mCurrentColumn;
 		Context mContext;
+		bool mPaused;
 	};
 }
 

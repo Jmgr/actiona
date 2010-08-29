@@ -269,10 +269,6 @@ namespace ActionTools
 			foreach(ActionException::Exception exception, exceptionActionsHash.keys())
 			{
 				ActionException::ExceptionActionInstance exceptionActionInstance = exceptionActionsHash.value(exception);
-
-				if(exceptionActionInstance.action() == ActionException::StopExecutionExceptionAction)
-					continue;
-
 				stream.writeStartElement("exception");
 				stream.writeAttribute("id", QString::number(static_cast<int>(exception)));
 				stream.writeAttribute("action", QString::number(static_cast<int>(exceptionActionInstance.action())));
@@ -460,9 +456,7 @@ namespace ActionTools
 							ActionException::Exception exceptionId = static_cast<ActionException::Exception>(attributes.value("id").toString().toInt());
 							ActionException::ExceptionActionInstance exceptionActionInstance(static_cast<ActionException::ExceptionAction>(attributes.value("action").toString().toInt()),
 																							 attributes.value("line").toString());
-
-							if(exceptionActionInstance.action() != ActionException::StopExecutionExceptionAction)
-								exceptionActionsHash.insert(exceptionId, exceptionActionInstance);
+							exceptionActionsHash.insert(exceptionId, exceptionActionInstance);
 						}
 						else if(stream.name() == "parameter")
 						{

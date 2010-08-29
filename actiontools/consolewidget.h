@@ -70,9 +70,10 @@ namespace ActionTools
 			ExceptionRole
 		};
 
-		ConsoleWidget(QStandardItemModel *model, QWidget *parent = 0);
 		explicit ConsoleWidget(QWidget *parent = 0);
 		~ConsoleWidget();
+		
+		void setup(QStandardItemModel *model = 0);
 
 		void addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type);
 		void addActionLine(const QString &message, int action, const QString &field, const QString &subField, int line, int column, Type type);
@@ -95,7 +96,6 @@ namespace ActionTools
 		void on_console_doubleClicked(const QModelIndex &index);
 
 	private:
-		void init();
 		void addLine(const QString &message, QStandardItem *item, Source source, Type type = Information);
 		void addSeparator(QStandardItem *item);
 

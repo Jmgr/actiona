@@ -35,6 +35,7 @@
 #include <QScriptContext>
 #include <QScriptEngine>
 #include <QMetaEnum>
+#include <QScriptable>
 
 class QScriptEngine;
 
@@ -66,8 +67,23 @@ namespace ActionTools
 			pauseAfter(other.pauseAfter),
 			timeout(other.timeout),
 			script(other.script),
-			scriptEngine(other.scriptEngine)																											{}
+			scriptEngine(other.scriptEngine)																										{}
 
+		bool operator==(const ActionInstanceData &other) const
+		{
+			return (parametersData == other.parametersData &&
+					definition == other.definition &&
+					comment == other.comment &&
+					label == other.label &&
+					color == other.color &&
+					enabled == other.enabled &&
+					selected == other.selected &&
+					exceptionActionInstances == other.exceptionActionInstances &&
+					pauseBefore == other.pauseBefore &&
+					pauseAfter == other.pauseAfter &&
+					timeout == other.timeout);
+		}
+		
 		ParametersData parametersData;
 		const ActionDefinition *definition;
 		QString comment;
@@ -83,14 +99,17 @@ namespace ActionTools
 		QScriptEngine *scriptEngine;
 	};
 
-	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
+	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject, protected QScriptable
 	{
 		Q_OBJECT
 
 	public:
 		ActionInstance(const ActionDefinition *definition = 0, QObject *parent = 0);
-		ActionInstance(const ActionInstance &other) : QObject(), d(other.d)	{}
+		ActionInstance(const ActionInstance &other) : QObject(), QScriptable(), d(other.d)	{}
 		virtual ~ActionInstance()											{}
+		
+		bool operator==(const ActionInstance &other) const					{ return ((*d) == (*other.d)); }
+		bool operator!=(const ActionInstance &other) const					{ return !((*d) == (*other.d)); }
 
 		const ActionDefinition *definition() const							{ return d->definition; }
 
@@ -136,6 +155,8 @@ namespace ActionTools
 		virtual void startExecution()										{}//This is called when the action should start its execution
 		virtual void stopExecution()										{}//This is called when the action should break its execution
 		virtual void stopLongTermExecution()								{}//This is called on script execution end, the action should stop its long term actions (ie continuous press of a key)
+		virtual void pauseExecution()										{}//This is called when the action should pause its execution
+		virtual void resumeExecution()										{}//This is called when the action should resume its execution
 
 		void setupExecution(QScriptEngine *scriptEngine, Script *script)	{ d->scriptEngine = scriptEngine; d->script = script; }
 

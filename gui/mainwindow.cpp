@@ -81,7 +81,6 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mScriptModel(new ScriptModel(mScript, mActionFactory, this)),
 	mSystemTrayIcon(commandOptions->count("notrayicon") ? 0 : new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
 	mSplashScreen(splashScreen),
-	mExecuter(0),
 	mWasNewActionDockShown(false),
 	mWasConsoleDockShown(false),
 	mUndoGroup(new QUndoGroup(this)),
@@ -106,6 +105,8 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 #endif
 
 	ui->setupUi(this);
+	
+	ui->consoleWidget->setup();
 
 #ifdef Q_WS_WIN
 	CoInitialize(0);
@@ -113,8 +114,6 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	HRESULT result = CoCreateInstance(CLSID_TaskbarList, 0, CLSCTX_INPROC_SERVER, IID_ITaskbarList3, reinterpret_cast<LPVOID*>(&mTaskbarList));
 	if(SUCCEEDED(result))
 		mTaskbarList->HrInit();
-	else
-		mTaskbarList = 0;
 #endif
 
 	setTaskbarStatus(Normal);
@@ -197,6 +196,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	connect(mActionFactory, SIGNAL(packLoadError(QString)), this, SLOT(packLoadError(QString)));
 	connect(ui->consoleWidget, SIGNAL(itemDoubleClicked(int)), this, SLOT(logItemDoubleClicked(int)));
 	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
+	connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
 #ifndef ACT_NO_UPDATER
 	connect(mUpdater, SIGNAL(error(QString)), this, SLOT(updateError(QString)));
 	connect(mUpdater, SIGNAL(noResult()), this, SLOT(updateNoResult()));
@@ -216,8 +216,6 @@ MainWindow::~MainWindow()
 
 	CoUninitialize();
 #endif
-
-	delete mExecuter;
 
 	delete ui;
 }
@@ -439,6 +437,9 @@ void MainWindow::postInit()
 	const QString &startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
 	if(!startStopExecutionHotkey.isEmpty())
 		GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
+	const QString &pauseExecutionHotkey = settings.value("actions/pauseExecutionHotkey", QKeySequence("Ctrl+Alt+W")).toString();
+	if(!pauseExecutionHotkey.isEmpty())
+		GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
 
 	if(mCommandOptions->count("execute"))
 		execute(false);
@@ -790,13 +791,16 @@ void MainWindow::on_actionSettings_triggered()
 
 			updateRecentFileActions();
 		}
+		
+		GlobalShortcutManager::clear();
 
 		QString startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
 		if(!startStopExecutionHotkey.isEmpty())
-		{
-			GlobalShortcutManager::clear();
 			GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
-		}
+
+		QString pauseExecutionHotkey = settings.value("actions/pauseExecutionHotkey", QKeySequence("Ctrl+Alt+W")).toString();
+		if(!pauseExecutionHotkey.isEmpty())
+			GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
 	}
 
 	delete settingsDialog;
@@ -1297,8 +1301,6 @@ void MainWindow::execute(bool onlySelection)
 	int consoleWindowPosition = settings.value("actions/consoleWindowPosition", QVariant(1)).toInt();
 	int consoleWindowScreen = settings.value("actions/consoleWindowScreen", QVariant(0)).toInt();
 
-	delete mExecuter;
-
 	if(mCommandOptions->count("noexecutionwindow"))
 		showExecutionWindow = false;
 	if(mCommandOptions->count("noconsolewindow"))
@@ -1306,24 +1308,21 @@ void MainWindow::execute(bool onlySelection)
 
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("Creating executer");
+		Tools::HighResolutionTimer timer("Executer setup");
 #endif
-		mExecuter = new Executer::Executer(mScript,
-										  mActionFactory,
-										  showExecutionWindow,
-										  executionWindowPosition,
-										  executionWindowScreen,
-										  showConsoleWindow,
-										  consoleWindowPosition,
-										  consoleWindowScreen,
-										  stopExecutionHotkey,
-										  ui->consoleWidget->model(),
-										  this);
+		mExecuter.setup(mScript,
+						 mActionFactory,
+						 showExecutionWindow,
+						 executionWindowPosition,
+						 executionWindowScreen,
+						 showConsoleWindow,
+						 consoleWindowPosition,
+						 consoleWindowScreen,
+						 stopExecutionHotkey,
+						 ui->consoleWidget->model());
 	}
 
-	connect(mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
-
-	if(mExecuter->startExecution(onlySelection))
+	if(mExecuter.startExecution(onlySelection))
 	{
 		mPreviousWindowPosition = pos();
 		hide();
@@ -1342,9 +1341,6 @@ void MainWindow::execute(bool onlySelection)
 	else
 	{
 		ui->consoleWidget->updateClearButton();
-
-		mExecuter->deleteLater();
-		mExecuter = 0;
 
 		if(settings.value("general/addConsoleStartEndSeparators", QVariant(true)).toBool())
 			ui->consoleWidget->addEndSeparator();
@@ -1465,8 +1461,7 @@ void MainWindow::packLoadError(const QString &error)
 
 void MainWindow::stopExecution()
 {
-	if(mExecuter)
-		mExecuter->stopExecution();
+	mExecuter.stopExecution();
 }
 
 void MainWindow::startOrStopExecution()
@@ -1477,11 +1472,13 @@ void MainWindow::startOrStopExecution()
 		execute(false);
 }
 
+void MainWindow::pauseOrResumeExecution()
+{
+	mExecuter.pauseExecution();
+}
+
 void MainWindow::scriptExecutionStopped()
 {
-	mExecuter->deleteLater();
-	mExecuter = 0;
-
 	QSettings settings;
 
 	if(settings.value("general/addConsoleStartEndSeparators", QVariant(true)).toBool())
@@ -1750,8 +1747,7 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, const Q
 	if(!actionInstance)
 		return false;
 
-	ActionTools::ParametersData previousData = actionInstance->parametersData();
-
+	ActionTools::ActionInstance oldAction = *actionInstance;
 	ActionDialog *dialog = mActionDialogs.at(actionInstance->definition()->index());
 	if(!dialog)
 	{
@@ -1762,7 +1758,7 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, const Q
 	int result = dialog->exec(actionInstance, field, subField, line, column);
 	if(result == QDialog::Accepted)
 	{
-		if(previousData != actionInstance->parametersData())
+		if(oldAction != *actionInstance)
 			scriptEdited();
 	}
 
@@ -1774,8 +1770,7 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exc
 	if(!actionInstance)
 		return false;
 
-	ActionTools::ParametersData previousData = actionInstance->parametersData();
-
+	ActionTools::ActionInstance oldAction = *actionInstance;
 	ActionDialog *dialog = mActionDialogs.at(actionInstance->definition()->index());
 	if(!dialog)
 	{
@@ -1786,11 +1781,9 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exc
 	int result = dialog->exec(actionInstance, exception);
 	if(result == QDialog::Accepted)
 	{
-		if(previousData != actionInstance->parametersData())
+		if(oldAction != *actionInstance)
 			scriptEdited();
 	}
-
-	delete dialog;
 
 	return (result == QDialog::Accepted);
 }

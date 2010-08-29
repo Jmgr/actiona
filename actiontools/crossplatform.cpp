@@ -275,6 +275,16 @@ namespace ActionTools
 		return back;
 #endif
 	}
+	
+	void CrossPlatform::sleep(int milliseconds)
+	{
+#ifdef Q_WS_X11
+		usleep(milliseconds * 1000);
+#endif
+#ifdef Q_WS_WIN
+		Sleep(milliseconds);
+#endif
+	}
 
 	void CrossPlatform::setupLastError()
 	{

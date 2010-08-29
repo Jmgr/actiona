@@ -42,16 +42,22 @@ namespace Executer
 		void setStopExecutionShortcut(const QKeySequence &keySequence);
 		void setCurrentActionName(const QString &actionName);
 		void setCurrentActionColor(const QColor &actionColor);
-		void setProgressVisible(bool visible);
+		void setProgressEnabled(bool enabled);
 		void setProgressValue(int value);
 		void setProgressMinimum(int minimum);
 		void setProgressMaximum(int maximum);
+		void setPauseStatus(bool paused);
 	
 	signals:
 		void canceled();
+		void paused();
+		
+	private slots:
+		void on_pausePushButton_clicked();
 	
 	private:
 		Ui::ExecutionWindow *ui;
+		bool mPaused;
 	};
 }
 

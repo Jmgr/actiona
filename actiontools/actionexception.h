@@ -61,6 +61,11 @@ namespace ActionTools
 
 			ExceptionAction action() const				{ return mAction; }
 			QString line() const						{ return mLine; }
+			
+			bool operator ==(const ExceptionActionInstance &other) const
+			{
+				return (mAction == other.mAction && mLine == other.mLine);
+			}
 
 		private:
 			ExceptionAction mAction;

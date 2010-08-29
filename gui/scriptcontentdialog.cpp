@@ -82,10 +82,6 @@ void ScriptContentDialog::accept()
 			for(int i=1; i < mScript->column(); ++i)
 				ui->scriptContent->moveCursor(QTextCursor::Right);
 		}
-		else
-		{
-			
-		}
 	
 		return;
 	}

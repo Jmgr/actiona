@@ -25,25 +25,33 @@
 
 namespace ActionTools
 {
-	ConsoleWidget::ConsoleWidget(QStandardItemModel *model, QWidget *parent)
-		: QWidget(parent),
-		ui(new Ui::ConsoleWidget),
-		mModel(model)
-	{
-		init();
-	}
-
 	ConsoleWidget::ConsoleWidget(QWidget *parent)
 		: QWidget(parent),
 		ui(new Ui::ConsoleWidget),
-		mModel(new QStandardItemModel(0, 1, this))
+		mModel(0)
 	{
-		init();
+		ui->setupUi(this);
+		
+		ui->console->verticalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+		ui->console->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+		
+		ui->clearPushButton->setEnabled(false);
 	}
 
 	ConsoleWidget::~ConsoleWidget()
 	{
 		delete ui;
+	}
+	
+	void ConsoleWidget::setup(QStandardItemModel *model)
+	{
+		mModel = (model ? model : new QStandardItemModel(0, 1, this));
+		
+		QItemSelectionModel *oldModel = ui->console->selectionModel();
+		ui->console->setModel(mModel);
+		delete oldModel;
+		
+		connect(mModel, SIGNAL(rowsInserted(QModelIndex,int,int)), ui->console, SLOT(scrollToBottom()));
 	}
 
 	void ConsoleWidget::addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type)
@@ -163,23 +171,7 @@ namespace ActionTools
 	{
 		emit itemDoubleClicked(index.row());
 	}
-
-	void ConsoleWidget::init()
-	{
-		ui->setupUi(this);
-
-		QItemSelectionModel *oldModel = ui->console->selectionModel();
-		ui->console->setModel(mModel);
-		delete oldModel;
-
-		ui->console->verticalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-		ui->console->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-
-		ui->clearPushButton->setEnabled(false);
-
-		connect(ui->console->model(), SIGNAL(rowsInserted(QModelIndex,int,int)), ui->console, SLOT(scrollToBottom()));
-	}
-
+	
 	void ConsoleWidget::addLine(const QString &message, QStandardItem *item, Source source, Type type)
 	{
 		QIcon icon;

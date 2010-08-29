@@ -35,51 +35,23 @@
 
 namespace Executer
 {
-	Executer::Executer(ActionTools::Script *script,
-					   ActionTools::ActionFactory *actionFactory,
-					   bool showExecutionWindow,
-					   int executionWindowPosition,
-					   int executionWindowScreen,
-					   bool showConsoleWindow,
-					   int consoleWindowPosition,
-					   int consoleWindowScreen,
-					   const QKeySequence &stopExecutionHotkey,
-					   QStandardItemModel *consoleModel,
-					   QObject *parent)
-		: QObject(parent),
-		mScript(script),
-		mActionFactory(actionFactory),
-		mShowExecutionWindow(showExecutionWindow),
-		mExecutionWindowPosition(executionWindowPosition),
-		mExecutionWindowScreen(executionWindowScreen),
-		mShowConsoleWindow(showConsoleWindow),
-		mConsoleWindowPosition(consoleWindowPosition),
-		mConsoleWindowScreen(consoleWindowScreen),
-		mStopExecutionShortcut(stopExecutionHotkey),
+	Executer::ExecutionStatus Executer::mExecutionStatus = Executer::Stopped;//I feel confused about this line...
+	
+	Executer::Executer()
+		: QObject(0),
 		mExecutionWindow(new ExecutionWindow()),
-		mConsoleWidget(new ActionTools::ConsoleWidget(consoleModel)),
-		mCurrentActionIndex(0),
-		mExecutionStarted(false),
-		mExecutionPaused(false),
-		mExecuteOnlySelection(false),
+		mConsoleWidget(new ActionTools::ConsoleWidget()),
 		mScriptAgent(new ScriptAgent(&mScriptEngine)),
-		mCurrentActionTimeout(0),
-		mProgressDialog(0),
-		mActiveActionsCount(0)
+		mHasExecuted(false)
 	{
 		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
-		connect(&mStartExecutionTimer, SIGNAL(timeout()), this, SLOT(startActionExecution()));
-		connect(&mTimeoutTimer, SIGNAL(timeout()), this, SLOT(updateTimeoutProgress()));
-
-		mStartExecutionTimer.setSingleShot(true);
-		mTimeoutTimer.setSingleShot(false);
-		mTimeoutTimer.setInterval(10);
+		connect(mExecutionWindow, SIGNAL(paused()), this, SLOT(pauseExecution()));
+		connect(&mExecutionTimer, SIGNAL(timeout()), this, SLOT(updateTimerProgress()));
 
 		mConsoleWidget->setWindowFlags(Qt::Tool |
 					   Qt::WindowStaysOnTopHint |
 					   Qt::CustomizeWindowHint |
 					   Qt::WindowTitleHint);
-		mConsoleWidget->updateClearButton();
 	}
 
 	Executer::~Executer()
@@ -87,14 +59,56 @@ namespace Executer
 		delete mExecutionWindow;
 		delete mConsoleWidget;
 	}
+	
+	void Executer::setup(ActionTools::Script *script,
+			   ActionTools::ActionFactory *actionFactory,
+			   bool showExecutionWindow,
+			   int executionWindowPosition,
+			   int executionWindowScreen,
+			   bool showConsoleWindow,
+			   int consoleWindowPosition,
+			   int consoleWindowScreen,
+			   const QKeySequence &stopExecutionHotkey,
+			   QStandardItemModel *consoleModel)
+	{
+		mScript = script;
+		mActionFactory = actionFactory;
+		mShowExecutionWindow = showExecutionWindow;
+		mExecutionWindowPosition = executionWindowPosition;
+		mExecutionWindowScreen = executionWindowScreen;
+		mShowConsoleWindow = showConsoleWindow;
+		mConsoleWindowPosition = consoleWindowPosition;
+		mConsoleWindowScreen = consoleWindowScreen;
+		mStopExecutionShortcut = stopExecutionHotkey;
+		mCurrentActionIndex = 0;
+		mExecutionStarted = false;
+		mExecutionEnded = false;
+		mExecuteOnlySelection = false;
+		mProgressDialog = 0;
+		mActiveActionsCount = 0;
+		mExecutionPaused = false;
+		
+		mConsoleWidget->setup(consoleModel);
+		
+		mExecutionTimer.setSingleShot(false);
+		mExecutionTimer.setInterval(5);
+		mConsoleWidget->updateClearButton();
+	}
 
 	void printCall(QScriptContext *context, ActionTools::ConsoleWidget:: Type type)
 	{
+		QApplication::processEvents();//Call this to prevent UI freeze when calling print often
+		if(!Executer::isExecuterRunning())
+		{
+			context->engine()->abortEvaluation();
+			return;//We need to do this to prevent that the context become invalid when stopping the script
+		}
+		
 		QScriptValue calleeData = context->callee().data();
 		Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
 		QString message;
 		ScriptAgent *agent = executer->scriptAgent();
-
+		
 		for(int argumentIndex = 0; argumentIndex < context->argumentCount(); ++argumentIndex)
 			message += context->argument(argumentIndex).toString();
 
@@ -167,6 +181,11 @@ namespace Executer
 	#ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Executer::startExecution");
 	#endif
+		if(mHasExecuted)//HACK: We cannot do that in stopExecution because is asserts for some reason when aborting script
+			mScriptEngine.popContext();
+		
+		mScriptEngine.pushContext();
+
 		mScriptAgent->setContext(ScriptAgent::Unknown);
 
 		mExecuteOnlySelection = onlySelection;
@@ -174,7 +193,8 @@ namespace Executer
 		mActiveActionsCount = 0;
 
 		mScriptEngine.setAgent(mScriptAgent);
-
+		mScriptEngine.setProcessEventsInterval(50);
+		
 		QScriptValue script = mScriptEngine.newObject();
 		mScriptEngine.globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
 		script.setProperty("nextLine", mScriptEngine.newVariant(QVariant(1)));
@@ -321,6 +341,8 @@ namespace Executer
 		mExecutionStarted = true;
 
 		mScriptAgent->setContext(ScriptAgent::Actions);
+		
+		mHasExecuted = true;
 
 		executeCurrentAction();
 
@@ -331,14 +353,20 @@ namespace Executer
 	{
 		if(!mExecutionStarted)
 			return;
+		
+		mScriptAgent->pause(false);
+		
+		mExecutionStarted = false;
+		mExecutionStatus = Stopped;
+		mScriptEngine.abortEvaluation();
 
-		mTimeoutTimer.stop();
+		mExecutionTimer.stop();
 
 		if(mCurrentActionIndex >= 0 && mCurrentActionIndex < mScript->actionCount())
 		{
-			mScript->actionAt(mCurrentActionIndex)->disconnect();
-			if(!mExecutionPaused)
-				mScript->actionAt(mCurrentActionIndex)->stopExecution();
+			currentActionInstance()->disconnect();
+			if(!mExecutionEnded)
+				currentActionInstance()->stopExecution();
 		}
 
 		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
@@ -353,20 +381,28 @@ namespace Executer
 		mConsoleWidget->hide();
 
 		emit executionStopped();
-
-		mExecutionStarted = false;
-
-		mScriptEngine.abortEvaluation();
+	}
+	
+	void Executer::pauseExecution()
+	{
+		if(mExecutionStatus == Stopped)
+			return;
+		
+		mExecutionPaused = !mExecutionPaused;
+		
+		mScriptAgent->pause(mExecutionPaused);
+		
+		mExecutionWindow->setPauseStatus(mExecutionPaused);
 	}
 
 	void Executer::executionException(int exception,
 									  const QString &message)
 	{
-		ActionTools::ActionInstance *currentActionInstance = mScript->actionAt(mCurrentActionIndex);
+		ActionTools::ActionInstance *actionInstance = currentActionInstance();
 		bool standardException = (exception >= 0 && exception < ActionTools::ActionException::ExceptionCount);
 		bool customException = false;
 
-		foreach(ActionTools::ActionException *actionException, currentActionInstance->definition()->exceptions())
+		foreach(ActionTools::ActionException *actionException, actionInstance->definition()->exceptions())
 		{
 			if(actionException->id() == exception)
 			{
@@ -378,13 +414,13 @@ namespace Executer
 		if(!standardException && !customException)
 		{
 			mConsoleWidget->addDesignErrorLine(tr("Action design error: Invalid exception emitted (%1, line %2)")
-											   .arg(currentActionInstance->definition()->name())
+											   .arg(actionInstance->definition()->name())
 											   .arg(mCurrentActionIndex+1), ActionTools::ConsoleWidget::Error);
 			stopExecution();
 			return;
 		}
 
-		ActionTools::ActionException::ExceptionActionInstance exceptionActionInstance = currentActionInstance->exceptionActionInstance(static_cast<ActionTools::ActionException::Exception>(exception));
+		ActionTools::ActionException::ExceptionActionInstance exceptionActionInstance = actionInstance->exceptionActionInstance(static_cast<ActionTools::ActionException::Exception>(exception));
 		ActionTools::ConsoleWidget::Type exceptionType;
 		bool shouldStopExecution;
 		switch(exceptionActionInstance.action())
@@ -436,13 +472,26 @@ namespace Executer
 
 	void Executer::actionExecutionEnded()
 	{
-		mTimeoutTimer.stop();
-		mScript->actionAt(mCurrentActionIndex)->disconnect();
+		mExecutionTimer.stop();
+		currentActionInstance()->disconnect();
 
 		emit actionEnded(mCurrentActionIndex, mActiveActionsCount);
+		
+		mExecutionStatus = PostPause;
 
-		QTimer::singleShot(mScript->actionAt(mCurrentActionIndex)->pauseAfter(), this, SLOT(startNextAction()));
-		mExecutionPaused = true;
+		mExecutionTimer.start();
+		mExecutionTime = 0;
+		if(currentActionInstance()->pauseAfter() > 0)
+		{
+			mExecutionWindow->setProgressEnabled(true);
+			mExecutionWindow->setProgressMinimum(0);
+			mExecutionWindow->setProgressMaximum(currentActionInstance()->pauseAfter());
+			mExecutionWindow->setProgressValue(0);
+		}
+		else
+			mExecutionWindow->setProgressEnabled(false);
+		
+		mExecutionEnded = true;
 	}
 
 	void Executer::disableAction(bool disable)
@@ -452,7 +501,7 @@ namespace Executer
 
 	void Executer::startNextAction()
 	{
-		mExecutionPaused = false;
+		mExecutionEnded = false;
 
 		QScriptValue script = mScriptEngine.globalObject().property("Script");
 		QString nextLineString = script.property("nextLine").toString();
@@ -502,38 +551,69 @@ namespace Executer
 
 	void Executer::startActionExecution()
 	{
-		mExecutionPaused = false;
+		mExecutionStatus = Executing;
+		
+		mExecutionEnded = false;
 
-		mCurrentActionTimeout = mScript->actionAt(mCurrentActionIndex)->timeout();
-		if(mCurrentActionTimeout > 0)
+		int actionTimeout = currentActionInstance()->timeout();
+		if(actionTimeout > 0)
 		{
-			mTimeoutTimer.start();
-			mTimeoutTime.start();
-			mExecutionWindow->setProgressVisible(true);
+			mExecutionTimer.start();
+			mExecutionTime = 0;
+			mExecutionWindow->setProgressEnabled(true);
 			mExecutionWindow->setProgressMinimum(0);
-			mExecutionWindow->setProgressMaximum(mCurrentActionTimeout);
+			mExecutionWindow->setProgressMaximum(actionTimeout);
 			mExecutionWindow->setProgressValue(0);
 		}
 		else
-			mExecutionWindow->setProgressVisible(false);
+			mExecutionWindow->setProgressEnabled(false);
 
 		emit actionStarted(mCurrentActionIndex, mActiveActionsCount);
 
-		mScript->actionAt(mCurrentActionIndex)->startExecution();
+		currentActionInstance()->startExecution();
 	}
 
-	void Executer::updateTimeoutProgress()
+	void Executer::updateTimerProgress()
 	{
-		if(mTimeoutTime.elapsed() >= mCurrentActionTimeout)
+		if(mExecutionPaused)
+			return;
+		
+		mExecutionTime += mExecutionTimer.interval();
+		
+		ActionTools::ActionInstance *actionInstance = currentActionInstance();
+		switch(mExecutionStatus)
 		{
-			mTimeoutTimer.stop();
-			mScript->actionAt(mCurrentActionIndex)->disconnect();
-			mScript->actionAt(mCurrentActionIndex)->stopExecution();
-
-			executionException(ActionTools::ActionException::TimeoutException, QString());
+		case PrePause:
+			if(mExecutionTime >= actionInstance->pauseBefore())
+			{
+				mExecutionTimer.stop();
+				startActionExecution();
+			}
+			mExecutionWindow->setProgressValue(mExecutionTime);
+			break;
+		case Executing://Timeout
+			if(mExecutionTime >= actionInstance->timeout())
+			{
+				mExecutionTimer.stop();
+				actionInstance->disconnect();
+				actionInstance->stopExecution();
+	
+				executionException(ActionTools::ActionException::TimeoutException, QString());
+			}
+			mExecutionWindow->setProgressValue(mExecutionTime);
+			break;
+		case PostPause:
+			if(mExecutionTime >= actionInstance->pauseAfter())
+			{
+				mExecutionTimer.stop();
+				startNextAction();
+			}
+			mExecutionWindow->setProgressValue(mExecutionTime);
+			break;
+		default:
+			Q_ASSERT(false && "updateTimerProgress() called, but execution is stopped");
+			break;
 		}
-
-		mExecutionWindow->setProgressValue(mTimeoutTime.elapsed());
 	}
 
 	void Executer::showProgressDialog(const QString &title, int maximum)
@@ -578,6 +658,14 @@ namespace Executer
 
 		return canExecuteAction(nextLine);
 	}
+	
+	ActionTools::ActionInstance *Executer::currentActionInstance() const
+	{
+		if(mCurrentActionIndex < 0 || mCurrentActionIndex >= mScript->actionCount())
+			return 0;
+		
+		return mScript->actionAt(mCurrentActionIndex);
+	}
 
 	Executer::ExecuteActionResult Executer::canExecuteAction(int index) const
 	{
@@ -619,7 +707,7 @@ namespace Executer
 		QScriptValue script = mScriptEngine.globalObject().property("Script");
 		script.setProperty("nextLine", mScriptEngine.newVariant(QVariant(nextLine)));
 
-		ActionTools::ActionInstance *actionInstance = mScript->actionAt(mCurrentActionIndex);
+		ActionTools::ActionInstance *actionInstance = currentActionInstance();
 
 		mExecutionWindow->setCurrentActionName(actionInstance->definition()->name());
 		mExecutionWindow->setCurrentActionColor(actionInstance->color());
@@ -631,11 +719,22 @@ namespace Executer
 		connect(actionInstance, SIGNAL(updateProgressDialog(int)), this, SLOT(updateProgressDialog(int)));
 		connect(actionInstance, SIGNAL(updateProgressDialog(QString)), this, SLOT(updateProgressDialog(QString)));
 		connect(actionInstance, SIGNAL(hideProgressDialog()), this, SLOT(hideProgressDialog()));
+		
+		mExecutionStatus = PrePause;
 
-		mStartExecutionTimer.setInterval(actionInstance->pauseBefore());
-		mStartExecutionTimer.start();
+		mExecutionTimer.start();
+		mExecutionTime = 0;
+		if(currentActionInstance()->pauseBefore() > 0)
+		{
+			mExecutionWindow->setProgressEnabled(true);
+			mExecutionWindow->setProgressMinimum(0);
+			mExecutionWindow->setProgressMaximum(currentActionInstance()->pauseBefore());
+			mExecutionWindow->setProgressValue(0);
+		}
+		else
+			mExecutionWindow->setProgressEnabled(false);
 
-		mExecutionPaused = true;
+		mExecutionEnded = true;
 	}
 
 	void Executer::addClassToScript(QObject *classPointer, const QString &name)
