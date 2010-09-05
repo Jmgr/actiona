@@ -34,9 +34,9 @@
 
 class CodeRegistry : public QObject, public QScriptable
 {
-    Q_OBJECT
+	Q_OBJECT
 	Q_ENUMS(Key)
-	
+
 public:
 	enum Key
 	{
@@ -46,22 +46,31 @@ public:
 		Users,
 		LocalMachine
 	};
-	
-    static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+
+	static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+
+	CodeRegistry();
+	~CodeRegistry();
 
 public slots:
-	QScriptValue openKey(Key key, const QString &subKey) const;
-	QScriptValue createKey(Key key, const QString &subKey) const;
-	QScriptValue setValue(const QString &valueName, const QVariant &value) const;
-	QVariant value(const QString &valueName = QString()) const;
+	QScriptValue openKey(Key key, const QString &subKey);
+	QScriptValue createKey(Key key, const QString &subKey);
+	QScriptValue setValue(const QString &value, const QVariant &data) const;
+	QVariant value(const QString &value = QString()) const;
 	QStringList valueNames() const;
 	QStringList keys() const;
-	QScriptValue deleteKey(bool recursive = true) const;
+	QScriptValue deleteKey(Key key, const QString &subKey) const;
+	QScriptValue deleteKey() const;
 	QScriptValue closeKey() const;
-	
+	//TODO : Add delete value
+
 private:
 #ifdef Q_WS_WIN
+	HKEY enumToKey(Key key) const;
+
 	HKEY mHKey;
+	Key mRootKey;
+	QString mSubKey;
 #endif
 };
 

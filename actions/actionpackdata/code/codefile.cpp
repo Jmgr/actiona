@@ -27,17 +27,17 @@
 QScriptValue CodeFile::constructor(QScriptContext *context, QScriptEngine *engine)
 {
 	Q_UNUSED(context)
-	
+
 	return engine->newQObject(new CodeFile, QScriptEngine::ScriptOwnership);
 }
 
 QScriptValue CodeFile::open(const QString &filename, OpenMode mode)
 {
 	mFile.setFileName(filename);
-	
+
 	if(!mFile.open(static_cast<QIODevice::OpenMode>(mode)))
 		context()->throwError(tr("Unable to open file"));
-	
+
 	return context()->thisObject();
 }
 
@@ -45,14 +45,14 @@ QScriptValue CodeFile::write(const QScriptValue &value)
 {
 	if(mFile.write(value.toVariant().toByteArray()) == -1)
 		context()->throwError(tr("Write failed"));
-	
+
 	return context()->thisObject();
 }
 
 QScriptValue CodeFile::writeText(const QString &value, Encoding encoding)
 {
 	QByteArray data;
-	
+
 	switch(encoding)
 	{
 	case Native:
@@ -70,10 +70,10 @@ QScriptValue CodeFile::writeText(const QString &value, Encoding encoding)
 	default:
 		break;
 	}
-	
+
 	if(mFile.write(data) == -1)
 		context()->throwError(tr("Write failed"));
-	
+
 	return context()->thisObject();
 }
 
@@ -85,7 +85,7 @@ QScriptValue CodeFile::read()
 QScriptValue CodeFile::readText(Encoding encoding)
 {
 	QByteArray data = mFile.readAll();
-	
+
 	switch(encoding)
 	{
 	case Native:
@@ -104,8 +104,8 @@ QScriptValue CodeFile::readText(Encoding encoding)
 QScriptValue CodeFile::close()
 {
 	mFile.close();
-	
-	return context()->thisObject();                                                                                                                                                                                                                                 
+
+	return context()->thisObject();
 }
 
 QScriptValue CodeFile::copy(QString source, QString destination, const QScriptValue &parameters)
@@ -113,7 +113,7 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 	QScriptValueIterator it(parameters);
 	bool createDestinationDirectory = true;
 	bool recursive = true;
-	
+
 	while(it.hasNext())
 	{
 		it.next();
@@ -123,11 +123,11 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 		else if(it.name() == "recursive")
 			recursive = it.value().toBool();
 	}
-	
+
 #ifdef Q_WS_X11
 	source.replace(" ", "\\ ");
 	destination.replace(" ", "\\ ");
-	
+
 	QDir destinationDir(destination);
 	if(!destinationDir.exists())
 	{
@@ -145,12 +145,12 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 			return QScriptValue();
 		}
 	}
-	
+
 	QString command = "sh -c \"cp -f";
-	
+
 	if(recursive)
 		command += " -r";
-	
+
 	command += " ";
 	command += source;
 	command += " ";
@@ -166,9 +166,9 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 #ifdef Q_WS_WIN
 	//TODO
 #endif
-	
+
 	return QScriptValue();
-	
+
 	return context()->thisObject();
 }
 
@@ -181,7 +181,7 @@ QScriptValue CodeFile::move(QString source, QString destination, const QScriptVa
 {
 	QScriptValueIterator it(parameters);
 	bool createDestinationDirectory = true;
-	
+
 	while(it.hasNext())
 	{
 		it.next();
@@ -189,11 +189,11 @@ QScriptValue CodeFile::move(QString source, QString destination, const QScriptVa
 		if(it.name() == "createDestinationDirectory")
 			createDestinationDirectory = it.value().toBool();
 	}
-	
+
 #ifdef Q_WS_X11
 	source.replace(" ", "\\ ");
 	destination.replace(" ", "\\ ");
-	
+
 	QDir destinationDir(destination);
 	if(!destinationDir.exists())
 	{
@@ -211,9 +211,9 @@ QScriptValue CodeFile::move(QString source, QString destination, const QScriptVa
 			return QScriptValue();
 		}
 	}
-	
+
 	QString command = "sh -c \"mv -f";
-	
+
 	command += " ";
 	command += source;
 	command += " ";
@@ -229,16 +229,16 @@ QScriptValue CodeFile::move(QString source, QString destination, const QScriptVa
 #ifdef Q_WS_WIN
 	//TODO
 #endif
-	
+
 	return QScriptValue();
-	
+
 	return context()->thisObject();
 }
 
 QScriptValue CodeFile::move(const QString &destination, const QScriptValue &parameters)
 {
 	mFile.close();
-	
+
 	return copy(mFile.fileName(), destination, parameters);
 }
 
@@ -252,35 +252,33 @@ QScriptValue CodeFile::rename(const QString &destination, const QScriptValue &pa
 	return move(destination, parameters);
 }
 
-QScriptValue CodeFile::remove(QString file)
+QScriptValue CodeFile::remove(const QString &filename)
 {
 #ifdef Q_WS_X11
-	file.replace(" ", "\\ ");
-	
+	filename.replace(" ", "\\ ");
+
 	QString command = "sh -c \"rm -fr";
-	
+
 	command += " ";
-	command += file;
+	command += filename;
 	command += "\"";
 
 	if(QProcess::execute(command))
 	{
 		context()->throwError(tr("Remove failed"));
-		return QScriptValue();
+		return context()->thisObject();
 	}
 #endif
 #ifdef Q_WS_WIN
 	//TODO
 #endif
-	
-	return QScriptValue();
-	
+
 	return context()->thisObject();
 }
 
 QScriptValue CodeFile::remove()
 {
 	mFile.close();
-	
+
 	return remove(mFile.fileName());
 }

@@ -29,20 +29,20 @@
 
 class CodeFile : public QObject, public QScriptable
 {
-    Q_OBJECT
+	Q_OBJECT
 	Q_ENUMS(OpenMode)
 	Q_ENUMS(Encoding)
 
 public:
 	enum OpenMode
 	{
-        ReadOnly =		QIODevice::ReadOnly,
-        WriteOnly =		QIODevice::WriteOnly,
-        ReadWrite =		QIODevice::ReadWrite,
-        Append =		QIODevice::Append,
-        Truncate =		QIODevice::Truncate,
-        Text =			QIODevice::Text,
-        Unbuffered =	QIODevice::Unbuffered
+		ReadOnly =		QIODevice::ReadOnly,
+		WriteOnly =		QIODevice::WriteOnly,
+		ReadWrite =		QIODevice::ReadWrite,
+		Append =		QIODevice::Append,
+		Truncate =		QIODevice::Truncate,
+		Text =			QIODevice::Text,
+		Unbuffered =	QIODevice::Unbuffered
 	};
 	enum Encoding
 	{
@@ -51,9 +51,9 @@ public:
 		Latin1,
 		UTF8,
 	};
-	
+
 	static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-	
+
 	~CodeFile()						{ mFile.close(); }
 
 public slots:
@@ -69,7 +69,7 @@ public slots:
 	QScriptValue move(const QString &destination, const QScriptValue &parameters = QScriptValue());
 	QScriptValue rename(QString source, QString destination, const QScriptValue &parameters = QScriptValue());
 	QScriptValue rename(const QString &destination, const QScriptValue &parameters = QScriptValue());
-	QScriptValue remove(QString file);
+	QScriptValue remove(const QString &filename);
 	QScriptValue remove();
 
 private:

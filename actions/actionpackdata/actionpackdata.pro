@@ -11,23 +11,24 @@ HEADERS += actionpackdata.h \
 	actionreadinifileinstance.h \
 	actionreadregistryinstance.h \
 	actionreadregistrydefinition.h \
-    actionwriteregistrydefinition.h \
-    actionwriteregistryinstance.h \
+	actionwriteregistrydefinition.h \
+	actionwriteregistryinstance.h \
 	actionreadclipboarddefinition.h \
 	actionreadclipboardinstance.h \
 	actionwriteclipboarddefinition.h \
 	actionwriteclipboardinstance.h \
-    actionreadbinaryfileinstance.h \
-    actionreadbinaryfiledefinition.h \
-    actionwritebinaryfileinstance.h \
-    actionwritebinaryfiledefinition.h \
-    actioncopyfileinstance.h \
-    actioncopyfiledefinition.h
+	actionreadbinaryfileinstance.h \
+	actionreadbinaryfiledefinition.h \
+	actionwritebinaryfileinstance.h \
+	actionwritebinaryfiledefinition.h \
+	actioncopyfileinstance.h \
+	actioncopyfiledefinition.h
 SOURCES +=	actionreadtextfileinstance.cpp \
 	actionreadregistryinstance.cpp \
-    actionwriteregistryinstance.cpp
+	actionwriteregistryinstance.cpp
 INCLUDEPATH += ../../3rdparty/rudeconfig
 LIBS += -L../.. -lrudeconfig
+win32:LIBS += -ladvapi32
 
 TRANSLATIONS = locale/actionpackdata_en.ts \
 	locale/actionpackdata_fr.ts \
