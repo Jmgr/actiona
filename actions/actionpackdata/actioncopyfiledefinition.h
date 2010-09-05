@@ -1,0 +1,72 @@
+/*
+	Actionaz
+	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+
+	Actionaz is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Actionaz is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+	Contact : jmgr@jmgr.info
+*/
+
+#ifndef ACTIONCOPYFILEDEFINITION_H
+#define ACTIONCOPYFILEDEFINITION_H
+
+#include "actiondefinition.h"
+#include "actioncopyfileinstance.h"
+#include "fileparameterdefinition.h"
+
+namespace ActionTools
+{
+	class ActionPack;
+	class ActionInstance;
+}
+
+class ActionCopyFileDefinition : public QObject, public ActionTools::ActionDefinition
+{
+   Q_OBJECT
+
+public:
+	explicit ActionCopyFileDefinition(ActionTools::ActionPack *pack)
+	: ActionDefinition(pack)
+	{
+		ActionTools::FileParameterDefinition *source = new ActionTools::FileParameterDefinition("source", tr("Source file"), this);
+		source->setTooltip(tr("The file to copy"));
+		source->setMode(ActionTools::FileEdit::FileOpen);
+		source->setCaption(tr("Choose the file"));
+		source->setFilter(tr("All files (*.*)"));
+		addElement(source);
+
+		ActionTools::FileParameterDefinition *destination = new ActionTools::FileParameterDefinition("destination", tr("Destination"), this);
+		destination->setTooltip(tr("The destination file"));
+		destination->setMode(ActionTools::FileEdit::FileSave);
+		destination->setCaption(tr("Choose the destination file"));
+		destination->setFilter(tr("All files (*.*)"));
+		addElement(destination);
+
+		addException(ActionCopyFileInstance::UnableToReadFileException, tr("Unable to read source file"));
+		addException(ActionCopyFileInstance::UnableToWriteFileException, tr("Unable to write destination file"));
+	}
+
+	QString name() const													{ return QObject::tr("Copy file"); }
+	QString id() const														{ return "ActionCopyFile"; }
+	Flag flags() const														{ return ActionDefinition::flags() | Official; }
+	QString description() const												{ return QObject::tr("Copy a file"); }
+	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionCopyFileInstance(this); }
+	Category category() const												{ return Data; }
+	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+
+private:
+	Q_DISABLE_COPY(ActionCopyFileDefinition)
+};
+
+#endif // ACTIONCOPYFILEDEFINITION_H

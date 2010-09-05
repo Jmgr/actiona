@@ -40,20 +40,14 @@ public:
 	explicit ActionWriteBinaryFileDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"file",
-																								 tr("File"),
-																								 this);
+		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
 		file->setTooltip(tr("The file to write to"));
 		file->setMode(ActionTools::FileEdit::FileSave);
 		file->setCaption(tr("Choose the file"));
 		file->setFilter(tr("All files (*.*)"));
 		addElement(file);
 
-		ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::OUTPUT,
-																								"data",
-																								 tr("Data"),
-																								 this);
+		ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition("data", tr("Data"), this);
 		data->setTooltip(tr("The data to write to the file"));
 		addElement(data);
 

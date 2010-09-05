@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	ParameterDefinition::ParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ElementDefinition(category, name, translatedName, parent)
+	ParameterDefinition::ParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ElementDefinition(name, translatedName, parent)
 	{
 	}
 

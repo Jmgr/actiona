@@ -45,11 +45,14 @@ namespace Executer
 			mCurrentLine(-1),
 			mCurrentColumn(-1),
 			mContext(Unknown),
-			mPaused(false)													{}
+			mPaused(false),
+			mDebuggerAgent(0)
+																			{}
 	
 		void setContext(Context context)									{ mContext = context; }
 		void setCurrentParameter(int currentParameter)						{ mCurrentParameter = currentParameter; }
 		void pause(bool pause)												{ mPaused = pause; }
+		void setDebuggerAgent(QScriptEngineAgent *debuggerAgent)			{ mDebuggerAgent = debuggerAgent;  }
 	
 		int currentLine() const												{ return mCurrentLine; }
 		int currentColumn() const											{ return mCurrentColumn; }
@@ -57,9 +60,45 @@ namespace Executer
 		int currentParameter() const										{ return mCurrentParameter; }
 	
 	private:
+		void contextPop()
+		{
+			mDebuggerAgent->contextPop();
+		}
+		
+		void contextPush()
+		{
+			mDebuggerAgent->contextPush();
+		}
+		
+		void exceptionCatch(qint64 scriptId, const QScriptValue &exception)
+		{
+			mDebuggerAgent->exceptionCatch(scriptId, exception);
+		}
+		
+		void exceptionThrow(qint64 scriptId, const QScriptValue &exception, bool hasHandler)
+		{
+			mDebuggerAgent->exceptionThrow(scriptId, exception, hasHandler);
+		}
+		
+		QVariant extension(Extension extension, const QVariant &argument = QVariant())
+		{
+			return mDebuggerAgent->extension(extension, argument);
+		}
+		
+		void functionEntry(qint64 scriptId)
+		{
+			mDebuggerAgent->functionEntry(scriptId);
+		}
+		
+		void functionExit(qint64 scriptId, const QScriptValue &returnValue)
+		{
+			mDebuggerAgent->functionExit(scriptId, returnValue);
+		}
+		
 		void positionChange(qint64 scriptId, int lineNumber, int columnNumber)
 		{
-			Q_UNUSED(scriptId);
+			mDebuggerAgent->positionChange(scriptId, lineNumber, columnNumber);
+
 			mCurrentLine = lineNumber;
 			mCurrentColumn = columnNumber;
 			
@@ -70,6 +109,21 @@ namespace Executer
 				ActionTools::CrossPlatform::sleep(10);
 			}
 		}
+		
+		void scriptLoad(qint64 id, const QString &program, const QString &fileName, int baseLineNumber)
+		{
+			mDebuggerAgent->scriptLoad(id, program, fileName, baseLineNumber);
+		}
+		
+		void scriptUnload(qint64 id)
+		{
+			mDebuggerAgent->scriptUnload(id);
+		}
+		
+		bool supportsExtension(Extension extension) const
+		{
+			return mDebuggerAgent->supportsExtension(extension);
+		}
 	
 	private:
 		int mCurrentParameter;
@@ -77,6 +131,7 @@ namespace Executer
 		int mCurrentColumn;
 		Context mContext;
 		bool mPaused;
+		QScriptEngineAgent *mDebuggerAgent;
 	};
 }
 

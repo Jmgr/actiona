@@ -39,10 +39,7 @@ public:
 	explicit ActionGotoDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"line",
-																								 tr("Line"),
-																								 this);
+		ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition("line", tr("Line"), this);
 		line->setTooltip(tr("The line (or label) to go to"));
 		addElement(line);
 	}

@@ -1,5 +1,5 @@
 include(../common.pri)
-QT += script
+QT += script scripttools
 TEMPLATE = lib
 CONFIG += dll qxt
 QXT += core \

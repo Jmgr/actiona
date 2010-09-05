@@ -39,7 +39,7 @@ namespace ActionTools
 			OUTPUT
 		};
 
-		ElementDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent);
+		ElementDefinition(const QString &name, const QString &translatedName, QObject *parent);
 		virtual ~ElementDefinition()							{}
 
 		QString translatedName() const							{ return mTranslatedName; }

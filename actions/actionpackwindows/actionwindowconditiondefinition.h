@@ -42,68 +42,41 @@ public:
 	explicit ActionWindowConditionDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"title",
-																								 tr("Window title"),
-																								 this);
+		ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition("title", tr("Window title"), this);
 		title->setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
 		addElement(title);
 		
-		ActionTools::ListParameterDefinition *condition = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"condition",
-																								 tr("Condition"),
-																								 this);
+		ActionTools::ListParameterDefinition *condition = new ActionTools::ListParameterDefinition("condition", tr("Condition"), this);
 		condition->setTooltip(tr("The condition to wait for"));
 		condition->setItems(ActionWindowConditionInstance::conditions);
 		condition->setDefaultValue(ActionWindowConditionInstance::conditions.second.at(ActionWindowConditionInstance::Created));
 		addElement(condition);
 		
-		ActionTools::IfActionParameterDefinition *ifTrue = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifTrue",
-																								 tr("If true"),
-																								 this);
+		ActionTools::IfActionParameterDefinition *ifTrue = new ActionTools::IfActionParameterDefinition("ifTrue", tr("If true"), this);
 		ifTrue->setTooltip(tr("What to do if the condition is met"));
 		addElement(ifTrue);
 		
-		ActionTools::IfActionParameterDefinition *ifFalse = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifFalse",
-																								 tr("If false"),
-																								 this);
+		ActionTools::IfActionParameterDefinition *ifFalse = new ActionTools::IfActionParameterDefinition("ifFalse", tr("If false"), this);
 		ifFalse->setTooltip(tr("What to do if the condition is not met"));
 		addElement(ifFalse);
 		
-		ActionTools::VariableParameterDefinition *xCoordinate = new ActionTools::VariableParameterDefinition(ActionTools::ElementDefinition::OUTPUT,
-																								"xCoordinate",
-																								 tr("X-coordinate"),
-																								 this);
+		ActionTools::VariableParameterDefinition *xCoordinate = new ActionTools::VariableParameterDefinition("xCoordinate", tr("X-coordinate"), this);
 		xCoordinate->setTooltip(tr("The x-coordinate of the found window"));
 		addElement(xCoordinate, 1);
 		
-		ActionTools::VariableParameterDefinition *yCoordinate = new ActionTools::VariableParameterDefinition(ActionTools::ElementDefinition::OUTPUT,
-																								"yCoordinate",
-																								 tr("Y-coordinate"),
-																								 this);
+		ActionTools::VariableParameterDefinition *yCoordinate = new ActionTools::VariableParameterDefinition("yCoordinate", tr("Y-coordinate"), this);
 		yCoordinate->setTooltip(tr("The y-coordinate of the found window"));
 		addElement(yCoordinate, 1);
 		
-		ActionTools::VariableParameterDefinition *width = new ActionTools::VariableParameterDefinition(ActionTools::ElementDefinition::OUTPUT,
-																								"width",
-																								 tr("Width"),
-																								 this);
+		ActionTools::VariableParameterDefinition *width = new ActionTools::VariableParameterDefinition("width", tr("Width"), this);
 		width->setTooltip(tr("The width of the found window"));
 		addElement(width, 1);
 		
-		ActionTools::VariableParameterDefinition *height = new ActionTools::VariableParameterDefinition(ActionTools::ElementDefinition::OUTPUT,
-																								"height",
-																								 tr("Height"),
-																								 this);
+		ActionTools::VariableParameterDefinition *height = new ActionTools::VariableParameterDefinition("height", tr("Height"), this);
 		height->setTooltip(tr("The height of the found window"));
 		addElement(height, 1);
 		
-		ActionTools::VariableParameterDefinition *processId = new ActionTools::VariableParameterDefinition(ActionTools::ElementDefinition::OUTPUT,
-																								"processId",
-																								 tr("Process id"),
-																								 this);
+		ActionTools::VariableParameterDefinition *processId = new ActionTools::VariableParameterDefinition("processId", tr("Process id"), this);
 		processId->setTooltip(tr("The process id of the found window"));
 		addElement(processId, 1);
 	}

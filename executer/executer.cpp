@@ -27,11 +27,13 @@
 #include "actioninstance.h"
 #include "executionenvironment.h"
 #include "executionalgorithms.h"
+#include "actionpack.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QScriptContextInfo>
 #include <QAction>
+#include <QMainWindow>
 
 namespace Executer
 {
@@ -47,6 +49,8 @@ namespace Executer
 		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
 		connect(mExecutionWindow, SIGNAL(paused()), this, SLOT(pauseExecution()));
 		connect(&mExecutionTimer, SIGNAL(timeout()), this, SLOT(updateTimerProgress()));
+		connect(&mScriptEngineDebugger, SIGNAL(evaluationSuspended()), mExecutionWindow, SLOT(onEvaluationPaused()));
+		connect(&mScriptEngineDebugger, SIGNAL(evaluationResumed()), mExecutionWindow, SLOT(onEvaluationResumed()));
 
 		mConsoleWidget->setWindowFlags(Qt::Tool |
 					   Qt::WindowStaysOnTopHint |
@@ -68,7 +72,6 @@ namespace Executer
 			   bool showConsoleWindow,
 			   int consoleWindowPosition,
 			   int consoleWindowScreen,
-			   const QKeySequence &stopExecutionHotkey,
 			   QStandardItemModel *consoleModel)
 	{
 		mScript = script;
@@ -79,7 +82,6 @@ namespace Executer
 		mShowConsoleWindow = showConsoleWindow;
 		mConsoleWindowPosition = consoleWindowPosition;
 		mConsoleWindowScreen = consoleWindowScreen;
-		mStopExecutionShortcut = stopExecutionHotkey;
 		mCurrentActionIndex = 0;
 		mExecutionStarted = false;
 		mExecutionEnded = false;
@@ -87,6 +89,12 @@ namespace Executer
 		mProgressDialog = 0;
 		mActiveActionsCount = 0;
 		mExecutionPaused = false;
+		
+		mScriptEngineDebugger.attachTo(&mScriptEngine);
+		mDebuggerWindow = mScriptEngineDebugger.standardWindow();
+		QScriptEngineAgent *debuggerAgent = mScriptEngine.agent();
+		mScriptEngine.setAgent(mScriptAgent);
+		mScriptAgent->setDebuggerAgent(debuggerAgent);
 		
 		mConsoleWidget->setup(consoleModel);
 		
@@ -124,8 +132,8 @@ namespace Executer
 		case ScriptAgent::Actions:
 			executer->consoleWidget()->addUserLine(message,
 												   executer->currentActionIndex(),
-												   context->engine()->evaluate("currentParameter").toString(),
-												   context->engine()->evaluate("currentSubParameter").toString(),
+												   context->engine()->property("currentParameter").toString(),
+												   context->engine()->property("currentSubParameter").toString(),
 												   agent->currentLine(),
 												   agent->currentColumn(),
 												   context->backtrace(),
@@ -192,7 +200,6 @@ namespace Executer
 		mCurrentActionIndex = 0;
 		mActiveActionsCount = 0;
 
-		mScriptEngine.setAgent(mScriptAgent);
 		mScriptEngine.setProcessEventsInterval(50);
 		
 		QScriptValue script = mScriptEngine.newObject();
@@ -221,14 +228,13 @@ namespace Executer
 		bool initSucceeded = true;
 
 		mScriptAgent->setContext(ScriptAgent::ActionInit);
-
-		int actionCount = mActionFactory->actionDefinitionCount();
-		for(int actionIndex = 0; actionIndex < actionCount; ++actionIndex)
+		
+		int actionPackCount = mActionFactory->actionPackCount();
+		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)
 		{
-			ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionIndex);
+			ActionTools::ActionPack *actionPack = mActionFactory->actionPack(actionPackIndex);
 
-			ActionTools::ActionInstance *actionInstance = actionDefinition->scriptInit(&mScriptEngine);
-			actionInstance->setupExecution(&mScriptEngine, mScript);
+			actionPack->codeInit(&mScriptEngine);
 		}
 
 		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
@@ -292,8 +298,6 @@ namespace Executer
 
 		if(mShowExecutionWindow)
 		{
-			mExecutionWindow->setStopExecutionShortcut(mStopExecutionShortcut);
-
 			QRect screenRect = QApplication::desktop()->availableGeometry(mExecutionWindowScreen);
 			QPoint position;
 
@@ -377,6 +381,7 @@ namespace Executer
 
 		delete mProgressDialog;
 		mProgressDialog = 0;
+		mDebuggerWindow->hide();
 		mExecutionWindow->hide();
 		mConsoleWidget->hide();
 
@@ -390,7 +395,12 @@ namespace Executer
 		
 		mExecutionPaused = !mExecutionPaused;
 		
-		mScriptAgent->pause(mExecutionPaused);
+		if(mExecutionPaused)
+			mScriptEngineDebugger.action(QScriptEngineDebugger::InterruptAction)->trigger();
+		else
+			mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
+		
+		//mScriptAgent->pause(mExecutionPaused);
 		
 		mExecutionWindow->setPauseStatus(mExecutionPaused);
 	}

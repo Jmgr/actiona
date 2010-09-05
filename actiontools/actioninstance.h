@@ -35,7 +35,6 @@
 #include <QScriptContext>
 #include <QScriptEngine>
 #include <QMetaEnum>
-#include <QScriptable>
 
 class QScriptEngine;
 
@@ -99,13 +98,13 @@ namespace ActionTools
 		QScriptEngine *scriptEngine;
 	};
 
-	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject, protected QScriptable
+	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
 	{
 		Q_OBJECT
 
 	public:
 		ActionInstance(const ActionDefinition *definition = 0, QObject *parent = 0);
-		ActionInstance(const ActionInstance &other) : QObject(), QScriptable(), d(other.d)	{}
+		ActionInstance(const ActionInstance &other) : QObject(), d(other.d)	{}
 		virtual ~ActionInstance()											{}
 		
 		bool operator==(const ActionInstance &other) const					{ return ((*d) == (*other.d)); }

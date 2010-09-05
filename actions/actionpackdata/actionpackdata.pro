@@ -1,4 +1,5 @@
 include(../common_actions.pri)
+include(code/code.pri)
 TARGET = ActionPackData
 QT += script
 HEADERS += actionpackdata.h \
@@ -19,7 +20,9 @@ HEADERS += actionpackdata.h \
     actionreadbinaryfileinstance.h \
     actionreadbinaryfiledefinition.h \
     actionwritebinaryfileinstance.h \
-    actionwritebinaryfiledefinition.h
+    actionwritebinaryfiledefinition.h \
+    actioncopyfileinstance.h \
+    actioncopyfiledefinition.h
 SOURCES +=	actionreadtextfileinstance.cpp \
 	actionreadregistryinstance.cpp \
     actionwriteregistryinstance.cpp

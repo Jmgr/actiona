@@ -22,6 +22,8 @@
 #define ACTIONPACK_H
 
 #include <QList>
+#include <QScriptValue>
+#include <QScriptEngine>
 #include "version.h"
 
 namespace ActionTools
@@ -33,22 +35,41 @@ namespace ActionTools
 	class ActionPack
 	{
 	public:
-		ActionPack()			{}
-		virtual ~ActionPack()	{}
+		ActionPack()												{}
+		virtual ~ActionPack()										{}
 
 		virtual QString id() const = 0;
 		virtual QString name() const = 0;
 		virtual Tools::Version version() const = 0;
+		virtual void codeInit(QScriptEngine *scriptEngine) const	{ Q_UNUSED(scriptEngine) }
+		
 		//Returns an instance of each plugin definition
-		const ActionDefinitionList &actionsDefinitions() const	{ return mActionDefinitions; }
+		const ActionDefinitionList &actionsDefinitions() const		{ return mActionDefinitions; }
 
-		void setFilename(const QString &filename)				{ mFilename = filename; }
-		const QString &filename() const							{ return mFilename; }
+		void setFilename(const QString &filename)					{ mFilename = filename; }
+		const QString &filename() const								{ return mFilename; }
 
 	protected:
 		void addActionDefinition(ActionDefinition *actionDefinition)
 		{
 			mActionDefinitions.append(actionDefinition);
+		}
+		
+		template<typename T>
+		void addCodeClass(const QString &objectName, QScriptEngine *scriptEngine) const
+		{
+			QScriptValue metaObject = scriptEngine->newQMetaObject(&T::staticMetaObject, scriptEngine->newFunction(&T::constructor));
+			scriptEngine->globalObject().setProperty(objectName, metaObject);
+		}
+		
+		void addCodeFunction(const QString &objectName, QScriptEngine::FunctionSignature function, int length, QScriptEngine *scriptEngine) const
+		{
+			scriptEngine->globalObject().setProperty(objectName, scriptEngine->newFunction(function, length));
+		}
+		
+		void addCodeFunction(const QString &objectName, QScriptEngine::FunctionSignature function, QScriptEngine *scriptEngine) const
+		{
+			addCodeFunction(objectName, function, 0, scriptEngine);
 		}
 
 	private:

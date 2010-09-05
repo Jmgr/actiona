@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	DateTimeParameterDefinition::DateTimeParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(category, name, translatedName, parent),
+	DateTimeParameterDefinition::DateTimeParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ParameterDefinition(name, translatedName, parent),
 		mDateTimeEdit(0)
 	{
 	}

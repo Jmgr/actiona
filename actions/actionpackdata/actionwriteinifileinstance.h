@@ -63,16 +63,12 @@ public:
 		emit executionEnded();
 	}
 
-public slots:
+private:
 	bool write(const QString &filename, const QString &section, const QString &parameter, const QString &value)
 	{
 		rude::Config config;
 
-#ifdef Q_WS_WIN
-		config.setConfigFile(filename.toLatin1());
-#else
-		config.setConfigFile(filename.toUtf8());
-#endif
+		config.setConfigFile(filename.toLocal8Bit());
 
 		if(!config.setSection(section.toLatin1(), true))
 			return false;
@@ -84,8 +80,7 @@ public slots:
 
 		return true;
 	}
-
-private:
+	
 	Q_DISABLE_COPY(ActionWriteIniFileInstance)
 };
 

@@ -42,56 +42,35 @@ public:
 	explicit ActionMessageBoxDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"message",
-																								 tr("Message"),
-																								 this);
+		ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition("message", tr("Message"), this);
 		text->setTooltip(tr("The text to show"));
 		addElement(text);
 
-		ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"title",
-																								tr("Title"),
-																								this);
+		ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition("title", tr("Title"), this);
 		title->setTooltip(tr("The title to show"));
 		addElement(title);
 
-		ActionTools::ListParameterDefinition *icon = new ActionTools::ListParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"icon",
-																								tr("Icon"),
-																								this);
+		ActionTools::ListParameterDefinition *icon = new ActionTools::ListParameterDefinition("icon", tr("Icon"), this);
 		icon->setTooltip(tr("The icon to use"));
 		icon->setItems(ActionMessageBoxInstance::icons);
 		icon->setDefaultValue(ActionMessageBoxInstance::icons.second.at(ActionMessageBoxInstance::None));
 		addElement(icon);
 
-		ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"type",
-																								tr("Type"),
-																								this);
+		ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition("type", tr("Type"), this);
 		type->setTooltip(tr("The message box type"));
 		type->setItems(ActionMessageBoxInstance::buttons);
 		type->setDefaultValue(ActionMessageBoxInstance::buttons.second.at(ActionMessageBoxInstance::OkButton));
 		addElement(type, 1);
 
-		ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition(			ActionTools::ElementDefinition::INPUT,
-																								"ifyesno",
-																								tr("Yes-No action"),
-																								this);
+		ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition("ifyesno", tr("Yes-No action"), this);
 		yesNoGroup->setMasterList(type);
 		yesNoGroup->setMasterValues(QStringList() << ActionMessageBoxInstance::buttons.first.at(ActionMessageBoxInstance::YesNoButtons));
 
-		ActionTools::IfActionParameterDefinition *ifYes = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifYes",
-																								tr("If yes"),
-																								this);
+		ActionTools::IfActionParameterDefinition *ifYes = new ActionTools::IfActionParameterDefinition("ifYes", tr("If yes"), this);
 		ifYes->setTooltip(tr("What to do if the yes button is pressed"));
 		yesNoGroup->addMember(ifYes);
 
-		ActionTools::IfActionParameterDefinition *ifNo = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifNo",
-																								tr("If no"),
-																								this);
+		ActionTools::IfActionParameterDefinition *ifNo = new ActionTools::IfActionParameterDefinition("ifNo", tr("If no"), this);
 		ifNo->setTooltip(tr("What to do if the no button is pressed"));
 		yesNoGroup->addMember(ifNo);
 

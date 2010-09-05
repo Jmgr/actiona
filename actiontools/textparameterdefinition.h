@@ -33,7 +33,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		TextParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent);
+		TextParameterDefinition(const QString &name, const QString &translatedName, QObject *parent);
 		virtual ~TextParameterDefinition()			{}
 
 		virtual void buildEditors(Script *script, QWidget *parent);

@@ -40,34 +40,22 @@ public:
 	explicit ActionWriteIniFileDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"file",
-																								 tr("File"),
-																								 this);
+		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
 		file->setTooltip(tr("The file to create or edit"));
 		file->setMode(ActionTools::FileEdit::FileSave);
 		file->setCaption(tr("Choose the INI file"));
 		file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
 		addElement(file);
 		
-		ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"section",
-																								 tr("Section"),
-																								 this);
+		ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition("section", tr("Section"), this);
 		section->setTooltip(tr("The section name of the parameter"));
 		addElement(section);
 		
-		ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"parameter",
-																								 tr("Parameter"),
-																								 this);
+		ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition("parameter", tr("Parameter"), this);
 		parameter->setTooltip(tr("The parameter name"));
 		addElement(parameter);
 		
-		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"value",
-																								 tr("Value"),
-																								 this);
+		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
 		value->setTooltip(tr("The new value"));
 		addElement(value);
 		

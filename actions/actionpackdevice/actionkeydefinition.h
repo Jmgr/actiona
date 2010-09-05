@@ -40,17 +40,11 @@ public:
 	explicit ActionKeyDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::KeyParameterDefinition *key = new ActionTools::KeyParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"key",
-																								tr("Key"),
-																								this);
+		ActionTools::KeyParameterDefinition *key = new ActionTools::KeyParameterDefinition("key", tr("Key"), this);
 		key->setTooltip(tr("The key to simulate"));
 		addElement(key);
 		
-		ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"action",
-																								tr("Action"),
-																								this);
+		ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition("action", tr("Action"), this);
 		action->setTooltip(tr("The action to simulate"));
 		action->setItems(ActionKeyInstance::actions);
 		action->setDefaultValue(ActionKeyInstance::actions.second.at(ActionKeyInstance::PressReleaseAction));

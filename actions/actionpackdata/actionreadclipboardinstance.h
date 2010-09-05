@@ -50,14 +50,6 @@ public:
 
 		emit executionEnded();
 	}
-	
-public slots:
-	QString read() const
-	{
-		QClipboard *clipboard = QApplication::clipboard();
-		
-		return clipboard->text();
-	}
 
 private:
 	Q_DISABLE_COPY(ActionReadClipboardInstance)

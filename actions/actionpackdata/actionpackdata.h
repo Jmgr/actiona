@@ -31,6 +31,12 @@
 #include "actionwriteclipboarddefinition.h"
 #include "actionreadbinaryfiledefinition.h"
 #include "actionwritebinaryfiledefinition.h"
+#include "actioncopyfiledefinition.h"
+
+#include "code/codefile.h"
+#include "code/codeclipboard.h"
+#include "code/coderegistry.h"
+#include "code/codeinifile.h"
 
 #include <QtCore/qplugin.h>
 
@@ -56,11 +62,20 @@ public:
 		addActionDefinition(new ActionWriteClipboardDefinition(this));
 		addActionDefinition(new ActionReadBinaryFileDefinition(this));
 		addActionDefinition(new ActionWriteBinaryFileDefinition(this));
+		addActionDefinition(new ActionCopyFileDefinition(this));
 	}
 
 	QString id() const								{ return tr("other"); }
 	QString name() const							{ return tr("Other actions"); }
 	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
+	
+	void codeInit(QScriptEngine *scriptEngine) const
+	{
+		addCodeClass<CodeFile>("File", scriptEngine);
+		addCodeClass<CodeClipboard>("Clipboard", scriptEngine);
+		addCodeClass<CodeRegistry>("Registry", scriptEngine);
+		addCodeClass<CodeIniFile>("IniFile", scriptEngine);
+	}
 
 private:
 	Q_DISABLE_COPY(ActionPackOther)

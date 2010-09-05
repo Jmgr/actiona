@@ -40,10 +40,7 @@ public:
 	explicit ActionReadClipboardDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition( ActionTools::ElementDefinition::OUTPUT,
-																								"variable",
-																								 tr("Variable"),
-																								 this);
+		ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
 		output->setTooltip(tr("The variable where to save the current clipboard value"));
 		addElement(output);
 	}

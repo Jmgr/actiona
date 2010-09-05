@@ -40,12 +40,13 @@ namespace ActionTools
 		void loadActionPacks();
 		ActionDefinition *actionDefinition(const QString &actionId) const;
 		ActionDefinition *actionDefinition(int index) const;
+		ActionPack *actionPack(int index) const;
 		ActionInstance *newActionInstance(const QString &actionDefinitionId) const;
 		int actionDefinitionCount(ActionDefinition::Category category = ActionDefinition::None) const;
-		int packCount()	const					{ return mActionPacks.count(); }
+		int actionPackCount()	const					{ return mActionPacks.count(); }
 
 	signals:
-		void packLoadError(QString error);
+		void actionPackLoadError(QString error);
 
 	private:
 		void clear();

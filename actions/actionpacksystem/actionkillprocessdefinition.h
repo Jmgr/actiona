@@ -41,26 +41,17 @@ public:
 	explicit ActionKillProcessDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::TextParameterDefinition *processId = new ActionTools::TextParameterDefinition( ActionTools::ElementDefinition::INPUT,
-																								"processId",
-																								 tr("Process id"),
-																								 this);
+		ActionTools::TextParameterDefinition *processId = new ActionTools::TextParameterDefinition("processId", tr("Process id"), this);
 		processId->setTooltip(tr("The process id of the process to kill"));
 		addElement(processId);
 		
-		ActionTools::ListParameterDefinition *killMode = new ActionTools::ListParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"killMode",
-																								tr("Kill mode"),
-																								this);
+		ActionTools::ListParameterDefinition *killMode = new ActionTools::ListParameterDefinition("killMode", tr("Kill mode"), this);
 		killMode->setTooltip(tr("The kill mode"));
 		killMode->setItems(ActionKillProcessInstance::killModes);
 		killMode->setDefaultValue(ActionKillProcessInstance::killModes.second.at(ActionKillProcessInstance::GracefulThenForceful));
 		addElement(killMode, 1);
 		
-		ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition( ActionTools::ElementDefinition::INPUT,
-																								"timeout",
-																								 tr("Timeout"),
-																								 this);
+		ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition("timeout", tr("Timeout"), this);
 		timeout->setTooltip(tr("The timeout before doing a forceful kill"));
 		timeout->setMinimum(0);
 		timeout->setMaximum(INT_MAX);

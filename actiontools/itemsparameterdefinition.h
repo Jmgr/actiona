@@ -31,8 +31,8 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ItemsParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-			: ParameterDefinition(category, name, translatedName, parent)						{}
+		ItemsParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+			: ParameterDefinition(name, translatedName, parent)						{}
 
 		StringListPair items()																	{ return mItems; }
 

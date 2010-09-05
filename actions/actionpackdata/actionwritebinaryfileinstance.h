@@ -56,7 +56,7 @@ public:
 		mFile.setFileName(filename);
 		mDataBuffer.setBuffer(&mData);
 		
-		if(!DataCopyActionInstance::startCopy(&mDataBuffer, &mFile, mData.size()))
+		if(!DataCopyActionInstance::startCopy(&mDataBuffer, &mFile))
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("file");
 			emit executionException(UnableToWriteFileException, tr("Unable to write to the file \"%1\"").arg(filename));

@@ -43,58 +43,37 @@ public:
 	explicit ActionWindowDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"title",
-																								 tr("Window title"),
-																								 this);
+		ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition("title", tr("Window title"), this);
 		title->setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
 		addElement(title);
 		
-		ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"action",
-																								 tr("Action"),
-																								 this);
+		ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition("action", tr("Action"), this);
 		action->setTooltip(tr("The condition to wait for"));
 		action->setItems(ActionWindowInstance::actions);
 		action->setDefaultValue(ActionWindowInstance::actions.second.at(ActionWindowInstance::Close));
 		addElement(action);
 		
-		ActionTools::GroupDefinition *moveGroup = new ActionTools::GroupDefinition(				ActionTools::ElementDefinition::INPUT,
-																								"move",
-																								tr("Move"),
-																								this);
+		ActionTools::GroupDefinition *moveGroup = new ActionTools::GroupDefinition("move", tr("Move"), this);
 		moveGroup->setMasterList(action);
 		moveGroup->setMasterValues(QStringList() << ActionWindowInstance::actions.first.at(ActionWindowInstance::Move));
 		
-		ActionTools::PositionParameterDefinition *movePosition = new ActionTools::PositionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"movePosition",
-																								 tr("Move position"),
-																								 this);
+		ActionTools::PositionParameterDefinition *movePosition = new ActionTools::PositionParameterDefinition("movePosition", tr("Move position"), this);
 		movePosition->setTooltip(tr("The position to move the window"));
 		moveGroup->addMember(movePosition);
 		
 		addElement(moveGroup);
 		
-		ActionTools::GroupDefinition *resizeGroup = new ActionTools::GroupDefinition(			ActionTools::ElementDefinition::INPUT,
-																								"resize",
-																								tr("Resize"),
-																								this);
+		ActionTools::GroupDefinition *resizeGroup = new ActionTools::GroupDefinition("resize", tr("Resize"), this);
 		resizeGroup->setMasterList(action);
 		resizeGroup->setMasterValues(QStringList() << ActionWindowInstance::actions.first.at(ActionWindowInstance::Resize));
 		
-		ActionTools::NumberParameterDefinition *resizeWidth = new ActionTools::NumberParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"resizeWidth",
-																								 tr("Resize width"),
-																								 this);
+		ActionTools::NumberParameterDefinition *resizeWidth = new ActionTools::NumberParameterDefinition("resizeWidth", tr("Resize width"), this);
 		resizeWidth->setTooltip(tr("The new width of the window"));
 		resizeWidth->setMinimum(0);
 		resizeWidth->setMaximum(INT_MAX);
 		resizeGroup->addMember(resizeWidth);
 		
-		ActionTools::NumberParameterDefinition *resizeHeight = new ActionTools::NumberParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"resizeHeight",
-																								 tr("Resize height"),
-																								 this);
+		ActionTools::NumberParameterDefinition *resizeHeight = new ActionTools::NumberParameterDefinition("resizeHeight", tr("Resize height"), this);
 		resizeHeight->setTooltip(tr("The new height of the window"));
 		resizeHeight->setMinimum(0);
 		resizeHeight->setMaximum(INT_MAX);

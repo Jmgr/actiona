@@ -32,8 +32,8 @@ namespace ActionTools
 		QStringList() << "do_nothing" << "goto",
 		QStringList() << tr("Do nothing") << tr("Goto line"));
 
-	IfActionParameterDefinition::IfActionParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ItemsParameterDefinition(category, name, translatedName, parent),
+	IfActionParameterDefinition::IfActionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ItemsParameterDefinition(name, translatedName, parent),
 		mActionEdit(0),
 		mLineEdit(0),
 		mAllowWait(false)

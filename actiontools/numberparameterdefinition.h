@@ -33,7 +33,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		NumberParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent);
+		NumberParameterDefinition(const QString &name, const QString &translatedName, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

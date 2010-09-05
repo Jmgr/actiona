@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	FileParameterDefinition::FileParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(category, name, translatedName, parent),
+	FileParameterDefinition::FileParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ParameterDefinition(name, translatedName, parent),
 		mFileEdit(0)
 	{
 	}

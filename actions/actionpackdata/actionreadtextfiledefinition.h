@@ -43,49 +43,31 @@ public:
 	explicit ActionReadTextFileDefinition(ActionTools::ActionPack *pack)
         : ActionDefinition(pack)
 	{
-		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition( ActionTools::ElementDefinition::INPUT,
-																							   "file",
-																							   tr("File"),
-																							   this);
+		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
 		file->setTooltip(tr("The file you want to read"));
 		addElement(file);
 
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition( ActionTools::ElementDefinition::OUTPUT,
-																										 "variable",
-																										 tr("Variable"),
-																										 this);
+		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
 		variable->setTooltip(tr("The variable where to save the text read from the file"));
 		addElement(variable);
 
-		ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition( ActionTools::ElementDefinition::INPUT,
-																								 "mode",
-																								 tr("Mode"),
-																								 this);
+		ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition("mode", tr("Mode"), this);
 		mode->setTooltip(tr("The file read mode"));
 		mode->setItems(ActionReadTextFileInstance::modes);
 		mode->setDefaultValue(ActionReadTextFileInstance::modes.second.at(ActionReadTextFileInstance::Full));
 		addElement(mode, 1);
 
-		ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(		ActionTools::ElementDefinition::INPUT,
-																							"selectionmode",
-																							tr("Selection mode"),
-																							this);
+		ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition("selectionmode", tr("Selection mode"), this);
 		selectionMode->setMasterList(mode);
 		selectionMode->setMasterValues(QStringList() << ActionReadTextFileInstance::modes.first.at(ActionReadTextFileInstance::Selection));
 
-		ActionTools::NumberParameterDefinition *firstline = new ActionTools::NumberParameterDefinition( ActionTools::ElementDefinition::INPUT,
-																										"firstline",
-																										tr("First line"),
-																										this);
+		ActionTools::NumberParameterDefinition *firstline = new ActionTools::NumberParameterDefinition("firstline", tr("First line"), this);
 		firstline->setTooltip(tr("The line where to start reading the file"));
 		firstline->setMinimum(1);
 		firstline->setDefaultValue(1);
 		selectionMode->addMember(firstline, 1);
 
-		ActionTools::NumberParameterDefinition *lastline = new ActionTools::NumberParameterDefinition( ActionTools::ElementDefinition::INPUT,
-																									   "lastline",
-																									   tr("Last line"),
-																									   this);
+		ActionTools::NumberParameterDefinition *lastline = new ActionTools::NumberParameterDefinition("lastline", tr("Last line"), this);
 		lastline->setTooltip(tr("The line where to stop reading the file"));
 		lastline->setMinimum(1);
 		lastline->setDefaultValue(1);

@@ -89,6 +89,14 @@ namespace ActionTools
 
 		return mActionDefinitions.at(index);
 	}
+	
+	ActionPack *ActionFactory::actionPack(int index) const
+	{
+		if(index < 0 || index >= mActionPacks.count())
+			return 0;
+
+		return mActionPacks.at(index);
+	}
 
 	ActionInstance *ActionFactory::newActionInstance(const QString &actionDefinitionId) const
 	{
@@ -132,14 +140,14 @@ namespace ActionTools
 
 		if(!actionPackObject)
 		{
-			emit packLoadError(tr("%1: \"%2\"").arg(shortFilename).arg(pluginLoader.errorString()));
+			emit actionPackLoadError(tr("%1: \"%2\"").arg(shortFilename).arg(pluginLoader.errorString()));
 			return;
 		}
 
 		ActionPack *actionPack = qobject_cast<ActionPack *>(actionPackObject);
 		if(!actionPack)
 		{
-			emit packLoadError(tr("%1: bad definition version").arg(shortFilename));
+			emit actionPackLoadError(tr("%1: bad definition version").arg(shortFilename));
 			return;
 		}
 
@@ -147,7 +155,7 @@ namespace ActionTools
 		{
 			if(actionDefinition(definition->id()))
 			{
-				emit packLoadError(tr("%1: <b>%2</b> already loaded").arg(shortFilename).arg(definition->id()));
+				emit actionPackLoadError(tr("%1: <b>%2</b> already loaded").arg(shortFilename).arg(definition->id()));
 				continue;
 			}
 
@@ -167,7 +175,7 @@ namespace ActionTools
 			QStringList missingFeatures;
 			if(!definition->requirementCheck(missingFeatures))
 			{
-				emit packLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
+				emit actionPackLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
 								   .arg(shortFilename)
 								   .arg(definition->id())
 								   .arg(missingFeatures.join("<li>")));//TODO

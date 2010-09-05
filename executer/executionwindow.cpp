@@ -43,13 +43,6 @@ namespace Executer
 		delete ui;
 	}
 	
-	void ExecutionWindow::setStopExecutionShortcut(const QKeySequence &keySequence)
-	{
-		ui->stopScriptLabel->setText(tr("Press %1 to stop the script execution").arg(keySequence.toString()));
-	
-		adjustSize();
-	}
-	
 	void ExecutionWindow::setCurrentActionName(const QString &actionName)
 	{
 		ui->currentActionLabel->setText(actionName);
@@ -101,16 +94,31 @@ namespace Executer
 	
 	void ExecutionWindow::setPauseStatus(bool paused)
 	{
-		mPaused = paused;
+		//mPaused = paused;
 		
-		if(mPaused)
+		if(paused)
 			ui->pausePushButton->setIcon(QIcon(":/images/play.png"));
 		else
 			ui->pausePushButton->setIcon(QIcon(":/images/pause.png"));
 	}
 	
-	void Executer::ExecutionWindow::on_pausePushButton_clicked()
+	void ExecutionWindow::onEvaluationResumed()
+	{
+		setPauseStatus(false);
+	}
+
+	void ExecutionWindow::onEvaluationPaused()
+	{
+		setPauseStatus(true);
+	}
+	
+	void ExecutionWindow::on_pausePushButton_clicked()
 	{
 		setPauseStatus(!mPaused);
+	}
+	
+	void ExecutionWindow::on_debugPushButton_clicked()
+	{
+		//TODO
 	}
 }

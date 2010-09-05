@@ -40,24 +40,15 @@ public:
 	explicit ActionTextInputDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"question",
-																								 tr("Question"),
-																								 this);
+		ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition("question", tr("Question"), this);
 		question->setTooltip(tr("The question to ask"));
 		addElement(question);
 		
-		ActionTools::TextParameterDefinition *defaultValue = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"defaultValue",
-																								 tr("Default value"),
-																								 this);
+		ActionTools::TextParameterDefinition *defaultValue = new ActionTools::TextParameterDefinition("defaultValue", tr("Default value"), this);
 		defaultValue->setTooltip(tr("The default value"));
 		addElement(defaultValue);
 		
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(	ActionTools::ElementDefinition::OUTPUT,
-																								"variable",
-																								 tr("Variable"),
-																								 this);
+		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
 		variable->setTooltip(tr("The variable where to save the entered input"));
 		addElement(variable);
 	}

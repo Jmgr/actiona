@@ -41,34 +41,22 @@ public:
 	explicit ActionReadIniFileDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"file",
-																								 tr("File"),
-																								 this);
+		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
 		file->setTooltip(tr("The file to read from"));
 		file->setMode(ActionTools::FileEdit::FileOpen);
 		file->setCaption(tr("Choose the INI file"));
 		file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
 		addElement(file);
 
-		ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"section",
-																								 tr("Section"),
-																								 this);
+		ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition("section", tr("Section"), this);
 		section->setTooltip(tr("The section name of the parameter"));
 		addElement(section);
 
-		ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"parameter",
-																								 tr("Parameter"),
-																								 this);
+		ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition("parameter", tr("Parameter"), this);
 		parameter->setTooltip(tr("The parameter name"));
 		addElement(parameter);
 
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(	ActionTools::ElementDefinition::OUTPUT,
-																								"variable",
-																								 tr("Variable"),
-																								 this);
+		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
 		variable->setTooltip(tr("The variable where to store the data"));
 		addElement(variable);
 

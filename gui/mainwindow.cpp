@@ -193,7 +193,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	connect(ui->newActionTreeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(newActionDoubleClicked(QTreeWidgetItem*,int)));
 	if(mSystemTrayIcon)
 		connect(mSystemTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(systemTrayIconActivated(QSystemTrayIcon::ActivationReason)));
-	connect(mActionFactory, SIGNAL(packLoadError(QString)), this, SLOT(packLoadError(QString)));
+	connect(mActionFactory, SIGNAL(actionPackLoadError(QString)), this, SLOT(packLoadError(QString)));
 	connect(ui->consoleWidget, SIGNAL(itemDoubleClicked(int)), this, SLOT(logItemDoubleClicked(int)));
 	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
 	connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
@@ -318,7 +318,7 @@ void MainWindow::postInit()
 		fillNewActionTreeWidget(ui->newActionTreeWidget);
 	}
 
-	statusBar()->showMessage(tr("Ready, loaded %1 actions from %2 packs").arg(mActionFactory->actionDefinitionCount()).arg(mActionFactory->packCount()));
+	statusBar()->showMessage(tr("Ready, loaded %1 actions from %2 packs").arg(mActionFactory->actionDefinitionCount()).arg(mActionFactory->actionPackCount()));
 
 	ui->actionActions_window->setChecked(ui->actionsDockWidget->isVisible());
 	ui->actionConsole_window->setChecked(ui->consoleDockWidget->isVisible());
@@ -1062,6 +1062,12 @@ void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
 	ui->menuEdit->exec(ui->scriptView->mapToGlobal(pos));
 }
 
+void MainWindow::on_reportBugPushButton_clicked()
+{
+	//TODO : redirect to the bug submission form
+	QDesktopServices::openUrl(QUrl("bugs.actionaz.org"));
+}
+
 void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
 	if(reason == QSystemTrayIcon::DoubleClick)
@@ -1293,7 +1299,6 @@ void MainWindow::execute(bool onlySelection)
 	if(settings.value("general/addConsoleStartEndSeparators", QVariant(true)).toBool())
 		ui->consoleWidget->addStartSeparator();
 
-	QKeySequence stopExecutionHotkey = QKeySequence(settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString());
 	bool showExecutionWindow = settings.value("actions/showExecutionWindow", QVariant(true)).toBool();
 	int executionWindowPosition = settings.value("actions/executionWindowPosition", QVariant(0)).toInt();
 	int executionWindowScreen = settings.value("actions/executionWindowScreen", QVariant(0)).toInt();
@@ -1318,7 +1323,6 @@ void MainWindow::execute(bool onlySelection)
 						 showConsoleWindow,
 						 consoleWindowPosition,
 						 consoleWindowScreen,
-						 stopExecutionHotkey,
 						 ui->consoleWidget->model());
 	}
 

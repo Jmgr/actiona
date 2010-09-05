@@ -48,14 +48,6 @@ public:
 
 		emit executionEnded();
 	}
-	
-public slots:
-	void write(const QString &value)
-	{
-		QClipboard *clipboard = QApplication::clipboard();
-		
-		clipboard->setText(value);
-	}
 
 private:
 	Q_DISABLE_COPY(ActionWriteClipboardInstance)

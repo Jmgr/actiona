@@ -41,27 +41,6 @@ namespace ActionTools
 		qDeleteAll(mExceptions);
 	}
 	
-	ActionInstance *ActionDefinition::scriptInit(QScriptEngine *scriptEngine) const
-	{
-		ActionTools::ActionInstance *actionInstance = newActionInstance();
-		QScriptValue scriptObject = scriptEngine->newQObject(actionInstance, QScriptEngine::ScriptOwnership, QScriptEngine::ExcludeSuperClassContents | QScriptEngine::ExcludeDeleteLater);
-		
-		scriptEngine->globalObject().setProperty(id(), scriptObject);
-		
-		for(int enumeratorIndex = 0; enumeratorIndex < actionInstance->metaObject()->enumeratorCount(); ++enumeratorIndex)
-		{
-			const QMetaEnum &metaEnum = actionInstance->metaObject()->enumerator(enumeratorIndex);
-			QScriptValue enumObject = scriptEngine->newObject();
-			
-			scriptObject.setProperty(metaEnum.name(), enumObject);
-			
-			for(int keyIndex = 0; keyIndex < metaEnum.keyCount(); ++keyIndex)
-				enumObject.setProperty(metaEnum.key(keyIndex), metaEnum.value(keyIndex));
-		}
-		
-		return actionInstance;
-	}
-	
 	QString ActionDefinition::CategoryName[CategoryCount] =
 	{
 		QObject::tr("Windows"),

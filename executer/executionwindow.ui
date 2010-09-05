@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>170</width>
-    <height>149</height>
+    <height>192</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,14 +15,63 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0" colspan="2">
+      <widget class="QPushButton" name="cancelPushButton">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Stop</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="executer.qrc">
+         <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="debugPushButton">
+       <property name="toolTip">
+        <string>Debug</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="executer.qrc">
+         <normaloff>:/images/debug.png</normaloff>:/images/debug.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
       <widget class="QPushButton" name="pausePushButton">
        <property name="minimumSize">
         <size>
          <width>0</width>
          <height>60</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Pause</string>
        </property>
        <property name="text">
         <string/>
@@ -42,43 +91,7 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="cancelPushButton">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>60</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="executer.qrc">
-         <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
-      </widget>
-     </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="stopScriptLabel">
-     <property name="text">
-      <string notr="true">[text here]</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
    </item>
    <item>
     <widget class="QLabel" name="currentActionLabel">

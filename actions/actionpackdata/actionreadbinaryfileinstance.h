@@ -53,7 +53,7 @@ public:
 		
 		mFile.setFileName(filename);
 
-		if(!DataCopyActionInstance::startCopy(&mFile, &mResult, mFile.size()))
+		if(!DataCopyActionInstance::startCopy(&mFile, &mResult))
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("file");
 			emit executionException(UnableToReadFileException, tr("Unable to read the file \"%1\"").arg(filename));

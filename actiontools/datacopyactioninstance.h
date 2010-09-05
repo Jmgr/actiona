@@ -42,7 +42,7 @@ namespace ActionTools
 		virtual void stopExecution();
 		
 	protected:
-		bool startCopy(QIODevice *input, QIODevice *output, qint64 totalSize);
+		bool startCopy(QIODevice *input, QIODevice *output);
 		virtual void clean();
 		
 	private slots:

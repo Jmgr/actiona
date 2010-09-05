@@ -31,8 +31,8 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		LineParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-			: ListParameterDefinition(category, name, translatedName, parent)						{}
+		LineParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+			: ListParameterDefinition(name, translatedName, parent)						{}
 
 		void buildEditors(Script *script, QWidget *parent);
 		void update(Script *script);

@@ -38,12 +38,12 @@ namespace ActionTools
 		clean();
 	}
 	
-	bool DataCopyActionInstance::startCopy(QIODevice *input, QIODevice *output, qint64 totalSize)
+	bool DataCopyActionInstance::startCopy(QIODevice *input, QIODevice *output)
 	{
-		if(!input->open(QIODevice::ReadOnly))
+		if(!input->isOpen() && !input->open(QIODevice::ReadOnly))
 			return false;
 		
-		if(!output->open(QIODevice::WriteOnly))
+		if(!output->isOpen() && !output->open(QIODevice::WriteOnly))
 		{
 			input->close();
 			return false;
@@ -51,7 +51,7 @@ namespace ActionTools
 		
 		mInput = input;
 		mOutput = output;
-		mTotalSize = totalSize;
+		mTotalSize = input->size();
 		mDeviceCopyThread = new ActionTools::DeviceCopyThread(input, output);
 		
 		connect(mDeviceCopyThread, SIGNAL(finished()), this, SLOT(done()));

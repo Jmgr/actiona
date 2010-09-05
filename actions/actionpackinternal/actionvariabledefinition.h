@@ -41,17 +41,11 @@ public:
 	explicit ActionVariableDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::ElementDefinition::OUTPUT,
-																								"variable",
-																								tr("Variable"),
-																								this);
+		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
 		variable->setTooltip(tr("The variable name"));
 		addElement(variable);
 		
-		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"value",
-																								tr("Value"),
-																								this);
+		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
 		value->setTooltip(tr("The variable's new value"));
 		addElement(value);
 	}

@@ -39,10 +39,7 @@ public:
 	explicit ActionWheelDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::NumberParameterDefinition *intensity = new ActionTools::NumberParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"intensity",
-																								tr("Intensity"),
-																								this);
+		ActionTools::NumberParameterDefinition *intensity = new ActionTools::NumberParameterDefinition("intensity", tr("Intensity"), this);
 		intensity->setTooltip(tr("Intensity of the movement, positive is up, negative is down"));
 		intensity->setMinimum(INT_MIN);
 		intensity->setMaximum(INT_MAX);

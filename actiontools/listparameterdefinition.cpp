@@ -27,8 +27,8 @@
 
 namespace ActionTools
 {
-	ListParameterDefinition::ListParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ItemsParameterDefinition(category, name, translatedName, parent),
+	ListParameterDefinition::ListParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ItemsParameterDefinition(name, translatedName, parent),
 		mComboBox(0)
 	{
 	}

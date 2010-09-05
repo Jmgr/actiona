@@ -42,33 +42,21 @@ public:
 		: ActionDefinition(pack)
 	{
 #ifdef Q_WS_WIN
-		ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"key",
-																								tr("Key"),
-																								this);
+		ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition("key", tr("Key"), this);
 		key->setTooltip(tr("The registry key to read from"));
 		key->setItems(ActionReadRegistryInstance::keys);
 		key->setDefaultValue(ActionReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 		addElement(key);
 
-		ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition( ActionTools::ElementDefinition::INPUT,
-																							   "subKey",
-																							   tr("Subkey"),
-																							   this);
+		ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition("subKey", tr("Subkey"), this);
 		subKey->setTooltip(tr("The registry subkey to read from"));
 		addElement(subKey);
 
-		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition( ActionTools::ElementDefinition::INPUT,
-																							   "value",
-																							   tr("Value"),
-																							   this);
+		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
 		value->setTooltip(tr("The value to read"));
 		addElement(value);
 
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition( ActionTools::ElementDefinition::OUTPUT,
-																										 "variable",
-																										 tr("Variable"),
-																										 this);
+		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
 		variable->setTooltip(tr("The variable where to save the value read from the registry"));
 		addElement(variable);
 

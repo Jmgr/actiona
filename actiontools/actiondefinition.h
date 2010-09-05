@@ -94,15 +94,13 @@ namespace ActionTools
 		const QList<ActionException *> &exceptions() const								{ return mExceptions; }
 
 		virtual bool requirementCheck(QStringList &missingRequirements) const			{ Q_UNUSED(missingRequirements) return true; }
-		
-		ActionInstance *scriptInit(QScriptEngine *scriptEngine) const;
-		
+
 		static QString CategoryName[CategoryCount];
 		static QStringList StandardTabs;
 
 	protected:
 		void addElement(ElementDefinition *element, int tab = 0);
-		void addException(int id, const QString &name)								{ mExceptions.append(new ActionException(id, name)); }
+		void addException(int id, const QString &name)									{ mExceptions.append(new ActionException(id, name)); }
 		bool requirementCheckXTest(QStringList &missingRequirements) const;
 
 	private:

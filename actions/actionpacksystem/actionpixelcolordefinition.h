@@ -42,31 +42,19 @@ public:
 	explicit ActionPixelColorDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::ColorPositionParameterDefinition *pixel = new ActionTools::ColorPositionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																												"pixel",
-																												tr("Pixel"),
-																												this);
+		ActionTools::ColorPositionParameterDefinition *pixel = new ActionTools::ColorPositionParameterDefinition("pixel", tr("Pixel"), this);
 		pixel->setTooltip(tr("The pixel position and color to check"));
 		addElement(pixel);
 		
-		ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																											"ifEqual",
-																											tr("If equal"),
-																											this);
+		ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition("ifEqual", tr("If equal"), this);
 		ifEqual->setTooltip(tr("What to to if the pixel is from the specified color"));
 		addElement(ifEqual);
 		
-		ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																											"ifDifferent",
-																											tr("If different"),
-																											this);
+		ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition("ifDifferent", tr("If different"), this);
 		ifDifferent->setTooltip(tr("What to to if the pixel is not from the specified color"));
 		addElement(ifDifferent);
 		
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(	ActionTools::ElementDefinition::OUTPUT,
-																											"variable",
-																											tr("Variable"),
-																											this);
+		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
 		variable->setTooltip(tr("Variable name where to store the pixel color"));
 		addElement(variable, 1);
 	}

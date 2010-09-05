@@ -24,8 +24,8 @@
 
 namespace ActionTools
 {
-	PositionParameterDefinition::PositionParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(category, name, translatedName, parent),
+	PositionParameterDefinition::PositionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ParameterDefinition(name, translatedName, parent),
 		mPositionEdit(0)
 	{
 	}

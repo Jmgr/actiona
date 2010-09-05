@@ -38,8 +38,7 @@ namespace Executer
 	public:
 		ExecutionWindow(QWidget *parent = 0);
 		~ExecutionWindow();
-	
-		void setStopExecutionShortcut(const QKeySequence &keySequence);
+
 		void setCurrentActionName(const QString &actionName);
 		void setCurrentActionColor(const QColor &actionColor);
 		void setProgressEnabled(bool enabled);
@@ -51,9 +50,15 @@ namespace Executer
 	signals:
 		void canceled();
 		void paused();
+		void debug();
+		
+	public slots:
+		void onEvaluationResumed();
+		void onEvaluationPaused();
 		
 	private slots:
 		void on_pausePushButton_clicked();
+		void on_debugPushButton_clicked();
 	
 	private:
 		Ui::ExecutionWindow *ui;

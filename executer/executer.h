@@ -32,6 +32,7 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QProgressDialog>
+#include <QScriptEngineDebugger>
 
 namespace ActionTools
 {
@@ -41,6 +42,7 @@ namespace ActionTools
 }
 
 class QStandardItemModel;
+class QMainWindow;
 
 namespace Executer
 {
@@ -62,7 +64,6 @@ namespace Executer
 				   bool showConsoleWindow,
 				   int consoleWindowPosition,
 				   int consoleWindowScreen,
-				   const QKeySequence &stopExecutionHotkey,
 				   QStandardItemModel *consoleModel);
 
 		ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
@@ -129,13 +130,14 @@ namespace Executer
 		bool mShowConsoleWindow;
 		int mConsoleWindowPosition;
 		int mConsoleWindowScreen;
-		QKeySequence mStopExecutionShortcut;
 		ExecutionWindow *mExecutionWindow;
 		ActionTools::ConsoleWidget *mConsoleWidget;
 		int mCurrentActionIndex;
 		bool mExecutionStarted;
 		bool mExecutionEnded;
 		QScriptEngine mScriptEngine;
+		QScriptEngineDebugger mScriptEngineDebugger;
+		QMainWindow *mDebuggerWindow;
 		bool mExecuteOnlySelection;
 		ScriptAgent *mScriptAgent;
 		QList<bool> mActionEnabled;

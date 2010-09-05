@@ -5,7 +5,8 @@ unix:!mac {
 }
 QT += xml \
 	network \
-	script
+	script \
+	scripttools
 CONFIG += qxt
 QXT += core \
 	gui

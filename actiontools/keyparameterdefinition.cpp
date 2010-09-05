@@ -27,8 +27,8 @@
 
 namespace ActionTools
 {
-	KeyParameterDefinition::KeyParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(category, name, translatedName, parent),
+	KeyParameterDefinition::KeyParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ParameterDefinition(name, translatedName, parent),
 		mKeyEdit(0)
 	{
 	}

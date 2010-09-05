@@ -40,31 +40,19 @@ public:
 	explicit ActionTimeConditionDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::DateTimeParameterDefinition *date = new ActionTools::DateTimeParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"date",
-																								tr("Date"),
-																								this);
+		ActionTools::DateTimeParameterDefinition *date = new ActionTools::DateTimeParameterDefinition("date", tr("Date"), this);
 		date->setTooltip(tr("The date to compare"));
 		addElement(date);
 		
-		ActionTools::IfActionParameterDefinition *ifBefore = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifBefore",
-																								tr("If before"),
-																								this);
+		ActionTools::IfActionParameterDefinition *ifBefore = new ActionTools::IfActionParameterDefinition("ifBefore", tr("If before"), this);
 		ifBefore->setTooltip(tr("What to do if the date is in the past"));
 		addElement(ifBefore);
 		
-		ActionTools::IfActionParameterDefinition *ifNow = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifNow",
-																								tr("If now"),
-																								this);
+		ActionTools::IfActionParameterDefinition *ifNow = new ActionTools::IfActionParameterDefinition("ifNow", tr("If now"), this);
 		ifNow->setTooltip(tr("What to do if the date is the current date"));
 		addElement(ifNow);
 		
-		ActionTools::IfActionParameterDefinition *ifAfter = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifAfter",
-																								tr("If after"),
-																								this);
+		ActionTools::IfActionParameterDefinition *ifAfter = new ActionTools::IfActionParameterDefinition("ifAfter", tr("If after"), this);
 		ifAfter->setTooltip(tr("What to do if the date is in the future"));
 		ifAfter->setAllowWait(true);
 		addElement(ifAfter);

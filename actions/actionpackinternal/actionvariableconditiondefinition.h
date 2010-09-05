@@ -42,40 +42,26 @@ public:
 	explicit ActionVariableConditionDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"variable",
-																								tr("Variable"),
-																								this);
+		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+		variable->setCategory(ActionTools::ElementDefinition::INPUT);
 		variable->setTooltip(tr("The variable to compare"));
 		addElement(variable);
 
-		ActionTools::ListParameterDefinition *comparison = new ActionTools::ListParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"comparison",
-																								tr("Comparison"),
-																								this);
+		ActionTools::ListParameterDefinition *comparison = new ActionTools::ListParameterDefinition("comparison", tr("Comparison"), this);
 		comparison->setTooltip(tr("The comparison"));
 		comparison->setItems(ActionVariableConditionInstance::comparisons);
 		comparison->setDefaultValue(ActionVariableConditionInstance::comparisons.second.at(ActionVariableConditionInstance::Equal));
 		addElement(comparison);
 
-		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																							   "value",
-																							   tr("Value"),
-																							   this);
+		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
 		value->setTooltip(tr("The value"));
 		addElement(value);
 
-		ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifEqual",
-																								tr("If equal"),
-																								this);
+		ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition("ifEqual", tr("If equal"), this);
 		ifEqual->setTooltip(tr("What to do if the values are equal"));
 		addElement(ifEqual);
 
-		ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"ifDifferent",
-																								tr("If different"),
-																								this);
+		ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition("ifDifferent", tr("If different"), this);
 		ifDifferent->setTooltip(tr("What to do if the values are different"));
 		addElement(ifDifferent);
 	}

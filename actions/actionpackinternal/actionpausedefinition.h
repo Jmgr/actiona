@@ -41,11 +41,7 @@ public:
 	explicit ActionPauseDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition(ActionTools::ElementDefinition::INPUT,
-																								"duration",
-																								tr("Duration"),
-																								this);
-
+		ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition("duration", tr("Duration"), this);
 		duration->setTooltip(tr("The duration of the pause"));
 		duration->setSuffix(tr(" ms", "milliseconds"));
 		duration->setMinimum(0);

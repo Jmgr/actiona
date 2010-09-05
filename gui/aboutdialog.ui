@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>865</width>
+    <width>891</width>
     <height>298</height>
    </rect>
   </property>
@@ -90,6 +90,11 @@
           <item>
            <property name="text">
             <string>Matthieu Hazon</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Loïc Vauvrecy</string>
            </property>
           </item>
          </widget>

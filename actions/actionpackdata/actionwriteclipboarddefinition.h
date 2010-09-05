@@ -40,10 +40,7 @@ public:
 	explicit ActionWriteClipboardDefinition(ActionTools::ActionPack *pack)
 	: ActionDefinition(pack)
 	{
-		ActionTools::TextParameterDefinition *input = new ActionTools::TextParameterDefinition(	ActionTools::ElementDefinition::INPUT,
-																								"value",
-																								 tr("Value"),
-																								 this);
+		ActionTools::TextParameterDefinition *input = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
 		input->setTooltip(tr("The new clipboard value"));
 		addElement(input);
 	}

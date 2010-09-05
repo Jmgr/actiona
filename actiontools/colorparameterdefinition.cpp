@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	ColorParameterDefinition::ColorParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(category, name, translatedName, parent),
+	ColorParameterDefinition::ColorParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ParameterDefinition(name, translatedName, parent),
 		mColorEdit(0)
 	{
 	}

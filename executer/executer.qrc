@@ -6,5 +6,6 @@
         <file>images/pause.png</file>
         <file>images/play.png</file>
         <file>images/stop.png</file>
+        <file>images/debug.png</file>
     </qresource>
 </RCC>

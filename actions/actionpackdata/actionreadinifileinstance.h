@@ -55,11 +55,7 @@ public:
 			return;
 
 		rude::Config config;
-#ifdef Q_WS_WIN
-		if(!config.load(filename.toLatin1()))
-#else
-		if(!config.load(filename.toUtf8()))
-#endif
+		if(!config.load(filename.toLocal8Bit()))
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("filename");
 			emit executionException(UnableToReadFileException, tr("Unable to read the file"));
@@ -76,25 +72,6 @@ public:
 		actionInstanceExecutionHelper.setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
 
 		emit executionEnded();
-	}
-
-public slots:
-	QString read(const QString &filename, const QString &section, const QString &parameter) const
-	{
-		rude::Config config;
-
-#ifdef Q_WS_WIN
-		if(!config.load(filename.toLatin1()))
-			return QString();
-#else
-		if(!config.load(filename.toUtf8()))
-			return QString();
-#endif
-
-		if(!config.setSection(section.toLatin1(), false))
-			return QString();
-
-		return QString::fromLatin1(config.getStringValue(parameter.toLatin1()));
 	}
 
 private:

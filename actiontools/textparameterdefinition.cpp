@@ -27,8 +27,8 @@
 
 namespace ActionTools
 {
-	TextParameterDefinition::TextParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(category, name, translatedName, parent),
+	TextParameterDefinition::TextParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ParameterDefinition(name, translatedName, parent),
 		mCodeOnly(false),
 		mLineEdit(0)
 	{

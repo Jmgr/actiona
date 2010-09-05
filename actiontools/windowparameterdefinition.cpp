@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	WindowParameterDefinition::WindowParameterDefinition(Category category, const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(category, name, translatedName, parent),
+	WindowParameterDefinition::WindowParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
+		: ParameterDefinition(name, translatedName, parent),
 		mWindowEdit(0)
 	{
 	}
