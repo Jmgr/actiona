@@ -69,7 +69,7 @@ public slots:
 	QScriptValue move(const QString &destination, const QScriptValue &parameters = QScriptValue());
 	QScriptValue rename(QString source, QString destination, const QScriptValue &parameters = QScriptValue());
 	QScriptValue rename(const QString &destination, const QScriptValue &parameters = QScriptValue());
-	QScriptValue remove(const QString &filename);
+	QScriptValue remove(QString filename);
 	QScriptValue remove();
 
 private:

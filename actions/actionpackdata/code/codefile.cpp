@@ -252,7 +252,7 @@ QScriptValue CodeFile::rename(const QString &destination, const QScriptValue &pa
 	return move(destination, parameters);
 }
 
-QScriptValue CodeFile::remove(const QString &filename)
+QScriptValue CodeFile::remove(QString filename)
 {
 #ifdef Q_WS_X11
 	filename.replace(" ", "\\ ");
