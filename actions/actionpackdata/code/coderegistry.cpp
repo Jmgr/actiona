@@ -255,7 +255,7 @@ QStringList CodeRegistry::valueNames() const
 		return QStringList();
 	}
 
-	if(valueCount <= 1 || maxValueNameLength == 0)
+	if(valueCount == 0 || maxValueNameLength == 0)
 		return QStringList();
 
 	wchar_t *valueName = new wchar_t[maxValueNameLength + 1];
@@ -321,6 +321,15 @@ QStringList CodeRegistry::keys() const
 #else
 	return QStringList();
 #endif
+}
+
+QScriptValue CodeRegistry::deleteValue(const QString &value) const
+{
+#ifdef Q_WS_WIN
+	if(RegDeleteValue(mHKey, value.toStdWString().c_str()) != ERROR_SUCCESS)
+		context()->throwError(tr("Unable to delete the key"));
+#endif
+	return context()->thisObject();
 }
 
 #ifdef Q_WS_WIN

@@ -59,10 +59,10 @@ public slots:
 	QVariant value(const QString &value = QString()) const;
 	QStringList valueNames() const;
 	QStringList keys() const;
+	QScriptValue deleteValue(const QString &value = QString()) const;
 	QScriptValue deleteKey(Key key, const QString &subKey) const;
 	QScriptValue deleteKey() const;
 	QScriptValue closeKey() const;
-	//TODO : Add delete value
 
 private:
 #ifdef Q_WS_WIN
