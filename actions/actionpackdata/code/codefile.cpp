@@ -131,7 +131,7 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 	{
 		if(createDestinationDirectory)
 		{
-			if(QProcess::execute(QString("sh -c \"mkdir -p %1\"").arg(QFile::encodeName(destination)))
+			if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destination) + "\""))
 			{
 				context()->throwError(tr("Unable to create destination directory"));
 				return context()->thisObject();
@@ -144,10 +144,7 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 		}
 	}
 
-	QString command = "sh -c \"cp -f";
-
-	if(recursive)
-		command += " -r";
+	QString command = "sh -c \"cp -fr";
 
 	command += " ";
 	command += QFile::encodeName(source);
@@ -217,7 +214,7 @@ QScriptValue CodeFile::move(QString source, QString destination, const QScriptVa
 	{
 		if(createDestinationDirectory)
 		{
-			if(QProcess::execute(QString("sh -c \"mkdir -p %1\"").arg(QFile::encodeName(destination)))
+			if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destination) + "\""))
 			{
 				context()->throwError(tr("Unable to create destination directory"));
 				return QScriptValue();

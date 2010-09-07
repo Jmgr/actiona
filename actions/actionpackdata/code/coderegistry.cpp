@@ -60,6 +60,9 @@ QScriptValue CodeRegistry::openKey(Key key, const QString &subKey)
 		mRootKey = key;
 		mSubKey = subKey;
 	}
+#else
+	Q_UNUSED(key)
+	Q_UNUSED(subKey)
 #endif
 	return context()->thisObject();
 }
@@ -76,6 +79,9 @@ QScriptValue CodeRegistry::createKey(Key key, const QString &subKey)
 		mRootKey = key;
 		mSubKey = subKey;
 	}
+#else
+	Q_UNUSED(key)
+	Q_UNUSED(subKey)
 #endif
 	return context()->thisObject();
 }
@@ -138,6 +144,9 @@ QScriptValue CodeRegistry::setValue(const QString &value, const QVariant &data) 
 		}
 		break;
 	}
+#else
+	Q_UNUSED(value)
+	Q_UNUSED(data)
 #endif
 	return context()->thisObject();
 }
@@ -238,6 +247,8 @@ QVariant CodeRegistry::value(const QString &value) const
 		break;
 	}
 #else
+	Q_UNUSED(value)
+	
 	return QVariant();
 #endif
 }
@@ -328,6 +339,8 @@ QScriptValue CodeRegistry::deleteValue(const QString &value) const
 #ifdef Q_WS_WIN
 	if(RegDeleteValue(mHKey, value.toStdWString().c_str()) != ERROR_SUCCESS)
 		context()->throwError(tr("Unable to delete the key"));
+#else
+	Q_UNUSED(value)
 #endif
 	return context()->thisObject();
 }
@@ -431,6 +444,9 @@ QScriptValue CodeRegistry::deleteKey(Key key, const QString &subKey) const
 
 	if(!RegDelnode(hKey, subKey.toStdWString().c_str()))
 		context()->throwError(tr("Unable to delete the key"));
+#else
+	Q_UNUSED(key)
+	Q_UNUSED(subKey)
 #endif
 	return context()->thisObject();
 }
