@@ -23,6 +23,7 @@
 #include <QScriptValueIterator>
 #include <QProcess>
 #include <QDir>
+#include <QDebug>
 
 QScriptValue CodeFile::constructor(QScriptContext *context, QScriptEngine *engine)
 {
@@ -112,7 +113,6 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 {
 	QScriptValueIterator it(parameters);
 	bool createDestinationDirectory = true;
-	bool recursive = true;
 
 	while(it.hasNext())
 	{
@@ -120,20 +120,55 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 
 		if(it.name() == "createDestinationDirectory")
 			createDestinationDirectory = it.value().toBool();
-		else if(it.name() == "recursive")
-			recursive = it.value().toBool();
 	}
 
 #ifdef Q_WS_X11
+	QDir destinationDir(destination);
+
 	source.replace(" ", "\\ ");
 	destination.replace(" ", "\\ ");
 
+	if(!destinationDir.exists())
+	{
+		if(createDestinationDirectory)
+		{
+			if(QProcess::execute(QString("sh -c \"mkdir -p %1\"").arg(QFile::encodeName(destination)))
+			{
+				context()->throwError(tr("Unable to create destination directory"));
+				return context()->thisObject();
+			}
+		}
+		else
+		{
+			context()->throwError(tr("Destination directory doesn't exist"));
+			return context()->thisObject();
+		}
+	}
+
+	QString command = "sh -c \"cp -f";
+
+	if(recursive)
+		command += " -r";
+
+	command += " ";
+	command += QFile::encodeName(source);
+	command += " ";
+	command += QFile::encodeName(destination);
+	command += "\"";
+
+	if(QProcess::execute(command))
+	{
+		context()->throwError(tr("Copy failed"));
+		return context()->thisObject();
+	}
+#endif
+#ifdef Q_WS_WIN
 	QDir destinationDir(destination);
 	if(!destinationDir.exists())
 	{
 		if(createDestinationDirectory)
 		{
-			if(QProcess::execute(QString("sh -c \"mkdir -p %1\"").arg(destination)))
+			if(QProcess::execute("cmd", QStringList() << "/c" << "mkdir" << QFile::encodeName(destination)))
 			{
 				context()->throwError(tr("Unable to create destination directory"));
 				return QScriptValue();
@@ -146,28 +181,11 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 		}
 	}
 
-	QString command = "sh -c \"cp -f";
+	QStringList args = QStringList() << "/c" << "xcopy" << QFile::encodeName(source) << QFile::encodeName(destination) << "/i /y /e /r /k /a /q /h /c /m /x";
 
-	if(recursive)
-		command += " -r";
-
-	command += " ";
-	command += source;
-	command += " ";
-	command += destination;
-	command += "\"";
-
-	if(QProcess::execute(command))
-	{
+	if(QProcess::execute("cmd", args) > 1)
 		context()->throwError(tr("Copy failed"));
-		return QScriptValue();
-	}
 #endif
-#ifdef Q_WS_WIN
-	//TODO
-#endif
-
-	return QScriptValue();
 
 	return context()->thisObject();
 }
@@ -191,15 +209,16 @@ QScriptValue CodeFile::move(QString source, QString destination, const QScriptVa
 	}
 
 #ifdef Q_WS_X11
+	QDir destinationDir(destination);
+
 	source.replace(" ", "\\ ");
 	destination.replace(" ", "\\ ");
 
-	QDir destinationDir(destination);
 	if(!destinationDir.exists())
 	{
 		if(createDestinationDirectory)
 		{
-			if(QProcess::execute(QString("sh -c \"mkdir -p %1\"").arg(destination)))
+			if(QProcess::execute(QString("sh -c \"mkdir -p %1\"").arg(QFile::encodeName(destination)))
 			{
 				context()->throwError(tr("Unable to create destination directory"));
 				return QScriptValue();
@@ -215,9 +234,9 @@ QScriptValue CodeFile::move(QString source, QString destination, const QScriptVa
 	QString command = "sh -c \"mv -f";
 
 	command += " ";
-	command += source;
+	command += QFile::encodeName(source);
 	command += " ";
-	command += destination;
+	command += QFile::encodeName(destination);
 	command += "\"";
 
 	if(QProcess::execute(command))
@@ -227,7 +246,10 @@ QScriptValue CodeFile::move(QString source, QString destination, const QScriptVa
 	}
 #endif
 #ifdef Q_WS_WIN
-	//TODO
+	QStringList args = QStringList() << "/c" << "move /y" << QFile::encodeName(source) << QFile::encodeName(destination);
+
+	if(QProcess::execute("cmd", args))
+		context()->throwError(tr("Move/rename failed"));
 #endif
 
 	return QScriptValue();
@@ -260,7 +282,7 @@ QScriptValue CodeFile::remove(QString filename)
 	QString command = "sh -c \"rm -fr";
 
 	command += " ";
-	command += filename;
+	command += QFile::encodeName(filename);
 	command += "\"";
 
 	if(QProcess::execute(command))
@@ -270,7 +292,24 @@ QScriptValue CodeFile::remove(QString filename)
 	}
 #endif
 #ifdef Q_WS_WIN
-	//TODO
+	QProcess funkyWindowsCommand;
+
+	QStringList args = QStringList() << "/c" << "del /q" << QFile::encodeName(filename) << "/f /s /q /as /ah /ar /aa";
+	//Yes, the /q option has to be *before* AND *after* the filename :D
+
+	funkyWindowsCommand.start("cmd", args);
+	funkyWindowsCommand.waitForStarted();
+	funkyWindowsCommand.waitForFinished();
+
+	args = QStringList() << "/c" << "rmdir /s /q" << QFile::encodeName(filename);
+
+	funkyWindowsCommand.start("cmd", args);//Yes, we have to run it *two* time...
+	funkyWindowsCommand.waitForStarted();
+	funkyWindowsCommand.waitForFinished();
+
+	funkyWindowsCommand.start("cmd", args);
+	funkyWindowsCommand.waitForStarted();
+	funkyWindowsCommand.waitForFinished();
 #endif
 
 	return context()->thisObject();
