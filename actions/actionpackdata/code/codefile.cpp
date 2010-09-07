@@ -23,7 +23,6 @@
 #include <QScriptValueIterator>
 #include <QProcess>
 #include <QDir>
-#include <QDebug>
 
 QScriptValue CodeFile::constructor(QScriptContext *context, QScriptEngine *engine)
 {
