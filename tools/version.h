@@ -89,13 +89,15 @@ namespace Tools
 		QString toString() const;
 		bool setFromString(const QString &str);
 
-		Version& operator= (const Version &other);
+		Version& operator= (Version other);
 		bool operator== (const Version &other) const;
 		bool operator!= (const Version &other) const;
 		bool operator< (const Version &other) const;
 		bool operator> (const Version &other) const;
 		bool operator<= (const Version &other) const;
 		bool operator>= (const Version &other) const;
+		
+		void swap(Version &other);
 
 		static bool isValidVersion(const QString &str);
 

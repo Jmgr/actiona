@@ -133,6 +133,11 @@ namespace Tools
 
 		return true;
 	}
+	
+	void Version::swap(Version &other)
+	{
+		d.swap(other.d);
+	}
 
 	bool Version::isValidVersion(const QString &str)
 	{
@@ -145,16 +150,9 @@ namespace Tools
 		return regExp.exactMatch(str);
 	}
 
-	Version &Version::operator= (const Version &other)
+	Version &Version::operator= (Version other)
 	{
-		if(this == &other)
-			return *this;
-
-		d->major = other.d->major;
-		d->minor = other.d->minor;
-		d->micro = other.d->micro;
-		d->nano = other.d->nano;
-		d->numberCount = other.d->numberCount;
+		swap(other);
 
 		return *this;
 	}
