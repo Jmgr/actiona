@@ -98,14 +98,17 @@ QScriptValue CodeImage::setData(const QScriptValue &data)
 QScriptValue CodeImage::data() const
 {
 	//TODO
+	return context()->thisObject();
 }
 
 QScriptValue CodeImage::loadFromFile(const QString &filename)
 {
-	
+	//TODO
+	return context()->thisObject();
 }
 
 QScriptValue CodeImage::saveToFile(const QString &filename) const
 {
-	
+	//TODO
+	return context()->thisObject();
 }
