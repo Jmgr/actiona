@@ -189,9 +189,6 @@ namespace Executer
 	#ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Executer::startExecution");
 	#endif
-		if(mHasExecuted)//HACK: We cannot do that in stopExecution because is asserts for some reason when aborting script
-			mScriptEngine.popContext();
-		
 		mScriptEngine.pushContext();
 
 		mScriptAgent->setContext(ScriptAgent::Unknown);
@@ -378,6 +375,9 @@ namespace Executer
 			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
 			actionInstance->stopLongTermExecution();
 		}
+		
+		mScriptEngine.popContext();
+		mScriptEngine.collectGarbage();
 
 		delete mProgressDialog;
 		mProgressDialog = 0;
