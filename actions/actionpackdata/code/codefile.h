@@ -21,6 +21,8 @@
 #ifndef CODEFILE_H
 #define CODEFILE_H
 
+#include "code.h"
+
 #include <QObject>
 #include <QScriptable>
 #include <QScriptValue>
@@ -44,13 +46,6 @@ public:
 		Text =			QIODevice::Text,
 		Unbuffered =	QIODevice::Unbuffered
 	};
-	enum Encoding
-	{
-		Native,
-		Ascii,
-		Latin1,
-		UTF8,
-	};
 
 	static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
@@ -58,18 +53,18 @@ public:
 
 public slots:
 	QScriptValue open(const QString &filename, OpenMode mode = static_cast<OpenMode>(ReadWrite | Append));
-	QScriptValue write(const QScriptValue &value);
-	QScriptValue writeText(const QString &value, Encoding encoding = Native);
+	QScriptValue write(const QScriptValue &data);
+	QScriptValue writeText(const QString &value, Code::Encoding encoding = Code::Native);
 	QScriptValue read();
-	QScriptValue readText(Encoding encoding = Native);
+	QScriptValue readText(Code::Encoding encoding = Code::Native);
 	QScriptValue close();
-	QScriptValue copy(QString source, QString destination, const QScriptValue &parameters = QScriptValue());
-	QScriptValue copy(const QString &destination, const QScriptValue &parameters = QScriptValue());
+	QScriptValue copy(QString source, QString destination, const QScriptValue &parameters = QScriptValue()) const;
+	QScriptValue copy(const QString &destination, const QScriptValue &parameters = QScriptValue()) const;
 	QScriptValue move(QString source, QString destination, const QScriptValue &parameters = QScriptValue());
 	QScriptValue move(const QString &destination, const QScriptValue &parameters = QScriptValue());
 	QScriptValue rename(QString source, QString destination, const QScriptValue &parameters = QScriptValue());
 	QScriptValue rename(const QString &destination, const QScriptValue &parameters = QScriptValue());
-	QScriptValue remove(QString filename);
+	QScriptValue remove(QString filename) const;
 	QScriptValue remove();
 
 private:

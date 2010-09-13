@@ -19,6 +19,7 @@
 */
 
 #include "codeclipboard.h"
+#include "codeimage.h"
 
 #include <QApplication>
 #include <QImage>
@@ -30,7 +31,7 @@ QScriptValue CodeClipboard::constructor(QScriptContext *context, QScriptEngine *
 	return engine->newQObject(new CodeClipboard, QScriptEngine::ScriptOwnership);
 }
 
-QScriptValue CodeClipboard::writeText(const QString &value, Mode mode)
+QScriptValue CodeClipboard::writeText(const QString &value, Mode mode) const
 {
 	if(!isModeValid(mode))
 		return context()->thisObject();
@@ -43,7 +44,7 @@ QScriptValue CodeClipboard::writeText(const QString &value, Mode mode)
 	return context()->thisObject();
 }
 
-QScriptValue CodeClipboard::writeImage(const QVariant &value, Mode mode)
+QScriptValue CodeClipboard::writeImage(const QScriptValue &data, Mode mode) const
 {
 	if(!isModeValid(mode))
 		return context()->thisObject();
@@ -51,12 +52,16 @@ QScriptValue CodeClipboard::writeImage(const QVariant &value, Mode mode)
 	QClipboard *clipboard = QApplication::clipboard();
 	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mode);
 	
-	clipboard->setImage(value.value<QImage>(), clipboardMode);
-	
+	QObject *object = data.toQObject();
+	if(CodeImage *codeImage = qobject_cast<CodeImage*>(object))
+		clipboard->setImage(codeImage->image(), clipboardMode);
+	else
+		clipboard->setImage(data.toVariant().value<QImage>(), clipboardMode);
+
 	return context()->thisObject();
 }
 
-QString CodeClipboard::readText(Mode mode)
+QString CodeClipboard::readText(Mode mode) const
 {
 	if(!isModeValid(mode))
 		return QString();
@@ -67,15 +72,15 @@ QString CodeClipboard::readText(Mode mode)
 	return clipboard->text(clipboardMode);
 }
 
-QVariant CodeClipboard::readImage(Mode mode)
+QScriptValue CodeClipboard::readImage(Mode mode) const
 {
 	if(!isModeValid(mode))
-		return QVariant();
+		return QScriptValue();
 	
 	QClipboard *clipboard = QApplication::clipboard();
 	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mode);
 	
-	return clipboard->image(clipboardMode);
+	return CodeImage::constructor(clipboard->image(clipboardMode), context(), engine());
 }
 
 bool CodeClipboard::isModeValid(Mode mode) const

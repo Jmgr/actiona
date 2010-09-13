@@ -21,6 +21,8 @@
 #ifndef CODEINIFILE_H
 #define CODEINIFILE_H
 
+#include "code.h"
+
 #include <QObject>
 #include <QScriptable>
 #include <QScriptValue>
@@ -31,8 +33,11 @@
 class CodeIniFile : public QObject, public QScriptable
 {
     Q_OBJECT
+
 public:
 	static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+	
+	CodeIniFile();
 
 public slots:
 	QScriptValue load(const QString &filename);
@@ -42,6 +47,7 @@ public slots:
 	QScriptValue setDelimiter(char delimiter);
 	QScriptValue setCommentCharacter(char commentchar);
 	QScriptValue setSection(const QString &sectionName, bool create = true);
+	QScriptValue setEncoding(Code::Encoding encoding);
 	QString sectionAt(int sectionIndex) const;
 	QScriptValue deleteSection(const QString &sectionName);
 	int sectionCount() const;
@@ -54,6 +60,7 @@ public slots:
 
 private:
 	rude::Config mConfig;
+	Code::Encoding mEncoding;
 };
 
 #endif // CODEINIFILE_H

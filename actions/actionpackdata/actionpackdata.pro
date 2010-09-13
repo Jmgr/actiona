@@ -1,7 +1,7 @@
 include(../common_actions.pri)
 include(code/code.pri)
 TARGET = ActionPackData
-QT += script
+QT += script network sql
 HEADERS += actionpackdata.h \
 	actionreadtextfiledefinition.h \
 	actionreadtextfileinstance.h \

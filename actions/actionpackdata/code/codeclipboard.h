@@ -43,10 +43,10 @@ public:
 	static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 public slots:
-	QScriptValue writeText(const QString &value, Mode mode = Clipboard);
-	QScriptValue writeImage(const QVariant &value, Mode mode = Clipboard);
-	QString readText(Mode mode = Clipboard);
-	QVariant readImage(Mode mode = Clipboard);
+	QScriptValue writeText(const QString &value, Mode mode = Clipboard) const;
+	QScriptValue writeImage(const QScriptValue &data, Mode mode = Clipboard) const;
+	QString readText(Mode mode = Clipboard) const;
+	QScriptValue readImage(Mode mode = Clipboard) const;
 	
 private:
 	bool isModeValid(Mode mode) const;

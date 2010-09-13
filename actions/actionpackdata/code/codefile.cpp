@@ -19,6 +19,7 @@
 */
 
 #include "codefile.h"
+#include "coderawdata.h"
 
 #include <QScriptValueIterator>
 #include <QProcess>
@@ -41,37 +42,26 @@ QScriptValue CodeFile::open(const QString &filename, OpenMode mode)
 	return context()->thisObject();
 }
 
-QScriptValue CodeFile::write(const QScriptValue &value)
+QScriptValue CodeFile::write(const QScriptValue &data)
 {
-	if(mFile.write(value.toVariant().toByteArray()) == -1)
-		context()->throwError(tr("Write failed"));
+	QObject *object = data.toQObject();
+	if(CodeRawData *codeRawData = qobject_cast<CodeRawData*>(object))
+	{
+		if(mFile.write(codeRawData->byteArray()) == -1)
+			context()->throwError(tr("Write failed"));
+	}
+	else
+	{
+		if(mFile.write(data.toVariant().toByteArray()) == -1)
+			context()->throwError(tr("Write failed"));
+	}
 
 	return context()->thisObject();
 }
 
-QScriptValue CodeFile::writeText(const QString &value, Encoding encoding)
+QScriptValue CodeFile::writeText(const QString &value, Code::Encoding encoding)
 {
-	QByteArray data;
-
-	switch(encoding)
-	{
-	case Native:
-		data = value.toLocal8Bit();
-		break;
-	case Ascii:
-		data = value.toAscii();
-		break;
-	case Latin1:
-		data = value.toLatin1();
-		break;
-	case UTF8:
-		data = value.toUtf8();
-		break;
-	default:
-		break;
-	}
-
-	if(mFile.write(data) == -1)
+	if(mFile.write(Code::toEncoding(value, encoding)) == -1)
 		context()->throwError(tr("Write failed"));
 
 	return context()->thisObject();
@@ -79,26 +69,12 @@ QScriptValue CodeFile::writeText(const QString &value, Encoding encoding)
 
 QScriptValue CodeFile::read()
 {
-	return engine()->newVariant(mFile.readAll());
+	return CodeRawData::constructor(mFile.readAll(), context(), engine());
 }
 
-QScriptValue CodeFile::readText(Encoding encoding)
+QScriptValue CodeFile::readText(Code::Encoding encoding)
 {
-	QByteArray data = mFile.readAll();
-
-	switch(encoding)
-	{
-	case Native:
-		return engine()->newVariant(QString::fromLocal8Bit(data.data(), data.size()));
-	case Ascii:
-		return engine()->newVariant(QString::fromAscii(data.data(), data.size()));
-	case Latin1:
-		return engine()->newVariant(QString::fromLatin1(data.data(), data.size()));
-	case UTF8:
-		return engine()->newVariant(QString::fromUtf8(data.data(), data.size()));
-	default:
-		return QScriptValue();
-	}
+	return engine()->newVariant(Code::fromEncoding(mFile.readAll(), encoding));
 }
 
 QScriptValue CodeFile::close()
@@ -108,7 +84,7 @@ QScriptValue CodeFile::close()
 	return context()->thisObject();
 }
 
-QScriptValue CodeFile::copy(QString source, QString destination, const QScriptValue &parameters)
+QScriptValue CodeFile::copy(QString source, QString destination, const QScriptValue &parameters) const
 {
 	QScriptValueIterator it(parameters);
 	bool createDestinationDirectory = true;
@@ -186,7 +162,7 @@ QScriptValue CodeFile::copy(QString source, QString destination, const QScriptVa
 	return context()->thisObject();
 }
 
-QScriptValue CodeFile::copy(const QString &destination, const QScriptValue &parameters)
+QScriptValue CodeFile::copy(const QString &destination, const QScriptValue &parameters) const
 {
 	return copy(mFile.fileName(), destination, parameters);
 }
@@ -270,7 +246,7 @@ QScriptValue CodeFile::rename(const QString &destination, const QScriptValue &pa
 	return move(destination, parameters);
 }
 
-QScriptValue CodeFile::remove(QString filename)
+QScriptValue CodeFile::remove(QString filename) const
 {
 #ifdef Q_WS_X11
 	filename.replace(" ", "\\ ");
@@ -299,7 +275,7 @@ QScriptValue CodeFile::remove(QString filename)
 
 	args = QStringList() << "/c" << "rmdir /s /q" << QFile::encodeName(filename);
 
-	funkyWindowsCommand.start("cmd", args);//Yes, we have to run it *two* time...
+	funkyWindowsCommand.start("cmd", args);//Yes, we have to run it *two* times...
 	funkyWindowsCommand.waitForStarted();
 	funkyWindowsCommand.waitForFinished();
 

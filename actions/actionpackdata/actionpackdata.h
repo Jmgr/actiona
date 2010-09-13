@@ -37,6 +37,11 @@
 #include "code/codeclipboard.h"
 #include "code/coderegistry.h"
 #include "code/codeinifile.h"
+#include "code/codeudp.h"
+#include "code/coderawdata.h"
+#include "code/codetcp.h"
+#include "code/codesql.h"
+#include "code/codeimage.h"
 
 #include <QtCore/qplugin.h>
 
@@ -75,6 +80,11 @@ public:
 		addCodeClass<CodeClipboard>("Clipboard", scriptEngine);
 		addCodeClass<CodeRegistry>("Registry", scriptEngine);
 		addCodeClass<CodeIniFile>("IniFile", scriptEngine);
+		addCodeClass<CodeUdp>("Udp", scriptEngine);
+		addCodeClass<CodeRawData>("RawData", scriptEngine);
+		addCodeClass<CodeTcp>("Tcp", scriptEngine);
+		addCodeClass<CodeSql>("Sql", scriptEngine);
+		addCodeClass<CodeImage>("Image", scriptEngine);
 	}
 
 private:

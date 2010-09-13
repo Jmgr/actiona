@@ -27,14 +27,19 @@ QScriptValue CodeIniFile::constructor(QScriptContext *context, QScriptEngine *en
 	return engine->newQObject(new CodeIniFile, QScriptEngine::ScriptOwnership);
 }
 
+CodeIniFile::CodeIniFile()
+	: mEncoding(Code::Native)
+{
+}
+
 QScriptValue CodeIniFile::load(const QString &filename)
 {
-	if(!mConfig.load(filename.toLocal8Bit()))
+	if(!mConfig.load(Code::toEncoding(filename, mEncoding)))
 	{
 		context()->throwError(tr("Cannot load the file"));
 		return context()->thisObject();
 	}
-		
+
 	return context()->thisObject();
 }
 
@@ -45,7 +50,7 @@ QScriptValue CodeIniFile::save(const QString &filename)
 	if(filename.isEmpty())
 		saveResult = mConfig.save();
 	else
-		saveResult = mConfig.save(filename.toLocal8Bit());
+		saveResult = mConfig.save(Code::toEncoding(filename, mEncoding));
 	
 	if(!saveResult)
 	{
@@ -86,11 +91,18 @@ QScriptValue CodeIniFile::setCommentCharacter(char commentchar)
 
 QScriptValue CodeIniFile::setSection(const QString &sectionName, bool create)
 {
-	if(!mConfig.setSection(sectionName.toLocal8Bit(), create))
+	if(!mConfig.setSection(Code::toEncoding(sectionName, mEncoding), create))
 	{
 		context()->throwError(tr("Cannot find the section named \"%1\"").arg(sectionName));
 		return context()->thisObject();
 	}
+	
+	return context()->thisObject();
+}
+
+QScriptValue CodeIniFile::setEncoding(Code::Encoding encoding)
+{
+	mEncoding = encoding;
 	
 	return context()->thisObject();
 }
@@ -108,7 +120,7 @@ QString CodeIniFile::sectionAt(int sectionIndex) const
 
 QScriptValue CodeIniFile::deleteSection(const QString &sectionName)
 {
-	if(!mConfig.deleteSection(sectionName.toLocal8Bit()))
+	if(!mConfig.deleteSection(Code::toEncoding(sectionName, mEncoding)))
 	{
 		context()->throwError(tr("Cannot delete section named \"%1\"").arg(sectionName));
 		return context()->thisObject();
@@ -124,7 +136,7 @@ int CodeIniFile::sectionCount() const
 
 bool CodeIniFile::keyExists(const QString &keyName) const
 {
-	return mConfig.exists(keyName.toLocal8Bit());
+	return mConfig.exists(Code::toEncoding(keyName, mEncoding));
 }
 
 QString CodeIniFile::keyAt(int keyIndex) const
@@ -140,19 +152,19 @@ QString CodeIniFile::keyAt(int keyIndex) const
 
 QString CodeIniFile::keyValue(const QString &keyName) const
 {
-	return mConfig.getStringValue(keyName.toLocal8Bit());
+	return mConfig.getStringValue(Code::toEncoding(keyName, mEncoding));
 }
 
 QScriptValue CodeIniFile::setKeyValue(const QString &keyName, const QString &value)
 {
-	mConfig.setStringValue(keyName.toLocal8Bit(), value.toLocal8Bit());
+	mConfig.setStringValue(Code::toEncoding(keyName, mEncoding), Code::toEncoding(value, mEncoding));
 	
 	return context()->thisObject();
 }
 
 QScriptValue CodeIniFile::deleteKey(const QString &keyName)
 {
-	if(!mConfig.deleteData(keyName.toLocal8Bit()))
+	if(!mConfig.deleteData(Code::toEncoding(keyName, mEncoding)))
 	{
 		context()->throwError(tr("Cannot delete key named \"%1\"").arg(keyName));
 		return context()->thisObject();
