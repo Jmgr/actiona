@@ -23,6 +23,7 @@
 
 #include <QApplication>
 #include <QImage>
+#include <QMimeData>
 
 QScriptValue CodeClipboard::constructor(QScriptContext *context, QScriptEngine *engine)
 {
@@ -81,6 +82,20 @@ QScriptValue CodeClipboard::readImage(Mode mode) const
 	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mode);
 	
 	return CodeImage::constructor(clipboard->image(clipboardMode), context(), engine());
+}
+
+CodeClipboard::DataType CodeClipboard::dataType(Mode mode) const
+{
+	if(!isModeValid(mode))
+		return Text;
+
+	QClipboard *clipboard = QApplication::clipboard();
+	const QMimeData *mimeData = clipboard->mimeData();
+
+	if(mimeData->hasImage())
+		return Image;
+	else
+		return Text;
 }
 
 bool CodeClipboard::isModeValid(Mode mode) const

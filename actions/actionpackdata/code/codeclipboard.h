@@ -39,6 +39,11 @@ public:
 		Selection =		QClipboard::Selection,
 		FindBuffer =	QClipboard::FindBuffer
 	};
+	enum DataType
+	{
+		Text,
+		Image
+	};
 	
 	static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
@@ -47,6 +52,7 @@ public slots:
 	QScriptValue writeImage(const QScriptValue &data, Mode mode = Clipboard) const;
 	QString readText(Mode mode = Clipboard) const;
 	QScriptValue readImage(Mode mode = Clipboard) const;
+	DataType dataType(Mode mode = Clipboard) const;
 	
 private:
 	bool isModeValid(Mode mode) const;

@@ -87,8 +87,8 @@ QImage CodeImage::image() const
 QScriptValue CodeImage::setData(const QScriptValue &data)
 {
 	QObject *object = data.toQObject();
-	if(CodeImage *codeImage = qobject_cast<CodeImage*>(object))
-		mImage = codeImage->image();
+	if(CodeRawData *codeRawData = qobject_cast<CodeRawData*>(object))
+		mImage.loadFromData(codeRawData->byteArray());
 	else
 		mImage = data.toVariant().value<QImage>();
 	
@@ -97,18 +97,27 @@ QScriptValue CodeImage::setData(const QScriptValue &data)
 
 QScriptValue CodeImage::data() const
 {
-	//TODO
-	return context()->thisObject();
+	return CodeRawData::constructor(QByteArray(reinterpret_cast<const char*>(mImage.bits()), mImage.byteCount()), context(), engine());
 }
 
 QScriptValue CodeImage::loadFromFile(const QString &filename)
 {
-	//TODO
+	if(!mImage.load(filename))
+	{
+		context()->throwError(tr("Unable to load image from file %1").arg(filename));
+		return context()->thisObject();
+	}
+
 	return context()->thisObject();
 }
 
 QScriptValue CodeImage::saveToFile(const QString &filename) const
 {
-	//TODO
+	if(!mImage.save(filename))
+	{
+		context()->throwError(tr("Unable to save image to file %1").arg(filename));
+		return context()->thisObject();
+	}
+
 	return context()->thisObject();
 }
