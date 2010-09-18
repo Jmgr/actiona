@@ -80,8 +80,8 @@ namespace Code
 		QClipboard *clipboard = QApplication::clipboard();
 
 		QObject *object = data.toQObject();
-		if(Code::Image *codeImage = qobject_cast<Code::Image*>(object))
-			clipboard->setImage(codeImage->image(), mMode);
+		if(Code::Image *image = qobject_cast<Code::Image*>(object))
+			clipboard->setImage(image->image(), mMode);
 		else
 			clipboard->setImage(data.toVariant().value<QImage>(), mMode);
 	

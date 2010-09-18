@@ -12,30 +12,18 @@ HEADERS += actionpackinternal.h \
     actionexitdefinition.h \
     actionexitinstance.h \
     actionvariableconditioninstance.h \
-    actionvariableconditiondefinition.h
-RESOURCES += actionpackinternal.qrc
-
-# Pause
-HEADERS += actionpausedefinition.h \
-    actionpauseinstance.h
-
-# Code
-HEADERS += actioncodedefinition.h \
-    actioncodeinstance.h
-
-# Goto
-HEADERS += actiongotodefinition.h \
-    actiongotoinstance.h
-
-# Loop
-HEADERS += actionloopdefinition.h \
-    actionloopinstance.h
-SOURCES += 
-
-# No-op
-HEADERS += actionnoopdefinition.h \
+    actionvariableconditiondefinition.h \
+	actionpausedefinition.h \
+    actionpauseinstance.h \
+	actioncodedefinition.h \
+    actioncodeinstance.h \
+	actiongotodefinition.h \
+    actiongotoinstance.h \
+	actionloopdefinition.h \
+    actionloopinstance.h \
+	actionnoopdefinition.h \
     actionnoopinstance.h
-
+RESOURCES += actionpackinternal.qrc
 TRANSLATIONS = locale/actionpackinternal_en.ts \
 	locale/actionpackinternal_fr.ts \
 	locale/actionpackinternal_de.ts

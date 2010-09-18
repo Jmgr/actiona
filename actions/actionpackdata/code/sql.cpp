@@ -33,7 +33,7 @@ namespace Code
 		if(context->argumentCount() < 1)
 		{
 			context->throwError(tr("Please specify the database driver that should be used"));
-			return QScriptValue();
+			return engine->undefinedValue();
 		}
 		
 		Driver driver = static_cast<Driver>(context->argument(0).toInteger());

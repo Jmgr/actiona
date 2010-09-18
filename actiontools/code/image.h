@@ -22,6 +22,7 @@
 #define IMAGE_H
 
 #include "actiontools_global.h"
+#include "qtimagefilters/QtImageFilter"
 
 #include <QObject>
 #include <QScriptable>
@@ -34,8 +35,27 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Image : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_ENUMS(Filter)
 		
 	public:
+		enum Filter
+		{
+			ConvolutionFilter,
+			GaussianBlur,
+			Defocus,
+			Highlight,
+			Sharpen,
+			SharpenMore,
+			SharpenEvenMore,
+			EdgeDetect,
+			BigEdge,
+			Emboss,
+			EmbossColor,
+			Negative,
+			RemoveChannel,
+			Punch
+		};
+		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QImage &image, QScriptContext *context, QScriptEngine *engine);
 		
@@ -56,8 +76,23 @@ namespace Code
 		QScriptValue data() const;
 		QScriptValue loadFromFile(const QString &filename);
 		QScriptValue saveToFile(const QString &filename) const;
+		QScriptValue applyFilter(Filter filter, const QScriptValue &options = QScriptValue());
 	
 	private:
+		enum FilterOption
+		{
+			FilterChannels = QtImageFilter::FilterChannels,
+			FilterBorderPolicy = QtImageFilter::FilterBorderPolicy,
+			ConvolutionDivisor = QtImageFilter::ConvolutionDivisor,
+			ConvolutionBias = QtImageFilter::ConvolutionBias,
+			Radius = QtImageFilter::Radius,
+			Force = QtImageFilter::Force,
+			Center = QtImageFilter::Center
+		};
+		
+		static const QString filterNames[];
+		static const QStringList filterOptionsNames;
+		
 		QImage mImage;
 	};
 }

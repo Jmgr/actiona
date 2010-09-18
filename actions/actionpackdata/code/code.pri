@@ -1,7 +1,4 @@
-INCLUDEPATH += code
-
-HEADERS += \
-    code/file.h \
+HEADERS += code/file.h \
     code/clipboard.h \
     code/registry.h \
     code/inifile.h \
@@ -9,8 +6,7 @@ HEADERS += \
     code/tcp.h \
     code/sql.h
 
-SOURCES += \
-    code/file.cpp \
+SOURCES += code/file.cpp \
     code/clipboard.cpp \
     code/registry.cpp \
     code/inifile.cpp \

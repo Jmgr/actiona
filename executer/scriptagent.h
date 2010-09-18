@@ -46,6 +46,7 @@ namespace Executer
 			mCurrentColumn(-1),
 			mContext(Unknown),
 			mPaused(false),
+			mPauseDuration(0),
 			mDebuggerAgent(0)
 																			{}
 	
@@ -53,6 +54,7 @@ namespace Executer
 		void setCurrentParameter(int currentParameter)						{ mCurrentParameter = currentParameter; }
 		void pause(bool pause)												{ mPaused = pause; }
 		void setDebuggerAgent(QScriptEngineAgent *debuggerAgent)			{ mDebuggerAgent = debuggerAgent;  }
+		void setPauseDuration(qint64 duration)								{ mPauseDuration = duration; }
 	
 		int currentLine() const												{ return mCurrentLine; }
 		int currentColumn() const											{ return mCurrentColumn; }
@@ -93,6 +95,16 @@ namespace Executer
 		void functionExit(qint64 scriptId, const QScriptValue &returnValue)
 		{
 			mDebuggerAgent->functionExit(scriptId, returnValue);
+			
+			while(mPauseDuration > 0)
+			{
+				QApplication::processEvents();
+				
+				ActionTools::CrossPlatform::sleep(10);
+				
+				if(!mPaused)
+					mPauseDuration -= 10;
+			}
 		}
 		
 		void positionChange(qint64 scriptId, int lineNumber, int columnNumber)
@@ -101,13 +113,6 @@ namespace Executer
 
 			mCurrentLine = lineNumber;
 			mCurrentColumn = columnNumber;
-			
-			while(mPaused)
-			{
-				QApplication::processEvents();
-				
-				ActionTools::CrossPlatform::sleep(10);
-			}
 		}
 		
 		void scriptLoad(qint64 id, const QString &program, const QString &fileName, int baseLineNumber)
@@ -131,6 +136,7 @@ namespace Executer
 		int mCurrentColumn;
 		Context mContext;
 		bool mPaused;
+		qint64 mPauseDuration;
 		QScriptEngineAgent *mDebuggerAgent;
 	};
 }

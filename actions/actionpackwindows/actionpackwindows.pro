@@ -6,21 +6,18 @@ QXT += core \
     gui
 SOURCES += actiontextinputinstance.cpp \
     actionwindowconditioninstance.cpp \
-    actionwindowinstance.cpp
+    actionwindowinstance.cpp \
+	actionmessageboxinstance.cpp
 HEADERS += actionpackwindows.h \
     actiontextinputdefinition.h \
     actiontextinputinstance.h \
     actionwindowconditiondefinition.h \
     actionwindowconditioninstance.h \
     actionwindowinstance.h \
-    actionwindowdefinition.h
-RESOURCES += actionpackwindows.qrc
-
-# MessageBox
-SOURCES += actionmessageboxinstance.cpp
-HEADERS += actionmessageboxdefinition.h \
+    actionwindowdefinition.h \
+	actionmessageboxdefinition.h \
     actionmessageboxinstance.h
-
+RESOURCES += actionpackwindows.qrc
 TRANSLATIONS = locale/actionpackwindows_en.ts \
 	locale/actionpackwindows_fr.ts \
 	locale/actionpackwindows_de.ts

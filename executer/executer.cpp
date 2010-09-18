@@ -185,6 +185,19 @@ namespace Executer
 
 		return engine->undefinedValue();
 	}
+	
+	QScriptValue pauseFunction(QScriptContext *context, QScriptEngine *engine)
+	{
+		QScriptValue calleeData = context->callee().data();
+		Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
+		
+		if(context->argumentCount() < 1)
+			return engine->undefinedValue();
+		
+		executer->scriptAgent()->setPauseDuration(context->argument(0).toInteger());
+		
+		return engine->undefinedValue();
+	}
 
 	bool Executer::startExecution(bool onlySelection)
 	{
@@ -220,6 +233,11 @@ namespace Executer
 		printFun = mScriptEngine.newFunction(printErrorFunction);
 		printFun.setData(mScriptEngine.newQObject(this));
 		script.setProperty("printError", printFun);
+		
+		QScriptValue pauseFun = mScriptEngine.newFunction(pauseFunction);
+		pauseFun.setData(mScriptEngine.newQObject(this));
+		script.setProperty("sleep", pauseFun);
+		script.setProperty("pause", pauseFun);
 
 		addClassToScript(new ExecutionEnvironment(), "Environment");
 		addClassToScript(new ExecutionAlgorithms(), "Algorithms");
@@ -405,7 +423,7 @@ namespace Executer
 		else
 			mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
 		
-		//mScriptAgent->pause(mExecutionPaused);
+		mScriptAgent->pause(mExecutionPaused);
 		
 		mExecutionWindow->setPauseStatus(mExecutionPaused);
 	}

@@ -20,8 +20,10 @@
 
 #include "image.h"
 #include "rawdata.h"
+#include "qtimagefilters/QtImageFilterFactory"
 
 #include <QBuffer>
+#include <QScriptValueIterator>
 
 namespace Code
 {
@@ -38,6 +40,27 @@ namespace Code
 	
 		return engine->newQObject(new Image(image), QScriptEngine::ScriptOwnership);
 	}
+	
+	const QString Image::filterNames[] =
+	{
+		"ConvolutionFilter",
+		"GaussianBlur",
+		"Defocus",
+		"Highlight",
+		"Sharpen",
+		"SharpenMore",
+		"SharpenEvenMore",
+		"EdgeDetect",
+		"BigEdge",
+		"Emboss",
+		"EmbossColor",
+		"Negative",
+		"RemoveChannel",
+		"Punch"
+	};
+	
+	const QStringList Image::filterOptionsNames = QStringList() << "filterChannels" << "filterBorderPolicy" << "convolutionDivisor"
+												  << "convolutionBias" << "" << "radius" << "force" << "center";
 	
 	Image::Image()
 		: QObject(),
@@ -114,7 +137,7 @@ namespace Code
 		if(!mImage.save(&dataBuffer, "BMP"))
 		{
 			context()->throwError(tr("Unable to get the image data"));
-			return QScriptValue();
+			return engine()->undefinedValue();
 		}
 		
 		return RawData::constructor(dataByteArray, context(), engine());
@@ -139,6 +162,58 @@ namespace Code
 			return context()->thisObject();
 		}
 	
+		return context()->thisObject();
+	}
+	
+	QScriptValue Image::applyFilter(Filter filter, const QScriptValue &options)
+	{
+		QtImageFilter *imageFilter = QtImageFilterFactory::createImageFilter(filterNames[filter]);
+		if(!imageFilter)
+		{
+			context()->throwError(tr("Unable to apply filter"));
+			return context()->thisObject();
+		}
+		
+		QScriptValueIterator it(options);
+		while(it.hasNext())
+		{
+			it.next();
+			
+			int optionIndex = filterOptionsNames.indexOf(it.name());
+			if(optionIndex == -1)
+				continue;
+			
+			QtImageFilter::FilterOption option = static_cast<QtImageFilter::FilterOption>(optionIndex + 1);
+			QVariant value;
+
+			switch(option)
+			{
+			case QtImageFilter::FilterChannels:
+			case QtImageFilter::FilterBorderPolicy:
+				value = it.value().toString();
+				break;
+			case QtImageFilter::ConvolutionDivisor:
+			case QtImageFilter::ConvolutionBias:
+			case QtImageFilter::Radius:
+			case QtImageFilter::Force:
+				value = it.value().toNumber();
+				break;
+			case QtImageFilter::Center:
+				value = QPointF(it.value().property("x").toNumber(), it.value().property("y").toNumber());
+				break;
+			default:
+				break;
+			}
+			
+			if(!imageFilter->setOption(option, value))
+			{
+				context()->throwError(tr("Cannot set filter option %1 %2").arg(it.name()).arg(value.toString()));
+				return context()->thisObject();
+			}
+		}
+		
+		mImage = imageFilter->apply(mImage);
+		
 		return context()->thisObject();
 	}
 }

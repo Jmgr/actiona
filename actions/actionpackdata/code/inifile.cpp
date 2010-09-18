@@ -178,5 +178,5 @@ namespace Code
 	int IniFile::keyCount() const
 	{
 		return mConfig.getNumDataMembers();
-}
+	}
 }

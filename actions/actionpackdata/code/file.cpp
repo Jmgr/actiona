@@ -47,9 +47,9 @@ namespace Code
 	QScriptValue File::write(const QScriptValue &data)
 	{
 		QObject *object = data.toQObject();
-		if(RawData *codeRawData = qobject_cast<RawData*>(object))
+		if(RawData *rawData = qobject_cast<RawData*>(object))
 		{
-			if(mFile.write(codeRawData->byteArray()) == -1)
+			if(mFile.write(rawData->byteArray()) == -1)
 				context()->throwError(tr("Write failed"));
 		}
 		else
@@ -145,13 +145,13 @@ namespace Code
 				if(QProcess::execute("cmd", QStringList() << "/c" << "mkdir" << QFile::encodeName(destination)))
 				{
 					context()->throwError(tr("Unable to create destination directory"));
-					return QScriptValue();
+					return context()->thisObject();
 				}
 			}
 			else
 			{
 				context()->throwError(tr("Destination directory doesn't exist"));
-				return QScriptValue();
+				return context()->thisObject();
 			}
 		}
 	
@@ -195,13 +195,13 @@ namespace Code
 				if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destination) + "\""))
 				{
 					context()->throwError(tr("Unable to create destination directory"));
-					return QScriptValue();
+					return context()->thisObject();
 				}
 			}
 			else
 			{
 				context()->throwError(tr("Destination directory doesn't exist"));
-				return QScriptValue();
+				return context()->thisObject();
 			}
 		}
 	
@@ -216,7 +216,7 @@ namespace Code
 		if(QProcess::execute(command))
 		{
 			context()->throwError(tr("Move/rename failed"));
-			return QScriptValue();
+			return context()->thisObject();
 		}
 	#endif
 	#ifdef Q_WS_WIN
@@ -225,8 +225,6 @@ namespace Code
 		if(QProcess::execute("cmd", args))
 			context()->throwError(tr("Move/rename failed"));
 	#endif
-	
-		return QScriptValue();
 	
 		return context()->thisObject();
 	}
