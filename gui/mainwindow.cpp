@@ -45,7 +45,6 @@
 #include "sevenziparchivewrite.h"
 #include "actionpack.h"
 #include "sfxscriptdialog.h"
-#include "executionenvironment.h"
 #include "executionalgorithms.h"
 #include "progresssplashscreen.h"
 
@@ -287,8 +286,6 @@ void MainWindow::postInit()
 		Tools::HighResolutionTimer timer("adding execution classes");
 #endif
 		//Add Environment & Algorithms class
-		Executer::ExecutionEnvironment executionEnvironment;
-		ActionTools::addClassKeywords(executionEnvironment.metaObject(), "Environment", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
 		Executer::ExecutionAlgorithms executionAlgorithms;
 		ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
 	}

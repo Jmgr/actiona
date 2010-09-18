@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef Tcp_H
-#define Tcp_H
+#ifndef TCP_H
+#define TCP_H
 
 #include "code/code.h"
 
@@ -65,4 +65,4 @@ namespace Code
 	};
 }
 
-#endif // Tcp_H
+#endif // TCP_H

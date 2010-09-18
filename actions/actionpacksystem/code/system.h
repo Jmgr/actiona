@@ -18,23 +18,48 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXECUTIONENVIRONMENT_H
-#define EXECUTIONENVIRONMENT_H
-
-#include "executer_global.h"
+#ifndef SYSTEM_H
+#define SYSTEM_H
 
 #include <QObject>
 #include <QScriptable>
 #include <QScriptValue>
+#include <QScriptEngine>
+#include <QStringList>
+#include <qmobilityglobal.h>
 
-namespace Executer
+QTM_BEGIN_NAMESPACE
+class QSystemInfo;
+class QSystemStorageInfo;
+class QSystemDisplayInfo;
+class QSystemDeviceInfo;
+QTM_END_NAMESPACE
+
+namespace Code
 {
-	class EXECUTERSHARED_EXPORT ExecutionEnvironment : public QObject, protected QScriptable
+	class System : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_ENUMS(DriveType)
+		Q_ENUMS(PowerState)
 		Q_ENUMS(StorageLocation)
-		
+	
 	public:
+		enum DriveType
+		{
+			UnknownDrive,
+			InternalDrive,
+			RemovableDrive,
+			RemoteDrive,
+			CdromDrive
+		};
+		enum PowerState
+		{
+			UnknownState,
+			BatteryPower,
+			WallPower,
+			WallPowerChargingBattery
+		};
 		enum StorageLocation
 		{
 			Desktop,
@@ -50,7 +75,9 @@ namespace Executer
 			Cache
 		};
 		
-		explicit ExecutionEnvironment(QObject *parent = 0);
+		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+	
+		System();
 	
 	public slots:
 		QString storageLocationPath(StorageLocation location) const;
@@ -66,7 +93,27 @@ namespace Executer
 		QString variable(const QString &name) const;
 		uint timestamp() const;
 		uint idleTime() const;
+		QString version() const;
+		QString countryCode() const;
+		QString language() const;
+		QStringList logicalDrives() const;
+		qlonglong availableDiskSpace(const QString &drive) const;
+		qlonglong totalDiskSpace(const QString &drive) const;
+		DriveType driveType(const QString &drive) const;
+		int colorDepth(int screenId = -1) const;
+		int displayBrightness(int screenId = -1) const;
+		int batteryLevel() const;
+		PowerState powerState() const;
+		QString manufacturer() const;
+		QString model() const;
+		QString productName() const;
+		
+	private:
+		QTM_PREPEND_NAMESPACE(QSystemInfo) *mSystemInfo;
+		QTM_PREPEND_NAMESPACE(QSystemStorageInfo) *mSystemStorageInfo;
+		QTM_PREPEND_NAMESPACE(QSystemDisplayInfo) *mSystemDisplayInfo;
+		QTM_PREPEND_NAMESPACE(QSystemDeviceInfo) *mSystemDeviceInfo;
 	};
 }
 
-#endif // EXECUTIONENVIRONMENT_H
+#endif // SYSTEM_H

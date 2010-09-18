@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef Sql_H
-#define Sql_H
+#ifndef SQL_H
+#define SQL_H
 
 #include <QObject>
 #include <QScriptable>
@@ -75,4 +75,4 @@ namespace Code
 	};
 }
 
-#endif // Sql_H
+#endif // SQL_H

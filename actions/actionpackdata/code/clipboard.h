@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef Clipboard_H
-#define Clipboard_H
+#ifndef CLIPBOARD_H
+#define CLIPBOARD_H
 
 #include <QObject>
 #include <QScriptable>
@@ -66,4 +66,4 @@ namespace Code
 	};
 }
 
-#endif // Clipboard_H
+#endif // CLIPBOARD_H

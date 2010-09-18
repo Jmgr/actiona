@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef IniFile_H
-#define IniFile_H
+#ifndef INIFILE_H
+#define INIFILE_H
 
 #include "code/code.h"
 
@@ -66,4 +66,4 @@ namespace Code
 	};
 }
 
-#endif // IniFile_H
+#endif // INIFILE_H

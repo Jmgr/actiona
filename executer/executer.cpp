@@ -25,7 +25,6 @@
 #include "consolewidget.h"
 #include "scriptparameter.h"
 #include "actioninstance.h"
-#include "executionenvironment.h"
 #include "executionalgorithms.h"
 #include "actionpack.h"
 #include "code/image.h"
@@ -239,7 +238,6 @@ namespace Executer
 		script.setProperty("sleep", pauseFun);
 		script.setProperty("pause", pauseFun);
 
-		addClassToScript(new ExecutionEnvironment(), "Environment");
 		addClassToScript(new ExecutionAlgorithms(), "Algorithms");
 
 		bool initSucceeded = true;

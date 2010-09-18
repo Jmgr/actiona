@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef Registry_H
-#define Registry_H
+#ifndef REGISTRY_H
+#define REGISTRY_H
 
 #include <QObject>
 #include <QScriptable>
@@ -77,4 +77,4 @@ namespace Code
 	};
 }
 
-#endif // Registry_H
+#endif // REGISTRY_H

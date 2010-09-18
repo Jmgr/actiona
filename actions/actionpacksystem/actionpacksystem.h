@@ -27,6 +27,8 @@
 #include "actionnotifydefinition.h"
 #include "actionpixelcolordefinition.h"
 
+#include "code/system.h"
+
 #include <QtCore/qplugin.h>
 
 namespace ActionTools
@@ -51,6 +53,11 @@ public:
 	QString id() const							{ return tr("system"); }
 	QString name() const						{ return tr("Actions dealing with the operating system"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
+	
+	void codeInit(QScriptEngine *scriptEngine) const
+	{
+		addCodeClass<Code::System>("System", scriptEngine);
+	}
 
 private:
 	Q_DISABLE_COPY(ActionPackSystem)

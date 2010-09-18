@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACKOTHER_H
-#define ACTIONPACKOTHER_H
+#ifndef ACTIONPACKDATA_H
+#define ACTIONPACKDATA_H
 
 #include "actionpack.h"
 #include "actionreadtextfiledefinition.h"
@@ -48,13 +48,13 @@ namespace ActionTools
 	class ActionDefinition;
 }
 
-class ActionPackOther : public QObject, public ActionTools::ActionPack
+class ActionPackData : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
-	ActionPackOther()
+	ActionPackData()
 	{
 		addActionDefinition(new ActionReadTextFileDefinition(this));
 		addActionDefinition(new ActionWriteIniFileDefinition(this));
@@ -84,9 +84,9 @@ public:
 	}
 
 private:
-	Q_DISABLE_COPY(ActionPackOther)
+	Q_DISABLE_COPY(ActionPackData)
 };
 
-Q_EXPORT_PLUGIN2(ActionPackOther, ActionPackOther)
+Q_EXPORT_PLUGIN2(ActionPackData, ActionPackData)
 
-#endif // ACTIONPACKINTERNAL_H
+#endif // ACTIONPACKDATA_H

@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef REGISTRY_H
-#define REGISTRY_H
+#ifndef AT_REGISTRY_H
+#define AT_REGISTRY_H
 
 #include "actiontools_global.h"
 
@@ -71,4 +71,4 @@ namespace ActionTools
 
 #endif
 
-#endif // REGISTRY_H
+#endif // AT_REGISTRY_H
