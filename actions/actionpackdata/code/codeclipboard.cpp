@@ -32,26 +32,51 @@ QScriptValue CodeClipboard::constructor(QScriptContext *context, QScriptEngine *
 	return engine->newQObject(new CodeClipboard, QScriptEngine::ScriptOwnership);
 }
 
-QScriptValue CodeClipboard::writeText(const QString &value, Mode mode) const
+CodeClipboard::CodeClipboard()
+	: mMode(Clipboard)
 {
-	if(!isModeValid(mode))
-		return context()->thisObject();
-	
+}
+
+QScriptValue CodeClipboard::setMode(Mode mode)
+{
+	switch(mode)
+	{
+	case Selection:
+		if(!QApplication::clipboard()->supportsSelection())
+		{
+			context()->throwError(tr("Selection mode is not supported by your operating system"));
+			return context()->thisObject();
+		}
+		break;
+	case FindBuffer:
+		if(!QApplication::clipboard()->supportsFindBuffer())
+		{
+			context()->throwError(tr("Find buffer mode is not supported by your operating system"));
+			return context()->thisObject();
+		}
+		break;
+	default:
+		mMode = mode;
+		break;
+	}
+
+	return context()->thisObject();
+}
+
+QScriptValue CodeClipboard::writeText(const QString &value) const
+{
 	QClipboard *clipboard = QApplication::clipboard();
-	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mode);
+	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mMode);
 	
 	clipboard->setText(value, clipboardMode);
 	
 	return context()->thisObject();
 }
 
-QScriptValue CodeClipboard::writeImage(const QScriptValue &data, Mode mode) const
+QScriptValue CodeClipboard::writeImage(const QScriptValue &data) const
 {
-	if(!isModeValid(mode))
-		return context()->thisObject();
-	
 	QClipboard *clipboard = QApplication::clipboard();
-	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mode);
+	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mMode);
 	
 	QObject *object = data.toQObject();
 	if(CodeImage *codeImage = qobject_cast<CodeImage*>(object))
@@ -62,53 +87,30 @@ QScriptValue CodeClipboard::writeImage(const QScriptValue &data, Mode mode) cons
 	return context()->thisObject();
 }
 
-QString CodeClipboard::readText(Mode mode) const
+QString CodeClipboard::readText() const
 {
-	if(!isModeValid(mode))
-		return QString();
-	
 	QClipboard *clipboard = QApplication::clipboard();
-	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mode);
+	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mMode);
 	
 	return clipboard->text(clipboardMode);
 }
 
-QScriptValue CodeClipboard::readImage(Mode mode) const
+QScriptValue CodeClipboard::readImage() const
 {
-	if(!isModeValid(mode))
-		return QScriptValue();
-	
 	QClipboard *clipboard = QApplication::clipboard();
-	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mode);
+	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mMode);
 	
 	return CodeImage::constructor(clipboard->image(clipboardMode), context(), engine());
 }
 
-CodeClipboard::DataType CodeClipboard::dataType(Mode mode) const
+CodeClipboard::DataType CodeClipboard::dataType() const
 {
-	if(!isModeValid(mode))
-		return Text;
-
 	QClipboard *clipboard = QApplication::clipboard();
-	const QMimeData *mimeData = clipboard->mimeData();
+	QClipboard::Mode clipboardMode = static_cast<QClipboard::Mode>(mMode);
+	const QMimeData *mimeData = clipboard->mimeData(clipboardMode);
 
 	if(mimeData->hasImage())
 		return Image;
 	else
 		return Text;
-}
-
-bool CodeClipboard::isModeValid(Mode mode) const
-{
-	switch(mode)
-	{
-	case Clipboard:
-		return true;
-	case Selection:
-		return QApplication::clipboard()->supportsSelection();
-	case FindBuffer:
-		return QApplication::clipboard()->supportsFindBuffer();
-	default:
-		return false;
-	}
 }

@@ -47,15 +47,20 @@ public:
 	
 	static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
+	CodeClipboard();
+
 public slots:
-	QScriptValue writeText(const QString &value, Mode mode = Clipboard) const;
-	QScriptValue writeImage(const QScriptValue &data, Mode mode = Clipboard) const;
-	QString readText(Mode mode = Clipboard) const;
-	QScriptValue readImage(Mode mode = Clipboard) const;
-	DataType dataType(Mode mode = Clipboard) const;
+	QScriptValue setMode(Mode mode);
+	QScriptValue writeText(const QString &value) const;
+	QScriptValue writeImage(const QScriptValue &data) const;
+	QString readText() const;
+	QScriptValue readImage() const;
+	DataType dataType() const;
 	
 private:
 	bool isModeValid(Mode mode) const;
+
+	Mode mMode;
 };
 
 #endif // CODECLIPBOARD_H
