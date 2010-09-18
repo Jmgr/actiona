@@ -21,22 +21,27 @@
 #ifndef CODE_H
 #define CODE_H
 
+#include "actiontools_global.h"
+
 #include <QString>
 #include <QByteArray>
 
-class Code
+namespace Code
 {
-public:
-	enum Encoding
+	class ACTIONTOOLSSHARED_EXPORT Code
 	{
-		Native,
-		Ascii,
-		Latin1,
-		UTF8,
+	public:
+		enum Encoding
+		{
+			Native,
+			Ascii,
+			Latin1,
+			UTF8,
+		};
+		
+		static QByteArray toEncoding(const QString &string, Encoding encoding);
+		static QString fromEncoding(const QByteArray &byteArray, Encoding encoding);
 	};
-	
-	static QByteArray toEncoding(const QString &string, Encoding encoding);
-	static QString fromEncoding(const QByteArray &byteArray, Encoding encoding);
-};
+}
 
 #endif // CODE_H

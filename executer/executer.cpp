@@ -28,6 +28,8 @@
 #include "executionenvironment.h"
 #include "executionalgorithms.h"
 #include "actionpack.h"
+#include "code/image.h"
+#include "code/rawdata.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -225,6 +227,9 @@ namespace Executer
 		bool initSucceeded = true;
 
 		mScriptAgent->setContext(ScriptAgent::ActionInit);
+		
+		addCodeClass<Code::RawData>("RawData", &mScriptEngine);
+		addCodeClass<Code::Image>("Image", &mScriptEngine);
 		
 		int actionPackCount = mActionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)

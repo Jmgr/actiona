@@ -33,15 +33,13 @@
 #include "actionwritebinaryfiledefinition.h"
 #include "actioncopyfiledefinition.h"
 
-#include "code/codefile.h"
-#include "code/codeclipboard.h"
-#include "code/coderegistry.h"
-#include "code/codeinifile.h"
-#include "code/codeudp.h"
-#include "code/coderawdata.h"
-#include "code/codetcp.h"
-#include "code/codesql.h"
-#include "code/codeimage.h"
+#include "code/file.h"
+#include "code/clipboard.h"
+#include "code/registry.h"
+#include "code/inifile.h"
+#include "code/udp.h"
+#include "code/tcp.h"
+#include "code/sql.h"
 
 #include <QtCore/qplugin.h>
 
@@ -76,15 +74,13 @@ public:
 	
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
-		addCodeClass<CodeFile>("File", scriptEngine);
-		addCodeClass<CodeClipboard>("Clipboard", scriptEngine);
-		addCodeClass<CodeRegistry>("Registry", scriptEngine);
-		addCodeClass<CodeIniFile>("IniFile", scriptEngine);
-		addCodeClass<CodeUdp>("Udp", scriptEngine);
-		addCodeClass<CodeRawData>("RawData", scriptEngine);
-		addCodeClass<CodeTcp>("Tcp", scriptEngine);
-		addCodeClass<CodeSql>("Sql", scriptEngine);
-		addCodeClass<CodeImage>("Image", scriptEngine);
+		addCodeClass<Code::File>("File", scriptEngine);
+		addCodeClass<Code::Clipboard>("Clipboard", scriptEngine);
+		addCodeClass<Code::Registry>("Registry", scriptEngine);
+		addCodeClass<Code::IniFile>("IniFile", scriptEngine);
+		addCodeClass<Code::Udp>("Udp", scriptEngine);
+		addCodeClass<Code::Tcp>("Tcp", scriptEngine);
+		addCodeClass<Code::Sql>("Sql", scriptEngine);
 	}
 
 private:

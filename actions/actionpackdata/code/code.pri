@@ -1,24 +1,19 @@
+INCLUDEPATH += code
 
 HEADERS += \
-    code/codefile.h \
-    code/codeclipboard.h \
-    code/coderegistry.h \
-    code/codeinifile.h \
-    code/codeudp.h \
-    code/coderawdata.h \
-    code/codetcp.h \
-    code/codesql.h \
-    code/code.h \
-    code/codeimage.h
+    code/file.h \
+    code/clipboard.h \
+    code/registry.h \
+    code/inifile.h \
+    code/udp.h \
+    code/tcp.h \
+    code/sql.h
 
 SOURCES += \
-    code/codefile.cpp \
-    code/codeclipboard.cpp \
-    code/coderegistry.cpp \
-    code/codeinifile.cpp \
-    code/codeudp.cpp \
-    code/coderawdata.cpp \
-    code/codetcp.cpp \
-    code/codesql.cpp \
-    code/code.cpp \
-    code/codeimage.cpp
+    code/file.cpp \
+    code/clipboard.cpp \
+    code/registry.cpp \
+    code/inifile.cpp \
+    code/udp.cpp \
+    code/tcp.cpp \
+    code/sql.cpp

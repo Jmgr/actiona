@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODECLIPBOARD_H
-#define CODECLIPBOARD_H
+#ifndef Clipboard_H
+#define Clipboard_H
 
 #include <QObject>
 #include <QScriptable>
@@ -27,40 +27,43 @@
 #include <QScriptEngine>
 #include <QClipboard>
 
-class CodeClipboard : public QObject, public QScriptable
+namespace Code
 {
-    Q_OBJECT
-	Q_ENUMS(Mode)
-
-public:
-	enum Mode
+	class Clipboard : public QObject, public QScriptable
 	{
-        Clipboard =		QClipboard::Clipboard,
-		Selection =		QClipboard::Selection,
-		FindBuffer =	QClipboard::FindBuffer
-	};
-	enum DataType
-	{
-		Text,
-		Image
-	};
+		Q_OBJECT
+		Q_ENUMS(Mode)
 	
-	static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-
-	CodeClipboard();
-
-public slots:
-	QScriptValue setMode(Mode mode);
-	QScriptValue writeText(const QString &value) const;
-	QScriptValue writeImage(const QScriptValue &data) const;
-	QString readText() const;
-	QScriptValue readImage() const;
-	DataType dataType() const;
+	public:
+		enum Mode
+		{
+			Standard =		QClipboard::Clipboard,
+			Selection =		QClipboard::Selection,
+			FindBuffer =	QClipboard::FindBuffer
+		};
+		enum DataType
+		{
+			Text,
+			Image
+		};
+		
+		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	
-private:
-	bool isModeValid(Mode mode) const;
+		Clipboard();
+	
+	public slots:
+		QScriptValue setMode(Mode mode);
+		QScriptValue writeText(const QString &value) const;
+		QScriptValue writeImage(const QScriptValue &data) const;
+		QString readText() const;
+		QScriptValue readImage() const;
+		DataType dataType() const;
+		
+	private:
+		bool isModeValid(Mode mode) const;
+	
+		QClipboard::Mode mMode;
+	};
+}
 
-	Mode mMode;
-};
-
-#endif // CODECLIPBOARD_H
+#endif // Clipboard_H

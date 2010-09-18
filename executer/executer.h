@@ -121,6 +121,13 @@ namespace Executer
 		ExecuteActionResult canExecuteAction(int index) const;
 		void executeCurrentAction();
 		void addClassToScript(QObject *classPointer, const QString &name);
+		
+		template<typename T>
+		void addCodeClass(const QString &objectName, QScriptEngine *scriptEngine) const
+		{
+			QScriptValue metaObject = scriptEngine->newQMetaObject(&T::staticMetaObject, scriptEngine->newFunction(&T::constructor));
+			scriptEngine->globalObject().setProperty(objectName, metaObject);
+		}
 
 		ActionTools::Script *mScript;
 		ActionTools::ActionFactory *mActionFactory;

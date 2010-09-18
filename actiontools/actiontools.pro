@@ -12,6 +12,7 @@ DESTDIR = ..
 FORMS += codeeditordialog.ui
 include(widgets.pri)
 include(parameters.pri)
+include(code/code.pri)
 SOURCES += actionfactory.cpp \
     actioninstance.cpp \
     actiondefinition.cpp \
