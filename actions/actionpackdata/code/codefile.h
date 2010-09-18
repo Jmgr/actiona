@@ -52,7 +52,7 @@ public:
 	~CodeFile()						{ mFile.close(); }
 
 public slots:
-	QScriptValue open(const QString &filename, OpenMode mode = static_cast<OpenMode>(ReadWrite | Append));
+	QScriptValue open(const QString &filename, OpenMode mode);
 	QScriptValue write(const QScriptValue &data);
 	QScriptValue writeText(const QString &value, Code::Encoding encoding = Code::Native);
 	QScriptValue read();

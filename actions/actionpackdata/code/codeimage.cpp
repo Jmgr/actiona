@@ -21,6 +21,8 @@
 #include "codeimage.h"
 #include "coderawdata.h"
 
+#include <QBuffer>
+
 QScriptValue CodeImage::constructor(QScriptContext *context, QScriptEngine *engine)
 {
 	Q_UNUSED(context)
@@ -88,7 +90,13 @@ QScriptValue CodeImage::setData(const QScriptValue &data)
 {
 	QObject *object = data.toQObject();
 	if(CodeRawData *codeRawData = qobject_cast<CodeRawData*>(object))
-		mImage.loadFromData(codeRawData->byteArray());
+	{
+		if(!mImage.loadFromData(codeRawData->byteArray()))
+		{
+			context()->throwError(tr("Unable to set the image data"));
+			return context()->thisObject();
+		}
+	}
 	else
 		mImage = data.toVariant().value<QImage>();
 	
@@ -97,7 +105,17 @@ QScriptValue CodeImage::setData(const QScriptValue &data)
 
 QScriptValue CodeImage::data() const
 {
-	return CodeRawData::constructor(QByteArray(reinterpret_cast<const char*>(mImage.bits()), mImage.byteCount()), context(), engine());
+	QByteArray dataByteArray;
+	QBuffer dataBuffer(&dataByteArray);
+	dataBuffer.open(QIODevice::WriteOnly);
+	
+	if(!mImage.save(&dataBuffer, "BMP"))
+	{
+		context()->throwError(tr("Unable to get the image data"));
+		return QScriptValue();
+	}
+	
+	return CodeRawData::constructor(dataByteArray, context(), engine());
 }
 
 QScriptValue CodeImage::loadFromFile(const QString &filename)
