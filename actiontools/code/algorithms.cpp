@@ -18,54 +18,56 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "executionalgorithms.h"
+#include "algorithms.h"
 
 #include <QCryptographicHash>
 #include <cstdlib>
 
-namespace Executer
+namespace Code
 {
-	ExecutionAlgorithms::ExecutionAlgorithms(QObject *parent)
-		: QObject(parent)
+	QScriptValue Algorithms::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
+		Q_UNUSED(context)
+	
+		return engine->newQObject(new Algorithms, QScriptEngine::ScriptOwnership);
 	}
 	
-	QString ExecutionAlgorithms::md4(const QString &data) const
+	QString Algorithms::md4(const QString &data) const
 	{
 		return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md4).toHex();
 	}
 	
-	QString ExecutionAlgorithms::md5(const QString &data) const
+	QString Algorithms::md5(const QString &data) const
 	{
 		return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex();
 	}
 	
-	QString ExecutionAlgorithms::sha1(const QString &data) const
+	QString Algorithms::sha1(const QString &data) const
 	{
 		return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1).toHex();
 	}
 	
-	void ExecutionAlgorithms::setRandomSeed(uint seed) const
+	void Algorithms::setRandomSeed(uint seed) const
 	{
 		qsrand(seed);
 	}
 	
-	int ExecutionAlgorithms::randomMax() const
+	int Algorithms::randomMax() const
 	{
 		return RAND_MAX;
 	}
 	
-	int ExecutionAlgorithms::randomInt() const
+	int Algorithms::randomInteger() const
 	{
 		return qrand();
 	}
 	
-	int ExecutionAlgorithms::randomInt(int min, int max) const
+	int Algorithms::randomInteger(int min, int max) const
 	{
 		return static_cast<int>(min + (static_cast<float>(qrand()) / RAND_MAX * (max - min + 1)));
 	}
 	
-	float ExecutionAlgorithms::randomFloat(float min, float max) const
+	float Algorithms::randomFloat(float min, float max) const
 	{
 		return (qrand() / static_cast<float>(RAND_MAX)) * (max - min) + min;
 	}

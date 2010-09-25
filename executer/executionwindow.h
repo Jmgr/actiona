@@ -29,7 +29,7 @@ namespace Ui
 	class ExecutionWindow;
 }
 
-namespace Executer
+namespace LibExecuter
 {
 	class ExecutionWindow : public QWidget
 	{

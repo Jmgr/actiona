@@ -10,6 +10,7 @@ DEFINES += ACTIONTOOLS_LIBRARY
 TARGET = actiontools
 DESTDIR = ..
 FORMS += codeeditordialog.ui
+include(globalshortcut/globalshortcut.pri)
 include(widgets.pri)
 include(parameters.pri)
 include(code/code.pri)

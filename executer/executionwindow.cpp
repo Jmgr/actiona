@@ -21,7 +21,7 @@
 #include "executionwindow.h"
 #include "ui_executionwindow.h"
 
-namespace Executer
+namespace LibExecuter
 {
 	ExecutionWindow::ExecutionWindow(QWidget *parent)
 		: QWidget(parent),

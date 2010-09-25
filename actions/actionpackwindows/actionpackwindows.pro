@@ -1,4 +1,5 @@
 include(../common_actions.pri)
+include(code/code.pri)
 TARGET = ActionPackWindows
 QT += script
 CONFIG += qxt

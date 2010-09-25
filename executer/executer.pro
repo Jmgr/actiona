@@ -11,12 +11,16 @@ DESTDIR = ..
 FORMS += executionwindow.ui
 SOURCES += executer.cpp \
 	executionwindow.cpp \
-	executionalgorithms.cpp
+    codeinitializer.cpp \
+    codeexecution.cpp \
+    codeconsole.cpp
 HEADERS += executer_global.h \
 	executer.h \
 	executionwindow.h \
 	scriptagent.h \
-	executionalgorithms.h
+    codeinitializer.h \
+    codeexecution.h \
+    codeconsole.h
 INCLUDEPATH += src \
 	../tools \
 	../actiontools

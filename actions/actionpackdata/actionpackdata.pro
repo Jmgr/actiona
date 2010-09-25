@@ -28,6 +28,7 @@ SOURCES +=	actionreadtextfileinstance.cpp \
 	actionwriteregistryinstance.cpp
 INCLUDEPATH += ../../3rdparty/rudeconfig
 LIBS += -L../.. -lrudeconfig
+unix:LIBS += -lespeak
 win32:LIBS += -ladvapi32 \
 	-lshell32
 

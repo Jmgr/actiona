@@ -4,7 +4,8 @@ HEADERS += code/file.h \
     code/inifile.h \
     code/udp.h \
     code/tcp.h \
-    code/sql.h
+    code/sql.h \
+    code/speak.h
 
 SOURCES += code/file.cpp \
     code/clipboard.cpp \
@@ -12,4 +13,5 @@ SOURCES += code/file.cpp \
     code/inifile.cpp \
     code/udp.cpp \
     code/tcp.cpp \
-    code/sql.cpp
+    code/sql.cpp \
+    code/speak.cpp

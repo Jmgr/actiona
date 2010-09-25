@@ -27,6 +27,8 @@
 #include "actionwindowconditiondefinition.h"
 #include "actionwindowdefinition.h"
 
+#include "code/messagebox.h"
+
 #include <QtCore/qplugin.h>
 
 namespace ActionTools
@@ -51,6 +53,11 @@ public:
 	QString id() const							{ return tr("windows"); }
 	QString name() const						{ return tr("Actions dealing with windows"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
+	
+	void codeInit(QScriptEngine *scriptEngine) const
+	{
+		addCodeClass<Code::MessageBox>("MessageBox", scriptEngine);
+	}
 
 private:
 	Q_DISABLE_COPY(ActionPackWindows)

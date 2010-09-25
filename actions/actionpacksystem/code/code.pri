@@ -1,8 +1,11 @@
-HEADERS += code/system.h
+HEADERS += code/system.h \
+    code/mediaplaylist.h
 
-SOURCES += code/system.cpp
+SOURCES += code/system.cpp \
+    code/mediaplaylist.cpp
 
 CONFIG += mobility qxt
-MOBILITY += systeminfo
+MOBILITY += systeminfo \
+	multimedia
 QXT += core \
     gui

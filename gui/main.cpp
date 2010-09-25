@@ -27,7 +27,7 @@
 #include "actioninstancebuffer.h"
 #include "global.h"
 #include "version.h"
-#include "globalshortcutmanager.h"
+#include "globalshortcut/globalshortcutmanager.h"
 #include "progresssplashscreen.h"
 
 #include <QxtApplication>
@@ -36,7 +36,7 @@
 #include <QDebug>
 #include <QTextStream>
 #include <QTextCodec>
-#include <QTime>
+#include <QElapsedTimer>
 
 #ifdef Q_WS_X11
 #undef signals
@@ -52,15 +52,15 @@
 #include <windows.h>
 #endif
 
-void cleanup()
+static void cleanup()
 {
-	GlobalShortcutManager::clear();
+	ActionTools::GlobalShortcutManager::clear();
 }
 
 int main(int argc, char **argv)
 {
-#if (QT_VERSION < 0x040600)
-		#error("You need Qt 4.6.0 or later to compile Actionaz");
+#if (QT_VERSION < 0x040700)
+		#error("You need Qt 4.7.0 or later to compile Actionaz");
 #endif
 
 #ifdef ACT_PROFILE
@@ -70,6 +70,8 @@ int main(int argc, char **argv)
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);
+	
+	qsrand(time(NULL));
 
 #ifdef Q_WS_X11
 	notify_init("Actionaz");
@@ -155,7 +157,7 @@ int main(int argc, char **argv)
 		app.processEvents();
 
 		float splashScreenOpacity = 0.0f;
-		QTime splashScreenFadeTime;
+		QElapsedTimer splashScreenFadeTime;
 
 		splashScreenFadeTime.start();
 

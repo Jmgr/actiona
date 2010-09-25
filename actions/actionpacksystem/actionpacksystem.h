@@ -28,6 +28,7 @@
 #include "actionpixelcolordefinition.h"
 
 #include "code/system.h"
+#include "code/mediaplaylist.h"
 
 #include <QtCore/qplugin.h>
 
@@ -57,6 +58,7 @@ public:
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
 		addCodeClass<Code::System>("System", scriptEngine);
+		addCodeClass<Code::MediaPlaylist>("MediaPlaylist", scriptEngine);
 	}
 
 private:

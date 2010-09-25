@@ -22,7 +22,7 @@
 #include "windowhandle.h"
 
 #include <QWidget>
-#include <QTime>
+#include <QElapsedTimer>
 #ifndef Q_WS_MAC
 #include <QxtWindowSystem>
 #endif
@@ -105,15 +105,15 @@ namespace ActionTools
 					return false;
 				}
 
-				QTime time;
-				time.start();
+				QElapsedTimer timer;
+				timer.start();
 
 				while(true)
 				{
 					if(processStatus(id) == Stopped)
 						return true;
 
-					if(time.elapsed() >= timeout)
+					if(timer.elapsed() >= timeout)
 					{
 						int ret = kill(id, SIGKILL);
 						if(ret != 0)
@@ -163,8 +163,8 @@ namespace ActionTools
 				handle.close();
 		}
 
-		QTime time;
-		time.start();
+		QElapsedTimer timer;
+		timer.start();
 
 		DWORD exitCode;
 		do
@@ -176,7 +176,7 @@ namespace ActionTools
 				return false;
 			}
 
-			if(time.elapsed() >= timeout)
+			if(timer.elapsed() >= timeout)
 				break;
 
 			Sleep(100);

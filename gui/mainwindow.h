@@ -211,7 +211,7 @@ private:
 	ProgressSplashScreen *mSplashScreen;
 	QFile *mFile;
 	QStringList mPackLoadErrors;
-	Executer::Executer mExecuter;
+	LibExecuter::Executer mExecuter;
 	bool mWasNewActionDockShown;
 	bool mWasConsoleDockShown;
 	QUndoGroup *mUndoGroup;

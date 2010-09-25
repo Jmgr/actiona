@@ -18,33 +18,35 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXECUTIONALGORITHMS_H
-#define EXECUTIONALGORITHMS_H
+#ifndef CODEEXECUTION_H
+#define CODEEXECUTION_H
 
 #include "executer_global.h"
 
 #include <QObject>
 #include <QScriptable>
+#include <QScriptValue>
+#include <QScriptEngine>
 
-namespace Executer
+namespace LibExecuter
 {
-	class EXECUTERSHARED_EXPORT ExecutionAlgorithms : public QObject, protected QScriptable
+	class ScriptAgent;
+	
+	class EXECUTERSHARED_EXPORT CodeExecution : public QObject, public QScriptable
 	{
 		Q_OBJECT
 		
 	public:
-		explicit ExecutionAlgorithms(QObject *parent = 0);
-	
+		CodeExecution(ScriptAgent *scriptAgent);
+		
 	public slots:
-		QString md4(const QString &data) const;
-		QString md5(const QString &data) const;
-		QString sha1(const QString &data) const;
-		void setRandomSeed(uint seed) const;
-		int randomMax() const;
-		int randomInt() const;
-		int randomInt(int min, int max) const;
-		float randomFloat(float min, float max) const;
+		void pause(qint64 duration) const;
+		void sleep(qint64 duration) const;
+		void stop() const;
+		
+	private:
+		ScriptAgent *mScriptAgent;
 	};
 }
 
-#endif // EXECUTIONALGORITHMS_H
+#endif // CODEEXECUTION_H

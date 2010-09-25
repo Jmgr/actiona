@@ -18,15 +18,14 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXECUTER_H
-#define EXECUTER_H
+#ifndef LIB_EXECUTER_H
+#define LIB_EXECUTER_H
 
 #include "executer_global.h"
 #include "actioninstance.h"
 #include "scriptagent.h"
 
 #include <QObject>
-#include <QScriptEngine>
 #include <QPoint>
 #include <QKeySequence>
 #include <QTimer>
@@ -43,8 +42,9 @@ namespace ActionTools
 
 class QStandardItemModel;
 class QMainWindow;
+class QScriptEngine;
 
-namespace Executer
+namespace LibExecuter
 {
 	class ExecutionWindow;
 
@@ -53,7 +53,7 @@ namespace Executer
 		Q_OBJECT
 
 	public:
-		Executer();
+		Executer(QObject *parent = 0);
 		~Executer();
 		
 		void setup(ActionTools::Script *script,
@@ -120,14 +120,6 @@ namespace Executer
 		ExecuteActionResult canExecuteAction(const QString &line) const;
 		ExecuteActionResult canExecuteAction(int index) const;
 		void executeCurrentAction();
-		void addClassToScript(QObject *classPointer, const QString &name);
-		
-		template<typename T>
-		void addCodeClass(const QString &objectName, QScriptEngine *scriptEngine) const
-		{
-			QScriptValue metaObject = scriptEngine->newQMetaObject(&T::staticMetaObject, scriptEngine->newFunction(&T::constructor));
-			scriptEngine->globalObject().setProperty(objectName, metaObject);
-		}
 
 		ActionTools::Script *mScript;
 		ActionTools::ActionFactory *mActionFactory;
@@ -142,7 +134,7 @@ namespace Executer
 		int mCurrentActionIndex;
 		bool mExecutionStarted;
 		bool mExecutionEnded;
-		QScriptEngine mScriptEngine;
+		QScriptEngine *mScriptEngine;
 		QScriptEngineDebugger mScriptEngineDebugger;
 		QMainWindow *mDebuggerWindow;
 		bool mExecuteOnlySelection;
@@ -160,4 +152,4 @@ namespace Executer
 	};
 }
 
-#endif // EXECUTER_H
+#endif // LIB_EXECUTER_H

@@ -21,15 +21,19 @@
 #ifndef SCRIPTAGENT_H
 #define SCRIPTAGENT_H
 
+#include "executer_global.h"
 #include "crossplatform.h"
 
+#include <QScriptEngine>
 #include <QScriptEngineAgent>
 #include <QApplication>
 
-namespace Executer
+namespace LibExecuter
 {
-	class ScriptAgent : public QScriptEngineAgent
+	class EXECUTERSHARED_EXPORT ScriptAgent : public QObject, public QScriptEngineAgent
 	{
+		Q_OBJECT
+		
 	public:
 		enum Context
 		{
@@ -46,6 +50,7 @@ namespace Executer
 			mCurrentColumn(-1),
 			mContext(Unknown),
 			mPaused(false),
+			mContinueExecution(true),
 			mPauseDuration(0),
 			mDebuggerAgent(0)
 																			{}
@@ -55,48 +60,61 @@ namespace Executer
 		void pause(bool pause)												{ mPaused = pause; }
 		void setDebuggerAgent(QScriptEngineAgent *debuggerAgent)			{ mDebuggerAgent = debuggerAgent;  }
 		void setPauseDuration(qint64 duration)								{ mPauseDuration = duration; }
+		void emitStopExecution()											{ mContinueExecution = false; emit stopExecution(); }
 	
 		int currentLine() const												{ return mCurrentLine; }
 		int currentColumn() const											{ return mCurrentColumn; }
 		Context context() const												{ return mContext; }
 		int currentParameter() const										{ return mCurrentParameter; }
+		
+	signals:
+		void stopExecution();
 	
 	private:
 		void contextPop()
 		{
-			mDebuggerAgent->contextPop();
+			if(mDebuggerAgent)
+				mDebuggerAgent->contextPop();
 		}
 		
 		void contextPush()
 		{
-			mDebuggerAgent->contextPush();
+			if(mDebuggerAgent)
+				mDebuggerAgent->contextPush();
 		}
 		
 		void exceptionCatch(qint64 scriptId, const QScriptValue &exception)
 		{
-			mDebuggerAgent->exceptionCatch(scriptId, exception);
+			if(mDebuggerAgent)
+				mDebuggerAgent->exceptionCatch(scriptId, exception);
 		}
 		
 		void exceptionThrow(qint64 scriptId, const QScriptValue &exception, bool hasHandler)
 		{
-			mDebuggerAgent->exceptionThrow(scriptId, exception, hasHandler);
+			if(mDebuggerAgent)
+				mDebuggerAgent->exceptionThrow(scriptId, exception, hasHandler);
 		}
 		
 		QVariant extension(Extension extension, const QVariant &argument = QVariant())
 		{
-			return mDebuggerAgent->extension(extension, argument);
+			if(mDebuggerAgent)
+				return mDebuggerAgent->extension(extension, argument);
+			
+			return QScriptEngineAgent::extension(extension, argument);
 		}
 		
 		void functionEntry(qint64 scriptId)
 		{
-			mDebuggerAgent->functionEntry(scriptId);
+			if(mDebuggerAgent)
+				mDebuggerAgent->functionEntry(scriptId);
 		}
 		
 		void functionExit(qint64 scriptId, const QScriptValue &returnValue)
 		{
-			mDebuggerAgent->functionExit(scriptId, returnValue);
+			if(mDebuggerAgent)
+				mDebuggerAgent->functionExit(scriptId, returnValue);
 			
-			while(mPauseDuration > 0)
+			while(mContinueExecution && mPauseDuration > 0)
 			{
 				QApplication::processEvents();
 				
@@ -109,7 +127,8 @@ namespace Executer
 		
 		void positionChange(qint64 scriptId, int lineNumber, int columnNumber)
 		{
-			mDebuggerAgent->positionChange(scriptId, lineNumber, columnNumber);
+			if(mDebuggerAgent)
+				mDebuggerAgent->positionChange(scriptId, lineNumber, columnNumber);
 
 			mCurrentLine = lineNumber;
 			mCurrentColumn = columnNumber;
@@ -117,17 +136,22 @@ namespace Executer
 		
 		void scriptLoad(qint64 id, const QString &program, const QString &fileName, int baseLineNumber)
 		{
-			mDebuggerAgent->scriptLoad(id, program, fileName, baseLineNumber);
+			if(mDebuggerAgent)
+				mDebuggerAgent->scriptLoad(id, program, fileName, baseLineNumber);
 		}
 		
 		void scriptUnload(qint64 id)
 		{
-			mDebuggerAgent->scriptUnload(id);
+			if(mDebuggerAgent)
+				mDebuggerAgent->scriptUnload(id);
 		}
 		
 		bool supportsExtension(Extension extension) const
 		{
-			return mDebuggerAgent->supportsExtension(extension);
+			if(mDebuggerAgent)
+				return mDebuggerAgent->supportsExtension(extension);
+
+			return QScriptEngineAgent::supportsExtension(extension);
 		}
 	
 	private:
@@ -136,6 +160,7 @@ namespace Executer
 		int mCurrentColumn;
 		Context mContext;
 		bool mPaused;
+		bool mContinueExecution;
 		qint64 mPauseDuration;
 		QScriptEngineAgent *mDebuggerAgent;
 	};

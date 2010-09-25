@@ -26,6 +26,7 @@ SUBDIRS += 3rdparty \
 	tools \
 	actiontools \
 	executer \
+	actexecuter \
 	gui \
 	actions/actionpackinternal \
 	actions/actionpackwindows \

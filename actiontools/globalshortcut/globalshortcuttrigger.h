@@ -1,5 +1,5 @@
 /*
- * globalshortcutmanager.h - Class managing global shortcuts
+ * globalshortcuttrigger.h - Helper class activating global shortcut
  * Copyright (C) 2006  Maciej Niedzielski
  *
  * This program is free software; you can redistribute it and/or
@@ -18,30 +18,47 @@
  *
  */
 
-#ifndef GLOBALSHORTCUTMANAGER_H
-#define GLOBALSHORTCUTMANAGER_H
+#ifndef GLOBALSHORTCUTTRIGGER_H
+#define GLOBALSHORTCUTTRIGGER_H
 
+#include "globalshortcutmanager.h"
 #include <QObject>
-#include <QKeySequence>
-#include <QMap>
 
-class QObject;
-class KeyTrigger;
-
-class GlobalShortcutManager : public QObject
+namespace ActionTools
 {
-public:
-	static GlobalShortcutManager* instance();
-	static void connect(const QKeySequence& key, QObject* receiver, const char* slot);
-	static void disconnect(const QKeySequence& key, QObject* receiver, const char* slot);
-	static void clear();
-
-private:
-	GlobalShortcutManager();
-	~GlobalShortcutManager();
-	static GlobalShortcutManager* instance_;
-	class KeyTrigger;
-	QMap<QKeySequence, KeyTrigger*> triggers_;
-};
+	class GlobalShortcutManager::KeyTrigger : public QObject
+	{
+		Q_OBJECT
+	public:
+		/**
+		 * Is there any slot connected to this hotkey?
+		 */
+		bool isUsed() const
+		{
+			return QObject::receivers(SIGNAL(triggered())) > 0;
+		}
+	
+	signals:
+		void triggered();
+	
+	private:
+		/**
+		 * Registers the \a key.
+		 */
+		KeyTrigger(const QKeySequence& key);
+		/**
+		 * Unregisters the key.
+		 */
+		~KeyTrigger();
+	
+		friend class GlobalShortcutManager;
+	
+		/**
+		 * Platform-specific helper
+		 */
+		class Impl;
+		Impl* d;
+	};
+}
 
 #endif

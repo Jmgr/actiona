@@ -40,12 +40,11 @@
 #include "scriptcontentdialog.h"
 #include "keywords.h"
 #include "modeltest.h"
-#include "globalshortcutmanager.h"
+#include "globalshortcut/globalshortcutmanager.h"
 #include "changelogdialog.h"
 #include "sevenziparchivewrite.h"
 #include "actionpack.h"
 #include "sfxscriptdialog.h"
-#include "executionalgorithms.h"
 #include "progresssplashscreen.h"
 
 #include <QSystemTrayIcon>
@@ -286,8 +285,9 @@ void MainWindow::postInit()
 		Tools::HighResolutionTimer timer("adding execution classes");
 #endif
 		//Add Environment & Algorithms class
-		Executer::ExecutionAlgorithms executionAlgorithms;
-		ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
+		//LibExecuter::ExecutionAlgorithms executionAlgorithms;
+		//ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
+		//TODO
 	}
 
 	{
@@ -433,10 +433,10 @@ void MainWindow::postInit()
 
 	const QString &startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
 	if(!startStopExecutionHotkey.isEmpty())
-		GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
+		ActionTools::GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
 	const QString &pauseExecutionHotkey = settings.value("actions/pauseExecutionHotkey", QKeySequence("Ctrl+Alt+W")).toString();
 	if(!pauseExecutionHotkey.isEmpty())
-		GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
+		ActionTools::GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
 
 	if(mCommandOptions->count("execute"))
 		execute(false);
@@ -789,15 +789,15 @@ void MainWindow::on_actionSettings_triggered()
 			updateRecentFileActions();
 		}
 		
-		GlobalShortcutManager::clear();
+		ActionTools::GlobalShortcutManager::clear();
 
 		QString startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
 		if(!startStopExecutionHotkey.isEmpty())
-			GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
+			ActionTools::GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
 
 		QString pauseExecutionHotkey = settings.value("actions/pauseExecutionHotkey", QKeySequence("Ctrl+Alt+W")).toString();
 		if(!pauseExecutionHotkey.isEmpty())
-			GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
+			ActionTools::GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
 	}
 
 	delete settingsDialog;
@@ -1062,7 +1062,7 @@ void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
 void MainWindow::on_reportBugPushButton_clicked()
 {
 	//TODO : redirect to the bug submission form
-	QDesktopServices::openUrl(QUrl("bugs.actionaz.org"));
+	QDesktopServices::openUrl(QUrl("http://bugs.actionaz.org"));
 }
 
 void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
