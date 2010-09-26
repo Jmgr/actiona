@@ -46,7 +46,7 @@ namespace Code
 		QScriptable(),
 		mFrequency(-1)
 	{
-		if((mFrequency = espeak_Initialize(AUDIO_OUTPUT_SYNCH_PLAYBACK, 500, dataDirectory.isEmpty() ? 0 : dataDirectory.toUtf8(), 0)) == -1)
+		if((mFrequency = espeak_Initialize(AUDIO_OUTPUT_SYNCH_PLAYBACK, 500, dataDirectory.isEmpty() ? 0 : dataDirectory.toUtf8().data(), 0)) == -1)
 		{
 			context()->throwError(tr("Initialize failed"));
 			return;
@@ -115,7 +115,7 @@ namespace Code
 	{
 		QScriptValueIterator it(parameters);
 		espeak_VOICE voice;
-		std::memset(&voice, 0, sizeof(espeak_VOICE));
+		memset(&voice, 0, sizeof(espeak_VOICE));
 
 		std::string name;
 		std::string language;
