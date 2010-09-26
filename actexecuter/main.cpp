@@ -23,6 +23,8 @@
 #include "version.h"
 #include "mainclass.h"
 
+#include <ctime>
+
 #include <QtGlobal>
 #include <QDir>
 #include <QTextCodec>
@@ -47,23 +49,23 @@ int main(int argc, char **argv)
 #if (QT_VERSION < 0x040700)
 		#error("You need Qt 4.7.0 or later to compile Actionaz Executer");
 #endif
-	
+
 	QxtApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
-	
+
 	qAddPostRoutine(cleanup);
-	
-	qsrand(time(NULL));
-	
+
+	qsrand(std::time(NULL));
+
 #ifdef Q_WS_X11
 	notify_init("Actionaz executer");
 #endif
-	
+
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-	
+
 	app.addLibraryPath(QDir::currentPath() + "/actions");
-	
+
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");
 	qRegisterMetaType<ActionTools::Parameter>("Parameter");
@@ -74,7 +76,7 @@ int main(int argc, char **argv)
 	qRegisterMetaTypeStreamOperators<ActionTools::Parameter>("Parameter");
 	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaTypeStreamOperators<Tools::Version>("Version");
-	
+
 	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
@@ -107,9 +109,9 @@ int main(int argc, char **argv)
 		stream.flush();
 		return -1;
 	}
-	
+
 	QString filename = options.positional().at(0);
-	
+
 	MainClass::ExecutionMode executionMode = MainClass::Unknown;
 	if(options.count("code"))
 		executionMode = MainClass::Code;
@@ -129,7 +131,7 @@ int main(int argc, char **argv)
 			return -1;
 		}
 	}
-	
+
 	QFile file(filename);
 	if(!file.open(QIODevice::ReadOnly))
 	{
@@ -143,9 +145,9 @@ int main(int argc, char **argv)
 	if(!mainClass.start(file))
 	{
 		file.close();
-		
+
 		return -1;
 	}
-	
+
 	return app.exec();
 }

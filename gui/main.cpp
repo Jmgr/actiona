@@ -30,8 +30,11 @@
 #include "globalshortcut/globalshortcutmanager.h"
 #include "progresssplashscreen.h"
 
+#include <ctime>
+
 #include <QxtApplication>
 #include <QxtCommandOptions>
+
 #include <QDir>
 #include <QDebug>
 #include <QTextStream>
@@ -70,8 +73,8 @@ int main(int argc, char **argv)
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);
-	
-	qsrand(time(NULL));
+
+	qsrand(std::time(NULL));
 
 #ifdef Q_WS_X11
 	notify_init("Actionaz");

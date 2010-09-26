@@ -31,18 +31,40 @@ namespace Code
 	class Speak : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		
+		Q_ENUMS(Gender)
+
 	public:
+		enum Gender
+		{
+			NotSpecified,
+			Male,
+			Female
+		};
+
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-		Speak();
+
+		Speak(const QString &dataDirectory);
 		~Speak();
-		
+
 	public slots:
-		QScriptValue speak(const QString &text) const;
+		int rate() const;
+		int volume() const;
+		int pitch() const;
+		int range() const;
+		int wordGap() const;
+		int frequency() const;
 		bool isPlaying() const;
+		QScriptValue speak(const QString &text) const;
+		QScriptValue setVoice(const QScriptValue &parameters) const;
+		QScriptValue setRate(int rate) const;
+		QScriptValue setVolume(int volume) const;
+		QScriptValue setPitch(int pitch) const;
+		QScriptValue setRange(int range) const;
+		QScriptValue setWordGap(int wordGap) const;
 		QScriptValue stop() const;
-		QScriptValue synchronize() const;
+
+	private:
+		int mFrequency;
 	};
 }
 

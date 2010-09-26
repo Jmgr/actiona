@@ -23,9 +23,10 @@
 
 #include <iostream>
 #include <QApplication>
+#include <QFile>
 
 Executer::Executer(QObject *parent) :
-    QObject(parent),
+	QObject(parent),
 	mActionFactory(new ActionTools::ActionFactory(this)),
 	mActionLoadingFailed(false)
 {
@@ -39,11 +40,11 @@ Executer::~Executer()
 bool Executer::start(QFile &file)
 {
 	Q_UNUSED(file)
-	
+
 	mActionFactory->loadActionPacks();
 	if(mActionLoadingFailed)
 		return false;
-	
+
 	return true;
 }
 
@@ -55,6 +56,6 @@ ActionTools::ActionFactory *Executer::actionFactory() const
 void Executer::actionPackLoadError(const QString &error)
 {
 	mActionLoadingFailed = true;
-	
+
 	std::wcerr << error.toStdWString() << std::endl;
 }

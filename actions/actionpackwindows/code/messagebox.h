@@ -23,10 +23,6 @@
 
 #include "window.h"
 
-#include <QObject>
-#include <QScriptable>
-#include <QScriptValue>
-#include <QScriptEngine>
 #include <QMessageBox>
 
 namespace Code
@@ -36,9 +32,7 @@ namespace Code
 		Q_OBJECT
 		Q_ENUMS(StandardButton)
 		Q_ENUMS(Icon)
-		
-		//TODO : Create a class parent of all dialogs
-		
+
 	public:
 		enum StandardButton
 		{
@@ -70,9 +64,9 @@ namespace Code
 			Warning = QMessageBox::Warning,
 			Critical = QMessageBox::Critical
 		};
-				
+
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
+
 		MessageBox();
 		~MessageBox();
 
@@ -85,13 +79,14 @@ namespace Code
 		QScriptValue setIcon(Icon icon);
 		QScriptValue setDefaultButton(StandardButton button);
 		QScriptValue setEscapeButton(StandardButton button);
+		QScriptValue addCustomButton(StandardButton button, const QString &text);
 		QScriptValue show();
 		int showModal();
 		QScriptValue close();
-		
+
 	private slots:
 		void finished(int result);
-		
+
 	private:
 		QMessageBox *mMessageBox;
 		QScriptValue mOnButtonPressed;

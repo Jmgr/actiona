@@ -31,17 +31,19 @@ namespace Code
 	class Window : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		
+
 	public slots:
 		QScriptValue setPosition(int x, int y);
 		QScriptValue setOpacity(float opacity);
-		
+		QScriptValue setSize(int width, int height);
+		QScriptValue setFixedSize(int width, int height);
+
 	protected:
 		Window();
-		
+
 		void setWidget(QWidget *widget);
 		void setupConstructorParameters(const QScriptValue &parameters);
-		
+
 	private:
 		QWidget *mWindow;
 	};

@@ -36,7 +36,7 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_ENUMS(PlaybackMode)
-		
+
 	public:
 		enum PlaybackMode
 		{
@@ -46,12 +46,12 @@ namespace Code
 			Loop,
 			Random
 		};
-		
+
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
+
 		MediaPlaylist();
 		~MediaPlaylist();
-		
+
 	public slots:
 		//Player
 		QScriptValue setPlaybackRate(qreal rate);
@@ -70,7 +70,7 @@ namespace Code
 		QScriptValue play();
 		QScriptValue pause();
 		QScriptValue stop();
-		
+
 		//Playlist
 		QScriptValue addLocalMedia(const QString &path);
 		QScriptValue addDistantMedia(const QString &path);
@@ -89,11 +89,10 @@ namespace Code
 		int nextMedia() const;
 		int previousMedia() const;
 		PlaybackMode playbackMode() const;
-		qint64 playlistDuration() const;
-		
+
 	private slots:
 		void videoAvailableChanged(bool videoAvailable);
-		
+
 	private:
 		QMediaPlaylist *mMediaPlaylist;
 		QMediaPlayer *mMediaPlayer;

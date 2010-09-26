@@ -28,6 +28,7 @@
 #include "actionwindowdefinition.h"
 
 #include "code/messagebox.h"
+#include "code/inputdialog.h"
 
 #include <QtCore/qplugin.h>
 
@@ -53,10 +54,11 @@ public:
 	QString id() const							{ return tr("windows"); }
 	QString name() const						{ return tr("Actions dealing with windows"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
-	
+
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
 		addCodeClass<Code::MessageBox>("MessageBox", scriptEngine);
+		addCodeClass<Code::InputDialog>("InputDialog", scriptEngine);
 	}
 
 private:

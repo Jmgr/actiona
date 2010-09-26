@@ -35,11 +35,11 @@ namespace Code
 			context->throwError(tr("Please specify the database driver that should be used"));
 			return engine->undefinedValue();
 		}
-		
-		Driver driver = static_cast<Driver>(context->argument(0).toInteger());
+
+		Driver driver = static_cast<Driver>(context->argument(0).toInt32());
 		return engine->newQObject(new Sql(driver), QScriptEngine::ScriptOwnership);
 	}
-	
+
 	Sql::Sql(Driver driver)
 		: QObject(),
 		QScriptable(),
@@ -78,34 +78,34 @@ namespace Code
 			break;
 		}
 	}
-	
+
 	Sql::~Sql()
 	{
 		QString connectionName = mDatabase->connectionName();
-		
+
 		mDatabase->close();
 		delete mDatabase;
-		
+
 		QSqlDatabase::removeDatabase(connectionName);
 	}
-	
+
 	QScriptValue Sql::connect(const QScriptValue &parameters) const
 	{
 		mDatabase->close();
-		
+
 		if(!QSqlDatabase::isDriverAvailable(mDriverName))
 		{
 			context()->throwError(tr("The requested database driver is not available"));
 			return context()->thisObject();
 		}
-		
+
 		*mDatabase = QSqlDatabase::addDatabase(mDriverName, QUuid::createUuid().toString());
 		if(!mDatabase->isValid())
 		{
 			context()->throwError(tr("The requested database driver is not available"));
 			return context()->thisObject();
 		}
-		
+
 		QScriptValueIterator it(parameters);
 		QString hostName;
 		int port = 0;
@@ -113,11 +113,11 @@ namespace Code
 		QString userName;
 		QString password;
 		QString options;
-	
+
 		while(it.hasNext())
 		{
 			it.next();
-	
+
 			if(it.name() == "hostName")
 				hostName = it.value().toString();
 			else if(it.name() == "port")
@@ -131,7 +131,7 @@ namespace Code
 			else if(it.name() == "options")
 				options = it.value().toString();
 		}
-		
+
 		mDatabase->setHostName(hostName);
 		if(port != 0)
 			mDatabase->setPort(port);
@@ -142,10 +142,10 @@ namespace Code
 			context()->throwError(tr("Unable to establish a connection to the database"));
 			return context()->thisObject();
 		}
-		
+
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue Sql::prepare(const QString &queryString, const QScriptValue &parameters)
 	{
 		mQuery = QSqlQuery(*mDatabase);
@@ -155,18 +155,18 @@ namespace Code
 			context()->throwError(tr("Failed to prepare the query"));
 			return context()->thisObject();
 		}
-		
+
 		QScriptValueIterator it(parameters);
 		while(it.hasNext())
 		{
 			it.next();
-	
+
 			mQuery.bindValue(it.name(), it.value().toString());
 		}
-	
+
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue Sql::execute(const QString &queryString)
 	{
 		if(!queryString.isEmpty())
@@ -174,17 +174,17 @@ namespace Code
 			mQuery = QSqlQuery(queryString, *mDatabase);
 			mQuery.setForwardOnly(true);
 		}
-		
+
 		if(!mQuery.exec())
 		{
 			QSqlError error = mQuery.lastError();
 			context()->throwError(tr("Failed to execute the query : %1").arg(error.text()));
 			return context()->thisObject();
 		}
-		
+
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue Sql::fetchResult(IndexStyle indexStyle)
 	{
 		if(!mQuery.isSelect())
@@ -192,13 +192,13 @@ namespace Code
 			context()->throwError(tr("Cannot fetch the result of a non-select query"));
 			return context()->thisObject();
 		}
-		
+
 		int size = mQuery.size();
 		if(size == -1)
 			size = 0;
-		
+
 		QScriptValue back = engine()->newArray(size);
-		
+
 		switch(indexStyle)
 		{
 		case IndexNumber:
@@ -211,7 +211,7 @@ namespace Code
 					{
 						row.setProperty(columnIndex, engine()->newVariant(mQuery.value(columnIndex)));
 					}
-					
+
 					back.setProperty(index, row);
 				}
 			}
@@ -226,20 +226,20 @@ namespace Code
 					{
 						row.setProperty(record.fieldName(columnIndex), engine()->newVariant(record.value(columnIndex)));
 					}
-					
+
 					back.setProperty(index, row);
 				}
 			}
 			break;
 		}
-		
+
 		return back;
 	}
-	
+
 	QScriptValue Sql::disconnect() const
 	{
 		mDatabase->close();
-		
+
 		return context()->thisObject();
 	}
 }

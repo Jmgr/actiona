@@ -29,44 +29,66 @@ namespace Code
 		: mWindow(0)
 	{
 	}
-	
+
 	void Window::setWidget(QWidget *widget)
 	{
 		mWindow = widget;
 	}
-	
+
 	void Window::setupConstructorParameters(const QScriptValue &parameters)
 	{
 		Q_ASSERT(mWindow);
-		
+
 		QScriptValueIterator it(parameters);
-		
+
 		while(it.hasNext())
 		{
 			it.next();
-	
+
 			if(it.name() == "position")
 				mWindow->move(it.value().property("x").toInt32(), it.value().property("y").toInt32());
 			else if(it.name() == "opacity")
 				mWindow->setWindowOpacity(it.value().toNumber());
+			else if(it.name() == "size")
+				mWindow->resize(it.value().property("width").toInt32(), it.value().property("height").toInt32());
+			else if(it.name() == "fixedSize")
+				mWindow->setFixedSize(it.value().property("width").toInt32(), it.value().property("height").toInt32());
 		}
 	}
-	
+
 	QScriptValue Window::setPosition(int x, int y)
 	{
 		Q_ASSERT(mWindow);
-		
+
 		mWindow->move(x, y);
-		
+
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue Window::setOpacity(float opacity)
 	{
 		Q_ASSERT(mWindow);
-		
+
 		mWindow->setWindowOpacity(opacity);
-		
+
+		return context()->thisObject();
+	}
+
+	QScriptValue Window::setSize(int width, int height)
+	{
+		Q_ASSERT(mWindow);
+
+		mWindow->resize(width, height);
+
+		return context()->thisObject();
+	}
+
+	QScriptValue Window::setFixedSize(int width, int height)
+	{
+		Q_ASSERT(mWindow);
+
+		mWindow->setFixedSize(width, height);
+
 		return context()->thisObject();
 	}
 }

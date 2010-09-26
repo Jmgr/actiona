@@ -21,6 +21,7 @@
 #include "messagebox.h"
 
 #include <QScriptValueIterator>
+#include <QPushButton>
 
 namespace Code
 {
@@ -28,13 +29,13 @@ namespace Code
 	{
 		MessageBox *messageBox = new MessageBox;
 		messageBox->setupConstructorParameters(context->argument(0));
-		
+
 		QScriptValueIterator it(context->argument(0));
-		
+
 		while(it.hasNext())
 		{
 			it.next();
-	
+
 			if(it.name() == "title")
 				messageBox->mMessageBox->setWindowTitle(it.value().toString());
 			else if(it.name() == "text")
@@ -57,83 +58,97 @@ namespace Code
 
 		return messageBox->mThisObject = engine->newQObject(messageBox, QScriptEngine::ScriptOwnership);
 	}
-	
+
 	MessageBox::MessageBox()
 		: Window(),
 		mMessageBox(new QMessageBox)
 	{
 		setWidget(mMessageBox);
-		
+
 		mMessageBox->setWindowModality(Qt::WindowModal);
-		
+
 		connect(mMessageBox, SIGNAL(finished(int)), this, SLOT(finished(int)));
 	}
-	
+
 	MessageBox::~MessageBox()
 	{
 		delete mMessageBox;
 	}
-	
+
 	QScriptValue MessageBox::setTitle(const QString &title)
 	{
 		mMessageBox->setWindowTitle(title);
-		
+
 		return context()->thisObject();
 	}
 
 	QScriptValue MessageBox::setText(const QString &text)
 	{
 		mMessageBox->setText(text);
-		
+
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue MessageBox::setDetailedText(const QString &detailedText)
 	{
 		mMessageBox->setDetailedText(detailedText);
-		
+
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue MessageBox::setInformativeText(const QString &informativeText)
 	{
 		mMessageBox->setInformativeText(informativeText);
-		
+
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue MessageBox::setButtons(StandardButton buttons)
 	{
 		mMessageBox->setStandardButtons(static_cast<QMessageBox::StandardButton>(buttons));
-		
+
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue MessageBox::setIcon(Icon icon)
 	{
 		mMessageBox->setIcon(static_cast<QMessageBox::Icon>(icon));
-		
+
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue MessageBox::setDefaultButton(StandardButton button)
 	{
 		mMessageBox->setDefaultButton(static_cast<QMessageBox::StandardButton>(button));
-		
+
 		return context()->thisObject();
 	}
 
 	QScriptValue MessageBox::setEscapeButton(StandardButton button)
 	{
 		mMessageBox->setEscapeButton(static_cast<QMessageBox::StandardButton>(button));
-		
+
+		return context()->thisObject();
+	}
+
+	QScriptValue MessageBox::addCustomButton(StandardButton button, const QString &text)
+	{
+		QPushButton *addedButton = mMessageBox->addButton(static_cast<QMessageBox::StandardButton>(button));
+		if(!addedButton)
+		{
+			context()->throwError(tr("Add custom button failed"));
+			return context()->thisObject();
+		}
+
+		addedButton->setText(text);
+
 		return context()->thisObject();
 	}
 
 	QScriptValue MessageBox::show()
 	{
 		mMessageBox->show();
-		
+
 		return context()->thisObject();
 	}
 
@@ -141,14 +156,14 @@ namespace Code
 	{
 		return mMessageBox->exec();
 	}
-	
+
 	QScriptValue MessageBox::close()
 	{
 		mMessageBox->close();
-		
+
 		return context()->thisObject();
 	}
-	
+
 	void MessageBox::finished(int result)
 	{
 		if(mOnButtonPressed.isValid())
