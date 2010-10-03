@@ -23,6 +23,10 @@
 #include "code/image.h"
 #include "code/rawdata.h"
 #include "code/algorithms.h"
+#include "code/color.h"
+#include "code/point.h"
+#include "code/size.h"
+#include "code/rect.h"
 #include "actionpack.h"
 #include "actionfactory.h"
 #include "codeexecution.h"
@@ -47,6 +51,10 @@ namespace LibExecuter
 		addCodeClass<Code::RawData>("RawData", scriptEngine);
 		addCodeClass<Code::Image>("Image", scriptEngine);
 		addCodeClass<Code::Algorithms>("Algorithms", scriptEngine);
+		addCodeClass<Code::Color>("Color", scriptEngine);
+		addCodeClass<Code::Point>("Point", scriptEngine);
+		addCodeClass<Code::Size>("Size", scriptEngine);
+		addCodeClass<Code::Rect>("Rect", scriptEngine);
 		
 		int actionPackCount = actionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)

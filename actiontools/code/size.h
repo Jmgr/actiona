@@ -18,44 +18,51 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef SIZE_H
+#define SIZE_H
+
+#include "actiontools_global.h"
 
 #include <QObject>
 #include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
+#include <QSize>
 
 namespace Code
 {
-	class Window : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT Size : public QObject, public QScriptable
 	{
 		Q_OBJECT
-
+		
+	public:
+		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(const QSize &size, QScriptContext *context, QScriptEngine *engine);
+		static QSize parameter(QScriptContext *context);
+		
+		Size();
+		Size(const Size &other);
+		Size(const QSize &size);
+		
+		Size &operator=(Size other);
+		Size &operator=(QSize size);
+		
+		void swap(Size &other);
+		void swap(QSize &size);
+		
+		const QSize &size() const;
+		
 	public slots:
-		QScriptValue setTitle(const QString &title);
-		QScriptValue setPosition();
-		QScriptValue setOpacity(float opacity);
-		QScriptValue setSize();
-		QScriptValue setFixedSize();
-		QScriptValue setEnabled(bool enabled);
-		QScriptValue setVisible(bool visible);
-		QScriptValue close();
-		QScriptValue position() const;
-		float opacity() const;
-		QScriptValue size() const;
-		bool enabled() const;
-		bool visible() const;
-
-	protected:
-		Window();
-
-		void setWidget(QWidget *widget);
-		void setupConstructorParameters(const QScriptValue &parameters);
-
+		QScriptValue clone() const;
+		bool equals(const QScriptValue &other) const;
+		QScriptValue setWidth(int width);
+		QScriptValue setHeight(int height);
+		int width() const;
+		int height() const;
+		
 	private:
-		QWidget *mWindow;
+		QSize mSize;
 	};
 }
 
-#endif // WINDOW_H
+#endif // SIZE_H

@@ -20,6 +20,10 @@
 
 #include "code.h"
 
+#include <QScriptValueIterator>
+#include <QStringList>
+#include <QScriptEngine>
+
 namespace Code
 {
 	QByteArray Code::toEncoding(const QString &string, Encoding encoding)
@@ -54,5 +58,33 @@ namespace Code
 		default:
 			return QString();
 		}
+	}
+	
+	QStringList Code::arrayParameterToStringList(const QScriptValue &scriptValue)
+	{
+		QStringList back;
+		
+		QScriptValueIterator it(scriptValue);
+		while(it.hasNext())
+		{
+			it.next();
+			
+			back << it.value().toString();
+		}
+		
+		return back;
+	}
+	
+	QScriptValue Code::stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList)
+	{
+		if(stringList.count() == 0)
+			return engine->undefinedValue();
+		
+		QScriptValue back = engine->newArray(stringList.count());
+		
+		for(int index = 0; index < stringList.count(); ++index)
+			back.setProperty(index, stringList.at(index));
+		
+		return back;
 	}
 }

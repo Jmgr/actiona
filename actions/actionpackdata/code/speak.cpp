@@ -32,20 +32,57 @@ namespace Code
 {
 	QScriptValue Speak::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-#ifdef Q_WS_WIN
-		QString dataDirectory = context->argumentCount() > 0 ? context->argument(0).toString() : "data";
-#else
-		QString dataDirectory = context->argumentCount() > 0 ? context->argument(0).toString() : QString();
-#endif
+		Speak *speak = new Speak;
 
-		return engine->newQObject(new Speak(dataDirectory), QScriptEngine::ScriptOwnership);
+		QScriptValueIterator it(context->argument(0));
+		
+		while(it.hasNext())
+		{
+			it.next();
+			
+			if(it.name() == "voice")
+				speak->setVoicePrivate(context, it.value());
+			else if(it.name() == "rate")
+			{
+				if(espeak_SetParameter(espeakRATE, it.value().toInt32(), 0) != EE_OK)
+					context->throwError(tr("Failed to set the rate"));
+			}
+			else if(it.name() == "volume")
+			{
+				if(espeak_SetParameter(espeakVOLUME, it.value().toInt32(), 0) != EE_OK)
+					context->throwError(tr("Failed to set the volume"));
+			}
+			else if(it.name() == "pitch")
+			{
+				if(espeak_SetParameter(espeakPITCH, it.value().toInt32(), 0) != EE_OK)
+					context->throwError(tr("Failed to set the pitch"));
+			}
+			else if(it.name() == "range")
+			{
+				if(espeak_SetParameter(espeakRANGE, it.value().toInt32(), 0) != EE_OK)
+					context->throwError(tr("Failed to set the range"));
+			}
+			else if(it.name() == "wordGap")
+			{
+				if(espeak_SetParameter(espeakWORDGAP, it.value().toInt32(), 0) != EE_OK)
+					context->throwError(tr("Failed to set the wordGap"));
+			}
+		}
+		
+		return engine->newQObject(speak, QScriptEngine::ScriptOwnership);
 	}
 
-	Speak::Speak(const QString &dataDirectory)
+	Speak::Speak()
 		: QObject(),
 		QScriptable(),
 		mFrequency(-1)
 	{
+#ifdef Q_WS_WIN
+		QString dataDirectory = "data";
+#else
+		QString dataDirectory;
+#endif
+		
 		if((mFrequency = espeak_Initialize(AUDIO_OUTPUT_SYNCH_PLAYBACK, 500, dataDirectory.isEmpty() ? 0 : dataDirectory.toUtf8().data(), 0)) == -1)
 		{
 			context()->throwError(tr("Initialize failed"));
@@ -113,39 +150,7 @@ namespace Code
 
 	QScriptValue Speak::setVoice(const QScriptValue &parameters) const
 	{
-		QScriptValueIterator it(parameters);
-		espeak_VOICE voice;
-		memset(&voice, 0, sizeof(espeak_VOICE));
-
-		std::string name;
-		std::string language;
-
-		while(it.hasNext())
-		{
-			it.next();
-
-			if(it.name() == "name" && !it.value().toString().isEmpty())
-				name = it.value().toString().toStdString();
-			else if(it.name() == "language" && !it.value().toString().isEmpty())
-				language = it.value().toString().toStdString();
-			else if(it.name() == "gender")
-				voice.gender = it.value().toInt32();
-			else if(it.name() == "age")
-				voice.age = it.value().toInt32();
-			else if(it.name() == "variant")
-				voice.variant = it.value().toInt32();
-		}
-
-		if(name.size() > 0)
-			voice.name = name.c_str();
-		if(language.size() > 0)
-			voice.languages = language.c_str();
-
-		if(espeak_SetVoiceByProperties(&voice) != EE_OK)
-		{
-			context()->throwError(tr("Unable to set the voice"));
-			return context()->thisObject();
-		}
+		setVoicePrivate(context(), parameters);
 
 		return context()->thisObject();
 	}
@@ -214,5 +219,39 @@ namespace Code
 		}
 
 		return context()->thisObject();
+	}
+	
+	void Speak::setVoicePrivate(QScriptContext *context, const QScriptValue &parameters) const
+	{
+		QScriptValueIterator it(parameters);
+		espeak_VOICE voice;
+		memset(&voice, 0, sizeof(espeak_VOICE));
+
+		std::string name;
+		std::string language;
+
+		while(it.hasNext())
+		{
+			it.next();
+
+			if(it.name() == "name" && !it.value().toString().isEmpty())
+				name = it.value().toString().toStdString();
+			else if(it.name() == "language" && !it.value().toString().isEmpty())
+				language = it.value().toString().toStdString();
+			else if(it.name() == "gender")
+				voice.gender = it.value().toInt32();
+			else if(it.name() == "age")
+				voice.age = it.value().toInt32();
+			else if(it.name() == "variant")
+				voice.variant = it.value().toInt32();
+		}
+
+		if(name.size() > 0)
+			voice.name = name.c_str();
+		if(language.size() > 0)
+			voice.languages = language.c_str();
+
+		if(espeak_SetVoiceByProperties(&voice) != EE_OK)
+			context->throwError(tr("Unable to set the voice"));
 	}
 }

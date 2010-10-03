@@ -71,7 +71,6 @@ namespace Code
 		~MessageBox();
 
 	public slots:
-		QScriptValue setTitle(const QString &title);
 		QScriptValue setText(const QString &text);
 		QScriptValue setDetailedText(const QString &detailedText);
 		QScriptValue setInformativeText(const QString &informativeText);
@@ -82,14 +81,13 @@ namespace Code
 		QScriptValue addCustomButton(StandardButton button, const QString &text);
 		QScriptValue show();
 		int showModal();
-		QScriptValue close();
 
 	private slots:
 		void finished(int result);
 
 	private:
 		QMessageBox *mMessageBox;
-		QScriptValue mOnButtonPressed;
+		QScriptValue mOnClosed;
 		QScriptValue mThisObject;
 	};
 }

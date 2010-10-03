@@ -36,9 +36,7 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "title")
-				messageBox->mMessageBox->setWindowTitle(it.value().toString());
-			else if(it.name() == "text")
+			if(it.name() == "text")
 				messageBox->mMessageBox->setText(it.value().toString());
 			else if(it.name() == "detailedText")
 				messageBox->mMessageBox->setDetailedText(it.value().toString());
@@ -52,8 +50,8 @@ namespace Code
 				messageBox->mMessageBox->setDefaultButton(static_cast<QMessageBox::StandardButton>(it.value().toInt32()));
 			else if(it.name() == "escapeButton")
 				messageBox->mMessageBox->setEscapeButton(static_cast<QMessageBox::StandardButton>(it.value().toInt32()));
-			else if(it.name() == "onButtonPressed")
-				messageBox->mOnButtonPressed = it.value();
+			else if(it.name() == "onClosed")
+				messageBox->mOnClosed = it.value();
 		}
 
 		return messageBox->mThisObject = engine->newQObject(messageBox, QScriptEngine::ScriptOwnership);
@@ -65,21 +63,12 @@ namespace Code
 	{
 		setWidget(mMessageBox);
 
-		mMessageBox->setWindowModality(Qt::WindowModal);
-
 		connect(mMessageBox, SIGNAL(finished(int)), this, SLOT(finished(int)));
 	}
 
 	MessageBox::~MessageBox()
 	{
 		delete mMessageBox;
-	}
-
-	QScriptValue MessageBox::setTitle(const QString &title)
-	{
-		mMessageBox->setWindowTitle(title);
-
-		return context()->thisObject();
 	}
 
 	QScriptValue MessageBox::setText(const QString &text)
@@ -147,7 +136,7 @@ namespace Code
 
 	QScriptValue MessageBox::show()
 	{
-		mMessageBox->show();
+		mMessageBox->open();
 
 		return context()->thisObject();
 	}
@@ -157,16 +146,9 @@ namespace Code
 		return mMessageBox->exec();
 	}
 
-	QScriptValue MessageBox::close()
-	{
-		mMessageBox->close();
-
-		return context()->thisObject();
-	}
-
 	void MessageBox::finished(int result)
 	{
-		if(mOnButtonPressed.isValid())
-			mOnButtonPressed.call(mThisObject, QScriptValueList() << result);
+		if(mOnClosed.isValid())
+			mOnClosed.call(mThisObject, QScriptValueList() << result);
 	}
 }

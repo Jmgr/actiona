@@ -29,6 +29,9 @@
 
 #include "code/messagebox.h"
 #include "code/inputdialog.h"
+#include "code/progressdialog.h"
+#include "code/colordialog.h"
+#include "code/filedialog.h"
 
 #include <QtCore/qplugin.h>
 
@@ -59,6 +62,9 @@ public:
 	{
 		addCodeClass<Code::MessageBox>("MessageBox", scriptEngine);
 		addCodeClass<Code::InputDialog>("InputDialog", scriptEngine);
+		addCodeClass<Code::ProgressDialog>("ProgressDialog", scriptEngine);
+		addCodeClass<Code::ColorDialog>("ColorDialog", scriptEngine);
+		addCodeClass<Code::FileDialog>("FileDialog", scriptEngine);
 	}
 
 private:

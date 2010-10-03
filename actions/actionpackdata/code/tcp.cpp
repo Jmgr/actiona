@@ -21,13 +21,41 @@
 #include "tcp.h"
 #include "code/rawdata.h"
 
+#include <QScriptValueIterator>
+
 namespace Code
 {
 	QScriptValue Tcp::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-		
-		return engine->newQObject(new Tcp, QScriptEngine::ScriptOwnership);
+		Tcp *tcp = new Tcp;
+
+		QScriptValueIterator it(context->argument(0));
+
+		while(it.hasNext())
+		{
+			it.next();
+			
+			if(it.name() == "onConnected")
+				tcp->mOnConnected = it.value();
+			else if(it.name() == "onDisconnected")
+				tcp->mOnDisconnected = it.value();
+			else if(it.name() == "onReadyRead")
+				tcp->mOnReadyRead = it.value();
+			else if(it.name() == "onBytesWritten")
+				tcp->mOnBytesWritten = it.value();
+		}
+
+		return tcp->mThisObject = engine->newQObject(tcp, QScriptEngine::ScriptOwnership);
+	}
+	
+	Tcp::Tcp()
+		: QObject(),
+		QScriptable()
+	{
+		QObject::connect(&mTcpSocket, SIGNAL(connected()), this, SLOT(connected()));
+		QObject::connect(&mTcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+		QObject::connect(&mTcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+		QObject::connect(&mTcpSocket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
 	}
 	
 	Tcp::~Tcp()
@@ -114,5 +142,29 @@ namespace Code
 		mTcpSocket.disconnectFromHost();
 		
 		return context()->thisObject();
+	}
+	
+	void Tcp::connected()
+	{
+		if(mOnConnected.isValid())
+			mOnConnected.call(mThisObject);
+	}
+
+	void Tcp::disconnected()
+	{
+		if(mOnDisconnected.isValid())
+			mOnDisconnected.call(mThisObject);
+	}
+
+	void Tcp::readyRead()
+	{
+		if(mOnReadyRead.isValid())
+			mOnReadyRead.call(mThisObject);
+	}
+
+	void Tcp::bytesWritten(qint64 bytes)
+	{
+		if(mOnBytesWritten.isValid())
+			mOnBytesWritten.call(mThisObject, static_cast<qsreal>(bytes));
 	}
 }

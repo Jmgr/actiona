@@ -18,52 +18,46 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CLIPBOARD_H
-#define CLIPBOARD_H
+#ifndef COLORDIALOG_H
+#define COLORDIALOG_H
 
-#include <QObject>
-#include <QScriptable>
-#include <QScriptValue>
-#include <QScriptEngine>
-#include <QClipboard>
+#include "window.h"
+
+class QColorDialog;
 
 namespace Code
 {
-	class Clipboard : public QObject, public QScriptable
+	class ColorDialog : public Window
 	{
 		Q_OBJECT
-		Q_ENUMS(Mode)
-	
-	public:
-		enum Mode
-		{
-			Standard =		QClipboard::Clipboard,
-			Selection =		QClipboard::Selection,
-			FindBuffer =	QClipboard::FindBuffer
-		};
-		enum DataType
-		{
-			Text,
-			Image
-		};
 		
+	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-	
-		Clipboard();
-	
+		
+		ColorDialog();
+		~ColorDialog();
+		
 	public slots:
-		QScriptValue setMode(Mode mode);
-		QScriptValue writeText(const QString &value) const;
-		QScriptValue writeImage(const QScriptValue &data) const;
-		QString readText() const;
-		QScriptValue readImage() const;
-		DataType dataType() const;
+		QScriptValue showAlphaChannel(bool showAlphaChannel);
+		QScriptValue setColor(const QScriptValue &color);
+		QScriptValue show();
+		int showModal();
+		QScriptValue color() const;
+		
+	private slots:
+		void finished(int result);
+		void colorSelected(const QColor &color);
+		void currentColorChanged(const QColor &color);
 		
 	private:
-		void setModePrivate(QScriptContext *context, Mode mode);
-	
-		QClipboard::Mode mMode;
+		void setColorPrivate(const QScriptValue &color, QScriptContext *context);
+		
+		QColorDialog *mColorDialog;
+		QScriptValue mOnClosed;
+		QScriptValue mOnColorSelected;
+		QScriptValue mOnColorChanged;
+		QScriptValue mThisObject;
 	};
 }
 
-#endif // CLIPBOARD_H
+#endif // COLORDIALOG_H

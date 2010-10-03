@@ -30,7 +30,7 @@ namespace Code
 	QScriptValue File::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(context)
-	
+
 		return engine->newQObject(new File, QScriptEngine::ScriptOwnership);
 	}
 	

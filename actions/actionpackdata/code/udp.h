@@ -46,6 +46,7 @@ namespace Code
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
+		Udp();
 		~Udp();
 	
 	public slots:
@@ -57,9 +58,18 @@ namespace Code
 		QScriptValue read();
 		QString readText(Code::Encoding encoding = Code::Native);
 		QScriptValue disconnect();
+		
+	private slots:
+		void connected();
+		void disconnected();
+		void readyRead();
 	
 	private:
 		QUdpSocket mUdpSocket;
+		QScriptValue mOnConnected;
+		QScriptValue mOnDisconnected;
+		QScriptValue mOnReadyRead;
+		QScriptValue mThisObject;
 	};
 }
 

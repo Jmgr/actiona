@@ -24,9 +24,31 @@ namespace Code
 {
 	QScriptValue RawData::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
+		RawData *rawData = 0;
 		
-		return engine->newQObject(new RawData, QScriptEngine::ScriptOwnership);
+		switch(context->argumentCount())
+		{
+		case 0:
+			rawData = new RawData;
+			break;
+		case 1:
+			{
+				QObject *object = context->argument(0).toQObject();
+				if(RawData *codeRawData = qobject_cast<RawData*>(object))
+					rawData = new RawData(*codeRawData);
+				else
+					context->throwError("Incorrect parameter type");
+			}
+			break;
+		default:
+			context->throwError("Incorrect parameter count");
+			break;
+		}
+		
+		if(!rawData)
+			return engine->undefinedValue();
+		
+		return engine->newQObject(rawData, QScriptEngine::ScriptOwnership);
 	}
 	
 	QScriptValue RawData::constructor(const RawData &other, QScriptContext *context, QScriptEngine *engine)
@@ -87,9 +109,26 @@ namespace Code
 		std::swap(mByteArray, byteArray);
 	}
 	
-	QByteArray RawData::byteArray() const
+	const QByteArray &RawData::byteArray() const
 	{
 		return mByteArray;
+	}
+	
+	QScriptValue RawData::clone() const
+	{
+		return constructor(mByteArray, context(), engine());
+	}
+	
+	bool RawData::equals(const QScriptValue &other) const
+	{
+		if(other.isUndefined() || other.isNull())
+			return false;
+		
+		QObject *object = other.toQObject();
+		if(RawData *otherRawData = qobject_cast<RawData*>(object))
+			return (otherRawData == this || otherRawData->mByteArray == mByteArray);
+			
+		return false;
 	}
 	
 	QScriptValue RawData::append(const QVariant &data)

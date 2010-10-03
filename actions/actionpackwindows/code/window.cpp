@@ -19,6 +19,8 @@
 */
 
 #include "window.h"
+#include "code/point.h"
+#include "code/size.h"
 
 #include <QScriptValueIterator>
 #include <QWidget>
@@ -38,6 +40,8 @@ namespace Code
 	void Window::setupConstructorParameters(const QScriptValue &parameters)
 	{
 		Q_ASSERT(mWindow);
+		
+		mWindow->setWindowTitle(tr("Window"));
 
 		QScriptValueIterator it(parameters);
 
@@ -45,7 +49,9 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "position")
+			if(it.name() == "title")
+				mWindow->setWindowTitle(it.value().toString());
+			else if(it.name() == "position")
 				mWindow->move(it.value().property("x").toInt32(), it.value().property("y").toInt32());
 			else if(it.name() == "opacity")
 				mWindow->setWindowOpacity(it.value().toNumber());
@@ -53,14 +59,27 @@ namespace Code
 				mWindow->resize(it.value().property("width").toInt32(), it.value().property("height").toInt32());
 			else if(it.name() == "fixedSize")
 				mWindow->setFixedSize(it.value().property("width").toInt32(), it.value().property("height").toInt32());
+			else if(it.name() == "enabled")
+				mWindow->setEnabled(it.value().toBool());
+			else if(it.name() == "visible")
+				mWindow->setVisible(it.value().toBool());
 		}
 	}
+	
+	QScriptValue Window::setTitle(const QString &title)
+	{
+		Q_ASSERT(mWindow);
+		
+		mWindow->setWindowTitle(title);
 
-	QScriptValue Window::setPosition(int x, int y)
+		return context()->thisObject();
+	}
+
+	QScriptValue Window::setPosition()
 	{
 		Q_ASSERT(mWindow);
 
-		mWindow->move(x, y);
+		mWindow->move(Point::parameter(context()));
 
 		return context()->thisObject();
 	}
@@ -74,21 +93,83 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue Window::setSize(int width, int height)
+	QScriptValue Window::setSize()
 	{
 		Q_ASSERT(mWindow);
 
-		mWindow->resize(width, height);
+		mWindow->resize(Size::parameter(context()));
 
 		return context()->thisObject();
 	}
 
-	QScriptValue Window::setFixedSize(int width, int height)
+	QScriptValue Window::setFixedSize()
 	{
 		Q_ASSERT(mWindow);
 
-		mWindow->setFixedSize(width, height);
+		mWindow->setFixedSize(Size::parameter(context()));
 
 		return context()->thisObject();
+	}
+	
+	QScriptValue Window::setEnabled(bool enabled)
+	{
+		Q_ASSERT(mWindow);
+		
+		mWindow->setEnabled(enabled);
+		
+		return context()->thisObject();
+	}
+
+	QScriptValue Window::setVisible(bool visible)
+	{
+		Q_ASSERT(mWindow);
+		
+		mWindow->setVisible(visible);
+		
+		return context()->thisObject();
+	}
+	
+	QScriptValue Window::close()
+	{
+		Q_ASSERT(mWindow);
+		
+		mWindow->close();
+
+		return context()->thisObject();
+	}	
+	
+	QScriptValue Window::position() const
+	{
+		Q_ASSERT(mWindow);
+		
+		return Point::constructor(mWindow->pos(), context(), engine());
+	}
+	
+	float Window::opacity() const
+	{
+		Q_ASSERT(mWindow);
+		
+		return mWindow->windowOpacity();
+	}
+	
+	QScriptValue Window::size() const
+	{
+		Q_ASSERT(mWindow);
+		
+		return Size::constructor(mWindow->size(), context(), engine());
+	}
+	
+	bool Window::enabled() const
+	{
+		Q_ASSERT(mWindow);
+		
+		return mWindow->isEnabled();
+	}
+	
+	bool Window::visible() const
+	{
+		Q_ASSERT(mWindow);
+		
+		return mWindow->isVisible();
 	}
 }

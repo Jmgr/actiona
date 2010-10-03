@@ -18,44 +18,51 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef POINT_H
+#define POINT_H
+
+#include "actiontools_global.h"
 
 #include <QObject>
 #include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
+#include <QPoint>
 
 namespace Code
 {
-	class Window : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT Point : public QObject, public QScriptable
 	{
 		Q_OBJECT
-
+		
+	public:
+		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(const QPoint &point, QScriptContext *context, QScriptEngine *engine);
+		static QPoint parameter(QScriptContext *context);
+		
+		Point();
+		Point(const Point &other);
+		Point(const QPoint &point);
+		
+		Point &operator=(Point other);
+		Point &operator=(QPoint point);
+		
+		void swap(Point &other);
+		void swap(QPoint &point);
+		
+		const QPoint &point() const;
+		
 	public slots:
-		QScriptValue setTitle(const QString &title);
-		QScriptValue setPosition();
-		QScriptValue setOpacity(float opacity);
-		QScriptValue setSize();
-		QScriptValue setFixedSize();
-		QScriptValue setEnabled(bool enabled);
-		QScriptValue setVisible(bool visible);
-		QScriptValue close();
-		QScriptValue position() const;
-		float opacity() const;
-		QScriptValue size() const;
-		bool enabled() const;
-		bool visible() const;
-
-	protected:
-		Window();
-
-		void setWidget(QWidget *widget);
-		void setupConstructorParameters(const QScriptValue &parameters);
-
+		QScriptValue clone() const;
+		bool equals(const QScriptValue &other) const;
+		QScriptValue setX(int x);
+		QScriptValue setY(int y);
+		int x() const;
+		int y() const;
+		
 	private:
-		QWidget *mWindow;
+		QPoint mPoint;
 	};
 }
 
-#endif // WINDOW_H
+#endif // POINT_H

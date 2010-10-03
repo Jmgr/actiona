@@ -21,13 +21,38 @@
 #include "udp.h"
 #include "code/rawdata.h"
 
+#include <QScriptValueIterator>
+
 namespace Code
 {
 	QScriptValue Udp::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-		
-		return engine->newQObject(new Udp, QScriptEngine::ScriptOwnership);
+		Udp *udp = new Udp;
+
+		QScriptValueIterator it(context->argument(0));
+
+		while(it.hasNext())
+		{
+			it.next();
+			
+			if(it.name() == "onConnected")
+				udp->mOnConnected = it.value();
+			else if(it.name() == "onDisconnected")
+				udp->mOnDisconnected = it.value();
+			else if(it.name() == "onReadyRead")
+				udp->mOnReadyRead = it.value();
+		}
+
+		return udp->mThisObject = engine->newQObject(udp, QScriptEngine::ScriptOwnership);
+	}
+	
+	Udp::Udp()
+		: QObject(),
+		QScriptable()
+	{
+		QObject::connect(&mUdpSocket, SIGNAL(connected()), this, SLOT(connected()));
+		QObject::connect(&mUdpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+		QObject::connect(&mUdpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 	}
 	
 	Udp::~Udp()
@@ -98,5 +123,23 @@ namespace Code
 		mUdpSocket.disconnectFromHost();
 		
 		return context()->thisObject();
+	}
+	
+	void Udp::connected()
+	{
+		if(mOnConnected.isValid())
+			mOnConnected.call(mThisObject);
+	}
+
+	void Udp::disconnected()
+	{
+		if(mOnDisconnected.isValid())
+			mOnDisconnected.call(mThisObject);
+	}
+
+	void Udp::readyRead()
+	{
+		if(mOnReadyRead.isValid())
+			mOnReadyRead.call(mThisObject);
 	}
 }

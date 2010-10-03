@@ -19,6 +19,7 @@
 */
 
 #include "system.h"
+#include "code/rect.h"
 
 #include <QSystemInfo>
 #include <QxtWindowSystem>
@@ -80,26 +81,12 @@ namespace Code
 
 	QScriptValue System::availableGeometry(int screen) const
 	{
-		const QRect &geometry = QApplication::desktop()->availableGeometry(screen);
-		QScriptValue value = engine()->newObject();
-		value.setProperty("x", engine()->newVariant(geometry.x()));
-		value.setProperty("y", engine()->newVariant(geometry.y()));
-		value.setProperty("width", engine()->newVariant(geometry.width()));
-		value.setProperty("height", engine()->newVariant(geometry.height()));
-
-		return value;
+		return Rect::constructor(QApplication::desktop()->availableGeometry(screen), context(), engine());
 	}
 
 	QScriptValue System::screenGeometry(int screen) const
 	{
-		const QRect &geometry = QApplication::desktop()->screenGeometry(screen);
-		QScriptValue value = engine()->newObject();
-		value.setProperty("x", engine()->newVariant(geometry.x()));
-		value.setProperty("y", engine()->newVariant(geometry.y()));
-		value.setProperty("width", engine()->newVariant(geometry.width()));
-		value.setProperty("height", engine()->newVariant(geometry.height()));
-
-		return value;
+		return Rect::constructor(QApplication::desktop()->screenGeometry(screen), context(), engine());
 	}
 
 	int System::primaryScreen() const

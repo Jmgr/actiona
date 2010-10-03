@@ -20,6 +20,8 @@
 
 #include "image.h"
 #include "rawdata.h"
+#include "color.h"
+#include "size.h"
 #include "qtimagefilters/QtImageFilterFactory"
 
 #include <QBuffer>
@@ -29,9 +31,31 @@ namespace Code
 {
 	QScriptValue Image::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
+		Image *image = 0;
+		
+		switch(context->argumentCount())
+		{
+		case 0:
+			image = new Image;
+			break;
+		case 1:
+			{
+				QObject *object = context->argument(0).toQObject();
+				if(Image *codeImage = qobject_cast<Image*>(object))
+					image = new Image(*codeImage);
+				else
+					context->throwError("Incorrect parameter type");
+			}
+			break;
+		default:
+			context->throwError("Incorrect parameter count");
+			break;
+		}
+		
+		if(!image)
+			return engine->undefinedValue();
 	
-		return engine->newQObject(new Image, QScriptEngine::ScriptOwnership);
+		return engine->newQObject(image, QScriptEngine::ScriptOwnership);
 	}
 	
 	QScriptValue Image::constructor(const QImage &image, QScriptContext *context, QScriptEngine *engine)
@@ -106,9 +130,26 @@ namespace Code
 		std::swap(mImage, image);
 	}
 			
-	QImage Image::image() const
+	const QImage &Image::image() const
 	{
 		return mImage;
+	}
+	
+	QScriptValue Image::clone() const
+	{
+		return constructor(mImage, context(), engine());
+	}
+	
+	bool Image::equals(const QScriptValue &other) const
+	{
+		if(other.isUndefined() || other.isNull())
+			return false;
+		
+		QObject *object = other.toQObject();
+		if(Image *otherImage = qobject_cast<Image*>(object))
+			return (otherImage == this || otherImage->mImage == mImage);
+			
+		return false;
 	}
 	
 	QScriptValue Image::setData(const QScriptValue &data)
@@ -215,5 +256,58 @@ namespace Code
 		mImage = imageFilter->apply(mImage);
 		
 		return context()->thisObject();
+	}
+	
+	QScriptValue Image::pixel(int x, int y) const
+	{
+		return Color::constructor(mImage.pixel(x, y), context(), engine());
+	}
+	
+	QScriptValue Image::setPixel(int x, int y, const QScriptValue &color)
+	{
+		if(context()->argumentCount() == 3)
+		{
+			QObject *object = color.toQObject();
+			if(Color *codeColor = qobject_cast<Color*>(object))
+				mImage.setPixel(x, y, codeColor->color().rgb());
+			else
+				mImage.setPixel(x, y, QColor(color.toString()).rgb());
+		}
+		else if(context()->argumentCount() == 5)
+		{
+			QColor color(context()->argument(2).toInt32(), context()->argument(3).toInt32(), context()->argument(4).toInt32());
+			mImage.setPixel(x, y, color.rgb());
+		}
+
+		return context()->thisObject();
+	}
+	
+	QScriptValue Image::mirror(MirrorOrientation mirrorOrientation)
+	{
+		mImage = mImage.mirrored(mirrorOrientation & Horizontal, mirrorOrientation & Vertical);
+		
+		return context()->thisObject();
+	}
+	
+	QScriptValue Image::setSize()
+	{
+		mImage = mImage.scaled(Size::parameter(context()));
+		
+		return context()->thisObject();
+	}
+
+	QScriptValue Image::size()
+	{
+		return Size::constructor(mImage.size(), context(), engine());
+	}
+	
+	int Image::width() const
+	{
+		return mImage.width();
+	}
+	
+	int Image::height() const
+	{
+		return mImage.height();
 	}
 }

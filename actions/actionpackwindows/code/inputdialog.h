@@ -23,6 +23,8 @@
 
 #include "window.h"
 
+#include <QLineEdit>
+
 class QInputDialog;
 
 namespace Code
@@ -30,14 +32,65 @@ namespace Code
 	class InputDialog : public Window
 	{
 		Q_OBJECT
+		Q_ENUMS(InputType)
+		Q_ENUMS(TextEchoMode)
 
 	public:
+		enum InputType
+		{
+			Text,
+			Integer,
+			Float,
+			Items
+		};
+		enum TextEchoMode
+		{
+			Normal = QLineEdit::Normal,
+			NoEcho = QLineEdit::NoEcho,
+			Password = QLineEdit::Password,
+			PasswordEchoOnEdit = QLineEdit::PasswordEchoOnEdit
+		};
+		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 		InputDialog();
+		~InputDialog();
+		
+	public slots:
+		QScriptValue setLabelText(const QString &labelText);
+		QScriptValue setOkButtonText(const QString &okButtonText);
+		QScriptValue setCancelButtonText(const QString &cancelButtonText);
+		QScriptValue setTextEchoMode(TextEchoMode textEchoMode);
+		QScriptValue setFloatDecimals(int decimals);
+		QScriptValue setIntegerStep(int step);
+		QScriptValue setMaximum(const QScriptValue &maximum);
+		QScriptValue setMinimum(const QScriptValue &minimum);
+		QScriptValue setRange(const QScriptValue &minimum, const QScriptValue &maximum);
+		QScriptValue setInputType(InputType inputType);
+		QScriptValue setValue(const QScriptValue &value);
+		QScriptValue setItems(const QScriptValue &items);
+		QScriptValue setItemsEditable(bool itemsEditable);
+		QScriptValue show();
+		int showModal();
+		QScriptValue value() const;
+		
+	private slots:
+		void finished(int result);
+		void doubleValueChanged(double value);
+		void intValueChanged(int value);
+		void textValueChanged(const QString &value);
 
 	private:
+		void setup();
+
+		InputType mInputType;
+		QScriptValue mValue;
+		QScriptValue mItems;
+		QScriptValue mMinimum;
+		QScriptValue mMaximum;
 		QInputDialog *mInputDialog;
+		QScriptValue mOnClosed;
+		QScriptValue mOnValueChanged;
 		QScriptValue mThisObject;
 	};
 }

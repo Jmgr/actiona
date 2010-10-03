@@ -51,9 +51,11 @@ namespace Code
 		void swap(RawData &other);
 		void swap(QByteArray &byteArray);
 		
-		QByteArray byteArray() const;
+		const QByteArray &byteArray() const;
 	
 	public slots:
+		QScriptValue clone() const;
+		bool equals(const QScriptValue &other) const;
 		QScriptValue append(const QVariant &data);
 		QScriptValue chop(int n);
 		QScriptValue clear();

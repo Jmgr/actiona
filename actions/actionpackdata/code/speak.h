@@ -43,7 +43,7 @@ namespace Code
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
-		Speak(const QString &dataDirectory);
+		Speak();
 		~Speak();
 
 	public slots:
@@ -64,6 +64,8 @@ namespace Code
 		QScriptValue stop() const;
 
 	private:
+		void setVoicePrivate(QScriptContext *context, const QScriptValue &parameters) const;
+		
 		int mFrequency;
 	};
 }

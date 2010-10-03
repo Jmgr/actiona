@@ -25,6 +25,7 @@
 
 #include <QString>
 #include <QByteArray>
+#include <QScriptValue>
 
 namespace Code
 {
@@ -41,6 +42,8 @@ namespace Code
 		
 		static QByteArray toEncoding(const QString &string, Encoding encoding);
 		static QString fromEncoding(const QByteArray &byteArray, Encoding encoding);
+		static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
+		static QScriptValue stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList);
 	};
 }
 

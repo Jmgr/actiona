@@ -18,44 +18,43 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef PROGRESSDIALOG_H
+#define PROGRESSDIALOG_H
 
-#include <QObject>
-#include <QScriptable>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include "window.h"
+
+class QProgressDialog;
 
 namespace Code
 {
-	class Window : public QObject, public QScriptable
+	class ProgressDialog : public Window
 	{
 		Q_OBJECT
-
+		
+	public:
+		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);		
+		
+		ProgressDialog();
+		~ProgressDialog();
+		
 	public slots:
-		QScriptValue setTitle(const QString &title);
-		QScriptValue setPosition();
-		QScriptValue setOpacity(float opacity);
-		QScriptValue setSize();
-		QScriptValue setFixedSize();
-		QScriptValue setEnabled(bool enabled);
-		QScriptValue setVisible(bool visible);
-		QScriptValue close();
-		QScriptValue position() const;
-		float opacity() const;
-		QScriptValue size() const;
-		bool enabled() const;
-		bool visible() const;
-
-	protected:
-		Window();
-
-		void setWidget(QWidget *widget);
-		void setupConstructorParameters(const QScriptValue &parameters);
-
+		QScriptValue setValue(int value);
+		QScriptValue setLabelText(const QString &labelText);
+		QScriptValue setMinimum(int minimum);
+		QScriptValue setMaximum(int maximum);
+		QScriptValue setRange(int minimum, int maximum);
+		QScriptValue show();
+		int showModal();
+		int value() const;
+		
+	private slots:
+		void canceled();
+		
 	private:
-		QWidget *mWindow;
+		QProgressDialog *mProgressDialog;
+		QScriptValue mOnCanceled;
+		QScriptValue mThisObject;
 	};
 }
 
-#endif // WINDOW_H
+#endif // PROGRESSDIALOG_H

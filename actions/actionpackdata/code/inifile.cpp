@@ -20,13 +20,29 @@
 
 #include "inifile.h"
 
+#include <QScriptValueIterator>
+
 namespace Code
 {
 	QScriptValue IniFile::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-		
-		return engine->newQObject(new IniFile, QScriptEngine::ScriptOwnership);
+		IniFile *iniFile = new IniFile;
+
+		QScriptValueIterator it(context->argument(0));
+
+		while(it.hasNext())
+		{
+			it.next();
+			
+			if(it.name() == "delimiter")
+				iniFile->mConfig.setDelimiter(it.value().toInt32());
+			else if(it.name() == "commentCharacter")
+				iniFile->mConfig.setCommentCharacter(it.value().toInt32());
+			else if(it.name() == "encoding")
+				iniFile->mEncoding = static_cast<Code::Encoding>(it.value().toInt32());
+		}
+
+		return engine->newQObject(iniFile, QScriptEngine::ScriptOwnership);
 	}
 	
 	IniFile::IniFile()

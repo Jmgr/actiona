@@ -36,6 +36,7 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_ENUMS(Filter)
+		Q_ENUMS(MirrorOrientation)
 		
 	public:
 		enum Filter
@@ -55,6 +56,11 @@ namespace Code
 			RemoveChannel,
 			Punch
 		};
+		enum MirrorOrientation
+		{
+			Vertical = 1,
+			Horizontal = 2
+		};
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QImage &image, QScriptContext *context, QScriptEngine *engine);
@@ -69,14 +75,23 @@ namespace Code
 		void swap(Image &other);
 		void swap(QImage &image);
 		
-		QImage image() const;
+		const QImage &image() const;
 	
 	public slots:
+		QScriptValue clone() const;
+		bool equals(const QScriptValue &other) const;
 		QScriptValue setData(const QScriptValue &data);
 		QScriptValue data() const;
 		QScriptValue loadFromFile(const QString &filename);
 		QScriptValue saveToFile(const QString &filename) const;
 		QScriptValue applyFilter(Filter filter, const QScriptValue &options = QScriptValue());
+		QScriptValue pixel(int x, int y) const;
+		QScriptValue setPixel(int x, int y, const QScriptValue &color);
+		QScriptValue mirror(MirrorOrientation mirrorOrientation);
+		QScriptValue setSize();
+		QScriptValue size();
+		int width() const;
+		int height() const;
 	
 	private:
 		enum FilterOption

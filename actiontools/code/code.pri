@@ -1,8 +1,16 @@
 SOURCES += code/rawdata.cpp \
     code/image.cpp \
     code/code.cpp \
-    code/algorithms.cpp
+    code/algorithms.cpp \
+    code/color.cpp \
+    code/point.cpp \
+    code/size.cpp \
+    code/rect.cpp
 HEADERS += code/rawdata.h \
     code/image.h \
     code/code.h \
-    code/algorithms.h
+    code/algorithms.h \
+    code/color.h \
+    code/point.h \
+    code/size.h \
+    code/rect.h

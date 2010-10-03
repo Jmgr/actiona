@@ -32,7 +32,7 @@ namespace Code
 	QScriptValue Registry::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(context)
-	
+
 		return engine->newQObject(new Registry, QScriptEngine::ScriptOwnership);
 	}
 	

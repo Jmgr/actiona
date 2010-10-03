@@ -24,14 +24,25 @@
 #include <QApplication>
 #include <QImage>
 #include <QMimeData>
+#include <QScriptValueIterator>
 
 namespace Code
 {
 	QScriptValue Clipboard::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-		
-		return engine->newQObject(new Clipboard, QScriptEngine::ScriptOwnership);
+		Clipboard *clipboard = new Clipboard;
+
+		QScriptValueIterator it(context->argument(0));
+
+		while(it.hasNext())
+		{
+			it.next();
+			
+			if(it.name() == "mode")
+				clipboard->setModePrivate(context, static_cast<Mode>(it.value().toInt32()));
+		}
+
+		return engine->newQObject(clipboard, QScriptEngine::ScriptOwnership);
 	}
 	
 	Clipboard::Clipboard()
@@ -41,27 +52,7 @@ namespace Code
 	
 	QScriptValue Clipboard::setMode(Mode mode)
 	{
-		switch(mode)
-		{
-		case Selection:
-			if(!QApplication::clipboard()->supportsSelection())
-			{
-				context()->throwError(tr("Selection mode is not supported by your operating system"));
-				return context()->thisObject();
-			}
-			break;
-		case FindBuffer:
-			if(!QApplication::clipboard()->supportsFindBuffer())
-			{
-				context()->throwError(tr("Find buffer mode is not supported by your operating system"));
-				return context()->thisObject();
-			}
-			break;
-		default:
-			break;
-		}
-		
-		mMode = static_cast<QClipboard::Mode>(mode);
+		setModePrivate(context(), mode);
 	
 		return context()->thisObject();
 	}
@@ -111,5 +102,30 @@ namespace Code
 			return Image;
 		else
 			return Text;
+	}
+	
+	void Clipboard::setModePrivate(QScriptContext *context, Mode mode)
+	{
+		switch(mode)
+		{
+		case Selection:
+			if(!QApplication::clipboard()->supportsSelection())
+			{
+				context->throwError(tr("Selection mode is not supported by your operating system"));
+				return;
+			}
+			break;
+		case FindBuffer:
+			if(!QApplication::clipboard()->supportsFindBuffer())
+			{
+				context->throwError(tr("Find buffer mode is not supported by your operating system"));
+				return;
+			}
+			break;
+		default:
+			break;
+		}
+		
+		mMode = static_cast<QClipboard::Mode>(mode);
 	}
 }
