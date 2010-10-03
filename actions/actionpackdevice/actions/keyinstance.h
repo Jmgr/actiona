@@ -18,44 +18,49 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONMOVECURSORINSTANCE_H
-#define ACTIONMOVECURSORINSTANCE_H
+#ifndef KEYINSTANCE_H
+#define KEYINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
-#include <QCursor>
+#include <QSet>
 
-class ActionMoveCursorInstance : public ActionTools::ActionInstance
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	ActionMoveCursorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)										{}
-
-	void startExecution()
+	class KeyInstance : public ActionTools::ActionInstance
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+		Q_OBJECT
 	
-		QPoint position;
+	public:
+		enum Action
+		{
+			PressReleaseAction,
+			PressAction,
+			ReleaseAction
+		};
+		enum Exceptions
+		{
+			FailedToSendInputException = ActionTools::ActionException::UserException,
+			InvalidActionException
+		};
 	
-		if(!actionInstanceExecutionHelper.evaluatePoint(position, "position"))
-			return;
+		KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)										{}
 		
-		QCursor::setPos(position);
+		static ActionTools::StringListPair actions;
 	
-		emit executionEnded();
-	}
+		void startExecution();
+		void stopLongTermExecution();
 	
-public slots:
-	void move(int x, int y)
-	{
-		QCursor::setPos(x, y);
-	}
+	private:
+		static QSet<int> mPressedKeys;
+	#ifdef Q_WS_WIN
+		static bool mAltGrPressed;
+	#endif
+		
+		Q_DISABLE_COPY(KeyInstance)
+	};
+}
 
-private:
-	Q_DISABLE_COPY(ActionMoveCursorInstance)
-};
-
-#endif // ACTIONMOVECURSORINSTANCE_H
+#endif // KEYINSTANCE_H

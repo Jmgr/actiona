@@ -22,11 +22,13 @@
 #define ACTIONPACKDEVICE_H
 
 #include "actionpack.h"
-#include "actiontextdefinition.h"
-#include "actionclickdefinition.h"
-#include "actionwheeldefinition.h"
-#include "actionkeydefinition.h"
-#include "actionmovecursordefinition.h"
+#include "actions/textdefinition.h"
+#include "actions/clickdefinition.h"
+#include "actions/wheeldefinition.h"
+#include "actions/keydefinition.h"
+#include "actions/movecursordefinition.h"
+
+#include "code/mouse.h"
 
 #include <QtCore/qplugin.h>
 
@@ -43,16 +45,21 @@ class ActionPackDevice : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackDevice()
 	{
-		addActionDefinition(new ActionTextDefinition(this));
-		addActionDefinition(new ActionClickDefinition(this));
-		addActionDefinition(new ActionWheelDefinition(this));
-		addActionDefinition(new ActionKeyDefinition(this));
-		addActionDefinition(new ActionMoveCursorDefinition(this));
+		addActionDefinition(new Actions::TextDefinition(this));
+		addActionDefinition(new Actions::ClickDefinition(this));
+		addActionDefinition(new Actions::WheelDefinition(this));
+		addActionDefinition(new Actions::KeyDefinition(this));
+		addActionDefinition(new Actions::MoveCursorDefinition(this));
 	}
 
 	QString id() const							{ return tr("device"); }
 	QString name() const						{ return tr("Actions dealing with devices like the keyboard or the mouse"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
+	
+	void codeInit(QScriptEngine *scriptEngine) const
+	{
+		addCodeClass<Code::Mouse>("Mouse", scriptEngine);
+	}
 
 private:
 	Q_DISABLE_COPY(ActionPackDevice)

@@ -18,29 +18,31 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONTEXTINSTANCE_H
-#define ACTIONTEXTINSTANCE_H
+#ifndef WHEELINSTANCE_H
+#define WHEELINSTANCE_H
 
 #include "actioninstance.h"
 
-class ActionTextInstance : public ActionTools::ActionInstance
+namespace Actions
 {
-	Q_OBJECT
-	Q_ENUMS(Action)
-
-public:
-	enum Exceptions
+	class WheelInstance : public ActionTools::ActionInstance
 	{
-		FailedToSendInputException = ActionTools::ActionException::UserException
+		Q_OBJECT
+	
+	public:
+		enum Exceptions
+		{
+			FailedToSendInputException = ActionTools::ActionException::UserException
+		};	
+		
+		WheelInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)										{}
+	
+		void startExecution();
+	
+	private:
+		Q_DISABLE_COPY(WheelInstance)
 	};
+}
 
-	ActionTextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)										{}
-
-	void startExecution();
-
-private:
-	Q_DISABLE_COPY(ActionTextInstance)
-};
-
-#endif // ACTIONTEXTINSTANCE_H
+#endif // WHEELINSTANCE_H
