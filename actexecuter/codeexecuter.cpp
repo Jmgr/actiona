@@ -84,4 +84,10 @@ void CodeExecuter::onEvaluationPaused()
 void CodeExecuter::stopExecution()
 {
 	mScriptEngine->abortEvaluation();
+	//Qt BUG
+	/*
+	 A bug in Qt 4.6.x and 4.7.0 prevents from aborting a running script
+	 Should be fixed in 4.7.2
+	 See http://bugreports.qt.nokia.com/browse/QTBUG-9433
+	 */
 }
