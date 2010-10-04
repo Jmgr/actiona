@@ -81,6 +81,6 @@ namespace Actions
 
 		Q_DISABLE_COPY(MessageBoxInstance)
 	};
-
-	#endif // MESSAGEBOXINSTANCE_H
 }
+
+#endif // MESSAGEBOXINSTANCE

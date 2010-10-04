@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADREGISTRYDEFINITION_H
-#define ACTIONREADREGISTRYDEFINITION_H
+#ifndef READREGISTRYDEFINITION_H
+#define READREGISTRYDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionreadregistryinstance.h"
+#include "actions/readregistryinstance.h"
 #include "listparameterdefinition.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
@@ -33,49 +33,52 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionReadRegistryDefinition : public QObject, public ActionTools::ActionDefinition
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	explicit ActionReadRegistryDefinition(ActionTools::ActionPack *pack)
-		: ActionDefinition(pack)
+	class ReadRegistryDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-#ifdef Q_WS_WIN
-		ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition("key", tr("Key"), this);
-		key->setTooltip(tr("The registry key to read from"));
-		key->setItems(ActionReadRegistryInstance::keys);
-		key->setDefaultValue(ActionReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
-		addElement(key);
+		Q_OBJECT
 
-		ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition("subKey", tr("Subkey"), this);
-		subKey->setTooltip(tr("The registry subkey to read from"));
-		addElement(subKey);
+	public:
+		explicit ReadRegistryDefinition(ActionTools::ActionPack *pack)
+			: ActionDefinition(pack)
+		{
+	#ifdef Q_WS_WIN
+			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition("key", tr("Key"), this);
+			key->setTooltip(tr("The registry key to read from"));
+			key->setItems(ActionReadRegistryInstance::keys);
+			key->setDefaultValue(ActionReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
+			addElement(key);
 
-		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
-		value->setTooltip(tr("The value to read"));
-		addElement(value);
+			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition("subKey", tr("Subkey"), this);
+			subKey->setTooltip(tr("The registry subkey to read from"));
+			addElement(subKey);
 
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
-		variable->setTooltip(tr("The variable where to save the value read from the registry"));
-		addElement(variable);
+			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
+			value->setTooltip(tr("The value to read"));
+			addElement(value);
 
-		addException(ActionReadRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
-		addException(ActionReadRegistryInstance::CannotFindValueException, tr("Cannot find value"));
-		addException(ActionReadRegistryInstance::InvalidValueType, tr("Invalid value type"));
-#endif
-	}
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			variable->setTooltip(tr("The variable where to save the value read from the registry"));
+			addElement(variable);
 
-	QString name() const													{ return QObject::tr("Read registry"); }
-	QString id() const														{ return "ActionReadRegistry"; }
-	Flag flags() const														{ return WorksOnWindows | Official; }
-	QString description() const												{ return QObject::tr("Read an entry from the registry"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadRegistryInstance(this); }
-	Category category() const												{ return Data; }
-	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+			addException(ActionReadRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
+			addException(ActionReadRegistryInstance::CannotFindValueException, tr("Cannot find value"));
+			addException(ActionReadRegistryInstance::InvalidValueType, tr("Invalid value type"));
+	#endif
+		}
 
-private:
-	Q_DISABLE_COPY(ActionReadRegistryDefinition)
-};
+		QString name() const													{ return QObject::tr("Read registry"); }
+		QString id() const														{ return "ActionReadRegistry"; }
+		Flag flags() const														{ return WorksOnWindows | Official; }
+		QString description() const												{ return QObject::tr("Read an entry from the registry"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadRegistryInstance(this); }
+		Category category() const												{ return Data; }
+		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
-#endif // ACTIONREADREGISTRYDEFINITION_H
+	private:
+		Q_DISABLE_COPY(ReadRegistryDefinition)
+	};
+}
+
+#endif // READREGISTRYDEFINITION_H

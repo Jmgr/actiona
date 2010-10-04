@@ -91,6 +91,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(MessageBoxDefinition)
 	};
-
-	#endif // MESSAGEBOXDEFINITION_H
 }
+
+#endif // MESSAGEBOXDEFINITION_H

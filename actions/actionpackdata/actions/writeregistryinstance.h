@@ -18,33 +18,36 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONWRITEREGISTRYINSTANCE_H
-#define ACTIONWRITEREGISTRYINSTANCE_H
+#ifndef WRITEREGISTRYINSTANCE_H
+#define WRITEREGISTRYINSTANCE_H
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
 #include "registry.h"
 
-class ActionWriteRegistryInstance : public ActionTools::ActionInstance
+namespace Actions
 {
-	Q_OBJECT
-	Q_ENUMS(ActionTools::Registry::Key)
-	Q_ENUMS(ActionTools::Registry::WriteResult)
-
-public:
-	enum Exceptions
+	class WriteRegistryInstance : public ActionTools::ActionInstance
 	{
-		CannotFindSubKeyException = ActionTools::ActionException::UserException,
-		CannotWriteValueException,
+		Q_OBJECT
+		Q_ENUMS(ActionTools::Registry::Key)
+		Q_ENUMS(ActionTools::Registry::WriteResult)
+
+	public:
+		enum Exceptions
+		{
+			CannotFindSubKeyException = ActionTools::ActionException::UserException,
+			CannotWriteValueException,
+		};
+
+		WriteRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)												{}
+
+		void startExecution();
+
+	private:
+		Q_DISABLE_COPY(WriteRegistryInstance)
 	};
+}
 
-	ActionWriteRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)												{}
-
-	void startExecution();
-
-private:
-	Q_DISABLE_COPY(ActionWriteRegistryInstance)
-};
-
-#endif // ACTIONWRITEREGISTRYINSTANCE_H
+#endif // WRITEREGISTRYINSTANCE_H

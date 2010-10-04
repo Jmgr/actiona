@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONWRITEBINARYFILEINSTANCE_H
-#define ACTIONWRITEBINARYFILEINSTANCE_H
+#ifndef WRITEBINARYFILEINSTANCE_H
+#define WRITEBINARYFILEINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
 #include "datacopyactioninstance.h"
@@ -27,60 +27,63 @@
 #include <QFile>
 #include <QBuffer>
 
-class ActionWriteBinaryFileInstance : public ActionTools::DataCopyActionInstance
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	enum Exceptions
+	class WriteBinaryFileInstance : public ActionTools::DataCopyActionInstance
 	{
-		UnableToWriteFileException = ActionTools::ActionException::UserException
-	};
+		Q_OBJECT
 
-	ActionWriteBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::DataCopyActionInstance(definition, parent)
-	{
-	}
-
-	void startExecution()
-	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString filename;
-		QVariant data;
-
-		if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
-		   !actionInstanceExecutionHelper.evaluateVariant(data, "data"))
-			return;
-		
-		mData = data.toByteArray();
-		mFile.setFileName(filename);
-		mDataBuffer.setBuffer(&mData);
-		
-		if(!DataCopyActionInstance::startCopy(&mDataBuffer, &mFile))
+	public:
+		enum Exceptions
 		{
-			actionInstanceExecutionHelper.setCurrentParameter("file");
-			emit executionException(UnableToWriteFileException, tr("Unable to write to the file \"%1\"").arg(filename));
-			return;
+			UnableToWriteFileException = ActionTools::ActionException::UserException
+		};
+
+		WriteBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::DataCopyActionInstance(definition, parent)
+		{
 		}
-		
-		emit showProgressDialog("Writing file", 100);
-		emit updateProgressDialog("Writing in progress");
-	}
 
-private:
-	void clean()
-	{
-		DataCopyActionInstance::clean();
-		
-		mDataBuffer.buffer().clear();
-	}
-	
-	QFile mFile;
-	QByteArray mData;
-	QBuffer mDataBuffer;
+		void startExecution()
+		{
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			QString filename;
+			QVariant data;
 
-private:
-	Q_DISABLE_COPY(ActionWriteBinaryFileInstance)
-};
+			if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
+			   !actionInstanceExecutionHelper.evaluateVariant(data, "data"))
+				return;
 
-#endif // ACTIONWRITEBINARYFILEINSTANCE_H
+			mData = data.toByteArray();
+			mFile.setFileName(filename);
+			mDataBuffer.setBuffer(&mData);
+
+			if(!DataCopyActionInstance::startCopy(&mDataBuffer, &mFile))
+			{
+				actionInstanceExecutionHelper.setCurrentParameter("file");
+				emit executionException(UnableToWriteFileException, tr("Unable to write to the file \"%1\"").arg(filename));
+				return;
+			}
+
+			emit showProgressDialog("Writing file", 100);
+			emit updateProgressDialog("Writing in progress");
+		}
+
+	private:
+		void clean()
+		{
+			DataCopyActionInstance::clean();
+
+			mDataBuffer.buffer().clear();
+		}
+
+		QFile mFile;
+		QByteArray mData;
+		QBuffer mDataBuffer;
+
+	private:
+		Q_DISABLE_COPY(WriteBinaryFileInstance)
+	};
+}
+
+#endif // WRITEBINARYFILEINSTANCE_H

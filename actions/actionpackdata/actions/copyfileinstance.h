@@ -18,69 +18,72 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONCOPYFILEINSTANCE_H
-#define ACTIONCOPYFILEINSTANCE_H
+#ifndef COPYFILEINSTANCE_H
+#define COPYFILEINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
 #include "datacopyactioninstance.h"
 
 #include <QFile>
 
-class ActionCopyFileInstance : public ActionTools::DataCopyActionInstance
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	enum Exceptions
+	class CopyFileInstance : public ActionTools::DataCopyActionInstance
 	{
-		UnableToReadFileException = ActionTools::ActionException::UserException,
-		UnableToWriteFileException
+		Q_OBJECT
+
+	public:
+		enum Exceptions
+		{
+			UnableToReadFileException = ActionTools::ActionException::UserException,
+			UnableToWriteFileException
+		};
+
+		CopyFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::DataCopyActionInstance(definition, parent)
+		{
+		}
+
+		void startExecution()
+		{
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			QString sourceFile;
+			QString destinationFile;
+
+			if(!actionInstanceExecutionHelper.evaluateString(sourceFile, "source") ||
+			   !actionInstanceExecutionHelper.evaluateString(destinationFile, "destination"))
+				return;
+
+			mSourceFile.setFileName(sourceFile);
+			mDestinationFile.setFileName(destinationFile);
+
+			if(!mSourceFile.open(QIODevice::ReadOnly))
+			{
+				actionInstanceExecutionHelper.setCurrentParameter("source");
+				emit executionException(UnableToReadFileException, tr("Unable to read the source file \"%1\"").arg(sourceFile));
+				return;
+			}
+
+			if(!mDestinationFile.open(QIODevice::WriteOnly))
+			{
+				mSourceFile.close();
+				actionInstanceExecutionHelper.setCurrentParameter("destination");
+				emit executionException(UnableToWriteFileException, tr("Unable to write to \"%1\"").arg(destinationFile));
+				return;
+			}
+
+			DataCopyActionInstance::startCopy(&mSourceFile, &mDestinationFile);
+
+			emit showProgressDialog("Copying file", 100);
+			emit updateProgressDialog("Copying in progress");
+		}
+
+	private:
+		QFile mSourceFile;
+		QFile mDestinationFile;
+
+		Q_DISABLE_COPY(CopyFileInstance)
 	};
+}
 
-	ActionCopyFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::DataCopyActionInstance(definition, parent)
-	{
-	}
-
-	void startExecution()
-	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString sourceFile;
-		QString destinationFile;
-
-		if(!actionInstanceExecutionHelper.evaluateString(sourceFile, "source") ||
-		   !actionInstanceExecutionHelper.evaluateString(destinationFile, "destination"))
-			return;
-		
-		mSourceFile.setFileName(sourceFile);
-		mDestinationFile.setFileName(destinationFile);
-		
-		if(!mSourceFile.open(QIODevice::ReadOnly))
-		{
-			actionInstanceExecutionHelper.setCurrentParameter("source");
-			emit executionException(UnableToReadFileException, tr("Unable to read the source file \"%1\"").arg(sourceFile));
-			return;
-		}
-		
-		if(!mDestinationFile.open(QIODevice::WriteOnly))
-		{
-			mSourceFile.close();
-			actionInstanceExecutionHelper.setCurrentParameter("destination");
-			emit executionException(UnableToWriteFileException, tr("Unable to write to \"%1\"").arg(destinationFile));
-			return;
-		}
-
-		DataCopyActionInstance::startCopy(&mSourceFile, &mDestinationFile);
-		
-		emit showProgressDialog("Copying file", 100);
-		emit updateProgressDialog("Copying in progress");
-	}
-
-private:
-	QFile mSourceFile;
-	QFile mDestinationFile;
-	
-	Q_DISABLE_COPY(ActionCopyFileInstance)
-};
-
-#endif // ACTIONCOPYFILEINSTANCE_H
+#endif // COPYFILEINSTANCE_H

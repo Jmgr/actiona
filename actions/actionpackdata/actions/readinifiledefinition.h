@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADINIFILEDEFINITION_H
-#define ACTIONREADINIFILEDEFINITION_H
+#ifndef READINIFILEDEFINITION_H
+#define READINIFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionreadinifileinstance.h"
+#include "actions/readinifileinstance.h"
 #include "textparameterdefinition.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
@@ -33,47 +33,50 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionReadIniFileDefinition : public QObject, public ActionTools::ActionDefinition
+namespace Actions
 {
-   Q_OBJECT
-
-public:
-	explicit ActionReadIniFileDefinition(ActionTools::ActionPack *pack)
-	: ActionDefinition(pack)
+	class ReadIniFileDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
-		file->setTooltip(tr("The file to read from"));
-		file->setMode(ActionTools::FileEdit::FileOpen);
-		file->setCaption(tr("Choose the INI file"));
-		file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
-		addElement(file);
+	   Q_OBJECT
 
-		ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition("section", tr("Section"), this);
-		section->setTooltip(tr("The section name of the parameter"));
-		addElement(section);
+	public:
+		explicit ReadIniFileDefinition(ActionTools::ActionPack *pack)
+		: ActionDefinition(pack)
+		{
+			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
+			file->setTooltip(tr("The file to read from"));
+			file->setMode(ActionTools::FileEdit::FileOpen);
+			file->setCaption(tr("Choose the INI file"));
+			file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
+			addElement(file);
 
-		ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition("parameter", tr("Parameter"), this);
-		parameter->setTooltip(tr("The parameter name"));
-		addElement(parameter);
+			ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition("section", tr("Section"), this);
+			section->setTooltip(tr("The section name of the parameter"));
+			addElement(section);
 
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
-		variable->setTooltip(tr("The variable where to store the data"));
-		addElement(variable);
+			ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition("parameter", tr("Parameter"), this);
+			parameter->setTooltip(tr("The parameter name"));
+			addElement(parameter);
 
-		addException(ActionReadIniFileInstance::UnableToReadFileException, tr("Unable to read file"));
-		addException(ActionReadIniFileInstance::UnableToFindSectionException, tr("Unable to find section"));
-	}
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			variable->setTooltip(tr("The variable where to store the data"));
+			addElement(variable);
 
-	QString name() const													{ return QObject::tr("Read INI file"); }
-	QString id() const														{ return "ActionReadIniFile"; }
-	Flag flags() const														{ return ActionDefinition::flags() | Official; }
-	QString description() const												{ return QObject::tr("Read an entry in an INI file"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadIniFileInstance(this); }
-	Category category() const												{ return Data; }
-	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+			addException(ReadIniFileInstance::UnableToReadFileException, tr("Unable to read file"));
+			addException(ReadIniFileInstance::UnableToFindSectionException, tr("Unable to find section"));
+		}
 
-private:
-	Q_DISABLE_COPY(ActionReadIniFileDefinition)
-};
+		QString name() const													{ return QObject::tr("Read INI file"); }
+		QString id() const														{ return "ActionReadIniFile"; }
+		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		QString description() const												{ return QObject::tr("Read an entry in an INI file"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadIniFileInstance(this); }
+		Category category() const												{ return Data; }
+		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
-#endif // ACTIONREADINIFILEDEFINITION_H
+	private:
+		Q_DISABLE_COPY(ReadIniFileDefinition)
+	};
+}
+
+#endif // READINIFILEDEFINITION_H

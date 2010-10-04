@@ -22,16 +22,16 @@
 #define ACTIONPACKDATA_H
 
 #include "actionpack.h"
-#include "actionreadtextfiledefinition.h"
-#include "actionwriteinifiledefinition.h"
-#include "actionreadinifiledefinition.h"
-#include "actionreadregistrydefinition.h"
-#include "actionwriteregistrydefinition.h"
-#include "actionreadclipboarddefinition.h"
-#include "actionwriteclipboarddefinition.h"
-#include "actionreadbinaryfiledefinition.h"
-#include "actionwritebinaryfiledefinition.h"
-#include "actioncopyfiledefinition.h"
+#include "actions/readtextfiledefinition.h"
+#include "actions/writeinifiledefinition.h"
+#include "actions/readinifiledefinition.h"
+#include "actions/readregistrydefinition.h"
+#include "actions/writeregistrydefinition.h"
+#include "actions/readclipboarddefinition.h"
+#include "actions/writeclipboarddefinition.h"
+#include "actions/readbinaryfiledefinition.h"
+#include "actions/writebinaryfiledefinition.h"
+#include "actions/copyfiledefinition.h"
 
 #include "code/file.h"
 #include "code/clipboard.h"
@@ -57,16 +57,16 @@ class ActionPackData : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackData()
 	{
-		addActionDefinition(new ActionReadTextFileDefinition(this));
-		addActionDefinition(new ActionWriteIniFileDefinition(this));
-		addActionDefinition(new ActionReadIniFileDefinition(this));
-		addActionDefinition(new ActionReadRegistryDefinition(this));
-		addActionDefinition(new ActionWriteRegistryDefinition(this));
-		addActionDefinition(new ActionReadClipboardDefinition(this));
-		addActionDefinition(new ActionWriteClipboardDefinition(this));
-		addActionDefinition(new ActionReadBinaryFileDefinition(this));
-		addActionDefinition(new ActionWriteBinaryFileDefinition(this));
-		addActionDefinition(new ActionCopyFileDefinition(this));
+		addActionDefinition(new Actions::ReadTextFileDefinition(this));
+		addActionDefinition(new Actions::WriteIniFileDefinition(this));
+		addActionDefinition(new Actions::ReadIniFileDefinition(this));
+		addActionDefinition(new Actions::ReadRegistryDefinition(this));
+		addActionDefinition(new Actions::WriteRegistryDefinition(this));
+		addActionDefinition(new Actions::ReadClipboardDefinition(this));
+		addActionDefinition(new Actions::WriteClipboardDefinition(this));
+		addActionDefinition(new Actions::ReadBinaryFileDefinition(this));
+		addActionDefinition(new Actions::WriteBinaryFileDefinition(this));
+		addActionDefinition(new Actions::CopyFileDefinition(this));
 	}
 
 	QString id() const								{ return tr("other"); }

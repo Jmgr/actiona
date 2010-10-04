@@ -18,70 +18,73 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONWRITEINIFILEINSTANCE_H
-#define ACTIONWRITEINIFILEINSTANCE_H
+#ifndef WRITEINIFILEINSTANCE_H
+#define WRITEINIFILEINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 #include <config.h>
 
-class ActionWriteIniFileInstance : public ActionTools::ActionInstance
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	enum Exceptions
+	class WriteIniFileInstance : public ActionTools::ActionInstance
 	{
-		UnableToWriteFileException = ActionTools::ActionException::UserException
-	};
+		Q_OBJECT
 
-	ActionWriteIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)											{}
-
-	void startExecution()
-	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString filename;
-		QString section;
-		QString parameter;
-		QString value;
-
-		if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
-		   !actionInstanceExecutionHelper.evaluateString(section, "section") ||
-		   !actionInstanceExecutionHelper.evaluateString(parameter, "parameter") ||
-		   !actionInstanceExecutionHelper.evaluateString(value, "value"))
-			return;
-
-		if(!write(filename, section, parameter, value))
+	public:
+		enum Exceptions
 		{
-			actionInstanceExecutionHelper.setCurrentParameter("filename");
-			emit executionException(UnableToWriteFileException, tr("Unable to write to the file"));
-			return;
+			UnableToWriteFileException = ActionTools::ActionException::UserException
+		};
+
+		WriteIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)											{}
+
+		void startExecution()
+		{
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			QString filename;
+			QString section;
+			QString parameter;
+			QString value;
+
+			if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
+			   !actionInstanceExecutionHelper.evaluateString(section, "section") ||
+			   !actionInstanceExecutionHelper.evaluateString(parameter, "parameter") ||
+			   !actionInstanceExecutionHelper.evaluateString(value, "value"))
+				return;
+
+			if(!write(filename, section, parameter, value))
+			{
+				actionInstanceExecutionHelper.setCurrentParameter("filename");
+				emit executionException(UnableToWriteFileException, tr("Unable to write to the file"));
+				return;
+			}
+
+			emit executionEnded();
 		}
 
-		emit executionEnded();
-	}
+	private:
+		bool write(const QString &filename, const QString &section, const QString &parameter, const QString &value)
+		{
+			rude::Config config;
 
-private:
-	bool write(const QString &filename, const QString &section, const QString &parameter, const QString &value)
-	{
-		rude::Config config;
+			config.setConfigFile(filename.toLocal8Bit());
 
-		config.setConfigFile(filename.toLocal8Bit());
+			if(!config.setSection(section.toLatin1(), true))
+				return false;
 
-		if(!config.setSection(section.toLatin1(), true))
-			return false;
+			config.setStringValue(parameter.toLatin1(), value.toLatin1());
 
-		config.setStringValue(parameter.toLatin1(), value.toLatin1());
+			if(!config.save())
+				return false;
 
-		if(!config.save())
-			return false;
+			return true;
+		}
 
-		return true;
-	}
-	
-	Q_DISABLE_COPY(ActionWriteIniFileInstance)
-};
+		Q_DISABLE_COPY(WriteIniFileInstance)
+	};
+}
 
-#endif // ACTIONWRITEINIFILEINSTANCE_H
+#endif // WRITEINIFILEINSTANCE_H

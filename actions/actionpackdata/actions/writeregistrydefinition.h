@@ -18,12 +18,12 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONWRITEREGISTRYDEFINITION_H
-#define ACTIONWRITEREGISTRYDEFINITION_H
+#ifndef WRITEREGISTRYDEFINITION_H
+#define WRITEREGISTRYDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionwriteregistryinstance.h"
-#include "actionreadregistryinstance.h"
+#include "actions/writeregistryinstance.h"
+#include "actions/readregistryinstance.h"
 #include "listparameterdefinition.h"
 #include "textparameterdefinition.h"
 
@@ -33,48 +33,51 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionWriteRegistryDefinition : public QObject, public ActionTools::ActionDefinition
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	explicit ActionWriteRegistryDefinition(ActionTools::ActionPack *pack)
-		: ActionDefinition(pack)
+	class WriteRegistryDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-#ifdef Q_WS_WIN
-		ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition("key", tr("Key"), this);
-		key->setTooltip(tr("The registry key to write to"));
-		key->setItems(ActionReadRegistryInstance::keys);
-		key->setDefaultValue(ActionReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
-		addElement(key);
+		Q_OBJECT
 
-		ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition("subKey", tr("Subkey"), this);
-		subKey->setTooltip(tr("The registry subkey to write to"));
-		addElement(subKey);
+	public:
+		explicit WriteRegistryDefinition(ActionTools::ActionPack *pack)
+			: ActionDefinition(pack)
+		{
+	#ifdef Q_WS_WIN
+			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition("key", tr("Key"), this);
+			key->setTooltip(tr("The registry key to write to"));
+			key->setItems(ActionReadRegistryInstance::keys);
+			key->setDefaultValue(ActionReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
+			addElement(key);
 
-		ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
-		value->setTooltip(tr("The value to write to"));
-		addElement(value);
+			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition("subKey", tr("Subkey"), this);
+			subKey->setTooltip(tr("The registry subkey to write to"));
+			addElement(subKey);
 
-		ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition("data", tr("Data"), this);
-		data->setTooltip(tr("The data to write"));
-		addElement(data);
+			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
+			value->setTooltip(tr("The value to write to"));
+			addElement(value);
 
-		addException(ActionWriteRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
-		addException(ActionWriteRegistryInstance::CannotWriteValueException, tr("Cannot write value"));
-#endif
-	}
+			ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition("data", tr("Data"), this);
+			data->setTooltip(tr("The data to write"));
+			addElement(data);
 
-	QString name() const													{ return QObject::tr("Write registry"); }
-	QString id() const														{ return "ActionWriteRegistry"; }
-	Flag flags() const														{ return WorksOnWindows | Official; }
-	QString description() const												{ return QObject::tr("Writes an entry to the registry"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionWriteRegistryInstance(this); }
-	Category category() const												{ return Data; }
-	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+			addException(ActionWriteRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
+			addException(ActionWriteRegistryInstance::CannotWriteValueException, tr("Cannot write value"));
+	#endif
+		}
 
-private:
-	Q_DISABLE_COPY(ActionWriteRegistryDefinition)
-};
+		QString name() const													{ return QObject::tr("Write registry"); }
+		QString id() const														{ return "ActionWriteRegistry"; }
+		Flag flags() const														{ return WorksOnWindows | Official; }
+		QString description() const												{ return QObject::tr("Writes an entry to the registry"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteRegistryInstance(this); }
+		Category category() const												{ return Data; }
+		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
-#endif // ACTIONWRITEREGISTRYDEFINITION_H
+	private:
+		Q_DISABLE_COPY(WriteRegistryDefinition)
+	};
+}
+
+#endif // WRITEREGISTRYDEFINITION_H

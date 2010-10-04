@@ -18,36 +18,39 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADREGISTRYINSTANCE_H
-#define ACTIONREADREGISTRYINSTANCE_H
+#ifndef READREGISTRYINSTANCE_H
+#define READREGISTRYINSTANCE_H
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
 #include "registry.h"
 
-class ActionReadRegistryInstance : public ActionTools::ActionInstance
+namespace Actions
 {
-	Q_OBJECT
-	Q_ENUMS(ActionTools::Registry::Key)
-	Q_ENUMS(ActionTools::Registry::ReadResult)
-
-public:
-	enum Exceptions
+	class ReadRegistryInstance : public ActionTools::ActionInstance
 	{
-		CannotFindSubKeyException = ActionTools::ActionException::UserException,
-		CannotFindValueException,
-		InvalidValueType
+		Q_OBJECT
+		Q_ENUMS(ActionTools::Registry::Key)
+		Q_ENUMS(ActionTools::Registry::ReadResult)
+
+	public:
+		enum Exceptions
+		{
+			CannotFindSubKeyException = ActionTools::ActionException::UserException,
+			CannotFindValueException,
+			InvalidValueType
+		};
+
+		ReadRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)												{}
+
+		static ActionTools::StringListPair keys;
+
+		void startExecution();
+
+	private:
+		Q_DISABLE_COPY(ReadRegistryInstance)
 	};
+}
 
-	ActionReadRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)												{}
-
-	static ActionTools::StringListPair keys;
-
-	void startExecution();
-
-private:
-	Q_DISABLE_COPY(ActionReadRegistryInstance)
-};
-
-#endif // ACTIONREADREGISTRYINSTANCE_H
+#endif // READREGISTRYINSTANCE_H

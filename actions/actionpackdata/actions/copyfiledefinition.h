@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONCOPYFILEDEFINITION_H
-#define ACTIONCOPYFILEDEFINITION_H
+#ifndef COPYFILEDEFINITION_H
+#define COPYFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actioncopyfileinstance.h"
+#include "actions/copyfileinstance.h"
 #include "fileparameterdefinition.h"
 
 namespace ActionTools
@@ -31,42 +31,45 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionCopyFileDefinition : public QObject, public ActionTools::ActionDefinition
+namespace Actions
 {
-   Q_OBJECT
-
-public:
-	explicit ActionCopyFileDefinition(ActionTools::ActionPack *pack)
-	: ActionDefinition(pack)
+	class CopyFileDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-		ActionTools::FileParameterDefinition *source = new ActionTools::FileParameterDefinition("source", tr("Source file"), this);
-		source->setTooltip(tr("The file to copy"));
-		source->setMode(ActionTools::FileEdit::FileOpen);
-		source->setCaption(tr("Choose the file"));
-		source->setFilter(tr("All files (*.*)"));
-		addElement(source);
+	   Q_OBJECT
 
-		ActionTools::FileParameterDefinition *destination = new ActionTools::FileParameterDefinition("destination", tr("Destination"), this);
-		destination->setTooltip(tr("The destination file"));
-		destination->setMode(ActionTools::FileEdit::FileSave);
-		destination->setCaption(tr("Choose the destination file"));
-		destination->setFilter(tr("All files (*.*)"));
-		addElement(destination);
+	public:
+		explicit CopyFileDefinition(ActionTools::ActionPack *pack)
+		: ActionDefinition(pack)
+		{
+			ActionTools::FileParameterDefinition *source = new ActionTools::FileParameterDefinition("source", tr("Source file"), this);
+			source->setTooltip(tr("The file to copy"));
+			source->setMode(ActionTools::FileEdit::FileOpen);
+			source->setCaption(tr("Choose the file"));
+			source->setFilter(tr("All files (*.*)"));
+			addElement(source);
 
-		addException(ActionCopyFileInstance::UnableToReadFileException, tr("Unable to read source file"));
-		addException(ActionCopyFileInstance::UnableToWriteFileException, tr("Unable to write destination file"));
-	}
+			ActionTools::FileParameterDefinition *destination = new ActionTools::FileParameterDefinition("destination", tr("Destination"), this);
+			destination->setTooltip(tr("The destination file"));
+			destination->setMode(ActionTools::FileEdit::FileSave);
+			destination->setCaption(tr("Choose the destination file"));
+			destination->setFilter(tr("All files (*.*)"));
+			addElement(destination);
 
-	QString name() const													{ return QObject::tr("Copy file"); }
-	QString id() const														{ return "ActionCopyFile"; }
-	Flag flags() const														{ return ActionDefinition::flags() | Official; }
-	QString description() const												{ return QObject::tr("Copy a file"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionCopyFileInstance(this); }
-	Category category() const												{ return Data; }
-	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+			addException(CopyFileInstance::UnableToReadFileException, tr("Unable to read source file"));
+			addException(CopyFileInstance::UnableToWriteFileException, tr("Unable to write destination file"));
+		}
 
-private:
-	Q_DISABLE_COPY(ActionCopyFileDefinition)
-};
+		QString name() const													{ return QObject::tr("Copy file"); }
+		QString id() const														{ return "ActionCopyFile"; }
+		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		QString description() const												{ return QObject::tr("Copy a file"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new CopyFileInstance(this); }
+		Category category() const												{ return Data; }
+		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
-#endif // ACTIONCOPYFILEDEFINITION_H
+	private:
+		Q_DISABLE_COPY(CopyFileDefinition)
+	};
+}
+
+#endif // COPYFILEDEFINITION_H

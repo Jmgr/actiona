@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADTEXTFILEDEFINITION_H
-#define ACTIONREADTEXTFILEDEFINITION_H
+#ifndef READTEXTFILEDEFINITION_H
+#define READTEXTFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionreadtextfileinstance.h"
+#include "actions/readtextfileinstance.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "numberparameterdefinition.h"
@@ -35,60 +35,63 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionReadTextFileDefinition : public QObject, public ActionTools::ActionDefinition
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	explicit ActionReadTextFileDefinition(ActionTools::ActionPack *pack)
-        : ActionDefinition(pack)
+	class ReadTextFileDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
-		file->setTooltip(tr("The file you want to read"));
-		addElement(file);
+		Q_OBJECT
 
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
-		variable->setTooltip(tr("The variable where to save the text read from the file"));
-		addElement(variable);
+	public:
+		explicit ReadTextFileDefinition(ActionTools::ActionPack *pack)
+			: ActionDefinition(pack)
+		{
+			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
+			file->setTooltip(tr("The file you want to read"));
+			addElement(file);
 
-		ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition("mode", tr("Mode"), this);
-		mode->setTooltip(tr("The file read mode"));
-		mode->setItems(ActionReadTextFileInstance::modes);
-		mode->setDefaultValue(ActionReadTextFileInstance::modes.second.at(ActionReadTextFileInstance::Full));
-		addElement(mode, 1);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			variable->setTooltip(tr("The variable where to save the text read from the file"));
+			addElement(variable);
 
-		ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition("selectionmode", tr("Selection mode"), this);
-		selectionMode->setMasterList(mode);
-		selectionMode->setMasterValues(QStringList() << ActionReadTextFileInstance::modes.first.at(ActionReadTextFileInstance::Selection));
+			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition("mode", tr("Mode"), this);
+			mode->setTooltip(tr("The file read mode"));
+			mode->setItems(ReadTextFileInstance::modes);
+			mode->setDefaultValue(ReadTextFileInstance::modes.second.at(ReadTextFileInstance::Full));
+			addElement(mode, 1);
 
-		ActionTools::NumberParameterDefinition *firstline = new ActionTools::NumberParameterDefinition("firstline", tr("First line"), this);
-		firstline->setTooltip(tr("The line where to start reading the file"));
-		firstline->setMinimum(1);
-		firstline->setDefaultValue(1);
-		selectionMode->addMember(firstline, 1);
+			ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition("selectionmode", tr("Selection mode"), this);
+			selectionMode->setMasterList(mode);
+			selectionMode->setMasterValues(QStringList() << ReadTextFileInstance::modes.first.at(ReadTextFileInstance::Selection));
 
-		ActionTools::NumberParameterDefinition *lastline = new ActionTools::NumberParameterDefinition("lastline", tr("Last line"), this);
-		lastline->setTooltip(tr("The line where to stop reading the file"));
-		lastline->setMinimum(1);
-		lastline->setDefaultValue(1);
-		selectionMode->addMember(lastline, 1);
+			ActionTools::NumberParameterDefinition *firstline = new ActionTools::NumberParameterDefinition("firstline", tr("First line"), this);
+			firstline->setTooltip(tr("The line where to start reading the file"));
+			firstline->setMinimum(1);
+			firstline->setDefaultValue(1);
+			selectionMode->addMember(firstline, 1);
 
-		addElement(selectionMode, 1);
+			ActionTools::NumberParameterDefinition *lastline = new ActionTools::NumberParameterDefinition("lastline", tr("Last line"), this);
+			lastline->setTooltip(tr("The line where to stop reading the file"));
+			lastline->setMinimum(1);
+			lastline->setDefaultValue(1);
+			selectionMode->addMember(lastline, 1);
 
-		addException(ActionReadTextFileInstance::CannotOpenFileException, tr("Cannot read file"));
-	}
+			addElement(selectionMode, 1);
 
-	QString name() const													{ return QObject::tr("Read text file"); }
-	QString id() const														{ return "ActionReadTextFile"; }
-	Flag flags() const														{ return ActionDefinition::flags() | Official; }
-	QString description() const												{ return QObject::tr("Read a plain text file"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadTextFileInstance(this); }
-	Category category() const												{ return Data; }
-	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
-	QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+			addException(ReadTextFileInstance::CannotOpenFileException, tr("Cannot read file"));
+		}
 
-private:
-	Q_DISABLE_COPY(ActionReadTextFileDefinition)
-};
+		QString name() const													{ return QObject::tr("Read text file"); }
+		QString id() const														{ return "ActionReadTextFile"; }
+		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		QString description() const												{ return QObject::tr("Read a plain text file"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadTextFileInstance(this); }
+		Category category() const												{ return Data; }
+		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
-#endif // ACTIONREADTEXTFILEDEFINITION_H
+	private:
+		Q_DISABLE_COPY(ReadTextFileDefinition)
+	};
+}
+
+#endif // READTEXTFILEDEFINITION_H

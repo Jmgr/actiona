@@ -73,6 +73,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(KillProcessDefinition)
 	};
-
-	#endif // KILLPROCESSDEFINITION_H
 }
+
+#endif // KILLPROCESSDEFINITION_H

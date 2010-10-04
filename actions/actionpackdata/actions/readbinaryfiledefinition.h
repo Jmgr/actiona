@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADBINARYFILEDEFINITION_H
-#define ACTIONREADBINARYFILEDEFINITION_H
+#ifndef READBINARYFILEDEFINITION_H
+#define READBINARYFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionreadbinaryfileinstance.h"
+#include "actions/readbinaryfileinstance.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
 
@@ -32,38 +32,41 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionReadBinaryFileDefinition : public QObject, public ActionTools::ActionDefinition
+namespace Actions
 {
-   Q_OBJECT
-
-public:
-	explicit ActionReadBinaryFileDefinition(ActionTools::ActionPack *pack)
-	: ActionDefinition(pack)
+	class ReadBinaryFileDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
-		file->setTooltip(tr("The file to read from"));
-		file->setMode(ActionTools::FileEdit::FileOpen);
-		file->setCaption(tr("Choose the file"));
-		file->setFilter(tr("All files (*.*)"));
-		addElement(file);
+	   Q_OBJECT
 
-		ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
-		variable->setTooltip(tr("The variable where to store the data"));
-		addElement(variable);
+	public:
+		explicit ReadBinaryFileDefinition(ActionTools::ActionPack *pack)
+		: ActionDefinition(pack)
+		{
+			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
+			file->setTooltip(tr("The file to read from"));
+			file->setMode(ActionTools::FileEdit::FileOpen);
+			file->setCaption(tr("Choose the file"));
+			file->setFilter(tr("All files (*.*)"));
+			addElement(file);
 
-		addException(ActionReadBinaryFileInstance::UnableToReadFileException, tr("Unable to read file"));
-	}
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			variable->setTooltip(tr("The variable where to store the data"));
+			addElement(variable);
 
-	QString name() const													{ return QObject::tr("Read binary file"); }
-	QString id() const														{ return "ActionReadBinaryFile"; }
-	Flag flags() const														{ return ActionDefinition::flags() | Official; }
-	QString description() const												{ return QObject::tr("Read a binary file"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadBinaryFileInstance(this); }
-	Category category() const												{ return Data; }
-	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+			addException(ReadBinaryFileInstance::UnableToReadFileException, tr("Unable to read file"));
+		}
 
-private:
-	Q_DISABLE_COPY(ActionReadBinaryFileDefinition)
-};
+		QString name() const													{ return QObject::tr("Read binary file"); }
+		QString id() const														{ return "ActionReadBinaryFile"; }
+		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		QString description() const												{ return QObject::tr("Read a binary file"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadBinaryFileInstance(this); }
+		Category category() const												{ return Data; }
+		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
-#endif // ACTIONREADBINARYFILEDEFINITION_H
+	private:
+		Q_DISABLE_COPY(ReadBinaryFileDefinition)
+	};
+}
+
+#endif // READBINARYFILEDEFINITION_H

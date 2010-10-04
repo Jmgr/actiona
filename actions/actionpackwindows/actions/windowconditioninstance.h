@@ -47,6 +47,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(WindowConditionInstance)
 	};
-
-	#endif // WINDOWCONDITIONINSTANCE_H
 }
+
+#endif // WINDOWCONDITIONINSTANCE_H

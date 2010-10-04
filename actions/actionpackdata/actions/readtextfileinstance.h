@@ -18,39 +18,42 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADTEXTFILEINSTANCE_H
-#define ACTIONREADTEXTFILEINSTANCE_H
+#ifndef READTEXTFILEINSTANCE_H
+#define READTEXTFILEINSTANCE_H
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
 
 #include <QScriptable>
 
-class ActionReadTextFileInstance : public ActionTools::ActionInstance
+namespace Actions
 {
-	Q_OBJECT
-	Q_ENUMS(Mode)
-
-public:
-	enum Mode
+	class ReadTextFileInstance : public ActionTools::ActionInstance
 	{
-		Full,
-		Selection
+		Q_OBJECT
+		Q_ENUMS(Mode)
+
+	public:
+		enum Mode
+		{
+			Full,
+			Selection
+		};
+		enum Exceptions
+		{
+			CannotOpenFileException = ActionTools::ActionException::UserException
+		};
+
+		ReadTextFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)												{}
+
+		static ActionTools::StringListPair modes;
+
+		void startExecution();
+
+	private:
+		Q_DISABLE_COPY(ReadTextFileInstance)
 	};
-	enum Exceptions
-	{
-		CannotOpenFileException = ActionTools::ActionException::UserException
-	};
+}
 
-	ActionReadTextFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)												{}
-
-	static ActionTools::StringListPair modes;
-
-	void startExecution();
-
-private:
-	Q_DISABLE_COPY(ActionReadTextFileInstance)
-};
-
-#endif // ACTIONREADTEXTFILEINSTANCE_H
+#endif // READTEXTFILEINSTANCE_H

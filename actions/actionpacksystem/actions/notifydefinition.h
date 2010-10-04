@@ -77,6 +77,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(NotifyDefinition)
 	};
-
-	#endif // NOTIFYDEFINITION_H
 }
+
+#endif // NOTIFYDEFINITION_H

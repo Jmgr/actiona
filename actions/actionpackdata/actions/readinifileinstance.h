@@ -18,64 +18,67 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADINIFILEINSTANCE_H
-#define ACTIONREADINIFILEINSTANCE_H
+#ifndef READINIFILEINSTANCE_H
+#define READINIFILEINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 #include <config.h>
 
-class ActionReadIniFileInstance : public ActionTools::ActionInstance
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	enum Exceptions
+	class ReadIniFileInstance : public ActionTools::ActionInstance
 	{
-		UnableToReadFileException = ActionTools::ActionException::UserException,
-		UnableToFindSectionException
+		Q_OBJECT
+
+	public:
+		enum Exceptions
+		{
+			UnableToReadFileException = ActionTools::ActionException::UserException,
+			UnableToFindSectionException
+		};
+
+		ReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)											{}
+
+		void startExecution()
+		{
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			QString filename;
+			QString section;
+			QString parameter;
+			QString variable;
+
+			if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
+			   !actionInstanceExecutionHelper.evaluateString(section, "section") ||
+			   !actionInstanceExecutionHelper.evaluateString(parameter, "parameter") ||
+			   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
+				return;
+
+			rude::Config config;
+			if(!config.load(filename.toLocal8Bit()))
+			{
+				actionInstanceExecutionHelper.setCurrentParameter("filename");
+				emit executionException(UnableToReadFileException, tr("Unable to read the file"));
+				return;
+			}
+
+			if(!config.setSection(section.toLatin1(), false))
+			{
+				actionInstanceExecutionHelper.setCurrentParameter("section");
+				emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
+				return;
+			}
+
+			actionInstanceExecutionHelper.setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
+
+			emit executionEnded();
+		}
+
+	private:
+		Q_DISABLE_COPY(ReadIniFileInstance)
 	};
+}
 
-	ActionReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)											{}
-
-	void startExecution()
-	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString filename;
-		QString section;
-		QString parameter;
-		QString variable;
-
-		if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
-		   !actionInstanceExecutionHelper.evaluateString(section, "section") ||
-		   !actionInstanceExecutionHelper.evaluateString(parameter, "parameter") ||
-		   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
-			return;
-
-		rude::Config config;
-		if(!config.load(filename.toLocal8Bit()))
-		{
-			actionInstanceExecutionHelper.setCurrentParameter("filename");
-			emit executionException(UnableToReadFileException, tr("Unable to read the file"));
-			return;
-		}
-
-		if(!config.setSection(section.toLatin1(), false))
-		{
-			actionInstanceExecutionHelper.setCurrentParameter("section");
-			emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
-			return;
-		}
-
-		actionInstanceExecutionHelper.setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
-
-		emit executionEnded();
-	}
-
-private:
-	Q_DISABLE_COPY(ActionReadIniFileInstance)
-};
-
-#endif // ACTIONREADINIFILEINSTANCE_H
+#endif // READINIFILEINSTANCE_H

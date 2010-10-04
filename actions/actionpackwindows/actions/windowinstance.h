@@ -57,6 +57,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(WindowInstance)
 	};
-
-	#endif // WINDOWINSTANCE_H
 }
+
+#endif // WINDOWINSTANCE_H

@@ -22,10 +22,10 @@
 #define ACTIONPACKWINDOWS_H
 
 #include "actionpack.h"
-#include "actionmessageboxdefinition.h"
-#include "actiontextinputdefinition.h"
-#include "actionwindowconditiondefinition.h"
-#include "actionwindowdefinition.h"
+#include "actions/messageboxdefinition.h"
+#include "actions/textinputdefinition.h"
+#include "actions/windowconditiondefinition.h"
+#include "actions/windowdefinition.h"
 
 #include "code/messagebox.h"
 #include "code/inputdialog.h"
@@ -48,10 +48,10 @@ class ActionPackWindows : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackWindows()
 	{
-		addActionDefinition(new ActionMessageBoxDefinition(this));
-		addActionDefinition(new ActionTextInputDefinition(this));
-		addActionDefinition(new ActionWindowConditionDefinition(this));
-		addActionDefinition(new ActionWindowDefinition(this));
+		addActionDefinition(new Actions::MessageBoxDefinition(this));
+		addActionDefinition(new Actions::TextInputDefinition(this));
+		addActionDefinition(new Actions::WindowConditionDefinition(this));
+		addActionDefinition(new Actions::WindowDefinition(this));
 	}
 
 	QString id() const							{ return tr("windows"); }

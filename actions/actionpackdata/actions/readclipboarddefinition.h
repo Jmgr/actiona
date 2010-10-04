@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADCLIPBOARDDEFINITION_H
-#define ACTIONREADCLIPBOARDDEFINITION_H
+#ifndef READCLIPBOARDDEFINITION_H
+#define READCLIPBOARDDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionreadclipboardinstance.h"
+#include "actions/readclipboardinstance.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 
@@ -32,29 +32,32 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionReadClipboardDefinition : public QObject, public ActionTools::ActionDefinition
+namespace Actions
 {
-   Q_OBJECT
-
-public:
-	explicit ActionReadClipboardDefinition(ActionTools::ActionPack *pack)
-	: ActionDefinition(pack)
+	class ReadClipboardDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-		ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
-		output->setTooltip(tr("The variable where to save the current clipboard value"));
-		addElement(output);
-	}
+	   Q_OBJECT
 
-	QString name() const													{ return QObject::tr("Read clipboard"); }
-	QString id() const														{ return "ActionReadClipboard"; }
-	Flag flags() const														{ return ActionDefinition::flags() | Official; }
-	QString description() const												{ return QObject::tr("Read the clipboard contents"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionReadClipboardInstance(this); }
-	Category category() const												{ return Data; }
-	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+	public:
+		explicit ReadClipboardDefinition(ActionTools::ActionPack *pack)
+		: ActionDefinition(pack)
+		{
+			ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			output->setTooltip(tr("The variable where to save the current clipboard value"));
+			addElement(output);
+		}
 
-private:
-	Q_DISABLE_COPY(ActionReadClipboardDefinition)
-};
+		QString name() const													{ return QObject::tr("Read clipboard"); }
+		QString id() const														{ return "ActionReadClipboard"; }
+		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		QString description() const												{ return QObject::tr("Read the clipboard contents"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadClipboardInstance(this); }
+		Category category() const												{ return Data; }
+		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
-#endif // ACTIONREADCLIPBOARDDEFINITION_H
+	private:
+		Q_DISABLE_COPY(ReadClipboardDefinition)
+	};
+}
+
+#endif // READCLIPBOARDDEFINITION_H

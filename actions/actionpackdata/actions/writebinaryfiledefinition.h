@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONWRITEBINARYFILEDEFINITION_H
-#define ACTIONWRITEBINARYFILEDEFINITION_H
+#ifndef WRITEBINARYFILEDEFINITION_H
+#define WRITEBINARYFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionwritebinaryfileinstance.h"
+#include "actions/writebinaryfileinstance.h"
 #include "fileparameterdefinition.h"
 #include "textparameterdefinition.h"
 
@@ -32,38 +32,41 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionWriteBinaryFileDefinition : public QObject, public ActionTools::ActionDefinition
+namespace Actions
 {
-   Q_OBJECT
-
-public:
-	explicit ActionWriteBinaryFileDefinition(ActionTools::ActionPack *pack)
-	: ActionDefinition(pack)
+	class WriteBinaryFileDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-		ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
-		file->setTooltip(tr("The file to write to"));
-		file->setMode(ActionTools::FileEdit::FileSave);
-		file->setCaption(tr("Choose the file"));
-		file->setFilter(tr("All files (*.*)"));
-		addElement(file);
+	   Q_OBJECT
 
-		ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition("data", tr("Data"), this);
-		data->setTooltip(tr("The data to write to the file"));
-		addElement(data);
+	public:
+		explicit WriteBinaryFileDefinition(ActionTools::ActionPack *pack)
+		: ActionDefinition(pack)
+		{
+			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
+			file->setTooltip(tr("The file to write to"));
+			file->setMode(ActionTools::FileEdit::FileSave);
+			file->setCaption(tr("Choose the file"));
+			file->setFilter(tr("All files (*.*)"));
+			addElement(file);
 
-		addException(ActionWriteBinaryFileInstance::UnableToWriteFileException, tr("Unable to write to the file"));
-	}
+			ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition("data", tr("Data"), this);
+			data->setTooltip(tr("The data to write to the file"));
+			addElement(data);
 
-	QString name() const													{ return QObject::tr("Write binary file"); }
-	QString id() const														{ return "ActionWriteBinaryFile"; }
-	Flag flags() const														{ return ActionDefinition::flags() | Official; }
-	QString description() const												{ return QObject::tr("Write to a binary file"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionWriteBinaryFileInstance(this); }
-	Category category() const												{ return Data; }
-	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+			addException(WriteBinaryFileInstance::UnableToWriteFileException, tr("Unable to write to the file"));
+		}
 
-private:
-	Q_DISABLE_COPY(ActionWriteBinaryFileDefinition)
-};
+		QString name() const													{ return QObject::tr("Write binary file"); }
+		QString id() const														{ return "ActionWriteBinaryFile"; }
+		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		QString description() const												{ return QObject::tr("Write to a binary file"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteBinaryFileInstance(this); }
+		Category category() const												{ return Data; }
+		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
-#endif // ACTIONWRITEBINARYFILEDEFINITION_H
+	private:
+		Q_DISABLE_COPY(WriteBinaryFileDefinition)
+	};
+}
+
+#endif // WRITEBINARYFILEDEFINITION_H

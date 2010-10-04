@@ -155,6 +155,6 @@ namespace Actions
 
 		Q_DISABLE_COPY(CommandInstance)
 	};
-
-	#endif // COMMANDINSTANCE_H
 }
+
+#endif // COMMANDINSTANCE_H

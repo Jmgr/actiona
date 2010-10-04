@@ -95,6 +95,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(WindowConditionDefinition)
 	};
-
-	#endif // WINDOWCONDITIONDEFINITION_H
 }
+
+#endif // WINDOWCONDITIONDEFINITION_H

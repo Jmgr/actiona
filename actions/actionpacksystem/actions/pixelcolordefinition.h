@@ -73,6 +73,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(PixelColorDefinition)
 	};
-
-	#endif // PIXELCOLORDEFINITION_H
 }
+
+#endif // PIXELCOLORDEFINITION_H

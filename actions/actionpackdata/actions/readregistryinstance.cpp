@@ -18,7 +18,7 @@
 		Contact : jmgr@jmgr.info
 */
 
-#include "actionreadregistryinstance.h"
+#include "actions/readregistryinstance.h"
 #include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_WIN
@@ -26,46 +26,49 @@
 #include <windows.h>
 #endif
 
-ActionTools::StringListPair ActionReadRegistryInstance::keys = qMakePair(
-		QStringList() << "classesRoot" << "currentConfig" << "currentUser" << "users" << "localMachine",
-		QStringList() << "Classes root" << "Current config" << "Current user" << "Users" << "Local machine");
-//Note : This is not translated, because this is not translated either in Regedit
-
-void ActionReadRegistryInstance::startExecution()
+namespace Actions
 {
-	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-#ifdef Q_WS_WIN
-	ActionTools::Registry::Key key;
-	QString subKey;
-	QString value;
-	QString variable;
+	ActionTools::StringListPair ReadRegistryInstance::keys = qMakePair(
+			QStringList() << "classesRoot" << "currentConfig" << "currentUser" << "users" << "localMachine",
+			QStringList() << "Classes root" << "Current config" << "Current user" << "Users" << "Local machine");
+	//Note : This is not translated, because this is not translated either in Regedit
 
-	if(!actionInstanceExecutionHelper.evaluateListElement(key, keys, "key") ||
-	   !actionInstanceExecutionHelper.evaluateString(subKey, "subKey") ||
-	   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
-	   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
-		return;
-
-	QVariant resultValue;
-	switch(ActionTools::Registry::read(resultValue, key, subKey, value))
+	void ReadRegistryInstance::startExecution()
 	{
-	case ActionTools::Registry::ReadCannotFindSubKey:
-		actionInstanceExecutionHelper.setCurrentParameter("subKey");
-		emit executionException(CannotFindSubKeyException, tr("Cannot find subKey \"%1\"").arg(subKey));
-		return;
-	case ActionTools::Registry::ReadCannotFindValue:
-		actionInstanceExecutionHelper.setCurrentParameter("value");
-		emit executionException(CannotFindValueException, tr("Cannot find value \"%1\"").arg(value));
-		return;
-	case ActionTools::Registry::ReadInvalidValueType:
-		actionInstanceExecutionHelper.setCurrentParameter("value");
-		emit executionException(CannotFindValueException, tr("Invalid value type"));
-		return;
-	default:
-		actionInstanceExecutionHelper.setVariable(variable, resultValue);
-		break;
-	}
-#endif
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+	#ifdef Q_WS_WIN
+		ActionTools::Registry::Key key;
+		QString subKey;
+		QString value;
+		QString variable;
 
-	emit executionEnded();
+		if(!actionInstanceExecutionHelper.evaluateListElement(key, keys, "key") ||
+		   !actionInstanceExecutionHelper.evaluateString(subKey, "subKey") ||
+		   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
+		   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
+			return;
+
+		QVariant resultValue;
+		switch(ActionTools::Registry::read(resultValue, key, subKey, value))
+		{
+		case ActionTools::Registry::ReadCannotFindSubKey:
+			actionInstanceExecutionHelper.setCurrentParameter("subKey");
+			emit executionException(CannotFindSubKeyException, tr("Cannot find subKey \"%1\"").arg(subKey));
+			return;
+		case ActionTools::Registry::ReadCannotFindValue:
+			actionInstanceExecutionHelper.setCurrentParameter("value");
+			emit executionException(CannotFindValueException, tr("Cannot find value \"%1\"").arg(value));
+			return;
+		case ActionTools::Registry::ReadInvalidValueType:
+			actionInstanceExecutionHelper.setCurrentParameter("value");
+			emit executionException(CannotFindValueException, tr("Invalid value type"));
+			return;
+		default:
+			actionInstanceExecutionHelper.setVariable(variable, resultValue);
+			break;
+		}
+	#endif
+
+		emit executionEnded();
+	}
 }

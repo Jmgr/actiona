@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONREADBINARYFILEINSTANCE_H
-#define ACTIONREADBINARYFILEINSTANCE_H
+#ifndef READBINARYFILEINSTANCE_H
+#define READBINARYFILEINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
 #include "datacopyactioninstance.h"
@@ -27,65 +27,68 @@
 #include <QFile>
 #include <QBuffer>
 
-class ActionReadBinaryFileInstance : public ActionTools::DataCopyActionInstance
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	enum Exceptions
+	class ReadBinaryFileInstance : public ActionTools::DataCopyActionInstance
 	{
-		UnableToReadFileException = ActionTools::ActionException::UserException
-	};
+		Q_OBJECT
 
-	ActionReadBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::DataCopyActionInstance(definition, parent)
-	{
-	}
-
-	void startExecution()
-	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString filename;
-
-		if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
-		   !actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
-			return;
-		
-		mFile.setFileName(filename);
-
-		if(!DataCopyActionInstance::startCopy(&mFile, &mResult))
+	public:
+		enum Exceptions
 		{
-			actionInstanceExecutionHelper.setCurrentParameter("file");
-			emit executionException(UnableToReadFileException, tr("Unable to read the file \"%1\"").arg(filename));
-			return;
+			UnableToReadFileException = ActionTools::ActionException::UserException
+		};
+
+		ReadBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::DataCopyActionInstance(definition, parent)
+		{
 		}
-		
-		emit showProgressDialog("Reading file", 100);
-		emit updateProgressDialog("Reading in progress");
-	}
 
-private slots:
-	void done()
-	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		actionInstanceExecutionHelper.setVariable(mVariable, mResult.buffer());
-		
-		DataCopyActionInstance::done();
-	}
+		void startExecution()
+		{
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			QString filename;
 
-private:
-	void clean()
-	{
-		DataCopyActionInstance::clean();
-		
-		mResult.buffer().clear();
-	}
-	
-	QFile mFile;
-	QBuffer mResult;
-	QString mVariable;
-	
-	Q_DISABLE_COPY(ActionReadBinaryFileInstance)
-};
+			if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
+			   !actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
+				return;
 
-#endif // ACTIONREADBINARYFILEINSTANCE_H
+			mFile.setFileName(filename);
+
+			if(!DataCopyActionInstance::startCopy(&mFile, &mResult))
+			{
+				actionInstanceExecutionHelper.setCurrentParameter("file");
+				emit executionException(UnableToReadFileException, tr("Unable to read the file \"%1\"").arg(filename));
+				return;
+			}
+
+			emit showProgressDialog("Reading file", 100);
+			emit updateProgressDialog("Reading in progress");
+		}
+
+	private slots:
+		void done()
+		{
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			actionInstanceExecutionHelper.setVariable(mVariable, mResult.buffer());
+
+			DataCopyActionInstance::done();
+		}
+
+	private:
+		void clean()
+		{
+			DataCopyActionInstance::clean();
+
+			mResult.buffer().clear();
+		}
+
+		QFile mFile;
+		QBuffer mResult;
+		QString mVariable;
+
+		Q_DISABLE_COPY(ReadBinaryFileInstance)
+	};
+}
+
+#endif // READBINARYFILEINSTANCE_H

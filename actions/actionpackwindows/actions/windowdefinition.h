@@ -98,6 +98,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(WindowDefinition)
 	};
-
-	#endif // WINDOWDEFINITION_H
 }
+
+#endif // WINDOWDEFINITION_H

@@ -90,6 +90,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(CommandDefinition)
 	};
-
-	#endif // COMMANDDEFINITION_H
 }
+
+#endif // COMMANDDEFINITION_H

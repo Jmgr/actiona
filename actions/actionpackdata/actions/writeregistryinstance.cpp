@@ -18,8 +18,8 @@
 		Contact : jmgr@jmgr.info
 */
 
-#include "actionwriteregistryinstance.h"
-#include "actionreadregistryinstance.h"
+#include "actions/writeregistryinstance.h"
+#include "actions/readregistryinstance.h"
 #include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_WIN
@@ -27,35 +27,38 @@
 #include <windows.h>
 #endif
 
-void ActionWriteRegistryInstance::startExecution()
+namespace Actions
 {
-	ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-#ifdef Q_WS_WIN
-	ActionTools::Registry::Key key;
-	QString subKey;
-	QString value;
-	QVariant data;
-
-	if(!actionInstanceExecutionHelper.evaluateListElement(key, ActionReadRegistryInstance::keys, "key") ||
-	   !actionInstanceExecutionHelper.evaluateString(subKey, "subKey") ||
-	   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
-	   !actionInstanceExecutionHelper.evaluateVariant(data, "data"))
-		return;
-
-	switch(ActionTools::Registry::write(data, key, subKey, value))
+	void WriteRegistryInstance::startExecution()
 	{
-	case ActionTools::Registry::WriteCannotFindSubKey:
-		actionInstanceExecutionHelper.setCurrentParameter("subKey");
-		emit executionException(CannotFindSubKeyException, tr("Cannot find subKey \"%1\"").arg(subKey));
-		return;
-	case ActionTools::Registry::WriteCannotWriteValue:
-		actionInstanceExecutionHelper.setCurrentParameter("value");
-		emit executionException(CannotWriteValueException, tr("Cannot write value \"%1\"").arg(value));
-		return;
-	default:
-		break;
-	}
-#endif
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+	#ifdef Q_WS_WIN
+		ActionTools::Registry::Key key;
+		QString subKey;
+		QString value;
+		QVariant data;
 
-	emit executionEnded();
+		if(!actionInstanceExecutionHelper.evaluateListElement(key, ActionReadRegistryInstance::keys, "key") ||
+		   !actionInstanceExecutionHelper.evaluateString(subKey, "subKey") ||
+		   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
+		   !actionInstanceExecutionHelper.evaluateVariant(data, "data"))
+			return;
+
+		switch(ActionTools::Registry::write(data, key, subKey, value))
+		{
+		case ActionTools::Registry::WriteCannotFindSubKey:
+			actionInstanceExecutionHelper.setCurrentParameter("subKey");
+			emit executionException(CannotFindSubKeyException, tr("Cannot find subKey \"%1\"").arg(subKey));
+			return;
+		case ActionTools::Registry::WriteCannotWriteValue:
+			actionInstanceExecutionHelper.setCurrentParameter("value");
+			emit executionException(CannotWriteValueException, tr("Cannot write value \"%1\"").arg(value));
+			return;
+		default:
+			break;
+		}
+	#endif
+
+		emit executionEnded();
+	}
 }

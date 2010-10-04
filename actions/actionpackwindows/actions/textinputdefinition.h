@@ -66,6 +66,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(TextInputDefinition)
 	};
-
-	#endif // TEXTINPUTDEFINITION_H
 }
+
+#endif // TEXTINPUTDEFINITION_H

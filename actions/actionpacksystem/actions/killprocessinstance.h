@@ -69,6 +69,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(KillProcessInstance)
 	};
-
-	#endif // KILLPROCESSINSTANCE_H
 }
+
+#endif // KILLPROCESSINSTANCE_H

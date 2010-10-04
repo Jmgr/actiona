@@ -95,6 +95,6 @@ namespace Actions
 	private:
 		Q_DISABLE_COPY(PixelColorInstance)
 	};
-
-	#endif // PIXELCOLORINSTANCE_H
 }
+
+#endif // PIXELCOLORINSTANCE_H

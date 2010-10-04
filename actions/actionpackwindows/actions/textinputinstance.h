@@ -47,6 +47,6 @@ namespace Actions
 
 		Q_DISABLE_COPY(TextInputInstance)
 	};
-
-	#endif // TEXTINPUTINSTANCE_H
 }
+
+#endif // TEXTINPUTINSTANCE_H

@@ -18,11 +18,11 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONWRITECLIPBOARDDEFINITION_H
-#define ACTIONWRITECLIPBOARDDEFINITION_H
+#ifndef WRITECLIPBOARDDEFINITION_H
+#define WRITECLIPBOARDDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actionwriteclipboardinstance.h"
+#include "actions/writeclipboardinstance.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 
@@ -32,29 +32,32 @@ namespace ActionTools
 	class ActionInstance;
 }
 
-class ActionWriteClipboardDefinition : public QObject, public ActionTools::ActionDefinition
+namespace Actions
 {
-   Q_OBJECT
-
-public:
-	explicit ActionWriteClipboardDefinition(ActionTools::ActionPack *pack)
-	: ActionDefinition(pack)
+	class WriteClipboardDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-		ActionTools::TextParameterDefinition *input = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
-		input->setTooltip(tr("The new clipboard value"));
-		addElement(input);
-	}
+	   Q_OBJECT
 
-	QString name() const													{ return QObject::tr("Write clipboard"); }
-	QString id() const														{ return "ActionWriteClipboard"; }
-	Flag flags() const														{ return ActionDefinition::flags() | Official; }
-	QString description() const												{ return QObject::tr("Set the clipboard contents"); }
-	ActionTools::ActionInstance *newActionInstance() const					{ return new ActionWriteClipboardInstance(this); }
-	Category category() const												{ return Data; }
-	QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+	public:
+		explicit WriteClipboardDefinition(ActionTools::ActionPack *pack)
+		: ActionDefinition(pack)
+		{
+			ActionTools::TextParameterDefinition *input = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
+			input->setTooltip(tr("The new clipboard value"));
+			addElement(input);
+		}
 
-private:
-	Q_DISABLE_COPY(ActionWriteClipboardDefinition)
-};
+		QString name() const													{ return QObject::tr("Write clipboard"); }
+		QString id() const														{ return "ActionWriteClipboard"; }
+		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		QString description() const												{ return QObject::tr("Set the clipboard contents"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteClipboardInstance(this); }
+		Category category() const												{ return Data; }
+		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
 
-#endif // ACTIONWRITECLIPBOARDDEFINITION_H
+	private:
+		Q_DISABLE_COPY(WriteClipboardDefinition)
+	};
+}
+
+#endif // WRITECLIPBOARDDEFINITION_H

@@ -48,6 +48,6 @@ namespace Actions
 
 		Q_DISABLE_COPY(NotifyInstance)
 	};
-
-	#endif // NOTIFYINSTANCE_H
 }
+
+#endif // NOTIFYINSTANCE_H

@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONWRITECLIPBOARDINSTANCE_H
-#define ACTIONWRITECLIPBOARDINSTANCE_H
+#ifndef WRITECLIPBOARDINSTANCE_H
+#define WRITECLIPBOARDINSTANCE_H
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
@@ -27,30 +27,33 @@
 #include <QApplication>
 #include <QClipboard>
 
-class ActionWriteClipboardInstance : public ActionTools::ActionInstance
+namespace Actions
 {
-	Q_OBJECT
-
-public:
-	ActionWriteClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-		: ActionTools::ActionInstance(definition, parent)											{}
-
-	void startExecution()
+	class WriteClipboardInstance : public ActionTools::ActionInstance
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString value;
+		Q_OBJECT
 
-		if(!actionInstanceExecutionHelper.evaluateString(value, "value"))
-			return;
+	public:
+		WriteClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)											{}
 
-		QClipboard *clipboard = QApplication::clipboard();
-		clipboard->setText(value);
+		void startExecution()
+		{
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			QString value;
 
-		emit executionEnded();
-	}
+			if(!actionInstanceExecutionHelper.evaluateString(value, "value"))
+				return;
 
-private:
-	Q_DISABLE_COPY(ActionWriteClipboardInstance)
-};
+			QClipboard *clipboard = QApplication::clipboard();
+			clipboard->setText(value);
 
-#endif // ACTIONWRITECLIPBOARDINSTANCE_H
+			emit executionEnded();
+		}
+
+	private:
+		Q_DISABLE_COPY(WriteClipboardInstance)
+	};
+}
+
+#endif // WRITECLIPBOARDINSTANCE_H

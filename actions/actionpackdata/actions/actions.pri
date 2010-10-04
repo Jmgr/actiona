@@ -1,14 +1,23 @@
-HEADERS += actions/wheeldefinition.h \
-    actions/wheelinstance.h \
-    actions/keydefinition.h \
-    actions/keyinstance.h \
-    actions/movecursorinstance.h \
-    actions/movecursordefinition.h \
-	actions/textdefinition.h \
-    actions/textinstance.h \
-	actions/clickdefinition.h \
-    actions/clickinstance.h
-SOURCES += actions/textinstance.cpp \
-    actions/wheelinstance.cpp \
-    actions/keyinstance.cpp \
-	actions/clickinstance.cpp
+HEADERS += actions/readtextfiledefinition.h \
+	actions/readtextfileinstance.h \
+	actions/writeinifiledefinition.h \
+	actions/writeinifileinstance.h \
+	actions/readinifiledefinition.h \
+	actions/readinifileinstance.h \
+	actions/readregistryinstance.h \
+	actions/readregistrydefinition.h \
+	actions/writeregistrydefinition.h \
+	actions/writeregistryinstance.h \
+	actions/readclipboarddefinition.h \
+	actions/readclipboardinstance.h \
+	actions/writeclipboarddefinition.h \
+	actions/writeclipboardinstance.h \
+	actions/readbinaryfileinstance.h \
+	actions/readbinaryfiledefinition.h \
+	actions/writebinaryfileinstance.h \
+	actions/writebinaryfiledefinition.h \
+	actions/copyfileinstance.h \
+	actions/copyfiledefinition.h
+SOURCES +=	actions/readtextfileinstance.cpp \
+	actions/readregistryinstance.cpp \
+	actions/writeregistryinstance.cpp
