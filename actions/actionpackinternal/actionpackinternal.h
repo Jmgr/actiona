@@ -22,16 +22,16 @@
 #define ACTIONPACKINTERNAL_H
 
 #include "actionpack.h"
-#include "actionpausedefinition.h"
-#include "actioncodedefinition.h"
-#include "actiongotodefinition.h"
-#include "actionloopdefinition.h"
-#include "actionnoopdefinition.h"
-#include "actionstopdefinition.h"
-#include "actionvariabledefinition.h"
-#include "actiontimeconditiondefinition.h"
-#include "actionexitdefinition.h"
-#include "actionvariableconditiondefinition.h"
+#include "actions/pausedefinition.h"
+#include "actions/codedefinition.h"
+#include "actions/gotodefinition.h"
+#include "actions/loopdefinition.h"
+#include "actions/noopdefinition.h"
+#include "actions/stopdefinition.h"
+#include "actions/variabledefinition.h"
+#include "actions/timeconditiondefinition.h"
+#include "actions/exitdefinition.h"
+#include "actions/variableconditiondefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -48,16 +48,16 @@ class ActionPackInternal : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackInternal()
 	{
-		addActionDefinition(new ActionPauseDefinition(this));
-		addActionDefinition(new ActionCodeDefinition(this));
-		addActionDefinition(new ActionGotoDefinition(this));
-		addActionDefinition(new ActionLoopDefinition(this));
-		addActionDefinition(new ActionNoopDefinition(this));
-		addActionDefinition(new ActionStopDefinition(this));
-		addActionDefinition(new ActionVariableDefinition(this));
-		addActionDefinition(new ActionTimeConditionDefinition(this));
-		addActionDefinition(new ActionExitDefinition(this));
-		addActionDefinition(new ActionVariableConditionDefinition(this));
+		addActionDefinition(new Actions::PauseDefinition(this));
+		addActionDefinition(new Actions::CodeDefinition(this));
+		addActionDefinition(new Actions::GotoDefinition(this));
+		addActionDefinition(new Actions::LoopDefinition(this));
+		addActionDefinition(new Actions::NoopDefinition(this));
+		addActionDefinition(new Actions::StopDefinition(this));
+		addActionDefinition(new Actions::VariableDefinition(this));
+		addActionDefinition(new Actions::TimeConditionDefinition(this));
+		addActionDefinition(new Actions::ExitDefinition(this));
+		addActionDefinition(new Actions::VariableConditionDefinition(this));
 	}
 
 	QString id() const								{ return tr("internal"); }

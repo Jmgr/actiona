@@ -22,10 +22,10 @@
 #define ACTIONPACKSYSTEM_H
 
 #include "actionpack.h"
-#include "actioncommanddefinition.h"
-#include "actionkillprocessdefinition.h"
-#include "actionnotifydefinition.h"
-#include "actionpixelcolordefinition.h"
+#include "actions/commanddefinition.h"
+#include "actions/killprocessdefinition.h"
+#include "actions/notifydefinition.h"
+#include "actions/pixelcolordefinition.h"
 
 #include "code/system.h"
 #include "code/mediaplaylist.h"
@@ -45,10 +45,10 @@ class ActionPackSystem : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackSystem()
 	{
-		addActionDefinition(new ActionCommandDefinition(this));
-		addActionDefinition(new ActionKillProcessDefinition(this));
-		addActionDefinition(new ActionNotifyDefinition(this));
-		addActionDefinition(new ActionPixelColorDefinition(this));
+		addActionDefinition(new Actions::CommandDefinition(this));
+		addActionDefinition(new Actions::KillProcessDefinition(this));
+		addActionDefinition(new Actions::NotifyDefinition(this));
+		addActionDefinition(new Actions::PixelColorDefinition(this));
 	}
 
 	QString id() const							{ return tr("system"); }

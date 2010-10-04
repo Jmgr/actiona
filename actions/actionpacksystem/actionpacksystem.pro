@@ -1,19 +1,10 @@
 include(../common_actions.pri)
+include(actions/actions.pri)
 include(code/code.pri)
 TARGET = ActionPackSystem
 QT += script
-HEADERS += actionpacksystem.h \
-	actioncommanddefinition.h \
-	actioncommandinstance.h \
-	actionkillprocessdefinition.h \
-	actionkillprocessinstance.h \
-	actionnotifydefinition.h \
-	actionnotifyinstance.h \
-	actionpixelcolordefinition.h \
-	actionpixelcolorinstance.h
+HEADERS += actionpacksystem.h
 RESOURCES += actionpacksystem.qrc
-SOURCES += actionkillprocessinstance.cpp \
-	actionnotifyinstance.cpp
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
 
