@@ -26,14 +26,24 @@
 #include <QScriptValue>
 #include <QScriptEngine>
 
+class MouseDevice;
+
 namespace Code
 {
 	class Mouse : public QObject, public QScriptable
 	{
+		Q_OBJECT
+
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
 		Mouse();
+
+	public slots:
+		void setCursorPosition() const;
+
+	private:
+		MouseDevice *mMouseDevice;
 	};
 }
 

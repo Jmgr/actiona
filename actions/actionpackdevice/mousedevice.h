@@ -18,41 +18,35 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "mouse.h"
-#include "mousedevice.h"
-#include "code/point.h"
+#ifndef MOUSEDEVICE_H
+#define MOUSEDEVICE_H
 
-#include <QScriptValueIterator>
+#include <QPoint>
 
-namespace Code
+class MouseDevice
 {
-	QScriptValue Mouse::constructor(QScriptContext *context, QScriptEngine *engine)
+public:
+	enum Button
 	{
-		Mouse *mouse = new Mouse;
+		LeftButton,
+		RightButton,
+		MiddleButton,
 
-		QScriptValueIterator it(context->argument(0));
+		ButtonCount
+	};
 
-		while(it.hasNext())
-		{
-			it.next();
-			
-			//TODO
-			//if(it.name() == "mode")
-			//	mouse->setModePrivate(context, static_cast<Mode>(it.value().toInt32()));
-		}
+	MouseDevice();
+	~MouseDevice();
 
-		return engine->newQObject(mouse, QScriptEngine::ScriptOwnership);
-	}
-	
-	Mouse::Mouse()
-		: QObject(),
-		QScriptable(),
-		mMouseDevice(new MouseDevice)
-	{
-	}
+	bool isButtonPressed(Button button) const;
+	QPoint cursorPosition() const;
+	void setCursorPosition(const QPoint &position) const;
 
-	void Mouse::setCursorPosition() const
-	{
-		mMouseDevice->setCursorPosition(Point::parameter(context()));
-	}
-}
+	void pressButton(Button button);
+	void releaseButton(Button button);
+
+private:
+	bool mPressedButtons[ButtonCount];
+};
+
+#endif // MOUSEDEVICE_H
