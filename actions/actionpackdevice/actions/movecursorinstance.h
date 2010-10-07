@@ -23,8 +23,7 @@
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
-
-#include <QCursor>
+#include "../mousedevice.h"
 
 namespace Actions
 {
@@ -45,18 +44,14 @@ namespace Actions
 			if(!actionInstanceExecutionHelper.evaluatePoint(position, "position"))
 				return;
 			
-			QCursor::setPos(position);
+			mMouseDevice.setCursorPosition(position);
 		
 			emit executionEnded();
 		}
-		
-	public slots:
-		void move(int x, int y)
-		{
-			QCursor::setPos(x, y);
-		}
 	
 	private:
+		MouseDevice mMouseDevice;
+		
 		Q_DISABLE_COPY(MoveCursorInstance)
 	};
 }

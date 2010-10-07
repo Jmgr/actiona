@@ -19,40 +19,69 @@
 */
 
 #include "mouse.h"
-#include "mousedevice.h"
 #include "code/point.h"
-
-#include <QScriptValueIterator>
 
 namespace Code
 {
 	QScriptValue Mouse::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Mouse *mouse = new Mouse;
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-			
-			//TODO
-			//if(it.name() == "mode")
-			//	mouse->setModePrivate(context, static_cast<Mode>(it.value().toInt32()));
-		}
-
-		return engine->newQObject(mouse, QScriptEngine::ScriptOwnership);
+		Q_UNUSED(context)
+		
+		return engine->newQObject(new Mouse, QScriptEngine::ScriptOwnership);
 	}
 	
 	Mouse::Mouse()
 		: QObject(),
-		QScriptable(),
-		mMouseDevice(new MouseDevice)
+		QScriptable()
 	{
 	}
-
-	void Mouse::setCursorPosition() const
+	
+	QScriptValue Mouse::position() const
 	{
-		mMouseDevice->setCursorPosition(Point::parameter(context()));
+		return Point::constructor(mMouseDevice.cursorPosition(), context(), engine());
+	}
+
+	QScriptValue Mouse::move() const
+	{
+		mMouseDevice.setCursorPosition(Point::parameter(context()));
+		
+		return context()->thisObject();
+	}
+	
+	bool Mouse::isButtonPressed(MouseDevice::Button button) const
+	{
+		return mMouseDevice.isButtonPressed(button);
+	}
+	
+	QScriptValue Mouse::press(MouseDevice::Button button)
+	{
+		if(!mMouseDevice.pressButton(button))
+			context()->throwError(tr("Unable to press the button"));
+		
+		return context()->thisObject();
+	}
+
+	QScriptValue Mouse::release(MouseDevice::Button button)
+	{
+		if(!mMouseDevice.releaseButton(button))
+			context()->throwError(tr("Unable to release the button"));
+		
+		return context()->thisObject();
+	}
+
+	QScriptValue Mouse::click(MouseDevice::Button button)
+	{
+		if(!mMouseDevice.buttonClick(button))
+			context()->throwError(tr("Unable to emulate a button click"));
+		
+		return context()->thisObject();
+	}
+	
+	QScriptValue Mouse::wheel(int intensity) const
+	{
+		if(!mMouseDevice.wheel(intensity))
+			context()->throwError(tr("Unable to emulate the wheel"));
+		
+		return context()->thisObject();
 	}
 }

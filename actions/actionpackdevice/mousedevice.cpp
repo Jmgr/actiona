@@ -23,7 +23,9 @@
 #include <QCursor>
 
 #ifdef Q_WS_X11
-#include "xdisplayhelper.h"
+#include <QX11Info>
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
 #endif
 
 #ifdef Q_WS_WIN
@@ -62,15 +64,11 @@ bool MouseDevice::isButtonPressed(Button button) const
 	}
 #endif
 #ifdef Q_WS_X11
-	ActionTools::XDisplayHelper xDisplayHelper;
-	if(!xDisplayHelper.display())
-		return false;
-
 	Window unusedWindow;
 	int unusedInt;
 	unsigned int buttonMask;
-	if(!XQueryPointer(xDisplayHelper.display(),
-					  XDefaultRootWindow(xDisplayHelper.display()),
+	if(!XQueryPointer(QX11Info::display(),
+					  XDefaultRootWindow(QX11Info::display()),
 					  &unusedWindow,
 					  &unusedWindow,
 					  &unusedInt,
@@ -104,18 +102,132 @@ void MouseDevice::setCursorPosition(const QPoint &position) const
 	QCursor::setPos(position);
 }
 
-void MouseDevice::pressButton(Button button)
+bool MouseDevice::buttonClick(Button button)
+{
+	return (pressButton(button) && releaseButton(button));
+}
+
+bool MouseDevice::pressButton(Button button)
 {
 	if(mPressedButtons[button])
-		return;
+		return true;
+	
+	mPressedButtons[button] = true;
 
+#ifdef Q_WS_X11
+	if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), True, CurrentTime))
+		return false;
+	
+	XFlush(QX11Info::display());
+#endif
+	
+#ifdef Q_WS_WIN
+	INPUT input;
+	input.type = INPUT_MOUSE;
+	input.mi.dx = 0;
+	input.mi.dy = 0;
+	input.mi.mouseData = 0;
+	input.mi.dwFlags = toWinButton(button, true);
+	input.mi.time = 0;
 
+	if(!SendInput(1, &input, sizeof(INPUT)))
+		return false;
+#endif
+	
+	return true;
 }
 
-void MouseDevice::releaseButton(Button button)
+bool MouseDevice::releaseButton(Button button)
 {
 	if(!mPressedButtons[button])
-		return;
+		return true;
+	
+	mPressedButtons[button] = false;
 
+#ifdef Q_WS_X11
+	if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), False, CurrentTime))
+		return false;
+	
+	XFlush(QX11Info::display());
+#endif
+	
+#ifdef Q_WS_WIN
+	INPUT input;
+	input.type = INPUT_MOUSE;
+	input.mi.dx = 0;
+	input.mi.dy = 0;
+	input.mi.mouseData = 0;
+	input.mi.dwFlags = toWinButton(button, false);
+	input.mi.time = 0;
 
+	if(!SendInput(1, &input, sizeof(INPUT)))
+		return false;
+#endif
+	
+	return true;
 }
+
+bool MouseDevice::wheel(int intensity) const
+{
+#ifdef Q_WS_X11
+	int button;
+	if(intensity < 0)
+	{
+		button = Button5;
+		intensity = -intensity;
+	}
+	else
+		button = Button4;
+
+	bool result = true;
+
+	for(int i = 0; i < intensity; ++i)
+	{
+		result &= XTestFakeButtonEvent(QX11Info::display(), button, True, CurrentTime);
+		result &= XTestFakeButtonEvent(QX11Info::display(), button, False, CurrentTime);
+		
+		XFlush(QX11Info::display());
+	}
+
+	if(!result)
+		return false;
+#endif
+	
+#ifdef Q_WS_WIN
+	INPUT input;
+
+	input.type = INPUT_MOUSE;
+	input.mi.dwFlags = MOUSEEVENTF_WHEEL;
+	input.mi.time = 0;
+	input.mi.dwExtraInfo = 0;
+	input.mi.mouseData = intensity * WHEEL_DELTA;
+
+	if(!SendInput(1, &input, sizeof(INPUT)))
+		return false;
+#endif
+	
+	return true;
+}
+
+#ifdef Q_WS_X11
+int MouseDevice::toX11Button(Button button) const
+{
+	return button + 1;
+}
+#endif
+
+#ifdef Q_WS_WIN
+int MouseDevice::toWinButton(Button button, bool press) const
+{
+	switch(button)
+	{
+	case LeftButton:
+		return press ? MOUSEEVENTF_LEFTDOWN : MOUSEEVENTF_LEFTUP;
+	case MiddleButton:
+		return press ? MOUSEEVENTF_MIDDLEDOWN : MOUSEEVENTF_MIDDLEUP;
+	case RightButton:
+		return press ? MOUSEEVENTF_RIGHTDOWN : MOUSEEVENTF_RIGHTUP;
+	}
+	return -1;
+}
+#endif

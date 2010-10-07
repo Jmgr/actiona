@@ -18,49 +18,37 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MOUSEDEVICE_H
-#define MOUSEDEVICE_H
+#ifndef KEYBOARDDEVICE_H
+#define KEYBOARDDEVICE_H
 
-#include <QPoint>
+#include <QSet>
 #include <QObject>
 
-class MouseDevice : public QObject
+class KeyboardDevice : public QObject
 {
 	Q_OBJECT
-	Q_ENUMS(Button)
 	
 public:
-	enum Button
+	enum Action
 	{
-		LeftButton,
-		MiddleButton,
-		RightButton,
-
-		ButtonCount
+		Press,
+		Release,
+		Trigger
 	};
-
-	MouseDevice();
-	~MouseDevice();
-
-	bool isButtonPressed(Button button) const;
-	QPoint cursorPosition() const;
-	void setCursorPosition(const QPoint &position) const;
-
-	bool buttonClick(Button button);
-	bool pressButton(Button button);
-	bool releaseButton(Button button);
 	
-	bool wheel(int intensity = 1) const;
+	KeyboardDevice();
+	~KeyboardDevice();
+	
+	bool pressKey(const QString &key);
+	bool releaseKey(const QString &key);
+	bool triggerKey(const QString &key);
+	bool writeText(const QString &text) const;
 
 private:
-#ifdef Q_WS_X11
-	int toX11Button(Button button) const;
-#endif
-#ifdef Q_WS_WIN
-	int toWinButton(Button button, bool press) const;
-#endif
+	bool doKeyAction(Action action, int nativeKey);
+	int stringToNativeKey(const QString &key) const;
 	
-	bool mPressedButtons[ButtonCount];
+	QSet<int> mPressedKeys;
 };
 
-#endif // MOUSEDEVICE_H
+#endif // KEYBOARDDEVICE_H

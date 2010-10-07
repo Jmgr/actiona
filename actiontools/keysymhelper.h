@@ -31,7 +31,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT KeySymHelper
 	{
 	public:
-		static void loadKeyCodes(Display *display);
+		static void loadKeyCodes();
 		static KeySym wcharToKeySym(wchar_t c);
 		static int keySymToModifier(KeySym keySym);
 		static KeyCode keySymToKeyCode(KeySym keySym);

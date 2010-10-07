@@ -23,22 +23,15 @@
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
+#include "../mousedevice.h"
 
 namespace Actions
 {
 	class ClickInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Button)
-		Q_ENUMS(Action)
 	
 	public:
-		enum Button
-		{
-			LeftButton,
-			MiddleButton,
-			RightButton
-		};
 		enum Action
 		{
 			ClickAction,
@@ -58,10 +51,9 @@ namespace Actions
 		static ActionTools::StringListPair actions;
 	
 		void startExecution();
-		void stopLongTermExecution();
 	
 	private:
-		static bool mPressedButtonStatus[3];
+		MouseDevice mMouseDevice;
 	
 		Q_DISABLE_COPY(ClickInstance)
 	};

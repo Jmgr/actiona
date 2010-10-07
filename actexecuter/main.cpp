@@ -37,6 +37,7 @@
 #undef signals
 #include <libnotify/notify.h>
 #define signals
+#include "keysymhelper.h"
 #endif
 
 static void cleanup()
@@ -111,6 +112,15 @@ int main(int argc, char **argv)
 	}
 
 	QString filename = options.positional().at(0);
+	
+#ifdef Q_WS_X11
+	{
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("Load key codes");
+#endif
+		ActionTools::KeySymHelper::loadKeyCodes();
+	}
+#endif
 
 	MainClass::ExecutionMode executionMode = MainClass::Unknown;
 	if(options.count("code"))

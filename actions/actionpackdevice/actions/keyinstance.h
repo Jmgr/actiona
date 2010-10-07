@@ -23,8 +23,7 @@
 
 #include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
-
-#include <QSet>
+#include "../keyboarddevice.h"
 
 namespace Actions
 {
@@ -51,13 +50,9 @@ namespace Actions
 		static ActionTools::StringListPair actions;
 	
 		void startExecution();
-		void stopLongTermExecution();
 	
 	private:
-		static QSet<int> mPressedKeys;
-	#ifdef Q_WS_WIN
-		static bool mAltGrPressed;
-	#endif
+		KeyboardDevice mKeyboardDevice;
 		
 		Q_DISABLE_COPY(KeyInstance)
 	};

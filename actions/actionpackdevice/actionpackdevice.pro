@@ -4,11 +4,13 @@ include(code/code.pri)
 TARGET = ActionPackDevice
 QT += script
 HEADERS += actionpackdevice.h \
-    mousedevice.h
+    mousedevice.h \
+    keyboarddevice.h
 RESOURCES += actionpackdevice.qrc
 unix:LIBS += -lXtst
 win32:LIBS += -luser32
 TRANSLATIONS = locale/actionpackdevice_en.ts \
     locale/actionpackdevice_fr.ts \
     locale/actionpackdevice_de.ts
-SOURCES += mousedevice.cpp
+SOURCES += mousedevice.cpp \
+    keyboarddevice.cpp

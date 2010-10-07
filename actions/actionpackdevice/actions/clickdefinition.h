@@ -55,7 +55,7 @@ namespace Actions
 			ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition("button", tr("Button"), this);
 			button->setTooltip(tr("The button to simulate"));
 			button->setItems(ClickInstance::buttons);
-			button->setDefaultValue(ClickInstance::buttons.second.at(ClickInstance::LeftButton));
+			button->setDefaultValue(ClickInstance::buttons.second.at(MouseDevice::LeftButton));
 			addElement(button);
 	
 			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition("position", tr("Position"), this);

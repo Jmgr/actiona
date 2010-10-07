@@ -18,34 +18,36 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TEXTINSTANCE_H
-#define TEXTINSTANCE_H
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
 
-#include "actioninstance.h"
 #include "../keyboarddevice.h"
 
-namespace Actions
+#include <QObject>
+#include <QScriptable>
+#include <QScriptValue>
+#include <QScriptEngine>
+
+namespace Code
 {
-	class TextInstance : public ActionTools::ActionInstance
+	class Keyboard : public QObject, public QScriptable
 	{
 		Q_OBJECT
-	
+
 	public:
-		enum Exceptions
-		{
-			FailedToSendInputException = ActionTools::ActionException::UserException
-		};
-	
-		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-			: ActionTools::ActionInstance(definition, parent)										{}
-	
-		void startExecution();
-	
+		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+		
+		Keyboard();
+
+	public slots:
+		QScriptValue pressKey(const QString &key);
+		QScriptValue releaseKey(const QString &key);
+		QScriptValue triggerKey(const QString &key);
+		QScriptValue writeText(const QString &text) const;
+
 	private:
 		KeyboardDevice mKeyboardDevice;
-		
-		Q_DISABLE_COPY(TextInstance)
 	};
 }
 
-#endif // TEXTINSTANCE_H
+#endif // KEYBOARD_H

@@ -21,18 +21,19 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 
+#include "../mousedevice.h"
+
 #include <QObject>
 #include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
-
-class MouseDevice;
 
 namespace Code
 {
 	class Mouse : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_ENUMS(MouseDevice::Button)
 
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
@@ -40,10 +41,16 @@ namespace Code
 		Mouse();
 
 	public slots:
-		void setCursorPosition() const;
+		QScriptValue position() const;
+		QScriptValue move() const;
+		bool isButtonPressed(MouseDevice::Button button) const;
+		QScriptValue press(MouseDevice::Button button = MouseDevice::LeftButton);
+		QScriptValue release(MouseDevice::Button button = MouseDevice::LeftButton);
+		QScriptValue click(MouseDevice::Button button = MouseDevice::LeftButton);
+		QScriptValue wheel(int intensity = 1) const;
 
 	private:
-		MouseDevice *mMouseDevice;
+		MouseDevice mMouseDevice;
 	};
 }
 

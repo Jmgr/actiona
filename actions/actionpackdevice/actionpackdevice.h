@@ -29,6 +29,7 @@
 #include "actions/movecursordefinition.h"
 
 #include "code/mouse.h"
+#include "code/keyboard.h"
 
 #include <QtCore/qplugin.h>
 
@@ -59,6 +60,7 @@ public:
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
 		addCodeClass<Code::Mouse>("Mouse", scriptEngine);
+		addCodeClass<Code::Keyboard>("Keyboard", scriptEngine);
 	}
 
 private:

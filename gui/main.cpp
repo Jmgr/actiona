@@ -144,10 +144,10 @@ int main(int argc, char **argv)
 
 #ifdef Q_WS_X11
 	{
-		ActionTools::XDisplayHelper xDisplayHelper;
-
-		if(xDisplayHelper.display())
-			ActionTools::KeySymHelper::loadKeyCodes(xDisplayHelper.display());
+#ifdef ACT_PROFILE
+		Tools::HighResolutionTimer timer("Load key codes");
+#endif
+		ActionTools::KeySymHelper::loadKeyCodes();
 	}
 #endif
 

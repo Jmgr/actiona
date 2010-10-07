@@ -9,6 +9,5 @@ HEADERS += actions/wheeldefinition.h \
 	actions/clickdefinition.h \
     actions/clickinstance.h
 SOURCES += actions/textinstance.cpp \
-    actions/wheelinstance.cpp \
     actions/keyinstance.cpp \
 	actions/clickinstance.cpp

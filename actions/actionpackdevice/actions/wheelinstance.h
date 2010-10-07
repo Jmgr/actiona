@@ -22,6 +22,8 @@
 #define WHEELINSTANCE_H
 
 #include "actioninstance.h"
+#include "actioninstanceexecutionhelper.h"
+#include "../mousedevice.h"
 
 namespace Actions
 {
@@ -38,9 +40,27 @@ namespace Actions
 		WheelInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
-		void startExecution();
+		void startExecution()
+		{
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+		
+			int intensity;
+		
+			if(!actionInstanceExecutionHelper.evaluateInteger(intensity, "intensity"))
+				return;
+		
+			if(!mMouseDevice.wheel(intensity))
+			{
+				emit executionException(FailedToSendInputException, tr("Unable to emulate wheel: failed to send input"));
+				return;
+			}
+	
+			emit executionEnded();
+		}
 	
 	private:
+		MouseDevice mMouseDevice;
+		
 		Q_DISABLE_COPY(WheelInstance)
 	};
 }
