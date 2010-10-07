@@ -27,6 +27,7 @@
 #include "code/point.h"
 #include "code/size.h"
 #include "code/rect.h"
+#include "code/window.h"
 #include "actionpack.h"
 #include "actionfactory.h"
 #include "codeexecution.h"
@@ -55,6 +56,7 @@ namespace LibExecuter
 		addCodeClass<Code::Point>("Point", scriptEngine);
 		addCodeClass<Code::Size>("Size", scriptEngine);
 		addCodeClass<Code::Rect>("Rect", scriptEngine);
+		addCodeClass<Code::Window>("Window", scriptEngine);
 		
 		int actionPackCount = actionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)

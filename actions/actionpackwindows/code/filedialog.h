@@ -21,14 +21,14 @@
 #ifndef FILEDIALOG_H
 #define FILEDIALOG_H
 
-#include "window.h"
+#include "basewindow.h"
 
 #include <QFileDialog>
 #include <QDir>
 
 namespace Code
 {
-	class FileDialog : public Window
+	class FileDialog : public BaseWindow
 	{
 		Q_OBJECT
 		Q_ENUMS(AcceptMode)

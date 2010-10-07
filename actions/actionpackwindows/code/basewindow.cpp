@@ -18,7 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "window.h"
+#include "basewindow.h"
 #include "code/point.h"
 #include "code/size.h"
 
@@ -27,17 +27,17 @@
 
 namespace Code
 {
-	Window::Window()
+	BaseWindow::BaseWindow()
 		: mWindow(0)
 	{
 	}
 
-	void Window::setWidget(QWidget *widget)
+	void BaseWindow::setWidget(QWidget *widget)
 	{
 		mWindow = widget;
 	}
 
-	void Window::setupConstructorParameters(const QScriptValue &parameters)
+	void BaseWindow::setupConstructorParameters(const QScriptValue &parameters)
 	{
 		Q_ASSERT(mWindow);
 		
@@ -66,7 +66,7 @@ namespace Code
 		}
 	}
 	
-	QScriptValue Window::setTitle(const QString &title)
+	QScriptValue BaseWindow::setTitle(const QString &title)
 	{
 		Q_ASSERT(mWindow);
 		
@@ -75,7 +75,7 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue Window::setPosition()
+	QScriptValue BaseWindow::setPosition()
 	{
 		Q_ASSERT(mWindow);
 
@@ -84,7 +84,7 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue Window::setOpacity(float opacity)
+	QScriptValue BaseWindow::setOpacity(float opacity)
 	{
 		Q_ASSERT(mWindow);
 
@@ -93,7 +93,7 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue Window::setSize()
+	QScriptValue BaseWindow::setSize()
 	{
 		Q_ASSERT(mWindow);
 
@@ -102,7 +102,7 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue Window::setFixedSize()
+	QScriptValue BaseWindow::setFixedSize()
 	{
 		Q_ASSERT(mWindow);
 
@@ -111,7 +111,7 @@ namespace Code
 		return context()->thisObject();
 	}
 	
-	QScriptValue Window::setEnabled(bool enabled)
+	QScriptValue BaseWindow::setEnabled(bool enabled)
 	{
 		Q_ASSERT(mWindow);
 		
@@ -120,7 +120,7 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue Window::setVisible(bool visible)
+	QScriptValue BaseWindow::setVisible(bool visible)
 	{
 		Q_ASSERT(mWindow);
 		
@@ -129,7 +129,7 @@ namespace Code
 		return context()->thisObject();
 	}
 	
-	QScriptValue Window::close()
+	QScriptValue BaseWindow::close()
 	{
 		Q_ASSERT(mWindow);
 		
@@ -138,35 +138,35 @@ namespace Code
 		return context()->thisObject();
 	}	
 	
-	QScriptValue Window::position() const
+	QScriptValue BaseWindow::position() const
 	{
 		Q_ASSERT(mWindow);
 		
 		return Point::constructor(mWindow->pos(), context(), engine());
 	}
 	
-	float Window::opacity() const
+	float BaseWindow::opacity() const
 	{
 		Q_ASSERT(mWindow);
 		
 		return mWindow->windowOpacity();
 	}
 	
-	QScriptValue Window::size() const
+	QScriptValue BaseWindow::size() const
 	{
 		Q_ASSERT(mWindow);
 		
 		return Size::constructor(mWindow->size(), context(), engine());
 	}
 	
-	bool Window::enabled() const
+	bool BaseWindow::enabled() const
 	{
 		Q_ASSERT(mWindow);
 		
 		return mWindow->isEnabled();
 	}
 	
-	bool Window::visible() const
+	bool BaseWindow::visible() const
 	{
 		Q_ASSERT(mWindow);
 		

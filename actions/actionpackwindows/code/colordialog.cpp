@@ -53,7 +53,7 @@ namespace Code
 	}
 
 	ColorDialog::ColorDialog()
-		: Window(),
+		: BaseWindow(),
 		mColorDialog(new QColorDialog)
 	{
 		setWidget(mColorDialog);

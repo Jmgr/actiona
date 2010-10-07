@@ -86,7 +86,7 @@ namespace Code
 	}
 	
 	FileDialog::FileDialog()
-		: Window(),
+		: BaseWindow(),
 		mFileDialog(new QFileDialog)
 	{
 		setWidget(mFileDialog);

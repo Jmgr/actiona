@@ -21,7 +21,7 @@
 #ifndef INPUTDIALOG_H
 #define INPUTDIALOG_H
 
-#include "window.h"
+#include "basewindow.h"
 
 #include <QLineEdit>
 
@@ -29,7 +29,7 @@ class QInputDialog;
 
 namespace Code
 {
-	class InputDialog : public Window
+	class InputDialog : public BaseWindow
 	{
 		Q_OBJECT
 		Q_ENUMS(InputType)

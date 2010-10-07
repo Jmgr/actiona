@@ -21,13 +21,13 @@
 #ifndef MESSAGEBOX_H
 #define MESSAGEBOX_H
 
-#include "window.h"
+#include "basewindow.h"
 
 #include <QMessageBox>
 
 namespace Code
 {
-	class MessageBox : public Window
+	class MessageBox : public BaseWindow
 	{
 		Q_OBJECT
 		Q_ENUMS(StandardButton)

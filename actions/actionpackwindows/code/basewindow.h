@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef BASEWINDOW_H
+#define BASEWINDOW_H
 
 #include <QObject>
 #include <QScriptable>
@@ -28,7 +28,7 @@
 
 namespace Code
 {
-	class Window : public QObject, public QScriptable
+	class BaseWindow : public QObject, public QScriptable
 	{
 		Q_OBJECT
 
@@ -48,7 +48,7 @@ namespace Code
 		bool visible() const;
 
 	protected:
-		Window();
+		BaseWindow();
 
 		void setWidget(QWidget *widget);
 		void setupConstructorParameters(const QScriptValue &parameters);
@@ -58,4 +58,4 @@ namespace Code
 	};
 }
 
-#endif // WINDOW_H
+#endif // BASEWINDOW_H

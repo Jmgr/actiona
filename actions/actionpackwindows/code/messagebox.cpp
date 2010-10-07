@@ -58,7 +58,7 @@ namespace Code
 	}
 
 	MessageBox::MessageBox()
-		: Window(),
+		: BaseWindow(),
 		mMessageBox(new QMessageBox)
 	{
 		setWidget(mMessageBox);

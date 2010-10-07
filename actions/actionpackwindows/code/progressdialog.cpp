@@ -57,7 +57,7 @@ namespace Code
 	}
 	
 	ProgressDialog::ProgressDialog()
-		: Window(),
+		: BaseWindow(),
 		mProgressDialog(new QProgressDialog)
 	{
 		setWidget(mProgressDialog);

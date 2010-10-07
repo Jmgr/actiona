@@ -21,13 +21,13 @@
 #ifndef COLORDIALOG_H
 #define COLORDIALOG_H
 
-#include "window.h"
+#include "basewindow.h"
 
 class QColorDialog;
 
 namespace Code
 {
-	class ColorDialog : public Window
+	class ColorDialog : public BaseWindow
 	{
 		Q_OBJECT
 		

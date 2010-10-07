@@ -75,7 +75,7 @@ namespace Code
 	}
 
 	InputDialog::InputDialog()
-		: Window(),
+		: BaseWindow(),
 		mInputType(Text),
 		mInputDialog(new QInputDialog)
 	{

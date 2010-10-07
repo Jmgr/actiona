@@ -21,13 +21,13 @@
 #ifndef PROGRESSDIALOG_H
 #define PROGRESSDIALOG_H
 
-#include "window.h"
+#include "basewindow.h"
 
 class QProgressDialog;
 
 namespace Code
 {
-	class ProgressDialog : public Window
+	class ProgressDialog : public BaseWindow
 	{
 		Q_OBJECT
 		
