@@ -80,6 +80,11 @@ namespace Code
 		}
 	}
 	
+	QScriptValue Window::find(QScriptContext *context, QScriptEngine *engine)
+	{
+		return constructor(ActionTools::WindowHandle::findWindow(context->argument(0).toString()), context, engine);//TODO : add token search and regular expression search
+	}
+	
 	Window::Window()
 		: QObject(),
 		QScriptable()

@@ -57,6 +57,7 @@ namespace Code
 	public slots:
 		QScriptValue clone() const;
 		bool equals(const QScriptValue &other) const;
+		QString toString() const;
 		QScriptValue normalize();
 		QScriptValue setTop(int top);
 		QScriptValue setBottom(int bottom);

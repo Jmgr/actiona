@@ -159,6 +159,11 @@ namespace Code
 		return false;
 	}
 	
+	QString Rect::toString() const
+	{
+		return "TODO";//TODO : Add toString() to all types
+	}
+	
 	QScriptValue Rect::normalize()
 	{
 		mRect = mRect.normalized();

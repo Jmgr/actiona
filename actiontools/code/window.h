@@ -39,6 +39,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const ActionTools::WindowHandle &windowHandle, QScriptContext *context, QScriptEngine *engine);
 		static ActionTools::WindowHandle parameter(QScriptContext *context);
+		static QScriptValue find(QScriptContext *context, QScriptEngine *engine);
 		
 		Window();
 		Window(const Window &other);
@@ -59,8 +60,8 @@ namespace Code
 		QString className() const;
 		QScriptValue rect() const;
 		int processId() const;
-		QScriptValue close() const;
-		QScriptValue killCreator() const;
+		QScriptValue close() const;//TODO : Check all methods to prevent using an invalid window handle
+		QScriptValue killCreator() const;//TODO : Add isValid()
 		QScriptValue setForeground() const;
 		QScriptValue minimize() const;
 		QScriptValue maximize() const;
