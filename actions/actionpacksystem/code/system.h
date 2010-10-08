@@ -80,6 +80,7 @@ namespace Code
 		System();
 	
 	public slots:
+		QString toString() const					{ return "System"; }
 		QString storageLocationPath(StorageLocation location) const;
 		QString storageLocationName(StorageLocation location) const;
 		void openUrl(const QString &url) const;

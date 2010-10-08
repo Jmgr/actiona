@@ -50,6 +50,7 @@ namespace Code
 		~Udp();
 	
 	public slots:
+		QString toString() const					{ return "Udp"; }
 		QScriptValue connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
 		QScriptValue waitForConnected(int waitTime = 30000);
 		QScriptValue waitForReadyRead(int waitTime = 30000);

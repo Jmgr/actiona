@@ -54,6 +54,7 @@ namespace Code
 		~File()						{ mFile.close(); }
 	
 	public slots:
+		QString toString() const					{ return "File"; }
 		QScriptValue open(const QString &filename, OpenMode mode);
 		QScriptValue write(const QScriptValue &data);
 		QScriptValue writeText(const QString &value, Code::Encoding encoding = Code::Native);

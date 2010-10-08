@@ -152,6 +152,11 @@ namespace Code
 		return false;
 	}
 
+	QString Size::toString() const
+	{
+		return QString("Size [width: %1][height: %2]").arg(width()).arg(height());
+	}
+
 	QScriptValue Size::setWidth(int width)
 	{
 		mSize.setWidth(width);

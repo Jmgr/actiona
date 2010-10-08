@@ -41,6 +41,7 @@ namespace Code
 		Mouse();
 
 	public slots:
+		QString toString() const					{ return "Mouse"; }
 		QScriptValue position() const;
 		QScriptValue move() const;
 		bool isButtonPressed(MouseDevice::Button button) const;

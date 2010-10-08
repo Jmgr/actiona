@@ -130,6 +130,11 @@ namespace Code
 			
 		return false;
 	}
+
+	QString RawData::toString() const
+	{
+		return QString("RawData [size: %1]").arg(size());
+	}
 	
 	QScriptValue RawData::append(const QVariant &data)
 	{
@@ -265,12 +270,12 @@ namespace Code
 		return mByteArray.startsWith(data.toByteArray());
 	}
 	
-	double RawData::toNumber() const
+	double RawData::convertToNumber() const
 	{
 		return mByteArray.toDouble();
 	}
 	
-	QString RawData::toString(Code::Encoding encoding) const
+	QString RawData::convertToString(Code::Encoding encoding) const
 	{
 		return Code::fromEncoding(mByteArray, encoding);
 	}

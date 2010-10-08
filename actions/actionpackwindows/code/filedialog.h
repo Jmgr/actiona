@@ -89,6 +89,7 @@ namespace Code
 		~FileDialog();
 		
 	public slots:
+		QString toString() const					{ return "FileDialog"; }
 		QScriptValue setAcceptMode(AcceptMode acceptMode);
 		QScriptValue setFileMode(FileMode fileMode);
 		QScriptValue setViewMode(ViewMode viewMode);

@@ -40,6 +40,7 @@ namespace Code
 		Keyboard();
 
 	public slots:
+		QString toString() const					{ return "Keyboard"; }
 		QScriptValue pressKey(const QString &key);
 		QScriptValue releaseKey(const QString &key);
 		QScriptValue triggerKey(const QString &key);

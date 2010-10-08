@@ -45,6 +45,7 @@ namespace Code
 		QScriptValue color() const;
 		
 	private slots:
+		QString toString() const					{ return "ColorDialog"; }
 		void finished(int result);
 		void colorSelected(const QColor &color);
 		void currentColorChanged(const QColor &color);

@@ -151,6 +151,11 @@ namespace Code
 			
 		return false;
 	}
+
+	QString Image::toString() const
+	{
+		return QString("Image [width: %1][height: %2]").arg(width()).arg(height());
+	}
 	
 	QScriptValue Image::setData(const QScriptValue &data)
 	{

@@ -56,6 +56,7 @@ namespace Code
 	public slots:
 		QScriptValue clone() const;
 		bool equals(const QScriptValue &other) const;
+		QString toString() const;
 		QScriptValue append(const QVariant &data);
 		QScriptValue chop(int n);
 		QScriptValue clear();
@@ -78,8 +79,8 @@ namespace Code
 		QScriptValue simplified() const;
 		int size() const;
 		bool startsWith(const QVariant &data);
-		double toNumber() const;
-		QString toString(Code::Encoding encoding = Code::Native) const;
+		double convertToNumber() const;
+		QString convertToString(Code::Encoding encoding = Code::Native) const;
 		QScriptValue trimmed() const;
 		QScriptValue truncate(int pos);
 		

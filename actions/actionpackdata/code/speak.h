@@ -47,6 +47,7 @@ namespace Code
 		~Speak();
 
 	public slots:
+		QString toString() const					{ return "Speak"; }
 		int rate() const;
 		int volume() const;
 		int pitch() const;

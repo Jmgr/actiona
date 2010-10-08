@@ -53,6 +53,7 @@ namespace Code
 		~MediaPlaylist();
 
 	public slots:
+		QString toString() const					{ return "MediaPlaylist"; }
 		//Player
 		QScriptValue setPlaybackRate(qreal rate);
 		QScriptValue setVolume(qreal volume);

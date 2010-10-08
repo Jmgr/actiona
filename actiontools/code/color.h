@@ -54,6 +54,7 @@ namespace Code
 	public slots:
 		QScriptValue clone() const;
 		bool equals(const QScriptValue &other) const;
+		QString toString() const;
 		QScriptValue setRed(int red);
 		QScriptValue setGreen(int green);
 		QScriptValue setBlue(int blue);

@@ -62,6 +62,7 @@ namespace Code
 		~Sql();
 		
 	public slots:
+		QString toString() const					{ return "Sql"; }
 		QScriptValue connect(const QScriptValue &parameters) const;
 		QScriptValue prepare(const QString &queryString, const QScriptValue &parameters);
 		QScriptValue execute(const QString &queryString = QString());

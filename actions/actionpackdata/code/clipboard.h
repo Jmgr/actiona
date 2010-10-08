@@ -52,6 +52,7 @@ namespace Code
 		Clipboard();
 	
 	public slots:
+		QString toString() const					{ return "Clipboard"; }
 		QScriptValue setMode(Mode mode);
 		QScriptValue writeText(const QString &value) const;
 		QScriptValue writeImage(const QScriptValue &data) const;

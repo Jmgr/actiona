@@ -57,6 +57,7 @@ namespace Code
 		~InputDialog();
 		
 	public slots:
+		QString toString() const					{ return "InputDialog"; }
 		QScriptValue setLabelText(const QString &labelText);
 		QScriptValue setOkButtonText(const QString &okButtonText);
 		QScriptValue setCancelButtonText(const QString &cancelButtonText);

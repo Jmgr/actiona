@@ -80,6 +80,7 @@ namespace Code
 	public slots:
 		QScriptValue clone() const;
 		bool equals(const QScriptValue &other) const;
+		QString toString() const;
 		QScriptValue setData(const QScriptValue &data);
 		QScriptValue data() const;
 		QScriptValue loadFromFile(const QString &filename);

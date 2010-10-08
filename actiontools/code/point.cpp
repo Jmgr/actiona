@@ -152,6 +152,11 @@ namespace Code
 		return false;
 	}
 
+	QString Point::toString() const
+	{
+		return QString("Point [x: %1][y: %2]").arg(x()).arg(y());
+	}
+
 	QScriptValue Point::setX(int x)
 	{
 		mPoint.setX(x);

@@ -50,6 +50,7 @@ namespace Code
 		~Tcp();
 		
 	public slots:
+		QString toString() const					{ return "Tcp"; }
 		QScriptValue connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
 		QScriptValue waitForConnected(int waitTime = 30000);
 		QScriptValue waitForBytesWritten(int waitTime = 30000);

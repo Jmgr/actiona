@@ -71,6 +71,7 @@ namespace Code
 		~MessageBox();
 
 	public slots:
+		QString toString() const					{ return "MessageBox"; }
 		QScriptValue setText(const QString &text);
 		QScriptValue setDetailedText(const QString &detailedText);
 		QScriptValue setInformativeText(const QString &informativeText);

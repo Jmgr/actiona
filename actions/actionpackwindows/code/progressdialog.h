@@ -38,6 +38,7 @@ namespace Code
 		~ProgressDialog();
 		
 	public slots:
+		QString toString() const					{ return "ProgressDialog"; }
 		QScriptValue setValue(int value);
 		QScriptValue setLabelText(const QString &labelText);
 		QScriptValue setMinimum(int minimum);
