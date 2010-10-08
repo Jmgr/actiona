@@ -231,29 +231,49 @@ namespace Code
 	{
 		return QString("Window [title: %1][className: %2]").arg(title()).arg(className());
 	}
+
+	bool Window::isValid() const
+	{
+		return mWindowHandle.isValid();
+	}
 	
 	QString Window::title() const
 	{
+		if(!checkValidity())
+			return QString();
+
 		return mWindowHandle.title();
 	}
 	
 	QString Window::className() const
 	{
+		if(!checkValidity())
+			return QString();
+
 		return mWindowHandle.classname();
 	}
 	
 	QScriptValue Window::rect() const
 	{
+		if(!checkValidity())
+			return QScriptValue();
+
 		return Rect::constructor(mWindowHandle.rect(), context(), engine());
 	}
 	
 	int Window::processId() const
 	{
+		if(!checkValidity())
+			return -1;
+
 		return mWindowHandle.processId();
 	}
 	
 	QScriptValue Window::close() const
 	{
+		if(!checkValidity())
+			return context()->thisObject();
+
 		if(!mWindowHandle.close())
 			context()->throwError(tr("Unable to close the window"));
 		
@@ -262,6 +282,9 @@ namespace Code
 	
 	QScriptValue Window::killCreator() const
 	{
+		if(!checkValidity())
+			return context()->thisObject();
+
 		if(!mWindowHandle.killCreator())
 			context()->throwError(tr("Unable to kill the window creator"));
 		
@@ -270,6 +293,9 @@ namespace Code
 	
 	QScriptValue Window::setForeground() const
 	{
+		if(!checkValidity())
+			return context()->thisObject();
+
 		if(!mWindowHandle.setForeground())
 			context()->throwError(tr("Unable to set the window foreground"));
 		
@@ -278,6 +304,9 @@ namespace Code
 	
 	QScriptValue Window::minimize() const
 	{
+		if(!checkValidity())
+			return context()->thisObject();
+
 		if(!mWindowHandle.minimize())
 			context()->throwError(tr("Unable to minimize the window"));
 		
@@ -286,6 +315,9 @@ namespace Code
 	
 	QScriptValue Window::maximize() const
 	{
+		if(!checkValidity())
+			return context()->thisObject();
+
 		if(!mWindowHandle.maximize())
 			context()->throwError(tr("Unable to maximize the window"));
 		
@@ -294,6 +326,9 @@ namespace Code
 	
 	QScriptValue Window::move() const
 	{
+		if(!checkValidity())
+			return context()->thisObject();
+
 		if(!mWindowHandle.move(Point::parameter(context())))
 			context()->throwError(tr("Unable to move the window"));
 		
@@ -302,9 +337,23 @@ namespace Code
 	
 	QScriptValue Window::resize() const
 	{
+		if(!checkValidity())
+			return context()->thisObject();
+
 		if(!mWindowHandle.resize(Size::parameter(context())))
 			context()->throwError(tr("Unable to resize the window"));
 		
 		return context()->thisObject();
+	}
+
+	bool Window::checkValidity() const
+	{
+		if(!mWindowHandle.isValid())
+		{
+			context()->throwError(tr("Invalid window"));
+			return false;
+		}
+
+		return true;
 	}
 }

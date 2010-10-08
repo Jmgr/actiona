@@ -68,12 +68,13 @@ namespace Code
 		QScriptValue clone() const;
 		bool equals(const QScriptValue &other) const;
 		QString toString() const;
+		bool isValid() const;
 		QString title() const;
 		QString className() const;
 		QScriptValue rect() const;
 		int processId() const;
-		QScriptValue close() const;//TODO : Check all methods to prevent using an invalid window handle
-		QScriptValue killCreator() const;//TODO : Add isValid()
+		QScriptValue close() const;
+		QScriptValue killCreator() const;
 		QScriptValue setForeground() const;
 		QScriptValue minimize() const;
 		QScriptValue maximize() const;
@@ -81,6 +82,8 @@ namespace Code
 		QScriptValue resize() const;
 		
 	private:
+		bool checkValidity() const;
+
 		ActionTools::WindowHandle mWindowHandle;
 	};
 }
