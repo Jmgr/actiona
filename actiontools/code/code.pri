@@ -6,7 +6,8 @@ SOURCES += code/rawdata.cpp \
     code/point.cpp \
     code/size.cpp \
     code/rect.cpp \
-    code/window.cpp
+	code/window.cpp \
+	code/process.cpp
 HEADERS += code/rawdata.h \
     code/image.h \
     code/code.h \
@@ -15,4 +16,5 @@ HEADERS += code/rawdata.h \
     code/point.h \
     code/size.h \
     code/rect.h \
-    code/window.h
+	code/window.h \
+	code/process.h
