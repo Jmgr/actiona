@@ -56,9 +56,10 @@ namespace LibExecuter
 		addCodeClass<Code::Point>("Point", scriptEngine);
 		addCodeClass<Code::Size>("Size", scriptEngine);
 		addCodeClass<Code::Rect>("Rect", scriptEngine);
-		QScriptValue windowValue = addCodeClass<Code::Window>("Window", scriptEngine);
-		windowValue.setProperty("find", scriptEngine->newFunction(&Code::Window::find));//TODO : Think of a simpler method to add static stuff
-		
+		addCodeClass<Code::Window>("Window", scriptEngine);
+		addCodeStaticMethod(&Code::Window::find, "Window", "find", scriptEngine);
+		addCodeStaticMethod(&Code::Window::all, "Window", "all", scriptEngine);
+
 		int actionPackCount = actionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)
 		{

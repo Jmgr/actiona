@@ -270,4 +270,16 @@ namespace ActionTools
 	{
 		return QxtWindowSystem::findWindow(title);
 	}
+
+	QList<WindowHandle> WindowHandle::windowList()
+	{
+		QList<WindowHandle> back;
+
+		foreach(WId windowId, QxtWindowSystem::windows())
+		{
+			back.append(windowId);
+		}
+
+		return back;
+	}
 }

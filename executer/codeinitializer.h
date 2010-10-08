@@ -43,12 +43,16 @@ namespace LibExecuter
 		static void initialize(QScriptEngine *scriptEngine, ScriptAgent *scriptAgent, ActionTools::ActionFactory *actionFactory);
 		
 		template<typename T>
-		static QScriptValue addCodeClass(const QString &objectName, QScriptEngine *scriptEngine)
+		static void addCodeClass(const QString &objectName, QScriptEngine *scriptEngine)
 		{
 			QScriptValue metaObject = scriptEngine->newQMetaObject(&T::staticMetaObject, scriptEngine->newFunction(&T::constructor));
 			scriptEngine->globalObject().setProperty(objectName, metaObject);
-			
-			return metaObject;
+		}
+
+		static void addCodeStaticMethod(QScriptEngine::FunctionSignature method, const QString &objectName, const QString &methodName, QScriptEngine *scriptEngine)
+		{
+			QScriptValue classMetaObject = scriptEngine->globalObject().property(objectName);
+			classMetaObject.setProperty(methodName, scriptEngine->newFunction(method));
 		}
 	};
 }

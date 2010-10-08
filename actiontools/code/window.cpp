@@ -23,6 +23,8 @@
 #include "size.h"
 #include "point.h"
 
+#include <QScriptValueIterator>
+
 namespace Code
 {
 	QScriptValue Window::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -82,7 +84,78 @@ namespace Code
 	
 	QScriptValue Window::find(QScriptContext *context, QScriptEngine *engine)
 	{
-		return constructor(ActionTools::WindowHandle::findWindow(context->argument(0).toString()), context, engine);//TODO : add token search and regular expression search
+		QScriptValueIterator it(context->argument(0));
+		QString titlePattern;
+		QString classNamePattern;
+		Mode titleMode = WildcardUnix;
+		Mode classNameMode = WildcardUnix;
+		bool titleCaseSensitive = true;
+		bool classNameCaseSensitive = true;
+		int processId = -1;
+
+		while(it.hasNext())
+		{
+			it.next();
+
+			if(it.name() == "title")
+				titlePattern = it.value().toString();
+			else if(it.name() == "className")
+				classNamePattern = it.value().toString();
+			else if(it.name() == "titleMode")
+				titleMode = static_cast<Mode>(it.value().toInt32());
+			else if(it.name() == "classNameMode")
+				classNameMode = static_cast<Mode>(it.value().toInt32());
+			else if(it.name() == "titleCaseSensitive")
+				titleCaseSensitive = it.value().toBool();
+			else if(it.name() == "classNameCaseSensitive")
+				classNameCaseSensitive = it.value().toBool();
+			else if(it.name() == "processId")
+				processId = it.value().toInt32();
+		}
+
+		QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
+
+		QRegExp titleRegExp(titlePattern,
+							titleCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
+							static_cast<QRegExp::PatternSyntax>(titleMode));
+		QRegExp classNameRegExp(classNamePattern,
+							classNameCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
+							static_cast<QRegExp::PatternSyntax>(classNameMode));
+
+		QList<ActionTools::WindowHandle> foundWindows;
+
+		foreach(const ActionTools::WindowHandle &windowHandle, windowList)
+		{
+			if(!titlePattern.isNull() && !titleRegExp.exactMatch(windowHandle.title()))
+				continue;
+
+			if(!classNamePattern.isNull() && !classNameRegExp.exactMatch(windowHandle.classname()))
+				continue;
+
+			if(processId != -1 && windowHandle.processId() != processId)
+				continue;
+
+			foundWindows.append(windowHandle);
+		}
+
+		QScriptValue back = engine->newArray(foundWindows.count());
+
+		for(int index = 0; index < foundWindows.count(); ++index)
+			back.setProperty(index, constructor(foundWindows.at(index), context, engine));
+
+		return back;
+	}
+
+	QScriptValue Window::all(QScriptContext *context, QScriptEngine *engine)
+	{
+		QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
+
+		QScriptValue back = engine->newArray(windowList.count());
+
+		for(int index = 0; index < windowList.count(); ++index)
+			back.setProperty(index, constructor(windowList.at(index), context, engine));
+
+		return back;
 	}
 	
 	Window::Window()
@@ -152,6 +225,11 @@ namespace Code
 			return (otherWindow == this || otherWindow->mWindowHandle == mWindowHandle);
 			
 		return false;
+	}
+
+	QString Window::toString() const
+	{
+		return QString("Window [title: %1][className: %2]").arg(title()).arg(className());
 	}
 	
 	QString Window::title() const

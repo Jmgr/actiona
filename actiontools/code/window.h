@@ -34,12 +34,23 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Window : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_ENUMS(Mode)
 		
 	public:
+		enum Mode
+		{
+			RegExp = QRegExp::RegExp2,
+			Wildcard = QRegExp::Wildcard,
+			WildcardUnix = QRegExp::WildcardUnix,
+			FixedString = QRegExp::FixedString
+		};
+
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const ActionTools::WindowHandle &windowHandle, QScriptContext *context, QScriptEngine *engine);
 		static ActionTools::WindowHandle parameter(QScriptContext *context);
+
 		static QScriptValue find(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue all(QScriptContext *context, QScriptEngine *engine);
 		
 		Window();
 		Window(const Window &other);
@@ -56,6 +67,7 @@ namespace Code
 	public slots:
 		QScriptValue clone() const;
 		bool equals(const QScriptValue &other) const;
+		QString toString() const;
 		QString title() const;
 		QString className() const;
 		QScriptValue rect() const;
