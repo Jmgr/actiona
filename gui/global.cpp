@@ -20,16 +20,10 @@
 
 #include "global.h"
 
-#include <QxtLocale>
 #include <QSysInfo>
 
 namespace Global
 {
-	QString currentLanguage()
-	{
-		return QxtLocale::countryToISO2Letter(QLocale::system().country()).toLower();
-	}
-
 	QString currentOS()
 	{
 		QString wordSize = (QSysInfo::WordSize == 32) ? QString() : "64";

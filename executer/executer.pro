@@ -1,9 +1,7 @@
 include(../common.pri)
 QT += script scripttools
 TEMPLATE = lib
-CONFIG += dll qxt
-QXT += core \
-    gui
+CONFIG += dll
 DEFINES += EXECUTER_LIBRARY
 win32:DEFINES += _CRT_SECURE_NO_WARNINGS
 TARGET = executer

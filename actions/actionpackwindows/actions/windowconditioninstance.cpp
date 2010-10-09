@@ -23,7 +23,6 @@
 #include "ifactionvalue.h"
 #include "windowhandle.h"
 
-#include <QxtWindowSystem>
 #include <QRegExp>
 
 namespace Actions
@@ -64,9 +63,8 @@ namespace Actions
 		QRegExp titleRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix);
 		ActionTools::WindowHandle foundWindow;
 
-		foreach(const WId &windowId, QxtWindowSystem::windows())
+		foreach(const ActionTools::WindowHandle &windowHandle, ActionTools::WindowHandle::windowList())
 		{
-			ActionTools::WindowHandle windowHandle(windowId);
 			if(titleRegExp.exactMatch(windowHandle.title()))
 			{
 				foundWindow = windowHandle;

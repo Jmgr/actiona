@@ -1,9 +1,6 @@
 include(../common.pri)
 QT += script \
     xmlpatterns
-CONFIG += qxt
-QXT += core \
-    gui
 TEMPLATE = lib
 CONFIG += dll
 DEFINES += ACTIONTOOLS_LIBRARY
@@ -11,6 +8,7 @@ TARGET = actiontools
 DESTDIR = ..
 FORMS += codeeditordialog.ui
 include(globalshortcut/globalshortcut.pri)
+include(qxtcommandoptions/qxtcommandoptions.pri)
 include(widgets.pri)
 include(parameters.pri)
 include(code/code.pri)
@@ -38,7 +36,8 @@ SOURCES += actionfactory.cpp \
     keymapper.cpp \
     registry.cpp \
     devicecopythread.cpp \
-    datacopyactioninstance.cpp
+    datacopyactioninstance.cpp \
+    nativeeventfilteringapplication.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -69,7 +68,9 @@ HEADERS += actiontools_global.h \
     keymapper.h \
     registry.h \
     devicecopythread.h \
-    datacopyactioninstance.h
+    datacopyactioninstance.h \
+    nativeeventfilter.h \
+    nativeeventfilteringapplication.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32

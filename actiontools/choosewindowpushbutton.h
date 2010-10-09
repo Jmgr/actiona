@@ -23,15 +23,15 @@
 
 #include "actiontools_global.h"
 #include "windowhandle.h"
+#include "nativeeventfilter.h"
 
 #include <QPushButton>
-#include <QxtNativeEventFilter>
 
 class QMainWindow;
 
 namespace ActionTools
 {
-	class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton, public QxtNativeEventFilter
+	class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton, public NativeEventFilter
 	{
 		Q_OBJECT
 

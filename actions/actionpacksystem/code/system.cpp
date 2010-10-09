@@ -22,7 +22,6 @@
 #include "code/rect.h"
 
 #include <QSystemInfo>
-#include <QxtWindowSystem>
 #include <QDesktopServices>
 #include <QSystemStorageInfo>
 #include <QSystemDisplayInfo>
@@ -125,11 +124,6 @@ namespace Code
 	uint System::timestamp() const
 	{
 		return QDateTime::currentDateTime().toTime_t();
-	}
-
-	uint System::idleTime() const
-	{
-		return QxtWindowSystem::idleTime();
 	}
 
 	QString System::version() const

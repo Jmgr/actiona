@@ -19,11 +19,11 @@
 */
 
 #include "choosepositionpushbutton.h"
+#include "nativeeventfilteringapplication.h"
 
 #include <QStylePainter>
 #include <QStyleOptionButton>
 #include <QMouseEvent>
-#include <QxtApplication>
 #include <QMessageBox>
 #include <QDesktopWidget>
 #include <QMainWindow>
@@ -70,7 +70,7 @@ namespace ActionTools
 		if(mSearching)
 			stopMouseCapture();
 
-		qxtApp->removeNativeEventFilter(this);
+		nativeEventFilteringApp->removeNativeEventFilter(this);
 
 		delete mCrossIcon;
 	}
@@ -104,7 +104,7 @@ namespace ActionTools
 			mMainWindow->showMinimized();
 #endif
 #ifdef Q_WS_WIN
-		foreach(QWidget *widget, qxtApp->topLevelWidgets())
+		foreach(QWidget *widget, qApp->topLevelWidgets())
 			widget->setWindowOpacity(0.0f);
 #endif
 
@@ -114,7 +114,7 @@ namespace ActionTools
 		mPreviousCursor = SetCursor(newCursor.handle());
 #endif
 #ifdef Q_WS_X11
-		qxtApp->installNativeEventFilter(this);
+		nativeEventFilteringApp->installNativeEventFilter(this);
 
 		if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
 						None, newCursor.handle(), CurrentTime) != GrabSuccess)
@@ -161,13 +161,13 @@ namespace ActionTools
 		if(mPreviousCursor)
 			SetCursor(mPreviousCursor);
 
-		foreach(QWidget *widget, qxtApp->topLevelWidgets())
+		foreach(QWidget *widget, qApp->topLevelWidgets())
 			widget->setWindowOpacity(1.0f);
 #endif
 #ifdef Q_WS_X11
 		XUngrabPointer(QX11Info::display(), CurrentTime);
 
-		qxtApp->removeNativeEventFilter(this);
+		nativeEventFilteringApp->removeNativeEventFilter(this);
 
 		if(mMainWindow)
 			mMainWindow->showNormal();

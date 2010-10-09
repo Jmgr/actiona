@@ -41,6 +41,7 @@
 #include "keywords.h"
 #include "modeltest.h"
 #include "globalshortcut/globalshortcutmanager.h"
+#include "qxtcommandoptions/qxtcommandoptions.h"
 #include "changelogdialog.h"
 #include "sevenziparchivewrite.h"
 #include "actionpack.h"
@@ -62,11 +63,13 @@
 #include <QBuffer>
 #include <QNetworkProxy>
 #include <QCloseEvent>
-#include <QxtCommandOptions>
 #include <QProgressDialog>
 #include <QProcess>
 #include <QTemporaryFile>
 #include <QListWidget>
+#include <QSystemInfo>
+
+QTM_USE_NAMESPACE
 
 MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript)
 	: QMainWindow(0),
@@ -662,8 +665,6 @@ void MainWindow::on_actionExport_executable_triggered()
 								<< "QtSqld4.dll"
 								<< "QtXmld4.dll"
 								<< "QtXmlPatternsd4.dll"
-								<< "QxtCored.dll"
-								<< "QxtGuid.dll"
 								<< "Microsoft.VC90.DebugCRT.manifest"
 								<< "msvcp90d.dll"
 								<< "msvcr90d.dll";
@@ -675,8 +676,6 @@ void MainWindow::on_actionExport_executable_triggered()
 								<< "QtSql4.dll"
 								<< "QtXml4.dll"
 								<< "QtXmlPatterns4.dll"
-								<< "QxtCore.dll"
-								<< "QxtGui.dll"
 								<< "Microsoft.VC90.CRT.manifest"
 								<< "msvcp90.dll"
 								<< "msvcr90.dll";
@@ -1276,7 +1275,7 @@ void MainWindow::checkForUpdate(bool silent)
 	mUpdaterProgressDialog->setMinimumDuration(0);
 	mUpdaterProgressDialog->open(this, SLOT(updateCanceled()));
 	mSilentUpdate = silent;
-	mUpdater->checkForUpdates("actionaz", Global::ACTIONAZ_VERSION, Tools::Updater::Installer, Global::currentOS(), Global::currentLanguage());
+	mUpdater->checkForUpdates("actionaz", Global::ACTIONAZ_VERSION, Tools::Updater::Installer, Global::currentOS(), QSystemInfo().currentLanguage());
 }
 #endif
 

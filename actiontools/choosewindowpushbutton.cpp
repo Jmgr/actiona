@@ -21,15 +21,13 @@
 //By Lim Bio Liong
 
 #include "choosewindowpushbutton.h"
+#include "nativeeventfilteringapplication.h"
 
 #include <QStylePainter>
 #include <QStyleOptionButton>
 #include <QDebug>
 #include <QMessageBox>
 #include <QMainWindow>
-#ifndef Q_WS_MAC
-#include <QxtWindowSystem>
-#endif
 
 #ifdef Q_WS_X11
 #include <QX11Info>
@@ -95,7 +93,7 @@ namespace ActionTools
 		if(mSearching)
 			stopMouseCapture();
 
-		qxtApp->removeNativeEventFilter(this);
+		nativeEventFilteringApp->removeNativeEventFilter(this);
 
 #ifdef Q_WS_WIN
 		DeleteObject(mRectanglePen);
@@ -139,11 +137,11 @@ namespace ActionTools
 			mMainWindow->showMinimized();
 #endif
 #ifdef Q_WS_WIN
-		foreach(QWidget *widget, qxtApp->topLevelWidgets())
+		foreach(QWidget *widget, qApp->topLevelWidgets())
 			widget->setWindowOpacity(0.0f);
 #endif
 
-		qxtApp->installNativeEventFilter(this);
+		nativeEventFilteringApp->installNativeEventFilter(this);
 
 		startMouseCapture();
 	}
@@ -282,7 +280,7 @@ namespace ActionTools
 		if(mLastFoundWindow)
 			refreshWindow(mLastFoundWindow);
 
-		foreach(QWidget *widget, qxtApp->topLevelWidgets())
+		foreach(QWidget *widget, qApp->topLevelWidgets())
 			widget->setWindowOpacity(1.0f);
 	#endif
 	#ifdef Q_WS_X11
@@ -292,7 +290,7 @@ namespace ActionTools
 			mMainWindow->showNormal();
 	#endif
 
-		qxtApp->removeNativeEventFilter(this);
+		nativeEventFilteringApp->removeNativeEventFilter(this);
 
 		emit searchEnded(mLastFoundWindow);
 	}

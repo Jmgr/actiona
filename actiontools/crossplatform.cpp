@@ -23,9 +23,6 @@
 
 #include <QWidget>
 #include <QElapsedTimer>
-#ifndef Q_WS_MAC
-#include <QxtWindowSystem>
-#endif
 #include <QDebug>
 #include <QDir>
 
@@ -154,13 +151,11 @@ namespace ActionTools
 
 			return ret;
 		}
-
-		const WindowList &windows = QxtWindowSystem::windows();
-		foreach(const WId wid, windows)
+		
+		foreach(const ActionTools::WindowHandle &windowHandle, ActionTools::WindowHandle::windowList())
 		{
-			WindowHandle handle = wid;
-			if(handle.processId() == id)
-				handle.close();
+			if(windowHandle.processId() == id)
+				windowHandle.close();
 		}
 
 		QElapsedTimer timer;

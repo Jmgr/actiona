@@ -28,12 +28,11 @@
 #include "global.h"
 #include "version.h"
 #include "globalshortcut/globalshortcutmanager.h"
+#include "qxtcommandoptions/qxtcommandoptions.h"
 #include "progresssplashscreen.h"
+#include "nativeeventfilteringapplication.h"
 
 #include <ctime>
-
-#include <QxtApplication>
-#include <QxtCommandOptions>
 
 #include <QDir>
 #include <QDebug>
@@ -69,7 +68,7 @@ int main(int argc, char **argv)
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("Application run");
 #endif
-	QxtApplication app(argc, argv);
+	ActionTools::NativeEventFilteringApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);

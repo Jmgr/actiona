@@ -57,10 +57,11 @@ namespace ActionTools
 		bool resize(QSize size) const;
 
 		static WindowHandle foregroundWindow();
-		static WindowHandle findWindow(const QString &title);
 		static QList<WindowHandle> windowList();
 
 	private:
+		static QList<WindowHandle> mWindowList;
+		
 		WId mValue;
 	};
 }

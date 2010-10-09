@@ -1,11 +1,7 @@
 include(../common.pri)
 QT += network
 TEMPLATE = lib
-CONFIG += dll \
-	qxt
-QXT += core \
-	gui \
-	network
+CONFIG += dll
 DEFINES += TOOLS_LIBRARY
 TARGET = tools
 DESTDIR = ..

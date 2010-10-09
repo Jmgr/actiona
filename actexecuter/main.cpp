@@ -19,19 +19,18 @@
 */
 
 #include "globalshortcut/globalshortcutmanager.h"
+#include "qxtcommandoptions/qxtcommandoptions.h"
 #include "actioninstance.h"
 #include "version.h"
 #include "mainclass.h"
 
 #include <ctime>
 
+#include <QApplication>
 #include <QtGlobal>
 #include <QDir>
 #include <QTextCodec>
 #include <QFile>
-
-#include <QxtApplication>
-#include <QxtCommandOptions>
 
 #ifdef Q_WS_X11
 #undef signals
@@ -51,7 +50,7 @@ int main(int argc, char **argv)
 		#error("You need Qt 4.7.0 or later to compile Actionaz Executer");
 #endif
 
-	QxtApplication app(argc, argv);
+	QApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);

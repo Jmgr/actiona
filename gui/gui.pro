@@ -6,7 +6,9 @@ QT += xml \
 	network \
 	script \
 	scripttools
-CONFIG += qxt
+CONFIG += qxt \
+	mobility
+MOBILITY += systeminfo
 QXT += core \
 	gui
 TARGET = actionaz

@@ -3,9 +3,6 @@ HEADERS += code/system.h \
 SOURCES += code/system.cpp \
 	code/mediaplaylist.cpp
 win32:LIBS += -ladvapi32
-CONFIG += mobility \
-    qxt
+CONFIG += mobility
 MOBILITY += systeminfo \
     multimedia
-QXT += core \
-    gui

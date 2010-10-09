@@ -3,9 +3,6 @@ include(actions/actions.pri)
 include(code/code.pri)
 TARGET = ActionPackWindows
 QT += script
-CONFIG += qxt
-QXT += core \
-    gui
 HEADERS += actionpackwindows.h
 RESOURCES += actionpackwindows.qrc
 TRANSLATIONS = locale/actionpackwindows_en.ts \

@@ -22,16 +22,16 @@
 #define CHOOSEPOSITIONPUSHBUTTON_H
 
 #include "actiontools_global.h"
+#include "nativeeventfilter.h"
 
 #include <QPushButton>
-#include <QxtNativeEventFilter>
 #include <QList>
 
 class QMainWindow;
 
 namespace ActionTools
 {
-	class ACTIONTOOLSSHARED_EXPORT ChoosePositionPushButton : public QPushButton, public QxtNativeEventFilter
+	class ACTIONTOOLSSHARED_EXPORT ChoosePositionPushButton : public QPushButton, public NativeEventFilter
 	{
 		Q_OBJECT
 	public:

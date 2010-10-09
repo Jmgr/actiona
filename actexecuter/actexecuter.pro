@@ -4,9 +4,6 @@ QT += xml \
     network \
     script \
     scripttools
-CONFIG += qxt
-QXT += core \
-    gui
 TARGET = actexec
 DESTDIR = ..
 SOURCES += main.cpp \
