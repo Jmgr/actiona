@@ -6,11 +6,8 @@ QT += xml \
 	network \
 	script \
 	scripttools
-CONFIG += qxt \
-	mobility
+CONFIG += mobility
 MOBILITY += systeminfo
-QXT += core \
-	gui
 TARGET = actionaz
 DESTDIR = ..
 SOURCES += main.cpp \
