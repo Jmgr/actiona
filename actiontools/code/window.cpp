@@ -262,7 +262,7 @@ namespace Code
 		return Rect::constructor(mWindowHandle.rect(), context(), engine());
 	}
 	
-	QScriptValue Window::processId() const
+	QScriptValue Window::process() const
 	{
 		if(!checkValidity())
 			return -1;

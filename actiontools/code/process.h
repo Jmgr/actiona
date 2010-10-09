@@ -43,7 +43,6 @@ namespace Code
 		static int parameter(QScriptContext *context);
 		
 		static QScriptValue list(QScriptContext *context, QScriptEngine *engine);
-		//TODO : Add start/run
 
 		Process();
 		Process(const Process &other);

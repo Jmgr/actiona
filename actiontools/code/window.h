@@ -72,7 +72,7 @@ namespace Code
 		QString title() const;
 		QString className() const;
 		QScriptValue rect() const;
-		QScriptValue processId() const;
+		QScriptValue process() const;
 		QScriptValue close() const;
 		QScriptValue killCreator() const;
 		QScriptValue setForeground() const;
