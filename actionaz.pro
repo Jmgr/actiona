@@ -22,6 +22,9 @@ contains(DEFINES, ACT_PROFILE){
 message(** Profiling activated **)
 }
 
+unix:QMAKE_CLEAN += actions/*.so
+win32:QMAKE_CLEAN += actions/*.dll
+
 SUBDIRS += 3rdparty \
 	tools \
 	actiontools \
