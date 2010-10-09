@@ -68,7 +68,7 @@ namespace ActionTools
 #endif
 	}
 
-	bool CrossPlatform::killProcess(int id, KillProcessMode killMode, int timeout)
+	bool CrossPlatform::killProcess(int id, KillMode killMode, int timeout)
 	{
 #ifdef Q_WS_X11
 		switch(killMode)

@@ -25,15 +25,20 @@
 
 #include <QString>
 #include <QList>
+#include <QObject>
 
 class QWidget;
 
 namespace ActionTools
 {
-	class ACTIONTOOLSSHARED_EXPORT CrossPlatform
+	class ACTIONTOOLSSHARED_EXPORT CrossPlatform : public QObject
 	{
+		Q_OBJECT
+		Q_ENUMS(KillMode)
+		Q_ENUMS(ProcessStatus)
+		
 	public:
-		enum KillProcessMode
+		enum KillMode
 		{
 			Graceful,
 			Forceful,
@@ -49,7 +54,7 @@ namespace ActionTools
 		static void setForegroundWindow(QWidget *window);
 
 		//Processes
-		static bool killProcess(int id, KillProcessMode killMode = GracefulThenForceful, int timeout = 3000);
+		static bool killProcess(int id, KillMode killMode = GracefulThenForceful, int timeout = 3000);
 		static ProcessStatus processStatus(int id);
 		static QList<int> runningProcesses();
 

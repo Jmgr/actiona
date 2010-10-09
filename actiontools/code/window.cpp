@@ -22,6 +22,7 @@
 #include "rect.h"
 #include "size.h"
 #include "point.h"
+#include "process.h"
 
 #include <QScriptValueIterator>
 
@@ -261,12 +262,12 @@ namespace Code
 		return Rect::constructor(mWindowHandle.rect(), context(), engine());
 	}
 	
-	int Window::processId() const
+	QScriptValue Window::processId() const
 	{
 		if(!checkValidity())
 			return -1;
 
-		return mWindowHandle.processId();
+		return Process::constructor(mWindowHandle.processId(), context(), engine());
 	}
 	
 	QScriptValue Window::close() const

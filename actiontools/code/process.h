@@ -22,6 +22,7 @@
 #define PROCESS_H
 
 #include "actiontools_global.h"
+#include "crossplatform.h"
 
 #include <QObject>
 #include <QScriptable>
@@ -30,41 +31,43 @@
 
 namespace Code
 {
-	/*
 	class ACTIONTOOLSSHARED_EXPORT Process : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_ENUMS(ActionTools::CrossPlatform::KillMode)
+		Q_ENUMS(ActionTools::CrossPlatform::ProcessStatus)
 
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QPoint &point, QScriptContext *context, QScriptEngine *engine);
-		static QPoint parameter(QScriptContext *context);
+		static QScriptValue constructor(int processId, QScriptContext *context, QScriptEngine *engine);
+		static int parameter(QScriptContext *context);
+		
+		static QScriptValue list(QScriptContext *context, QScriptEngine *engine);
+		//TODO : Add start/run
 
-		Point();
-		Point(const Point &other);
-		Point(const QPoint &point);
+		Process();
+		Process(const Process &other);
+		Process(int processId);
 
-		Point &operator=(Point other);
-		Point &operator=(QPoint point);
+		Process &operator=(Process other);
+		Process &operator=(int processId);
 
-		void swap(Point &other);
-		void swap(QPoint &point);
+		void swap(Process &other);
+		void swap(int &processId);
 
-		const QPoint &point() const;
+		int processId() const;
 
 	public slots:
 		QScriptValue clone() const;
 		bool equals(const QScriptValue &other) const;
 		QString toString() const;
-		QScriptValue setX(int x);
-		QScriptValue setY(int y);
-		int x() const;
-		int y() const;
+		int id() const;
+		bool kill(ActionTools::CrossPlatform::KillMode killMode = ActionTools::CrossPlatform::GracefulThenForceful, int timeout = 3000) const;
+		bool isRunning() const;
 
 	private:
-		QPoint mPoint;
+		int mProcessId;
 	};
-	*/
 }
 
 #endif // PROCESS_H
