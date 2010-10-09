@@ -241,6 +241,8 @@
     <property name="title">
      <string>&amp;?</string>
     </property>
+    <addaction name="action_Help"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -669,9 +671,6 @@
    <property name="text">
     <string>&amp;About</string>
    </property>
-   <property name="shortcut">
-    <string>F1</string>
-   </property>
   </action>
   <action name="actionClear">
    <property name="text">
@@ -835,6 +834,14 @@
   <action name="actionImport_script_content">
    <property name="text">
     <string>Script content</string>
+   </property>
+  </action>
+  <action name="action_Help">
+   <property name="text">
+    <string>&amp;Help</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
  </widget>
