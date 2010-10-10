@@ -18,7 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "actions/killprocessinstance.h"
+#include "killprocessinstance.h"
 
 namespace Actions
 {

@@ -22,7 +22,7 @@
 #define COPYFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/copyfileinstance.h"
+#include "copyfileinstance.h"
 #include "fileparameterdefinition.h"
 
 namespace ActionTools

@@ -22,7 +22,7 @@
 #define VARIABLEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/variableinstance.h"
+#include "variableinstance.h"
 #include "variableparameterdefinition.h"
 #include "textparameterdefinition.h"
 #include "listparameterdefinition.h"

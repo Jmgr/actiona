@@ -22,7 +22,7 @@
 #define NOTIFYDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/notifyinstance.h"
+#include "notifyinstance.h"
 #include "textparameterdefinition.h"
 #include "numberparameterdefinition.h"
 #include "fileparameterdefinition.h"

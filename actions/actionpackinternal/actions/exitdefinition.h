@@ -22,7 +22,7 @@
 #define EXITDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/exitinstance.h"
+#include "exitinstance.h"
 
 namespace ActionTools
 {

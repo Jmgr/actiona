@@ -23,7 +23,7 @@
 
 #include "actiondefinition.h"
 #include "numberparameterdefinition.h"
-#include "actions/pauseinstance.h"
+#include "pauseinstance.h"
 
 #include <limits.h>
 

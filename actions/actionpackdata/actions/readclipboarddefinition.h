@@ -22,7 +22,7 @@
 #define READCLIPBOARDDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/readclipboardinstance.h"
+#include "readclipboardinstance.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 

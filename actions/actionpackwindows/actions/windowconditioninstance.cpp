@@ -18,7 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "actions/windowconditioninstance.h"
+#include "windowconditioninstance.h"
 #include "actioninstanceexecutionhelper.h"
 #include "ifactionvalue.h"
 #include "windowhandle.h"

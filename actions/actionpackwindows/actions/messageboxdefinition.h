@@ -22,7 +22,7 @@
 #define MESSAGEBOXDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/messageboxinstance.h"
+#include "messageboxinstance.h"
 #include "textparameterdefinition.h"
 #include "listparameterdefinition.h"
 #include "groupdefinition.h"

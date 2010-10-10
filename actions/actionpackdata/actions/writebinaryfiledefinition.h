@@ -22,7 +22,7 @@
 #define WRITEBINARYFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/writebinaryfileinstance.h"
+#include "writebinaryfileinstance.h"
 #include "fileparameterdefinition.h"
 #include "textparameterdefinition.h"
 

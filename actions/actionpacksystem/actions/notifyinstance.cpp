@@ -20,7 +20,7 @@
 
 #include <QtGlobal>
 
-#include "actions/notifyinstance.h"
+#include "notifyinstance.h"
 #include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_X11

@@ -22,7 +22,7 @@
 #define GOTODEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/gotoinstance.h"
+#include "gotoinstance.h"
 #include "lineparameterdefinition.h"
 
 namespace ActionTools

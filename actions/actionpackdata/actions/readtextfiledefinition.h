@@ -22,7 +22,7 @@
 #define READTEXTFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/readtextfileinstance.h"
+#include "readtextfileinstance.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "numberparameterdefinition.h"

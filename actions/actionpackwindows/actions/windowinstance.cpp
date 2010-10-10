@@ -18,7 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "actions/windowinstance.h"
+#include "windowinstance.h"
 #include "actioninstanceexecutionhelper.h"
 #include "windowhandle.h"
 

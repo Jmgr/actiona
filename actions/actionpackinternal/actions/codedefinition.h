@@ -22,7 +22,7 @@
 #define CODEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/codeinstance.h"
+#include "codeinstance.h"
 #include "textparameterdefinition.h"
 
 namespace ActionTools

@@ -22,7 +22,7 @@
 #define WINDOWDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/windowinstance.h"
+#include "windowinstance.h"
 #include "textparameterdefinition.h"
 #include "listparameterdefinition.h"
 #include "groupdefinition.h"

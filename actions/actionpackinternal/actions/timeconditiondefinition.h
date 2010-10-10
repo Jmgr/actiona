@@ -22,7 +22,7 @@
 #define TIMECONDITIONDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/timeconditioninstance.h"
+#include "timeconditioninstance.h"
 #include "datetimeparameterdefinition.h"
 #include "ifactionparameterdefinition.h"
 

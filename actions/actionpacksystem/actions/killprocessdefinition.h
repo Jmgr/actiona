@@ -22,7 +22,7 @@
 #define KILLPROCESSDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/killprocessinstance.h"
+#include "killprocessinstance.h"
 #include "textparameterdefinition.h"
 #include "numberparameterdefinition.h"
 #include "listparameterdefinition.h"

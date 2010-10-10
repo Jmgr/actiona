@@ -18,7 +18,7 @@
 		Contact : jmgr@jmgr.info
 */
 
-#include "actions/readregistryinstance.h"
+#include "readregistryinstance.h"
 #include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_WIN

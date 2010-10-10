@@ -22,7 +22,7 @@
 #define VARIABLECONDITIONDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/variableconditioninstance.h"
+#include "variableconditioninstance.h"
 #include "variableparameterdefinition.h"
 #include "listparameterdefinition.h"
 #include "textparameterdefinition.h"

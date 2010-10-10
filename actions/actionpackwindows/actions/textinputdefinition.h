@@ -22,7 +22,7 @@
 #define TEXTINPUTDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/textinputinstance.h"
+#include "textinputinstance.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 

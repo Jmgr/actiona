@@ -22,7 +22,7 @@
 #define WRITECLIPBOARDDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/writeclipboardinstance.h"
+#include "writeclipboardinstance.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 

@@ -18,8 +18,8 @@
 		Contact : jmgr@jmgr.info
 */
 
-#include "actions/writeregistryinstance.h"
-#include "actions/readregistryinstance.h"
+#include "writeregistryinstance.h"
+#include "readregistryinstance.h"
 #include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_WIN
@@ -38,7 +38,7 @@ namespace Actions
 		QString value;
 		QVariant data;
 
-		if(!actionInstanceExecutionHelper.evaluateListElement(key, ActionReadRegistryInstance::keys, "key") ||
+		if(!actionInstanceExecutionHelper.evaluateListElement(key, ReadRegistryInstance::keys, "key") ||
 		   !actionInstanceExecutionHelper.evaluateString(subKey, "subKey") ||
 		   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
 		   !actionInstanceExecutionHelper.evaluateVariant(data, "data"))

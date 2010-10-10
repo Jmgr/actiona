@@ -22,7 +22,7 @@
 #define PIXELCOLORDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/pixelcolorinstance.h"
+#include "pixelcolorinstance.h"
 #include "colorpositionparameterdefinition.h"
 #include "numberparameterdefinition.h"
 #include "variableparameterdefinition.h"

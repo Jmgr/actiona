@@ -22,7 +22,7 @@
 #define WINDOWCONDITIONDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/windowconditioninstance.h"
+#include "windowconditioninstance.h"
 #include "textparameterdefinition.h"
 #include "listparameterdefinition.h"
 #include "ifactionparameterdefinition.h"

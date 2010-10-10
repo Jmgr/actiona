@@ -22,7 +22,7 @@
 #define NOOPDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/noopinstance.h"
+#include "noopinstance.h"
 
 namespace ActionTools
 {

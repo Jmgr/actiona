@@ -22,7 +22,7 @@
 #define READBINARYFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/readbinaryfileinstance.h"
+#include "readbinaryfileinstance.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
 

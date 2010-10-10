@@ -22,7 +22,7 @@
 #define LOOPDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/loopinstance.h"
+#include "loopinstance.h"
 #include "lineparameterdefinition.h"
 #include "numberparameterdefinition.h"
 

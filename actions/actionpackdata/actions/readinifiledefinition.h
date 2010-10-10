@@ -22,7 +22,7 @@
 #define READINIFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/readinifileinstance.h"
+#include "readinifileinstance.h"
 #include "textparameterdefinition.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"

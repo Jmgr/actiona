@@ -22,7 +22,7 @@
 #define COMMANDDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/commandinstance.h"
+#include "commandinstance.h"
 #include "textparameterdefinition.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"

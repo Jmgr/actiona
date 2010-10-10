@@ -22,7 +22,7 @@
 #define READREGISTRYDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/readregistryinstance.h"
+#include "readregistryinstance.h"
 #include "listparameterdefinition.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
@@ -46,8 +46,8 @@ namespace Actions
 	#ifdef Q_WS_WIN
 			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition("key", tr("Key"), this);
 			key->setTooltip(tr("The registry key to read from"));
-			key->setItems(ActionReadRegistryInstance::keys);
-			key->setDefaultValue(ActionReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
+			key->setItems(ReadRegistryInstance::keys);
+			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 			addElement(key);
 
 			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition("subKey", tr("Subkey"), this);
@@ -62,9 +62,9 @@ namespace Actions
 			variable->setTooltip(tr("The variable where to save the value read from the registry"));
 			addElement(variable);
 
-			addException(ActionReadRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
-			addException(ActionReadRegistryInstance::CannotFindValueException, tr("Cannot find value"));
-			addException(ActionReadRegistryInstance::InvalidValueType, tr("Invalid value type"));
+			addException(ReadRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
+			addException(ReadRegistryInstance::CannotFindValueException, tr("Cannot find value"));
+			addException(ReadRegistryInstance::InvalidValueType, tr("Invalid value type"));
 	#endif
 		}
 

@@ -18,7 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "actions/messageboxinstance.h"
+#include "messageboxinstance.h"
 #include "consolewidget.h"
 
 #include <QApplication>

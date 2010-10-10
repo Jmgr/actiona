@@ -60,8 +60,6 @@ namespace ActionTools
 		static QList<WindowHandle> windowList();
 
 	private:
-		static QList<WindowHandle> mWindowList;
-		
 		WId mValue;
 	};
 }

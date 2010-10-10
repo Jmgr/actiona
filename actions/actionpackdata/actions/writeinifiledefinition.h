@@ -22,7 +22,7 @@
 #define WRITEINIFILEDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/writeinifileinstance.h"
+#include "writeinifileinstance.h"
 #include "textparameterdefinition.h"
 #include "fileparameterdefinition.h"
 

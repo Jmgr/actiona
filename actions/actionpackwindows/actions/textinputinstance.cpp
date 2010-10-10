@@ -18,7 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "actions/textinputinstance.h"
+#include "textinputinstance.h"
 #include "actioninstanceexecutionhelper.h"
 #include "script.h"
 

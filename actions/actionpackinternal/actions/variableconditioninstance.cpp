@@ -18,7 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "actions/variableconditioninstance.h"
+#include "variableconditioninstance.h"
 
 namespace Actions
 {

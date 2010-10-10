@@ -34,35 +34,35 @@
 
 namespace ActionTools
 {
-	QList<WindowHandle> WindowHandle::mWindowList;
-	
+	static QList<WindowHandle> gWindowList;
+
 	QString WindowHandle::title() const
 	{
 #ifdef Q_WS_X11
 		QString name;
 		char *str = 0;
-		
+
 		if(XFetchName(QX11Info::display(), mValue, &str))
 			name = QString::fromUtf8(str);
-		
+
 		XFree(str);
 		return name;
 #endif
 #ifdef Q_WS_WIN
 		QString title;
-		
+
 		int titleLength = GetWindowTextLength(mValue);
-		
+
 		if(titleLength >= 0)
 		{
-			wchar_t titleName = new wchar_t[titleLength + 1];
-			
+			wchar_t *titleName = new wchar_t[titleLength + 1];
+
 			titleLength = GetWindowText(mValue, titleName, titleLength + 1);
-			title = QString::fromWCharArray(className);
-			
+			title = QString::fromWCharArray(titleName);
+
 			delete[] titleName;
 		}
-		
+
 		return title;
 #endif
 	}
@@ -94,16 +94,16 @@ namespace ActionTools
 #ifdef Q_WS_X11
 		QRect rect;
 		XWindowAttributes windowAttributes;
-		
+
 		if(XGetWindowAttributes(QX11Info::display(), mValue, &windowAttributes))
 			rect = QRect(windowAttributes.x, windowAttributes.y, windowAttributes.width, windowAttributes.height);
-		
+
 		return rect;
 #endif
 #ifdef Q_WS_WIN
 		RECT rc;
 		QRect rect;
-		
+
 		if(GetWindowRect(mValue, &rc))
 		{
 			rect.setTop(rc.top);
@@ -111,7 +111,7 @@ namespace ActionTools
 			rect.setLeft(rc.left);
 			rect.setRight(rc.right);
 		}
-		
+
 		return rect;
 #endif
 	}
@@ -295,35 +295,35 @@ namespace ActionTools
 		int revert = 0;
 
 		XGetInputFocus(QX11Info::display(), &focus, &revert);
-		
+
 		return focus;
 #endif
 #ifdef Q_WS_WIN
 		return GetForegroundWindow();
 #endif
 	}
-	
+
 #ifdef Q_WS_WIN
 	BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 	{
 		Q_UNUSED(lParam)
-		
+
 		if(IsWindowVisible(hwnd))
-			mWindowList.append(hwnd);
-		
+			gWindowList.append(hwnd);
+
 		return true;
 	}
 #endif
 
 	QList<WindowHandle> WindowHandle::windowList()
 	{
-		mWindowList.clear();
-		
+		gWindowList.clear();
+
 #ifdef Q_WS_X11
 		static Atom net_clients = None;
 		if(!net_clients)
 			net_clients = XInternAtom(QX11Info::display(), "_NET_CLIENT_LIST_STACKING", True);
-	
+
 		int count = 0;
 		Window* list = 0;
 		Atom type = 0;
@@ -331,20 +331,20 @@ namespace ActionTools
 		unsigned long after = 0;
 		XGetWindowProperty(QX11Info::display(), QX11Info::appRootWindow(), net_clients, 0, 256 * sizeof(Window), False, AnyPropertyType,
 						   &type, &format, reinterpret_cast<unsigned long*>(&count), &after, reinterpret_cast<unsigned char**>(&list));
-		
+
 		for (int i = 0; i < count; ++i)
-			mWindowList.append(list[i]);
-		
+			gWindowList.append(list[i]);
+
 		XFree(list);
 #endif
 #ifdef Q_WS_WIN
 		HDESK hdesk = OpenInputDesktop(0, false, DESKTOP_READOBJECTS);
-		
+
 		EnumDesktopWindows(hdesk, EnumWindowsProc, 0);
-		
+
 		CloseDesktop(hdesk);
 #endif
 
-		return mWindowList;
+		return gWindowList;
 	}
 }

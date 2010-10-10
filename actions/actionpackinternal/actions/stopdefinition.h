@@ -22,7 +22,7 @@
 #define STOPDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/stopinstance.h"
+#include "stopinstance.h"
 
 namespace ActionTools
 {

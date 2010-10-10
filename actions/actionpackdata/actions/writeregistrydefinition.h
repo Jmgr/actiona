@@ -22,8 +22,8 @@
 #define WRITEREGISTRYDEFINITION_H
 
 #include "actiondefinition.h"
-#include "actions/writeregistryinstance.h"
-#include "actions/readregistryinstance.h"
+#include "writeregistryinstance.h"
+#include "readregistryinstance.h"
 #include "listparameterdefinition.h"
 #include "textparameterdefinition.h"
 
@@ -46,8 +46,8 @@ namespace Actions
 	#ifdef Q_WS_WIN
 			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition("key", tr("Key"), this);
 			key->setTooltip(tr("The registry key to write to"));
-			key->setItems(ActionReadRegistryInstance::keys);
-			key->setDefaultValue(ActionReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
+			key->setItems(ReadRegistryInstance::keys);
+			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 			addElement(key);
 
 			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition("subKey", tr("Subkey"), this);
@@ -62,8 +62,8 @@ namespace Actions
 			data->setTooltip(tr("The data to write"));
 			addElement(data);
 
-			addException(ActionWriteRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
-			addException(ActionWriteRegistryInstance::CannotWriteValueException, tr("Cannot write value"));
+			addException(WriteRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
+			addException(WriteRegistryInstance::CannotWriteValueException, tr("Cannot write value"));
 	#endif
 		}
 
