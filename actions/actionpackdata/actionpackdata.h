@@ -41,6 +41,7 @@
 #include "code/tcp.h"
 #include "code/sql.h"
 #include "code/speak.h"
+#include "code/tcpserver.h"
 
 #include <QtCore/qplugin.h>
 
@@ -83,6 +84,7 @@ public:
 		addCodeClass<Code::Tcp>("Tcp", scriptEngine);
 		addCodeClass<Code::Sql>("Sql", scriptEngine);
 		addCodeClass<Code::Speak>("Speak", scriptEngine);
+		addCodeClass<Code::TcpServer>("TcpServer", scriptEngine);
 	}
 
 private:

@@ -18,40 +18,43 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOTIFY_H
-#define NOTIFY_H
+#ifndef TCPSERVER_H
+#define TCPSERVER_H
 
 #include <QObject>
 #include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
-#include <QStringList>
-
-struct _NotifyNotification;
+#include <QTcpServer>
 
 namespace Code
 {
-	class Notify : public QObject, public QScriptable
+	class TcpServer : public QObject, public QScriptable
 	{
 		Q_OBJECT
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
-		Notify();
-		~Notify();
+		TcpServer();
+		~TcpServer();
 		
 	public slots:
-		QString toString() const					{ return "Notify"; }
-		QScriptValue show();
+		QString toString() const					{ return "TcpServer"; }
+		QScriptValue listen(const QString &address = QString(), int port = 0);
+		QScriptValue waitForNewConnection(int waitTime = 30000);
+		QScriptValue nextPendingConnection();
+		QString address() const;
+		int port() const;
+		
+	private slots:
+		void newConnection();
 		
 	private:
-		_NotifyNotification *mNotification;
-		QString mTitle;
-		QString mText;
-		QString mIcon;
-		int mTimeout;
+		QTcpServer mTcpServer;
+		QScriptValue mOnNewConnection;
+		QScriptValue mThisObject;
 	};
 }
 
-#endif // NOTIFY_H
+#endif // TCPSERVER_H

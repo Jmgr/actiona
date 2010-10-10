@@ -27,7 +27,8 @@
 #include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
-#include <QTcpSocket>
+
+class QTcpSocket;
 
 namespace Code
 {
@@ -35,6 +36,8 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_ENUMS(OpenMode)
+		Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
+		Q_PROPERTY(QScriptValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
 		
 	public:
 		enum OpenMode
@@ -45,12 +48,20 @@ namespace Code
 		};	
 				
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(QTcpSocket *tcpSocket, QScriptEngine *engine);
 		
 		Tcp();
+		Tcp(QTcpSocket *tcpSocket);
 		~Tcp();
 		
+		void setOnDisconnected(const QScriptValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
+		void setOnReadyRead(const QScriptValue &onReadyRead)			{ mOnReadyRead = onReadyRead; }
+		
+		QScriptValue onDisconnected() const								{ return mOnDisconnected; }
+		QScriptValue onReadyRead() const								{ return mOnReadyRead; }
+		
 	public slots:
-		QString toString() const					{ return "Tcp"; }
+		QString toString() const										{ return "Tcp"; }
 		QScriptValue connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
 		QScriptValue waitForConnected(int waitTime = 30000);
 		QScriptValue waitForBytesWritten(int waitTime = 30000);
@@ -69,7 +80,7 @@ namespace Code
 		void bytesWritten(qint64 bytes);
 	
 	private:
-		QTcpSocket mTcpSocket;
+		QTcpSocket *mTcpSocket;
 		QScriptValue mOnConnected;
 		QScriptValue mOnDisconnected;
 		QScriptValue mOnReadyRead;

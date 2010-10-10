@@ -21,6 +21,7 @@
 #include "tcp.h"
 #include "code/rawdata.h"
 
+#include <QTcpSocket>
 #include <QScriptValueIterator>
 
 namespace Code
@@ -48,31 +49,47 @@ namespace Code
 		return tcp->mThisObject = engine->newQObject(tcp, QScriptEngine::ScriptOwnership);
 	}
 	
+	QScriptValue Tcp::constructor(QTcpSocket *tcpSocket, QScriptEngine *engine)
+	{
+		return engine->newQObject(new Tcp(tcpSocket), QScriptEngine::ScriptOwnership);
+	}
+	
 	Tcp::Tcp()
 		: QObject(),
-		QScriptable()
+		QScriptable(),
+		mTcpSocket(new QTcpSocket(this))
 	{
-		QObject::connect(&mTcpSocket, SIGNAL(connected()), this, SLOT(connected()));
-		QObject::connect(&mTcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-		QObject::connect(&mTcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-		QObject::connect(&mTcpSocket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
+		QObject::connect(mTcpSocket, SIGNAL(connected()), this, SLOT(connected()));
+		QObject::connect(mTcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+		QObject::connect(mTcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+		QObject::connect(mTcpSocket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
+	}
+	
+	Tcp::Tcp(QTcpSocket *tcpSocket)
+		: QObject(),
+		QScriptable(),
+		mTcpSocket(tcpSocket)
+	{
+		QObject::connect(mTcpSocket, SIGNAL(connected()), this, SLOT(connected()));
+		QObject::connect(mTcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+		QObject::connect(mTcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+		QObject::connect(mTcpSocket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
 	}
 	
 	Tcp::~Tcp()
 	{
-		mTcpSocket.disconnectFromHost();
 	}
 	
 	QScriptValue Tcp::connect(const QString &hostname, quint16 port, OpenMode openMode)
 	{
-		mTcpSocket.connectToHost(hostname, port, static_cast<QIODevice::OpenMode>(openMode));
+		mTcpSocket->connectToHost(hostname, port, static_cast<QIODevice::OpenMode>(openMode));
 		
 		return context()->thisObject();
 	}
 	
 	QScriptValue Tcp::waitForConnected(int waitTime)
 	{
-		if(!mTcpSocket.waitForConnected(waitTime))
+		if(!mTcpSocket->waitForConnected(waitTime))
 			context()->throwError(tr("Cannot establish a connection to the host"));
 		
 		return context()->thisObject();
@@ -80,7 +97,7 @@ namespace Code
 	
 	QScriptValue Tcp::waitForBytesWritten(int waitTime)
 	{
-		if(!mTcpSocket.waitForBytesWritten(waitTime))
+		if(!mTcpSocket->waitForBytesWritten(waitTime))
 			context()->throwError(tr("Waiting for bytes written failed"));
 		
 		return context()->thisObject();
@@ -88,7 +105,7 @@ namespace Code
 	
 	QScriptValue Tcp::waitForReadyRead(int waitTime)
 	{
-		if(!mTcpSocket.waitForReadyRead(waitTime))
+		if(!mTcpSocket->waitForReadyRead(waitTime))
 			context()->throwError(tr("Waiting for ready read failed"));
 		
 		return context()->thisObject();
@@ -96,7 +113,7 @@ namespace Code
 	
 	QScriptValue Tcp::waitForDisconnected(int waitTime)
 	{
-		if(!mTcpSocket.waitForDisconnected(waitTime))
+		if(!mTcpSocket->waitForDisconnected(waitTime))
 			context()->throwError(tr("Waiting for disconnection failed"));
 		
 		return context()->thisObject();
@@ -107,12 +124,12 @@ namespace Code
 		QObject *object = data.toQObject();
 		if(RawData *rawData = qobject_cast<RawData*>(object))
 		{
-			if(mTcpSocket.write(rawData->byteArray()) == -1)
+			if(mTcpSocket->write(rawData->byteArray()) == -1)
 				context()->throwError(tr("Write failed"));
 		}
 		else
 		{
-			if(mTcpSocket.write(data.toVariant().toByteArray()) == -1)
+			if(mTcpSocket->write(data.toVariant().toByteArray()) == -1)
 				context()->throwError(tr("Write failed"));
 		}
 	
@@ -121,7 +138,7 @@ namespace Code
 	
 	QScriptValue Tcp::writeText(const QString &data, Code::Encoding encoding)
 	{
-		if(mTcpSocket.write(Code::toEncoding(data, encoding)) == -1)
+		if(mTcpSocket->write(Code::toEncoding(data, encoding)) == -1)
 			context()->throwError(tr("Write failed"));
 		
 		return context()->thisObject();
@@ -129,17 +146,17 @@ namespace Code
 	
 	QScriptValue Tcp::read()
 	{
-		return RawData::constructor(mTcpSocket.readAll(), context(), engine());
+		return RawData::constructor(mTcpSocket->readAll(), context(), engine());
 	}
 	
 	QString Tcp::readText(Code::Encoding encoding)
 	{
-		return Code::fromEncoding(mTcpSocket.readAll(), encoding);
+		return Code::fromEncoding(mTcpSocket->readAll(), encoding);
 	}
 	
 	QScriptValue Tcp::disconnect()
 	{
-		mTcpSocket.disconnectFromHost();
+		mTcpSocket->disconnectFromHost();
 		
 		return context()->thisObject();
 	}
