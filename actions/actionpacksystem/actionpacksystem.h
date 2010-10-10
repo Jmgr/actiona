@@ -29,6 +29,7 @@
 
 #include "code/system.h"
 #include "code/mediaplaylist.h"
+#include "code/notify.h"
 
 #include <QtCore/qplugin.h>
 
@@ -59,6 +60,7 @@ public:
 	{
 		addCodeClass<Code::System>("System", scriptEngine);
 		addCodeClass<Code::MediaPlaylist>("MediaPlaylist", scriptEngine);
+		addCodeClass<Code::Notify>("Notify", scriptEngine);
 	}
 
 private:

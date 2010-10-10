@@ -34,7 +34,9 @@ namespace Code
 	}
 	
 	MediaPlaylist::MediaPlaylist()
-		: mMediaPlaylist(new QMediaPlaylist(this)),
+		: QObject(),
+		QScriptable(),
+		mMediaPlaylist(new QMediaPlaylist(this)),
 		mMediaPlayer(new QMediaPlayer(this)),
 		mVideoWidget(new QVideoWidget())
 	{

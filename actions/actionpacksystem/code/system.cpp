@@ -51,7 +51,9 @@ namespace Code
 	}
 
 	System::System()
-		: mSystemInfo(new QSystemInfo(this)),
+		: QObject(),
+		QScriptable(),
+		mSystemInfo(new QSystemInfo(this)),
 		mSystemStorageInfo(new QSystemStorageInfo(this)),
 		mSystemDisplayInfo(new QSystemDisplayInfo(this)),
 		mSystemDeviceInfo(new QSystemDeviceInfo(this))
