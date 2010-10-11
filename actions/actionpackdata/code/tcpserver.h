@@ -32,12 +32,17 @@ namespace Code
 	class TcpServer : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_PROPERTY(QScriptValue onNewConnection READ onNewConnection WRITE setOnNewConnection)
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
 		TcpServer();
 		~TcpServer();
+		
+		void setOnNewConnection(const QScriptValue &onNewConnection)		{ mOnNewConnection = onNewConnection; }
+		
+		QScriptValue onNewConnection() const								{ return mOnNewConnection; }
 		
 	public slots:
 		QString toString() const					{ return "TcpServer"; }

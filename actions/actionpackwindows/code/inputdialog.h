@@ -34,6 +34,8 @@ namespace Code
 		Q_OBJECT
 		Q_ENUMS(InputType)
 		Q_ENUMS(TextEchoMode)
+		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
+		Q_PROPERTY(QScriptValue onValueChanged READ onValueChanged WRITE setOnValueChanged)
 
 	public:
 		enum InputType
@@ -55,6 +57,12 @@ namespace Code
 
 		InputDialog();
 		~InputDialog();
+		
+		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
+		void setOnValueChanged(const QScriptValue &onValueChanged)			{ mOnValueChanged = onValueChanged; }
+		
+		QScriptValue onClosed() const										{ return mOnClosed; }
+		QScriptValue onValueChanged() const									{ return mOnValueChanged; }
 		
 	public slots:
 		QString toString() const					{ return "InputDialog"; }

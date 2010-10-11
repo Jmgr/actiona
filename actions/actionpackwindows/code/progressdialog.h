@@ -30,12 +30,17 @@ namespace Code
 	class ProgressDialog : public BaseWindow
 	{
 		Q_OBJECT
+		Q_PROPERTY(QScriptValue onCanceled READ onCanceled WRITE setOnCanceled)
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);		
 		
 		ProgressDialog();
 		~ProgressDialog();
+		
+		void setOnCanceled(const QScriptValue &onCanceled)					{ mOnCanceled = onCanceled; }
+		
+		QScriptValue onCanceled() const										{ return mOnCanceled; }
 		
 	public slots:
 		QString toString() const					{ return "ProgressDialog"; }

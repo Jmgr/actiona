@@ -27,7 +27,8 @@
 #include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
-#include <QUdpSocket>
+
+class QUdpSocket;
 
 namespace Code
 {
@@ -35,6 +36,9 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_ENUMS(OpenMode)
+		Q_PROPERTY(QScriptValue onConnected READ onConnected WRITE setOnConnected)
+		Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
+		Q_PROPERTY(QScriptValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
 		
 	public:
 		enum OpenMode
@@ -48,6 +52,14 @@ namespace Code
 		
 		Udp();
 		~Udp();
+		
+		void setOnConnected(const QScriptValue &onConnected)			{ mOnConnected = onConnected; }
+		void setOnDisconnected(const QScriptValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
+		void setOnReadyRead(const QScriptValue &onReadyRead)			{ mOnReadyRead = onReadyRead; }
+		
+		QScriptValue onConnected() const								{ return mOnConnected; }
+		QScriptValue onDisconnected() const								{ return mOnDisconnected; }
+		QScriptValue onReadyRead() const								{ return mOnReadyRead; }
 	
 	public slots:
 		QString toString() const					{ return "Udp"; }
@@ -66,7 +78,7 @@ namespace Code
 		void readyRead();
 	
 	private:
-		QUdpSocket mUdpSocket;
+		QUdpSocket *mUdpSocket;
 		QScriptValue mOnConnected;
 		QScriptValue mOnDisconnected;
 		QScriptValue mOnReadyRead;

@@ -30,12 +30,23 @@ namespace Code
 	class ColorDialog : public BaseWindow
 	{
 		Q_OBJECT
+		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
+		Q_PROPERTY(QScriptValue onColorSelected READ onColorSelected WRITE setOnColorSelected)
+		Q_PROPERTY(QScriptValue onColorChanged READ onColorChanged WRITE setOnColorChanged)
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
 		ColorDialog();
 		~ColorDialog();
+		
+		void setOnClosed(const QScriptValue &onClosed)					{ mOnClosed = onClosed; }
+		void setOnColorSelected(const QScriptValue &onColorSelected)	{ mOnColorSelected = onColorSelected; }
+		void setOnColorChanged(const QScriptValue &onColorChanged)		{ mOnColorChanged = onColorChanged; }
+		
+		QScriptValue onClosed() const									{ return mOnClosed; }
+		QScriptValue onColorSelected() const							{ return mOnColorSelected; }
+		QScriptValue onColorChanged() const								{ return mOnColorChanged; }
 		
 	public slots:
 		QScriptValue showAlphaChannel(bool showAlphaChannel);

@@ -36,6 +36,12 @@ namespace Code
 		Q_ENUMS(ViewMode)
 		Q_ENUMS(DialogLabel)
 		Q_ENUMS(Filters)
+		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
+		Q_PROPERTY(QScriptValue onCurrentChanged READ onCurrentChanged WRITE setOnCurrentChanged)
+		Q_PROPERTY(QScriptValue onDirectoryEntered READ onDirectoryEntered WRITE setOnDirectoryEntered)
+		Q_PROPERTY(QScriptValue onFileSelected READ onFileSelected WRITE setOnFileSelected)
+		Q_PROPERTY(QScriptValue onFilesSelected READ onFilesSelected WRITE setOnFilesSelected)
+		Q_PROPERTY(QScriptValue onFilterSelected READ onFilterSelected WRITE setOnFilterSelected)
 		
 	public:
 		enum AcceptMode
@@ -87,6 +93,20 @@ namespace Code
 		
 		FileDialog();
 		~FileDialog();
+		
+		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
+		void setOnCurrentChanged(const QScriptValue &onCurrentChanged)		{ mOnCurrentChanged = onCurrentChanged; }
+		void setOnDirectoryEntered(const QScriptValue &onDirectoryEntered)	{ mOnDirectoryEntered = onDirectoryEntered; }
+		void setOnFileSelected(const QScriptValue &onFileSelected)			{ mOnFileSelected = onFileSelected; }
+		void setOnFilesSelected(const QScriptValue &onFilesSelected)		{ mOnFilesSelected = onFilesSelected; }
+		void setOnFilterSelected(const QScriptValue &onFilterSelected)		{ mOnFilterSelected = onFilterSelected; }
+		
+		QScriptValue onClosed() const										{ return mOnClosed; }
+		QScriptValue onCurrentChanged() const								{ return mOnCurrentChanged; }
+		QScriptValue onDirectoryEntered() const								{ return mOnDirectoryEntered; }
+		QScriptValue onFileSelected() const									{ return mOnFileSelected; }
+		QScriptValue onFilesSelected() const								{ return mOnFilesSelected; }
+		QScriptValue onFilterSelected() const								{ return mOnFilterSelected; }
 		
 	public slots:
 		QString toString() const					{ return "FileDialog"; }

@@ -32,6 +32,7 @@ namespace Code
 		Q_OBJECT
 		Q_ENUMS(StandardButton)
 		Q_ENUMS(Icon)
+		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
 
 	public:
 		enum StandardButton
@@ -69,6 +70,10 @@ namespace Code
 
 		MessageBox();
 		~MessageBox();
+		
+		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
+		
+		QScriptValue onClosed() const										{ return mOnClosed; }
 
 	public slots:
 		QString toString() const					{ return "MessageBox"; }

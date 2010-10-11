@@ -36,8 +36,10 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_ENUMS(OpenMode)
+		Q_PROPERTY(QScriptValue onConnected READ onConnected WRITE setOnConnected)
 		Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
 		Q_PROPERTY(QScriptValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
+		Q_PROPERTY(QScriptValue onBytesWritten READ onBytesWritten WRITE setOnBytesWritten)
 		
 	public:
 		enum OpenMode
@@ -54,11 +56,15 @@ namespace Code
 		Tcp(QTcpSocket *tcpSocket);
 		~Tcp();
 		
+		void setOnConnected(const QScriptValue &onConnected)			{ mOnConnected = onConnected; }
 		void setOnDisconnected(const QScriptValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
 		void setOnReadyRead(const QScriptValue &onReadyRead)			{ mOnReadyRead = onReadyRead; }
+		void setOnBytesWritten(const QScriptValue &onBytesWritten)		{ mOnBytesWritten = onBytesWritten; }
 		
+		QScriptValue onConnected() const								{ return mOnConnected; }
 		QScriptValue onDisconnected() const								{ return mOnDisconnected; }
 		QScriptValue onReadyRead() const								{ return mOnReadyRead; }
+		QScriptValue onBytesWritten() const								{ return mOnBytesWritten; }
 		
 	public slots:
 		QString toString() const										{ return "Tcp"; }
