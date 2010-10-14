@@ -59,6 +59,7 @@ namespace ActionTools
 		void addCodeClass(const QString &objectName, QScriptEngine *scriptEngine) const
 		{
 			QScriptValue metaObject = scriptEngine->newQMetaObject(&T::staticMetaObject, scriptEngine->newFunction(&T::constructor));
+			metaObject.setData("CodeClass");
 			scriptEngine->globalObject().setProperty(objectName, metaObject);
 		}
 		

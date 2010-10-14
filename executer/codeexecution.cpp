@@ -25,9 +25,9 @@ namespace LibExecuter
 {
 	CodeExecution::CodeExecution(ScriptAgent *scriptAgent)
 		: QObject(),
-		QScriptable(),
 		mScriptAgent(scriptAgent)
 	{
+		//TODO : See if we can get rid of the non-static stuff
 	}
 	
 	void CodeExecution::pause(qint64 duration) const

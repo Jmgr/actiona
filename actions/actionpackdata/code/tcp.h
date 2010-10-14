@@ -35,6 +35,7 @@ namespace Code
 	class Tcp : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(OpenMode)
 		Q_PROPERTY(QScriptValue onConnected READ onConnected WRITE setOnConnected)
 		Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)

@@ -55,7 +55,9 @@ bool CodeExecuter::start(QFile &file)
 	QString code = file.readAll();
 	file.close();
 	
+	mScriptAgent->setContext(LibExecuter::ScriptAgent::ActionInit);
 	LibExecuter::CodeInitializer::initialize(mScriptEngine, mScriptAgent, actionFactory());
+	mScriptAgent->setContext(LibExecuter::ScriptAgent::Parameters);
 	
 	QScriptValue result = mScriptEngine->evaluate(code, file.fileName());
 	if(result.isError())

@@ -52,6 +52,12 @@ namespace LibExecuter
 		static void addCodeStaticMethod(QScriptEngine::FunctionSignature method, const QString &objectName, const QString &methodName, QScriptEngine *scriptEngine)
 		{
 			QScriptValue classMetaObject = scriptEngine->globalObject().property(objectName);
+			if(!classMetaObject.isValid())
+			{
+				classMetaObject = scriptEngine->newObject();
+				scriptEngine->globalObject().setProperty(objectName, classMetaObject);
+			}
+			
 			classMetaObject.setProperty(methodName, scriptEngine->newFunction(method));
 		}
 	};

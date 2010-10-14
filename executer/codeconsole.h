@@ -24,20 +24,24 @@
 #include "executer_global.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
-#include <QScriptEngine>
+
+class QScriptContext;
+class QScriptEngine;
 
 namespace LibExecuter
 {
-	class EXECUTERSHARED_EXPORT CodeConsole : public QObject, public QScriptable
+	class EXECUTERSHARED_EXPORT CodeConsole : public QObject
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeClass")
 
-	public slots:
-		void print(const QString &text);
-		void printWarning(const QString &text);
-		void printError(const QString &text);
+	public:
+		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+				
+		static QScriptValue print(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue printWarning(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue printError(QScriptContext *context, QScriptEngine *engine);
 	};
 }
 

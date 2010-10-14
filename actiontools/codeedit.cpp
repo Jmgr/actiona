@@ -23,6 +23,7 @@
 #include "linenumberarea.h"
 #include "scriptcompleter.h"
 #include "keywords.h"
+#include "code/code.h"
 
 #include <QAbstractItemView>
 #include <QScrollBar>
@@ -120,7 +121,7 @@ namespace ActionTools
 			for(int actionIndex = 0; actionIndex < standardItemCompletionModel->rowCount(); ++actionIndex)
 			{
 				QStandardItem *item = standardItemCompletionModel->item(actionIndex, 0);
-				if(!item || static_cast<ScriptElementType>(item->data().toInt()) != ScriptElementAction)
+				if(!item)
 					continue;
 
 				mHighlighter->addAction(item->text());
@@ -452,6 +453,8 @@ namespace ActionTools
 			mCompleter->popup()->hide();
 			return;
 		}
+		
+		qDebug() << completionPrefix;
 
 		if(completionPrefix != mCompleter->completionPrefix())
 		{

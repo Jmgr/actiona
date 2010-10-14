@@ -31,6 +31,7 @@ namespace Code
 	class Speak : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(Gender)
 
 	public:

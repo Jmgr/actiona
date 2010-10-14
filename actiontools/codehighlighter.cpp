@@ -58,8 +58,8 @@ namespace ActionTools
 		format = QTextCharFormat();
 		
 		//Actions
-		mActionFormat.setForeground(Qt::darkMagenta);
-		mActionFormat.setFontWeight(QFont::Bold);
+		mCodeClassFormat.setForeground(Qt::darkBlue);
+		mCodeClassFormat.setFontWeight(QFont::Bold);
 		
 		//Operators
 		format.setForeground(Qt::red);
@@ -68,7 +68,7 @@ namespace ActionTools
 		mHighlightingRules.append(rule);
 		
 		//Numbers
-		format.setForeground(Qt::darkCyan);
+		format.setForeground(Qt::magenta);
 		rule.pattern = QRegExp("\\b[\\d]+\\.?[\\d]*\\b");
 		rule.format = format;
 		mHighlightingRules.append(rule);
@@ -82,12 +82,6 @@ namespace ActionTools
 		rule.format = format;
 		mHighlightingRules.append(rule);
 
-		//Functions
-		format.setForeground(Qt::blue);
-		rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
-		rule.format = format;
-		mHighlightingRules.append(rule);
-		
 		//Single line comments
 		format.setForeground(Qt::darkGreen);
 		rule.pattern = QRegExp("//[^\n]*");
@@ -102,7 +96,7 @@ namespace ActionTools
 	{
 		HighlightingRule rule;
 		rule.pattern = QRegExp(QString("\\b%1\\b").arg(actionName));
-		rule.format = mActionFormat;
+		rule.format = mCodeClassFormat;
 		mHighlightingRules.prepend(rule);
 	}
 

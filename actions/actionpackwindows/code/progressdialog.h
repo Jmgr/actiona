@@ -30,6 +30,7 @@ namespace Code
 	class ProgressDialog : public BaseWindow
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeClass")
 		Q_PROPERTY(QScriptValue onCanceled READ onCanceled WRITE setOnCanceled)
 		
 	public:

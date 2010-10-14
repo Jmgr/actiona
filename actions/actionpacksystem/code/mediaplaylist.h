@@ -35,6 +35,7 @@ namespace Code
 	class MediaPlaylist : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(PlaybackMode)
 
 	public:

@@ -34,6 +34,7 @@ namespace Code
 	class File : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(OpenMode)
 		Q_ENUMS(Encoding)
 	

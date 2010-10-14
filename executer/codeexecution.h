@@ -24,17 +24,19 @@
 #include "executer_global.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
-#include <QScriptEngine>
+
+class QScriptContext;
+class QScriptEngine;
 
 namespace LibExecuter
 {
 	class ScriptAgent;
 	
-	class EXECUTERSHARED_EXPORT CodeExecution : public QObject, public QScriptable
+	class EXECUTERSHARED_EXPORT CodeExecution : public QObject
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeClass")
 		
 	public:
 		CodeExecution(ScriptAgent *scriptAgent);

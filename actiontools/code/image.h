@@ -35,6 +35,7 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Image : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeType")
 		Q_ENUMS(Filter)
 		Q_ENUMS(MirrorOrientation)
 		

@@ -34,6 +34,7 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Process : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeType")
 		Q_ENUMS(ActionTools::CrossPlatform::KillMode)
 		Q_ENUMS(ActionTools::CrossPlatform::ProcessStatus)
 

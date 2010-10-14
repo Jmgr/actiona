@@ -20,28 +20,49 @@
 
 #include "codeconsole.h"
 
+#include <QScriptContext>
 #include <QTextStream>
 
 namespace LibExecuter
 {
-	void CodeConsole::print(const QString &text)
+	QScriptValue CodeConsole::constructor(QScriptContext *context, QScriptEngine *)
 	{
+		return context->thisObject();
+	}
+	
+	QScriptValue CodeConsole::print(QScriptContext *context, QScriptEngine *)
+	{
+		if(context->argumentCount() < 1)
+			return context->thisObject();
+		
 		QTextStream stream(stdout);
-		stream << text;
+		stream << context->argument(0).toString();
 		stream.flush();
+		
+		return context->thisObject();
 	}
 
-	void CodeConsole::printWarning(const QString &text)
+	QScriptValue CodeConsole::printWarning(QScriptContext *context, QScriptEngine *)
 	{
+		if(context->argumentCount() < 1)
+			return context->thisObject();
+		
 		QTextStream stream(stdout);
-		stream << tr("Warning: ") << text;
+		stream << tr("Warning: ") << context->argument(0).toString();
 		stream.flush();
+		
+		return context->thisObject();
 	}
 
-	void CodeConsole::printError(const QString &text)
+	QScriptValue CodeConsole::printError(QScriptContext *context, QScriptEngine *)
 	{
+		if(context->argumentCount() < 1)
+			return context->thisObject();
+		
 		QTextStream stream(stdout);
-		stream << tr("Error: ") << text;
+		stream << context->argument(0).toString();
 		stream.flush();
+		
+		return context->thisObject();
 	}
 }

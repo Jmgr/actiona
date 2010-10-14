@@ -19,6 +19,7 @@
 */
 
 #include "keywords.h"
+#include "code/code.h"
 
 #include <QStandardItemModel>
 #include <QMetaMethod>
@@ -111,87 +112,15 @@ namespace ActionTools
 		
 		foreach(const QString &keyword, globalKeywords)
 		{
-			QStandardItem *globalItem = new QStandardItem(QIcon(":/icons/keywords.png"), keyword);//TODO : Find a nice icon
-			globalItem->setData(static_cast<int>(ActionTools::ScriptElementAction));
+			QStandardItem *globalItem = new QStandardItem(QIcon(":/icons/native.png"), keyword);
+			globalItem->setData(Code::CodeNative);
 			model->appendRow(globalItem);
 		}
 		
-		QStandardItem *mathItem = new QStandardItem(QIcon(":/icons/keywords.png"), "Math");//TODO : Find a nice icon
+		QStandardItem *mathItem = new QStandardItem(QIcon(":/icons/calc.png"), "Math");
 		foreach(const QString &keyword, mathKeywords)
-			mathItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), keyword));//TODO : Find a nice icon
-		mathItem->setData(static_cast<int>(ActionTools::ScriptElementAction));
+			mathItem->appendRow(new QStandardItem(QIcon(":/icons/calc.png"), keyword));
+		mathItem->setData(Code::CodeNative);
 		model->appendRow(mathItem);
-	}
-	
-	void addClassKeywords(const QMetaObject *metaObject, const QString &name, const QIcon &icon, QStandardItemModel *model, const QStringList &ignoreList)
-	{
-		QStandardItem *currentItem = 0;
-		
-		//Add all methods
-		for(int methodIndex = 0; methodIndex < metaObject->methodCount(); ++methodIndex)
-		{
-			const QMetaMethod &method = metaObject->method(methodIndex);
-			
-			if(method.access() != QMetaMethod::Public || method.methodType() != QMetaMethod::Slot)
-				continue;
-			
-			const QString &signature(method.signature());
-			bool shouldIgnore = false;
-			foreach(const QString &ignore, ignoreList)
-			{
-				if(signature.startsWith(ignore))
-				{
-					shouldIgnore = true;
-					break;
-				}
-			}
-			
-			if(shouldIgnore)
-				continue;
-			
-			QString methodName(signature.left(signature.indexOf("(")));
-			methodName += "(";
-			
-			bool firstParameter = true;
-			foreach(const QByteArray &parameter, method.parameterNames())
-			{
-				if(firstParameter)
-					firstParameter = false;
-				else
-					methodName += ", ";
-				
-				methodName += parameter;
-			}
-			
-			methodName += ")";
-
-			if(!currentItem)
-				currentItem = new QStandardItem(icon, name);
-			
-			QStandardItem *methodItem = new QStandardItem(icon, methodName);
-			currentItem->appendRow(methodItem);
-		}
-		
-		//Add all enums
-		if(currentItem)//Only add enums if a valid method has been added
-		{
-			for(int enumIndex = 0; enumIndex < metaObject->enumeratorCount(); ++enumIndex)
-			{
-				const QMetaEnum &enumerator = metaObject->enumerator(enumIndex);
-				
-				QStandardItem *enumNameItem = new QStandardItem(icon, enumerator.name());
-				
-				for(int keyIndex = 0; keyIndex < enumerator.keyCount(); ++keyIndex)
-				{
-					QStandardItem *enumItem = new QStandardItem(icon, enumerator.key(keyIndex));
-					enumNameItem->appendRow(enumItem);
-				}
-
-				currentItem->appendRow(enumNameItem);
-			}
-			
-			currentItem->setData(static_cast<int>(ActionTools::ScriptElementAction));
-			model->appendRow(currentItem);
-		}
 	}
 }

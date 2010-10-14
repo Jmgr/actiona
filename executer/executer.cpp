@@ -183,7 +183,9 @@ namespace LibExecuter
 		Tools::HighResolutionTimer timer("Executer::startExecution");
 	#endif
 		
+		mScriptAgent->setContext(ScriptAgent::ActionInit);
 		CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory);
+		mScriptAgent->setContext(ScriptAgent::Parameters);
 		
 		QScriptValue script = mScriptEngine->newObject();
 		mScriptEngine->globalObject().setProperty("Script", script, QScriptValue::ReadOnly);

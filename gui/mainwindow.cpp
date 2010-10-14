@@ -47,6 +47,8 @@
 #include "actionpack.h"
 #include "sfxscriptdialog.h"
 #include "progresssplashscreen.h"
+#include "codeinitializer.h"
+#include "code/code.h"
 
 #include <QSystemTrayIcon>
 #include <QInputDialog>
@@ -68,6 +70,7 @@
 #include <QTemporaryFile>
 #include <QListWidget>
 #include <QSystemInfo>
+#include <QScriptValueIterator>
 
 QTM_USE_NAMESPACE
 
@@ -238,16 +241,37 @@ void MainWindow::postInit()
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("building completion model");
 #endif
-		//Create one instance of every action to build the completion model
-		for(int actionDefinitionIndex = 0; actionDefinitionIndex < mActionFactory->actionDefinitionCount(); ++actionDefinitionIndex)
+		QScriptEngine engine;
+		for(int actionPackIndex = 0; actionPackIndex < mActionFactory->actionPackCount(); ++actionPackIndex)
 		{
-			ActionTools::ActionDefinition *actionDefinition =	mActionFactory->actionDefinition(actionDefinitionIndex);
-			ActionTools::ActionInstance *actionInstance = actionDefinition->newActionInstance();
-			QStringList ignoreList(QStringList() << "deleteLater" << "startExecution" << "stopExecution");
-
-			ActionTools::addClassKeywords(actionInstance->metaObject(), actionDefinition->id(), actionDefinition->icon(), mCompletionModel, ignoreList);
-
-			delete actionInstance;
+			ActionTools::ActionPack *actionPack = mActionFactory->actionPack(actionPackIndex);
+			actionPack->codeInit(&engine);
+		}
+		
+		LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory);
+		
+		QScriptValueIterator it(engine.globalObject());
+		while(it.hasNext())
+		{
+			it.next();
+			
+			if(!it.value().isQMetaObject())
+				continue;
+			
+			const QMetaObject *metaObject = it.value().toQMetaObject();
+			int typeIndex = metaObject->indexOfClassInfo("type");
+			if(typeIndex == -1)
+				continue;
+			
+			const char *type = metaObject->classInfo(typeIndex).value();
+			QStandardItem *codeObject = new QStandardItem(QIcon(":/icons/class.png"), it.name());
+			
+			if(qstrcmp(type, "CodeClass") == 0)
+				codeObject->setData(Code::CodeClass);
+			else if(qstrcmp(type, "CodeType") == 0)
+				codeObject->setData(Code::CodeType);
+			
+			mCompletionModel->appendRow(codeObject);
 		}
 	}
 
@@ -285,31 +309,11 @@ void MainWindow::postInit()
 
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("adding execution classes");
-#endif
-		//Add Environment & Algorithms class
-		//LibExecuter::ExecutionAlgorithms executionAlgorithms;
-		//ActionTools::addClassKeywords(executionAlgorithms.metaObject(), "Algorithms", QIcon(":/icons/keywords.png"), mCompletionModel, QStringList() << "deleteLater");//TODO : Find an icon to put here
-		//TODO
-	}
-
-	{
-#ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("adding Ecmascript stuff");
 #endif
 		//Add Ecmascript stuff
 		ActionTools::addEcmaScriptObjectsKeywords(mCompletionModel);
 	}
-
-	//Add our functions
-	QStandardItem *scriptItem = new QStandardItem(QIcon(":/icons/keywords.png"), "Script");//TODO : Find an icon to put here (and to the following)
-	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "nextLine"));
-	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "stopExecution()"));
-	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "print(text)"));
-	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "printWarning(text)"));
-	scriptItem->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), "printError(text)"));
-	scriptItem->setData(static_cast<int>(ActionTools::ScriptElementAction));
-	mCompletionModel->appendRow(scriptItem);
 
 	{
 #ifdef ACT_PROFILE

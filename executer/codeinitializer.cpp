@@ -40,15 +40,10 @@ namespace LibExecuter
 {
 	void CodeInitializer::initialize(QScriptEngine *scriptEngine, ScriptAgent *scriptAgent, ActionTools::ActionFactory *actionFactory)
 	{
-		scriptAgent->setContext(ScriptAgent::ActionInit);
-		
 		scriptEngine->setProcessEventsInterval(50);
 
 		QScriptValue codeExecution = scriptEngine->newQObject(new CodeExecution(scriptAgent), QScriptEngine::ScriptOwnership, QScriptEngine::ExcludeChildObjects | QScriptEngine::ExcludeSuperClassContents | QScriptEngine::ExcludeDeleteLater);
 		scriptEngine->globalObject().setProperty("execution", codeExecution);
-		
-		QScriptValue codeConsole = scriptEngine->newQObject(new CodeConsole(), QScriptEngine::ScriptOwnership, QScriptEngine::ExcludeChildObjects | QScriptEngine::ExcludeSuperClassContents | QScriptEngine::ExcludeDeleteLater);
-		scriptEngine->globalObject().setProperty("console", codeConsole);
 		
 		addCodeClass<Code::RawData>("RawData", scriptEngine);
 		addCodeClass<Code::Image>("Image", scriptEngine);
@@ -61,6 +56,10 @@ namespace LibExecuter
 		addCodeClass<Code::Window>("Window", scriptEngine);
 		addCodeStaticMethod(&Code::Window::find, "Window", "find", scriptEngine);
 		addCodeStaticMethod(&Code::Window::all, "Window", "all", scriptEngine);
+		addCodeClass<CodeConsole>("Console", scriptEngine);
+		addCodeStaticMethod(&CodeConsole::print, "Console", "print", scriptEngine);
+		addCodeStaticMethod(&CodeConsole::printWarning, "Console", "printWarning", scriptEngine);
+		addCodeStaticMethod(&CodeConsole::printError, "Console", "printError", scriptEngine);
 
 		int actionPackCount = actionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)
@@ -69,7 +68,5 @@ namespace LibExecuter
 
 			actionPack->codeInit(scriptEngine);
 		}
-
-		scriptAgent->setContext(ScriptAgent::Parameters);
 	}
 }

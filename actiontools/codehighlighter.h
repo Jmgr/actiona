@@ -53,7 +53,7 @@ namespace ActionTools
 		QRegExp mCommentEndExpression;
 
 		QTextCharFormat mMultiLineCommentFormat;
-		QTextCharFormat mActionFormat;
+		QTextCharFormat mCodeClassFormat;
 
 		Q_DISABLE_COPY(CodeHighlighter)
 	};

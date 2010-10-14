@@ -33,6 +33,7 @@ namespace Code
 	class Mouse : public QObject, public QScriptable
 	{
 		Q_OBJECT
+		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(MouseDevice::Button)
 
 	public:

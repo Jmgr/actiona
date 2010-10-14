@@ -29,6 +29,13 @@
 
 namespace Code
 {
+	enum CodeObject
+	{
+		CodeClass,
+		CodeType,
+		CodeNative
+	};
+	
 	class ACTIONTOOLSSHARED_EXPORT Code
 	{
 	public:
