@@ -18,26 +18,26 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "process.h"
+#include "processhandle.h"
 
 namespace Code
 {
-	QScriptValue Process::constructor(QScriptContext *context, QScriptEngine *engine)
+	QScriptValue ProcessHandle::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Process *process = 0;
+		ProcessHandle *process = 0;
 		
 		switch(context->argumentCount())
 		{
 		case 0:
-			process = new Process;
+			process = new ProcessHandle;
 			break;
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Process *codeProcess = qobject_cast<Process*>(object))
-					process = new Process(*codeProcess);
+				if(ProcessHandle *codeProcess = qobject_cast<ProcessHandle*>(object))
+					process = new ProcessHandle(*codeProcess);
 				else
-					process = new Process(context->argument(0).toInt32());
+					process = new ProcessHandle(context->argument(0).toInt32());
 			}
 			break;
 		default:
@@ -51,21 +51,21 @@ namespace Code
 		return engine->newQObject(process, QScriptEngine::ScriptOwnership);
 	}
 	
-	QScriptValue Process::constructor(int processId, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue ProcessHandle::constructor(int processId, QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(context)
 	
-		return engine->newQObject(new Process(processId), QScriptEngine::ScriptOwnership);
+		return engine->newQObject(new ProcessHandle(processId), QScriptEngine::ScriptOwnership);
 	}
 	
-	int Process::parameter(QScriptContext *context)
+	int ProcessHandle::parameter(QScriptContext *context)
 	{
 		switch(context->argumentCount())
 		{
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Process *process = qobject_cast<Process*>(object))
+				if(ProcessHandle *process = qobject_cast<ProcessHandle*>(object))
 					return process->processId();
 				else
 					return context->argument(0).toInt32();
@@ -77,7 +77,7 @@ namespace Code
 		}
 	}
 	
-	QScriptValue Process::list(QScriptContext *context, QScriptEngine *engine)
+	QScriptValue ProcessHandle::list(QScriptContext *context, QScriptEngine *engine)
 	{
 		QList<int> processesList = ActionTools::CrossPlatform::runningProcesses();
 
@@ -89,14 +89,14 @@ namespace Code
 		return back;
 	}
 	
-	Process::Process()
+	ProcessHandle::ProcessHandle()
 		: QObject(),
 		QScriptable()
 	{
 		
 	}
 
-	Process::Process(const Process &other)
+	ProcessHandle::ProcessHandle(const ProcessHandle &other)
 		: QObject(),
 		QScriptable(),
 		mProcessId(other.processId())
@@ -104,7 +104,7 @@ namespace Code
 		
 	}
 
-	Process::Process(int processId)
+	ProcessHandle::ProcessHandle(int processId)
 		: QObject(),
 		QScriptable(),
 		mProcessId(processId)
@@ -112,68 +112,68 @@ namespace Code
 		
 	}
 	
-	Process &Process::operator=(Process other)
+	ProcessHandle &ProcessHandle::operator=(ProcessHandle other)
 	{
 		swap(other);
 		
 		return *this;
 	}
 
-	Process &Process::operator=(int processId)
+	ProcessHandle &ProcessHandle::operator=(int processId)
 	{
 		swap(processId);
 		
 		return *this;
 	}
 	
-	void Process::swap(Process &other)
+	void ProcessHandle::swap(ProcessHandle &other)
 	{
 		std::swap(mProcessId, other.mProcessId);
 	}
 
-	void Process::swap(int &processId)
+	void ProcessHandle::swap(int &processId)
 	{
 		std::swap(mProcessId, processId);
 	}
 	
-	int Process::processId() const
+	int ProcessHandle::processId() const
 	{
 		return mProcessId;
 	}
 	
-	QScriptValue Process::clone() const
+	QScriptValue ProcessHandle::clone() const
 	{
 		return constructor(mProcessId, context(), engine());
 	}
 
-	bool Process::equals(const QScriptValue &other) const
+	bool ProcessHandle::equals(const QScriptValue &other) const
 	{
 		if(other.isUndefined() || other.isNull())
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(Process *otherProcess = qobject_cast<Process*>(object))
+		if(ProcessHandle *otherProcess = qobject_cast<ProcessHandle*>(object))
 			return (otherProcess == this || otherProcess->mProcessId == mProcessId);
 			
 		return false;
 	}
 
-	QString Process::toString() const
+	QString ProcessHandle::toString() const
 	{
 		return QString("Process [id: %1]").arg(processId());
 	}
 	
-	int Process::id() const
+	int ProcessHandle::id() const
 	{
 		return processId();
 	}
 	
-	bool Process::kill(ActionTools::CrossPlatform::KillMode killMode, int timeout) const
+	bool ProcessHandle::kill(ActionTools::CrossPlatform::KillMode killMode, int timeout) const
 	{
 		return ActionTools::CrossPlatform::killProcess(mProcessId, killMode, timeout);
 	}
 	
-	bool Process::isRunning() const
+	bool ProcessHandle::isRunning() const
 	{
 		return (ActionTools::CrossPlatform::processStatus(mProcessId) == ActionTools::CrossPlatform::Running);
 	}

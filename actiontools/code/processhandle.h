@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PROCESS_H
-#define PROCESS_H
+#ifndef PROCESSHANDLE_H
+#define PROCESSHANDLE_H
 
 #include "actiontools_global.h"
 #include "crossplatform.h"
@@ -31,7 +31,7 @@
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT Process : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT ProcessHandle : public QObject, public QScriptable
 	{
 		Q_OBJECT
 		Q_CLASSINFO("type", "CodeType")
@@ -45,14 +45,14 @@ namespace Code
 		
 		static QScriptValue list(QScriptContext *context, QScriptEngine *engine);
 
-		Process();
-		Process(const Process &other);
-		Process(int processId);
+		ProcessHandle();
+		ProcessHandle(const ProcessHandle &other);
+		ProcessHandle(int processId);
 
-		Process &operator=(Process other);
-		Process &operator=(int processId);
+		ProcessHandle &operator=(ProcessHandle other);
+		ProcessHandle &operator=(int processId);
 
-		void swap(Process &other);
+		void swap(ProcessHandle &other);
 		void swap(int &processId);
 
 		int processId() const;
@@ -70,4 +70,4 @@ namespace Code
 	};
 }
 
-#endif // PROCESS_H
+#endif // PROCESSHANDLE_H

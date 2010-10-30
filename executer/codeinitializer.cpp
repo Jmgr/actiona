@@ -27,7 +27,7 @@
 #include "code/point.h"
 #include "code/size.h"
 #include "code/rect.h"
-#include "code/process.h"
+#include "code/processhandle.h"
 #include "code/window.h"
 #include "actionpack.h"
 #include "actionfactory.h"
@@ -52,7 +52,7 @@ namespace LibExecuter
 		addCodeClass<Code::Point>("Point", scriptEngine);
 		addCodeClass<Code::Size>("Size", scriptEngine);
 		addCodeClass<Code::Rect>("Rect", scriptEngine);
-		addCodeClass<Code::Process>("Process", scriptEngine);
+		addCodeClass<Code::ProcessHandle>("Process", scriptEngine);
 		addCodeClass<Code::Window>("Window", scriptEngine);
 		addCodeStaticMethod(&Code::Window::find, "Window", "find", scriptEngine);
 		addCodeStaticMethod(&Code::Window::all, "Window", "all", scriptEngine);

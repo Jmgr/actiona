@@ -22,7 +22,7 @@
 #include "rect.h"
 #include "size.h"
 #include "point.h"
-#include "process.h"
+#include "processhandle.h"
 
 #include <QScriptValueIterator>
 
@@ -93,6 +93,7 @@ namespace Code
 		bool titleCaseSensitive = true;
 		bool classNameCaseSensitive = true;
 		int processId = -1;
+		ProcessHandle *processHandle = 0;
 
 		while(it.hasNext())
 		{
@@ -112,6 +113,13 @@ namespace Code
 				classNameCaseSensitive = it.value().toBool();
 			else if(it.name() == "processId")
 				processId = it.value().toInt32();
+			else if(it.name() == "process")
+			{
+				if(ProcessHandle *processHandleParameter = qobject_cast<ProcessHandle *>(it.value().toQObject()))
+					processHandle = processHandleParameter;
+				else
+					context->throwError(tr("Invalid process handle"));
+			}
 		}
 
 		QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
@@ -134,6 +142,9 @@ namespace Code
 				continue;
 
 			if(processId != -1 && windowHandle.processId() != processId)
+				continue;
+
+			if(processHandle && windowHandle.processId() != processHandle->processId())
 				continue;
 
 			foundWindows.append(windowHandle);
@@ -267,7 +278,7 @@ namespace Code
 		if(!checkValidity())
 			return -1;
 
-		return Process::constructor(mWindowHandle.processId(), context(), engine());
+		return ProcessHandle::constructor(mWindowHandle.processId(), context(), engine());
 	}
 	
 	QScriptValue Window::close() const
