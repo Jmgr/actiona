@@ -23,6 +23,7 @@
 #include "actioninstance.h"
 #include "version.h"
 #include "mainclass.h"
+#include "nativeeventfilteringapplication.h"
 
 #include <ctime>
 
@@ -50,7 +51,7 @@ int main(int argc, char **argv)
 		#error("You need Qt 4.7.0 or later to compile Actionaz Executer");
 #endif
 
-	QApplication app(argc, argv);
+	ActionTools::NativeEventFilteringApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);

@@ -26,7 +26,7 @@ namespace Code
 	QScriptValue Mouse::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(context)
-		
+
 		return engine->newQObject(new Mouse, QScriptEngine::ScriptOwnership);
 	}
 	
@@ -35,7 +35,7 @@ namespace Code
 		QScriptable()
 	{
 	}
-	
+
 	QScriptValue Mouse::position() const
 	{
 		return Point::constructor(mMouseDevice.cursorPosition(), context(), engine());

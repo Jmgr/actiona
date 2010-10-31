@@ -63,6 +63,8 @@ public:
 		addCodeClass<Code::MediaPlaylist>("MediaPlaylist", scriptEngine);
 		addCodeClass<Code::Notify>("Notify", scriptEngine);
 		addCodeClass<Code::Process>("Process", scriptEngine);
+		addCodeStaticMethod(&Code::Process::list, "Process", "list", scriptEngine);
+		addCodeStaticMethod(&Code::Process::startDetached, "Process", "startDetached", scriptEngine);
 	}
 
 private:

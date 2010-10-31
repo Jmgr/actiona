@@ -60,7 +60,7 @@ namespace Code
 		QScriptValue write(const QScriptValue &data);
 		QScriptValue writeText(const QString &value, Code::Encoding encoding = Code::Native);
 		QScriptValue read();
-		QScriptValue readText(Code::Encoding encoding = Code::Native);
+		QString readText(Code::Encoding encoding = Code::Native);
 		QScriptValue close();
 		QScriptValue copy(QString source, QString destination, const QScriptValue &parameters = QScriptValue()) const;
 		QScriptValue copy(const QString &destination, const QScriptValue &parameters = QScriptValue()) const;

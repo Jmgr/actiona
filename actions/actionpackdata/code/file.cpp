@@ -74,9 +74,9 @@ namespace Code
 		return RawData::constructor(mFile.readAll(), context(), engine());
 	}
 	
-	QScriptValue File::readText(Code::Encoding encoding)
+	QString File::readText(Code::Encoding encoding)
 	{
-		return engine()->newVariant(Code::fromEncoding(mFile.readAll(), encoding));
+		return Code::fromEncoding(mFile.readAll(), encoding);
 	}
 	
 	QScriptValue File::close()

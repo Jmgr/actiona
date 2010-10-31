@@ -52,7 +52,7 @@ namespace LibExecuter
 		addCodeClass<Code::Point>("Point", scriptEngine);
 		addCodeClass<Code::Size>("Size", scriptEngine);
 		addCodeClass<Code::Rect>("Rect", scriptEngine);
-		addCodeClass<Code::ProcessHandle>("Process", scriptEngine);
+		addCodeClass<Code::ProcessHandle>("ProcessHandle", scriptEngine);
 		addCodeClass<Code::Window>("Window", scriptEngine);
 		addCodeStaticMethod(&Code::Window::find, "Window", "find", scriptEngine);
 		addCodeStaticMethod(&Code::Window::all, "Window", "all", scriptEngine);

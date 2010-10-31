@@ -59,7 +59,7 @@ private:
 #ifdef Q_WS_WIN
 	int toWinButton(Button button, bool press) const;
 #endif
-	
+
 	bool mPressedButtons[ButtonCount];
 };
 

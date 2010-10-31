@@ -1,20 +1,4 @@
 /*
-	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
-
-	Actionaz is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	Actionaz is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program. If not, see <http://www.gnu.org/licenses/>.
-
 	Contact : jmgr@jmgr.info
 */
 
@@ -37,13 +21,22 @@ namespace Code
 		Q_CLASSINFO("type", "CodeType")
 		Q_ENUMS(ActionTools::CrossPlatform::KillMode)
 		Q_ENUMS(ActionTools::CrossPlatform::ProcessStatus)
+		Q_ENUMS(Priority)
 
 	public:
+		enum Priority
+		{
+			AboveNormal,
+			BelowNormal,
+			High,
+			Idle,
+			Normal,
+			Realtime
+		};
+
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(int processId, QScriptContext *context, QScriptEngine *engine);
 		static int parameter(QScriptContext *context);
-		
-		static QScriptValue list(QScriptContext *context, QScriptEngine *engine);
 
 		ProcessHandle();
 		ProcessHandle(const ProcessHandle &other);
@@ -64,6 +57,8 @@ namespace Code
 		int id() const;
 		bool kill(ActionTools::CrossPlatform::KillMode killMode = ActionTools::CrossPlatform::GracefulThenForceful, int timeout = 3000) const;
 		bool isRunning() const;
+		QString command() const;
+		Priority priority() const;
 
 	private:
 		int mProcessId;

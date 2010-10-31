@@ -20,6 +20,8 @@
 
 #include "processhandle.h"
 
+#include <QProcess>
+
 namespace Code
 {
 	QScriptValue ProcessHandle::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -75,18 +77,6 @@ namespace Code
 			context->throwError("Incorrect parameter count");
 			return -1;
 		}
-	}
-	
-	QScriptValue ProcessHandle::list(QScriptContext *context, QScriptEngine *engine)
-	{
-		QList<int> processesList = ActionTools::CrossPlatform::runningProcesses();
-
-		QScriptValue back = engine->newArray(processesList.count());
-
-		for(int index = 0; index < processesList.count(); ++index)
-			back.setProperty(index, constructor(processesList.at(index), context, engine));
-
-		return back;
 	}
 	
 	ProcessHandle::ProcessHandle()
@@ -160,7 +150,7 @@ namespace Code
 
 	QString ProcessHandle::toString() const
 	{
-		return QString("Process [id: %1]").arg(processId());
+		return QString("ProcessHandle [id: %1]").arg(processId());
 	}
 	
 	int ProcessHandle::id() const
@@ -176,5 +166,77 @@ namespace Code
 	bool ProcessHandle::isRunning() const
 	{
 		return (ActionTools::CrossPlatform::processStatus(mProcessId) == ActionTools::CrossPlatform::Running);
+	}
+
+	QString ProcessHandle::command() const
+	{
+#ifdef Q_WS_WIN
+		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, id());
+		if(!process)
+		{
+			context()->throwError("Unable to open the process");
+			return QString();
+		}
+
+		TCHAR buffer[256];
+		if(!GetModuleFileNameEx(process, NULL, buffer, 256))
+		{
+			context()->throwError("Unable to retrieve the executable filename");
+			return QString();
+		}
+
+		CloseHandle(process);
+
+		return QString::fromWCharArray(buffer);
+#else
+		QProcess process;
+		process.start(QString("ps h -p %1 -ocommand").arg(id()), QIODevice::ReadOnly);
+		if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
+		{
+			context()->throwError("Failed to get the process command");
+			return QString();
+		}
+
+		return process.readAll();
+#endif
+	}
+
+	ProcessHandle::Priority ProcessHandle::priority() const
+	{
+#ifdef Q_WS_WIN
+		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, id());
+		if(!process)
+		{
+			context()->throwError("Unable to open the process");
+			return Normal;
+		}
+
+		int priority = GetPriorityClass(process);
+		CloseHandle(process);
+
+		switch(priority)
+		{
+		case ABOVE_NORMAL_PRIORITY_CLASS:
+			return AboveNormal;
+		case BELOW_NORMAL_PRIORITY_CLASS:
+			return BelowNormal;
+		case HIGH_PRIORITY_CLASS:
+			return High;
+		case IDLE_PRIORITY_CLASS:
+			return Idle;
+		case NORMAL_PRIORITY_CLASS:
+			return Normal;
+		case REALTIME_PRIORITY_CLASS:
+			return Realtime;
+		default:
+			context()->throwError("Unable to retrieve the process priority");
+			return Normal;
+		}
+
+		return QString::fromWCharArray(buffer);
+#else
+		context()->throwError("This is not available under your operating system");
+		return Normal;
+#endif
 	}
 }

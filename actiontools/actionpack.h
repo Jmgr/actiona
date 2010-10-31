@@ -59,18 +59,19 @@ namespace ActionTools
 		void addCodeClass(const QString &objectName, QScriptEngine *scriptEngine) const
 		{
 			QScriptValue metaObject = scriptEngine->newQMetaObject(&T::staticMetaObject, scriptEngine->newFunction(&T::constructor));
-			metaObject.setData("CodeClass");
 			scriptEngine->globalObject().setProperty(objectName, metaObject);
 		}
-		
-		void addCodeFunction(const QString &objectName, QScriptEngine::FunctionSignature function, int length, QScriptEngine *scriptEngine) const
+
+		void addCodeStaticMethod(QScriptEngine::FunctionSignature method, const QString &objectName, const QString &methodName, QScriptEngine *scriptEngine) const
 		{
-			scriptEngine->globalObject().setProperty(objectName, scriptEngine->newFunction(function, length));
-		}
-		
-		void addCodeFunction(const QString &objectName, QScriptEngine::FunctionSignature function, QScriptEngine *scriptEngine) const
-		{
-			addCodeFunction(objectName, function, 0, scriptEngine);
+			QScriptValue classMetaObject = scriptEngine->globalObject().property(objectName);
+			if(!classMetaObject.isValid())
+			{
+				classMetaObject = scriptEngine->newObject();
+				scriptEngine->globalObject().setProperty(objectName, classMetaObject);
+			}
+
+			classMetaObject.setProperty(methodName, scriptEngine->newFunction(method));
 		}
 
 	private:
