@@ -22,10 +22,15 @@
 #include "rawdata.h"
 #include "color.h"
 #include "size.h"
+#include "rect.h"
+#include "window.h"
 #include "qtimagefilters/QtImageFilterFactory"
 
 #include <QBuffer>
 #include <QScriptValueIterator>
+#include <QPixmap>
+#include <QApplication>
+#include <QDesktopWidget>
 
 namespace Code
 {
@@ -63,6 +68,24 @@ namespace Code
 		Q_UNUSED(context)
 	
 		return engine->newQObject(new Image(image), QScriptEngine::ScriptOwnership);
+	}
+
+	QScriptValue Image::takeScreenshot(QScriptContext *context, QScriptEngine *engine)
+	{
+		WId windowId = QApplication::desktop()->winId();
+
+		if(context->argumentCount() > 0)
+		{
+			Window *window = qobject_cast<Window *>(context->argument(0).toQObject());
+			if(window)
+				windowId = window->windowHandle().value();
+			else
+				windowId = context->argument(0).toInt32();
+		}
+
+		QPixmap screenPixmap = QPixmap::grabWindow(windowId);
+
+		return constructor(screenPixmap.toImage(), context, engine);
 	}
 	
 	const QString Image::filterNames[] =
@@ -301,7 +324,7 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue Image::size()
+	QScriptValue Image::size() const
 	{
 		return Size::constructor(mImage.size(), context(), engine());
 	}
@@ -314,5 +337,13 @@ namespace Code
 	int Image::height() const
 	{
 		return mImage.height();
+	}
+
+	QScriptValue Image::copy() const
+	{
+		if(context()->argumentCount() == 0)
+			return Image::constructor(mImage, context(), engine());
+		else
+			return Image::constructor(mImage.copy(Rect::parameter(context())), context(), engine());
 	}
 }

@@ -65,6 +65,8 @@ namespace Code
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QImage &image, QScriptContext *context, QScriptEngine *engine);
+
+		static QScriptValue takeScreenshot(QScriptContext *context, QScriptEngine *engine);
 		
 		Image();
 		Image(const Image &other);
@@ -91,9 +93,10 @@ namespace Code
 		QScriptValue setPixel(int x, int y, const QScriptValue &color);
 		QScriptValue mirror(MirrorOrientation mirrorOrientation);
 		QScriptValue setSize();
-		QScriptValue size();
+		QScriptValue size() const;
 		int width() const;
 		int height() const;
+		QScriptValue copy() const;
 	
 	private:
 		enum FilterOption
