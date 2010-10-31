@@ -349,9 +349,9 @@ namespace LibExecuter
 			actionInstance->stopLongTermExecution();
 		}
 		
-		delete mScriptAgent;
+		mScriptAgent->deleteLater();
 		mScriptAgent = 0;
-		delete mScriptEngine;
+		mScriptEngine->deleteLater();
 		mScriptEngine = 0;
 
 		delete mProgressDialog;
