@@ -22,6 +22,7 @@
 #define STOPINSTANCE_H
 
 #include "actioninstance.h"
+#include "scriptagent.h"
 
 namespace Actions
 {
@@ -35,7 +36,8 @@ namespace Actions
 
 		void startExecution()
 		{
-			scriptEngine()->evaluate("Script.stopExecution()");
+			LibExecuter::ScriptAgent *scriptAgent = dynamic_cast<LibExecuter::ScriptAgent *>(scriptEngine()->agent());
+			scriptAgent->emitStopExecution();
 
 			emit executionEnded();
 		}

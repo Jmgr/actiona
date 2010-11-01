@@ -7,3 +7,4 @@ RESOURCES += actionpackinternal.qrc
 TRANSLATIONS = locale/actionpackinternal_en.ts \
 	locale/actionpackinternal_fr.ts \
 	locale/actionpackinternal_de.ts
+INCLUDEPATH += ../../executer

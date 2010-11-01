@@ -22,11 +22,10 @@
 #define SCRIPTAGENT_H
 
 #include "executer_global.h"
-#include "crossplatform.h"
 
 #include <QScriptEngine>
 #include <QScriptEngineAgent>
-#include <QApplication>
+#include <QStringList>
 
 namespace LibExecuter
 {
@@ -52,7 +51,8 @@ namespace LibExecuter
 			mPaused(false),
 			mContinueExecution(true),
 			mPauseDuration(0),
-			mDebuggerAgent(0)
+			mDebuggerAgent(0),
+			mEngineLevel(0)
 																			{}
 	
 		void setContext(Context context)									{ mContext = context; }
@@ -66,109 +66,37 @@ namespace LibExecuter
 		int currentColumn() const											{ return mCurrentColumn; }
 		Context context() const												{ return mContext; }
 		int currentParameter() const										{ return mCurrentParameter; }
-		
+		QString currentFile() const											{ return mFiles.count() > 0 ? mFiles.back() : QString(); }
+
 	signals:
 		void stopExecution();
 		void evaluationStarted();
 		void evaluationStopped();
 	
 	private:
-		void contextPop()
-		{
-			if(mDebuggerAgent)
-				mDebuggerAgent->contextPop();
-		}
-		
-		void contextPush()
-		{
-			if(mDebuggerAgent)
-				mDebuggerAgent->contextPush();
-		}
-		
-		void exceptionCatch(qint64 scriptId, const QScriptValue &exception)
-		{
-			if(mDebuggerAgent)
-				mDebuggerAgent->exceptionCatch(scriptId, exception);
-		}
-		
-		void exceptionThrow(qint64 scriptId, const QScriptValue &exception, bool hasHandler)
-		{
-			if(mDebuggerAgent)
-				mDebuggerAgent->exceptionThrow(scriptId, exception, hasHandler);
-		}
-		
-		QVariant extension(Extension extension, const QVariant &argument = QVariant())
-		{
-			if(mDebuggerAgent)
-				return mDebuggerAgent->extension(extension, argument);
-			
-			return QScriptEngineAgent::extension(extension, argument);
-		}
-		
-		void functionEntry(qint64 scriptId)
-		{
-			if(mDebuggerAgent)
-				mDebuggerAgent->functionEntry(scriptId);
-		}
-		
-		void functionExit(qint64 scriptId, const QScriptValue &returnValue)
-		{
-			if(mDebuggerAgent)
-				mDebuggerAgent->functionExit(scriptId, returnValue);
-			
-			while(mContinueExecution && mPauseDuration > 0)
-			{
-				QApplication::processEvents();
-				
-				ActionTools::CrossPlatform::sleep(10);
-				
-				if(!mPaused)
-					mPauseDuration -= 10;
-			}
-		}
-		
-		void positionChange(qint64 scriptId, int lineNumber, int columnNumber)
-		{
-			if(mDebuggerAgent)
-				mDebuggerAgent->positionChange(scriptId, lineNumber, columnNumber);
-
-			mCurrentLine = lineNumber;
-			mCurrentColumn = columnNumber;
-		}
-		
-		void scriptLoad(qint64 id, const QString &program, const QString &fileName, int baseLineNumber)
-		{
-			if(mDebuggerAgent)
-				mDebuggerAgent->scriptLoad(id, program, fileName, baseLineNumber);
-
-			emit evaluationStarted();
-		}
-		
-		void scriptUnload(qint64 id)
-		{
-			if(mDebuggerAgent)
-				mDebuggerAgent->scriptUnload(id);
-
-			emit evaluationStopped();
-		}
-		
-		bool supportsExtension(Extension extension) const
-		{
-			if(mDebuggerAgent)
-				return mDebuggerAgent->supportsExtension(extension);
-
-			return QScriptEngineAgent::supportsExtension(extension);
-		}
+		void contextPop();
+		void contextPush();
+		void exceptionCatch(qint64 scriptId, const QScriptValue &exception);
+		void exceptionThrow(qint64 scriptId, const QScriptValue &exception, bool hasHandler);
+		QVariant extension(Extension extension, const QVariant &argument = QVariant());
+		void functionEntry(qint64 scriptId);
+		void functionExit(qint64 scriptId, const QScriptValue &returnValue);
+		void positionChange(qint64 scriptId, int lineNumber, int columnNumber);
+		void scriptLoad(qint64 id, const QString &program, const QString &fileName, int baseLineNumber);
+		void scriptUnload(qint64 id);
+		bool supportsExtension(Extension extension) const;
 	
 	private:
 		int mCurrentParameter;
 		int mCurrentLine;
 		int mCurrentColumn;
+		QStringList mFiles;
 		Context mContext;
 		bool mPaused;
 		bool mContinueExecution;
 		qint64 mPauseDuration;
 		QScriptEngineAgent *mDebuggerAgent;
+		int mEngineLevel;
 	};
 }
 

@@ -151,6 +151,7 @@ namespace LibExecuter
 		bool mExecutionPaused;
 		bool mHasExecuted;
 		static ExecutionStatus mExecutionStatus;
+		bool mPauseInterrupt;
 
 		Q_DISABLE_COPY(Executer)
 	};

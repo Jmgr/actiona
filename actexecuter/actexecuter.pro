@@ -18,7 +18,7 @@ HEADERS += executer.h \
 INCLUDEPATH += . \
     .. \
     ../tools \
-    ../actiontools
+	../actiontools
 FORMS += 
 win32:LIBS += -luser32 \
     -ladvapi32 \

@@ -256,7 +256,7 @@ namespace ActionTools
 
 	QString ActionInstanceExecutionHelper::nextLine() const
 	{
-		return mScriptEngine->evaluate("Script.nextLine").toString();
+		return mScriptEngine->property("Script.nextLine").toString();
 	}
 
 	void ActionInstanceExecutionHelper::setNextLine(const QString &nextLine)

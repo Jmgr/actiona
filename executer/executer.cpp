@@ -28,6 +28,7 @@
 #include <QDesktopWidget>
 #include <QAction>
 #include <QMainWindow>
+#include <QApplication>
 
 namespace LibExecuter
 {
@@ -39,7 +40,8 @@ namespace LibExecuter
 		mConsoleWidget(new ActionTools::ConsoleWidget()),
 		mScriptEngine(0),
 		mScriptAgent(0),
-		mHasExecuted(false)
+		mHasExecuted(false),
+		mPauseInterrupt(false)
 	{
 		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
 		connect(mExecutionWindow, SIGNAL(paused()), this, SLOT(pauseExecution()));
@@ -76,11 +78,6 @@ namespace LibExecuter
 	{
 		mScript = script;
 		mScriptEngine = new QScriptEngine;
-		mScriptAgent = new ScriptAgent(mScriptEngine);
-		
-		connect(mScriptAgent, SIGNAL(stopExecution()), this, SLOT(stopExecution()));
-		connect(mScriptAgent, SIGNAL(evaluationStarted()), mExecutionWindow, SLOT(enableDebug()));
-		connect(mScriptAgent, SIGNAL(evaluationStopped()), mExecutionWindow, SLOT(disableDebug()));
 		
 		mActionFactory = actionFactory;
 		mShowExecutionWindow = showExecutionWindow;
@@ -99,6 +96,13 @@ namespace LibExecuter
 		
 		mScriptEngineDebugger.attachTo(mScriptEngine);
 		mDebuggerWindow = mScriptEngineDebugger.standardWindow();
+
+		mScriptAgent = new ScriptAgent(mScriptEngine);
+
+		connect(mScriptAgent, SIGNAL(stopExecution()), this, SLOT(stopExecution()));
+		connect(mScriptAgent, SIGNAL(evaluationStarted()), mExecutionWindow, SLOT(enableDebug()));
+		connect(mScriptAgent, SIGNAL(evaluationStopped()), mExecutionWindow, SLOT(disableDebug()));
+
 		QScriptEngineAgent *debuggerAgent = mScriptEngine->agent();
 		mScriptEngine->setAgent(mScriptAgent);
 		mScriptAgent->setDebuggerAgent(debuggerAgent);
@@ -442,10 +446,17 @@ namespace LibExecuter
 
 		if(exception != ActionTools::ActionException::TimeoutException)
 		{
-			mConsoleWidget->addActionLine(tr("Script line %1: ").arg(mCurrentActionIndex+1) + message,
+			QString currentFile = mScriptAgent->currentFile();
+			QString finalMessage;
+			if(currentFile.isEmpty())
+				finalMessage = tr("Script line %1: ").arg(mCurrentActionIndex+1);
+			else
+				finalMessage = tr("Script %1, line %2: ").arg(currentFile).arg(mCurrentActionIndex+1);
+
+			mConsoleWidget->addActionLine(finalMessage + message,
 										mCurrentActionIndex,
-										mScriptEngine->evaluate("currentParameter").toString(),
-										mScriptEngine->evaluate("currentSubParameter").toString(),
+										mScriptEngine->property("currentParameter").toString(),
+										mScriptEngine->property("currentSubParameter").toString(),
 										mScriptAgent->currentLine(),
 										mScriptAgent->currentColumn(),
 										exceptionType);
@@ -634,6 +645,11 @@ namespace LibExecuter
 	void Executer::executionPaused()
 	{
 		mExecutionPaused = true;
+
+		if(!mPauseInterrupt)
+			mDebuggerWindow->show();
+		else
+			mPauseInterrupt = false;
 	}
 
 	void Executer::executionResumed()
@@ -660,6 +676,8 @@ namespace LibExecuter
 			return;
 
 		mExecutionPaused = !mExecutionPaused;
+
+		mPauseInterrupt = !debug;
 
 		if(mExecutionPaused)
 		{

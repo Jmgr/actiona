@@ -11,7 +11,8 @@ SOURCES += executer.cpp \
 	executionwindow.cpp \
     codeinitializer.cpp \
     codeexecution.cpp \
-    codeconsole.cpp
+    codeconsole.cpp \
+    scriptagent.cpp
 HEADERS += executer_global.h \
 	executer.h \
 	executionwindow.h \

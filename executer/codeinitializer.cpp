@@ -35,15 +35,42 @@
 #include "codeconsole.h"
 
 #include <QScriptEngine>
+#include <QFile>
 
 namespace LibExecuter
 {
+	static QScriptValue includeFunction(QScriptContext *context, QScriptEngine *engine)
+	{
+		QString filename = context->argument(0).toString();
+		QFile file(filename);
+		if(!file.open(QIODevice::ReadOnly))
+		{
+			context->throwError(QObject::tr("Unable to include file %1").arg(filename));
+			return context->thisObject();
+		}
+
+		QString fileContent = file.readAll();
+		file.close();
+
+		QScriptContext *parent = context->parentContext();
+		if(parent)
+		{
+			context->setActivationObject(parent->activationObject());
+			context->setThisObject(parent->thisObject());
+		}
+
+		return engine->evaluate(fileContent, filename);
+	}
+
 	void CodeInitializer::initialize(QScriptEngine *scriptEngine, ScriptAgent *scriptAgent, ActionTools::ActionFactory *actionFactory)
 	{
 		scriptEngine->setProcessEventsInterval(50);
 
 		QScriptValue codeExecution = scriptEngine->newQObject(new CodeExecution(scriptAgent), QScriptEngine::ScriptOwnership, QScriptEngine::ExcludeChildObjects | QScriptEngine::ExcludeSuperClassContents | QScriptEngine::ExcludeDeleteLater);
 		scriptEngine->globalObject().setProperty("execution", codeExecution);
+
+		QScriptValue includeFunc = scriptEngine->newFunction(&includeFunction);
+		scriptEngine->globalObject().setProperty("include", includeFunc);
 		
 		addCodeClass<Code::RawData>("RawData", scriptEngine);
 		addCodeClass<Code::Image>("Image", scriptEngine);

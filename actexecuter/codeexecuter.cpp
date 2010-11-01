@@ -29,6 +29,7 @@
 #include <QTimer>
 #include <QTextStream>
 #include <QStringList>
+#include <QApplication>
 
 CodeExecuter::CodeExecuter(QObject *parent) :
     Executer(parent),
@@ -81,7 +82,7 @@ void CodeExecuter::onEvaluationResumed()
 
 void CodeExecuter::onEvaluationPaused()
 {
-	
+	mDebuggerWindow->show();
 }
 
 void CodeExecuter::stopExecution()
