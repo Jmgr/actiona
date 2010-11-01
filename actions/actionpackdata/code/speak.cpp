@@ -83,7 +83,7 @@ namespace Code
 		QString dataDirectory;
 #endif
 		
-		if((mFrequency = espeak_Initialize(AUDIO_OUTPUT_SYNCH_PLAYBACK, 500, dataDirectory.isEmpty() ? 0 : dataDirectory.toUtf8().data(), 0)) == -1)
+                if((mFrequency = espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 500, dataDirectory.isEmpty() ? 0 : dataDirectory.toUtf8().data(), 0)) == -1)
 		{
 			context()->throwError(tr("Initialize failed"));
 			return;

@@ -22,6 +22,12 @@
 
 #include <QProcess>
 
+#ifdef Q_WS_WIN
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <Psapi.h>
+#endif
+
 namespace Code
 {
 	QScriptValue ProcessHandle::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -232,8 +238,6 @@ namespace Code
 			context()->throwError("Unable to retrieve the process priority");
 			return Normal;
 		}
-
-		return QString::fromWCharArray(buffer);
 #else
 		context()->throwError("This is not available under your operating system");
 		return Normal;

@@ -80,7 +80,14 @@ namespace Code
 			if(window)
 				windowId = window->windowHandle().value();
 			else
+			{
+#ifdef Q_WS_WIN
+				context->throwError("Invalid window");
+				return engine->undefinedValue();
+#else
 				windowId = context->argument(0).toInt32();
+#endif
+			}
 		}
 
 		QPixmap screenPixmap = QPixmap::grabWindow(windowId);

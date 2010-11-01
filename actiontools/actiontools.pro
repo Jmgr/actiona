@@ -73,7 +73,8 @@ HEADERS += actiontools_global.h \
     nativeeventfilteringapplication.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
-    -lgdi32
+    -lgdi32 \
+    -lPsapi
 unix:LIBS += -lXtst
 UI_DIR = generated
 MOC_DIR = generated

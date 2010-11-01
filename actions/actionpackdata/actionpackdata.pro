@@ -9,7 +9,7 @@ LIBS += -L../.. -lrudeconfig
 unix:LIBS += -lespeak
 win32:LIBS += -ladvapi32 \
 	-lshell32 \
-	-lespeak_sapi
+        -lespeak
 
 TRANSLATIONS = locale/actionpackdata_en.ts \
 	locale/actionpackdata_fr.ts \

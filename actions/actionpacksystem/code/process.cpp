@@ -25,6 +25,11 @@
 #include <QDir>
 #include <QScriptValueIterator>
 
+#ifdef Q_WS_WIN
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#endif
+
 namespace Code
 {
 	QScriptValue Process::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -121,12 +126,16 @@ namespace Code
 
 	QScriptValue Process::handle() const
 	{
-		return ProcessHandle::constructor(mProcess->pid(), context(), engine());
+		return ProcessHandle::constructor(id(), context(), engine());
 	}
 
 	int Process::id() const
 	{
-		return mProcess->pid();
+#ifdef Q_WS_WIN
+            return mProcess->pid()->dwProcessId;
+#else
+            return mProcess->pid();
+#endif
 	}
 
 	QScriptValue Process::start()
