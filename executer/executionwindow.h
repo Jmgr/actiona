@@ -55,14 +55,15 @@ namespace LibExecuter
 	public slots:
 		void onEvaluationResumed();
 		void onEvaluationPaused();
-		
+		void enableDebug();
+		void disableDebug();
+
 	private slots:
 		void on_pausePushButton_clicked();
 		void on_debugPushButton_clicked();
 	
 	private:
 		Ui::ExecutionWindow *ui;
-		bool mPaused;
 	};
 }
 

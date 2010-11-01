@@ -69,6 +69,8 @@ namespace LibExecuter
 		
 	signals:
 		void stopExecution();
+		void evaluationStarted();
+		void evaluationStopped();
 	
 	private:
 		void contextPop()
@@ -138,12 +140,16 @@ namespace LibExecuter
 		{
 			if(mDebuggerAgent)
 				mDebuggerAgent->scriptLoad(id, program, fileName, baseLineNumber);
+
+			emit evaluationStarted();
 		}
 		
 		void scriptUnload(qint64 id)
 		{
 			if(mDebuggerAgent)
 				mDebuggerAgent->scriptUnload(id);
+
+			emit evaluationStopped();
 		}
 		
 		bool supportsExtension(Extension extension) const

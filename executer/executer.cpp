@@ -43,9 +43,14 @@ namespace LibExecuter
 	{
 		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
 		connect(mExecutionWindow, SIGNAL(paused()), this, SLOT(pauseExecution()));
+		connect(mExecutionWindow, SIGNAL(debug()), this, SLOT(debugExecution()));
 		connect(&mExecutionTimer, SIGNAL(timeout()), this, SLOT(updateTimerProgress()));
 		connect(&mScriptEngineDebugger, SIGNAL(evaluationSuspended()), mExecutionWindow, SLOT(onEvaluationPaused()));
 		connect(&mScriptEngineDebugger, SIGNAL(evaluationResumed()), mExecutionWindow, SLOT(onEvaluationResumed()));
+		connect(&mScriptEngineDebugger, SIGNAL(evaluationSuspended()), this, SLOT(executionPaused()));
+		connect(&mScriptEngineDebugger, SIGNAL(evaluationResumed()), this, SLOT(executionResumed()));
+
+		mScriptEngineDebugger.setAutoShowStandardWindow(false);
 
 		mConsoleWidget->setWindowFlags(Qt::Tool |
 					   Qt::WindowStaysOnTopHint |
@@ -74,6 +79,8 @@ namespace LibExecuter
 		mScriptAgent = new ScriptAgent(mScriptEngine);
 		
 		connect(mScriptAgent, SIGNAL(stopExecution()), this, SLOT(stopExecution()));
+		connect(mScriptAgent, SIGNAL(evaluationStarted()), mExecutionWindow, SLOT(enableDebug()));
+		connect(mScriptAgent, SIGNAL(evaluationStopped()), mExecutionWindow, SLOT(disableDebug()));
 		
 		mActionFactory = actionFactory;
 		mShowExecutionWindow = showExecutionWindow;
@@ -365,19 +372,12 @@ namespace LibExecuter
 	
 	void Executer::pauseExecution()
 	{
-		if(mExecutionStatus == Stopped)
-			return;
-		
-		mExecutionPaused = !mExecutionPaused;
-		
-		if(mExecutionPaused)
-			mScriptEngineDebugger.action(QScriptEngineDebugger::InterruptAction)->trigger();
-		else
-			mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
-		
-		mScriptAgent->pause(mExecutionPaused);
-		
-		mExecutionWindow->setPauseStatus(mExecutionPaused);
+		pauseOrDebug(false);
+	}
+
+	void Executer::debugExecution()
+	{
+		pauseOrDebug(true);
 	}
 
 	void Executer::executionException(int exception,
@@ -631,6 +631,16 @@ namespace LibExecuter
 		mProgressDialog = 0;
 	}
 
+	void Executer::executionPaused()
+	{
+		mExecutionPaused = true;
+	}
+
+	void Executer::executionResumed()
+	{
+		mExecutionPaused = false;
+	}
+
 	Executer::ExecuteActionResult Executer::canExecuteAction(const QString &line) const
 	{
 		bool ok;
@@ -642,6 +652,33 @@ namespace LibExecuter
 			--nextLine;
 
 		return canExecuteAction(nextLine);
+	}
+
+	void Executer::pauseOrDebug(bool debug)
+	{
+		if(mExecutionStatus == Stopped)
+			return;
+
+		mExecutionPaused = !mExecutionPaused;
+
+		if(mExecutionPaused)
+		{
+			mScriptEngineDebugger.action(QScriptEngineDebugger::InterruptAction)->trigger();
+
+			if(debug)
+				mDebuggerWindow->show();
+		}
+		else
+		{
+			mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
+
+			if(debug)
+				mDebuggerWindow->hide();
+		}
+
+		mScriptAgent->pause(mExecutionPaused);
+
+		mExecutionWindow->setPauseStatus(mExecutionPaused);
 	}
 	
 	ActionTools::ActionInstance *Executer::currentActionInstance() const

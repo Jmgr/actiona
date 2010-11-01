@@ -79,6 +79,7 @@ namespace LibExecuter
 		bool startExecution(bool onlySelection);
 		void stopExecution();
 		void pauseExecution();
+		void debugExecution();
 
 	signals:
 		void executionStopped();
@@ -98,6 +99,8 @@ namespace LibExecuter
 		void updateProgressDialog(const QString &caption);
 		void updateProgressDialog(int value);
 		void hideProgressDialog();
+		void executionPaused();
+		void executionResumed();
 
 	private:
 		enum ExecuteActionResult
@@ -116,6 +119,7 @@ namespace LibExecuter
 			PostPause
 		};
 
+		void pauseOrDebug(bool debug);
 		ActionTools::ActionInstance *currentActionInstance() const;
 		ExecuteActionResult canExecuteAction(const QString &line) const;
 		ExecuteActionResult canExecuteAction(int index) const;

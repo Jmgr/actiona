@@ -41,6 +41,7 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 	connect(mScriptEngineDebugger, SIGNAL(evaluationSuspended()), this, SLOT(onEvaluationPaused()));
 	connect(mScriptAgent, SIGNAL(stopExecution()), this, SLOT(stopExecution()));
 	
+	mScriptEngineDebugger->setAutoShowStandardWindow(false);
 	mScriptEngineDebugger->attachTo(mScriptEngine);
 	QScriptEngineAgent *debuggerAgent = mScriptEngine->agent();
 	mScriptEngine->setAgent(mScriptAgent);
