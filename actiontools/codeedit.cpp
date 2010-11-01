@@ -454,8 +454,6 @@ namespace ActionTools
 			return;
 		}
 		
-		qDebug() << completionPrefix;
-
 		if(completionPrefix != mCompleter->completionPrefix())
 		{
 			mCompleter->setCompletionPrefix(completionPrefix);
