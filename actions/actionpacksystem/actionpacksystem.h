@@ -65,6 +65,7 @@ public:
 		addCodeClass<Code::Process>("Process", scriptEngine);
 		addCodeStaticMethod(&Code::Process::list, "Process", "list", scriptEngine);
 		addCodeStaticMethod(&Code::Process::startDetached, "Process", "startDetached", scriptEngine);
+		addCodeStaticMethod(&Code::Process::thisProcess, "Process", "thisProcess", scriptEngine);
 	}
 
 private:

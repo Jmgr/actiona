@@ -53,6 +53,7 @@ namespace Code
 
 		static QScriptValue list(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue startDetached(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue thisProcess(QScriptContext *context, QScriptEngine *engine);
 
 		Process();
 

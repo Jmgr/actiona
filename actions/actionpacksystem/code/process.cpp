@@ -24,6 +24,7 @@
 
 #include <QDir>
 #include <QScriptValueIterator>
+#include <QThread>
 
 #ifdef Q_WS_WIN
 #define WIN32_LEAN_AND_MEAN
@@ -109,6 +110,11 @@ namespace Code
 		}
 
 		return ProcessHandle::constructor(processId, context, engine);
+	}
+
+	QScriptValue Process::thisProcess(QScriptContext *context, QScriptEngine *engine)
+	{
+		return ProcessHandle::constructor(QThread::currentThreadId(), context, engine);
 	}
 
 	Process::Process()
