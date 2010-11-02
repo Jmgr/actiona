@@ -24,11 +24,14 @@
 
 #include <QDir>
 #include <QScriptValueIterator>
-#include <QThread>
 
 #ifdef Q_WS_WIN
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#endif
+
+#ifdef Q_WS_X11
+#include <unistd.h>
 #endif
 
 namespace Code
@@ -114,7 +117,11 @@ namespace Code
 
 	QScriptValue Process::thisProcess(QScriptContext *context, QScriptEngine *engine)
 	{
-		return ProcessHandle::constructor(QThread::currentThreadId(), context, engine);
+#ifdef Q_WS_WIN
+		return ProcessHandle::constructor(GetCurrentProcessId(), context, engine);
+#else
+		return ProcessHandle::constructor(getpid(), context, engine);
+#endif
 	}
 
 	Process::Process()
