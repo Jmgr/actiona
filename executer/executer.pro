@@ -1,7 +1,7 @@
 include(../common.pri)
 QT += script scripttools
 TEMPLATE = lib
-CONFIG += dll
+CONFIG += dll uitools
 DEFINES += EXECUTER_LIBRARY
 win32:DEFINES += _CRT_SECURE_NO_WARNINGS
 TARGET = executer

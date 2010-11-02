@@ -251,6 +251,7 @@ void MainWindow::postInit()
 		LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory);
 
 		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), "include"));
+		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), "loadUI"));
 		
 		QScriptValueIterator it(engine.globalObject());
 		while(it.hasNext())

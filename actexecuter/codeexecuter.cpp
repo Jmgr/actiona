@@ -41,6 +41,10 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 	connect(mScriptEngineDebugger, SIGNAL(evaluationResumed()), this, SLOT(onEvaluationResumed()));
 	connect(mScriptEngineDebugger, SIGNAL(evaluationSuspended()), this, SLOT(onEvaluationPaused()));
 	connect(mScriptAgent, SIGNAL(stopExecution()), this, SLOT(stopExecution()));
+
+	QCoreApplication::setLibraryPaths(QStringList() << "plugins");
+	foreach(QString extension, mScriptEngine->availableExtensions())
+		mScriptEngine->importExtension(extension);
 	
 	mScriptEngineDebugger->setAutoShowStandardWindow(false);
 	mScriptEngineDebugger->attachTo(mScriptEngine);

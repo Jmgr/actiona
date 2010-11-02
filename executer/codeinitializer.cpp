@@ -36,9 +36,23 @@
 
 #include <QScriptEngine>
 #include <QFile>
+#include <QUiLoader>
 
 namespace LibExecuter
 {
+	static QScriptValue loadUIFunction(QScriptContext *context, QScriptEngine *engine)
+	{
+		QString filename = context->argument(0).toString();
+		QFile file(filename);
+		if(!file.open(QIODevice::ReadOnly))
+		{
+			context->throwError(QObject::tr("Unable to load UI file %1").arg(filename));
+			return context->thisObject();
+		}
+
+		return engine->newQObject(QUiLoader().load(&file), QScriptEngine::ScriptOwnership);
+	}
+
 	static QScriptValue includeFunction(QScriptContext *context, QScriptEngine *engine)
 	{
 		QString filename = context->argument(0).toString();
@@ -68,6 +82,9 @@ namespace LibExecuter
 
 		QScriptValue codeExecution = scriptEngine->newQObject(new CodeExecution(scriptAgent), QScriptEngine::ScriptOwnership, QScriptEngine::ExcludeChildObjects | QScriptEngine::ExcludeSuperClassContents | QScriptEngine::ExcludeDeleteLater);
 		scriptEngine->globalObject().setProperty("execution", codeExecution);
+
+		QScriptValue loadUIFunc = scriptEngine->newFunction(&loadUIFunction);
+		scriptEngine->globalObject().setProperty("loadUI", loadUIFunc);
 
 		QScriptValue includeFunc = scriptEngine->newFunction(&includeFunction);
 		scriptEngine->globalObject().setProperty("include", includeFunc);

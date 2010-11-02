@@ -78,6 +78,10 @@ namespace LibExecuter
 	{
 		mScript = script;
 		mScriptEngine = new QScriptEngine;
+
+		QCoreApplication::setLibraryPaths(QStringList() << "plugins");
+		foreach(QString extension, mScriptEngine->availableExtensions())
+			mScriptEngine->importExtension(extension);
 		
 		mActionFactory = actionFactory;
 		mShowExecutionWindow = showExecutionWindow;
