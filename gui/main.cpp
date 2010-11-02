@@ -137,7 +137,7 @@ int main(int argc, char **argv)
 	qRegisterMetaTypeStreamOperators<Tools::Version>("Version");
 
 	app.setOrganizationName("Actionaz");
-	app.setOrganizationDomain("actionaz.eu");
+	app.setOrganizationDomain("actionaz.org");
 	app.setApplicationName("Actionaz");
 	app.setApplicationVersion(Global::ACTIONAZ_VERSION.toString());
 

@@ -56,7 +56,7 @@ namespace Actions
 			ifDifferent->setTooltip(tr("What to to if the pixel is not from the specified color"));
 			addElement(ifDifferent);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Pixel color variable"), this);
 			variable->setTooltip(tr("Variable name where to store the pixel color"));
 			addElement(variable, 1);
 		}

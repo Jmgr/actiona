@@ -58,11 +58,6 @@ namespace Actions
 			return;
 		}
 		
-		QPoint previousPosition;
-	
-		if(action == ClickAction)
-			previousPosition = mMouseDevice.cursorPosition();
-	
 		mMouseDevice.setCursorPosition(position);
 	
 		for(int i = 0; i < amount; ++i)
@@ -84,9 +79,6 @@ namespace Actions
 				}
 			}
 		}
-		
-		if(action == ClickAction)
-			mMouseDevice.setCursorPosition(previousPosition);
 	
 		QTimer::singleShot(1, this, SIGNAL(executionEnded()));
 	}
