@@ -22,6 +22,7 @@
 #define ACTIONPACKDATA_H
 
 #include "actionpack.h"
+#include "actions/writetextfiledefinition.h"
 #include "actions/readtextfiledefinition.h"
 #include "actions/writeinifiledefinition.h"
 #include "actions/readinifiledefinition.h"
@@ -58,6 +59,7 @@ class ActionPackData : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackData()
 	{
+		addActionDefinition(new Actions::WriteTextFileDefinition(this));
 		addActionDefinition(new Actions::ReadTextFileDefinition(this));
 		addActionDefinition(new Actions::WriteIniFileDefinition(this));
 		addActionDefinition(new Actions::ReadIniFileDefinition(this));

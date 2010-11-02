@@ -17,7 +17,10 @@ HEADERS += actions/readtextfiledefinition.h \
 	actions/writebinaryfileinstance.h \
 	actions/writebinaryfiledefinition.h \
 	actions/copyfileinstance.h \
-	actions/copyfiledefinition.h
+	actions/copyfiledefinition.h \
+    actions/writetextfileinstance.h \
+    actions/writetextfiledefinition.h
 SOURCES +=	actions/readtextfileinstance.cpp \
 	actions/readregistryinstance.cpp \
-	actions/writeregistryinstance.cpp
+	actions/writeregistryinstance.cpp \
+    actions/writetextfileinstance.cpp

@@ -109,6 +109,8 @@ namespace Actions
 
 		actionInstanceExecutionHelper.setVariable(variable, result);
 
+		file.close();
+
 		emit executionEnded();
 	}
 }
