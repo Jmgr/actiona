@@ -21,6 +21,7 @@
 #include "algorithms.h"
 
 #include <QCryptographicHash>
+#include <QScriptValueIterator>
 #include <cstdlib>
 
 namespace Code
@@ -70,5 +71,35 @@ namespace Code
 	float Algorithms::randomFloat(float min, float max) const
 	{
 		return (qrand() / static_cast<float>(RAND_MAX)) * (max - min) + min;
+	}
+
+	QString Algorithms::randomString() const
+	{
+		QScriptValueIterator it(context()->argument(0));
+		QString characters("abcdefghijklmnopqrstuvwxyz0123456789");
+		int minLength = 5;
+		int maxLength = 15;
+
+		while(it.hasNext())
+		{
+			it.next();
+
+			if(it.name() == "characters")
+				characters = it.value().toString();
+			else if(it.name() == "minLength")
+				minLength = it.value().toInt32();
+			else if(it.name() == "maxLength")
+				maxLength = it.value().toInt32();
+		}
+
+		QString back;
+		int charactersLength = characters.length();
+		int finalLength = randomInteger(minLength, maxLength);
+		for(int i = 0; i < finalLength; ++i)
+		{
+			back += characters.at(randomInteger(0, charactersLength - 1));
+		}
+
+		return back;
 	}
 }
