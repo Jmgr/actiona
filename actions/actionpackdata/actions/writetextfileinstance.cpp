@@ -34,11 +34,11 @@ namespace Actions
 	{
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString filepath;
-		QString variable;
+		QString text;
 		Mode mode;
 
 		if(!actionInstanceExecutionHelper.evaluateString(filepath, "file") ||
-		   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable") ||
+		   !actionInstanceExecutionHelper.evaluateString(text, "text") ||
 		   !actionInstanceExecutionHelper.evaluateListElement(mode, modes, "mode"))
 			return;
 
@@ -52,7 +52,7 @@ namespace Actions
 
 		QTextStream textStream(&file);
 
-		textStream << actionInstanceExecutionHelper.variable(variable).toString();
+		textStream << text;
 
 		file.close();
 

@@ -24,7 +24,7 @@
 #include "actiondefinition.h"
 #include "writetextfileinstance.h"
 #include "fileparameterdefinition.h"
-#include "variableparameterdefinition.h"
+#include "textparameterdefinition.h"
 #include "listparameterdefinition.h"
 
 namespace ActionTools
@@ -47,9 +47,9 @@ namespace Actions
 			file->setTooltip(tr("The file you want to write"));
 			addElement(file);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
-			variable->setTooltip(tr("The variable to write to the file"));
-			addElement(variable);
+			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition("text", tr("Text"), this);
+			text->setTooltip(tr("The text to write to the file"));
+			addElement(text);
 
 			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition("mode", tr("Mode"), this);
 			mode->setTooltip(tr("The file write mode"));
