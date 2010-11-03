@@ -7,4 +7,5 @@ HEADERS += actions/commanddefinition.h \
 	actions/pixelcolordefinition.h \
 	actions/pixelcolorinstance.h
 SOURCES += actions/killprocessinstance.cpp \
-	actions/notifyinstance.cpp
+	actions/notifyinstance.cpp \
+    actions/pixelcolorinstance.cpp
