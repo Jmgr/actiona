@@ -288,6 +288,16 @@ namespace ActionTools
 #endif
 	}
 
+	bool WindowHandle::isActive() const
+	{
+#ifdef Q_WS_X11
+		//TODO
+#endif
+#ifdef Q_WS_WIN
+		//TODO
+#endif
+	}
+
 	WindowHandle WindowHandle::foregroundWindow()
 	{
 #ifdef Q_WS_X11

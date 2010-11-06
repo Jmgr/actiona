@@ -39,6 +39,7 @@ namespace ActionTools
 		~ChoosePositionPushButton();
 
 	signals:
+		void chooseStarted();
 		void positionChosen(QPoint position);
 		
 	private:

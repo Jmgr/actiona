@@ -264,6 +264,14 @@ namespace Code
 
 		return mWindowHandle.classname();
 	}
+
+	bool Window::isActive() const
+	{
+		if(!checkValidity())
+			return false;
+
+		return mWindowHandle.isActive();
+	}
 	
 	QScriptValue Window::rect() const
 	{

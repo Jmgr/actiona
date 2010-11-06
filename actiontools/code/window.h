@@ -72,6 +72,7 @@ namespace Code
 		bool isValid() const;
 		QString title() const;
 		QString className() const;
+		bool isActive() const;
 		QScriptValue rect() const;
 		QScriptValue process() const;
 		QScriptValue close() const;
