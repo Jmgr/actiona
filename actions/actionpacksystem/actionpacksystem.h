@@ -26,6 +26,7 @@
 #include "actions/killprocessdefinition.h"
 #include "actions/notifydefinition.h"
 #include "actions/pixelcolordefinition.h"
+#include "actions/systemdefinition.h"
 
 #include "code/system.h"
 #include "code/mediaplaylist.h"
@@ -51,6 +52,7 @@ public:
 		addActionDefinition(new Actions::KillProcessDefinition(this));
 		addActionDefinition(new Actions::NotifyDefinition(this));
 		addActionDefinition(new Actions::PixelColorDefinition(this));
+		addActionDefinition(new Actions::SystemDefinition(this));
 	}
 
 	QString id() const							{ return tr("system"); }

@@ -128,6 +128,17 @@ namespace Code
 		return QDateTime::currentDateTime().toTime_t();
 	}
 
+	QString System::osName() const
+	{
+#ifdef Q_WS_X11
+		return "GNU/Linux";
+#endif
+#ifdef Q_WS_WIN
+		return "Windows";
+#endif
+		//TODO : Check if Mobility allows us to be more precise on the os name
+	}
+
 	QString System::version() const
 	{
 		return mSystemInfo->version(QSystemInfo::Os);

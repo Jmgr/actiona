@@ -94,6 +94,7 @@ namespace Code
 		QString username() const;
 		QString variable(const QString &name) const;
 		uint timestamp() const;
+		QString osName() const;
 		QString version() const;
 		QString countryCode() const;
 		QString language() const;
