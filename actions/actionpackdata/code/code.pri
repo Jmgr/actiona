@@ -5,7 +5,6 @@ HEADERS += code/file.h \
     code/udp.h \
     code/tcp.h \
     code/sql.h \
-    code/speak.h \
     code/tcpserver.h
 
 SOURCES += code/file.cpp \
@@ -15,5 +14,4 @@ SOURCES += code/file.cpp \
     code/udp.cpp \
     code/tcp.cpp \
     code/sql.cpp \
-    code/speak.cpp \
     code/tcpserver.cpp
