@@ -165,14 +165,11 @@ namespace ActionTools
 		case Qt::Key_Alt:
 		case Qt::Key_Meta:
 		case Qt::Key_AltGr:
-			for(int i = 0; i < KeyCount; ++i)
+			for(int i = 1; i < KeyCount; ++i)
 			{
 				if(HIBYTE(GetAsyncKeyState(mNativeKey[i])))
 				{
-					if(HIBYTE(GetAsyncKeyState(VK_RMENU)) && HIBYTE(GetAsyncKeyState(VK_LCONTROL)))
-						mKey = AltGr;
-					else
-						mKey = static_cast<Key>(i);
+					mKey = static_cast<Key>(i);
 
 					mIsQtKey = false;
 					break;
@@ -196,11 +193,7 @@ namespace ActionTools
 		}
 		else
 		{
-			if(!nativeKey(mKey)
-#ifdef Q_WS_WIN
-				&& mKey != AltGr
-#endif
-						)
+			if(!nativeKey(mKey))
 				return false;
 		}
 

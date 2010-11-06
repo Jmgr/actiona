@@ -24,6 +24,7 @@
 #include "actiondefinition.h"
 #include "pixelcolorinstance.h"
 #include "colorpositionparameterdefinition.h"
+#include "listparameterdefinition.h"
 #include "numberparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "ifactionparameterdefinition.h"
@@ -48,13 +49,19 @@ namespace Actions
 			pixel->setTooltip(tr("The pixel position and color to check"));
 			addElement(pixel);
 
-			ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition("ifEqual", tr("If equal"), this);
-			ifEqual->setTooltip(tr("What to to if the pixel is from the specified color"));
-			addElement(ifEqual);
+			ActionTools::ListParameterDefinition *comparison = new ActionTools::ListParameterDefinition("comparison", tr("Comparison"), this);
+			comparison->setTooltip(tr("The comparison"));
+			comparison->setItems(PixelColorInstance::comparisons);
+			comparison->setDefaultValue(PixelColorInstance::comparisons.second.at(PixelColorInstance::Equal));
+			addElement(comparison);
 
-			ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition("ifDifferent", tr("If different"), this);
-			ifDifferent->setTooltip(tr("What to to if the pixel is not from the specified color"));
-			addElement(ifDifferent);
+			ActionTools::IfActionParameterDefinition *ifTrue = new ActionTools::IfActionParameterDefinition("ifTrue", tr("If true"), this);
+			ifTrue->setTooltip(tr("What to to if the pixel comparison is true"));
+			addElement(ifTrue);
+
+			ActionTools::IfActionParameterDefinition *ifFalse = new ActionTools::IfActionParameterDefinition("ifFalse", tr("If false"), this);
+			ifFalse->setTooltip(tr("What to to if the pixel comparison is false"));
+			addElement(ifFalse);
 
 			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Pixel color variable"), this);
 			variable->setTooltip(tr("Variable name where to store the pixel color"));

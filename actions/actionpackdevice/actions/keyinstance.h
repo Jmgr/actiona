@@ -45,7 +45,7 @@ namespace Actions
 		};
 	
 		KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-			: ActionTools::ActionInstance(definition, parent)										{}
+			: ActionTools::ActionInstance(definition, parent)								{}
 		
 		static ActionTools::StringListPair actions;
 	

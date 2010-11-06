@@ -47,6 +47,7 @@ namespace Code
 		int randomInteger() const;
 		int randomInteger(int min, int max) const;
 		float randomFloat(float min, float max) const;
+		QString randomString() const;
 	};
 }
 

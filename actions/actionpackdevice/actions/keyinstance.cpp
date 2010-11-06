@@ -19,6 +19,14 @@
 */
 
 #include "keyinstance.h"
+#include "keyinput.h"
+
+#ifdef Q_WS_WIN
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
+
+#include <QDebug>
 
 namespace Actions
 {
@@ -36,79 +44,6 @@ namespace Actions
 		if(!actionInstanceExecutionHelper.evaluateString(key, "key", "key") ||
 		   !actionInstanceExecutionHelper.evaluateListElement(action, actions, "action"))
 			return;
-	
-	#ifdef Q_WS_WIN
-		//TODO : Fix the AltGr problem under Windows
-		/*
-		if(keyInput.key() == ActionTools::KeyInput::AltGr)
-		{
-			if(mAltGrPressed && action != ReleaseAction)
-			{
-				actionInstanceExecutionHelper.setCurrentParameter("action");
-				emit executionException(InvalidActionException, tr("Cannot press the key because it's already pressed"));
-				return;
-			}
-	
-			if(!mAltGrPressed && action == ReleaseAction)
-			{
-				actionInstanceExecutionHelper.setCurrentParameter("action");
-				emit executionException(InvalidActionException, tr("Cannot press the key because it's already pressed"));
-				return;
-			}
-	
-			bool result = true;
-	
-			INPUT input[2];
-	
-			for(int i = 0; i < 2; ++i)
-			{
-				input[i].type = INPUT_KEYBOARD;
-				input[i].ki.dwFlags = 0;
-				input[i].ki.time = 0;
-				input[i].ki.dwExtraInfo = 0;
-			}
-	
-			if(action == PressAction || action == PressReleaseAction)
-			{
-				//Press right alt
-				input[0].ki.wVk = VK_RMENU;
-	
-				//Press left control
-				input[1].ki.wVk = VK_LCONTROL;
-	
-				result &= (SendInput(2, input, sizeof(INPUT)) != 0);
-			}
-			if(action == ReleaseAction || action == PressReleaseAction)
-			{
-				input[0].ki.dwFlags = KEYEVENTF_KEYUP;
-				input[1].ki.dwFlags = KEYEVENTF_KEYUP;
-	
-				//Release left control
-				input[0].ki.wVk = VK_LCONTROL;
-	
-				//Release right alt
-				input[1].ki.wVk = VK_RMENU;
-	
-				result &= (SendInput(2, input, sizeof(INPUT)) != 0);
-			}
-	
-			if(!result)
-			{
-				emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
-				return;
-			}
-	
-			if(action == PressAction)
-				mAltGrPressed = true;
-			else if(action == ReleaseAction)
-				mAltGrPressed = false;
-	
-			emit executionEnded();
-	
-			return;
-		}
-		*/
-	#endif
 	
 		bool result = true;
 	

@@ -38,8 +38,17 @@ namespace Actions
 		Q_OBJECT
 
 	public:
+		enum Comparison
+		{
+			Equal,
+			Darker,
+			Lighter
+		};
+
 		PixelColorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)											{}
+
+		static ActionTools::StringListPair comparisons;
 
 		void startExecution()
 		{
@@ -47,14 +56,16 @@ namespace Actions
 
 			QPoint pixelPosition;
 			QColor pixelColorValue;
-			ActionTools::IfActionValue ifEqual;
-			ActionTools::IfActionValue ifDifferent;
+			Comparison comparison;
+			ActionTools::IfActionValue ifTrue;
+			ActionTools::IfActionValue ifFalse;
 			QString variable;
 
 			if(!actionInstanceExecutionHelper.evaluatePoint(pixelPosition, "pixel", "position") ||
 			   !actionInstanceExecutionHelper.evaluateColor(pixelColorValue, "pixel", "color") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(ifEqual, "ifEqual") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(ifDifferent, "ifDifferent") ||
+			   !actionInstanceExecutionHelper.evaluateListElement(comparison, comparisons, "comparison") ||
+			   !actionInstanceExecutionHelper.evaluateIfAction(ifTrue, "ifTrue") ||
+			   !actionInstanceExecutionHelper.evaluateIfAction(ifFalse, "ifFalse") ||
 			   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
 				return;
 
@@ -65,17 +76,32 @@ namespace Actions
 			if(!variable.isEmpty())
 				actionInstanceExecutionHelper.setVariable(variable, color);
 
-			if(color == pixelColorValue)
+			bool isTrue = true;
+
+			switch(comparison)
 			{
-				action = ifEqual.action();
-				line = ifEqual.line();
-				actionInstanceExecutionHelper.setCurrentParameter("ifEqual", "line");
+			case Equal:
+				isTrue = (color == pixelColorValue);
+				break;
+			case Darker:
+				isTrue = (color.lightness() < pixelColorValue.lightness());
+				break;
+			case Lighter:
+				isTrue = (color.lightness() > pixelColorValue.lightness());
+				break;
+			}
+
+			if(isTrue)
+			{
+				action = ifTrue.action();
+				line = ifTrue.line();
+				actionInstanceExecutionHelper.setCurrentParameter("ifTrue", "line");
 			}
 			else
 			{
-				action = ifDifferent.action();
-				line = ifDifferent.line();
-				actionInstanceExecutionHelper.setCurrentParameter("ifDifferent", "line");
+				action = ifFalse.action();
+				line = ifFalse.line();
+				actionInstanceExecutionHelper.setCurrentParameter("ifFalse", "line");
 			}
 
 			if(action == ActionTools::IfActionValue::GOTO)
@@ -84,7 +110,7 @@ namespace Actions
 			emit executionEnded();
 		}
 
-	public slots:
+	private:
 		QColor pixelColor(int positionX, int positionY) const
 		{
 			QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), positionX, positionY, 1, 1);
@@ -92,7 +118,6 @@ namespace Actions
 			return pixel.toImage().pixel(0, 0);
 		}
 
-	private:
 		Q_DISABLE_COPY(PixelColorInstance)
 	};
 }
