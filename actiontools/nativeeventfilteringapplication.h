@@ -22,8 +22,7 @@
 #define NATIVEEVENTFILTERINGAPPLICATION_H
 
 #include "actiontools_global.h"
-
-#include <QApplication>
+#include "qtsingleapplication/qtsingleapplication.h"
 
 #define nativeEventFilteringApp (ActionTools::NativeEventFilteringApplication::instance())
 
@@ -31,12 +30,12 @@ namespace ActionTools
 {
 	class NativeEventFilter;
 	
-	class ACTIONTOOLSSHARED_EXPORT NativeEventFilteringApplication : public QApplication
+	class ACTIONTOOLSSHARED_EXPORT NativeEventFilteringApplication : public QtSingleApplication
 	{
 		Q_OBJECT
 		
 	public:
-		NativeEventFilteringApplication(int &argc, char **argv);
+		NativeEventFilteringApplication(const QString &appId, int &argc, char **argv);
 		
 		void installNativeEventFilter(NativeEventFilter *filter);
 		void removeNativeEventFilter(NativeEventFilter *filter);

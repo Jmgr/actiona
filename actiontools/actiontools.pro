@@ -13,6 +13,7 @@ include(widgets.pri)
 include(parameters.pri)
 include(code/code.pri)
 include(qtimagefilters/qtimagefilters.pri)
+include(qtsingleapplication/qtsingleapplication.pri)
 SOURCES += actionfactory.cpp \
     actioninstance.cpp \
     actiondefinition.cpp \

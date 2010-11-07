@@ -23,8 +23,8 @@
 
 namespace ActionTools
 {
-	NativeEventFilteringApplication::NativeEventFilteringApplication(int &argc, char **argv)
-		: QApplication(argc, argv)
+	NativeEventFilteringApplication::NativeEventFilteringApplication(const QString &appId, int &argc, char **argv)
+		: QtSingleApplication(appId, argc, argv)
 	{
 	}
 	

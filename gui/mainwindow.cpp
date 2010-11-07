@@ -1561,6 +1561,15 @@ void MainWindow::logItemDoubleClicked(int itemRow)
 	}
 }
 
+void MainWindow::otherInstanceMessage(const QString &message)
+{
+	if(!mCurrentFile.isEmpty() && !ui->actionExecute->isEnabled()) // Executing
+		return;
+
+	if(maybeSave() && !message.isEmpty() && loadFile(message))
+		emit needToShow();
+}
+
 #ifndef ACT_NO_UPDATER
 void MainWindow::updateError(const QString &message)
 {

@@ -68,16 +68,12 @@ int main(int argc, char **argv)
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("Application run");
 #endif
-	ActionTools::NativeEventFilteringApplication app(argc, argv);
+	ActionTools::NativeEventFilteringApplication app("actionaz-gui", argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);
 
 	qsrand(std::time(NULL));
-
-#ifdef Q_WS_X11
-	notify_init("Actionaz");
-#endif
 
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
@@ -116,6 +112,14 @@ int main(int argc, char **argv)
 	const QStringList &positionalParameters = options.positional();
 	if(positionalParameters.count() > 0)
 		startScript = positionalParameters.at(0);
+
+	QFileInfo fileInfo(QDir::current().filePath(startScript));
+	if(fileInfo.isReadable() && app.sendMessage(fileInfo.filePath()))
+		return 0;
+
+#ifdef Q_WS_X11
+	notify_init("Actionaz");
+#endif
 
 #ifdef Q_WS_WIN
 	AllowSetForegroundWindow(ASFW_ANY);
@@ -177,6 +181,12 @@ int main(int argc, char **argv)
 
 	MainWindow mainWindow(&options, splash, startScript);
 	mainWindow.setWindowOpacity(0.0);
+
+	QObject::connect(&app, SIGNAL(messageReceived(const QString &)), &mainWindow, SLOT(otherInstanceMessage(const QString &)));
+
+	app.setActivationWindow(&mainWindow);
+
+	QObject::connect(&mainWindow, SIGNAL(needToShow()), &app, SLOT(activateWindow()));
 
 	if(!options.count("execute"))
 		mainWindow.show();

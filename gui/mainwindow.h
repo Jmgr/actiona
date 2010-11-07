@@ -77,6 +77,9 @@ public:
 	MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript);
 	~MainWindow();
 
+signals:
+	void needToShow();
+
 private slots:
 	void postInit();
 	void opacityOpenUpdate();
@@ -139,6 +142,7 @@ private slots:
 	void scriptExecutionStopped();
 	void postExecution();
 	void logItemDoubleClicked(int itemRow);
+	void otherInstanceMessage(const QString &message);
 #ifndef ACT_NO_UPDATER
 	void updateError(const QString &message);
 	void updateNoResult();
