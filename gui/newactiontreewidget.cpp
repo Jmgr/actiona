@@ -42,7 +42,7 @@ QMimeData *NewActionTreeWidget::mimeData(const QList<QTreeWidgetItem *> items) c
 
 	data.append(items.at(0)->data(0, ActionIdRole).toString());
 
-	mimeData->setData("application/act.add.action", data);
+	mimeData->setData("application/actionaz.add.action", data);
 
 	return mimeData;
 }

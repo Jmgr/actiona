@@ -32,35 +32,13 @@ DeleteActionPushButton::DeleteActionPushButton(QWidget *parent)
 
 void DeleteActionPushButton::dragEnterEvent(QDragEnterEvent *event)
 {
-	if(event->mimeData()->hasFormat("application/act.action"))
+	if(event->mimeData()->hasFormat("application/actionaz.action"))
 		event->acceptProposedAction();
 }
 
 void DeleteActionPushButton::dropEvent(QDropEvent *event)
 {
-	/*
-	QByteArray encodedData = event->mimeData()->data("application/act.action");
-	QDataStream stream(&encodedData, QIODevice::ReadOnly);
-	QPersistentModelIndex *index;
-	qint32 indexPointer;
-
-	QList<int> rowIdList;
-	while(!stream.atEnd())
-	{
-	stream >> indexPointer;
-	index = reinterpret_cast<QPersistentModelIndex *>(indexPointer);
-
-	rowIdList << index->row();
-
-	delete index;
-	}
-
-	emit actionsDropped(rowIdList);
-
-	event->setDropAction(Qt::IgnoreAction);
-	event->acceptProposedAction();
-	*/
-	QByteArray encodedData = event->mimeData()->data("application/act.action");
+	QByteArray encodedData = event->mimeData()->data("application/actionaz.action");
 	QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
 	QList<int> rowIdList;

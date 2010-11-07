@@ -129,9 +129,9 @@ int main(int argc, char **argv)
 		executionMode = MainClass::Script;
 	else
 	{
-		if(filename.endsWith(".act"))
+		if(filename.endsWith(".ascr"))
 			executionMode = MainClass::Script;
-		else if(filename.endsWith(".cod"))
+		else if(filename.endsWith(".acod"))
 			executionMode = MainClass::Code;
 		else
 		{

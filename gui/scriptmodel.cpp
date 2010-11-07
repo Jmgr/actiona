@@ -386,7 +386,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 		stream << ActionTools::ActionInstanceBuffer(actionInstance->definition()->id(), *actionInstance);
 	}
 
-	mimeDataPtr->setData("application/act.action", encodedData);
+	mimeDataPtr->setData("application/actionaz.action", encodedData);
 	return mimeDataPtr;
 }
 
@@ -400,9 +400,9 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 	if(parent.isValid())
 		return false;
 
-	if(data->hasFormat("application/act.add.action"))
+	if(data->hasFormat("application/actionaz.add.action"))
 	{
-		QByteArray encodedData = data->data("application/act.add.action");
+		QByteArray encodedData = data->data("application/actionaz.add.action");
 
 		if(row == -1)
 			row = rowCount(QModelIndex());
@@ -411,9 +411,9 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 
 		return true;
 	}
-	else if(data->hasFormat("application/act.action"))
+	else if(data->hasFormat("application/actionaz.action"))
 	{
-		QByteArray encodedData = data->data("application/act.action");
+		QByteArray encodedData = data->data("application/actionaz.action");
 		QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
 		if(row == -1)
@@ -450,8 +450,8 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 QStringList ScriptModel::mimeTypes() const
 {
 	return QStringList()
-			<< "application/act.action"
-			<< "application/act.add.action";
+			<< "application/actionaz.action"
+			<< "application/actionaz.add.action";
 }
 
 bool ScriptModel::insertRows(int row, int count, const QModelIndex &parent)

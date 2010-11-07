@@ -490,13 +490,13 @@ void MainWindow::on_actionSave_as_triggered()
 
 void MainWindow::on_actionSave_copy_as_triggered()
 {
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save copy"), QString(), tr("Actionaz script (*.act)"));
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save copy"), QString(), tr("Actionaz script (*.ascr)"));
 	if(fileName.isEmpty())
 		return;
 
 	QFileInfo fileInfo(fileName);
 	if(fileInfo.suffix().isEmpty())
-		fileName += ".act";
+		fileName += ".ascr";
 
 	saveFile(fileName, true);
 }
@@ -505,7 +505,7 @@ void MainWindow::on_actionOpen_triggered()
 {
 	if(maybeSave())
 	{
-		QString fileName = QFileDialog::getOpenFileName(this, tr("Open script"), QString(), tr("Actionaz script (*.act)"));
+		QString fileName = QFileDialog::getOpenFileName(this, tr("Open script"), QString(), tr("Actionaz script (*.ascr)"));
 		if(!fileName.isEmpty())
 			loadFile(fileName);
 	}
@@ -621,7 +621,7 @@ void MainWindow::on_actionExport_executable_triggered()
 
 	const QString archivePath = QDir::temp().filePath("archive.7z");
 	const QString sfxPath = QDir::current().filePath("sfx/7zsd.sfx");
-	const QString scriptPath = QDir::temp().filePath("script.act");
+	const QString scriptPath = QDir::temp().filePath("script.ascr");
 
 	QFileInfo archiveFileInfo(archivePath);
 	if(archiveFileInfo.exists() && !archiveFileInfo.isWritable())
@@ -649,7 +649,7 @@ void MainWindow::on_actionExport_executable_triggered()
 	QTextStream configFileStream(&configFile);
 	configFileStream << ";!@Install@!UTF-8!" << "\r\n";
 	configFileStream << "ExecuteFile=\"actionaz.exe\"" << "\r\n";
-	configFileStream << QString("ExecuteParameters=\"-%1 script.act\"").arg(parameters) << "\r\n";
+	configFileStream << QString("ExecuteParameters=\"-%1 script.ascr\"").arg(parameters) << "\r\n";
 	configFileStream << "GUIMode=\"2\"" << "\r\n";
 	configFileStream << ";!@InstallEnd@!";
 
@@ -1848,6 +1848,13 @@ bool MainWindow::loadFile(const QString &fileName, bool verbose)
 		return false;
 	}
 
+	if(fileName.endsWith(".acod"))
+	{
+		if(verbose)
+			QMessageBox::warning(this, tr("Load script"), tr("Actionaz currently has no builtin editor for Code files (.acod). Please use an external code editor."));
+		return false;
+	}
+
 	QApplication::setOverrideCursor(Qt::WaitCursor);
 
 	ActionTools::Script::ReadResult result = mScript->read(&loadFile, Global::SCRIPT_VERSION);
@@ -1912,7 +1919,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
 	QString shownName = mCurrentFile;
 	if(shownName.isEmpty())
-		shownName = tr("untitled.act");
+		shownName = tr("untitled.ascr");
 	setWindowFilePath(shownName);
 
 	QSettings settings;
@@ -1967,13 +1974,13 @@ bool MainWindow::save()
 
 bool MainWindow::saveAs()
 {
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save script"), QString(), tr("Actionaz script (*.act)"));
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save script"), QString(), tr("Actionaz script (*.ascr)"));
 	if(fileName.isEmpty())
 		return false;
 
 	QFileInfo fileInfo(fileName);
 	if(fileInfo.suffix().isEmpty())
-		fileName += ".act";
+		fileName += ".ascr";
 
 	return saveFile(fileName);
 }
