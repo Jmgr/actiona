@@ -14,7 +14,8 @@ SOURCES += main.cpp \
 HEADERS += executer.h \
     codeexecuter.h \
     scriptexecuter.h \
-	mainclass.h
+	mainclass.h \
+    global.h
 INCLUDEPATH += . \
     .. \
     ../tools \

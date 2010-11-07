@@ -93,11 +93,19 @@ int main(int argc, char **argv)
 	options.alias("noconsolewindow", "C");
 	options.add("execute", QObject::tr("execute the current script"));
 	options.alias("execute", "e");
+	options.add("version", QObject::tr("show the program version"));
 	options.add("exitatend", QObject::tr("close Actionaz after execution - requires execute"));
 	options.alias("exitatend", "x");
 	options.add("help", QObject::tr("show this help text"));
 	options.alias("help", "h");
 	options.parse(QCoreApplication::arguments());
+	if(options.count("version"))
+	{
+		QTextStream stream(stdout);
+		stream << "Actionaz version " << Global::ACTIONAZ_VERSION.toString() << ", script version " << Global::SCRIPT_VERSION.toString() << "\n";
+		stream.flush();
+		return 0;
+	}
 	if(options.count("help") || options.showUnrecognizedWarning() || (options.count("exitatend") && !options.count("execute")))
 	{
 		QTextStream stream(stdout);

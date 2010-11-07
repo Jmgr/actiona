@@ -24,6 +24,7 @@
 #include "version.h"
 #include "mainclass.h"
 #include "nativeeventfilteringapplication.h"
+#include "global.h"
 
 #include <ctime>
 
@@ -81,26 +82,21 @@ int main(int argc, char **argv)
 	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
-	options.add("console", QObject::tr("show the execution console"));
-	options.alias("console", "c");
-	options.add("execution-window", QObject::tr("show the execution window"));
-	options.alias("execution-window", "e");
-	options.add("stop-hotkey", QObject::tr("hotkey to stop the execution"));
-	options.alias("stop-hotkey", "s");
-	options.add("pause-hotkey", QObject::tr("hotkey to pause the execution"));
-	options.alias("pause-hotkey", "p");
-	options.add("debug-hotkey", QObject::tr("hotkey to pause and debug the execution"));
-	options.alias("debug-hotkey", "d");
 	options.add("code", QObject::tr("switch to code mode, may not be used with -r"));
-	options.alias("code", "o");
+	options.alias("code", "c");
 	options.add("script", QObject::tr("switch to script mode, may not be used with -o"));
-	options.alias("script", "r");
+	options.alias("script", "s");
 	options.add("version", QObject::tr("show the program version"));
-	options.add("verbose", QObject::tr("be more verbose"));
-	options.alias("verbose", "v");
 	options.add("help", QObject::tr("show this help text"));
 	options.alias("help", "h");
 	options.parse(QCoreApplication::arguments());
+	if(options.count("version"))
+	{
+		QTextStream stream(stdout);
+		stream << "Actionaz Executer version " << Global::ACTIONAZ_VERSION.toString() << ", script version " << Global::SCRIPT_VERSION.toString() << "\n";
+		stream.flush();
+		return 0;
+	}
 	if(options.count("help") || options.showUnrecognizedWarning() || options.positional().count() < 1 || (options.count("code") && options.count("script")))
 	{
 		QTextStream stream(stdout);
