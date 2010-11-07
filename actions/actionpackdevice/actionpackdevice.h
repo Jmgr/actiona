@@ -27,6 +27,7 @@
 #include "actions/wheeldefinition.h"
 #include "actions/keydefinition.h"
 #include "actions/movecursordefinition.h"
+#include "actions/cursorpathdefinition.h"
 
 #include "code/mouse.h"
 #include "code/keyboard.h"
@@ -51,6 +52,7 @@ public:
 		addActionDefinition(new Actions::WheelDefinition(this));
 		addActionDefinition(new Actions::KeyDefinition(this));
 		addActionDefinition(new Actions::MoveCursorDefinition(this));
+		addActionDefinition(new Actions::CursorPathDefinition(this));
 	}
 
 	QString id() const							{ return tr("device"); }

@@ -20,6 +20,7 @@
 
 #include "pointlistwidget.h"
 #include "ui_pointlistwidget.h"
+#include "pointitemdelegate.h"
 
 #include <QDebug>
 
@@ -31,8 +32,12 @@ namespace ActionTools
 	{
 		ui->setupUi(this);
 
+		setMinimumHeight(250);
+
 		updateClearStatus();
 		on_list_itemSelectionChanged();
+
+		ui->list->setItemDelegate(new PointItemDelegate);
 
 		connect(ui->addPositionPushButton, SIGNAL(positionChosen(QPoint)), this, SLOT(positionChosen(QPoint)));
 		connect(ui->capturePathPushButton, SIGNAL(positionChosen(QPoint)), this, SLOT(stopCapture()));
@@ -44,43 +49,39 @@ namespace ActionTools
 		delete ui;
 	}
 
-	QList<QPoint> PointListWidget::points() const
+	QPolygon PointListWidget::points() const
 	{
-		QList<QPoint> back;
+		QPolygon back;
 
-		for(int index = 0; index < ui->list->count(); ++index)
-		{
-			QStringList points = ui->list->item(index)->text().split(':');
-
-			if(points.size() != 2)
-				continue;
-
-			back.append(QPoint(points.at(0).toInt(), points.at(1).toInt()));
-		}
+		for(int index = 0; index < ui->list->rowCount(); ++index)
+			back.append(QPoint(ui->list->item(index, 0)->text().toInt(),
+							   ui->list->item(index, 1)->text().toInt()));
 
 		return back;
 	}
 
-	void PointListWidget::setPoints(const QList<QPoint> &points)
+	void PointListWidget::setPoints(const QPolygon &points)
 	{
 		on_clearPushButton_clicked();
 
 		foreach(const QPoint &point, points)
-		{
-			QListWidgetItem *item = new QListWidgetItem(QString("%1:%2").arg(point.x()).arg(point.y()));
-			item->setFlags(item->flags() | Qt::ItemIsEditable);
-			ui->list->addItem(item);
-		}
+			addPoint(point);
 
 		updateClearStatus();
 	}
 
 	void PointListWidget::addPoint(const QPoint &point)
 	{
-		QListWidgetItem *item = new QListWidgetItem(QString("%1:%2").arg(point.x()).arg(point.y()));
+		int row = ui->list->rowCount();
+		ui->list->setRowCount(row + 1);
+
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(point.x()));
 		item->setFlags(item->flags() | Qt::ItemIsEditable);
-		ui->list->addItem(item);
-		ui->list->scrollToItem(item);
+		ui->list->setItem(row, 0, item);
+
+		item = new QTableWidgetItem(QString::number(point.y()));
+		item->setFlags(item->flags() | Qt::ItemIsEditable);
+		ui->list->setItem(row, 1, item);
 
 		updateClearStatus();
 	}
@@ -92,10 +93,9 @@ namespace ActionTools
 
 	void PointListWidget::on_addPushButton_clicked()
 	{
-		QListWidgetItem *item = new QListWidgetItem("0:0");
-		item->setFlags(item->flags() | Qt::ItemIsEditable);
-		ui->list->addItem(item);
-		ui->list->scrollToItem(item);
+		addPoint(QPoint());
+
+		ui->list->scrollToBottom();
 
 		updateClearStatus();
 	}
@@ -107,14 +107,15 @@ namespace ActionTools
 
 	void PointListWidget::on_removePushButton_clicked()
 	{
-		ui->list->takeItem(ui->list->row(ui->list->currentItem()));
+		int row = ui->list->row(ui->list->currentItem());
+		ui->list->removeRow(row);
 
 		updateClearStatus();
 	}
 
 	void PointListWidget::on_clearPushButton_clicked()
 	{
-		ui->list->clear();
+		ui->list->setRowCount(0);
 
 		updateClearStatus();
 	}
@@ -131,9 +132,7 @@ namespace ActionTools
 
 	void PointListWidget::on_capturePathPushButton_chooseStarted()
 	{
-		mCaptureTimer.start(ui->captureIntervalSpinBox->value());
-
-		qDebug() << "dfdf";
+		mCaptureTimer.start(25);
 	}
 
 	void PointListWidget::capture()
@@ -148,6 +147,6 @@ namespace ActionTools
 
 	void PointListWidget::updateClearStatus()
 	{
-		ui->clearPushButton->setEnabled(ui->list->count() > 0);
+		ui->clearPushButton->setEnabled(ui->list->rowCount() > 0);
 	}
 }

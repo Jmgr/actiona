@@ -116,6 +116,9 @@ namespace ActionTools
 		bool evaluatePoint(QPoint &buffer,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
+		bool evaluatePolygon(QPolygon &buffer,
+						   const QString &parameterName,
+						   const QString &subParameterName = "value");
 		bool evaluateColor(QColor &buffer,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");

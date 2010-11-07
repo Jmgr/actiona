@@ -14,7 +14,8 @@ SOURCES += parameterdefinition.cpp \
     ifactionparameterdefinition.cpp \
     datetimeparameterdefinition.cpp \
     variableparameterdefinition.cpp \
-	colorpositionparameterdefinition.cpp
+	colorpositionparameterdefinition.cpp \
+	pointlistparameterdefinition.cpp
 HEADERS += parameterdefinition.h \
     elementdefinition.h \
     groupdefinition.h \
@@ -31,4 +32,5 @@ HEADERS += parameterdefinition.h \
     ifactionparameterdefinition.h \
     datetimeparameterdefinition.h \
     variableparameterdefinition.h \
-	colorpositionparameterdefinition.h
+	colorpositionparameterdefinition.h \
+	pointlistparameterdefinition.h

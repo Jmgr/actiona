@@ -7,7 +7,9 @@ HEADERS += actions/wheeldefinition.h \
 	actions/textdefinition.h \
     actions/textinstance.h \
 	actions/clickdefinition.h \
-    actions/clickinstance.h
+    actions/clickinstance.h \
+    actions/cursorpathdefinition.h \
+    actions/cursorpathinstance.h
 SOURCES += actions/textinstance.cpp \
     actions/keyinstance.cpp \
 	actions/clickinstance.cpp

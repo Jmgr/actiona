@@ -290,12 +290,7 @@ namespace ActionTools
 
 	bool WindowHandle::isActive() const
 	{
-#ifdef Q_WS_X11
-		//TODO
-#endif
-#ifdef Q_WS_WIN
-		//TODO
-#endif
+		return (foregroundWindow() == *this);
 	}
 
 	WindowHandle WindowHandle::foregroundWindow()

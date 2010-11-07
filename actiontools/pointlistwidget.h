@@ -41,8 +41,8 @@ namespace ActionTools
 		explicit PointListWidget(QWidget *parent = 0);
 		~PointListWidget();
 
-		QList<QPoint> points() const;
-		void setPoints(const QList<QPoint> &points);
+		QPolygon points() const;
+		void setPoints(const QPolygon &points);
 
 		void addPoint(const QPoint &point);
 		void clear();

@@ -26,6 +26,7 @@
 #include <QScriptValueIterator>
 #include <QScriptEngine>
 #include <QPoint>
+#include <QPolygon>
 #include <QDebug>
 
 namespace ActionTools
@@ -220,6 +221,29 @@ namespace ActionTools
 			mErrorMessage = tr("\"%1\" is not a valid position.").arg(positionString);
 			emit evaluationException(ActionException::BadParameterException, mErrorMessage);
 			return false;
+		}
+
+		return true;
+	}
+
+	bool ActionInstanceExecutionHelper::evaluatePolygon(QPolygon &buffer,
+					   const QString &parameterName,
+					   const QString &subParameterName)
+	{
+		QString polygonString;
+
+		if(!evaluateString(polygonString, parameterName, subParameterName))
+			return false;
+
+		QStringList pointStrings = polygonString.split(';', QString::SkipEmptyParts);
+
+		foreach(const QString &pointString, pointStrings)
+		{
+			QStringList pointComponents = pointString.split(':', QString::SkipEmptyParts);
+			if(pointComponents.size() != 2)
+				continue;
+
+			buffer << QPoint(pointComponents.at(0).toInt(), pointComponents.at(1).toInt());
 		}
 
 		return true;
