@@ -24,6 +24,7 @@
 #include <QProcess>
 #include <QDir>
 #include <QDebug>
+#include <QApplication>
 
 namespace Tools
 {
@@ -38,6 +39,6 @@ namespace Tools
 		QStringList arguments;
 		arguments << "a" << mFilename << filename;
 
-		return (QProcess::execute(QDir::current().filePath("sfx/7zr.exe"), arguments) == 0);
+		return (QProcess::execute(QDir(QApplication::applicationDirPath()).filePath("sfx/7zr.exe"), arguments) == 0);
 	}
 }

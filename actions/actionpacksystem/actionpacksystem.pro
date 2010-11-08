@@ -2,7 +2,8 @@ include(../common_actions.pri)
 include(actions/actions.pri)
 include(code/code.pri)
 TARGET = ActionPackSystem
-QT += script dbus
+QT += script
+unix:QT += dbus
 HEADERS += actionpacksystem.h
 RESOURCES += actionpacksystem.qrc
 unix:!mac:CONFIG += link_pkgconfig

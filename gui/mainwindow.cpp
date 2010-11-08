@@ -620,7 +620,7 @@ void MainWindow::on_actionExport_executable_triggered()
 		parameters += "x";
 
 	const QString archivePath = QDir::temp().filePath("archive.7z");
-	const QString sfxPath = QDir::current().filePath("sfx/7zsd.sfx");
+	const QString sfxPath = QDir(QApplication::applicationDirPath()).filePath("sfx/7zsd.sfx");
 	const QString scriptPath = QDir::temp().filePath("script.ascr");
 
 	QFileInfo archiveFileInfo(archivePath);
@@ -663,29 +663,36 @@ void MainWindow::on_actionExport_executable_triggered()
 								<< "tools.dll"
 								<< "actiontools.dll"
 								<< "executer.dll"
+								<< "rudeconfig.dll"
 								<< scriptPath
 #ifdef QT_DEBUG
 								<< "QtCored4.dll"
 								<< "QtGuid4.dll"
+								<< "QtMultimediaKitd1.dll"
+								<< "QtOpenGLd4.dll"
 								<< "QtNetworkd4.dll"
 								<< "QtScriptd4.dll"
+								<< "QtScriptToolsd4.dll"
 								<< "QtSqld4.dll"
+								<< "QtSystemInfod1.dll"
 								<< "QtXmld4.dll"
 								<< "QtXmlPatternsd4.dll"
-								<< "Microsoft.VC90.DebugCRT.manifest"
-								<< "msvcp90d.dll"
-								<< "msvcr90d.dll";
+								<< "msvcp100d.dll"
+								<< "msvcr100d.dll";
 #else
 								<< "QtCore4.dll"
 								<< "QtGui4.dll"
+								<< "QtMultimediaKit1.dll"
+								<< "QtOpenGL4.dll"
 								<< "QtNetwork4.dll"
 								<< "QtScript4.dll"
+								<< "QtScriptTools4.dll"
 								<< "QtSql4.dll"
+								<< "QtSystemInfo1.dll"
 								<< "QtXml4.dll"
 								<< "QtXmlPatterns4.dll"
-								<< "Microsoft.VC90.CRT.manifest"
-								<< "msvcp90.dll"
-								<< "msvcr90.dll";
+								<< "msvcp100.dll"
+								<< "msvcr100.dll";
 #endif
 
 	foreach(const QString &archiveFile, archiveFiles)
@@ -693,7 +700,7 @@ void MainWindow::on_actionExport_executable_triggered()
 		progressDialog.setLabelText(QObject::tr("Adding %1...").arg(QFileInfo(archiveFile).fileName()));
 		progressDialog.setValue(progressDialog.value() + 1);
 		QApplication::processEvents();
-		if(!archive.addFile(QDir::current().filePath(archiveFile)))
+		if(!archive.addFile(QDir(QApplication::applicationDirPath()).filePath(archiveFile)))
 		{
 			QFile::remove(archivePath);
 			QFile::remove(scriptPath);
@@ -716,7 +723,7 @@ void MainWindow::on_actionExport_executable_triggered()
 
 		addedPacks.insert(actionDefinition->pack());
 
-		if(!archive.addFile(QDir::current().relativeFilePath(actionDefinition->pack()->filename())))
+		if(!archive.addFile(QDir(QApplication::applicationDirPath()).relativeFilePath(actionDefinition->pack()->filename())))
 		{
 			QFile::remove(archivePath);
 			QFile::remove(scriptPath);

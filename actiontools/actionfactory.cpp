@@ -25,6 +25,7 @@
 #include <QPluginLoader>
 #include <QDir>
 #include <QFileInfo>
+#include <QApplication>
 
 namespace ActionTools
 {
@@ -50,7 +51,7 @@ namespace ActionTools
 #endif
 		clear();
 
-		QDir actionDirectory(QDir::currentPath() + "/actions/");
+		QDir actionDirectory(QApplication::applicationDirPath() + "/actions/");
 
 	#ifdef Q_WS_WIN
 		QString actionMask = "ActionPack*.dll";

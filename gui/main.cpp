@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 	AllowSetForegroundWindow(ASFW_ANY);
 #endif
 
-	app.addLibraryPath(QDir::currentPath() + "/actions");
+	app.addLibraryPath(QApplication::applicationDirPath() + "/actions");
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");
