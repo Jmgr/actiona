@@ -23,6 +23,13 @@
 #include "settings.h"
 #include "ui_settingsdialog.h"
 
+#ifdef Q_WS_WIN
+#include "registry.h"
+#include <Shlwapi.h>
+#include <ShlObj.h>
+#include <QDir>
+#endif
+
 #include <QSettings>
 #include <QNetworkProxy>
 #include <QNetworkAccessManager>
@@ -39,9 +46,17 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	mNetworkAccessManager(new QNetworkAccessManager(this)),
 	mNetworkReply(0),
 	mTimeoutTimer(new QTimer(this)),
-	mSystemTrayIcon(systemTrayIcon)
+	mSystemTrayIcon(systemTrayIcon),
+	mPreviousASCRAssociation(false),
+	mPreviousACODAssociation(false)
 {
 	ui->setupUi(this);
+
+#ifdef Q_WS_X11
+	ui->fileAssociationsLabel->setVisible(false);
+	ui->associateASCRCheckBox->setVisible(false);
+	ui->associateACODCheckBox->setVisible(false);
+#endif
 
 #ifdef ACT_NO_UPDATER
 	ui->updatesCheck->setVisible(false);
@@ -92,6 +107,15 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->proxyUser->setText(settings.value("network/proxyUser", QVariant()).toString());
 	ui->proxyPassword->setText(settings.value("network/proxyPassword", QVariant()).toString());
 	ui->proxyType->setCurrentIndex(settings.value("network/proxyType", QVariant(ActionTools::Settings::PROXY_TYPE_HTTP)).toInt());
+
+#ifdef Q_WS_WIN
+	QVariant result;
+	mPreviousASCRAssociation = (ActionTools::Registry::read(result, ActionTools::Registry::ClassesRoot, ".ascr") == ActionTools::Registry::ReadOk);
+	mPreviousACODAssociation = (ActionTools::Registry::read(result, ActionTools::Registry::ClassesRoot, ".acod") == ActionTools::Registry::ReadOk);
+
+	ui->associateASCRCheckBox->setChecked(mPreviousASCRAssociation);
+	ui->associateACODCheckBox->setChecked(mPreviousACODAssociation);
+#endif
 
 	connect(mTimeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
@@ -194,6 +218,57 @@ void SettingsDialog::accept()
 	settings.setValue("network/proxyUser", QVariant(ui->proxyUser->text()));
 	settings.setValue("network/proxyPassword", QVariant(ui->proxyPassword->text()));
 	settings.setValue("network/proxyType", QVariant(ui->proxyType->currentIndex()));
+
+#ifdef Q_WS_WIN
+	bool associateASCR = (ui->associateASCRCheckBox->checkState() == Qt::Checked);
+	bool associateACOD = (ui->associateACODCheckBox->checkState() == Qt::Checked);
+
+	if(mPreviousASCRAssociation != associateASCR)
+	{
+		if(associateASCR)
+		{
+			std::wstring valueData = L"ActionazScriptFile";
+			SHSetValue(HKEY_CLASSES_ROOT, L".ascr", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+
+			valueData = L"Actionaz Script File";
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazScriptFile", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+
+			valueData = QString("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazScriptFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+
+			valueData = QString(QString("\"%1\" ").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())) + "\"%1\"").toStdWString();
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazScriptFile\\shell\\open\\command", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+		}
+		else
+		{
+			RegDeleteKey(HKEY_CLASSES_ROOT, L".ascr");
+			SHDeleteKey(HKEY_CLASSES_ROOT, L"ActionazScriptFile");
+		}
+	}
+
+	if(mPreviousACODAssociation != associateACOD)
+	{
+		if(associateACOD)
+		{
+			std::wstring valueData = L"ActionazCodeFile";
+			SHSetValue(HKEY_CLASSES_ROOT, L".acod", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+
+			valueData = L"Actionaz Code File";
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazCodeFile", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+
+			valueData = QString("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazCodeFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+		}
+		else
+		{
+			RegDeleteKey(HKEY_CLASSES_ROOT, L".acod");
+			SHDeleteKey(HKEY_CLASSES_ROOT, L"ActionazCodeFile");
+		}
+	}
+
+	if(mPreviousASCRAssociation != associateASCR || mPreviousACODAssociation != associateACOD)
+		SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
+#endif
 
 	QDialog::accept();
 }

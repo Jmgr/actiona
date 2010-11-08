@@ -58,6 +58,8 @@ private:
 	QNetworkReply *mNetworkReply;
 	QTimer *mTimeoutTimer;
 	QSystemTrayIcon *mSystemTrayIcon;
+	bool mPreviousASCRAssociation;
+	bool mPreviousACODAssociation;
 
 	Q_DISABLE_COPY(SettingsDialog)
 };
