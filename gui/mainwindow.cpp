@@ -732,6 +732,20 @@ void MainWindow::on_actionExport_executable_triggered()
 		}
 	}
 
+	progressDialog.setLabelText(tr("Adding script plugins..."));
+
+	QDir plugins(QApplication::applicationDirPath() + "/plugins/script");
+	foreach(const QString &plugin, plugins.entryList(QDir::Files | QDir::NoDotAndDotDot))
+	{
+		if(!archive.addFile(QDir(QApplication::applicationDirPath()).relativeFilePath("plugins/script/" + plugin)))
+		{
+			QFile::remove(archivePath);
+			QFile::remove(scriptPath);
+			QMessageBox::warning(this, tr("Create SFX script"), tr("Failed to add the script plugin %1 to the SFX archive.").arg(plugin));
+			return;
+		}
+	}
+
 	progressDialog.setValue(progressDialog.value() + 1);
 	QApplication::processEvents();
 

@@ -79,7 +79,6 @@ namespace LibExecuter
 		mScript = script;
 		mScriptEngine = new QScriptEngine;
 
-		QCoreApplication::addLibraryPath("plugins");
 		foreach(QString extension, mScriptEngine->availableExtensions())
 			mScriptEngine->importExtension(extension);
 		
@@ -344,6 +343,7 @@ namespace LibExecuter
 			return;
 		
 		mScriptAgent->pause(false);
+		mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
 		
 		mExecutionStarted = false;
 		mExecutionStatus = Stopped;
@@ -363,6 +363,8 @@ namespace LibExecuter
 			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
 			actionInstance->stopLongTermExecution();
 		}
+
+		mScriptEngineDebugger.detach();
 		
 		mScriptAgent->deleteLater();
 		mScriptAgent = 0;

@@ -67,6 +67,7 @@ int main(int argc, char **argv)
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	app.addLibraryPath(QApplication::applicationDirPath() + "/actions");
+	app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");
