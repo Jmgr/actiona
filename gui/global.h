@@ -27,7 +27,7 @@ namespace Global
 {
 	const Tools::Version	ACTIONAZ_VERSION =	Tools::Version(0, 0, 1);
 	const Tools::Version	SCRIPT_VERSION =	Tools::Version(0, 0, 1);
-	const QString			UPDATE_URL =		"http://updates.jmgr.eu/";
+	const QString			UPDATE_URL =		"http://updates.actionaz.org/";
 
 	QString currentLanguage();
 	QString currentOS();
