@@ -74,7 +74,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript);
+	MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale);
 	~MainWindow();
 
 signals:
@@ -238,6 +238,7 @@ private:
 	int mUpdateFileSize;
 	QString mUpdateFileHash;
 	QCryptographicHash mHashCalculator;
+	QString mUsedLocale;
 #endif
 #ifdef Q_WS_WIN
 	ITaskbarList3 *mTaskbarList;

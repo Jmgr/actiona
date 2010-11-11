@@ -229,7 +229,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-	MainWindow mainWindow(&options, splash, startScript);
+	MainWindow mainWindow(&options, splash, startScript, locale);
 	mainWindow.setWindowOpacity(0.0);
 
 	QObject::connect(&app, SIGNAL(messageReceived(const QString &)), &mainWindow, SLOT(otherInstanceMessage(const QString &)));

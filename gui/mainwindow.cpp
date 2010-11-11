@@ -75,7 +75,7 @@
 
 QTM_USE_NAMESPACE
 
-MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript)
+MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
 	: QMainWindow(0),
 	ui(new Ui::MainWindow),
 	mOpacity(0.0f),
@@ -99,7 +99,8 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mUpdateDownloadNetworkReply(0),
 	mUpdater(new Tools::Updater(mNetworkAccessManager, Global::UPDATE_URL, this)),
 	mUpdaterProgressDialog(new QProgressDialog(this)),
-	mHashCalculator(QCryptographicHash::Md5)
+	mHashCalculator(QCryptographicHash::Md5),
+	mUsedLocale(usedLocale)
 #endif
 #ifdef Q_WS_WIN
 	,mTaskbarList(0)
@@ -244,30 +245,13 @@ void MainWindow::postInit()
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("building completion model");
 #endif
-		QString locale = settings.value("locale").toString();
-
-		if(locale.isEmpty())
-		{
-			locale = QLocale::system().name();
-
-	#ifdef Q_WS_WIN
-			QString installerLanguage = settings.value("installerLanguage").toString();
-			if(!installerLanguage.isEmpty())
-			{
-				if(installerLanguage == "english")
-					locale = "en_US";
-				else if(installerLanguage == "french")
-					locale = "fr_FR";
-			}
-	#endif
-		}
 
 		for(int actionPackIndex = 0; actionPackIndex < mActionFactory->actionPackCount(); ++actionPackIndex)
 		{
 			ActionTools::ActionPack *actionPack = mActionFactory->actionPack(actionPackIndex);
 
 			QTranslator *actionTranslator = new QTranslator(this);
-			actionTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale));
+			actionTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(mUsedLocale));
 			QApplication::installTranslator(actionTranslator);
 		}
 
@@ -1123,8 +1107,7 @@ void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::on_reportBugPushButton_clicked()
 {
-	//TODO : redirect to the bug submission form
-	QDesktopServices::openUrl(QUrl("http://bugs.actionaz.org"));
+	QDesktopServices::openUrl(QUrl(QString("http://bugs.actionaz.org?language=%1&program=actionaz&version=%2&os=%3").arg(mUsedLocale).arg(Global::ACTIONAZ_VERSION.toString()).arg(Global::currentOS())));
 }
 
 void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
