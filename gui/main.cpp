@@ -88,26 +88,42 @@ int main(int argc, char **argv)
 
 	QSettings settings;
 
-	QString locale = settings.value("locale", QLocale::system().name()).toString();
+	QString locale = settings.value("locale").toString();
+
+	if(locale.isEmpty())
+	{
+		locale = QLocale::system().name();
+
+#ifdef Q_WS_WIN
+		QString installerLanguage = settings.value("installerLanguage").toString();
+		if(!installerLanguage.isEmpty())
+		{
+			if(installerLanguage == "english")
+				locale = "en_US";
+			else if(installerLanguage == "french")
+				locale = "fr_FR";
+		}
+#endif
+	}
 
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 	app.installTranslator(&qtTranslator);
 
 	QTranslator toolsTranslator;
-	toolsTranslator.load(QString("%1/tools/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale));
 	app.installTranslator(&toolsTranslator);
 
 	QTranslator actionToolsTranslator;
-	actionToolsTranslator.load(QString("%1/actiontools/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale));
 	app.installTranslator(&actionToolsTranslator);
 
 	QTranslator executerTranslator;
-	actionToolsTranslator.load(QString("%1/executer/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	actionToolsTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale));
 	app.installTranslator(&executerTranslator);
 
 	QTranslator guiTranslator;
-	actionToolsTranslator.load(QString("%1/gui/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	actionToolsTranslator.load(QString("%1/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale));
 	app.installTranslator(&guiTranslator);
 
 	QxtCommandOptions options;

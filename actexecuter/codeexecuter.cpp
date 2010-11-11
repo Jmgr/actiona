@@ -21,6 +21,8 @@
 #include "codeexecuter.h"
 #include "executer/codeinitializer.h"
 #include "executer/scriptagent.h"
+#include "actionfactory.h"
+#include "actionpack.h"
 
 #include <QFile>
 #include <QScriptEngine>
@@ -30,6 +32,8 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QApplication>
+#include <QSettings>
+#include <QTranslator>
 
 CodeExecuter::CodeExecuter(QObject *parent) :
     Executer(parent),
@@ -62,6 +66,35 @@ bool CodeExecuter::start(QFile &file)
 	
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::ActionInit);
 	LibExecuter::CodeInitializer::initialize(mScriptEngine, mScriptAgent, actionFactory());
+
+	QSettings settings;
+	QString locale = settings.value("locale").toString();
+
+	if(locale.isEmpty())
+	{
+		locale = QLocale::system().name();
+
+#ifdef Q_WS_WIN
+		QString installerLanguage = settings.value("installerLanguage").toString();
+		if(!installerLanguage.isEmpty())
+		{
+			if(installerLanguage == "english")
+				locale = "en_US";
+			else if(installerLanguage == "french")
+				locale = "fr_FR";
+		}
+#endif
+	}
+
+	for(int actionPackIndex = 0; actionPackIndex < actionFactory()->actionPackCount(); ++actionPackIndex)
+	{
+		ActionTools::ActionPack *actionPack = actionFactory()->actionPack(actionPackIndex);
+
+		QTranslator *actionTranslator = new QTranslator(this);
+		actionTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale));
+		QApplication::installTranslator(actionTranslator);
+	}
+
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::Parameters);
 	
 	QScriptValue result = mScriptEngine->evaluate(code, file.fileName());

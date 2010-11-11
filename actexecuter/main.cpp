@@ -33,6 +33,9 @@
 #include <QDir>
 #include <QTextCodec>
 #include <QFile>
+#include <QSettings>
+#include <QTranslator>
+#include <QLibraryInfo>
 
 #ifdef Q_WS_X11
 #undef signals
@@ -65,6 +68,30 @@ int main(int argc, char **argv)
 
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+
+	QSettings settings;
+
+	QString locale = settings.value("locale", QLocale::system().name()).toString();
+
+	QTranslator qtTranslator;
+	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	app.installTranslator(&qtTranslator);
+
+	QTranslator toolsTranslator;
+	toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	app.installTranslator(&toolsTranslator);
+
+	QTranslator actionToolsTranslator;
+	actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	app.installTranslator(&actionToolsTranslator);
+
+	QTranslator executerTranslator;
+	actionToolsTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	app.installTranslator(&executerTranslator);
+
+	QTranslator guiTranslator;
+	actionToolsTranslator.load(QString("%1/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	app.installTranslator(&guiTranslator);
 
 	app.addLibraryPath(QApplication::applicationDirPath() + "/actions");
 	app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
