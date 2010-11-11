@@ -2,446 +2,529 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr_FR">
 <context>
-    <name>ActionCommandDefinition</name>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="46"/>
-        <source>Command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="48"/>
-        <source>The command to execute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="53"/>
-        <source>Parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="55"/>
-        <source>The command&apos;s parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="60"/>
-        <source>Working directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="62"/>
-        <source>The command&apos;s working directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="63"/>
-        <source>Command working directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="69"/>
-        <source>Exit code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="71"/>
-        <source>The command&apos;s exit code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="76"/>
-        <source>Process id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="78"/>
-        <source>The command&apos;s process id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="83"/>
-        <source>Output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="85"/>
-        <source>The command&apos;s output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="90"/>
-        <source>Error output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="92"/>
-        <source>The command&apos;s error output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="97"/>
-        <source>Exit status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncommanddefinition.h" line="99"/>
-        <source>The command&apos;s exit status</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionGetClipboardDefinition</name>
-    <message>
-        <location filename="../actiongetclipboarddefinition.h" line="45"/>
-        <source>Variable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actiongetclipboarddefinition.h" line="47"/>
-        <source>The variable where to save the current clipboard value</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionKillProcessDefinition</name>
-    <message>
-        <location filename="../actionkillprocessdefinition.h" line="46"/>
-        <source>Process id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkillprocessdefinition.h" line="48"/>
-        <source>The process id of the process to kill</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkillprocessdefinition.h" line="53"/>
-        <source>Kill mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkillprocessdefinition.h" line="55"/>
-        <source>The kill mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkillprocessdefinition.h" line="62"/>
-        <source>Timeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkillprocessdefinition.h" line="64"/>
-        <source>The timeout before doing a forceful kill</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionNotifyDefinition</name>
-    <message>
-        <location filename="../actionnotifydefinition.h" line="46"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionnotifydefinition.h" line="48"/>
-        <source>The notification title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionnotifydefinition.h" line="53"/>
-        <source>Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionnotifydefinition.h" line="55"/>
-        <source>The notification text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionnotifydefinition.h" line="60"/>
-        <source>Timeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionnotifydefinition.h" line="62"/>
-        <source>The notification timeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionnotifydefinition.h" line="70"/>
-        <source>Icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionnotifydefinition.h" line="72"/>
-        <source>The notification icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionnotifydefinition.h" line="75"/>
-        <source>Show notification failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionNotifyInstance</name>
-    <message>
-        <location filename="../actionnotifyinstance.cpp" line="72"/>
-        <source>Unable to show the notification</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ActionPackSystem</name>
     <message>
-        <location filename="../actionpacksystem.h" line="57"/>
-        <source>system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionpacksystem.h" line="58"/>
+        <location filename="../actionpacksystem.h" line="59"/>
         <source>Actions dealing with the operating system</source>
-        <translation type="unfinished"></translation>
+        <translation>Actions en rapport avec le système d&apos;exploitation</translation>
     </message>
 </context>
 <context>
-    <name>ActionPixelColorDefinition</name>
+    <name>Actions::CommandDefinition</name>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="47"/>
+        <location filename="../actions/commanddefinition.h" line="46"/>
+        <source>Command</source>
+        <translation>Commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="47"/>
+        <source>The command to execute</source>
+        <translation>La commande à exécuter</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="50"/>
+        <source>Parameters</source>
+        <translation>Paramètres</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="51"/>
+        <source>The command&apos;s parameters</source>
+        <translation>Les paramètres de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="54"/>
+        <source>Working directory</source>
+        <translation>Dossier de travail</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="55"/>
+        <source>The command&apos;s working directory</source>
+        <translation>Le dossier de travail de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="56"/>
+        <source>Command working directory</source>
+        <translation>Dossier de travail de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="60"/>
+        <source>Exit code</source>
+        <translation>Code de sortie</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="61"/>
+        <source>The command&apos;s exit code</source>
+        <translation>Le code de sortie de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="64"/>
+        <source>Process id</source>
+        <translation>Identifiant de processus</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="65"/>
+        <source>The command&apos;s process id</source>
+        <translation>L&apos;identifiant de processus de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="68"/>
+        <source>Output</source>
+        <translation>Sortie</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="69"/>
+        <source>The command&apos;s output</source>
+        <translation>La sortie de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="72"/>
+        <source>Error output</source>
+        <translation>Sortie d&apos;erreur</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="73"/>
+        <source>The command&apos;s error output</source>
+        <translation>La sortie d&apos;erreur de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="76"/>
+        <source>Exit status</source>
+        <translation>Statut de sortie</translation>
+    </message>
+    <message>
+        <location filename="../actions/commanddefinition.h" line="77"/>
+        <source>The command&apos;s exit status</source>
+        <translation>Le statut de sortie de la commande</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::KillProcessDefinition</name>
+    <message>
+        <location filename="../actions/killprocessdefinition.h" line="46"/>
+        <source>Process id</source>
+        <translation>Identifiant de processus</translation>
+    </message>
+    <message>
+        <location filename="../actions/killprocessdefinition.h" line="47"/>
+        <source>The process id of the process to kill</source>
+        <translation>L&apos;identifiant de processus du processus à fermer</translation>
+    </message>
+    <message>
+        <location filename="../actions/killprocessdefinition.h" line="50"/>
+        <source>Kill mode</source>
+        <translation>Mode de fermeture</translation>
+    </message>
+    <message>
+        <location filename="../actions/killprocessdefinition.h" line="51"/>
+        <source>The kill mode</source>
+        <translation>Le mode de fermeture</translation>
+    </message>
+    <message>
+        <location filename="../actions/killprocessdefinition.h" line="56"/>
+        <source>Timeout</source>
+        <translation>Délai</translation>
+    </message>
+    <message>
+        <location filename="../actions/killprocessdefinition.h" line="57"/>
+        <source>The timeout before doing a forceful kill</source>
+        <translation>Délai avant de fermer de façon brutale</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::NotifyDefinition</name>
+    <message>
+        <location filename="../actions/notifydefinition.h" line="46"/>
+        <source>Title</source>
+        <translation>Titre</translation>
+    </message>
+    <message>
+        <location filename="../actions/notifydefinition.h" line="47"/>
+        <source>The notification title</source>
+        <translation>Titre de la notification</translation>
+    </message>
+    <message>
+        <location filename="../actions/notifydefinition.h" line="50"/>
+        <source>Text</source>
+        <translation>Texte</translation>
+    </message>
+    <message>
+        <location filename="../actions/notifydefinition.h" line="51"/>
+        <source>The notification text</source>
+        <translation>Texte de la notification</translation>
+    </message>
+    <message>
+        <location filename="../actions/notifydefinition.h" line="54"/>
+        <source>Timeout</source>
+        <translation>Délai</translation>
+    </message>
+    <message>
+        <location filename="../actions/notifydefinition.h" line="55"/>
+        <source>The notification timeout</source>
+        <translation>Délai de la notification</translation>
+    </message>
+    <message>
+        <location filename="../actions/notifydefinition.h" line="61"/>
+        <source>Icon</source>
+        <translation>Icône</translation>
+    </message>
+    <message>
+        <location filename="../actions/notifydefinition.h" line="62"/>
+        <source>The notification icon</source>
+        <translation>L&apos;icône de la notification</translation>
+    </message>
+    <message>
+        <location filename="../actions/notifydefinition.h" line="65"/>
+        <source>Show notification failure</source>
+        <translation>Erreur lors de l&apos;affichage de la notification</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::NotifyInstance</name>
+    <message>
+        <location filename="../actions/notifyinstance.cpp" line="74"/>
+        <source>Unable to show the notification</source>
+        <translation>Impossible d&apos;afficher la notification</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::PixelColorDefinition</name>
+    <message>
+        <location filename="../actions/pixelcolordefinition.h" line="48"/>
         <source>Pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>Pixel</translation>
     </message>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="49"/>
+        <location filename="../actions/pixelcolordefinition.h" line="49"/>
         <source>The pixel position and color to check</source>
-        <translation type="unfinished"></translation>
+        <translation>La position et la couleur du pixel à vérifier</translation>
     </message>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="54"/>
-        <source>If equal</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/pixelcolordefinition.h" line="52"/>
+        <source>Comparison</source>
+        <translation>Comparaison</translation>
     </message>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="56"/>
-        <source>What to to if the pixel is from the specified color</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/pixelcolordefinition.h" line="53"/>
+        <source>The comparison</source>
+        <translation>La comparaison</translation>
     </message>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="61"/>
-        <source>If different</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/pixelcolordefinition.h" line="58"/>
+        <source>If true</source>
+        <translation>Si vrai</translation>
     </message>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="63"/>
-        <source>What to to if the pixel is not from the specified color</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/pixelcolordefinition.h" line="59"/>
+        <source>What to to if the pixel comparison is true</source>
+        <translation>Ce qui doit être fait si la comparaison de pixel est vraie</translation>
     </message>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="68"/>
-        <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/pixelcolordefinition.h" line="62"/>
+        <source>If false</source>
+        <translation>Si faux</translation>
     </message>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="70"/>
+        <location filename="../actions/pixelcolordefinition.h" line="63"/>
+        <source>What to to if the pixel comparison is false</source>
+        <translation>Ce qui doit être fait si la comparaison de pixel est fausse</translation>
+    </message>
+    <message>
+        <location filename="../actions/pixelcolordefinition.h" line="66"/>
+        <source>Pixel color variable</source>
+        <translation>Variable de la couleur de pixel</translation>
+    </message>
+    <message>
+        <location filename="../actions/pixelcolordefinition.h" line="67"/>
         <source>Variable name where to store the pixel color</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de la variable où stocker la couleur du pixel</translation>
     </message>
 </context>
 <context>
-    <name>ActionReadFileDefinition</name>
+    <name>Actions::SystemDefinition</name>
     <message>
-        <location filename="../actionreadfiledefinition.h" line="48"/>
-        <source>File</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/systemdefinition.h" line="44"/>
+        <source>Operation</source>
+        <translation>Opération</translation>
     </message>
     <message>
-        <location filename="../actionreadfiledefinition.h" line="50"/>
-        <source>The file you want to read</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/systemdefinition.h" line="45"/>
+        <source>The operation to execute</source>
+        <translation>L&apos;opération à exécuter</translation>
     </message>
     <message>
-        <location filename="../actionreadfiledefinition.h" line="55"/>
-        <source>Variable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionreadfiledefinition.h" line="57"/>
-        <source>The variable where to save the text read from the file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionreadfiledefinition.h" line="62"/>
+        <location filename="../actions/systemdefinition.h" line="50"/>
         <source>Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actionreadfiledefinition.h" line="64"/>
-        <source>The file read mode</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/systemdefinition.h" line="51"/>
+        <source>The operation mode</source>
+        <translation>Le mode de l&apos;opération</translation>
     </message>
     <message>
-        <location filename="../actionreadfiledefinition.h" line="71"/>
-        <source>Selection mode</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/systemdefinition.h" line="56"/>
+        <source>Not enough rights</source>
+        <translation>Pas assez de droits</translation>
     </message>
     <message>
-        <location filename="../actionreadfiledefinition.h" line="78"/>
-        <source>First line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionreadfiledefinition.h" line="80"/>
-        <source>The line where to start reading the file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionreadfiledefinition.h" line="87"/>
-        <source>Last line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionreadfiledefinition.h" line="89"/>
-        <source>The line where to stop reading the file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionreadfiledefinition.h" line="96"/>
-        <source>Cannot read file</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/systemdefinition.h" line="57"/>
+        <source>Not available</source>
+        <translation>Non disponible</translation>
     </message>
 </context>
 <context>
-    <name>ActionReadFileInstance</name>
+    <name>Actions::SystemInstance</name>
     <message>
-        <location filename="../actionreadfileinstance.cpp" line="52"/>
-        <source>Invalid first line value : %1</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/systeminstance.h" line="128"/>
+        <source>Logout is not available</source>
+        <translation>La déconnexion n&apos;est pas disponible</translation>
     </message>
     <message>
-        <location filename="../actionreadfileinstance.cpp" line="59"/>
-        <source>Invalid last line value : %1</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/systeminstance.h" line="133"/>
+        <source>Logout</source>
+        <translation>Déconnexion</translation>
     </message>
     <message>
-        <location filename="../actionreadfileinstance.cpp" line="66"/>
-        <source>The first line has to be smaller than the last line</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/systeminstance.h" line="133"/>
+        <source>Do you really want to logout ?</source>
+        <translation>Voulez-vous vraiment vous déconnecter ?</translation>
     </message>
     <message>
-        <location filename="../actionreadfileinstance.cpp" line="75"/>
-        <source>Cannot open file</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/systeminstance.h" line="138"/>
+        <source>Not enough rights to logout</source>
+        <translation>Pas assez de droits pour se déconnecter</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.h" line="162"/>
+        <source>Restart is not available</source>
+        <translation>Le redémarrage n&apos;est pas disponible</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.h" line="167"/>
+        <source>Restart</source>
+        <translation>Redémarrer</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.h" line="167"/>
+        <source>Do you really want to restart ?</source>
+        <translation>Voulez-vous vraiment redémarrer ?</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.h" line="172"/>
+        <source>Not enough rights to restart</source>
+        <translation>Pas assez de droits pour redémarrer</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.h" line="196"/>
+        <source>Shutdown is not available</source>
+        <translation>L&apos;arrêt n&apos;est pas disponible</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.h" line="201"/>
+        <source>Shutdown</source>
+        <translation>Arrêt</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.h" line="201"/>
+        <source>Do you really want to shutdown ?</source>
+        <translation>Voulez-vous vraiment arrêter votre ordinateur ?</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.h" line="206"/>
+        <source>Not enough rights to shutdown</source>
+        <translation>Pas assez de droits pour arrêter l&apos;ordinateur</translation>
     </message>
 </context>
 <context>
-    <name>ActionSetClipboardDefinition</name>
+    <name>Code::MediaPlaylist</name>
     <message>
-        <location filename="../actionsetclipboarddefinition.h" line="45"/>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
+        <location filename="../code/mediaplaylist.cpp" line="153"/>
+        <location filename="../code/mediaplaylist.cpp" line="164"/>
+        <source>Add media failed : %1</source>
+        <translation>Impossible d&apos;ajouter le média : %1</translation>
     </message>
     <message>
-        <location filename="../actionsetclipboarddefinition.h" line="47"/>
-        <source>The new clipboard value</source>
-        <translation type="unfinished"></translation>
+        <location filename="../code/mediaplaylist.cpp" line="175"/>
+        <location filename="../code/mediaplaylist.cpp" line="186"/>
+        <source>Insert media failed : %1</source>
+        <translation>Impossible d&apos;insérer le média : %1</translation>
+    </message>
+    <message>
+        <location filename="../code/mediaplaylist.cpp" line="197"/>
+        <source>Clear failed : %1</source>
+        <translation>Impossible de vider la liste de lecture : %1</translation>
+    </message>
+    <message>
+        <location filename="../code/mediaplaylist.cpp" line="243"/>
+        <source>Remove media failed : %1</source>
+        <translation>Impossible de supprimer un média : %1</translation>
+    </message>
+</context>
+<context>
+    <name>Code::Notify</name>
+    <message>
+        <location filename="../code/notify.cpp" line="102"/>
+        <source>Unable to show the notification</source>
+        <translation>Impossible d&apos;afficher la notification</translation>
+    </message>
+</context>
+<context>
+    <name>Code::Process</name>
+    <message>
+        <location filename="../code/process.cpp" line="89"/>
+        <location filename="../code/process.cpp" line="159"/>
+        <source>Invalid filename</source>
+        <translation>Nom de fichier incorrect</translation>
+    </message>
+    <message>
+        <location filename="../code/process.cpp" line="111"/>
+        <source>Unable to start the process</source>
+        <translation>Impossible de démarrer le processus</translation>
+    </message>
+    <message>
+        <location filename="../code/process.cpp" line="249"/>
+        <location filename="../code/process.cpp" line="254"/>
+        <location filename="../code/process.cpp" line="263"/>
+        <source>Write failed</source>
+        <translation>Impossible d&apos;écrire</translation>
+    </message>
+    <message>
+        <location filename="../code/process.cpp" line="349"/>
+        <source>Invalid process</source>
+        <translation>Processus incorrect</translation>
+    </message>
+    <message>
+        <location filename="../code/process.cpp" line="361"/>
+        <source>Wait for finished failed</source>
+        <translation>L&apos;attente de terminaison a échouée</translation>
+    </message>
+    <message>
+        <location filename="../code/process.cpp" line="369"/>
+        <source>Wait for started failed</source>
+        <translation>L&apos;attente de démarrage a échouée</translation>
+    </message>
+    <message>
+        <location filename="../code/process.cpp" line="377"/>
+        <source>Waiting for bytes written failed</source>
+        <translation>L&apos;attente d&apos;écriture a échouée</translation>
+    </message>
+    <message>
+        <location filename="../code/process.cpp" line="385"/>
+        <source>Waiting for ready read failed</source>
+        <translation>L&apos;attente de lecture a échouée</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actioncommanddefinition.h" line="103"/>
+        <location filename="../actions/commanddefinition.h" line="81"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actioncommanddefinition.h" line="106"/>
+        <location filename="../actions/commanddefinition.h" line="84"/>
         <source>Executes a command</source>
-        <translation type="unfinished"></translation>
+        <translation>Exécute une commande</translation>
     </message>
     <message>
-        <location filename="../actiongetclipboarddefinition.h" line="51"/>
-        <source>Get clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actiongetclipboarddefinition.h" line="54"/>
-        <source>Get the clipboard contents</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkillprocessdefinition.h" line="71"/>
+        <location filename="../actions/killprocessdefinition.h" line="64"/>
         <source>Kill process</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer processus</translation>
     </message>
     <message>
-        <location filename="../actionkillprocessdefinition.h" line="74"/>
+        <location filename="../actions/killprocessdefinition.h" line="67"/>
         <source>Kills a process</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferme un processus</translation>
     </message>
     <message>
-        <location filename="../actionnotifydefinition.h" line="78"/>
+        <location filename="../actions/notifydefinition.h" line="68"/>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Notification</translation>
     </message>
     <message>
-        <location filename="../actionnotifydefinition.h" line="81"/>
+        <location filename="../actions/notifydefinition.h" line="71"/>
         <source>Shows a message using the notify system</source>
-        <translation type="unfinished"></translation>
+        <translation>Affiche un message via le système de notifications</translation>
     </message>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="74"/>
+        <location filename="../actions/pixelcolordefinition.h" line="71"/>
         <source>Pixel color</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleur de pixel</translation>
     </message>
     <message>
-        <location filename="../actionpixelcolordefinition.h" line="77"/>
+        <location filename="../actions/pixelcolordefinition.h" line="74"/>
         <source>Check a pixel color on the screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifie la couleur d&apos;un pixel sur l&apos;écran</translation>
     </message>
     <message>
-        <location filename="../actionreadfiledefinition.h" line="99"/>
-        <source>Read file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionreadfiledefinition.h" line="102"/>
-        <source>Read a plain text file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionsetclipboarddefinition.h" line="51"/>
-        <source>Set clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionsetclipboarddefinition.h" line="54"/>
-        <source>Set the clipboard contents</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkillprocessinstance.cpp" line="25"/>
+        <location filename="../actions/killprocessinstance.cpp" line="27"/>
         <source>Graceful</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../actionkillprocessinstance.cpp" line="25"/>
+        <location filename="../actions/killprocessinstance.cpp" line="27"/>
         <source>Forceful</source>
-        <translation type="unfinished"></translation>
+        <translation>Forcé</translation>
     </message>
     <message>
-        <location filename="../actionkillprocessinstance.cpp" line="25"/>
+        <location filename="../actions/killprocessinstance.cpp" line="27"/>
         <source>Graceful then forceful</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal puis forcé</translation>
     </message>
     <message>
-        <location filename="../actionreadfileinstance.cpp" line="29"/>
-        <source>Read the entire file</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/pixelcolorinstance.cpp" line="27"/>
+        <source>Equal</source>
+        <translation>Égal</translation>
     </message>
     <message>
-        <location filename="../actionreadfileinstance.cpp" line="29"/>
-        <source>Read only a selection</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actions/pixelcolorinstance.cpp" line="27"/>
+        <source>Darker</source>
+        <translation>Plus sombre</translation>
+    </message>
+    <message>
+        <location filename="../actions/pixelcolorinstance.cpp" line="27"/>
+        <source>Lighter</source>
+        <translation>Plus clair</translation>
+    </message>
+    <message>
+        <location filename="../actions/systemdefinition.h" line="60"/>
+        <source>System</source>
+        <translation>Système</translation>
+    </message>
+    <message>
+        <location filename="../actions/systemdefinition.h" line="63"/>
+        <source>Restart, stop the computer or logout the current user</source>
+        <translation>Redémarre, arrête l&apos;ordinateur ou déconnecte l&apos;utilisateur courant</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.cpp" line="27"/>
+        <source>Logout</source>
+        <translation>Déconnexion</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.cpp" line="27"/>
+        <source>Reboot</source>
+        <translation>Redémarrage</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.cpp" line="27"/>
+        <source>Shutdown</source>
+        <translation>Arrêt</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.cpp" line="31"/>
+        <source>Ask</source>
+        <translation>Demander</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.cpp" line="31"/>
+        <source>Normal</source>
+        <translation>Normal</translation>
+    </message>
+    <message>
+        <location filename="../actions/systeminstance.cpp" line="31"/>
+        <source>Force</source>
+        <translation>Forcer</translation>
     </message>
 </context>
 </TS>

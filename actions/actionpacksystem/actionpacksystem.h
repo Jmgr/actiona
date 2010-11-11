@@ -55,7 +55,7 @@ public:
 		addActionDefinition(new Actions::SystemDefinition(this));
 	}
 
-	QString id() const							{ return tr("system"); }
+	QString id() const							{ return "system"; }
 	QString name() const						{ return tr("Actions dealing with the operating system"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
 	

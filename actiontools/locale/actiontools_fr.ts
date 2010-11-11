@@ -4,59 +4,72 @@
 <context>
     <name>ActionTools::ActionFactory</name>
     <message>
-        <location filename="../actionfactory.cpp" line="135"/>
+        <location filename="../actionfactory.cpp" line="144"/>
         <source>%1: &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 : &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../actionfactory.cpp" line="142"/>
+        <location filename="../actionfactory.cpp" line="151"/>
         <source>%1: bad definition version</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 : mauvause définition de version</translation>
     </message>
     <message>
-        <location filename="../actionfactory.cpp" line="150"/>
+        <location filename="../actionfactory.cpp" line="159"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; already loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 : &lt;b&gt;%2&lt;/b&gt; est déjà chargé</translation>
+    </message>
+    <message>
+        <location filename="../actionfactory.cpp" line="179"/>
+        <source>%1: &lt;b&gt;%2&lt;/b&gt; cannot be loaded:&lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</source>
+        <translation>%1 : &lt;b&gt;%2&lt;/b&gt; ne peut pas être chargé : &lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</translation>
     </message>
 </context>
 <context>
     <name>ActionTools::ActionInstanceExecutionHelper</name>
     <message>
-        <location filename="../actioninstanceexecutionhelper.cpp" line="84"/>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="92"/>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="347"/>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="353"/>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="394"/>
+        <source>[Raw data]</source>
+        <translation>[Données brutes]</translation>
+    </message>
+    <message>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="113"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas démarrer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actioninstanceexecutionhelper.cpp" line="110"/>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="139"/>
         <source>Expected an integer value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actioninstanceexecutionhelper.cpp" line="152"/>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="181"/>
         <source>Expected a decimal value.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioninstanceexecutionhelper.cpp" line="183"/>
-        <location filename="../actioninstanceexecutionhelper.cpp" line="192"/>
-        <source>&quot;%1&quot; is not a valid position.</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
         <location filename="../actioninstanceexecutionhelper.cpp" line="212"/>
         <location filename="../actioninstanceexecutionhelper.cpp" line="221"/>
+        <source>&quot;%1&quot; is not a valid position.</source>
+        <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
+    </message>
+    <message>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="264"/>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="273"/>
         <source>&quot;%1&quot; is not a valid color.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actioninstanceexecutionhelper.cpp" line="281"/>
+        <location filename="../actioninstanceexecutionhelper.cpp" line="333"/>
         <source>Variable %1 not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable %1 ne peut pas être trouvée</translation>
     </message>
     <message>
-        <location filename="../actioninstanceexecutionhelper.h" line="105"/>
+        <location filename="../actioninstanceexecutionhelper.h" line="108"/>
         <source>&quot;%1&quot; is incorrect.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; est incorrect.</translation>
     </message>
 </context>
 <context>
@@ -64,35 +77,35 @@
     <message>
         <location filename="../choosepositionpushbutton.cpp" line="65"/>
         <source>Target a position by clicking this button, moving the cursor to the desired position and releasing the mouse button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez une position en cliquant sur ce bouton puis déplacez le curseur vers la position désirée et relâchez le bouton de la souris.</translation>
     </message>
     <message>
-        <location filename="../choosepositionpushbutton.cpp" line="122"/>
+        <location filename="../choosepositionpushbutton.cpp" line="124"/>
         <source>Choose a window</source>
-        <translation type="unfinished"></translation>
+        <translation>Choix de fenêtre</translation>
     </message>
     <message>
-        <location filename="../choosepositionpushbutton.cpp" line="122"/>
+        <location filename="../choosepositionpushbutton.cpp" line="124"/>
         <source>Unable to grab the pointer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de récupérer le curseur</translation>
     </message>
 </context>
 <context>
     <name>ActionTools::ChooseWindowPushButton</name>
     <message>
-        <location filename="../choosewindowpushbutton.cpp" line="90"/>
+        <location filename="../choosewindowpushbutton.cpp" line="88"/>
         <source>Target a window by clicking this button, moving the cursor to the wanted window and releasing the mouse button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez une fenêtre en cliquant sur ce bouton puis déplacez le curseur vers la fenêtre ciblée et relâchez le bouton de la souris.</translation>
     </message>
     <message>
-        <location filename="../choosewindowpushbutton.cpp" line="264"/>
+        <location filename="../choosewindowpushbutton.cpp" line="262"/>
         <source>Choose a window</source>
-        <translation type="unfinished"></translation>
+        <translation>Choix de fenêtre</translation>
     </message>
     <message>
-        <location filename="../choosewindowpushbutton.cpp" line="264"/>
+        <location filename="../choosewindowpushbutton.cpp" line="262"/>
         <source>Unable to grab the pointer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de récupérer le curseur.</translation>
     </message>
 </context>
 <context>
@@ -100,12 +113,12 @@
     <message>
         <location filename="../codedatetimeedit.cpp" line="117"/>
         <source>&amp;Step up</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Monter</translation>
     </message>
     <message>
         <location filename="../codedatetimeedit.cpp" line="121"/>
         <source>Step &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Descendre</translation>
     </message>
 </context>
 <context>
@@ -114,22 +127,22 @@
         <location filename="../codeeditordialog.cpp" line="109"/>
         <location filename="../codeeditordialog.cpp" line="128"/>
         <source>Syntax error check</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification d&apos;erreur de syntaxe</translation>
     </message>
     <message>
         <location filename="../codeeditordialog.cpp" line="109"/>
         <source>No syntax errors where found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune erreur de syntaxe n&apos;a été trouvée.</translation>
     </message>
     <message>
         <location filename="../codeeditordialog.cpp" line="124"/>
         <source>Syntax error detected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Des erreurs de syntaxe ont été trouvées.</translation>
     </message>
     <message>
         <location filename="../codeeditordialog.cpp" line="126"/>
         <source>Syntax error detected: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur de syntaxe détectée : %1</translation>
     </message>
 </context>
 <context>
@@ -137,27 +150,27 @@
     <message>
         <location filename="../codelineedit.cpp" line="45"/>
         <source>Set to text/code</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer en texte/code</translation>
     </message>
     <message>
         <location filename="../codelineedit.cpp" line="46"/>
         <source>Open editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir éditeur</translation>
     </message>
     <message>
         <location filename="../codelineedit.cpp" line="70"/>
         <source>Click here to switch text/code</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquez ici pour passer en mode texte/code</translation>
     </message>
     <message>
         <location filename="../codelineedit.cpp" line="74"/>
         <source>Click here to open the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquez ici pour ouvrir l&apos;éditeur</translation>
     </message>
     <message>
         <location filename="../codelineedit.cpp" line="293"/>
         <source>Double-click to edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Double-cliquez pour éditer</translation>
     </message>
 </context>
 <context>
@@ -165,72 +178,74 @@
     <message>
         <location filename="../codespinbox.cpp" line="149"/>
         <source>&amp;Step up</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Monter</translation>
     </message>
     <message>
         <location filename="../codespinbox.cpp" line="153"/>
         <source>Step &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Descendre</translation>
     </message>
 </context>
 <context>
     <name>ActionTools::ConsoleWidget</name>
     <message>
-        <location filename="../consolewidget.cpp" line="107"/>
+        <location filename="../consolewidget.cpp" line="115"/>
         <source>Execution started at %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exécution démarrée à %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../consolewidget.cpp" line="119"/>
+        <location filename="../consolewidget.cpp" line="127"/>
         <source>%n day(s) </source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n jour</numerusform>
+            <numerusform>%n jours</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../consolewidget.cpp" line="129"/>
+        <location filename="../consolewidget.cpp" line="137"/>
         <source>%n hour(s) </source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n heure</numerusform>
+            <numerusform>%n heures</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../consolewidget.cpp" line="131"/>
+        <location filename="../consolewidget.cpp" line="139"/>
         <source>%n minute(s) </source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n minute</numerusform>
+            <numerusform>%n minutes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../consolewidget.cpp" line="133"/>
+        <location filename="../consolewidget.cpp" line="141"/>
         <source>%n second(s) </source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n seconde</numerusform>
+            <numerusform>%n secondes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../consolewidget.cpp" line="138"/>
+        <location filename="../consolewidget.cpp" line="146"/>
         <source>%n millisecond(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n milliseconde</numerusform>
+            <numerusform>%n millisecondes</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../consolewidget.cpp" line="140"/>
+        <location filename="../consolewidget.cpp" line="148"/>
         <source>Execution ended at %1
 (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exécution terminée à %1
+(%2)</translation>
     </message>
     <message>
-        <location filename="../consolewidget.cpp" line="204"/>
+        <location filename="../consolewidget.cpp" line="196"/>
         <source>
 Double-click to show</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Double-cliquez pour afficher</translation>
     </message>
 </context>
 <context>
@@ -238,7 +253,7 @@ Double-click to show</source>
     <message>
         <location filename="../screenpositionwidget.cpp" line="48"/>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Écran %1</translation>
     </message>
 </context>
 <context>
@@ -246,22 +261,112 @@ Double-click to show</source>
     <message>
         <location filename="../script.cpp" line="199"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Inconnu</translation>
     </message>
     <message>
         <location filename="../script.cpp" line="201"/>
         <source>GNU/Linux</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU/Linux</translation>
     </message>
     <message>
         <location filename="../script.cpp" line="204"/>
         <source>Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows</translation>
     </message>
     <message>
         <location filename="../script.cpp" line="207"/>
         <source>Mac</source>
-        <translation type="unfinished"></translation>
+        <translation>Mac</translation>
+    </message>
+</context>
+<context>
+    <name>Code::Color</name>
+    <message>
+        <location filename="../code/color.cpp" line="40"/>
+        <location filename="../code/color.cpp" line="207"/>
+        <source>Invalid color name</source>
+        <translation>Nom de couleur incorrect</translation>
+    </message>
+</context>
+<context>
+    <name>Code::Image</name>
+    <message>
+        <location filename="../code/image.cpp" line="197"/>
+        <source>Unable to set the image data</source>
+        <translation>Impossible de changer les données de l&apos;image</translation>
+    </message>
+    <message>
+        <location filename="../code/image.cpp" line="215"/>
+        <source>Unable to get the image data</source>
+        <translation>Impossible de récupérer les données de l&apos;image</translation>
+    </message>
+    <message>
+        <location filename="../code/image.cpp" line="226"/>
+        <source>Unable to load image from file %1</source>
+        <translation>Impossible de charger l&apos;image à partir du fichier %1</translation>
+    </message>
+    <message>
+        <location filename="../code/image.cpp" line="237"/>
+        <source>Unable to save image to file %1</source>
+        <translation>Impossible de sauvegarder l&apos;image dans le fichier %1</translation>
+    </message>
+    <message>
+        <location filename="../code/image.cpp" line="249"/>
+        <source>Unable to apply filter</source>
+        <translation>Impossible d&apos;appliquer le filtre</translation>
+    </message>
+    <message>
+        <location filename="../code/image.cpp" line="286"/>
+        <source>Cannot set filter option %1 %2</source>
+        <translation>Impossible de changer les options du filtre %1 %2</translation>
+    </message>
+</context>
+<context>
+    <name>Code::Window</name>
+    <message>
+        <location filename="../code/window.cpp" line="121"/>
+        <source>Invalid process handle</source>
+        <translation>Processus invalide</translation>
+    </message>
+    <message>
+        <location filename="../code/window.cpp" line="298"/>
+        <source>Unable to close the window</source>
+        <translation>Impossible de fermer la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../code/window.cpp" line="309"/>
+        <source>Unable to kill the window creator</source>
+        <translation>Impossible de fermer de créateur de la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../code/window.cpp" line="320"/>
+        <source>Unable to set the window foreground</source>
+        <translation>Impossible de placer la fenêtre en premier plan</translation>
+    </message>
+    <message>
+        <location filename="../code/window.cpp" line="331"/>
+        <source>Unable to minimize the window</source>
+        <translation>Impossible de minimiser la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../code/window.cpp" line="342"/>
+        <source>Unable to maximize the window</source>
+        <translation>Impossible de maximiser la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../code/window.cpp" line="353"/>
+        <source>Unable to move the window</source>
+        <translation>Impossible de déplacer la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../code/window.cpp" line="364"/>
+        <source>Unable to resize the window</source>
+        <translation>Impossible de redimensionner la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../code/window.cpp" line="373"/>
+        <source>Invalid window</source>
+        <translation>Fenêtre invalide</translation>
     </message>
 </context>
 <context>
@@ -269,22 +374,22 @@ Double-click to show</source>
     <message>
         <location filename="../codeeditordialog.ui" line="14"/>
         <source>Code editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de code</translation>
     </message>
     <message>
         <location filename="../codeeditordialog.ui" line="36"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texte</translation>
     </message>
     <message>
         <location filename="../codeeditordialog.ui" line="49"/>
         <source>Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Code</translation>
     </message>
     <message>
         <location filename="../codeeditordialog.ui" line="84"/>
         <source>Check syntax</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier la syntaxe</translation>
     </message>
 </context>
 <context>
@@ -292,12 +397,12 @@ Double-click to show</source>
     <message>
         <location filename="../coloredit.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <location filename="../coloredit.ui" line="47"/>
         <source>Choose...</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisir...</translation>
     </message>
 </context>
 <context>
@@ -305,12 +410,12 @@ Double-click to show</source>
     <message>
         <location filename="../consolewidget.ui" line="14"/>
         <source>Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Console</translation>
     </message>
     <message>
         <location filename="../consolewidget.ui" line="72"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Vider</translation>
     </message>
 </context>
 <context>
@@ -318,12 +423,50 @@ Double-click to show</source>
     <message>
         <location filename="../fileedit.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <location filename="../fileedit.ui" line="47"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
+    </message>
+</context>
+<context>
+    <name>PointListWidget</name>
+    <message>
+        <location filename="../pointlistwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Formulaire</translation>
+    </message>
+    <message>
+        <location filename="../pointlistwidget.ui" line="31"/>
+        <source>Add point</source>
+        <translation>Ajouter point</translation>
+    </message>
+    <message>
+        <location filename="../pointlistwidget.ui" line="58"/>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <location filename="../pointlistwidget.ui" line="65"/>
+        <source>Clear</source>
+        <translation>Vider</translation>
+    </message>
+    <message>
+        <location filename="../pointlistwidget.ui" line="96"/>
+        <source>X</source>
+        <translation>Abscisse</translation>
+    </message>
+    <message>
+        <location filename="../pointlistwidget.ui" line="101"/>
+        <source>Y</source>
+        <translation>Ordonnée</translation>
+    </message>
+    <message>
+        <location filename="../pointlistwidget.ui" line="111"/>
+        <source>Choose path:</source>
+        <translation>Choisir chemin :</translation>
     </message>
 </context>
 <context>
@@ -331,235 +474,497 @@ Double-click to show</source>
     <message>
         <location filename="../positionedit.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulaire</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actiondefinition.cpp" line="60"/>
+        <location filename="../actiondefinition.cpp" line="46"/>
         <source>Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenêtres</translation>
     </message>
     <message>
-        <location filename="../actiondefinition.cpp" line="61"/>
+        <location filename="../actiondefinition.cpp" line="47"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Périphériques</translation>
     </message>
     <message>
-        <location filename="../actiondefinition.cpp" line="62"/>
+        <location filename="../actiondefinition.cpp" line="48"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Système</translation>
     </message>
     <message>
-        <location filename="../actiondefinition.cpp" line="63"/>
+        <location filename="../actiondefinition.cpp" line="49"/>
         <source>Internal</source>
-        <translation type="unfinished"></translation>
+        <translation>Interne</translation>
     </message>
     <message>
-        <location filename="../actiondefinition.cpp" line="64"/>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
+        <location filename="../actiondefinition.cpp" line="50"/>
+        <source>Data</source>
+        <translation>Données</translation>
     </message>
     <message>
-        <location filename="../actiondefinition.cpp" line="67"/>
+        <location filename="../actiondefinition.cpp" line="76"/>
+        <source>missing XTest extension</source>
+        <translation>extension XTest manquante</translation>
+    </message>
+    <message>
+        <location filename="../actiondefinition.cpp" line="53"/>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../actiondefinition.cpp" line="67"/>
+        <location filename="../actiondefinition.cpp" line="53"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avancé</translation>
     </message>
     <message>
         <location filename="../actiondefinition.h" line="78"/>
         <source>No description</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de description</translation>
     </message>
     <message>
         <location filename="../actiondefinition.h" line="83"/>
         <source>The Actionaz Team</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;équipe d&apos;Actionaz</translation>
     </message>
     <message>
         <location filename="../actionexception.cpp" line="29"/>
         <source>Bad parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Mauvais paramètre</translation>
     </message>
     <message>
         <location filename="../actionexception.cpp" line="30"/>
         <source>Code error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur de code</translation>
     </message>
     <message>
         <location filename="../actionexception.cpp" line="31"/>
         <source>Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Délai</translation>
     </message>
     <message>
         <location filename="../actionexception.cpp" line="43"/>
         <source>Stop execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopper l&apos;exécution</translation>
     </message>
     <message>
         <location filename="../actionexception.cpp" line="44"/>
         <source>Skip current action</source>
-        <translation type="unfinished"></translation>
+        <translation>Passer l&apos;action courante</translation>
     </message>
     <message>
         <location filename="../actionexception.cpp" line="45"/>
         <source>Goto a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller à une ligne</translation>
+    </message>
+    <message>
+        <location filename="../ifactionparameterdefinition.cpp" line="33"/>
+        <source>Do nothing</source>
+        <translation>Ne rien faire</translation>
+    </message>
+    <message>
+        <location filename="../ifactionparameterdefinition.cpp" line="33"/>
+        <source>Goto line</source>
+        <translation>Aller à une ligne</translation>
     </message>
     <message>
         <location filename="../ifactionparameterdefinition.cpp" line="52"/>
         <source>Wait</source>
-        <translation type="unfinished"></translation>
+        <translation>Attendre</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="48"/>
         <source>Left Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift gauche</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="48"/>
         <source>Right Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift droit</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="48"/>
         <source>Left Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle gauche</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="48"/>
         <source>Right Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle droit</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="49"/>
         <source>Left Alt</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt gauche</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="49"/>
         <source>Right Alt</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt droit</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="51"/>
         <source>Left Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows gauche</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="51"/>
         <source>Right Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows droit</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="53"/>
         <source>Left Meta</source>
-        <translation type="unfinished"></translation>
+        <translation>Méta gauche</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="53"/>
         <source>Right Meta</source>
-        <translation type="unfinished"></translation>
+        <translation>Méta droit</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="55"/>
         <source>Alt Gr</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt Gr</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="55"/>
         <source>Numpad 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 0</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="55"/>
         <source>Numpad 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 1</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="55"/>
         <source>Numpad 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 2</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="55"/>
         <source>Numpad 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 3</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="55"/>
         <source>Numpad 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 4</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="56"/>
         <source>Numpad 5</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 5</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="56"/>
         <source>Numpad 6</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 7</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="56"/>
         <source>Numpad 7</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 7</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="56"/>
         <source>Numpad 8</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 8</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="56"/>
         <source>Numpad 9</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique 9</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="57"/>
         <source>Numpad *</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique *</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="57"/>
         <source>Numpad +</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique +</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="57"/>
         <source>Numpad Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique séparateur</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="57"/>
         <source>Numpad -</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique -</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="57"/>
         <source>Numpad .</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique .</translation>
     </message>
     <message>
         <location filename="../keyinput.cpp" line="57"/>
         <source>Numpad /</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavé numérique /</translation>
     </message>
     <message>
         <location filename="../linecombobox.cpp" line="37"/>
         <source>Labels</source>
-        <translation type="unfinished"></translation>
+        <translation>Labels</translation>
     </message>
     <message>
         <location filename="../linecombobox.cpp" line="43"/>
         <source>Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Lignes</translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/gaussfilter.h" line="97"/>
+        <source>A gaussian blur filter</source>
+        <comment>GaussBlurFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/punchfilter.h" line="63"/>
+        <source>A parametrized circular pinch/punch filter</source>
+        <comment>PunchFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilter.cpp" line="232"/>
+        <source>The filter has no description.</source>
+        <comment>QtImageFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="67"/>
+        <source>Blurs the image</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="96"/>
+        <source>Sharpens the image</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="109"/>
+        <source>Sharpens the image more</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="122"/>
+        <source>Sharpens the image even more</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="137"/>
+        <source>Creates big edges</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="150"/>
+        <source>Creates an emboss effect on the image, resulting in a greyish image</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="163"/>
+        <source>Creates an emboss effect on the image, while keeping most of the colours</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="176"/>
+        <source>Creates a filter that enables you to detect edges easily.</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="187"/>
+        <source>Negates color channel(s).</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="198"/>
+        <source>Removes channel(s). I.e sets the value of each channel it is processing to 0.</source>
+        <comment>ConvolutionFilter</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qtimagefilters/qtimagefilterfactory.cpp" line="209"/>
+        <source>Generic convolutionfilter.</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>QxtCommandOptions</name>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="101"/>
+        <source>sets the application GUI style</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="102"/>
+        <source>sets the application stylesheet</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="103"/>
+        <source>restores the application from an earlier session</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="104"/>
+        <source>displays debugging information about widgets</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="105"/>
+        <source>use right-to-left layout</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="107"/>
+        <source>never grab the mouse or keyboard</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="110"/>
+        <source>grab the mouse/keyboard even in a debugger</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="111"/>
+        <source>run in synchronous mode for debugging</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="114"/>
+        <source>use Direct3D by default</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="117"/>
+        <source>sets the X11 display</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="118"/>
+        <source>sets the geometry of the first window</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="120"/>
+        <source>sets the default font</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="122"/>
+        <source>sets the default background color</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="124"/>
+        <source>sets the default foreground color</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="126"/>
+        <source>sets the default button color</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="127"/>
+        <source>sets the application name</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="128"/>
+        <source>sets the application title</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="129"/>
+        <source>sets the X11 visual type</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="130"/>
+        <source>limit the number of colors on an 8-bit display</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="131"/>
+        <source>use a private color map</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="132"/>
+        <source>sets the input method server</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="133"/>
+        <source>disable the X Input Method</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="134"/>
+        <source>sets the style used by the input method</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="238"/>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="252"/>
+        <source>option &quot;%1&quot; not found</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="387"/>
+        <source>Short options cannot have optional parameters</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="399"/>
+        <source>positional() called before parse()</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="413"/>
+        <source>unrecognized() called before parse()</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="426"/>
+        <source>count() called before parse()</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="446"/>
+        <source>value() called before parse()</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="461"/>
+        <source>parameters() called before parse()</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="752"/>
+        <source>unrecognized parameters: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qxtcommandoptions/qxtcommandoptions.cpp" line="755"/>
+        <source>%1 requires a parameter</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -567,7 +972,7 @@ Double-click to show</source>
     <message>
         <location filename="../windowedit.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulaire</translation>
     </message>
 </context>
 </TS>

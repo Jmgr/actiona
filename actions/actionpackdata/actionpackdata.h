@@ -71,8 +71,8 @@ public:
 		addActionDefinition(new Actions::CopyFileDefinition(this));
 	}
 
-	QString id() const								{ return tr("other"); }
-	QString name() const							{ return tr("Other actions"); }
+	QString id() const								{ return "data"; }
+	QString name() const							{ return tr("Data related actions"); }
 	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
 	
 	void codeInit(QScriptEngine *scriptEngine) const

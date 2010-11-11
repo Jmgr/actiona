@@ -2,357 +2,352 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr_FR">
 <context>
-    <name>ActionCodeDefinition</name>
-    <message>
-        <location filename="../actioncodedefinition.h" line="44"/>
-        <source>Code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actioncodedefinition.h" line="46"/>
-        <source>The code to evaluate</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionGotoDefinition</name>
-    <message>
-        <location filename="../actiongotodefinition.h" line="44"/>
-        <source>Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actiongotodefinition.h" line="46"/>
-        <source>The line (or label) to go to</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionLoopDefinition</name>
-    <message>
-        <location filename="../actionloopdefinition.h" line="45"/>
-        <source>Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionloopdefinition.h" line="47"/>
-        <source>The line (or label) to go to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionloopdefinition.h" line="51"/>
-        <source>Count</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionloopdefinition.h" line="53"/>
-        <source>The amount of times (evaluated the first time)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ActionPackInternal</name>
-    <message>
-        <location filename="../actionpackinternal.h" line="63"/>
-        <source>internal</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../actionpackinternal.h" line="64"/>
         <source>Internal actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Actions internes</translation>
     </message>
 </context>
 <context>
-    <name>ActionPauseDefinition</name>
+    <name>Actions::CodeDefinition</name>
     <message>
-        <location filename="../actionpausedefinition.h" line="46"/>
+        <location filename="../actions/codedefinition.h" line="44"/>
+        <source>Code</source>
+        <translation>Code</translation>
+    </message>
+    <message>
+        <location filename="../actions/codedefinition.h" line="45"/>
+        <source>The code to evaluate</source>
+        <translation>Le code à évaluer</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::GotoDefinition</name>
+    <message>
+        <location filename="../actions/gotodefinition.h" line="44"/>
+        <source>Line</source>
+        <translation>Ligne</translation>
+    </message>
+    <message>
+        <location filename="../actions/gotodefinition.h" line="45"/>
+        <source>The line (or label) to go to</source>
+        <translation>La ligne (ou le label) à aller</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::LoopDefinition</name>
+    <message>
+        <location filename="../actions/loopdefinition.h" line="45"/>
+        <source>Line</source>
+        <translation>Ligne</translation>
+    </message>
+    <message>
+        <location filename="../actions/loopdefinition.h" line="46"/>
+        <source>The line (or label) to go to</source>
+        <translation>La ligne (ou le label) à aller</translation>
+    </message>
+    <message>
+        <location filename="../actions/loopdefinition.h" line="49"/>
+        <source>Count</source>
+        <translation>Nombre de fois</translation>
+    </message>
+    <message>
+        <location filename="../actions/loopdefinition.h" line="50"/>
+        <source>The amount of times (evaluated the first time)</source>
+        <translation>Le nombre de fois (évalué la première fois)</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::PauseDefinition</name>
+    <message>
+        <location filename="../actions/pausedefinition.h" line="46"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée</translation>
     </message>
     <message>
-        <location filename="../actionpausedefinition.h" line="49"/>
+        <location filename="../actions/pausedefinition.h" line="47"/>
         <source>The duration of the pause</source>
-        <translation type="unfinished"></translation>
+        <translation>La durée de la pause</translation>
     </message>
     <message>
-        <location filename="../actionpausedefinition.h" line="50"/>
+        <location filename="../actions/pausedefinition.h" line="48"/>
         <source> ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"></translation>
+        <translation> ms</translation>
     </message>
 </context>
 <context>
-    <name>ActionPauseInstance</name>
+    <name>Actions::PauseInstance</name>
     <message>
-        <location filename="../actionpauseinstance.h" line="47"/>
+        <location filename="../actions/pauseinstance.h" line="49"/>
         <source>Invalid pause duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée de pause incorrecte</translation>
     </message>
 </context>
 <context>
-    <name>ActionTimeConditionDefinition</name>
+    <name>Actions::TimeConditionDefinition</name>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="45"/>
+        <location filename="../actions/timeconditiondefinition.h" line="45"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Date</translation>
     </message>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="47"/>
+        <location filename="../actions/timeconditiondefinition.h" line="46"/>
         <source>The date to compare</source>
-        <translation type="unfinished"></translation>
+        <translation>La date à comparer</translation>
     </message>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="52"/>
+        <location filename="../actions/timeconditiondefinition.h" line="49"/>
         <source>If before</source>
-        <translation type="unfinished"></translation>
+        <translation>Si avant</translation>
     </message>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="54"/>
+        <location filename="../actions/timeconditiondefinition.h" line="50"/>
         <source>What to do if the date is in the past</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce qui doit être fait si la date appartient au passé</translation>
     </message>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="59"/>
+        <location filename="../actions/timeconditiondefinition.h" line="53"/>
         <source>If now</source>
-        <translation type="unfinished"></translation>
+        <translation>Si maintenant</translation>
     </message>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="61"/>
+        <location filename="../actions/timeconditiondefinition.h" line="54"/>
         <source>What to do if the date is the current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce qui doit être fait si la date est la date actuelle</translation>
     </message>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="66"/>
+        <location filename="../actions/timeconditiondefinition.h" line="57"/>
         <source>If after</source>
-        <translation type="unfinished"></translation>
+        <translation>Si après</translation>
     </message>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="68"/>
+        <location filename="../actions/timeconditiondefinition.h" line="58"/>
         <source>What to do if the date is in the future</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce qui doit être fait si la date appartient au futur</translation>
     </message>
 </context>
 <context>
-    <name>ActionTimeConditionInstance</name>
+    <name>Actions::TimeConditionInstance</name>
     <message>
-        <location filename="../actiontimeconditioninstance.h" line="57"/>
+        <location filename="../actions/timeconditioninstance.h" line="59"/>
         <source>Invalid date</source>
-        <translation type="unfinished"></translation>
+        <translation>Date incorrecte</translation>
     </message>
 </context>
 <context>
-    <name>ActionVariableConditionDefinition</name>
+    <name>Actions::VariableConditionDefinition</name>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="47"/>
+        <location filename="../actions/variableconditiondefinition.h" line="47"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="49"/>
+        <location filename="../actions/variableconditiondefinition.h" line="49"/>
         <source>The variable to compare</source>
-        <translation type="unfinished"></translation>
+        <translation>La variable à comparer</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="54"/>
+        <location filename="../actions/variableconditiondefinition.h" line="52"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Comparaison</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="56"/>
+        <location filename="../actions/variableconditiondefinition.h" line="53"/>
         <source>The comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>La comparaison</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="63"/>
+        <location filename="../actions/variableconditiondefinition.h" line="58"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="65"/>
+        <location filename="../actions/variableconditiondefinition.h" line="59"/>
         <source>The value</source>
-        <translation type="unfinished"></translation>
+        <translation>La valeur</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="70"/>
+        <location filename="../actions/variableconditiondefinition.h" line="62"/>
         <source>If equal</source>
-        <translation type="unfinished"></translation>
+        <translation>Si égal</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="72"/>
+        <location filename="../actions/variableconditiondefinition.h" line="63"/>
         <source>What to do if the values are equal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce qui doit être fait si les valeurs sont égales</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="77"/>
+        <location filename="../actions/variableconditiondefinition.h" line="66"/>
         <source>If different</source>
-        <translation type="unfinished"></translation>
+        <translation>Si différent</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="79"/>
+        <location filename="../actions/variableconditiondefinition.h" line="67"/>
         <source>What to do if the values are different</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce qui doit être fait si les valeurs sont différentes</translation>
     </message>
 </context>
 <context>
-    <name>ActionVariableDefinition</name>
+    <name>Actions::VariableDefinition</name>
     <message>
-        <location filename="../actionvariabledefinition.h" line="46"/>
+        <location filename="../actions/variabledefinition.h" line="46"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actionvariabledefinition.h" line="48"/>
+        <location filename="../actions/variabledefinition.h" line="47"/>
         <source>The variable name</source>
-        <translation type="unfinished"></translation>
+        <translation>Le nom de la variable</translation>
     </message>
     <message>
-        <location filename="../actionvariabledefinition.h" line="53"/>
+        <location filename="../actions/variabledefinition.h" line="50"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../actionvariabledefinition.h" line="55"/>
+        <location filename="../actions/variabledefinition.h" line="51"/>
         <source>The variable&apos;s new value</source>
-        <translation type="unfinished"></translation>
+        <translation>La nouvelle valeur de la variable</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actioncodedefinition.h" line="51"/>
+        <location filename="../actions/codedefinition.h" line="50"/>
         <source>Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Code</translation>
     </message>
     <message>
-        <location filename="../actioncodedefinition.h" line="54"/>
+        <location filename="../actions/codedefinition.h" line="53"/>
         <source>Evaluates some code</source>
-        <translation type="unfinished"></translation>
+        <translation>Évalue du code</translation>
     </message>
     <message>
-        <location filename="../actionexitdefinition.h" line="43"/>
+        <location filename="../actions/exitdefinition.h" line="45"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../actionexitdefinition.h" line="46"/>
+        <location filename="../actions/exitdefinition.h" line="48"/>
         <source>Exit Actionaz</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitte Actionaz</translation>
     </message>
     <message>
-        <location filename="../actiongotodefinition.h" line="50"/>
+        <location filename="../actions/gotodefinition.h" line="49"/>
         <source>Goto</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller à</translation>
     </message>
     <message>
-        <location filename="../actiongotodefinition.h" line="53"/>
+        <location filename="../actions/gotodefinition.h" line="52"/>
         <source>Go to a script line</source>
-        <translation type="unfinished"></translation>
+        <translation>Va à une ligne du script</translation>
     </message>
     <message>
-        <location filename="../actionloopdefinition.h" line="59"/>
+        <location filename="../actions/loopdefinition.h" line="56"/>
         <source>Loop</source>
-        <translation type="unfinished"></translation>
+        <translation>Boucle</translation>
     </message>
     <message>
-        <location filename="../actionloopdefinition.h" line="62"/>
+        <location filename="../actions/loopdefinition.h" line="59"/>
         <source>Go to a script line a specific number of times</source>
-        <translation type="unfinished"></translation>
+        <translation>Va à une ligne du script un certain nombre de fois</translation>
     </message>
     <message>
-        <location filename="../actionnoopdefinition.h" line="43"/>
+        <location filename="../actions/noopdefinition.h" line="45"/>
         <source>No-op</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune opération</translation>
     </message>
     <message>
-        <location filename="../actionnoopdefinition.h" line="46"/>
+        <location filename="../actions/noopdefinition.h" line="48"/>
         <source>Does nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne fait rien</translation>
     </message>
     <message>
-        <location filename="../actionpausedefinition.h" line="57"/>
+        <location filename="../actions/pausedefinition.h" line="55"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../actionpausedefinition.h" line="60"/>
+        <location filename="../actions/pausedefinition.h" line="58"/>
         <source>Pauses the script execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Met en pause l&apos;exécution du script</translation>
     </message>
     <message>
-        <location filename="../actionstopdefinition.h" line="43"/>
+        <location filename="../actions/stopdefinition.h" line="45"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../actionstopdefinition.h" line="46"/>
+        <location filename="../actions/stopdefinition.h" line="48"/>
         <source>Stop the script execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Stoppe l&apos;exécution du script</translation>
     </message>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="73"/>
+        <location filename="../actions/timeconditiondefinition.h" line="63"/>
         <source>Time condition</source>
-        <translation type="unfinished"></translation>
+        <translation>Condition temporelle</translation>
     </message>
     <message>
-        <location filename="../actiontimeconditiondefinition.h" line="76"/>
+        <location filename="../actions/timeconditiondefinition.h" line="66"/>
         <source>Check the current date time and do some action</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifie la date actuelle et effectue une action</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="83"/>
+        <location filename="../actions/variableconditiondefinition.h" line="71"/>
         <source>Variable condition</source>
-        <translation type="unfinished"></translation>
+        <translation>Condition de variable</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditiondefinition.h" line="86"/>
+        <location filename="../actions/variableconditiondefinition.h" line="74"/>
         <source>Check the value of a variable and do some action</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifie la valeur d&apos;une variable et effectue une action</translation>
     </message>
     <message>
-        <location filename="../actionvariabledefinition.h" line="59"/>
+        <location filename="../actions/variabledefinition.h" line="55"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actionvariabledefinition.h" line="62"/>
+        <location filename="../actions/variabledefinition.h" line="58"/>
         <source>Set the value of a variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Change la valeur d&apos;une variable</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditioninstance.cpp" line="25"/>
+        <location filename="../actions/variableconditioninstance.cpp" line="27"/>
         <source>Equal (=)</source>
-        <translation type="unfinished"></translation>
+        <translation>Égal (=)</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditioninstance.cpp" line="25"/>
+        <location filename="../actions/variableconditioninstance.cpp" line="27"/>
         <source>Different (!=)</source>
-        <translation type="unfinished"></translation>
+        <translation>Différent (!=)</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditioninstance.cpp" line="25"/>
+        <location filename="../actions/variableconditioninstance.cpp" line="27"/>
         <source>Inferior (&lt;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Inférieur (&lt;)</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditioninstance.cpp" line="25"/>
+        <location filename="../actions/variableconditioninstance.cpp" line="27"/>
         <source>Superior (&gt;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur (&gt;)</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditioninstance.cpp" line="26"/>
+        <location filename="../actions/variableconditioninstance.cpp" line="28"/>
         <source>Inferior or equal (&lt;=)</source>
-        <translation type="unfinished"></translation>
+        <translation>Inférieur ou égal (&lt;=)</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditioninstance.cpp" line="26"/>
+        <location filename="../actions/variableconditioninstance.cpp" line="28"/>
         <source>Superior or equal (&gt;=)</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur ou égal (&gt;=)</translation>
     </message>
     <message>
-        <location filename="../actionvariableconditioninstance.cpp" line="26"/>
+        <location filename="../actions/variableconditioninstance.cpp" line="28"/>
         <source>Contains</source>
-        <translation type="unfinished"></translation>
+        <translation>Contient</translation>
     </message>
 </context>
 </TS>

@@ -2,328 +2,347 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="en_US">
 <context>
-    <name>ActionClickDefinition</name>
-    <message>
-        <location filename="../actionclickdefinition.h" line="49"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="51"/>
-        <source>The action to simulate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="58"/>
-        <source>Button</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="60"/>
-        <source>The button to simulate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="67"/>
-        <source>Position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="69"/>
-        <source>The screen position where to simulate a mouse click</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="74"/>
-        <source>Click action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="81"/>
-        <source>Amount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="83"/>
-        <source>The amount of clicks to simulate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="91"/>
-        <source>Send input failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickdefinition.h" line="92"/>
-        <source>Invalid action</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionClickInstance</name>
-    <message>
-        <location filename="../actionclickinstance.cpp" line="68"/>
-        <source>Invalid click amount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickinstance.cpp" line="75"/>
-        <source>Cannot press the button because it&apos;s already pressed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickinstance.cpp" line="82"/>
-        <source>Cannot release the button because it&apos;s not pressed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickinstance.cpp" line="90"/>
-        <source>Unable to emulate click: cannot open display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickinstance.cpp" line="119"/>
-        <location filename="../actionclickinstance.cpp" line="127"/>
-        <source>Unable to emulate click: fake button event failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionclickinstance.cpp" line="195"/>
-        <location filename="../actionclickinstance.cpp" line="204"/>
-        <source>Send input failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionKeyDefinition</name>
-    <message>
-        <location filename="../actionkeydefinition.h" line="45"/>
-        <source>Key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkeydefinition.h" line="47"/>
-        <source>The key to simulate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkeydefinition.h" line="52"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkeydefinition.h" line="54"/>
-        <source>The action to simulate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkeydefinition.h" line="59"/>
-        <source>Send input failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkeydefinition.h" line="60"/>
-        <source>Invalid action</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionKeyInstance</name>
-    <message>
-        <location filename="../actionkeyinstance.cpp" line="75"/>
-        <location filename="../actionkeyinstance.cpp" line="82"/>
-        <location filename="../actionkeyinstance.cpp" line="149"/>
-        <source>Cannot press the key because it&apos;s already pressed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkeyinstance.cpp" line="124"/>
-        <location filename="../actionkeyinstance.cpp" line="192"/>
-        <source>Unable to emulate key: failed to send input</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionkeyinstance.cpp" line="156"/>
-        <source>Cannot release the key because it&apos;s not pressed</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ActionMoveCursorDefinition</name>
-    <message>
-        <location filename="../actionmovecursordefinition.h" line="44"/>
-        <source>Position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmovecursordefinition.h" line="46"/>
-        <source>The position where to move the cursor</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ActionPackDevice</name>
     <message>
-        <location filename="../actionpackdevice.h" line="53"/>
-        <source>device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionpackdevice.h" line="54"/>
+        <location filename="../actionpackdevice.h" line="59"/>
         <source>Actions dealing with devices like the keyboard or the mouse</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ActionTextDefinition</name>
+    <name>Actions::ClickDefinition</name>
     <message>
-        <location filename="../actiontextdefinition.h" line="44"/>
+        <location filename="../actions/clickdefinition.h" line="49"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="50"/>
+        <source>The action to simulate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="55"/>
+        <source>Button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="56"/>
+        <source>The button to simulate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="61"/>
+        <source>Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="62"/>
+        <source>The screen position where to simulate a mouse click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="65"/>
+        <source>Click action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="69"/>
+        <source>Amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="70"/>
+        <source>The amount of clicks to simulate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="78"/>
+        <source>Send input failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickdefinition.h" line="79"/>
+        <source>Invalid action</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Actions::ClickInstance</name>
+    <message>
+        <location filename="../actions/clickinstance.cpp" line="57"/>
+        <source>Invalid click amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/clickinstance.cpp" line="69"/>
+        <location filename="../actions/clickinstance.cpp" line="77"/>
+        <source>Unable to emulate click: button event failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Actions::CursorPathDefinition</name>
+    <message>
+        <location filename="../actions/cursorpathdefinition.h" line="44"/>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/cursorpathdefinition.h" line="45"/>
+        <source>The path to follow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Actions::KeyDefinition</name>
+    <message>
+        <location filename="../actions/keydefinition.h" line="45"/>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/keydefinition.h" line="46"/>
+        <source>The key to simulate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/keydefinition.h" line="49"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/keydefinition.h" line="50"/>
+        <source>The action to simulate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/keydefinition.h" line="55"/>
+        <source>Send input failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/keydefinition.h" line="56"/>
+        <source>Invalid action</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Actions::KeyInstance</name>
+    <message>
+        <location filename="../actions/keyinstance.cpp" line="65"/>
+        <source>Unable to emulate key: failed to send input</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Actions::MoveCursorDefinition</name>
+    <message>
+        <location filename="../actions/movecursordefinition.h" line="44"/>
+        <source>Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/movecursordefinition.h" line="45"/>
+        <source>The position where to move the cursor</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Actions::TextDefinition</name>
+    <message>
+        <location filename="../actions/textdefinition.h" line="44"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextdefinition.h" line="46"/>
+        <location filename="../actions/textdefinition.h" line="45"/>
         <source>The text to write</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextdefinition.h" line="49"/>
+        <location filename="../actions/textdefinition.h" line="48"/>
         <source>Send input failure</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ActionTextInstance</name>
+    <name>Actions::TextInstance</name>
     <message>
-        <location filename="../actiontextinstance.cpp" line="182"/>
-        <source>Unable to emulate keypress: cannot open display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actiontextinstance.cpp" line="193"/>
-        <source>Unable to send input</source>
+        <location filename="../actions/textinstance.cpp" line="39"/>
+        <source>Unable to write the text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ActionWheelDefinition</name>
+    <name>Actions::WheelDefinition</name>
     <message>
-        <location filename="../actionwheeldefinition.h" line="44"/>
+        <location filename="../actions/wheeldefinition.h" line="44"/>
         <source>Intensity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwheeldefinition.h" line="46"/>
+        <location filename="../actions/wheeldefinition.h" line="45"/>
         <source>Intensity of the movement, positive is up, negative is down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwheeldefinition.h" line="51"/>
+        <location filename="../actions/wheeldefinition.h" line="50"/>
         <source>Send input failure</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ActionWheelInstance</name>
+    <name>Actions::WheelInstance</name>
     <message>
-        <location filename="../actionwheelinstance.cpp" line="48"/>
-        <source>Unable to emulate wheel: cannot open display</source>
+        <location filename="../actions/wheelinstance.h" line="54"/>
+        <source>Unable to emulate wheel: failed to send input</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Code::Keyboard</name>
+    <message>
+        <location filename="../code/keyboard.cpp" line="41"/>
+        <source>Unable to press the key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwheelinstance.cpp" line="73"/>
-        <location filename="../actionwheelinstance.cpp" line="88"/>
-        <source>Unable to emulate wheel: failed to send input</source>
+        <location filename="../code/keyboard.cpp" line="49"/>
+        <source>Unable to release the key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../code/keyboard.cpp" line="57"/>
+        <source>Unable to trigger the key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../code/keyboard.cpp" line="65"/>
+        <source>Unable to write the text</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Code::Mouse</name>
+    <message>
+        <location filename="../code/mouse.cpp" line="59"/>
+        <source>Unable to press the button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../code/mouse.cpp" line="67"/>
+        <source>Unable to release the button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../code/mouse.cpp" line="75"/>
+        <source>Unable to emulate a button click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../code/mouse.cpp" line="83"/>
+        <source>Unable to emulate the wheel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actionclickdefinition.h" line="95"/>
+        <location filename="../actions/clickdefinition.h" line="82"/>
         <source>Click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionclickdefinition.h" line="98"/>
+        <location filename="../actions/clickdefinition.h" line="85"/>
         <source>Emulates a mouse click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionkeydefinition.h" line="63"/>
+        <location filename="../actions/keydefinition.h" line="59"/>
         <source>Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionkeydefinition.h" line="66"/>
+        <location filename="../actions/keydefinition.h" line="62"/>
         <source>Emulates a key press</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmovecursordefinition.h" line="50"/>
+        <location filename="../actions/movecursordefinition.h" line="49"/>
         <source>Move cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmovecursordefinition.h" line="53"/>
+        <location filename="../actions/movecursordefinition.h" line="52"/>
         <source>Move the mouse cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextdefinition.h" line="52"/>
+        <location filename="../actions/textdefinition.h" line="51"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextdefinition.h" line="55"/>
+        <location filename="../actions/textdefinition.h" line="54"/>
         <source>Write some text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwheeldefinition.h" line="54"/>
+        <location filename="../actions/wheeldefinition.h" line="53"/>
         <source>Wheel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwheeldefinition.h" line="57"/>
+        <location filename="../actions/wheeldefinition.h" line="56"/>
         <source>Emulates the mouse wheel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionclickinstance.cpp" line="40"/>
+        <location filename="../actions/clickinstance.cpp" line="31"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionclickinstance.cpp" line="40"/>
+        <location filename="../actions/clickinstance.cpp" line="31"/>
         <source>Middle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionclickinstance.cpp" line="40"/>
+        <location filename="../actions/clickinstance.cpp" line="31"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionclickinstance.cpp" line="43"/>
+        <location filename="../actions/clickinstance.cpp" line="34"/>
         <source>Click (press and release)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionclickinstance.cpp" line="43"/>
-        <location filename="../actionkeyinstance.cpp" line="48"/>
+        <location filename="../actions/clickinstance.cpp" line="34"/>
+        <location filename="../actions/keyinstance.cpp" line="35"/>
         <source>Press</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionclickinstance.cpp" line="43"/>
-        <location filename="../actionkeyinstance.cpp" line="48"/>
+        <location filename="../actions/clickinstance.cpp" line="34"/>
+        <location filename="../actions/keyinstance.cpp" line="35"/>
         <source>Release</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionkeyinstance.cpp" line="48"/>
+        <location filename="../actions/keyinstance.cpp" line="35"/>
         <source>Press and release</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/cursorpathdefinition.h" line="49"/>
+        <source>Cursor path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/cursorpathdefinition.h" line="52"/>
+        <source>Move the mouse cursor on a path</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

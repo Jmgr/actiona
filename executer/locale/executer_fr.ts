@@ -2,72 +2,95 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr_FR">
 <context>
-    <name>Executer::Executer</name>
-    <message>
-        <location filename="../executer.cpp" line="228"/>
-        <source>Incorrect parameter name: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../executer.cpp" line="243"/>
-        <source>Error while evaluating parameter &quot;%1&quot;, error message: &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../executer.cpp" line="370"/>
-        <source>Action design error: Invalid exception emitted (%1, line %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../executer.cpp" line="394"/>
-        <source>Invalid exception line: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../executer.cpp" line="414"/>
-        <source>Script line %1: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../executer.cpp" line="457"/>
-        <source>Unable to find the label named &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../executer.cpp" line="474"/>
-        <source>Incorrect Script.nextLine value: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../executer.cpp" line="477"/>
-        <source>The action at line %1 is invalid</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Executer::ExecutionWindow</name>
-    <message>
-        <location filename="../executionwindow.cpp" line="44"/>
-        <source>Press %1 to stop the script execution</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ExecutionWindow</name>
     <message>
         <location filename="../executionwindow.ui" line="14"/>
         <source>Execution window</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenêtre d&apos;exécution</translation>
     </message>
     <message>
-        <location filename="../executionwindow.ui" line="37"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Stop&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;execution&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <location filename="../executionwindow.ui" line="28"/>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <location filename="../executionwindow.ui" line="48"/>
+        <source>Debug</source>
+        <translation>Debug</translation>
+    </message>
+    <message>
+        <location filename="../executionwindow.ui" line="74"/>
+        <source>Pause</source>
+        <translation>Pause</translation>
+    </message>
+</context>
+<context>
+    <name>LibExecuter::CodeConsole</name>
+    <message>
+        <location filename="../codeconsole.cpp" line="51"/>
+        <source>Warning: </source>
+        <translation>Avertissement :</translation>
+    </message>
+</context>
+<context>
+    <name>LibExecuter::Executer</name>
+    <message>
+        <location filename="../executer.cpp" line="246"/>
+        <source>Incorrect parameter name: &quot;%1&quot;</source>
+        <translation>Nom de paramètre incorrect : &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../executer.cpp" line="261"/>
+        <source>Error while evaluating parameter &quot;%1&quot;, error message: &quot;%2&quot;</source>
+        <translation>Erreur lors de l&apos;évaluation du paramètre &quot;%1&quot;, message d&apos;erreur : &quot;%2&quot;</translation>
+    </message>
+    <message>
+        <location filename="../executer.cpp" line="411"/>
+        <source>Action design error: Invalid exception emitted (%1, line %2)</source>
+        <translation>Erreur de conception de l&apos;action : Exception invalide émise (%1, ligne %2)</translation>
+    </message>
+    <message>
+        <location filename="../executer.cpp" line="435"/>
+        <source>Invalid exception line: %1</source>
+        <translation>Ligne d&apos;exception invalide : %1</translation>
+    </message>
+    <message>
+        <location filename="../executer.cpp" line="458"/>
+        <source>Script line %1: </source>
+        <translation>Ligne de script %1 :</translation>
+    </message>
+    <message>
+        <location filename="../executer.cpp" line="460"/>
+        <source>Script %1, line %2: </source>
+        <translation>Script %1, ligne %2 :</translation>
+    </message>
+    <message>
+        <location filename="../executer.cpp" line="520"/>
+        <source>Unable to find the label named &quot;%1&quot;</source>
+        <translation>Impossible de trouver le label nommé &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../executer.cpp" line="537"/>
+        <source>Incorrect Script.nextLine value: %1</source>
+        <translation>Valeur de Script.nextLine incorrecte : %1</translation>
+    </message>
+    <message>
+        <location filename="../executer.cpp" line="540"/>
+        <source>The action at line %1 is invalid</source>
+        <translation>L&apos;action à la ligne %1 est invalide</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../codeinitializer.cpp" line="49"/>
+        <source>Unable to load UI file %1</source>
+        <translation>Impossible de charger le fichier UI %1</translation>
+    </message>
+    <message>
+        <location filename="../codeinitializer.cpp" line="62"/>
+        <source>Unable to include file %1</source>
+        <translation>Impossible d&apos;include le fichier %1</translation>
     </message>
 </context>
 </TS>

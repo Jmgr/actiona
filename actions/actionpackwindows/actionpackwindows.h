@@ -54,7 +54,7 @@ public:
 		addActionDefinition(new Actions::WindowDefinition(this));
 	}
 
-	QString id() const							{ return tr("windows"); }
+	QString id() const							{ return "windows"; }
 	QString name() const						{ return tr("Actions dealing with windows"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
 

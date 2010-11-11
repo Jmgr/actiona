@@ -39,6 +39,9 @@
 #include <QTextStream>
 #include <QTextCodec>
 #include <QElapsedTimer>
+#include <QTranslator>
+#include <QLibraryInfo>
+#include <QSettings>
 
 #ifdef Q_WS_X11
 #undef signals
@@ -71,6 +74,11 @@ int main(int argc, char **argv)
 	ActionTools::NativeEventFilteringApplication app("actionaz-gui", argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
+	app.setOrganizationName("Actionaz");
+	app.setOrganizationDomain("actionaz.org");
+	app.setApplicationName("Actionaz");
+	app.setApplicationVersion(Global::ACTIONAZ_VERSION.toString());
+
 	qAddPostRoutine(cleanup);
 
 	qsrand(std::time(NULL));
@@ -78,7 +86,29 @@ int main(int argc, char **argv)
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
-	//QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+	QSettings settings;
+
+	QString locale = settings.value("locale", QLocale::system().name()).toString();
+
+	QTranslator qtTranslator;
+	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	app.installTranslator(&qtTranslator);
+
+	QTranslator toolsTranslator;
+	toolsTranslator.load(QString("%1/tools/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	app.installTranslator(&toolsTranslator);
+
+	QTranslator actionToolsTranslator;
+	actionToolsTranslator.load(QString("%1/actiontools/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	app.installTranslator(&actionToolsTranslator);
+
+	QTranslator executerTranslator;
+	actionToolsTranslator.load(QString("%1/executer/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	app.installTranslator(&executerTranslator);
+
+	QTranslator guiTranslator;
+	actionToolsTranslator.load(QString("%1/gui/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	app.installTranslator(&guiTranslator);
 
 	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
@@ -148,11 +178,6 @@ int main(int argc, char **argv)
 	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");
 	qRegisterMetaTypeStreamOperators<Tools::Version>("Version");
-
-	app.setOrganizationName("Actionaz");
-	app.setOrganizationDomain("actionaz.org");
-	app.setApplicationName("Actionaz");
-	app.setApplicationVersion(Global::ACTIONAZ_VERSION.toString());
 
 #ifdef Q_WS_X11
 	{

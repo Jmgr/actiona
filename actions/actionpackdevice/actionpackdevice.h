@@ -55,7 +55,7 @@ public:
 		addActionDefinition(new Actions::CursorPathDefinition(this));
 	}
 
-	QString id() const							{ return tr("device"); }
+	QString id() const							{ return "device"; }
 	QString name() const						{ return tr("Actions dealing with devices like the keyboard or the mouse"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
 	

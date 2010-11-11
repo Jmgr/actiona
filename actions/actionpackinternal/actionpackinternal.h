@@ -60,7 +60,7 @@ public:
 		addActionDefinition(new Actions::VariableConditionDefinition(this));
 	}
 
-	QString id() const								{ return tr("internal"); }
+	QString id() const								{ return "internal"; }
 	QString name() const							{ return tr("Internal actions"); }
 	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
 

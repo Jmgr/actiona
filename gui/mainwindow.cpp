@@ -71,6 +71,7 @@
 #include <QListWidget>
 #include <QSystemInfo>
 #include <QScriptValueIterator>
+#include <QTranslator>
 
 QTM_USE_NAMESPACE
 
@@ -237,15 +238,23 @@ void MainWindow::postInit()
 
 	mActionFactory->loadActionPacks();
 
+	QSettings settings;
+
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("building completion model");
 #endif
 		QScriptEngine engine;
+		QString locale = settings.value("locale", QLocale::system().name()).toString();
+
 		for(int actionPackIndex = 0; actionPackIndex < mActionFactory->actionPackCount(); ++actionPackIndex)
 		{
 			ActionTools::ActionPack *actionPack = mActionFactory->actionPack(actionPackIndex);
 			actionPack->codeInit(&engine);
+
+			QTranslator *actionTranslator = new QTranslator(this);
+			actionTranslator->load(QString("%1/actions/actionpack%2/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale));
+			QApplication::installTranslator(actionTranslator);
 		}
 		
 		LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory);
@@ -346,8 +355,6 @@ void MainWindow::postInit()
 #endif
 
 	setCurrentFile(QString());
-
-	QSettings settings;
 
 	{
 #ifdef ACT_PROFILE

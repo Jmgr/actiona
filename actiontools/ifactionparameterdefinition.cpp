@@ -30,7 +30,7 @@ namespace ActionTools
 {
 	StringListPair IfActionParameterDefinition::actions = qMakePair(
 		QStringList() << "do_nothing" << "goto",
-		QStringList() << tr("Do nothing") << tr("Goto line"));
+		QStringList() << QObject::tr("Do nothing") << QObject::tr("Goto line"));
 
 	IfActionParameterDefinition::IfActionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
 		: ItemsParameterDefinition(name, translatedName, parent),

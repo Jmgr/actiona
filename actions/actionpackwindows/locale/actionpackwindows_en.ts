@@ -2,417 +2,428 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="en_US">
 <context>
-    <name>ActionMessageBoxDefinition</name>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="47"/>
-        <source>Message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="49"/>
-        <source>The text to show</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="54"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="56"/>
-        <source>The title to show</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="61"/>
-        <source>Icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="63"/>
-        <source>The icon to use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="70"/>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="72"/>
-        <source>The message box type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="79"/>
-        <source>Yes-No action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="86"/>
-        <source>If yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="88"/>
-        <source>What to do if the yes button is pressed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="93"/>
-        <source>If no</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionmessageboxdefinition.h" line="95"/>
-        <source>What to do if the no button is pressed</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ActionPackWindows</name>
     <message>
-        <location filename="../actionpackwindows.h" line="51"/>
-        <source>windows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actionpackwindows.h" line="52"/>
+        <location filename="../actionpackwindows.h" line="58"/>
         <source>Actions dealing with windows</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ActionTextInputDefinition</name>
+    <name>Actions::MessageBoxDefinition</name>
     <message>
-        <location filename="../actiontextinputdefinition.h" line="45"/>
+        <location filename="../actions/messageboxdefinition.h" line="47"/>
+        <source>Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="48"/>
+        <source>The text to show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="51"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="52"/>
+        <source>The title to show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="55"/>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="56"/>
+        <source>The icon to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="61"/>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="62"/>
+        <source>The message box type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="67"/>
+        <source>Yes-No action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="71"/>
+        <source>If yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="72"/>
+        <source>What to do if the yes button is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="75"/>
+        <source>If no</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/messageboxdefinition.h" line="76"/>
+        <source>What to do if the no button is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Actions::TextInputDefinition</name>
+    <message>
+        <location filename="../actions/textinputdefinition.h" line="45"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextinputdefinition.h" line="47"/>
+        <location filename="../actions/textinputdefinition.h" line="46"/>
         <source>The question to ask</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextinputdefinition.h" line="52"/>
+        <location filename="../actions/textinputdefinition.h" line="49"/>
         <source>Default value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextinputdefinition.h" line="54"/>
+        <location filename="../actions/textinputdefinition.h" line="50"/>
         <source>The default value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextinputdefinition.h" line="59"/>
+        <location filename="../actions/textinputdefinition.h" line="53"/>
         <source>Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextinputdefinition.h" line="61"/>
+        <location filename="../actions/textinputdefinition.h" line="54"/>
         <source>The variable where to save the entered input</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ActionWindowConditionDefinition</name>
+    <name>Actions::WindowConditionDefinition</name>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="47"/>
+        <location filename="../actions/windowconditiondefinition.h" line="47"/>
         <source>Window title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="49"/>
+        <location filename="../actions/windowconditiondefinition.h" line="48"/>
         <source>The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="54"/>
+        <location filename="../actions/windowconditiondefinition.h" line="51"/>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="56"/>
+        <location filename="../actions/windowconditiondefinition.h" line="52"/>
         <source>The condition to wait for</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="63"/>
+        <location filename="../actions/windowconditiondefinition.h" line="57"/>
         <source>If true</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="65"/>
+        <location filename="../actions/windowconditiondefinition.h" line="58"/>
         <source>What to do if the condition is met</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="70"/>
+        <location filename="../actions/windowconditiondefinition.h" line="61"/>
         <source>If false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="72"/>
+        <location filename="../actions/windowconditiondefinition.h" line="62"/>
         <source>What to do if the condition is not met</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="77"/>
+        <location filename="../actions/windowconditiondefinition.h" line="65"/>
         <source>X-coordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="79"/>
+        <location filename="../actions/windowconditiondefinition.h" line="66"/>
         <source>The x-coordinate of the found window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="84"/>
+        <location filename="../actions/windowconditiondefinition.h" line="69"/>
         <source>Y-coordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="86"/>
+        <location filename="../actions/windowconditiondefinition.h" line="70"/>
         <source>The y-coordinate of the found window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="91"/>
+        <location filename="../actions/windowconditiondefinition.h" line="73"/>
         <source>Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="93"/>
+        <location filename="../actions/windowconditiondefinition.h" line="74"/>
         <source>The width of the found window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="98"/>
+        <location filename="../actions/windowconditiondefinition.h" line="77"/>
         <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="100"/>
+        <location filename="../actions/windowconditiondefinition.h" line="78"/>
         <source>The height of the found window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="105"/>
+        <location filename="../actions/windowconditiondefinition.h" line="81"/>
         <source>Process id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="107"/>
+        <location filename="../actions/windowconditiondefinition.h" line="82"/>
         <source>The process id of the found window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ActionWindowDefinition</name>
+    <name>Actions::WindowDefinition</name>
     <message>
-        <location filename="../actionwindowdefinition.h" line="48"/>
+        <location filename="../actions/windowdefinition.h" line="48"/>
         <source>Window title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="50"/>
+        <location filename="../actions/windowdefinition.h" line="49"/>
         <source>The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="55"/>
+        <location filename="../actions/windowdefinition.h" line="52"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="57"/>
+        <location filename="../actions/windowdefinition.h" line="53"/>
         <source>The condition to wait for</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="64"/>
+        <location filename="../actions/windowdefinition.h" line="58"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="71"/>
+        <location filename="../actions/windowdefinition.h" line="62"/>
         <source>Move position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="73"/>
+        <location filename="../actions/windowdefinition.h" line="63"/>
         <source>The position to move the window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="80"/>
+        <location filename="../actions/windowdefinition.h" line="68"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="87"/>
+        <location filename="../actions/windowdefinition.h" line="72"/>
         <source>Resize width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="89"/>
+        <location filename="../actions/windowdefinition.h" line="73"/>
         <source>The new width of the window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="96"/>
+        <location filename="../actions/windowdefinition.h" line="78"/>
         <source>Resize height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="98"/>
+        <location filename="../actions/windowdefinition.h" line="79"/>
         <source>The new height of the window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="105"/>
+        <location filename="../actions/windowdefinition.h" line="86"/>
         <source>Cannot find window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="106"/>
+        <location filename="../actions/windowdefinition.h" line="87"/>
         <source>Action failed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ActionWindowInstance</name>
+    <name>Actions::WindowInstance</name>
     <message>
-        <location filename="../actionwindowinstance.cpp" line="79"/>
+        <location filename="../actions/windowinstance.cpp" line="79"/>
         <source>Cannot find any window matching &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowinstance.cpp" line="113"/>
+        <location filename="../actions/windowinstance.cpp" line="113"/>
         <source>&quot;%1&quot; failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Code::BaseWindow</name>
+    <message>
+        <location filename="../code/basewindow.cpp" line="44"/>
+        <source>Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Code::MessageBox</name>
+    <message>
+        <location filename="../code/messagebox.cpp" line="128"/>
+        <source>Add custom button failed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actionmessageboxdefinition.h" line="101"/>
+        <location filename="../actions/messageboxdefinition.h" line="82"/>
         <source>Message Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmessageboxdefinition.h" line="104"/>
+        <location filename="../actions/messageboxdefinition.h" line="85"/>
         <source>Shows a message box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextinputdefinition.h" line="65"/>
+        <location filename="../actions/textinputdefinition.h" line="58"/>
         <source>Text input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontextinputdefinition.h" line="68"/>
+        <location filename="../actions/textinputdefinition.h" line="61"/>
         <source>Ask the user to enter some text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="111"/>
+        <location filename="../actions/windowconditiondefinition.h" line="86"/>
         <source>Window condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditiondefinition.h" line="114"/>
+        <location filename="../actions/windowconditiondefinition.h" line="89"/>
         <source>Checks for the state of a window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="109"/>
+        <location filename="../actions/windowdefinition.h" line="90"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowdefinition.h" line="112"/>
+        <location filename="../actions/windowdefinition.h" line="93"/>
         <source>Do some action on a window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmessageboxinstance.cpp" line="30"/>
+        <location filename="../actions/messageboxinstance.cpp" line="32"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmessageboxinstance.cpp" line="30"/>
+        <location filename="../actions/messageboxinstance.cpp" line="32"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmessageboxinstance.cpp" line="30"/>
+        <location filename="../actions/messageboxinstance.cpp" line="32"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmessageboxinstance.cpp" line="30"/>
+        <location filename="../actions/messageboxinstance.cpp" line="32"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmessageboxinstance.cpp" line="30"/>
+        <location filename="../actions/messageboxinstance.cpp" line="32"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmessageboxinstance.cpp" line="34"/>
+        <location filename="../actions/messageboxinstance.cpp" line="36"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionmessageboxinstance.cpp" line="34"/>
+        <location filename="../actions/messageboxinstance.cpp" line="36"/>
         <source>Yes-No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditioninstance.cpp" line="31"/>
+        <location filename="../actions/windowconditioninstance.cpp" line="32"/>
         <source>Created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowconditioninstance.cpp" line="31"/>
+        <location filename="../actions/windowconditioninstance.cpp" line="32"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowinstance.cpp" line="30"/>
+        <location filename="../actions/windowinstance.cpp" line="31"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowinstance.cpp" line="30"/>
+        <location filename="../actions/windowinstance.cpp" line="31"/>
         <source>Kill process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowinstance.cpp" line="30"/>
+        <location filename="../actions/windowinstance.cpp" line="31"/>
         <source>Set foreground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowinstance.cpp" line="30"/>
+        <location filename="../actions/windowinstance.cpp" line="31"/>
         <source>Minimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowinstance.cpp" line="30"/>
+        <location filename="../actions/windowinstance.cpp" line="31"/>
         <source>Maximize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowinstance.cpp" line="30"/>
+        <location filename="../actions/windowinstance.cpp" line="31"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actionwindowinstance.cpp" line="30"/>
+        <location filename="../actions/windowinstance.cpp" line="31"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
