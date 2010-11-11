@@ -244,7 +244,23 @@ void MainWindow::postInit()
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("building completion model");
 #endif
-		QString locale = settings.value("locale", QLocale::system().name()).toString();
+		QString locale = settings.value("locale").toString();
+
+		if(locale.isEmpty())
+		{
+			locale = QLocale::system().name();
+
+	#ifdef Q_WS_WIN
+			QString installerLanguage = settings.value("installerLanguage").toString();
+			if(!installerLanguage.isEmpty())
+			{
+				if(installerLanguage == "english")
+					locale = "en_US";
+				else if(installerLanguage == "french")
+					locale = "fr_FR";
+			}
+	#endif
+		}
 
 		for(int actionPackIndex = 0; actionPackIndex < mActionFactory->actionPackCount(); ++actionPackIndex)
 		{

@@ -88,7 +88,23 @@ int main(int argc, char **argv)
 
 	QSettings settings;
 
-	QString locale = settings.value("locale", QLocale::system().name()).toString();
+	QString locale = settings.value("locale").toString();
+
+	if(locale.isEmpty())
+	{
+		locale = QLocale::system().name();
+
+#ifdef Q_WS_WIN
+		QString installerLanguage = settings.value("installerLanguage").toString();
+		if(!installerLanguage.isEmpty())
+		{
+			if(installerLanguage == "english")
+				locale = "en_US";
+			else if(installerLanguage == "french")
+				locale = "fr_FR";
+		}
+#endif
+	}
 
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));

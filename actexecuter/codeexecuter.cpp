@@ -68,7 +68,24 @@ bool CodeExecuter::start(QFile &file)
 	LibExecuter::CodeInitializer::initialize(mScriptEngine, mScriptAgent, actionFactory());
 
 	QSettings settings;
-	QString locale = settings.value("locale", QLocale::system().name()).toString();
+	QString locale = settings.value("locale").toString();
+
+	if(locale.isEmpty())
+	{
+		locale = QLocale::system().name();
+
+#ifdef Q_WS_WIN
+		QString installerLanguage = settings.value("installerLanguage").toString();
+		if(!installerLanguage.isEmpty())
+		{
+			if(installerLanguage == "english")
+				locale = "en_US";
+			else if(installerLanguage == "french")
+				locale = "fr_FR";
+		}
+#endif
+	}
+
 	for(int actionPackIndex = 0; actionPackIndex < actionFactory()->actionPackCount(); ++actionPackIndex)
 	{
 		ActionTools::ActionPack *actionPack = actionFactory()->actionPack(actionPackIndex);
