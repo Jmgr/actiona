@@ -244,19 +244,18 @@ void MainWindow::postInit()
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("building completion model");
 #endif
-		QScriptEngine engine;
 		QString locale = settings.value("locale", QLocale::system().name()).toString();
 
 		for(int actionPackIndex = 0; actionPackIndex < mActionFactory->actionPackCount(); ++actionPackIndex)
 		{
 			ActionTools::ActionPack *actionPack = mActionFactory->actionPack(actionPackIndex);
-			actionPack->codeInit(&engine);
 
 			QTranslator *actionTranslator = new QTranslator(this);
-			actionTranslator->load(QString("%1/actions/actionpack%2/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale));
+			actionTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale));
 			QApplication::installTranslator(actionTranslator);
 		}
-		
+
+		QScriptEngine engine;
 		LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory);
 
 		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), "include"));
