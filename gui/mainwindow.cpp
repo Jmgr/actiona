@@ -457,6 +457,19 @@ void MainWindow::postInit()
 
 	if(mCommandOptions->count("execute"))
 		execute(false);
+	else
+	{
+		if(!settings.value("hasGotAlphaMessage", false).toBool())
+		{
+			settings.setValue("hasGotAlphaMessage", true);
+
+			QMessageBox::information(this, tr("Alpha test"),
+									 tr("Thank you for alpha-testing this new version of Actionaz !<br>"
+										"<br>Please test as many features as you can, and remember that any comments are welcome !<br><br>To report a bug or write a comment please use the <b>Report a bug</b> button.<br>"
+										"<br>Remember that this is an <b>alpha</b> version so please do not write any critical scripts with it since the script format may change before the final release.<br>"
+										"<br><i>Please do not distribute this version because it has not received enough reviews yet.</i>"));
+		}
+	}
 }
 
 void MainWindow::opacityOpenUpdate()
