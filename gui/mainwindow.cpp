@@ -329,7 +329,6 @@ void MainWindow::postInit()
 	ui->actionConsole_window->setChecked(ui->consoleDockWidget->isVisible());
 	ui->actionToolbar->setChecked(ui->toolBar->isVisible());
 
-	actionSelectionChanged();
 	updateUndoRedoStatus();
 	actionCountChanged();
 
@@ -459,6 +458,8 @@ void MainWindow::postInit()
 										"<br><i>Please do not distribute this version because it has not received enough reviews yet.</i>"));
 		}
 	}
+
+	actionSelectionChanged();
 }
 
 void MainWindow::opacityOpenUpdate()
@@ -1130,6 +1131,7 @@ void MainWindow::scriptEdited()
 	ui->scriptView->resizeColumnToContents(1);
 	actionCountChanged();
 	actionEnabled();
+	actionSelectionChanged();
 
 	updateUndoRedoStatus();
 }
