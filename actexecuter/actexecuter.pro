@@ -34,8 +34,7 @@ UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated
 OBJECTS_DIR = generated
-TRANSLATIONS = locale/actexecuter_en.ts \
-    locale/actexecuter_fr.ts \
-    locale/actexecuter_de.ts
+TRANSLATIONS = ../locale/actexecuter_en.ts \
+    ../locale/actexecuter_fr.ts
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify

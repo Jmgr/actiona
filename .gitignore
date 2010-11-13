@@ -11,5 +11,5 @@ generated
 *.so*
 *.log*
 *.cache*
-*.qm
 actionaz
+actexec

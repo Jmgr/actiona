@@ -48,8 +48,8 @@ namespace Actions
 			addException(TextInstance::FailedToSendInputException, tr("Send input failure"));
 		}
 	
-		QString name() const													{ return QObject::tr("Text"); }
-		QString id() const														{ return "ActionText"; }
+		QString name() const													{ return QObject::tr("Write text"); }
+		QString id() const														{ return "ActionWriteText"; }
 		Flag flags() const														{ return ActionDefinition::flags() | Official; }
 		QString description() const												{ return QObject::tr("Write some text"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new TextInstance(this); }

@@ -19,7 +19,6 @@ UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated
 OBJECTS_DIR = generated
-TRANSLATIONS = locale/tools_en.ts \
-	locale/tools_fr.ts \
-	locale/tools_de.ts
+TRANSLATIONS = ../locale/tools_en.ts \
+	../locale/tools_fr.ts
 win32:LIBS += User32.lib

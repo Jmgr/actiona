@@ -75,8 +75,7 @@ UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated
 OBJECTS_DIR = generated
-TRANSLATIONS = locale/gui_en.ts \
-	locale/gui_fr.ts \
-	locale/gui_de.ts
+TRANSLATIONS = ../locale/gui_en.ts \
+	../locale/gui_fr.ts
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
