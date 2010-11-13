@@ -51,10 +51,6 @@ namespace Actions
 
 			mCurrentPoint = 0;
 			mMoveTimer.start(25);
-
-			//mMouseDevice.setCursorPosition(position);
-
-			//emit executionEnded();
 		}
 
 		void stopExecution()

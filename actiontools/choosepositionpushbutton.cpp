@@ -110,13 +110,13 @@ namespace ActionTools
 
 		QCursor newCursor(*mCrossIcon);
 
+		emit chooseStarted();
+
 #ifdef Q_WS_WIN
 		mPreviousCursor = SetCursor(newCursor.handle());
 #endif
 #ifdef Q_WS_X11
 		nativeEventFilteringApp->installNativeEventFilter(this);
-
-		emit chooseStarted();
 
 		if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
 						None, newCursor.handle(), CurrentTime) != GrabSuccess)
