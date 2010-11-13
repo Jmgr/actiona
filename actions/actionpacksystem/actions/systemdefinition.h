@@ -41,6 +41,9 @@ namespace Actions
 		explicit SystemDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("SystemInstance::operations", SystemInstance::operations);
+			translateItems("SystemInstance::modes", SystemInstance::modes);
+
 			ActionTools::ListParameterDefinition *operation = new ActionTools::ListParameterDefinition("operation", tr("Operation"), this);
 			operation->setTooltip(tr("The operation to execute"));
 			operation->setItems(SystemInstance::operations);

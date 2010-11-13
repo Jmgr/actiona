@@ -32,7 +32,7 @@ namespace Actions
 {
 	ActionTools::StringListPair KeyInstance::actions = qMakePair(
 			QStringList() << "pressRelease" << "press" << "release",
-			QStringList() << QObject::tr("Press and release") << QObject::tr("Press") << QObject::tr("Release"));
+			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", "Press and release") << QT_TRANSLATE_NOOP("KeyInstance::actions", "Press") << QT_TRANSLATE_NOOP("KeyInstance::actions", "Release"));
 
 	void KeyInstance::startExecution()
 	{

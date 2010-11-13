@@ -42,6 +42,8 @@ namespace Actions
 		explicit KeyDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("KeyInstance::actions", KeyInstance::actions);
+
 			ActionTools::KeyParameterDefinition *key = new ActionTools::KeyParameterDefinition("key", tr("Key"), this);
 			key->setTooltip(tr("The key to simulate"));
 			addElement(key);

@@ -45,6 +45,8 @@ namespace Actions
 		explicit ReadTextFileDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
+			translateItems("ReadTextFileInstance::modes", ReadTextFileInstance::modes);
+
 			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
 			file->setTooltip(tr("The file you want to read"));
 			addElement(file);

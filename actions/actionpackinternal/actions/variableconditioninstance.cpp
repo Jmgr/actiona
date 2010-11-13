@@ -24,6 +24,12 @@ namespace Actions
 {
 	ActionTools::StringListPair VariableConditionInstance::comparisons = qMakePair(
 			QStringList() << "equal" << "different" << "inferior" << "superior" << "inferiorEqual" << "superiorEqual" << "contains",
-			QStringList() << QObject::tr("Equal (=)") << QObject::tr("Different (!=)") << QObject::tr("Inferior (<)") << QObject::tr("Superior (>)")
-			<< QObject::tr("Inferior or equal (<=)") << QObject::tr("Superior or equal (>=)") << QObject::tr("Contains"));
+			QStringList()
+			<< QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Equal (=)")
+			<< QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Different (!=)")
+			<< QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Inferior (<)")
+			<< QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Superior (>)")
+			<< QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Inferior or equal (<=)")
+			<< QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Superior or equal (>=)")
+			<< QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Contains"));
 }

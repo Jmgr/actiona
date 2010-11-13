@@ -31,6 +31,5 @@ UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated
 OBJECTS_DIR = generated
-TRANSLATIONS = ../locale/executer_en.ts \
-	../locale/executer_fr.ts
+TRANSLATIONS = ../locale/executer_fr_FR.ts
 RESOURCES += executer.qrc

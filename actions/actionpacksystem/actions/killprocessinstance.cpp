@@ -24,5 +24,8 @@ namespace Actions
 {
 	ActionTools::StringListPair KillProcessInstance::killModes = qMakePair(
 			QStringList() << "graceful" << "forceful" << "gracefulThenForceful",
-			QStringList() << QObject::tr("Graceful") << QObject::tr("Forceful") << QObject::tr("Graceful then forceful"));
+			QStringList()
+			<< QT_TRANSLATE_NOOP("KillProcessInstance::killModes", "Graceful")
+			<< QT_TRANSLATE_NOOP("KillProcessInstance::killModes", "Forceful")
+			<< QT_TRANSLATE_NOOP("KillProcessInstance::killModes", "Graceful then forceful"));
 }

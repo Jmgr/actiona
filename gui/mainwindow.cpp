@@ -71,7 +71,6 @@
 #include <QListWidget>
 #include <QSystemInfo>
 #include <QScriptValueIterator>
-#include <QTranslator>
 
 QTM_USE_NAMESPACE
 
@@ -237,7 +236,7 @@ void MainWindow::postInit()
 	if(mSplashScreen)
 		mSplashScreen->showMessage(tr("Loading actions..."));
 
-	mActionFactory->loadActionPacks();
+	mActionFactory->loadActionPacks(mUsedLocale);
 
 	QSettings settings;
 
@@ -245,15 +244,6 @@ void MainWindow::postInit()
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("building completion model");
 #endif
-
-		for(int actionPackIndex = 0; actionPackIndex < mActionFactory->actionPackCount(); ++actionPackIndex)
-		{
-			ActionTools::ActionPack *actionPack = mActionFactory->actionPack(actionPackIndex);
-
-			QTranslator *actionTranslator = new QTranslator(this);
-			actionTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(mUsedLocale));
-			QApplication::installTranslator(actionTranslator);
-		}
 
 		QScriptEngine engine;
 		LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory);
@@ -295,7 +285,7 @@ void MainWindow::postInit()
 
 		for(int actionDefinitionIndex = 0; actionDefinitionIndex < mActionFactory->actionDefinitionCount(); ++actionDefinitionIndex)
 		{
-			ActionTools::ActionDefinition *actionDefinition =	mActionFactory->actionDefinition(actionDefinitionIndex);
+			ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionDefinitionIndex);
 
 			if(mSplashScreen)
 			{
@@ -1397,7 +1387,7 @@ void MainWindow::fillNewActionTreeWidget(NewActionTreeWidget *widget)
 {
 	for(int i = 0; i < ActionTools::ActionDefinition::CategoryCount; ++i)
 	{
-		QTreeWidgetItem *item = new QTreeWidgetItem(QStringList(ActionTools::ActionDefinition::CategoryName[i]));
+		QTreeWidgetItem *item = new QTreeWidgetItem(QStringList(QApplication::translate("ActionDefinition::CategoryName", ActionTools::ActionDefinition::CategoryName[i].toLatin1())));
 		QFont boldFont;
 
 		boldFont.setWeight(QFont::Bold);

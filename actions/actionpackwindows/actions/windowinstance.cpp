@@ -28,7 +28,14 @@ namespace Actions
 {
 	ActionTools::StringListPair WindowInstance::actions = qMakePair(
 			QStringList() << "close" << "killProcess" << "setForeground" << "minimize" << "maximize" << "move" << "resize",
-			QStringList() << QObject::tr("Close") << QObject::tr("Kill process") << QObject::tr("Set foreground") << QObject::tr("Minimize") << QObject::tr("Maximize") << QObject::tr("Move") << QObject::tr("Resize"));
+			QStringList()
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Close")
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Kill process")
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Set foreground")
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Minimize")
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Maximize")
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Move")
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Resize"));
 
 	WindowInstance::WindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent)

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ExecutionWindow</name>
     <message>
         <location filename="../executer/executionwindow.ui" line="14"/>
         <source>Execution window</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenêtre d&apos;exécution</translation>
     </message>
     <message>
         <location filename="../executer/executionwindow.ui" line="28"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
     <message>
         <location filename="../executer/executionwindow.ui" line="48"/>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <location filename="../executer/executionwindow.ui" line="74"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause</translation>
     </message>
 </context>
 <context>
@@ -29,7 +29,7 @@
     <message>
         <location filename="../executer/codeconsole.cpp" line="51"/>
         <source>Warning: </source>
-        <translation type="unfinished"></translation>
+        <translation>Avertissement :</translation>
     </message>
 </context>
 <context>
@@ -37,47 +37,47 @@
     <message>
         <location filename="../executer/executer.cpp" line="246"/>
         <source>Incorrect parameter name: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de paramètre incorrect : &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../executer/executer.cpp" line="261"/>
         <source>Error while evaluating parameter &quot;%1&quot;, error message: &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur lors de l&apos;évaluation du paramètre &quot;%1&quot;, message d&apos;erreur : &quot;%2&quot;</translation>
     </message>
     <message>
         <location filename="../executer/executer.cpp" line="411"/>
         <source>Action design error: Invalid exception emitted (%1, line %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur de conception de l&apos;action : Exception invalide émise (%1, ligne %2)</translation>
     </message>
     <message>
         <location filename="../executer/executer.cpp" line="435"/>
         <source>Invalid exception line: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne d&apos;exception invalide : %1</translation>
     </message>
     <message>
         <location filename="../executer/executer.cpp" line="458"/>
         <source>Script line %1: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de script %1 :</translation>
     </message>
     <message>
         <location filename="../executer/executer.cpp" line="460"/>
         <source>Script %1, line %2: </source>
-        <translation type="unfinished"></translation>
+        <translation>Script %1, ligne %2 :</translation>
     </message>
     <message>
         <location filename="../executer/executer.cpp" line="520"/>
         <source>Unable to find the label named &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver le label nommé &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../executer/executer.cpp" line="537"/>
         <source>Incorrect Script.nextLine value: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur de Script.nextLine incorrecte : %1</translation>
     </message>
     <message>
         <location filename="../executer/executer.cpp" line="540"/>
         <source>The action at line %1 is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;action à la ligne %1 est invalide</translation>
     </message>
 </context>
 <context>
@@ -85,12 +85,12 @@
     <message>
         <location filename="../executer/codeinitializer.cpp" line="49"/>
         <source>Unable to load UI file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger le fichier UI %1</translation>
     </message>
     <message>
         <location filename="../executer/codeinitializer.cpp" line="62"/>
         <source>Unable to include file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;include le fichier %1</translation>
     </message>
 </context>
 </TS>

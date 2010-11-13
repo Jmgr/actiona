@@ -9,5 +9,4 @@ RESOURCES += actionpacksystem.qrc
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
 
-TRANSLATIONS = ../../locale/actionpacksystem_en.ts \
-	../../locale/actionpacksystem_fr.ts
+TRANSLATIONS = ../../locale/actionpacksystem_fr_FR.ts

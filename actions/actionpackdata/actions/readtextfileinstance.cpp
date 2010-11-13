@@ -28,7 +28,7 @@ namespace Actions
 {
 	ActionTools::StringListPair ReadTextFileInstance::modes = qMakePair(
 			QStringList() << "full" << "selection",
-			QStringList() << QObject::tr("Read the entire file") << QObject::tr("Read only a selection"));
+			QStringList() << QT_TRANSLATE_NOOP("ReadTextFileInstance::modes", "Read the entire file") << QT_TRANSLATE_NOOP("ReadTextFileInstance::modes", "Read only a selection"));
 
 	void ReadTextFileInstance::startExecution()
 	{

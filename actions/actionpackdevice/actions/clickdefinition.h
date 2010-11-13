@@ -46,6 +46,9 @@ namespace Actions
 		explicit ClickDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("ClickInstance::buttons", ClickInstance::buttons);
+			translateItems("ClickInstance::actions", ClickInstance::actions);
+
 			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition("action", tr("Action"), this);
 			action->setTooltip(tr("The action to simulate"));
 			action->setItems(ClickInstance::actions);

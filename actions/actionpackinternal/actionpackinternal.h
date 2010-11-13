@@ -46,7 +46,9 @@ class ActionPackInternal : public QObject, public ActionTools::ActionPack
 	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
-	ActionPackInternal()
+	ActionPackInternal()							{}
+
+	void createDefinitions()
 	{
 		addActionDefinition(new Actions::PauseDefinition(this));
 		addActionDefinition(new Actions::CodeDefinition(this));

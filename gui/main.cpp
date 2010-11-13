@@ -119,11 +119,11 @@ int main(int argc, char **argv)
 	app.installTranslator(&actionToolsTranslator);
 
 	QTranslator executerTranslator;
-	actionToolsTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale));
 	app.installTranslator(&executerTranslator);
 
 	QTranslator guiTranslator;
-	actionToolsTranslator.load(QString("%1/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	guiTranslator.load(QString("%1/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale));
 	app.installTranslator(&guiTranslator);
 
 	QxtCommandOptions options;

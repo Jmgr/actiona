@@ -38,6 +38,7 @@ namespace ActionTools
 		ActionPack()												{}
 		virtual ~ActionPack()										{}
 
+		virtual void createDefinitions() = 0;
 		virtual QString id() const = 0;
 		virtual QString name() const = 0;
 		virtual Tools::Version version() const = 0;

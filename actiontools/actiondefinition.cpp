@@ -26,6 +26,7 @@
 #include <QScriptEngine>
 #include <QScriptValue>
 #include <QSysInfo>
+#include <QApplication>
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>
@@ -43,15 +44,21 @@ namespace ActionTools
 	
 	QString ActionDefinition::CategoryName[CategoryCount] =
 	{
-		QObject::tr("Windows"),
-		QObject::tr("Device"),
-		QObject::tr("System"),
-		QObject::tr("Internal"),
-		QObject::tr("Data")
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Windows"),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Device"),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "System"),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Internal"),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Data")
 	};
 
-	QStringList ActionDefinition::StandardTabs = QStringList() << QObject::tr("Standard") << QObject::tr("Advanced");
+	QStringList ActionDefinition::StandardTabs = QStringList() << QT_TRANSLATE_NOOP("ActionTabs", "Standard") << QT_TRANSLATE_NOOP("ActionTabs", "Advanced");
 	
+	void ActionDefinition::translateItems(const char *context, StringListPair &items) const
+	{
+		for(int index = 0; index < items.second.size(); ++index)
+			items.second[index] = QApplication::instance()->translate(context, items.second.at(index).toLatin1());
+	}
+
 	void ActionDefinition::addElement(ElementDefinition *element, int tab)
 	{
 		if(tab > 0 && tabs().count() > 0)

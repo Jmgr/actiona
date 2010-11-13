@@ -29,7 +29,9 @@ namespace Actions
 {
 	ActionTools::StringListPair WindowConditionInstance::conditions = qMakePair(
 			QStringList() << "created" << "closed",
-			QStringList() << QObject::tr("Created") << QObject::tr("Closed"));
+			QStringList()
+			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Created")
+			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Closed"));
 
 	WindowConditionInstance::WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent)

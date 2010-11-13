@@ -46,7 +46,9 @@ class ActionPackWindows : public QObject, public ActionTools::ActionPack
 	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
-	ActionPackWindows()
+	ActionPackWindows()							{}
+
+	void createDefinitions()
 	{
 		addActionDefinition(new Actions::MessageBoxDefinition(this));
 		addActionDefinition(new Actions::TextInputDefinition(this));

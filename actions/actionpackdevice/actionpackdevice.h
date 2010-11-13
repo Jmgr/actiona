@@ -45,7 +45,9 @@ class ActionPackDevice : public QObject, public ActionTools::ActionPack
 	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
-	ActionPackDevice()
+	ActionPackDevice()							{}
+
+	void createDefinitions()
 	{
 		addActionDefinition(new Actions::TextDefinition(this));
 		addActionDefinition(new Actions::ClickDefinition(this));

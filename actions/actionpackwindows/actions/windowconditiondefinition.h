@@ -44,6 +44,8 @@ namespace Actions
 		explicit WindowConditionDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("WindowConditionInstance::conditions", WindowConditionInstance::conditions);
+
 			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition("title", tr("Window title"), this);
 			title->setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
 			addElement(title);

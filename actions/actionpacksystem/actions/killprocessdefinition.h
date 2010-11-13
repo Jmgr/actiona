@@ -43,6 +43,8 @@ namespace Actions
 		explicit KillProcessDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("KillProcessInstance::killModes", KillProcessInstance::killModes);
+
 			ActionTools::TextParameterDefinition *processId = new ActionTools::TextParameterDefinition("processId", tr("Process id"), this);
 			processId->setTooltip(tr("The process id of the process to kill"));
 			addElement(processId);

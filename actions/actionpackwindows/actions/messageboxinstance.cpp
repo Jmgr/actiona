@@ -29,11 +29,18 @@ namespace Actions
 {
 	ActionTools::StringListPair MessageBoxInstance::icons = qMakePair(
 			QStringList() << "none" << "information" << "question" << "warning" << "error",
-			QStringList() << QObject::tr("None") << QObject::tr("Information") << QObject::tr("Question") << QObject::tr("Warning") << QObject::tr("Error"));
+			QStringList()
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "None")
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Information")
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Question")
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Warning")
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Error"));
 
 	ActionTools::StringListPair MessageBoxInstance::buttons = qMakePair(
 			QStringList() << "ok" << "yesno",
-			QStringList() << QObject::tr("Ok") << QObject::tr("Yes-No"));
+			QStringList()
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Ok")
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Yes-No"));
 
 	MessageBoxInstance::MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

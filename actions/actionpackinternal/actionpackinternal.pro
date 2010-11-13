@@ -4,7 +4,6 @@ TARGET = ActionPackInternal
 QT += script
 HEADERS += actionpackinternal.h
 RESOURCES += actionpackinternal.qrc
-TRANSLATIONS = ../../locale/actionpackinternal_en.ts \
-	../../locale/actionpackinternal_fr.ts
+TRANSLATIONS = ../../locale/actionpackinternal_fr_FR.ts
 INCLUDEPATH += ../../executer
 LIBS += -L../.. -lexecuter

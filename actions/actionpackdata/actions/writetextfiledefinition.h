@@ -43,6 +43,8 @@ namespace Actions
 		explicit WriteTextFileDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
+			translateItems("WriteTextFileInstance::modes", WriteTextFileInstance::modes);
+
 			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
 			file->setTooltip(tr("The file you want to write"));
 			addElement(file);

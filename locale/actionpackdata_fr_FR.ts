@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ActionPackData</name>
     <message>
-        <location filename="../actions/actionpackdata/actionpackdata.h" line="75"/>
+        <location filename="../actions/actionpackdata/actionpackdata.h" line="77"/>
         <source>Data related actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Actions liées aux données</translation>
     </message>
 </context>
 <context>
@@ -14,48 +14,48 @@
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="44"/>
         <source>Source file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier source</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="45"/>
         <source>The file to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier à copier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="47"/>
         <source>Choose the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez le fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="48"/>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="55"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tous les fichiers (*.*)</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="51"/>
         <source>Destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Destination</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="52"/>
         <source>The destination file</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier de destination</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="54"/>
         <source>Choose the destination file</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez le fichier de destination</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="58"/>
         <source>Unable to read source file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier source</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="59"/>
         <source>Unable to write destination file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire le fichier de destination</translation>
     </message>
 </context>
 <context>
@@ -63,12 +63,12 @@
     <message>
         <location filename="../actions/actionpackdata/actions/copyfileinstance.h" line="63"/>
         <source>Unable to read the source file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire de fichier source &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfileinstance.h" line="71"/>
         <source>Unable to write to &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire vers &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -76,37 +76,37 @@
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="45"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="46"/>
         <source>The file to read from</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier à lire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="48"/>
         <source>Choose the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez le fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tous les fichiers (*.*)</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="52"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="53"/>
         <source>The variable where to store the data</source>
-        <translation type="unfinished"></translation>
+        <translation>La variable où stocker les données</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="56"/>
         <source>Unable to read file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier</translation>
     </message>
 </context>
 <context>
@@ -114,7 +114,7 @@
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfileinstance.h" line="61"/>
         <source>Unable to read the file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -122,12 +122,12 @@
     <message>
         <location filename="../actions/actionpackdata/actions/readclipboarddefinition.h" line="45"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readclipboarddefinition.h" line="46"/>
         <source>The variable where to save the current clipboard value</source>
-        <translation type="unfinished"></translation>
+        <translation>La variable où enregistrer la valeur actuelle du presse-papiers</translation>
     </message>
 </context>
 <context>
@@ -135,62 +135,62 @@
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="46"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="47"/>
         <source>The file to read from</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier à lire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="49"/>
         <source>Choose the INI file</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez le fichier INI</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="50"/>
         <source>INI files (*.ini);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers INI (*.ini);;Tous les fichiers (*.*)</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="53"/>
         <source>Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Section</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="54"/>
         <source>The section name of the parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Le nom de section du paramètre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="57"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="58"/>
         <source>The parameter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Le nom du paramètre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="61"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="62"/>
         <source>The variable where to store the data</source>
-        <translation type="unfinished"></translation>
+        <translation>La variable où stocker les données</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="65"/>
         <source>Unable to read file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="66"/>
         <source>Unable to find section</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la section</translation>
     </message>
 </context>
 <context>
@@ -198,12 +198,12 @@
     <message>
         <location filename="../actions/actionpackdata/actions/readinifileinstance.h" line="63"/>
         <source>Unable to read the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifileinstance.h" line="70"/>
         <source>Unable to find the section named &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la section nommée &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -211,57 +211,57 @@
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="47"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Clef</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="48"/>
         <source>The registry key to read from</source>
-        <translation type="unfinished"></translation>
+        <translation>La clef de registre à lire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="53"/>
         <source>Subkey</source>
-        <translation type="unfinished"></translation>
+        <translation>Sous-clef</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="54"/>
         <source>The registry subkey to read from</source>
-        <translation type="unfinished"></translation>
+        <translation>La sous-clef du registre à lire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="57"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="58"/>
         <source>The value to read</source>
-        <translation type="unfinished"></translation>
+        <translation>La valeur à lire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="61"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="62"/>
         <source>The variable where to save the value read from the registry</source>
-        <translation type="unfinished"></translation>
+        <translation>La variable où enregistrer la valeur lue à partir du registre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="65"/>
         <source>Cannot find subKey</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la sous-clef</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="66"/>
         <source>Cannot find value</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la valeur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="67"/>
         <source>Invalid value type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de valeur incorrect</translation>
     </message>
 </context>
 <context>
@@ -269,80 +269,80 @@
     <message>
         <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="56"/>
         <source>Cannot find subKey &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la sous-clef &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="60"/>
         <source>Cannot find value &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la valeur &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="64"/>
         <source>Invalid value type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de valeur incorrect</translation>
     </message>
 </context>
 <context>
     <name>Actions::ReadTextFileDefinition</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="48"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="50"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="49"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="51"/>
         <source>The file you want to read</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="54"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="53"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="55"/>
         <source>The variable where to save the text read from the file</source>
-        <translation type="unfinished"></translation>
+        <translation>La variable où enregistrer le texte lu à partir du fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="56"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="58"/>
         <source>Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="57"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="59"/>
         <source>The file read mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Le mode de lecture du fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="62"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="64"/>
         <source>Selection mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode de sélection</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="66"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="68"/>
         <source>First line</source>
-        <translation type="unfinished"></translation>
+        <translation>Première ligne</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="67"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="69"/>
         <source>The line where to start reading the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Line à partir de laquelle lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="72"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="74"/>
         <source>Last line</source>
-        <translation type="unfinished"></translation>
+        <translation>Dernière ligne</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="73"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="75"/>
         <source>The line where to stop reading the file</source>
-        <translation type="unfinished"></translation>
+        <translation>La ligne où arrêter de lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="80"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="82"/>
         <source>Cannot read file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier</translation>
     </message>
 </context>
 <context>
@@ -350,22 +350,22 @@
     <message>
         <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="54"/>
         <source>Invalid first line value : %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur de première ligne incorrecte : %1</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="61"/>
         <source>Invalid last line value : %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur de dernière ligne incorrecte : %1</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="68"/>
         <source>The first line has to be smaller than the last line</source>
-        <translation type="unfinished"></translation>
+        <translation>La première ligne doit être plus petite que la dernière</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="77"/>
         <source>Cannot open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
 </context>
 <context>
@@ -373,37 +373,37 @@
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="45"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="46"/>
         <source>The file to write to</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier à écrire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="48"/>
         <source>Choose the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez le fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tous les fichiers (*.*)</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="52"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Données</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="53"/>
         <source>The data to write to the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Les données à écrire dans le fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="56"/>
         <source>Unable to write to the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire vers le fichier</translation>
     </message>
 </context>
 <context>
@@ -411,7 +411,7 @@
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfileinstance.h" line="64"/>
         <source>Unable to write to the file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire vers le fichier &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -419,12 +419,12 @@
     <message>
         <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="45"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="46"/>
         <source>The new clipboard value</source>
-        <translation type="unfinished"></translation>
+        <translation>La nouvelle valeur du presse-papier</translation>
     </message>
 </context>
 <context>
@@ -432,57 +432,57 @@
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="45"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="46"/>
         <source>The file to create or edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier à créer ou à éditer</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="48"/>
         <source>Choose the INI file</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez le fichier INI</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="49"/>
         <source>INI files (*.ini);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers INI (*.ini);;Tous les fichiers (*.*)</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="52"/>
         <source>Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Section</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="53"/>
         <source>The section name of the parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Le nom de la section du paramètre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="56"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="57"/>
         <source>The parameter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Le nom du paramètre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="60"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="61"/>
         <source>The new value</source>
-        <translation type="unfinished"></translation>
+        <translation>La nouvelle valeur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="64"/>
         <source>Unable to write file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire vers le fichier</translation>
     </message>
 </context>
 <context>
@@ -490,7 +490,7 @@
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="61"/>
         <source>Unable to write to the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire vers le fichier</translation>
     </message>
 </context>
 <context>
@@ -498,52 +498,52 @@
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="47"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Clef</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="48"/>
         <source>The registry key to write to</source>
-        <translation type="unfinished"></translation>
+        <translation>La clef de registre à écrire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="53"/>
         <source>Subkey</source>
-        <translation type="unfinished"></translation>
+        <translation>Sous-clef</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="54"/>
         <source>The registry subkey to write to</source>
-        <translation type="unfinished"></translation>
+        <translation>La sous-clef de registre à écrire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="57"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="58"/>
         <source>The value to write to</source>
-        <translation type="unfinished"></translation>
+        <translation>La valeur où écrire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="61"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Données</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="62"/>
         <source>The data to write</source>
-        <translation type="unfinished"></translation>
+        <translation>Les données à écrire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="65"/>
         <source>Cannot find subKey</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la sous-clef</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="66"/>
         <source>Cannot write value</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire la valeur</translation>
     </message>
 </context>
 <context>
@@ -551,50 +551,50 @@
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistryinstance.cpp" line="51"/>
         <source>Cannot find subKey &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la sous-clef &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistryinstance.cpp" line="55"/>
         <source>Cannot write value &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire la valeur &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>Actions::WriteTextFileDefinition</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="46"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="48"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="47"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="49"/>
         <source>The file you want to write</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="50"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="52"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="51"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="53"/>
         <source>The text to write to the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Le texte à écrire vers le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="54"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="56"/>
         <source>Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="55"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="57"/>
         <source>The file write mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Le mode d&apos;écriture du fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="60"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="62"/>
         <source>Cannot write file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire le fichier</translation>
     </message>
 </context>
 <context>
@@ -602,7 +602,7 @@
     <message>
         <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="49"/>
         <source>Cannot open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
 </context>
 <context>
@@ -610,12 +610,12 @@
     <message>
         <location filename="../actions/actionpackdata/code/clipboard.cpp" line="114"/>
         <source>Selection mode is not supported by your operating system</source>
-        <translation type="unfinished"></translation>
+        <translation>Le mode sélection n&apos;est pas supporté par votre système d&apos;exploitation</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/clipboard.cpp" line="121"/>
         <source>Find buffer mode is not supported by your operating system</source>
-        <translation type="unfinished"></translation>
+        <translation>Le mode tampon de recherche n&apos;est pas supporté par votre système d&apos;exploitation</translation>
     </message>
 </context>
 <context>
@@ -623,45 +623,45 @@
     <message>
         <location filename="../actions/actionpackdata/code/file.cpp" line="42"/>
         <source>Unable to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/file.cpp" line="53"/>
         <location filename="../actions/actionpackdata/code/file.cpp" line="58"/>
         <location filename="../actions/actionpackdata/code/file.cpp" line="67"/>
         <source>Write failed</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;écriture a échouée</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/file.cpp" line="114"/>
         <location filename="../actions/actionpackdata/code/file.cpp" line="147"/>
         <location filename="../actions/actionpackdata/code/file.cpp" line="197"/>
         <source>Unable to create destination directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de créer le dossier de destination</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/file.cpp" line="120"/>
         <location filename="../actions/actionpackdata/code/file.cpp" line="153"/>
         <location filename="../actions/actionpackdata/code/file.cpp" line="203"/>
         <source>Destination directory doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Le dossier de destination n&apos;existe pas</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/file.cpp" line="135"/>
         <location filename="../actions/actionpackdata/code/file.cpp" line="161"/>
         <source>Copy failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Copie échouée</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/file.cpp" line="218"/>
         <location filename="../actions/actionpackdata/code/file.cpp" line="226"/>
         <source>Move/rename failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Déplacement/renommage échoué</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/file.cpp" line="262"/>
         <source>Remove failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Le suppression a échoué</translation>
     </message>
 </context>
 <context>
@@ -669,37 +669,37 @@
     <message>
         <location filename="../actions/actionpackdata/code/inifile.cpp" line="57"/>
         <source>Cannot load the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger le fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/inifile.cpp" line="75"/>
         <source>Cannot save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer le fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/inifile.cpp" line="114"/>
         <source>Cannot find the section named &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la section nommée &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/inifile.cpp" line="132"/>
         <source>Invalid section index</source>
-        <translation type="unfinished"></translation>
+        <translation>Index de section incorrect</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/inifile.cpp" line="143"/>
         <source>Cannot delete section named &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de supprimer la section nommée &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/inifile.cpp" line="164"/>
         <source>Invalid key index</source>
-        <translation type="unfinished"></translation>
+        <translation>Index de clef incorrect</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/inifile.cpp" line="187"/>
         <source>Cannot delete key named &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de supprimer la clef nommée &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -707,12 +707,12 @@
     <message>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="59"/>
         <source>Unable to open the key</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir la clef</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="78"/>
         <source>Unable to create the key</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de créer la clef</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="103"/>
@@ -722,7 +722,7 @@
         <location filename="../actions/actionpackdata/code/registry.cpp" line="142"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="145"/>
         <source>Cannot set the value data</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de changer les données de la valeur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="164"/>
@@ -731,24 +731,24 @@
         <location filename="../actions/actionpackdata/code/registry.cpp" line="223"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="238"/>
         <source>Cannot find the value to read</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la valeur à lire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="247"/>
         <source>Invalid value type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de valeur incorrect</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="267"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="309"/>
         <source>Unable to query informations about this key</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de récupérer des informations à propos de cette clef</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="343"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="448"/>
         <source>Unable to delete the key</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de supprimer la clef</translation>
     </message>
 </context>
 <context>
@@ -756,33 +756,33 @@
     <message>
         <location filename="../actions/actionpackdata/code/sql.cpp" line="35"/>
         <source>Please specify the database driver that should be used</source>
-        <translation type="unfinished"></translation>
+        <translation>Merci de spécifier le pilote de base de données à utiliser</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/sql.cpp" line="98"/>
         <location filename="../actions/actionpackdata/code/sql.cpp" line="105"/>
         <source>The requested database driver is not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce pilote de base de données n&apos;est pas disponible</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/sql.cpp" line="142"/>
         <source>Unable to establish a connection to the database</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;établir une connexion vers la base de données</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/sql.cpp" line="155"/>
         <source>Failed to prepare the query</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de préparer la requête</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/sql.cpp" line="181"/>
         <source>Failed to execute the query : %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;exécuter la requête : %1</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/sql.cpp" line="192"/>
         <source>Cannot fetch the result of a non-select query</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de récupérer le résultat d&apos;une requête non-select</translation>
     </message>
 </context>
 <context>
@@ -790,29 +790,29 @@
     <message>
         <location filename="../actions/actionpackdata/code/tcp.cpp" line="93"/>
         <source>Cannot establish a connection to the host</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;établir une connexion vers l&apos;hôte</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/tcp.cpp" line="101"/>
         <source>Waiting for bytes written failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Attente d&apos;écriture échouée</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/tcp.cpp" line="109"/>
         <source>Waiting for ready read failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Attente de lecture échouée</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/tcp.cpp" line="117"/>
         <source>Waiting for disconnection failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Attente de déconnexion échouée</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/tcp.cpp" line="128"/>
         <location filename="../actions/actionpackdata/code/tcp.cpp" line="133"/>
         <location filename="../actions/actionpackdata/code/tcp.cpp" line="142"/>
         <source>Write failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Écriture échouée</translation>
     </message>
 </context>
 <context>
@@ -820,17 +820,17 @@
     <message>
         <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="60"/>
         <source>Unable to start listening</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de démarrer l&apos;écoute</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="68"/>
         <source>Waiting for bytes written failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Attente d&apos;écriture échouée</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="78"/>
         <source>There is no pending connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Il n&apos;y a pas de connexion en attente</translation>
     </message>
 </context>
 <context>
@@ -838,19 +838,19 @@
     <message>
         <location filename="../actions/actionpackdata/code/udp.cpp" line="74"/>
         <source>Cannot establish a connection to the host</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;établir une connexion vers l&apos;hôte</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/udp.cpp" line="82"/>
         <source>Waiting for ready read failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Attente de lecture échouée</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/code/udp.cpp" line="93"/>
         <location filename="../actions/actionpackdata/code/udp.cpp" line="98"/>
         <location filename="../actions/actionpackdata/code/udp.cpp" line="107"/>
         <source>Write failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Écriture échouée</translation>
     </message>
 </context>
 <context>
@@ -858,132 +858,154 @@
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="62"/>
         <source>Copy file</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="65"/>
         <source>Copy a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Copie un fichier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="59"/>
         <source>Read binary file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire fichier binaire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="62"/>
         <source>Read a binary file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire un fichier binaire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readclipboarddefinition.h" line="50"/>
         <source>Read clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire presse-papier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readclipboarddefinition.h" line="53"/>
         <source>Read the clipboard contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Lit le contenu du presse-papier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="69"/>
         <source>Read INI file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire fichier INI</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="72"/>
         <source>Read an entry in an INI file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire une entrée dans un fichier INI</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="71"/>
         <source>Read registry</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire registre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="74"/>
         <source>Read an entry from the registry</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire une entrée de la base registre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="83"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="85"/>
         <source>Read text file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire fichier texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="86"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="88"/>
         <source>Read a plain text file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire un fichier texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="31"/>
         <source>Read the entire file</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Lire le fichier entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="31"/>
         <source>Read only a selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Lire une sélection</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="59"/>
         <source>Write binary file</source>
-        <translation type="unfinished"></translation>
+        <translation>Écrire fichier binaire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="62"/>
         <source>Write to a binary file</source>
-        <translation type="unfinished"></translation>
+        <translation>Écrire vers un fichier binaire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="50"/>
         <source>Write clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Écriture presse-papier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="53"/>
         <source>Set the clipboard contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Change le contenu du presse-papier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="67"/>
         <source>Write INI file</source>
-        <translation type="unfinished"></translation>
+        <translation>Écrire fichier INI</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="70"/>
         <source>Write an entry in an INI file</source>
-        <translation type="unfinished"></translation>
+        <translation>Écrire une entrée dans un fichier INI</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="70"/>
         <source>Write registry</source>
-        <translation type="unfinished"></translation>
+        <translation>Écrire registre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="73"/>
         <source>Writes an entry to the registry</source>
-        <translation type="unfinished"></translation>
+        <translation>Écrire une entrée dans la base de registres</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="63"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="65"/>
         <source>Write text file</source>
-        <translation type="unfinished"></translation>
+        <translation>Écrire fichier texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="66"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="68"/>
         <source>Write a plain text file</source>
-        <translation type="unfinished"></translation>
+        <translation>Écrire vers un fichier texte</translation>
     </message>
+    <message>
+        <source>Overwrite any content</source>
+        <translation type="obsolete">Écraser tout contenu</translation>
+    </message>
+    <message>
+        <source>Append to the end</source>
+        <translation type="obsolete">Ajouter à la fin</translation>
+    </message>
+</context>
+<context>
+    <name>ReadTextFileInstance::modes</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="31"/>
+        <source>Read the entire file</source>
+        <translation>Lire le fichier entier</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="31"/>
+        <source>Read only a selection</source>
+        <translation>Lire une sélection</translation>
+    </message>
+</context>
+<context>
+    <name>WriteTextFileInstance::modes</name>
     <message>
         <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="31"/>
         <source>Overwrite any content</source>
-        <translation type="unfinished"></translation>
+        <translation>Écraser tout contenu</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="31"/>
         <source>Append to the end</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter à la fin</translation>
     </message>
 </context>
 </TS>

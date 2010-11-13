@@ -46,7 +46,9 @@ class ActionPackSystem : public QObject, public ActionTools::ActionPack
 	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
-	ActionPackSystem()
+	ActionPackSystem()							{}
+
+	void createDefinitions()
 	{
 		addActionDefinition(new Actions::CommandDefinition(this));
 		addActionDefinition(new Actions::KillProcessDefinition(this));

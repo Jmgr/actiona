@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ActionPackDevice</name>
     <message>
-        <location filename="../actions/actionpackdevice/actionpackdevice.h" line="59"/>
+        <location filename="../actions/actionpackdevice/actionpackdevice.h" line="61"/>
         <source>Actions dealing with devices like the keyboard or the mouse</source>
-        <translation type="unfinished"></translation>
+        <translation>Actions en rapport avec les périphériques comme la souris ou le clavier</translation>
     </message>
 </context>
 <context>
     <name>Actions::ClickDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="49"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="52"/>
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="50"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="53"/>
         <source>The action to simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;action à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="55"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="58"/>
         <source>Button</source>
-        <translation type="unfinished"></translation>
+        <translation>Bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="56"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="59"/>
         <source>The button to simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>Le bouton à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="61"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="64"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="62"/>
-        <source>The screen position where to simulate a mouse click</source>
-        <translation type="unfinished"></translation>
+        <translation>Position</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="65"/>
+        <source>The screen position where to simulate a mouse click</source>
+        <translation>La position à l&apos;écran où simuler le clic de souris</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="68"/>
         <source>Click action</source>
-        <translation type="unfinished"></translation>
+        <translation>Action de clic</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="69"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="72"/>
         <source>Amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Quantité</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="70"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="73"/>
         <source>The amount of clicks to simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>La quantité de clics à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="78"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="81"/>
         <source>Send input failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la simulation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="79"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
         <source>Invalid action</source>
-        <translation type="unfinished"></translation>
+        <translation>Action incorrecte</translation>
     </message>
 </context>
 <context>
@@ -72,13 +72,13 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="57"/>
         <source>Invalid click amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Quantité de clics incorrecte</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="69"/>
         <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="77"/>
         <source>Unable to emulate click: button event failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de simuler un clic : l&apos;évènement de bouton n&apos;a pas pu être envoyé</translation>
     </message>
 </context>
 <context>
@@ -86,45 +86,45 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="44"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="45"/>
         <source>The path to follow</source>
-        <translation type="unfinished"></translation>
+        <translation>Le chemin à suivre</translation>
     </message>
 </context>
 <context>
     <name>Actions::KeyDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="45"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="47"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="46"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="48"/>
         <source>The key to simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>La touche à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="49"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="51"/>
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="50"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="52"/>
         <source>The action to simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;action à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="55"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="57"/>
         <source>Send input failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la simulation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="56"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="58"/>
         <source>Invalid action</source>
-        <translation type="unfinished"></translation>
+        <translation>Action incorrecte</translation>
     </message>
 </context>
 <context>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="65"/>
         <source>Unable to emulate key: failed to send input</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de simuler la touche : l&apos;évènement n&apos;a pas pu être envoyé</translation>
     </message>
 </context>
 <context>
@@ -140,12 +140,12 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="44"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Position</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="45"/>
         <source>The position where to move the cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>La position où déplacer le curseur</translation>
     </message>
 </context>
 <context>
@@ -153,17 +153,17 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="44"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texte</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="45"/>
         <source>The text to write</source>
-        <translation type="unfinished"></translation>
+        <translation>Le texte à écrire</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="48"/>
         <source>Send input failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la simulation</translation>
     </message>
 </context>
 <context>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="39"/>
         <source>Unable to write the text</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire le texte</translation>
     </message>
 </context>
 <context>
@@ -179,17 +179,17 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="44"/>
         <source>Intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Intensité</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="45"/>
         <source>Intensity of the movement, positive is up, negative is down</source>
-        <translation type="unfinished"></translation>
+        <translation>Intensité du mouvement, vers le haut si positif, vers le bas si négatif</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="50"/>
         <source>Send input failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la simulation</translation>
     </message>
 </context>
 <context>
@@ -197,7 +197,43 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/wheelinstance.h" line="54"/>
         <source>Unable to emulate wheel: failed to send input</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de simuler la molette de souris : l&apos;évènement n&apos;a pas pu être envoyé</translation>
+    </message>
+</context>
+<context>
+    <name>ClickInstance::actions</name>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
+        <source>Click (press and release)</source>
+        <translation>Clic (pression et relâchement)</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
+        <source>Press</source>
+        <translation>Pression</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
+        <source>Release</source>
+        <translation>Relâchement</translation>
+    </message>
+</context>
+<context>
+    <name>ClickInstance::buttons</name>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
+        <source>Left</source>
+        <translation>Gauche</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
+        <source>Middle</source>
+        <translation>Milieu</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
+        <source>Right</source>
+        <translation>Droit</translation>
     </message>
 </context>
 <context>
@@ -205,22 +241,22 @@
     <message>
         <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="41"/>
         <source>Unable to press the key</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;appuyer sur la touche</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="49"/>
         <source>Unable to release the key</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de relâcher la touche</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="57"/>
         <source>Unable to trigger the key</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de déclencher la touche</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="65"/>
         <source>Unable to write the text</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire le texte</translation>
     </message>
 </context>
 <context>
@@ -228,122 +264,135 @@
     <message>
         <location filename="../actions/actionpackdevice/code/mouse.cpp" line="59"/>
         <source>Unable to press the button</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;appuyer sur le bouton</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/code/mouse.cpp" line="67"/>
         <source>Unable to release the button</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de relâcher le bouton</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/code/mouse.cpp" line="75"/>
         <source>Unable to emulate a button click</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de simuler un clic de bouton</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/code/mouse.cpp" line="83"/>
         <source>Unable to emulate the wheel</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de simuler la molette</translation>
+    </message>
+</context>
+<context>
+    <name>KeyInstance::actions</name>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
+        <source>Press and release</source>
+        <translation>Pression et relâchement</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
+        <source>Press</source>
+        <translation>Pression</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
+        <source>Release</source>
+        <translation>Relâchement</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
-        <source>Click</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
+        <source>Click</source>
+        <translation>Clic</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="88"/>
         <source>Emulates a mouse click</source>
-        <translation type="unfinished"></translation>
+        <translation>Simule un clic de souris</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="59"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="61"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="62"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="64"/>
         <source>Emulates a key press</source>
-        <translation type="unfinished"></translation>
+        <translation>Simule la pression d&apos;une touche</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="49"/>
         <source>Move cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Déplacement de curseur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="52"/>
         <source>Move the mouse cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Déplace le curseur de souris</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="obsolete">Texte</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="51"/>
         <source>Write text</source>
-        <translation type="unfinished"></translation>
+        <translation>Écriture de texte</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="54"/>
         <source>Write some text</source>
-        <translation type="unfinished"></translation>
+        <translation>Écrit du texte</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="53"/>
         <source>Wheel</source>
-        <translation type="unfinished"></translation>
+        <translation>Molette</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="56"/>
         <source>Emulates the mouse wheel</source>
-        <translation type="unfinished"></translation>
+        <translation>Simule un mouvement de molette</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Gauche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Milieu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Droit</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
         <source>Click (press and release)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Clic (pression et relâchement)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
         <source>Press</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pression</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
         <source>Release</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
         <source>Press and release</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pression et relâchement</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="49"/>
         <source>Cursor path</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin de curseur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="52"/>
         <source>Move the mouse cursor on a path</source>
-        <translation type="unfinished"></translation>
+        <translation>Déplace le curseur de souris sur un chemin</translation>
     </message>
 </context>
 </TS>

@@ -9,5 +9,4 @@ LIBS += -L../.. -lrudeconfig
 win32:LIBS += -ladvapi32 \
 	-lshell32
 
-TRANSLATIONS = ../../locale/actionpackdata_en.ts \
-	../../locale/actionpackdata_fr.ts
+TRANSLATIONS = ../../locale/actionpackdata_fr_FR.ts

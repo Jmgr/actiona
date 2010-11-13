@@ -44,6 +44,8 @@ namespace Actions
 		explicit VariableConditionDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("VariableConditionInstance::comparisons", VariableConditionInstance::comparisons);
+
 			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
 			variable->setCategory(ActionTools::ElementDefinition::INPUT);
 			variable->setTooltip(tr("The variable to compare"));

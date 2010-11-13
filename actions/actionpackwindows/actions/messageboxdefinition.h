@@ -44,6 +44,9 @@ namespace Actions
 		explicit MessageBoxDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("MessageBoxInstance::icons", MessageBoxInstance::icons);
+			translateItems("MessageBoxInstance::buttons", MessageBoxInstance::buttons);
+
 			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition("message", tr("Message"), this);
 			text->setTooltip(tr("The text to show"));
 			addElement(text);

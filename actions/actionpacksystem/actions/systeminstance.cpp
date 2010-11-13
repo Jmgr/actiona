@@ -24,10 +24,10 @@ namespace Actions
 {
 	ActionTools::StringListPair SystemInstance::operations = qMakePair(
 			QStringList() << "logout" << "reboot" << "shutdown",
-			QStringList() << QObject::tr("Logout") << QObject::tr("Reboot") << QObject::tr("Shutdown"));
+			QStringList() << QT_TRANSLATE_NOOP("SystemInstance::operations", "Logout") << QT_TRANSLATE_NOOP("SystemInstance::operations", "Reboot") << QT_TRANSLATE_NOOP("SystemInstance::operations", "Shutdown"));
 
 	ActionTools::StringListPair SystemInstance::modes = qMakePair(
 			QStringList() << "ask" << "normal" << "force",
-			QStringList() << QObject::tr("Ask") << QObject::tr("Normal") << QObject::tr("Force"));
+			QStringList() << QT_TRANSLATE_NOOP("SystemInstance::modes", "Ask") << QT_TRANSLATE_NOOP("SystemInstance::modes", "Normal") << QT_TRANSLATE_NOOP("SystemInstance::modes", "Force"));
 }
 

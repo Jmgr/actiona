@@ -24,6 +24,7 @@
 #include "actiontools_global.h"
 #include "version.h"
 #include "actionexception.h"
+#include "stringlistpair.h"
 
 #include <QString>
 #include <QPixmap>
@@ -99,6 +100,7 @@ namespace ActionTools
 		static QStringList StandardTabs;
 
 	protected:
+		void translateItems(const char *context, StringListPair &items) const;
 		void addElement(ElementDefinition *element, int tab = 0);
 		void addException(int id, const QString &name)									{ mExceptions.append(new ActionException(id, name)); }
 		bool requirementCheckXTest(QStringList &missingRequirements) const;

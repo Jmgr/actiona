@@ -45,6 +45,8 @@ namespace Actions
 		explicit PixelColorDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("PixelColorInstance::comparisons", PixelColorInstance::comparisons);
+
 			ActionTools::ColorPositionParameterDefinition *pixel = new ActionTools::ColorPositionParameterDefinition("pixel", tr("Pixel"), this);
 			pixel->setTooltip(tr("The pixel position and color to check"));
 			addElement(pixel);

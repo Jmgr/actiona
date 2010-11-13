@@ -5,5 +5,4 @@ TARGET = ActionPackWindows
 QT += script
 HEADERS += actionpackwindows.h
 RESOURCES += actionpackwindows.qrc
-TRANSLATIONS = ../../locale/actionpackwindows_en.ts \
-	../../locale/actionpackwindows_fr.ts
+TRANSLATIONS = ../../locale/actionpackwindows_fr_FR.ts

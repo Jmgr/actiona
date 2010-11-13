@@ -26,6 +26,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QApplication>
+#include <QTranslator>
 
 namespace ActionTools
 {
@@ -44,7 +45,7 @@ namespace ActionTools
 		return s1->name() < s2->name();
 	}
 
-	void ActionFactory::loadActionPacks()
+	void ActionFactory::loadActionPacks(const QString &locale)
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("ActionFactory loadActionPacks");
@@ -64,7 +65,7 @@ namespace ActionTools
 	#endif
 
 		foreach(const QString actionFilename, actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
-			loadActionPack(actionDirectory.absoluteFilePath(actionFilename));
+			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
 
 		qSort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
 
@@ -133,7 +134,7 @@ namespace ActionTools
 		mActionPacks.clear();
 	}
 
-	void ActionFactory::loadActionPack(const QString &filename)
+	void ActionFactory::loadActionPack(const QString &filename, const QString &locale)
 	{
 		QPluginLoader pluginLoader(filename);
 		QObject *actionPackObject = pluginLoader.instance();
@@ -151,6 +152,12 @@ namespace ActionTools
 			emit actionPackLoadError(tr("%1: bad definition version").arg(shortFilename));
 			return;
 		}
+
+		QTranslator *actionPackTranslator = new QTranslator(this);
+		actionPackTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale));
+		QApplication::installTranslator(actionPackTranslator);
+
+		actionPack->createDefinitions();
 
 		foreach(ActionDefinition *definition, actionPack->actionsDefinitions())
 		{

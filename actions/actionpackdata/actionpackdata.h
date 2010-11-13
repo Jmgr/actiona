@@ -56,7 +56,9 @@ class ActionPackData : public QObject, public ActionTools::ActionPack
 	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
-	ActionPackData()
+	ActionPackData()								{}
+
+	void createDefinitions()
 	{
 		addActionDefinition(new Actions::WriteTextFileDefinition(this));
 		addActionDefinition(new Actions::ReadTextFileDefinition(this));

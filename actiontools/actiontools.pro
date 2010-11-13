@@ -83,8 +83,7 @@ UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated
 OBJECTS_DIR = generated
-TRANSLATIONS = ../locale/actiontools_en.ts \
-	../locale/actiontools_fr.ts
+TRANSLATIONS = ../locale/actiontools_fr_FR.ts
 RESOURCES += actiontools.qrc
 INCLUDEPATH += . \
     ../tools

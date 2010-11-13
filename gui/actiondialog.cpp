@@ -72,7 +72,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	//Init of tabs & group boxes
 	QStringList tabs = actionDefinition->tabs();
 	if(tabs.count() == 0)
-		tabs << tr("Parameters");
+		tabs << QT_TRANSLATE_NOOP("ActionTabs", "Parameters");
 
 	int tabCount = tabs.count();
 
@@ -103,7 +103,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		widget->setLayout(layout);
 
 		mParameterTabWidgets.append(widget);
-		mTabWidget->addTab(widget, tab);
+		mTabWidget->addTab(widget, QApplication::translate("ActionTabs", tab.toLatin1()));
 
 		++tabIndex;
 	}
@@ -147,7 +147,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	//Init of exceptions
 	QStringList exceptionActionsNames;
 	for(int i = 0; i < ActionTools::ActionException::ExceptionActionCount; ++i)
-		exceptionActionsNames << ActionTools::ActionException::ExceptionActionName[i];
+		exceptionActionsNames << QApplication::translate("ActionException::ExceptionActionName", ActionTools::ActionException::ExceptionActionName[i].toLatin1());
 
 	QList<ActionTools::ActionException *> actionExceptions = actionDefinition->exceptions();
 
@@ -158,7 +158,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 		if(i < ActionTools::ActionException::ExceptionCount)
 		{
-			exceptionName = ActionTools::ActionException::ExceptionName[i];
+			exceptionName = QApplication::translate("ActionException::ExceptionName", ActionTools::ActionException::ExceptionName[i].toLatin1());
 			exceptionId = i;
 		}
 		else
@@ -169,7 +169,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 			++exceptionIndex;
 		}
 
-		QLabel *exceptionNameLabel = new QLabel(exceptionName, this);
+		QLabel *exceptionNameLabel = new QLabel(exceptionName + tr(":"), this);
 		exceptionNameLabel->setProperty("id", exceptionId);
 		mExceptionsLayout->addWidget(exceptionNameLabel, i, 0, Qt::AlignLeft);
 
