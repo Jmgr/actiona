@@ -74,6 +74,7 @@ namespace ActionTools
 		QVariant defaultValue(QVariant defaultValue = QVariant()) const			{ Q_UNUSED(defaultValue); return QVariant(); }
 		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }
 
+		static bool translated;
 		static StringListPair actions;
 
 		CodeComboBox *mActionEdit;

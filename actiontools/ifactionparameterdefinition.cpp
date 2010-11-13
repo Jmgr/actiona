@@ -26,11 +26,15 @@
 #include "actioninstance.h"
 #include "script.h"
 
+#include <QApplication>
+
 namespace ActionTools
 {
+	bool IfActionParameterDefinition::translated = false;
+
 	StringListPair IfActionParameterDefinition::actions = qMakePair(
 		QStringList() << "do_nothing" << "goto",
-		QStringList() << QObject::tr("Do nothing") << QObject::tr("Goto line"));
+		QStringList() << QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Do nothing") << QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Goto line"));
 
 	IfActionParameterDefinition::IfActionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
 		: ItemsParameterDefinition(name, translatedName, parent),
@@ -38,6 +42,13 @@ namespace ActionTools
 		mLineEdit(0),
 		mAllowWait(false)
 	{
+		if(!translated)
+		{
+			translated = true;
+
+			for(int index = 0; index < actions.second.size(); ++index)
+				actions.second[index] = QApplication::instance()->translate("IfActionParameterDefinition::actions", actions.second.at(index).toLatin1());
+		}
 	}
 
 	void IfActionParameterDefinition::buildEditors(Script *script, QWidget *parent)

@@ -558,6 +558,19 @@ Double-cliquez pour afficher</translation>
     </message>
 </context>
 <context>
+    <name>IfActionParameterDefinition::actions</name>
+    <message>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="35"/>
+        <source>Do nothing</source>
+        <translation>Ne rien faire</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="35"/>
+        <source>Goto line</source>
+        <translation>Aller à une ligne</translation>
+    </message>
+</context>
+<context>
     <name>PointListWidget</name>
     <message>
         <location filename="../actiontools/pointlistwidget.ui" line="14"/>
@@ -673,17 +686,15 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Aller à une ligne</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="33"/>
         <source>Do nothing</source>
-        <translation>Ne rien faire</translation>
+        <translation type="obsolete">Ne rien faire</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="33"/>
         <source>Goto line</source>
-        <translation>Aller à une ligne</translation>
+        <translation type="obsolete">Aller à une ligne</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="52"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="56"/>
         <source>Wait</source>
         <translation>Attendre</translation>
     </message>
