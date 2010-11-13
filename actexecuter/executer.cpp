@@ -24,6 +24,7 @@
 #include <iostream>
 #include <QApplication>
 #include <QFile>
+#include <QSettings>
 
 Executer::Executer(QObject *parent) :
 	QObject(parent),
@@ -41,7 +42,10 @@ bool Executer::start(QFile &file)
 {
 	Q_UNUSED(file)
 
-	mActionFactory->loadActionPacks();
+	QSettings settings;
+	QString locale = settings.value("locale", QLocale::system().name()).toString();
+
+	mActionFactory->loadActionPacks(locale);
 	if(mActionLoadingFailed)
 		return false;
 
