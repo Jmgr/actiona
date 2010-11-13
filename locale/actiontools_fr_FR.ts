@@ -560,12 +560,12 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>IfActionParameterDefinition::actions</name>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="35"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="37"/>
         <source>Do nothing</source>
         <translation>Ne rien faire</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="35"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="37"/>
         <source>Goto line</source>
         <translation>Aller à une ligne</translation>
     </message>
@@ -694,7 +694,7 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Aller à une ligne</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="56"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="63"/>
         <source>Wait</source>
         <translation>Attendre</translation>
     </message>

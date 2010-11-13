@@ -458,12 +458,12 @@
     <message>
         <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="33"/>
         <source>Created</source>
-        <translation>Créé</translation>
+        <translation>Créée</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="34"/>
         <source>Closed</source>
-        <translation>Fermé</translation>
+        <translation>Fermée</translation>
     </message>
 </context>
 <context>
