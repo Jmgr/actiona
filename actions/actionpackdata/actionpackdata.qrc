@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/copyfile.png</file>
+        <file>icons/readbinary.png</file>
+        <file>icons/readclipboard.png</file>
+        <file>icons/readini.png</file>
+        <file>icons/readregistry.png</file>
+        <file>icons/readtext.png</file>
+        <file>icons/writebinary.png</file>
+        <file>icons/writeclipboard.png</file>
+        <file>icons/writeini.png</file>
+        <file>icons/writeregistry.png</file>
+        <file>icons/writetext.png</file>
+    </qresource>
+</RCC>

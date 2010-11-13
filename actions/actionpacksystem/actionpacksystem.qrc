@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/clipboard.png</file>
+        <file>icons/closeprocess.png</file>
+        <file>icons/command.png</file>
+        <file>icons/notification.png</file>
+        <file>icons/pixelcolor.png</file>
+        <file>icons/system.png</file>
     </qresource>
 </RCC>

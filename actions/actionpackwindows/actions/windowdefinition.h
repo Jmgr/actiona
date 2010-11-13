@@ -95,7 +95,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Do some action on a window"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WindowInstance(this); }
 		Category category() const												{ return Windows; }
-		QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/window.png"); }
 
 	private:
 		Q_DISABLE_COPY(WindowDefinition)

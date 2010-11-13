@@ -74,7 +74,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Read an entry from the registry"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadRegistryInstance(this); }
 		Category category() const												{ return Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/readregistry.png"); }
 
 	private:
 		Q_DISABLE_COPY(ReadRegistryDefinition)

@@ -66,7 +66,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Restart, stop the computer or logout the current user"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new SystemInstance(this); }
 		Category category() const												{ return System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/system.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:

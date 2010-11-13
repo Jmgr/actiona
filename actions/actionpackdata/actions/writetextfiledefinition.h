@@ -68,7 +68,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Write a plain text file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteTextFileInstance(this); }
 		Category category() const												{ return Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/writetext.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:

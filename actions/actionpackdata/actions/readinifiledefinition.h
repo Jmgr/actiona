@@ -72,7 +72,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Read an entry in an INI file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadIniFileInstance(this); }
 		Category category() const												{ return Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/readini.png"); }
 
 	private:
 		Q_DISABLE_COPY(ReadIniFileDefinition)

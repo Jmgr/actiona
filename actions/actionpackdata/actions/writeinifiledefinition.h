@@ -70,7 +70,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Write an entry in an INI file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteIniFileInstance(this); }
 		Category category() const												{ return Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/writeini.png"); }
 
 	private:
 		Q_DISABLE_COPY(WriteIniFileDefinition)

@@ -62,7 +62,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Read a binary file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadBinaryFileInstance(this); }
 		Category category() const												{ return Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/readbinary.png"); }
 
 	private:
 		Q_DISABLE_COPY(ReadBinaryFileDefinition)

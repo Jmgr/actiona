@@ -53,7 +53,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Read the clipboard contents"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadClipboardInstance(this); }
 		Category category() const												{ return Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/readclipboard.png"); }
 
 	private:
 		Q_DISABLE_COPY(ReadClipboardDefinition)

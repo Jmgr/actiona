@@ -76,7 +76,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Check a pixel color on the screen"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new PixelColorInstance(this); }
 		Category category() const												{ return System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/pixelcolor.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:

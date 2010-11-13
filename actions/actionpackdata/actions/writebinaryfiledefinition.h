@@ -62,7 +62,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Write to a binary file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteBinaryFileInstance(this); }
 		Category category() const												{ return Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/writebinary.png"); }
 
 	private:
 		Q_DISABLE_COPY(WriteBinaryFileDefinition)

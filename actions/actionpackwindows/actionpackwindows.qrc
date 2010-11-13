@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/msg.png</file>
+        <file>icons/window.png</file>
+        <file>icons/windowcondition.png</file>
+        <file>icons/textinput.png</file>
     </qresource>
 </RCC>

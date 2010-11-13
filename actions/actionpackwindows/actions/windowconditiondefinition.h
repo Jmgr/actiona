@@ -91,7 +91,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Checks for the state of a window"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WindowConditionInstance(this); }
 		Category category() const												{ return Windows; }
-		QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/windowcondition.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:

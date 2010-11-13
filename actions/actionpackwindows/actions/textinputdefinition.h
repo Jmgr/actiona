@@ -61,7 +61,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Ask the user to enter some text"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new TextInputInstance(this); }
 		Category category() const												{ return Windows; }
-		QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/textinput.png"); }
 
 	private:
 		Q_DISABLE_COPY(TextInputDefinition)

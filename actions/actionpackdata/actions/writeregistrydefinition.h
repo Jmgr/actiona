@@ -73,7 +73,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Writes an entry to the registry"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteRegistryInstance(this); }
 		Category category() const												{ return Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/writeregistry.png"); }
 
 	private:
 		Q_DISABLE_COPY(WriteRegistryDefinition)

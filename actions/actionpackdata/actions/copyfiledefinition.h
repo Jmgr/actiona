@@ -65,7 +65,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Copy a file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CopyFileInstance(this); }
 		Category category() const												{ return Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/copyfile.png"); }
 
 	private:
 		Q_DISABLE_COPY(CopyFileDefinition)

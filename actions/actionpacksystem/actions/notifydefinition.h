@@ -71,7 +71,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Shows a message using the notify system"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new NotifyInstance(this); }
 		Category category() const												{ return System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/clipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/notification.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:
