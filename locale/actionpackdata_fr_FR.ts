@@ -936,7 +936,7 @@
     <message>
         <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="50"/>
         <source>Write clipboard</source>
-        <translation>Écriture presse-papier</translation>
+        <translation>Écrire presse-papier</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="53"/>
