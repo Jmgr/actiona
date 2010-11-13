@@ -44,5 +44,10 @@ namespace ActionTools
 			for(int i=0 ; i < lineCount ; ++i)
 				addItem(QString("%1").arg(i + 1, 3, 10, QChar('0')));
 		}
+
+		if(labels.size() > 0)
+			setCurrentIndex(1);
+		else if(lineCount > 0)
+			setCurrentIndex(1);
 	}
 }
