@@ -84,43 +84,6 @@ namespace Actions
 			mProcess->kill();
 		}
 
-	public slots:
-		qint64 executeDetached(const QString &command, const QString &parameters = "", const QString &workingDirectory = "") const
-		{
-			qint64 processId;
-			QStringList parameterList = parameters.split(QChar(' '));
-
-			bool started = QProcess::startDetached(command, parameters.isEmpty() ? QStringList() : parameterList, workingDirectory, &processId);
-
-			if(started)
-				return processId;
-			else
-				return 0;
-		}
-		QString execute(const QString &command, const QString &parameters = "", const QString &workingDirectory = "", int maxExecutionTime = -1) const
-		{
-			QProcess process;
-			QStringList parameterList = parameters.split(QChar(' '));
-
-			process.setWorkingDirectory(workingDirectory);
-			process.start(command, parameters.isEmpty() ? QStringList() : parameterList);
-			process.waitForFinished(maxExecutionTime);
-
-			if(process.state() != QProcess::NotRunning)
-			{
-				process.kill();
-				process.waitForFinished(3000);
-			}
-
-			const QString &standardOutput = QString::fromUtf8(process.readAllStandardOutput());
-			const QString &errorOutput = QString::fromUtf8(process.readAllStandardError());
-
-			if(standardOutput.isEmpty())
-				return errorOutput;
-
-			return standardOutput;
-		}
-
 	private slots:
 		void processFinished(int exitCode, QProcess::ExitStatus exitStatus)
 		{

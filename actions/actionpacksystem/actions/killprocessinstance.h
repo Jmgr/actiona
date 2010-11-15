@@ -60,12 +60,6 @@ namespace Actions
 			emit executionEnded();
 		}
 
-	public slots:
-		bool killProcess(int processId, KillMode killMode = GracefulThenForceful, int timeout = 1000)
-		{
-			return ActionTools::CrossPlatform::killProcess(processId, static_cast<ActionTools::CrossPlatform::KillMode>(killMode), timeout);
-		}
-
 	private:
 		Q_DISABLE_COPY(KillProcessInstance)
 	};

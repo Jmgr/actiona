@@ -125,30 +125,4 @@ namespace Actions
 
 		emit executionEnded();
 	}
-
-	MessageBoxInstance::Result MessageBoxInstance::messageBox(const QString &text, const QString &title, Icon icon, Buttons buttons)
-	{
-		QMessageBox::StandardButtons messageBoxButtons;
-
-		if(buttons == OkButton)
-			messageBoxButtons = QMessageBox::Ok;
-		else
-			messageBoxButtons = QMessageBox::Yes | QMessageBox::No;
-
-		QMessageBox *messageBox = new QMessageBox(messageBoxIcon(icon), title, text, messageBoxButtons);
-
-		messageBox->setWindowFlags(messageBox->windowFlags() & Qt::WA_DeleteOnClose);
-
-		messageBox->adjustSize();
-		QRect screenGeometry = QApplication::desktop()->availableGeometry();
-		messageBox->move(screenGeometry.center());
-		messageBox->move(messageBox->pos().x() - messageBox->width()/2, messageBox->pos().y() - messageBox->height()/2);
-
-		int result = messageBox->exec();
-
-		if(buttons == OkButton)
-			return Ok;
-
-		return (result == QMessageBox::Yes ? Yes : No);
-	}
 }

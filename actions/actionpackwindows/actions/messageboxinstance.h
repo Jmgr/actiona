@@ -71,9 +71,6 @@ namespace Actions
 	private slots:
 		void buttonClicked();
 
-	public slots:
-		MessageBoxInstance::Result messageBox(const QString &text, const QString &title = QString(), Icon icon = None, Buttons buttons = OkButton);
-
 	private:
 		QMessageBox *mMessageBox;
 		ActionTools::IfActionValue mIfYes;
