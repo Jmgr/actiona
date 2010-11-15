@@ -7,8 +7,11 @@ HEADERS += actions/commanddefinition.h \
 	actions/pixelcolordefinition.h \
 	actions/pixelcolorinstance.h \
 	actions/systeminstance.h \
-	actions/systemdefinition.h
+	actions/systemdefinition.h \
+    actions/openurlinstance.h \
+    actions/openurldefinition.h
 SOURCES += actions/killprocessinstance.cpp \
 	actions/notifyinstance.cpp \
 	actions/systeminstance.cpp \
-	actions/pixelcolorinstance.cpp
+	actions/pixelcolorinstance.cpp \
+    actions/openurlinstance.cpp

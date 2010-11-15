@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackSystem</name>
     <message>
-        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="61"/>
+        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="63"/>
         <source>Actions dealing with the operating system</source>
         <translation>Actions en rapport avec le système d&apos;exploitation</translation>
     </message>
@@ -184,6 +184,42 @@
         <location filename="../actions/actionpacksystem/actions/notifyinstance.cpp" line="74"/>
         <source>Unable to show the notification</source>
         <translation>Impossible d&apos;afficher la notification</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::OpenURLDefinition</name>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="45"/>
+        <source>Scheme</source>
+        <translation>Schéma</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="46"/>
+        <source>The url scheme</source>
+        <translation>Le schéma de l&apos;URL</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="51"/>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="52"/>
+        <source>The url to open</source>
+        <translation>L&apos;URL à ouvrir</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="55"/>
+        <source>Failed to open URL</source>
+        <translation>Impossible d&apos;ouvrir l&apos;URL</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::OpenURLInstance</name>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="70"/>
+        <source>Failed to open URL</source>
+        <translation>Impossible d&apos;ouvrir l&apos;URL</translation>
     </message>
 </context>
 <context>
@@ -549,6 +585,16 @@
     <message>
         <source>Force</source>
         <translation type="obsolete">Forcer</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="58"/>
+        <source>Open URL</source>
+        <translation>Ouvrir URL</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="61"/>
+        <source>Opens an URL</source>
+        <translation>Ouvre une URL</translation>
     </message>
 </context>
 <context>

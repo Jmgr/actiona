@@ -27,6 +27,7 @@
 #include "actions/notifydefinition.h"
 #include "actions/pixelcolordefinition.h"
 #include "actions/systemdefinition.h"
+#include "actions/openurldefinition.h"
 
 #include "code/system.h"
 #include "code/mediaplaylist.h"
@@ -55,6 +56,7 @@ public:
 		addActionDefinition(new Actions::NotifyDefinition(this));
 		addActionDefinition(new Actions::PixelColorDefinition(this));
 		addActionDefinition(new Actions::SystemDefinition(this));
+		addActionDefinition(new Actions::OpenURLDefinition(this));
 	}
 
 	QString id() const							{ return "system"; }
