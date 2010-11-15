@@ -24,6 +24,7 @@
 #include "executer_global.h"
 #include "actioninstance.h"
 #include "scriptagent.h"
+#include "consolewidget.h"
 
 #include <QObject>
 #include <QPoint>
@@ -37,7 +38,6 @@ namespace ActionTools
 {
 	class Script;
 	class ActionFactory;
-	class ConsoleWidget;
 }
 
 class QStandardItemModel;
@@ -101,6 +101,9 @@ namespace LibExecuter
 		void hideProgressDialog();
 		void executionPaused();
 		void executionResumed();
+		void consolePrint(const QString &text);
+		void consolePrintWarning(const QString &text);
+		void consolePrintError(const QString &text);
 
 	private:
 		enum ExecuteActionResult
@@ -119,6 +122,7 @@ namespace LibExecuter
 			PostPause
 		};
 
+		void consolePrint(const QString &text, ActionTools::ConsoleWidget::Type type);
 		void pauseOrDebug(bool debug);
 		ActionTools::ActionInstance *currentActionInstance() const;
 		ExecuteActionResult canExecuteAction(const QString &line) const;

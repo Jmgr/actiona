@@ -10,5 +10,6 @@
         <file>icons/timecondition.png</file>
         <file>icons/variable.png</file>
         <file>icons/variablecondition.png</file>
+        <file>icons/console.png</file>
     </qresource>
 </RCC>

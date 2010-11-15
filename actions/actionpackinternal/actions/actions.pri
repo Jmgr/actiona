@@ -1,4 +1,5 @@
-SOURCES += actions/variableconditioninstance.cpp
+SOURCES += actions/variableconditioninstance.cpp \
+    actions/consoleinstance.cpp
 HEADERS += actions/stopdefinition.h \
 	actions/stopinstance.h \
 	actions/variabledefinition.h \
@@ -18,4 +19,6 @@ HEADERS += actions/stopdefinition.h \
 	actions/loopdefinition.h \
 	actions/loopinstance.h \
 	actions/noopdefinition.h \
-	actions/noopinstance.h
+	actions/noopinstance.h \
+    actions/consoledefinition.h \
+    actions/consoleinstance.h

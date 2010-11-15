@@ -22,7 +22,6 @@
 #include "script.h"
 #include "actionfactory.h"
 #include "executionwindow.h"
-#include "consolewidget.h"
 #include "codeinitializer.h"
 
 #include <QDesktopWidget>
@@ -663,6 +662,21 @@ namespace LibExecuter
 		mExecutionPaused = false;
 	}
 
+	void Executer::consolePrint(const QString &text)
+	{
+		consolePrint(text, ActionTools::ConsoleWidget::Information);
+	}
+
+	void Executer::consolePrintWarning(const QString &text)
+	{
+		consolePrint(text, ActionTools::ConsoleWidget::Warning);
+	}
+
+	void Executer::consolePrintError(const QString &text)
+	{
+		consolePrint(text, ActionTools::ConsoleWidget::Error);
+	}
+
 	Executer::ExecuteActionResult Executer::canExecuteAction(const QString &line) const
 	{
 		bool ok;
@@ -674,6 +688,18 @@ namespace LibExecuter
 			--nextLine;
 
 		return canExecuteAction(nextLine);
+	}
+
+	void Executer::consolePrint(const QString &text, ActionTools::ConsoleWidget::Type type)
+	{
+		consoleWidget()->addUserLine(text,
+									   currentActionIndex(),
+									   mScriptEngine->currentContext()->engine()->property("currentParameter").toString(),
+									   mScriptEngine->currentContext()->engine()->property("currentSubParameter").toString(),
+									   mScriptAgent->currentLine(),
+									   mScriptAgent->currentColumn(),
+									   mScriptEngine->currentContext()->backtrace(),
+									   type);
 	}
 
 	void Executer::pauseOrDebug(bool debug)
@@ -765,6 +791,9 @@ namespace LibExecuter
 		connect(actionInstance, SIGNAL(updateProgressDialog(int)), this, SLOT(updateProgressDialog(int)));
 		connect(actionInstance, SIGNAL(updateProgressDialog(QString)), this, SLOT(updateProgressDialog(QString)));
 		connect(actionInstance, SIGNAL(hideProgressDialog()), this, SLOT(hideProgressDialog()));
+		connect(actionInstance, SIGNAL(consolePrint(QString)), this, SLOT(consolePrint(QString)));
+		connect(actionInstance, SIGNAL(consolePrintWarning(QString)), this, SLOT(consolePrintWarning(QString)));
+		connect(actionInstance, SIGNAL(consolePrintError(QString)), this, SLOT(consolePrintError(QString)));
 		
 		mExecutionStatus = PrePause;
 

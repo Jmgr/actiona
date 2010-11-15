@@ -185,6 +185,9 @@ namespace ActionTools
 		void executionException(int exception, const QString &message);
 		void executionEnded();
 		void disableAction(bool disable = true);
+		void consolePrint(const QString &text);
+		void consolePrintWarning(const QString &text);
+		void consolePrintError(const QString &text);
 
 	private:
 		QSharedDataPointer<ActionInstanceData> d;

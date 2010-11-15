@@ -32,6 +32,7 @@
 #include "actions/timeconditiondefinition.h"
 #include "actions/exitdefinition.h"
 #include "actions/variableconditiondefinition.h"
+#include "actions/consoledefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -60,6 +61,7 @@ public:
 		addActionDefinition(new Actions::TimeConditionDefinition(this));
 		addActionDefinition(new Actions::ExitDefinition(this));
 		addActionDefinition(new Actions::VariableConditionDefinition(this));
+		addActionDefinition(new Actions::ConsoleDefinition(this));
 	}
 
 	QString id() const								{ return "internal"; }

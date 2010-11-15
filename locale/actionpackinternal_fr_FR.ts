@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackInternal</name>
     <message>
-        <location filename="../actions/actionpackinternal/actionpackinternal.h" line="66"/>
+        <location filename="../actions/actionpackinternal/actionpackinternal.h" line="68"/>
         <source>Internal actions</source>
         <translation>Actions internes</translation>
     </message>
@@ -20,6 +20,29 @@
         <location filename="../actions/actionpackinternal/actions/codedefinition.h" line="45"/>
         <source>The code to evaluate</source>
         <translation>Le code à évaluer</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::ConsoleDefinition</name>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="47"/>
+        <source>Text</source>
+        <translation>Texte</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="48"/>
+        <source>The text to write</source>
+        <translation>Le texte à écrire</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="51"/>
+        <source>Output</source>
+        <translation>Sortie</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="52"/>
+        <source>The console output</source>
+        <translation>Le type de sortie</translation>
     </message>
 </context>
 <context>
@@ -213,6 +236,24 @@
     </message>
 </context>
 <context>
+    <name>ConsoleInstance::outputs</name>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/consoleinstance.cpp" line="28"/>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/consoleinstance.cpp" line="29"/>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/consoleinstance.cpp" line="30"/>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../actions/actionpackinternal/actions/codedefinition.h" line="50"/>
@@ -341,6 +382,16 @@
     <message>
         <source>Contains</source>
         <translation type="obsolete">Contient</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="58"/>
+        <source>Console</source>
+        <translation>Console</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="61"/>
+        <source>Write an entry in the console</source>
+        <translation>Écrit une entrée dans la console</translation>
     </message>
 </context>
 <context>
