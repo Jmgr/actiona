@@ -826,7 +826,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../gui/mainwindow.ui" line="689"/>
         <source>New &amp;action window</source>
-        <translation>Nouvelle fenêtre d&apos;&amp;action</translation>
+        <translation>Fenêtre nouvelle &amp;action</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.ui" line="762"/>
