@@ -86,12 +86,12 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="44"/>
         <source>Path</source>
-        <translation>Chemin</translation>
+        <translation>Trajet</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="45"/>
         <source>The path to follow</source>
-        <translation>Le chemin à suivre</translation>
+        <translation>Le trajet à effectuer</translation>
     </message>
 </context>
 <context>
@@ -325,7 +325,7 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="49"/>
         <source>Move cursor</source>
-        <translation>Déplacement de curseur</translation>
+        <translation>Déplacement du curseur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="52"/>
@@ -387,12 +387,12 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="49"/>
         <source>Cursor path</source>
-        <translation>Chemin de curseur</translation>
+        <translation>Trajet du curseur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="52"/>
         <source>Move the mouse cursor on a path</source>
-        <translation>Déplace le curseur de souris sur un chemin</translation>
+        <translation>Déplace le curseur de la souris sur un trajet</translation>
     </message>
 </context>
 </TS>
