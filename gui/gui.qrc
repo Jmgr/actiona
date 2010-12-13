@@ -3,16 +3,12 @@
         <file>icons/delete.png</file>
         <file>icons/delete_cursor.png</file>
         <file>icons/keywords.png</file>
-        <file>icons/logo.png</file>
         <file>icons/act.png</file>
-        <file>images/start.png</file>
         <file>icons/warning.png</file>
         <file>icons/yes.png</file>
         <file>icons/about.png</file>
         <file>icons/act16.png</file>
         <file>icons/act32.png</file>
-        <file>icons/actionaz.ico</file>
-        <file>icons/actionaz.png</file>
         <file>icons/bg.png</file>
         <file>icons/copy.png</file>
         <file>icons/cut.png</file>
@@ -54,5 +50,9 @@
         <file>icons/calc.png</file>
         <file>icons/native.png</file>
         <file>icons/class.png</file>
+        <file>images/start.png</file>
+        <file>icons/actionaz.png</file>
+        <file>icons/logo.png</file>
+        <file>icons/actionaz.ico</file>
     </qresource>
 </RCC>

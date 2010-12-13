@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>515</width>
-    <height>466</height>
+    <width>531</width>
+    <height>456</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -100,7 +100,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <item>
              <property name="text">
-              <string>Sébastien &quot;usx&quot; Crapoulet</string>
+              <string>inTenSe</string>
              </property>
             </item>
            </widget>
