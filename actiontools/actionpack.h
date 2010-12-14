@@ -21,9 +21,11 @@
 #ifndef ACTIONPACK_H
 #define ACTIONPACK_H
 
+#include "actiontools_global.h"
+#include "version.h"
+
 #include <QScriptValue>
 #include <QScriptEngine>
-#include "version.h"
 
 namespace ActionTools
 {
@@ -31,7 +33,7 @@ namespace ActionTools
 
 	typedef QList<ActionDefinition *> ActionDefinitionList;
 
-	class ActionPack
+	class ACTIONTOOLSSHARED_EXPORT ActionPack
 	{
 	public:
 		ActionPack()												{}
