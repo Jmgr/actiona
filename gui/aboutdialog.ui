@@ -167,6 +167,11 @@ p, li { white-space: pre-wrap; }
               <string>djez</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Le lapin</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

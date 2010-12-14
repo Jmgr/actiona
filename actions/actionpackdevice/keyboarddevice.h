@@ -35,10 +35,17 @@ public:
 		Release,
 		Trigger
 	};
+	enum Type
+	{
+		Win32,
+		DirectX
+	};
 	
 	KeyboardDevice();
 	~KeyboardDevice();
 	
+	void setType(Type type) { mType = type; }
+
 	bool pressKey(const QString &key);
 	bool releaseKey(const QString &key);
 	bool triggerKey(const QString &key);
@@ -49,6 +56,7 @@ private:
 	int stringToNativeKey(const QString &key) const;
 	
 	QSet<int> mPressedKeys;
+	Type mType;
 };
 
 #endif // KEYBOARDDEVICE_H

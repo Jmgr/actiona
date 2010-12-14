@@ -25,6 +25,8 @@
 #include "actioninstance.h"
 #include "../keyboarddevice.h"
 
+#include <QTimer>
+
 namespace Actions
 {
 	class KeyInstance : public ActionTools::ActionInstance
@@ -38,21 +40,32 @@ namespace Actions
 			PressAction,
 			ReleaseAction
 		};
+		enum Type
+		{
+			Win32Type,
+			DirectXType
+		};
 		enum Exceptions
 		{
 			FailedToSendInputException = ActionTools::ActionException::UserException,
 			InvalidActionException
 		};
 	
-		KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-			: ActionTools::ActionInstance(definition, parent)								{}
+		KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 		
 		static ActionTools::StringListPair actions;
+		static ActionTools::StringListPair types;
 	
 		void startExecution();
+		void stopExecution();
+
+	private slots:
+		void sendRelease();
 	
 	private:
 		KeyboardDevice mKeyboardDevice;
+		QString mKey;
+		QTimer mTimer;
 		
 		Q_DISABLE_COPY(KeyInstance)
 	};

@@ -244,6 +244,19 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	{
 		if(ActionTools::ParameterDefinition *currentParameter = qobject_cast<ActionTools::ParameterDefinition *>(element))
 		{
+#ifdef Q_WS_X11
+			if(!(currentParameter->operatingSystems() & ActionTools::ActionDefinition::WorksOnGnuLinux))
+				continue;
+#endif
+#ifdef Q_WS_WIN
+			if(!(currentParameter->operatingSystems() & ActionTools::ActionDefinition::WorksOnWindows))
+				continue;
+#endif
+#ifdef Q_WS_MAC
+			if(!(currentParameter->operatingSystems() & ActionTools::ActionDefinition::WorksOnMac))
+				continue;
+#endif
+
 			int parameterType = (currentParameter->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);
 
 			QFormLayout *parameterLayout = mParameterLayouts[parameterType][currentParameter->tab()];

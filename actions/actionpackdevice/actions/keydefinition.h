@@ -25,6 +25,7 @@
 #include "keyinstance.h"
 #include "keyparameterdefinition.h"
 #include "listparameterdefinition.h"
+#include "numberparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -43,6 +44,7 @@ namespace Actions
 		: ActionDefinition(pack)
 		{
 			translateItems("KeyInstance::actions", KeyInstance::actions);
+			translateItems("KeyInstance::types", KeyInstance::types);
 
 			ActionTools::KeyParameterDefinition *key = new ActionTools::KeyParameterDefinition("key", tr("Key"), this);
 			key->setTooltip(tr("The key to simulate"));
@@ -53,7 +55,22 @@ namespace Actions
 			action->setItems(KeyInstance::actions);
 			action->setDefaultValue(KeyInstance::actions.second.at(KeyInstance::PressReleaseAction));
 			addElement(action);
-	
+
+			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition("type", tr("Type"), this);
+			type->setTooltip(tr("The key type to use"));
+			type->setItems(KeyInstance::types);
+			type->setDefaultValue(KeyInstance::types.second.at(KeyInstance::Win32Type));
+			type->setOperatingSystems(WorksOnWindows);
+			addElement(type, 1);
+
+			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition("pause", tr("Press/Release pause"), this);
+			pause->setTooltip(tr("The pause duration between press and release"));
+			pause->setMinimum(0);
+			pause->setMaximum(INT_MAX);
+			pause->setDefaultValue(10);
+			pause->setSuffix(tr(" ms", "milliseconds"));
+			addElement(pause, 1);
+
 			addException(KeyInstance::FailedToSendInputException, tr("Send input failure"));
 			addException(KeyInstance::InvalidActionException, tr("Invalid action"));
 		}
@@ -66,7 +83,8 @@ namespace Actions
 		Category category() const												{ return Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/key.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
-	
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+
 	private:
 		Q_DISABLE_COPY(KeyDefinition)
 	};

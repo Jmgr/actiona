@@ -33,30 +33,47 @@ namespace Actions
 	ActionTools::StringListPair KeyInstance::actions = qMakePair(
 			QStringList() << "pressRelease" << "press" << "release",
 			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", "Press and release") << QT_TRANSLATE_NOOP("KeyInstance::actions", "Press") << QT_TRANSLATE_NOOP("KeyInstance::actions", "Release"));
+	ActionTools::StringListPair KeyInstance::types = qMakePair(
+			QStringList() << "win32" << "directx",
+			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", "Win32") << QT_TRANSLATE_NOOP("KeyInstance::actions", "DirectX"));
+
+	KeyInstance::KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
+		: ActionTools::ActionInstance(definition, parent)
+	{
+		connect(&mTimer, SIGNAL(timeout()), this, SLOT(sendRelease()));
+	}
 
 	void KeyInstance::startExecution()
 	{
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 	
-		QString key;
 		Action action;
+		Type type;
+		int pause;
 	
-		if(!actionInstanceExecutionHelper.evaluateString(key, "key", "key") ||
-		   !actionInstanceExecutionHelper.evaluateListElement(action, actions, "action"))
+		if(!actionInstanceExecutionHelper.evaluateString(mKey, "key", "key") ||
+		   !actionInstanceExecutionHelper.evaluateListElement(action, actions, "action") ||
+		   !actionInstanceExecutionHelper.evaluateListElement(type, types, "type") ||
+		   !actionInstanceExecutionHelper.evaluateInteger(pause, "pause"))
 			return;
+
+		mKeyboardDevice.setType(static_cast<KeyboardDevice::Type>(type));
 	
 		bool result = true;
 	
 		switch(action)
 		{
 		case PressAction:
-			result &= mKeyboardDevice.pressKey(key);
+			result &= mKeyboardDevice.pressKey(mKey);
 			break;
 		case ReleaseAction:
-			result &= mKeyboardDevice.releaseKey(key);
+			result &= mKeyboardDevice.releaseKey(mKey);
 			break;
 		case PressReleaseAction:
-			result &= mKeyboardDevice.triggerKey(key);
+			result &= mKeyboardDevice.pressKey(mKey);
+
+			mTimer.setSingleShot(true);
+			mTimer.start(pause);
 			break;
 		}
 		
@@ -65,6 +82,19 @@ namespace Actions
 			emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
 			return;
 		}
+
+		if(action != PressReleaseAction)
+			emit executionEnded();
+	}
+
+	void KeyInstance::stopExecution()
+	{
+		mTimer.stop();
+	}
+
+	void KeyInstance::sendRelease()
+	{
+		mKeyboardDevice.releaseKey(mKey);
 
 		emit executionEnded();
 	}
