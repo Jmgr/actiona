@@ -40,8 +40,6 @@
 #include <windows.h>
 #endif
 
-#include <QDebug>
-
 KeyboardDevice::KeyboardDevice()
 	: mType(Win32)
 {
