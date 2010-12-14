@@ -1641,11 +1641,14 @@ void MainWindow::otherInstanceMessage(const QString &message)
 	{
 		QFileInfo fileInfo(message);
 
-		if(fileInfo.isFile() && fileInfo.isReadable() && maybeSave())
-			loadFile(message);
-	}
+		if(fileInfo.isFile() && fileInfo.isReadable())
+		{
+			if(maybeSave())
+				loadFile(message);
 
-	emit needToShow();
+			emit needToShow();
+		}
+	}
 }
 
 #ifndef ACT_NO_UPDATER
