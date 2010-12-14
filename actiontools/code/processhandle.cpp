@@ -181,14 +181,14 @@ namespace Code
 		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, id());
 		if(!process)
 		{
-			throwError("OpenProcessError", tr("Unable to open the process");
+			throwError("OpenProcessError", tr("Unable to open the process"));
 			return QString();
 		}
 
 		TCHAR buffer[256];
 		if(!GetModuleFileNameEx(process, NULL, buffer, 256))
 		{
-			throwError("GetModuleFilenameError", tr("Unable to retrieve the executable filename");
+			throwError("GetModuleFilenameError", tr("Unable to retrieve the executable filename"));
 			return QString();
 		}
 
@@ -214,7 +214,7 @@ namespace Code
 		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, id());
 		if(!process)
 		{
-			throwError("OpenProcessError", tr("Unable to open the process");
+			throwError("OpenProcessError", tr("Unable to open the process"));
 			return Normal;
 		}
 
@@ -236,7 +236,7 @@ namespace Code
 		case REALTIME_PRIORITY_CLASS:
 			return Realtime;
 		default:
-			throwError("GetPriorityClassError", tr("Unable to retrieve the process priority");
+			throwError("GetPriorityClassError", tr("Unable to retrieve the process priority"));
 			return Normal;
 		}
 #else

@@ -27,17 +27,6 @@
 
 namespace Code
 {
-	CodeClass::CodeClass()
-		: QObject(),
-		QScriptable()
-	{
-	}
-
-	void CodeClass::throwError(const QString &errorType, const QString &message, const QString &parent) const
-	{
-		throwError(context(), engine(), errorType, message, parent);
-	}
-
 	void CodeClass::throwError(QScriptContext *context, QScriptEngine *engine, const QString &errorType, const QString &message, const QString &parent)
 	{
 		QScriptValue errorTypeValue = engine->globalObject().property(errorType);
@@ -52,6 +41,17 @@ namespace Code
 		thrownError.setProperty("message", message);
 		thrownError.setProperty("name", errorType);
 		context->throwValue(thrownError);
+	}
+
+	CodeClass::CodeClass()
+		: QObject(),
+		QScriptable()
+	{
+	}
+
+	void CodeClass::throwError(const QString &errorType, const QString &message, const QString &parent) const
+	{
+		throwError(context(), engine(), errorType, message, parent);
 	}
 
 	QScriptValue CodeClass::constructor(CodeClass *object, QScriptContext *context, QScriptEngine *engine)

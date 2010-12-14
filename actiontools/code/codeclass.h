@@ -21,13 +21,15 @@
 #ifndef CODECLASS_H
 #define CODECLASS_H
 
+#include "actiontools_global.h"
+
 #include <QObject>
 #include <QScriptable>
 #include <QByteArray>
 
 namespace Code
 {
-	class CodeClass : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT CodeClass : public QObject, public QScriptable
 	{
 		Q_OBJECT
 
