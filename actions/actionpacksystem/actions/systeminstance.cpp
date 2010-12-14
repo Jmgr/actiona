@@ -24,6 +24,7 @@
 #ifdef Q_WS_WIN
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <powrprof.h>
 #include <QMessageBox>
 #endif
 
@@ -229,9 +230,9 @@ namespace Actions
 			}
 #endif
 #ifdef Q_WS_WIN
-			if(!SetSuspendState(false, (mode == Force), false))
+			if(!SetSuspendState(false, (mode == Force), true))
 			{
-				emit executionException(NotEnoughRightsException, tr("Not enough rights to suspend"));
+				emit executionException(NotEnoughRightsException, tr("Suspend failed"));
 				return;
 			}
 #endif
@@ -271,7 +272,7 @@ namespace Actions
 #ifdef Q_WS_WIN
 			if(!SetSuspendState(true, (mode == Force), false))
 			{
-				emit executionException(NotEnoughRightsException, tr("Not enough rights to hibernate"));
+				emit executionException(NotEnoughRightsException, tr("Hibernate failed"));
 				return;
 			}
 #endif
