@@ -40,9 +40,11 @@
 #include <windows.h>
 #endif
 
+#include <QDebug>
+
 KeyboardDevice::KeyboardDevice()
+	: mType(Win32)
 {
-	
 }
 
 KeyboardDevice::~KeyboardDevice()
@@ -195,12 +197,6 @@ bool KeyboardDevice::writeText(const QString &text) const
 
 bool KeyboardDevice::doKeyAction(Action action, int nativeKey)
 {
-	if(mPressedKeys.contains(nativeKey) && action != Release)
-		return false;
-
-	if(!mPressedKeys.contains(nativeKey) && action == Release)
-		return false;
-	
 	bool result = true;
 	
 #ifdef Q_WS_X11
@@ -217,17 +213,27 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey)
 #ifdef Q_WS_WIN
 	INPUT input;
 	input.type = INPUT_KEYBOARD;
-	input.ki.wVk = nativeKey;
-	input.ki.wScan = 0;
-	input.ki.dwFlags = 0;
 	input.ki.time = 0;
 	input.ki.dwExtraInfo = 0;
+	input.ki.dwFlags = 0;
+
+	switch(mType)
+	{
+	case Win32:
+		input.ki.wVk = nativeKey;
+		input.ki.wScan = 0;
+		break;
+	case DirectX:
+		input.ki.wVk = 0;
+		input.ki.wScan = ActionTools::KeyMapper::toDirectXKey(nativeKey);
+		break;
+	}
 
 	if(action == Press || action == Trigger)
 		result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 	if(action == Release || action == Trigger)
 	{
-		input.ki.dwFlags = KEYEVENTF_KEYUP;
+		input.ki.dwFlags |= KEYEVENTF_KEYUP;
 
 		result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 	}
@@ -237,7 +243,7 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey)
 		mPressedKeys.insert(nativeKey);
 	else if(action == Release)
 		mPressedKeys.remove(nativeKey);
-	
+
 	return result;
 }
 
