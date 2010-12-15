@@ -227,13 +227,13 @@ namespace Code
 			{
 				if(QProcess::execute("cmd", QStringList() << "/c" << "mkdir" << QFile::encodeName(destination)))
 				{
-					throwError("DirectoryCreationError", tr("Unable to create destination directory"));
+					throwError(context, engine, "DirectoryCreationError", tr("Unable to create destination directory"));
 					return context->thisObject();
 				}
 			}
 			else
 			{
-				throwError("DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
+				throwError(context, engine, "DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
 				return context->thisObject();
 			}
 		}
@@ -241,7 +241,7 @@ namespace Code
 		QStringList args = QStringList() << "/c" << "xcopy" << QFile::encodeName(source) << QFile::encodeName(destination) << "/i /y /e /r /k /a /q /h /c /m /x";
 
 		if(QProcess::execute("cmd", args) > 1)
-			throwError("CopyError", tr("Copy failed"));
+			throwError(context, engine, "CopyError", tr("Copy failed"));
 #endif
 
 		return context->thisObject();
@@ -291,10 +291,12 @@ namespace Code
 		}
 #endif
 #ifdef Q_WS_WIN
+		Q_UNUSED(createDestinationDirectory)
+
 		QStringList args = QStringList() << "/c" << "move /y" << QFile::encodeName(source) << QFile::encodeName(destination);
 
 		if(QProcess::execute("cmd", args))
-			throwError("MoveRenameError", tr("Move/rename failed"));
+			throwError(context, engine, "MoveRenameError", tr("Move/rename failed"));
 #endif
 
 		return context->thisObject();
