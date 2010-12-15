@@ -58,6 +58,9 @@ namespace Code
 		};
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue drivers(QScriptContext *context, QScriptEngine *engine);
+
+		static void registerClass(QScriptEngine *scriptEngine);
 		
 		Sql(Driver driver);
 		~Sql();

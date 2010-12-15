@@ -80,12 +80,14 @@ public:
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
 		addCodeClass<Code::File>("File", scriptEngine);
+		Code::File::registerClass(scriptEngine);
 		addCodeClass<Code::Clipboard>("Clipboard", scriptEngine);
 		addCodeClass<Code::Registry>("Registry", scriptEngine);
 		addCodeClass<Code::IniFile>("IniFile", scriptEngine);
 		addCodeClass<Code::Udp>("Udp", scriptEngine);
 		addCodeClass<Code::Tcp>("Tcp", scriptEngine);
 		addCodeClass<Code::Sql>("Sql", scriptEngine);
+		Code::Sql::registerClass(scriptEngine);
 		addCodeClass<Code::TcpServer>("TcpServer", scriptEngine);
 	}
 

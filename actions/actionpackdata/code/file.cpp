@@ -81,6 +81,14 @@ namespace Code
 
 		return engine->undefinedValue();
 	}
+
+	void File::registerClass(QScriptEngine *scriptEngine)
+	{
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&copy, "copy", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&move, "move", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&rename, "rename", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&remove, "remove", scriptEngine);
+	}
 	
 	QScriptValue File::open(const QString &filename, OpenMode mode)
 	{

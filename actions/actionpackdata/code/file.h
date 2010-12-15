@@ -53,6 +53,8 @@ namespace Code
 		static QScriptValue move(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue rename(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue remove(QScriptContext *context, QScriptEngine *engine);
+
+		static void registerClass(QScriptEngine *scriptEngine);
 	
 		~File()						{ mFile.close(); }
 	

@@ -19,12 +19,14 @@
 */
 
 #include "sql.h"
+#include "code/codetools.h"
 
 #include <QScriptValueIterator>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QUuid>
+#include <QStringList>
 
 namespace Code
 {
@@ -39,6 +41,20 @@ namespace Code
 		Driver driver = static_cast<Driver>(context->argument(0).toInt32());
 
 		return CodeClass::constructor(new Sql(driver), context, engine);
+	}
+
+	QScriptValue Sql::drivers(QScriptContext *context, QScriptEngine *engine)
+	{
+		Q_UNUSED(context)
+
+		//TODO : Return Enum members
+
+		return stringListToArrayParameter(engine, QSqlDatabase::drivers());
+	}
+
+	void Sql::registerClass(QScriptEngine *scriptEngine)
+	{
+		CodeTools::addClassGlobalFunctionToScriptEngine<Sql>(&drivers, "drivers", scriptEngine);
 	}
 
 	Sql::Sql(Driver driver)
