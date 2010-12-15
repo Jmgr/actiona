@@ -182,9 +182,10 @@ int main(int argc, char **argv)
 #endif
 
 	app.addLibraryPath(QApplication::applicationDirPath() + "/actions");
+	app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
 
 	if(!options.count("nocodeqt"))
-		app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
+		app.addLibraryPath(QApplication::applicationDirPath() + "/code");
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");

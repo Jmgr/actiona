@@ -135,8 +135,10 @@ int main(int argc, char **argv)
 	}
 
 	app.addLibraryPath(QApplication::applicationDirPath() + "/actions");
+	app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
+
 	if(!options.count("nocodeqt"))
-		app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
+		app.addLibraryPath(QApplication::applicationDirPath() + "/code");
 
 	QString filename = options.positional().at(0);
 	
