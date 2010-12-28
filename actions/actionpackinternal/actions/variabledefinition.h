@@ -43,13 +43,24 @@ namespace Actions
 		explicit VariableDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("VariableInstance::types", VariableInstance::types);
+
 			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			variable->setCategory(ActionTools::ElementDefinition::INPUT);
 			variable->setTooltip(tr("The variable name"));
 			addElement(variable);
 
 			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
 			value->setTooltip(tr("The variable's new value"));
 			addElement(value);
+
+			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition("type", tr("Type"), this);
+			type->setTooltip(tr("The variable type"));
+			type->setItems(VariableInstance::types);
+			type->setDefaultValue(VariableInstance::types.second.at(VariableInstance::String));
+			addElement(type);
+
+			addException(VariableInstance::ConversionFailedException, tr("Conversion failed"));
 		}
 
 		QString name() const													{ return QObject::tr("Variable"); }

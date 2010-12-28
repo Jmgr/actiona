@@ -30,22 +30,67 @@ namespace Actions
 	class VariableInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
+		Q_ENUMS(Type)
 
 	public:
+		enum Type
+		{
+			String,
+			Integer,
+			Float
+		};
+		enum Exceptions
+		{
+			ConversionFailedException = ActionTools::ActionException::UserException
+		};
+
 		VariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)										{}
+
+		static ActionTools::StringListPair types;
 
 		void startExecution()
 		{
 			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 			QString variable;
 			QString value;
+			Type type;
 
 			if(!actionInstanceExecutionHelper.evaluateString(variable, "variable") ||
-			   !actionInstanceExecutionHelper.evaluateString(value, "value"))
+			   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
+			   !actionInstanceExecutionHelper.evaluateListElement(type, types, "type"))
 				return;
 
-			actionInstanceExecutionHelper.setVariable(variable, value);
+			switch(type)
+			{
+			case String:
+				{
+					actionInstanceExecutionHelper.setVariable(variable, value);
+				}
+				break;
+			case Integer:
+				{
+					bool ok;
+					actionInstanceExecutionHelper.setVariable(variable, value.toInt(&ok));
+					if(!ok)
+					{
+						emit executionException(ConversionFailedException, tr("Cannot evaluate the value as an integer"));
+						return;
+					}
+				}
+				break;
+			case Float:
+				{
+					bool ok;
+					actionInstanceExecutionHelper.setVariable(variable, value.toFloat(&ok));
+					if(!ok)
+					{
+						emit executionException(ConversionFailedException, tr("Cannot evaluate the value as a floating number"));
+						return;
+					}
+				}
+				break;
+			}
 
 			emit executionEnded();
 		}

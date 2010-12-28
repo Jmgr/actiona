@@ -348,22 +348,22 @@
 <context>
     <name>Actions::ReadTextFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="54"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="57"/>
         <source>Invalid first line value : %1</source>
         <translation>Valeur de première ligne incorrecte : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="61"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="64"/>
         <source>Invalid last line value : %1</source>
         <translation>Valeur de dernière ligne incorrecte : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="68"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="71"/>
         <source>The first line has to be smaller than the last line</source>
         <translation>La première ligne doit être plus petite que la dernière</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="77"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="80"/>
         <source>Cannot open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
@@ -985,12 +985,12 @@
 <context>
     <name>ReadTextFileInstance::modes</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="32"/>
         <source>Read the entire file</source>
         <translation>Lire le fichier entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="32"/>
         <source>Read only a selection</source>
         <translation>Lire une sélection</translation>
     </message>
