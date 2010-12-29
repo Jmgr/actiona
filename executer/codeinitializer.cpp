@@ -81,9 +81,6 @@ namespace LibExecuter
 	{
 		scriptEngine->setProcessEventsInterval(50);
 
-		QScriptValue codeExecution = scriptEngine->newQObject(new CodeExecution(scriptAgent), QScriptEngine::ScriptOwnership, QScriptEngine::ExcludeChildObjects | QScriptEngine::ExcludeSuperClassContents | QScriptEngine::ExcludeDeleteLater);
-		scriptEngine->globalObject().setProperty("Execution", codeExecution);
-
 		QScriptValue loadUIFunc = scriptEngine->newFunction(&loadUIFunction);
 		scriptEngine->globalObject().setProperty("loadUI", loadUIFunc);
 
@@ -99,6 +96,12 @@ namespace LibExecuter
 		Code::Size::registerClass(scriptEngine);
 		Code::Rect::registerClass(scriptEngine);
 		Code::ProcessHandle::registerClass(scriptEngine);
+
+		CodeExecution::setScriptAgent(scriptAgent);
+		Code::Code::addClassToScriptEngine<CodeExecution>("Execution", scriptEngine);
+		Code::Code::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::pause, "pause", scriptEngine);
+		Code::Code::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::sleep, "sleep", scriptEngine);
+		Code::Code::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::stop, "stop", scriptEngine);
 
 		Code::Code::addClassToScriptEngine<CodeConsole>("Console", scriptEngine);
 		Code::Code::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::print, "print", scriptEngine);

@@ -38,15 +38,15 @@ namespace LibExecuter
 		Q_OBJECT
 		
 	public:
-		CodeExecution(ScriptAgent *scriptAgent);
-		
-	public slots:
-		void pause(qint64 duration) const;
-		void sleep(qint64 duration) const;
-		void stop() const;
+		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+		static void setScriptAgent(ScriptAgent *scriptAgent) { mScriptAgent = scriptAgent; }
+
+		static QScriptValue pause(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue sleep(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue stop(QScriptContext *context, QScriptEngine *engine);
 		
 	private:
-		ScriptAgent *mScriptAgent;
+		static ScriptAgent *mScriptAgent;
 	};
 }
 
