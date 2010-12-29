@@ -32,7 +32,6 @@ namespace Code
 	class TcpServer : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 		Q_PROPERTY(QScriptValue onNewConnection READ onNewConnection WRITE setOnNewConnection)
 		
 	public:

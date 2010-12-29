@@ -21,6 +21,7 @@
 #include "rect.h"
 #include "point.h"
 #include "size.h"
+#include "code.h"
 
 namespace Code
 {
@@ -88,6 +89,11 @@ namespace Code
 			context->throwError("Incorrect parameter count");
 			return QRect();
 		}
+	}
+
+	void Rect::registerClass(QScriptEngine *scriptEngine)
+	{
+		Code::addClassToScriptEngine<Rect>(scriptEngine);
 	}
 	
 	Rect::Rect()

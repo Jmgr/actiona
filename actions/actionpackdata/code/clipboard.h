@@ -32,7 +32,6 @@ namespace Code
 	class Clipboard : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(Mode)
 	
 	public:

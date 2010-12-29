@@ -34,7 +34,6 @@ namespace Code
 	class Sql : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(Driver)
 		Q_ENUMS(IndexStyle)
 		

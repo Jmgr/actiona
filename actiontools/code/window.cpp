@@ -23,6 +23,7 @@
 #include "size.h"
 #include "point.h"
 #include "processhandle.h"
+#include "code.h"
 
 #include <QScriptValueIterator>
 
@@ -168,6 +169,13 @@ namespace Code
 			back.setProperty(index, constructor(windowList.at(index), context, engine));
 
 		return back;
+	}
+
+	void Window::registerClass(QScriptEngine *scriptEngine)
+	{
+		Code::addClassToScriptEngine<Window>(scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Window>(&all, "all", scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Window>(&find, "find", scriptEngine);
 	}
 	
 	Window::Window()

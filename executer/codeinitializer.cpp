@@ -20,6 +20,7 @@
 
 #include "codeinitializer.h"
 #include "executer.h"
+#include "code/code.h"
 #include "code/image.h"
 #include "code/rawdata.h"
 #include "code/algorithms.h"
@@ -81,29 +82,28 @@ namespace LibExecuter
 		scriptEngine->setProcessEventsInterval(50);
 
 		QScriptValue codeExecution = scriptEngine->newQObject(new CodeExecution(scriptAgent), QScriptEngine::ScriptOwnership, QScriptEngine::ExcludeChildObjects | QScriptEngine::ExcludeSuperClassContents | QScriptEngine::ExcludeDeleteLater);
-		scriptEngine->globalObject().setProperty("execution", codeExecution);
+		scriptEngine->globalObject().setProperty("Execution", codeExecution);
 
 		QScriptValue loadUIFunc = scriptEngine->newFunction(&loadUIFunction);
 		scriptEngine->globalObject().setProperty("loadUI", loadUIFunc);
 
 		QScriptValue includeFunc = scriptEngine->newFunction(&includeFunction);
 		scriptEngine->globalObject().setProperty("include", includeFunc);
-		
-		addCodeClass<Code::RawData>("RawData", scriptEngine);
-		addCodeClass<Code::Image>("Image", scriptEngine);
-		addCodeClass<Code::Algorithms>("Algorithms", scriptEngine);
-		addCodeClass<Code::Color>("Color", scriptEngine);
-		addCodeClass<Code::Point>("Point", scriptEngine);
-		addCodeClass<Code::Size>("Size", scriptEngine);
-		addCodeClass<Code::Rect>("Rect", scriptEngine);
-		addCodeClass<Code::ProcessHandle>("ProcessHandle", scriptEngine);
-		addCodeClass<Code::Window>("Window", scriptEngine);
-		addCodeStaticMethod(&Code::Window::find, "Window", "find", scriptEngine);
-		addCodeStaticMethod(&Code::Window::all, "Window", "all", scriptEngine);
-		addCodeClass<CodeConsole>("Console", scriptEngine);
-		addCodeStaticMethod(&CodeConsole::print, "Console", "print", scriptEngine);
-		addCodeStaticMethod(&CodeConsole::printWarning, "Console", "printWarning", scriptEngine);
-		addCodeStaticMethod(&CodeConsole::printError, "Console", "printError", scriptEngine);
+
+		Code::Window::registerClass(scriptEngine);
+		Code::RawData::registerClass(scriptEngine);
+		Code::Image::registerClass(scriptEngine);
+		Code::Algorithms::registerClass(scriptEngine);
+		Code::Color::registerClass(scriptEngine);
+		Code::Point::registerClass(scriptEngine);
+		Code::Size::registerClass(scriptEngine);
+		Code::Rect::registerClass(scriptEngine);
+		Code::ProcessHandle::registerClass(scriptEngine);
+
+		Code::Code::addClassToScriptEngine<CodeConsole>("Console", scriptEngine);
+		Code::Code::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::print, "print", scriptEngine);
+		Code::Code::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::printWarning, "printWarning", scriptEngine);
+		Code::Code::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::printError, "printError", scriptEngine);
 
 		int actionPackCount = actionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)

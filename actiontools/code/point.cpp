@@ -19,6 +19,7 @@
 */
 
 #include "point.h"
+#include "code.h"
 
 namespace Code
 {
@@ -81,6 +82,11 @@ namespace Code
 			context->throwError("Incorrect parameter count");
 			return QPoint();
 		}
+	}
+
+	void Point::registerClass(QScriptEngine *scriptEngine)
+	{
+		Code::addClassToScriptEngine<Point>(scriptEngine);
 	}
 	
 	Point::Point()

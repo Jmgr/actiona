@@ -35,12 +35,13 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT RawData : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeType")
 	
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const RawData &other, QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QByteArray &byteArray, QScriptContext *context, QScriptEngine *engine);
+
+		static void registerClass(QScriptEngine *scriptEngine);
 		
 		RawData();
 		RawData(const RawData &other);

@@ -30,7 +30,6 @@ namespace Code
 	class MessageBox : public BaseWindow
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(StandardButton)
 		Q_ENUMS(Icon)
 		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)

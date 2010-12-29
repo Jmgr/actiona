@@ -26,16 +26,10 @@
 #include <QString>
 #include <QByteArray>
 #include <QScriptValue>
+#include <QScriptEngine>
 
 namespace Code
 {
-	enum CodeObject
-	{
-		CodeClass,
-		CodeType,
-		CodeNative
-	};
-	
 	class ACTIONTOOLSSHARED_EXPORT Code
 	{
 	public:
@@ -46,11 +40,51 @@ namespace Code
 			Latin1,
 			UTF8,
 		};
+
+		template<typename T>
+		static void addClassToScriptEngine(const QString &name, QScriptEngine *scriptEngine)
+		{
+			QScriptValue metaObject = scriptEngine->newQMetaObject(&T::staticMetaObject, scriptEngine->newFunction(&T::constructor));
+			scriptEngine->globalObject().setProperty(name, metaObject);
+		}
 		
+		template<typename T>
+		static void addClassToScriptEngine(QScriptEngine *scriptEngine)
+		{
+			addClassToScriptEngine<T>(removeCodeNamespace(T::staticMetaObject.className()), scriptEngine);
+		}
+
+		static void addClassGlobalFunctionToScriptEngine(const QString &className, QScriptEngine::FunctionSignature function, const QString &functionName, QScriptEngine *scriptEngine)
+		{
+			QScriptValue classMetaObject = scriptEngine->globalObject().property(className);
+			if(!classMetaObject.isValid())
+			{
+				classMetaObject = scriptEngine->newObject();
+				scriptEngine->globalObject().setProperty(className, classMetaObject);
+			}
+
+			classMetaObject.setProperty(functionName, scriptEngine->newFunction(function));
+		}
+
+		template<typename T>
+		static void addClassGlobalFunctionToScriptEngine(QScriptEngine::FunctionSignature function, const QString &functionName, QScriptEngine *scriptEngine)
+		{
+			addClassGlobalFunctionToScriptEngine(removeCodeNamespace(T::staticMetaObject.className()), function, functionName, scriptEngine);
+		}
+
 		static QByteArray toEncoding(const QString &string, Encoding encoding);
 		static QString fromEncoding(const QByteArray &byteArray, Encoding encoding);
 		static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
 		static QScriptValue stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList);
+
+	private:
+		static QString removeCodeNamespace(const QString &className)
+		{
+			if(className.startsWith("Code::"))
+				return className.right(className.size() - 6);
+			else
+				return className;
+		}
 	};
 }
 

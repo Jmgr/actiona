@@ -34,12 +34,13 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Size : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeType")
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QSize &size, QScriptContext *context, QScriptEngine *engine);
 		static QSize parameter(QScriptContext *context);
+
+		static void registerClass(QScriptEngine *scriptEngine);
 		
 		Size();
 		Size(const Size &other);

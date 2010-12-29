@@ -24,6 +24,7 @@
 #include "size.h"
 #include "rect.h"
 #include "window.h"
+#include "code.h"
 #include "qtimagefilters/QtImageFilterFactory"
 
 #include <QBuffer>
@@ -93,6 +94,12 @@ namespace Code
 		QPixmap screenPixmap = QPixmap::grabWindow(windowId);
 
 		return constructor(screenPixmap.toImage(), context, engine);
+	}
+
+	void Image::registerClass(QScriptEngine *scriptEngine)
+	{
+		Code::addClassToScriptEngine<Image>(scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshot, "takeScreenshot", scriptEngine);
 	}
 	
 	const QString Image::filterNames[] =

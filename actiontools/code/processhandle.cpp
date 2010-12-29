@@ -19,6 +19,7 @@
 */
 
 #include "processhandle.h"
+#include "code.h"
 
 #include <QProcess>
 
@@ -83,6 +84,11 @@ namespace Code
 			context->throwError("Incorrect parameter count");
 			return -1;
 		}
+	}
+
+	void ProcessHandle::registerClass(QScriptEngine *scriptEngine)
+	{
+		Code::addClassToScriptEngine<ProcessHandle>(scriptEngine);
 	}
 	
 	ProcessHandle::ProcessHandle()

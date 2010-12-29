@@ -33,21 +33,23 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Algorithms : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-	public slots:
-		QString md4(const QString &data) const;
-		QString md5(const QString &data) const;
-		QString sha1(const QString &data) const;
-		void setRandomSeed(uint seed) const;
-		int randomMax() const;
-		int randomInteger() const;
-		int randomInteger(int min, int max) const;
-		float randomFloat(float min, float max) const;
-		QString randomString() const;
+
+		static QScriptValue md4(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue md5(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue sha1(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue setRandomSeed(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue randomMax(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue randomInteger(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue randomFloat(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue randomString(QScriptContext *context, QScriptEngine *engine);
+
+		static void registerClass(QScriptEngine *scriptEngine);
+
+	private:
+		static int randomInteger(int min, int max);
 	};
 }
 

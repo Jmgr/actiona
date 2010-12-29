@@ -31,7 +31,6 @@ namespace Code
 	class BaseWindow : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 
 	public slots:
 		QScriptValue setTitle(const QString &title);

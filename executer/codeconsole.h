@@ -34,7 +34,6 @@ namespace LibExecuter
 	class EXECUTERSHARED_EXPORT CodeConsole : public QObject
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);

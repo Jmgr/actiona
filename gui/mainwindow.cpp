@@ -258,21 +258,8 @@ void MainWindow::postInit()
 			
 			if(!it.value().isQMetaObject())
 				continue;
-			
-			const QMetaObject *metaObject = it.value().toQMetaObject();
-			int typeIndex = metaObject->indexOfClassInfo("type");
-			if(typeIndex == -1)
-				continue;
-			
-			const char *type = metaObject->classInfo(typeIndex).value();
-			QStandardItem *codeObject = new QStandardItem(QIcon(":/icons/class.png"), it.name());
-			
-			if(qstrcmp(type, "CodeClass") == 0)
-				codeObject->setData(Code::CodeClass);
-			else if(qstrcmp(type, "CodeType") == 0)
-				codeObject->setData(Code::CodeType);
-			
-			mCompletionModel->appendRow(codeObject);
+
+			mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), it.name()));
 		}
 	}
 

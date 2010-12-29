@@ -19,6 +19,7 @@
 */
 
 #include "size.h"
+#include "code.h"
 
 namespace Code
 {
@@ -81,6 +82,11 @@ namespace Code
 			context->throwError("Incorrect parameter count");
 			return QSize();
 		}
+	}
+
+	void Size::registerClass(QScriptEngine *scriptEngine)
+	{
+		Code::addClassToScriptEngine<Size>(scriptEngine);
 	}
 	
 	Size::Size()

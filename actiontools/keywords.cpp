@@ -111,16 +111,11 @@ namespace ActionTools
 			model->appendRow(new QStandardItem(QIcon(":/icons/no.png"), keyword));
 		
 		foreach(const QString &keyword, globalKeywords)
-		{
-			QStandardItem *globalItem = new QStandardItem(QIcon(":/icons/native.png"), keyword);
-			globalItem->setData(Code::CodeNative);
-			model->appendRow(globalItem);
-		}
+			model->appendRow(new QStandardItem(QIcon(":/icons/native.png"), keyword));
 		
 		QStandardItem *mathItem = new QStandardItem(QIcon(":/icons/calc.png"), "Math");
 		foreach(const QString &keyword, mathKeywords)
 			mathItem->appendRow(new QStandardItem(QIcon(":/icons/calc.png"), keyword));
-		mathItem->setData(Code::CodeNative);
 		model->appendRow(mathItem);
 	}
 }

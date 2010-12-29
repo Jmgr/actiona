@@ -18,7 +18,6 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT ProcessHandle : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeType")
 		Q_ENUMS(ActionTools::CrossPlatform::KillMode)
 		Q_ENUMS(ActionTools::CrossPlatform::ProcessStatus)
 		Q_ENUMS(Priority)
@@ -37,6 +36,8 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(int processId, QScriptContext *context, QScriptEngine *engine);
 		static int parameter(QScriptContext *context);
+
+		static void registerClass(QScriptEngine *scriptEngine);
 
 		ProcessHandle();
 		ProcessHandle(const ProcessHandle &other);

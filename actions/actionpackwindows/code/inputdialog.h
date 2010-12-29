@@ -32,7 +32,6 @@ namespace Code
 	class InputDialog : public BaseWindow
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(InputType)
 		Q_ENUMS(TextEchoMode)
 		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)

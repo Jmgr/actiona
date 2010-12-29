@@ -35,7 +35,6 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Image : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeType")
 		Q_ENUMS(Filter)
 		Q_ENUMS(MirrorOrientation)
 		
@@ -67,6 +66,8 @@ namespace Code
 		static QScriptValue constructor(const QImage &image, QScriptContext *context, QScriptEngine *engine);
 
 		static QScriptValue takeScreenshot(QScriptContext *context, QScriptEngine *engine);
+
+		static void registerClass(QScriptEngine *scriptEngine);
 		
 		Image();
 		Image(const Image &other);

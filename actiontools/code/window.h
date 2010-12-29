@@ -34,7 +34,6 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Window : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeType")
 		Q_ENUMS(Mode)
 		
 	public:
@@ -52,7 +51,9 @@ namespace Code
 
 		static QScriptValue find(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue all(QScriptContext *context, QScriptEngine *engine);
-		
+
+		static void registerClass(QScriptEngine *scriptEngine);
+
 		Window();
 		Window(const Window &other);
 		Window(const ActionTools::WindowHandle &windowHandle);

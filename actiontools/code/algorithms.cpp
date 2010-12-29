@@ -19,6 +19,7 @@
 */
 
 #include "algorithms.h"
+#include "code.h"
 
 #include <QCryptographicHash>
 #include <QScriptValueIterator>
@@ -32,50 +33,80 @@ namespace Code
 	
 		return engine->newQObject(new Algorithms, QScriptEngine::ScriptOwnership);
 	}
-	
-	QString Algorithms::md4(const QString &data) const
+
+	QScriptValue Algorithms::md4(QScriptContext *context, QScriptEngine *engine)
 	{
-		return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md4).toHex();
+		Q_UNUSED(engine)
+
+		return QString(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Md4).toHex());
 	}
-	
-	QString Algorithms::md5(const QString &data) const
+
+	QScriptValue Algorithms::md5(QScriptContext *context, QScriptEngine *engine)
 	{
-		return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex();
+		Q_UNUSED(engine)
+
+		return QString(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Md5).toHex());
 	}
-	
-	QString Algorithms::sha1(const QString &data) const
+
+	QScriptValue Algorithms::sha1(QScriptContext *context, QScriptEngine *engine)
 	{
-		return QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1).toHex();
+		Q_UNUSED(engine)
+
+		return QString(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Sha1).toHex());
 	}
-	
-	void Algorithms::setRandomSeed(uint seed) const
+
+	QScriptValue Algorithms::setRandomSeed(QScriptContext *context, QScriptEngine *engine)
 	{
-		qsrand(seed);
+		Q_UNUSED(engine)
+
+		qsrand(context->argument(0).toInt32());
+
+		return QScriptValue();
 	}
-	
-	int Algorithms::randomMax() const
+
+	QScriptValue Algorithms::randomMax(QScriptContext *context, QScriptEngine *engine)
 	{
+		Q_UNUSED(context)
+		Q_UNUSED(engine)
+
 		return RAND_MAX;
 	}
-	
-	int Algorithms::randomInteger() const
+
+	QScriptValue Algorithms::randomInteger(QScriptContext *context, QScriptEngine *engine)
 	{
-		return qrand();
+		Q_UNUSED(engine)
+
+		switch(context->argumentCount())
+		{
+		case 0:
+			return qrand();
+		case 2:
+			{
+				int min = context->argument(0).toInt32();
+				int max = context->argument(1).toInt32();
+
+				return randomInteger(min, max);
+			}
+		default:
+			return QScriptValue();
+		}
 	}
-	
-	int Algorithms::randomInteger(int min, int max) const
+
+	QScriptValue Algorithms::randomFloat(QScriptContext *context, QScriptEngine *engine)
 	{
-		return static_cast<int>(min + (static_cast<float>(qrand()) / RAND_MAX * (max - min + 1)));
-	}
-	
-	float Algorithms::randomFloat(float min, float max) const
-	{
+		Q_UNUSED(engine)
+
+		float min = context->argument(0).toNumber();
+		float max = context->argument(1).toNumber();
+
 		return (qrand() / static_cast<float>(RAND_MAX)) * (max - min) + min;
 	}
 
-	QString Algorithms::randomString() const
+	QScriptValue Algorithms::randomString(QScriptContext *context, QScriptEngine *engine)
 	{
-		QScriptValueIterator it(context()->argument(0));
+		Q_UNUSED(engine)
+
+		QScriptValueIterator it(context->argument(0));
 		QString characters("abcdefghijklmnopqrstuvwxyz0123456789");
 		int minLength = 5;
 		int maxLength = 15;
@@ -101,5 +132,23 @@ namespace Code
 		}
 
 		return back;
+	}
+
+	void Algorithms::registerClass(QScriptEngine *scriptEngine)
+	{
+		Code::addClassToScriptEngine<Algorithms>(scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&md4, "md4", scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&md5, "md5", scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&sha1, "sha1", scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&setRandomSeed, "setRandomSeed", scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomMax, "randomMax", scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomInteger, "randomInteger", scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomFloat, "randomFloat", scriptEngine);
+		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomString, "randomString", scriptEngine);
+	}
+
+	int Algorithms::randomInteger(int min, int max)
+	{
+		return static_cast<int>(min + (static_cast<float>(qrand()) / RAND_MAX * (max - min + 1)));
 	}
 }

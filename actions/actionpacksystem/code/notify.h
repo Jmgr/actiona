@@ -34,7 +34,6 @@ namespace Code
 	class Notify : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);

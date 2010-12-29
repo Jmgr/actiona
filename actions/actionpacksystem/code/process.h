@@ -34,7 +34,6 @@ namespace Code
 	class Process : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 		Q_PROPERTY(QScriptValue onError READ onError WRITE setOnError)
 		Q_PROPERTY(QScriptValue onFinished READ onFinished WRITE setOnFinished)
 		Q_PROPERTY(QScriptValue onReadyReadStandardError READ onReadyReadStandardError WRITE setOnReadyReadStandardError)

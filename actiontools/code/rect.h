@@ -36,12 +36,13 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Rect : public QObject, public QScriptable
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeType")
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QRect &rect, QScriptContext *context, QScriptEngine *engine);
 		static QRect parameter(QScriptContext *context);
+
+		static void registerClass(QScriptEngine *scriptEngine);
 		
 		Rect();
 		Rect(const Rect &other);

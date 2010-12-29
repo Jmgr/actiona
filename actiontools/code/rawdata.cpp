@@ -64,6 +64,11 @@ namespace Code
 		
 		return engine->newQObject(new RawData(byteArray), QScriptEngine::ScriptOwnership);
 	}
+
+	void RawData::registerClass(QScriptEngine *scriptEngine)
+	{
+		Code::addClassToScriptEngine<RawData>(scriptEngine);
+	}
 	
 	RawData::RawData()
 		: QObject(),

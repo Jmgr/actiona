@@ -31,7 +31,6 @@ namespace Code
 	class FileDialog : public BaseWindow
 	{
 		Q_OBJECT
-		Q_CLASSINFO("type", "CodeClass")
 		Q_ENUMS(AcceptMode)
 		Q_ENUMS(FileMode)
 		Q_ENUMS(ViewMode)

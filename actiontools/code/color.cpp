@@ -19,6 +19,7 @@
 */
 
 #include "color.h"
+#include "code.h"
 
 namespace Code
 {
@@ -75,6 +76,11 @@ namespace Code
 		Q_UNUSED(context)
 	
 		return engine->newQObject(new Color(color), QScriptEngine::ScriptOwnership);
+	}
+
+	void Color::registerClass(QScriptEngine *scriptEngine)
+	{
+		Code::addClassToScriptEngine<Color>(scriptEngine);
 	}
 	
 	Color::Color()
