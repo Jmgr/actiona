@@ -25,31 +25,38 @@ namespace LibExecuter
 {
 	ScriptAgent *CodeExecution::mScriptAgent = 0;
 
-	QScriptValue CodeExecution::constructor(QScriptContext *context, QScriptEngine *)
+	QScriptValue CodeExecution::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
+		Q_UNUSED(engine)
+
 		return context->thisObject();
 	}
 
-	QScriptValue CodeExecution::pause(QScriptContext *context, QScriptEngine *)
+	QScriptValue CodeExecution::pause(QScriptContext *context, QScriptEngine *engine)
 	{
+		Q_UNUSED(engine)
+
 		if(mScriptAgent)
 			mScriptAgent->setPauseDuration(static_cast<quint64>(context->argument(0).toNumber()));
 
-		return QScriptValue();
+		return context->thisObject();
 	}
 	
 	QScriptValue CodeExecution::sleep(QScriptContext *context, QScriptEngine *engine)
 	{
 		pause(context, engine);
 
-		return QScriptValue();
+		return context->thisObject();
 	}
 	
-	QScriptValue CodeExecution::stop(QScriptContext *, QScriptEngine *)
+	QScriptValue CodeExecution::stop(QScriptContext *context, QScriptEngine *engine)
 	{
+		Q_UNUSED(context)
+		Q_UNUSED(engine)
+
 		if(mScriptAgent)
 			mScriptAgent->emitStopExecution();
 
-		return QScriptValue();
+		return context->thisObject();
 	}
 }
