@@ -55,10 +55,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Loop"); }
 		QString id() const														{ return "ActionLoop"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Go to a script line a specific number of times"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new LoopInstance(this); }
-		Category category() const												{ return Internal; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/loop.png"); }
 
 	private:

@@ -66,10 +66,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Write INI file"); }
 		QString id() const														{ return "ActionWriteIniFile"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write an entry in an INI file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteIniFileInstance(this); }
-		Category category() const												{ return Data; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/writeini.png"); }
 
 	private:

@@ -152,6 +152,14 @@ namespace ActionTools
 		update();
 	}
 
+	void CodeLineEdit::setFromSubParameter(const SubParameter &subParameter)
+	{
+		if(mAllowTextCodeChange)
+			setCode(subParameter.isCode());
+
+		setText(subParameter.value().toString());
+	}
+
 	void CodeLineEdit::addShortcuts(QMenu *menu)
 	{
 		menu->addActions(actions());

@@ -91,10 +91,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Window"); }
 		QString id() const														{ return "ActionWindow"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Do some action on a window"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WindowInstance(this); }
-		Category category() const												{ return Windows; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Windows; }
 		QPixmap icon() const													{ return QPixmap(":/icons/window.png"); }
 
 	private:

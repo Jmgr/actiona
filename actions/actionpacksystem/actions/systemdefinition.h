@@ -62,10 +62,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("System"); }
 		QString id() const														{ return "ActionSystem"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Restart, stop the computer or logout the current user"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new SystemInstance(this); }
-		Category category() const												{ return System; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/system.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

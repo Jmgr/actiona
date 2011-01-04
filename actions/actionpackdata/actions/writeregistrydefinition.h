@@ -69,10 +69,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Write registry"); }
 		QString id() const														{ return "ActionWriteRegistry"; }
-		Flag flags() const														{ return WorksOnWindows | Official; }
+		ActionTools::Flag flags() const											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Writes an entry to the registry"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteRegistryInstance(this); }
-		Category category() const												{ return Data; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/writeregistry.png"); }
 
 	private:

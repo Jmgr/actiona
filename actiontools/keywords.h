@@ -24,7 +24,6 @@
 #include "actiontools_global.h"
 
 #include <QStringList>
-#include <QIcon>
 
 class QStandardItemModel;
 struct QMetaObject;

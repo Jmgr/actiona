@@ -68,10 +68,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Read INI file"); }
 		QString id() const														{ return "ActionReadIniFile"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read an entry in an INI file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadIniFileInstance(this); }
-		Category category() const												{ return Data; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readini.png"); }
 
 	private:

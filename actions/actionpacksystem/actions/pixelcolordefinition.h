@@ -72,10 +72,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Pixel color"); }
 		QString id() const														{ return "ActionPixelColor"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Check a pixel color on the screen"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new PixelColorInstance(this); }
-		Category category() const												{ return System; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/pixelcolor.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

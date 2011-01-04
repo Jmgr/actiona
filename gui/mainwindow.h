@@ -25,7 +25,6 @@
 #include "executer.h"
 
 #include <QMainWindow>
-#include <QModelIndex>
 #ifndef ACT_NO_UPDATER
 #include <QCryptographicHash>
 #include <QFile>
@@ -62,6 +61,7 @@ class QStandardItemModel;
 class QxtCommandOptions;
 class QNetworkAccessManager;
 class ActionDialog;
+class QModelIndex;
 
 #ifdef Q_WS_WIN
 #include <Shobjidl.h>

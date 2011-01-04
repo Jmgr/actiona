@@ -44,10 +44,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("No-op"); }
 		QString id() const														{ return "ActionNoop"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Does nothing"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new NoopInstance(this); }
-		Category category() const												{ return Internal; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/noop.png"); }
 
 	private:

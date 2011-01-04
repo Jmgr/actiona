@@ -27,16 +27,10 @@
 
 #include <QObject>
 #include <QSharedData>
-#include <QVariant>
-#include <QDataStream>
-#include <QHash>
 #include <QColor>
-#include <QScriptValue>
-#include <QScriptContext>
-#include <QScriptEngine>
-#include <QMetaEnum>
 
 class QScriptEngine;
+class QDataStream;
 
 namespace ActionTools
 {
@@ -68,20 +62,7 @@ namespace ActionTools
 			script(other.script),
 			scriptEngine(other.scriptEngine)																										{}
 
-		bool operator==(const ActionInstanceData &other) const
-		{
-			return (parametersData == other.parametersData &&
-					definition == other.definition &&
-					comment == other.comment &&
-					label == other.label &&
-					color == other.color &&
-					enabled == other.enabled &&
-					selected == other.selected &&
-					exceptionActionInstances == other.exceptionActionInstances &&
-					pauseBefore == other.pauseBefore &&
-					pauseAfter == other.pauseAfter &&
-					timeout == other.timeout);
-		}
+		bool operator==(const ActionInstanceData &other) const;
 		
 		ParametersData parametersData;
 		const ActionDefinition *definition;
@@ -159,19 +140,7 @@ namespace ActionTools
 
 		void setupExecution(QScriptEngine *scriptEngine, Script *script)	{ d->scriptEngine = scriptEngine; d->script = script; }
 
-		void copyActionDataFrom(const ActionInstance &other)
-		{
-			setComment(other.comment());
-			setLabel(other.label());
-			setParametersData(other.parametersData());
-			setColor(other.color());
-			setEnabled(other.isEnabled());
-			setSelected(other.isSelected());
-			setExceptionActionInstances(other.exceptionActionInstances());
-			setPauseBefore(other.pauseBefore());
-			setPauseAfter(other.pauseAfter());
-			setTimeout(other.timeout());
-		}
+		void copyActionDataFrom(const ActionInstance &other);
 
 	protected:
 		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }

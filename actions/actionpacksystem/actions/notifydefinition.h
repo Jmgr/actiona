@@ -67,10 +67,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Notify"); }
 		QString id() const														{ return "ActionNotify"; }
-		Flag flags() const														{ return WorksOnGnuLinux | Official; }
+		ActionTools::Flag flags() const											{ return ActionTools::WorksOnGnuLinux | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Shows a message using the notify system"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new NotifyInstance(this); }
-		Category category() const												{ return System; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/notification.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

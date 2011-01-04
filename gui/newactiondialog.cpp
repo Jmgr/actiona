@@ -86,23 +86,23 @@ void NewActionDialog::on_newActionTreeWidget_currentItemChanged(QTreeWidgetItem 
 	QString status;
 	switch(actionDefinition->status())
 	{
-	case ActionTools::ActionDefinition::Alpha:
+	case ActionTools::Alpha:
 		status = tr("Alpha");
 		break;
-	case ActionTools::ActionDefinition::Beta:
+	case ActionTools::Beta:
 		status = tr("Beta");
 		break;
-	case ActionTools::ActionDefinition::Testing:
+	case ActionTools::Testing:
 		status = tr("Testing");
 		break;
-	case ActionTools::ActionDefinition::Stable:
+	case ActionTools::Stable:
 		status = tr("Stable");
 		break;
 	}
 	ui->statusLabel->setText(status);
 
 	QString official;
-	if(actionDefinition->flags() & ActionTools::ActionDefinition::Official)
+	if(actionDefinition->flags() & ActionTools::Official)
 		official = tr("Yes");
 	else
 		official = tr("No");

@@ -201,7 +201,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	QString email = actionDefinition->email();
 	QString website = actionDefinition->website();
 	Tools::Version version = actionDefinition->version();
-	ActionTools::ActionDefinition::Status status = actionDefinition->status();
+	ActionTools::ActionStatus status = actionDefinition->status();
 
 	if(!author.isEmpty())
 	{
@@ -228,10 +228,10 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 	switch(status)
 	{
-	case ActionTools::ActionDefinition::Alpha:		statusString = tr("Alpha"); break;
-	case ActionTools::ActionDefinition::Beta:		statusString = tr("Beta"); break;
-	case ActionTools::ActionDefinition::Testing:	statusString = tr("Testing"); break;
-	case ActionTools::ActionDefinition::Stable:		statusString = tr("Stable"); break;
+	case ActionTools::Alpha:	statusString = tr("Alpha"); break;
+	case ActionTools::Beta:		statusString = tr("Beta"); break;
+	case ActionTools::Testing:	statusString = tr("Testing"); break;
+	case ActionTools::Stable:	statusString = tr("Stable"); break;
 	}
 
 	informations += QString(" (%1)").arg(statusString);
@@ -245,15 +245,15 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		if(ActionTools::ParameterDefinition *currentParameter = qobject_cast<ActionTools::ParameterDefinition *>(element))
 		{
 #ifdef Q_WS_X11
-			if(!(currentParameter->operatingSystems() & ActionTools::ActionDefinition::WorksOnGnuLinux))
+			if(!(currentParameter->operatingSystems() & ActionTools::WorksOnGnuLinux))
 				continue;
 #endif
 #ifdef Q_WS_WIN
-			if(!(currentParameter->operatingSystems() & ActionTools::ActionDefinition::WorksOnWindows))
+			if(!(currentParameter->operatingSystems() & ActionTools::WorksOnWindows))
 				continue;
 #endif
 #ifdef Q_WS_MAC
-			if(!(currentParameter->operatingSystems() & ActionTools::ActionDefinition::WorksOnMac))
+			if(!(currentParameter->operatingSystems() & ActionTools::WorksOnMac))
 				continue;
 #endif
 

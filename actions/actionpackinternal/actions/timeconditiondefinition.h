@@ -62,10 +62,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Time condition"); }
 		QString id() const														{ return "ActionTimeCondition"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Check the current date time and do some action"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new TimeConditionInstance(this); }
-		Category category() const												{ return Internal; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/timecondition.png"); }
 
 	private:

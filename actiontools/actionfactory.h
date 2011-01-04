@@ -22,12 +22,15 @@
 #define ACTIONFACTORY_H
 
 #include "actiontools_global.h"
-#include "actiondefinition.h"
+#include "actiondefinitionenums.h"
+
+#include <QObject>
 
 namespace ActionTools
 {
 	class ActionPack;
 	class ActionInstance;
+	class ActionDefinition;
 
 	class ACTIONTOOLSSHARED_EXPORT ActionFactory : public QObject
 	{
@@ -42,7 +45,7 @@ namespace ActionTools
 		ActionDefinition *actionDefinition(int index) const;
 		ActionPack *actionPack(int index) const;
 		ActionInstance *newActionInstance(const QString &actionDefinitionId) const;
-		int actionDefinitionCount(ActionDefinition::Category category = ActionDefinition::None) const;
+		int actionDefinitionCount(ActionCategory category = None) const;
 		int actionPackCount()	const					{ return mActionPacks.count(); }
 
 	signals:

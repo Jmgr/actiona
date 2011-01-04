@@ -39,7 +39,8 @@ SOURCES += actionfactory.cpp \
     devicecopythread.cpp \
     datacopyactioninstance.cpp \
 	nativeeventfilteringapplication.cpp \
-	pointitemdelegate.cpp
+	pointitemdelegate.cpp \
+    actionpack.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -73,7 +74,8 @@ HEADERS += actiontools_global.h \
     datacopyactioninstance.h \
     nativeeventfilter.h \
 	nativeeventfilteringapplication.h \
-	pointitemdelegate.h
+	pointitemdelegate.h \
+    actiondefinitionenums.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \

@@ -27,6 +27,21 @@
 
 namespace ActionTools
 {
+	bool ActionInstanceData::operator==(const ActionInstanceData &other) const
+	{
+		return (parametersData == other.parametersData &&
+				definition == other.definition &&
+				comment == other.comment &&
+				label == other.label &&
+				color == other.color &&
+				enabled == other.enabled &&
+				selected == other.selected &&
+				exceptionActionInstances == other.exceptionActionInstances &&
+				pauseBefore == other.pauseBefore &&
+				pauseAfter == other.pauseAfter &&
+				timeout == other.timeout);
+	}
+
 	ActionInstance::ActionInstance(const ActionDefinition *definition, QObject *parent)
 		: QObject(parent)
 	{
@@ -48,6 +63,20 @@ namespace ActionTools
 			setExceptionActionInstance(static_cast<ActionTools::ActionException::Exception>(i),
 									   ActionTools::ActionException::ExceptionActionInstance(ActionTools::ActionException::ExceptionDefaultAction[i], QString()));
 		}
+	}
+
+	void ActionInstance::copyActionDataFrom(const ActionInstance &other)
+	{
+		setComment(other.comment());
+		setLabel(other.label());
+		setParametersData(other.parametersData());
+		setColor(other.color());
+		setEnabled(other.isEnabled());
+		setSelected(other.isSelected());
+		setExceptionActionInstances(other.exceptionActionInstances());
+		setPauseBefore(other.pauseBefore());
+		setPauseAfter(other.pauseAfter());
+		setTimeout(other.timeout());
 	}
 
 	QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance)

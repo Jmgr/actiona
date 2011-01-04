@@ -50,11 +50,11 @@ namespace ActionTools
 		virtual Qt::Orientation editorsOrientation() const							{ return Qt::Horizontal; }
 
 		QList<QWidget *> editors() const											{ return mEditors; }
-		ActionDefinition::Flag operatingSystems() const								{ return mOperatingSystems; }
+		Flag operatingSystems() const												{ return mOperatingSystems; }
 		
 		virtual QVariant defaultValue(QVariant defaultValue = QVariant()) const;
 		virtual void setDefaultValue(const QVariant &defaultValue)					{ mDefaultValue = defaultValue; }
-		virtual void setOperatingSystems(ActionDefinition::Flag operatingSystems)	{ mOperatingSystems = operatingSystems; }
+		virtual void setOperatingSystems(Flag operatingSystems)						{ mOperatingSystems = operatingSystems; }
 		
 		virtual void update(Script *script)											{ Q_UNUSED(script) }
 		
@@ -64,7 +64,7 @@ namespace ActionTools
 	private:
 		QList<QWidget *> mEditors;
 		QVariant mDefaultValue;
-		ActionDefinition::Flag mOperatingSystems;
+		Flag mOperatingSystems;
 
 		Q_DISABLE_COPY(ParameterDefinition)
 	};

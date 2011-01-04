@@ -58,10 +58,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Read binary file"); }
 		QString id() const														{ return "ActionReadBinaryFile"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read a binary file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadBinaryFileInstance(this); }
-		Category category() const												{ return Data; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readbinary.png"); }
 
 	private:

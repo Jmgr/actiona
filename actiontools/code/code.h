@@ -38,7 +38,7 @@ namespace Code
 			Native,
 			Ascii,
 			Latin1,
-			UTF8,
+			UTF8
 		};
 
 		template<typename T>
@@ -54,17 +54,7 @@ namespace Code
 			addClassToScriptEngine<T>(removeCodeNamespace(T::staticMetaObject.className()), scriptEngine);
 		}
 
-		static void addClassGlobalFunctionToScriptEngine(const QString &className, QScriptEngine::FunctionSignature function, const QString &functionName, QScriptEngine *scriptEngine)
-		{
-			QScriptValue classMetaObject = scriptEngine->globalObject().property(className);
-			if(!classMetaObject.isValid())
-			{
-				classMetaObject = scriptEngine->newObject();
-				scriptEngine->globalObject().setProperty(className, classMetaObject);
-			}
-
-			classMetaObject.setProperty(functionName, scriptEngine->newFunction(function));
-		}
+		static void addClassGlobalFunctionToScriptEngine(const QString &className, QScriptEngine::FunctionSignature function, const QString &functionName, QScriptEngine *scriptEngine);
 
 		template<typename T>
 		static void addClassGlobalFunctionToScriptEngine(QScriptEngine::FunctionSignature function, const QString &functionName, QScriptEngine *scriptEngine)
@@ -78,13 +68,7 @@ namespace Code
 		static QScriptValue stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList);
 
 	private:
-		static QString removeCodeNamespace(const QString &className)
-		{
-			if(className.startsWith("Code::"))
-				return className.right(className.size() - 6);
-			else
-				return className;
-		}
+		static QString removeCodeNamespace(const QString &className);
 	};
 }
 

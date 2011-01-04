@@ -21,6 +21,8 @@
 #include "codeexecution.h"
 #include "scriptagent.h"
 
+#include <QScriptEngine>
+
 namespace LibExecuter
 {
 	ScriptAgent *CodeExecution::mScriptAgent = 0;

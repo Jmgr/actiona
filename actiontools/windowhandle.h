@@ -22,8 +22,6 @@
 #define WINDOWHANDLE_H
 
 #include <QWidget>
-#include <QString>
-#include <QRect>
 #include <QMetaType>
 
 #include "actiontools_global.h"

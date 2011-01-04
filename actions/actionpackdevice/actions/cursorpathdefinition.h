@@ -48,10 +48,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Cursor path"); }
 		QString id() const														{ return "ActionCursorPath"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Move the mouse cursor on a path"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CursorPathInstance(this); }
-		Category category() const												{ return Device; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 

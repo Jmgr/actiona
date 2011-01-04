@@ -64,10 +64,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Write text file"); }
 		QString id() const														{ return "ActionWriteTextFile"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write a plain text file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteTextFileInstance(this); }
-		Category category() const												{ return Data; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/writetext.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

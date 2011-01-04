@@ -27,9 +27,9 @@ namespace ActionTools
 {
 	ParameterDefinition::ParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
 		: ElementDefinition(name, translatedName, parent),
-		mOperatingSystems(ActionDefinition::WorksOnGnuLinux |
-						  ActionDefinition::WorksOnWindows |
-						  ActionDefinition::WorksOnMac)
+		mOperatingSystems(WorksOnGnuLinux |
+						  WorksOnWindows |
+						  WorksOnMac)
 	{
 	}
 

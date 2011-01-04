@@ -22,31 +22,28 @@
 #define LIB_EXECUTER_H
 
 #include "executer_global.h"
-#include "actioninstance.h"
-#include "scriptagent.h"
 #include "consolewidget.h"
 
 #include <QObject>
-#include <QPoint>
-#include <QKeySequence>
 #include <QTimer>
-#include <QDateTime>
-#include <QProgressDialog>
 #include <QScriptEngineDebugger>
 
 namespace ActionTools
 {
 	class Script;
 	class ActionFactory;
+	class ActionInstance;
 }
 
 class QStandardItemModel;
 class QMainWindow;
 class QScriptEngine;
+class QProgressDialog;
 
 namespace LibExecuter
 {
 	class ExecutionWindow;
+	class ScriptAgent;
 
 	class EXECUTERSHARED_EXPORT Executer : public QObject
 	{

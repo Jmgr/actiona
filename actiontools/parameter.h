@@ -25,7 +25,6 @@
 #include "actiontools_global.h"
 
 #include <QSharedData>
-#include <QHash>
 
 namespace ActionTools
 {

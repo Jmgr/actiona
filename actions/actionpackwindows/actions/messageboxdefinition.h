@@ -84,10 +84,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Message Box"); }
 		QString id() const														{ return "ActionMessageBox"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Shows a message box"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new MessageBoxInstance(this); }
-		Category category() const												{ return Windows; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Windows; }
 		QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

@@ -70,10 +70,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Read registry"); }
 		QString id() const														{ return "ActionReadRegistry"; }
-		Flag flags() const														{ return WorksOnWindows | Official; }
+		ActionTools::Flag flags() const											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read an entry from the registry"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadRegistryInstance(this); }
-		Category category() const												{ return Data; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readregistry.png"); }
 
 	private:

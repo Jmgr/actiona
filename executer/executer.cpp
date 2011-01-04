@@ -23,11 +23,17 @@
 #include "actionfactory.h"
 #include "executionwindow.h"
 #include "codeinitializer.h"
+#include "actiondefinition.h"
+#include "scriptagent.h"
+#include "actioninstance.h"
 
 #include <QDesktopWidget>
 #include <QAction>
 #include <QMainWindow>
 #include <QApplication>
+#include <QLocale>
+#include <QProgressDialog>
+#include <QScriptEngine>
 
 namespace LibExecuter
 {

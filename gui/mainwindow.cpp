@@ -1374,7 +1374,7 @@ void MainWindow::execute(bool onlySelection)
 
 void MainWindow::fillNewActionTreeWidget(NewActionTreeWidget *widget)
 {
-	for(int i = 0; i < ActionTools::ActionDefinition::CategoryCount; ++i)
+	for(int i = 0; i < ActionTools::CategoryCount; ++i)
 	{
 		QTreeWidgetItem *item = new QTreeWidgetItem(QStringList(QApplication::translate("ActionDefinition::CategoryName", ActionTools::ActionDefinition::CategoryName[i].toLatin1())));
 		QFont boldFont;
@@ -1384,7 +1384,7 @@ void MainWindow::fillNewActionTreeWidget(NewActionTreeWidget *widget)
 
 		widget->addTopLevelItem(item);
 
-		if(mActionFactory->actionDefinitionCount(static_cast<ActionTools::ActionDefinition::Category>(i)) == 0)
+		if(mActionFactory->actionDefinitionCount(static_cast<ActionTools::ActionCategory>(i)) == 0)
 			item->setFlags(Qt::NoItemFlags);
 		else
 			item->setFlags(Qt::ItemIsEnabled);

@@ -84,10 +84,10 @@ namespace Actions
 	
 		QString name() const													{ return QObject::tr("Click"); }
 		QString id() const														{ return "ActionClick"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Emulates a mouse click"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ClickInstance(this); }
-		Category category() const												{ return Device; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/click.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 	

@@ -58,10 +58,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Write binary file"); }
 		QString id() const														{ return "ActionWriteBinaryFile"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write to a binary file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteBinaryFileInstance(this); }
-		Category category() const												{ return Data; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/writebinary.png"); }
 
 	private:

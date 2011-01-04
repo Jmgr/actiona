@@ -22,7 +22,6 @@
 #define CODEHIGHLIGHTER_H
 
 #include <QSyntaxHighlighter>
-#include <QHash>
 #include <QTextCharFormat>
 
 #include "actiontools_global.h"

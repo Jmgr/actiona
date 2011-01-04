@@ -81,7 +81,7 @@ namespace ActionTools
 
 		void addParameter(const ScriptParameter &parameter)					{ mParameters.append(parameter); }
 		int parameterCount() const											{ return mParameters.count(); }
-		ScriptParameter parameter(int index) const							{ return mParameters.at(index); }
+		const ScriptParameter &parameter(int index) const					{ return mParameters.at(index); }
 		void removeAllParameters()											{ mParameters.clear(); }
 		QList<ScriptParameter> parameters() const							{ return mParameters; }
 

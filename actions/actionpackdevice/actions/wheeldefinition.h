@@ -52,10 +52,10 @@ namespace Actions
 	
 		QString name() const													{ return QObject::tr("Wheel"); }
 		QString id() const														{ return "ActionWheel"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Emulates the mouse wheel"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WheelInstance(this); }
-		Category category() const												{ return Device; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/wheel.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 	

@@ -22,7 +22,6 @@
 #define EXECUTIONWINDOW_H
 
 #include <QWidget>
-#include <QKeySequence>
 
 namespace Ui
 {

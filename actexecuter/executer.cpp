@@ -25,6 +25,7 @@
 #include <QApplication>
 #include <QFile>
 #include <QSettings>
+#include <QLocale>
 
 Executer::Executer(QObject *parent) :
 	QObject(parent),

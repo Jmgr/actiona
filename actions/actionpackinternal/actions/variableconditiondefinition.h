@@ -72,10 +72,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Variable condition"); }
 		QString id() const														{ return "ActionVariableCondition"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Check the value of a variable and do some action"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new VariableConditionInstance(this); }
-		Category category() const												{ return Internal; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/variablecondition.png"); }
 
 	private:

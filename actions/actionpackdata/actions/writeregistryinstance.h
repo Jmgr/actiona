@@ -37,7 +37,7 @@ namespace Actions
 		enum Exceptions
 		{
 			CannotFindSubKeyException = ActionTools::ActionException::UserException,
-			CannotWriteValueException,
+			CannotWriteValueException
 		};
 
 		WriteRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)

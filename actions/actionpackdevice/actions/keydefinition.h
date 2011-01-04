@@ -60,7 +60,7 @@ namespace Actions
 			type->setTooltip(tr("The key type to use"));
 			type->setItems(KeyInstance::types);
 			type->setDefaultValue(KeyInstance::types.second.at(KeyInstance::Win32Type));
-			type->setOperatingSystems(WorksOnWindows);
+			type->setOperatingSystems(ActionTools::WorksOnWindows);
 			addElement(type, 1);
 
 			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition("pause", tr("Press/Release pause"), this);
@@ -77,10 +77,10 @@ namespace Actions
 	
 		QString name() const													{ return QObject::tr("Key"); }
 		QString id() const														{ return "ActionKey"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Emulates a key press"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new KeyInstance(this); }
-		Category category() const												{ return Device; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/key.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }

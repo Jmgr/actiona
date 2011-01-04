@@ -44,10 +44,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Stop"); }
 		QString id() const														{ return "ActionStop"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Stop the script execution"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new StopInstance(this); }
-		Category category() const												{ return Internal; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/stop.png"); }
 
 	private:

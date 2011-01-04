@@ -65,10 +65,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Variable"); }
 		QString id() const														{ return "ActionVariable"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Set the value of a variable"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new VariableInstance(this); }
-		Category category() const												{ return Internal; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/variable.png"); }
 
 	private:

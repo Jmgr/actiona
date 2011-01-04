@@ -24,6 +24,8 @@
 #include "actioninstance.h"
 #include "scriptagent.h"
 
+#include <QScriptEngine>
+
 namespace Actions
 {
 	class StopInstance : public ActionTools::ActionInstance

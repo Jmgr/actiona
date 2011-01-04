@@ -72,6 +72,11 @@ namespace ActionTools
 		mElements.append(element);
 	}
 
+	void ActionDefinition::addException(int id, const QString &name)
+	{
+		mExceptions.append(new ActionException(id, name));
+	}
+
 	bool ActionDefinition::requirementCheckXTest(QStringList &missingRequirements) const
 	{
 #ifdef Q_WS_X11

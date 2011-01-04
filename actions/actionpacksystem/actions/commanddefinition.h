@@ -80,10 +80,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Command"); }
 		QString id() const														{ return "ActionCommand"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Executes a command"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CommandInstance(this); }
-		Category category() const												{ return System; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/command.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

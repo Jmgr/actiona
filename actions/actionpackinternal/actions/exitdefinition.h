@@ -44,10 +44,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Exit"); }
 		QString id() const														{ return "ActionExit"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Exit Actionaz"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ExitInstance(this); }
-		Category category() const												{ return Internal; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/exit.png"); }
 
 	private:

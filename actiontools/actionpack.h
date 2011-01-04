@@ -21,7 +21,6 @@
 #ifndef ACTIONPACK_H
 #define ACTIONPACK_H
 
-#include <QList>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include "version.h"
@@ -63,17 +62,7 @@ namespace ActionTools
 			scriptEngine->globalObject().setProperty(objectName, metaObject);
 		}
 
-		void addCodeStaticMethod(QScriptEngine::FunctionSignature method, const QString &objectName, const QString &methodName, QScriptEngine *scriptEngine) const
-		{
-			QScriptValue classMetaObject = scriptEngine->globalObject().property(objectName);
-			if(!classMetaObject.isValid())
-			{
-				classMetaObject = scriptEngine->newObject();
-				scriptEngine->globalObject().setProperty(objectName, classMetaObject);
-			}
-
-			classMetaObject.setProperty(methodName, scriptEngine->newFunction(method));
-		}
+		void addCodeStaticMethod(QScriptEngine::FunctionSignature method, const QString &objectName, const QString &methodName, QScriptEngine *scriptEngine) const;
 
 	private:
 		ActionDefinitionList mActionDefinitions;

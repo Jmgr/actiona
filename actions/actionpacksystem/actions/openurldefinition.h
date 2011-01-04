@@ -57,10 +57,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Open URL"); }
 		QString id() const														{ return "ActionOpenURL"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Opens an URL"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new OpenURLInstance(this); }
-		Category category() const												{ return System; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/openurl.png"); }
 
 	private:

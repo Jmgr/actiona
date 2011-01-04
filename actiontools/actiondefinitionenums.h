@@ -18,27 +18,38 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEINITIALIZER_H
-#define CODEINITIALIZER_H
-
-#include "executer_global.h"
-
-class QScriptEngine;
+#ifndef ACTIONDEFINITIONENUMS_H
+#define ACTIONDEFINITIONENUMS_H
 
 namespace ActionTools
 {
-	class ActionFactory;
-}
+	typedef int Flag;
 
-namespace LibExecuter
-{
-	class ScriptAgent;
-	
-	class EXECUTERSHARED_EXPORT CodeInitializer
+	enum ActionStatus
 	{
-	public:
-		static void initialize(QScriptEngine *scriptEngine, ScriptAgent *scriptAgent, ActionTools::ActionFactory *actionFactory);
+		Alpha,
+		Beta,
+		Testing,
+		Stable
+	};
+	enum ActionCategory
+	{
+		None = -1,
+		Windows,
+		Device,
+		System,
+		Internal,
+		Data,
+
+		CategoryCount
+	};
+	enum ActionFlags
+	{
+		WorksOnWindows =    1 << 1,
+		WorksOnGnuLinux =	1 << 2,
+		WorksOnMac =	    1 << 3,
+		Official =			1 << 4
 	};
 }
 
-#endif // CODEINITIALIZER_H
+#endif // ACTIONDEFINITIONENUMS_H

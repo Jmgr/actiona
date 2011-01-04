@@ -18,27 +18,19 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEINITIALIZER_H
-#define CODEINITIALIZER_H
-
-#include "executer_global.h"
-
-class QScriptEngine;
+#include "actionpack.h"
 
 namespace ActionTools
 {
-	class ActionFactory;
-}
-
-namespace LibExecuter
-{
-	class ScriptAgent;
-	
-	class EXECUTERSHARED_EXPORT CodeInitializer
+	void ActionPack::addCodeStaticMethod(QScriptEngine::FunctionSignature method, const QString &objectName, const QString &methodName, QScriptEngine *scriptEngine) const
 	{
-	public:
-		static void initialize(QScriptEngine *scriptEngine, ScriptAgent *scriptAgent, ActionTools::ActionFactory *actionFactory);
-	};
-}
+		QScriptValue classMetaObject = scriptEngine->globalObject().property(objectName);
+		if(!classMetaObject.isValid())
+		{
+			classMetaObject = scriptEngine->newObject();
+			scriptEngine->globalObject().setProperty(objectName, classMetaObject);
+		}
 
-#endif // CODEINITIALIZER_H
+		classMetaObject.setProperty(methodName, scriptEngine->newFunction(method));
+	}
+}

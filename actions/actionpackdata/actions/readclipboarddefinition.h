@@ -49,10 +49,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Read clipboard"); }
 		QString id() const														{ return "ActionReadClipboard"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read the clipboard contents"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadClipboardInstance(this); }
-		Category category() const												{ return Data; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readclipboard.png"); }
 
 	private:

@@ -23,8 +23,8 @@
 
 #include "actiontools_global.h"
 #include "version.h"
-#include "actionexception.h"
 #include "stringlistpair.h"
+#include "actiondefinitionenums.h"
 
 #include <QString>
 #include <QPixmap>
@@ -38,38 +38,11 @@ namespace ActionTools
 	class ActionPack;
 	class ActionInstance;
 	class ElementDefinition;
+	class ActionException;
 
 	class ACTIONTOOLSSHARED_EXPORT ActionDefinition
 	{
 	public:
-		typedef int Flag;
-
-		enum Status
-		{
-			Alpha,
-			Beta,
-			Testing,
-			Stable
-		};
-		enum Category
-		{
-			None = -1,
-			Windows,
-			Device,
-			System,
-			Internal,
-			Data,
-
-			CategoryCount
-		};
-		enum Flags
-		{
-			WorksOnWindows =    1 << 1,
-			WorksOnGnuLinux =	1 << 2,
-			WorksOnMac =	    1 << 3,
-			Official =			1 << 4
-		};
-
 		explicit ActionDefinition(ActionPack *pack) : mPack(pack), mIndex(-1)	{}
 		virtual ~ActionDefinition();
 
@@ -79,8 +52,8 @@ namespace ActionTools
 		virtual QString description() const												{ return QObject::tr("No description"); }
 		virtual Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
 		virtual ActionInstance *newActionInstance() const = 0;
-		virtual Status status() const													{ return Stable; }
-		virtual Category category() const = 0;
+		virtual ActionStatus status() const													{ return Stable; }
+		virtual ActionCategory category() const = 0;
 		virtual QString author() const													{ return (flags() & Official) ? QObject::tr("The Actionaz Team") : QString(); }
 		virtual QString website() const													{ return QString(); }
 		virtual QString email() const													{ return QString(); }
@@ -102,7 +75,7 @@ namespace ActionTools
 	protected:
 		void translateItems(const char *context, StringListPair &items) const;
 		void addElement(ElementDefinition *element, int tab = 0);
-		void addException(int id, const QString &name)									{ mExceptions.append(new ActionException(id, name)); }
+		void addException(int id, const QString &name);
 		bool requirementCheckXTest(QStringList &missingRequirements) const;
 
 	private:

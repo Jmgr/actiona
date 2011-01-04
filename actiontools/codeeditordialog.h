@@ -22,7 +22,6 @@
 #define CODEEDITORDIALOG_H
 
 #include "actiontools_global.h"
-#include "windowhandle.h"
 
 #include <QDialog>
 

@@ -23,7 +23,8 @@
 
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QDebug>
+#include <QScriptValue>
+#include <QScriptEngine>
 
 namespace Actions
 {

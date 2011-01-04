@@ -50,10 +50,10 @@ namespace Actions
 	
 		QString name() const													{ return QObject::tr("Write text"); }
 		QString id() const														{ return "ActionWriteText"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write some text"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new TextInstance(this); }
-		Category category() const												{ return Device; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/text.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 	

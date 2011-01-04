@@ -26,6 +26,18 @@
 
 namespace Code
 {
+	void Code::addClassGlobalFunctionToScriptEngine(const QString &className, QScriptEngine::FunctionSignature function, const QString &functionName, QScriptEngine *scriptEngine)
+	{
+		QScriptValue classMetaObject = scriptEngine->globalObject().property(className);
+		if(!classMetaObject.isValid())
+		{
+			classMetaObject = scriptEngine->newObject();
+			scriptEngine->globalObject().setProperty(className, classMetaObject);
+		}
+
+		classMetaObject.setProperty(functionName, scriptEngine->newFunction(function));
+	}
+
 	QByteArray Code::toEncoding(const QString &string, Encoding encoding)
 	{
 		switch(encoding)
@@ -86,5 +98,13 @@ namespace Code
 			back.setProperty(index, stringList.at(index));
 		
 		return back;
+	}
+
+	QString Code::removeCodeNamespace(const QString &className)
+	{
+		if(className.startsWith("Code::"))
+			return className.right(className.size() - 6);
+		else
+			return className;
 	}
 }

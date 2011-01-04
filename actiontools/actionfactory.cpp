@@ -110,9 +110,9 @@ namespace ActionTools
 		return definition->newActionInstance();
 	}
 
-	int ActionFactory::actionDefinitionCount(ActionDefinition::Category category) const
+	int ActionFactory::actionDefinitionCount(ActionCategory category) const
 	{
-		if(category == ActionDefinition::None)
+		if(category == None)
 			return mActionDefinitions.count();
 
 		int count = 0;
@@ -168,15 +168,15 @@ namespace ActionTools
 			}
 
 		#ifdef Q_WS_WIN
-			if(!(definition->flags() & ActionDefinition::WorksOnWindows))
+			if(!(definition->flags() & WorksOnWindows))
 				continue;
 		#endif
 		#ifdef Q_WS_X11
-			if(!(definition->flags() & ActionDefinition::WorksOnGnuLinux))
+			if(!(definition->flags() & WorksOnGnuLinux))
 				continue;
 		#endif
 		#ifdef Q_WS_MAC
-			if(!(definition->flags() & ActionDefinition::WorksOnMac))
+			if(!(definition->flags() & WorksOnMac))
 				continue;
 		#endif
 

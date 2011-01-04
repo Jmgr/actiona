@@ -48,10 +48,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Goto"); }
 		QString id() const														{ return "ActionGoto"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Go to a script line"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new GotoInstance(this); }
-		Category category() const												{ return Internal; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/goto.png"); }
 
 	private:

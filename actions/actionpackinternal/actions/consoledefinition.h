@@ -57,10 +57,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Console"); }
 		QString id() const														{ return "ActionConsole"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write an entry in the console"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ConsoleInstance(this); }
-		Category category() const												{ return Internal; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/console.png"); }
 
 	private:

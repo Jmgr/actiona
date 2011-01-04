@@ -87,10 +87,10 @@ namespace Actions
 
 		QString name() const													{ return QObject::tr("Window condition"); }
 		QString id() const														{ return "ActionWindowCondition"; }
-		Flag flags() const														{ return ActionDefinition::flags() | Official; }
+		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Checks for the state of a window"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WindowConditionInstance(this); }
-		Category category() const												{ return Windows; }
+		ActionTools::ActionCategory category() const									{ return ActionTools::Windows; }
 		QPixmap icon() const													{ return QPixmap(":/icons/windowcondition.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

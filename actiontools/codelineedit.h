@@ -54,8 +54,7 @@ namespace ActionTools
 
 		void setAllowTextCodeChange(bool allowTextCodeChange);
 		void setShowEditorButton(bool showEditorButton);
-
-		void setFromSubParameter(const SubParameter &subParameter)		{ if(mAllowTextCodeChange) setCode(subParameter.isCode()); setText(subParameter.value().toString()); }
+		void setFromSubParameter(const SubParameter &subParameter);
 
 		void addShortcuts(QMenu *menu);
 		
