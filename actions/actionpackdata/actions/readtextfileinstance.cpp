@@ -83,13 +83,14 @@ namespace Actions
 		--lastline;
 
 		QString result;
+		QTextStream stream(&file);
+
+		stream.setAutoDetectUnicode(true);
 
 		if(mode == Full)
-			result = file.readAll();
+			result = stream.readAll();
 		else
 		{
-			QTextStream stream(&file);
-
 			for(int line = 0; !stream.atEnd(); ++line)
 			{
 				QString readLine = stream.readLine();
