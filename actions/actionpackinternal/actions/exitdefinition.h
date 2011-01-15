@@ -42,10 +42,10 @@ namespace Actions
 		{
 		}
 
-		QString name() const													{ return QObject::tr("Exit"); }
+		QString name() const													{ return QObject::tr("Exit Actionaz", "action name: to exit"); }
 		QString id() const														{ return "ActionExit"; }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Exit Actionaz"); }
+		QString description() const												{ return QObject::tr("Exit Actionaz", "action description: this exits"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ExitInstance(this); }
 		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/exit.png"); }
