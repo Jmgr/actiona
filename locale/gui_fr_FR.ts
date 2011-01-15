@@ -1725,41 +1725,71 @@ p, li { white-space: pre-wrap; }
         <translation>Paramètres du script</translation>
     </message>
     <message>
-        <location filename="../gui/scriptparametersdialog.ui" line="37"/>
+        <location filename="../gui/scriptparametersdialog.ui" line="40"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../gui/scriptparametersdialog.ui" line="42"/>
+        <location filename="../gui/scriptparametersdialog.ui" line="45"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../gui/scriptparametersdialog.ui" line="47"/>
-        <location filename="../gui/scriptparametersdialog.cpp" line="83"/>
+        <location filename="../gui/scriptparametersdialog.ui" line="50"/>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <location filename="../gui/scriptparametersdialog.ui" line="55"/>
+        <location filename="../gui/scriptparametersdialog.cpp" line="248"/>
         <source>Remove</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../gui/scriptparametersdialog.ui" line="55"/>
+        <location filename="../gui/scriptparametersdialog.ui" line="63"/>
         <source>Add a parameter</source>
         <translation>Ajouter un paramètre</translation>
     </message>
     <message>
-        <location filename="../gui/scriptparametersdialog.cpp" line="152"/>
-        <location filename="../gui/scriptparametersdialog.cpp" line="164"/>
+        <location filename="../gui/scriptparametersdialog.cpp" line="135"/>
+        <location filename="../gui/scriptparametersdialog.cpp" line="194"/>
         <source>Script parameter error</source>
         <translation>Erreur de paramètre de script</translation>
     </message>
     <message>
-        <location filename="../gui/scriptparametersdialog.cpp" line="152"/>
+        <location filename="../gui/scriptparametersdialog.cpp" line="135"/>
         <source>Incorrect parameter name &quot;%1&quot;.</source>
         <translation>Nom de paramètre incorrect &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../gui/scriptparametersdialog.cpp" line="164"/>
+        <location filename="../gui/scriptparametersdialog.cpp" line="194"/>
         <source>The script parameter named &quot;%1&quot; contains an error: &quot;%2&quot;, please correct it.</source>
         <translation>The paramètre de script nommé &quot;%1&quot; contient une erreur : &quot;%2&quot;, merci de le corriger.</translation>
+    </message>
+    <message>
+        <location filename="../gui/scriptparametersdialog.cpp" line="242"/>
+        <source>Text</source>
+        <translation>Texte</translation>
+    </message>
+    <message>
+        <location filename="../gui/scriptparametersdialog.cpp" line="242"/>
+        <source>Number</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <location filename="../gui/scriptparametersdialog.cpp" line="242"/>
+        <source>Window title</source>
+        <translation>Titre de fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../gui/scriptparametersdialog.cpp" line="242"/>
+        <source>File</source>
+        <translation>Fichier</translation>
+    </message>
+    <message>
+        <location filename="../gui/scriptparametersdialog.cpp" line="242"/>
+        <source>Line</source>
+        <translation>Ligne</translation>
     </message>
 </context>
 <context>
