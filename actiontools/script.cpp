@@ -239,6 +239,7 @@ namespace ActionTools
 			stream.writeStartElement("parameter");
 			stream.writeAttribute("name", parameter.name());
 			stream.writeAttribute("code", QString("%1").arg(parameter.isCode()));
+			stream.writeAttribute("type", QString::number(parameter.type()));
 			stream.writeCharacters(parameter.value());
 			stream.writeEndElement();
 		}
@@ -415,7 +416,8 @@ namespace ActionTools
 					const QXmlStreamAttributes &attributes = stream.attributes();
 					ScriptParameter scriptParameter(	attributes.value("name").toString(),
 														stream.readElementText(),
-														QVariant(attributes.value("code").toString()).toBool());
+														QVariant(attributes.value("code").toString()).toBool(),
+														static_cast<ScriptParameter::ParameterType>(attributes.value("type").toString().toInt()));
 
 					mParameters.append(scriptParameter);
 				}

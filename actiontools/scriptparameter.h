@@ -32,27 +32,39 @@ namespace ActionTools
 	class ScriptParameterData : public QSharedData
 	{
 	public:
-		ScriptParameterData() : code(false)				{}
+		ScriptParameterData() : code(false), type(0)	{}
 		ScriptParameterData(const ScriptParameterData &other) :
 			QSharedData(other),
 			name(other.name),
 			value(other.value),
-			code(other.code)							{}
+			code(other.code),
+			type(other.type)							{}
 
 		QString name;
 		QString value;
 		bool code;
+		int type;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ScriptParameter
 	{
 	public:
-		ScriptParameter(const QString &name, const QString &value, bool code)
+		enum ParameterType
+		{
+			Text,
+			Number,
+			Window,
+			File,
+			Line
+		};
+
+		ScriptParameter(const QString &name, const QString &value, bool code, ParameterType type)
 			: d(new ScriptParameterData())
 		{
 			setName(name);
 			setValue(value);
 			setCode(code);
+			setType(type);
 		}
 		ScriptParameter(const ScriptParameter &other)
 			: d(other.d)								{}
@@ -60,14 +72,16 @@ namespace ActionTools
 		void setName(const QString &name)				{ d->name = name; }
 		void setValue(const QString &value)				{ d->value = value; }
 		void setCode(bool code)							{ d->code = code; }
+		void setType(ParameterType type)				{ d->type = type; }
 
 		const QString &name() const						{ return d->name; }
 		const QString &value() const					{ return d->value; }
 		bool isCode() const								{ return d->code; }
+		ParameterType type() const						{ return static_cast<ParameterType>(d->type); }
 
 		bool operator == (const ScriptParameter &other) const
 		{
-			return (name() == other.name() && value() == other.value() && isCode() == other.isCode());
+			return (name() == other.name() && value() == other.value() && isCode() == other.isCode() && type() == other.type());
 		}
 
 	private:

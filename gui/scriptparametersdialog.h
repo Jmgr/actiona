@@ -21,6 +21,8 @@
 #ifndef SCRIPTPARAMETERSDIALOG_H
 #define SCRIPTPARAMETERSDIALOG_H
 
+#include "scriptparameter.h"
+
 #include <QDialog>
 
 namespace Ui
@@ -51,22 +53,25 @@ public:
 
 	int exec();
 
-private:
-	void addParameter(const QString &name, const QString &value, bool code);
-
 private slots:
 	void postInit();
 	void removeParameter();
 	void accept();
+	void parameterTypeChanged(int type);
 	void on_addParameter_clicked();
 
 private:
+	void addParameter(const QString &name, const QString &value, bool code, ActionTools::ScriptParameter::ParameterType parameterType);
+	void setupValueParameter(int row, ActionTools::ScriptParameter::ParameterType type, const QString &value = QString(), bool code = false);
+	bool eventFilter(QObject *obj, QEvent *event);
+
 	Ui::ScriptParametersDialog *ui;
 	ActionTools::CodeEditorDialog *mCodeEditorDialog;
 	ActionTools::Script *mScript;
 	int mCurrentParameter;
 	int mCurrentLine;
 	int mCurrentColumn;
+	QList<ActionTools::ScriptParameter::ParameterType> mParameterTypes;
 
 	Q_DISABLE_COPY(ScriptParametersDialog)
 };
