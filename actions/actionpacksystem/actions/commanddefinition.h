@@ -23,7 +23,6 @@
 
 #include "actiondefinition.h"
 #include "commandinstance.h"
-#include "textparameterdefinition.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
 
@@ -43,7 +42,7 @@ namespace Actions
 		explicit CommandDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *command = new ActionTools::TextParameterDefinition("command", tr("Command"), this);
+			ActionTools::FileParameterDefinition *command = new ActionTools::FileParameterDefinition("command", tr("Command"), this);
 			command->setTooltip(tr("The command to execute"));
 			addElement(command);
 
