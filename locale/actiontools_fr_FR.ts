@@ -294,7 +294,7 @@
         <translation>Cliquez ici pour ouvrir l&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="293"/>
+        <location filename="../actiontools/codelineedit.cpp" line="301"/>
         <source>Double-click to edit</source>
         <translation>Double-cliquez pour éditer</translation>
     </message>
@@ -385,22 +385,22 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::Script</name>
     <message>
-        <location filename="../actiontools/script.cpp" line="199"/>
+        <location filename="../actiontools/script.cpp" line="201"/>
         <source>Unknown</source>
         <translation>Inconnu</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="201"/>
+        <location filename="../actiontools/script.cpp" line="203"/>
         <source>GNU/Linux</source>
         <translation>GNU/Linux</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="204"/>
+        <location filename="../actiontools/script.cpp" line="206"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="207"/>
+        <location filename="../actiontools/script.cpp" line="209"/>
         <source>Mac</source>
         <translation>Mac</translation>
     </message>
@@ -408,8 +408,8 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code::Color</name>
     <message>
-        <location filename="../actiontools/code/color.cpp" line="40"/>
-        <location filename="../actiontools/code/color.cpp" line="207"/>
+        <location filename="../actiontools/code/color.cpp" line="41"/>
+        <location filename="../actiontools/code/color.cpp" line="213"/>
         <source>Invalid color name</source>
         <translation>Nom de couleur incorrect</translation>
     </message>
@@ -417,32 +417,32 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code::Image</name>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="197"/>
+        <location filename="../actiontools/code/image.cpp" line="204"/>
         <source>Unable to set the image data</source>
         <translation>Impossible de changer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="215"/>
+        <location filename="../actiontools/code/image.cpp" line="222"/>
         <source>Unable to get the image data</source>
         <translation>Impossible de récupérer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="226"/>
+        <location filename="../actiontools/code/image.cpp" line="233"/>
         <source>Unable to load image from file %1</source>
         <translation>Impossible de charger l&apos;image à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="237"/>
+        <location filename="../actiontools/code/image.cpp" line="244"/>
         <source>Unable to save image to file %1</source>
         <translation>Impossible de sauvegarder l&apos;image dans le fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="249"/>
+        <location filename="../actiontools/code/image.cpp" line="256"/>
         <source>Unable to apply filter</source>
         <translation>Impossible d&apos;appliquer le filtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="286"/>
+        <location filename="../actiontools/code/image.cpp" line="293"/>
         <source>Cannot set filter option %1 %2</source>
         <translation>Impossible de changer les options du filtre %1 %2</translation>
     </message>
@@ -450,47 +450,47 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code::Window</name>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="121"/>
+        <location filename="../actiontools/code/window.cpp" line="122"/>
         <source>Invalid process handle</source>
         <translation>Processus invalide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="298"/>
+        <location filename="../actiontools/code/window.cpp" line="306"/>
         <source>Unable to close the window</source>
         <translation>Impossible de fermer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="309"/>
+        <location filename="../actiontools/code/window.cpp" line="317"/>
         <source>Unable to kill the window creator</source>
         <translation>Impossible de fermer de créateur de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="320"/>
+        <location filename="../actiontools/code/window.cpp" line="328"/>
         <source>Unable to set the window foreground</source>
         <translation>Impossible de placer la fenêtre en premier plan</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="331"/>
+        <location filename="../actiontools/code/window.cpp" line="339"/>
         <source>Unable to minimize the window</source>
         <translation>Impossible de minimiser la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="342"/>
+        <location filename="../actiontools/code/window.cpp" line="350"/>
         <source>Unable to maximize the window</source>
         <translation>Impossible de maximiser la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="353"/>
+        <location filename="../actiontools/code/window.cpp" line="361"/>
         <source>Unable to move the window</source>
         <translation>Impossible de déplacer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="364"/>
+        <location filename="../actiontools/code/window.cpp" line="372"/>
         <source>Unable to resize the window</source>
         <translation>Impossible de redimensionner la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="373"/>
+        <location filename="../actiontools/code/window.cpp" line="381"/>
         <source>Invalid window</source>
         <translation>Fenêtre invalide</translation>
     </message>
@@ -639,7 +639,7 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Données</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="83"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="88"/>
         <source>missing XTest extension</source>
         <translation>extension XTest manquante</translation>
     </message>
@@ -652,12 +652,12 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Avancé</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.h" line="79"/>
+        <location filename="../actiontools/actiondefinition.h" line="52"/>
         <source>No description</source>
         <translation>Pas de description</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.h" line="84"/>
+        <location filename="../actiontools/actiondefinition.h" line="57"/>
         <source>The Actionaz Team</source>
         <translation>L&apos;équipe d&apos;Actionaz</translation>
     </message>

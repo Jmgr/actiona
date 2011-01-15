@@ -84,26 +84,35 @@
 <context>
     <name>Actions::PauseDefinition</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="46"/>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="49"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="47"/>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="50"/>
         <source>The duration of the pause</source>
         <translation>La durée de la pause</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="48"/>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="56"/>
+        <source>Unit</source>
+        <translation>Unité</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="57"/>
+        <source>The pause duration unit</source>
+        <translation>L&apos;unité de durée de pause</translation>
+    </message>
+    <message>
         <source> ms</source>
         <comment>milliseconds</comment>
-        <translation> ms</translation>
+        <translation type="obsolete"> ms</translation>
     </message>
 </context>
 <context>
     <name>Actions::PauseInstance</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pauseinstance.h" line="49"/>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.h" line="67"/>
         <source>Invalid pause duration</source>
         <translation>Durée de pause incorrecte</translation>
     </message>
@@ -282,6 +291,34 @@
     </message>
 </context>
 <context>
+    <name>PauseInstance::units</name>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="28"/>
+        <source>Milliseconds</source>
+        <translation>Millisecondes</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="29"/>
+        <source>Seconds</source>
+        <translation>Secondes</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="30"/>
+        <source>Minutes</source>
+        <translation>Minutes</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="31"/>
+        <source>Hours</source>
+        <translation>Heures</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="32"/>
+        <source>Days</source>
+        <translation>Jours</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../actions/actionpackinternal/actions/codedefinition.h" line="50"/>
@@ -294,14 +331,12 @@
         <translation>Évalue du code</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/exitdefinition.h" line="45"/>
         <source>Exit</source>
-        <translation>Quitter</translation>
+        <translation type="obsolete">Quitter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/exitdefinition.h" line="48"/>
         <source>Exit Actionaz</source>
-        <translation>Quitte Actionaz</translation>
+        <translation type="obsolete">Quitte Actionaz</translation>
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/gotodefinition.h" line="49"/>
@@ -334,12 +369,12 @@
         <translation>Ne fait rien</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="55"/>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="63"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="58"/>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="66"/>
         <source>Pauses the script execution</source>
         <translation>Met en pause l&apos;exécution du script</translation>
     </message>
@@ -420,6 +455,18 @@
         <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="61"/>
         <source>Write an entry in the console</source>
         <translation>Écrit une entrée dans la console</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/exitdefinition.h" line="45"/>
+        <source>Exit Actionaz</source>
+        <comment>action name: to exit</comment>
+        <translation>Quitter Actionaz</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/exitdefinition.h" line="48"/>
+        <source>Exit Actionaz</source>
+        <comment>action description: this exits</comment>
+        <translation>Quitte Actionaz</translation>
     </message>
 </context>
 <context>

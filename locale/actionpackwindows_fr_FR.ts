@@ -153,52 +153,52 @@
         <translation>Ce qui doit être fait si la condition n&apos;est pas vérifiée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="67"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="68"/>
         <source>X-coordinate</source>
         <translation>Abscisse</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="68"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="69"/>
         <source>The x-coordinate of the found window</source>
         <translation>L&apos;abscisse de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="71"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="72"/>
         <source>Y-coordinate</source>
         <translation>Ordonnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="72"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="73"/>
         <source>The y-coordinate of the found window</source>
         <translation>L&apos;ordonnée de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="76"/>
         <source>Width</source>
         <translation>Largeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="76"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="77"/>
         <source>The width of the found window</source>
         <translation>La largeur de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="79"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="80"/>
         <source>Height</source>
         <translation>Hauteur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="80"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="81"/>
         <source>The height of the found window</source>
         <translation>La hauteur de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="83"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="84"/>
         <source>Process id</source>
         <translation>Identifiant de processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="84"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="85"/>
         <source>The process id of the found window</source>
         <translation>L&apos;identifiant de processus de la fenêtre trouvée</translation>
     </message>
@@ -308,12 +308,12 @@
 <context>
     <name>MessageBoxInstance::buttons</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="42"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="43"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="43"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="44"/>
         <source>Yes-No</source>
         <translation>Oui-Non</translation>
     </message>
@@ -321,27 +321,27 @@
 <context>
     <name>MessageBoxInstance::icons</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="33"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="34"/>
         <source>None</source>
         <translation>Aucune</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="35"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="36"/>
         <source>Question</source>
         <translation>Question</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="37"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="38"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -369,12 +369,12 @@
         <translation>Demande à l&apos;utilisateur d&apos;entrer du texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="88"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="89"/>
         <source>Window condition</source>
         <translation>Condition de fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="91"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="92"/>
         <source>Checks for the state of a window</source>
         <translation>Vérifie l&apos;état d&apos;une fenêtre</translation>
     </message>
@@ -456,14 +456,22 @@
 <context>
     <name>WindowConditionInstance::conditions</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="33"/>
         <source>Created</source>
-        <translation>Créée</translation>
+        <translation type="obsolete">Créée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="34"/>
         <source>Closed</source>
-        <translation>Fermée</translation>
+        <translation type="obsolete">Fermée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="31"/>
+        <source>Exists</source>
+        <translation>Existe</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="32"/>
+        <source>Don&apos;t exists</source>
+        <translation>N&apos;existe pas</translation>
     </message>
 </context>
 <context>

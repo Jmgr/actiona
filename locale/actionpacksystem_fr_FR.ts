@@ -12,87 +12,87 @@
 <context>
     <name>Actions::CommandDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="46"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="45"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="47"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="46"/>
         <source>The command to execute</source>
         <translation>La commande à exécuter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="50"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="49"/>
         <source>Parameters</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="51"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="50"/>
         <source>The command&apos;s parameters</source>
         <translation>Les paramètres de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="53"/>
         <source>Working directory</source>
         <translation>Dossier de travail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="54"/>
         <source>The command&apos;s working directory</source>
         <translation>Le dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="56"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="55"/>
         <source>Command working directory</source>
         <translation>Dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="60"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="59"/>
         <source>Exit code</source>
         <translation>Code de sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="61"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="60"/>
         <source>The command&apos;s exit code</source>
         <translation>Le code de sortie de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="64"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="63"/>
         <source>Process id</source>
         <translation>Identifiant de processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="65"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="64"/>
         <source>The command&apos;s process id</source>
         <translation>L&apos;identifiant de processus de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="68"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="67"/>
         <source>Output</source>
         <translation>Sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="69"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="68"/>
         <source>The command&apos;s output</source>
         <translation>La sortie de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="72"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="71"/>
         <source>Error output</source>
         <translation>Sortie d&apos;erreur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="73"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="72"/>
         <source>The command&apos;s error output</source>
         <translation>La sortie d&apos;erreur de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="76"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="75"/>
         <source>Exit status</source>
         <translation>Statut de sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="77"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="76"/>
         <source>The command&apos;s exit status</source>
         <translation>Le statut de sortie de la commande</translation>
     </message>
@@ -265,12 +265,12 @@
         <translation>Ce qui doit être fait si la comparaison de pixel est fausse</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="68"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="69"/>
         <source>Pixel color variable</source>
         <translation>Variable de la couleur de pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="69"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="70"/>
         <source>Variable name where to store the pixel color</source>
         <translation>Nom de la variable où stocker la couleur du pixel</translation>
     </message>
@@ -489,12 +489,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="81"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="80"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="84"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="83"/>
         <source>Executes a command</source>
         <translation>Exécute une commande</translation>
     </message>
@@ -519,12 +519,12 @@
         <translation>Affiche un message via le système de notifications</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="73"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="74"/>
         <source>Pixel color</source>
         <translation>Couleur de pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="76"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="77"/>
         <source>Check a pixel color on the screen</source>
         <translation>Vérifie la couleur d&apos;un pixel sur l&apos;écran</translation>
     </message>
