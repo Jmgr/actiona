@@ -172,12 +172,23 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 		}
 	case Qt::ForegroundRole:
 		{
-			const QPalette &palette = QApplication::palette();
+			const QColor &color = actionInstance->color();
+			if(color.isValid())
+			{
+				if(color.lightness() < 128)
+					return QBrush(Qt::white);
+				else
+					return QBrush(Qt::black);
+			}
+			else
+			{
+				const QPalette &palette = QApplication::palette();
 
-			if(!actionInstance->isEnabled())
-				return QBrush(palette.color(QPalette::Disabled, QPalette::WindowText));
+				if(!actionInstance->isEnabled())
+					return QBrush(palette.color(QPalette::Disabled, QPalette::WindowText));
 
-			return QBrush();
+				return QBrush();
+			}
 		}
 	}
 
