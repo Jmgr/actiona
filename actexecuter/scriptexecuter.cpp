@@ -70,7 +70,7 @@ bool ScriptExecuter::start(QFile &file)
 	
 	file.close();
 	
-	mExecuter->setup(mScript, actionFactory(), false, 0, 0, false, 0, 0, 0);
+	mExecuter->setup(mScript, actionFactory(), false, 0, 0, false, 0, 0, 0, 0, 0);
 	if(!mExecuter->startExecution(false))
 	{
 		QTextStream stream(stdout);
