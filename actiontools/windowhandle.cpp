@@ -43,7 +43,7 @@ namespace ActionTools
 		char *str = 0;
 
 		if(XFetchName(QX11Info::display(), mValue, &str))
-			name = QString::fromUtf8(str);
+			name = QString::fromLatin1(str);
 
 		XFree(str);
 		return name;
@@ -71,10 +71,10 @@ namespace ActionTools
 	{
 #ifdef Q_WS_X11
 		XClassHint *hint = XAllocClassHint();
-		QString back ;
+		QString back;
 
 		if(XGetClassHint(QX11Info::display(), mValue, hint))
-			back = QString::fromUtf8(hint->res_class);
+			back = QString::fromLatin1(hint->res_class);
 
 		XFree(hint);
 

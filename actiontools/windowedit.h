@@ -53,6 +53,7 @@ namespace ActionTools
 		void setFromSubParameter(const SubParameter &subParameter);
 		void openEditor(int line = -1, int column = -1);
 		void setCompletionModel(QAbstractItemModel *completionModel);
+		void setWindowTitles(const QStringList &windowTitles);
 
 	private slots:
 		void on_choose_searchEnded(const WindowHandle &handle);

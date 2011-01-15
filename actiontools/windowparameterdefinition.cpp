@@ -22,6 +22,7 @@
 #include "subparameter.h"
 #include "windowedit.h"
 #include "actioninstance.h"
+#include "windowhandle.h"
 
 namespace ActionTools
 {
@@ -48,5 +49,25 @@ namespace ActionTools
 	void WindowParameterDefinition::save(ActionInstance *actionInstance)
 	{
 		actionInstance->setSubParameter(name(), "value", mWindowEdit->isCode(), mWindowEdit->text());
+	}
+
+	void WindowParameterDefinition::update(Script *script)
+	{
+		Q_UNUSED(script)
+
+		QStringList windowTitles;
+
+		foreach(const ActionTools::WindowHandle &windowHandle, ActionTools::WindowHandle::windowList())
+		{
+			QString title = windowHandle.title();
+			if(title.isEmpty())
+				continue;
+
+			windowTitles << title;
+		}
+
+		windowTitles.sort();
+
+		mWindowEdit->setWindowTitles(windowTitles);
 	}
 }

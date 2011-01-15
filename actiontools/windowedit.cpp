@@ -21,6 +21,8 @@
 #include "windowedit.h"
 #include "ui_windowedit.h"
 
+#include "codelineedit.h"
+
 namespace ActionTools
 {
 	WindowEdit::WindowEdit(QWidget *parent)
@@ -37,17 +39,17 @@ namespace ActionTools
 
 	void WindowEdit::setText(const QString &text)
 	{
-		ui->window->setText(text);
+		ui->window->codeLineEdit()->setText(text);
 	}
 
 	QString WindowEdit::text() const
 	{
-		return ui->window->text();
+		return ui->window->codeLineEdit()->text();
 	}
 
 	CodeLineEdit *WindowEdit::codeLineEdit() const
 	{
-		return ui->window;
+		return ui->window->codeLineEdit();
 	}
 
 	bool WindowEdit::isCode() const
@@ -62,7 +64,7 @@ namespace ActionTools
 
 	void WindowEdit::setFromSubParameter(const SubParameter &subParameter)
 	{
-		ui->window->setFromSubParameter(subParameter);
+		ui->window->codeLineEdit()->setFromSubParameter(subParameter);
 	}
 
 	void WindowEdit::openEditor(int line, int column)
@@ -75,8 +77,14 @@ namespace ActionTools
 		codeLineEdit()->setCompletionModel(completionModel);
 	}
 
+	void WindowEdit::setWindowTitles(const QStringList &windowTitles)
+	{
+		ui->window->clear();
+		ui->window->addItems(windowTitles);
+	}
+
 	void WindowEdit::on_choose_searchEnded(const WindowHandle &handle)
 	{
-		ui->window->setText(handle.title());
+		ui->window->codeLineEdit()->setText(handle.title());
 	}
 }

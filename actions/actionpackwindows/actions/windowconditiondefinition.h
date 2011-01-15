@@ -23,7 +23,7 @@
 
 #include "actiondefinition.h"
 #include "windowconditioninstance.h"
-#include "textparameterdefinition.h"
+#include "windowparameterdefinition.h"
 #include "listparameterdefinition.h"
 #include "ifactionparameterdefinition.h"
 #include "variableparameterdefinition.h"
@@ -46,7 +46,7 @@ namespace Actions
 		{
 			translateItems("WindowConditionInstance::conditions", WindowConditionInstance::conditions);
 
-			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition("title", tr("Window title"), this);
+			ActionTools::WindowParameterDefinition *title = new ActionTools::WindowParameterDefinition("title", tr("Window title"), this);
 			title->setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
 			addElement(title);
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>238</width>
-    <height>23</height>
+    <height>27</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="ActionTools::CodeLineEdit" name="window"/>
+    <widget class="ActionTools::CodeComboBox" name="window"/>
    </item>
    <item>
     <widget class="ActionTools::ChooseWindowPushButton" name="choose">
@@ -40,14 +40,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ActionTools::CodeLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>codelineedit.h</header>
-  </customwidget>
-  <customwidget>
    <class>ActionTools::ChooseWindowPushButton</class>
    <extends>QPushButton</extends>
    <header>choosewindowpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ActionTools::CodeComboBox</class>
+   <extends>QComboBox</extends>
+   <header>codecombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
