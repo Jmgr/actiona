@@ -79,6 +79,8 @@ namespace LibExecuter
 			   bool showConsoleWindow,
 			   int consoleWindowPosition,
 			   int consoleWindowScreen,
+			   int pauseBefore,
+			   int pauseAfter,
 			   QStandardItemModel *consoleModel)
 	{
 		mScript = script;
@@ -94,6 +96,8 @@ namespace LibExecuter
 		mShowConsoleWindow = showConsoleWindow;
 		mConsoleWindowPosition = consoleWindowPosition;
 		mConsoleWindowScreen = consoleWindowScreen;
+		mPauseBefore = pauseBefore;
+		mPauseAfter = pauseAfter;
 		mCurrentActionIndex = 0;
 		mExecutionStarted = false;
 		mExecutionEnded = false;
@@ -485,11 +489,11 @@ namespace LibExecuter
 
 		mExecutionTimer.start();
 		mExecutionTime = 0;
-		if(currentActionInstance()->pauseAfter() > 0)
+		if(currentActionInstance()->pauseAfter() + mPauseAfter > 0)
 		{
 			mExecutionWindow->setProgressEnabled(true);
 			mExecutionWindow->setProgressMinimum(0);
-			mExecutionWindow->setProgressMaximum(currentActionInstance()->pauseAfter());
+			mExecutionWindow->setProgressMaximum(currentActionInstance()->pauseAfter() + mPauseAfter);
 			mExecutionWindow->setProgressValue(0);
 		}
 		else
@@ -588,7 +592,7 @@ namespace LibExecuter
 		switch(mExecutionStatus)
 		{
 		case PrePause:
-			if(mExecutionTime >= actionInstance->pauseBefore())
+			if(mExecutionTime >= actionInstance->pauseBefore() + mPauseBefore)
 			{
 				mExecutionTimer.stop();
 				startActionExecution();
@@ -607,7 +611,7 @@ namespace LibExecuter
 			mExecutionWindow->setProgressValue(mExecutionTime);
 			break;
 		case PostPause:
-			if(mExecutionTime >= actionInstance->pauseAfter())
+			if(mExecutionTime >= actionInstance->pauseAfter() + mPauseAfter)
 			{
 				mExecutionTimer.stop();
 				startNextAction();
@@ -802,11 +806,11 @@ namespace LibExecuter
 
 		mExecutionTimer.start();
 		mExecutionTime = 0;
-		if(currentActionInstance()->pauseBefore() > 0)
+		if(currentActionInstance()->pauseBefore() + mPauseBefore > 0)
 		{
 			mExecutionWindow->setProgressEnabled(true);
 			mExecutionWindow->setProgressMinimum(0);
-			mExecutionWindow->setProgressMaximum(currentActionInstance()->pauseBefore());
+			mExecutionWindow->setProgressMaximum(currentActionInstance()->pauseBefore() + mPauseBefore);
 			mExecutionWindow->setProgressValue(0);
 		}
 		else

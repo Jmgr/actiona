@@ -27,7 +27,8 @@ SOURCES += main.cpp \
 	changelogdialog.cpp \
 	scriptcontentdialog.cpp \
     sfxscriptdialog.cpp \
-    progresssplashscreen.cpp
+    progresssplashscreen.cpp \
+    scriptsettingsdialog.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -44,7 +45,8 @@ HEADERS += mainwindow.h \
 	changelogdialog.h \
 	scriptcontentdialog.h \
     sfxscriptdialog.h \
-    progresssplashscreen.h
+    progresssplashscreen.h \
+    scriptsettingsdialog.h
 INCLUDEPATH += . \
 	src \
 	../tools \
@@ -58,7 +60,8 @@ FORMS += mainwindow.ui \
 	newactiondialog.ui \
 	changelogdialog.ui \
 	scriptcontentdialog.ui \
-    sfxscriptdialog.ui
+    sfxscriptdialog.ui \
+    scriptsettingsdialog.ui
 win32:LIBS += -luser32 \
 	-ladvapi32 \
 	-lole32 \

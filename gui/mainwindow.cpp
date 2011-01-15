@@ -49,6 +49,7 @@
 #include "progresssplashscreen.h"
 #include "codeinitializer.h"
 #include "code/code.h"
+#include "scriptsettingsdialog.h"
 
 #include <QSystemTrayIcon>
 #include <QInputDialog>
@@ -1078,6 +1079,25 @@ void MainWindow::on_actionExport_script_content_triggered()
 	delete scriptContentDialog;
 }
 
+void MainWindow::on_actionScriptSettings_triggered()
+{
+	ScriptSettingsDialog *scriptSettingsDialog = new ScriptSettingsDialog(this);
+	scriptSettingsDialog->setPauseBefore(mScript->pauseBefore());
+	scriptSettingsDialog->setPauseAfter(mScript->pauseAfter());
+	if(scriptSettingsDialog->exec() == QDialog::Accepted)
+	{
+		if(mScript->pauseBefore() != scriptSettingsDialog->pauseBefore() ||
+		   mScript->pauseAfter() != scriptSettingsDialog->pauseAfter())
+		{
+			mScript->setPauseBefore(scriptSettingsDialog->pauseBefore());
+			mScript->setPauseAfter(scriptSettingsDialog->pauseAfter());
+			scriptEdited();
+		}
+	}
+
+	delete scriptSettingsDialog;
+}
+
 void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
 {
 	ui->menuEdit->exec(ui->scriptView->mapToGlobal(pos));
@@ -1344,6 +1364,8 @@ void MainWindow::execute(bool onlySelection)
 						 showConsoleWindow,
 						 consoleWindowPosition,
 						 consoleWindowScreen,
+						 mScript->pauseBefore(),
+						 mScript->pauseAfter(),
 						 ui->consoleWidget->model());
 	}
 

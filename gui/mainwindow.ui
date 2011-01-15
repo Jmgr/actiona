@@ -129,7 +129,7 @@
      <x>0</x>
      <y>0</y>
      <width>767</width>
-     <height>23</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -236,6 +236,8 @@
      <string>S&amp;cript</string>
     </property>
     <addaction name="actionParameters"/>
+    <addaction name="separator"/>
+    <addaction name="actionScriptSettings"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -842,6 +844,14 @@
    </property>
    <property name="shortcut">
     <string>F1</string>
+   </property>
+  </action>
+  <action name="actionScriptSettings">
+   <property name="text">
+    <string>Script &amp;settings</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+T</string>
    </property>
   </action>
  </widget>

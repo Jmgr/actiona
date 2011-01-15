@@ -78,12 +78,16 @@ namespace ActionTools
 		const Tools::Version &scriptVersion() const							{ return mScriptVersion; }
 		const QString &os() const											{ return mOs; }
 		const QStringList &missingActions() const							{ return mMissingActions; }
+		int pauseBefore() const												{ return mPauseBefore; }
+		int pauseAfter() const												{ return mPauseAfter; }
 
 		void addParameter(const ScriptParameter &parameter)					{ mParameters.append(parameter); }
 		int parameterCount() const											{ return mParameters.count(); }
 		const ScriptParameter &parameter(int index) const					{ return mParameters.at(index); }
 		void removeAllParameters()											{ mParameters.clear(); }
 		QList<ScriptParameter> parameters() const							{ return mParameters; }
+		void setPauseBefore(int pauseBefore)								{ mPauseBefore = pauseBefore; }
+		void setPauseAfter(int pauseAfter)									{ mPauseAfter = pauseAfter; }
 
 		QStringList labels() const;
 
@@ -99,6 +103,8 @@ namespace ActionTools
 		Tools::Version mScriptVersion;
 		QString mOs;
 		QStringList mMissingActions;
+		int mPauseBefore;
+		int mPauseAfter;
 
 		Q_DISABLE_COPY(Script)
 	};

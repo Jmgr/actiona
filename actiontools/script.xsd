@@ -81,6 +81,8 @@
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
+						<xs:attribute name="pauseBefore" type="xs:integer"/>
+						<xs:attribute name="pauseAfter" type="xs:integer"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>

@@ -61,6 +61,8 @@ namespace LibExecuter
 				   bool showConsoleWindow,
 				   int consoleWindowPosition,
 				   int consoleWindowScreen,
+				   int pauseBefore,
+				   int pauseAfter,
 				   QStandardItemModel *consoleModel);
 
 		ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
@@ -153,6 +155,8 @@ namespace LibExecuter
 		bool mHasExecuted;
 		static ExecutionStatus mExecutionStatus;
 		bool mPauseInterrupt;
+		int mPauseBefore;
+		int mPauseAfter;
 
 		Q_DISABLE_COPY(Executer)
 	};

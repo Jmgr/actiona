@@ -39,7 +39,9 @@ namespace ActionTools
 		: QObject(parent),
 		mActionFactory(actionFactory),
 		mLine(-1),
-		mColumn(-1)
+		mColumn(-1),
+		mPauseBefore(0),
+		mPauseAfter(0)
 	{
 	}
 
@@ -244,6 +246,8 @@ namespace ActionTools
 		stream.writeEndElement();
 
 		stream.writeStartElement("script");
+		stream.writeAttribute("pauseBefore", QString::number(pauseBefore()));
+		stream.writeAttribute("pauseAfter", QString::number(pauseAfter()));
 
 		foreach(ActionInstance *actionInstance, mActionInstances)
 		{
@@ -418,6 +422,10 @@ namespace ActionTools
 			}
 			else if(stream.name() == "script")
 			{
+				const QXmlStreamAttributes &attributes = stream.attributes();
+				setPauseBefore(attributes.value("pauseBefore").toString().toInt());
+				setPauseAfter(attributes.value("pauseAfter").toString().toInt());
+
 				stream.readNext();
 
 				for(;!stream.isEndElement() || stream.name() != "script";stream.readNext())
