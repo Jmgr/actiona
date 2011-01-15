@@ -364,10 +364,7 @@ namespace LibExecuter
 		}
 
 		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
-		{
-			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
-			actionInstance->stopLongTermExecution();
-		}
+			mScript->actionAt(actionIndex)->stopLongTermExecution();
 
 		mScriptEngineDebugger.detach();
 		

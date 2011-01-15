@@ -82,4 +82,9 @@ namespace Actions
 	
 		QTimer::singleShot(1, this, SIGNAL(executionEnded()));
 	}
+
+	void ClickInstance::stopLongTermExecution()
+	{
+		mMouseDevice.reset();
+	}
 }

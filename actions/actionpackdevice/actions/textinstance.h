@@ -40,6 +40,7 @@ namespace Actions
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
 		void startExecution();
+		void stopLongTermExecution();
 	
 	private:
 		KeyboardDevice mKeyboardDevice;

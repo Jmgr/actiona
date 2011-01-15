@@ -43,6 +43,8 @@ public:
 	
 	KeyboardDevice();
 	~KeyboardDevice();
+
+	void reset();
 	
 	void setType(Type type) { mType = type; }
 

@@ -58,6 +58,7 @@ namespace Actions
 	
 		void startExecution();
 		void stopExecution();
+		void stopLongTermExecution();
 
 	private slots:
 		void sendRelease();

@@ -58,6 +58,11 @@ namespace Actions
 			mMoveTimer.stop();
 		}
 
+		void stopLongTermExecution()
+		{
+			mMouseDevice.reset();
+		}
+
 	private slots:
 		void moveToNextPosition()
 		{

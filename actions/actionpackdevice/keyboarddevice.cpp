@@ -47,6 +47,11 @@ KeyboardDevice::KeyboardDevice()
 
 KeyboardDevice::~KeyboardDevice()
 {
+	reset();
+}
+
+void KeyboardDevice::reset()
+{
 	foreach(int nativeKey, mPressedKeys)
 	{
 		doKeyAction(Release, nativeKey);

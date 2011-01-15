@@ -145,8 +145,6 @@ namespace ActionTools
 	{
 		mIsQtKey = true;
 
-		qDebug() << event->nativeVirtualKey();
-
 		for(int i = 0; i < KeyCount; ++i)
 		{
 			if(event->nativeVirtualKey() == mNativeKey[i])

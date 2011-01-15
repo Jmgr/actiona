@@ -51,6 +51,7 @@ namespace Actions
 		static ActionTools::StringListPair actions;
 	
 		void startExecution();
+		void stopLongTermExecution();
 	
 	private:
 		MouseDevice mMouseDevice;

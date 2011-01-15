@@ -41,6 +41,11 @@ MouseDevice::MouseDevice()
 
 MouseDevice::~MouseDevice()
 {
+	reset();
+}
+
+void MouseDevice::reset()
+{
 	for(int i = 0; i < ButtonCount; ++i)
 	{
 		if(mPressedButtons[i])
@@ -109,9 +114,6 @@ bool MouseDevice::buttonClick(Button button)
 
 bool MouseDevice::pressButton(Button button)
 {
-	if(mPressedButtons[button])
-		return true;
-	
 	mPressedButtons[button] = true;
 
 #ifdef Q_WS_X11
@@ -139,9 +141,6 @@ bool MouseDevice::pressButton(Button button)
 
 bool MouseDevice::releaseButton(Button button)
 {
-	if(!mPressedButtons[button])
-		return true;
-	
 	mPressedButtons[button] = false;
 
 #ifdef Q_WS_X11

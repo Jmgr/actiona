@@ -92,6 +92,11 @@ namespace Actions
 		mTimer.stop();
 	}
 
+	void KeyInstance::stopLongTermExecution()
+	{
+		mKeyboardDevice.reset();
+	}
+
 	void KeyInstance::sendRelease()
 	{
 		mKeyboardDevice.releaseKey(mKey);

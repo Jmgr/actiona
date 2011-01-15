@@ -42,4 +42,9 @@ namespace Actions
 	
 		QTimer::singleShot(1, this, SIGNAL(executionEnded()));
 	}
+
+	void TextInstance::stopLongTermExecution()
+	{
+		mKeyboardDevice.reset();
+	}
 }

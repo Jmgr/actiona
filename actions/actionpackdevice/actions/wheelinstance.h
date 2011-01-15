@@ -57,7 +57,12 @@ namespace Actions
 	
 			emit executionEnded();
 		}
-	
+
+		void stopLongTermExecution()
+		{
+			mMouseDevice.reset();
+		}
+
 	private:
 		MouseDevice mMouseDevice;
 		

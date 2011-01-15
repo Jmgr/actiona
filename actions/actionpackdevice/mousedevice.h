@@ -42,6 +42,8 @@ public:
 	MouseDevice();
 	~MouseDevice();
 
+	void reset();
+
 	bool isButtonPressed(Button button) const;
 	QPoint cursorPosition() const;
 	void setCursorPosition(const QPoint &position) const;
