@@ -25,23 +25,41 @@
 #include "actioninstance.h"
 
 #include <QTimer>
+#include <QDateTime>
 
 namespace Actions
 {
 	class PauseInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
+		Q_ENUMS(Unit)
 
 	public:
+		enum Unit
+		{
+			Milliseconds,
+			Seconds,
+			Minutes,
+			Hours,
+			Days
+		};
+
 		PauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-			: ActionTools::ActionInstance(definition, parent)										{}
+			: ActionTools::ActionInstance(definition, parent)
+		{
+			connect(&mCheckTimer, SIGNAL(timeout()), this, SLOT(checkTime()));
+		}
+
+		static ActionTools::StringListPair units;
 
 		void startExecution()
 		{
 			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 			int duration;
+			Unit unit;
 
-			if(!actionInstanceExecutionHelper.evaluateInteger(duration, "duration"))
+			if(!actionInstanceExecutionHelper.evaluateInteger(duration, "duration") ||
+			   !actionInstanceExecutionHelper.evaluateListElement(unit, units, "unit"))
 				return;
 
 			if(duration < 0)
@@ -50,10 +68,54 @@ namespace Actions
 				return;
 			}
 
-			QTimer::singleShot(duration, this, SIGNAL(executionEnded()));
+			mEndTime = QDateTime::currentDateTime();
+
+			if(unit == Milliseconds)
+				mCheckTimer.start(duration);
+			else
+			{
+				switch(unit)
+				{
+				case Seconds:
+					mEndTime = mEndTime.addSecs(duration);
+					break;
+				case Minutes:
+					mEndTime = mEndTime.addMSecs(duration * 60000);
+					break;
+				case Hours:
+					mEndTime = mEndTime.addSecs(duration * 3600000);
+					break;
+				case Days:
+					mEndTime = mEndTime.addDays(duration);
+					break;
+				default:
+					break;
+				}
+
+				mCheckTimer.start(1000);
+			}
+		}
+
+		void stopExecution()
+		{
+			mCheckTimer.stop();
+		}
+
+	private slots:
+		void checkTime()
+		{
+			if(QDateTime::currentDateTime() >= mEndTime)
+			{
+				mCheckTimer.stop();
+
+				emit executionEnded();
+			}
 		}
 
 	private:
+		QDateTime mEndTime;
+		QTimer mCheckTimer;
+
 		Q_DISABLE_COPY(PauseInstance)
 	};
 }

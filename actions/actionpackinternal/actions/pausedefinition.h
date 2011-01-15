@@ -23,6 +23,7 @@
 
 #include "actiondefinition.h"
 #include "numberparameterdefinition.h"
+#include "listparameterdefinition.h"
 #include "pauseinstance.h"
 
 #include <limits.h>
@@ -43,13 +44,20 @@ namespace Actions
 		explicit PauseDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("PauseInstance::units", PauseInstance::units);
+
 			ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition("duration", tr("Duration"), this);
 			duration->setTooltip(tr("The duration of the pause"));
-			duration->setSuffix(tr(" ms", "milliseconds"));
 			duration->setMinimum(0);
 			duration->setMaximum(INT_MAX);
-			duration->setDefaultValue(1000);
+			duration->setDefaultValue(5);
 			addElement(duration);
+
+			ActionTools::ListParameterDefinition *unit = new ActionTools::ListParameterDefinition("unit", tr("Unit"), this);
+			unit->setTooltip(tr("The pause duration unit"));
+			unit->setItems(PauseInstance::units);
+			unit->setDefaultValue(PauseInstance::units.second.at(PauseInstance::Seconds));
+			addElement(unit);
 		}
 
 		QString name() const													{ return QObject::tr("Pause"); }

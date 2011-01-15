@@ -1,6 +1,7 @@
 SOURCES += actions/variableconditioninstance.cpp \
     actions/consoleinstance.cpp \
-    actions/variableinstance.cpp
+    actions/variableinstance.cpp \
+    actions/pauseinstance.cpp
 HEADERS += actions/stopdefinition.h \
 	actions/stopinstance.h \
 	actions/variabledefinition.h \
