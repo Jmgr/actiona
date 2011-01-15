@@ -30,6 +30,7 @@
 #include <QPixmap>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QTimer>
 
 namespace Actions
 {
@@ -54,68 +55,90 @@ namespace Actions
 		{
 			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 
-			QPoint pixelPosition;
-			QColor pixelColorValue;
-			Comparison comparison;
-			ActionTools::IfActionValue ifTrue;
 			ActionTools::IfActionValue ifFalse;
-			QString variable;
 
-			if(!actionInstanceExecutionHelper.evaluatePoint(pixelPosition, "pixel", "position") ||
-			   !actionInstanceExecutionHelper.evaluateColor(pixelColorValue, "pixel", "color") ||
-			   !actionInstanceExecutionHelper.evaluateListElement(comparison, comparisons, "comparison") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(ifTrue, "ifTrue") ||
+			if(!actionInstanceExecutionHelper.evaluatePoint(mPixelPosition, "pixel", "position") ||
+			   !actionInstanceExecutionHelper.evaluateColor(mPixelColorValue, "pixel", "color") ||
+			   !actionInstanceExecutionHelper.evaluateListElement(mComparison, comparisons, "comparison") ||
+			   !actionInstanceExecutionHelper.evaluateIfAction(mIfTrue, "ifTrue") ||
 			   !actionInstanceExecutionHelper.evaluateIfAction(ifFalse, "ifFalse") ||
-			   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
+			   !actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
 				return;
 
-			QString action;
-			QString line;
-			QColor color = pixelColor(pixelPosition.x(), pixelPosition.y());
-
-			if(!variable.isEmpty())
-				actionInstanceExecutionHelper.setVariable(variable, color);
-
-			bool isTrue = true;
-
-			switch(comparison)
+			if(testPixel())
 			{
-			case Equal:
-				isTrue = (color == pixelColorValue);
-				break;
-			case Darker:
-				isTrue = (color.lightness() < pixelColorValue.lightness());
-				break;
-			case Lighter:
-				isTrue = (color.lightness() > pixelColorValue.lightness());
-				break;
-			}
-
-			if(isTrue)
-			{
-				action = ifTrue.action();
-				line = ifTrue.line();
 				actionInstanceExecutionHelper.setCurrentParameter("ifTrue", "line");
+
+				if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
+					actionInstanceExecutionHelper.setNextLine(mIfTrue.line());
+
+				emit executionEnded();
 			}
 			else
 			{
-				action = ifFalse.action();
-				line = ifFalse.line();
 				actionInstanceExecutionHelper.setCurrentParameter("ifFalse", "line");
+
+				if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
+					actionInstanceExecutionHelper.setNextLine(ifFalse.line());
+				else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
+				{
+					connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkPixel()));
+					mTimer.setInterval(100);
+					mTimer.start();
+				}
+				else
+					emit executionEnded();
 			}
+		}
 
-			if(action == ActionTools::IfActionValue::GOTO)
-				actionInstanceExecutionHelper.setNextLine(line);
+		void stopExecution()
+		{
+			mTimer.stop();
+		}
 
-			emit executionEnded();
+	private slots:
+		void checkPixel()
+		{
+			if(testPixel())
+			{
+				if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
+				{
+					ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+					actionInstanceExecutionHelper.setNextLine(mIfTrue.line());
+				}
+
+				mTimer.stop();
+				emit executionEnded();
+			}
 		}
 
 	private:
-		QColor pixelColor(int positionX, int positionY) const
-		{
-			QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), positionX, positionY, 1, 1);
+		QPoint mPixelPosition;
+		QColor mPixelColorValue;
+		Comparison mComparison;
+		ActionTools::IfActionValue mIfTrue;
+		QString mVariable;
+		QTimer mTimer;
 
-			return pixel.toImage().pixel(0, 0);
+		bool testPixel()
+		{
+			QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), mPixelPosition.x(), mPixelPosition.y(), 1, 1);
+			QColor pixelColor = pixel.toImage().pixel(0, 0);
+
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			actionInstanceExecutionHelper.setVariable(mVariable, pixelColor);
+
+			switch(mComparison)
+			{
+			case Equal:
+				return (pixelColor == mPixelColorValue);
+			case Darker:
+				return (pixelColor.lightness() < mPixelColorValue.lightness());
+			case Lighter:
+				return (pixelColor.lightness() > mPixelColorValue.lightness());
+			}
+
+			return false;
 		}
 
 		Q_DISABLE_COPY(PixelColorInstance)

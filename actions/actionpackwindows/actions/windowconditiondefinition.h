@@ -53,7 +53,7 @@ namespace Actions
 			ActionTools::ListParameterDefinition *condition = new ActionTools::ListParameterDefinition("condition", tr("Condition"), this);
 			condition->setTooltip(tr("The condition to wait for"));
 			condition->setItems(WindowConditionInstance::conditions);
-			condition->setDefaultValue(WindowConditionInstance::conditions.second.at(WindowConditionInstance::Created));
+			condition->setDefaultValue(WindowConditionInstance::conditions.second.at(WindowConditionInstance::Exists));
 			addElement(condition);
 
 			ActionTools::IfActionParameterDefinition *ifTrue = new ActionTools::IfActionParameterDefinition("ifTrue", tr("If true"), this);
@@ -62,6 +62,7 @@ namespace Actions
 
 			ActionTools::IfActionParameterDefinition *ifFalse = new ActionTools::IfActionParameterDefinition("ifFalse", tr("If false"), this);
 			ifFalse->setTooltip(tr("What to do if the condition is not met"));
+			ifFalse->setAllowWait(true);
 			addElement(ifFalse);
 
 			ActionTools::VariableParameterDefinition *xCoordinate = new ActionTools::VariableParameterDefinition("xCoordinate", tr("X-coordinate"), this);

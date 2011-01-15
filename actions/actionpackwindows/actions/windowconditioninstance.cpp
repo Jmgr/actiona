@@ -20,18 +20,16 @@
 
 #include "windowconditioninstance.h"
 #include "actioninstanceexecutionhelper.h"
-#include "ifactionvalue.h"
-#include "windowhandle.h"
 
 #include <QRegExp>
 
 namespace Actions
 {
 	ActionTools::StringListPair WindowConditionInstance::conditions = qMakePair(
-			QStringList() << "created" << "closed",
+			QStringList() << "exists" << "dontexists",
 			QStringList()
-			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Created")
-			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Closed"));
+			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Exists")
+			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Don't exists"));
 
 	WindowConditionInstance::WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent)
@@ -42,69 +40,86 @@ namespace Actions
 	{
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString title;
-		Condition condition;
-		ActionTools::IfActionValue ifTrue;
 		ActionTools::IfActionValue ifFalse;
-		QString xCoordinate;
-		QString yCoordinate;
-		QString width;
-		QString height;
-		QString processId;
 
 		if(!actionInstanceExecutionHelper.evaluateString(title, "title") ||
-			!actionInstanceExecutionHelper.evaluateListElement(condition, conditions, "condition") ||
-			!actionInstanceExecutionHelper.evaluateIfAction(ifTrue, "ifTrue") ||
+			!actionInstanceExecutionHelper.evaluateListElement(mCondition, conditions, "condition") ||
+			!actionInstanceExecutionHelper.evaluateIfAction(mIfTrue, "ifTrue") ||
 			!actionInstanceExecutionHelper.evaluateIfAction(ifFalse, "ifFalse") ||
-			!actionInstanceExecutionHelper.evaluateVariable(xCoordinate, "xCoordinate") ||
-			!actionInstanceExecutionHelper.evaluateVariable(yCoordinate, "yCoordinate") ||
-			!actionInstanceExecutionHelper.evaluateVariable(width, "width") ||
-			!actionInstanceExecutionHelper.evaluateVariable(height, "height") ||
-			!actionInstanceExecutionHelper.evaluateVariable(processId, "processId"))
+			!actionInstanceExecutionHelper.evaluateVariable(mXCoordinate, "xCoordinate") ||
+			!actionInstanceExecutionHelper.evaluateVariable(mYCoordinate, "yCoordinate") ||
+			!actionInstanceExecutionHelper.evaluateVariable(mWidth, "width") ||
+			!actionInstanceExecutionHelper.evaluateVariable(mHeight, "height") ||
+			!actionInstanceExecutionHelper.evaluateVariable(mProcessId, "processId"))
 			return;
 
-		QRegExp titleRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix);
-		ActionTools::WindowHandle foundWindow;
+		mTitleRegExp = QRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix);
 
+		ActionTools::WindowHandle foundWindow = findWindow();
+		if((foundWindow.isValid() && mCondition == Exists) ||
+		   (!foundWindow.isValid() && mCondition == DontExists))
+		{
+			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
+				actionInstanceExecutionHelper.setNextLine(mIfTrue.line());
+
+			emit executionEnded();
+		}
+		else
+		{
+			if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
+				actionInstanceExecutionHelper.setNextLine(ifFalse.line());
+			else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
+			{
+				connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkWindow()));
+				mTimer.setInterval(100);
+				mTimer.start();
+			}
+			else
+				emit executionEnded();
+		}
+	}
+
+	void WindowConditionInstance::stopExecution()
+	{
+		mTimer.stop();
+	}
+
+	void WindowConditionInstance::checkWindow()
+	{
+		ActionTools::WindowHandle foundWindow = findWindow();
+		if((foundWindow.isValid() && mCondition == Exists) ||
+		   (!foundWindow.isValid() && mCondition == DontExists))
+		{
+			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
+			{
+				ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+				actionInstanceExecutionHelper.setNextLine(mIfTrue.line());
+			}
+
+			mTimer.stop();
+			emit executionEnded();
+		}
+	}
+
+	ActionTools::WindowHandle WindowConditionInstance::findWindow()
+	{
 		foreach(const ActionTools::WindowHandle &windowHandle, ActionTools::WindowHandle::windowList())
 		{
-			if(titleRegExp.exactMatch(windowHandle.title()))
+			if(mTitleRegExp.exactMatch(windowHandle.title()))
 			{
-				foundWindow = windowHandle;
-				break;
+				QRect windowRect = windowHandle.rect();
+
+				ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+				actionInstanceExecutionHelper.setVariable(mXCoordinate, windowRect.x());
+				actionInstanceExecutionHelper.setVariable(mYCoordinate, windowRect.y());
+				actionInstanceExecutionHelper.setVariable(mWidth, windowRect.width());
+				actionInstanceExecutionHelper.setVariable(mHeight, windowRect.height());
+				actionInstanceExecutionHelper.setVariable(mProcessId, windowHandle.processId());
+
+				return windowHandle;
 			}
 		}
 
-		if(foundWindow.isValid())
-		{
-			QRect windowRect = foundWindow.rect();
-
-			actionInstanceExecutionHelper.setVariable(xCoordinate, windowRect.x());
-			actionInstanceExecutionHelper.setVariable(yCoordinate, windowRect.y());
-			actionInstanceExecutionHelper.setVariable(width, windowRect.width());
-			actionInstanceExecutionHelper.setVariable(height, windowRect.height());
-			actionInstanceExecutionHelper.setVariable(processId, foundWindow.processId());
-		}
-
-		ActionTools::IfActionValue action;
-		switch(condition)
-		{
-		case Created:
-			if(foundWindow.isValid())
-				action = ifTrue;
-			else
-				action = ifFalse;
-			break;
-		case Closed:
-			if(foundWindow.isValid())
-				action = ifFalse;
-			else
-				action = ifTrue;
-			break;
-		}
-
-		if(action.action() == ActionTools::IfActionValue::GOTO)
-			actionInstanceExecutionHelper.setNextLine(action.line());
-
-		emit executionEnded();
+		return ActionTools::WindowHandle();
 	}
 }

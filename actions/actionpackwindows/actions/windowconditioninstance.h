@@ -23,6 +23,10 @@
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
+#include "windowhandle.h"
+#include "ifactionvalue.h"
+
+#include <QTimer>
 
 namespace Actions
 {
@@ -34,17 +38,34 @@ namespace Actions
 	public:
 		enum Condition
 		{
-			Created,
-			Closed
+			Exists,
+			DontExists
 		};
 
 		WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
 		static ActionTools::StringListPair conditions;
 
+		void stopExecution();
 		void startExecution();
 
+	private slots:
+		void checkWindow();
+
 	private:
+		ActionTools::WindowHandle findWindow();
+
+		QRegExp mTitleRegExp;
+		ActionTools::IfActionValue mIfTrue;
+		Condition mCondition;
+		QString mXCoordinate;
+		QString mYCoordinate;
+		QString mWidth;
+		QString mHeight;
+		QString mProcessId;
+		QTimer mTimer;
+		ActionTools::WindowHandle mTestedWindowHandle;
+
 		Q_DISABLE_COPY(WindowConditionInstance)
 	};
 }

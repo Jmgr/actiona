@@ -63,6 +63,7 @@ namespace Actions
 
 			ActionTools::IfActionParameterDefinition *ifFalse = new ActionTools::IfActionParameterDefinition("ifFalse", tr("If false"), this);
 			ifFalse->setTooltip(tr("What to to if the pixel comparison is false"));
+			ifFalse->setAllowWait(true);
 			addElement(ifFalse);
 
 			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Pixel color variable"), this);
