@@ -321,9 +321,6 @@ namespace ActionTools
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Script::read");
 #endif
-		qDeleteAll(mActionInstances);
-		mActionInstances.clear();
-		mParameters.clear();
 		mMissingActions.clear();
 
 		MessageHandler messageHandler;
@@ -357,6 +354,10 @@ namespace ActionTools
 				return ReadBadSchema;
 			}
 		}
+
+		qDeleteAll(mActionInstances);
+		mActionInstances.clear();
+		mParameters.clear();
 
 		device->reset();
 

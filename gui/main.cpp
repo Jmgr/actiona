@@ -168,7 +168,7 @@ int main(int argc, char **argv)
 		startScript = positionalParameters.at(0);
 
 	QFileInfo fileInfo(QDir::current().filePath(startScript));
-	if(fileInfo.isReadable() && app.sendMessage(fileInfo.filePath()))
+	if(app.sendMessage(fileInfo.filePath()))
 		return 0;
 
 #ifdef Q_WS_X11
