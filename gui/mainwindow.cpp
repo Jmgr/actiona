@@ -1606,8 +1606,15 @@ void MainWindow::otherInstanceMessage(const QString &message)
 	if(!mCurrentFile.isEmpty() && !ui->actionExecute->isEnabled()) // Executing
 		return;
 
-	if(maybeSave() && !message.isEmpty() && loadFile(message))
-		emit needToShow();
+	if(!message.isEmpty())
+	{
+		QFileInfo fileInfo(message);
+
+		if(fileInfo.isFile() && fileInfo.isReadable() && maybeSave())
+			loadFile(message);
+	}
+
+	emit needToShow();
 }
 
 #ifndef ACT_NO_UPDATER
