@@ -32,6 +32,7 @@
 #include <QPalette>
 #include <QApplication>
 #include <QMimeData>
+#include <QUrl>
 
 ScriptModel::ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory *actionFactory, QObject *parent)
 	: QAbstractTableModel(parent),
@@ -454,6 +455,21 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 
 		return true;
 	}
+	else if(data->hasUrls())
+	{
+		if(data->urls().count() != 1)
+			return false;
+
+		emit scriptFileDropped(data->urls().at(0).toLocalFile());
+
+		return true;
+	}
+	else if(data->hasText())
+	{
+		emit scriptContentDropped(data->text());
+
+		return true;
+	}
 
 	return false;
 }
@@ -462,7 +478,9 @@ QStringList ScriptModel::mimeTypes() const
 {
 	return QStringList()
 			<< "application/actionaz.action"
-			<< "application/actionaz.add.action";
+			<< "application/actionaz.add.action"
+			<< "text/uri-list"
+			<< "text/plain";
 }
 
 bool ScriptModel::insertRows(int row, int count, const QModelIndex &parent)

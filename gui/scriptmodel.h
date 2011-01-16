@@ -94,6 +94,8 @@ public slots:
 signals:
 	void scriptEdited();
 	void wantToAddAction(int row, const QString &actionId);
+	void scriptFileDropped(const QString &scriptFilename);
+	void scriptContentDropped(const QString &scriptContent);
 
 protected:
 	void emitDataChanged(const QModelIndex &index)						{ emit dataChanged(index, index); }

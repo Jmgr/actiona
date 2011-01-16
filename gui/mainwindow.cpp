@@ -194,6 +194,8 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	connect(ui->deleteDropTarget, SIGNAL(actionsDropped(QList<int>)), mScriptModel, SLOT(removeActions(QList<int>)));
 	connect(ui->scriptView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editAction(QModelIndex)));
 	connect(mScriptModel, SIGNAL(wantToAddAction(int, QString)), this, SLOT(wantToAddAction(int, QString)));
+	connect(mScriptModel, SIGNAL(scriptFileDropped(QString)), this, SLOT(scriptFileDropped(QString)));
+	connect(mScriptModel, SIGNAL(scriptContentDropped(QString)), this, SLOT(scriptContentDropped(QString)));
 	connect(ui->scriptView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(actionSelectionChanged()));
 	connect(mScriptModel, SIGNAL(scriptEdited()), this, SLOT(scriptEdited()));
 	connect(ui->newActionTreeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(newActionDoubleClicked(QTreeWidgetItem*,int)));
@@ -1446,6 +1448,35 @@ void MainWindow::wantToAddAction(int row, const QString &actionId)
 
 	mAddActionRow = row;
 	mAddAction = actionId;
+}
+
+void MainWindow::scriptFileDropped(const QString &scriptFilename)
+{
+	QFileInfo fileInfo(scriptFilename);
+
+	if(fileInfo.isFile() && fileInfo.isReadable() && maybeSave())
+		loadFile(scriptFilename);
+}
+
+void MainWindow::scriptContentDropped(const QString &scriptContent)
+{
+	if(maybeSave())
+	{
+		QByteArray newContent(scriptContent.toUtf8());
+		QBuffer buffer(&newContent);
+
+		buffer.open(QIODevice::ReadOnly);
+
+		ActionTools::Script::ReadResult result = mScript->read(&buffer, Global::SCRIPT_VERSION);
+		if(result == ActionTools::Script::ReadSuccess)
+		{
+			mScriptModel->update();
+
+			scriptEdited();
+		}
+
+		checkReadResult(result);
+	}
 }
 
 void MainWindow::addAction()

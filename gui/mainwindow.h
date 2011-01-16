@@ -132,6 +132,8 @@ private slots:
 	void editAction(const QModelIndex &index);
 	void wantToAddAction(const QString &actionId);
 	void wantToAddAction(int row, const QString &actionId);
+	void scriptFileDropped(const QString &scriptFilename);
+	void scriptContentDropped(const QString &scriptContent);
 	void addAction();
 	void openRecentFile();
 	void newActionDoubleClicked(QTreeWidgetItem *item, int column);
