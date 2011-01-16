@@ -11,7 +11,7 @@ SOURCES += executer.cpp \
 	executionwindow.cpp \
     codeinitializer.cpp \
     codeexecution.cpp \
-    codeconsole.cpp \
+	codestdio.cpp \
     scriptagent.cpp
 HEADERS += executer_global.h \
 	executer.h \
@@ -19,7 +19,7 @@ HEADERS += executer_global.h \
 	scriptagent.h \
     codeinitializer.h \
     codeexecution.h \
-    codeconsole.h
+	codestdio.h
 INCLUDEPATH += src \
 	../tools \
 	../actiontools

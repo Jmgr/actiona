@@ -34,7 +34,7 @@
 #include "actionpack.h"
 #include "actionfactory.h"
 #include "codeexecution.h"
-#include "codeconsole.h"
+#include "codestdio.h"
 
 #include <QScriptEngine>
 #include <QFile>
@@ -104,10 +104,10 @@ namespace LibExecuter
 		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::sleep, "sleep", scriptEngine);
 		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::stop, "stop", scriptEngine);
 
-		Code::CodeTools::addClassToScriptEngine<CodeConsole>("Console", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::print, "print", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::printWarning, "printWarning", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::printError, "printError", scriptEngine);
+		Code::CodeTools::addClassToScriptEngine<CodeStdio>("Stdio", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::print, "print", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printWarning, "printWarning", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printError, "printError", scriptEngine);
 
 		int actionPackCount = actionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)

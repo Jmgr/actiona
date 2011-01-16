@@ -214,17 +214,20 @@ namespace LibExecuter
 		mScriptEngine->globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
 		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(1)));
 
+		QScriptValue console = mScriptEngine->newObject();
+		mScriptEngine->globalObject().setProperty("Console", console, QScriptValue::ReadOnly);
+
 		QScriptValue printFun = mScriptEngine->newFunction(printFunction);
 		printFun.setData(mScriptEngine->newQObject(this));
-		script.setProperty("print", printFun);
+		console.setProperty("print", printFun);
 
 		printFun = mScriptEngine->newFunction(printWarningFunction);
 		printFun.setData(mScriptEngine->newQObject(this));
-		script.setProperty("printWarning", printFun);
+		console.setProperty("printWarning", printFun);
 
 		printFun = mScriptEngine->newFunction(printErrorFunction);
 		printFun.setData(mScriptEngine->newQObject(this));
-		script.setProperty("printError", printFun);
+		console.setProperty("printError", printFun);
 		
 		mExecuteOnlySelection = onlySelection;
 		mCurrentActionIndex = 0;

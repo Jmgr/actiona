@@ -18,19 +18,19 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "codeconsole.h"
+#include "codestdio.h"
 
 #include <QScriptContext>
 #include <QTextStream>
 
 namespace LibExecuter
 {
-	QScriptValue CodeConsole::constructor(QScriptContext *context, QScriptEngine *)
+	QScriptValue CodeStdio::constructor(QScriptContext *context, QScriptEngine *)
 	{
 		return context->thisObject();
 	}
 	
-	QScriptValue CodeConsole::print(QScriptContext *context, QScriptEngine *)
+	QScriptValue CodeStdio::print(QScriptContext *context, QScriptEngine *)
 	{
 		if(context->argumentCount() < 1)
 			return context->thisObject();
@@ -42,7 +42,7 @@ namespace LibExecuter
 		return context->thisObject();
 	}
 
-	QScriptValue CodeConsole::printWarning(QScriptContext *context, QScriptEngine *)
+	QScriptValue CodeStdio::printWarning(QScriptContext *context, QScriptEngine *)
 	{
 		if(context->argumentCount() < 1)
 			return context->thisObject();
@@ -54,7 +54,7 @@ namespace LibExecuter
 		return context->thisObject();
 	}
 
-	QScriptValue CodeConsole::printError(QScriptContext *context, QScriptEngine *)
+	QScriptValue CodeStdio::printError(QScriptContext *context, QScriptEngine *)
 	{
 		if(context->argumentCount() < 1)
 			return context->thisObject();

@@ -31,7 +31,7 @@ class QScriptEngine;
 
 namespace LibExecuter
 {
-	class EXECUTERSHARED_EXPORT CodeConsole : public QObject
+	class EXECUTERSHARED_EXPORT CodeStdio : public QObject
 	{
 		Q_OBJECT
 

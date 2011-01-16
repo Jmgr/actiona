@@ -23,6 +23,8 @@
 #include "executer/scriptagent.h"
 #include "actionfactory.h"
 #include "actionpack.h"
+#include "executer/codestdio.h"
+#include "code/codetools.h"
 
 #include <QFile>
 #include <QScriptEngine>
@@ -66,6 +68,11 @@ bool CodeExecuter::start(QFile &file)
 	
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::ActionInit);
 	LibExecuter::CodeInitializer::initialize(mScriptEngine, mScriptAgent, actionFactory());
+
+	Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeStdio>("Console", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::print, "print", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printWarning, "printWarning", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printError, "printError", mScriptEngine);
 
 	QSettings settings;
 	QString locale = settings.value("locale").toString();
