@@ -60,7 +60,7 @@ namespace LibExecuter
 			return context->thisObject();
 		
 		QTextStream stream(stdout);
-		stream << context->argument(0).toString();
+		stream << tr("Error: ") << context->argument(0).toString();
 		stream.flush();
 		
 		return context->thisObject();
