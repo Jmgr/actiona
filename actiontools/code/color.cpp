@@ -19,7 +19,7 @@
 */
 
 #include "color.h"
-#include "code.h"
+#include "codetools.h"
 
 namespace Code
 {
@@ -38,7 +38,7 @@ namespace Code
 				{
 					if(!QColor::isValidColor(context->argument(0).toString()))
 					{
-						context->throwError(tr("Invalid color name"));
+						throwError(context, engine, "ColorNameError", tr("Invalid color name"));
 						color = new Color;
 					}
 					else
@@ -50,7 +50,7 @@ namespace Code
 					if(Color *codeColor = qobject_cast<Color*>(object))
 						color = new Color(*codeColor);
 					else
-						context->throwError("Incorrect parameter type");
+						throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 				}
 			}
 			break;
@@ -61,46 +61,41 @@ namespace Code
 			color = new Color(QColor(context->argument(0).toInt32(), context->argument(1).toInt32(), context->argument(2).toInt32(), context->argument(3).toInt32()));
 			break;
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			break;
 		}
 		
 		if(!color)
 			return engine->undefinedValue();
 	
-		return engine->newQObject(color, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(color, context, engine);
 	}
 	
 	QScriptValue Color::constructor(const QColor &color, QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-	
-		return engine->newQObject(new Color(color), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Color(color), context, engine);
 	}
 
 	void Color::registerClass(QScriptEngine *scriptEngine)
 	{
-		Code::addClassToScriptEngine<Color>(scriptEngine);
+		CodeTools::addClassToScriptEngine<Color>(scriptEngine);
 	}
 	
 	Color::Color()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 		
 	}
 
 	Color::Color(const Color &other)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mColor(other.color())
 	{
 		
 	}
 
 	Color::Color(const QColor &color)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mColor(color)
 	{
 		
@@ -210,7 +205,7 @@ namespace Code
 	{
 		if(!QColor::isValidColor(name))
 		{
-			context()->throwError(tr("Invalid color name"));
+			throwError("ColorNameError", tr("Invalid color name"));
 			return context()->thisObject();
 		}
 		

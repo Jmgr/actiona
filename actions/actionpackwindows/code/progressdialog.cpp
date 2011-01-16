@@ -53,7 +53,7 @@ namespace Code
 				progressDialog->mOnCanceled = it.value();
 		}
 
-		return progressDialog->mThisObject = engine->newQObject(progressDialog, QScriptEngine::ScriptOwnership);
+		return progressDialog->mThisObject = CodeClass::constructor(progressDialog, context, engine);
 	}
 	
 	ProgressDialog::ProgressDialog()

@@ -20,7 +20,8 @@
 
 #include "codeinitializer.h"
 #include "executer.h"
-#include "code/code.h"
+#include "code/codetools.h"
+#include "code/codeclass.h"
 #include "code/image.h"
 #include "code/rawdata.h"
 #include "code/algorithms.h"
@@ -47,7 +48,7 @@ namespace LibExecuter
 		QFile file(filename);
 		if(!file.open(QIODevice::ReadOnly))
 		{
-			context->throwError(QObject::tr("Unable to load UI file %1").arg(filename));
+			Code::CodeClass::throwError(context, engine, "LoadFileError", QObject::tr("Unable to load UI file %1").arg(filename));
 			return context->thisObject();
 		}
 
@@ -60,7 +61,7 @@ namespace LibExecuter
 		QFile file(filename);
 		if(!file.open(QIODevice::ReadOnly))
 		{
-			context->throwError(QObject::tr("Unable to include file %1").arg(filename));
+			Code::CodeClass::throwError(context, engine, "IncludeFileError", QObject::tr("Unable to include file %1").arg(filename));
 			return context->thisObject();
 		}
 
@@ -98,15 +99,15 @@ namespace LibExecuter
 		Code::ProcessHandle::registerClass(scriptEngine);
 
 		CodeExecution::setScriptAgent(scriptAgent);
-		Code::Code::addClassToScriptEngine<CodeExecution>("Execution", scriptEngine);
-		Code::Code::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::pause, "pause", scriptEngine);
-		Code::Code::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::sleep, "sleep", scriptEngine);
-		Code::Code::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::stop, "stop", scriptEngine);
+		Code::CodeTools::addClassToScriptEngine<CodeExecution>("Execution", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::pause, "pause", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::sleep, "sleep", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::stop, "stop", scriptEngine);
 
-		Code::Code::addClassToScriptEngine<CodeConsole>("Console", scriptEngine);
-		Code::Code::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::print, "print", scriptEngine);
-		Code::Code::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::printWarning, "printWarning", scriptEngine);
-		Code::Code::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::printError, "printError", scriptEngine);
+		Code::CodeTools::addClassToScriptEngine<CodeConsole>("Console", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::print, "print", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::printWarning, "printWarning", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &CodeConsole::printError, "printError", scriptEngine);
 
 		int actionPackCount = actionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)

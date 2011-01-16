@@ -28,14 +28,11 @@ namespace Code
 {
 	QScriptValue MediaPlaylist::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-		
-		return engine->newQObject(new MediaPlaylist, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new MediaPlaylist, context, engine);
 	}
 	
 	MediaPlaylist::MediaPlaylist()
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mMediaPlaylist(new QMediaPlaylist(this)),
 		mMediaPlayer(new QMediaPlayer(this)),
 		mVideoWidget(new QVideoWidget())
@@ -150,7 +147,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->addMedia(QUrl::fromLocalFile(path)))
 		{
-			context()->throwError(tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError("AddMediaError", tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
 			return context()->thisObject();
 		}
 		
@@ -161,7 +158,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->addMedia(QUrl(path)))
 		{
-			context()->throwError(tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError("AddMediaError", tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
 			return context()->thisObject();
 		}
 		
@@ -172,7 +169,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->insertMedia(position, QUrl::fromLocalFile(path)))
 		{
-			context()->throwError(tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError("InsertMediaError", tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
 			return context()->thisObject();
 		}
 		
@@ -183,7 +180,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->insertMedia(position, QUrl(path)))
 		{
-			context()->throwError(tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError("InsertMediaError", tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
 			return context()->thisObject();
 		}
 		
@@ -194,7 +191,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->clear())
 		{
-			context()->throwError(tr("Clear failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError("ClearMediaError", tr("Clear failed : %1").arg(mMediaPlaylist->errorString()));
 			return context()->thisObject();
 		}
 		
@@ -240,7 +237,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->removeMedia(position))
 		{
-			context()->throwError(tr("Remove media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError("RemoveMediaError", tr("Remove media failed : %1").arg(mMediaPlaylist->errorString()));
 			return context()->thisObject();
 		}
 		

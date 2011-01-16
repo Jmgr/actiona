@@ -21,7 +21,7 @@
 #include "rect.h"
 #include "point.h"
 #include "size.h"
-#include "code.h"
+#include "codetools.h"
 
 namespace Code
 {
@@ -40,7 +40,7 @@ namespace Code
 				if(Rect *codeRect = qobject_cast<Rect*>(object))
 					rect = new Rect(*codeRect);
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			break;
 		case 4:
@@ -50,24 +50,22 @@ namespace Code
 								  context->argument(3).toInt32()));
 			break;
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			break;
 		}
 		
 		if(!rect)
 			return engine->undefinedValue();
 
-		return engine->newQObject(rect, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(rect, context, engine);
 	}
 	
 	QScriptValue Rect::constructor(const QRect &rect, QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-	
-		return engine->newQObject(new Rect(rect), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Rect(rect), context, engine);
 	}
 	
-	QRect Rect::parameter(QScriptContext *context)
+	QRect Rect::parameter(QScriptContext *context, QScriptEngine *engine)
 	{
 		switch(context->argumentCount())
 		{
@@ -77,7 +75,7 @@ namespace Code
 				if(Rect *rect = qobject_cast<Rect*>(object))
 					return rect->mRect;
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			return QRect();
 		case 4:
@@ -86,34 +84,31 @@ namespace Code
 						 context->argument(2).toInt32(),
 						 context->argument(3).toInt32());
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			return QRect();
 		}
 	}
 
 	void Rect::registerClass(QScriptEngine *scriptEngine)
 	{
-		Code::addClassToScriptEngine<Rect>(scriptEngine);
+		CodeTools::addClassToScriptEngine<Rect>(scriptEngine);
 	}
 	
 	Rect::Rect()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 		
 	}
 
 	Rect::Rect(const Rect &other)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mRect(other.rect())
 	{
 		
 	}
 
 	Rect::Rect(const QRect &rect)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mRect(rect)
 	{
 		
@@ -235,7 +230,7 @@ namespace Code
 
 	QScriptValue Rect::setSize()
 	{
-		mRect.setSize(Size::parameter(context()));
+		mRect.setSize(Size::parameter(context(), engine()));
 		
 		return context()->thisObject();
 	}
@@ -249,7 +244,7 @@ namespace Code
 
 	QScriptValue Rect::setRect()
 	{
-		const QRect &rect = parameter(context());
+		const QRect &rect = parameter(context(), engine());
 		mRect.setRect(rect.x(), rect.y(), rect.width(), rect.height());
 		
 		return context()->thisObject();
@@ -257,7 +252,7 @@ namespace Code
 
 	QScriptValue Rect::translate()
 	{
-		mRect.translate(Point::parameter(context()));
+		mRect.translate(Point::parameter(context(), engine()));
 		
 		return context()->thisObject();
 	}
@@ -292,14 +287,14 @@ namespace Code
 
 	QScriptValue Rect::moveCenter()
 	{
-		mRect.moveCenter(Point::parameter(context()));
+		mRect.moveCenter(Point::parameter(context(), engine()));
 		
 		return context()->thisObject();
 	}
 
 	QScriptValue Rect::moveTo()
 	{
-		mRect.moveTo(Point::parameter(context()));
+		mRect.moveTo(Point::parameter(context(), engine()));
 		
 		return context()->thisObject();
 	}
@@ -316,7 +311,7 @@ namespace Code
 				else if(Rect *codeRect = qobject_cast<Rect*>(object))
 					return (codeRect == this || mRect.contains(codeRect->mRect));
 				else
-					context()->throwError("Incorrect parameter type");
+					throwError("ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			return false;
 		case 2:
@@ -327,24 +322,24 @@ namespace Code
 										context()->argument(2).toInt32(),
 										context()->argument(3).toInt32()));
 		default:
-			context()->throwError("Incorrect parameter count");
+			throwError("ParameterCountError", tr("Incorrect parameter count"));
 			return false;
 		}
 	}
 	
 	QScriptValue Rect::united() const
 	{
-		return constructor(mRect.united(parameter(context())), context(), engine());
+		return constructor(mRect.united(parameter(context(), engine())), context(), engine());
 	}
 	
 	QScriptValue Rect::intersected() const
 	{
-		return constructor(mRect.intersected(parameter(context())), context(), engine());
+		return constructor(mRect.intersected(parameter(context(), engine())), context(), engine());
 	}
 	
 	bool Rect::intersects() const
 	{
-		return mRect.intersects(parameter(context()));
+		return mRect.intersects(parameter(context(), engine()));
 	}
 	
 	bool Rect::isEmpty() const

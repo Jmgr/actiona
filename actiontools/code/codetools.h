@@ -18,29 +18,19 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODE_H
-#define CODE_H
+#ifndef CODETOOLS_H
+#define CODETOOLS_H
 
 #include "actiontools_global.h"
 
-#include <QString>
-#include <QByteArray>
 #include <QScriptValue>
 #include <QScriptEngine>
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT Code
+	class ACTIONTOOLSSHARED_EXPORT CodeTools
 	{
 	public:
-		enum Encoding
-		{
-			Native,
-			Ascii,
-			Latin1,
-			UTF8
-		};
-
 		template<typename T>
 		static void addClassToScriptEngine(const QString &name, QScriptEngine *scriptEngine)
 		{
@@ -62,14 +52,9 @@ namespace Code
 			addClassGlobalFunctionToScriptEngine(removeCodeNamespace(T::staticMetaObject.className()), function, functionName, scriptEngine);
 		}
 
-		static QByteArray toEncoding(const QString &string, Encoding encoding);
-		static QString fromEncoding(const QByteArray &byteArray, Encoding encoding);
-		static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
-		static QScriptValue stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList);
-
 	private:
 		static QString removeCodeNamespace(const QString &className);
 	};
 }
 
-#endif // CODE_H
+#endif // CODETOOLS_H

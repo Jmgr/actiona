@@ -39,12 +39,11 @@ namespace Code
 				tcpServer->mOnNewConnection = it.value();
 		}
 
-		return tcpServer->mThisObject = engine->newQObject(tcpServer, QScriptEngine::ScriptOwnership);
+		return tcpServer->mThisObject = CodeClass::constructor(tcpServer, context, engine);
 	}
 	
 	TcpServer::TcpServer()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 		connect(&mTcpServer, SIGNAL(newConnection()), this, SLOT(newConnection()));
 	}
@@ -57,7 +56,7 @@ namespace Code
 	QScriptValue TcpServer::listen(const QString &address, int port)
 	{
 		if(!mTcpServer.listen(QHostAddress(address), port))
-			context()->throwError(tr("Unable to start listening"));
+			throwError("ListenError", tr("Unable to start listening"));
 		
 		return context()->thisObject();
 	}
@@ -65,7 +64,7 @@ namespace Code
 	QScriptValue TcpServer::waitForNewConnection(int waitTime)
 	{
 		if(!mTcpServer.waitForNewConnection(waitTime))
-			context()->throwError(tr("Waiting for bytes written failed"));
+			throwError("WaitForNewConnectionError", tr("Waiting for new connection failed"));
 		
 		return context()->thisObject();
 	}
@@ -75,11 +74,11 @@ namespace Code
 		QTcpSocket *tcpSocket = mTcpServer.nextPendingConnection();
 		if(!tcpSocket)
 		{
-			context()->throwError(tr("There is no pending connection"));
+			throwError("NoPendingConnectionError", tr("There is no pending connection"));
 			return engine()->undefinedValue();
 		}
 		
-		return Tcp::constructor(tcpSocket, engine());
+		return Tcp::constructor(tcpSocket, context(), engine());
 	}
 	
 	QString TcpServer::address() const

@@ -22,16 +22,16 @@
 #define PROCESS_H
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QProcess>
 
-#include "code/code.h"
+#include "code/codetools.h"
+#include "code/codeclass.h"
 
 namespace Code
 {
-	class Process : public QObject, public QScriptable
+	class Process : public CodeClass
 	{
 		Q_OBJECT
 		Q_PROPERTY(QScriptValue onError READ onError WRITE setOnError)
@@ -83,14 +83,14 @@ namespace Code
 		QProcess::ExitStatus exitStatus() const;
 		QScriptValue readError() const;
 		QScriptValue read() const;
-		QString readErrorText(Code::Encoding encoding = Code::Native) const;
-		QString readText(Code::Encoding encoding = Code::Native) const;
+		QString readErrorText(Encoding encoding = Native) const;
+		QString readText(Encoding encoding = Native) const;
 		bool atEnd() const;
 		qint64 bytesAvailable() const;
 		qint64 bytesToWrite() const;
 		bool canReadLine() const;
 		QScriptValue write(const QScriptValue &data);
-		QScriptValue writeText(const QString &data, Code::Encoding encoding = Code::Native);
+		QScriptValue writeText(const QString &data, Encoding encoding = Native);
 		QScriptValue setWorkingDirectory(const QString &workingDirectory);
 		QScriptValue setProcessChannelMode(QProcess::ProcessChannelMode channelMode);
 		QScriptValue setEnvironment();

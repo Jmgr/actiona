@@ -18,41 +18,30 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOTIFY_H
-#define NOTIFY_H
+#include "codetools.h"
 
-#include "code/codeclass.h"
-
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
 #include <QStringList>
-
-struct _NotifyNotification;
+#include <QScriptEngine>
 
 namespace Code
 {
-	class Notify : public CodeClass
+	void CodeTools::addClassGlobalFunctionToScriptEngine(const QString &className, QScriptEngine::FunctionSignature function, const QString &functionName, QScriptEngine *scriptEngine)
 	{
-		Q_OBJECT
-		
-	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-		Notify();
-		~Notify();
-		
-	public slots:
-		QString toString() const					{ return "Notify"; }
-		QScriptValue show();
-		
-	private:
-		_NotifyNotification *mNotification;
-		QString mTitle;
-		QString mText;
-		QString mIcon;
-		int mTimeout;
-	};
-}
+		QScriptValue classMetaObject = scriptEngine->globalObject().property(className);
+		if(!classMetaObject.isValid())
+		{
+			classMetaObject = scriptEngine->newObject();
+			scriptEngine->globalObject().setProperty(className, classMetaObject);
+		}
 
-#endif // NOTIFY_H
+		classMetaObject.setProperty(functionName, scriptEngine->newFunction(function));
+	}
+
+	QString CodeTools::removeCodeNamespace(const QString &className)
+	{
+		if(className.startsWith("Code::"))
+			return className.right(className.size() - 6);
+		else
+			return className;
+	}
+}

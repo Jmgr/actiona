@@ -23,15 +23,15 @@
 
 #include "actiontools_global.h"
 #include "windowhandle.h"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT Window : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT Window : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(Mode)
@@ -47,7 +47,7 @@ namespace Code
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const ActionTools::WindowHandle &windowHandle, QScriptContext *context, QScriptEngine *engine);
-		static ActionTools::WindowHandle parameter(QScriptContext *context);
+		static ActionTools::WindowHandle parameter(QScriptContext *context, QScriptEngine *engine);
 
 		static QScriptValue find(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue all(QScriptContext *context, QScriptEngine *engine);

@@ -19,7 +19,7 @@
 */
 
 #include "size.h"
-#include "code.h"
+#include "codetools.h"
 
 namespace Code
 {
@@ -38,31 +38,29 @@ namespace Code
 				if(Size *codeSize = qobject_cast<Size*>(object))
 					size = new Size(*codeSize);
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			break;
 		case 2:
 			size = new Size(QSize(context->argument(0).toInt32(), context->argument(1).toInt32()));
 			break;
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			break;
 		}
 		
 		if(!size)
 			return engine->undefinedValue();
 
-		return engine->newQObject(size, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(size, context, engine);
 	}
 	
 	QScriptValue Size::constructor(const QSize &size, QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-	
-		return engine->newQObject(new Size(size), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Size(size), context, engine);
 	}
 	
-	QSize Size::parameter(QScriptContext *context)
+	QSize Size::parameter(QScriptContext *context, QScriptEngine *engine)
 	{
 		switch(context->argumentCount())
 		{
@@ -72,41 +70,38 @@ namespace Code
 				if(Size *size = qobject_cast<Size*>(object))
 					return size->size();
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			return QSize();
 		case 2:
 			return QSize(context->argument(0).toInt32(),
 						 context->argument(1).toInt32());
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			return QSize();
 		}
 	}
 
 	void Size::registerClass(QScriptEngine *scriptEngine)
 	{
-		Code::addClassToScriptEngine<Size>(scriptEngine);
+		CodeTools::addClassToScriptEngine<Size>(scriptEngine);
 	}
 	
 	Size::Size()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 		
 	}
 
 	Size::Size(const Size &other)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mSize(other.size())
 	{
 		
 	}
 
 	Size::Size(const QSize &size)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mSize(size)
 	{
 		

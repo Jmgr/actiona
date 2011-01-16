@@ -21,8 +21,9 @@
 #ifndef REGISTRY_H
 #define REGISTRY_H
 
+#include "code/codeclass.h"
+
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QStringList>
@@ -34,7 +35,7 @@
 
 namespace Code
 {
-	class Registry : public QObject, public QScriptable
+	class Registry : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(Key)

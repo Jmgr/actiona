@@ -49,7 +49,7 @@ namespace Code
 				colorDialog->mOnColorChanged = it.value();
 		}
 
-		return colorDialog->mThisObject = engine->newQObject(colorDialog, QScriptEngine::ScriptOwnership);
+		return colorDialog->mThisObject = CodeClass::constructor(colorDialog, context, engine);
 	}
 
 	ColorDialog::ColorDialog()

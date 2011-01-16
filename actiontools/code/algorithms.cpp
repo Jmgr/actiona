@@ -19,7 +19,7 @@
 */
 
 #include "algorithms.h"
-#include "code.h"
+#include "codetools.h"
 
 #include <QCryptographicHash>
 #include <QScriptValueIterator>
@@ -29,9 +29,7 @@ namespace Code
 {
 	QScriptValue Algorithms::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-	
-		return engine->newQObject(new Algorithms, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Algorithms, context, engine);
 	}
 
 	QScriptValue Algorithms::md4(QScriptContext *context, QScriptEngine *engine)
@@ -136,15 +134,15 @@ namespace Code
 
 	void Algorithms::registerClass(QScriptEngine *scriptEngine)
 	{
-		Code::addClassToScriptEngine<Algorithms>(scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&md4, "md4", scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&md5, "md5", scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&sha1, "sha1", scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&setRandomSeed, "setRandomSeed", scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomMax, "randomMax", scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomInteger, "randomInteger", scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomFloat, "randomFloat", scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomString, "randomString", scriptEngine);
+		CodeTools::addClassToScriptEngine<Algorithms>(scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&md4, "md4", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&md5, "md5", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&sha1, "sha1", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&setRandomSeed, "setRandomSeed", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomMax, "randomMax", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomInteger, "randomInteger", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomFloat, "randomFloat", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomString, "randomString", scriptEngine);
 	}
 
 	int Algorithms::randomInteger(int min, int max)

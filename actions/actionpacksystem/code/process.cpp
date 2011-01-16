@@ -66,7 +66,7 @@ namespace Code
 				process->mOnStateChanged = it.value();
 		}
 
-		return engine->newQObject(process, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(process, context, engine);
 	}
 
 	QScriptValue Process::list(QScriptContext *context, QScriptEngine *engine)
@@ -86,7 +86,7 @@ namespace Code
 		QString filename = context->argument(0).toString();
 		if(filename.isEmpty())
 		{
-			context->throwError(tr("Invalid filename"));
+			throwError(context, engine, "FilenameError", tr("Invalid filename"));
 			return engine->undefinedValue();
 		}
 
@@ -96,7 +96,7 @@ namespace Code
 			const QScriptValue &parametersScriptValue = context->argument(1);
 
 			if(parametersScriptValue.isArray())
-				parameters = Code::arrayParameterToStringList(parametersScriptValue);
+				parameters = arrayParameterToStringList(parametersScriptValue);
 			else
 				parameters.append(parametersScriptValue.toString());
 		}
@@ -108,7 +108,7 @@ namespace Code
 		qint64 processId;
 		if(!QProcess::startDetached(filename, parameters, workingDirectory, &processId))
 		{
-			context->throwError(tr("Unable to start the process"));
+			throwError(context, engine, "StartProcessError", tr("Unable to start the process"));
 			return engine->undefinedValue();
 		}
 
@@ -125,8 +125,7 @@ namespace Code
 	}
 
 	Process::Process()
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mProcess(new QProcess(this))
 	{
 		connect(mProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(error(QProcess::ProcessError)));
@@ -156,7 +155,7 @@ namespace Code
 		QString filename = context()->argument(0).toString();
 		if(filename.isEmpty())
 		{
-			context()->throwError(tr("Invalid filename"));
+			throwError("FilenameError", tr("Invalid filename"));
 			return engine()->undefinedValue();
 		}
 
@@ -166,7 +165,7 @@ namespace Code
 			const QScriptValue &parametersScriptValue = context()->argument(1);
 
 			if(parametersScriptValue.isArray())
-				parameters = Code::arrayParameterToStringList(parametersScriptValue);
+				parameters = arrayParameterToStringList(parametersScriptValue);
 			else
 				parameters.append(parametersScriptValue.toString());
 		}
@@ -210,14 +209,14 @@ namespace Code
 		return RawData::constructor(mProcess->readAllStandardOutput(), context(), engine());
 	}
 
-	QString Process::readErrorText(Code::Encoding encoding) const
+	QString Process::readErrorText(Encoding encoding) const
 	{
-		return Code::fromEncoding(mProcess->readAllStandardError(), encoding);
+		return fromEncoding(mProcess->readAllStandardError(), encoding);
 	}
 
-	QString Process::readText(Code::Encoding encoding) const
+	QString Process::readText(Encoding encoding) const
 	{
-		return Code::fromEncoding(mProcess->readAllStandardOutput(), encoding);
+		return fromEncoding(mProcess->readAllStandardOutput(), encoding);
 	}
 
 	bool Process::atEnd() const
@@ -246,21 +245,21 @@ namespace Code
 		if(RawData *rawData = qobject_cast<RawData*>(object))
 		{
 			if(mProcess->write(rawData->byteArray()) == -1)
-				context()->throwError(tr("Write failed"));
+				throwError("WriteError", tr("Write failed"));
 		}
 		else
 		{
 			if(mProcess->write(data.toVariant().toByteArray()) == -1)
-				context()->throwError(tr("Write failed"));
+				throwError("WriteError", tr("Write failed"));
 		}
 
 		return context()->thisObject();
 	}
 
-	QScriptValue Process::writeText(const QString &data, Code::Encoding encoding)
+	QScriptValue Process::writeText(const QString &data, Encoding encoding)
 	{
-		if(mProcess->write(Code::toEncoding(data, encoding)) == -1)
-			context()->throwError(tr("Write failed"));
+		if(mProcess->write(toEncoding(data, encoding)) == -1)
+			throwError("WriteError", tr("Write failed"));
 
 		return context()->thisObject();
 	}
@@ -346,7 +345,7 @@ namespace Code
 		Process *otherProcess = qobject_cast<Process *>(processValue.toQObject());
 		if(!otherProcess)
 		{
-			context()->throwError(tr("Invalid process"));
+			throwError("InvalidProcessError", tr("Invalid process"));
 			return context()->thisObject();
 		}
 
@@ -358,7 +357,7 @@ namespace Code
 	QScriptValue Process::waitForFinished(int waitTime)
 	{
 		if(!mProcess->waitForFinished(waitTime))
-			context()->throwError(tr("Wait for finished failed"));
+			throwError("WaitForFinishedError", tr("Wait for finished failed"));
 
 		return context()->thisObject();
 	}
@@ -366,7 +365,7 @@ namespace Code
 	QScriptValue Process::waitForStarted(int waitTime)
 	{
 		if(!mProcess->waitForFinished(waitTime))
-			context()->throwError(tr("Wait for started failed"));
+			throwError("WaitForStartedError", tr("Wait for started failed"));
 
 		return context()->thisObject();
 	}
@@ -374,7 +373,7 @@ namespace Code
 	QScriptValue Process::waitForBytesWritten(int waitTime)
 	{
 		if(!mProcess->waitForReadyRead(waitTime))
-			context()->throwError(tr("Waiting for bytes written failed"));
+			throwError("WaitForBytesWrittenError", tr("Waiting for bytes written failed"));
 
 		return context()->thisObject();
 	}
@@ -382,7 +381,7 @@ namespace Code
 	QScriptValue Process::waitForReadyRead(int waitTime)
 	{
 		if(!mProcess->waitForReadyRead(waitTime))
-			context()->throwError(tr("Waiting for ready read failed"));
+			throwError("WaitForReadyReadError", tr("Waiting for ready read failed"));
 
 		return context()->thisObject();
 	}

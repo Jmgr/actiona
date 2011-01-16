@@ -21,14 +21,14 @@
 #ifndef BASEWINDOW_H
 #define BASEWINDOW_H
 
-#include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
+#include "code/codeclass.h"
+
 namespace Code
 {
-	class BaseWindow : public QObject, public QScriptable
+	class BaseWindow : public CodeClass
 	{
 		Q_OBJECT
 

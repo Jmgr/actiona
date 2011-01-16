@@ -21,15 +21,16 @@
 #ifndef TCPSERVER_H
 #define TCPSERVER_H
 
+#include "code/codeclass.h"
+
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QTcpServer>
 
 namespace Code
 {
-	class TcpServer : public QObject, public QScriptable
+	class TcpServer : public CodeClass
 	{
 		Q_OBJECT
 		Q_PROPERTY(QScriptValue onNewConnection READ onNewConnection WRITE setOnNewConnection)

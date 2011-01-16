@@ -19,7 +19,7 @@
 */
 
 #include "processhandle.h"
-#include "code.h"
+#include "codetools.h"
 
 #include <QProcess>
 
@@ -50,24 +50,22 @@ namespace Code
 			}
 			break;
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			break;
 		}
 		
 		if(!process)
 			return engine->undefinedValue();
 
-		return engine->newQObject(process, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(process, context, engine);
 	}
 	
 	QScriptValue ProcessHandle::constructor(int processId, QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-	
-		return engine->newQObject(new ProcessHandle(processId), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new ProcessHandle(processId), context, engine);
 	}
 	
-	int ProcessHandle::parameter(QScriptContext *context)
+	int ProcessHandle::parameter(QScriptContext *context, QScriptEngine *engine)
 	{
 		switch(context->argumentCount())
 		{
@@ -81,34 +79,31 @@ namespace Code
 			}
 			return -1;
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			return -1;
 		}
 	}
 
 	void ProcessHandle::registerClass(QScriptEngine *scriptEngine)
 	{
-		Code::addClassToScriptEngine<ProcessHandle>(scriptEngine);
+		CodeTools::addClassToScriptEngine<ProcessHandle>(scriptEngine);
 	}
 	
 	ProcessHandle::ProcessHandle()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 		
 	}
 
 	ProcessHandle::ProcessHandle(const ProcessHandle &other)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mProcessId(other.processId())
 	{
 		
 	}
 
 	ProcessHandle::ProcessHandle(int processId)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mProcessId(processId)
 	{
 		
@@ -186,14 +181,14 @@ namespace Code
 		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, id());
 		if(!process)
 		{
-			context()->throwError("Unable to open the process");
+			throwError("OpenProcessError", tr("Unable to open the process");
 			return QString();
 		}
 
 		TCHAR buffer[256];
 		if(!GetModuleFileNameEx(process, NULL, buffer, 256))
 		{
-			context()->throwError("Unable to retrieve the executable filename");
+			throwError("GetModuleFilenameError", tr("Unable to retrieve the executable filename");
 			return QString();
 		}
 
@@ -205,7 +200,7 @@ namespace Code
 		process.start(QString("ps h -p %1 -ocommand").arg(id()), QIODevice::ReadOnly);
 		if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
 		{
-			context()->throwError("Failed to get the process command");
+			throwError("GetProcessError", tr("Failed to get the process command"));
 			return QString();
 		}
 
@@ -219,7 +214,7 @@ namespace Code
 		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, id());
 		if(!process)
 		{
-			context()->throwError("Unable to open the process");
+			throwError("OpenProcessError", tr("Unable to open the process");
 			return Normal;
 		}
 
@@ -241,11 +236,11 @@ namespace Code
 		case REALTIME_PRIORITY_CLASS:
 			return Realtime;
 		default:
-			context()->throwError("Unable to retrieve the process priority");
+			throwError("GetPriorityClassError", tr("Unable to retrieve the process priority");
 			return Normal;
 		}
 #else
-		context()->throwError("This is not available under your operating system");
+		throwError("OperatingSystemError", tr("This is not available under your operating system"));
 		return Normal;
 #endif
 	}

@@ -21,10 +21,9 @@
 #ifndef UDP_H
 #define UDP_H
 
-#include "code/code.h"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
@@ -32,7 +31,7 @@ class QUdpSocket;
 
 namespace Code
 {
-	class Udp : public QObject, public QScriptable
+	class Udp : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(OpenMode)
@@ -67,9 +66,9 @@ namespace Code
 		QScriptValue waitForConnected(int waitTime = 30000);
 		QScriptValue waitForReadyRead(int waitTime = 30000);
 		QScriptValue write(const QScriptValue &data);
-		QScriptValue writeText(const QString &data, Code::Encoding encoding = Code::Native);
+		QScriptValue writeText(const QString &data, Encoding encoding = Native);
 		QScriptValue read();
-		QString readText(Code::Encoding encoding = Code::Native);
+		QString readText(Encoding encoding = Native);
 		QScriptValue disconnect();
 		
 	private slots:

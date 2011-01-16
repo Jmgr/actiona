@@ -21,10 +21,9 @@
 #ifndef TCP_H
 #define TCP_H
 
-#include "code/code.h"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
@@ -32,7 +31,7 @@ class QTcpSocket;
 
 namespace Code
 {
-	class Tcp : public QObject, public QScriptable
+	class Tcp : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(OpenMode)
@@ -50,7 +49,7 @@ namespace Code
 		};	
 				
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(QTcpSocket *tcpSocket, QScriptEngine *engine);
+		static QScriptValue constructor(QTcpSocket *tcpSocket, QScriptContext *context, QScriptEngine *engine);
 		
 		Tcp();
 		Tcp(QTcpSocket *tcpSocket);
@@ -74,9 +73,9 @@ namespace Code
 		QScriptValue waitForReadyRead(int waitTime = 30000);
 		QScriptValue waitForDisconnected(int waitTime = 30000);
 		QScriptValue write(const QScriptValue &data);
-		QScriptValue writeText(const QString &data, Code::Encoding encoding = Code::Native);
+		QScriptValue writeText(const QString &data, Encoding encoding = Native);
 		QScriptValue read();
-		QString readText(Code::Encoding encoding = Code::Native);
+		QString readText(Encoding encoding = Native);
 		QScriptValue disconnect();
 		
 	private slots:

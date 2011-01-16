@@ -23,7 +23,7 @@
 #include "size.h"
 #include "point.h"
 #include "processhandle.h"
-#include "code.h"
+#include "codetools.h"
 
 #include <QScriptValueIterator>
 
@@ -44,28 +44,26 @@ namespace Code
 				if(Window *codeWindow = qobject_cast<Window*>(object))
 					window = new Window(*codeWindow);
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			break;
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			break;
 		}
 		
 		if(!window)
 			return engine->undefinedValue();
 
-		return engine->newQObject(window, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(window, context, engine);
 	}
 	
 	QScriptValue Window::constructor(const ActionTools::WindowHandle &windowHandle, QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-	
-		return engine->newQObject(new Window(windowHandle), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Window(windowHandle), context, engine);
 	}
 	
-	ActionTools::WindowHandle Window::parameter(QScriptContext *context)
+	ActionTools::WindowHandle Window::parameter(QScriptContext *context, QScriptEngine *engine)
 	{
 		switch(context->argumentCount())
 		{
@@ -75,11 +73,11 @@ namespace Code
 				if(Window *window = qobject_cast<Window*>(object))
 					return window->windowHandle();
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			return ActionTools::WindowHandle();
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			return ActionTools::WindowHandle();
 		}
 	}
@@ -119,7 +117,7 @@ namespace Code
 				if(ProcessHandle *processHandleParameter = qobject_cast<ProcessHandle *>(it.value().toQObject()))
 					processHandle = processHandleParameter;
 				else
-					context->throwError(tr("Invalid process handle"));
+					throwError(context, engine, "ProcessHandleError", tr("Invalid process handle"));
 			}
 		}
 
@@ -173,29 +171,26 @@ namespace Code
 
 	void Window::registerClass(QScriptEngine *scriptEngine)
 	{
-		Code::addClassToScriptEngine<Window>(scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Window>(&all, "all", scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Window>(&find, "find", scriptEngine);
+		CodeTools::addClassToScriptEngine<Window>(scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&all, "all", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&find, "find", scriptEngine);
 	}
 	
 	Window::Window()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 		
 	}
 
 	Window::Window(const Window &other)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mWindowHandle(other.windowHandle())
 	{
 		
 	}
 
 	Window::Window(const ActionTools::WindowHandle &windowHandle)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mWindowHandle(windowHandle)
 	{
 		
@@ -303,7 +298,7 @@ namespace Code
 			return context()->thisObject();
 
 		if(!mWindowHandle.close())
-			context()->throwError(tr("Unable to close the window"));
+			throwError("CloseWindowError", tr("Unable to close the window"));
 		
 		return context()->thisObject();
 	}
@@ -314,7 +309,7 @@ namespace Code
 			return context()->thisObject();
 
 		if(!mWindowHandle.killCreator())
-			context()->throwError(tr("Unable to kill the window creator"));
+			throwError("KillCreatorError", tr("Unable to kill the window creator"));
 		
 		return context()->thisObject();
 	}
@@ -325,7 +320,7 @@ namespace Code
 			return context()->thisObject();
 
 		if(!mWindowHandle.setForeground())
-			context()->throwError(tr("Unable to set the window foreground"));
+			throwError("SetForegroundError", tr("Unable to set the window foreground"));
 		
 		return context()->thisObject();
 	}
@@ -336,7 +331,7 @@ namespace Code
 			return context()->thisObject();
 
 		if(!mWindowHandle.minimize())
-			context()->throwError(tr("Unable to minimize the window"));
+			throwError("MinimizeError", tr("Unable to minimize the window"));
 		
 		return context()->thisObject();
 	}
@@ -347,7 +342,7 @@ namespace Code
 			return context()->thisObject();
 
 		if(!mWindowHandle.maximize())
-			context()->throwError(tr("Unable to maximize the window"));
+			throwError("MaximizeError", tr("Unable to maximize the window"));
 		
 		return context()->thisObject();
 	}
@@ -357,8 +352,8 @@ namespace Code
 		if(!checkValidity())
 			return context()->thisObject();
 
-		if(!mWindowHandle.move(Point::parameter(context())))
-			context()->throwError(tr("Unable to move the window"));
+		if(!mWindowHandle.move(Point::parameter(context(), engine())))
+			throwError("MoveError", tr("Unable to move the window"));
 		
 		return context()->thisObject();
 	}
@@ -368,8 +363,8 @@ namespace Code
 		if(!checkValidity())
 			return context()->thisObject();
 
-		if(!mWindowHandle.resize(Size::parameter(context())))
-			context()->throwError(tr("Unable to resize the window"));
+		if(!mWindowHandle.resize(Size::parameter(context(), engine())))
+			throwError("ResizeError", tr("Unable to resize the window"));
 		
 		return context()->thisObject();
 	}
@@ -378,7 +373,7 @@ namespace Code
 	{
 		if(!mWindowHandle.isValid())
 		{
-			context()->throwError(tr("Invalid window"));
+			throwError("InvalidWindowError", tr("Invalid window"));
 			return false;
 		}
 

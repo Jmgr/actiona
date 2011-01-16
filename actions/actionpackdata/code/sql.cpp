@@ -32,17 +32,17 @@ namespace Code
 	{
 		if(context->argumentCount() < 1)
 		{
-			context->throwError(tr("Please specify the database driver that should be used"));
+			throwError(context, engine, "NoDatabaseDriverError", tr("Please specify the database driver that should be used"));
 			return engine->undefinedValue();
 		}
 
 		Driver driver = static_cast<Driver>(context->argument(0).toInt32());
-		return engine->newQObject(new Sql(driver), QScriptEngine::ScriptOwnership);
+
+		return CodeClass::constructor(new Sql(driver), context, engine);
 	}
 
 	Sql::Sql(Driver driver)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mDatabase(new QSqlDatabase)
 	{
 		switch(driver)
@@ -95,14 +95,14 @@ namespace Code
 
 		if(!QSqlDatabase::isDriverAvailable(mDriverName))
 		{
-			context()->throwError(tr("The requested database driver is not available"));
+			throwError("DatabaseDriverUnavailableError", tr("The requested database driver is not available"));
 			return context()->thisObject();
 		}
 
 		*mDatabase = QSqlDatabase::addDatabase(mDriverName, QUuid::createUuid().toString());
 		if(!mDatabase->isValid())
 		{
-			context()->throwError(tr("The requested database driver is not available"));
+			throwError("DatabaseDriverUnavailableError", tr("The requested database driver is not available"));
 			return context()->thisObject();
 		}
 
@@ -139,7 +139,7 @@ namespace Code
 		mDatabase->setConnectOptions(options);
 		if(!mDatabase->open(userName, password))
 		{
-			context()->throwError(tr("Unable to establish a connection to the database"));
+			throwError("ConnectionError", tr("Unable to establish a connection to the database"));
 			return context()->thisObject();
 		}
 
@@ -152,7 +152,7 @@ namespace Code
 		mQuery.setForwardOnly(true);
 		if(!mQuery.prepare(queryString))
 		{
-			context()->throwError(tr("Failed to prepare the query"));
+			throwError("PrepareQueryError", tr("Failed to prepare the query"));
 			return context()->thisObject();
 		}
 
@@ -178,7 +178,7 @@ namespace Code
 		if(!mQuery.exec())
 		{
 			QSqlError error = mQuery.lastError();
-			context()->throwError(tr("Failed to execute the query : %1").arg(error.text()));
+			throwError("ExecuteQueryError", tr("Failed to execute the query : %1").arg(error.text()));
 			return context()->thisObject();
 		}
 
@@ -189,7 +189,7 @@ namespace Code
 	{
 		if(!mQuery.isSelect())
 		{
-			context()->throwError(tr("Cannot fetch the result of a non-select query"));
+			throwError("FetchError", tr("Cannot fetch the result of a non-select query"));
 			return context()->thisObject();
 		}
 

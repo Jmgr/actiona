@@ -37,55 +37,48 @@ namespace Code
 				if(RawData *codeRawData = qobject_cast<RawData*>(object))
 					rawData = new RawData(*codeRawData);
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			break;
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			break;
 		}
 		
 		if(!rawData)
 			return engine->undefinedValue();
 		
-		return engine->newQObject(rawData, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(rawData, context, engine);
 	}
 	
 	QScriptValue RawData::constructor(const RawData &other, QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-		
-		return engine->newQObject(new RawData(other), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new RawData(other), context, engine);
 	}
 	
 	QScriptValue RawData::constructor(const QByteArray &byteArray, QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-		
-		return engine->newQObject(new RawData(byteArray), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new RawData(byteArray), context, engine);
 	}
 
 	void RawData::registerClass(QScriptEngine *scriptEngine)
 	{
-		Code::addClassToScriptEngine<RawData>(scriptEngine);
+		CodeTools::addClassToScriptEngine<RawData>(scriptEngine);
 	}
 	
 	RawData::RawData()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 	}
 	
 	RawData::RawData(const RawData &other)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mByteArray(other.mByteArray)
 	{
 	}
 	
 	RawData::RawData(const QByteArray &byteArray)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mByteArray(byteArray)
 	{
 	}
@@ -280,9 +273,9 @@ namespace Code
 		return mByteArray.toDouble();
 	}
 	
-	QString RawData::convertToString(Code::Encoding encoding) const
+	QString RawData::convertToString(Encoding encoding) const
 	{
-		return Code::fromEncoding(mByteArray, encoding);
+		return fromEncoding(mByteArray, encoding);
 	}
 	
 	QScriptValue RawData::trimmed() const

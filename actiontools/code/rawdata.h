@@ -22,17 +22,17 @@
 #define RAWDATA_H
 
 #include "actiontools_global.h"
-#include "code.h"
+#include "codetools.h"
+#include "codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QByteArray>
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT RawData : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT RawData : public CodeClass
 	{
 		Q_OBJECT
 	
@@ -82,7 +82,7 @@ namespace Code
 		int size() const;
 		bool startsWith(const QVariant &data);
 		double convertToNumber() const;
-		QString convertToString(Code::Encoding encoding = Code::Native) const;
+		QString convertToString(Encoding encoding = Native) const;
 		QScriptValue trimmed() const;
 		QScriptValue truncate(int pos);
 		

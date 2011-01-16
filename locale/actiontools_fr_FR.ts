@@ -406,91 +406,230 @@ Double-cliquez pour afficher</translation>
     </message>
 </context>
 <context>
+    <name>Code</name>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="217"/>
+        <source>Unable to open the process</source>
+        <translation>Impossible d&apos;ouvrir le processus</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="239"/>
+        <source>Unable to retrieve the process priority</source>
+        <translation>Impossible de récupérer la priorité du processus</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="243"/>
+        <source>This is not available under your operating system</source>
+        <translation>Ceci n&apos;est pas disponible sous votre système d&apos;exploitation</translation>
+    </message>
+</context>
+<context>
     <name>Code::Color</name>
     <message>
         <location filename="../actiontools/code/color.cpp" line="41"/>
-        <location filename="../actiontools/code/color.cpp" line="213"/>
+        <location filename="../actiontools/code/color.cpp" line="208"/>
         <source>Invalid color name</source>
         <translation>Nom de couleur incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/color.cpp" line="53"/>
+        <source>Incorrect parameter type</source>
+        <translation>Type de paramètre incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/color.cpp" line="64"/>
+        <source>Incorrect parameter count</source>
+        <translation>Nombre de paramètres incorrect</translation>
     </message>
 </context>
 <context>
     <name>Code::Image</name>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="204"/>
+        <location filename="../actiontools/code/image.cpp" line="53"/>
+        <source>Incorrect parameter type</source>
+        <translation>Type de paramètre incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/image.cpp" line="57"/>
+        <source>Incorrect parameter count</source>
+        <translation>Nombre de paramètres incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/image.cpp" line="84"/>
+        <source>Invalid window</source>
+        <translation>Fenêtre invalide</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/image.cpp" line="199"/>
         <source>Unable to set the image data</source>
         <translation>Impossible de changer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="222"/>
+        <location filename="../actiontools/code/image.cpp" line="217"/>
         <source>Unable to get the image data</source>
         <translation>Impossible de récupérer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="233"/>
+        <location filename="../actiontools/code/image.cpp" line="228"/>
         <source>Unable to load image from file %1</source>
         <translation>Impossible de charger l&apos;image à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="244"/>
+        <location filename="../actiontools/code/image.cpp" line="239"/>
         <source>Unable to save image to file %1</source>
         <translation>Impossible de sauvegarder l&apos;image dans le fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="256"/>
+        <location filename="../actiontools/code/image.cpp" line="251"/>
         <source>Unable to apply filter</source>
         <translation>Impossible d&apos;appliquer le filtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="293"/>
+        <location filename="../actiontools/code/image.cpp" line="288"/>
         <source>Cannot set filter option %1 %2</source>
         <translation>Impossible de changer les options du filtre %1 %2</translation>
     </message>
 </context>
 <context>
+    <name>Code::Point</name>
+    <message>
+        <location filename="../actiontools/code/point.cpp" line="41"/>
+        <location filename="../actiontools/code/point.cpp" line="73"/>
+        <source>Incorrect parameter type</source>
+        <translation>Type de paramètre incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/point.cpp" line="48"/>
+        <location filename="../actiontools/code/point.cpp" line="80"/>
+        <source>Incorrect parameter count</source>
+        <translation>Nombre de paramètres incorrect</translation>
+    </message>
+</context>
+<context>
+    <name>Code::ProcessHandle</name>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="53"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="82"/>
+        <source>Incorrect parameter count</source>
+        <translation>Nombre de paramètres incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="184"/>
+        <source>Unable to open the process</source>
+        <translation>Impossible d&apos;ouvrir le processus</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="191"/>
+        <source>Unable to retrieve the executable filename</source>
+        <translation>Impossible d&apos;obtenir le nom de l&apos;exécutable</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="203"/>
+        <source>Failed to get the process command</source>
+        <translation>Impossible de récupérer la commande de processus</translation>
+    </message>
+</context>
+<context>
+    <name>Code::RawData</name>
+    <message>
+        <location filename="../actiontools/code/rawdata.cpp" line="40"/>
+        <source>Incorrect parameter type</source>
+        <translation>Type de paramètre incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/rawdata.cpp" line="44"/>
+        <source>Incorrect parameter count</source>
+        <translation>Nombre de paramètres incorrect</translation>
+    </message>
+</context>
+<context>
+    <name>Code::Rect</name>
+    <message>
+        <location filename="../actiontools/code/rect.cpp" line="43"/>
+        <location filename="../actiontools/code/rect.cpp" line="78"/>
+        <location filename="../actiontools/code/rect.cpp" line="314"/>
+        <source>Incorrect parameter type</source>
+        <translation>Type de paramètre incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/rect.cpp" line="53"/>
+        <location filename="../actiontools/code/rect.cpp" line="87"/>
+        <location filename="../actiontools/code/rect.cpp" line="325"/>
+        <source>Incorrect parameter count</source>
+        <translation>Nombre de paramètres incorrect</translation>
+    </message>
+</context>
+<context>
+    <name>Code::Size</name>
+    <message>
+        <location filename="../actiontools/code/size.cpp" line="41"/>
+        <location filename="../actiontools/code/size.cpp" line="73"/>
+        <source>Incorrect parameter type</source>
+        <translation>Type de paramètre incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/size.cpp" line="48"/>
+        <location filename="../actiontools/code/size.cpp" line="80"/>
+        <source>Incorrect parameter count</source>
+        <translation>Nombre de paramètres incorrect</translation>
+    </message>
+</context>
+<context>
     <name>Code::Window</name>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="122"/>
+        <location filename="../actiontools/code/window.cpp" line="47"/>
+        <location filename="../actiontools/code/window.cpp" line="76"/>
+        <source>Incorrect parameter type</source>
+        <translation>Type de paramètre incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/window.cpp" line="51"/>
+        <location filename="../actiontools/code/window.cpp" line="80"/>
+        <source>Incorrect parameter count</source>
+        <translation>Nombre de paramètres incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/window.cpp" line="120"/>
         <source>Invalid process handle</source>
         <translation>Processus invalide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="306"/>
+        <location filename="../actiontools/code/window.cpp" line="301"/>
         <source>Unable to close the window</source>
         <translation>Impossible de fermer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="317"/>
+        <location filename="../actiontools/code/window.cpp" line="312"/>
         <source>Unable to kill the window creator</source>
         <translation>Impossible de fermer de créateur de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="328"/>
+        <location filename="../actiontools/code/window.cpp" line="323"/>
         <source>Unable to set the window foreground</source>
         <translation>Impossible de placer la fenêtre en premier plan</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="339"/>
+        <location filename="../actiontools/code/window.cpp" line="334"/>
         <source>Unable to minimize the window</source>
         <translation>Impossible de minimiser la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="350"/>
+        <location filename="../actiontools/code/window.cpp" line="345"/>
         <source>Unable to maximize the window</source>
         <translation>Impossible de maximiser la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="361"/>
+        <location filename="../actiontools/code/window.cpp" line="356"/>
         <source>Unable to move the window</source>
         <translation>Impossible de déplacer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="372"/>
+        <location filename="../actiontools/code/window.cpp" line="367"/>
         <source>Unable to resize the window</source>
         <translation>Impossible de redimensionner la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="381"/>
+        <location filename="../actiontools/code/window.cpp" line="376"/>
         <source>Invalid window</source>
         <translation>Fenêtre invalide</translation>
     </message>

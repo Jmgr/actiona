@@ -29,9 +29,7 @@ namespace Code
 {
 	QScriptValue File::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-
-		return engine->newQObject(new File, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new File, context, engine);
 	}
 	
 	QScriptValue File::open(const QString &filename, OpenMode mode)
@@ -39,7 +37,7 @@ namespace Code
 		mFile.setFileName(filename);
 	
 		if(!mFile.open(static_cast<QIODevice::OpenMode>(mode)))
-			context()->throwError(tr("Unable to open file"));
+			throwError("CannotOpenFileError", tr("Unable to open file"));
 	
 		return context()->thisObject();
 	}
@@ -50,21 +48,21 @@ namespace Code
 		if(RawData *rawData = qobject_cast<RawData*>(object))
 		{
 			if(mFile.write(rawData->byteArray()) == -1)
-				context()->throwError(tr("Write failed"));
+				throwError("WriteFailedError", tr("Write failed"));
 		}
 		else
 		{
 			if(mFile.write(data.toVariant().toByteArray()) == -1)
-				context()->throwError(tr("Write failed"));
+				throwError("WriteFailedError", tr("Write failed"));
 		}
 	
 		return context()->thisObject();
 	}
 	
-	QScriptValue File::writeText(const QString &value, Code::Encoding encoding)
+	QScriptValue File::writeText(const QString &value, Encoding encoding)
 	{
-		if(mFile.write(Code::toEncoding(value, encoding)) == -1)
-			context()->throwError(tr("Write failed"));
+		if(mFile.write(toEncoding(value, encoding)) == -1)
+			throwError("WriteFailedError", tr("Write failed"));
 	
 		return context()->thisObject();
 	}
@@ -74,9 +72,9 @@ namespace Code
 		return RawData::constructor(mFile.readAll(), context(), engine());
 	}
 	
-	QString File::readText(Code::Encoding encoding)
+	QString File::readText(Encoding encoding)
 	{
-		return Code::fromEncoding(mFile.readAll(), encoding);
+		return fromEncoding(mFile.readAll(), encoding);
 	}
 	
 	QScriptValue File::close()
@@ -111,13 +109,13 @@ namespace Code
 			{
 				if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destination) + "\""))
 				{
-					context()->throwError(tr("Unable to create destination directory"));
+					throwError("DirectoryCreationError", tr("Unable to create destination directory"));
 					return context()->thisObject();
 				}
 			}
 			else
 			{
-				context()->throwError(tr("Destination directory doesn't exist"));
+				throwError("DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
 				return context()->thisObject();
 			}
 		}
@@ -132,7 +130,7 @@ namespace Code
 	
 		if(QProcess::execute(command))
 		{
-			context()->throwError(tr("Copy failed"));
+			throwError("CopyError", tr("Copy failed"));
 			return context()->thisObject();
 		}
 	#endif
@@ -144,13 +142,13 @@ namespace Code
 			{
 				if(QProcess::execute("cmd", QStringList() << "/c" << "mkdir" << QFile::encodeName(destination)))
 				{
-					context()->throwError(tr("Unable to create destination directory"));
+					throwError("DirectoryCreationError", tr("Unable to create destination directory"));
 					return context()->thisObject();
 				}
 			}
 			else
 			{
-				context()->throwError(tr("Destination directory doesn't exist"));
+				throwError("DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
 				return context()->thisObject();
 			}
 		}
@@ -158,7 +156,7 @@ namespace Code
 		QStringList args = QStringList() << "/c" << "xcopy" << QFile::encodeName(source) << QFile::encodeName(destination) << "/i /y /e /r /k /a /q /h /c /m /x";
 	
 		if(QProcess::execute("cmd", args) > 1)
-			context()->throwError(tr("Copy failed"));
+			throwError("CopyError", tr("Copy failed"));
 	#endif
 	
 		return context()->thisObject();
@@ -194,13 +192,13 @@ namespace Code
 			{
 				if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destination) + "\""))
 				{
-					context()->throwError(tr("Unable to create destination directory"));
+					throwError("DirectoryCreationError", tr("Unable to create destination directory"));
 					return context()->thisObject();
 				}
 			}
 			else
 			{
-				context()->throwError(tr("Destination directory doesn't exist"));
+				throwError("DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
 				return context()->thisObject();
 			}
 		}
@@ -215,7 +213,7 @@ namespace Code
 	
 		if(QProcess::execute(command))
 		{
-			context()->throwError(tr("Move/rename failed"));
+			throwError("MoveRenameError", tr("Move/rename failed"));
 			return context()->thisObject();
 		}
 	#endif
@@ -223,7 +221,7 @@ namespace Code
 		QStringList args = QStringList() << "/c" << "move /y" << QFile::encodeName(source) << QFile::encodeName(destination);
 	
 		if(QProcess::execute("cmd", args))
-			context()->throwError(tr("Move/rename failed"));
+			throwError("MoveRenameError", tr("Move/rename failed"));
 	#endif
 	
 		return context()->thisObject();
@@ -259,7 +257,7 @@ namespace Code
 	
 		if(QProcess::execute(command))
 		{
-			context()->throwError(tr("Remove failed"));
+			throwError("RemoveError", tr("Remove failed"));
 			return context()->thisObject();
 		}
 	#endif

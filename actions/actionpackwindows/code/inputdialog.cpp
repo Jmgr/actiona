@@ -71,7 +71,7 @@ namespace Code
 				inputDialog->mOnValueChanged = it.value();
 		}
 
-		return inputDialog->mThisObject = engine->newQObject(inputDialog, QScriptEngine::ScriptOwnership);
+		return inputDialog->mThisObject = CodeClass::constructor(inputDialog, context, engine);
 	}
 
 	InputDialog::InputDialog()

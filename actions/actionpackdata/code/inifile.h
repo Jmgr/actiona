@@ -21,10 +21,9 @@
 #ifndef INIFILE_H
 #define INIFILE_H
 
-#include "code/code.h"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
@@ -32,7 +31,7 @@
 
 namespace Code
 {
-	class IniFile : public QObject, public QScriptable
+	class IniFile : public CodeClass
 	{
 		Q_OBJECT
 	
@@ -50,7 +49,7 @@ namespace Code
 		QScriptValue setDelimiter(char delimiter);
 		QScriptValue setCommentCharacter(char commentchar);
 		QScriptValue setSection(const QString &sectionName, bool create = true);
-		QScriptValue setEncoding(Code::Encoding encoding);
+		QScriptValue setEncoding(Encoding encoding);
 		QString sectionAt(int sectionIndex) const;
 		QScriptValue deleteSection(const QString &sectionName);
 		int sectionCount() const;
@@ -63,7 +62,7 @@ namespace Code
 	
 	private:
 		rude::Config mConfig;
-		Code::Encoding mEncoding;
+		Encoding mEncoding;
 	};
 }
 

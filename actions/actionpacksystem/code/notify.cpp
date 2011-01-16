@@ -50,12 +50,11 @@ namespace Code
 				notify->mTimeout = it.value().toInt32();
 		}
 
-		return engine->newQObject(notify, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(notify, context, engine);
 	}
 	
 	Notify::Notify()
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mNotification(0),
 		mTimeout(5000)
 	{
@@ -99,7 +98,7 @@ namespace Code
 		notify_notification_set_timeout(mNotification, mTimeout);
 
 		if(!notify_notification_show(mNotification, 0))
-			context()->throwError(tr("Unable to show the notification"));
+			throwError("NotificationError", tr("Unable to show the notification"));
 #endif
 		return context()->thisObject();
 	}

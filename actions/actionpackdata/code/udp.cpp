@@ -44,12 +44,11 @@ namespace Code
 				udp->mOnReadyRead = it.value();
 		}
 
-		return udp->mThisObject = engine->newQObject(udp, QScriptEngine::ScriptOwnership);
+		return udp->mThisObject = CodeClass::constructor(udp, context, engine);
 	}
 	
 	Udp::Udp()
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mUdpSocket(new QUdpSocket(this))
 	{
 		QObject::connect(mUdpSocket, SIGNAL(connected()), this, SLOT(connected()));
@@ -71,7 +70,7 @@ namespace Code
 	QScriptValue Udp::waitForConnected(int waitTime)
 	{
 		if(!mUdpSocket->waitForConnected(waitTime))
-			context()->throwError(tr("Cannot establish a connection to the host"));
+			throwError("ConnectionError", tr("Cannot establish a connection to the host"));
 		
 		return context()->thisObject();
 	}
@@ -79,7 +78,7 @@ namespace Code
 	QScriptValue Udp::waitForReadyRead(int waitTime)
 	{
 		if(!mUdpSocket->waitForReadyRead(waitTime))
-			context()->throwError(tr("Waiting for ready read failed"));
+			throwError("ReadyReadError", tr("Waiting for ready read failed"));
 		
 		return context()->thisObject();
 	}
@@ -90,21 +89,21 @@ namespace Code
 		if(RawData *rawData = qobject_cast<RawData*>(object))
 		{
 			if(mUdpSocket->write(rawData->byteArray()) == -1)
-				context()->throwError(tr("Write failed"));
+				throwError("WriteError", tr("Write failed"));
 		}
 		else
 		{
 			if(mUdpSocket->write(data.toVariant().toByteArray()) == -1)
-				context()->throwError(tr("Write failed"));
+				throwError("WriteError", tr("Write failed"));
 		}
 	
 		return context()->thisObject();
 	}
 	
-	QScriptValue Udp::writeText(const QString &data, Code::Encoding encoding)
+	QScriptValue Udp::writeText(const QString &data, Encoding encoding)
 	{
-		if(mUdpSocket->write(Code::toEncoding(data, encoding)) == -1)
-			context()->throwError(tr("Write failed"));
+		if(mUdpSocket->write(toEncoding(data, encoding)) == -1)
+			throwError("WriteError", tr("Write failed"));
 		
 		return context()->thisObject();
 	}
@@ -114,9 +113,9 @@ namespace Code
 		return RawData::constructor(mUdpSocket->readAll(), context(), engine());
 	}
 	
-	QString Udp::readText(Code::Encoding encoding)
+	QString Udp::readText(Encoding encoding)
 	{
-		return Code::fromEncoding(mUdpSocket->readAll(), encoding);
+		return fromEncoding(mUdpSocket->readAll(), encoding);
 	}
 	
 	QScriptValue Udp::disconnect()

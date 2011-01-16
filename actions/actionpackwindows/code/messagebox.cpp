@@ -54,7 +54,7 @@ namespace Code
 				messageBox->mOnClosed = it.value();
 		}
 
-		return messageBox->mThisObject = engine->newQObject(messageBox, QScriptEngine::ScriptOwnership);
+		return messageBox->mThisObject = CodeClass::constructor(messageBox, context, engine);
 	}
 
 	MessageBox::MessageBox()
@@ -125,7 +125,7 @@ namespace Code
 		QPushButton *addedButton = mMessageBox->addButton(static_cast<QMessageBox::StandardButton>(button));
 		if(!addedButton)
 		{
-			context()->throwError(tr("Add custom button failed"));
+			throwError("AddCustomButtonError", tr("Add custom button failed"));
 			return context()->thisObject();
 		}
 

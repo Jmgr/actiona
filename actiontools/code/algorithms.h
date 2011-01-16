@@ -22,15 +22,15 @@
 #define ALGORITHMS_H
 
 #include "actiontools_global.h"
+#include "codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT Algorithms : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT Algorithms : public CodeClass
 	{
 		Q_OBJECT
 		

@@ -45,14 +45,11 @@ namespace Code
 {
 	QScriptValue System::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-
-		return engine->newQObject(new System, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new System, context, engine);
 	}
 
 	System::System()
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mSystemInfo(new QSystemInfo(this)),
 		mSystemStorageInfo(new QSystemStorageInfo(this)),
 		mSystemDisplayInfo(new QSystemDisplayInfo(this)),

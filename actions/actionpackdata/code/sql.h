@@ -21,8 +21,9 @@
 #ifndef SQL_H
 #define SQL_H
 
+#include "code/codeclass.h"
+
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QSqlQuery>
@@ -31,7 +32,7 @@ class QSqlDatabase;
 
 namespace Code
 {
-	class Sql : public QObject, public QScriptable
+	class Sql : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(Driver)

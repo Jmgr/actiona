@@ -22,23 +22,23 @@
 #define POINT_H
 
 #include "actiontools_global.h"
+#include "codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QPoint>
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT Point : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT Point : public CodeClass
 	{
 		Q_OBJECT
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QPoint &point, QScriptContext *context, QScriptEngine *engine);
-		static QPoint parameter(QScriptContext *context);
+		static QPoint parameter(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
 		

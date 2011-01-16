@@ -21,8 +21,9 @@
 #ifndef MEDIAPLAYLIST_H
 #define MEDIAPLAYLIST_H
 
+#include "code/codeclass.h"
+
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
@@ -32,7 +33,7 @@ class QVideoWidget;
 
 namespace Code
 {
-	class MediaPlaylist : public QObject, public QScriptable
+	class MediaPlaylist : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(PlaybackMode)

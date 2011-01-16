@@ -22,23 +22,23 @@
 #define SIZE_H
 
 #include "actiontools_global.h"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QSize>
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT Size : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT Size : public CodeClass
 	{
 		Q_OBJECT
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QSize &size, QScriptContext *context, QScriptEngine *engine);
-		static QSize parameter(QScriptContext *context);
+		static QSize parameter(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
 		

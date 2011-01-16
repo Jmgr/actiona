@@ -292,7 +292,7 @@
 <context>
     <name>Code::BaseWindow</name>
     <message>
-        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="44"/>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="45"/>
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>

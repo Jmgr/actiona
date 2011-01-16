@@ -19,7 +19,7 @@
 */
 
 #include "point.h"
-#include "code.h"
+#include "codetools.h"
 
 namespace Code
 {
@@ -38,31 +38,29 @@ namespace Code
 				if(Point *codePoint = qobject_cast<Point*>(object))
 					point = new Point(*codePoint);
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			break;
 		case 2:
 			point = new Point(QPoint(context->argument(0).toInt32(), context->argument(1).toInt32()));
 			break;
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			break;
 		}
 		
 		if(!point)
 			return engine->undefinedValue();
 
-		return engine->newQObject(point, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(point, context, engine);
 	}
 	
 	QScriptValue Point::constructor(const QPoint &point, QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-	
-		return engine->newQObject(new Point(point), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Point(point), context, engine);
 	}
 	
-	QPoint Point::parameter(QScriptContext *context)
+	QPoint Point::parameter(QScriptContext *context, QScriptEngine *engine)
 	{
 		switch(context->argumentCount())
 		{
@@ -72,41 +70,38 @@ namespace Code
 				if(Point *point = qobject_cast<Point*>(object))
 					return point->point();
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			return QPoint();
 		case 2:
 			return QPoint(context->argument(0).toInt32(),
 						 context->argument(1).toInt32());
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			return QPoint();
 		}
 	}
 
 	void Point::registerClass(QScriptEngine *scriptEngine)
 	{
-		Code::addClassToScriptEngine<Point>(scriptEngine);
+		CodeTools::addClassToScriptEngine<Point>(scriptEngine);
 	}
 	
 	Point::Point()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 		
 	}
 
 	Point::Point(const Point &other)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mPoint(other.point())
 	{
 		
 	}
 
 	Point::Point(const QPoint &point)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mPoint(point)
 	{
 		

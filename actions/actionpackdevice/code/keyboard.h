@@ -22,15 +22,15 @@
 #define KEYBOARD_H
 
 #include "../keyboarddevice.h"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
 namespace Code
 {
-	class Keyboard : public QObject, public QScriptable
+	class Keyboard : public CodeClass
 	{
 		Q_OBJECT
 

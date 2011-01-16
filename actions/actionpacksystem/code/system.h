@@ -21,8 +21,9 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include "code/codeclass.h"
+
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QStringList>
@@ -37,7 +38,7 @@ QTM_END_NAMESPACE
 
 namespace Code
 {
-	class System : public QObject, public QScriptable
+	class System : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(DriveType)

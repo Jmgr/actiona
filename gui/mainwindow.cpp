@@ -48,7 +48,7 @@
 #include "sfxscriptdialog.h"
 #include "progresssplashscreen.h"
 #include "codeinitializer.h"
-#include "code/code.h"
+#include "code/codetools.h"
 #include "scriptsettingsdialog.h"
 
 #include <QSystemTrayIcon>

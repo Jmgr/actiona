@@ -19,7 +19,7 @@
 */
 
 #include "keywords.h"
-#include "code/code.h"
+#include "code/codetools.h"
 
 #include <QStandardItemModel>
 #include <QMetaMethod>

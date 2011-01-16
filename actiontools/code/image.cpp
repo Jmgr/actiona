@@ -24,7 +24,7 @@
 #include "size.h"
 #include "rect.h"
 #include "window.h"
-#include "code.h"
+#include "codetools.h"
 #include "qtimagefilters/QtImageFilterFactory"
 
 #include <QBuffer>
@@ -50,25 +50,23 @@ namespace Code
 				if(Image *codeImage = qobject_cast<Image*>(object))
 					image = new Image(*codeImage);
 				else
-					context->throwError("Incorrect parameter type");
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
 			}
 			break;
 		default:
-			context->throwError("Incorrect parameter count");
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			break;
 		}
 		
 		if(!image)
 			return engine->undefinedValue();
 	
-		return engine->newQObject(image, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(image, context, engine);
 	}
 	
 	QScriptValue Image::constructor(const QImage &image, QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-	
-		return engine->newQObject(new Image(image), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Image(image), context, engine);
 	}
 
 	QScriptValue Image::takeScreenshot(QScriptContext *context, QScriptEngine *engine)
@@ -83,7 +81,7 @@ namespace Code
 			else
 			{
 #ifdef Q_WS_WIN
-				context->throwError("Invalid window");
+				throwError(context, engine, "InvalidWindowError", tr("Invalid window"));
 				return engine->undefinedValue();
 #else
 				windowId = context->argument(0).toInt32();
@@ -98,8 +96,8 @@ namespace Code
 
 	void Image::registerClass(QScriptEngine *scriptEngine)
 	{
-		Code::addClassToScriptEngine<Image>(scriptEngine);
-		Code::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshot, "takeScreenshot", scriptEngine);
+		CodeTools::addClassToScriptEngine<Image>(scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshot, "takeScreenshot", scriptEngine);
 	}
 	
 	const QString Image::filterNames[] =
@@ -124,21 +122,18 @@ namespace Code
 												  << "convolutionBias" << "" << "radius" << "force" << "center";
 	
 	Image::Image()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 	}
 	
 	Image::Image(const Image &other)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mImage(other.mImage)
 	{
 	}
 	
 	Image::Image(const QImage &image)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mImage(image)
 	{
 	}
@@ -201,7 +196,7 @@ namespace Code
 		{
 			if(!mImage.loadFromData(codeRawData->byteArray()))
 			{
-				context()->throwError(tr("Unable to set the image data"));
+				throwError("ImageDataError", tr("Unable to set the image data"));
 				return context()->thisObject();
 			}
 		}
@@ -219,7 +214,7 @@ namespace Code
 		
 		if(!mImage.save(&dataBuffer, "BMP"))
 		{
-			context()->throwError(tr("Unable to get the image data"));
+			throwError("ImageDataError", tr("Unable to get the image data"));
 			return engine()->undefinedValue();
 		}
 		
@@ -230,7 +225,7 @@ namespace Code
 	{
 		if(!mImage.load(filename))
 		{
-			context()->throwError(tr("Unable to load image from file %1").arg(filename));
+			throwError("LoadImageError", tr("Unable to load image from file %1").arg(filename));
 			return context()->thisObject();
 		}
 	
@@ -241,7 +236,7 @@ namespace Code
 	{
 		if(!mImage.save(filename))
 		{
-			context()->throwError(tr("Unable to save image to file %1").arg(filename));
+			throwError("SaveImageError", tr("Unable to save image to file %1").arg(filename));
 			return context()->thisObject();
 		}
 	
@@ -253,7 +248,7 @@ namespace Code
 		QtImageFilter *imageFilter = QtImageFilterFactory::createImageFilter(filterNames[filter]);
 		if(!imageFilter)
 		{
-			context()->throwError(tr("Unable to apply filter"));
+			throwError("ApplyFilterError", tr("Unable to apply filter"));
 			return context()->thisObject();
 		}
 		
@@ -290,7 +285,7 @@ namespace Code
 			
 			if(!imageFilter->setOption(option, value))
 			{
-				context()->throwError(tr("Cannot set filter option %1 %2").arg(it.name()).arg(value.toString()));
+				throwError("ApplyFilterError", tr("Cannot set filter option %1 %2").arg(it.name()).arg(value.toString()));
 				return context()->thisObject();
 			}
 		}
@@ -333,7 +328,7 @@ namespace Code
 	
 	QScriptValue Image::setSize()
 	{
-		mImage = mImage.scaled(Size::parameter(context()));
+		mImage = mImage.scaled(Size::parameter(context(), engine()));
 		
 		return context()->thisObject();
 	}
@@ -358,6 +353,6 @@ namespace Code
 		if(context()->argumentCount() == 0)
 			return Image::constructor(mImage, context(), engine());
 		else
-			return Image::constructor(mImage.copy(Rect::parameter(context())), context(), engine());
+			return Image::constructor(mImage.copy(Rect::parameter(context(), engine())), context(), engine());
 	}
 }

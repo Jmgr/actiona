@@ -24,8 +24,6 @@
 #include "actioninstance.h"
 #include "stringlistpair.h"
 
-#include <QScriptable>
-
 namespace Actions
 {
 	class ReadTextFileInstance : public ActionTools::ActionInstance

@@ -39,22 +39,23 @@ namespace Code
 			else if(it.name() == "commentCharacter")
 				iniFile->mConfig.setCommentCharacter(it.value().toInt32());
 			else if(it.name() == "encoding")
-				iniFile->mEncoding = static_cast<Code::Encoding>(it.value().toInt32());
+				iniFile->mEncoding = static_cast<Encoding>(it.value().toInt32());
 		}
 
-		return engine->newQObject(iniFile, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(iniFile, context, engine);
 	}
 	
 	IniFile::IniFile()
-		: mEncoding(Code::Native)
+		: CodeClass(),
+		mEncoding(Native)
 	{
 	}
 	
 	QScriptValue IniFile::load(const QString &filename)
 	{
-		if(!mConfig.load(Code::toEncoding(filename, mEncoding)))
+		if(!mConfig.load(toEncoding(filename, mEncoding)))
 		{
-			context()->throwError(tr("Cannot load the file"));
+			throwError("LoadFileError", tr("Cannot load the file"));
 			return context()->thisObject();
 		}
 	
@@ -68,11 +69,11 @@ namespace Code
 		if(filename.isEmpty())
 			saveResult = mConfig.save();
 		else
-			saveResult = mConfig.save(Code::toEncoding(filename, mEncoding));
+			saveResult = mConfig.save(toEncoding(filename, mEncoding));
 		
 		if(!saveResult)
 		{
-			context()->throwError(tr("Cannot save the file"));
+			throwError("SaveFileError", tr("Cannot save the file"));
 			return context()->thisObject();
 		}
 		
@@ -109,16 +110,16 @@ namespace Code
 	
 	QScriptValue IniFile::setSection(const QString &sectionName, bool create)
 	{
-		if(!mConfig.setSection(Code::toEncoding(sectionName, mEncoding), create))
+		if(!mConfig.setSection(toEncoding(sectionName, mEncoding), create))
 		{
-			context()->throwError(tr("Cannot find the section named \"%1\"").arg(sectionName));
+			throwError("FindSectionError", tr("Cannot find the section named \"%1\"").arg(sectionName));
 			return context()->thisObject();
 		}
 		
 		return context()->thisObject();
 	}
 	
-	QScriptValue IniFile::setEncoding(Code::Encoding encoding)
+	QScriptValue IniFile::setEncoding(Encoding encoding)
 	{
 		mEncoding = encoding;
 		
@@ -129,7 +130,7 @@ namespace Code
 	{
 		if(sectionIndex < 0 || sectionIndex >= mConfig.getNumSections())
 		{
-			context()->throwError(tr("Invalid section index"));
+			throwError("FindSectionError", tr("Invalid section index"));
 			return QString();
 		}
 		
@@ -138,9 +139,9 @@ namespace Code
 	
 	QScriptValue IniFile::deleteSection(const QString &sectionName)
 	{
-		if(!mConfig.deleteSection(Code::toEncoding(sectionName, mEncoding)))
+		if(!mConfig.deleteSection(toEncoding(sectionName, mEncoding)))
 		{
-			context()->throwError(tr("Cannot delete section named \"%1\"").arg(sectionName));
+			throwError("FindSectionError", tr("Cannot delete section named \"%1\"").arg(sectionName));
 			return context()->thisObject();
 		}
 		
@@ -154,14 +155,14 @@ namespace Code
 	
 	bool IniFile::keyExists(const QString &keyName) const
 	{
-		return mConfig.exists(Code::toEncoding(keyName, mEncoding));
+		return mConfig.exists(toEncoding(keyName, mEncoding));
 	}
 	
 	QString IniFile::keyAt(int keyIndex) const
 	{
 		if(keyIndex < 0 || keyIndex >= mConfig.getNumDataMembers())
 		{
-			context()->throwError(tr("Invalid key index"));
+			throwError("FindSectionError", tr("Invalid key index"));
 			return QString();
 		}
 		
@@ -170,21 +171,21 @@ namespace Code
 	
 	QString IniFile::keyValue(const QString &keyName) const
 	{
-		return mConfig.getStringValue(Code::toEncoding(keyName, mEncoding));
+		return mConfig.getStringValue(toEncoding(keyName, mEncoding));
 	}
 	
 	QScriptValue IniFile::setKeyValue(const QString &keyName, const QString &value)
 	{
-		mConfig.setStringValue(Code::toEncoding(keyName, mEncoding), Code::toEncoding(value, mEncoding));
+		mConfig.setStringValue(toEncoding(keyName, mEncoding), toEncoding(value, mEncoding));
 		
 		return context()->thisObject();
 	}
 	
 	QScriptValue IniFile::deleteKey(const QString &keyName)
 	{
-		if(!mConfig.deleteData(Code::toEncoding(keyName, mEncoding)))
+		if(!mConfig.deleteData(toEncoding(keyName, mEncoding)))
 		{
-			context()->throwError(tr("Cannot delete key named \"%1\"").arg(keyName));
+			throwError("FindSectionError", tr("Cannot delete key named \"%1\"").arg(keyName));
 			return context()->thisObject();
 		}
 		

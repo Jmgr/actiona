@@ -22,16 +22,16 @@
 #define COLOR_H
 
 #include "actiontools_global.h"
+#include "codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QColor>
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT Color : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT Color : public CodeClass
 	{
 		Q_OBJECT
 		

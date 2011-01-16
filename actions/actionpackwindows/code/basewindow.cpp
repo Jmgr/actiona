@@ -28,7 +28,8 @@
 namespace Code
 {
 	BaseWindow::BaseWindow()
-		: mWindow(0)
+		: CodeClass(),
+		mWindow(0)
 	{
 	}
 
@@ -79,7 +80,7 @@ namespace Code
 	{
 		Q_ASSERT(mWindow);
 
-		mWindow->move(Point::parameter(context()));
+		mWindow->move(Point::parameter(context(), engine()));
 
 		return context()->thisObject();
 	}
@@ -97,7 +98,7 @@ namespace Code
 	{
 		Q_ASSERT(mWindow);
 
-		mWindow->resize(Size::parameter(context()));
+		mWindow->resize(Size::parameter(context(), engine()));
 
 		return context()->thisObject();
 	}
@@ -106,7 +107,7 @@ namespace Code
 	{
 		Q_ASSERT(mWindow);
 
-		mWindow->setFixedSize(Size::parameter(context()));
+		mWindow->setFixedSize(Size::parameter(context(), engine()));
 
 		return context()->thisObject();
 	}

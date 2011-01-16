@@ -25,14 +25,11 @@ namespace Code
 {
 	QScriptValue Mouse::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-
-		return engine->newQObject(new Mouse, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Mouse, context, engine);
 	}
 	
 	Mouse::Mouse()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 	}
 
@@ -43,7 +40,7 @@ namespace Code
 
 	QScriptValue Mouse::move() const
 	{
-		mMouseDevice.setCursorPosition(Point::parameter(context()));
+		mMouseDevice.setCursorPosition(Point::parameter(context(), engine()));
 		
 		return context()->thisObject();
 	}
@@ -56,7 +53,7 @@ namespace Code
 	QScriptValue Mouse::press(MouseDevice::Button button)
 	{
 		if(!mMouseDevice.pressButton(button))
-			context()->throwError(tr("Unable to press the button"));
+			throwError("PressButtonError", tr("Unable to press the button"));
 		
 		return context()->thisObject();
 	}
@@ -64,7 +61,7 @@ namespace Code
 	QScriptValue Mouse::release(MouseDevice::Button button)
 	{
 		if(!mMouseDevice.releaseButton(button))
-			context()->throwError(tr("Unable to release the button"));
+			throwError("ReleaseButtonError", tr("Unable to release the button"));
 		
 		return context()->thisObject();
 	}
@@ -72,7 +69,7 @@ namespace Code
 	QScriptValue Mouse::click(MouseDevice::Button button)
 	{
 		if(!mMouseDevice.buttonClick(button))
-			context()->throwError(tr("Unable to emulate a button click"));
+			throwError("ClickError", tr("Unable to emulate a button click"));
 		
 		return context()->thisObject();
 	}
@@ -80,7 +77,7 @@ namespace Code
 	QScriptValue Mouse::wheel(int intensity) const
 	{
 		if(!mMouseDevice.wheel(intensity))
-			context()->throwError(tr("Unable to emulate the wheel"));
+			throwError("WheelError", tr("Unable to emulate the wheel"));
 		
 		return context()->thisObject();
 	}

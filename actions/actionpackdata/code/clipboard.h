@@ -21,15 +21,16 @@
 #ifndef CLIPBOARD_H
 #define CLIPBOARD_H
 
+#include "code/codeclass.h"
+
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QClipboard>
 
 namespace Code
 {
-	class Clipboard : public QObject, public QScriptable
+	class Clipboard : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(Mode)
@@ -61,7 +62,7 @@ namespace Code
 		DataType dataType() const;
 		
 	private:
-		void setModePrivate(QScriptContext *context, Mode mode);
+		void setModePrivate(QScriptContext *context, QScriptEngine *engine, Mode mode);
 	
 		QClipboard::Mode mMode;
 	};

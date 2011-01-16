@@ -46,17 +46,16 @@ namespace Code
 				tcp->mOnBytesWritten = it.value();
 		}
 
-		return tcp->mThisObject = engine->newQObject(tcp, QScriptEngine::ScriptOwnership);
+		return tcp->mThisObject = CodeClass::constructor(tcp, context, engine);
 	}
 	
-	QScriptValue Tcp::constructor(QTcpSocket *tcpSocket, QScriptEngine *engine)
+	QScriptValue Tcp::constructor(QTcpSocket *tcpSocket, QScriptContext *context, QScriptEngine *engine)
 	{
-		return engine->newQObject(new Tcp(tcpSocket), QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Tcp(tcpSocket), context, engine);
 	}
 	
 	Tcp::Tcp()
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mTcpSocket(new QTcpSocket(this))
 	{
 		QObject::connect(mTcpSocket, SIGNAL(connected()), this, SLOT(connected()));
@@ -66,8 +65,7 @@ namespace Code
 	}
 	
 	Tcp::Tcp(QTcpSocket *tcpSocket)
-		: QObject(),
-		QScriptable(),
+		: CodeClass(),
 		mTcpSocket(tcpSocket)
 	{
 		QObject::connect(mTcpSocket, SIGNAL(connected()), this, SLOT(connected()));
@@ -90,7 +88,7 @@ namespace Code
 	QScriptValue Tcp::waitForConnected(int waitTime)
 	{
 		if(!mTcpSocket->waitForConnected(waitTime))
-			context()->throwError(tr("Cannot establish a connection to the host"));
+			throwError("ConnectionError", tr("Cannot establish a connection to the host"));
 		
 		return context()->thisObject();
 	}
@@ -98,7 +96,7 @@ namespace Code
 	QScriptValue Tcp::waitForBytesWritten(int waitTime)
 	{
 		if(!mTcpSocket->waitForBytesWritten(waitTime))
-			context()->throwError(tr("Waiting for bytes written failed"));
+			throwError("BytesWrittenError", tr("Waiting for bytes written failed"));
 		
 		return context()->thisObject();
 	}
@@ -106,7 +104,7 @@ namespace Code
 	QScriptValue Tcp::waitForReadyRead(int waitTime)
 	{
 		if(!mTcpSocket->waitForReadyRead(waitTime))
-			context()->throwError(tr("Waiting for ready read failed"));
+			throwError("ReadyReadError", tr("Waiting for ready read failed"));
 		
 		return context()->thisObject();
 	}
@@ -114,7 +112,7 @@ namespace Code
 	QScriptValue Tcp::waitForDisconnected(int waitTime)
 	{
 		if(!mTcpSocket->waitForDisconnected(waitTime))
-			context()->throwError(tr("Waiting for disconnection failed"));
+			throwError("DisconnectionError", tr("Waiting for disconnection failed"));
 		
 		return context()->thisObject();
 	}
@@ -125,21 +123,21 @@ namespace Code
 		if(RawData *rawData = qobject_cast<RawData*>(object))
 		{
 			if(mTcpSocket->write(rawData->byteArray()) == -1)
-				context()->throwError(tr("Write failed"));
+				throwError("WriteError", tr("Write failed"));
 		}
 		else
 		{
 			if(mTcpSocket->write(data.toVariant().toByteArray()) == -1)
-				context()->throwError(tr("Write failed"));
+				throwError("WriteError", tr("Write failed"));
 		}
 	
 		return context()->thisObject();
 	}
 	
-	QScriptValue Tcp::writeText(const QString &data, Code::Encoding encoding)
+	QScriptValue Tcp::writeText(const QString &data, Encoding encoding)
 	{
-		if(mTcpSocket->write(Code::toEncoding(data, encoding)) == -1)
-			context()->throwError(tr("Write failed"));
+		if(mTcpSocket->write(toEncoding(data, encoding)) == -1)
+			throwError("WriteError", tr("Write failed"));
 		
 		return context()->thisObject();
 	}
@@ -149,9 +147,9 @@ namespace Code
 		return RawData::constructor(mTcpSocket->readAll(), context(), engine());
 	}
 	
-	QString Tcp::readText(Code::Encoding encoding)
+	QString Tcp::readText(Encoding encoding)
 	{
-		return Code::fromEncoding(mTcpSocket->readAll(), encoding);
+		return fromEncoding(mTcpSocket->readAll(), encoding);
 	}
 	
 	QScriptValue Tcp::disconnect()

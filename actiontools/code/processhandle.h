@@ -7,15 +7,15 @@
 
 #include "actiontools_global.h"
 #include "crossplatform.h"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT ProcessHandle : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT ProcessHandle : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(ActionTools::CrossPlatform::KillMode)
@@ -35,7 +35,7 @@ namespace Code
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(int processId, QScriptContext *context, QScriptEngine *engine);
-		static int parameter(QScriptContext *context);
+		static int parameter(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
 

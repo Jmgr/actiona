@@ -21,17 +21,16 @@
 #ifndef FILE_H
 #define FILE_H
 
-#include "code/code.h"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QFile>
 
 namespace Code
 {
-	class File : public QObject, public QScriptable
+	class File : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(OpenMode)
@@ -57,9 +56,9 @@ namespace Code
 		QString toString() const					{ return "File"; }
 		QScriptValue open(const QString &filename, OpenMode mode);
 		QScriptValue write(const QScriptValue &data);
-		QScriptValue writeText(const QString &value, Code::Encoding encoding = Code::Native);
+		QScriptValue writeText(const QString &value, Encoding encoding = Native);
 		QScriptValue read();
-		QString readText(Code::Encoding encoding = Code::Native);
+		QString readText(Encoding encoding = Native);
 		QScriptValue close();
 		QScriptValue copy(QString source, QString destination, const QScriptValue &parameters = QScriptValue()) const;
 		QScriptValue copy(const QString &destination, const QScriptValue &parameters = QScriptValue()) const;

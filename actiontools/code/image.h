@@ -23,16 +23,16 @@
 
 #include "actiontools_global.h"
 #include "qtimagefilters/QtImageFilter"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QImage>
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT Image : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT Image : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(Filter)

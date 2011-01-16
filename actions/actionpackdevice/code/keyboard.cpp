@@ -24,21 +24,18 @@ namespace Code
 {
 	QScriptValue Keyboard::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
-		
-		return engine->newQObject(new Keyboard, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(new Keyboard, context, engine);
 	}
 	
 	Keyboard::Keyboard()
-		: QObject(),
-		QScriptable()
+		: CodeClass()
 	{
 	}
 	
 	QScriptValue Keyboard::pressKey(const QString &key)
 	{
 		if(!mKeyboardDevice.pressKey(key))
-			context()->throwError(tr("Unable to press the key"));
+			throwError("PressKeyError", tr("Unable to press the key"));
 		
 		return context()->thisObject();
 	}
@@ -46,7 +43,7 @@ namespace Code
 	QScriptValue Keyboard::releaseKey(const QString &key)
 	{
 		if(!mKeyboardDevice.releaseKey(key))
-			context()->throwError(tr("Unable to release the key"));
+			throwError("ReleaseKeyError", tr("Unable to release the key"));
 		
 		return context()->thisObject();
 	}
@@ -54,7 +51,7 @@ namespace Code
 	QScriptValue Keyboard::triggerKey(const QString &key)
 	{
 		if(!mKeyboardDevice.triggerKey(key))
-			context()->throwError(tr("Unable to trigger the key"));
+			throwError("TriggerKeyError", tr("Unable to trigger the key"));
 		
 		return context()->thisObject();
 	}
@@ -62,7 +59,7 @@ namespace Code
 	QScriptValue Keyboard::writeText(const QString &text) const
 	{
 		if(!mKeyboardDevice.writeText(text))
-			context()->throwError(tr("Unable to write the text"));
+			throwError("WriteTextError", tr("Unable to write the text"));
 		
 		return context()->thisObject();
 	}

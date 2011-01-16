@@ -22,15 +22,15 @@
 #define MOUSE_H
 
 #include "../mousedevice.h"
+#include "code/codeclass.h"
 
 #include <QObject>
-#include <QScriptable>
 #include <QScriptValue>
 #include <QScriptEngine>
 
 namespace Code
 {
-	class Mouse : public QObject, public QScriptable
+	class Mouse : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(MouseDevice::Button)

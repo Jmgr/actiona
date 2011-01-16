@@ -23,7 +23,7 @@
 #include "linenumberarea.h"
 #include "scriptcompleter.h"
 #include "keywords.h"
-#include "code/code.h"
+#include "code/codetools.h"
 
 #include <QAbstractItemView>
 #include <QScrollBar>

@@ -39,20 +39,21 @@ namespace Code
 			it.next();
 			
 			if(it.name() == "mode")
-				clipboard->setModePrivate(context, static_cast<Mode>(it.value().toInt32()));
+				clipboard->setModePrivate(context, engine, static_cast<Mode>(it.value().toInt32()));
 		}
 
-		return engine->newQObject(clipboard, QScriptEngine::ScriptOwnership);
+		return CodeClass::constructor(clipboard, context, engine);
 	}
 	
 	Clipboard::Clipboard()
-		: mMode(QClipboard::Clipboard)
+		: CodeClass(),
+		mMode(QClipboard::Clipboard)
 	{
 	}
 	
 	QScriptValue Clipboard::setMode(Mode mode)
 	{
-		setModePrivate(context(), mode);
+		setModePrivate(context(), engine(), mode);
 	
 		return context()->thisObject();
 	}
@@ -85,7 +86,7 @@ namespace Code
 		
 		return clipboard->text(mMode);
 	}
-	
+
 	QScriptValue Clipboard::readImage() const
 	{
 		QClipboard *clipboard = QApplication::clipboard();
@@ -104,21 +105,21 @@ namespace Code
 			return Text;
 	}
 	
-	void Clipboard::setModePrivate(QScriptContext *context, Mode mode)
+	void Clipboard::setModePrivate(QScriptContext *context, QScriptEngine *engine, Mode mode)
 	{
 		switch(mode)
 		{
 		case Selection:
 			if(!QApplication::clipboard()->supportsSelection())
 			{
-				context->throwError(tr("Selection mode is not supported by your operating system"));
+				throwError(context, engine, "UnsupportedSelectionModeError", tr("Selection mode is not supported by your operating system"));
 				return;
 			}
 			break;
 		case FindBuffer:
 			if(!QApplication::clipboard()->supportsFindBuffer())
 			{
-				context->throwError(tr("Find buffer mode is not supported by your operating system"));
+				throwError(context, engine, "UnsupportedSelectionModeError", tr("Find buffer mode is not supported by your operating system"));
 				return;
 			}
 			break;

@@ -265,22 +265,22 @@
 <context>
     <name>Code::Keyboard</name>
     <message>
-        <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="41"/>
+        <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="38"/>
         <source>Unable to press the key</source>
         <translation>Impossible d&apos;appuyer sur la touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="49"/>
+        <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="46"/>
         <source>Unable to release the key</source>
         <translation>Impossible de relâcher la touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="57"/>
+        <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="54"/>
         <source>Unable to trigger the key</source>
         <translation>Impossible de déclencher la touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="65"/>
+        <location filename="../actions/actionpackdevice/code/keyboard.cpp" line="62"/>
         <source>Unable to write the text</source>
         <translation>Impossible d&apos;écrire le texte</translation>
     </message>
@@ -288,22 +288,22 @@
 <context>
     <name>Code::Mouse</name>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="59"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="56"/>
         <source>Unable to press the button</source>
         <translation>Impossible d&apos;appuyer sur le bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="67"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="64"/>
         <source>Unable to release the button</source>
         <translation>Impossible de relâcher le bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="75"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="72"/>
         <source>Unable to emulate a button click</source>
         <translation>Impossible de simuler un clic de bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="83"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="80"/>
         <source>Unable to emulate the wheel</source>
         <translation>Impossible de simuler la molette</translation>
     </message>

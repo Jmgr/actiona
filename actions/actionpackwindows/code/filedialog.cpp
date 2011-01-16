@@ -19,7 +19,7 @@
 */
 
 #include "filedialog.h"
-#include "code/code.h"
+#include "code/codetools.h"
 
 #include <QScriptValueIterator>
 #include <QUrl>
@@ -56,7 +56,7 @@ namespace Code
 			else if(it.name() == "nameFilter")
 				fileDialog->mFileDialog->setNameFilter(it.value().toString());
 			else if(it.name() == "nameFilters")
-				fileDialog->mFileDialog->setNameFilters(Code::arrayParameterToStringList(it.value()));
+				fileDialog->mFileDialog->setNameFilters(arrayParameterToStringList(it.value()));
 			else if(it.name() == "showDirectoriesOnly")
 				fileDialog->mFileDialog->setOption(QFileDialog::ShowDirsOnly, it.value().toBool());
 			else if(it.name() == "dontResolveSymlinks")
@@ -73,7 +73,7 @@ namespace Code
 			{
 				QList<QUrl> urls;
 				
-				foreach(const QString &url, Code::arrayParameterToStringList(it.value()))
+				foreach(const QString &url, arrayParameterToStringList(it.value()))
 					urls.append(QUrl::fromLocalFile(url));
 					
 				fileDialog->mFileDialog->setSidebarUrls(urls);
@@ -82,7 +82,7 @@ namespace Code
 				fileDialog->mOnClosed = it.value();
 		}
 
-		return fileDialog->mThisObject = engine->newQObject(fileDialog, QScriptEngine::ScriptOwnership);
+		return fileDialog->mThisObject = CodeClass::constructor(fileDialog, context, engine);
 	}
 	
 	FileDialog::FileDialog()
@@ -171,7 +171,7 @@ namespace Code
 
 	QScriptValue FileDialog::setNameFilters(const QScriptValue &nameFilters)
 	{
-		mFileDialog->setNameFilters(Code::arrayParameterToStringList(nameFilters));
+		mFileDialog->setNameFilters(arrayParameterToStringList(nameFilters));
 		
 		return context()->thisObject();
 	}
@@ -222,7 +222,7 @@ namespace Code
 	{
 		QList<QUrl> urls;
 		
-		foreach(const QString &url, Code::arrayParameterToStringList(sidebarUrls))
+		foreach(const QString &url, arrayParameterToStringList(sidebarUrls))
 			urls.append(QUrl::fromLocalFile(url));
 			
 		mFileDialog->setSidebarUrls(urls);
@@ -242,7 +242,7 @@ namespace Code
 	
 	QScriptValue FileDialog::selectedFiles() const
 	{
-		return Code::stringListToArrayParameter(engine(), mFileDialog->selectedFiles());
+		return stringListToArrayParameter(engine(), mFileDialog->selectedFiles());
 	}
 	
 	QString FileDialog::selectedNameFilter() const
