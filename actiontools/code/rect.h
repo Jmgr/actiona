@@ -36,6 +36,14 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Rect : public CodeClass
 	{
 		Q_OBJECT
+		Q_PROPERTY(int top READ top WRITE setTop)
+		Q_PROPERTY(int bottom READ bottom WRITE setBottom)
+		Q_PROPERTY(int left READ left WRITE setLeft)
+		Q_PROPERTY(int right READ right WRITE setRight)
+		Q_PROPERTY(int x READ x WRITE setX)
+		Q_PROPERTY(int y READ y WRITE setY)
+		Q_PROPERTY(int width READ width WRITE setWidth)
+		Q_PROPERTY(int height READ height WRITE setHeight)
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);

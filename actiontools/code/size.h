@@ -34,6 +34,8 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Size : public CodeClass
 	{
 		Q_OBJECT
+		Q_PROPERTY(int width READ width WRITE setWidth)
+		Q_PROPERTY(int height READ height WRITE setHeight)
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);

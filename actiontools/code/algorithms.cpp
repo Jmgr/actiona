@@ -86,6 +86,7 @@ namespace Code
 				return randomInteger(min, max);
 			}
 		default:
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			return QScriptValue();
 		}
 	}

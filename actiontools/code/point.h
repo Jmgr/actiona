@@ -34,6 +34,8 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Point : public CodeClass
 	{
 		Q_OBJECT
+		Q_PROPERTY(int x READ x WRITE setX)
+		Q_PROPERTY(int y READ y WRITE setY)
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);

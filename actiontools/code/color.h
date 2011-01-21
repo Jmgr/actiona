@@ -34,6 +34,10 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Color : public CodeClass
 	{
 		Q_OBJECT
+		Q_PROPERTY(int red READ red WRITE setRed)
+		Q_PROPERTY(int green READ green WRITE setGreen)
+		Q_PROPERTY(int blue READ blue WRITE setBlue)
+		Q_PROPERTY(int alpha READ alpha WRITE setAlpha)
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
