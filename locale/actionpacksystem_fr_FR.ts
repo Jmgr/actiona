@@ -278,32 +278,37 @@
 <context>
     <name>Actions::SystemDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="47"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="48"/>
         <source>Operation</source>
         <translation>Opération</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="48"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="49"/>
         <source>The operation to execute</source>
         <translation>L&apos;opération à exécuter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="53"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="54"/>
+        <source>Operation mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="63"/>
         <source>Mode</source>
         <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="64"/>
         <source>The operation mode</source>
         <translation>Le mode de l&apos;opération</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="59"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="71"/>
         <source>Not enough rights</source>
         <translation>Pas assez de droits</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="60"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="72"/>
         <source>Not available</source>
         <translation>Non disponible</translation>
     </message>
@@ -311,62 +316,91 @@
 <context>
     <name>Actions::SystemInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="128"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="91"/>
         <source>Logout is not available</source>
         <translation>La déconnexion n&apos;est pas disponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="133"/>
         <source>Logout</source>
-        <translation>Déconnexion</translation>
+        <translation type="obsolete">Déconnexion</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="133"/>
         <source>Do you really want to logout ?</source>
-        <translation>Voulez-vous vraiment vous déconnecter ?</translation>
+        <translation type="obsolete">Voulez-vous vraiment vous déconnecter ?</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="138"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="98"/>
         <source>Not enough rights to logout</source>
         <translation>Pas assez de droits pour se déconnecter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="162"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="139"/>
         <source>Restart is not available</source>
         <translation>Le redémarrage n&apos;est pas disponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="167"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="227"/>
+        <source>Suspend is not available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="234"/>
+        <source>Not enough rights to suspend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="267"/>
+        <source>Hibernate is not available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="274"/>
+        <source>Not enough rights to hibernate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="307"/>
+        <source>Lock is not available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="314"/>
+        <source>Not enough rights to lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="347"/>
+        <source>Start screen saver is not available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Restart</source>
-        <translation>Redémarrer</translation>
+        <translation type="obsolete">Redémarrer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="167"/>
         <source>Do you really want to restart ?</source>
-        <translation>Voulez-vous vraiment redémarrer ?</translation>
+        <translation type="obsolete">Voulez-vous vraiment redémarrer ?</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="172"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="146"/>
         <source>Not enough rights to restart</source>
         <translation>Pas assez de droits pour redémarrer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="196"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="187"/>
         <source>Shutdown is not available</source>
         <translation>L&apos;arrêt n&apos;est pas disponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="201"/>
         <source>Shutdown</source>
-        <translation>Arrêt</translation>
+        <translation type="obsolete">Arrêt</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="201"/>
         <source>Do you really want to shutdown ?</source>
-        <translation>Voulez-vous vraiment arrêter votre ordinateur ?</translation>
+        <translation type="obsolete">Voulez-vous vraiment arrêter votre ordinateur ?</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.h" line="206"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="194"/>
         <source>Not enough rights to shutdown</source>
         <translation>Pas assez de droits pour arrêter l&apos;ordinateur</translation>
     </message>
@@ -553,12 +587,12 @@
         <translation type="obsolete">Plus clair</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="63"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="75"/>
         <source>System</source>
         <translation>Système</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="66"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="78"/>
         <source>Restart, stop the computer or logout the current user</source>
         <translation>Redémarre, arrête l&apos;ordinateur ou déconnecte l&apos;utilisateur courant</translation>
     </message>
@@ -600,17 +634,16 @@
 <context>
     <name>SystemInstance::modes</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="31"/>
         <source>Ask</source>
-        <translation>Demander</translation>
+        <translation type="obsolete">Demander</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="31"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="51"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="31"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="51"/>
         <source>Force</source>
         <translation>Forcer</translation>
     </message>
@@ -618,19 +651,39 @@
 <context>
     <name>SystemInstance::operations</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="27"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="41"/>
         <source>Logout</source>
         <translation>Déconnexion</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="27"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="42"/>
         <source>Reboot</source>
         <translation>Redémarrage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="27"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="43"/>
         <source>Shutdown</source>
         <translation>Arrêt</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="44"/>
+        <source>Suspend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="45"/>
+        <source>Hibernate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="46"/>
+        <source>Lock screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="47"/>
+        <source>Start screen saver</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

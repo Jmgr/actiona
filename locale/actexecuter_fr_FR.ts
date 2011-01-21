@@ -4,7 +4,7 @@
 <context>
     <name>CodeExecuter</name>
     <message>
-        <location filename="../actexecuter/codeexecuter.cpp" line="105"/>
+        <location filename="../actexecuter/codeexecuter.cpp" line="112"/>
         <source>Backtrace: </source>
         <translation>Pile d&apos;appels :</translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actexecuter/codeexecuter.cpp" line="104"/>
+        <location filename="../actexecuter/codeexecuter.cpp" line="111"/>
         <source>Uncaught exception: </source>
         <translation>Exception non gérée :</translation>
     </message>

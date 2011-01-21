@@ -408,19 +408,24 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code</name>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="217"/>
         <source>Unable to open the process</source>
-        <translation>Impossible d&apos;ouvrir le processus</translation>
+        <translation type="obsolete">Impossible d&apos;ouvrir le processus</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="239"/>
         <source>Unable to retrieve the process priority</source>
-        <translation>Impossible de récupérer la priorité du processus</translation>
+        <translation type="obsolete">Impossible de récupérer la priorité du processus</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="243"/>
         <source>This is not available under your operating system</source>
-        <translation>Ceci n&apos;est pas disponible sous votre système d&apos;exploitation</translation>
+        <translation type="obsolete">Ceci n&apos;est pas disponible sous votre système d&apos;exploitation</translation>
+    </message>
+</context>
+<context>
+    <name>Code::Algorithms</name>
+    <message>
+        <location filename="../actiontools/code/algorithms.cpp" line="89"/>
+        <source>Incorrect parameter count</source>
+        <translation type="unfinished">Nombre de paramètres incorrect</translation>
     </message>
 </context>
 <context>
@@ -515,6 +520,7 @@ Double-cliquez pour afficher</translation>
     </message>
     <message>
         <location filename="../actiontools/code/processhandle.cpp" line="184"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="217"/>
         <source>Unable to open the process</source>
         <translation>Impossible d&apos;ouvrir le processus</translation>
     </message>
@@ -527,6 +533,16 @@ Double-cliquez pour afficher</translation>
         <location filename="../actiontools/code/processhandle.cpp" line="203"/>
         <source>Failed to get the process command</source>
         <translation>Impossible de récupérer la commande de processus</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="239"/>
+        <source>Unable to retrieve the process priority</source>
+        <translation type="unfinished">Impossible de récupérer la priorité du processus</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="243"/>
+        <source>This is not available under your operating system</source>
+        <translation type="unfinished">Ceci n&apos;est pas disponible sous votre système d&apos;exploitation</translation>
     </message>
 </context>
 <context>
