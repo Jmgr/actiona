@@ -24,6 +24,7 @@
 #include "actiondefinition.h"
 #include "systeminstance.h"
 #include "listparameterdefinition.h"
+#include "groupdefinition.h"
 
 namespace ActionTools
 {
@@ -50,11 +51,22 @@ namespace Actions
 			operation->setDefaultValue(SystemInstance::operations.second.at(SystemInstance::Logout));
 			addElement(operation);
 
+			ActionTools::GroupDefinition *operationMode = new ActionTools::GroupDefinition("operationmode", tr("Operation mode"), this);
+			operationMode->setMasterList(operation);
+			operationMode->setMasterValues(QStringList()
+										   << SystemInstance::operations.first.at(SystemInstance::Shutdown)
+										   << SystemInstance::operations.first.at(SystemInstance::Restart)
+										   << SystemInstance::operations.first.at(SystemInstance::Logout)
+										   << SystemInstance::operations.first.at(SystemInstance::Suspend)
+										   << SystemInstance::operations.first.at(SystemInstance::Hibernate));
+
 			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition("mode", tr("Mode"), this);
 			mode->setTooltip(tr("The operation mode"));
 			mode->setItems(SystemInstance::modes);
 			mode->setDefaultValue(SystemInstance::modes.second.at(SystemInstance::Normal));
-			addElement(mode);
+			operationMode->addMember(mode);
+
+			addElement(operationMode);
 
 			addException(SystemInstance::NotEnoughRightsException, tr("Not enough rights"));
 			addException(SystemInstance::NotAvailable, tr("Not available"));

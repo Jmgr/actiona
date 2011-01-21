@@ -47,7 +47,7 @@ class ActionPackSystem : public QObject, public ActionTools::ActionPack
 	Q_INTERFACES(ActionTools::ActionPack)
 
 public:
-	ActionPackSystem()							{}
+	ActionPackSystem() {}
 
 	void createDefinitions()
 	{
@@ -62,7 +62,7 @@ public:
 	QString id() const							{ return "system"; }
 	QString name() const						{ return tr("Actions dealing with the operating system"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
-	
+
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
 		addCodeClass<Code::System>("System", scriptEngine);

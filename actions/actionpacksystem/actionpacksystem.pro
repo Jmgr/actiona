@@ -11,3 +11,5 @@ unix:!mac:PKGCONFIG += libnotify
 win32:DEFINES += _CRT_SECURE_NO_WARNINGS
 
 TRANSLATIONS = ../../locale/actionpacksystem_fr_FR.ts
+
+SOURCES +=
