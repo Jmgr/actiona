@@ -425,7 +425,7 @@ Double-cliquez pour afficher</translation>
     <message>
         <location filename="../actiontools/code/algorithms.cpp" line="89"/>
         <source>Incorrect parameter count</source>
-        <translation type="unfinished">Nombre de paramètres incorrect</translation>
+        <translation>Nombre de paramètres incorrect</translation>
     </message>
 </context>
 <context>
@@ -537,12 +537,12 @@ Double-cliquez pour afficher</translation>
     <message>
         <location filename="../actiontools/code/processhandle.cpp" line="239"/>
         <source>Unable to retrieve the process priority</source>
-        <translation type="unfinished">Impossible de récupérer la priorité du processus</translation>
+        <translation>Impossible de récupérer la priorité du processus</translation>
     </message>
     <message>
         <location filename="../actiontools/code/processhandle.cpp" line="243"/>
         <source>This is not available under your operating system</source>
-        <translation type="unfinished">Ceci n&apos;est pas disponible sous votre système d&apos;exploitation</translation>
+        <translation>Ceci n&apos;est pas disponible sous votre système d&apos;exploitation</translation>
     </message>
 </context>
 <context>

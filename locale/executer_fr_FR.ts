@@ -36,12 +36,12 @@
     <message>
         <location filename="../executer/codestdio.cpp" line="51"/>
         <source>Warning: </source>
-        <translation type="unfinished">Avertissement :</translation>
+        <translation>Avertissement : </translation>
     </message>
     <message>
         <location filename="../executer/codestdio.cpp" line="63"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur : </translation>
     </message>
 </context>
 <context>
