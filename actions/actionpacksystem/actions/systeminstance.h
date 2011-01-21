@@ -70,7 +70,11 @@ namespace Actions
 #endif
 
 		SystemInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-			: ActionTools::ActionInstance(definition, parent)											{}
+			: ActionTools::ActionInstance(definition, parent)
+#ifdef Q_WS_X11
+			, mCapabilities(0)
+#endif
+		{}
 
 		static ActionTools::StringListPair operations;
 		static ActionTools::StringListPair modes;
@@ -80,6 +84,7 @@ namespace Actions
 	private:
 #ifdef Q_WS_X11
 	bool checkForDBusInterface(const QString &service, const QString &path, const QString &interface, const QString &testMethod, bool systemBus) const;
+	bool checkForDBusInterface(const QString &service, const QString &path, const QString &testMethod, bool systemBus) const;
 	void checkOperatingSystemCapabilities();
 
 	int mCapabilities;

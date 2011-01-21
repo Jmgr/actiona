@@ -283,26 +283,20 @@ namespace Actions
 				if(mCapabilities & GnomeScreenSaver)
 				{
 					QDBusInterface dbusInterface("org.gnome.ScreenSaver", "/ScreenSaver", "org.gnome.ScreenSaver", QDBusConnection::sessionBus());
-					QDBusMessage reply = dbusInterface.call("Lock");
-
-					if(reply.type() != QDBusMessage::ErrorMessage)
-						break;
+					dbusInterface.asyncCall("Lock");
+					break;
 				}
 				if(mCapabilities & FreedesktopScreenSaver)
 				{
 					QDBusInterface dbusInterface("org.freedesktop.ScreenSaver", "/ScreenSaver", "org.freedesktop.ScreenSaver", QDBusConnection::sessionBus());
-					QDBusMessage reply = dbusInterface.call("Lock");
-
-					if(reply.type() != QDBusMessage::ErrorMessage)
-						break;
+					dbusInterface.asyncCall("Lock");
+					break;
 				}
 				if(mCapabilities & KdeScreenSaver)
 				{
 					QDBusInterface dbusInterface("org.kde.screensaver", "/ScreenSaver", "org.freedesktop.ScreenSaver", QDBusConnection::sessionBus());
-					QDBusMessage reply = dbusInterface.call("Lock");
-
-					if(reply.type() != QDBusMessage::ErrorMessage)
-						break;
+					dbusInterface.asyncCall("Lock");
+					break;
 				}
 
 				emit executionException(NotAvailable, tr("Lock is not available"));
