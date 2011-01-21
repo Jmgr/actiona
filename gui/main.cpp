@@ -241,12 +241,5 @@ int main(int argc, char **argv)
 	if(!options.count("execute"))
 		mainWindow.show();
 
-	try
-	{
-		return app.exec();
-	}
-	catch(...)
-	{
-		return -1;
-	}
+	return app.exec();
 }
