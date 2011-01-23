@@ -137,6 +137,8 @@ int main(int argc, char **argv)
 	options.alias("noexecutionwindow", "E");
 	options.add("noconsolewindow", QObject::tr("do not show the console window"));
 	options.alias("noconsolewindow", "C");
+	options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
+	options.alias("nocodeqt", "Q");
 	options.add("execute", QObject::tr("execute the current script"));
 	options.alias("execute", "e");
 	options.add("version", QObject::tr("show the program version"));
@@ -180,7 +182,9 @@ int main(int argc, char **argv)
 #endif
 
 	app.addLibraryPath(QApplication::applicationDirPath() + "/actions");
-	app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
+
+	if(!options.count("nocodeqt"))
+		app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");

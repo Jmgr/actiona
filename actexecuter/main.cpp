@@ -93,9 +93,6 @@ int main(int argc, char **argv)
 	actexecuterTranslator.load(QString("%1/locale/actexecuter_%2").arg(QApplication::applicationDirPath()).arg(locale));
 	app.installTranslator(&actexecuterTranslator);
 
-	app.addLibraryPath(QApplication::applicationDirPath() + "/actions");
-	app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
-
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");
 	qRegisterMetaType<ActionTools::Parameter>("Parameter");
@@ -114,6 +111,8 @@ int main(int argc, char **argv)
 	options.alias("code", "c");
 	options.add("script", QObject::tr("switch to script mode, may not be used with -o"));
 	options.alias("script", "s");
+	options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
+	options.alias("nocodeqt", "Q");
 	options.add("version", QObject::tr("show the program version"));
 	options.add("help", QObject::tr("show this help text"));
 	options.alias("help", "h");
@@ -134,6 +133,10 @@ int main(int argc, char **argv)
 		stream.flush();
 		return -1;
 	}
+
+	app.addLibraryPath(QApplication::applicationDirPath() + "/actions");
+	if(!options.count("nocodeqt"))
+		app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
 
 	QString filename = options.positional().at(0);
 	
