@@ -37,8 +37,6 @@ namespace Code
 		Q_OBJECT
 		Q_ENUMS(Filter)
 		Q_ENUMS(MirrorOrientation)
-		Q_PROPERTY(int width READ width)
-		Q_PROPERTY(int height READ height)
 		
 	public:
 		enum Filter

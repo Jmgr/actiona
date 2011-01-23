@@ -64,8 +64,7 @@ namespace Code
 		QScriptValue clear();
 		bool contains(const QVariant &data);
 		int count(const QVariant &data) const;
-		int count() const;
-		bool endWith(const QVariant &data) const;
+		bool endsWith(const QVariant &data) const;
 		int indexOf(const QVariant &data, int from = 0) const;
 		bool isEmpty() const;
 		int lastIndexOf(const QVariant &data) const;
@@ -78,12 +77,10 @@ namespace Code
 		QScriptValue resize(int size);
 		QScriptValue right(int len) const;
 		QScriptValue setData(const QVariant &data);
-		QScriptValue simplified() const;
 		int size() const;
 		bool startsWith(const QVariant &data);
 		double convertToNumber() const;
 		QString convertToString(Encoding encoding = Native) const;
-		QScriptValue trimmed() const;
 		QScriptValue truncate(int pos);
 		
 	private:

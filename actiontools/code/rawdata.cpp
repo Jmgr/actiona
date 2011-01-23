@@ -165,12 +165,7 @@ namespace Code
 		return mByteArray.count(data.toByteArray());
 	}
 	
-	int RawData::count() const
-	{
-		return mByteArray.count();
-	}
-	
-	bool RawData::endWith(const QVariant &data) const
+	bool RawData::endsWith(const QVariant &data) const
 	{
 		return mByteArray.endsWith(data.toByteArray());
 	}
@@ -192,9 +187,7 @@ namespace Code
 	
 	QScriptValue RawData::left(int len) const
 	{
-		mByteArray.left(len);
-		
-		return context()->thisObject();
+		return RawData::constructor(mByteArray.left(len), context(), engine());
 	}
 	
 	int RawData::length() const
@@ -204,9 +197,7 @@ namespace Code
 	
 	QScriptValue RawData::mid(int pos, int len) const
 	{
-		mByteArray.mid(pos, len);
-		
-		return context()->thisObject();
+		return RawData::constructor(mByteArray.mid(pos, len), context(), engine());
 	}
 	
 	QScriptValue RawData::prepend(const QVariant &data)
@@ -239,21 +230,12 @@ namespace Code
 	
 	QScriptValue RawData::right(int len) const
 	{
-		mByteArray.right(len);
-		
-		return context()->thisObject();
+		return RawData::constructor(mByteArray.right(len), context(), engine());
 	}
 	
 	QScriptValue RawData::setData(const QVariant &data)
 	{
 		mByteArray = data.toByteArray();
-		
-		return context()->thisObject();
-	}
-	
-	QScriptValue RawData::simplified() const
-	{
-		mByteArray.simplified();
 		
 		return context()->thisObject();
 	}
@@ -276,13 +258,6 @@ namespace Code
 	QString RawData::convertToString(Encoding encoding) const
 	{
 		return fromEncoding(mByteArray, encoding);
-	}
-	
-	QScriptValue RawData::trimmed() const
-	{
-		mByteArray.trimmed();
-		
-		return context()->thisObject();
 	}
 	
 	QScriptValue RawData::truncate(int pos)

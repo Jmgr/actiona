@@ -315,6 +315,11 @@ namespace Code
 			QColor color(context()->argument(2).toInt32(), context()->argument(3).toInt32(), context()->argument(4).toInt32());
 			mImage.setPixel(x, y, color.rgb());
 		}
+		else if(context()->argumentCount() == 6)
+		{
+			QColor color(context()->argument(2).toInt32(), context()->argument(3).toInt32(), context()->argument(4).toInt32());
+			mImage.setPixel(x, y, color.rgb());
+		}
 
 		return context()->thisObject();
 	}

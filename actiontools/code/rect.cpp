@@ -257,48 +257,6 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue Rect::moveTop(int y)
-	{
-		mRect.moveTop(y);
-		
-		return context()->thisObject();
-	}
-
-	QScriptValue Rect::moveBottom(int y)
-	{
-		mRect.moveBottom(y);
-		
-		return context()->thisObject();
-	}
-
-	QScriptValue Rect::moveLeft(int x)
-	{
-		mRect.moveLeft(x);
-		
-		return context()->thisObject();
-	}
-
-	QScriptValue Rect::moveRight(int x)
-	{
-		mRect.moveRight(x);
-		
-		return context()->thisObject();
-	}
-
-	QScriptValue Rect::moveCenter()
-	{
-		mRect.moveCenter(Point::parameter(context(), engine()));
-		
-		return context()->thisObject();
-	}
-
-	QScriptValue Rect::moveTo()
-	{
-		mRect.moveTo(Point::parameter(context(), engine()));
-		
-		return context()->thisObject();
-	}
-
 	bool Rect::contains(const QScriptValue &point) const
 	{
 		switch(context()->argumentCount())

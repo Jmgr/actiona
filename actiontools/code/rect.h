@@ -81,12 +81,6 @@ namespace Code
 		QScriptValue setCoords(int x1, int y1, int x2, int y2);
 		QScriptValue setRect();
 		QScriptValue translate();
-		QScriptValue moveTop(int y);
-		QScriptValue moveBottom(int y);
-		QScriptValue moveLeft(int x);
-		QScriptValue moveRight(int x);
-		QScriptValue moveCenter();
-		QScriptValue moveTo();
 		bool contains(const QScriptValue &point) const;
 		QScriptValue united() const;
 		QScriptValue intersected() const;
