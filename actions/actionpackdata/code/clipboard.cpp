@@ -32,14 +32,10 @@ namespace Code
 	{
 		Clipboard *clipboard = new Clipboard;
 
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
+		if(context->argumentCount() > 0)
 		{
-			it.next();
-			
-			if(it.name() == "mode")
-				clipboard->setModePrivate(context, engine, static_cast<Mode>(it.value().toInt32()));
+			Mode mode = static_cast<Mode>(context->argument(0).toInt32());
+			clipboard->setModePrivate(context, engine, mode);
 		}
 
 		return CodeClass::constructor(clipboard, context, engine);
