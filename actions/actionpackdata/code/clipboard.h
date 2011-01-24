@@ -34,6 +34,9 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_ENUMS(Mode)
+		Q_ENUMS(DataType)
+		Q_PROPERTY(QString text READ text WRITE setText)
+		Q_PROPERTY(QScriptValue image READ image WRITE setImage)
 	
 	public:
 		enum Mode
@@ -55,10 +58,10 @@ namespace Code
 	public slots:
 		QString toString() const					{ return "Clipboard"; }
 		QScriptValue setMode(Mode mode);
-		QScriptValue writeText(const QString &value) const;
-		QScriptValue writeImage(const QScriptValue &data) const;
-		QString readText() const;
-		QScriptValue readImage() const;
+		QScriptValue setText(const QString &value) const;
+		QScriptValue setImage(const QScriptValue &data) const;
+		QString text() const;
+		QScriptValue image() const;
 		DataType dataType() const;
 		
 	private:

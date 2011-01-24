@@ -58,7 +58,7 @@ namespace Code
 		return context()->thisObject();
 	}
 	
-	QScriptValue Clipboard::writeText(const QString &value) const
+	QScriptValue Clipboard::setText(const QString &value) const
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 
@@ -67,7 +67,7 @@ namespace Code
 		return context()->thisObject();
 	}
 	
-	QScriptValue Clipboard::writeImage(const QScriptValue &data) const
+	QScriptValue Clipboard::setImage(const QScriptValue &data) const
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 
@@ -80,14 +80,14 @@ namespace Code
 		return context()->thisObject();
 	}
 	
-	QString Clipboard::readText() const
+	QString Clipboard::text() const
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 		
 		return clipboard->text(mMode);
 	}
 
-	QScriptValue Clipboard::readImage() const
+	QScriptValue Clipboard::image() const
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 
