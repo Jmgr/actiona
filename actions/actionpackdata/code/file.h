@@ -49,6 +49,10 @@ namespace Code
 		};
 	
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue copy(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue move(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue rename(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue remove(QScriptContext *context, QScriptEngine *engine);
 	
 		~File()						{ mFile.close(); }
 	
@@ -60,16 +64,17 @@ namespace Code
 		QScriptValue read();
 		QString readText(Encoding encoding = Native);
 		QScriptValue close();
-		QScriptValue copy(QString source, QString destination, const QScriptValue &parameters = QScriptValue()) const;
-		QScriptValue copy(const QString &destination, const QScriptValue &parameters = QScriptValue()) const;
-		QScriptValue move(QString source, QString destination, const QScriptValue &parameters = QScriptValue());
-		QScriptValue move(const QString &destination, const QScriptValue &parameters = QScriptValue());
-		QScriptValue rename(QString source, QString destination, const QScriptValue &parameters = QScriptValue());
-		QScriptValue rename(const QString &destination, const QScriptValue &parameters = QScriptValue());
-		QScriptValue remove(QString filename) const;
+		QScriptValue copy(const QString &destination, bool createDestinationDirectory = true) const;
+		QScriptValue move(const QString &destination, bool createDestinationDirectory = true);
+		QScriptValue rename(const QString &destination, bool createDestinationDirectory = true);
 		QScriptValue remove();
 	
 	private:
+		static bool getParameters(QString &source, QString &destination, bool &createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue copyPrivate(const QString &source, const QString &destination, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue movePrivate(const QString &source, const QString &destination, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue removePrivate(const QString &filename, QScriptContext *context, QScriptEngine *engine);
+
 		QFile mFile;
 	};
 }

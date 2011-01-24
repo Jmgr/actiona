@@ -31,6 +31,56 @@ namespace Code
 	{
 		return CodeClass::constructor(new File, context, engine);
 	}
+
+	QScriptValue File::copy(QScriptContext *context, QScriptEngine *engine)
+	{
+		QString source, destination;
+		bool createDestinationDirectory;
+
+		if(getParameters(source, destination, createDestinationDirectory, context, engine))
+			copyPrivate(source, destination, createDestinationDirectory, context, engine);
+
+		return engine->undefinedValue();
+	}
+
+	QScriptValue File::move(QScriptContext *context, QScriptEngine *engine)
+	{
+		QString source, destination;
+		bool createDestinationDirectory;
+
+		if(getParameters(source, destination, createDestinationDirectory, context, engine))
+			movePrivate(source, destination, createDestinationDirectory, context, engine);
+
+		return engine->undefinedValue();
+	}
+
+	QScriptValue File::rename(QScriptContext *context, QScriptEngine *engine)
+	{
+		QString source, destination;
+		bool createDestinationDirectory;
+
+		if(getParameters(source, destination, createDestinationDirectory, context, engine))
+			movePrivate(source, destination, createDestinationDirectory, context, engine);
+
+		return engine->undefinedValue();
+	}
+
+	QScriptValue File::remove(QScriptContext *context, QScriptEngine *engine)
+	{
+		QString filename;
+
+		if(context->argumentCount() < 1)
+		{
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			return false;
+		}
+
+		filename = context->argument(0).toString();
+
+		removePrivate(filename, context, engine);
+
+		return engine->undefinedValue();
+	}
 	
 	QScriptValue File::open(const QString &filename, OpenMode mode)
 	{
@@ -84,57 +134,92 @@ namespace Code
 		return context()->thisObject();
 	}
 	
-	QScriptValue File::copy(QString source, QString destination, const QScriptValue &parameters) const
+	QScriptValue File::copy(const QString &destination, bool createDestinationDirectory) const
 	{
-		QScriptValueIterator it(parameters);
-		bool createDestinationDirectory = true;
+		return copyPrivate(mFile.fileName(), destination, createDestinationDirectory, context(), engine());
+	}
 	
-		while(it.hasNext())
+	QScriptValue File::move(const QString &destination, bool createDestinationDirectory)
+	{
+		mFile.close();
+	
+		return movePrivate(mFile.fileName(), destination, createDestinationDirectory, context(), engine());
+	}
+	
+	QScriptValue File::rename(const QString &destination, bool createDestinationDirectory)
+	{
+		return movePrivate(mFile.fileName(), destination, createDestinationDirectory, context(), engine());
+	}
+	
+	QScriptValue File::remove()
+	{
+		mFile.close();
+	
+		return removePrivate(mFile.fileName(), context(), engine());
+	}
+
+	bool File::getParameters(QString &source, QString &destination, bool &createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
+	{
+		if(context->argumentCount() < 2)
 		{
-			it.next();
-	
-			if(it.name() == "createDestinationDirectory")
-				createDestinationDirectory = it.value().toBool();
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			return false;
 		}
-	
-	#ifdef Q_WS_X11
+
+		source = context->argument(0).toString();
+		destination = context->argument(1).toString();
+		createDestinationDirectory = true;
+
+		if(context->argumentCount() >= 3)
+			createDestinationDirectory = context->argument(2).toBool();
+
+		return true;
+	}
+
+	QScriptValue File::copyPrivate(const QString &source, const QString &destination, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
+	{
+		Q_UNUSED(engine)
+
+#ifdef Q_WS_X11
 		QDir destinationDir(destination);
-	
-		source.replace(" ", "\\ ");
-		destination.replace(" ", "\\ ");
-	
+		QString sourceCopy(source);
+		QString destinationCopy(destination);
+
+		sourceCopy.replace(" ", "\\ ");
+		destinationCopy.replace(" ", "\\ ");
+
 		if(!destinationDir.exists())
 		{
 			if(createDestinationDirectory)
 			{
-				if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destination) + "\""))
+				if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destinationCopy) + "\""))
 				{
-					throwError("DirectoryCreationError", tr("Unable to create destination directory"));
-					return context()->thisObject();
+					throwError(context, engine, "DirectoryCreationError", tr("Unable to create destination directory"));
+					return context->thisObject();
 				}
 			}
 			else
 			{
-				throwError("DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
-				return context()->thisObject();
+				throwError(context, engine, "DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
+				return context->thisObject();
 			}
 		}
-	
+
 		QString command = "sh -c \"cp -fr";
-	
+
 		command += " ";
-		command += QFile::encodeName(source);
+		command += QFile::encodeName(sourceCopy);
 		command += " ";
-		command += QFile::encodeName(destination);
+		command += QFile::encodeName(destinationCopy);
 		command += "\"";
-	
+
 		if(QProcess::execute(command))
 		{
-			throwError("CopyError", tr("Copy failed"));
-			return context()->thisObject();
+			throwError(context, engine, "CopyError", tr("Copy failed"));
+			return context->thisObject();
 		}
-	#endif
-	#ifdef Q_WS_WIN
+#endif
+#ifdef Q_WS_WIN
 		QDir destinationDir(destination);
 		if(!destinationDir.exists())
 		{
@@ -143,152 +228,119 @@ namespace Code
 				if(QProcess::execute("cmd", QStringList() << "/c" << "mkdir" << QFile::encodeName(destination)))
 				{
 					throwError("DirectoryCreationError", tr("Unable to create destination directory"));
-					return context()->thisObject();
+					return context->thisObject();
 				}
 			}
 			else
 			{
 				throwError("DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
-				return context()->thisObject();
+				return context->thisObject();
 			}
 		}
-	
+
 		QStringList args = QStringList() << "/c" << "xcopy" << QFile::encodeName(source) << QFile::encodeName(destination) << "/i /y /e /r /k /a /q /h /c /m /x";
-	
+
 		if(QProcess::execute("cmd", args) > 1)
 			throwError("CopyError", tr("Copy failed"));
-	#endif
-	
-		return context()->thisObject();
+#endif
+
+		return context->thisObject();
 	}
-	
-	QScriptValue File::copy(const QString &destination, const QScriptValue &parameters) const
+
+	QScriptValue File::movePrivate(const QString &source, const QString &destination, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
 	{
-		return copy(mFile.fileName(), destination, parameters);
-	}
-	
-	QScriptValue File::move(QString source, QString destination, const QScriptValue &parameters)
-	{
-		QScriptValueIterator it(parameters);
-		bool createDestinationDirectory = true;
-	
-		while(it.hasNext())
-		{
-			it.next();
-	
-			if(it.name() == "createDestinationDirectory")
-				createDestinationDirectory = it.value().toBool();
-		}
-	
-	#ifdef Q_WS_X11
+		Q_UNUSED(engine)
+
+#ifdef Q_WS_X11
 		QDir destinationDir(destination);
-	
-		source.replace(" ", "\\ ");
-		destination.replace(" ", "\\ ");
-	
+		QString sourceCopy(source);
+		QString destinationCopy(destination);
+
+		sourceCopy.replace(" ", "\\ ");
+		destinationCopy.replace(" ", "\\ ");
+
 		if(!destinationDir.exists())
 		{
 			if(createDestinationDirectory)
 			{
-				if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destination) + "\""))
+				if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destinationCopy) + "\""))
 				{
-					throwError("DirectoryCreationError", tr("Unable to create destination directory"));
-					return context()->thisObject();
+					throwError(context, engine, "DirectoryCreationError", tr("Unable to create destination directory"));
+					return context->thisObject();
 				}
 			}
 			else
 			{
-				throwError("DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
-				return context()->thisObject();
+				throwError(context, engine, "DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
+				return context->thisObject();
 			}
 		}
-	
+
 		QString command = "sh -c \"mv -f";
-	
+
 		command += " ";
-		command += QFile::encodeName(source);
+		command += QFile::encodeName(sourceCopy);
 		command += " ";
-		command += QFile::encodeName(destination);
+		command += QFile::encodeName(destinationCopy);
 		command += "\"";
-	
+
 		if(QProcess::execute(command))
 		{
-			throwError("MoveRenameError", tr("Move/rename failed"));
-			return context()->thisObject();
+			throwError(context, engine, "MoveRenameError", tr("Move/rename failed"));
+			return context->thisObject();
 		}
-	#endif
-	#ifdef Q_WS_WIN
+#endif
+#ifdef Q_WS_WIN
 		QStringList args = QStringList() << "/c" << "move /y" << QFile::encodeName(source) << QFile::encodeName(destination);
-	
+
 		if(QProcess::execute("cmd", args))
 			throwError("MoveRenameError", tr("Move/rename failed"));
-	#endif
-	
-		return context()->thisObject();
+#endif
+
+		return context->thisObject();
 	}
-	
-	QScriptValue File::move(const QString &destination, const QScriptValue &parameters)
+
+	QScriptValue File::removePrivate(const QString &filename, QScriptContext *context, QScriptEngine *engine)
 	{
-		mFile.close();
-	
-		return copy(mFile.fileName(), destination, parameters);
-	}
-	
-	QScriptValue File::rename(QString source, QString destination, const QScriptValue &parameters)
-	{
-		return move(source, destination, parameters);
-	}
-	
-	QScriptValue File::rename(const QString &destination, const QScriptValue &parameters)
-	{
-		return move(destination, parameters);
-	}
-	
-	QScriptValue File::remove(QString filename) const
-	{
-	#ifdef Q_WS_X11
-		filename.replace(" ", "\\ ");
-	
+		Q_UNUSED(engine)
+
+#ifdef Q_WS_X11
+		QString filenameCopy(filename);
+		filenameCopy.replace(" ", "\\ ");
+
 		QString command = "sh -c \"rm -fr";
-	
+
 		command += " ";
-		command += QFile::encodeName(filename);
+		command += QFile::encodeName(filenameCopy);
 		command += "\"";
-	
+
 		if(QProcess::execute(command))
 		{
-			throwError("RemoveError", tr("Remove failed"));
-			return context()->thisObject();
+			throwError(context, engine, "RemoveError", tr("Remove failed"));
+			return context->thisObject();
 		}
-	#endif
-	#ifdef Q_WS_WIN
+#endif
+#ifdef Q_WS_WIN
 		QProcess funkyWindowsCommand;
-	
+
 		QStringList args = QStringList() << "/c" << "del /q" << QFile::encodeName(filename) << "/f /s /q /as /ah /ar /aa";
 		//Yes, the /q option has to be *before* AND *after* the filename :D
-	
+
 		funkyWindowsCommand.start("cmd", args);
 		funkyWindowsCommand.waitForStarted();
 		funkyWindowsCommand.waitForFinished();
-	
+
 		args = QStringList() << "/c" << "rmdir /s /q" << QFile::encodeName(filename);
-	
+
 		funkyWindowsCommand.start("cmd", args);//Yes, we have to run it *two* times...
 		funkyWindowsCommand.waitForStarted();
 		funkyWindowsCommand.waitForFinished();
-	
+
 		funkyWindowsCommand.start("cmd", args);
 		funkyWindowsCommand.waitForStarted();
 		funkyWindowsCommand.waitForFinished();
-	#endif
-	
-		return context()->thisObject();
-	}
-	
-	QScriptValue File::remove()
-	{
-		mFile.close();
-	
-		return remove(mFile.fileName());
+#endif
+
+		return context->thisObject();
 	}
 }
