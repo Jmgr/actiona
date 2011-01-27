@@ -21,7 +21,6 @@
 #include "udp.h"
 #include "code/rawdata.h"
 
-#include <QUdpSocket>
 #include <QScriptValueIterator>
 
 namespace Code
@@ -42,6 +41,8 @@ namespace Code
 				udp->mOnDisconnected = it.value();
 			else if(it.name() == "onReadyRead")
 				udp->mOnReadyRead = it.value();
+			else if(it.name() == "onError")
+				udp->mOnError = it.value();
 		}
 
 		return udp->mThisObject = CodeClass::constructor(udp, context, engine);
@@ -54,6 +55,7 @@ namespace Code
 		QObject::connect(mUdpSocket, SIGNAL(connected()), this, SLOT(connected()));
 		QObject::connect(mUdpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 		QObject::connect(mUdpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+		QObject::connect(mUdpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 	}
 	
 	Udp::~Udp()
@@ -141,5 +143,13 @@ namespace Code
 	{
 		if(mOnReadyRead.isValid())
 			mOnReadyRead.call(mThisObject);
+	}
+
+	void Udp::error(QAbstractSocket::SocketError socketError)
+	{
+		Q_UNUSED(socketError)
+
+		if(mOnError.isValid())
+			mOnError.call(mThisObject, mUdpSocket->errorString());
 	}
 }

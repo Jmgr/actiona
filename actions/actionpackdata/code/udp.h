@@ -26,8 +26,7 @@
 #include <QObject>
 #include <QScriptValue>
 #include <QScriptEngine>
-
-class QUdpSocket;
+#include <QUdpSocket>
 
 namespace Code
 {
@@ -38,6 +37,7 @@ namespace Code
 		Q_PROPERTY(QScriptValue onConnected READ onConnected WRITE setOnConnected)
 		Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
 		Q_PROPERTY(QScriptValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
+		Q_PROPERTY(QScriptValue onError READ onError WRITE setOnError)
 		
 	public:
 		enum OpenMode
@@ -55,11 +55,13 @@ namespace Code
 		void setOnConnected(const QScriptValue &onConnected)			{ mOnConnected = onConnected; }
 		void setOnDisconnected(const QScriptValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
 		void setOnReadyRead(const QScriptValue &onReadyRead)			{ mOnReadyRead = onReadyRead; }
-		
+		void setOnError(const QScriptValue &onError)					{ mOnError = onError; }
+
 		QScriptValue onConnected() const								{ return mOnConnected; }
 		QScriptValue onDisconnected() const								{ return mOnDisconnected; }
 		QScriptValue onReadyRead() const								{ return mOnReadyRead; }
-	
+		QScriptValue onError() const									{ return mOnError; }
+
 	public slots:
 		QString toString() const					{ return "Udp"; }
 		QScriptValue connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
@@ -75,12 +77,14 @@ namespace Code
 		void connected();
 		void disconnected();
 		void readyRead();
+		void error(QAbstractSocket::SocketError socketError);
 	
 	private:
 		QUdpSocket *mUdpSocket;
 		QScriptValue mOnConnected;
 		QScriptValue mOnDisconnected;
 		QScriptValue mOnReadyRead;
+		QScriptValue mOnError;
 		QScriptValue mThisObject;
 	};
 }

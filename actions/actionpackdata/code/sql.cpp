@@ -27,6 +27,7 @@
 #include <QSqlRecord>
 #include <QUuid>
 #include <QStringList>
+#include <QSet>
 
 namespace Code
 {
@@ -47,9 +48,30 @@ namespace Code
 	{
 		Q_UNUSED(context)
 
-		//TODO : Return Enum members
+		QStringList driverNames = QSqlDatabase::drivers();
+		QSet<Driver> driverList;
 
-		return stringListToArrayParameter(engine, QSqlDatabase::drivers());
+		for(int index = 0; index < driverNames.size(); ++index)
+		{
+			const QString &driverNameToInclude = driverNames.at(index);
+
+			for(int driverIndex = 0; driverIndex < DriverCount; ++driverIndex)
+			{
+				if(driverName(static_cast<Driver>(driverIndex)) == driverNameToInclude)
+					driverList.insert(static_cast<Driver>(driverIndex));
+			}
+		}
+
+		QScriptValue back = engine->newArray(driverList.size());
+		int index = 0;
+		foreach(const Driver &driver, driverList)
+		{
+			back.setProperty(index, driver);
+
+			++index;
+		}
+
+		return back;
 	}
 
 	void Sql::registerClass(QScriptEngine *scriptEngine)
@@ -61,38 +83,7 @@ namespace Code
 		: CodeClass(),
 		mDatabase(new QSqlDatabase)
 	{
-		switch(driver)
-		{
-		case SQLite2:
-			mDriverName = "QSQLITE2";
-			break;
-		case SQLite:
-			mDriverName = "QSQLITE";
-			break;
-		case PostgreSQL:
-			mDriverName = "QPSQL";
-			break;
-		case MySQL:
-			mDriverName = "QMYSQL";
-			break;
-		case ODBC:
-			mDriverName = "QODBC";
-			break;
-		case InterBase:
-			mDriverName = "QIBASE";
-			break;
-		case OCI:
-			mDriverName = "QOCI";
-			break;
-		case TDS:
-			mDriverName = "QTDS";
-			break;
-		case DB2:
-			mDriverName = "QDB2";
-			break;
-		default:
-			break;
-		}
+		mDriverName = driverName(driver);
 	}
 
 	Sql::~Sql()
@@ -257,5 +248,32 @@ namespace Code
 		mDatabase->close();
 
 		return context()->thisObject();
+	}
+
+	QString Sql::driverName(Driver driver)
+	{
+		switch(driver)
+		{
+		case SQLite2:
+			return "QSQLITE2";
+		case SQLite:
+			return "QSQLITE";
+		case PostgreSQL:
+			return "QPSQL";
+		case MySQL:
+			return "QMYSQL";
+		case ODBC:
+			return "QODBC";
+		case InterBase:
+			return "QIBASE";
+		case OCI:
+			return "QOCI";
+		case TDS:
+			return "QTDS";
+		case DB2:
+			return "QDB2";
+		default:
+			return QString();
+		}
 	}
 }

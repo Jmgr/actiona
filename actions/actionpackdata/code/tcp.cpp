@@ -21,7 +21,6 @@
 #include "tcp.h"
 #include "code/rawdata.h"
 
-#include <QTcpSocket>
 #include <QScriptValueIterator>
 
 namespace Code
@@ -44,6 +43,8 @@ namespace Code
 				tcp->mOnReadyRead = it.value();
 			else if(it.name() == "onBytesWritten")
 				tcp->mOnBytesWritten = it.value();
+			else if(it.name() == "onError")
+				tcp->mOnError = it.value();
 		}
 
 		return tcp->mThisObject = CodeClass::constructor(tcp, context, engine);
@@ -62,6 +63,7 @@ namespace Code
 		QObject::connect(mTcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 		QObject::connect(mTcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 		QObject::connect(mTcpSocket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
+		QObject::connect(mTcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 	}
 	
 	Tcp::Tcp(QTcpSocket *tcpSocket)
@@ -72,6 +74,7 @@ namespace Code
 		QObject::connect(mTcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 		QObject::connect(mTcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 		QObject::connect(mTcpSocket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
+		QObject::connect(mTcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 	}
 	
 	Tcp::~Tcp()
@@ -108,7 +111,7 @@ namespace Code
 		
 		return context()->thisObject();
 	}
-	
+
 	QScriptValue Tcp::waitForDisconnected(int waitTime)
 	{
 		if(!mTcpSocket->waitForDisconnected(waitTime))
@@ -181,5 +184,13 @@ namespace Code
 	{
 		if(mOnBytesWritten.isValid())
 			mOnBytesWritten.call(mThisObject, static_cast<qsreal>(bytes));
+	}
+
+	void Tcp::error(QAbstractSocket::SocketError socketError)
+	{
+		Q_UNUSED(socketError)
+
+		if(mOnError.isValid())
+			mOnError.call(mThisObject, mTcpSocket->errorString());
 	}
 }

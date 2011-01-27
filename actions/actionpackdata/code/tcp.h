@@ -26,8 +26,7 @@
 #include <QObject>
 #include <QScriptValue>
 #include <QScriptEngine>
-
-class QTcpSocket;
+#include <QTcpSocket>
 
 namespace Code
 {
@@ -39,6 +38,7 @@ namespace Code
 		Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
 		Q_PROPERTY(QScriptValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
 		Q_PROPERTY(QScriptValue onBytesWritten READ onBytesWritten WRITE setOnBytesWritten)
+		Q_PROPERTY(QScriptValue onError READ onError WRITE setOnError)
 		
 	public:
 		enum OpenMode
@@ -59,11 +59,13 @@ namespace Code
 		void setOnDisconnected(const QScriptValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
 		void setOnReadyRead(const QScriptValue &onReadyRead)			{ mOnReadyRead = onReadyRead; }
 		void setOnBytesWritten(const QScriptValue &onBytesWritten)		{ mOnBytesWritten = onBytesWritten; }
+		void setOnError(const QScriptValue &onError)					{ mOnError = onError; }
 		
 		QScriptValue onConnected() const								{ return mOnConnected; }
 		QScriptValue onDisconnected() const								{ return mOnDisconnected; }
 		QScriptValue onReadyRead() const								{ return mOnReadyRead; }
 		QScriptValue onBytesWritten() const								{ return mOnBytesWritten; }
+		QScriptValue onError() const									{ return mOnError; }
 		
 	public slots:
 		QString toString() const										{ return "Tcp"; }
@@ -83,6 +85,7 @@ namespace Code
 		void disconnected();
 		void readyRead();
 		void bytesWritten(qint64 bytes);
+		void error(QAbstractSocket::SocketError socketError);
 	
 	private:
 		QTcpSocket *mTcpSocket;
@@ -90,6 +93,7 @@ namespace Code
 		QScriptValue mOnDisconnected;
 		QScriptValue mOnReadyRead;
 		QScriptValue mOnBytesWritten;
+		QScriptValue mOnError;
 		QScriptValue mThisObject;
 	};
 }

@@ -49,7 +49,9 @@ namespace Code
 			InterBase,
 			OCI,
 			TDS,
-			DB2
+			DB2,
+
+			DriverCount
 		};
 		enum IndexStyle
 		{
@@ -74,6 +76,8 @@ namespace Code
 		QScriptValue disconnect() const;
 	
 	private:
+		static QString driverName(Driver driver);
+
 		QString mDriverName;
 		QSqlDatabase *mDatabase;
 		QSqlQuery mQuery;
