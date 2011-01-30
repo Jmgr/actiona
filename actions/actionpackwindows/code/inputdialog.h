@@ -36,6 +36,7 @@ namespace Code
 		Q_ENUMS(TextEchoMode)
 		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
 		Q_PROPERTY(QScriptValue onValueChanged READ onValueChanged WRITE setOnValueChanged)
+		Q_PROPERTY(QScriptValue value READ value WRITE setValue)
 
 	public:
 		enum InputType

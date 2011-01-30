@@ -83,7 +83,6 @@ int main(int argc, char **argv)
 
 	qsrand(std::time(NULL));
 
-	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	QSettings settings;

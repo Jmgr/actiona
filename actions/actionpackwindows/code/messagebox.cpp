@@ -28,7 +28,7 @@ namespace Code
 	QScriptValue MessageBox::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
 		MessageBox *messageBox = new MessageBox;
-		messageBox->setupConstructorParameters(context->argument(0));
+		messageBox->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
 
@@ -149,6 +149,6 @@ namespace Code
 	void MessageBox::finished(int result)
 	{
 		if(mOnClosed.isValid())
-			mOnClosed.call(mThisObject, QScriptValueList() << result);
+			mOnClosed.call(mThisObject, result);
 	}
 }

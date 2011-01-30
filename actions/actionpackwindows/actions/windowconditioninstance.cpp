@@ -32,7 +32,7 @@ namespace Actions
 			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Don't exists"));
 
 	WindowConditionInstance::WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
-		: ActionTools::ActionInstance(definition, parent)
+		: ActionTools::ActionInstance(definition, parent), mCondition(Exists)
 	{
 	}
 

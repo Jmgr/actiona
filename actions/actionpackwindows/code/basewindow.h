@@ -31,19 +31,22 @@ namespace Code
 	class BaseWindow : public CodeClass
 	{
 		Q_OBJECT
+		Q_PROPERTY(QString title READ title WRITE setTitle)
+		Q_PROPERTY(QScriptValue position READ position WRITE setPosition)
+		Q_PROPERTY(float opacity READ opacity WRITE setOpacity)
+		Q_PROPERTY(bool enabled READ enabled WRITE setEnabled)
+		Q_PROPERTY(bool visible READ visible WRITE setVisible)
 
 	public slots:
 		QScriptValue setTitle(const QString &title);
-		QScriptValue setPosition();
+		QScriptValue setPosition(const QScriptValue &);
 		QScriptValue setOpacity(float opacity);
-		QScriptValue setSize();
-		QScriptValue setFixedSize();
 		QScriptValue setEnabled(bool enabled);
 		QScriptValue setVisible(bool visible);
 		QScriptValue close();
+		QString title() const;
 		QScriptValue position() const;
 		float opacity() const;
-		QScriptValue size() const;
 		bool enabled() const;
 		bool visible() const;
 
@@ -51,7 +54,7 @@ namespace Code
 		BaseWindow();
 
 		void setWidget(QWidget *widget);
-		void setupConstructorParameters(const QScriptValue &parameters);
+		void setupConstructorParameters(QScriptContext *context, QScriptEngine *engine, const QScriptValue &parameters);
 
 	private:
 		QWidget *mWindow;

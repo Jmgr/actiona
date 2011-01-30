@@ -33,6 +33,7 @@ namespace Code
 		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
 		Q_PROPERTY(QScriptValue onColorSelected READ onColorSelected WRITE setOnColorSelected)
 		Q_PROPERTY(QScriptValue onColorChanged READ onColorChanged WRITE setOnColorChanged)
+		Q_PROPERTY(QScriptValue color READ color WRITE setColor)
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);

@@ -1368,6 +1368,9 @@ void MainWindow::execute(bool onlySelection)
 						 consoleWindowScreen,
 						 mScript->pauseBefore(),
 						 mScript->pauseAfter(),
+						 Global::ACTIONAZ_VERSION,
+						 Global::SCRIPT_VERSION,
+						 false,
 						 ui->consoleWidget->model());
 	}
 

@@ -53,8 +53,8 @@ namespace Code
 		{
 			AnyFile = QFileDialog::AnyFile,
 			ExistingFile = QFileDialog::ExistingFile,
-			Directory = QFileDialog::Directory,
-			ExistingFiles = QFileDialog::ExistingFiles
+			ExistingFiles = QFileDialog::ExistingFiles,
+			Directory = QFileDialog::Directory
 		};
 		enum ViewMode
 		{
@@ -136,6 +136,11 @@ namespace Code
 		
 	private slots:
 		void finished(int result);
+		void currentChanged(const QString &path);
+		void directoryEntered(const QString &directory);
+		void fileSelected(const QString &file);
+		void filesSelected(const QStringList &files);
+		void filterSelected(const QString &filter);
 		
 	private:
 		QFileDialog *mFileDialog;

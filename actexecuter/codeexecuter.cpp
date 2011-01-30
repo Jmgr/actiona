@@ -25,6 +25,8 @@
 #include "actionpack.h"
 #include "executer/codestdio.h"
 #include "code/codetools.h"
+#include "executer/codeactionaz.h"
+#include "global.h"
 
 #include <QFile>
 #include <QScriptEngine>
@@ -73,6 +75,15 @@ bool CodeExecuter::start(QFile &file)
 	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::print, "print", mScriptEngine);
 	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printWarning, "printWarning", mScriptEngine);
 	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printError, "printError", mScriptEngine);
+
+	Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeActionaz>("Actionaz", mScriptEngine);
+	LibExecuter::CodeActionaz::setActExec(true);
+	LibExecuter::CodeActionaz::setActionazVersion(Global::ACTIONAZ_VERSION);
+	LibExecuter::CodeActionaz::setScriptVersion(Global::SCRIPT_VERSION);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &LibExecuter::CodeActionaz::version, "version", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &LibExecuter::CodeActionaz::scriptVersion, "scriptVersion", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &LibExecuter::CodeActionaz::isActExec, "isActExec", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &LibExecuter::CodeActionaz::isActionaz, "isActionaz", mScriptEngine);
 
 	QSettings settings;
 	QString locale = settings.value("locale").toString();

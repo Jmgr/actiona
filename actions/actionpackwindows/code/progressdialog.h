@@ -31,6 +31,7 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_PROPERTY(QScriptValue onCanceled READ onCanceled WRITE setOnCanceled)
+		Q_PROPERTY(int value READ value WRITE setValue)
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);		

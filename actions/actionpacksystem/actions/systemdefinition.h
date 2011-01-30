@@ -25,6 +25,7 @@
 #include "systeminstance.h"
 #include "listparameterdefinition.h"
 #include "groupdefinition.h"
+#include "../systemsession.h"
 
 namespace ActionTools
 {
@@ -68,7 +69,6 @@ namespace Actions
 
 			addElement(operationMode);
 
-			addException(SystemInstance::NotEnoughRightsException, tr("Not enough rights"));
 			addException(SystemInstance::NotAvailable, tr("Not available"));
 		}
 

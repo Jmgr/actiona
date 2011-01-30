@@ -28,7 +28,7 @@ namespace Code
 	QScriptValue InputDialog::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
 		InputDialog *inputDialog = new InputDialog;
-		inputDialog->setupConstructorParameters(context->argument(0));
+		inputDialog->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
 
@@ -219,25 +219,25 @@ namespace Code
 	void InputDialog::finished(int result)
 	{
 		if(mOnClosed.isValid())
-			mOnClosed.call(mThisObject, QScriptValueList() << result);
+			mOnClosed.call(mThisObject, result);
 	}
 	
 	void InputDialog::doubleValueChanged(double value)
 	{
 		if(mOnValueChanged.isValid())
-			mOnValueChanged.call(mThisObject, QScriptValueList() << value);
+			mOnValueChanged.call(mThisObject, value);
 	}
 
 	void InputDialog::intValueChanged(int value)
 	{
 		if(mOnValueChanged.isValid())
-			mOnValueChanged.call(mThisObject, QScriptValueList() << value);
+			mOnValueChanged.call(mThisObject, value);
 	}
 
 	void InputDialog::textValueChanged(const QString &value)
 	{
 		if(mOnValueChanged.isValid())
-			mOnValueChanged.call(mThisObject, QScriptValueList() << value);
+			mOnValueChanged.call(mThisObject, value);
 	}
 	
 	void InputDialog::setup()

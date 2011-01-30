@@ -38,6 +38,7 @@ namespace Code
 		: CodeClass()
 	#ifdef Q_WS_WIN
 		, mHKey(0)
+		, mRootKey(ClassesRoot)
 	#endif
 	{
 	}

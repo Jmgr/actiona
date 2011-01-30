@@ -29,7 +29,7 @@ namespace Code
 	QScriptValue FileDialog::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
 		FileDialog *fileDialog = new FileDialog;
-		fileDialog->setupConstructorParameters(context->argument(0));
+		fileDialog->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
 
@@ -80,6 +80,16 @@ namespace Code
 			}
 			else if(it.name() == "onClosed")
 				fileDialog->mOnClosed = it.value();
+			else if(it.name() == "onCurrentChanged")
+				fileDialog->mOnCurrentChanged = it.value();
+			else if(it.name() == "onDirectoryEntered")
+				fileDialog->mOnDirectoryEntered = it.value();
+			else if(it.name() == "onFileSelected")
+				fileDialog->mOnFileSelected = it.value();
+			else if(it.name() == "onFilesSelected")
+				fileDialog->mOnFilesSelected = it.value();
+			else if(it.name() == "onFilterSelected")
+				fileDialog->mOnFilterSelected = it.value();
 		}
 
 		return fileDialog->mThisObject = CodeClass::constructor(fileDialog, context, engine);
@@ -92,6 +102,11 @@ namespace Code
 		setWidget(mFileDialog);
 		
 		connect(mFileDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));
+		connect(mFileDialog, SIGNAL(currentChanged(QString)), this, SLOT(currentChanged(QString)));
+		connect(mFileDialog, SIGNAL(directoryEntered(QString)), this, SLOT(directoryEntered(QString)));
+		connect(mFileDialog, SIGNAL(fileSelected(QString)), this, SLOT(fileSelected(QString)));
+		connect(mFileDialog, SIGNAL(filesSelected(QStringList)), this, SLOT(filesSelected(QStringList)));
+		connect(mFileDialog, SIGNAL(filterSelected(QString)), this, SLOT(filterSelected(QString)));
 	}
 	
 	FileDialog::~FileDialog()
@@ -265,6 +280,36 @@ namespace Code
 	void FileDialog::finished(int result)
 	{
 		if(mOnClosed.isValid())
-			mOnClosed.call(mThisObject, QScriptValueList() << result);
+			mOnClosed.call(mThisObject, result);
+	}
+
+	void FileDialog::currentChanged(const QString &path)
+	{
+		if(mOnCurrentChanged.isValid())
+			mOnCurrentChanged.call(mThisObject, path);
+	}
+
+	void FileDialog::directoryEntered(const QString &directory)
+	{
+		if(mOnDirectoryEntered.isValid())
+			mOnDirectoryEntered.call(mThisObject, directory);
+	}
+
+	void FileDialog::fileSelected(const QString &file)
+	{
+		if(mOnFileSelected.isValid())
+			mOnFileSelected.call(mThisObject, file);
+	}
+
+	void FileDialog::filesSelected(const QStringList &files)
+	{
+		if(mOnFilesSelected.isValid())
+			mOnFilesSelected.call(mThisObject, stringListToArrayParameter(engine(), files));
+	}
+
+	void FileDialog::filterSelected(const QString &filter)
+	{
+		if(mOnFilterSelected.isValid())
+			mOnFilterSelected.call(mThisObject, filter);
 	}
 }

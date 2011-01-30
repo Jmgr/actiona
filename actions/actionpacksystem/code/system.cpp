@@ -20,6 +20,7 @@
 
 #include "system.h"
 #include "code/rect.h"
+#include "../systemsession.h"
 
 #include <QSystemInfo>
 #include <QDesktopServices>
@@ -50,11 +51,17 @@ namespace Code
 
 	System::System()
 		: CodeClass(),
+		mSystemSession(new SystemSession),
 		mSystemInfo(new QSystemInfo(this)),
 		mSystemStorageInfo(new QSystemStorageInfo(this)),
 		mSystemDisplayInfo(new QSystemDisplayInfo(this)),
 		mSystemDeviceInfo(new QSystemDeviceInfo(this))
 	{
+	}
+
+	System::~System()
+	{
+		delete mSystemSession;
 	}
 
 	QString System::storageLocationPath(StorageLocation location) const
@@ -206,5 +213,61 @@ namespace Code
 	QString System::productName() const
 	{
 		return mSystemDeviceInfo->productName();
+	}
+
+	QScriptValue System::logout(bool force) const
+	{
+		if(!mSystemSession->logout(force))
+			throwError("LogoutError", tr("Logout failed"));
+
+		return context()->thisObject();
+	}
+
+	QScriptValue System::restart(bool force) const
+	{
+		if(!mSystemSession->restart(force))
+			throwError("RestartError", tr("Restart failed"));
+
+		return context()->thisObject();
+	}
+
+	QScriptValue System::shutdown(bool force) const
+	{
+		if(!mSystemSession->shutdown(force))
+			throwError("ShutdownError", tr("Shutdown failed"));
+
+		return context()->thisObject();
+	}
+
+	QScriptValue System::suspend(bool force) const
+	{
+		if(!mSystemSession->suspend(force))
+			throwError("SuspendError", tr("Suspend failed"));
+
+		return context()->thisObject();
+	}
+
+	QScriptValue System::hibernate(bool force) const
+	{
+		if(!mSystemSession->hibernate(force))
+			throwError("HibernateError", tr("Hibernate failed"));
+
+		return context()->thisObject();
+	}
+
+	QScriptValue System::lockScreen() const
+	{
+		if(!mSystemSession->lockScreen())
+			throwError("LockScreenError", tr("Lock screen failed"));
+
+		return context()->thisObject();
+	}
+
+	QScriptValue System::startScreenSaver() const
+	{
+		if(!mSystemSession->startScreenSaver())
+			throwError("StartScreenSaverError", tr("Start screen saver failed"));
+
+		return context()->thisObject();
 	}
 }

@@ -122,12 +122,18 @@ namespace ActionTools
 							return false;
 						}
 
-						usleep(10000); //10 msec
+						timespec req;
+						req.tv_sec = 0;
+						req.tv_nsec = 10000; //10 msec
+						nanosleep(&req, 0);
 
 						return (processStatus(id) == Stopped);
 					}
 
-					usleep(100000); //100 msec
+					timespec req;
+					req.tv_sec = 0;
+					req.tv_nsec = 100000; //100 msec
+					nanosleep(&req, 0);
 				}
 			}
 		}
@@ -274,7 +280,10 @@ namespace ActionTools
 	void CrossPlatform::sleep(int milliseconds)
 	{
 #ifdef Q_WS_X11
-		usleep(milliseconds * 1000);
+		timespec req;
+		req.tv_sec = 0;
+		req.tv_nsec = milliseconds * 1000;
+		nanosleep(&req, 0);
 #endif
 #ifdef Q_WS_WIN
 		Sleep(milliseconds);

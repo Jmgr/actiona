@@ -36,6 +36,8 @@ class QSystemDisplayInfo;
 class QSystemDeviceInfo;
 QTM_END_NAMESPACE
 
+class SystemSession;
+
 namespace Code
 {
 	class System : public CodeClass
@@ -79,6 +81,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	
 		System();
+		~System();
 	
 	public slots:
 		QString toString() const					{ return "System"; }
@@ -109,8 +112,16 @@ namespace Code
 		QString manufacturer() const;
 		QString model() const;
 		QString productName() const;
+		QScriptValue logout(bool force) const;
+		QScriptValue restart(bool force) const;
+		QScriptValue shutdown(bool force) const;
+		QScriptValue suspend(bool force) const;
+		QScriptValue hibernate(bool force) const;
+		QScriptValue lockScreen() const;
+		QScriptValue startScreenSaver() const;
 		
 	private:
+		SystemSession *mSystemSession;
 		QTM_PREPEND_NAMESPACE(QSystemInfo) *mSystemInfo;
 		QTM_PREPEND_NAMESPACE(QSystemStorageInfo) *mSystemStorageInfo;
 		QTM_PREPEND_NAMESPACE(QSystemDisplayInfo) *mSystemDisplayInfo;

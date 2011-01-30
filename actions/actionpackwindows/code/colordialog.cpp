@@ -29,7 +29,7 @@ namespace Code
 	QScriptValue ColorDialog::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
 		ColorDialog *colorDialog = new ColorDialog;
-		colorDialog->setupConstructorParameters(context->argument(0));
+		colorDialog->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
 
@@ -102,19 +102,19 @@ namespace Code
 	void ColorDialog::finished(int result)
 	{
 		if(mOnClosed.isValid())
-			mOnClosed.call(mThisObject, QScriptValueList() << result);
+			mOnClosed.call(mThisObject, result);
 	}
 	
 	void ColorDialog::colorSelected(const QColor &color)
 	{
 		if(mOnColorSelected.isValid())
-			mOnColorSelected.call(mThisObject, QScriptValueList() << Color::constructor(color, context(), engine()));
+			mOnColorSelected.call(mThisObject, Color::constructor(color, context(), engine()));
 	}
 
 	void ColorDialog::currentColorChanged(const QColor &color)
 	{
 		if(mOnColorChanged.isValid())
-			mOnColorChanged.call(mThisObject, QScriptValueList() << Color::constructor(color, context(), engine()));
+			mOnColorChanged.call(mThisObject,Color::constructor(color, context(), engine()));
 	}
 	
 	void ColorDialog::setColorPrivate(const QScriptValue &color, QScriptContext *context)

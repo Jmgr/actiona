@@ -26,6 +26,8 @@
 #include "actiondefinition.h"
 #include "scriptagent.h"
 #include "actioninstance.h"
+#include "code/codetools.h"
+#include "codeactionaz.h"
 
 #include <QDesktopWidget>
 #include <QAction>
@@ -81,6 +83,9 @@ namespace LibExecuter
 			   int consoleWindowScreen,
 			   int pauseBefore,
 			   int pauseAfter,
+			   Tools::Version actionazVersion,
+			   Tools::Version scriptVersion,
+			   bool isActExec,
 			   QStandardItemModel *consoleModel)
 	{
 		mScript = script;
@@ -105,6 +110,9 @@ namespace LibExecuter
 		mProgressDialog = 0;
 		mActiveActionsCount = 0;
 		mExecutionPaused = false;
+		mActionazVersion = actionazVersion;
+		mScriptVersion = scriptVersion;
+		mIsActExec = isActExec;
 		
 		mScriptEngineDebugger.attachTo(mScriptEngine);
 		mDebuggerWindow = mScriptEngineDebugger.standardWindow();
@@ -205,6 +213,15 @@ namespace LibExecuter
 	#ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Executer::startExecution");
 	#endif
+
+		Code::CodeTools::addClassToScriptEngine<CodeActionaz>("Actionaz", mScriptEngine);
+		CodeActionaz::setActExec(mIsActExec);
+		CodeActionaz::setActionazVersion(mActionazVersion);
+		CodeActionaz::setScriptVersion(mScriptVersion);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &CodeActionaz::version, "version", mScriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &CodeActionaz::scriptVersion, "scriptVersion", mScriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &CodeActionaz::isActExec, "isActExec", mScriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &CodeActionaz::isActionaz, "isActionaz", mScriptEngine);
 		
 		mScriptAgent->setContext(ScriptAgent::ActionInit);
 		CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory);

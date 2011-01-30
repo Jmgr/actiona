@@ -38,7 +38,7 @@ namespace Code
 		mWindow = widget;
 	}
 
-	void BaseWindow::setupConstructorParameters(const QScriptValue &parameters)
+	void BaseWindow::setupConstructorParameters(QScriptContext *context, QScriptEngine *engine, const QScriptValue &parameters)
 	{
 		Q_ASSERT(mWindow);
 		
@@ -53,13 +53,15 @@ namespace Code
 			if(it.name() == "title")
 				mWindow->setWindowTitle(it.value().toString());
 			else if(it.name() == "position")
-				mWindow->move(it.value().property("x").toInt32(), it.value().property("y").toInt32());
+			{
+				QObject *object = it.value().toQObject();
+				if(Point *codePoint = qobject_cast<Point*>(object))
+					mWindow->move(codePoint->point());
+				else
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+			}
 			else if(it.name() == "opacity")
 				mWindow->setWindowOpacity(it.value().toNumber());
-			else if(it.name() == "size")
-				mWindow->resize(it.value().property("width").toInt32(), it.value().property("height").toInt32());
-			else if(it.name() == "fixedSize")
-				mWindow->setFixedSize(it.value().property("width").toInt32(), it.value().property("height").toInt32());
 			else if(it.name() == "enabled")
 				mWindow->setEnabled(it.value().toBool());
 			else if(it.name() == "visible")
@@ -76,7 +78,7 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue BaseWindow::setPosition()
+	QScriptValue BaseWindow::setPosition(const QScriptValue &)
 	{
 		Q_ASSERT(mWindow);
 
@@ -94,24 +96,6 @@ namespace Code
 		return context()->thisObject();
 	}
 
-	QScriptValue BaseWindow::setSize()
-	{
-		Q_ASSERT(mWindow);
-
-		mWindow->resize(Size::parameter(context(), engine()));
-
-		return context()->thisObject();
-	}
-
-	QScriptValue BaseWindow::setFixedSize()
-	{
-		Q_ASSERT(mWindow);
-
-		mWindow->setFixedSize(Size::parameter(context(), engine()));
-
-		return context()->thisObject();
-	}
-	
 	QScriptValue BaseWindow::setEnabled(bool enabled)
 	{
 		Q_ASSERT(mWindow);
@@ -138,7 +122,14 @@ namespace Code
 
 		return context()->thisObject();
 	}	
-	
+
+	QString BaseWindow::title() const
+	{
+		Q_ASSERT(mWindow);
+
+		return mWindow->windowTitle();
+	}
+
 	QScriptValue BaseWindow::position() const
 	{
 		Q_ASSERT(mWindow);
@@ -152,14 +143,7 @@ namespace Code
 		
 		return mWindow->windowOpacity();
 	}
-	
-	QScriptValue BaseWindow::size() const
-	{
-		Q_ASSERT(mWindow);
-		
-		return Size::constructor(mWindow->size(), context(), engine());
-	}
-	
+
 	bool BaseWindow::enabled() const
 	{
 		Q_ASSERT(mWindow);

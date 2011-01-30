@@ -23,6 +23,7 @@
 
 #include "executer_global.h"
 #include "consolewidget.h"
+#include "version.h"
 
 #include <QObject>
 #include <QTimer>
@@ -63,6 +64,9 @@ namespace LibExecuter
 				   int consoleWindowScreen,
 				   int pauseBefore,
 				   int pauseAfter,
+				   Tools::Version actionazVersion,
+				   Tools::Version scriptVersion,
+				   bool isActExec,
 				   QStandardItemModel *consoleModel);
 
 		ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
@@ -157,6 +161,9 @@ namespace LibExecuter
 		bool mPauseInterrupt;
 		int mPauseBefore;
 		int mPauseAfter;
+		Tools::Version mActionazVersion;
+		Tools::Version mScriptVersion;
+		bool mIsActExec;
 
 		Q_DISABLE_COPY(Executer)
 	};

@@ -28,7 +28,7 @@ namespace Code
 	QScriptValue ProgressDialog::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
 		ProgressDialog *progressDialog = new ProgressDialog;
-		progressDialog->setupConstructorParameters(context->argument(0));
+		progressDialog->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
 

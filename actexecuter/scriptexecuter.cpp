@@ -22,6 +22,7 @@
 #include "script.h"
 #include "executer/executer.h"
 #include "mainclass.h"
+#include "global.h"
 
 #include <QFile>
 #include <QApplication>
@@ -70,7 +71,7 @@ bool ScriptExecuter::start(QFile &file)
 	
 	file.close();
 	
-	mExecuter->setup(mScript, actionFactory(), false, 0, 0, false, 0, 0, 0, 0, 0);
+	mExecuter->setup(mScript, actionFactory(), false, 0, 0, false, 0, 0, 0, 0, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION, true, 0);
 	if(!mExecuter->startExecution(false))
 	{
 		QTextStream stream(stdout);

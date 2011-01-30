@@ -66,7 +66,6 @@ int main(int argc, char **argv)
 	notify_init("Actionaz executer");
 #endif
 
-	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	QSettings settings;

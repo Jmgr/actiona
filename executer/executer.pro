@@ -12,14 +12,16 @@ SOURCES += executer.cpp \
     codeinitializer.cpp \
     codeexecution.cpp \
 	codestdio.cpp \
-    scriptagent.cpp
+    scriptagent.cpp \
+    codeactionaz.cpp
 HEADERS += executer_global.h \
 	executer.h \
 	executionwindow.h \
 	scriptagent.h \
     codeinitializer.h \
     codeexecution.h \
-	codestdio.h
+	codestdio.h \
+    codeactionaz.h
 INCLUDEPATH += src \
 	../tools \
 	../actiontools
