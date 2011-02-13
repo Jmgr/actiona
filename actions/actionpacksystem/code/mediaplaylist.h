@@ -37,6 +37,12 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_ENUMS(PlaybackMode)
+		Q_PROPERTY(qreal playbackRate READ playbackRate WRITE setPlaybackRate)
+		Q_PROPERTY(qreal volume READ volume WRITE setVolume)
+		Q_PROPERTY(qint64 position READ position WRITE setPosition)
+		Q_PROPERTY(bool muted READ isMuted WRITE setMuted)
+		Q_PROPERTY(int currentMedia READ currentMedia WRITE setCurrentMedia)
+		Q_PROPERTY(PlaybackMode playbackMode READ playbackMode WRITE setPlaybackMode)
 
 	public:
 		enum PlaybackMode
