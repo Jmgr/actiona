@@ -87,7 +87,7 @@ namespace Code
 		QString toString() const					{ return "System"; }
 		QString storageLocationPath(StorageLocation location) const;
 		QString storageLocationName(StorageLocation location) const;
-		void openUrl(const QString &url) const;
+		QScriptValue openUrl(const QString &url) const;
 		int screenCount() const;
 		QScriptValue availableGeometry(int screen = -1) const;
 		QScriptValue screenGeometry(int screen = -1) const;
