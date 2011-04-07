@@ -36,7 +36,7 @@ namespace ActionTools
 		DeviceCopyThread(QIODevice *input, QIODevice *output);
 		
 		void stop();
-		qint64 copiedData();
+		qint64 copiedData() const;
 		
 	protected:
 		void run();
@@ -46,7 +46,7 @@ namespace ActionTools
 		QIODevice *mOutput;
 		qint64 mCopiedData;
 		bool mContinue;
-		QMutex mMutex;
+		mutable QMutex mMutex;
 	};
 }
 
