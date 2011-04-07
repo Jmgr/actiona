@@ -74,9 +74,12 @@ namespace Code
 		return QDesktopServices::displayName(static_cast<QDesktopServices::StandardLocation>(location));
 	}
 
-	void System::openUrl(const QString &url) const
+	QScriptValue System::openUrl(const QString &url) const
 	{
-		QDesktopServices::openUrl(QUrl(url));
+		if(!QDesktopServices::openUrl(QUrl(url)))
+			throwError("OpenUrlError", tr("Cannot open the url"));
+
+		return context()->thisObject();
 	}
 
 	int System::screenCount() const
@@ -140,7 +143,6 @@ namespace Code
 #ifdef Q_WS_WIN
 		return "Windows";
 #endif
-		//TODO : Check if Mobility allows us to be more precise on the os name
 	}
 
 	QString System::version() const
