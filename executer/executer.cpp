@@ -39,7 +39,7 @@
 
 namespace LibExecuter
 {
-	Executer::ExecutionStatus Executer::mExecutionStatus = Executer::Stopped;//I feel confused about this line...
+	Executer::ExecutionStatus Executer::mExecutionStatus = Executer::Stopped;
 	
 	Executer::Executer(QObject *parent)
 		: QObject(parent),
@@ -249,6 +249,7 @@ namespace LibExecuter
 		mExecuteOnlySelection = onlySelection;
 		mCurrentActionIndex = 0;
 		mActiveActionsCount = 0;
+		mExecutionPaused = false;
 
 		bool initSucceeded = true;
 
@@ -328,6 +329,7 @@ namespace LibExecuter
 			else if(mExecutionWindowPosition == 2 || mExecutionWindowPosition == 5 || mExecutionWindowPosition == 8)//Down
 				position.setY(screenRect.top() + screenRect.height() - mExecutionWindow->height());
 
+			mExecutionWindow->setPauseStatus(false);
 			mExecutionWindow->move(position);
 			mExecutionWindow->show();
 		}
@@ -738,22 +740,25 @@ namespace LibExecuter
 
 		mPauseInterrupt = !debug;
 
-		if(mExecutionPaused)
+		if(mScriptEngine->isEvaluating())
 		{
-			mScriptEngineDebugger.action(QScriptEngineDebugger::InterruptAction)->trigger();
+			if(mExecutionPaused)
+			{
+				mScriptEngineDebugger.action(QScriptEngineDebugger::InterruptAction)->trigger();
 
-			if(debug)
-				mDebuggerWindow->show();
+				if(debug)
+					mDebuggerWindow->show();
+			}
+			else
+			{
+				mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
+
+				if(debug)
+					mDebuggerWindow->hide();
+			}
+
+			mScriptAgent->pause(mExecutionPaused);
 		}
-		else
-		{
-			mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
-
-			if(debug)
-				mDebuggerWindow->hide();
-		}
-
-		mScriptAgent->pause(mExecutionPaused);
 
 		mExecutionWindow->setPauseStatus(mExecutionPaused);
 	}
