@@ -5,6 +5,6 @@ contains(DEFINES, ACT_PROFILE) {
 *-msvc*:INCLUDEPATH += . tools ../tools ../../tools
 *-msvc*:QMAKE_CXXFLAGS += /FI "highresolutiontimer.h"
 }
-*-g++*::QMAKE_CXXFLAGS_DEBUG = -pedantic -Wno-long-long
+*-g++*::QMAKE_CXXFLAGS_DEBUG = -pedantic -Wno-long-long -g
 *-g++*::QMAKE_CXXFLAGS_RELEASE = -mmmx -msse -msse2 -mfpmath=sse -O3
 *-msvc*::QMAKE_CXXFLAGS_RELEASE += -Ox -arch:SSE2 -fp:fast
