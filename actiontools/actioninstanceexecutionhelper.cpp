@@ -189,12 +189,8 @@ namespace ActionTools
 	bool ActionInstanceExecutionHelper::evaluateIfAction(IfActionValue &buffer,
 										const QString &parameterName)
 	{
-		bool result = true;
-
-		result &= evaluateString(buffer.action(), parameterName, "action");
-		result &= evaluateString(buffer.line(), parameterName, "line");
-
-		return result;
+		return (evaluateString(buffer.action(), parameterName, "action") &&
+				evaluateString(buffer.line(), parameterName, "line"));
 	}
 
 	bool ActionInstanceExecutionHelper::evaluatePoint(QPoint &buffer,
@@ -372,6 +368,8 @@ namespace ActionTools
 			emit evaluationException(ActionException::CodeErrorException, mErrorMessage);
 			return false;
 		}
+		else if(!result.isValid()) // An invalid value means that an exception was thrown but was catched by the debugger ; abort() was called
+			return false;
 
 		if(result.isArray())
 		{
