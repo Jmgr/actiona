@@ -137,16 +137,14 @@ namespace LibExecuter
 	void printCall(QScriptContext *context, ActionTools::ConsoleWidget::Type type)
 	{
 		QApplication::processEvents();//Call this to prevent UI freeze when calling print often
-		if(!Executer::isExecuterRunning())
-		{
-			context->engine()->abortEvaluation();
-			return;//We need to do this to prevent that the context become invalid when stopping the script
-		}
-		
+
 		QScriptValue calleeData = context->callee().data();
 		Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
 		QString message;
 		ScriptAgent *agent = executer->scriptAgent();
+
+		if(!agent)
+			return;
 		
 		for(int argumentIndex = 0; argumentIndex < context->argumentCount(); ++argumentIndex)
 			message += context->argument(argumentIndex).toString();
@@ -177,6 +175,9 @@ namespace LibExecuter
 
 	QScriptValue printFunction(QScriptContext *context, QScriptEngine *engine)
 	{
+		if(!Executer::isExecuterRunning())
+			return QScriptValue();
+
 		if(context->argumentCount() < 1)
 			return engine->undefinedValue();
 
@@ -187,6 +188,9 @@ namespace LibExecuter
 
 	QScriptValue printWarningFunction(QScriptContext *context, QScriptEngine *engine)
 	{
+		if(!Executer::isExecuterRunning())
+			return QScriptValue();
+
 		if(context->argumentCount() < 1)
 			return engine->undefinedValue();
 
@@ -197,6 +201,9 @@ namespace LibExecuter
 
 	QScriptValue printErrorFunction(QScriptContext *context, QScriptEngine *engine)
 	{
+		if(!Executer::isExecuterRunning())
+			return QScriptValue();
+
 		if(context->argumentCount() < 1)
 			return engine->undefinedValue();
 
