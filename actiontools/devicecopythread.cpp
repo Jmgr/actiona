@@ -41,7 +41,7 @@ namespace ActionTools
 		mContinue = false;
 	}
 	
-	qint64 DeviceCopyThread::copiedData()
+	qint64 DeviceCopyThread::copiedData() const
 	{
 		QMutexLocker mutexLocker(&mMutex);
 		
@@ -50,7 +50,7 @@ namespace ActionTools
 		
 	void DeviceCopyThread::run()
 	{
-		const int bufferSize = 1024 * 1024;//Read 1MB each time
+		const int bufferSize = 1024 * 100;//Read 100KB each time
 		char buffer[bufferSize];
 		int size;
 
