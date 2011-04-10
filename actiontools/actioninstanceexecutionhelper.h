@@ -64,6 +64,8 @@ namespace ActionTools
 						   const QString &subParameterName = "value");
 		bool evaluateIfAction(IfActionValue &buffer,
 						   const QString &parameterName);
+		bool evaluateSubParameter(QString &buffer,
+								  const SubParameter &subParameter);
 
 		//I have to put this method here because it's a template method
 		template<typename T>

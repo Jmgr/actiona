@@ -24,4 +24,5 @@ namespace ActionTools
 {
 	const char *IfActionValue::WAIT = "wait";
 	const char *IfActionValue::GOTO = "goto";
+	const char *IfActionValue::RUNCODE = "run_code";
 }

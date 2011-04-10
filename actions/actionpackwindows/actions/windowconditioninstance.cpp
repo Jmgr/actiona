@@ -59,15 +59,25 @@ namespace Actions
 		if((foundWindow.isValid() && mCondition == Exists) ||
 		   (!foundWindow.isValid() && mCondition == DontExists))
 		{
+			QString line;
+
+			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfTrue.actionParameter()))
+				return;
+
 			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
-				actionInstanceExecutionHelper.setNextLine(mIfTrue.line());
+				actionInstanceExecutionHelper.setNextLine(line);
 
 			emit executionEnded();
 		}
 		else
 		{
+			QString line;
+
+			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifFalse.actionParameter()))
+				return;
+
 			if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
-				actionInstanceExecutionHelper.setNextLine(ifFalse.line());
+				actionInstanceExecutionHelper.setNextLine(line);
 			else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 			{
 				connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkWindow()));
@@ -90,10 +100,17 @@ namespace Actions
 		if((foundWindow.isValid() && mCondition == Exists) ||
 		   (!foundWindow.isValid() && mCondition == DontExists))
 		{
+			QString line;
+
+			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+
+			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfTrue.actionParameter()))
+				return;
+
 			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
 			{
 				ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-				actionInstanceExecutionHelper.setNextLine(mIfTrue.line());
+				actionInstanceExecutionHelper.setNextLine(line);
 			}
 
 			mTimer.stop();

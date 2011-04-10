@@ -65,7 +65,9 @@ namespace Actions
 			if(mTestedDateTime < QDateTime::currentDateTime())//Before
 			{
 				action = ifBefore.action();
-				line = ifBefore.line();
+
+				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifBefore.actionParameter()))
+					return;
 			}
 			else if(mTestedDateTime > QDateTime::currentDateTime())//After
 			{
@@ -79,12 +81,16 @@ namespace Actions
 				}
 
 				action = ifAfter.action();
-				line = ifAfter.line();
+
+				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifAfter.actionParameter()))
+					return;
 			}
 			else//Now
 			{
 				action = ifNow.action();
-				line = ifNow.line();
+
+				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifNow.actionParameter()))
+					return;
 			}
 
 			if(action == ActionTools::IfActionValue::GOTO)

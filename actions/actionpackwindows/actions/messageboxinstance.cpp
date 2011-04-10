@@ -115,11 +115,36 @@ namespace Actions
 
 	void MessageBoxInstance::buttonClicked()
 	{
+		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QScriptValue script = scriptEngine()->globalObject().property("Script");
-		if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::Yes) && mIfYes.action() == ActionTools::IfActionValue::GOTO)
-			script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfYes.line())));
-		else if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::No) && mIfNo.action() == ActionTools::IfActionValue::GOTO)
-			script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(mIfNo.line())));
+		QString line;
+
+		if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::Yes))
+		{
+			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfYes.actionParameter()))
+			{
+				mMessageBox->disconnect();
+				mMessageBox->deleteLater();
+
+				return;
+			}
+
+			if(mIfYes.action() == ActionTools::IfActionValue::GOTO)
+				script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(line)));
+		}
+		else if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::No))
+		{
+			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfNo.actionParameter()))
+			{
+				mMessageBox->disconnect();
+				mMessageBox->deleteLater();
+
+				return;
+			}
+
+			if(mIfYes.action() == ActionTools::IfActionValue::GOTO)
+				script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(line)));
+		}
 
 		mMessageBox->disconnect();
 		mMessageBox->deleteLater();

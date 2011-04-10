@@ -67,6 +67,7 @@ namespace ActionTools
 		{
 			DoNothing,
 			Goto,
+			RunCode,
 			Wait
 		};
 

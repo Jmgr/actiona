@@ -132,7 +132,11 @@ namespace Actions
 			}
 
 			QString action = (equal ? ifEqual.action() : ifDifferent.action());
-			QString line = (equal ? ifEqual.line() : ifDifferent.line());
+			const ActionTools::SubParameter &actionParameter = (equal ? ifEqual.actionParameter() : ifDifferent.actionParameter());
+			QString line;
+
+			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, actionParameter))
+				return;
 
 			if(action == ActionTools::IfActionValue::GOTO)
 				actionInstanceExecutionHelper.setNextLine(line);

@@ -33,8 +33,11 @@ namespace ActionTools
 	bool IfActionParameterDefinition::translated = false;
 
 	StringListPair IfActionParameterDefinition::actions = qMakePair(
-		QStringList() << "do_nothing" << "goto",
-		QStringList() << QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Do nothing") << QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Goto line"));
+		QStringList() << "do_nothing" << "goto" << "run_code",
+		QStringList()
+		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Do nothing")
+		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Goto line")
+		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code"));
 
 	IfActionParameterDefinition::IfActionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
 		: ItemsParameterDefinition(name, translatedName, parent),
@@ -124,18 +127,33 @@ namespace ActionTools
 		if(mActionEdit->codeLineEdit()->isCode())
 		{
 			mLineEdit->setEnabled(true);
+			mLineEdit->codeLineEdit()->setAllowTextCodeChange(true);
 			return;
 		}
 
 		if(text == mItems.first.at(DoNothing) ||
 			text == mItems.second.at(DoNothing) ||
-			(mAllowWait && (text == mItems.first.at(Wait) ||
-			text == mItems.second.at(Wait))))
+			(mAllowWait && (text == mItems.first.at(Wait) || text == mItems.second.at(Wait))))
 		{
 			mLineEdit->setEditText(QString());
 			mLineEdit->setEnabled(false);
+			mLineEdit->codeLineEdit()->setAllowTextCodeChange(true);
+			mLineEdit->setCode(false);
 		}
 		else
+		{
 			mLineEdit->setEnabled(true);
+
+			if(text == mItems.first.at(RunCode) || text == mItems.second.at(RunCode))
+			{
+				mLineEdit->setCode(true);
+				mLineEdit->codeLineEdit()->setAllowTextCodeChange(false);
+			}
+			else
+			{
+				mLineEdit->codeLineEdit()->setAllowTextCodeChange(true);
+				mLineEdit->setCode(false);
+			}
+		}
 	}
 }

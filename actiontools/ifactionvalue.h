@@ -22,6 +22,7 @@
 #define IFACTIONVALUE_H
 
 #include "actiontools_global.h"
+#include "subparameter.h"
 
 #include <QString>
 
@@ -30,24 +31,25 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT IfActionValue
 	{
 	public:
-		IfActionValue(const QString &action = QString(), const QString &line = QString())
-			: mAction(action), mLine(line)								{}
+		IfActionValue(const QString &action = QString(), const SubParameter &actionParameter = SubParameter())
+			: mAction(action), mActionParameter(actionParameter)								{}
 		
 		void setAction(const QString &action)							{ mAction = action; }
-		void setLine(const QString &line)								{ mLine = line; }
+		void setActionParameter(const SubParameter &actionParameter)	{ mActionParameter = actionParameter; }
 		
 		QString action() const											{ return mAction; }
-		QString line() const											{ return mLine; }
+		SubParameter actionParameter() const							{ return mActionParameter; }
 		
 		QString &action()												{ return mAction; }
-		QString &line()													{ return mLine; }
+		SubParameter &actionParameter()									{ return mActionParameter; }
 		
 		static const char *WAIT;
 		static const char *GOTO;
+		static const char *RUNCODE;
 		
 	private:
 		QString mAction;
-		QString mLine;
+		SubParameter mActionParameter;
 	};
 }
 

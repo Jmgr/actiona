@@ -189,8 +189,32 @@ namespace ActionTools
 	bool ActionInstanceExecutionHelper::evaluateIfAction(IfActionValue &buffer,
 										const QString &parameterName)
 	{
-		return (evaluateString(buffer.action(), parameterName, "action") &&
-				evaluateString(buffer.line(), parameterName, "line"));
+		buffer.setActionParameter(mActionInstance->subParameter(parameterName, "line"));
+
+		return evaluateString(buffer.action(), parameterName, "action");
+	}
+
+	bool ActionInstanceExecutionHelper::evaluateSubParameter(QString &buffer,
+							  const SubParameter &subParameter)
+	{
+		//This needs some refactoring -> copy & paste mostly
+		if(subParameter.value().toString().isEmpty())
+		{
+			buffer = QString();
+			return true;
+		}
+
+		if(!evaluate(subParameter))
+			return false;
+
+		if(mResult.type() == QVariant::StringList)
+			buffer = mResult.toStringList().join("\n");
+		else if(mResult.canConvert(QVariant::String))
+			buffer = mResult.toString();
+		else
+			buffer = tr("[Raw data]");
+
+		return true;
 	}
 
 	bool ActionInstanceExecutionHelper::evaluatePoint(QPoint &buffer,

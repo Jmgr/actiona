@@ -69,8 +69,12 @@ namespace Actions
 			{
 				actionInstanceExecutionHelper.setCurrentParameter("ifTrue", "line");
 
+				QString line;
+				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfTrue.actionParameter()))
+					return;
+
 				if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
-					actionInstanceExecutionHelper.setNextLine(mIfTrue.line());
+					actionInstanceExecutionHelper.setNextLine(line);
 
 				emit executionEnded();
 			}
@@ -78,8 +82,12 @@ namespace Actions
 			{
 				actionInstanceExecutionHelper.setCurrentParameter("ifFalse", "line");
 
+				QString line;
+				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifFalse.actionParameter()))
+					return;
+
 				if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
-					actionInstanceExecutionHelper.setNextLine(ifFalse.line());
+					actionInstanceExecutionHelper.setNextLine(line);
 				else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 				{
 					connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkPixel()));
@@ -101,11 +109,14 @@ namespace Actions
 		{
 			if(testPixel())
 			{
+				ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+
+				QString line;
+				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfTrue.actionParameter()))
+					return;
+
 				if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
-				{
-					ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-					actionInstanceExecutionHelper.setNextLine(mIfTrue.line());
-				}
+					actionInstanceExecutionHelper.setNextLine(line);
 
 				mTimer.stop();
 				emit executionEnded();
