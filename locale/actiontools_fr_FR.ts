@@ -154,9 +154,9 @@
     <name>ActionTools::ActionInstanceExecutionHelper</name>
     <message>
         <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="92"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="347"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="353"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="394"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="343"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="349"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="392"/>
         <source>[Raw data]</source>
         <translation>[Données brutes]</translation>
     </message>
@@ -176,19 +176,19 @@
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="212"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="221"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="208"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="217"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="264"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="273"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="260"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="269"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="333"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="329"/>
         <source>Variable %1 not found</source>
         <translation>Variable %1 ne peut pas être trouvée</translation>
     </message>
@@ -563,14 +563,14 @@ Double-cliquez pour afficher</translation>
     <message>
         <location filename="../actiontools/code/rect.cpp" line="43"/>
         <location filename="../actiontools/code/rect.cpp" line="78"/>
-        <location filename="../actiontools/code/rect.cpp" line="314"/>
+        <location filename="../actiontools/code/rect.cpp" line="272"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
     <message>
         <location filename="../actiontools/code/rect.cpp" line="53"/>
         <location filename="../actiontools/code/rect.cpp" line="87"/>
-        <location filename="../actiontools/code/rect.cpp" line="325"/>
+        <location filename="../actiontools/code/rect.cpp" line="283"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
@@ -715,14 +715,19 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>IfActionParameterDefinition::actions</name>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="37"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="38"/>
         <source>Do nothing</source>
         <translation>Ne rien faire</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="37"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="39"/>
         <source>Goto line</source>
         <translation>Aller à une ligne</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="40"/>
+        <source>Run code</source>
+        <translation>Exécuter code</translation>
     </message>
 </context>
 <context>
@@ -849,7 +854,7 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Aller à une ligne</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="63"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="66"/>
         <source>Wait</source>
         <translation>Attendre</translation>
     </message>

@@ -296,6 +296,11 @@
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
+    <message>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="61"/>
+        <source>Incorrect parameter type</source>
+        <translation>Type de paramètre incorrect</translation>
+    </message>
 </context>
 <context>
     <name>Code::MessageBox</name>
