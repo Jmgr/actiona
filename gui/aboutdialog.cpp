@@ -56,6 +56,8 @@ AboutDialog::AboutDialog(QWidget *parent)
 	mComboBoxes.append(ui->act3Ideas);
 	mComboBoxes.append(ui->act3Donators);
 	mComboBoxes.append(ui->act3Art);
+	mComboBoxes.append(ui->act3Pack);
+	mComboBoxes.append(ui->act3Documentation);
 	mComboBoxes.append(ui->act2Prog);
 	mComboBoxes.append(ui->act2Ideas);
 	mComboBoxes.append(ui->act2Donators);
