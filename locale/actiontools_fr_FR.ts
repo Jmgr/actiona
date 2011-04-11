@@ -154,9 +154,10 @@
     <name>ActionTools::ActionInstanceExecutionHelper</name>
     <message>
         <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="92"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="343"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="349"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="392"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="215"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="367"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="373"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="416"/>
         <source>[Raw data]</source>
         <translation>[Données brutes]</translation>
     </message>
@@ -176,24 +177,24 @@
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="208"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="217"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="232"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="241"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="260"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="269"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="284"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="293"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="329"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="353"/>
         <source>Variable %1 not found</source>
         <translation>Variable %1 ne peut pas être trouvée</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.h" line="108"/>
+        <location filename="../actiontools/actioninstanceexecutionhelper.h" line="110"/>
         <source>&quot;%1&quot; is incorrect.</source>
         <translation>&quot;%1&quot; est incorrect.</translation>
     </message>
