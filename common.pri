@@ -7,4 +7,5 @@ contains(DEFINES, ACT_PROFILE) {
 }
 *-g++*::QMAKE_CXXFLAGS_DEBUG = -pedantic -Wno-long-long -g
 *-g++*::QMAKE_CXXFLAGS_RELEASE = -mmmx -msse -msse2 -mfpmath=sse -O3
-*-msvc*::QMAKE_CXXFLAGS_RELEASE += -Ox -arch:SSE2 -fp:fast
+*-msvc*::QMAKE_CXXFLAGS_RELEASE += -O2 -arch:SSE2 -fp:fast -GL
+*-msvc*::QMAKE_LFLAGS_RELEASE += /LTCG
