@@ -17,57 +17,62 @@
         <translation>Exception non gérée :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="109"/>
+        <location filename="../actexecuter/main.cpp" line="74"/>
         <source>switch to code mode, may not be used with -r</source>
         <translation>passer en mode code, ne peut pas être utilisé avec -r</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="111"/>
+        <location filename="../actexecuter/main.cpp" line="76"/>
         <source>switch to script mode, may not be used with -o</source>
         <translation>passer en mode script, ne peut pas être utiliser avec -o</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="113"/>
+        <location filename="../actexecuter/main.cpp" line="78"/>
         <source>do not include the Qt library into the code</source>
         <translation>ne pas inclure la bibliothèque Qt dans le code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="115"/>
+        <location filename="../actexecuter/main.cpp" line="80"/>
+        <source>starts in portable mode, storing the settings in the executable folder</source>
+        <translation>démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="82"/>
         <source>show the program version</source>
         <translation>afficher la version du programme</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="116"/>
+        <location filename="../actexecuter/main.cpp" line="83"/>
         <source>show this help text</source>
         <translation>afficher ce texte d&apos;aide</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="129"/>
+        <location filename="../actexecuter/main.cpp" line="139"/>
         <source>usage: </source>
         <translation>usage :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="129"/>
+        <location filename="../actexecuter/main.cpp" line="139"/>
         <source>[parameters]</source>
         <translation>[paramètres]</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="129"/>
+        <location filename="../actexecuter/main.cpp" line="139"/>
         <source>filename</source>
         <translation>nom de fichier</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="130"/>
+        <location filename="../actexecuter/main.cpp" line="140"/>
         <source>Parameters are:</source>
         <translation>Les paramètres sont :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="167"/>
+        <location filename="../actexecuter/main.cpp" line="177"/>
         <source>Unknown execution mode, please specify -o (script) or -r (code)</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="177"/>
+        <location filename="../actexecuter/main.cpp" line="187"/>
         <source>Unable to read input file</source>
         <translation>Impossible de lire le fichier d&apos;entrée</translation>
     </message>

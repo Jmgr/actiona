@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackSystem</name>
     <message>
-        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="63"/>
+        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="65"/>
         <source>Actions dealing with the operating system</source>
         <translation>Actions en rapport avec le système d&apos;exploitation</translation>
     </message>
@@ -98,6 +98,67 @@
     </message>
 </context>
 <context>
+    <name>Actions::DetachedCommandDefinition</name>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="45"/>
+        <source>Command</source>
+        <translation>Commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="46"/>
+        <source>The command to execute</source>
+        <translation>La commande à exécuter</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="49"/>
+        <source>Parameters</source>
+        <translation>Paramètres</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="50"/>
+        <source>The command&apos;s parameters</source>
+        <translation>Les paramètres de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="53"/>
+        <source>Working directory</source>
+        <translation>Dossier de travail</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="54"/>
+        <source>The command&apos;s working directory</source>
+        <translation>Le dossier de travail de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="55"/>
+        <source>Command working directory</source>
+        <translation>Dossier de travail de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="59"/>
+        <source>Process id</source>
+        <translation>Identifiant de processus</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="60"/>
+        <source>The command&apos;s process id</source>
+        <translation>L&apos;identifiant de processus de la commande</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="63"/>
+        <source>Unable to execute the detached command</source>
+        <translation>Impossible d&apos;exécuter la commande détachée</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::DetachedCommandInstance</name>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommandinstance.h" line="69"/>
+        <source>Unable to start the detached command</source>
+        <translation>Impossible d&apos;exécuter la commande détachée</translation>
+    </message>
+</context>
+<context>
     <name>Actions::KillProcessDefinition</name>
     <message>
         <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="48"/>
@@ -181,7 +242,7 @@
 <context>
     <name>Actions::NotifyInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifyinstance.cpp" line="74"/>
+        <location filename="../actions/actionpacksystem/actions/notifyinstance.cpp" line="75"/>
         <source>Unable to show the notification</source>
         <translation>Impossible d&apos;afficher la notification</translation>
     </message>
@@ -665,6 +726,16 @@
         <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="61"/>
         <source>Opens an URL</source>
         <translation>Ouvre une URL</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="66"/>
+        <source>Detached command</source>
+        <translation>Commande détachée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="69"/>
+        <source>Executes a detached command</source>
+        <translation>Exécute une commande détachée</translation>
     </message>
 </context>
 <context>
