@@ -21,6 +21,7 @@
 #include "devicecopythread.h"
 
 #include <QIODevice>
+#include <QSharedPointer>
 
 namespace ActionTools
 {
@@ -50,15 +51,31 @@ namespace ActionTools
 		
 	void DeviceCopyThread::run()
 	{
-		const int bufferSize = 1024 * 100;//Read 100KB each time
-		char buffer[bufferSize];
+		//Try to allocate as much as possible
+		int bufferSize = 1024 * 1024;
+		QSharedPointer<char> buffer;
+
+		while(!buffer)
+		{
+			try
+			{
+				buffer = QSharedPointer<char>(new char[bufferSize]);
+			}
+			catch(const std::exception &e)
+			{
+				buffer.clear();
+				bufferSize /= 5;
+				continue;
+			}
+		}
+
 		int size;
 
 		while(!mInput->atEnd())
 		{
-			size = mInput->read(buffer, bufferSize);
+			size = mInput->read(buffer.data(), bufferSize);
 			
-			mOutput->write(buffer, size);
+			mOutput->write(buffer.data(), size);
 
 			{
 				QMutexLocker mutexLocker(&mMutex);
