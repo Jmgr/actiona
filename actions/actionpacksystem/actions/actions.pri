@@ -9,7 +9,9 @@ HEADERS += actions/commanddefinition.h \
 	actions/systeminstance.h \
 	actions/systemdefinition.h \
     actions/openurlinstance.h \
-    actions/openurldefinition.h
+    actions/openurldefinition.h \
+    actions/detachedcommanddefinition.h \
+    actions/detachedcommandinstance.h
 SOURCES += actions/killprocessinstance.cpp \
 	actions/notifyinstance.cpp \
 	actions/systeminstance.cpp \

@@ -71,7 +71,10 @@ namespace Actions
 		notify_notification_set_timeout(mNotification, timeout);
 
 		if(!notify_notification_show(mNotification, 0))
+		{
 			emit executionException(UnableToShowNotificationException, tr("Unable to show the notification"));
+			return;
+		}
 	#endif
 
 		emit executionEnded();

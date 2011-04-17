@@ -28,6 +28,7 @@
 #include "actions/pixelcolordefinition.h"
 #include "actions/systemdefinition.h"
 #include "actions/openurldefinition.h"
+#include "actions/detachedcommanddefinition.h"
 
 #include "code/system.h"
 #include "code/mediaplaylist.h"
@@ -57,6 +58,7 @@ public:
 		addActionDefinition(new Actions::PixelColorDefinition(this));
 		addActionDefinition(new Actions::SystemDefinition(this));
 		addActionDefinition(new Actions::OpenURLDefinition(this));
+		addActionDefinition(new Actions::DetachedCommandDefinition(this));
 	}
 
 	QString id() const							{ return "system"; }
