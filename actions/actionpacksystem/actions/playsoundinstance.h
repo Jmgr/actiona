@@ -18,48 +18,40 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINSTANCE_H
-#define SYSTEMINSTANCE_H
+#ifndef PLAYSOUNDINSTANCE_H
+#define PLAYSOUNDINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
-#include "script.h"
-#include "../systemsession.h"
+
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 namespace Actions
 {
-	class SystemInstance : public ActionTools::ActionInstance
+	class PlaySoundInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Operation)
 
 	public:
-		enum Operation
-		{
-			Logout,
-			Restart,
-			Shutdown,
-			Suspend,
-			Hibernate,
-			LockScreen,
-			StartScreenSaver
-		};
-		enum Exceptions
-		{
-			NotAvailable = ActionTools::ActionException::UserException
-		};
-
-		SystemInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-			: ActionTools::ActionInstance(definition, parent) {}
-
-		static ActionTools::StringListPair operations;
-		static ActionTools::StringListPair modes;
+		PlaySoundInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		~PlaySoundInstance();
 
 		void startExecution();
+		void pauseExecution();
+		void resumeExecution();
+		void stopExecution();
+		void stopLongTermExecution();
+
+	private slots:
+		void stateChanged(QMediaPlayer::State state);
 
 	private:
-		Q_DISABLE_COPY(SystemInstance)
+		QMediaPlayer *mMediaPlayer;
+		QMediaPlaylist *mMediaPlaylist;
+		bool mBlocking;
+
+		Q_DISABLE_COPY(PlaySoundInstance)
 	};
 }
 
-#endif // SYSTEMINSTANCE_H
+#endif // PLAYSOUNDINSTANCE_H

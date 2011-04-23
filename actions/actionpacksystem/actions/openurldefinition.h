@@ -24,7 +24,6 @@
 #include "actiondefinition.h"
 #include "openurlinstance.h"
 #include "textparameterdefinition.h"
-#include "listparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -42,12 +41,6 @@ namespace Actions
 		explicit OpenURLDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::ListParameterDefinition *scheme = new ActionTools::ListParameterDefinition("scheme", tr("Scheme"), this);
-			scheme->setTooltip(tr("The url scheme"));
-			scheme->setItems(OpenURLInstance::schemes);
-			scheme->setDefaultValue(OpenURLInstance::schemes.second.at(OpenURLInstance::Http));
-			addElement(scheme);
-
 			ActionTools::TextParameterDefinition *url = new ActionTools::TextParameterDefinition("url", tr("URL"), this);
 			url->setTooltip(tr("The url to open"));
 			addElement(url);

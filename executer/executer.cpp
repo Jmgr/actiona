@@ -766,6 +766,17 @@ namespace LibExecuter
 
 			mScriptAgent->pause(mExecutionPaused);
 		}
+		else
+		{
+			ActionTools::ActionInstance *currentAction = currentActionInstance();
+			if(currentAction)
+			{
+				if(mExecutionPaused)
+					currentAction->pauseExecution();
+				else
+					currentAction->resumeExecution();
+			}
+		}
 
 		mExecutionWindow->setPauseStatus(mExecutionPaused);
 	}

@@ -18,11 +18,25 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "openurlinstance.h"
+#ifndef SWITCHTEXTMODEPUSHBUTTON_H
+#define SWITCHTEXTMODEPUSHBUTTON_H
 
-namespace Actions
+#include "actiontools_global.h"
+
+#include <QPushButton>
+
+namespace ActionTools
 {
-	ActionTools::StringListPair OpenURLInstance::schemes = qMakePair(
-			QStringList() << "http://" << "https://" << "file://" << "ftp://" << "mailto:",
-			QStringList() << "http://" << "https://" << "file://" << "ftp://" << "mailto:");
+	class ACTIONTOOLSSHARED_EXPORT SwitchTextModePushButton : public QPushButton
+	{
+		Q_OBJECT
+
+	public:
+		explicit SwitchTextModePushButton(QWidget *parent = 0);
+
+	private:
+		Q_DISABLE_COPY(SwitchTextModePushButton)
+	};
 }
+
+#endif // SWITCHTEXTMODEPUSHBUTTON_H

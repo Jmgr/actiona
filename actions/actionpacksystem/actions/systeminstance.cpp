@@ -34,18 +34,14 @@ namespace Actions
 			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Lock screen")
 			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Start screen saver"));
 
-	ActionTools::StringListPair SystemInstance::modes = qMakePair(
-			QStringList() << "normal" << "force",
-			QStringList() << QT_TRANSLATE_NOOP("SystemInstance::modes", "Normal") << QT_TRANSLATE_NOOP("SystemInstance::modes", "Force"));
-
 	void SystemInstance::startExecution()
 	{
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		Operation operation;
-		Mode mode;
+		bool force;
 
 		if(!actionInstanceExecutionHelper.evaluateListElement(operation, operations, "operation") ||
-		   !actionInstanceExecutionHelper.evaluateListElement(mode, modes, "mode"))
+		   !actionInstanceExecutionHelper.evaluateBoolean(force, "force"))
 			return;
 
 		SystemSession systemSession;
@@ -53,35 +49,35 @@ namespace Actions
 		switch(operation)
 		{
 		case Logout:
-			if(!systemSession.logout(mode == Force))
+			if(!systemSession.logout(force))
 			{
 				emit executionException(NotAvailable, tr("Logout is not available"));
 				return;
 			}
 			break;
 		case Restart:
-			if(!systemSession.restart(mode == Force))
+			if(!systemSession.restart(force))
 			{
 				emit executionException(NotAvailable, tr("Restart is not available"));
 				return;
 			}
 			break;
 		case Shutdown:
-			if(!systemSession.shutdown(mode == Force))
+			if(!systemSession.shutdown(force))
 			{
 				emit executionException(NotAvailable, tr("Shutdown is not available"));
 				return;
 			}
 			break;
 		case Suspend:
-			if(!systemSession.suspend(mode == Force))
+			if(!systemSession.suspend(force))
 			{
 				emit executionException(NotAvailable, tr("Suspend is not available"));
 				return;
 			}
 			break;
 		case Hibernate:
-			if(!systemSession.hibernate(mode == Force))
+			if(!systemSession.hibernate(force))
 			{
 				emit executionException(NotAvailable, tr("Hibernate is not available"));
 				return;

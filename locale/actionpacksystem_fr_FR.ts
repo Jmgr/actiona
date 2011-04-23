@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackSystem</name>
     <message>
-        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="65"/>
+        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="67"/>
         <source>Actions dealing with the operating system</source>
         <translation>Actions en rapport avec le système d&apos;exploitation</translation>
     </message>
@@ -250,27 +250,25 @@
 <context>
     <name>Actions::OpenURLDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="45"/>
         <source>Scheme</source>
-        <translation>Schéma</translation>
+        <translation type="obsolete">Schéma</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="46"/>
         <source>The url scheme</source>
-        <translation>Le schéma de l&apos;URL</translation>
+        <translation type="obsolete">Le schéma de l&apos;URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="51"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="44"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="52"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="45"/>
         <source>The url to open</source>
         <translation>L&apos;URL à ouvrir</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="48"/>
         <source>Failed to open URL</source>
         <translation>Impossible d&apos;ouvrir l&apos;URL</translation>
     </message>
@@ -278,7 +276,7 @@
 <context>
     <name>Actions::OpenURLInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="70"/>
+        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="58"/>
         <source>Failed to open URL</source>
         <translation>Impossible d&apos;ouvrir l&apos;URL</translation>
     </message>
@@ -337,6 +335,111 @@
     </message>
 </context>
 <context>
+    <name>Actions::PlaySoundDefinition</name>
+    <message>
+        <source>Sound file/url</source>
+        <translation type="obsolete">Fichier/Url</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="48"/>
+        <source>Sound file/URL</source>
+        <translation>Fichier son/URL</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="49"/>
+        <source>The sound file or URL to play</source>
+        <translation>Le fichier son ou l&apos;URL à jouer</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="51"/>
+        <source>Choose the sound file</source>
+        <translation>Choisissez le fichier son</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="52"/>
+        <source>All files (*.*)</source>
+        <translation>Tous les fichiers (*.*)</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="55"/>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="56"/>
+        <source>Is the sound resource an URL</source>
+        <translation>La ressource est-elle une URL</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="60"/>
+        <source>Volume</source>
+        <translation>Volume</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="61"/>
+        <source>The volume to play at</source>
+        <translation>Le volume à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="64"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="82"/>
+        <source>%</source>
+        <comment>percent</comment>
+        <translation>%</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="68"/>
+        <source>Wait until played</source>
+        <translation>Attendre fin de lecture</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="69"/>
+        <source>Should the action end only when the sound has finished playing</source>
+        <translation>Attendre la fin de la lecture avant de terminer l&apos;action</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="73"/>
+        <source>Looping</source>
+        <translation>Jouer en boucle</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="74"/>
+        <source>Should the sound loop</source>
+        <translation>Jouer en son en boucle</translation>
+    </message>
+    <message>
+        <source>Distant</source>
+        <translation type="obsolete">Distant</translation>
+    </message>
+    <message>
+        <source>Is the sound resource distant</source>
+        <translation type="obsolete">Le son est distant</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="78"/>
+        <source>Playback rate</source>
+        <translation>Vitesse de lecture</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="79"/>
+        <source>The playback rate</source>
+        <translation>La vitesse de lecture</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::PlaySoundInstance</name>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsoundinstance.cpp" line="72"/>
+        <source>Unable to load file %1: %2</source>
+        <translation>Impossible de charger le fichier %1 : %2</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsoundinstance.cpp" line="84"/>
+        <source>Unable to play file %1: %2</source>
+        <translation>Impossible de lire le fichier %1 : %2</translation>
+    </message>
+</context>
+<context>
     <name>Actions::SystemDefinition</name>
     <message>
         <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="49"/>
@@ -355,20 +458,28 @@
     </message>
     <message>
         <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="64"/>
-        <source>Mode</source>
-        <translation>Mode</translation>
+        <source>Force</source>
+        <translation>Forcer</translation>
     </message>
     <message>
         <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="65"/>
+        <source>Should the operation be forced</source>
+        <translation>L&apos;opération doit-elle être forcée</translation>
+    </message>
+    <message>
+        <source>Mode</source>
+        <translation type="obsolete">Mode</translation>
+    </message>
+    <message>
         <source>The operation mode</source>
-        <translation>Le mode de l&apos;opération</translation>
+        <translation type="obsolete">Le mode de l&apos;opération</translation>
     </message>
     <message>
         <source>Not enough rights</source>
         <translation type="obsolete">Pas assez de droits</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="72"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="71"/>
         <source>Not available</source>
         <translation>Non disponible</translation>
     </message>
@@ -376,7 +487,7 @@
 <context>
     <name>Actions::SystemInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="58"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="54"/>
         <source>Logout is not available</source>
         <translation>La déconnexion n&apos;est pas disponible</translation>
     </message>
@@ -393,12 +504,12 @@
         <translation type="obsolete">Pas assez de droits pour se déconnecter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="65"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="61"/>
         <source>Restart is not available</source>
         <translation>Le redémarrage n&apos;est pas disponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="79"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="75"/>
         <source>Suspend is not available</source>
         <translation>La mise en veille n&apos;est pas disponible</translation>
     </message>
@@ -411,12 +522,12 @@
         <translation type="obsolete">Mise en hibernation échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="86"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="82"/>
         <source>Hibernate is not available</source>
         <translation>La mise en hibernation n&apos;est pas disponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="93"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="89"/>
         <source>Lock is not available</source>
         <translation>Le verrouillage de session n&apos;est pas disponible</translation>
     </message>
@@ -425,7 +536,7 @@
         <translation type="obsolete">Droits insuffisants pour verrouiller</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="100"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="96"/>
         <source>Start screen saver is not available</source>
         <translation>Impossible de démarrer l&apos;écran de veille</translation>
     </message>
@@ -442,7 +553,7 @@
         <translation type="obsolete">Pas assez de droits pour redémarrer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="72"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="68"/>
         <source>Shutdown is not available</source>
         <translation>L&apos;arrêt n&apos;est pas disponible</translation>
     </message>
@@ -684,12 +795,12 @@
         <translation type="obsolete">Plus clair</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="75"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="74"/>
         <source>System</source>
         <translation>Système</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="78"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="77"/>
         <source>Restart, stop the computer or logout the current user</source>
         <translation>Redémarre, arrête l&apos;ordinateur ou déconnecte l&apos;utilisateur courant</translation>
     </message>
@@ -718,12 +829,12 @@
         <translation type="obsolete">Forcer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="58"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="51"/>
         <source>Open URL</source>
         <translation>Ouvrir URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="61"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="54"/>
         <source>Opens an URL</source>
         <translation>Ouvre une URL</translation>
     </message>
@@ -737,6 +848,16 @@
         <source>Executes a detached command</source>
         <translation>Exécute une commande détachée</translation>
     </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="87"/>
+        <source>Play sound</source>
+        <translation>Lire son</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="90"/>
+        <source>Plays a sound</source>
+        <translation>Lit un son</translation>
+    </message>
 </context>
 <context>
     <name>SystemInstance::modes</name>
@@ -745,14 +866,12 @@
         <translation type="obsolete">Demander</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="39"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation type="obsolete">Normal</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="39"/>
         <source>Force</source>
-        <translation>Forcer</translation>
+        <translation type="obsolete">Forcer</translation>
     </message>
 </context>
 <context>
