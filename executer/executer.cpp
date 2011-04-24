@@ -89,7 +89,7 @@ namespace LibExecuter
 			   QStandardItemModel *consoleModel)
 	{
 		mScript = script;
-		mScriptEngine = new QScriptEngine;
+		mScriptEngine = new QScriptEngine(this);
 
 		foreach(QString extension, mScriptEngine->availableExtensions())
 			mScriptEngine->importExtension(extension);

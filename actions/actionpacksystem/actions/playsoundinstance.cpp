@@ -19,7 +19,6 @@
 */
 
 #include <QtGlobal>
-#include <QDebug>
 
 #include "playsoundinstance.h"
 #include "actioninstanceexecutionhelper.h"

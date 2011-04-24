@@ -44,7 +44,7 @@ namespace ActionTools
 	public:
 		SubParameter(bool code = false, const QVariant &value = QVariant())
 		{
-			d = new SubParameterData();
+			d = new SubParameterData;
 			setCode(code);
 			setValue(value);
 		}

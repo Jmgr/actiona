@@ -127,7 +127,6 @@ namespace ActionTools
 
 	void ActionFactory::clear()
 	{
-		qDeleteAll(mActionDefinitions);
 		qDeleteAll(mActionPacks);
 
 		mActionDefinitions.clear();

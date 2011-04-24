@@ -82,7 +82,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mOpacityTimer(new QTimer(this)),
 	mScriptModified(false),
 	mActionFactory(new ActionTools::ActionFactory(this)),
-	mScript(new ActionTools::Script(mActionFactory)),
+	mScript(new ActionTools::Script(mActionFactory, this)),
 	mScriptModel(new ScriptModel(mScript, mActionFactory, this)),
 	mSystemTrayIcon(commandOptions->count("notrayicon") ? 0 : new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
 	mSplashScreen(splashScreen),

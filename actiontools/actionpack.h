@@ -37,7 +37,7 @@ namespace ActionTools
 	{
 	public:
 		ActionPack()												{}
-		virtual ~ActionPack()										{}
+		virtual ~ActionPack();
 
 		virtual void createDefinitions() = 0;
 		virtual QString id() const = 0;

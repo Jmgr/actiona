@@ -19,9 +19,15 @@
 */
 
 #include "actionpack.h"
+#include "actiondefinition.h"
 
 namespace ActionTools
 {
+	ActionPack::~ActionPack()
+	{
+		qDeleteAll(mActionDefinitions);
+	}
+
 	void ActionPack::addCodeStaticMethod(QScriptEngine::FunctionSignature method, const QString &objectName, const QString &methodName, QScriptEngine *scriptEngine) const
 	{
 		QScriptValue classMetaObject = scriptEngine->globalObject().property(objectName);

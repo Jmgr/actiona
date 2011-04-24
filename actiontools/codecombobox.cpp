@@ -69,6 +69,7 @@ namespace ActionTools
 		QComboBox(parent)
 	{
 		setModel(new CodeComboBoxModel(this));
+		delete itemDelegate();
 		setItemDelegate(new CodeComboBoxDelegate(this));
 
 		CodeLineEdit *codeLineEdit = new CodeLineEdit(parent);

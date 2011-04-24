@@ -38,7 +38,6 @@ namespace ActionTools
 {
 	ActionDefinition::~ActionDefinition()
 	{
-		qDeleteAll(mElements);
 		qDeleteAll(mExceptions);
 	}
 	
