@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mOpacityTimer(new QTimer(this)),
 	mScriptModified(false),
 	mActionFactory(new ActionTools::ActionFactory(this)),
-	mScript(new ActionTools::Script(mActionFactory)),
+	mScript(new ActionTools::Script(mActionFactory, this)),
 	mScriptModel(new ScriptModel(mScript, mActionFactory, this)),
 	mSystemTrayIcon(commandOptions->count("notrayicon") ? 0 : new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
 	mSplashScreen(splashScreen),

@@ -6,5 +6,6 @@
         <file>icons/pixelcolor.png</file>
         <file>icons/system.png</file>
         <file>icons/openurl.png</file>
+        <file>icons/playsound.png</file>
     </qresource>
 </RCC>

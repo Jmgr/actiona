@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,9 +19,15 @@
 */
 
 #include "actionpack.h"
+#include "actiondefinition.h"
 
 namespace ActionTools
 {
+	ActionPack::~ActionPack()
+	{
+		qDeleteAll(mActionDefinitions);
+	}
+
 	void ActionPack::addCodeStaticMethod(QScriptEngine::FunctionSignature method, const QString &objectName, const QString &methodName, QScriptEngine *scriptEngine) const
 	{
 		QScriptValue classMetaObject = scriptEngine->globalObject().property(objectName);

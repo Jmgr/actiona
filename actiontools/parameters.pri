@@ -15,7 +15,8 @@ SOURCES += parameterdefinition.cpp \
     datetimeparameterdefinition.cpp \
     variableparameterdefinition.cpp \
 	colorpositionparameterdefinition.cpp \
-	pointlistparameterdefinition.cpp
+	pointlistparameterdefinition.cpp \
+	booleanparameterdefinition.cpp
 HEADERS += parameterdefinition.h \
     elementdefinition.h \
     groupdefinition.h \
@@ -33,4 +34,5 @@ HEADERS += parameterdefinition.h \
     datetimeparameterdefinition.h \
     variableparameterdefinition.h \
 	colorpositionparameterdefinition.h \
-	pointlistparameterdefinition.h
+	pointlistparameterdefinition.h \
+	booleanparameterdefinition.h

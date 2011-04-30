@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@ namespace Actions
 	{
 		Q_OBJECT
 		Q_ENUMS(Operation)
-		Q_ENUMS(Mode)
 
 	public:
 		enum Operation
@@ -44,11 +43,6 @@ namespace Actions
 			Hibernate,
 			LockScreen,
 			StartScreenSaver
-		};
-		enum Mode
-		{
-			Normal,
-			Force
 		};
 		enum Exceptions
 		{
