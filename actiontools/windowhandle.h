@@ -32,7 +32,7 @@ namespace ActionTools
 	{
 	public:
 		WindowHandle() : mValue(0)								{}
-		WindowHandle(WId handle)								{ mValue = handle; }
+		WindowHandle(WId handle) : mValue(handle)				{}
 
 		bool isValid() const									{ return (mValue != 0); }
 		void setInvalid()										{ mValue = 0; }

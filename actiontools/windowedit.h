@@ -60,6 +60,8 @@ namespace ActionTools
 
 	private:
 		Ui::WindowEdit *ui;
+
+		Q_DISABLE_COPY(WindowEdit)
 	};
 }
 

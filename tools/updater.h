@@ -76,6 +76,8 @@ namespace Tools
 		QUrl mUrl;
 		QNetworkAccessManager *mNetworkAccessManager;
 		QNetworkReply *mCurrentReply;
+
+		Q_DISABLE_COPY(Updater)
 	};
 }
 

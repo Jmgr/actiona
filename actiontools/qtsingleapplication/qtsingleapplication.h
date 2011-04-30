@@ -102,4 +102,6 @@ private:
     void sysInit(const QString &appId = QString());
     QtLocalPeer *peer;
     QWidget *actWin;
+
+	Q_DISABLE_COPY(QtSingleApplication)
 };

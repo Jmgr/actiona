@@ -102,6 +102,8 @@ namespace ActionTools
 		Ui::ConsoleWidget *ui;
 		QStandardItemModel *mModel;
 		QDateTime mStartTime;
+
+		Q_DISABLE_COPY(ConsoleWidget)
 	};
 }
 

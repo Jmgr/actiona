@@ -65,6 +65,8 @@ namespace ActionTools
 
 	private:
 		Ui::PositionEdit *ui;
+
+		Q_DISABLE_COPY(PositionEdit)
 	};
 }
 

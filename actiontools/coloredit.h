@@ -74,6 +74,8 @@ namespace ActionTools
 
 		Ui::ColorEdit *ui;
 		QColorDialog *mColorDialog;
+
+		Q_DISABLE_COPY(ColorEdit)
 	};
 }
 

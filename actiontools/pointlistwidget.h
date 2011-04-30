@@ -63,6 +63,8 @@ namespace ActionTools
 
 		Ui::PointListWidget *ui;
 		QTimer mCaptureTimer;
+
+		Q_DISABLE_COPY(PointListWidget)
 	};
 }
 

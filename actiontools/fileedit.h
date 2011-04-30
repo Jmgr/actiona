@@ -80,6 +80,8 @@ namespace ActionTools
 		QString mCaption;
 		QString mFilter;
 		QString mDirectory;
+
+		Q_DISABLE_COPY(FileEdit)
 	};
 }
 
