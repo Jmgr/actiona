@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -71,7 +71,10 @@ namespace Actions
 		notify_notification_set_timeout(mNotification, timeout);
 
 		if(!notify_notification_show(mNotification, 0))
+		{
 			emit executionException(UnableToShowNotificationException, tr("Unable to show the notification"));
+			return;
+		}
 	#endif
 
 		emit executionEnded();

@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ namespace ActionTools
 	{
 	public:
 		WindowHandle() : mValue(0)								{}
-		WindowHandle(WId handle)								{ mValue = handle; }
+		WindowHandle(WId handle) : mValue(handle)				{}
 
 		bool isValid() const									{ return (mValue != 0); }
 		void setInvalid()										{ mValue = 0; }

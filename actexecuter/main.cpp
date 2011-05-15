@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -68,6 +68,29 @@ int main(int argc, char **argv)
 
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
+	QxtCommandOptions options;
+	options.setFlagStyle(QxtCommandOptions::DoubleDash);
+	options.setScreenWidth(0);
+	options.add("code", QObject::tr("switch to code mode, may not be used with -r"));
+	options.alias("code", "c");
+	options.add("script", QObject::tr("switch to script mode, may not be used with -o"));
+	options.alias("script", "s");
+	options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
+	options.alias("nocodeqt", "Q");
+	options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
+	options.alias("portable", "p");
+	options.add("version", QObject::tr("show the program version"));
+	options.add("help", QObject::tr("show this help text"));
+	options.alias("help", "h");
+	options.parse(QCoreApplication::arguments());
+
+	if(options.count("portable"))
+	{
+		QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QApplication::applicationDirPath() + "/userSettings");
+		QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope, QApplication::applicationDirPath() + "/systemSettings");
+		QSettings::setDefaultFormat(QSettings::IniFormat);
+	}
+
 	QSettings settings;
 
 	QString locale = settings.value("locale", QLocale::system().name()).toString();
@@ -103,19 +126,6 @@ int main(int argc, char **argv)
 	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaTypeStreamOperators<Tools::Version>("Version");
 
-	QxtCommandOptions options;
-	options.setFlagStyle(QxtCommandOptions::DoubleDash);
-	options.setScreenWidth(0);
-	options.add("code", QObject::tr("switch to code mode, may not be used with -r"));
-	options.alias("code", "c");
-	options.add("script", QObject::tr("switch to script mode, may not be used with -o"));
-	options.alias("script", "s");
-	options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
-	options.alias("nocodeqt", "Q");
-	options.add("version", QObject::tr("show the program version"));
-	options.add("help", QObject::tr("show this help text"));
-	options.alias("help", "h");
-	options.parse(QCoreApplication::arguments());
 	if(options.count("version"))
 	{
 		QTextStream stream(stdout);

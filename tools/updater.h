@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -76,6 +76,8 @@ namespace Tools
 		QUrl mUrl;
 		QNetworkAccessManager *mNetworkAccessManager;
 		QNetworkReply *mCurrentReply;
+
+		Q_DISABLE_COPY(Updater)
 	};
 }
 

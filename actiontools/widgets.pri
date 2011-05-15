@@ -3,7 +3,8 @@ FORMS += consolewidget.ui \
     fileedit.ui \
     positionedit.ui \
 	windowedit.ui \
-	pointlistwidget.ui
+	pointlistwidget.ui  \
+	booleanedit.ui
 SOURCES += codelineedit.cpp \
     codecombobox.cpp \
     codespinbox.cpp \
@@ -20,7 +21,9 @@ SOURCES += codelineedit.cpp \
     positionedit.cpp \
     windowedit.cpp \
 	codedatetimeedit.cpp \
-	pointlistwidget.cpp
+	pointlistwidget.cpp \
+	booleanedit.cpp \
+	switchtextmodepushbutton.cpp
 HEADERS += codelineedit.h \
     codecombobox.h \
     codespinbox.h \
@@ -38,4 +41,6 @@ HEADERS += codelineedit.h \
     positionedit.h \
     windowedit.h \
 	codedatetimeedit.h \
-	pointlistwidget.h
+	pointlistwidget.h \
+	booleanedit.h \
+	switchtextmodepushbutton.h

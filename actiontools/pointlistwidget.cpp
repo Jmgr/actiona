@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,7 +37,8 @@ namespace ActionTools
 		updateClearStatus();
 		on_list_itemSelectionChanged();
 
-		ui->list->setItemDelegate(new PointItemDelegate);
+		delete ui->list->itemDelegate();
+		ui->list->setItemDelegate(new PointItemDelegate(this));
 
 		connect(ui->addPositionPushButton, SIGNAL(positionChosen(QPoint)), this, SLOT(positionChosen(QPoint)));
 		connect(ui->capturePathPushButton, SIGNAL(positionChosen(QPoint)), this, SLOT(stopCapture()));

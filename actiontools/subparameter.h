@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -43,8 +43,8 @@ namespace ActionTools
 	{
 	public:
 		SubParameter(bool code = false, const QVariant &value = QVariant())
+			: d(new SubParameterData())
 		{
-			d = new SubParameterData();
 			setCode(code);
 			setValue(value);
 		}

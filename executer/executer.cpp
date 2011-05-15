@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ namespace LibExecuter
 			   QStandardItemModel *consoleModel)
 	{
 		mScript = script;
-		mScriptEngine = new QScriptEngine;
+		mScriptEngine = new QScriptEngine(this);
 
 		foreach(QString extension, mScriptEngine->availableExtensions())
 			mScriptEngine->importExtension(extension);
@@ -765,6 +765,17 @@ namespace LibExecuter
 			}
 
 			mScriptAgent->pause(mExecutionPaused);
+		}
+		else
+		{
+			ActionTools::ActionInstance *currentAction = currentActionInstance();
+			if(currentAction)
+			{
+				if(mExecutionPaused)
+					currentAction->pauseExecution();
+				else
+					currentAction->resumeExecution();
+			}
 		}
 
 		mExecutionWindow->setPauseStatus(mExecutionPaused);

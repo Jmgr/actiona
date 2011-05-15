@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,14 +35,6 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		enum Scheme
-		{
-			Http,
-			Https,
-			File,
-			Ftp,
-			Mailto
-		};
 		enum Exceptions
 		{
 			FailedToOpenURL = ActionTools::ActionException::UserException
@@ -53,19 +45,15 @@ namespace Actions
 		{
 		}
 
-		static ActionTools::StringListPair schemes;
-
 		void startExecution()
 		{
 			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString scheme;
 			QString urlString;
 
-			if(!actionInstanceExecutionHelper.evaluateString(scheme, "scheme") ||
-			   !actionInstanceExecutionHelper.evaluateString(urlString, "url"))
+			if(!actionInstanceExecutionHelper.evaluateString(urlString, "url"))
 				return;
 
-			if(!QDesktopServices::openUrl(QUrl(scheme + urlString, QUrl::TolerantMode)))
+			if(!QDesktopServices::openUrl(QUrl(urlString, QUrl::TolerantMode)))
 			{
 				emit executionException(FailedToOpenURL, tr("Failed to open URL"));
 				return;

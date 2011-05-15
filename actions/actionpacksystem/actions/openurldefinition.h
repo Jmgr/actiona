@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
 #include "actiondefinition.h"
 #include "openurlinstance.h"
 #include "textparameterdefinition.h"
-#include "listparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -42,12 +41,6 @@ namespace Actions
 		explicit OpenURLDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::ListParameterDefinition *scheme = new ActionTools::ListParameterDefinition("scheme", tr("Scheme"), this);
-			scheme->setTooltip(tr("The url scheme"));
-			scheme->setItems(OpenURLInstance::schemes);
-			scheme->setDefaultValue(OpenURLInstance::schemes.second.at(OpenURLInstance::Http));
-			addElement(scheme);
-
 			ActionTools::TextParameterDefinition *url = new ActionTools::TextParameterDefinition("url", tr("URL"), this);
 			url->setTooltip(tr("The url to open"));
 			addElement(url);

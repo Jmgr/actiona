@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include "systeminstance.h"
 #include "listparameterdefinition.h"
 #include "groupdefinition.h"
+#include "booleanparameterdefinition.h"
 #include "../systemsession.h"
 
 namespace ActionTools
@@ -44,7 +45,6 @@ namespace Actions
 		: ActionDefinition(pack)
 		{
 			translateItems("SystemInstance::operations", SystemInstance::operations);
-			translateItems("SystemInstance::modes", SystemInstance::modes);
 
 			ActionTools::ListParameterDefinition *operation = new ActionTools::ListParameterDefinition("operation", tr("Operation"), this);
 			operation->setTooltip(tr("The operation to execute"));
@@ -61,11 +61,10 @@ namespace Actions
 										   << SystemInstance::operations.first.at(SystemInstance::Suspend)
 										   << SystemInstance::operations.first.at(SystemInstance::Hibernate));
 
-			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition("mode", tr("Mode"), this);
-			mode->setTooltip(tr("The operation mode"));
-			mode->setItems(SystemInstance::modes);
-			mode->setDefaultValue(SystemInstance::modes.second.at(SystemInstance::Normal));
-			operationMode->addMember(mode);
+			ActionTools::BooleanParameterDefinition *force = new ActionTools::BooleanParameterDefinition("force", tr("Force"), this);
+			force->setTooltip(tr("Should the operation be forced"));
+			force->setDefaultValue(false);
+			operationMode->addMember(force);
 
 			addElement(operationMode);
 

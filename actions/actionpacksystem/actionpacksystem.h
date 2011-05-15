@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2010 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,6 +28,8 @@
 #include "actions/pixelcolordefinition.h"
 #include "actions/systemdefinition.h"
 #include "actions/openurldefinition.h"
+#include "actions/detachedcommanddefinition.h"
+#include "actions/playsounddefinition.h"
 
 #include "code/system.h"
 #include "code/mediaplaylist.h"
@@ -57,6 +59,8 @@ public:
 		addActionDefinition(new Actions::PixelColorDefinition(this));
 		addActionDefinition(new Actions::SystemDefinition(this));
 		addActionDefinition(new Actions::OpenURLDefinition(this));
+		addActionDefinition(new Actions::DetachedCommandDefinition(this));
+		addActionDefinition(new Actions::PlaySoundDefinition(this));
 	}
 
 	QString id() const							{ return "system"; }

@@ -407,6 +407,14 @@ Double-cliquez pour afficher</translation>
     </message>
 </context>
 <context>
+    <name>BooleanEdit</name>
+    <message>
+        <location filename="../actiontools/booleanedit.ui" line="14"/>
+        <source>Form</source>
+        <translation>Formulaire</translation>
+    </message>
+</context>
+<context>
     <name>Code</name>
     <message>
         <source>Unable to open the process</source>
