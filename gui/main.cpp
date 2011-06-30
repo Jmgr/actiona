@@ -136,15 +136,13 @@ int main(int argc, char **argv)
 #endif
 	}
 
+	QTranslator qtTranslator;
 #ifdef Q_WS_WIN
-	QTranslator qtTranslator;
 	qtTranslator.load(QString("%1/locale/qt_%2").arg(QApplication::applicationDirPath()).arg(locale));
-	app.installTranslator(&qtTranslator);
 #else
-	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	app.installTranslator(&qtTranslator);
 #endif
+	app.installTranslator(&qtTranslator);
 
 	QTranslator toolsTranslator;
 	toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale));
