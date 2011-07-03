@@ -68,7 +68,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Executes a detached command"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new DetachedCommandInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/command.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

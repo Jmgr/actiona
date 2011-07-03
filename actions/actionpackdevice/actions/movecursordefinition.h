@@ -51,7 +51,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Move the mouse cursor"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new MoveCursorInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Device; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 	

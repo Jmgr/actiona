@@ -53,7 +53,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Opens an URL"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new OpenURLInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/openurl.png"); }
 
 	private:

@@ -87,7 +87,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Shows a message box"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new MessageBoxInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Windows; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
 		QPixmap icon() const													{ return QPixmap(":/icons/msg.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

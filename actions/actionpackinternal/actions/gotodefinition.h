@@ -51,7 +51,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Go to a script line"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new GotoInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/goto.png"); }
 
 	private:

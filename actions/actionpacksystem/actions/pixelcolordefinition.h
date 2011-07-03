@@ -76,7 +76,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Check a pixel color on the screen"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new PixelColorInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/pixelcolor.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

@@ -73,7 +73,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read an entry from the registry"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadRegistryInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readregistry.png"); }
 
 	private:

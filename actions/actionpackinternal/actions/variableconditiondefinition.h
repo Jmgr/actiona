@@ -75,7 +75,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Check the value of a variable and do some action"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new VariableConditionInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/variablecondition.png"); }
 
 	private:

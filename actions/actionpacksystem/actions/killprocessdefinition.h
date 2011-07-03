@@ -68,7 +68,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Kills a process"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new KillProcessInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/closeprocess.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

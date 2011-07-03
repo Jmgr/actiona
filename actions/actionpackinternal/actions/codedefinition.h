@@ -52,7 +52,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Evaluates some code"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CodeInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/code.png"); }
 
 	private:

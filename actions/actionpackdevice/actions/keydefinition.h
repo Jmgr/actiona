@@ -80,7 +80,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Emulates a key press"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new KeyInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Device; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/key.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }

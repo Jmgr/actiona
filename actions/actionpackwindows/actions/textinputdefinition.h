@@ -60,7 +60,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Ask the user to enter some text"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new TextInputInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Windows; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
 		QPixmap icon() const													{ return QPixmap(":/icons/textinput.png"); }
 
 	private:

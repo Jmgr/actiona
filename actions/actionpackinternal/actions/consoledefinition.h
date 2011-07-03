@@ -60,7 +60,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write an entry in the console"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ConsoleInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Internal; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/console.png"); }
 
 	private:

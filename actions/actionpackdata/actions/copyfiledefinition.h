@@ -64,7 +64,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Copy a file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CopyFileInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/copyfile.png"); }
 
 	private:

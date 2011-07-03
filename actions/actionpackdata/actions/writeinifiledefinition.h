@@ -69,7 +69,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write an entry in an INI file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteIniFileInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/writeini.png"); }
 
 	private:

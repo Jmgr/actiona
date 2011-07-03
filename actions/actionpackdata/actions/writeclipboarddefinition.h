@@ -52,7 +52,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Set the clipboard contents"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteClipboardInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/writeclipboard.png"); }
 
 	private:

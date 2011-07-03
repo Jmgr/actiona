@@ -70,7 +70,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionTools::WorksOnGnuLinux | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Shows a message using the notify system"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new NotifyInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::System; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/notification.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

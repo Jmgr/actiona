@@ -53,7 +53,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write some text"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new TextInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Device; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/text.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 	

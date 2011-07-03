@@ -87,7 +87,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read a plain text file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadTextFileInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readtext.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

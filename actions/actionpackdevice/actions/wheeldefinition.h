@@ -55,7 +55,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Emulates the mouse wheel"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WheelInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Device; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/wheel.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 	

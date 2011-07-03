@@ -72,7 +72,7 @@ namespace Actions
 		ActionTools::Flag flags() const											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Writes an entry to the registry"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteRegistryInstance(this); }
-		ActionTools::ActionCategory category() const									{ return ActionTools::Data; }
+		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/writeregistry.png"); }
 
 	private:
