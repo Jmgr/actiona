@@ -211,7 +211,7 @@ namespace ActionTools
 			if(!SetForegroundWindow(mValue))
 				return false;
 
-			if(!SetWindowPos(mValue, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE))
+			if(!SetWindowPos(mValue, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE))
 				return false;
 		}
 
