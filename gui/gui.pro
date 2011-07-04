@@ -7,6 +7,9 @@ QT += xml \
 	script \
 	scripttools
 CONFIG += mobility
+contains(DEFINES, ACT_PROFILE) {
+CONFIG += console
+}
 MOBILITY += systeminfo
 TARGET = actionaz
 DESTDIR = ..
