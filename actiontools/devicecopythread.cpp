@@ -61,7 +61,7 @@ namespace ActionTools
 			{
 				buffer = QSharedPointer<char>(new char[bufferSize]);
 			}
-			catch(const std::exception &e)
+			catch(const std::exception &)
 			{
 				buffer.clear();
 				bufferSize /= 5;
