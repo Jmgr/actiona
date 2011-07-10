@@ -115,8 +115,6 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	ui->consoleWidget->setup();
 
 #ifdef Q_WS_WIN
-	CoInitialize(0);
-
 	HRESULT result = CoCreateInstance(CLSID_TaskbarList, 0, CLSCTX_INPROC_SERVER, IID_ITaskbarList3, reinterpret_cast<LPVOID*>(&mTaskbarList));
 	if(SUCCEEDED(result))
 		mTaskbarList->HrInit();
@@ -225,8 +223,6 @@ MainWindow::~MainWindow()
 #ifdef Q_WS_WIN
 	if(mTaskbarList)
 		mTaskbarList->Release();
-
-	CoUninitialize();
 #endif
 
 	delete ui;

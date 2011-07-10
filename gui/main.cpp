@@ -59,6 +59,10 @@
 
 static void cleanup()
 {
+#ifdef Q_WS_WIN
+	CoUninitialize();
+#endif
+
 	ActionTools::GlobalShortcutManager::clear();
 }
 
@@ -71,6 +75,11 @@ int main(int argc, char **argv)
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("Application run");
 #endif
+
+#ifdef Q_WS_WIN
+	CoInitializeEx(0, COINIT_APARTMENTTHREADED | COINIT_SPEED_OVER_MEMORY);
+#endif
+
 	ActionTools::NativeEventFilteringApplication app("actionaz-gui", argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
