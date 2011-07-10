@@ -134,7 +134,11 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	setUnifiedTitleAndToolBarOnMac(true);
 
 #ifdef ACT_NO_UPDATER
-	ui->actionCheck_for_updates->setVisible(false);
+	const QList<QAction*> &actionList = ui->menuTools->actions();
+	for(int i= 0; i <= 1 && i < actionList.count(); ++i)
+	{
+		actionList.at(i)->setVisible(false);
+	}
 #endif
 
 	mStopExecutionAction->setEnabled(false);
