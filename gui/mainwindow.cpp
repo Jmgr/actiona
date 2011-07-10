@@ -93,14 +93,14 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mStartScript(startScript),
 	mCommandOptions(commandOptions),
 	mAddActionRow(0),
-	mStopExecutionAction(new QAction(tr("S&top execution"), this))
+	mStopExecutionAction(new QAction(tr("S&top execution"), this)),
+	mUsedLocale(usedLocale)
 #ifndef ACT_NO_UPDATER
 	,mNetworkAccessManager(new QNetworkAccessManager(this)),
 	mUpdateDownloadNetworkReply(0),
 	mUpdater(new Tools::Updater(mNetworkAccessManager, Global::UPDATE_URL, this)),
 	mUpdaterProgressDialog(new QProgressDialog(this)),
-	mHashCalculator(QCryptographicHash::Md5),
-	mUsedLocale(usedLocale)
+	mHashCalculator(QCryptographicHash::Md5)
 #endif
 #ifdef Q_WS_WIN
 	,mTaskbarList(0)
