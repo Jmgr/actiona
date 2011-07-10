@@ -24,6 +24,7 @@ message(** Profiling activated **)
 
 unix:QMAKE_CLEAN += actions/*.so
 win32:QMAKE_CLEAN += actions/*.dll
+QMAKE_CLEAN += locale/*.qm
 
 SUBDIRS += 3rdparty \
 	tools \

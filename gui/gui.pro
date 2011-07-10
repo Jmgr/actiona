@@ -82,5 +82,6 @@ MOC_DIR = generated
 RCC_DIR = generated
 OBJECTS_DIR = generated
 TRANSLATIONS = ../locale/gui_fr_FR.ts
+QMAKE_PRE_LINK += lrelease ../locale/*.ts
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
