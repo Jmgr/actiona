@@ -575,9 +575,8 @@ void MainWindow::on_actionInverse_selection_triggered()
 
 void MainWindow::on_actionAbout_triggered()
 {
-	AboutDialog *aboutDialog = new AboutDialog(this);
-	aboutDialog->exec();
-	delete aboutDialog;
+	AboutDialog aboutDialog(this);
+	aboutDialog.exec();
 }
 
 void MainWindow::on_actionClear_triggered()
@@ -801,8 +800,8 @@ void MainWindow::on_actionExport_executable_triggered()
 
 void MainWindow::on_actionSettings_triggered()
 {
-	SettingsDialog *settingsDialog = new SettingsDialog(mSystemTrayIcon, this);
-	if(settingsDialog->exec() == QDialog::Accepted)
+	SettingsDialog settingsDialog(mSystemTrayIcon, this);
+	if(settingsDialog.exec() == QDialog::Accepted)
 	{
 		QSettings settings;
 
@@ -826,8 +825,6 @@ void MainWindow::on_actionSettings_triggered()
 		if(!pauseExecutionHotkey.isEmpty())
 			ActionTools::GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
 	}
-
-	delete settingsDialog;
 }
 
 void MainWindow::on_actionParameters_triggered()
@@ -934,14 +931,12 @@ void MainWindow::on_actionSet_action_color_triggered()
 	if(!firstActionInstance)
 		return;
 
-	QColorDialog *colorDialog = new QColorDialog(firstActionInstance->color(), this);
-	colorDialog->setOptions(QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
-	colorDialog->setCurrentColor(firstActionInstance->color());
+	QColorDialog colorDialog(firstActionInstance->color(), this);
+	colorDialog.setOptions(QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
+	colorDialog.setCurrentColor(firstActionInstance->color());
 
-	if(colorDialog->exec() == QDialog::Accepted)
-		mScriptModel->setActionsColor(selection, colorDialog->currentColor());
-
-	delete colorDialog;
+	if(colorDialog.exec() == QDialog::Accepted)
+		mScriptModel->setActionsColor(selection, colorDialog.currentColor());
 }
 
 void MainWindow::on_actionClear_selection_color_triggered()
@@ -974,11 +969,10 @@ void MainWindow::on_actionNew_action_triggered()
 	if(mActionFactory->actionDefinitionCount() == 0)
 		return;
 
-	NewActionDialog *dialog = new NewActionDialog(mActionFactory, this);
-	fillNewActionTreeWidget(dialog->newActionTreeWidget());
-	if(dialog->exec() == QDialog::Accepted)
-		wantToAddAction(dialog->selectedAction());
-	delete dialog;
+	NewActionDialog dialog(mActionFactory, this);
+	fillNewActionTreeWidget(dialog.newActionTreeWidget());
+	if(dialog.exec() == QDialog::Accepted)
+		wantToAddAction(dialog.selectedAction());
 }
 
 void MainWindow::on_actionEdit_action_triggered()
@@ -995,22 +989,21 @@ void MainWindow::on_actionJump_to_line_triggered()
 	if(mScript->actionCount() == 0)
 		return;
 
-	QInputDialog *inputDialog = new QInputDialog(this);
-	inputDialog->setWindowTitle(tr("Jump to line"));
-	inputDialog->setLabelText(tr("Line:"));
-	inputDialog->setInputMode(QInputDialog::IntInput);
-	inputDialog->setIntRange(1, mScript->actionCount());
+	QInputDialog inputDialog(this);
+	inputDialog.setWindowTitle(tr("Jump to line"));
+	inputDialog.setLabelText(tr("Line:"));
+	inputDialog.setInputMode(QInputDialog::IntInput);
+	inputDialog.setIntRange(1, mScript->actionCount());
 
-	if(inputDialog->exec() == QDialog::Accepted)
+	if(inputDialog.exec() == QDialog::Accepted)
 	{
-		int line = inputDialog->intValue() - 1;
+		int line = inputDialog.intValue() - 1;
 		if(line >= 0 && line < mScript->actionCount())
 		{
 			ui->scriptView->setFocus();
 			ui->scriptView->selectRow(line);
 		}
 	}
-	delete inputDialog;
 }
 
 void MainWindow::on_actionCheck_for_updates_triggered()
@@ -1046,10 +1039,10 @@ void MainWindow::on_actionCreate_shortcut_triggered()
 
 void MainWindow::on_actionImport_script_content_triggered()
 {
-	ScriptContentDialog *scriptContentDialog = new ScriptContentDialog(ScriptContentDialog::Write, mScript, this);
-	if(scriptContentDialog->exec() == QDialog::Accepted)
+	ScriptContentDialog scriptContentDialog(ScriptContentDialog::Write, mScript, this);
+	if(scriptContentDialog.exec() == QDialog::Accepted)
 	{
-		QByteArray newContent(scriptContentDialog->text().toUtf8());
+		QByteArray newContent(scriptContentDialog.text().toUtf8());
 		QBuffer buffer(&newContent);
 
 		buffer.open(QIODevice::ReadOnly);
@@ -1064,8 +1057,6 @@ void MainWindow::on_actionImport_script_content_triggered()
 
 		checkReadResult(result);
 	}
-
-	delete scriptContentDialog;
 }
 
 void MainWindow::on_actionExport_script_content_triggered()
@@ -1075,29 +1066,26 @@ void MainWindow::on_actionExport_script_content_triggered()
 
 	mScript->write(&buffer, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
 
-	ScriptContentDialog *scriptContentDialog = new ScriptContentDialog(ScriptContentDialog::Read, mScript, this);
-	scriptContentDialog->setText(buffer.buffer());
-	scriptContentDialog->exec();
-	delete scriptContentDialog;
+	ScriptContentDialog scriptContentDialog(ScriptContentDialog::Read, mScript, this);
+	scriptContentDialog.setText(buffer.buffer());
+	scriptContentDialog.exec();
 }
 
 void MainWindow::on_actionScriptSettings_triggered()
 {
-	ScriptSettingsDialog *scriptSettingsDialog = new ScriptSettingsDialog(this);
-	scriptSettingsDialog->setPauseBefore(mScript->pauseBefore());
-	scriptSettingsDialog->setPauseAfter(mScript->pauseAfter());
-	if(scriptSettingsDialog->exec() == QDialog::Accepted)
+	ScriptSettingsDialog scriptSettingsDialog(this);
+	scriptSettingsDialog.setPauseBefore(mScript->pauseBefore());
+	scriptSettingsDialog.setPauseAfter(mScript->pauseAfter());
+	if(scriptSettingsDialog.exec() == QDialog::Accepted)
 	{
-		if(mScript->pauseBefore() != scriptSettingsDialog->pauseBefore() ||
-		   mScript->pauseAfter() != scriptSettingsDialog->pauseAfter())
+		if(mScript->pauseBefore() != scriptSettingsDialog.pauseBefore() ||
+		   mScript->pauseAfter() != scriptSettingsDialog.pauseAfter())
 		{
-			mScript->setPauseBefore(scriptSettingsDialog->pauseBefore());
-			mScript->setPauseAfter(scriptSettingsDialog->pauseAfter());
+			mScript->setPauseBefore(scriptSettingsDialog.pauseBefore());
+			mScript->setPauseAfter(scriptSettingsDialog.pauseAfter());
 			scriptEdited();
 		}
 	}
-
-	delete scriptSettingsDialog;
 }
 
 void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
@@ -1890,14 +1878,13 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exc
 
 void MainWindow::openParametersDialog(int parameter, int line, int column)
 {
-	ScriptParametersDialog *scriptParametersDialog = new ScriptParametersDialog(mCompletionModel, mScript, this);
+	ScriptParametersDialog scriptParametersDialog(mCompletionModel, mScript, this);
 	QList<ActionTools::ScriptParameter> parameters = mScript->parameters();
-	scriptParametersDialog->setCurrentParameter(parameter);
-	scriptParametersDialog->setCurrentLine(line);
-	scriptParametersDialog->setCurrentColumn(column);
-	if(scriptParametersDialog->exec() == QDialog::Accepted && mScript->parameters() != parameters)
+	scriptParametersDialog.setCurrentParameter(parameter);
+	scriptParametersDialog.setCurrentLine(line);
+	scriptParametersDialog.setCurrentColumn(column);
+	if(scriptParametersDialog.exec() == QDialog::Accepted && mScript->parameters() != parameters)
 		scriptWasModified(true);
-	delete scriptParametersDialog;
 }
 
 QList<int> MainWindow::selectedRows() const
