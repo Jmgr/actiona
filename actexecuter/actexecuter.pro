@@ -30,10 +30,7 @@ LIBS += -L.. \
     -lactiontools \
     -lexecuter
 win32:RC_FILE = actexecuter.rc
-UI_DIR = generated
-MOC_DIR = generated
-RCC_DIR = generated
-OBJECTS_DIR = generated
 TRANSLATIONS = ../locale/actexecuter_fr_FR.ts
+system(lrelease $$TRANSLATIONS)
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify

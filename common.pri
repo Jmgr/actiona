@@ -1,6 +1,11 @@
 DEFINES += QT_USE_FAST_CONCATENATION \
 	QT_USE_FAST_OPERATOR_PLUS
 
+UI_DIR = generated
+MOC_DIR = generated
+RCC_DIR = generated
+OBJECTS_DIR = generated
+
 unix {
 	isEmpty(PREFIX): PREFIX=/usr/local
 

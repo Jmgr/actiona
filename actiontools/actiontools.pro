@@ -81,11 +81,8 @@ win32:LIBS += -luser32 \
     -lgdi32 \
     -lPsapi
 unix:LIBS += -lXtst
-UI_DIR = generated
-MOC_DIR = generated
-RCC_DIR = generated
-OBJECTS_DIR = generated
 TRANSLATIONS = ../locale/actiontools_fr_FR.ts
+system(lrelease $$TRANSLATIONS)
 RESOURCES += actiontools.qrc
 INCLUDEPATH += . \
     ../tools

@@ -813,6 +813,8 @@ void MainWindow::on_actionExport_executable_triggered()
 
 	QFile::remove(archivePath);
 	QFile::remove(scriptPath);
+
+	QMessageBox::information(this, tr("Create SFX script"), tr("SFX script successfully created."));
 #endif
 }
 

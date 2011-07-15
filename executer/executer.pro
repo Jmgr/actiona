@@ -29,9 +29,6 @@ LIBS += -L.. \
 	-ltools \
 	-lactiontools
 win32:LIBS += -ladvapi32
-UI_DIR = generated
-MOC_DIR = generated
-RCC_DIR = generated
-OBJECTS_DIR = generated
 TRANSLATIONS = ../locale/executer_fr_FR.ts
+system(lrelease $$TRANSLATIONS)
 RESOURCES += executer.qrc
