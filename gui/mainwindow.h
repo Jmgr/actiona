@@ -230,6 +230,7 @@ private:
 	QString mAddAction;
 	QAction *mStopExecutionAction;
 	QList<ActionDialog *> mActionDialogs;
+	QString mUsedLocale;
 #ifndef ACT_NO_UPDATER
 	QNetworkAccessManager *mNetworkAccessManager;
 	QNetworkReply *mUpdateDownloadNetworkReply;
@@ -241,7 +242,6 @@ private:
 	int mUpdateFileSize;
 	QString mUpdateFileHash;
 	QCryptographicHash mHashCalculator;
-	QString mUsedLocale;
 #endif
 #ifdef Q_WS_WIN
 	ITaskbarList3 *mTaskbarList;

@@ -189,21 +189,19 @@ namespace ActionTools
 		if(!mShowEditorButton)
 			return;
 		
-		CodeEditorDialog *codeEditorDialog = new CodeEditorDialog(mCompletionModel, this);
+		CodeEditorDialog codeEditorDialog(mCompletionModel, this);
 
-		codeEditorDialog->setText(text());
-		codeEditorDialog->setCode(isCode());
-		codeEditorDialog->setCurrentLine(line);
-		codeEditorDialog->setCurrentColumn(column);
-		codeEditorDialog->setAllowTextCodeChange(mAllowTextCodeChange);
+		codeEditorDialog.setText(text());
+		codeEditorDialog.setCode(isCode());
+		codeEditorDialog.setCurrentLine(line);
+		codeEditorDialog.setCurrentColumn(column);
+		codeEditorDialog.setAllowTextCodeChange(mAllowTextCodeChange);
 
-		if(codeEditorDialog->exec() == QDialog::Accepted)
+		if(codeEditorDialog.exec() == QDialog::Accepted)
 		{
-			setText(codeEditorDialog->text());
-			setCode(codeEditorDialog->isCode());
+			setText(codeEditorDialog.text());
+			setCode(codeEditorDialog.isCode());
 		}
-
-		delete codeEditorDialog;
 	}
 
 	void CodeLineEdit::contextMenuEvent(QContextMenuEvent *event)
