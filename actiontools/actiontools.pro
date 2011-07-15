@@ -82,7 +82,7 @@ win32:LIBS += -luser32 \
     -lPsapi
 unix:LIBS += -lXtst
 TRANSLATIONS = ../locale/actiontools_fr_FR.ts
-system(lrelease $$TRANSLATIONS)
+include(../translations.pri)
 RESOURCES += actiontools.qrc
 INCLUDEPATH += . \
     ../tools

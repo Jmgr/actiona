@@ -13,7 +13,7 @@ win32:DEFINES += _CRT_SECURE_NO_WARNINGS
 win32:LIBS += -lPowrProf
 
 TRANSLATIONS = ../../locale/actionpacksystem_fr_FR.ts
-system(lrelease $$TRANSLATIONS)
+include(../../translations.pri)
 
 SOURCES += \
     systemsession.cpp

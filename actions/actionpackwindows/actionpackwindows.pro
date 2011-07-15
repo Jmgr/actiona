@@ -6,4 +6,4 @@ QT += script
 HEADERS += actionpackwindows.h
 RESOURCES += actionpackwindows.qrc
 TRANSLATIONS = ../../locale/actionpackwindows_fr_FR.ts
-system(lrelease $$TRANSLATIONS)
+include(../../translations.pri)

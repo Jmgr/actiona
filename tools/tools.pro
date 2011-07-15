@@ -18,5 +18,5 @@ win32:HEADERS += sevenziparchivewrite.h
 }
 INCLUDEPATH += src
 TRANSLATIONS = ../locale/tools_fr_FR.ts
-system(lrelease $$TRANSLATIONS)
+include(../translations.pri)
 win32:LIBS += User32.lib

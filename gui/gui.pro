@@ -80,7 +80,7 @@ LIBS += -L.. \
 RESOURCES += gui.qrc
 win32:RC_FILE = gui.rc
 TRANSLATIONS = ../locale/gui_fr_FR.ts
-for(translation, TRANSLATIONS):system(lrelease $${translation})
 system(lrelease ../locale/qt_fr_FR.ts)
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
+include(../translations.pri)

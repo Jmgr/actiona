@@ -31,6 +31,6 @@ LIBS += -L.. \
     -lexecuter
 win32:RC_FILE = actexecuter.rc
 TRANSLATIONS = ../locale/actexecuter_fr_FR.ts
-system(lrelease $$TRANSLATIONS)
+include(../translations.pri)
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify

@@ -30,5 +30,5 @@ LIBS += -L.. \
 	-lactiontools
 win32:LIBS += -ladvapi32
 TRANSLATIONS = ../locale/executer_fr_FR.ts
-system(lrelease $$TRANSLATIONS)
+include(../translations.pri)
 RESOURCES += executer.qrc

@@ -10,7 +10,7 @@ win32:LIBS += -ladvapi32 \
 	-lshell32
 
 TRANSLATIONS = ../../locale/actionpackdata_fr_FR.ts
-system(lrelease $$TRANSLATIONS)
+include(../../translations.pri)
 
 RESOURCES += \
     actionpackdata.qrc
