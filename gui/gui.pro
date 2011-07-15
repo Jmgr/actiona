@@ -1,7 +1,5 @@
 include(../common.pri)
-unix:!mac {
-	QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN
-}
+unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/lib/actionaz
 QT += xml \
 	network \
 	script \
@@ -80,7 +78,16 @@ LIBS += -L.. \
 RESOURCES += gui.qrc
 win32:RC_FILE = gui.rc
 TRANSLATIONS = ../locale/gui_fr_FR.ts
-system(lrelease ../locale/qt_fr_FR.ts)
+win32:system(lrelease ../locale/qt_fr_FR.ts) #For Windows we need to copy the qt translation files
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
 include(../translations.pri)
+
+unix {
+	target.path = $${PREFIX}/bin
+
+	locales.path = $${PREFIX}/share/actionaz/locale
+	locales.files = ../locale/gui_fr_FR.qm
+
+	INSTALLS += target locales
+}

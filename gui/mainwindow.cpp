@@ -241,7 +241,11 @@ void MainWindow::postInit()
 	if(mSplashScreen)
 		mSplashScreen->showMessage(tr("Loading actions..."));
 
-	mActionFactory->loadActionPacks(mUsedLocale);
+	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", mUsedLocale);
+#ifndef Q_WS_WIN
+	if(mActionFactory->actionPackCount() == 0)
+		mActionFactory->loadActionPacks(QString("%1/lib/actionaz/actions/").arg(ACT_PREFIX), mUsedLocale);
+#endif
 
 	QSettings settings;
 

@@ -8,3 +8,10 @@ TRANSLATIONS = ../../locale/actionpackinternal_fr_FR.ts
 include(../../translations.pri)
 INCLUDEPATH += ../../executer
 LIBS += -L../.. -lexecuter
+
+unix {
+	locales.path = $${PREFIX}/share/actionaz/locale
+	locales.files = ../../locale/actionpackinternal_fr_FR.qm
+
+	INSTALLS += locales
+}

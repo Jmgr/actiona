@@ -96,23 +96,47 @@ int main(int argc, char **argv)
 	QString locale = settings.value("locale", QLocale::system().name()).toString();
 
 	QTranslator qtTranslator;
+#ifdef Q_WS_WIN
+	qtTranslator.load(QString("%1/locale/qt_%2").arg(QApplication::applicationDirPath()).arg(locale));
+#else
 	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+#endif
 	app.installTranslator(&qtTranslator);
 
 	QTranslator toolsTranslator;
-	toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	if(!toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
+	{
+#ifndef Q_WS_WIN
+		toolsTranslator.load(QString("%1/share/actionaz/locale/tools_%2").arg(ACT_PREFIX).arg(locale));
+#endif
+	}
 	app.installTranslator(&toolsTranslator);
 
 	QTranslator actionToolsTranslator;
-	actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	if(!actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
+	{
+#ifndef Q_WS_WIN
+		actionToolsTranslator.load(QString("%1/share/actionaz/locale/actiontools_%2").arg(ACT_PREFIX).arg(locale));
+#endif
+	}
 	app.installTranslator(&actionToolsTranslator);
 
 	QTranslator executerTranslator;
-	executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	if(!executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale)))
+	{
+#ifndef Q_WS_WIN
+		executerTranslator.load(QString("%1/share/actionaz/locale/executer_%2").arg(ACT_PREFIX).arg(locale));
+#endif
+	}
 	app.installTranslator(&executerTranslator);
 
 	QTranslator actexecuterTranslator;
-	actexecuterTranslator.load(QString("%1/locale/actexecuter_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	if(!actexecuterTranslator.load(QString("%1/locale/actexecuter_%2").arg(QApplication::applicationDirPath()).arg(locale)))
+	{
+#ifndef Q_WS_WIN
+		actexecuterTranslator.load(QString("%1/share/actionaz/locale/actexecuter_%2").arg(ACT_PREFIX).arg(locale));
+#endif
+	}
 	app.installTranslator(&actexecuterTranslator);
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");

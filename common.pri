@@ -9,7 +9,8 @@ OBJECTS_DIR = generated
 unix {
 	isEmpty(PREFIX): PREFIX=/usr/local
 
-	DEFINES += 'ACT_PREFIX=\""$$PREFIX"\"'
+	PREFIXSTR = '\\"$${PREFIX}\\"'
+	DEFINES += ACT_PREFIX=\"$${PREFIXSTR}\"
 }
 
 contains(DEFINES, ACT_PROFILE) {

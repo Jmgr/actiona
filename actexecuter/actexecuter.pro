@@ -1,5 +1,5 @@
 include(../common.pri)
-unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN
+unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/lib/actionaz
 QT += xml \
     network \
     script \
@@ -34,3 +34,12 @@ TRANSLATIONS = ../locale/actexecuter_fr_FR.ts
 include(../translations.pri)
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
+
+unix {
+	target.path = $${PREFIX}/bin
+
+	locales.path = $${PREFIX}/share/actionaz/locale
+	locales.files = ../locale/actexecuter_fr_FR.qm
+
+	INSTALLS += target locales
+}

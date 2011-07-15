@@ -1,3 +1,4 @@
+include(../../common.pri)
 QT -= gui
 TEMPLATE = lib
 CONFIG += dll
@@ -44,3 +45,8 @@ UI_DIR = generated
 MOC_DIR = generated
 RCC_DIR = generated
 OBJECTS_DIR = generated
+
+unix {
+	target.path = $${PREFIX}/lib/actionaz
+	INSTALLS += target
+}

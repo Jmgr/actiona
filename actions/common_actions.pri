@@ -11,3 +11,8 @@ DESTDIR = ../../actions
 LIBS += -L../.. \
 	-ltools \
 	-lactiontools
+
+unix {
+	target.path = $${PREFIX}/lib/actionaz/actions
+	INSTALLS += target
+}

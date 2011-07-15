@@ -45,24 +45,23 @@ namespace ActionTools
 		return s1->name() < s2->name();
 	}
 
-	void ActionFactory::loadActionPacks(const QString &locale)
+	void ActionFactory::loadActionPacks(const QString &directory, const QString &locale)
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("ActionFactory loadActionPacks");
+		Tools::HighResolutionTimer timer("ActionFactory loadActionPacks from " + directory);
 #endif
-		clear();
 
-		QDir actionDirectory(QApplication::applicationDirPath() + "/actions/");
+		QDir actionDirectory(directory);
 
-	#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN
 		QString actionMask = "ActionPack*.dll";
-	#endif
-	#ifdef Q_WS_MAC
+#endif
+#ifdef Q_WS_MAC
 		QString actionMask = "libActionPack*.dylib";
-	#endif
-	#ifdef Q_WS_X11
+#endif
+#ifdef Q_WS_X11
 		QString actionMask = "libActionPack*.so";
-	#endif
+#endif
 
 		foreach(const QString actionFilename, actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
@@ -153,7 +152,13 @@ namespace ActionTools
 		}
 
 		QTranslator *actionPackTranslator = new QTranslator(this);
-		actionPackTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale));
+
+		if(!actionPackTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale)))
+		{
+	#ifndef Q_WS_WIN
+			actionPackTranslator->load(QString("%1/share/actionaz/locale/actionpack%2_%3").arg(ACT_PREFIX).arg(actionPack->id()).arg(locale));
+	#endif
+		}
 		QApplication::installTranslator(actionPackTranslator);
 
 		actionPack->createDefinitions();

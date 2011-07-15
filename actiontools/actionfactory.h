@@ -40,7 +40,7 @@ namespace ActionTools
 		explicit ActionFactory(QObject *parent = 0);
 		~ActionFactory();
 
-		void loadActionPacks(const QString &locale);
+		void loadActionPacks(const QString &directory, const QString &locale);
 		ActionDefinition *actionDefinition(const QString &actionId) const;
 		ActionDefinition *actionDefinition(int index) const;
 		ActionPack *actionPack(int index) const;

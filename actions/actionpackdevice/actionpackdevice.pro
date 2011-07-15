@@ -13,3 +13,10 @@ TRANSLATIONS = ../../locale/actionpackdevice_fr_FR.ts
 include(../../translations.pri)
 SOURCES += mousedevice.cpp \
     keyboarddevice.cpp
+
+unix {
+	locales.path = $${PREFIX}/share/actionaz/locale
+	locales.files = ../../locale/actionpackdevice_fr_FR.qm
+
+	INSTALLS += locales
+}

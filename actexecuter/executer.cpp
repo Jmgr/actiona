@@ -46,7 +46,12 @@ bool Executer::start(QFile &file)
 	QSettings settings;
 	QString locale = settings.value("locale", QLocale::system().name()).toString();
 
-	mActionFactory->loadActionPacks(locale);
+	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", locale);
+#ifndef Q_WS_WIN
+	if(mActionFactory->actionPackCount() == 0)
+		mActionFactory->loadActionPacks(QString("%1/lib/actionaz/actions/").arg(ACT_PREFIX), locale);
+#endif
+
 	if(mActionLoadingFailed)
 		return false;
 

@@ -14,3 +14,10 @@ include(../../translations.pri)
 
 RESOURCES += \
     actionpackdata.qrc
+
+unix {
+	locales.path = $${PREFIX}/share/actionaz/locale
+	locales.files = ../../locale/actionpackdata_fr_FR.qm
+
+	INSTALLS += locales
+}

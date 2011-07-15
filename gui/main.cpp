@@ -154,19 +154,39 @@ int main(int argc, char **argv)
 	app.installTranslator(&qtTranslator);
 
 	QTranslator toolsTranslator;
-	toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	if(!toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
+	{
+#ifndef Q_WS_WIN
+		toolsTranslator.load(QString("%1/share/actionaz/locale/tools_%2").arg(ACT_PREFIX).arg(locale));
+#endif
+	}
 	app.installTranslator(&toolsTranslator);
 
 	QTranslator actionToolsTranslator;
-	actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	if(!actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
+	{
+#ifndef Q_WS_WIN
+		actionToolsTranslator.load(QString("%1/share/actionaz/locale/actiontools_%2").arg(ACT_PREFIX).arg(locale));
+#endif
+	}
 	app.installTranslator(&actionToolsTranslator);
 
 	QTranslator executerTranslator;
-	executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	if(!executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale)))
+	{
+#ifndef Q_WS_WIN
+		executerTranslator.load(QString("%1/share/actionaz/locale/executer_%2").arg(ACT_PREFIX).arg(locale));
+#endif
+	}
 	app.installTranslator(&executerTranslator);
 
 	QTranslator guiTranslator;
-	guiTranslator.load(QString("%1/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale));
+	if(!guiTranslator.load(QString("%1/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale)))
+	{
+#ifndef Q_WS_WIN
+		guiTranslator.load(QString("%1/share/actionaz/locale/gui_%2").arg(ACT_PREFIX).arg(locale));
+#endif
+	}
 	app.installTranslator(&guiTranslator);
 
 	if(options.count("version"))

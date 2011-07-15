@@ -17,3 +17,10 @@ include(../../translations.pri)
 
 SOURCES += \
     systemsession.cpp
+
+unix {
+	locales.path = $${PREFIX}/share/actionaz/locale
+	locales.files = ../../locale/actionpacksystem_fr_FR.qm
+
+	INSTALLS += locales
+}

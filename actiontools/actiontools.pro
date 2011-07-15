@@ -88,3 +88,12 @@ INCLUDEPATH += . \
     ../tools
 LIBS += -L.. \
     -ltools
+
+unix {
+	target.path = $${PREFIX}/lib/actionaz
+
+	locales.path = $${PREFIX}/share/actionaz/locale
+	locales.files = ../locale/actiontools_fr_FR.qm
+
+	INSTALLS += target locales
+}

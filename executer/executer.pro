@@ -32,3 +32,12 @@ win32:LIBS += -ladvapi32
 TRANSLATIONS = ../locale/executer_fr_FR.ts
 include(../translations.pri)
 RESOURCES += executer.qrc
+
+unix {
+	target.path = $${PREFIX}/lib/actionaz
+
+	locales.path = $${PREFIX}/share/actionaz/locale
+	locales.files = ../locale/executer_fr_FR.qm
+
+	INSTALLS += target locales
+}
