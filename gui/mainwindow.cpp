@@ -645,6 +645,7 @@ void MainWindow::on_actionExport_executable_triggered()
 
 	QProgressDialog progressDialog(tr("Creating SFX script"), QString(), 0, 21, this);
 	progressDialog.setWindowTitle(tr("Create SFX script"));
+	progressDialog.setModal(true);
 	progressDialog.setValue(0);
 	progressDialog.setVisible(true);
 	QApplication::processEvents();
