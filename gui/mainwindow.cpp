@@ -609,6 +609,11 @@ void MainWindow::on_actionExport_executable_triggered()
 	if(!sfxScriptDialog.exec())
 		return;
 
+	bool useActExec = (sfxScriptDialog.closeAfterExecution()
+					   && sfxScriptDialog.disableTrayIcon()
+					   && !sfxScriptDialog.showConsole()
+					   && !sfxScriptDialog.showExecutionWindow());
+
 	QString parameters("es");//Execute the current script & disable splash screen
 	if(sfxScriptDialog.disableTrayIcon())
 		parameters += "t";
@@ -640,6 +645,7 @@ void MainWindow::on_actionExport_executable_triggered()
 	file.close();
 
 	QProgressDialog progressDialog(tr("Creating SFX script"), QString(), 0, 21, this);
+	progressDialog.setWindowTitle(tr("Create SFX script"));
 	progressDialog.setValue(0);
 	progressDialog.setVisible(true);
 	QApplication::processEvents();
@@ -648,8 +654,16 @@ void MainWindow::on_actionExport_executable_triggered()
 	QString configFile;
 	QTextStream configFileStream(&configFile);
 	configFileStream << ";!@Install@!UTF-8!" << "\r\n";
-	configFileStream << "ExecuteFile=\"actionaz.exe\"" << "\r\n";
-	configFileStream << QString("ExecuteParameters=\"-%1 script.ascr\"").arg(parameters) << "\r\n";
+	if(useActExec)
+	{
+		configFileStream << "ExecuteFile=\"actexec.exe\"" << "\r\n";
+		configFileStream << QString("ExecuteParameters=\"script.ascr\"") << "\r\n";
+	}
+	else
+	{
+		configFileStream << "ExecuteFile=\"actionaz.exe\"" << "\r\n";
+		configFileStream << QString("ExecuteParameters=\"-%1 script.ascr\"").arg(parameters) << "\r\n";
+	}
 	configFileStream << "GUIMode=\"2\"" << "\r\n";
 	configFileStream << ";!@InstallEnd@!";
 
@@ -659,7 +673,6 @@ void MainWindow::on_actionExport_executable_triggered()
 	QFile::remove(archivePath);
 	Tools::SevenZipArchiveWrite archive(archivePath);
 	QStringList archiveFiles = QStringList()
-								<< "actionaz.exe"
 								<< "tools.dll"
 								<< "actiontools.dll"
 								<< "executer.dll"
@@ -694,6 +707,11 @@ void MainWindow::on_actionExport_executable_triggered()
 								<< "msvcp100.dll"
 								<< "msvcr100.dll";
 #endif
+
+	if(useActExec)
+		archiveFiles << "actexec.exe";
+	else
+		archiveFiles << "actionaz.exe";
 
 	foreach(const QString &archiveFile, archiveFiles)
 	{
