@@ -4,27 +4,27 @@
 <context>
     <name>ActionDefinition::CategoryName</name>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="47"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="46"/>
         <source>Windows</source>
         <translation>Fenêtres</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="48"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="47"/>
         <source>Device</source>
         <translation>Périphériques</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="49"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="48"/>
         <source>System</source>
         <translation>Système</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="50"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="49"/>
         <source>Internal</source>
         <translation>Interne</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="51"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="50"/>
         <source>Data</source>
         <translation>Données</translation>
     </message>
@@ -68,12 +68,12 @@
 <context>
     <name>ActionTabs</name>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="54"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="53"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="54"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="53"/>
         <source>Advanced</source>
         <translation>Avancé</translation>
     </message>
@@ -130,22 +130,22 @@
 <context>
     <name>ActionTools::ActionFactory</name>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="145"/>
+        <location filename="../actiontools/actionfactory.cpp" line="144"/>
         <source>%1: &quot;%2&quot;</source>
         <translation>%1 : &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="152"/>
+        <location filename="../actiontools/actionfactory.cpp" line="151"/>
         <source>%1: bad definition version</source>
         <translation>%1 : mauvause définition de version</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="166"/>
+        <location filename="../actiontools/actionfactory.cpp" line="165"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; already loaded</source>
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; est déjà chargé</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="186"/>
+        <location filename="../actiontools/actionfactory.cpp" line="185"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; cannot be loaded:&lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</source>
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; ne peut pas être chargé : &lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</translation>
     </message>
@@ -295,7 +295,7 @@
         <translation>Cliquez ici pour ouvrir l&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="301"/>
+        <location filename="../actiontools/codelineedit.cpp" line="299"/>
         <source>Double-click to edit</source>
         <translation>Double-cliquez pour éditer</translation>
     </message>
@@ -808,7 +808,7 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Données</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="88"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="87"/>
         <source>missing XTest extension</source>
         <translation>extension XTest manquante</translation>
     </message>

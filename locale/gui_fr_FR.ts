@@ -781,7 +781,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/mainwindow.ui" line="575"/>
-        <location filename="../gui/mainwindow.cpp" line="549"/>
+        <location filename="../gui/mainwindow.cpp" line="546"/>
         <source>Delete all actions</source>
         <translation>Supprimer toutes les actions</translation>
     </message>
@@ -912,7 +912,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/mainwindow.ui" line="813"/>
-        <location filename="../gui/mainwindow.cpp" line="1004"/>
+        <location filename="../gui/mainwindow.cpp" line="1016"/>
         <source>Jump to line</source>
         <translation>Aller à la ligne</translation>
     </message>
@@ -1033,7 +1033,7 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="175"/>
+        <location filename="../gui/mainwindow.cpp" line="178"/>
         <source>Alt+F4</source>
         <translation>Alt+F4</translation>
     </message>
@@ -1042,63 +1042,63 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Merci à vous de beta-tester cette nouvelle version d&apos;Actionaz !&lt;br&gt;&lt;br&gt;Testez autant de fonctionnalités que possible, et rappelez vous que tout commentaire est bienvenu !&lt;br&gt;Pour rapporter un bug ou écrire un commentaire merci d&apos;utiliser le bouton &lt;b&gt;Rapporter un bug&lt;/b&gt;.&lt;br&gt;&lt;br&gt;Souvenez vous que ceci est une version &lt;b&gt;alpha&lt;/b&gt; et que vous ne devriez pas écrire de scripts critiques avec cette version car le format des scripts pourrait changer d&apos;ici la version finale.&lt;br&gt;&lt;br&gt;&lt;i&gt;Merci de ne pas distribuer cette version car elle n&apos;a pas encore reçue suffisamment de retours pour l&apos;instant.&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="498"/>
+        <location filename="../gui/mainwindow.cpp" line="495"/>
         <source>Save copy</source>
         <translation>Enregistrer une copie</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="513"/>
+        <location filename="../gui/mainwindow.cpp" line="510"/>
         <source>Open script</source>
         <translation>Ouvrir un script</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="550"/>
+        <location filename="../gui/mainwindow.cpp" line="547"/>
         <source>Do you really want to delete all the actions contained in this script ?</source>
         <translation>Voulez-vous vraiment supprimer toutes les actions contenues dans ce script ?</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1213"/>
+        <location filename="../gui/mainwindow.cpp" line="1219"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="97"/>
+        <location filename="../gui/mainwindow.cpp" line="98"/>
         <source>S&amp;top execution</source>
         <translation>S&amp;topper exécution</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="130"/>
+        <location filename="../gui/mainwindow.cpp" line="129"/>
         <source>Creating main window...</source>
         <translation>Création de la fenêtre principale...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="153"/>
-        <location filename="../gui/mainwindow.cpp" line="1587"/>
+        <location filename="../gui/mainwindow.cpp" line="156"/>
+        <location filename="../gui/mainwindow.cpp" line="1593"/>
         <source>Actionaz - ready</source>
         <translation>Actionaz - prêt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="245"/>
+        <location filename="../gui/mainwindow.cpp" line="242"/>
         <source>Loading actions...</source>
         <translation>Chargement des actions...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="287"/>
+        <location filename="../gui/mainwindow.cpp" line="284"/>
         <source>Creating action dialog %1...</source>
         <translation>Creation de la fenêtre d&apos;action %1...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="299"/>
+        <location filename="../gui/mainwindow.cpp" line="296"/>
         <source>Please wait...</source>
         <translation>Merci de patienter...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="321"/>
+        <location filename="../gui/mainwindow.cpp" line="318"/>
         <source>Ready, loaded %1 actions from %2 packs</source>
         <translation>Prêt, chargé %1 actions à partir de %2 packs</translation>
     </message>
     <message numerus="yes">
-        <location filename="../gui/mainwindow.cpp" line="371"/>
+        <location filename="../gui/mainwindow.cpp" line="368"/>
         <source>&lt;b&gt;Unable to load %n action(s):&lt;/b&gt;
 </source>
         <translation>
@@ -1108,24 +1108,24 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="381"/>
+        <location filename="../gui/mainwindow.cpp" line="378"/>
         <source>Error while loading actions</source>
         <translation>Erreur lors du chargement des actions</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="388"/>
+        <location filename="../gui/mainwindow.cpp" line="385"/>
         <source>Automatic updates</source>
         <translation>Mises à jour automatiques</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="389"/>
+        <location filename="../gui/mainwindow.cpp" line="386"/>
         <source>Do you want Actionaz to check once per day if a new version is available ?
 You can change this setting later in the settings dialog.</source>
         <translation>Voulez-vous que Actionaz vérifie une fois par jour si une nouvelle version est disponible ?
 Vous pouvez changer ce paramètre plus tard dans la fenêtre d&apos;options.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="449"/>
+        <location filename="../gui/mainwindow.cpp" line="446"/>
         <source>Alpha test</source>
         <translation>Alpha test</translation>
     </message>
@@ -1134,120 +1134,127 @@ Vous pouvez changer ce paramètre plus tard dans la fenêtre d&apos;options.</tr
         <translation type="obsolete">Merci à vous de beta-tester cette nouvelle version d&apos;Actionaz !&lt;br&gt;&lt;br&gt;Testez autant de fonctionnalités que possible, et rappelez vous que tout commentaire est bienvenu ! Pour rapporter un bug ou écrire un commentaire merci d&apos;utiliser le bouton &lt;b&gt;Rapporter un bug&lt;/b&gt;.&lt;br&gt;&lt;br&gt;Souvenez vous que ceci est une version &lt;b&gt;alpha&lt;/b&gt; et que vous ne devriez pas écrire de scripts critiques avec cette version car le format des scripts pourrait changer d&apos;ici la version finale.&lt;br&gt;&lt;br&gt;&lt;i&gt;Merci de ne pas distribuer cette version car elle n&apos;a pas encore reçue suffisamment de retours pour l&apos;instant.&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="450"/>
+        <location filename="../gui/mainwindow.cpp" line="447"/>
         <source>Thank you for alpha-testing this new version of Actionaz !&lt;br&gt;&lt;br&gt;Please test as many features as you can, and remember that any comments are welcome !&lt;br&gt;&lt;br&gt;To report a bug or write a comment please use the &lt;b&gt;Report a bug&lt;/b&gt; button.&lt;br&gt;&lt;br&gt;Remember that this is an &lt;b&gt;alpha&lt;/b&gt; version so please do not write any critical scripts with it since the script format may change before the final release.&lt;br&gt;&lt;br&gt;&lt;i&gt;Please do not distribute this version because it has not received enough reviews yet.&lt;/i&gt;</source>
         <translation>Merci à vous de beta-tester cette nouvelle version d&apos;Actionaz !&lt;br&gt;&lt;br&gt;Testez autant de fonctionnalités que possible, et rappelez vous que tout commentaire est bienvenu !&lt;br&gt;&lt;br&gt;Pour rapporter un bug ou écrire un commentaire merci d&apos;utiliser le bouton &lt;b&gt;Rapporter un bug&lt;/b&gt;.&lt;br&gt;&lt;br&gt;Souvenez vous que ceci est une version &lt;b&gt;alpha&lt;/b&gt; et que vous ne devriez pas écrire de scripts critiques avec cette version car le format des scripts pourrait changer d&apos;ici la version finale.&lt;br&gt;&lt;br&gt;&lt;i&gt;Merci de ne pas distribuer cette version car elle n&apos;a pas encore reçue suffisamment de retours pour l&apos;instant.&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="498"/>
-        <location filename="../gui/mainwindow.cpp" line="513"/>
-        <location filename="../gui/mainwindow.cpp" line="2066"/>
+        <location filename="../gui/mainwindow.cpp" line="495"/>
+        <location filename="../gui/mainwindow.cpp" line="510"/>
+        <location filename="../gui/mainwindow.cpp" line="2071"/>
         <source>Actionaz script (*.ascr)</source>
         <translation>Script Actionaz (*.ascr)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="600"/>
+        <location filename="../gui/mainwindow.cpp" line="596"/>
         <source>Choose the SFX script destination</source>
         <translation>Choisissez la destination du script SFX</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="607"/>
-        <location filename="../gui/mainwindow.cpp" line="634"/>
-        <location filename="../gui/mainwindow.cpp" line="641"/>
-        <location filename="../gui/mainwindow.cpp" line="712"/>
-        <location filename="../gui/mainwindow.cpp" line="735"/>
-        <location filename="../gui/mainwindow.cpp" line="749"/>
-        <location filename="../gui/mainwindow.cpp" line="762"/>
-        <location filename="../gui/mainwindow.cpp" line="773"/>
-        <location filename="../gui/mainwindow.cpp" line="793"/>
+        <location filename="../gui/mainwindow.cpp" line="603"/>
+        <location filename="../gui/mainwindow.cpp" line="635"/>
+        <location filename="../gui/mainwindow.cpp" line="642"/>
+        <location filename="../gui/mainwindow.cpp" line="649"/>
+        <location filename="../gui/mainwindow.cpp" line="727"/>
+        <location filename="../gui/mainwindow.cpp" line="750"/>
+        <location filename="../gui/mainwindow.cpp" line="764"/>
+        <location filename="../gui/mainwindow.cpp" line="777"/>
+        <location filename="../gui/mainwindow.cpp" line="788"/>
+        <location filename="../gui/mainwindow.cpp" line="808"/>
+        <location filename="../gui/mainwindow.cpp" line="820"/>
         <source>Create SFX script</source>
         <translation>Créer script SFX</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="607"/>
+        <location filename="../gui/mainwindow.cpp" line="603"/>
         <source>The output file you selected is not writeable.</source>
         <translation>Le fichier de sortie que vous sélectionné ne peut pas être écrit.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="634"/>
+        <location filename="../gui/mainwindow.cpp" line="635"/>
         <source>Unable to write to %1.</source>
         <translation>Impossible d&apos;écrire vers %1.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="641"/>
-        <location filename="../gui/mainwindow.cpp" line="762"/>
+        <location filename="../gui/mainwindow.cpp" line="642"/>
+        <location filename="../gui/mainwindow.cpp" line="777"/>
         <source>Unable to open %1 for writing.</source>
         <translation>Impossible d&apos;ouvrir %1 pour écriture.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="647"/>
+        <location filename="../gui/mainwindow.cpp" line="648"/>
         <source>Creating SFX script</source>
         <translation>Création de script SFX</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="712"/>
+        <location filename="../gui/mainwindow.cpp" line="727"/>
         <source>Failed to add %1 to the SFX archive.</source>
         <translation>Impossible d&apos;ajouter %1 à l&apos;archive SFX.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="717"/>
+        <location filename="../gui/mainwindow.cpp" line="732"/>
         <source>Adding actions...</source>
         <translation>Ajout des actions...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="735"/>
+        <location filename="../gui/mainwindow.cpp" line="750"/>
         <source>Failed to add the action pack %1 to the SFX archive.</source>
         <translation>Impossible d&apos;ajouter le pack d&apos;actions %1 à l&apos;archive SFX.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="740"/>
+        <location filename="../gui/mainwindow.cpp" line="755"/>
         <source>Adding script plugins...</source>
         <translation>Ajout des plugins de scripts...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="749"/>
+        <location filename="../gui/mainwindow.cpp" line="764"/>
         <source>Failed to add the script plugin %1 to the SFX archive.</source>
         <translation>Impossible d&apos;ajouter le plugin de script %1 à l&apos;archive SFX.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="773"/>
-        <location filename="../gui/mainwindow.cpp" line="793"/>
+        <location filename="../gui/mainwindow.cpp" line="788"/>
+        <location filename="../gui/mainwindow.cpp" line="808"/>
         <source>Unable to open %1 for reading.</source>
         <translation>Impossible d&apos;ouvrir %1 pour lecture.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1005"/>
+        <location filename="../gui/mainwindow.cpp" line="820"/>
+        <source>SFX script successfully created.</source>
+        <translation>Le script SFX a été créé avec succès.</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1017"/>
         <source>Line:</source>
         <translation>Ligne :</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1039"/>
+        <location filename="../gui/mainwindow.cpp" line="1050"/>
         <source>Choose the shortcut destination</source>
         <translation>Choisissez la destination du raccourci</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1049"/>
+        <location filename="../gui/mainwindow.cpp" line="1060"/>
         <source>Shortcut creation failed</source>
         <translation>La création du raccourci a échouée</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1049"/>
+        <location filename="../gui/mainwindow.cpp" line="1060"/>
         <source>Unable to create the shortcut.</source>
         <translation>Impossible de créeer le raccourci.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1258"/>
-        <location filename="../gui/mainwindow.cpp" line="1271"/>
-        <location filename="../gui/mainwindow.cpp" line="1276"/>
-        <location filename="../gui/mainwindow.cpp" line="1280"/>
-        <location filename="../gui/mainwindow.cpp" line="1289"/>
-        <location filename="../gui/mainwindow.cpp" line="1936"/>
-        <location filename="../gui/mainwindow.cpp" line="1943"/>
+        <location filename="../gui/mainwindow.cpp" line="1264"/>
+        <location filename="../gui/mainwindow.cpp" line="1277"/>
+        <location filename="../gui/mainwindow.cpp" line="1282"/>
+        <location filename="../gui/mainwindow.cpp" line="1286"/>
+        <location filename="../gui/mainwindow.cpp" line="1295"/>
+        <location filename="../gui/mainwindow.cpp" line="1941"/>
+        <location filename="../gui/mainwindow.cpp" line="1948"/>
         <source>Load script</source>
         <translation>Charger script</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1258"/>
+        <location filename="../gui/mainwindow.cpp" line="1264"/>
         <source>This script was created with an older version of Actionaz.
 It will be updated when you save it.
 Your version: %1
@@ -1258,22 +1265,22 @@ Votre version : %1
 Version du script : %2</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1264"/>
+        <location filename="../gui/mainwindow.cpp" line="1270"/>
         <source>Script loaded, some actions are missing:&lt;ul&gt;</source>
         <translation>Script chargé, quelques actions manquent :&lt;ul&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1276"/>
+        <location filename="../gui/mainwindow.cpp" line="1282"/>
         <source>Unable to load the script due to an internal error.</source>
         <translation>Impossible de charger le script à cause d&apos;une erreur interne.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1280"/>
+        <location filename="../gui/mainwindow.cpp" line="1286"/>
         <source>Unable to load the script because it has an incorrect schema.%1Line: %2&lt;br&gt;Column: %3</source>
         <translation>Impossible de charger le script car celui-ci a un schéma incorrect.%1Ligne : %2&lt;br&gt;Colonne : %3</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1289"/>
+        <location filename="../gui/mainwindow.cpp" line="1295"/>
         <source>Unable to load the script because it was created with a more recent version of Actionaz.
 Please update your version of Actionaz to load this script.
 Your version: %1
@@ -1284,163 +1291,163 @@ Votre version : %1
 Version du script : %2</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1326"/>
+        <location filename="../gui/mainwindow.cpp" line="1332"/>
         <source>Checking if an update is available...</source>
         <translation>Verifie si une mise à jour est disponible...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1392"/>
+        <location filename="../gui/mainwindow.cpp" line="1398"/>
         <source>Actionaz - executing</source>
         <translation>Actionaz - exécution</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1670"/>
-        <location filename="../gui/mainwindow.cpp" line="1680"/>
-        <location filename="../gui/mainwindow.cpp" line="1696"/>
-        <location filename="../gui/mainwindow.cpp" line="1843"/>
+        <location filename="../gui/mainwindow.cpp" line="1676"/>
+        <location filename="../gui/mainwindow.cpp" line="1686"/>
+        <location filename="../gui/mainwindow.cpp" line="1702"/>
+        <location filename="../gui/mainwindow.cpp" line="1849"/>
         <source>Update</source>
         <translation>Mise à jour</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1670"/>
+        <location filename="../gui/mainwindow.cpp" line="1676"/>
         <source>An error occured while checking for a new version:
 %1</source>
         <translation>Une erreur est apparue lors de la vérification de mise à jour :
 %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1680"/>
-        <location filename="../gui/mainwindow.cpp" line="1696"/>
+        <location filename="../gui/mainwindow.cpp" line="1686"/>
+        <location filename="../gui/mainwindow.cpp" line="1702"/>
         <source>No new version is available.</source>
         <translation>Aucune nouvelle version n&apos;est disponible.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1705"/>
+        <location filename="../gui/mainwindow.cpp" line="1711"/>
         <source>Major</source>
         <translation>Majeure</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1707"/>
+        <location filename="../gui/mainwindow.cpp" line="1713"/>
         <source>Release</source>
         <translation>Release</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1709"/>
+        <location filename="../gui/mainwindow.cpp" line="1715"/>
         <source>Bugfix</source>
         <translation>Correction de bugs</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1721"/>
+        <location filename="../gui/mainwindow.cpp" line="1727"/>
         <source>Select where to save the installation file</source>
         <translation>Sélectionner où enregistrer le fichier d&apos;installation</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1737"/>
+        <location filename="../gui/mainwindow.cpp" line="1743"/>
         <source>Download update</source>
         <translation>Téléchargement de la mise à jour</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1737"/>
+        <location filename="../gui/mainwindow.cpp" line="1743"/>
         <source>Unable to save the update file.</source>
         <translation>Impossible d&apos;enregistrer le fichier de mise à jour.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1752"/>
+        <location filename="../gui/mainwindow.cpp" line="1758"/>
         <source>Downloading file...</source>
         <translation>Téléchargement du fichier...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1753"/>
-        <location filename="../gui/mainwindow.cpp" line="1801"/>
-        <location filename="../gui/mainwindow.cpp" line="1806"/>
+        <location filename="../gui/mainwindow.cpp" line="1759"/>
+        <location filename="../gui/mainwindow.cpp" line="1807"/>
+        <location filename="../gui/mainwindow.cpp" line="1812"/>
         <source>Update download</source>
         <translation>Téléchargement de la mise à jour</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1779"/>
+        <location filename="../gui/mainwindow.cpp" line="1785"/>
         <source>Connection to the server was refused.</source>
         <translation>La connexion au serveur a été refusée.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1782"/>
+        <location filename="../gui/mainwindow.cpp" line="1788"/>
         <source>Unable to establish a connection to the server.</source>
         <translation>Impossible d&apos;établir une connexion vers le serveur.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1785"/>
+        <location filename="../gui/mainwindow.cpp" line="1791"/>
         <source>Connection timeout.</source>
         <translation>Connexion hors délai.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1790"/>
+        <location filename="../gui/mainwindow.cpp" line="1796"/>
         <source>Serverside error.</source>
         <translation>Erreur coté serveur.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1793"/>
+        <location filename="../gui/mainwindow.cpp" line="1799"/>
         <source>Connection error.</source>
         <translation>Erreur de connexion.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1801"/>
+        <location filename="../gui/mainwindow.cpp" line="1807"/>
         <source>An error occured while downloading the file.
 Error message: %1</source>
         <translation>Une erreur est apparue lors du téléchargement du fichier.
 Message d&apos;erreur : %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1806"/>
+        <location filename="../gui/mainwindow.cpp" line="1812"/>
         <source>The downloaded file is corrupted. Try again later.</source>
         <translation>Le fichier téléchargé est corrompu. Réessayez plus tard.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1843"/>
+        <location filename="../gui/mainwindow.cpp" line="1849"/>
         <source>Unable to execute the downloaded file.</source>
         <translation>Impossible d&apos;exécuter le fichier téléchargé.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1936"/>
+        <location filename="../gui/mainwindow.cpp" line="1941"/>
         <source>Unable to load the script because the file is not readable or you don&apos;t have enough rights.</source>
         <translation>Impossible de charger le script car le fichier n&apos;est pas lisible ou vous n&apos;avez pas assez de droits.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1943"/>
+        <location filename="../gui/mainwindow.cpp" line="1948"/>
         <source>Actionaz currently has no builtin editor for Code files (.acod). Please use an external code editor.</source>
         <translation>Actionaz ne possède pour l&apos;instant pas d&apos;éditeur intégré pour les fichiers de Code (.acod). Merci d&apos;utiliser un éditeur externe.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1963"/>
+        <location filename="../gui/mainwindow.cpp" line="1968"/>
         <source>File loaded</source>
         <translation>Fichier chargé</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1981"/>
-        <location filename="../gui/mainwindow.cpp" line="2066"/>
+        <location filename="../gui/mainwindow.cpp" line="1986"/>
+        <location filename="../gui/mainwindow.cpp" line="2071"/>
         <source>Save script</source>
         <translation>Enregistrer script</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1981"/>
+        <location filename="../gui/mainwindow.cpp" line="1986"/>
         <source>Unable to save the script because the file is not writeable or you don&apos;t have enough rights.</source>
         <translation>Impossible d&apos;enregistrer le script car le fichier ne peut pas être écrit ou vous n&apos;avez pas assez de droits.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1997"/>
+        <location filename="../gui/mainwindow.cpp" line="2002"/>
         <source>File saved</source>
         <translation>Fichier enregistré</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2011"/>
+        <location filename="../gui/mainwindow.cpp" line="2016"/>
         <source>untitled.ascr</source>
         <translation>sans nom.ascr</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2045"/>
+        <location filename="../gui/mainwindow.cpp" line="2050"/>
         <source>Save changes</source>
         <translation>Enregistrer les changements</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2045"/>
+        <location filename="../gui/mainwindow.cpp" line="2050"/>
         <source>The script has been modified.
 Do you want to save your changes ?</source>
         <translation>Le script a été modifié.
@@ -1581,77 +1588,77 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="91"/>
+        <location filename="../gui/main.cpp" line="100"/>
         <source>disable the splash screen</source>
         <translation>désactiver la fenêtre de démarrage</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="93"/>
+        <location filename="../gui/main.cpp" line="102"/>
         <source>disable the tray icon</source>
         <translation>désactiver l&apos;icône de la barre des tâches</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="95"/>
+        <location filename="../gui/main.cpp" line="104"/>
         <source>do not show the execution window</source>
         <translation>ne pas afficher la fenêtre d&apos;exécution</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="97"/>
+        <location filename="../gui/main.cpp" line="106"/>
         <source>do not show the console window</source>
         <translation>ne pas afficher la fenêtre de console</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="99"/>
+        <location filename="../gui/main.cpp" line="108"/>
         <source>do not include the Qt library into the code</source>
         <translation>ne pas inclure la bibliothèque Qt dans le code</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="101"/>
+        <location filename="../gui/main.cpp" line="110"/>
         <source>execute the current script</source>
         <translation>exécuter le script</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="105"/>
+        <location filename="../gui/main.cpp" line="114"/>
         <source>starts in portable mode, storing the settings in the executable folder</source>
         <translation>démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="107"/>
+        <location filename="../gui/main.cpp" line="116"/>
         <source>show the program version</source>
         <translation>afficher la version du programme</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="103"/>
+        <location filename="../gui/main.cpp" line="112"/>
         <source>close Actionaz after execution - requires execute</source>
         <translation>fermer Actionaz après l&apos;exécution - nécessite execute</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="108"/>
+        <location filename="../gui/main.cpp" line="117"/>
         <source>show this help text</source>
         <translation>afficher ce texte d&apos;aide</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="169"/>
+        <location filename="../gui/main.cpp" line="182"/>
         <source>usage: </source>
         <translation>usage :</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="169"/>
+        <location filename="../gui/main.cpp" line="182"/>
         <source>[parameters]</source>
         <translation>[paramètres]</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="169"/>
+        <location filename="../gui/main.cpp" line="182"/>
         <source>[filename]</source>
         <translation>[nom de fichier]</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="170"/>
+        <location filename="../gui/main.cpp" line="183"/>
         <source>Parameters are:</source>
         <translation>Les paramètres sont :</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="705"/>
+        <location filename="../gui/mainwindow.cpp" line="720"/>
         <source>Adding %1...</source>
         <translation>Ajout de %1...</translation>
     </message>

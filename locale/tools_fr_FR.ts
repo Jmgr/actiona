@@ -4,27 +4,27 @@
 <context>
     <name>Tools::Updater</name>
     <message>
-        <location filename="../tools/updater.cpp" line="103"/>
+        <location filename="../tools/updater.cpp" line="101"/>
         <source>Connection to the server was refused.</source>
         <translation>La connexion au serveur a échouée.</translation>
     </message>
     <message>
-        <location filename="../tools/updater.cpp" line="106"/>
+        <location filename="../tools/updater.cpp" line="104"/>
         <source>Unable to establish a connection to the server.</source>
         <translation>Impossible d&apos;établir une connexion vers le serveur.</translation>
     </message>
     <message>
-        <location filename="../tools/updater.cpp" line="109"/>
+        <location filename="../tools/updater.cpp" line="107"/>
         <source>Connection timeout.</source>
         <translation>Connexion échouée.</translation>
     </message>
     <message>
-        <location filename="../tools/updater.cpp" line="114"/>
+        <location filename="../tools/updater.cpp" line="112"/>
         <source>Serverside error.</source>
         <translation>Erreur coté serveur.</translation>
     </message>
     <message>
-        <location filename="../tools/updater.cpp" line="117"/>
+        <location filename="../tools/updater.cpp" line="115"/>
         <source>Connection error.</source>
         <translation>Erreur de connexion.</translation>
     </message>
