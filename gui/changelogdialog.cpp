@@ -18,8 +18,6 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACT_NO_UPDATER
-
 #include "changelogdialog.h"
 #include "ui_changelogdialog.h"
 
@@ -69,5 +67,3 @@ void ChangelogDialog::on_downloadButton_clicked()
 
 	accept();
 }
-
-#endif

@@ -18,8 +18,6 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACT_NO_UPDATER
-
 #ifndef CHANGELOGDIALOG_H
 #define CHANGELOGDIALOG_H
 
@@ -65,5 +63,3 @@ private:
 };
 
 #endif // CHANGELOGDIALOG_H
-
-#endif

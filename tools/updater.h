@@ -18,8 +18,6 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACT_NO_UPDATER
-
 #ifndef UPDATER_H
 #define UPDATER_H
 
@@ -82,5 +80,3 @@ namespace Tools
 }
 
 #endif // UPDATER_H
-
-#endif

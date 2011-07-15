@@ -36,13 +36,15 @@
 #include "crossplatform.h"
 #include "executer.h"
 #include "newactiondialog.h"
-#include "updater.h"
 #include "scriptcontentdialog.h"
 #include "keywords.h"
 #include "modeltest.h"
 #include "globalshortcut/globalshortcutmanager.h"
 #include "qxtcommandoptions/qxtcommandoptions.h"
+#ifndef ACT_NO_UPDATER
 #include "changelogdialog.h"
+#include "updater.h"
+#endif
 #include "sevenziparchivewrite.h"
 #include "actionpack.h"
 #include "sfxscriptdialog.h"

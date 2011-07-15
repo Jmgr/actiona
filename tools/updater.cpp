@@ -18,8 +18,6 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACT_NO_UPDATER
-
 #include "updater.h"
 
 #include <QNetworkAccessManager>
@@ -165,5 +163,3 @@ namespace Tools
 		emit success(version, date, type, changelog, filename, size, hash);
 	}
 }
-
-#endif

@@ -27,7 +27,6 @@ SOURCES += main.cpp \
 	scriptmodelundocommands.cpp \
 	newactiondialog.cpp \
 	global.cpp \
-	changelogdialog.cpp \
 	scriptcontentdialog.cpp \
     sfxscriptdialog.cpp \
     progresssplashscreen.cpp \
@@ -45,11 +44,14 @@ HEADERS += mainwindow.h \
 	scripttableview.h \
 	scriptmodelundocommands.h \
 	newactiondialog.h \
-	changelogdialog.h \
 	scriptcontentdialog.h \
     sfxscriptdialog.h \
     progresssplashscreen.h \
     scriptsettingsdialog.h
+!contains(DEFINES, ACT_NO_UPDATER) {
+	SOURCES += changelogdialog.cpp
+	HEADERS += changelogdialog.h
+}
 INCLUDEPATH += . \
 	src \
 	../tools \
