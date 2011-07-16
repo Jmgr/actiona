@@ -26,19 +26,19 @@
 #include "abstractcodeeditor.h"
 
 #include <QComboBox>
-#include <QItemDelegate>
+#include <QStyledItemDelegate>
 #include <QStandardItemModel>
 
 namespace ActionTools
 {
 	class CodeLineEdit;
 
-	class CodeComboBoxDelegate : public QItemDelegate
+	class CodeComboBoxDelegate : public QStyledItemDelegate
 	{
 		Q_OBJECT
 
 	public:
-		explicit CodeComboBoxDelegate(QObject *parent = 0) : QItemDelegate(parent)		{}
+		explicit CodeComboBoxDelegate(QObject *parent = 0) : QStyledItemDelegate(parent)		{}
 		void paint(QPainter * painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	};
 

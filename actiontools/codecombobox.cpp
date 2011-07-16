@@ -28,24 +28,20 @@
 namespace ActionTools
 {
 	//Taken and adapted from http://qtwiki.org/QCombobox_header_item
-	void CodeComboBoxDelegate::paint(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index) const
+	void CodeComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 	{
 		QString valueString = index.model()->data(index, Qt::DisplayRole).toString();
 
 		if(!(index.model()->flags(index) & Qt::ItemIsEnabled))
 		{
-			QFont *fontBold = new QFont();
-			fontBold->setBold(true);
-			painter->setFont(*fontBold);
-
-			QPalette::ColorGroup cg = QPalette::Disabled;
-			cg = QPalette::Inactive;
-			painter->fillRect(option.rect, option.palette.brush(cg, QPalette::Highlight));
-
+			QFont fontBold;
+			fontBold.setBold(true);
+			painter->setFont(fontBold);
+			painter->fillRect(option.rect, option.palette.brush(QPalette::Inactive, QPalette::Highlight));
 			painter->drawText(option.rect, Qt::AlignLeft | Qt::TextSingleLine, valueString);
 		}
 		else
-			QItemDelegate::paint(painter, option, index);
+			QStyledItemDelegate::paint(painter, option, index);
 	}
 
 	Qt::ItemFlags CodeComboBoxModel::flags(const QModelIndex & index) const
@@ -69,8 +65,7 @@ namespace ActionTools
 		QComboBox(parent)
 	{
 		setModel(new CodeComboBoxModel(this));
-		delete itemDelegate();
-		setItemDelegate(new CodeComboBoxDelegate(this));
+		setItemDelegate(new CodeComboBoxDelegate);
 
 		CodeLineEdit *codeLineEdit = new CodeLineEdit(parent);
 		codeLineEdit->setEmbedded(true);
@@ -78,9 +73,6 @@ namespace ActionTools
 		setLineEdit(codeLineEdit);
 		setEditable(true);
 		setInsertPolicy(QComboBox::NoInsert);
-
-		QStyleOptionComboBox styleOption;
-		styleOption.initFrom(this);
 
 		connect(codeLineEdit, SIGNAL(codeChanged(bool)), this, SIGNAL(codeChanged(bool)));
 
