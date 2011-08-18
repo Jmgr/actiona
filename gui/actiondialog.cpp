@@ -42,7 +42,7 @@
 #include <QComboBox>
 #include <QSpinBox>
 
-ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, QWidget *parent)
+ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::ActionDialog),
 	mActionInstance(0),
@@ -68,6 +68,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	ui->actionIcon->setPixmap(actionDefinition->icon());
 	ui->actionName->setText("<h2>" + actionDefinition->name() + "</h2>");
 	ui->actionDescription->setText("<i>" + actionDefinition->description() + "</i>");
+	ui->helpPushButton->setTopic(QString("%1:actions:%2").arg(localeName.left(2)).arg(actionDefinition->id().toLower()));
 
 	//Init of tabs & group boxes
 	QStringList tabs = actionDefinition->tabs();

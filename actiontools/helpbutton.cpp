@@ -20,10 +20,8 @@
 
 #include "helpbutton.h"
 
-#include <QMessageBox>
-#include <QProcess>
-#include <QLibraryInfo>
-#include <QTextStream>
+#include <QDesktopServices>
+#include <QUrl>
 
 namespace ActionTools
 {
@@ -41,22 +39,9 @@ namespace ActionTools
 	
 	void HelpButton::clicked()
 	{
-		//TODO : Start the assistant
-		/*
-		QProcess *process = new QProcess(this);
-		QString app = QLibraryInfo::location(QLibraryInfo::BinariesPath) + QLatin1String("/assistant");
-		
-		process->start(app, QStringList() << QLatin1String("-enableRemoteControl"));
-		if (!process->waitForStarted()) 
-		{
-			QMessageBox::critical(this, tr("Remote Control"),
-			tr("Could not start Qt Assistant from %1.").arg(app));
+		if(mTopic.isEmpty())
 			return;
-		}
-		
-		// show index page
-		QTextStream str(process);
-		str << QLatin1String("SetSource qthelp://mycompany.com/doc/index.html") << QLatin1Char('\0') << endl;
-		*/
+
+		QDesktopServices::openUrl(QUrl(QString("http://wiki.actionaz.org/doku.php?id=%1").arg(mTopic)));
 	}
 }
