@@ -78,7 +78,8 @@ class Section{
 public:
 
 	Section(const char *sectionname, const char *sectioncomment=0);
-	void acceptWriter(AbstractWriter& writer) const;
+
+	void acceptWriter(AbstractWriter& writer) const;
 
 	//=
 	// Writes the section and all associated data to the outputstream
@@ -134,7 +135,7 @@ public:
 	// Returns the number of (non-deleted) data members
 	// Deleted data, comments and blank lines are not included in the count.
 	//=
-	int getNumDataMembers() const;
+	size_t getNumDataMembers() const;
 
 
 	//=

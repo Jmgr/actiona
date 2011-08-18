@@ -228,16 +228,16 @@ void SettingsDialog::accept()
 		if(associateASCR)
 		{
 			std::wstring valueData = L"ActionazScriptFile";
-			SHSetValue(HKEY_CLASSES_ROOT, L".ascr", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+			SHSetValue(HKEY_CLASSES_ROOT, L".ascr", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
 			valueData = L"Actionaz Script File";
-			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazScriptFile", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazScriptFile", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
 			valueData = QString("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
-			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazScriptFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazScriptFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
 			valueData = QString(QString("\"%1\" ").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())) + "\"%1\"").toStdWString();
-			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazScriptFile\\shell\\open\\command", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazScriptFile\\shell\\open\\command", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 		}
 		else
 		{
@@ -251,13 +251,13 @@ void SettingsDialog::accept()
 		if(associateACOD)
 		{
 			std::wstring valueData = L"ActionazCodeFile";
-			SHSetValue(HKEY_CLASSES_ROOT, L".acod", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+			SHSetValue(HKEY_CLASSES_ROOT, L".acod", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
 			valueData = L"Actionaz Code File";
-			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazCodeFile", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazCodeFile", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
 			valueData = QString("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
-			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazCodeFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), valueData.size() * sizeof(wchar_t));
+			SHSetValue(HKEY_CLASSES_ROOT, L"ActionazCodeFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 		}
 		else
 		{

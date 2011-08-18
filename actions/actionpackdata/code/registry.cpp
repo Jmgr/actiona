@@ -122,14 +122,14 @@ namespace Code
 					wideData += L'\0';
 				}
 	
-				if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_MULTI_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), wideData.size() * sizeof(wchar_t)) != ERROR_SUCCESS)
+				if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_MULTI_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), static_cast<DWORD>(wideData.size() * sizeof(wchar_t))) != ERROR_SUCCESS)
 					throwError("SetValueError", tr("Cannot set the value data"));
 			}
 			break;
 		case QVariant::ByteArray:
 			{
 				QByteArray byteArray = data.toByteArray();
-				if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_BINARY, reinterpret_cast<LPBYTE>(byteArray.data()), byteArray.size()) != ERROR_SUCCESS)
+				if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_BINARY, reinterpret_cast<LPBYTE>(byteArray.data()), static_cast<DWORD>(byteArray.size())) != ERROR_SUCCESS)
 					throwError("SetValueError", tr("Cannot set the value data"));
 			}
 			break;
@@ -138,7 +138,7 @@ namespace Code
 				if(data.type() == QVariant::String || data.canConvert(QVariant::String))
 				{
 					std::wstring wideData = data.toString().toStdWString();
-					if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), wideData.size() * sizeof(wchar_t)) != ERROR_SUCCESS)
+					if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), static_cast<DWORD>(wideData.size() * sizeof(wchar_t))) != ERROR_SUCCESS)
 						throwError("SetValueError", tr("Cannot set the value data"));
 				}
 				else

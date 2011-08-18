@@ -192,7 +192,7 @@ namespace Code
 		return context()->thisObject();
 	}
 	
-	int IniFile::keyCount() const
+	size_t IniFile::keyCount() const
 	{
 		return mConfig.getNumDataMembers();
 	}

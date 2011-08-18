@@ -67,7 +67,7 @@ public:
 	const char * getStringValue(const char *name) const;
 	bool deleteData(const char *name);
 	void setStringValue(const char *name, const char *value);
-	int getNumDataMembers() const;
+	size_t getNumDataMembers() const;
 	const char *getDataNameAt(int index) const;
 	const char *getDataValueAt(int index) const;
 	bool exists(const char *name) const;

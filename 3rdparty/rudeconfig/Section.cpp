@@ -54,7 +54,8 @@ Section::Section(const char *sectionname, const char *sectioncomment)
 	d_sectionname = sectionname ? sectionname: "";
 	d_sectioncomment = sectioncomment ? sectioncomment: "";
 }
-
+
+
 Section::~Section()
 {
 	std::vector<DataLine*>::iterator iter;
@@ -63,11 +64,13 @@ Section::~Section()
 			delete (*iter);
 	}
 }
-
+
+
 void Section::acceptWriter(AbstractWriter& writer) const
 {
 	writer.visitSection(*this);
-
+
+
 	// Send the writer to all the children.
 	// The writer will know what to do.
 	//
@@ -77,27 +80,32 @@ void Section::acceptWriter(AbstractWriter& writer) const
 		(*iter)->acceptWriter(writer);
 	}
 }
-
+
+
 const char *Section::getSectionName() const
 {
 	return d_sectionname.c_str();
 }
-
+
+
 const char *Section::getSectionComment() const
 {
 	return d_sectioncomment.c_str();
 }
-
+
+
 void Section::setSectionComment(const char * newcomment)
 {
 	d_sectioncomment = newcomment ? newcomment : "";
 }
-
+
+
 bool Section::isDeleted() const
 {
 	return d_isDeleted;
 }
-
+
+
 void Section::isDeleted(bool is_it_or_not)
 {
 	d_isDeleted = is_it_or_not;
@@ -114,13 +122,15 @@ void Section::isDeleted(bool is_it_or_not)
 		d_kv_map.clear();
 	}
 }
-
-int Section::getNumDataMembers() const
+
+
+size_t Section::getNumDataMembers() const
 {
 	
 	return d_kv_vector.size();
 }
-
+
+
 const char *Section::getDataNameAt(int index) const
 {
 	KeyValue *kv = d_kv_vector[index];
@@ -130,7 +140,8 @@ const char *Section::getDataNameAt(int index) const
 	}
 	return "";
 }
-
+
+
 const char *Section::getDataValueAt(int index) const
 {
 	KeyValue *kv = d_kv_vector[index];
@@ -140,7 +151,8 @@ const char *Section::getDataValueAt(int index) const
 	}
 	return "";
 }
-
+
+
 // MAPPED
 //
 bool Section::exists(const char *name) const
@@ -156,7 +168,8 @@ bool Section::exists(const char *name) const
 	}
 	return false;
 }
-
+
+
 // MAPPED
 //
 const char * Section::getValue(const char *name) const
@@ -172,7 +185,8 @@ const char * Section::getValue(const char *name) const
 	}
 	return "";
 }
-
+
+
 // MAPPED
 //
 void Section::setValue(const char *name, const char *value)
@@ -198,7 +212,8 @@ void Section::setValue(const char *name, const char *value)
 		}
 	}
 }
-
+
+
 // MAPPED
 //
 const char * Section::getComment(const char *name) const
@@ -214,7 +229,8 @@ const char * Section::getComment(const char *name) const
 	}
 	return "";
 }
-
+
+
 // MAPPED
 //
 void Section::setComment(const char *name, const char *comment)
@@ -229,7 +245,8 @@ void Section::setComment(const char *name, const char *comment)
 		} 
 	}
 }
-
+
+
 // MAPPED
 //
 void Section::setValue(const char *name, const char *value, const char *comment)
@@ -248,14 +265,16 @@ void Section::setValue(const char *name, const char *value, const char *comment)
 		else
 		{	
 			KeyValue *newdata = new KeyValue(name, value, comment);
-
+
+
 			d_allDataVector.push_back(newdata);
 			d_kv_vector.push_back(newdata);
 			d_kv_map[myname] = newdata;
 		}
 	}
 }
-
+
+
 // MAPPED
 //
 void Section::addComment(const char *comment)
@@ -263,7 +282,8 @@ void Section::addComment(const char *comment)
 	Comment *newdata = new Comment(comment);
 	d_allDataVector.push_back(newdata);
 }
-
+
+
 // MAPPED
 //
 void Section::addWhiteSpace(const char *whitespace)
@@ -271,7 +291,8 @@ void Section::addWhiteSpace(const char *whitespace)
 	WhiteSpace *newdata = new WhiteSpace(whitespace);
 	d_allDataVector.push_back(newdata);
 }
-
+
+
 // MAPPED
 //
 bool Section::deleteData(const char *name)
@@ -288,7 +309,8 @@ bool Section::deleteData(const char *name)
 			// Remain in d_allDataVector, but as deleted
 			//
 			mydata->isDeleted(true);
-
+
+
 			// remove from keyvalue vector and map
 			//
 			std::vector<KeyValue*>::iterator iter;
@@ -302,13 +324,17 @@ bool Section::deleteData(const char *name)
 			}
 			
 			d_kv_map.erase(myname);
-
+
+
 			return true;
 		}
 	}
 	return false;
 }
-
+
+
 }} // end namespace rude::config
-
-
+
+
+
+

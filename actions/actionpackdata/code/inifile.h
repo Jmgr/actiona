@@ -58,7 +58,7 @@ namespace Code
 		QString keyValue(const QString &keyName) const;
 		QScriptValue setKeyValue(const QString &keyName, const QString &value);
 		QScriptValue deleteKey(const QString &keyName);
-		int keyCount() const;
+		size_t keyCount() const;
 	
 	private:
 		rude::Config mConfig;

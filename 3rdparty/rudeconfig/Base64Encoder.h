@@ -45,7 +45,7 @@ public:
 		//
 		// CALLER RESPONSIBLE FOR DELETING RETURNED char * if it is not NULL.
 		//
-		static char * encode(const char *data, int datalength, int &outlength);
+		static char * encode(const char *data, size_t datalength, int &outlength);
 
 
 		// datalength does not need to include the NULL terminator for strings
@@ -54,7 +54,7 @@ public:
 		//
 		// CALLER RESPONSIBLE FOR DELETING RETURNED char * if it is not NULL.
 		//
-		static char * decode(const char *data, int datalength, int &outlength);
+		static char * decode(const char *data, size_t datalength, int &outlength);
 
 };
 }}

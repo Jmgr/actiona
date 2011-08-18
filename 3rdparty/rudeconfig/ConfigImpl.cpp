@@ -255,7 +255,7 @@ char * ConfigImpl::stringToBinary(const char *value, int &outlength)
 
 	if(value)
 	{
-		int datalength=std::strlen(value);
+		size_t datalength=std::strlen(value);
 		return Base64Encoder::decode(value, datalength, outlength);
 	}
 	outlength=0;
@@ -568,7 +568,7 @@ bool ConfigImpl::deleteSection(const char *sectionname)
 
 
 
-int ConfigImpl::getNumDataMembers() const
+size_t ConfigImpl::getNumDataMembers() const
 {
 		return d_file->getNumDataMembers();
 }
@@ -615,7 +615,7 @@ bool ConfigImpl::deleteData(const char *name)
 	///////////////////////////////
 
 
-int ConfigImpl::getNumDataMembers(const char *key) const
+size_t ConfigImpl::getNumDataMembers(const char *key) const
 {
 	if(exists(key))
 	{

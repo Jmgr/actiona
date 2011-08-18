@@ -325,7 +325,7 @@ public:
 	// config->getNumDataMembers(); // returns 3
 	// </code>
 	//=
-	int getNumDataMembers() const;
+	size_t getNumDataMembers() const;
 
 	//=
 	// Enumeration method to discover data members within the current section

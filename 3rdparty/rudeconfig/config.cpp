@@ -197,7 +197,7 @@ bool Config::deleteSection(const char *sectionname)
 //////////////////////////////////////////
 // Data Methods
 //////////////////////////////////////////
-int Config::getNumDataMembers() const
+size_t Config::getNumDataMembers() const
 {
 	return d_implementation->getNumDataMembers();
 }

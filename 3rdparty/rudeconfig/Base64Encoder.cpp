@@ -78,7 +78,7 @@ inline unsigned char Base64Encoder::c_decode(char c)
 }
 
 
-char * Base64Encoder::encode(const char *data, int datalength, int &outlength)
+char * Base64Encoder::encode(const char *data, size_t datalength, int &outlength)
 {
       
 	
@@ -92,10 +92,10 @@ char * Base64Encoder::encode(const char *data, int datalength, int &outlength)
 
 		char *retval=new char[datalength * 2];
 		const char *crlf="\n";
-		int crlflength=strlen(crlf);
+		size_t crlflength=strlen(crlf);
 		int maxlinelength=76;
 		
-      for (int i=0; i<datalength; i+=3)
+	  for (size_t i=0; i<datalength; i+=3)
       {
 				unsigned char by1, by2, by3, by4, by5, by6, by7;
             by1 = data[i];
@@ -157,7 +157,7 @@ char * Base64Encoder::encode(const char *data, int datalength, int &outlength)
 				//
             if (maxlinelength != 0 && linelength >= maxlinelength)
             {
-						for(int y=0; y< crlflength; y++)
+						for(size_t y=0; y< crlflength; y++)
 						{
 							retval[outlength++]= crlf[y];
 						}
@@ -172,7 +172,7 @@ char * Base64Encoder::encode(const char *data, int datalength, int &outlength)
 }
 
 
-char * Base64Encoder::decode(const char *data, int datalength, int &outlength)
+char * Base64Encoder::decode(const char *data, size_t datalength, int &outlength)
 {
 		// Error if incoming data is NULL
 		// Error if nothing to decode
@@ -198,7 +198,7 @@ char * Base64Encoder::decode(const char *data, int datalength, int &outlength)
       // copy all base64 characters into outbuffer,
       // in other words, strip away CRLF's and non-b64 characters...
 		//
-      for (int j=0;j < datalength; j++)
+	  for (size_t j=0;j < datalength; j++)
       {
             if (IsBase64(data[j]))
             {

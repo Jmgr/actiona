@@ -170,7 +170,7 @@ namespace ActionTools
 					wideData += L'\0';
 				}
 
-				if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_MULTI_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), wideData.size() * sizeof(wchar_t)) != ERROR_SUCCESS)
+				if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_MULTI_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), static_cast<DWORD>(wideData.size() * sizeof(wchar_t))) != ERROR_SUCCESS)
 				{
 					RegCloseKey(hKey);
 					return WriteCannotWriteValue;
@@ -192,7 +192,7 @@ namespace ActionTools
 				if(data.type() == QVariant::String || data.canConvert(QVariant::String))
 				{
 					std::wstring wideData = data.toString().toStdWString();
-					if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), wideData.size() * sizeof(wchar_t)) != ERROR_SUCCESS)
+					if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), static_cast<DWORD>(wideData.size() * sizeof(wchar_t))) != ERROR_SUCCESS)
 					{
 						RegCloseKey(hKey);
 						return WriteCannotWriteValue;

@@ -159,7 +159,7 @@ public:
 
 	// DATA METHODS
 	//
-	int getNumDataMembers() const;
+	size_t getNumDataMembers() const;
 	const char *getDataNameAt(int index) const;
 	const char *getDataValueAt(int index) const;
 	bool exists(const char *name) const;
@@ -170,7 +170,7 @@ public:
 
 	// Working with Duplicate Keys
 	//
-	int getNumDataMembers(const char *key) const;
+	size_t getNumDataMembers(const char *key) const;
 	const char * getStringValue(const char *name, int index) const;
 	void addStringValue(const char *name, const char *value);
 	bool deleteData(const char *name, int index);

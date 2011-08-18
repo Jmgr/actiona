@@ -321,7 +321,7 @@ void Writer::visitKeyValue(const KeyValue& dataline) const
 
 			// if value starts with whitespace, ends with whitespace or contains the comment character or CRLF's, quote the value,
 			//
-			int size = value.size();
+			size_t size = value.size();
 
 			locale loc;
 

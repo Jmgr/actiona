@@ -44,8 +44,10 @@ File::File()
 	std::string empty = "";
 	d_sectionmap[empty] = d_currentSection;
 }
-
-
+
+
+
+
 File::~File()
 {
 	std::vector<Section*>::iterator iter;
@@ -54,11 +56,13 @@ File::~File()
 		delete (*iter);
 	}
 }
-
+
+
 void File::acceptWriter(AbstractWriter& writer) const
 {
 	writer.visitFile(*this);
-
+
+
 	// All the data members are responsible for printing themselves out.
 	// They are also responsible for knowing what to do when they are
 	// marked as deleted and when commentchar / delimiter are 0
@@ -78,15 +82,18 @@ void File::clear()
 	}
 	d_sections.clear();
 	d_sectionmap.clear();
-
-
+
+
+
+
 	// We create one to begin with, swo that we always
 	// have a valid d_currentSection to work with.
 	d_currentSection = new Section("", 0);
 	d_sections.push_back(d_currentSection);
 	std::string empty = "";
 	d_sectionmap[empty] = d_currentSection;
-
+
+
 }
 const char * File::getStringValue(const char *name) const
 {
@@ -96,7 +103,8 @@ const char * File::getStringValue(const char *name) const
 	}
 	return 0;
 }
-
+
+
 bool File::deleteData(const char *name)
 {
 	if(d_currentSection)
@@ -105,7 +113,8 @@ bool File::deleteData(const char *name)
 	}
 	return false;
 }
-
+
+
 void File::setStringValue(const char *name, const char *value)
 {
 	if(d_currentSection)
@@ -113,8 +122,9 @@ void File::setStringValue(const char *name, const char *value)
 		d_currentSection->setValue(name, value);
 	}
 }
-
-int File::getNumDataMembers() const
+
+
+size_t File::getNumDataMembers() const
 {
 	if(d_currentSection)
 	{
@@ -122,7 +132,8 @@ int File::getNumDataMembers() const
 	}
 	return 0;
 }
-
+
+
 const char *File::getDataNameAt(int index) const
 {
 	if(d_currentSection)
@@ -131,7 +142,8 @@ const char *File::getDataNameAt(int index) const
 	}
 	return 0;
 }
-
+
+
 const char *File::getDataValueAt(int index) const
 {
 	if(d_currentSection)
@@ -140,8 +152,10 @@ const char *File::getDataValueAt(int index) const
 	}
 	return 0;
 }
-
-
+
+
+
+
 bool File::exists(const char *name) const
 {
 	if(d_currentSection)
@@ -150,12 +164,13 @@ bool File::exists(const char *name) const
 	}
 	return 0;
 }
-
+
+
 int File::getNumSections() const
 {
-	int len = d_sections.size();
+	size_t len = d_sections.size();
 	int count = 0;
-	for(int x=0; x< len; x++)
+	for(size_t x=0; x< len; x++)
 	{
 		Section *theSection = d_sections[x];
 		if(!theSection->isDeleted())
@@ -165,12 +180,13 @@ int File::getNumSections() const
 	}
 	return count;
 }
-
+
+
 const char *File::getSectionNameAt(int index) const
 {
-	int len = d_sections.size();
+	size_t len = d_sections.size();
 	int position = 0;
-	for(int x=0; x< len; x++)
+	for(size_t x=0; x< len; x++)
 	{
 		Section *theSection = d_sections[x];
 		if(!theSection->isDeleted())
@@ -184,7 +200,8 @@ const char *File::getSectionNameAt(int index) const
 	}
 	return 0;
 }
-
+
+
 bool File::setSection(const char *sectionname, bool shouldCreate)
 {
 	if(sectionname)
@@ -227,13 +244,15 @@ bool File::setSection(const char *sectionname, bool shouldCreate)
 	}
 	return false;
 }
-
+
+
 Section *File::getSection(const char *sectionname)
 {
 	setSection(sectionname, true);
 	return d_currentSection;
 }
-
+
+
 bool File::deleteSection(const char *sectionname)
 {
 	if(sectionname)
@@ -256,14 +275,19 @@ bool File::deleteSection(const char *sectionname)
 					return setSection("", true);
 				}
 				return true;
-
+
+
 		}
 		// The section could not be found.....
 	}
 	return false;	
 }
-
-
-
+
+
+
+
+
+
 }} // end namespace rude::config
-
+
+
