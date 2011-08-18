@@ -160,7 +160,7 @@ namespace Code
 	
 	QString IniFile::keyAt(int keyIndex) const
 	{
-		if(keyIndex < 0 || keyIndex >= mConfig.getNumDataMembers())
+		if(keyIndex < 0 || keyIndex >= static_cast<int>(mConfig.getNumDataMembers()))
 		{
 			throwError("FindSectionError", tr("Invalid key index"));
 			return QString();

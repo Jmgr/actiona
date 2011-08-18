@@ -67,11 +67,11 @@ enum KeyValueState{ KEY, KEYESCAPE, STARTVALUE, COMMENT, FINDCOMMENT, KVERROR, E
 
 void ParserJuly2004::stripTrailing(std::string& buffer)
 {
-	size_t bufferLength = buffer.size();
+	int bufferLength = static_cast<int>(buffer.size());
 
 	locale loc;
 
-	for (size_t x = bufferLength - 1; x >= 0; x--)
+	for (int x = bufferLength - 1; x >= 0; x--)
 	{
 		char c = buffer[x];
 

@@ -24,6 +24,7 @@
 #ifndef INCLUDED_BASE64ENCODER_H
 #define INCLUDED_BASE64ENCODER_H
 
+#include <cstring>
 
 namespace rude{
 namespace config{
