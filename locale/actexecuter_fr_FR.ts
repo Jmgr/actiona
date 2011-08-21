@@ -17,62 +17,67 @@
         <translation>Exception non gérée :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="74"/>
+        <location filename="../actexecuter/main.cpp" line="77"/>
         <source>switch to code mode, may not be used with -r</source>
         <translation>passer en mode code, ne peut pas être utilisé avec -r</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="76"/>
+        <location filename="../actexecuter/main.cpp" line="79"/>
         <source>switch to script mode, may not be used with -o</source>
         <translation>passer en mode script, ne peut pas être utiliser avec -o</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="78"/>
+        <location filename="../actexecuter/main.cpp" line="81"/>
         <source>do not include the Qt library into the code</source>
         <translation>ne pas inclure la bibliothèque Qt dans le code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="80"/>
+        <location filename="../actexecuter/main.cpp" line="83"/>
         <source>starts in portable mode, storing the settings in the executable folder</source>
         <translation>démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="82"/>
+        <location filename="../actexecuter/main.cpp" line="85"/>
         <source>show the program version</source>
         <translation>afficher la version du programme</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="83"/>
+        <location filename="../actexecuter/main.cpp" line="86"/>
         <source>show this help text</source>
         <translation>afficher ce texte d&apos;aide</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="139"/>
+        <location filename="../actexecuter/main.cpp" line="166"/>
         <source>usage: </source>
         <translation>usage :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="139"/>
+        <location filename="../actexecuter/main.cpp" line="166"/>
         <source>[parameters]</source>
         <translation>[paramètres]</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="139"/>
+        <location filename="../actexecuter/main.cpp" line="166"/>
         <source>filename</source>
         <translation>nom de fichier</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="140"/>
+        <location filename="../actexecuter/main.cpp" line="167"/>
         <source>Parameters are:</source>
         <translation>Les paramètres sont :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="177"/>
+        <location filename="../actexecuter/main.cpp" line="221"/>
+        <source>Unknown execution mode, please specify mode=script or mode=code</source>
+        <translation>Mode d&apos;exécution inconnu, merci de spécifier mode=script ou mode=code</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="247"/>
         <source>Unknown execution mode, please specify -o (script) or -r (code)</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="187"/>
+        <location filename="../actexecuter/main.cpp" line="257"/>
         <source>Unable to read input file</source>
         <translation>Impossible de lire le fichier d&apos;entrée</translation>
     </message>
@@ -100,6 +105,11 @@
         <location filename="../actexecuter/scriptexecuter.cpp" line="97"/>
         <source>Execution error: </source>
         <translation>Erreur d&apos;exécution :</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/mainclass.cpp" line="69"/>
+        <source>Unable to download the requested file, &quot;%1&quot;</source>
+        <translation>Impossible de télécharger le fichier demandé, &quot;%1&quot;</translation>
     </message>
 </context>
 </TS>
