@@ -60,13 +60,13 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 	mScriptAgent->setDebuggerAgent(debuggerAgent);
 }
 
-bool CodeExecuter::start(QFile &file)
+bool CodeExecuter::start(QIODevice *device, const QString &filename)
 {
-	if(!Executer::start(file))
+	if(!Executer::start(device, filename))
 		return false;
 	
-	QString code = file.readAll();
-	file.close();
+	QString code = device->readAll();
+	device->close();
 	
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::ActionInit);
 	LibExecuter::CodeInitializer::initialize(mScriptEngine, mScriptAgent, actionFactory());
@@ -115,7 +115,7 @@ bool CodeExecuter::start(QFile &file)
 
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::Parameters);
 	
-	QScriptValue result = mScriptEngine->evaluate(code, file.fileName());
+	QScriptValue result = mScriptEngine->evaluate(code, filename);
 	if(result.isError())
 	{
 		QTextStream stream(stdout);

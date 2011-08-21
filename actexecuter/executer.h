@@ -23,7 +23,7 @@
 
 #include <QObject>
 
-class QFile;
+class QIODevice;
 
 namespace ActionTools
 {
@@ -38,7 +38,7 @@ public:
     explicit Executer(QObject *parent = 0);
 	virtual ~Executer();
 	
-	virtual bool start(QFile &file);
+	virtual bool start(QIODevice *device, const QString &filename);
 	
 protected:
 	ActionTools::ActionFactory *actionFactory() const;

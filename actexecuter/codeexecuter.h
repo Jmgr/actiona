@@ -39,7 +39,7 @@ class CodeExecuter : public Executer
 public:
     explicit CodeExecuter(QObject *parent = 0);
 	
-	bool start(QFile &file);
+	bool start(QIODevice *device, const QString &filename);
 	
 private slots:
 	void onEvaluationResumed();

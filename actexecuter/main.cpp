@@ -36,6 +36,7 @@
 #include <QSettings>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QUrl>
 
 #ifdef Q_WS_X11
 #undef signals
@@ -68,6 +69,8 @@ int main(int argc, char **argv)
 
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
+	const QStringList &arguments = QCoreApplication::arguments();
+
 	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
@@ -82,7 +85,7 @@ int main(int argc, char **argv)
 	options.add("version", QObject::tr("show the program version"));
 	options.add("help", QObject::tr("show this help text"));
 	options.alias("help", "h");
-	options.parse(QCoreApplication::arguments());
+	options.parse(arguments);
 
 	if(options.count("portable"))
 	{
@@ -173,8 +176,6 @@ int main(int argc, char **argv)
 	if(!options.count("nocodeqt"))
 		app.addLibraryPath(QApplication::applicationDirPath() + "/code");
 
-	QString filename = options.positional().at(0);
-	
 #ifdef Q_WS_X11
 	{
 #ifdef ACT_PROFILE
@@ -184,41 +185,86 @@ int main(int argc, char **argv)
 	}
 #endif
 
+	QUrl protocolUrl = QUrl::fromEncoded(arguments.at(1).toUtf8());
+	if(protocolUrl.isValid() && protocolUrl.scheme() != "actionaz")
+		protocolUrl = QUrl();
+
 	MainClass::ExecutionMode executionMode = MainClass::Unknown;
-	if(options.count("code"))
-		executionMode = MainClass::Code;
-	else if(options.count("script"))
-		executionMode = MainClass::Script;
-	else
+	MainClass mainClass;
+
+	if(protocolUrl.isValid())
 	{
-		if(filename.endsWith(".ascr"))
-			executionMode = MainClass::Script;
-		else if(filename.endsWith(".acod"))
+		QString mode;
+		typedef QPair<QString, QString> QStringPair;
+		foreach(const QStringPair &queryItem, protocolUrl.queryItems())
+		{
+			if(queryItem.first == "mode")
+			{
+				mode = queryItem.second;
+				break;
+			}
+		}
+
+		if(mode == "code")
 			executionMode = MainClass::Code;
+		else if(mode == "script")
+			executionMode = MainClass::Script;
 		else
 		{
+			if(protocolUrl.path().endsWith(".ascr"))
+				executionMode = MainClass::Script;
+			else if(protocolUrl.path().endsWith(".acod"))
+				executionMode = MainClass::Code;
+			else
+			{
+				QTextStream stream(stdout);
+				stream << QObject::tr("Unknown execution mode, please specify mode=script or mode=code") << "\n";
+				stream.flush();
+				return -1;
+			}
+		}
+
+		if(!mainClass.start(executionMode, protocolUrl))
+			return -1;
+	}
+	else
+	{
+		QString filename = options.positional().at(0);
+
+		if(options.count("code"))
+			executionMode = MainClass::Code;
+		else if(options.count("script"))
+			executionMode = MainClass::Script;
+		else
+		{
+			if(filename.endsWith(".ascr"))
+				executionMode = MainClass::Script;
+			else if(filename.endsWith(".acod"))
+				executionMode = MainClass::Code;
+			else
+			{
+				QTextStream stream(stdout);
+				stream << QObject::tr("Unknown execution mode, please specify -o (script) or -r (code)") << "\n";
+				stream.flush();
+				return -1;
+			}
+		}
+
+		QFile file(filename);
+		if(!file.open(QIODevice::ReadOnly))
+		{
 			QTextStream stream(stdout);
-			stream << QObject::tr("Unknown execution mode, please specify -o (script) or -r (code)") << "\n";
+			stream << QObject::tr("Unable to read input file") << "\n";
 			stream.flush();
 			return -1;
 		}
-	}
 
-	QFile file(filename);
-	if(!file.open(QIODevice::ReadOnly))
-	{
-		QTextStream stream(stdout);
-		stream << QObject::tr("Unable to read input file") << "\n";
-		stream.flush();
-		return -1;
-	}
+		if(!mainClass.start(executionMode, &file, file.fileName()))
+		{
+			file.close();
 
-	MainClass mainClass(executionMode);
-	if(!mainClass.start(file))
-	{
-		file.close();
-
-		return -1;
+			return -1;
+		}
 	}
 
 	return app.exec();

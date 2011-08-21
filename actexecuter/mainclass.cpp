@@ -22,20 +22,65 @@
 #include "codeexecuter.h"
 #include "scriptexecuter.h"
 
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QApplication>
+#include <QBuffer>
+#include <QTimer>
+
 const Tools::Version MainClass::ScriptVersion(0, 0, 1);
 const Tools::Version MainClass::ActionazVersion(0, 0, 1);
 
-MainClass::MainClass(ExecutionMode executionMode)
+MainClass::MainClass()
 	: QObject(0),
-	mExecuter(0)
+	mExecuter(0),
+	mNetworkAccessManager(new QNetworkAccessManager(this))
+{
+}
+
+bool MainClass::start(ExecutionMode executionMode, QIODevice *device, const QString &filename)
 {
 	if(executionMode == Script)
 		mExecuter = new ScriptExecuter(this);
 	else
 		mExecuter = new CodeExecuter(this);
+
+	return mExecuter->start(device, filename);
 }
 
-bool MainClass::start(QFile &file)
+bool MainClass::start(ExecutionMode executionMode, const QUrl &url)
 {
-	return mExecuter->start(file);
+	mExecutionMode = executionMode;
+	mUrl = url;
+	mUrl.setScheme("http");
+
+	mNetworkReply = mNetworkAccessManager->get(QNetworkRequest(mUrl));
+	connect(mNetworkReply, SIGNAL(finished()), this, SLOT(downloadFinished()));
+
+	return true;
+}
+
+void MainClass::downloadFinished()
+{
+	if(mNetworkReply->error() != QNetworkReply::NoError)
+	{
+		QTextStream stream(stdout);
+		stream << QObject::tr("Unable to download the requested file, \"%1\"").arg(mNetworkReply->errorString()) << "\n";
+		stream.flush();
+		QApplication::exit(-1);
+	}
+	else
+	{
+		QByteArray data = mNetworkReply->readAll();
+		QBuffer buffer(&data);
+		buffer.open(QIODevice::ReadOnly);
+
+		if(!start(mExecutionMode, &buffer, mUrl.toString()))
+			QApplication::exit(-1);
+	}
+
+	mNetworkReply->close();
+	mNetworkReply->deleteLater();
+	mNetworkReply = 0;
 }

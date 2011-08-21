@@ -36,12 +36,12 @@ ScriptExecuter::ScriptExecuter(QObject *parent) :
 	connect(mExecuter, SIGNAL(scriptError(int,QString,QString)), this, SLOT(scriptError(int,QString,QString)));
 }
 
-bool ScriptExecuter::start(QFile &file)
+bool ScriptExecuter::start(QIODevice *device, const QString &filename)
 {
-	if(!Executer::start(file))
+	if(!Executer::start(device, filename))
 		return false;
 	
-	ActionTools::Script::ReadResult result = mScript->read(&file, MainClass::ScriptVersion);
+	ActionTools::Script::ReadResult result = mScript->read(device, MainClass::ScriptVersion);
 	switch(result)
 	{
 	case ActionTools::Script::ReadInternal:
@@ -69,7 +69,7 @@ bool ScriptExecuter::start(QFile &file)
 		break;
 	}
 	
-	file.close();
+	device->close();
 	
 	mExecuter->setup(mScript, actionFactory(), false, 0, 0, false, 0, 0, 0, 0, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION, true, 0);
 	if(!mExecuter->startExecution(false))

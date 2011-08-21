@@ -39,9 +39,10 @@ Executer::~Executer()
 {
 }
 
-bool Executer::start(QFile &file)
+bool Executer::start(QIODevice *device, const QString &filename)
 {
-	Q_UNUSED(file)
+	Q_UNUSED(device)
+	Q_UNUSED(filename)
 
 	QSettings settings;
 	QString locale = settings.value("locale", QLocale::system().name()).toString();

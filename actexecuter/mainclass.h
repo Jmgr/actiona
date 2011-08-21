@@ -24,9 +24,13 @@
 #include "version.h"
 
 #include <QObject>
+#include <QUrl>
 
 class Executer;
-class QFile;
+class QIODevice;
+class QNetworkAccessManager;
+class QNetworkReply;
+class QTemporaryFile;
 
 class MainClass : public QObject
 {
@@ -43,12 +47,20 @@ public:
 	static const Tools::Version ScriptVersion;
 	static const Tools::Version ActionazVersion;
 	
-    MainClass(ExecutionMode executionMode);
+	MainClass();
 	
-	bool start(QFile &file);
+	bool start(ExecutionMode executionMode, QIODevice *device, const QString &filename);
+	bool start(ExecutionMode executionMode, const QUrl &url);
 	
+private slots:
+	void downloadFinished();
+
 private:
 	Executer *mExecuter;
+	QNetworkAccessManager *mNetworkAccessManager;
+	QNetworkReply *mNetworkReply;
+	ExecutionMode mExecutionMode;
+	QUrl mUrl;
 };
 
 #endif // MAINCLASS_H
