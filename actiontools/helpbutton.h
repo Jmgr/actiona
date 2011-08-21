@@ -34,13 +34,13 @@ namespace ActionTools
 	public:
 		explicit HelpButton(QWidget *parent = 0);
 		
-		void key(const QString &key)						{ mKey = key; }
+		void setTopic(const QString &topic)						{ mTopic = topic; }
 		
 	private slots:
 		void clicked();
 		
 	private:
-		QString mKey;
+		QString mTopic;
 	};
 }
 

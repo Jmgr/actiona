@@ -86,7 +86,10 @@
       </widget>
      </item>
      <item>
-      <widget class="ActionTools::HelpButton" name="pushButton">
+      <widget class="ActionTools::HelpButton" name="helpPushButton">
+       <property name="toolTip">
+        <string>Click to open the associated wiki page</string>
+       </property>
        <property name="text">
         <string/>
        </property>

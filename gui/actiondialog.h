@@ -51,7 +51,7 @@ class ActionDialog : public QDialog
 	Q_OBJECT
 
 public:
-	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, QWidget *parent = 0);
+	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent = 0);
 	~ActionDialog();
 
 public slots:

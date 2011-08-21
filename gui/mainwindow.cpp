@@ -291,7 +291,7 @@ void MainWindow::postInit()
 
 			setTaskbarProgress(actionDefinitionIndex, mActionFactory->actionDefinitionCount() - 1);
 
-			mActionDialogs.append(new ActionDialog(mCompletionModel, mScript, actionDefinition, this));
+			mActionDialogs.append(new ActionDialog(mCompletionModel, mScript, actionDefinition, mUsedLocale, this));
 		}
 	}
 
