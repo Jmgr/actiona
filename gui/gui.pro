@@ -10,6 +10,7 @@ CONFIG += console
 }
 MOBILITY += systeminfo
 TARGET = actionaz
+VERSION = $$ACTIONAZ_VERSION
 DESTDIR = ..
 SOURCES += main.cpp \
 	mainwindow.cpp \

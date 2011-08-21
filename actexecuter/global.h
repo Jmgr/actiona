@@ -25,8 +25,8 @@
 
 namespace Global
 {
-	const Tools::Version	ACTIONAZ_VERSION =	Tools::Version(0, 0, 1);
-	const Tools::Version	SCRIPT_VERSION =	Tools::Version(0, 0, 1);
+	const Tools::Version	ACTIONAZ_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_VERSION));
+	const Tools::Version	SCRIPT_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_SCRIPT_VERSION));
 }
 
 #endif // GLOBAL_H

@@ -36,6 +36,9 @@
 #undef minor
 #endif
 
+#define STRINGIZE(X) #X
+#define VERSION_TO_STRING(X) STRINGIZE(X)
+
 namespace Tools
 {
 	class VersionData : public QSharedData

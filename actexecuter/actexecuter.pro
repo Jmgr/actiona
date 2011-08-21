@@ -5,6 +5,7 @@ QT += xml \
     script \
     scripttools
 TARGET = actexec
+VERSION = $$ACTIONAZ_VERSION
 DESTDIR = ..
 SOURCES += main.cpp \
     executer.cpp \
