@@ -139,7 +139,7 @@ void ScriptParametersDialog::accept()
 			return;
 		}
 
-		bool isCode;
+		bool isCode = false;
 		QString value;
 
 		switch(mParameterTypes.at(row))
