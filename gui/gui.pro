@@ -90,5 +90,11 @@ unix {
 	locales.path = $${PREFIX}/share/actionaz/locale
 	locales.files = ../locale/gui_fr_FR.qm
 
-	INSTALLS += target locales
+	icon.path = $${PREFIX}/share/pixmaps
+	icon.files = icons/actionaz.png
+
+	desktopfile.path = $${PREFIX}/share/applications
+	desktopfile.files = ../actionaz.desktop
+
+	INSTALLS += target locales icon desktopfile
 }
