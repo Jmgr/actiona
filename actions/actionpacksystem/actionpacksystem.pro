@@ -21,7 +21,7 @@ SOURCES += \
 unix {
 	locales.path = $${PREFIX}/share/actionaz/locale
 	locales.files = ../../locale/actionpacksystem_fr_FR.qm
-	locales.config = no_check_exist
+	locales.CONFIG = no_check_exist
 
 	INSTALLS += locales
 }
