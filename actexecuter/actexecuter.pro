@@ -41,6 +41,7 @@ unix {
 
 	locales.path = $${PREFIX}/share/actionaz/locale
 	locales.files = ../locale/actexecuter_fr_FR.qm
+	locales.config = no_check_exist
 
 	INSTALLS += target locales
 }
