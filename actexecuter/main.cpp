@@ -83,6 +83,7 @@ int main(int argc, char **argv)
 	options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
 	options.alias("portable", "p");
 	options.add("version", QObject::tr("show the program version"));
+	options.alias("version", "v");
 	options.add("help", QObject::tr("show this help text"));
 	options.alias("help", "h");
 	options.parse(arguments);
