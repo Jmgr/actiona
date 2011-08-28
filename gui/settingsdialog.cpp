@@ -52,18 +52,17 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 {
 	ui->setupUi(this);
 
+#ifdef ACT_NO_UPDATER
+	ui->settingsTab->removeTab(ui->settingsTab->indexOf(ui->networkTab));
+#else
+	connect(mNetworkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(proxyTestFinished(QNetworkReply*)));
+#endif
+
 #ifdef Q_WS_X11
 	ui->fileAssociationsLabel->setVisible(false);
 	ui->associateASCRCheckBox->setVisible(false);
 	ui->associateACODCheckBox->setVisible(false);
 #endif
-
-#ifdef ACT_NO_UPDATER
-	ui->updatesCheck->setVisible(false);
-	ui->updatesCheckLabel->setVisible(false);
-#endif
-
-	connect(mNetworkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(proxyTestFinished(QNetworkReply*)));
 
 	QSettings settings;
 
@@ -97,6 +96,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 		QKeySequence(settings.value("actions/openEditorKey", QKeySequence("Ctrl+Shift+V")).toString()));
 	ui->checkCodeSyntaxAutomatically->setChecked(settings.value("actions/checkCodeSyntaxAutomatically", QVariant(true)).toBool());
 
+#ifndef ACT_NO_UPDATER
 	//NETWORK
 	ui->updatesCheck->setCurrentIndex(settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY)).toInt());
 	ui->useAProxy->setChecked(settings.value("network/useAProxy", QVariant(false)).toBool());
@@ -107,6 +107,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->proxyUser->setText(settings.value("network/proxyUser", QVariant()).toString());
 	ui->proxyPassword->setText(settings.value("network/proxyPassword", QVariant()).toString());
 	ui->proxyType->setCurrentIndex(settings.value("network/proxyType", QVariant(ActionTools::Settings::PROXY_TYPE_HTTP)).toInt());
+#endif
 
 #ifdef Q_WS_WIN
 	QVariant result;
@@ -210,6 +211,7 @@ void SettingsDialog::accept()
 	settings.setValue("actions/openEditorKey", QVariant::fromValue(ui->openEditorKey->keySequence()));
 	settings.setValue("actions/checkCodeSyntaxAutomatically", QVariant(ui->checkCodeSyntaxAutomatically->isChecked()));
 
+#ifndef ACT_NO_UPDATER
 	//NETWORK
 	settings.setValue("network/updatesCheck", QVariant(ui->updatesCheck->currentIndex()));
 	settings.setValue("network/useAProxy", QVariant(ui->useAProxy->isChecked()));
@@ -218,6 +220,7 @@ void SettingsDialog::accept()
 	settings.setValue("network/proxyUser", QVariant(ui->proxyUser->text()));
 	settings.setValue("network/proxyPassword", QVariant(ui->proxyPassword->text()));
 	settings.setValue("network/proxyType", QVariant(ui->proxyType->currentIndex()));
+#endif
 
 #ifdef Q_WS_WIN
 	bool associateASCR = (ui->associateASCRCheckBox->checkState() == Qt::Checked);
