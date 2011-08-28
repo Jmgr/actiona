@@ -74,9 +74,9 @@ int main(int argc, char **argv)
 	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
-	options.add("code", QObject::tr("switch to code mode, may not be used with -r"));
+	options.add("code", QObject::tr("switch to code mode, may not be used with -s"));
 	options.alias("code", "c");
-	options.add("script", QObject::tr("switch to script mode, may not be used with -o"));
+	options.add("script", QObject::tr("switch to script mode, may not be used with -c"));
 	options.alias("script", "s");
 	options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
 	options.alias("nocodeqt", "Q");
