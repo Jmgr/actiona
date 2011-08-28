@@ -485,7 +485,7 @@ namespace LibExecuter
 			shouldStopExecution = true;
 		}
 
-		if(exception != ActionTools::ActionException::TimeoutException)
+		if(shouldStopExecution)
 		{
 			QString currentFile = mScriptAgent->currentFile();
 			QString finalMessage;
@@ -501,10 +501,9 @@ namespace LibExecuter
 										mScriptAgent->currentLine(),
 										mScriptAgent->currentColumn(),
 										exceptionType);
-		}
 
-		if(shouldStopExecution)
 			stopExecution();
+		}
 	}
 
 	void Executer::actionExecutionEnded()
