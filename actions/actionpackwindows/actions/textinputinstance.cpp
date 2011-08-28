@@ -36,6 +36,7 @@ namespace Actions
 
 	void TextInputInstance::startExecution()
 	{
+		//TODO: Add a type parameter, to allow entering numbers
 		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 		QString question;
 		QString defaultValue;
@@ -85,6 +86,7 @@ namespace Actions
 
 	void TextInputInstance::canceled()
 	{
+		//TODO: add an exception to trigger when canceled
 		textEntered(QString());
 	}
 }
