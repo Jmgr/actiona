@@ -1,4 +1,3 @@
-Makefile*
 *.exe
 *.ilk
 *.pdb
@@ -11,5 +10,3 @@ generated
 *.so*
 *.log*
 *.cache*
-actionaz
-actexec
