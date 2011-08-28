@@ -377,7 +377,6 @@ namespace ActionTools
 				value.replace(position,
 							  foundVariable.length() + 1,
 							  stringEvalutationResult);
-				position += foundVariable.length() + 1;
 			}
 
 			mResult = value;
