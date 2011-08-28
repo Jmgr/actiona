@@ -10,3 +10,4 @@ Icon=actionaz
 Type=Application
 Categories=Utility;
 Version=1.0
+MimeType=text/actionaz-script+xml;text/actionaz-code+xml
