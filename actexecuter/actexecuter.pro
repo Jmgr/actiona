@@ -44,7 +44,7 @@ unix {
 	locales.CONFIG = no_check_exist
 
 	manfile.path = $${PREFIX}/share/man/man1
-	manfile.files = ../docs/actexec.man
+	manfile.files = ../docs/actexec.1
 
 	INSTALLS += target locales manfile
 }

@@ -98,7 +98,7 @@ unix {
 	desktopfile.files = ../actionaz.desktop
 
 	manfile.path = $${PREFIX}/share/man/man1
-	manfile.files = ../docs/actionaz.man
+	manfile.files = ../docs/actionaz.1
 
 	mimefile.path = $${PREFIX}/share/mime/packages/
 	mimefile.files = ../docs/actionaz.xml
