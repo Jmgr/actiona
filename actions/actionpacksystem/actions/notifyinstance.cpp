@@ -29,6 +29,10 @@
 #define signals
 #endif
 
+#ifndef NOTIFY_CHECK_VERSION
+#define NOTIFY_CHECK_VERSION(x,y,z) 0
+#endif
+
 namespace Actions
 {
 	NotifyInstance::NotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
@@ -64,7 +68,12 @@ namespace Actions
 
 	#ifdef Q_WS_X11
 		if(!mNotification)
-			mNotification = notify_notification_new(title.toUtf8(), text.toUtf8(), icon.toUtf8(), 0);
+			mNotification = notify_notification_new(title.toUtf8(), text.toUtf8(), icon.toUtf8()
+	#if NOTIFY_CHECK_VERSION (0, 7, 0)
+	);
+	#else
+	, 0);
+	#endif
 		else
 			notify_notification_update(mNotification, title.toUtf8(), text.toUtf8(), icon.toUtf8());
 
