@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="text/actionaz-script+xml">
+    <comment>Actionaz script file</comment>
+    <comment xml:lang="fr">Fichier script d'Actionaz</comment>
+    <glob pattern="*.ascr"/>
+  </mime-type>
+  <mime-type type="text/actionaz-code+xml">
+    <comment>Actionaz code file</comment>
+    <comment xml:lang="fr">Fichier code d'Actionaz</comment>
+    <glob pattern="*.acod"/>
+  </mime-type>
+</mime-info>
