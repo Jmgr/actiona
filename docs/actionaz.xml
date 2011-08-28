@@ -4,10 +4,12 @@
     <comment>Actionaz script file</comment>
     <comment xml:lang="fr">Fichier script d'Actionaz</comment>
     <glob pattern="*.ascr"/>
+    <icon name="actionaz"/>
   </mime-type>
   <mime-type type="text/actionaz-code+xml">
     <comment>Actionaz code file</comment>
     <comment xml:lang="fr">Fichier code d'Actionaz</comment>
     <glob pattern="*.acod"/>
+    <icon name="actionaz"/>
   </mime-type>
 </mime-info>
