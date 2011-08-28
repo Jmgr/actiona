@@ -113,6 +113,9 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 #endif
 
 	ui->setupUi(this);
+
+	if(Global::ACTIONAZ_VERSION >= Tools::Version(1, 0, 0))
+		ui->reportBugPushButton->setVisible(false);
 	
 	ui->consoleWidget->setup();
 
@@ -441,17 +444,16 @@ void MainWindow::postInit()
 
 	if(mCommandOptions->count("execute"))
 		execute(false);
-	else
+	else if(Global::ACTIONAZ_VERSION < Tools::Version(1, 0, 0))
 	{
-		if(!settings.value("hasGotAlphaMessage", false).toBool())
+		if(!settings.value("hasGotPreVersionMessage", false).toBool())
 		{
-			settings.setValue("hasGotAlphaMessage", true);
+			settings.setValue("hasGotPreVersionMessage", true);
 
-			QMessageBox::information(this, tr("Alpha test"),
-									 tr("Thank you for alpha-testing this new version of Actionaz !<br>"
+			QMessageBox::information(this, tr("Beta test"),
+									 tr("Thank you for beta-testing this new version of Actionaz !<br>"
 										"<br>Please test as many features as you can, and remember that any comments are welcome !<br><br>To report a bug or write a comment please use the <b>Report a bug</b> button.<br>"
-										"<br>Remember that this is an <b>alpha</b> version so please do not write any critical scripts with it since the script format may change before the final release.<br>"
-										"<br><i>Please do not distribute this version because it has not received enough reviews yet.</i>"));
+										"<br>Remember that this is a <b>beta</b> version so please do not write any critical scripts with it since the script format may change before the final release.<br>"));
 		}
 	}
 
