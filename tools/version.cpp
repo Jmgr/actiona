@@ -197,28 +197,46 @@ namespace Tools
 		case 2:
 			if(d->major < other.d->major)
 				return true;
+			if(d->major > other.d->major)
+				return false;
 			if(d->minor < other.d->minor)
 				return true;
+			if(d->minor > other.d->minor)
+				return false;
 
 			return false;
 		case 3:
 			if(d->major < other.d->major)
 				return true;
+			if(d->major > other.d->major)
+				return false;
 			if(d->minor < other.d->minor)
 				return true;
+			if(d->minor > other.d->minor)
+				return false;
 			if(d->micro < other.d->micro)
 				return true;
+			if(d->micro > other.d->micro)
+				return false;
 
 			return false;
 		case 4:
 			if(d->major < other.d->major)
 				return true;
+			if(d->major > other.d->major)
+				return false;
 			if(d->minor < other.d->minor)
 				return true;
+			if(d->minor > other.d->minor)
+				return false;
 			if(d->micro < other.d->micro)
 				return true;
+			if(d->micro > other.d->micro)
+				return false;
 			if(d->nano < other.d->nano)
 				return true;
+			if(d->nano > other.d->nano)
+				return false;
 
 			return false;
 		default:
@@ -241,28 +259,46 @@ namespace Tools
 		case 2:
 			if(d->major > other.d->major)
 				return true;
+			if(d->major < other.d->major)
+				return false;
 			if(d->minor > other.d->minor)
 				return true;
+			if(d->minor < other.d->minor)
+				return false;
 
 			return false;
 		case 3:
 			if(d->major > other.d->major)
 				return true;
+			if(d->major < other.d->major)
+				return false;
 			if(d->minor > other.d->minor)
 				return true;
+			if(d->minor < other.d->minor)
+				return false;
 			if(d->micro > other.d->micro)
 				return true;
+			if(d->micro < other.d->micro)
+				return false;
 
 			return false;
 		case 4:
 			if(d->major > other.d->major)
 				return true;
+			if(d->major < other.d->major)
+				return false;
 			if(d->minor > other.d->minor)
 				return true;
+			if(d->minor < other.d->minor)
+				return false;
 			if(d->micro > other.d->micro)
 				return true;
+			if(d->micro < other.d->micro)
+				return false;
 			if(d->nano > other.d->nano)
 				return true;
+			if(d->nano < other.d->nano)
+				return false;
 
 			return false;
 		default:
