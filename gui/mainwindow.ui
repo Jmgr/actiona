@@ -243,7 +243,7 @@
     <property name="title">
      <string>&amp;?</string>
     </property>
-    <addaction name="action_Help"/>
+    <addaction name="actionHelp"/>
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
@@ -838,7 +838,7 @@
     <string>Script content</string>
    </property>
   </action>
-  <action name="action_Help">
+  <action name="actionHelp">
    <property name="text">
     <string>&amp;Help</string>
    </property>

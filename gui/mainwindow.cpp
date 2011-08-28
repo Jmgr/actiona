@@ -1120,6 +1120,11 @@ void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
 	ui->menuEdit->exec(ui->scriptView->mapToGlobal(pos));
 }
 
+void MainWindow::on_actionHelp_triggered()
+{
+	QDesktopServices::openUrl(QUrl(QString("http://wiki.actionaz.org/")));
+}
+
 void MainWindow::on_reportBugPushButton_clicked()
 {
 	QDesktopServices::openUrl(QUrl(QString("http://bugs.actionaz.org?language=%1&program=actionaz&version=%2&os=%3").arg(mUsedLocale).arg(Global::ACTIONAZ_VERSION.toString()).arg(Global::currentOS())));
