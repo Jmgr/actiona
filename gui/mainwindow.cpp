@@ -606,7 +606,7 @@ void MainWindow::on_actionExport_executable_triggered()
 	QFileInfo outFileInfo(fileName);
 	if(outFileInfo.exists() && !outFileInfo.isWritable())
 	{
-		QMessageBox::warning(this, tr("Create SFX script"), tr("The output file you selected is not writeable."));
+		QMessageBox::warning(this, tr("Create SFX script"), tr("The output file you selected is not writable."));
 		return;
 	}
 
@@ -1994,7 +1994,7 @@ bool MainWindow::saveFile(const QString &fileName, bool copy)
 	QFile saveFile(fileName);
 	if(!saveFile.open(QIODevice::WriteOnly))
 	{
-		QMessageBox::warning(this, tr("Save script"), tr("Unable to save the script because the file is not writeable or you don't have enough rights."));
+		QMessageBox::warning(this, tr("Save script"), tr("Unable to save the script because the file is not writable or you don't have enough rights."));
 		return false;
 	}
 
