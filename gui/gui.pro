@@ -97,5 +97,8 @@ unix {
 	desktopfile.path = $${PREFIX}/share/applications
 	desktopfile.files = ../actionaz.desktop
 
-	INSTALLS += target locales icon desktopfile
+	manfile.path = $${PREFIX}/share/man/man1
+	manfile.files = ../docs/actionaz.man
+
+	INSTALLS += target locales icon desktopfile manfile
 }

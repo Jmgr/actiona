@@ -43,5 +43,8 @@ unix {
 	locales.files = ../locale/actexecuter_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
-	INSTALLS += target locales
+	manfile.path = $${PREFIX}/share/man/man1
+	manfile.files = ../docs/actexec.man
+
+	INSTALLS += target locales manfile
 }
