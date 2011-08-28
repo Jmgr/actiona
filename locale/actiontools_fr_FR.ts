@@ -130,22 +130,22 @@
 <context>
     <name>ActionTools::ActionFactory</name>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="144"/>
+        <location filename="../actiontools/actionfactory.cpp" line="143"/>
         <source>%1: &quot;%2&quot;</source>
         <translation>%1 : &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="151"/>
+        <location filename="../actiontools/actionfactory.cpp" line="150"/>
         <source>%1: bad definition version</source>
         <translation>%1 : mauvause définition de version</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="165"/>
+        <location filename="../actiontools/actionfactory.cpp" line="170"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; already loaded</source>
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; est déjà chargé</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="185"/>
+        <location filename="../actiontools/actionfactory.cpp" line="190"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; cannot be loaded:&lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</source>
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; ne peut pas être chargé : &lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</translation>
     </message>
@@ -303,12 +303,12 @@
 <context>
     <name>ActionTools::CodeSpinBox</name>
     <message>
-        <location filename="../actiontools/codespinbox.cpp" line="149"/>
+        <location filename="../actiontools/codespinbox.cpp" line="146"/>
         <source>&amp;Step up</source>
         <translation>&amp;Monter</translation>
     </message>
     <message>
-        <location filename="../actiontools/codespinbox.cpp" line="153"/>
+        <location filename="../actiontools/codespinbox.cpp" line="150"/>
         <source>Step &amp;down</source>
         <translation>&amp;Descendre</translation>
     </message>

@@ -17,14 +17,22 @@
         <translation>Exception non gérée :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="77"/>
         <source>switch to code mode, may not be used with -r</source>
-        <translation>passer en mode code, ne peut pas être utilisé avec -r</translation>
+        <translation type="obsolete">passer en mode code, ne peut pas être utilisé avec -r</translation>
+    </message>
+    <message>
+        <source>switch to script mode, may not be used with -o</source>
+        <translation type="obsolete">passer en mode script, ne peut pas être utiliser avec -o</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="77"/>
+        <source>switch to code mode, may not be used with -s</source>
+        <translation>passer en mode code, ne peut pas être utilisé avec -s</translation>
     </message>
     <message>
         <location filename="../actexecuter/main.cpp" line="79"/>
-        <source>switch to script mode, may not be used with -o</source>
-        <translation>passer en mode script, ne peut pas être utiliser avec -o</translation>
+        <source>switch to script mode, may not be used with -c</source>
+        <translation>passer en mode script, ne peut pas être utiliser avec -c</translation>
     </message>
     <message>
         <location filename="../actexecuter/main.cpp" line="81"/>
@@ -42,42 +50,42 @@
         <translation>afficher la version du programme</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="86"/>
+        <location filename="../actexecuter/main.cpp" line="87"/>
         <source>show this help text</source>
         <translation>afficher ce texte d&apos;aide</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="166"/>
+        <location filename="../actexecuter/main.cpp" line="167"/>
         <source>usage: </source>
         <translation>utilisation : </translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="166"/>
+        <location filename="../actexecuter/main.cpp" line="167"/>
         <source>[parameters]</source>
         <translation>[paramètres]</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="166"/>
+        <location filename="../actexecuter/main.cpp" line="167"/>
         <source>filename</source>
         <translation>nom de fichier</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="167"/>
+        <location filename="../actexecuter/main.cpp" line="168"/>
         <source>Parameters are:</source>
         <translation>Les paramètres sont :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="221"/>
+        <location filename="../actexecuter/main.cpp" line="222"/>
         <source>Unknown execution mode, please specify mode=script or mode=code</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier mode=script ou mode=code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="247"/>
+        <location filename="../actexecuter/main.cpp" line="248"/>
         <source>Unknown execution mode, please specify -o (script) or -r (code)</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="257"/>
+        <location filename="../actexecuter/main.cpp" line="258"/>
         <source>Unable to read input file</source>
         <translation>Impossible de lire le fichier d&apos;entrée</translation>
     </message>
