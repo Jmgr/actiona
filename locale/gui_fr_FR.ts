@@ -1645,7 +1645,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../gui/main.cpp" line="202"/>
         <source>usage: </source>
-        <translation>usage :</translation>
+        <translation>utilisation : </translation>
     </message>
     <message>
         <location filename="../gui/main.cpp" line="202"/>

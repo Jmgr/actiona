@@ -49,7 +49,7 @@
     <message>
         <location filename="../actexecuter/main.cpp" line="166"/>
         <source>usage: </source>
-        <translation>usage :</translation>
+        <translation>utilisation : </translation>
     </message>
     <message>
         <location filename="../actexecuter/main.cpp" line="166"/>
