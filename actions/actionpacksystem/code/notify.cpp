@@ -91,7 +91,12 @@ namespace Code
 		}
 		
 		if(!mNotification)
-			mNotification = notify_notification_new(mTitle.toUtf8(), mText.toUtf8(), mIcon.toUtf8(), 0);
+			mNotification = notify_notification_new(mTitle.toUtf8(), mText.toUtf8(), mIcon.toUtf8()
+		#if NOTIFY_CHECK_VERSION (0, 7, 0)
+		);
+		#else
+		, 0);
+		#endif
 		else
 			notify_notification_update(mNotification, mTitle.toUtf8(), mText.toUtf8(), mIcon.toUtf8());
 
