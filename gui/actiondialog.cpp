@@ -362,6 +362,14 @@ void ActionDialog::postInit()
 		parameter->update(mScript);
 		parameter->load(mActionInstance);
 	}
+
+	for(int i = 0; i < mExceptionsLayout->rowCount(); ++i)
+	{
+		ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mExceptionsLayout->itemAtPosition(i, 2)->widget());
+
+		lineComboBox->setup(mScript->labels(), mScript->actionCount());
+	}
+
 	const ActionTools::ExceptionActionInstancesHash exceptionActionInstances = mActionInstance->exceptionActionInstances();
 	QList<ActionTools::ActionException *> actionExceptions = mActionInstance->definition()->exceptions();
 
@@ -425,8 +433,6 @@ void ActionDialog::postInit()
 		ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mExceptionsLayout->itemAtPosition(i, 2)->widget());
 		ActionTools::ActionException::Exception exception = static_cast<ActionTools::ActionException::Exception>(exceptionNameLabel->property("id").toInt());
 
-		lineComboBox->setup(mScript->labels(), mScript->actionCount());
-		
 		if(exception == mCurrentException)
 		{
 			lineComboBox->setFocus();
