@@ -28,6 +28,10 @@
 #define signals
 #endif
 
+#ifndef NOTIFY_CHECK_VERSION
+#define NOTIFY_CHECK_VERSION(x,y,z) 0
+#endif
+
 namespace Code
 {
 	QScriptValue Notify::constructor(QScriptContext *context, QScriptEngine *engine)
