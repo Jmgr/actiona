@@ -26,13 +26,6 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-/*
-   DecimalType,
-   IntegerType,
-   ListType,
-   TextType
-  */
-
 namespace Actions
 {
 	ActionTools::StringListPair DataInputInstance::dataTypes = qMakePair(
