@@ -53,7 +53,17 @@ namespace Actions
 			if(!actionInstanceExecutionHelper.evaluateString(urlString, "url"))
 				return;
 
-			if(!QDesktopServices::openUrl(QUrl(urlString, QUrl::TolerantMode)))
+			QUrl url(urlString, QUrl::TolerantMode);
+			if(!url.isValid())
+			{
+				emit executionException(FailedToOpenURL, tr("Failed to open URL"));
+				return;
+			}
+
+			if(url.scheme() == QString())
+				url = QUrl("http://" + urlString, QUrl::TolerantMode);
+
+			if(!QDesktopServices::openUrl(url))
 			{
 				emit executionException(FailedToOpenURL, tr("Failed to open URL"));
 				return;
