@@ -24,6 +24,7 @@
 #include "actioninstance.h"
 
 #include <QApplication>
+#include <QWidget>
 
 namespace Actions
 {
@@ -37,7 +38,8 @@ namespace Actions
 
 		void startExecution()
 		{
-			QApplication::quit();
+			foreach(QWidget *widget, QApplication::topLevelWidgets())
+				widget->close();
 
 			emit executionEnded();
 		}
