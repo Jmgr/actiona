@@ -242,7 +242,7 @@
 <context>
     <name>Actions::NotifyInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifyinstance.cpp" line="75"/>
+        <location filename="../actions/actionpacksystem/actions/notifyinstance.cpp" line="84"/>
         <source>Unable to show the notification</source>
         <translation>Impossible d&apos;afficher la notification</translation>
     </message>
@@ -598,7 +598,7 @@
 <context>
     <name>Code::Notify</name>
     <message>
-        <location filename="../actions/actionpacksystem/code/notify.cpp" line="101"/>
+        <location filename="../actions/actionpacksystem/code/notify.cpp" line="110"/>
         <source>Unable to show the notification</source>
         <translation>Impossible d&apos;afficher la notification</translation>
     </message>

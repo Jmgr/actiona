@@ -77,17 +77,17 @@
         <translation>Script %1, ligne %2 : </translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="555"/>
+        <location filename="../executer/executer.cpp" line="554"/>
         <source>Unable to find the label named &quot;%1&quot;</source>
         <translation>Impossible de trouver le label nommé &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="572"/>
+        <location filename="../executer/executer.cpp" line="571"/>
         <source>Incorrect Script.nextLine value: %1</source>
         <translation>Valeur de Script.nextLine incorrecte : %1</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="575"/>
+        <location filename="../executer/executer.cpp" line="574"/>
         <source>The action at line %1 is invalid</source>
         <translation>L&apos;action à la ligne %1 est invalide</translation>
     </message>

@@ -471,7 +471,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../gui/actiondialog.cpp" line="176"/>
         <location filename="../gui/actiondialog.cpp" line="267"/>
-        <location filename="../gui/actiondialog.cpp" line="473"/>
+        <location filename="../gui/actiondialog.cpp" line="479"/>
         <source>:</source>
         <translation> :</translation>
     </message>

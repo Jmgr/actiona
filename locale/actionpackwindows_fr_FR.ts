@@ -10,6 +10,50 @@
     </message>
 </context>
 <context>
+    <name>Actions::DataInputDefinition</name>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="48"/>
+        <source>Question</source>
+        <translatorcomment>Question</translatorcomment>
+        <translation>Question</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="49"/>
+        <source>The question to ask</source>
+        <translation>La question à poser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="52"/>
+        <source>Data type</source>
+        <translation>Type de donnée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="53"/>
+        <source>The data type</source>
+        <translation>Le type de donnée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="58"/>
+        <source>Default value</source>
+        <translation>Valeur par défaut</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="59"/>
+        <source>The default value</source>
+        <translation>La valeur par défaut</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="62"/>
+        <source>Variable</source>
+        <translation>Variable</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="63"/>
+        <source>The variable where to save the entered input</source>
+        <translation>La variable où sauvegarder l&apos;entrée</translation>
+    </message>
+</context>
+<context>
     <name>Actions::MessageBoxDefinition</name>
     <message>
         <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="50"/>
@@ -80,34 +124,28 @@
 <context>
     <name>Actions::TextInputDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/textinputdefinition.h" line="45"/>
         <source>Question</source>
-        <translation>Question</translation>
+        <translation type="obsolete">Question</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/textinputdefinition.h" line="46"/>
         <source>The question to ask</source>
-        <translation>La question à poser</translation>
+        <translation type="obsolete">La question à poser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/textinputdefinition.h" line="49"/>
         <source>Default value</source>
-        <translation>Valeur par défaut</translation>
+        <translation type="obsolete">Valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/textinputdefinition.h" line="50"/>
         <source>The default value</source>
-        <translation>La valeur par défaut</translation>
+        <translation type="obsolete">La valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/textinputdefinition.h" line="53"/>
         <source>Variable</source>
-        <translation>Variable</translation>
+        <translation type="obsolete">Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/textinputdefinition.h" line="54"/>
         <source>The variable where to save the entered input</source>
-        <translation>La variable où sauvegarder l&apos;entrée</translation>
+        <translation type="obsolete">La variable où sauvegarder l&apos;entrée</translation>
     </message>
 </context>
 <context>
@@ -311,6 +349,24 @@
     </message>
 </context>
 <context>
+    <name>DataInputInstance::dataTypes</name>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="34"/>
+        <source>Text</source>
+        <translation>Texte</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="35"/>
+        <source>Integer</source>
+        <translation>Entier</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="36"/>
+        <source>Decimal</source>
+        <translation>Décimal</translation>
+    </message>
+</context>
+<context>
     <name>MessageBoxInstance::buttons</name>
     <message>
         <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="43"/>
@@ -364,14 +420,12 @@
         <translation>Affiche une boîte de dialogue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/textinputdefinition.h" line="58"/>
         <source>Text input</source>
-        <translation>Entrée de texte</translation>
+        <translation type="obsolete">Entrée de texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/textinputdefinition.h" line="61"/>
         <source>Ask the user to enter some text</source>
-        <translation>Demande à l&apos;utilisateur d&apos;entrer du texte</translation>
+        <translation type="obsolete">Demande à l&apos;utilisateur d&apos;entrer du texte</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="89"/>
@@ -456,6 +510,16 @@
     <message>
         <source>Resize</source>
         <translation type="obsolete">Redimensionner</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="67"/>
+        <source>Data input</source>
+        <translation>Entrée de donnée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="70"/>
+        <source>Ask the user to enter some data</source>
+        <translation>Demande à l&apos;utilisateur d&apos;entrer une donnée</translation>
     </message>
 </context>
 <context>
