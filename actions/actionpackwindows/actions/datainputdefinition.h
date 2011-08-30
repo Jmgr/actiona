@@ -18,13 +18,14 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TEXTINPUTDEFINITION_H
-#define TEXTINPUTDEFINITION_H
+#ifndef DATAINPUTDEFINITION_H
+#define DATAINPUTDEFINITION_H
 
 #include "actiondefinition.h"
-#include "textinputinstance.h"
+#include "datainputinstance.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
+#include "listparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -34,17 +35,25 @@ namespace ActionTools
 
 namespace Actions
 {
-	class TextInputDefinition : public QObject, public ActionTools::ActionDefinition
+	class DataInputDefinition : public QObject, public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
 	public:
-		explicit TextInputDefinition(ActionTools::ActionPack *pack)
+		explicit DataInputDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("DataInputInstance::dataTypes", DataInputInstance::dataTypes);
+
 			ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition("question", tr("Question"), this);
 			question->setTooltip(tr("The question to ask"));
 			addElement(question);
+
+			ActionTools::ListParameterDefinition *dataType = new ActionTools::ListParameterDefinition("dataType", tr("Data type"), this);
+			dataType->setTooltip(tr("The data type"));
+			dataType->setItems(DataInputInstance::dataTypes);
+			dataType->setDefaultValue(DataInputInstance::dataTypes.second.at(DataInputInstance::TextType));
+			addElement(dataType);
 
 			ActionTools::TextParameterDefinition *defaultValue = new ActionTools::TextParameterDefinition("defaultValue", tr("Default value"), this);
 			defaultValue->setTooltip(tr("The default value"));
@@ -55,17 +64,17 @@ namespace Actions
 			addElement(variable);
 		}
 
-		QString name() const													{ return QObject::tr("Text input"); }
-		QString id() const														{ return "ActionTextInput"; }
+		QString name() const													{ return QObject::tr("Data input"); }
+		QString id() const														{ return "ActionDataInput"; }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Ask the user to enter some text"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new TextInputInstance(this); }
+		QString description() const												{ return QObject::tr("Ask the user to enter some data"); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new DataInputInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
-		QPixmap icon() const													{ return QPixmap(":/icons/textinput.png"); }
+		QPixmap icon() const													{ return QPixmap(":/icons/datainput.png"); }
 
 	private:
-		Q_DISABLE_COPY(TextInputDefinition)
+		Q_DISABLE_COPY(DataInputDefinition)
 	};
 }
 
-#endif // TEXTINPUTDEFINITION_H
+#endif // DATAINPUTDEFINITION_H

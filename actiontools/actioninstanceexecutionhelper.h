@@ -59,7 +59,7 @@ namespace ActionTools
 		bool evaluateBoolean(bool &buffer,
 							 const QString &parameterName,
 							 const QString &subParameterName = "value");
-		bool evaluateFloat(float &buffer,
+		bool evaluateDouble(double &buffer,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
 		bool evaluateIfAction(IfActionValue &buffer,

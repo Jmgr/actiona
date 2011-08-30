@@ -18,35 +18,48 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TEXTINPUTINSTANCE_H
-#define TEXTINPUTINSTANCE_H
+#ifndef DATAINPUTINSTANCE_H
+#define DATAINPUTINSTANCE_H
 
 #include "actioninstance.h"
+#include "stringlistpair.h"
 
 class QInputDialog;
 
 namespace Actions
 {
-	class TextInputInstance : public ActionTools::ActionInstance
+	class DataInputInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
 
 	public:
-		TextInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		enum DataType
+		{
+			TextType,
+			IntegerType,
+			DecimalType
+		};
+
+		DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+
+		static ActionTools::StringListPair dataTypes;
 
 		void startExecution();
 		void stopExecution();
 
 	private slots:
-		void textEntered(const QString &value);
+		void dataEntered(int);
+		void dataEntered(double);
+		void dataEntered(const QString &value);
 		void canceled();
 
 	private:
 		QInputDialog *mInputDialog;
 		QString mVariable;
+		DataType mDataType;
 
-		Q_DISABLE_COPY(TextInputInstance)
+		Q_DISABLE_COPY(DataInputInstance)
 	};
 }
 
-#endif // TEXTINPUTINSTANCE_H
+#endif // DATAINPUTINSTANCE_H

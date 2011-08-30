@@ -20,6 +20,7 @@
 
 #include "clickinstance.h"
 #include "consolewidget.h"
+#include "actioninstanceexecutionhelper.h"
 
 #include <QPoint>
 #include <QTimer>

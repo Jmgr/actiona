@@ -1,12 +1,14 @@
-SOURCES += actions/textinputinstance.cpp \
+SOURCES += \
 	actions/windowconditioninstance.cpp \
 	actions/windowinstance.cpp \
-	actions/messageboxinstance.cpp
-HEADERS += actions/textinputdefinition.h \
-	actions/textinputinstance.h \
+	actions/messageboxinstance.cpp \
+    actions/datainputinstance.cpp
+HEADERS += \
 	actions/windowconditiondefinition.h \
 	actions/windowconditioninstance.h \
 	actions/windowinstance.h \
 	actions/windowdefinition.h \
 	actions/messageboxdefinition.h \
-	actions/messageboxinstance.h
+	actions/messageboxinstance.h \
+    actions/datainputdefinition.h \
+    actions/datainputinstance.h

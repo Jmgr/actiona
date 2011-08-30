@@ -23,7 +23,7 @@
 
 #include "actionpack.h"
 #include "actions/messageboxdefinition.h"
-#include "actions/textinputdefinition.h"
+#include "actions/datainputdefinition.h"
 #include "actions/windowconditiondefinition.h"
 #include "actions/windowdefinition.h"
 
@@ -51,7 +51,7 @@ public:
 	void createDefinitions()
 	{
 		addActionDefinition(new Actions::MessageBoxDefinition(this));
-		addActionDefinition(new Actions::TextInputDefinition(this));
+		addActionDefinition(new Actions::DataInputDefinition(this));
 		addActionDefinition(new Actions::WindowConditionDefinition(this));
 		addActionDefinition(new Actions::WindowDefinition(this));
 	}

@@ -21,9 +21,9 @@
 #ifndef KEYINSTANCE_H
 #define KEYINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "../keyboarddevice.h"
+#include "stringlistpair.h"
 
 #include <QTimer>
 

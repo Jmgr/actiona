@@ -21,9 +21,9 @@
 #ifndef CLICKINSTANCE_H
 #define CLICKINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "../mousedevice.h"
+#include "stringlistpair.h"
 
 namespace Actions
 {

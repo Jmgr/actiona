@@ -161,7 +161,7 @@ namespace ActionTools
 		return true;
 	}
 
-	bool ActionInstanceExecutionHelper::evaluateFloat(float &buffer,
+	bool ActionInstanceExecutionHelper::evaluateDouble(double &buffer,
 										const QString &parameterName,
 										const QString &subParameterName)
 	{
