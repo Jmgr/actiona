@@ -94,6 +94,9 @@ unix {
 	icon.path = $${PREFIX}/share/pixmaps
 	icon.files = icons/actionaz.png
 
+	desktopicon.path = $${PREFIX}/share/icons/hicolor/48x48/apps
+	desktopicon.files = icons/actionaz.png
+
 	desktopfile.path = $${PREFIX}/share/applications
 	desktopfile.files = ../actionaz.desktop
 
@@ -103,5 +106,5 @@ unix {
 	mimefile.path = $${PREFIX}/share/mime/packages/
 	mimefile.files = ../docs/actionaz.xml
 
-	INSTALLS += target locales icon desktopfile manfile mimefile
+	INSTALLS += target locales icon desktopicon desktopfile manfile mimefile
 }
