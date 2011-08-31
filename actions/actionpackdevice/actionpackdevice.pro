@@ -10,7 +10,6 @@ RESOURCES += actionpackdevice.qrc
 unix:LIBS += -lXtst
 win32:LIBS += -luser32
 TRANSLATIONS = ../../locale/actionpackdevice_fr_FR.ts
-include(../../translations.pri)
 SOURCES += mousedevice.cpp \
     keyboarddevice.cpp
 
