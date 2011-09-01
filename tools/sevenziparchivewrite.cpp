@@ -37,7 +37,7 @@ namespace Tools
 	bool SevenZipArchiveWrite::addFile(const QString &filename)
 	{
 		QStringList arguments;
-		arguments << "a" << mFilename << filename;
+		arguments << "a" << "-mmt" << mFilename << filename;
 
 		return (QProcess::execute(QDir(QApplication::applicationDirPath()).filePath("sfx/7zr.exe"), arguments) == 0);
 	}

@@ -40,6 +40,7 @@ public:
 	bool showConsole() const;
 	bool showExecutionWindow() const;
 	bool closeAfterExecution() const;
+	bool use32BitBinaries() const;
 
 public slots:
 	void accept();
