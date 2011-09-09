@@ -142,7 +142,7 @@ namespace Actions
 				return;
 			}
 
-			if(mIfYes.action() == ActionTools::IfActionValue::GOTO)
+			if(mIfNo.action() == ActionTools::IfActionValue::GOTO)
 				script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(line)));
 		}
 
