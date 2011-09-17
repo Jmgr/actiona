@@ -1096,7 +1096,7 @@ void MainWindow::on_actionExport_script_content_triggered()
 	mScript->write(&buffer, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
 
 	ScriptContentDialog scriptContentDialog(ScriptContentDialog::Read, mScript, this);
-	scriptContentDialog.setText(buffer.buffer());
+	scriptContentDialog.setText(QString::fromUtf8(buffer.buffer()));
 	scriptContentDialog.exec();
 }
 

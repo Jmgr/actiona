@@ -276,7 +276,8 @@
 <context>
     <name>Actions::OpenURLInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="58"/>
+        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="59"/>
+        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="68"/>
         <source>Failed to open URL</source>
         <translation>Impossible d&apos;ouvrir l&apos;URL</translation>
     </message>
