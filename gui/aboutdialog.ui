@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
+    <width>560</width>
     <height>456</height>
    </rect>
   </property>
@@ -149,6 +149,11 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="act3Ideas">
             <item>
              <property name="text">
+              <string>Fredy123</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>Matthieu Hazon</string>
              </property>
             </item>
@@ -218,12 +223,22 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="act3Documentation">
             <item>
              <property name="text">
+              <string>Jonathan &quot;Jmgr&quot; Mercier-Ganady</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>Yann Huriez</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Jonathan &quot;Jmgr&quot; Mercier-Ganady</string>
+              <string>Fredy123</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Floche</string>
              </property>
             </item>
            </widget>
