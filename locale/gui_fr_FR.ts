@@ -40,6 +40,11 @@ p, li { white-space: pre-wrap; }
         <translation>Jonathan &quot;Jmgr&quot; Mercier-Ganady</translation>
     </message>
     <message>
+        <location filename="../gui/aboutdialog.ui" line="125"/>
+        <source>None yet!</source>
+        <translation>Aucun pour l&apos;instant !</translation>
+    </message>
+    <message>
         <location filename="../gui/aboutdialog.ui" line="199"/>
         <source>Adrien &quot;Adri2000&quot; Cunin</source>
         <translation>Adrien &quot;Adri2000&quot; Cunin</translation>
@@ -110,9 +115,8 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Donateurs&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="125"/>
         <source>Insert your name here ;)</source>
-        <translation>Insérez votre nom ici ;)</translation>
+        <translation type="obsolete">Insérez votre nom ici ;)</translation>
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="137"/>
@@ -1757,7 +1761,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../gui/sfxscriptdialog.ui" line="89"/>
         <source>Use 32 bit binaries:</source>
-        <translation>Utiliser les binaires 32 bit:</translation>
+        <translation>Utiliser les binaires 32 bit :</translation>
     </message>
 </context>
 <context>

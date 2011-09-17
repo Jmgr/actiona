@@ -122,7 +122,7 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="act3Donators">
             <item>
              <property name="text">
-              <string>Insert your name here ;)</string>
+              <string>None yet!</string>
              </property>
             </item>
            </widget>
