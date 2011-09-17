@@ -603,13 +603,6 @@ void MainWindow::on_actionExport_executable_triggered()
 	if(fileName.isEmpty())
 		return;
 
-	QFileInfo outFileInfo(fileName);
-	if(outFileInfo.exists() && !outFileInfo.isWritable())
-	{
-		QMessageBox::warning(this, tr("Create SFX script"), tr("The output file you selected is not writable."));
-		return;
-	}
-
 	settings.setValue("sfxScript/destination", fileName);
 
 	SFXScriptDialog sfxScriptDialog(this);
@@ -634,28 +627,42 @@ void MainWindow::on_actionExport_executable_triggered()
 	const QString archivePath = QDir::temp().filePath("archive.7z");
 	const QString sfxPath = QDir(QApplication::applicationDirPath()).filePath("sfx/7zsd.sfx");
 	const QString scriptPath = QDir::temp().filePath("script.ascr");
+	QString sourceArchive;
 
-	QFileInfo archiveFileInfo(archivePath);
-	if(archiveFileInfo.exists() && !archiveFileInfo.isWritable())
+	if(QSysInfo::WordSize == 32 || sfxScriptDialog.use32BitBinaries())
+		sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx32.7z");
+	else
+		sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx64.7z");
+
+	QProgressDialog progressDialog(tr("Creating SFX script"), QString(), 0, 100, this);
+	progressDialog.setWindowTitle(tr("Create SFX script"));
+	progressDialog.setModal(true);
+	progressDialog.setValue(0);
+	progressDialog.setVisible(true);
+	progressDialog.setLabelText(tr("Copying archive..."));
+	QApplication::processEvents();
+
+	QFile::remove(archivePath);
+	if(!QFile::copy(sourceArchive, archivePath))
 	{
-		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to write to %1.").arg(archivePath));
+		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to copy the source archive."));
 		return;
 	}
 
+	progressDialog.setLabelText(tr("Writing script..."));
+	QApplication::processEvents();
+
+	//Write the script
 	QFile file(scriptPath);
 	if(!file.open(QIODevice::WriteOnly))
 	{
-		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to open %1 for writing.").arg(scriptPath));
+		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to write the script to %1.").arg(scriptPath));
 		return;
 	}
 	mScript->write(&file, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
 	file.close();
 
-	QProgressDialog progressDialog(tr("Creating SFX script"), QString(), 0, 21, this);
-	progressDialog.setWindowTitle(tr("Create SFX script"));
-	progressDialog.setModal(true);
-	progressDialog.setValue(0);
-	progressDialog.setVisible(true);
+	progressDialog.setLabelText(tr("Writing config file..."));
 	QApplication::processEvents();
 
 	//Write the config file
@@ -675,105 +682,18 @@ void MainWindow::on_actionExport_executable_triggered()
 	configFileStream << "GUIMode=\"2\"" << "\r\n";
 	configFileStream << ";!@InstallEnd@!";
 
-	progressDialog.setValue(progressDialog.value() + 1);
-	QApplication::processEvents();
-
-	QFile::remove(archivePath);
 	Tools::SevenZipArchiveWrite archive(archivePath);
-	QStringList archiveFiles = QStringList()
-								<< "tools.dll"
-								<< "actiontools.dll"
-								<< "executer.dll"
-								<< "rudeconfig.dll"
-								<< scriptPath
-#ifdef QT_DEBUG
-								<< "QtCored4.dll"
-								<< "QtGuid4.dll"
-								<< "QtMultimediaKitd1.dll"
-								<< "QtOpenGLd4.dll"
-								<< "QtNetworkd4.dll"
-								<< "QtScriptd4.dll"
-								<< "QtScriptToolsd4.dll"
-								<< "QtSqld4.dll"
-								<< "QtSystemInfod1.dll"
-								<< "QtXmld4.dll"
-								<< "QtXmlPatternsd4.dll"
-								<< "msvcp100d.dll"
-								<< "msvcr100d.dll";
-#else
-								<< "QtCore4.dll"
-								<< "QtGui4.dll"
-								<< "QtMultimediaKit1.dll"
-								<< "QtOpenGL4.dll"
-								<< "QtNetwork4.dll"
-								<< "QtScript4.dll"
-								<< "QtScriptTools4.dll"
-								<< "QtSql4.dll"
-								<< "QtSystemInfo1.dll"
-								<< "QtXml4.dll"
-								<< "QtXmlPatterns4.dll"
-								<< "msvcp100.dll"
-								<< "msvcr100.dll";
-#endif
 
-	if(useActExec)
-		archiveFiles << "actexec.exe";
-	else
-		archiveFiles << "actionaz.exe";
-
-	foreach(const QString &archiveFile, archiveFiles)
-	{
-		progressDialog.setLabelText(QObject::tr("Adding %1...").arg(QFileInfo(archiveFile).fileName()));
-		progressDialog.setValue(progressDialog.value() + 1);
-		QApplication::processEvents();
-		if(!archive.addFile(QDir(QApplication::applicationDirPath()).filePath(archiveFile)))
-		{
-			QFile::remove(archivePath);
-			QFile::remove(scriptPath);
-			QMessageBox::warning(this, tr("Create SFX script"), tr("Failed to add %1 to the SFX archive.").arg(archiveFile));
-			return;
-		}
-	}
-
-	progressDialog.setLabelText(tr("Adding actions..."));
-
-	QSet<ActionTools::ActionPack *> addedPacks;
-	for(int index = 0; index < mActionFactory->actionDefinitionCount(); ++index)
-	{
-		ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(index);
-		if(!actionDefinition)
-			continue;
-
-		if(addedPacks.contains(actionDefinition->pack()))
-			continue;
-
-		addedPacks.insert(actionDefinition->pack());
-
-		if(!archive.addFile(QDir(QApplication::applicationDirPath()).relativeFilePath(actionDefinition->pack()->filename())))
-		{
-			QFile::remove(archivePath);
-			QFile::remove(scriptPath);
-			QMessageBox::warning(this, tr("Create SFX script"), tr("Failed to add the action pack %1 to the SFX archive.").arg(actionDefinition->pack()->filename()));
-			return;
-		}
-	}
-
-	progressDialog.setLabelText(tr("Adding script plugins..."));
-
-	QDir plugins(QApplication::applicationDirPath() + "/plugins/script");
-	foreach(const QString &plugin, plugins.entryList(QDir::Files | QDir::NoDotAndDotDot))
-	{
-		if(!archive.addFile(QDir(QApplication::applicationDirPath()).relativeFilePath("plugins/script/" + plugin)))
-		{
-			QFile::remove(archivePath);
-			QFile::remove(scriptPath);
-			QMessageBox::warning(this, tr("Create SFX script"), tr("Failed to add the script plugin %1 to the SFX archive.").arg(plugin));
-			return;
-		}
-	}
-
-	progressDialog.setValue(progressDialog.value() + 1);
+	progressDialog.setLabelText(tr("Adding files..."));
 	QApplication::processEvents();
+
+	if(!archive.addFile(QDir(QApplication::applicationDirPath()).filePath(scriptPath)))
+	{
+		QFile::remove(archivePath);
+		QFile::remove(scriptPath);
+		QMessageBox::warning(this, tr("Create SFX script"), tr("Failed to add the script file to the SFX archive."));
+		return;
+	}
 
 	QFile outFile(fileName);
 	if(!outFile.open(QIODevice::WriteOnly))
@@ -788,6 +708,7 @@ void MainWindow::on_actionExport_executable_triggered()
 	QFile sfxStubFile(sfxPath);
 	if(!sfxStubFile.open(QIODevice::ReadOnly))
 	{
+		outFile.close();
 		QFile::remove(archivePath);
 		QFile::remove(scriptPath);
 		QFile::remove(fileName);
@@ -797,17 +718,17 @@ void MainWindow::on_actionExport_executable_triggered()
 	outFile.write(sfxStubFile.readAll());
 	sfxStubFile.close();
 
-	progressDialog.setValue(progressDialog.value() + 1);
-
 	//Copy the config file
 	outFile.write(configFile.toAscii());
 
-	progressDialog.setValue(progressDialog.value() + 1);
+	progressDialog.setLabelText(tr("Creating SFX archive..."));
+	QApplication::processEvents();
 
 	//Copy the archive
 	QFile archiveFile(archivePath);
 	if(!archiveFile.open(QIODevice::ReadOnly))
 	{
+		outFile.close();
 		QFile::remove(archivePath);
 		QFile::remove(scriptPath);
 		QFile::remove(fileName);
