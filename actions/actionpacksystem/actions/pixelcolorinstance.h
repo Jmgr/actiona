@@ -87,7 +87,11 @@ namespace Actions
 					return;
 
 				if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
+				{
 					actionInstanceExecutionHelper.setNextLine(line);
+
+					emit executionEnded();
+				}
 				else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 				{
 					connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkPixel()));
