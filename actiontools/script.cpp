@@ -517,7 +517,7 @@ namespace ActionTools
 
 	bool Script::validateContent(const QString &content)
 	{
-		QByteArray byteArray(content.toAscii());
+		QByteArray byteArray(content.toUtf8());
 		QBuffer buffer(&byteArray);
 		buffer.open(QIODevice::ReadOnly);
 
