@@ -1,9 +1,10 @@
 #define MyAppName "Actionaz 3"
-#define MyAppVersion "0.0.7"
+#define MyAppVersion "0.1.1"
+#define MyAppIsBeta 1
 #define MyAppPublisher "Actionaz.org"
 #define MyAppURL "http://www.actionaz.org/"
 #define MyAppExeName "actionaz.exe"
-#define MyAppBits 64
+#define MyAppBits 32
 
 [Setup]
 #if MyAppBits == 32
@@ -13,7 +14,11 @@ AppId={{098CDAF9-5A9B-4731-9F3C-F3F1DF7490C2}
 #endif
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+#if MyAppIsBeta == 1
+AppVerName={#MyAppName} {#MyAppVersion} beta ({#MyAppBits} bits)
+#else
 AppVerName={#MyAppName} {#MyAppVersion} ({#MyAppBits} bits)
+#endif
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -74,6 +79,7 @@ Source: "C:\actionaz\installer\reference{#MyAppBits}\actions\*"; DestDir: "{app}
 Source: "C:\actionaz\installer\reference{#MyAppBits}\sfx\*"; DestDir: "{app}\sfx"; Flags: ignoreversion
 Source: "C:\actionaz\installer\reference{#MyAppBits}\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion
 Source: "C:\actionaz\installer\reference{#MyAppBits}\plugins\sqldrivers\*"; DestDir: "{app}\plugins\sqldrivers"; Flags: ignoreversion
+Source: "C:\actionaz\installer\reference{#MyAppBits}\plugins\mediaservice\*"; DestDir: "{app}\plugins\mediaservice"; Flags: ignoreversion
 Source: "C:\actionaz\installer\reference{#MyAppBits}\code\script\*"; DestDir: "{app}\code\script"; Flags: ignoreversion
 
 [Icons]
