@@ -1174,8 +1174,7 @@ void MainWindow::updateProxySettings()
 		break;
 	case ActionTools::Settings::PROXY_SYSTEM:
 		{
-			QUrl url(Global::CONNECTIVITY_URL);
-			QNetworkProxyQuery networkProxyQuery(url);
+			QNetworkProxyQuery networkProxyQuery(QUrl(Global::CONNECTIVITY_URL));
 			QList<QNetworkProxy> listOfProxies = QNetworkProxyFactory::systemProxyForQuery(networkProxyQuery);
 			if(!listOfProxies.isEmpty())
 				proxy = listOfProxies.first();
