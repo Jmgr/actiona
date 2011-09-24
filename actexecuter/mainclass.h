@@ -44,9 +44,6 @@ public:
 		Script
 	};
 	
-	static const Tools::Version ScriptVersion;
-	static const Tools::Version ActionazVersion;
-	
 	MainClass();
 	
 	bool start(ExecutionMode executionMode, QIODevice *device, const QString &filename);

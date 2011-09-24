@@ -41,7 +41,7 @@ bool ScriptExecuter::start(QIODevice *device, const QString &filename)
 	if(!Executer::start(device, filename))
 		return false;
 	
-	ActionTools::Script::ReadResult result = mScript->read(device, MainClass::ScriptVersion);
+	ActionTools::Script::ReadResult result = mScript->read(device, Global::SCRIPT_VERSION);
 	switch(result)
 	{
 	case ActionTools::Script::ReadInternal:

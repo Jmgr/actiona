@@ -29,9 +29,6 @@
 #include <QBuffer>
 #include <QTimer>
 
-const Tools::Version MainClass::ScriptVersion(0, 0, 1);
-const Tools::Version MainClass::ActionazVersion(0, 0, 1);
-
 MainClass::MainClass()
 	: QObject(0),
 	mExecuter(0),
