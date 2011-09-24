@@ -56,6 +56,7 @@ namespace Actions
 		QString title;
 		Icon icon;
 		Buttons button;
+		QString customIcon;
 
 		mMessageBox = 0;
 
@@ -63,6 +64,7 @@ namespace Actions
 			!actionInstanceExecutionHelper.evaluateString(title, "title") ||
 			!actionInstanceExecutionHelper.evaluateListElement(icon, icons, "icon") ||
 			!actionInstanceExecutionHelper.evaluateListElement(button, buttons, "type") ||
+			!actionInstanceExecutionHelper.evaluateString(customIcon, "customIcon") ||
 			!actionInstanceExecutionHelper.evaluateIfAction(mIfYes, "ifYes") ||
 			!actionInstanceExecutionHelper.evaluateIfAction(mIfNo, "ifNo"))
 			return;
@@ -73,6 +75,14 @@ namespace Actions
 		mMessageBox->setWindowModality(Qt::NonModal);
 		mMessageBox->setText(message);
 		mMessageBox->setWindowTitle(title);
+
+		if(!customIcon.isEmpty())
+		{
+			QPixmap customIconPixmap;
+
+			if(customIconPixmap.load(customIcon))
+				mMessageBox->setIconPixmap(customIconPixmap);
+		}
 
 		switch(button)
 		{

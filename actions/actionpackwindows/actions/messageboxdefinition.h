@@ -27,6 +27,7 @@
 #include "listparameterdefinition.h"
 #include "groupdefinition.h"
 #include "ifactionparameterdefinition.h"
+#include "fileparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -66,6 +67,13 @@ namespace Actions
 			type->setItems(MessageBoxInstance::buttons);
 			type->setDefaultValue(MessageBoxInstance::buttons.second.at(MessageBoxInstance::OkButton));
 			addElement(type, 1);
+
+			ActionTools::FileParameterDefinition *customIcon = new ActionTools::FileParameterDefinition("customIcon", tr("Custom icon"), this);
+			customIcon->setTooltip(tr("The custom icon to use"));
+			customIcon->setMode(ActionTools::FileEdit::FileOpen);
+			customIcon->setCaption(tr("Select the icon to use"));
+			customIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
+			addElement(customIcon, 1);
 
 			ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition("ifyesno", tr("Yes-No action"), this);
 			yesNoGroup->setMasterList(type);
