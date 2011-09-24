@@ -1,0 +1,7 @@
+0.1.1 (24/09/11)
+- corrected a bug involving the "goto line" action when the tested pixel was not equal to the wanted value
+- added a new contributor to the about dialog
+- Windows: added a missing mediaservice dll used to play sound & videos
+- fixed a bug when validating a script file with non-ascii characters
+- ActionMessageBox: added a custom icon choice
+- Gui: added an option to use the system proxy
