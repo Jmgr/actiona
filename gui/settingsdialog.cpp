@@ -53,10 +53,6 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 {
 	ui->setupUi(this);
 
-#ifdef ACT_NO_UPDATER
-	ui->settingsTab->removeTab(ui->settingsTab->indexOf(ui->networkTab));
-#endif
-
 #ifdef Q_WS_X11
 	ui->fileAssociationsLabel->setVisible(false);
 	ui->associateASCRCheckBox->setVisible(false);
@@ -99,9 +95,11 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 		QKeySequence(settings.value("actions/openEditorKey", QKeySequence("Ctrl+Shift+V")).toString()));
 	ui->checkCodeSyntaxAutomatically->setChecked(settings.value("actions/checkCodeSyntaxAutomatically", QVariant(true)).toBool());
 
-#ifndef ACT_NO_UPDATER
 	//NETWORK
+#ifndef ACT_NO_UPDATER
 	ui->updatesCheck->setCurrentIndex(settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY)).toInt());
+#endif
+
 	int proxyMode = settings.value("network/proxyMode", QVariant(ActionTools::Settings::PROXY_SYSTEM)).toInt();
 
 	switch(proxyMode)
@@ -123,7 +121,6 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->proxyUser->setText(settings.value("network/proxyUser", QVariant()).toString());
 	ui->proxyPassword->setText(settings.value("network/proxyPassword", QVariant()).toString());
 	ui->proxyType->setCurrentIndex(settings.value("network/proxyType", QVariant(ActionTools::Settings::PROXY_TYPE_HTTP)).toInt());
-#endif
 
 #ifdef Q_WS_WIN
 	QVariant result;
@@ -261,16 +258,16 @@ void SettingsDialog::accept()
 	settings.setValue("actions/openEditorKey", QVariant::fromValue(ui->openEditorKey->keySequence()));
 	settings.setValue("actions/checkCodeSyntaxAutomatically", ui->checkCodeSyntaxAutomatically->isChecked());
 
-#ifndef ACT_NO_UPDATER
 	//NETWORK
+#ifndef ACT_NO_UPDATER
 	settings.setValue("network/updatesCheck", QVariant(ui->updatesCheck->currentIndex()));
+#endif
 	settings.setValue("network/proxyMode", proxyMode());
 	settings.setValue("network/proxyHost", ui->proxyHost->text());
 	settings.setValue("network/proxyPort", ui->proxyPort->text());
 	settings.setValue("network/proxyUser", ui->proxyUser->text());
 	settings.setValue("network/proxyPassword", ui->proxyPassword->text());
 	settings.setValue("network/proxyType", ui->proxyType->currentIndex());
-#endif
 
 #ifdef Q_WS_WIN
 	bool associateASCR = (ui->associateASCRCheckBox->checkState() == Qt::Checked);
