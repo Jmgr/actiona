@@ -324,32 +324,32 @@
         <location filename="../actiontools/consolewidget.cpp" line="127"/>
         <source>%n day(s) </source>
         <translation>
-            <numerusform>%n jour</numerusform>
-            <numerusform>%n jours</numerusform>
+            <numerusform>%n jour </numerusform>
+            <numerusform>%n jours </numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../actiontools/consolewidget.cpp" line="137"/>
         <source>%n hour(s) </source>
         <translation>
-            <numerusform>%n heure</numerusform>
-            <numerusform>%n heures</numerusform>
+            <numerusform>%n heure </numerusform>
+            <numerusform>%n heures </numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../actiontools/consolewidget.cpp" line="139"/>
         <source>%n minute(s) </source>
         <translation>
-            <numerusform>%n minute</numerusform>
-            <numerusform>%n minutes</numerusform>
+            <numerusform>%n minute </numerusform>
+            <numerusform>%n minutes </numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../actiontools/consolewidget.cpp" line="141"/>
         <source>%n second(s) </source>
         <translation>
-            <numerusform>%n seconde</numerusform>
-            <numerusform>%n secondes</numerusform>
+            <numerusform>%n seconde </numerusform>
+            <numerusform>%n secondes </numerusform>
         </translation>
     </message>
     <message numerus="yes">

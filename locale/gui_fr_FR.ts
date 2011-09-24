@@ -20,7 +20,7 @@
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="53"/>
-        <location filename="../gui/aboutdialog.ui" line="265"/>
+        <location filename="../gui/aboutdialog.ui" line="270"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -34,8 +34,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="68"/>
-        <location filename="../gui/aboutdialog.ui" line="226"/>
-        <location filename="../gui/aboutdialog.ui" line="280"/>
+        <location filename="../gui/aboutdialog.ui" line="231"/>
+        <location filename="../gui/aboutdialog.ui" line="285"/>
         <source>Jonathan &quot;Jmgr&quot; Mercier-Ganady</source>
         <translation>Jonathan &quot;Jmgr&quot; Mercier-Ganady</translation>
     </message>
@@ -45,12 +45,17 @@ p, li { white-space: pre-wrap; }
         <translation>Aucun pour l&apos;instant !</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="199"/>
+        <location filename="../gui/aboutdialog.ui" line="152"/>
+        <source>cyberia</source>
+        <translation>cyberia</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutdialog.ui" line="204"/>
         <source>Adrien &quot;Adri2000&quot; Cunin</source>
         <translation>Adrien &quot;Adri2000&quot; Cunin</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="211"/>
+        <location filename="../gui/aboutdialog.ui" line="216"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -63,7 +68,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Documentation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="231"/>
+        <location filename="../gui/aboutdialog.ui" line="236"/>
         <source>Yann Huriez</source>
         <translation>Yann Huriez</translation>
     </message>
@@ -72,18 +77,18 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Sébastien &quot;usx&quot; Crapoulet</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="349"/>
+        <location filename="../gui/aboutdialog.ui" line="354"/>
         <source>Jean-Christophe Champarnaud</source>
         <translation>Jean-Christophe Champarnaud</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="167"/>
+        <location filename="../gui/aboutdialog.ui" line="172"/>
         <source>djez</source>
         <translation>djez</translation>
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="80"/>
-        <location filename="../gui/aboutdialog.ui" line="292"/>
+        <location filename="../gui/aboutdialog.ui" line="297"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -102,7 +107,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="110"/>
-        <location filename="../gui/aboutdialog.ui" line="319"/>
+        <location filename="../gui/aboutdialog.ui" line="324"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -120,7 +125,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="137"/>
-        <location filename="../gui/aboutdialog.ui" line="366"/>
+        <location filename="../gui/aboutdialog.ui" line="371"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -133,28 +138,28 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Idées / Bugs&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="152"/>
-        <location filename="../gui/aboutdialog.ui" line="236"/>
+        <location filename="../gui/aboutdialog.ui" line="157"/>
+        <location filename="../gui/aboutdialog.ui" line="241"/>
         <source>Fredy123</source>
         <translation>Fredy123</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="157"/>
+        <location filename="../gui/aboutdialog.ui" line="162"/>
         <source>Matthieu Hazon</source>
         <translation>Matthieu Hazon</translation>
     </message>
     <message utf8="true">
-        <location filename="../gui/aboutdialog.ui" line="162"/>
+        <location filename="../gui/aboutdialog.ui" line="167"/>
         <source>Loïc Vauvrecy</source>
         <translation>Loïc Vauvrecy</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="172"/>
+        <location filename="../gui/aboutdialog.ui" line="177"/>
         <source>Le lapin</source>
         <translation>Le lapin</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="184"/>
+        <location filename="../gui/aboutdialog.ui" line="189"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -175,147 +180,147 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Floche</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="241"/>
+        <location filename="../gui/aboutdialog.ui" line="246"/>
         <source>Floche</source>
         <translation>Floche</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="254"/>
+        <location filename="../gui/aboutdialog.ui" line="259"/>
         <source>Contributors for Actionaz 2</source>
         <translation>Contributeurs d&apos;Actionaz 2</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="307"/>
+        <location filename="../gui/aboutdialog.ui" line="312"/>
         <source>&quot;TDM&quot;</source>
         <translation>&quot;TDM&quot;</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="334"/>
+        <location filename="../gui/aboutdialog.ui" line="339"/>
         <source>G. Delbard (www.delbard.com)</source>
         <translation>G. Delbard (www.delbard.com)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="339"/>
+        <location filename="../gui/aboutdialog.ui" line="344"/>
         <source>Thierry Rougeron</source>
         <translation>Thierry Rougeron</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="344"/>
+        <location filename="../gui/aboutdialog.ui" line="349"/>
         <source>Jean-Jacques Clair</source>
         <translation>Jean-Jacques Clair</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="354"/>
+        <location filename="../gui/aboutdialog.ui" line="359"/>
         <source>Jean-Luc Forveille</source>
         <translation>Jean-Luc Forveille</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="381"/>
+        <location filename="../gui/aboutdialog.ui" line="386"/>
         <source>Philbarfly (philbarfly.free.fr)</source>
         <translation>Philbarfly (philbarfly.free.fr)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="386"/>
+        <location filename="../gui/aboutdialog.ui" line="391"/>
         <source>sogood</source>
         <translation>sogood</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="391"/>
+        <location filename="../gui/aboutdialog.ui" line="396"/>
         <source>mieu</source>
         <translation>mieu</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="396"/>
+        <location filename="../gui/aboutdialog.ui" line="401"/>
         <source>Cyr</source>
         <translation>Cyr</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="401"/>
+        <location filename="../gui/aboutdialog.ui" line="406"/>
         <source>fredagier</source>
         <translation>fredagier</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="406"/>
+        <location filename="../gui/aboutdialog.ui" line="411"/>
         <source>166</source>
         <translation>166</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="411"/>
+        <location filename="../gui/aboutdialog.ui" line="416"/>
         <source>Zeprog</source>
         <translation>Zeprog</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="416"/>
+        <location filename="../gui/aboutdialog.ui" line="421"/>
         <source>love_me</source>
         <translation>love_me</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="421"/>
+        <location filename="../gui/aboutdialog.ui" line="426"/>
         <source>gealf</source>
         <translation>gealf</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="426"/>
+        <location filename="../gui/aboutdialog.ui" line="431"/>
         <source>Ppouet</source>
         <translation>Ppouet</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="431"/>
+        <location filename="../gui/aboutdialog.ui" line="436"/>
         <source>JLC</source>
         <translation>JLC</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="436"/>
+        <location filename="../gui/aboutdialog.ui" line="441"/>
         <source>Kenzo</source>
         <translation>Kenzo</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="441"/>
+        <location filename="../gui/aboutdialog.ui" line="446"/>
         <source>autofill</source>
         <translation>autofill</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="446"/>
+        <location filename="../gui/aboutdialog.ui" line="451"/>
         <source>mat95</source>
         <translation>mat95</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="451"/>
+        <location filename="../gui/aboutdialog.ui" line="456"/>
         <source>ybu</source>
         <translation>ybu</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="456"/>
+        <location filename="../gui/aboutdialog.ui" line="461"/>
         <source>darl-goku4</source>
         <translation>darl-goku4</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="461"/>
+        <location filename="../gui/aboutdialog.ui" line="466"/>
         <source>Jerome</source>
         <translation>Jerome</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="466"/>
+        <location filename="../gui/aboutdialog.ui" line="471"/>
         <source>Thierry</source>
         <translation>Thierry</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="471"/>
+        <location filename="../gui/aboutdialog.ui" line="476"/>
         <source>jcanale</source>
         <translation>jcanale</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="476"/>
+        <location filename="../gui/aboutdialog.ui" line="481"/>
         <source>Falken</source>
         <translation>Falken</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="481"/>
+        <location filename="../gui/aboutdialog.ui" line="486"/>
         <source>el-belgounetos</source>
         <translation>el-belgounetos</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="501"/>
+        <location filename="../gui/aboutdialog.ui" line="506"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -330,7 +335,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:11pt;&quot;&gt;des actions tierces parties et plus !&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="534"/>
+        <location filename="../gui/aboutdialog.ui" line="539"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -1132,7 +1137,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="159"/>
-        <location filename="../gui/mainwindow.cpp" line="1525"/>
+        <location filename="../gui/mainwindow.cpp" line="1544"/>
         <source>Actionaz - ready</source>
         <translation>Actionaz - prêt</translation>
     </message>
@@ -1198,7 +1203,7 @@ Vous pouvez changer ce paramètre plus tard dans la fenêtre d&apos;options.</tr
     <message>
         <location filename="../gui/mainwindow.cpp" line="501"/>
         <location filename="../gui/mainwindow.cpp" line="516"/>
-        <location filename="../gui/mainwindow.cpp" line="2003"/>
+        <location filename="../gui/mainwindow.cpp" line="2022"/>
         <source>Actionaz script (*.ascr)</source>
         <translation>Script Actionaz (*.ascr)</translation>
     </message>
@@ -1308,18 +1313,18 @@ Vous pouvez changer ce paramètre plus tard dans la fenêtre d&apos;options.</tr
         <translation>Impossible de créeer le raccourci.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1196"/>
-        <location filename="../gui/mainwindow.cpp" line="1209"/>
         <location filename="../gui/mainwindow.cpp" line="1214"/>
-        <location filename="../gui/mainwindow.cpp" line="1218"/>
         <location filename="../gui/mainwindow.cpp" line="1227"/>
-        <location filename="../gui/mainwindow.cpp" line="1873"/>
-        <location filename="../gui/mainwindow.cpp" line="1880"/>
+        <location filename="../gui/mainwindow.cpp" line="1232"/>
+        <location filename="../gui/mainwindow.cpp" line="1236"/>
+        <location filename="../gui/mainwindow.cpp" line="1245"/>
+        <location filename="../gui/mainwindow.cpp" line="1892"/>
+        <location filename="../gui/mainwindow.cpp" line="1899"/>
         <source>Load script</source>
         <translation>Charger script</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1196"/>
+        <location filename="../gui/mainwindow.cpp" line="1214"/>
         <source>This script was created with an older version of Actionaz.
 It will be updated when you save it.
 Your version: %1
@@ -1330,22 +1335,22 @@ Votre version : %1
 Version du script : %2</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1202"/>
+        <location filename="../gui/mainwindow.cpp" line="1220"/>
         <source>Script loaded, some actions are missing:&lt;ul&gt;</source>
         <translation>Script chargé, quelques actions manquent :&lt;ul&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1214"/>
+        <location filename="../gui/mainwindow.cpp" line="1232"/>
         <source>Unable to load the script due to an internal error.</source>
         <translation>Impossible de charger le script à cause d&apos;une erreur interne.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1218"/>
+        <location filename="../gui/mainwindow.cpp" line="1236"/>
         <source>Unable to load the script because it has an incorrect schema.%1Line: %2&lt;br&gt;Column: %3</source>
         <translation>Impossible de charger le script car celui-ci a un schéma incorrect.%1Ligne : %2&lt;br&gt;Colonne : %3</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1227"/>
+        <location filename="../gui/mainwindow.cpp" line="1245"/>
         <source>Unable to load the script because it was created with a more recent version of Actionaz.
 Please update your version of Actionaz to load this script.
 Your version: %1
@@ -1356,143 +1361,148 @@ Votre version : %1
 Version du script : %2</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1264"/>
+        <location filename="../gui/mainwindow.cpp" line="1282"/>
         <source>Checking if an update is available...</source>
         <translation>Verifie si une mise à jour est disponible...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1330"/>
+        <location filename="../gui/mainwindow.cpp" line="1285"/>
+        <source>Checking for updates</source>
+        <translation>Verifie si une mise à jour est disponible</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1349"/>
         <source>Actionaz - executing</source>
         <translation>Actionaz - exécution</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1608"/>
-        <location filename="../gui/mainwindow.cpp" line="1618"/>
-        <location filename="../gui/mainwindow.cpp" line="1634"/>
-        <location filename="../gui/mainwindow.cpp" line="1781"/>
+        <location filename="../gui/mainwindow.cpp" line="1627"/>
+        <location filename="../gui/mainwindow.cpp" line="1637"/>
+        <location filename="../gui/mainwindow.cpp" line="1653"/>
+        <location filename="../gui/mainwindow.cpp" line="1800"/>
         <source>Update</source>
         <translation>Mise à jour</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1608"/>
+        <location filename="../gui/mainwindow.cpp" line="1627"/>
         <source>An error occured while checking for a new version:
 %1</source>
         <translation>Une erreur est apparue lors de la vérification de mise à jour :
 %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1618"/>
-        <location filename="../gui/mainwindow.cpp" line="1634"/>
+        <location filename="../gui/mainwindow.cpp" line="1637"/>
+        <location filename="../gui/mainwindow.cpp" line="1653"/>
         <source>No new version is available.</source>
         <translation>Aucune nouvelle version n&apos;est disponible.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1643"/>
+        <location filename="../gui/mainwindow.cpp" line="1662"/>
         <source>Major</source>
         <translation>Majeure</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1645"/>
+        <location filename="../gui/mainwindow.cpp" line="1664"/>
         <source>Release</source>
         <translation>Release</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1647"/>
+        <location filename="../gui/mainwindow.cpp" line="1666"/>
         <source>Bugfix</source>
         <translation>Correction de bugs</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1659"/>
+        <location filename="../gui/mainwindow.cpp" line="1678"/>
         <source>Select where to save the installation file</source>
         <translation>Sélectionner où enregistrer le fichier d&apos;installation</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1675"/>
+        <location filename="../gui/mainwindow.cpp" line="1694"/>
         <source>Download update</source>
         <translation>Téléchargement de la mise à jour</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1675"/>
+        <location filename="../gui/mainwindow.cpp" line="1694"/>
         <source>Unable to save the update file.</source>
         <translation>Impossible d&apos;enregistrer le fichier de mise à jour.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1690"/>
+        <location filename="../gui/mainwindow.cpp" line="1709"/>
         <source>Downloading file...</source>
         <translation>Téléchargement du fichier...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1691"/>
-        <location filename="../gui/mainwindow.cpp" line="1739"/>
-        <location filename="../gui/mainwindow.cpp" line="1744"/>
+        <location filename="../gui/mainwindow.cpp" line="1710"/>
+        <location filename="../gui/mainwindow.cpp" line="1758"/>
+        <location filename="../gui/mainwindow.cpp" line="1763"/>
         <source>Update download</source>
         <translation>Téléchargement de la mise à jour</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1717"/>
+        <location filename="../gui/mainwindow.cpp" line="1736"/>
         <source>Connection to the server was refused.</source>
         <translation>La connexion au serveur a été refusée.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1720"/>
+        <location filename="../gui/mainwindow.cpp" line="1739"/>
         <source>Unable to establish a connection to the server.</source>
         <translation>Impossible d&apos;établir une connexion vers le serveur.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1723"/>
+        <location filename="../gui/mainwindow.cpp" line="1742"/>
         <source>Connection timeout.</source>
         <translation>Connexion hors délai.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1728"/>
+        <location filename="../gui/mainwindow.cpp" line="1747"/>
         <source>Serverside error.</source>
         <translation>Erreur coté serveur.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1731"/>
+        <location filename="../gui/mainwindow.cpp" line="1750"/>
         <source>Connection error.</source>
         <translation>Erreur de connexion.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1739"/>
+        <location filename="../gui/mainwindow.cpp" line="1758"/>
         <source>An error occured while downloading the file.
 Error message: %1</source>
         <translation>Une erreur est apparue lors du téléchargement du fichier.
 Message d&apos;erreur : %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1744"/>
+        <location filename="../gui/mainwindow.cpp" line="1763"/>
         <source>The downloaded file is corrupted. Try again later.</source>
         <translation>Le fichier téléchargé est corrompu. Réessayez plus tard.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1781"/>
+        <location filename="../gui/mainwindow.cpp" line="1800"/>
         <source>Unable to execute the downloaded file.</source>
         <translation>Impossible d&apos;exécuter le fichier téléchargé.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1873"/>
+        <location filename="../gui/mainwindow.cpp" line="1892"/>
         <source>Unable to load the script because the file is not readable or you don&apos;t have enough rights.</source>
         <translation>Impossible de charger le script car le fichier n&apos;est pas lisible ou vous n&apos;avez pas assez de droits.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1880"/>
+        <location filename="../gui/mainwindow.cpp" line="1899"/>
         <source>Actionaz currently has no builtin editor for Code files (.acod). Please use an external code editor.</source>
         <translation>Actionaz ne possède pour l&apos;instant pas d&apos;éditeur intégré pour les fichiers de Code (.acod). Merci d&apos;utiliser un éditeur externe.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1900"/>
+        <location filename="../gui/mainwindow.cpp" line="1919"/>
         <source>File loaded</source>
         <translation>Fichier chargé</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1918"/>
-        <location filename="../gui/mainwindow.cpp" line="2003"/>
+        <location filename="../gui/mainwindow.cpp" line="1937"/>
+        <location filename="../gui/mainwindow.cpp" line="2022"/>
         <source>Save script</source>
         <translation>Enregistrer script</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1918"/>
+        <location filename="../gui/mainwindow.cpp" line="1937"/>
         <source>Unable to save the script because the file is not writable or you don&apos;t have enough rights.</source>
         <translation>Impossible d&apos;enregistrer le script car le fichier ne peut pas être écrit ou vous n&apos;avez pas assez de droits.</translation>
     </message>
@@ -1501,22 +1511,22 @@ Message d&apos;erreur : %1</translation>
         <translation type="obsolete">Impossible d&apos;enregistrer le script car le fichier ne peut pas être écrit ou vous n&apos;avez pas assez de droits.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1934"/>
+        <location filename="../gui/mainwindow.cpp" line="1953"/>
         <source>File saved</source>
         <translation>Fichier enregistré</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1948"/>
+        <location filename="../gui/mainwindow.cpp" line="1967"/>
         <source>untitled.ascr</source>
         <translation>sans nom.ascr</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1982"/>
+        <location filename="../gui/mainwindow.cpp" line="2001"/>
         <source>Save changes</source>
         <translation>Enregistrer les changements</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1982"/>
+        <location filename="../gui/mainwindow.cpp" line="2001"/>
         <source>The script has been modified.
 Do you want to save your changes ?</source>
         <translation>Le script a été modifié.
@@ -1931,7 +1941,7 @@ milliseconds</extracomment>
     <name>SettingsDialog</name>
     <message>
         <location filename="../gui/settingsdialog.ui" line="14"/>
-        <location filename="../gui/settingsdialog.cpp" line="187"/>
+        <location filename="../gui/settingsdialog.cpp" line="237"/>
         <source>Settings</source>
         <translation>Options</translation>
     </message>
@@ -2140,78 +2150,118 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/settingsdialog.ui" line="386"/>
-        <source>Use a proxy</source>
-        <translation>Utiliser un proxy</translation>
+        <source>Do not use a proxy</source>
+        <translation>Ne pas utiliser de proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="396"/>
+        <location filename="../gui/settingsdialog.ui" line="393"/>
+        <source>Use the system proxy</source>
+        <translation>Utiliser le proxy du système</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.ui" line="400"/>
+        <source>Use custom proxy settings</source>
+        <translation>Utiliser des paramètres de proxy personnalisés</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.ui" line="485"/>
+        <source>Test connectivity</source>
+        <translation>Test de connectivité</translation>
+    </message>
+    <message>
+        <source>Use a proxy</source>
+        <translation type="obsolete">Utiliser un proxy</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.ui" line="410"/>
         <source>Proxy settings</source>
         <translation>Paramètres du proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="402"/>
+        <location filename="../gui/settingsdialog.ui" line="416"/>
         <source>Host :</source>
         <translation>Hôte :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="415"/>
+        <location filename="../gui/settingsdialog.ui" line="429"/>
         <source>Port :</source>
         <translation>Port :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="422"/>
+        <location filename="../gui/settingsdialog.ui" line="436"/>
         <source>User :</source>
         <translation>Utilisateur :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="429"/>
+        <location filename="../gui/settingsdialog.ui" line="443"/>
         <source>Password :</source>
         <translation>Mot de passe :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="442"/>
+        <location filename="../gui/settingsdialog.ui" line="456"/>
         <source>Proxy type :</source>
         <translation>Type de proxy :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="450"/>
+        <location filename="../gui/settingsdialog.ui" line="464"/>
         <source>Http</source>
         <translation>Http</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="455"/>
+        <location filename="../gui/settingsdialog.ui" line="469"/>
         <source>Socks5</source>
         <translation>Socks5</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="471"/>
         <source>Test proxy</source>
-        <translation>Tester proxy</translation>
+        <translation type="obsolete">Tester proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="169"/>
-        <location filename="../gui/settingsdialog.cpp" line="172"/>
-        <location filename="../gui/settingsdialog.cpp" line="175"/>
         <source>Proxy test ended</source>
-        <translation>Fin du test de proxy</translation>
+        <translation type="obsolete">Fin du test de proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="169"/>
         <source>The proxy test succeeded.</source>
-        <translation>Le test de proxy s&apos;est bien déroulé.</translation>
+        <translation type="obsolete">Le test de proxy s&apos;est bien déroulé.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="172"/>
         <source>The proxy test failed: invalid username or password.</source>
-        <translation>Le test de proxy a échoué : nom d&apos;utilisateur ou mot de passe incorrect.</translation>
+        <translation type="obsolete">Le test de proxy a échoué : nom d&apos;utilisateur ou mot de passe incorrect.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="175"/>
         <source>The proxy test failed: incorrect proxy settings.</source>
-        <translation>Le test de proxy a échoué : paramètres de proxy incorrects.</translation>
+        <translation type="obsolete">Le test de proxy a échoué : paramètres de proxy incorrects.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="187"/>
+        <location filename="../gui/settingsdialog.cpp" line="163"/>
+        <location filename="../gui/settingsdialog.cpp" line="216"/>
+        <location filename="../gui/settingsdialog.cpp" line="219"/>
+        <location filename="../gui/settingsdialog.cpp" line="224"/>
+        <source>Connectivity test ended</source>
+        <translation>Fin du test de connectivité</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.cpp" line="163"/>
+        <source>The connectivity test failed: maximum time exceeded.</source>
+        <translation>Le délai maximum du test de connectivité est écoulé.</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.cpp" line="216"/>
+        <source>The connectivity test succeeded.</source>
+        <translation>Le test de connectivité s&apos;est achevé avec succès.</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.cpp" line="219"/>
+        <source>The connectivity test failed: invalid username or password.</source>
+        <translation>Le test de connectivité a échoué : nom d&apos;utilisateur ou mot de passe incorrect.</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.cpp" line="224"/>
+        <source>The connectivity test failed: incorrect proxy settings.</source>
+        <translation>Le test de connectivité a échoué : paramètres de proxy incorrects.</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.cpp" line="237"/>
         <source>You have set the same key sequence for switching text/code mode and opening the editor, please choose a different one.</source>
         <translation>Vous avez paramétré la même touche pour passer en mode texte/code et pour ouvrir l&apos;éditeur, merci d&apos;en choisir deux différents.</translation>
     </message>

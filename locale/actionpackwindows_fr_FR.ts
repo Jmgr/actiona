@@ -56,67 +56,87 @@
 <context>
     <name>Actions::MessageBoxDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="50"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="51"/>
         <source>Message</source>
         <translation>Message</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="51"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="52"/>
         <source>The text to show</source>
         <translation>Le texte à afficher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="54"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="55"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="55"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="56"/>
         <source>The title to show</source>
         <translation>Le titre à afficher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="58"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="59"/>
         <source>Icon</source>
         <translation>Icône</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="59"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="60"/>
         <source>The icon to use</source>
         <translation>L&apos;icône à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="64"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="65"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="65"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="66"/>
         <source>The message box type</source>
         <translation>Le type de la boîte de dialogue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="70"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="71"/>
+        <source>Custom icon</source>
+        <translation>Icône personnalisée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="72"/>
+        <source>The custom icon to use</source>
+        <translation>L&apos;icône personnalisée à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="74"/>
+        <source>Select the icon to use</source>
+        <translation>Sélectionnez l&apos;icône à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="75"/>
+        <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
+        <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="78"/>
         <source>Yes-No action</source>
         <translation>Action Oui-Non</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="74"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="82"/>
         <source>If yes</source>
         <translation>Si oui</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="83"/>
         <source>What to do if the yes button is pressed</source>
         <translation>Ce qui doit être fait si le bouton Oui est pressé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="78"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="86"/>
         <source>If no</source>
         <translation>Si non</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="79"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="87"/>
         <source>What to do if the no button is pressed</source>
         <translation>Ce qui doit être fait si le bouton Non est pressé</translation>
     </message>
@@ -410,12 +430,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="85"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="93"/>
         <source>Message Box</source>
         <translation>Boîte de dialogue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="88"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="96"/>
         <source>Shows a message box</source>
         <translation>Affiche une boîte de dialogue</translation>
     </message>

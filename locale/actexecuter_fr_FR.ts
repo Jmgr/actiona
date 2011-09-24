@@ -25,67 +25,67 @@
         <translation type="obsolete">passer en mode script, ne peut pas être utiliser avec -o</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="77"/>
+        <location filename="../actexecuter/main.cpp" line="79"/>
         <source>switch to code mode, may not be used with -s</source>
         <translation>passer en mode code, ne peut pas être utilisé avec -s</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="79"/>
+        <location filename="../actexecuter/main.cpp" line="81"/>
         <source>switch to script mode, may not be used with -c</source>
         <translation>passer en mode script, ne peut pas être utiliser avec -c</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="81"/>
+        <location filename="../actexecuter/main.cpp" line="83"/>
         <source>do not include the Qt library into the code</source>
         <translation>ne pas inclure la bibliothèque Qt dans le code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="83"/>
+        <location filename="../actexecuter/main.cpp" line="85"/>
         <source>starts in portable mode, storing the settings in the executable folder</source>
         <translation>démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="85"/>
+        <location filename="../actexecuter/main.cpp" line="87"/>
         <source>show the program version</source>
         <translation>afficher la version du programme</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="87"/>
+        <location filename="../actexecuter/main.cpp" line="89"/>
         <source>show this help text</source>
         <translation>afficher ce texte d&apos;aide</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="167"/>
+        <location filename="../actexecuter/main.cpp" line="169"/>
         <source>usage: </source>
         <translation>utilisation : </translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="167"/>
+        <location filename="../actexecuter/main.cpp" line="169"/>
         <source>[parameters]</source>
         <translation>[paramètres]</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="167"/>
+        <location filename="../actexecuter/main.cpp" line="169"/>
         <source>filename</source>
         <translation>nom de fichier</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="168"/>
+        <location filename="../actexecuter/main.cpp" line="170"/>
         <source>Parameters are:</source>
         <translation>Les paramètres sont :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="222"/>
+        <location filename="../actexecuter/main.cpp" line="224"/>
         <source>Unknown execution mode, please specify mode=script or mode=code</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier mode=script ou mode=code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="248"/>
+        <location filename="../actexecuter/main.cpp" line="250"/>
         <source>Unknown execution mode, please specify -o (script) or -r (code)</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="258"/>
+        <location filename="../actexecuter/main.cpp" line="260"/>
         <source>Unable to read input file</source>
         <translation>Impossible de lire le fichier d&apos;entrée</translation>
     </message>
