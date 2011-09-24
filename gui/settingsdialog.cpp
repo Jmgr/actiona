@@ -173,7 +173,8 @@ void SettingsDialog::on_testConnectivity_clicked()
 		break;
 	case ActionTools::Settings::PROXY_SYSTEM:
 		{
-			QNetworkProxyQuery networkProxyQuery(QUrl(Global::CONNECTIVITY_URL));
+			QUrl url(Global::CONNECTIVITY_URL);
+			QNetworkProxyQuery networkProxyQuery(url);
 			QList<QNetworkProxy> listOfProxies = QNetworkProxyFactory::systemProxyForQuery(networkProxyQuery);
 			if(!listOfProxies.isEmpty())
 				proxy = listOfProxies.first();
