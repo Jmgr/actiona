@@ -67,6 +67,8 @@ int main(int argc, char **argv)
 	notify_init("Actionaz executer");
 #endif
 
+	//TODO: Use proxy ?
+
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	const QStringList &arguments = QCoreApplication::arguments();
