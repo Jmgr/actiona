@@ -25,15 +25,21 @@
 #include <QNetworkReply>
 #include <QXmlStreamReader>
 #include <QDate>
+#include <QTimer>
 
 namespace Tools
 {
-	Updater::Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, QObject *parent)
+	Updater::Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent)
 		: QObject(parent),
-		mUrl(url),
-		mNetworkAccessManager(networkAccessManager),
-		mCurrentReply(0)
+		  mUrl(url),
+		  mNetworkAccessManager(networkAccessManager),
+		  mCurrentReply(0),
+		  mTimeoutTimer(new QTimer(this))
 	{
+		connect(mTimeoutTimer, SIGNAL(timeout()), this, SLOT(timeout()));
+
+		mTimeoutTimer->setSingleShot(true);
+		mTimeoutTimer->setInterval(timeout);
 	}
 	
 	Updater::~Updater()
@@ -48,8 +54,6 @@ namespace Tools
 	{
 		if(mCurrentReply)
 			return;
-		
-		connect(mNetworkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
 		
 		QUrl url(mUrl);
 		url.addQueryItem("request", "program");
@@ -73,25 +77,33 @@ namespace Tools
 		QNetworkRequest request(url);
 		request.setRawHeader("User-Agent", QString("%1 %2").arg(program).arg(programVersion.toString()).toAscii());
 		
-		mNetworkAccessManager->get(request);
+		mCurrentReply = mNetworkAccessManager->get(request);
+
+		connect(mCurrentReply, SIGNAL(finished()), this, SLOT(replyFinished()));
+		connect(mCurrentReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress()));
+
+		mTimeoutTimer->start();
 	}
 	
 	void Updater::cancel()
 	{
+		mTimeoutTimer->stop();
+
 		if(!mCurrentReply)
 			return;
 		
 		mCurrentReply->abort();
-		mCurrentReply->deleteLater();
-		mCurrentReply = 0;
-		disconnect(mNetworkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
 	}
 	
-	void Updater::replyFinished(QNetworkReply *reply)
+	void Updater::replyFinished()
 	{
-		disconnect(mNetworkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+		mTimeoutTimer->stop();
+
+		mCurrentReply->deleteLater();
+
+		QNetworkReply *reply = mCurrentReply;
+
 		mCurrentReply = 0;
-		reply->deleteLater();
 		
 		if(reply->error() != QNetworkReply::NoError)
 		{
@@ -161,5 +173,19 @@ namespace Tools
 		}
 		
 		emit success(version, date, type, changelog, filename, size, hash);
+	}
+
+	void Updater::timeout()
+	{
+		cancel();
+
+		emit error(tr("Connection timeout."));
+	}
+
+	void Updater::downloadProgress()
+	{
+		//Restart the timer
+		if(mTimeoutTimer->isActive())
+			mTimeoutTimer->start();
 	}
 }

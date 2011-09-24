@@ -29,6 +29,7 @@
 
 class QNetworkAccessManager;
 class QNetworkReply;
+class QTimer;
 
 namespace Tools
 {
@@ -46,7 +47,7 @@ namespace Tools
 			Binary
 		};
 		
-		Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, QObject *parent = 0);
+		Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent = 0);
 		~Updater();
 		
 		void checkForUpdates(const QString &program,
@@ -68,12 +69,15 @@ namespace Tools
 					 const QString &hash);
 	
 	private slots:
-		void replyFinished(QNetworkReply *reply);
+		void replyFinished();
+		void timeout();
+		void downloadProgress();
 		
 	private:
 		QUrl mUrl;
 		QNetworkAccessManager *mNetworkAccessManager;
 		QNetworkReply *mCurrentReply;
+		QTimer *mTimeoutTimer;
 
 		Q_DISABLE_COPY(Updater)
 	};

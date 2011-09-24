@@ -100,7 +100,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 #ifndef ACT_NO_UPDATER
 	,mNetworkAccessManager(new QNetworkAccessManager(this)),
 	mUpdateDownloadNetworkReply(0),
-	mUpdater(new Tools::Updater(mNetworkAccessManager, Global::UPDATE_URL, this)),
+	mUpdater(new Tools::Updater(mNetworkAccessManager, Global::UPDATE_URL, Global::UPDATE_TIMEOUT, this)),
 	mUpdaterProgressDialog(new QProgressDialog(this)),
 	mHashCalculator(QCryptographicHash::Md5)
 #endif
@@ -1264,6 +1264,7 @@ void MainWindow::checkForUpdate(bool silent)
 	mUpdaterProgressDialog->setLabelText(tr("Checking if an update is available..."));
 	mUpdaterProgressDialog->setMinimumDuration(0);
 	mUpdaterProgressDialog->open(this, SLOT(updateCanceled()));
+	mUpdaterProgressDialog->setWindowTitle(tr("Checking for updates"));
 	mSilentUpdate = silent;
 	mUpdater->checkForUpdates("actionaz", Global::ACTIONAZ_VERSION, Tools::Updater::Installer, Global::currentOS(), QSystemInfo().currentLanguage());
 }
