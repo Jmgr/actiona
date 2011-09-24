@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>702</width>
-    <height>396</height>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
    <item>
     <widget class="QTabWidget" name="settingsTab">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="icon">
@@ -381,9 +381,23 @@ p, li { white-space: pre-wrap; }
        <item row="1" column="1">
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QCheckBox" name="useAProxy">
+          <widget class="QRadioButton" name="noProxyRadioButton">
            <property name="text">
-            <string>Use a proxy</string>
+            <string>Do not use a proxy</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="systemProxyRadioButton">
+           <property name="text">
+            <string>Use the system proxy</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="customProxyRadioButton">
+           <property name="text">
+            <string>Use custom proxy settings</string>
            </property>
           </widget>
          </item>
@@ -463,12 +477,12 @@ p, li { white-space: pre-wrap; }
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QPushButton" name="testProxy">
+            <widget class="QPushButton" name="testConnectivity">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="text">
-              <string>Test proxy</string>
+              <string>Test connectivity</string>
              </property>
             </widget>
            </item>
@@ -523,22 +537,6 @@ p, li { white-space: pre-wrap; }
  </resources>
  <connections>
   <connection>
-   <sender>useAProxy</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>proxySettings</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>130</x>
-     <y>75</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>147</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
    <receiver>SettingsDialog</receiver>
@@ -551,22 +549,6 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>418</x>
      <y>7</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>useAProxy</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>testProxy</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>376</x>
-     <y>76</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>160</x>
-     <y>270</y>
     </hint>
    </hints>
   </connection>

@@ -44,13 +44,18 @@ public:
 	~SettingsDialog();
 
 private slots:
+	void enableCustomProxy();
+	void disableCustomProxy();
 	void onTimeout();
-	void on_testProxy_clicked();
-	void proxyTestFinished(QNetworkReply *reply);
+	void on_testConnectivity_clicked();
+	void proxyTestFinished();
 	void accept();
 	void done(int result);
 
 private:
+	void setCustomProxyEnabled(bool enabled);
+	int proxyMode() const;
+
 	Ui::SettingsDialog *ui;
 	QButtonGroup *mExecutionWindowButtonGroup;
 	QButtonGroup *mConsoleWindowButtonGroup;

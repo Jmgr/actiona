@@ -42,6 +42,13 @@ namespace ActionTools
 			PROXY_TYPE_HTTP,
 			PROXY_TYPE_SOCKS5
 		};
+
+		enum
+		{
+			PROXY_NONE,
+			PROXY_SYSTEM,
+			PROXY_CUSTOM
+		};
 	}
 }
 

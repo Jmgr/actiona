@@ -29,6 +29,7 @@ namespace Global
 	const Tools::Version	SCRIPT_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_SCRIPT_VERSION));
 	const QString			UPDATE_URL =		"http://updates.actionaz.org/";
 	const int				UPDATE_TIMEOUT =	5000;
+	const QString			CONNECTIVITY_URL =	"http://www.actionaz.org/";
 
 	QString currentOS();
 }

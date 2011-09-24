@@ -22,6 +22,7 @@
 #include "screenpositionwidget.h"
 #include "settings.h"
 #include "ui_settingsdialog.h"
+#include "global.h"
 
 #ifdef Q_WS_WIN
 #include "registry.h"
@@ -54,8 +55,6 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 
 #ifdef ACT_NO_UPDATER
 	ui->settingsTab->removeTab(ui->settingsTab->indexOf(ui->networkTab));
-#else
-	connect(mNetworkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(proxyTestFinished(QNetworkReply*)));
 #endif
 
 #ifdef Q_WS_X11
@@ -63,6 +62,10 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->associateASCRCheckBox->setVisible(false);
 	ui->associateACODCheckBox->setVisible(false);
 #endif
+
+	connect(ui->noProxyRadioButton, SIGNAL(clicked()), this, SLOT(disableCustomProxy()));
+	connect(ui->systemProxyRadioButton, SIGNAL(clicked()), this, SLOT(disableCustomProxy()));
+	connect(ui->customProxyRadioButton, SIGNAL(clicked()), this, SLOT(enableCustomProxy()));
 
 	QSettings settings;
 
@@ -99,9 +102,22 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 #ifndef ACT_NO_UPDATER
 	//NETWORK
 	ui->updatesCheck->setCurrentIndex(settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY)).toInt());
-	ui->useAProxy->setChecked(settings.value("network/useAProxy", QVariant(false)).toBool());
-	ui->proxySettings->setEnabled(ui->useAProxy->isChecked());
-	ui->testProxy->setEnabled(ui->useAProxy->isChecked());
+	int proxyMode = settings.value("network/proxyMode", QVariant(ActionTools::Settings::PROXY_SYSTEM)).toInt();
+
+	switch(proxyMode)
+	{
+	case ActionTools::Settings::PROXY_NONE:
+		ui->noProxyRadioButton->setChecked(true);
+		break;
+	case ActionTools::Settings::PROXY_SYSTEM:
+		ui->systemProxyRadioButton->setChecked(true);
+		break;
+	case ActionTools::Settings::PROXY_CUSTOM:
+		ui->customProxyRadioButton->setChecked(true);
+		break;
+	}
+
+	setCustomProxyEnabled(ui->customProxyRadioButton->isChecked());
 	ui->proxyHost->setText(settings.value("network/proxyHost", QVariant()).toString());
 	ui->proxyPort->setText(settings.value("network/proxyPort", QVariant()).toString());
 	ui->proxyUser->setText(settings.value("network/proxyUser", QVariant()).toString());
@@ -129,54 +145,88 @@ SettingsDialog::~SettingsDialog()
 	delete ui;
 }
 
+void SettingsDialog::enableCustomProxy()
+{
+	setCustomProxyEnabled(true);
+}
+
+void SettingsDialog::disableCustomProxy()
+{
+	setCustomProxyEnabled(false);
+}
+
 void SettingsDialog::onTimeout()
 {
 	if(!mNetworkReply)
 		return;
 
+	QMessageBox::warning(this, tr("Connectivity test ended"), tr("The connectivity test failed: maximum time exceeded."));
+
 	mNetworkReply->abort();
 }
 
-void SettingsDialog::on_testProxy_clicked()
+void SettingsDialog::on_testConnectivity_clicked()
 {
 	QNetworkProxy proxy;
 
-	if(ui->proxyType->currentIndex() == ActionTools::Settings::PROXY_TYPE_HTTP)
-		proxy.setType(QNetworkProxy::HttpProxy);
-	else
-		proxy.setType(QNetworkProxy::Socks5Proxy);
-	proxy.setHostName(ui->proxyHost->text());
-	proxy.setPort(ui->proxyPort->text().toInt());
-	proxy.setUser(ui->proxyUser->text());
-	proxy.setPassword(ui->proxyPassword->text());
-
-	mNetworkAccessManager->setProxy(proxy);
-	mNetworkReply = mNetworkAccessManager->get(QNetworkRequest(QUrl("http://www.jmgr.info")));
-
-	setEnabled(false);
-
-	mTimeoutTimer->start(3000);
-}
-
-void SettingsDialog::proxyTestFinished(QNetworkReply *reply)
-{
-	mTimeoutTimer->stop();
-
-	QNetworkReply::NetworkError error = reply->error();
-	switch(error)
+	switch(proxyMode())
 	{
-	case QNetworkReply::NoError:
-		QMessageBox::information(this, tr("Proxy test ended"), tr("The proxy test succeeded."));
+	case ActionTools::Settings::PROXY_NONE:
+		proxy.setType(QNetworkProxy::NoProxy);
 		break;
-	case QNetworkReply::ProxyAuthenticationRequiredError:
-		QMessageBox::warning(this, tr("Proxy test ended"), tr("The proxy test failed: invalid username or password."));
+	case ActionTools::Settings::PROXY_SYSTEM:
+		{
+			QNetworkProxyQuery networkProxyQuery(QUrl(Global::CONNECTIVITY_URL));
+			QList<QNetworkProxy> listOfProxies = QNetworkProxyFactory::systemProxyForQuery(networkProxyQuery);
+			if(!listOfProxies.isEmpty())
+				proxy = listOfProxies.first();
+			else
+				proxy.setType(QNetworkProxy::NoProxy);
+		}
 		break;
-	default:
-		QMessageBox::warning(this, tr("Proxy test ended"), tr("The proxy test failed: incorrect proxy settings."));
+	case ActionTools::Settings::PROXY_CUSTOM:
+		if(ui->proxyType->currentIndex() == ActionTools::Settings::PROXY_TYPE_HTTP)
+			proxy.setType(QNetworkProxy::HttpProxy);
+		else
+			proxy.setType(QNetworkProxy::Socks5Proxy);
+		proxy.setHostName(ui->proxyHost->text());
+		proxy.setPort(ui->proxyPort->text().toInt());
+		proxy.setUser(ui->proxyUser->text());
+		proxy.setPassword(ui->proxyPassword->text());
 		break;
 	}
 
-	reply->deleteLater();
+	QNetworkProxy::setApplicationProxy(proxy);
+	mNetworkReply = mNetworkAccessManager->get(QNetworkRequest(QUrl(Global::CONNECTIVITY_URL)));
+	connect(mNetworkReply, SIGNAL(finished()), this, SLOT(proxyTestFinished()));
+
+	setEnabled(false);
+
+	mTimeoutTimer->start(5000);
+}
+
+void SettingsDialog::proxyTestFinished()
+{
+	mTimeoutTimer->stop();
+
+	QNetworkReply::NetworkError error = mNetworkReply->error();
+	switch(error)
+	{
+	case QNetworkReply::NoError:
+		QMessageBox::information(this, tr("Connectivity test ended"), tr("The connectivity test succeeded."));
+		break;
+	case QNetworkReply::ProxyAuthenticationRequiredError:
+		QMessageBox::warning(this, tr("Connectivity test ended"), tr("The connectivity test failed: invalid username or password."));
+		break;
+	case QNetworkReply::OperationCanceledError:
+		break;
+	default:
+		QMessageBox::warning(this, tr("Connectivity test ended"), tr("The connectivity test failed: incorrect proxy settings."));
+		break;
+	}
+
+	mNetworkReply->deleteLater();
+	mNetworkReply = 0;
 	setEnabled(true);
 }
 
@@ -191,35 +241,35 @@ void SettingsDialog::accept()
 	QSettings settings;
 
 	//GENERAL
-	settings.setValue("general/showLoadingWindow", QVariant(ui->showLoadingWindow->isChecked()));
-	settings.setValue("general/showTaskbarIcon", QVariant(ui->showTaskbarIcon->isChecked()));
-	settings.setValue("general/showWindowAfterExecution", QVariant(ui->showWindowAfterExecution->isChecked()));
-	settings.setValue("general/addConsoleStartEndSeparators", QVariant(ui->addStartEndSeparators->isChecked()));
-	settings.setValue("general/reopenLastScript", QVariant(ui->reopenLastScript->isChecked()));
-	settings.setValue("general/maxRecentFiles", QVariant(ui->maxRecentFiles->value()));
+	settings.setValue("general/showLoadingWindow", ui->showLoadingWindow->isChecked());
+	settings.setValue("general/showTaskbarIcon", ui->showTaskbarIcon->isChecked());
+	settings.setValue("general/showWindowAfterExecution", ui->showWindowAfterExecution->isChecked());
+	settings.setValue("general/addConsoleStartEndSeparators", ui->addStartEndSeparators->isChecked());
+	settings.setValue("general/reopenLastScript", ui->reopenLastScript->isChecked());
+	settings.setValue("general/maxRecentFiles", ui->maxRecentFiles->value());
 
 	//ACTIONS
-	settings.setValue("actions/showExecutionWindow", QVariant(ui->executionWindowGroup->isChecked()));
+	settings.setValue("actions/showExecutionWindow", ui->executionWindowGroup->isChecked());
 	settings.setValue("actions/executionWindowPosition", ui->executionWindowPosition->position());
 	settings.setValue("actions/executionWindowScreen", ui->executionWindowPosition->screen());
-	settings.setValue("actions/showConsoleWindow", QVariant(ui->consoleWindowGroup->isChecked()));
+	settings.setValue("actions/showConsoleWindow", ui->consoleWindowGroup->isChecked());
 	settings.setValue("actions/consoleWindowPosition", ui->consoleWindowPosition->position());
 	settings.setValue("actions/consoleWindowScreen", ui->consoleWindowPosition->screen());
 	settings.setValue("actions/stopExecutionHotkey", QVariant::fromValue(ui->stopExecutionHotkey->keySequence()));
 	settings.setValue("actions/pauseExecutionHotkey", QVariant::fromValue(ui->pauseExecutionHotkey->keySequence()));
 	settings.setValue("actions/switchTextCode", QVariant::fromValue(ui->switchTextCode->keySequence()));
 	settings.setValue("actions/openEditorKey", QVariant::fromValue(ui->openEditorKey->keySequence()));
-	settings.setValue("actions/checkCodeSyntaxAutomatically", QVariant(ui->checkCodeSyntaxAutomatically->isChecked()));
+	settings.setValue("actions/checkCodeSyntaxAutomatically", ui->checkCodeSyntaxAutomatically->isChecked());
 
 #ifndef ACT_NO_UPDATER
 	//NETWORK
 	settings.setValue("network/updatesCheck", QVariant(ui->updatesCheck->currentIndex()));
-	settings.setValue("network/useAProxy", QVariant(ui->useAProxy->isChecked()));
-	settings.setValue("network/proxyHost", QVariant(ui->proxyHost->text()));
-	settings.setValue("network/proxyPort", QVariant(ui->proxyPort->text()));
-	settings.setValue("network/proxyUser", QVariant(ui->proxyUser->text()));
-	settings.setValue("network/proxyPassword", QVariant(ui->proxyPassword->text()));
-	settings.setValue("network/proxyType", QVariant(ui->proxyType->currentIndex()));
+	settings.setValue("network/proxyMode", proxyMode());
+	settings.setValue("network/proxyHost", ui->proxyHost->text());
+	settings.setValue("network/proxyPort", ui->proxyPort->text());
+	settings.setValue("network/proxyUser", ui->proxyUser->text());
+	settings.setValue("network/proxyPassword", ui->proxyPassword->text());
+	settings.setValue("network/proxyType", ui->proxyType->currentIndex());
 #endif
 
 #ifdef Q_WS_WIN
@@ -283,5 +333,23 @@ void SettingsDialog::done(int result)
 	if(mSystemTrayIcon)
 		mSystemTrayIcon->setVisible(settings.value("general/showTaskbarIcon", QVariant(true)).toBool());
 
+	if(mNetworkReply)
+		mNetworkReply->abort();
+
 	QDialog::done(result);
+}
+
+void SettingsDialog::setCustomProxyEnabled(bool enabled)
+{
+	ui->proxySettings->setEnabled(enabled);
+}
+
+int SettingsDialog::proxyMode() const
+{
+	if(ui->noProxyRadioButton->isChecked())
+		return ActionTools::Settings::PROXY_NONE;
+	else if(ui->systemProxyRadioButton->isChecked())
+		return ActionTools::Settings::PROXY_SYSTEM;
+	else
+		return ActionTools::Settings::PROXY_CUSTOM;
 }
