@@ -91,7 +91,7 @@ int wmain(int argc, wchar_t **argv)
 
 	language = argv[1];
 
-	if(wcscmp(language, L"FR_fr") == 0)
+	if(wcscmp(language, L"fr_FR") == 0)
 		languageIndex = LANG_FR_FR;
 	// Add other languages here
 
