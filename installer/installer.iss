@@ -55,7 +55,6 @@ Root: HKCR; Subkey: "ActionazCodeFile"; ValueType: string; ValueName: ""; ValueD
 Root: HKCR; Subkey: "ActionazScriptFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\actionaz.exe,0"
 Root: HKCR; Subkey: "ActionazCodeFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\actionaz.exe,0"
 Root: HKCR; Subkey: "ActionazScriptFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\actionaz.exe"" ""%1"""
-Root: HKCR; Subkey: "ActionazScriptFile"; ValueType: string; ValueName: ""; ValueData: "Actionaz Script File"; Flags: uninsdeletekey
 ; Installer language
 Root: HKCU; Subkey: "Software\Actionaz\Actionaz"; ValueType: string; ValueName: "installerLanguage"; ValueData: "{language}"; Flags: uninsdeletekey
 ; URL Protocol
@@ -63,6 +62,31 @@ Root: HKCR; Subkey: "actionaz"; ValueType: string; ValueName: "URL Protocol"; Va
 Root: HKCR; Subkey: "actionaz"; ValueType: string; ValueData: "URL:Actionaz Protocol"; Flags: uninsdeletekey
 Root: HKCR; Subkey: "actionaz\DefaultIcon"; ValueType: string; ValueData: "{app}\actexec.exe,0"; Flags: uninsdeletekey
 Root: HKCR; Subkey: "actionaz\shell\open\command"; ValueType: string; ValueData: """{app}\actexec.exe"" ""%1"""; Flags: uninsdeletekey
+; Path
+Root: HKCU; SubKey: "Environment\"; ValueType: string; ValueName: "Path"; ValueData: "{reg:HKCU\Environment\,Path};{app}"
+
+[Code]
+// Path uninstall
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+var
+  Path, AppDir: string;
+  Index: Integer;
+begin
+  if CurUninstallStep = usUninstall then
+  begin
+    if RegQueryStringValue(HKEY_CURRENT_USER,
+      'Environment\',
+      'Path', Path) then
+    begin
+      AppDir := ExpandConstant('{app}');
+      Index := Pos(AppDir, Path);
+      Delete(Path, Index-1, Length(AppDir)+1);
+      RegWriteStringValue(HKEY_CURRENT_USER,
+        'Environment\',
+        'Path', Path);
+    end;
+  end;
+end;
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
