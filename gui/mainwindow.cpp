@@ -669,16 +669,12 @@ void MainWindow::on_actionExport_executable_triggered()
 	QString configFile;
 	QTextStream configFileStream(&configFile);
 	configFileStream << ";!@Install@!UTF-8!" << "\r\n";
+	configFileStream << "ExecuteFile=\"runner.exe\"" << "\r\n";
 	if(useActExec)
-	{
-		configFileStream << "ExecuteFile=\"actexec.exe\"" << "\r\n";
-		configFileStream << QString("ExecuteParameters=\"script.ascr\"") << "\r\n";
-	}
+		configFileStream << QString("ExecuteParameters=\"%1 open actexec \\\"script.ascr\\\"\"").arg(mUsedLocale) << "\r\n";
 	else
-	{
-		configFileStream << "ExecuteFile=\"actionaz.exe\"" << "\r\n";
-		configFileStream << QString("ExecuteParameters=\"-%1 script.ascr\"").arg(parameters) << "\r\n";
-	}
+		configFileStream << QString("ExecuteParameters=\"%1 open actionaz \\\"-%2 script.ascr\\\"\"").arg(mUsedLocale).arg(parameters) << "\r\n";
+
 	configFileStream << "GUIMode=\"2\"" << "\r\n";
 	configFileStream << ";!@InstallEnd@!";
 

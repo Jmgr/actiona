@@ -54,7 +54,7 @@ static const wchar_t * const texts[TEXT_COUNT][LANG_COUNT] =
 		L"Erreur"
 	},
 	{
-		L"Usage: runner language program parameters",
+		L"Usage: runner language action program parameters",
 		L"" //This doesn't get translated
 	},
 	{
@@ -82,7 +82,7 @@ int wmain(int argc, wchar_t **argv)
 	int languageIndex = LANG_DEFAULT;
 	int resultCode;
 
-	if(argc != 4)
+	if(argc != 5)
 	{
 		showMessageBox(LANG_DEFAULT, TEXT_USAGE);
 
@@ -95,7 +95,7 @@ int wmain(int argc, wchar_t **argv)
 		languageIndex = LANG_FR_FR;
 	// Add other languages here
 
-	resultCode = (int)ShellExecute(0, L"open", argv[2], argv[3], 0, SW_SHOWDEFAULT);
+	resultCode = (int)ShellExecute(0, argv[2], argv[3], argv[4], 0, SW_SHOWDEFAULT);
 	if(resultCode <= 32)
 	{
 		switch(resultCode)
@@ -106,6 +106,7 @@ int wmain(int argc, wchar_t **argv)
 			return -1;
 
 		case ERROR_BAD_FORMAT:
+		case ERROR_ACCESS_DENIED:
 			showMessageBox(languageIndex, TEXT_NO_64BIT);
 			return -1;
 
