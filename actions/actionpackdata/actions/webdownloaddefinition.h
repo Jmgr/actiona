@@ -74,6 +74,9 @@ namespace Actions
 
 			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("File"), this);
 			file->setTooltip(tr("The file where to write the downloaded data"));
+			file->setMode(ActionTools::FileEdit::FileSave);
+			file->setCaption(tr("Choose the destination file"));
+			file->setFilter(tr("All files (*.*)"));
 			fileMode->addMember(file);
 
 			addElement(fileMode);
