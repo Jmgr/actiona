@@ -363,7 +363,12 @@
 <context>
     <name>Code::MessageBox</name>
     <message>
-        <location filename="../actions/actionpackwindows/code/messagebox.cpp" line="128"/>
+        <location filename="../actions/actionpackwindows/code/messagebox.cpp" line="126"/>
+        <source>Invalid image</source>
+        <translation>Image invalide</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/code/messagebox.cpp" line="152"/>
         <source>Add custom button failed</source>
         <translation>Échec de l&apos;ajout de bouton personnalisé</translation>
     </message>

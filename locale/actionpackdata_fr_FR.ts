@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackData</name>
     <message>
-        <location filename="../actions/actionpackdata/actionpackdata.h" line="77"/>
+        <location filename="../actions/actionpackdata/actionpackdata.h" line="80"/>
         <source>Data related actions</source>
         <translation>Actions liées aux données</translation>
     </message>
@@ -366,6 +366,97 @@
         <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="77"/>
         <source>Cannot open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::WebDownloadDefinition</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="51"/>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="52"/>
+        <source>The URL of the data to download</source>
+        <translation>L&apos;URL des données à télécharger</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="55"/>
+        <source>Destination</source>
+        <translation>Destination</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="56"/>
+        <source>The destination where to write the downloaded data</source>
+        <translation>La destination des données téléchargées</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="65"/>
+        <source>Variable</source>
+        <translation>Variable</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="66"/>
+        <source>The variable where to write the downloaded data</source>
+        <translation>La variable où stocker les données téléchargées</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="75"/>
+        <source>File</source>
+        <translation>Fichier</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="76"/>
+        <source>The file where to write the downloaded data</source>
+        <translation>Le fichier où stocker les données téléchargées</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="81"/>
+        <source>Show progress</source>
+        <translation>Afficher la progression</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="82"/>
+        <source>Should the download progress be shown</source>
+        <translation>Affiche ou non la progression du téléchargement</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="86"/>
+        <source>Cannot write to file</source>
+        <translation>Impossible d&apos;écrire vers le fichier</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="87"/>
+        <source>Download error</source>
+        <translation>Erreur de téléchargement</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::WebDownloadInstance</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="70"/>
+        <source>Invalid URL</source>
+        <translation>URL invalide</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="80"/>
+        <source>Cannot write to file</source>
+        <translation>Impossible d&apos;écrire vers le fichier</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="92"/>
+        <source>Downloading</source>
+        <translation>Téléchargement</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="93"/>
+        <source>Downloading...</source>
+        <translation>Téléchargement...</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="134"/>
+        <source>Download error: %1</source>
+        <translation>Erreur de téléchargement : %1</translation>
     </message>
 </context>
 <context>
@@ -864,6 +955,14 @@
     </message>
 </context>
 <context>
+    <name>Code::Web</name>
+    <message>
+        <location filename="../actions/actionpackdata/code/web.cpp" line="85"/>
+        <source>Unable to open the destination file</source>
+        <translation>Impossible d&apos;écrire le fichier de destination</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="62"/>
@@ -991,6 +1090,16 @@
         <source>Append to the end</source>
         <translation type="obsolete">Ajouter à la fin</translation>
     </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="90"/>
+        <source>Web download</source>
+        <translation>Téléchargement Web</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="93"/>
+        <source>Downloads data from the Web</source>
+        <translation>Télécharge des données à partir du Web</translation>
+    </message>
 </context>
 <context>
     <name>ReadTextFileInstance::modes</name>
@@ -1003,6 +1112,19 @@
         <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="31"/>
         <source>Read only a selection</source>
         <translation>Lire une sélection</translation>
+    </message>
+</context>
+<context>
+    <name>WebDownloadInstance::destinations</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="33"/>
+        <source>Variable</source>
+        <translation>Variable</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="34"/>
+        <source>File</source>
+        <translation>Fichier</translation>
     </message>
 </context>
 <context>
