@@ -33,6 +33,7 @@
 #include "actions/readbinaryfiledefinition.h"
 #include "actions/writebinaryfiledefinition.h"
 #include "actions/copyfiledefinition.h"
+#include "actions/webdownloaddefinition.h"
 
 #include "code/file.h"
 #include "code/clipboard.h"
@@ -42,6 +43,7 @@
 #include "code/tcp.h"
 #include "code/sql.h"
 #include "code/tcpserver.h"
+#include "code/web.h"
 
 #include <QtCore/qplugin.h>
 
@@ -71,6 +73,7 @@ public:
 		addActionDefinition(new Actions::ReadBinaryFileDefinition(this));
 		addActionDefinition(new Actions::WriteBinaryFileDefinition(this));
 		addActionDefinition(new Actions::CopyFileDefinition(this));
+		addActionDefinition(new Actions::WebDownloadDefinition(this));
 	}
 
 	QString id() const								{ return "data"; }
@@ -89,6 +92,7 @@ public:
 		addCodeClass<Code::Sql>("Sql", scriptEngine);
 		Code::Sql::registerClass(scriptEngine);
 		addCodeClass<Code::TcpServer>("TcpServer", scriptEngine);
+		addCodeClass<Code::Web>("Web", scriptEngine);
 	}
 
 private:

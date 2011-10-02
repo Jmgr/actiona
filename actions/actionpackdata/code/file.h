@@ -57,6 +57,8 @@ namespace Code
 		static void registerClass(QScriptEngine *scriptEngine);
 	
 		~File()						{ mFile.close(); }
+
+		QFile *file()				{ return &mFile; }
 	
 	public slots:
 		QString toString() const					{ return "File"; }

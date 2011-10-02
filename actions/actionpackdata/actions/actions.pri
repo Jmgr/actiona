@@ -19,8 +19,14 @@ HEADERS += actions/readtextfiledefinition.h \
 	actions/copyfileinstance.h \
 	actions/copyfiledefinition.h \
     actions/writetextfileinstance.h \
-    actions/writetextfiledefinition.h
+    actions/writetextfiledefinition.h \
+    actions/webdownloaddefinition.h \
+    actions/webdownloadinstance.h
 SOURCES +=	actions/readtextfileinstance.cpp \
 	actions/readregistryinstance.cpp \
 	actions/writeregistryinstance.cpp \
-    actions/writetextfileinstance.cpp
+    actions/writetextfileinstance.cpp \
+    actions/webdownloadinstance.cpp
+
+
+
