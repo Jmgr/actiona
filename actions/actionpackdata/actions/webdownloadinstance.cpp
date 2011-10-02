@@ -67,7 +67,7 @@ namespace Actions
 		if(!url.isValid())
 		{
 			actionInstanceExecutionHelper.setCurrentParameter("url");
-			emit executionException(InvalidURLException, tr("Invalid URL"));
+			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid URL"));
 			return;
 		}
 

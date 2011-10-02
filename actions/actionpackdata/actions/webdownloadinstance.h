@@ -46,8 +46,7 @@ namespace Actions
 		};
 		enum Exceptions
 		{
-			InvalidURLException = ActionTools::ActionException::UserException,
-			CannotOpenFileException,
+			CannotOpenFileException = ActionTools::ActionException::UserException,
 			DownloadException
 		};
 

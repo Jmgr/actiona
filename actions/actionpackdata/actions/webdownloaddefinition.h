@@ -83,7 +83,6 @@ namespace Actions
 			showProgress->setDefaultValue(true);
 			addElement(showProgress, 1);
 
-			addException(WebDownloadInstance::InvalidURLException, tr("Invalid URL"));
 			addException(WebDownloadInstance::CannotOpenFileException, tr("Cannot write to file"));
 			addException(WebDownloadInstance::DownloadException, tr("Download error"));
 		}
