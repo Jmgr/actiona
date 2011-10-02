@@ -19,6 +19,7 @@
 */
 
 #include "messagebox.h"
+#include "code/image.h"
 
 #include <QScriptValueIterator>
 #include <QPushButton>
@@ -102,6 +103,29 @@ namespace Code
 	QScriptValue MessageBox::setIcon(Icon icon)
 	{
 		mMessageBox->setIcon(static_cast<QMessageBox::Icon>(icon));
+
+		return context()->thisObject();
+	}
+
+	QScriptValue MessageBox::setIconPixmap(const QScriptValue &image)
+	{
+		if(image.isUndefined() || image.isNull())
+		{
+			mMessageBox->setIconPixmap(QPixmap());
+
+			return context()->thisObject();
+		}
+
+		QObject *object = image.toQObject();
+		if(Image *otherImage = qobject_cast<Image*>(object))
+		{
+			mMessageBox->setIconPixmap(QPixmap::fromImage(otherImage->image()));
+		}
+		else
+		{
+			throwError("SetIconPixmapError", tr("Invalid image"));
+			return context()->thisObject();
+		}
 
 		return context()->thisObject();
 	}

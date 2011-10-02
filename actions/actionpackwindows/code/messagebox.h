@@ -82,6 +82,7 @@ namespace Code
 		QScriptValue setInformativeText(const QString &informativeText);
 		QScriptValue setButtons(StandardButton buttons);
 		QScriptValue setIcon(Icon icon);
+		QScriptValue setIconPixmap(const QScriptValue &image);
 		QScriptValue setDefaultButton(StandardButton button);
 		QScriptValue setEscapeButton(StandardButton button);
 		QScriptValue addCustomButton(StandardButton button, const QString &text);
