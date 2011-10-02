@@ -42,6 +42,9 @@ SFXScriptDialog::SFXScriptDialog(QWidget *parent)
 	ui->showExecutionWindow->setChecked(settings.value("sfxScript/showExecutionWindow", false).toBool());
 	ui->closeAfterExecution->setChecked(settings.value("sfxScript/closeAfterExecution", true).toBool());
 	ui->use32BitBinaries->setChecked(settings.value("sfxScript/use32BitBinaries", true).toBool());
+	ui->requiresActionaz->setChecked(settings.value("sfxScript/requiresActionaz", false).toBool());
+
+	on_requiresActionaz_clicked();
 }
 
 SFXScriptDialog::~SFXScriptDialog()
@@ -74,6 +77,11 @@ bool SFXScriptDialog::use32BitBinaries() const
 	return ui->use32BitBinaries->isChecked();
 }
 
+bool SFXScriptDialog::requiresActionaz() const
+{
+	return ui->requiresActionaz->isChecked();
+}
+
 void SFXScriptDialog::accept()
 {
 	QSettings settings;
@@ -82,6 +90,15 @@ void SFXScriptDialog::accept()
 	settings.setValue("sfxScript/showExecutionWindow", ui->showExecutionWindow->isChecked());
 	settings.setValue("sfxScript/closeAfterExecution", ui->closeAfterExecution->isChecked());
 	settings.setValue("sfxScript/use32BitBinaries", ui->use32BitBinaries->isChecked());
+	settings.setValue("sfxScript/requiresActionaz", ui->requiresActionaz->isChecked());
 
 	QDialog::accept();
+}
+
+void SFXScriptDialog::on_requiresActionaz_clicked()
+{
+	bool requiresActionaz = ui->requiresActionaz->isChecked();
+
+	ui->use32BitBinaries->setEnabled(!requiresActionaz);
+	ui->use32BitBinariesLabel->setEnabled(!requiresActionaz);
 }
