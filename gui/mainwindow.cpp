@@ -1948,6 +1948,10 @@ bool MainWindow::saveFile(const QString &fileName, bool copy)
 		if(!copy)
 			setCurrentFile(fileName);
 		statusBar()->showMessage(tr("File saved"), 2000);
+
+		QSettings settings;
+
+		settings.setValue("general/lastScript", fileName);
 	}
 
 	return result;
