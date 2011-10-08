@@ -75,6 +75,13 @@ namespace Actions
 			customIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 			addElement(customIcon, 1);
 
+			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition("windowIcon", tr("Window icon"), this);
+			windowIcon->setTooltip(tr("The window icon to use"));
+			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
+			windowIcon->setCaption(tr("Select the icon to use"));
+			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
+			addElement(windowIcon, 1);
+
 			ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition("ifyesno", tr("Yes-No action"), this);
 			yesNoGroup->setMasterList(type);
 			yesNoGroup->setMasterValues(QStringList() << MessageBoxInstance::buttons.first.at(MessageBoxInstance::YesNoButtons));

@@ -25,6 +25,7 @@
 #include <QDesktopWidget>
 #include <QScriptValue>
 #include <QScriptEngine>
+#include <QIcon>
 
 namespace Actions
 {
@@ -57,6 +58,7 @@ namespace Actions
 		Icon icon;
 		Buttons button;
 		QString customIcon;
+		QString windowIcon;
 
 		mMessageBox = 0;
 
@@ -65,6 +67,7 @@ namespace Actions
 			!actionInstanceExecutionHelper.evaluateListElement(icon, icons, "icon") ||
 			!actionInstanceExecutionHelper.evaluateListElement(button, buttons, "type") ||
 			!actionInstanceExecutionHelper.evaluateString(customIcon, "customIcon") ||
+			!actionInstanceExecutionHelper.evaluateString(windowIcon, "windowIcon") ||
 			!actionInstanceExecutionHelper.evaluateIfAction(mIfYes, "ifYes") ||
 			!actionInstanceExecutionHelper.evaluateIfAction(mIfNo, "ifNo"))
 			return;
@@ -82,6 +85,14 @@ namespace Actions
 
 			if(customIconPixmap.load(customIcon))
 				mMessageBox->setIconPixmap(customIconPixmap);
+		}
+
+		if(!windowIcon.isEmpty())
+		{
+			QPixmap windowIconPixmap;
+
+			if(windowIconPixmap.load(windowIcon))
+				mMessageBox->setWindowIcon(QIcon(windowIconPixmap));
 		}
 
 		switch(button)

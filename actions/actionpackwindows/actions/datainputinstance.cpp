@@ -25,6 +25,7 @@
 #include <QInputDialog>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QIcon>
 
 namespace Actions
 {
@@ -48,12 +49,14 @@ namespace Actions
 		QString textDefaultValue;
 		double decimalDefaultValue;
 		int integerDefaultValue;
+		QString windowIcon;
 
 		mInputDialog = 0;
 
 		if(!actionInstanceExecutionHelper.evaluateString(question, "question") ||
 			!actionInstanceExecutionHelper.evaluateListElement(mDataType, dataTypes, "dataType") ||
-			!actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
+			!actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable") ||
+			!actionInstanceExecutionHelper.evaluateString(windowIcon, "windowIcon"))
 			return;
 
 		switch(mDataType)
@@ -76,6 +79,14 @@ namespace Actions
 
 		mInputDialog->setWindowModality(Qt::NonModal);
 		mInputDialog->setLabelText(question);
+
+		if(!windowIcon.isEmpty())
+		{
+			QPixmap windowIconPixmap;
+
+			if(windowIconPixmap.load(windowIcon))
+				mInputDialog->setWindowIcon(QIcon(windowIconPixmap));
+		}
 
 		switch(mDataType)
 		{

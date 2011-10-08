@@ -26,6 +26,7 @@
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "listparameterdefinition.h"
+#include "fileparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -62,6 +63,13 @@ namespace Actions
 			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
 			variable->setTooltip(tr("The variable where to save the entered input"));
 			addElement(variable);
+
+			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition("windowIcon", tr("Window icon"), this);
+			windowIcon->setTooltip(tr("The window icon to use"));
+			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
+			windowIcon->setCaption(tr("Select the icon to use"));
+			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
+			addElement(windowIcon, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Data input"); }
@@ -71,6 +79,7 @@ namespace Actions
 		ActionTools::ActionInstance *newActionInstance() const					{ return new DataInputInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
 		QPixmap icon() const													{ return QPixmap(":/icons/datainput.png"); }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(DataInputDefinition)
