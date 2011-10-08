@@ -46,6 +46,8 @@ namespace Actions
 		{
 			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 
+			mPoints.clear();
+
 			if(!actionInstanceExecutionHelper.evaluatePolygon(mPoints, "path"))
 				return;
 
