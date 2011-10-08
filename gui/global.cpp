@@ -65,4 +65,21 @@ namespace Global
 
 		return "unknown";
 	}
+
+	QString currentOSType()
+	{
+#ifdef Q_OS_LINUX
+		return "linux";
+#endif
+#ifdef Q_OS_WIN
+		return "windows";
+#endif
+
+		return "unknown";
+	}
+
+	int currentOSBits()
+	{
+		return QSysInfo::WordSize;
+	}
 }

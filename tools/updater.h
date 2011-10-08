@@ -37,14 +37,23 @@ namespace Tools
 	{
 		Q_OBJECT
 		
-		static const int Protocol = 0;
+		static const int Protocol = 1;
 		
 	public:
 		enum FileType
 		{
+			Binary,
+			Source
+		};
+		enum ContainerType
+		{
 			Installer,
-			Source,
-			Binary
+			SevenZip,
+			Zip,
+			TarGz,
+			TarBz2,
+			Deb,
+			Rpm
 		};
 		
 		Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent = 0);
@@ -53,7 +62,9 @@ namespace Tools
 		void checkForUpdates(const QString &program,
 							 const Version &programVersion,
 							 FileType fileType,
+							 ContainerType containerType,
 							 const QString &operatingSystem,
+							 int operatingSystemBits,
 							 const QString &language);
 		void cancel();
 	

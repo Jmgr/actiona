@@ -32,6 +32,8 @@ namespace Global
 	const QString			CONNECTIVITY_URL =	"http://www.actionaz.org/";
 
 	QString currentOS();
+	QString currentOSType();
+	int currentOSBits();
 }
 
 #endif // GLOBAL_H

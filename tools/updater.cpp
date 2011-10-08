@@ -49,7 +49,9 @@ namespace Tools
 	void Updater::checkForUpdates(const QString &program,
 							const Version &programVersion,
 							FileType fileType,
+							ContainerType containerType,
 							const QString &operatingSystem,
+							int operatingSystemBits,
 							const QString &language)
 	{
 		if(mCurrentReply)
@@ -57,12 +59,9 @@ namespace Tools
 		
 		QUrl url(mUrl);
 		url.addQueryItem("request", "program");
-		url.addQueryItem("protocol", "0");
+		url.addQueryItem("protocol", QString::number(Protocol));
 		switch(fileType)
 		{
-		case Installer:
-			url.addQueryItem("type", "installer");
-			break;
 		case Source:
 			url.addQueryItem("type", "source");
 			break;
@@ -70,10 +69,35 @@ namespace Tools
 			url.addQueryItem("type", "binary");
 			break;
 		}
-		url.addQueryItem("os", operatingSystem);
+		switch(containerType)
+		{
+		case Installer:
+			url.addQueryItem("container", "installer");
+			break;
+		case SevenZip:
+			url.addQueryItem("container", "7z");
+			break;
+		case Zip:
+			url.addQueryItem("container", "zip");
+			break;
+		case TarGz:
+			url.addQueryItem("container", "targz");
+			break;
+		case TarBz2:
+			url.addQueryItem("container", "tarbz2");
+			break;
+		case Deb:
+			url.addQueryItem("container", "deb");
+			break;
+		case Rpm:
+			url.addQueryItem("container", "rpm");
+			break;
+		}
+		url.addQueryItem("osName", operatingSystem);
+		url.addQueryItem("osBits", QString::number(operatingSystemBits));
 		url.addQueryItem("language", language);
 		url.addQueryItem("program", program);
-		
+
 		QNetworkRequest request(url);
 		request.setRawHeader("User-Agent", QString("%1 %2").arg(program).arg(programVersion.toString()).toAscii());
 		
