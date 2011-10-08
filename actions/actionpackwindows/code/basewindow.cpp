@@ -21,9 +21,11 @@
 #include "basewindow.h"
 #include "code/point.h"
 #include "code/size.h"
+#include "code/image.h"
 
 #include <QScriptValueIterator>
 #include <QWidget>
+#include <QIcon>
 
 namespace Code
 {
@@ -66,6 +68,13 @@ namespace Code
 				mWindow->setEnabled(it.value().toBool());
 			else if(it.name() == "visible")
 				mWindow->setVisible(it.value().toBool());
+			else if(it.name() == "windowIcon")
+			{
+				if(Image *icon = qobject_cast<Image*>(it.value().toQObject()))
+					mWindow->setWindowIcon(QIcon(QPixmap::fromImage(icon->image())));
+				else
+					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+			}
 		}
 	}
 	
@@ -111,6 +120,28 @@ namespace Code
 		
 		mWindow->setVisible(visible);
 		
+		return context()->thisObject();
+	}
+
+	QScriptValue BaseWindow::setWindowIcon(const QScriptValue &windowIcon)
+	{
+		Q_ASSERT(mWindow);
+
+		if(windowIcon.isUndefined() || windowIcon.isNull())
+		{
+			mWindow->setWindowIcon(QIcon());
+
+			return context()->thisObject();
+		}
+
+		if(Image *icon = qobject_cast<Image*>(windowIcon.toQObject()))
+			mWindow->setWindowIcon(QIcon(QPixmap::fromImage(icon->image())));
+		else
+		{
+			throwError("SetWindowIcon", tr("Invalid image"));
+			return context()->thisObject();
+		}
+
 		return context()->thisObject();
 	}
 	
