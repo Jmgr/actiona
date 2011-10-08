@@ -12,45 +12,65 @@
 <context>
     <name>Actions::DataInputDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="48"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="49"/>
         <source>Question</source>
         <translatorcomment>Question</translatorcomment>
         <translation>Question</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="49"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="50"/>
         <source>The question to ask</source>
         <translation>La question à poser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="52"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="53"/>
         <source>Data type</source>
         <translation>Type de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="53"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="54"/>
         <source>The data type</source>
         <translation>Le type de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="58"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="59"/>
         <source>Default value</source>
         <translation>Valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="59"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="60"/>
         <source>The default value</source>
         <translation>La valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="62"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="63"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="63"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="64"/>
         <source>The variable where to save the entered input</source>
         <translation>La variable où sauvegarder l&apos;entrée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="67"/>
+        <source>Window icon</source>
+        <translation>Icône de la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="68"/>
+        <source>The window icon to use</source>
+        <translation>L&apos;icône de fenêtre à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="70"/>
+        <source>Select the icon to use</source>
+        <translation>Sélectionnez l&apos;icône à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="71"/>
+        <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
+        <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
     </message>
 </context>
 <context>
@@ -107,36 +127,48 @@
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="74"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="81"/>
         <source>Select the icon to use</source>
         <translation>Sélectionnez l&apos;icône à utiliser</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="82"/>
         <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
         <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="78"/>
+        <source>Window icon</source>
+        <translation>Icône de la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="79"/>
+        <source>The window icon to use</source>
+        <translation>L&apos;icône de fenêtre à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="85"/>
         <source>Yes-No action</source>
         <translation>Action Oui-Non</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="82"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="89"/>
         <source>If yes</source>
         <translation>Si oui</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="83"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="90"/>
         <source>What to do if the yes button is pressed</source>
         <translation>Ce qui doit être fait si le bouton Oui est pressé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="86"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="93"/>
         <source>If no</source>
         <translation>Si non</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="87"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="94"/>
         <source>What to do if the no button is pressed</source>
         <translation>Ce qui doit être fait si le bouton Non est pressé</translation>
     </message>
@@ -350,14 +382,20 @@
 <context>
     <name>Code::BaseWindow</name>
     <message>
-        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="45"/>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="47"/>
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="61"/>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="63"/>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="76"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="141"/>
+        <source>Invalid image</source>
+        <translation>Image invalide</translation>
     </message>
 </context>
 <context>
@@ -376,17 +414,17 @@
 <context>
     <name>DataInputInstance::dataTypes</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="35"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="36"/>
         <source>Integer</source>
         <translation>Entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="37"/>
         <source>Decimal</source>
         <translation>Décimal</translation>
     </message>
@@ -394,12 +432,12 @@
 <context>
     <name>MessageBoxInstance::buttons</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="43"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="44"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="44"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="45"/>
         <source>Yes-No</source>
         <translation>Oui-Non</translation>
     </message>
@@ -407,27 +445,27 @@
 <context>
     <name>MessageBoxInstance::icons</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="35"/>
         <source>None</source>
         <translation>Aucune</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="36"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="37"/>
         <source>Question</source>
         <translation>Question</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="38"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="38"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="39"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -435,12 +473,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="93"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="100"/>
         <source>Message Box</source>
         <translation>Boîte de dialogue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="96"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="103"/>
         <source>Shows a message box</source>
         <translation>Affiche une boîte de dialogue</translation>
     </message>
@@ -537,12 +575,12 @@
         <translation type="obsolete">Redimensionner</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="67"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="75"/>
         <source>Data input</source>
         <translation>Entrée de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="70"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="78"/>
         <source>Ask the user to enter some data</source>
         <translation>Demande à l&apos;utilisateur d&apos;entrer une donnée</translation>
     </message>

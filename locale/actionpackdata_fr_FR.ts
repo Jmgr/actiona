@@ -411,22 +411,32 @@
         <translation>Le fichier où stocker les données téléchargées</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="81"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="78"/>
+        <source>Choose the destination file</source>
+        <translation>Choisissez le fichier de destination</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="79"/>
+        <source>All files (*.*)</source>
+        <translation>Tous les fichiers (*.*)</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="84"/>
         <source>Show progress</source>
         <translation>Afficher la progression</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="82"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="85"/>
         <source>Should the download progress be shown</source>
         <translation>Affiche ou non la progression du téléchargement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="86"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="89"/>
         <source>Cannot write to file</source>
         <translation>Impossible d&apos;écrire vers le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="87"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="90"/>
         <source>Download error</source>
         <translation>Erreur de téléchargement</translation>
     </message>
@@ -1091,12 +1101,12 @@
         <translation type="obsolete">Ajouter à la fin</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="90"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="93"/>
         <source>Web download</source>
         <translation>Téléchargement Web</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="93"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="96"/>
         <source>Downloads data from the Web</source>
         <translation>Télécharge des données à partir du Web</translation>
     </message>
