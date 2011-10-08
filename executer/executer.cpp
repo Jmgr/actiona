@@ -541,6 +541,7 @@ namespace LibExecuter
 
 		QScriptValue script = mScriptEngine->globalObject().property("Script");
 		QString nextLineString = script.property("nextLine").toString();
+		int previousLine = mCurrentActionIndex;
 
 		bool ok;
 		int nextLine = nextLineString.toInt(&ok);
@@ -564,9 +565,6 @@ namespace LibExecuter
 		{
 			switch(canExecuteAction(nextLine))
 			{
-			case CanExecute:
-				mCurrentActionIndex = nextLine;
-				break;
 			case IncorrectLine:
 				executionException(ActionTools::ActionException::CodeErrorException, tr("Incorrect Script.nextLine value: %1").arg(nextLineString));
 				return;
@@ -574,12 +572,17 @@ namespace LibExecuter
 				executionException(ActionTools::ActionException::CodeErrorException, tr("The action at line %1 is invalid").arg(nextLineString));
 				return;
 			case DisabledAction:
-				mCurrentActionIndex = nextLine;
-				break;
 			case UnselectedAction:
+			case CanExecute:
 				mCurrentActionIndex = nextLine;
 				break;
 			}
+		}
+
+		if(mCurrentActionIndex >= 0)
+		{
+			for(int actionIndex = mCurrentActionIndex; actionIndex < previousLine; ++actionIndex)
+				mScript->actionAt(actionIndex)->reset();
 		}
 
 		executeCurrentAction();
