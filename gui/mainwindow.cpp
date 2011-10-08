@@ -629,10 +629,15 @@ void MainWindow::on_actionExport_executable_triggered()
 	const QString scriptPath = QDir::temp().filePath("script.ascr");
 	QString sourceArchive;
 
-	if(QSysInfo::WordSize == 32 || sfxScriptDialog.use32BitBinaries())
-		sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx32.7z");
+	if(sfxScriptDialog.requiresActionaz())
+		sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx.7z");
 	else
-		sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx64.7z");
+	{
+		if(QSysInfo::WordSize == 32 || sfxScriptDialog.use32BitBinaries())
+			sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx32.7z");
+		else
+			sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx64.7z");
+	}
 
 	QProgressDialog progressDialog(tr("Creating SFX script"), QString(), 0, 100, this);
 	progressDialog.setWindowTitle(tr("Create SFX script"));

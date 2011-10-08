@@ -41,9 +41,13 @@ public:
 	bool showExecutionWindow() const;
 	bool closeAfterExecution() const;
 	bool use32BitBinaries() const;
+	bool requiresActionaz() const;
 
 public slots:
 	void accept();
+
+private slots:
+	void on_requiresActionaz_clicked();
 
 private:
 	Ui::SFXScriptDialog *ui;
