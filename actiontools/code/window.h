@@ -51,6 +51,7 @@ namespace Code
 
 		static QScriptValue find(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue all(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue foreground(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
 

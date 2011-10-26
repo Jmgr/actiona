@@ -169,11 +169,17 @@ namespace Code
 		return back;
 	}
 
+	QScriptValue Window::foreground(QScriptContext *context, QScriptEngine *engine)
+	{
+		return constructor(ActionTools::WindowHandle::foregroundWindow(), context, engine);
+	}
+
 	void Window::registerClass(QScriptEngine *scriptEngine)
 	{
 		CodeTools::addClassToScriptEngine<Window>(scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&all, "all", scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&find, "find", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&foreground, "foreground", scriptEngine);
 	}
 	
 	Window::Window()
