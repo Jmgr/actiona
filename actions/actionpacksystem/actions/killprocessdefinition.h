@@ -45,17 +45,17 @@ namespace Actions
 		{
 			translateItems("KillProcessInstance::killModes", KillProcessInstance::killModes);
 
-			ActionTools::TextParameterDefinition *processId = new ActionTools::TextParameterDefinition("processId", tr("Process id"), this);
+			ActionTools::TextParameterDefinition *processId = new ActionTools::TextParameterDefinition(ActionTools::Name("processId", tr("Process id")), this);
 			processId->setTooltip(tr("The process id of the process to kill"));
 			addElement(processId);
 
-			ActionTools::ListParameterDefinition *killMode = new ActionTools::ListParameterDefinition("killMode", tr("Kill mode"), this);
+			ActionTools::ListParameterDefinition *killMode = new ActionTools::ListParameterDefinition(ActionTools::Name("killMode", tr("Kill mode")), this);
 			killMode->setTooltip(tr("The kill mode"));
 			killMode->setItems(KillProcessInstance::killModes);
 			killMode->setDefaultValue(KillProcessInstance::killModes.second.at(KillProcessInstance::GracefulThenForceful));
 			addElement(killMode, 1);
 
-			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition("timeout", tr("Timeout"), this);
+			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name("timeout", tr("Timeout")), this);
 			timeout->setTooltip(tr("The timeout before doing a forceful kill"));
 			timeout->setMinimum(0);
 			timeout->setMaximum(INT_MAX);

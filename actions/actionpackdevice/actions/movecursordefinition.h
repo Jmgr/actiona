@@ -41,7 +41,7 @@ namespace Actions
 		explicit MoveCursorDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition("position", tr("Position"), this);
+			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::Name("position", tr("Position")), this);
 			position->setTooltip(tr("The position where to move the cursor"));
 			addElement(position);
 		}

@@ -41,7 +41,7 @@ namespace Actions
 		explicit OpenURLDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *url = new ActionTools::TextParameterDefinition("url", tr("URL"), this);
+			ActionTools::TextParameterDefinition *url = new ActionTools::TextParameterDefinition(ActionTools::Name("url", tr("URL")), this);
 			url->setTooltip(tr("The url to open"));
 			addElement(url);
 

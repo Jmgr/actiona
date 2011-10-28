@@ -41,14 +41,14 @@ namespace Actions
 		explicit CopyFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *source = new ActionTools::FileParameterDefinition("source", tr("Source file"), this);
+			ActionTools::FileParameterDefinition *source = new ActionTools::FileParameterDefinition(ActionTools::Name("source", tr("Source file")), this);
 			source->setTooltip(tr("The file to copy"));
 			source->setMode(ActionTools::FileEdit::FileOpen);
 			source->setCaption(tr("Choose the file"));
 			source->setFilter(tr("All files (*.*)"));
 			addElement(source);
 
-			ActionTools::FileParameterDefinition *destination = new ActionTools::FileParameterDefinition("destination", tr("Destination"), this);
+			ActionTools::FileParameterDefinition *destination = new ActionTools::FileParameterDefinition(ActionTools::Name("destination", tr("Destination")), this);
 			destination->setTooltip(tr("The destination file"));
 			destination->setMode(ActionTools::FileEdit::FileSave);
 			destination->setCaption(tr("Choose the destination file"));

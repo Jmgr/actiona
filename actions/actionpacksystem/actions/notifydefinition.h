@@ -43,22 +43,22 @@ namespace Actions
 		explicit NotifyDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition("title", tr("Title"), this);
+			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition(ActionTools::Name("title", tr("Title")), this);
 			title->setTooltip(tr("The notification title"));
 			addElement(title);
 
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition("text", tr("Text"), this);
+			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("text", tr("Text")), this);
 			text->setTooltip(tr("The notification text"));
 			addElement(text);
 
-			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition("timeout", tr("Timeout"), this);
+			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name("timeout", tr("Timeout")), this);
 			timeout->setTooltip(tr("The notification timeout"));
 			timeout->setMinimum(0);
 			timeout->setMaximum(INT_MAX);
 			timeout->setDefaultValue(3000);
 			addElement(timeout, 1);
 
-			ActionTools::FileParameterDefinition *icon = new ActionTools::FileParameterDefinition("icon", tr("Icon"), this);
+			ActionTools::FileParameterDefinition *icon = new ActionTools::FileParameterDefinition(ActionTools::Name("icon", tr("Icon")), this);
 			icon->setTooltip(tr("The notification icon"));
 			addElement(icon, 1);
 

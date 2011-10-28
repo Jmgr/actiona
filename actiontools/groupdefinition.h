@@ -40,7 +40,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		GroupDefinition(const QString &name, const QString &translatedName, QObject *parent = 0);
+		GroupDefinition(const Name &name, QObject *parent = 0);
 
 		void addMember(ParameterDefinition *parameter, int tab = 0)		{ parameter->setTab(tab); mMembers.append(parameter); }
 		QList<ParameterDefinition *> members() const					{ return mMembers; }

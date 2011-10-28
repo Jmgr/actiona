@@ -33,7 +33,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		KeyParameterDefinition(const QString &name, const QString &translatedName, QObject *parent);
+		KeyParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

@@ -27,8 +27,8 @@
 
 namespace ActionTools
 {
-	TextParameterDefinition::TextParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	TextParameterDefinition::TextParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mCodeOnly(false),
 		mLineEdit(0)
 	{
@@ -52,11 +52,11 @@ namespace ActionTools
 
 	void TextParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mLineEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		mLineEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
 	}
 
 	void TextParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mLineEdit->isCode(), mLineEdit->text());
+		actionInstance->setSubParameter(name().original(), "value", mLineEdit->isCode(), mLineEdit->text());
 	}
 }

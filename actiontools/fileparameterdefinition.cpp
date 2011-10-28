@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	FileParameterDefinition::FileParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	FileParameterDefinition::FileParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mFileEdit(0)
 	{
 	}
@@ -47,11 +47,11 @@ namespace ActionTools
 
 	void FileParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mFileEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		mFileEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
 	}
 
 	void FileParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mFileEdit->isCode(), mFileEdit->text());
+		actionInstance->setSubParameter(name().original(), "value", mFileEdit->isCode(), mFileEdit->text());
 	}
 }

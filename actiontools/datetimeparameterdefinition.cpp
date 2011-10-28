@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	DateTimeParameterDefinition::DateTimeParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	DateTimeParameterDefinition::DateTimeParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mDateTimeEdit(0)
 	{
 	}
@@ -42,11 +42,11 @@ namespace ActionTools
 
 	void DateTimeParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mDateTimeEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		mDateTimeEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
 	}
 
 	void DateTimeParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mDateTimeEdit->isCode(), mDateTimeEdit->text());
+		actionInstance->setSubParameter(name().original(), "value", mDateTimeEdit->isCode(), mDateTimeEdit->text());
 	}
 }

@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	ColorParameterDefinition::ColorParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	ColorParameterDefinition::ColorParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mColorEdit(0)
 	{
 	}
@@ -42,11 +42,11 @@ namespace ActionTools
 
 	void ColorParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mColorEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		mColorEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
 	}
 
 	void ColorParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mColorEdit->isCode(), mColorEdit->text());
+		actionInstance->setSubParameter(name().original(), "value", mColorEdit->isCode(), mColorEdit->text());
 	}
 }

@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	ParameterDefinition::ParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ElementDefinition(name, translatedName, parent),
+	ParameterDefinition::ParameterDefinition(const Name &name, QObject *parent)
+		: ElementDefinition(name, parent),
 		mOperatingSystems(WorksOnGnuLinux |
 						  WorksOnWindows |
 						  WorksOnMac)
@@ -58,6 +58,6 @@ namespace ActionTools
 	
 	void ParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", defaultValue());
+		actionInstance->setSubParameter(name().original(), "value", defaultValue());
 	}
 }

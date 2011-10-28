@@ -28,6 +28,8 @@
 
 namespace ActionTools
 {
+	typedef QHash<QString, SubParameter> SubParameterHash;
+
 	class ParameterData : public QSharedData
 	{
 	public:
@@ -35,7 +37,7 @@ namespace ActionTools
 		ParameterData(const ParameterData &other)
 			: QSharedData(other), subParameters(other.subParameters)				{}
 
-		QHash<QString, SubParameter> subParameters;
+		SubParameterHash subParameters;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT Parameter
@@ -44,11 +46,11 @@ namespace ActionTools
 		Parameter()																	{ d = new ParameterData(); }
 		Parameter(const Parameter &other) : d(other.d)								{}
 
-		const QHash<QString, SubParameter> &subParameters() const					{ return d->subParameters; }
-		QHash<QString, SubParameter> &subParameters()								{ return d->subParameters; }
+		const SubParameterHash &subParameters() const								{ return d->subParameters; }
+		SubParameterHash &subParameters()											{ return d->subParameters; }
 		void setSubParameter(const QString &name, const SubParameter &subParameter)	{ d->subParameters.insert(name, subParameter); }
 		void setSubParameter(const QString &name, bool code, const QVariant &value)	{ setSubParameter(name, SubParameter(code, value)); }
-		void setSubParameters(const QHash<QString, SubParameter> &subParameters)	{ d->subParameters = subParameters; }
+		void setSubParameters(const SubParameterHash &subParameters)				{ d->subParameters = subParameters; }
 		SubParameter subParameter(const QString &name) const						{ return d->subParameters.value(name); }
 
 		bool operator == (const Parameter &other) const								{ return (subParameters() == other.subParameters()); }

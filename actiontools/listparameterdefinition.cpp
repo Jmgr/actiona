@@ -27,8 +27,8 @@
 
 namespace ActionTools
 {
-	ListParameterDefinition::ListParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ItemsParameterDefinition(name, translatedName, parent),
+	ListParameterDefinition::ListParameterDefinition(const Name &name, QObject *parent)
+		: ItemsParameterDefinition(name, parent),
 		mComboBox(0)
 	{
 	}
@@ -55,7 +55,7 @@ namespace ActionTools
 
 	void ListParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		const SubParameter &subParameter = actionInstance->subParameter(name(), "value");
+		const SubParameter &subParameter = actionInstance->subParameter(name().original(), "value");
 
 		mComboBox->setCode(subParameter.isCode());
 		mComboBox->setEditText(translatedNameFromOriginalName(subParameter.value().toString()));
@@ -63,6 +63,6 @@ namespace ActionTools
 
 	void ListParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mComboBox->isCode(), originalNameFromTranslatedName(mComboBox->currentText()));
+		actionInstance->setSubParameter(name().original(), "value", mComboBox->isCode(), originalNameFromTranslatedName(mComboBox->currentText()));
 	}
 }

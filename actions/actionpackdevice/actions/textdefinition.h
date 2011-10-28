@@ -41,7 +41,7 @@ namespace Actions
 		explicit TextDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition("text", tr("Text"), this);
+			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("text", tr("Text")), this);
 			text->setTooltip(tr("The text to write"));
 			addElement(text);
 	

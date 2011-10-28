@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	PointListParameterDefinition::PointListParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	PointListParameterDefinition::PointListParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mPointListWidget(0)
 	{
 	}
@@ -42,7 +42,7 @@ namespace ActionTools
 
 	void PointListParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		QString pointBuffer = actionInstance->subParameter(name(), "value").value().toString();
+		QString pointBuffer = actionInstance->subParameter(name().original(), "value").value().toString();
 		QPolygon polygon;
 		QStringList pointStrings = pointBuffer.split(';', QString::SkipEmptyParts);
 
@@ -64,6 +64,6 @@ namespace ActionTools
 		foreach(const QPoint &point, mPointListWidget->points())
 			pointBuffer += QString("%1:%2;").arg(point.x()).arg(point.y());
 
-		actionInstance->setSubParameter(name(), "value", pointBuffer);
+		actionInstance->setSubParameter(name().original(), "value", pointBuffer);
 	}
 }

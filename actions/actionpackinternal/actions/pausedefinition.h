@@ -46,14 +46,14 @@ namespace Actions
 		{
 			translateItems("PauseInstance::units", PauseInstance::units);
 
-			ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition("duration", tr("Duration"), this);
+			ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition(ActionTools::Name("duration", tr("Duration")), this);
 			duration->setTooltip(tr("The duration of the pause"));
 			duration->setMinimum(0);
 			duration->setMaximum(INT_MAX);
 			duration->setDefaultValue(5);
 			addElement(duration);
 
-			ActionTools::ListParameterDefinition *unit = new ActionTools::ListParameterDefinition("unit", tr("Unit"), this);
+			ActionTools::ListParameterDefinition *unit = new ActionTools::ListParameterDefinition(ActionTools::Name("unit", tr("Unit")), this);
 			unit->setTooltip(tr("The pause duration unit"));
 			unit->setItems(PauseInstance::units);
 			unit->setDefaultValue(PauseInstance::units.second.at(PauseInstance::Seconds));

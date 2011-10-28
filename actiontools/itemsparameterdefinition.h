@@ -31,10 +31,10 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ItemsParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-			: ParameterDefinition(name, translatedName, parent)						{}
+		ItemsParameterDefinition(const Name &name, QObject *parent)
+			: ParameterDefinition(name, parent)													{}
 
-		StringListPair items()																	{ return mItems; }
+		const StringListPair &items() const														{ return mItems; }
 
 		void setItems(const StringListPair &items)												{ mItems = items; }
 

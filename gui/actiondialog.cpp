@@ -264,7 +264,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 			int parameterType = (currentParameter->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);
 
 			QFormLayout *parameterLayout = mParameterLayouts[parameterType][currentParameter->tab()];
-			parameterLayout->addRow(currentParameter->translatedName() + tr(":"), addParameter(currentParameter));
+			parameterLayout->addRow(currentParameter->name().translated() + tr(":"), addParameter(currentParameter));
 		}
 		else if(ActionTools::GroupDefinition *currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
 			addGroup(currentGroup);
@@ -404,7 +404,7 @@ void ActionDialog::postInit()
 	{
 		foreach(ActionTools::ParameterDefinition *parameterDefinition, mParameters)
 		{
-			if(parameterDefinition->name() == mCurrentField && parameterDefinition->editors().count() > 0)
+			if(parameterDefinition->name().original() == mCurrentField && parameterDefinition->editors().count() > 0)
 			{
 				QWidget *editorWidget = parameterDefinition->editors().at(0);
 				if(!editorWidget)
@@ -463,7 +463,7 @@ void ActionDialog::currentExceptionActionChanged(int index)
 
 void ActionDialog::addGroup(ActionTools::GroupDefinition *group)
 {
-	QGroupBox *groupBox = new QGroupBox(group->translatedName(), this);
+	QGroupBox *groupBox = new QGroupBox(group->name().translated(), this);
 	QFormLayout *groupLayout = new QFormLayout(groupBox);
 
 	groupLayout->setMargin(5);
@@ -476,7 +476,7 @@ void ActionDialog::addGroup(ActionTools::GroupDefinition *group)
 	foreach(ActionTools::ParameterDefinition *parameter, group->members())
 	{
 		parameter->setCategory(group->category());
-		groupLayout->addRow(QString(parameter->translatedName() + tr(":")), addParameter(parameter));
+		groupLayout->addRow(QString(parameter->name().translated() + tr(":")), addParameter(parameter));
 	}
 
 	int parameterType = (group->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);

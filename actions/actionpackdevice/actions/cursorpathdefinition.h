@@ -41,7 +41,7 @@ namespace Actions
 		explicit CursorPathDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::PointListParameterDefinition *path = new ActionTools::PointListParameterDefinition("path", tr("Path"), this);
+			ActionTools::PointListParameterDefinition *path = new ActionTools::PointListParameterDefinition(ActionTools::Name("path", tr("Path")), this);
 			path->setTooltip(tr("The path to follow"));
 			addElement(path);
 		}

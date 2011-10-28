@@ -26,8 +26,8 @@
 
 namespace ActionTools
 {
-	ColorPositionParameterDefinition::ColorPositionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	ColorPositionParameterDefinition::ColorPositionParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mPositionEdit(0),
 		mColorEdit(0)
 	{
@@ -52,19 +52,19 @@ namespace ActionTools
 
 	void ColorPositionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name(), "position"));
-		mColorEdit->setFromSubParameter(actionInstance->subParameter(name(), "color"));
+		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "position"));
+		mColorEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "color"));
 	}
 
 	void ColorPositionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "position", mPositionEdit->isCode(), mPositionEdit->text());
-		actionInstance->setSubParameter(name(), "color", mColorEdit->isCode(), mColorEdit->text());
+		actionInstance->setSubParameter(name().original(), "position", mPositionEdit->isCode(), mPositionEdit->text());
+		actionInstance->setSubParameter(name().original(), "color", mColorEdit->isCode(), mColorEdit->text());
 	}
 
 	void ColorPositionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "position", defaultPosition());
-		actionInstance->setSubParameter(name(), "color", defaultColor());
+		actionInstance->setSubParameter(name().original(), "position", defaultPosition());
+		actionInstance->setSubParameter(name().original(), "color", defaultColor());
 	}
 }

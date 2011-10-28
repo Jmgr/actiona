@@ -37,7 +37,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ColorPositionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent);
+		ColorPositionParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

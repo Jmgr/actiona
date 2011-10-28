@@ -48,49 +48,49 @@ namespace Actions
 			translateItems("MessageBoxInstance::icons", MessageBoxInstance::icons);
 			translateItems("MessageBoxInstance::buttons", MessageBoxInstance::buttons);
 
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition("message", tr("Message"), this);
+			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("message", tr("Message")), this);
 			text->setTooltip(tr("The text to show"));
 			addElement(text);
 
-			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition("title", tr("Title"), this);
+			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition(ActionTools::Name("title", tr("Title")), this);
 			title->setTooltip(tr("The title to show"));
 			addElement(title);
 
-			ActionTools::ListParameterDefinition *icon = new ActionTools::ListParameterDefinition("icon", tr("Icon"), this);
+			ActionTools::ListParameterDefinition *icon = new ActionTools::ListParameterDefinition(ActionTools::Name("icon", tr("Icon")), this);
 			icon->setTooltip(tr("The icon to use"));
 			icon->setItems(MessageBoxInstance::icons);
 			icon->setDefaultValue(MessageBoxInstance::icons.second.at(MessageBoxInstance::None));
 			addElement(icon);
 
-			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition("type", tr("Type"), this);
+			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
 			type->setTooltip(tr("The message box type"));
 			type->setItems(MessageBoxInstance::buttons);
 			type->setDefaultValue(MessageBoxInstance::buttons.second.at(MessageBoxInstance::OkButton));
 			addElement(type, 1);
 
-			ActionTools::FileParameterDefinition *customIcon = new ActionTools::FileParameterDefinition("customIcon", tr("Custom icon"), this);
+			ActionTools::FileParameterDefinition *customIcon = new ActionTools::FileParameterDefinition(ActionTools::Name("customIcon", tr("Custom icon")), this);
 			customIcon->setTooltip(tr("The custom icon to use"));
 			customIcon->setMode(ActionTools::FileEdit::FileOpen);
 			customIcon->setCaption(tr("Select the icon to use"));
 			customIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 			addElement(customIcon, 1);
 
-			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition("windowIcon", tr("Window icon"), this);
+			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
 			windowIcon->setTooltip(tr("The window icon to use"));
 			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
 			windowIcon->setCaption(tr("Select the icon to use"));
 			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 			addElement(windowIcon, 1);
 
-			ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition("ifyesno", tr("Yes-No action"), this);
+			ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition(ActionTools::Name("ifyesno", tr("Yes-No action")), this);
 			yesNoGroup->setMasterList(type);
 			yesNoGroup->setMasterValues(QStringList() << MessageBoxInstance::buttons.first.at(MessageBoxInstance::YesNoButtons));
 
-			ActionTools::IfActionParameterDefinition *ifYes = new ActionTools::IfActionParameterDefinition("ifYes", tr("If yes"), this);
+			ActionTools::IfActionParameterDefinition *ifYes = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifYes", tr("If yes")), this);
 			ifYes->setTooltip(tr("What to do if the yes button is pressed"));
 			yesNoGroup->addMember(ifYes);
 
-			ActionTools::IfActionParameterDefinition *ifNo = new ActionTools::IfActionParameterDefinition("ifNo", tr("If no"), this);
+			ActionTools::IfActionParameterDefinition *ifNo = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifNo", tr("If no")), this);
 			ifNo->setTooltip(tr("What to do if the no button is pressed"));
 			yesNoGroup->addMember(ifNo);
 

@@ -46,13 +46,13 @@ namespace Actions
 		{
 			translateItems("SystemInstance::operations", SystemInstance::operations);
 
-			ActionTools::ListParameterDefinition *operation = new ActionTools::ListParameterDefinition("operation", tr("Operation"), this);
+			ActionTools::ListParameterDefinition *operation = new ActionTools::ListParameterDefinition(ActionTools::Name("operation", tr("Operation")), this);
 			operation->setTooltip(tr("The operation to execute"));
 			operation->setItems(SystemInstance::operations);
 			operation->setDefaultValue(SystemInstance::operations.second.at(SystemInstance::Logout));
 			addElement(operation);
 
-			ActionTools::GroupDefinition *operationMode = new ActionTools::GroupDefinition("operationmode", tr("Operation mode"), this);
+			ActionTools::GroupDefinition *operationMode = new ActionTools::GroupDefinition(ActionTools::Name("operationmode", tr("Operation mode")), this);
 			operationMode->setMasterList(operation);
 			operationMode->setMasterValues(QStringList()
 										   << SystemInstance::operations.first.at(SystemInstance::Shutdown)
@@ -61,7 +61,7 @@ namespace Actions
 										   << SystemInstance::operations.first.at(SystemInstance::Suspend)
 										   << SystemInstance::operations.first.at(SystemInstance::Hibernate));
 
-			ActionTools::BooleanParameterDefinition *force = new ActionTools::BooleanParameterDefinition("force", tr("Force"), this);
+			ActionTools::BooleanParameterDefinition *force = new ActionTools::BooleanParameterDefinition(ActionTools::Name("force", tr("Force")), this);
 			force->setTooltip(tr("Should the operation be forced"));
 			force->setDefaultValue(false);
 			operationMode->addMember(force);

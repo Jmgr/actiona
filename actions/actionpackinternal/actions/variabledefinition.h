@@ -45,16 +45,16 @@ namespace Actions
 		{
 			translateItems("VariableInstance::types", VariableInstance::types);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
 			variable->setCategory(ActionTools::ElementDefinition::INPUT);
 			variable->setTooltip(tr("The variable name"));
 			addElement(variable);
 
-			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
+			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
 			value->setTooltip(tr("The variable's new value"));
 			addElement(value);
 
-			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition("type", tr("Type"), this);
+			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
 			type->setTooltip(tr("The variable type"));
 			type->setItems(VariableInstance::types);
 			type->setDefaultValue(VariableInstance::types.second.at(VariableInstance::String));

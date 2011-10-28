@@ -47,26 +47,26 @@ namespace Actions
 		{
 			translateItems("PixelColorInstance::comparisons", PixelColorInstance::comparisons);
 
-			ActionTools::ColorPositionParameterDefinition *pixel = new ActionTools::ColorPositionParameterDefinition("pixel", tr("Pixel"), this);
+			ActionTools::ColorPositionParameterDefinition *pixel = new ActionTools::ColorPositionParameterDefinition(ActionTools::Name("pixel", tr("Pixel")), this);
 			pixel->setTooltip(tr("The pixel position and color to check"));
 			addElement(pixel);
 
-			ActionTools::ListParameterDefinition *comparison = new ActionTools::ListParameterDefinition("comparison", tr("Comparison"), this);
+			ActionTools::ListParameterDefinition *comparison = new ActionTools::ListParameterDefinition(ActionTools::Name("comparison", tr("Comparison")), this);
 			comparison->setTooltip(tr("The comparison"));
 			comparison->setItems(PixelColorInstance::comparisons);
 			comparison->setDefaultValue(PixelColorInstance::comparisons.second.at(PixelColorInstance::Equal));
 			addElement(comparison);
 
-			ActionTools::IfActionParameterDefinition *ifTrue = new ActionTools::IfActionParameterDefinition("ifTrue", tr("If true"), this);
+			ActionTools::IfActionParameterDefinition *ifTrue = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifTrue", tr("If true")), this);
 			ifTrue->setTooltip(tr("What to to if the pixel comparison is true"));
 			addElement(ifTrue);
 
-			ActionTools::IfActionParameterDefinition *ifFalse = new ActionTools::IfActionParameterDefinition("ifFalse", tr("If false"), this);
+			ActionTools::IfActionParameterDefinition *ifFalse = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifFalse", tr("If false")), this);
 			ifFalse->setTooltip(tr("What to to if the pixel comparison is false"));
 			ifFalse->setAllowWait(true);
 			addElement(ifFalse);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Pixel color variable"), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Pixel color variable")), this);
 			variable->setTooltip(tr("Variable name where to store the pixel color"));
 			addElement(variable, 1);
 		}

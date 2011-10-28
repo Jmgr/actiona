@@ -42,21 +42,21 @@ namespace Actions
 		explicit DetachedCommandDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *command = new ActionTools::FileParameterDefinition("command", tr("Command"), this);
+			ActionTools::FileParameterDefinition *command = new ActionTools::FileParameterDefinition(ActionTools::Name("command", tr("Command")), this);
 			command->setTooltip(tr("The command to execute"));
 			addElement(command);
 
-			ActionTools::TextParameterDefinition *parameters = new ActionTools::TextParameterDefinition("parameters", tr("Parameters"), this);
+			ActionTools::TextParameterDefinition *parameters = new ActionTools::TextParameterDefinition(ActionTools::Name("parameters", tr("Parameters")), this);
 			parameters->setTooltip(tr("The command's parameters"));
 			addElement(parameters);
 
-			ActionTools::FileParameterDefinition *workingDirectory = new ActionTools::FileParameterDefinition("workingDirectory", tr("Working directory"), this);
+			ActionTools::FileParameterDefinition *workingDirectory = new ActionTools::FileParameterDefinition(ActionTools::Name("workingDirectory", tr("Working directory")), this);
 			workingDirectory->setTooltip(tr("The command's working directory"));
 			workingDirectory->setCaption(tr("Command working directory"));
 			workingDirectory->setMode(ActionTools::FileEdit::DirectoryOpen);
 			addElement(workingDirectory);
 
-			ActionTools::VariableParameterDefinition *processId = new ActionTools::VariableParameterDefinition("processId", tr("Process id"), this);
+			ActionTools::VariableParameterDefinition *processId = new ActionTools::VariableParameterDefinition(ActionTools::Name("processId", tr("Process id")), this);
 			processId->setTooltip(tr("The command's process id"));
 			addElement(processId, 1);
 

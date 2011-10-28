@@ -24,8 +24,8 @@
 
 namespace ActionTools
 {
-	BooleanParameterDefinition::BooleanParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	BooleanParameterDefinition::BooleanParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mBooleanEdit(0)
 	{
 	}
@@ -41,12 +41,12 @@ namespace ActionTools
 
 	void BooleanParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mBooleanEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		mBooleanEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
 	}
 
 	void BooleanParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mBooleanEdit->isCode(), mBooleanEdit->text());
+		actionInstance->setSubParameter(name().original(), "value", mBooleanEdit->isCode(), mBooleanEdit->text());
 	}
 }
 

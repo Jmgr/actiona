@@ -35,7 +35,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		IfActionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent);
+		IfActionParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

@@ -26,8 +26,8 @@
 
 namespace ActionTools
 {
-	NumberParameterDefinition::NumberParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	NumberParameterDefinition::NumberParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mSpinBox(0),
 		mMaximum(99),
 		mMinimum(0),
@@ -52,11 +52,11 @@ namespace ActionTools
 
 	void NumberParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mSpinBox->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		mSpinBox->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
 	}
 
 	void NumberParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mSpinBox->isCode(), mSpinBox->text());
+		actionInstance->setSubParameter(name().original(), "value", mSpinBox->isCode(), mSpinBox->text());
 	}
 }

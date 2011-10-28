@@ -49,27 +49,27 @@ namespace Actions
 			translateItems("ClickInstance::buttons", ClickInstance::buttons);
 			translateItems("ClickInstance::actions", ClickInstance::actions);
 
-			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition("action", tr("Action"), this);
+			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name("action", tr("Action")), this);
 			action->setTooltip(tr("The action to simulate"));
 			action->setItems(ClickInstance::actions);
 			action->setDefaultValue(ClickInstance::actions.second.at(ClickInstance::ClickAction));
 			addElement(action);
 	
-			ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition("button", tr("Button"), this);
+			ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::Name("button", tr("Button")), this);
 			button->setTooltip(tr("The button to simulate"));
 			button->setItems(ClickInstance::buttons);
 			button->setDefaultValue(ClickInstance::buttons.second.at(MouseDevice::LeftButton));
 			addElement(button);
 	
-			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition("position", tr("Position"), this);
+			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::Name("position", tr("Position")), this);
 			position->setTooltip(tr("The screen position where to simulate a mouse click"));
 			addElement(position);
 	
-			ActionTools::GroupDefinition *clickGroup = new ActionTools::GroupDefinition("click", tr("Click action"), this);
+			ActionTools::GroupDefinition *clickGroup = new ActionTools::GroupDefinition(ActionTools::Name("click", tr("Click action")), this);
 			clickGroup->setMasterList(action);
 			clickGroup->setMasterValues(QStringList() << ClickInstance::actions.first.at(ClickInstance::ClickAction));
 	
-			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition("amount", tr("Amount"), this);
+			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
 			amount->setTooltip(tr("The amount of clicks to simulate"));
 			amount->setMinimum(1);
 			amount->setMaximum(INT_MAX);

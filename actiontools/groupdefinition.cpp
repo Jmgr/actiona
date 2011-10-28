@@ -28,8 +28,8 @@
 
 namespace ActionTools
 {
-	GroupDefinition::GroupDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ElementDefinition(name, translatedName, parent),
+	GroupDefinition::GroupDefinition(const Name &name, QObject *parent)
+		: ElementDefinition(name, parent),
 		mMasterList(0),
 		mGroupBox(0),
 		mMasterCodeComboBox(0)

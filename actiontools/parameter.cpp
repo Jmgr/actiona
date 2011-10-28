@@ -33,7 +33,7 @@ namespace ActionTools
 
 	QDataStream &operator >> (QDataStream &s, Parameter &parameter)
 	{
-		QHash<QString, SubParameter> subParameters;
+		SubParameterHash subParameters;
 
 		s >> subParameters;
 

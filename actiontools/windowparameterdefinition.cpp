@@ -26,8 +26,8 @@
 
 namespace ActionTools
 {
-	WindowParameterDefinition::WindowParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	WindowParameterDefinition::WindowParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mWindowEdit(0)
 	{
 	}
@@ -43,12 +43,12 @@ namespace ActionTools
 
 	void WindowParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mWindowEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		mWindowEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
 	}
 
 	void WindowParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mWindowEdit->isCode(), mWindowEdit->text());
+		actionInstance->setSubParameter(name().original(), "value", mWindowEdit->isCode(), mWindowEdit->text());
 	}
 
 	void WindowParameterDefinition::update(Script *script)

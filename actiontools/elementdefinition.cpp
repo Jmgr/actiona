@@ -22,10 +22,9 @@
 
 namespace ActionTools
 {
-	ElementDefinition::ElementDefinition(const QString &name, const QString &translatedName, QObject *parent)
+	ElementDefinition::ElementDefinition(const Name &name, QObject *parent)
 		: QObject(parent),
 		mName(name),
-		mTranslatedName(translatedName),
 		mCategory(INPUT),
 		mTab(0)
 	{

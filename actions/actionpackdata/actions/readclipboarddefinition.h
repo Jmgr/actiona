@@ -42,7 +42,7 @@ namespace Actions
 		explicit ReadClipboardDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
 			output->setTooltip(tr("The variable where to save the current clipboard value"));
 			addElement(output);
 		}

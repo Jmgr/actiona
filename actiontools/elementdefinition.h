@@ -21,8 +21,10 @@
 #ifndef ELEMENTDEFINITION_H
 #define ELEMENTDEFINITION_H
 
-#include <QObject>
 #include "actiontools_global.h"
+#include "name.h"
+
+#include <QObject>
 
 namespace ActionTools
 {
@@ -39,17 +41,15 @@ namespace ActionTools
 			OUTPUT
 		};
 
-		ElementDefinition(const QString &name, const QString &translatedName, QObject *parent);
+		ElementDefinition(const Name &name, QObject *parent);
 		virtual ~ElementDefinition()							{}
 
-		QString translatedName() const							{ return mTranslatedName; }
-		QString name() const									{ return mName; }
-		QString tooltip() const									{ return mTooltip; }
+		const Name &name() const								{ return mName; }
+		const QString &tooltip() const							{ return mTooltip; }
 		Category category() const								{ return mCategory; }
 		int tab() const											{ return mTab; }
 
-		void setTranslatedName(const QString &translatedName)   { mTranslatedName = translatedName; }
-		void setName(const QString &name)						{ mName = name; }
+		void setName(const Name &name)							{ mName = name; }
 		void setTooltip(const QString &tooltip)					{ mTooltip = tooltip; }
 		void setCategory(Category category)						{ mCategory = category; }
 		void setTab(int tab)									{ mTab = tab; }
@@ -57,8 +57,7 @@ namespace ActionTools
 		virtual void setDefaultValues(ActionInstance *actionInstance) = 0;
 
 	private:
-		QString mName;
-		QString mTranslatedName;
+		Name mName;
 		QString mTooltip;
 		Category mCategory;
 		int mTab;

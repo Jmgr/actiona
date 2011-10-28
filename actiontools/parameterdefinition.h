@@ -40,7 +40,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ParameterDefinition(const QString &name, const QString &translatedName, QObject *parent = 0);
+		ParameterDefinition(const Name &name, QObject *parent = 0);
 		virtual ~ParameterDefinition()												{}
 
 		virtual void buildEditors(Script *script, QWidget *parent);
@@ -49,7 +49,7 @@ namespace ActionTools
 		virtual void setDefaultValues(ActionInstance *actionInstance);
 		virtual Qt::Orientation editorsOrientation() const							{ return Qt::Horizontal; }
 
-		QList<QWidget *> editors() const											{ return mEditors; }
+		const QList<QWidget *> &editors() const										{ return mEditors; }
 		Flag operatingSystems() const												{ return mOperatingSystems; }
 		
 		virtual QVariant defaultValue(QVariant defaultValue = QVariant()) const;

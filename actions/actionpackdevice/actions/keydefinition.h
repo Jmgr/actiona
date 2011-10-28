@@ -46,24 +46,24 @@ namespace Actions
 			translateItems("KeyInstance::actions", KeyInstance::actions);
 			translateItems("KeyInstance::types", KeyInstance::types);
 
-			ActionTools::KeyParameterDefinition *key = new ActionTools::KeyParameterDefinition("key", tr("Key"), this);
+			ActionTools::KeyParameterDefinition *key = new ActionTools::KeyParameterDefinition(ActionTools::Name("key", tr("Key")), this);
 			key->setTooltip(tr("The key to simulate"));
 			addElement(key);
 			
-			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition("action", tr("Action"), this);
+			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name("action", tr("Action")), this);
 			action->setTooltip(tr("The action to simulate"));
 			action->setItems(KeyInstance::actions);
 			action->setDefaultValue(KeyInstance::actions.second.at(KeyInstance::PressReleaseAction));
 			addElement(action);
 
-			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition("type", tr("Type"), this);
+			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
 			type->setTooltip(tr("The key type to use"));
 			type->setItems(KeyInstance::types);
 			type->setDefaultValue(KeyInstance::types.second.at(KeyInstance::Win32Type));
 			type->setOperatingSystems(ActionTools::WorksOnWindows);
 			addElement(type, 1);
 
-			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition("pause", tr("Press/Release pause"), this);
+			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition(ActionTools::Name("pause", tr("Press/Release pause")), this);
 			pause->setTooltip(tr("The pause duration between press and release"));
 			pause->setMinimum(0);
 			pause->setMaximum(INT_MAX);

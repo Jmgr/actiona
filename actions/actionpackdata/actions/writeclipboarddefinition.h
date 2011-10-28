@@ -42,7 +42,7 @@ namespace Actions
 		explicit WriteClipboardDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *input = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
+			ActionTools::TextParameterDefinition *input = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
 			input->setTooltip(tr("The new clipboard value"));
 			addElement(input);
 		}

@@ -41,7 +41,7 @@ namespace Actions
 		explicit CodeDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *code = new ActionTools::TextParameterDefinition("code", tr("Code"), this);
+			ActionTools::TextParameterDefinition *code = new ActionTools::TextParameterDefinition(ActionTools::Name("code", tr("Code")), this);
 			code->setTooltip(tr("The code to evaluate"));
 			code->setCodeOnly(true);
 			addElement(code);

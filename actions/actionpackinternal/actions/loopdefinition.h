@@ -42,11 +42,11 @@ namespace Actions
 		explicit LoopDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition("line", tr("Line"), this);
+			ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition(ActionTools::Name("line", tr("Line")), this);
 			line->setTooltip(tr("The line (or label) to go to"));
 			addElement(line);
 
-			ActionTools::NumberParameterDefinition *count = new ActionTools::NumberParameterDefinition("count", tr("Count"), this);
+			ActionTools::NumberParameterDefinition *count = new ActionTools::NumberParameterDefinition(ActionTools::Name("count", tr("Count")), this);
 			count->setTooltip(tr("The amount of times (evaluated the first time)"));
 			count->setMinimum(0);
 			count->setMaximum(INT_MAX);

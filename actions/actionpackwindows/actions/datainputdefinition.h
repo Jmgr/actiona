@@ -46,25 +46,25 @@ namespace Actions
 		{
 			translateItems("DataInputInstance::dataTypes", DataInputInstance::dataTypes);
 
-			ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition("question", tr("Question"), this);
+			ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition(ActionTools::Name("question", tr("Question")), this);
 			question->setTooltip(tr("The question to ask"));
 			addElement(question);
 
-			ActionTools::ListParameterDefinition *dataType = new ActionTools::ListParameterDefinition("dataType", tr("Data type"), this);
+			ActionTools::ListParameterDefinition *dataType = new ActionTools::ListParameterDefinition(ActionTools::Name("dataType", tr("Data type")), this);
 			dataType->setTooltip(tr("The data type"));
 			dataType->setItems(DataInputInstance::dataTypes);
 			dataType->setDefaultValue(DataInputInstance::dataTypes.second.at(DataInputInstance::TextType));
 			addElement(dataType);
 
-			ActionTools::TextParameterDefinition *defaultValue = new ActionTools::TextParameterDefinition("defaultValue", tr("Default value"), this);
+			ActionTools::TextParameterDefinition *defaultValue = new ActionTools::TextParameterDefinition(ActionTools::Name("defaultValue", tr("Default value")), this);
 			defaultValue->setTooltip(tr("The default value"));
 			addElement(defaultValue);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition("variable", tr("Variable"), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
 			variable->setTooltip(tr("The variable where to save the entered input"));
 			addElement(variable);
 
-			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition("windowIcon", tr("Window icon"), this);
+			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
 			windowIcon->setTooltip(tr("The window icon to use"));
 			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
 			windowIcon->setCaption(tr("Select the icon to use"));

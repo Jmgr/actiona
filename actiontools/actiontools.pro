@@ -75,7 +75,8 @@ HEADERS += actiontools_global.h \
     nativeeventfilter.h \
 	nativeeventfilteringapplication.h \
 	pointitemdelegate.h \
-	actiondefinitionenums.h
+	actiondefinitionenums.h \
+    name.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \

@@ -39,8 +39,8 @@ namespace ActionTools
 		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Goto line")
 		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code"));
 
-	IfActionParameterDefinition::IfActionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ItemsParameterDefinition(name, translatedName, parent),
+	IfActionParameterDefinition::IfActionParameterDefinition(const Name &name, QObject *parent)
+		: ItemsParameterDefinition(name, parent),
 		mActionEdit(0),
 		mLineEdit(0),
 		mAllowWait(false)
@@ -84,25 +84,25 @@ namespace ActionTools
 
 	void IfActionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		const SubParameter &actionSubParameter = actionInstance->subParameter(name(), "action");
+		const SubParameter &actionSubParameter = actionInstance->subParameter(name().original(), "action");
 		mActionEdit->setCode(actionSubParameter.isCode());
 		mActionEdit->setEditText(translatedNameFromOriginalName(actionSubParameter.value().toString()));
 
-		const SubParameter &lineSubParameter = actionInstance->subParameter(name(), "line");
+		const SubParameter &lineSubParameter = actionInstance->subParameter(name().original(), "line");
 		mLineEdit->setCode(lineSubParameter.isCode());
 		mLineEdit->setEditText(lineSubParameter.value().toString());
 	}
 
 	void IfActionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "action", mActionEdit->isCode(), originalNameFromTranslatedName(mActionEdit->currentText()));
-		actionInstance->setSubParameter(name(), "line", mLineEdit->isCode(), mLineEdit->currentText());
+		actionInstance->setSubParameter(name().original(), "action", mActionEdit->isCode(), originalNameFromTranslatedName(mActionEdit->currentText()));
+		actionInstance->setSubParameter(name().original(), "line", mLineEdit->isCode(), mLineEdit->currentText());
 	}
 
 	void IfActionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "action", defaultAction(actions.second[DoNothing]));
-		actionInstance->setSubParameter(name(), "line", defaultLine());
+		actionInstance->setSubParameter(name().original(), "action", defaultAction(actions.second[DoNothing]));
+		actionInstance->setSubParameter(name().original(), "line", defaultLine());
 	}
 	
 	void IfActionParameterDefinition::update(Script *script)

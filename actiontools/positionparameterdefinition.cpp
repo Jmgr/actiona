@@ -24,8 +24,8 @@
 
 namespace ActionTools
 {
-	PositionParameterDefinition::PositionParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-		: ParameterDefinition(name, translatedName, parent),
+	PositionParameterDefinition::PositionParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
 		mPositionEdit(0)
 	{
 	}
@@ -41,11 +41,11 @@ namespace ActionTools
 
 	void PositionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name(), "value"));
+		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
 	}
 
 	void PositionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name(), "value", mPositionEdit->isCode(), mPositionEdit->text());
+		actionInstance->setSubParameter(name().original(), "value", mPositionEdit->isCode(), mPositionEdit->text());
 	}
 }

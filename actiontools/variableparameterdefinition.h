@@ -31,8 +31,8 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		VariableParameterDefinition(const QString &name, const QString &translatedName, QObject *parent)
-			: TextParameterDefinition(name, translatedName, parent)
+		VariableParameterDefinition(const Name &name, QObject *parent)
+			: TextParameterDefinition(name, parent)
 		{
 			setCategory(OUTPUT);
 		}

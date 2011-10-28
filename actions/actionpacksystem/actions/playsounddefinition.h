@@ -45,19 +45,19 @@ namespace Actions
 		explicit PlaySoundDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition("file", tr("Sound file/URL"), this);
+			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("Sound file/URL")), this);
 			file->setTooltip(tr("The sound file or URL to play"));
 			file->setMode(ActionTools::FileEdit::FileOpen);
 			file->setCaption(tr("Choose the sound file"));
 			file->setFilter(tr("All files (*.*)"));
 			addElement(file);
 
-			ActionTools::BooleanParameterDefinition *url = new ActionTools::BooleanParameterDefinition("url", tr("URL"), this);
+			ActionTools::BooleanParameterDefinition *url = new ActionTools::BooleanParameterDefinition(ActionTools::Name("url", tr("URL")), this);
 			url->setTooltip(tr("Is the sound resource an URL"));
 			url->setDefaultValue(false);
 			addElement(url);
 
-			ActionTools::NumberParameterDefinition *volume = new ActionTools::NumberParameterDefinition("volume", tr("Volume"), this);
+			ActionTools::NumberParameterDefinition *volume = new ActionTools::NumberParameterDefinition(ActionTools::Name("volume", tr("Volume")), this);
 			volume->setTooltip(tr("The volume to play at"));
 			volume->setMinimum(0);
 			volume->setMaximum(100);
@@ -65,17 +65,17 @@ namespace Actions
 			volume->setDefaultValue(100);
 			addElement(volume);
 
-			ActionTools::BooleanParameterDefinition *blocking = new ActionTools::BooleanParameterDefinition("blocking", tr("Wait until played"), this);
+			ActionTools::BooleanParameterDefinition *blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name("blocking", tr("Wait until played")), this);
 			blocking->setTooltip(tr("Should the action end only when the sound has finished playing"));
 			blocking->setDefaultValue(true);
 			addElement(blocking);
 
-			ActionTools::BooleanParameterDefinition *loop = new ActionTools::BooleanParameterDefinition("looping", tr("Looping"), this);
+			ActionTools::BooleanParameterDefinition *loop = new ActionTools::BooleanParameterDefinition(ActionTools::Name("looping", tr("Looping")), this);
 			loop->setTooltip(tr("Should the sound loop"));
 			loop->setDefaultValue(false);
 			addElement(loop, 1);
 
-			ActionTools::NumberParameterDefinition *playbackrate = new ActionTools::NumberParameterDefinition("playbackRate", tr("Playback rate"), this);
+			ActionTools::NumberParameterDefinition *playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name("playbackRate", tr("Playback rate")), this);
 			playbackrate->setTooltip(tr("The playback rate"));
 			playbackrate->setMinimum(INT_MIN);
 			playbackrate->setMaximum(INT_MAX);
