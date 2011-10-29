@@ -47,11 +47,13 @@ namespace ActionTools
 		const Name &name() const								{ return mName; }
 		const QString &tooltip() const							{ return mTooltip; }
 		Category category() const								{ return mCategory; }
+		const QString &description() const						{ return mDescription; }
 		int tab() const											{ return mTab; }
 
 		void setName(const Name &name)							{ mName = name; }
 		void setTooltip(const QString &tooltip)					{ mTooltip = tooltip; }
 		void setCategory(Category category)						{ mCategory = category; }
+		void setDescription(const QString &description)			{ mDescription = description; }
 		void setTab(int tab)									{ mTab = tab; }
 		
 		virtual void setDefaultValues(ActionInstance *actionInstance) = 0;
@@ -60,6 +62,7 @@ namespace ActionTools
 		Name mName;
 		QString mTooltip;
 		Category mCategory;
+		QString mDescription;
 		int mTab;
 
 		Q_DISABLE_COPY(ElementDefinition)
