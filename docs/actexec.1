@@ -1,25 +1,12 @@
-.TH actexec 1 "August 2011" "" "ActExec Manual"
+.TH actexec 1 "November 2011" "" "ActExec Manual"
 .SH NAME
 ActExec \- Task automation
 .SH SYNOPSIS
-.B actexec \-s|\-c|\-Q|\-p|\-v|\-h <filename>
+.B actexec \-s|\-c|\-Q|\-p|\-\-proxy\-mode|\-\-proxy\-type|\-\-proxy\-host|\-\-proxy\-port|\-\-proxy\-user|\-\-proxy\-password|\-v|\-h <filename>
 
 .SH DESCRIPTION
 ActExec is a commandline tool that allows you to execute code files and scripts made with Actionaz.
 .SH OPTIONS
-
-.TP
-.B \-h, \-\-help
-Displays a listing of these commandline options.
-
-.TP
-.B \-p, \-\-portable
-Starts in portable mode, storing the settings in the executable folder.
-
-.TP
-.B \-c, \-\-code
-switch to code mode, may not be used with 
-.B \-s
 
 .TP
 .B \-s, \-\-script
@@ -27,12 +14,56 @@ switch to script mode, may not be used with
 .B \-c
 
 .TP
+.B \-c, \-\-code
+switch to code mode, may not be used with 
+.B \-s
+
+.TP
 .B \-Q, \-\-nocodeqt
 Do not include the Qt library into the code.
 
 .TP
+.B \-p, \-\-portable
+Starts in portable mode, storing the settings in the executable folder.
+
+.TP
+.B \-\-proxy\-mode
+Sets the proxy mode, values are
+.B none
+.B system
+.B custom
+(default is system).
+
+.TP
+.B \-\-proxy\-type
+Sets the custom proxy type, values are
+.B http
+.B socks
+(default is socks).
+
+.TP
+.B \-\-proxy\-host
+Sets the custom proxy host.
+
+.TP
+.B \-\-proxy\-port
+Sets the custom proxy port.
+
+.TP
+.B \-\-proxy\-user
+Sets the custom proxy user.
+
+.TP
+.B \-\-proxy\-password
+Sets the custom proxy password.
+
+.TP
 .B \-v, \-\-version
 Displays the version number of Actionaz.
+
+.TP
+.B \-h, \-\-help
+Displays a listing of these commandline options.
 
 .SH SUPPORT
 Please visit http://www.actionaz.org/ for further information. Report bugs only if you are using the latest version available from the Actionaz website.
