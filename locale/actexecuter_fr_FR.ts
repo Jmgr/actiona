@@ -46,46 +46,86 @@
     </message>
     <message>
         <location filename="../actexecuter/main.cpp" line="87"/>
+        <source>sets the proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;</source>
+        <translation>change le mode de proxy, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="88"/>
+        <source>sets the custom proxy type, values are &quot;http&quot; or &quot;socks&quot; (default)</source>
+        <translation>change de type de proxy, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="89"/>
+        <source>sets the custom proxy host</source>
+        <translation>change l&apos;hôte du proxy</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="90"/>
+        <source>sets the custom proxy port</source>
+        <translation>change le port du proxy</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="91"/>
+        <source>sets the custom proxy user</source>
+        <translation>change le nom d&apos;utilisateur du proxy</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="92"/>
+        <source>sets the custom proxy password</source>
+        <translation>change le mot de passe du proxy</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="93"/>
         <source>show the program version</source>
         <translation>afficher la version du programme</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="89"/>
+        <location filename="../actexecuter/main.cpp" line="95"/>
         <source>show this help text</source>
         <translation>afficher ce texte d&apos;aide</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="169"/>
+        <location filename="../actexecuter/main.cpp" line="175"/>
         <source>usage: </source>
         <translation>utilisation : </translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="169"/>
+        <location filename="../actexecuter/main.cpp" line="175"/>
         <source>[parameters]</source>
         <translation>[paramètres]</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="169"/>
+        <location filename="../actexecuter/main.cpp" line="175"/>
         <source>filename</source>
         <translation>nom de fichier</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="170"/>
+        <location filename="../actexecuter/main.cpp" line="176"/>
         <source>Parameters are:</source>
         <translation>Les paramètres sont :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="224"/>
+        <location filename="../actexecuter/main.cpp" line="208"/>
+        <source>Unknown proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;</source>
+        <translation>Mode de proxy inconnu, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="241"/>
+        <source>Unknown proxy type, values are &quot;http&quot; or &quot;socks&quot; (default)</source>
+        <translation>Type de proxy inconnu, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/main.cpp" line="296"/>
         <source>Unknown execution mode, please specify mode=script or mode=code</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier mode=script ou mode=code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="250"/>
+        <location filename="../actexecuter/main.cpp" line="322"/>
         <source>Unknown execution mode, please specify -o (script) or -r (code)</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="260"/>
+        <location filename="../actexecuter/main.cpp" line="332"/>
         <source>Unable to read input file</source>
         <translation>Impossible de lire le fichier d&apos;entrée</translation>
     </message>
