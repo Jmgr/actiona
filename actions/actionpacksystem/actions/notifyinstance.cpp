@@ -21,7 +21,6 @@
 #include <QtGlobal>
 
 #include "notifyinstance.h"
-#include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_X11
 #undef signals
@@ -54,19 +53,17 @@ namespace Actions
 
 	void NotifyInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString title;
-		QString text;
-		int timeout;
-		QString icon;
+	#ifdef Q_WS_X11
+		bool ok = true;
 
-		if(!actionInstanceExecutionHelper.evaluateString(title, "title") ||
-		   !actionInstanceExecutionHelper.evaluateString(text, "text") ||
-		   !actionInstanceExecutionHelper.evaluateInteger(timeout, "timeout") ||
-		   !actionInstanceExecutionHelper.evaluateString(icon, "icon"))
+		QString title = evaluateString(ok, "title");
+		QString text = evaluateString(ok, "text");
+		int timeout = evaluateInteger(ok, "timeout");
+		QString icon = evaluateString(ok, "icon");
+
+		if(!ok)
 			return;
 
-	#ifdef Q_WS_X11
 		if(!mNotification)
 			mNotification = notify_notification_new(title.toUtf8(), text.toUtf8(), icon.toUtf8()
 	#if NOTIFY_CHECK_VERSION (0, 7, 0)

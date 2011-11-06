@@ -21,7 +21,6 @@
 #ifndef COPYFILEINSTANCE_H
 #define COPYFILEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "datacopyactioninstance.h"
 
 #include <QFile>
@@ -46,12 +45,12 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString sourceFile;
-			QString destinationFile;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(sourceFile, "source") ||
-			   !actionInstanceExecutionHelper.evaluateString(destinationFile, "destination"))
+			QString sourceFile = evaluateString(ok, "source");
+			QString destinationFile = evaluateString(ok, "destination");
+
+			if(!ok)
 				return;
 
 			mSourceFile.setFileName(sourceFile);
@@ -59,7 +58,7 @@ namespace Actions
 
 			if(!mSourceFile.open(QIODevice::ReadOnly))
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("source");
+				setCurrentParameter("source");
 				emit executionException(UnableToReadFileException, tr("Unable to read the source file \"%1\"").arg(sourceFile));
 				return;
 			}
@@ -67,7 +66,7 @@ namespace Actions
 			if(!mDestinationFile.open(QIODevice::WriteOnly))
 			{
 				mSourceFile.close();
-				actionInstanceExecutionHelper.setCurrentParameter("destination");
+				setCurrentParameter("destination");
 				emit executionException(UnableToWriteFileException, tr("Unable to write to \"%1\"").arg(destinationFile));
 				return;
 			}

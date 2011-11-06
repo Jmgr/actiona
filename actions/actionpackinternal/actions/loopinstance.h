@@ -21,7 +21,6 @@
 #ifndef LOOPINSTANCE_H
 #define LOOPINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 namespace Actions
@@ -42,18 +41,21 @@ namespace Actions
 				return;
 			}
 
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString line;
+			bool ok = true;
+
+			QString line = evaluateString(ok, "line");
 			int count;
 
-			if(!actionInstanceExecutionHelper.evaluateString(line, "line"))
+			if(!ok)
 				return;
 
 			if(!mInitialized)
 			{
 				mInitialized = true;
 
-				if(!actionInstanceExecutionHelper.evaluateInteger(count, "count"))
+				count = evaluateInteger(ok, "count");
+
+				if(!ok)
 					return;
 
 				if(count <= 0)
@@ -65,7 +67,7 @@ namespace Actions
 				mCounter = count;
 			}
 
-			actionInstanceExecutionHelper.setNextLine(line);
+			setNextLine(line);
 
 			--mCounter;
 

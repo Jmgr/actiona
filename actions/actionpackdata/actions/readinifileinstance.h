@@ -21,7 +21,6 @@
 #ifndef READINIFILEINSTANCE_H
 #define READINIFILEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 #include <config.h>
@@ -44,34 +43,32 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString filename;
-			QString section;
-			QString parameter;
-			QString variable;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
-			   !actionInstanceExecutionHelper.evaluateString(section, "section") ||
-			   !actionInstanceExecutionHelper.evaluateString(parameter, "parameter") ||
-			   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
+			QString filename = evaluateString(ok, "file");
+			QString section = evaluateString(ok, "section");
+			QString parameter = evaluateString(ok, "parameter");
+			QString variable = evaluateVariable(ok, "variable");
+
+			if(!ok)
 				return;
 
 			rude::Config config;
 			if(!config.load(filename.toLocal8Bit()))
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("filename");
+				setCurrentParameter("filename");
 				emit executionException(UnableToReadFileException, tr("Unable to read the file"));
 				return;
 			}
 
 			if(!config.setSection(section.toLatin1(), false))
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("section");
+				setCurrentParameter("section");
 				emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
 				return;
 			}
 
-			actionInstanceExecutionHelper.setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
+			setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
 
 			emit executionEnded();
 		}

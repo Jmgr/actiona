@@ -21,7 +21,6 @@
 #include <QtGlobal>
 
 #include "playsoundinstance.h"
-#include "actioninstanceexecutionhelper.h"
 
 namespace Actions
 {
@@ -42,19 +41,16 @@ namespace Actions
 
 	void PlaySoundInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString file;
-		int volume;
-		bool looping;
-		bool isUrl;
-		int playbackRate;
+		bool ok = true;
 
-		if(!actionInstanceExecutionHelper.evaluateString(file, "file") ||
-		   !actionInstanceExecutionHelper.evaluateInteger(volume, "volume") ||
-		   !actionInstanceExecutionHelper.evaluateBoolean(mBlocking, "blocking") ||
-		   !actionInstanceExecutionHelper.evaluateBoolean(looping, "looping") ||
-		   !actionInstanceExecutionHelper.evaluateBoolean(isUrl, "url") ||
-		   !actionInstanceExecutionHelper.evaluateInteger(playbackRate, "playbackRate"))
+		QString file = evaluateString(ok, "file");
+		int volume = evaluateInteger(ok, "volume");
+		mBlocking = evaluateBoolean(ok, "blocking");
+		bool looping = evaluateBoolean(ok, "looping");
+		bool isUrl = evaluateBoolean(ok, "url");
+		int playbackRate = evaluateInteger(ok, "playbackRate");
+
+		if(!ok)
 			return;
 
 		mMediaPlaylist->clear();

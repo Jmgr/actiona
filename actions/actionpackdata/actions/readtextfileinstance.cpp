@@ -19,7 +19,6 @@
 */
 
 #include "readtextfileinstance.h"
-#include "actioninstanceexecutionhelper.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -32,39 +31,36 @@ namespace Actions
 
 	void ReadTextFileInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString filepath;
-		QString variable;
-		Mode mode;
-		int firstline;
-		int lastline;
+		bool ok = true;
 
-		if(!actionInstanceExecutionHelper.evaluateString(filepath, "file") ||
-		   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable") ||
-		   !actionInstanceExecutionHelper.evaluateListElement(mode, modes, "mode") ||
-		   !actionInstanceExecutionHelper.evaluateInteger(firstline, "firstline") ||
-		   !actionInstanceExecutionHelper.evaluateInteger(lastline, "lastline"))
+		QString filepath = evaluateString(ok, "file");
+		QString variable = evaluateVariable(ok, "variable");
+		Mode mode = evaluateListElement<Mode>(ok, modes, "mode");
+		int firstline = evaluateInteger(ok, "firstline");
+		int lastline = evaluateInteger(ok, "lastline");
+
+		if(!ok)
 			return;
 
 		if(mode == Selection)
 		{
 			if(firstline < 1)
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("firstline");
+				setCurrentParameter("firstline");
 				emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid first line value : %1").arg(firstline));
 				return;
 			}
 
 			if(lastline < 1)
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("lastline");
+				setCurrentParameter("lastline");
 				emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid last line value : %1").arg(lastline));
 				return;
 			}
 
 			if(lastline < firstline)
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("firstline");
+				setCurrentParameter("firstline");
 				emit executionException(ActionTools::ActionException::BadParameterException, tr("The first line has to be smaller than the last line"));
 				return;
 			}
@@ -73,7 +69,7 @@ namespace Actions
 		QFile file(filepath);
 		if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
 		{
-			actionInstanceExecutionHelper.setCurrentParameter("file");
+			setCurrentParameter("file");
 			emit executionException(CannotOpenFileException, tr("Cannot open file"));
 			return;
 		}
@@ -108,7 +104,7 @@ namespace Actions
 			}
 		}
 
-		actionInstanceExecutionHelper.setVariable(variable, result);
+		setVariable(variable, result);
 
 		file.close();
 

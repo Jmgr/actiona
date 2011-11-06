@@ -21,7 +21,6 @@
 #ifndef WRITECLIPBOARDINSTANCE_H
 #define WRITECLIPBOARDINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 #include <QApplication>
@@ -39,10 +38,11 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString value;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(value, "value"))
+			QString value = evaluateString(ok, "value");
+
+			if(!ok)
 				return;
 
 			QClipboard *clipboard = QApplication::clipboard();

@@ -21,7 +21,6 @@
 #ifndef PIXELCOLORINSTANCE_H
 #define PIXELCOLORINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 #include "ifactionvalue.h"
@@ -53,42 +52,42 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			bool ok = true;
 
-			ActionTools::IfActionValue ifFalse;
+			mPixelPosition = evaluatePoint(ok, "pixel", "position");
+			mPixelColorValue = evaluateColor(ok, "pixel", "color");
+			mComparison = evaluateListElement<Comparison>(ok, comparisons, "comparison");
+			mIfTrue = evaluateIfAction(ok, "ifTrue");
+			ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, "ifFalse");
+			mVariable = evaluateVariable(ok, "variable");
 
-			if(!actionInstanceExecutionHelper.evaluatePoint(mPixelPosition, "pixel", "position") ||
-			   !actionInstanceExecutionHelper.evaluateColor(mPixelColorValue, "pixel", "color") ||
-			   !actionInstanceExecutionHelper.evaluateListElement(mComparison, comparisons, "comparison") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(mIfTrue, "ifTrue") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(ifFalse, "ifFalse") ||
-			   !actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
+			if(!ok)
 				return;
 
 			if(testPixel())
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("ifTrue", "line");
+				setCurrentParameter("ifTrue", "line");
 
-				QString line;
-				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfTrue.actionParameter()))
+				QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
+				if(!ok)
 					return;
 
 				if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
-					actionInstanceExecutionHelper.setNextLine(line);
+					setNextLine(line);
 
 				emit executionEnded();
 			}
 			else
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("ifFalse", "line");
+				setCurrentParameter("ifFalse", "line");
 
-				QString line;
-				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifFalse.actionParameter()))
+				QString line = evaluateSubParameter(ok, ifFalse.actionParameter());
+				if(!ok)
 					return;
 
 				if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
 				{
-					actionInstanceExecutionHelper.setNextLine(line);
+					setNextLine(line);
 
 					emit executionEnded();
 				}
@@ -113,14 +112,14 @@ namespace Actions
 		{
 			if(testPixel())
 			{
-				ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+				bool ok = true;
 
-				QString line;
-				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfTrue.actionParameter()))
+				QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
+				if(!ok)
 					return;
 
 				if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
-					actionInstanceExecutionHelper.setNextLine(line);
+					setNextLine(line);
 
 				mTimer.stop();
 				emit executionEnded();
@@ -140,8 +139,7 @@ namespace Actions
 			QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), mPixelPosition.x(), mPixelPosition.y(), 1, 1);
 			QColor pixelColor = pixel.toImage().pixel(0, 0);
 
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			actionInstanceExecutionHelper.setVariable(mVariable, pixelColor);
+			setVariable(mVariable, pixelColor);
 
 			switch(mComparison)
 			{

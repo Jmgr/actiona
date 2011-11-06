@@ -19,7 +19,6 @@
 */
 
 #include "windowconditioninstance.h"
-#include "actioninstanceexecutionhelper.h"
 
 #include <QRegExp>
 
@@ -38,19 +37,19 @@ namespace Actions
 
 	void WindowConditionInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString title;
-		ActionTools::IfActionValue ifFalse;
+		bool ok = true;
 
-		if(!actionInstanceExecutionHelper.evaluateString(title, "title") ||
-			!actionInstanceExecutionHelper.evaluateListElement(mCondition, conditions, "condition") ||
-			!actionInstanceExecutionHelper.evaluateIfAction(mIfTrue, "ifTrue") ||
-			!actionInstanceExecutionHelper.evaluateIfAction(ifFalse, "ifFalse") ||
-			!actionInstanceExecutionHelper.evaluateVariable(mXCoordinate, "xCoordinate") ||
-			!actionInstanceExecutionHelper.evaluateVariable(mYCoordinate, "yCoordinate") ||
-			!actionInstanceExecutionHelper.evaluateVariable(mWidth, "width") ||
-			!actionInstanceExecutionHelper.evaluateVariable(mHeight, "height") ||
-			!actionInstanceExecutionHelper.evaluateVariable(mProcessId, "processId"))
+		QString title = evaluateString(ok, "title");
+		mCondition = evaluateListElement<Condition>(ok, conditions, "condition");
+		mIfTrue = evaluateIfAction(ok, "ifTrue");
+		ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, "ifFalse");
+		mXCoordinate = evaluateVariable(ok, "xCoordinate");
+		mYCoordinate = evaluateVariable(ok, "yCoordinate");
+		mWidth = evaluateVariable(ok, "width");
+		mHeight = evaluateVariable(ok, "height");
+		mProcessId = evaluateVariable(ok, "processId");
+
+		if(!ok)
 			return;
 
 		mTitleRegExp = QRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix);
@@ -59,25 +58,25 @@ namespace Actions
 		if((foundWindow.isValid() && mCondition == Exists) ||
 		   (!foundWindow.isValid() && mCondition == DontExists))
 		{
-			QString line;
+			QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
 
-			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfTrue.actionParameter()))
+			if(!ok)
 				return;
 
 			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
-				actionInstanceExecutionHelper.setNextLine(line);
+				setNextLine(line);
 
 			emit executionEnded();
 		}
 		else
 		{
-			QString line;
+			QString line = evaluateSubParameter(ok, ifFalse.actionParameter());
 
-			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifFalse.actionParameter()))
+			if(!ok)
 				return;
 
 			if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
-				actionInstanceExecutionHelper.setNextLine(line);
+				setNextLine(line);
 			else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 			{
 				connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkWindow()));
@@ -100,18 +99,14 @@ namespace Actions
 		if((foundWindow.isValid() && mCondition == Exists) ||
 		   (!foundWindow.isValid() && mCondition == DontExists))
 		{
-			QString line;
+			bool ok = true;
 
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-
-			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfTrue.actionParameter()))
+			QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
+			if(!ok)
 				return;
 
 			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
-			{
-				ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-				actionInstanceExecutionHelper.setNextLine(line);
-			}
+				setNextLine(line);
 
 			mTimer.stop();
 			emit executionEnded();
@@ -126,12 +121,11 @@ namespace Actions
 			{
 				QRect windowRect = windowHandle.rect();
 
-				ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-				actionInstanceExecutionHelper.setVariable(mXCoordinate, windowRect.x());
-				actionInstanceExecutionHelper.setVariable(mYCoordinate, windowRect.y());
-				actionInstanceExecutionHelper.setVariable(mWidth, windowRect.width());
-				actionInstanceExecutionHelper.setVariable(mHeight, windowRect.height());
-				actionInstanceExecutionHelper.setVariable(mProcessId, windowHandle.processId());
+				setVariable(mXCoordinate, windowRect.x());
+				setVariable(mYCoordinate, windowRect.y());
+				setVariable(mWidth, windowRect.width());
+				setVariable(mHeight, windowRect.height());
+				setVariable(mProcessId, windowHandle.processId());
 
 				return windowHandle;
 			}

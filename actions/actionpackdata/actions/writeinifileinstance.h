@@ -21,7 +21,6 @@
 #ifndef WRITEINIFILEINSTANCE_H
 #define WRITEINIFILEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 #include <config.h>
@@ -43,21 +42,19 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString filename;
-			QString section;
-			QString parameter;
-			QString value;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
-			   !actionInstanceExecutionHelper.evaluateString(section, "section") ||
-			   !actionInstanceExecutionHelper.evaluateString(parameter, "parameter") ||
-			   !actionInstanceExecutionHelper.evaluateString(value, "value"))
+			QString filename = evaluateString(ok, "file");
+			QString section = evaluateString(ok, "section");
+			QString parameter = evaluateString(ok, "parameter");
+			QString value = evaluateString(ok, "value");
+
+			if(!ok)
 				return;
 
 			if(!write(filename, section, parameter, value))
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("filename");
+				setCurrentParameter("filename");
 				emit executionException(UnableToWriteFileException, tr("Unable to write to the file"));
 				return;
 			}

@@ -21,7 +21,6 @@
 #ifndef VARIABLEINSTANCE_H
 #define VARIABLEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 
@@ -51,27 +50,26 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString variable;
-			QString value;
-			Type type;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(variable, "variable") ||
-			   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
-			   !actionInstanceExecutionHelper.evaluateListElement(type, types, "type"))
+			QString variable = evaluateString(ok, "variable");
+			QString value = evaluateString(ok, "value");
+			Type type = evaluateListElement<Type>(ok, types, "type");
+
+			if(!ok)
 				return;
 
 			switch(type)
 			{
 			case String:
 				{
-					actionInstanceExecutionHelper.setVariable(variable, value);
+					setVariable(variable, value);
 				}
 				break;
 			case Integer:
 				{
 					bool ok;
-					actionInstanceExecutionHelper.setVariable(variable, value.toInt(&ok));
+					setVariable(variable, value.toInt(&ok));
 					if(!ok)
 					{
 						emit executionException(ConversionFailedException, tr("Cannot evaluate the value as an integer"));
@@ -82,7 +80,7 @@ namespace Actions
 			case Float:
 				{
 					bool ok;
-					actionInstanceExecutionHelper.setVariable(variable, value.toFloat(&ok));
+					setVariable(variable, value.toFloat(&ok));
 					if(!ok)
 					{
 						emit executionException(ConversionFailedException, tr("Cannot evaluate the value as a floating number"));

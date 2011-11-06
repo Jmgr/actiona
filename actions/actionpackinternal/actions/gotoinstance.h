@@ -21,7 +21,6 @@
 #ifndef GOTOINSTANCE_H
 #define GOTOINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 namespace Actions
@@ -36,13 +35,14 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString line;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(line, "line"))
+			QString line = evaluateString(ok, "line");
+
+			if(!ok)
 				return;
 
-			actionInstanceExecutionHelper.setNextLine(line);
+			setNextLine(line);
 
 			emit executionEnded();
 		}

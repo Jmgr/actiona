@@ -21,7 +21,6 @@
 #ifndef DETACHEDCOMMANDINSTANCE_H
 #define DETACHEDCOMMANDINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 
@@ -46,16 +45,14 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString command;
-			QString parameters;
-			QString workingDirectory;
-			QString processId;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(command, "command") ||
-				!actionInstanceExecutionHelper.evaluateString(parameters, "parameters") ||
-				!actionInstanceExecutionHelper.evaluateString(workingDirectory, "workingDirectory") ||
-				!actionInstanceExecutionHelper.evaluateVariable(processId, "processId"))
+			QString command = evaluateString(ok, "command");
+			QString parameters = evaluateString(ok, "parameters");
+			QString workingDirectory = evaluateString(ok, "workingDirectory");
+			QString processId = evaluateVariable(ok, "processId");
+
+			if(!ok)
 				return;
 
 			QStringList parameterList = parameters.split(QChar(' '));
@@ -70,7 +67,7 @@ namespace Actions
 				return;
 			}
 
-			actionInstanceExecutionHelper.setVariable(processId, QString::number(processIdValue));
+			setVariable(processId, QString::number(processIdValue));
 
 			emit executionEnded();
 		}

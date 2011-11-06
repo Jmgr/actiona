@@ -19,7 +19,6 @@
 */
 
 #include "datainputinstance.h"
-#include "actioninstanceexecutionhelper.h"
 #include "script.h"
 
 #include <QInputDialog>
@@ -44,33 +43,37 @@ namespace Actions
 
 	void DataInputInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString question;
+		bool ok = true;
+
+		QString question = evaluateString(ok, "question");
+		mDataType = evaluateListElement<DataType>(ok, dataTypes, "dataType");
+		mVariable = evaluateVariable(ok, "variable");
+		QString windowIcon = evaluateString(ok, "windowIcon");
+
+		if(!ok)
+			return;
+
 		QString textDefaultValue;
 		double decimalDefaultValue;
 		int integerDefaultValue;
-		QString windowIcon;
 
 		mInputDialog = 0;
-
-		if(!actionInstanceExecutionHelper.evaluateString(question, "question") ||
-			!actionInstanceExecutionHelper.evaluateListElement(mDataType, dataTypes, "dataType") ||
-			!actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable") ||
-			!actionInstanceExecutionHelper.evaluateString(windowIcon, "windowIcon"))
-			return;
 
 		switch(mDataType)
 		{
 		case IntegerType:
-			if(!actionInstanceExecutionHelper.evaluateInteger(integerDefaultValue, "defaultValue"))
+			integerDefaultValue = evaluateInteger(ok, "defaultValue");
+			if(!ok)
 				return;
 			break;
 		case DecimalType:
-			if(!actionInstanceExecutionHelper.evaluateDouble(decimalDefaultValue, "defaultValue"))
+			decimalDefaultValue = evaluateDouble(ok, "defaultValue");
+			if(!ok)
 				return;
 			break;
 		default:
-			if(!actionInstanceExecutionHelper.evaluateString(textDefaultValue, "defaultValue"))
+			textDefaultValue = evaluateString(ok, "defaultValue");
+			if(!ok)
 				return;
 			break;
 		}
@@ -135,9 +138,7 @@ namespace Actions
 
 	void DataInputInstance::dataEntered(int value)
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-
-		actionInstanceExecutionHelper.setVariable(mVariable, value);
+		setVariable(mVariable, value);
 
 		mInputDialog->disconnect();
 		mInputDialog->deleteLater();
@@ -147,9 +148,7 @@ namespace Actions
 
 	void DataInputInstance::dataEntered(double value)
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-
-		actionInstanceExecutionHelper.setVariable(mVariable, value);
+		setVariable(mVariable, value);
 
 		mInputDialog->disconnect();
 		mInputDialog->deleteLater();
@@ -159,9 +158,7 @@ namespace Actions
 
 	void DataInputInstance::dataEntered(const QString &value)
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-
-		actionInstanceExecutionHelper.setVariable(mVariable, value);
+		setVariable(mVariable, value);
 
 		mInputDialog->disconnect();
 		mInputDialog->deleteLater();

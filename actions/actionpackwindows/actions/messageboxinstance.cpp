@@ -52,24 +52,20 @@ namespace Actions
 
 	void MessageBoxInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString message;
-		QString title;
-		Icon icon;
-		Buttons button;
-		QString customIcon;
-		QString windowIcon;
+		bool ok = true;
+
+		QString message = evaluateString(ok, "message");
+		QString title = evaluateString(ok, "title");
+		Icon icon = evaluateListElement<Icon>(ok, icons, "icon");
+		Buttons button = evaluateListElement<Buttons>(ok, buttons, "type");
+		QString customIcon = evaluateString(ok, "customIcon");
+		QString windowIcon = evaluateString(ok, "windowIcon");
+		mIfYes = evaluateIfAction(ok, "ifYes");
+		mIfNo = evaluateIfAction(ok, "ifNo");
 
 		mMessageBox = 0;
 
-		if(!actionInstanceExecutionHelper.evaluateString(message, "message") ||
-			!actionInstanceExecutionHelper.evaluateString(title, "title") ||
-			!actionInstanceExecutionHelper.evaluateListElement(icon, icons, "icon") ||
-			!actionInstanceExecutionHelper.evaluateListElement(button, buttons, "type") ||
-			!actionInstanceExecutionHelper.evaluateString(customIcon, "customIcon") ||
-			!actionInstanceExecutionHelper.evaluateString(windowIcon, "windowIcon") ||
-			!actionInstanceExecutionHelper.evaluateIfAction(mIfYes, "ifYes") ||
-			!actionInstanceExecutionHelper.evaluateIfAction(mIfNo, "ifNo"))
+		if(!ok)
 			return;
 
 		mMessageBox = new QMessageBox();
@@ -136,13 +132,14 @@ namespace Actions
 
 	void MessageBoxInstance::buttonClicked()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QScriptValue script = scriptEngine()->globalObject().property("Script");
+		bool ok = true;
+
 		QString line;
 
 		if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::Yes))
 		{
-			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfYes.actionParameter()))
+			line = evaluateSubParameter(ok, mIfYes.actionParameter());
+			if(!ok)
 			{
 				mMessageBox->disconnect();
 				mMessageBox->deleteLater();
@@ -151,11 +148,12 @@ namespace Actions
 			}
 
 			if(mIfYes.action() == ActionTools::IfActionValue::GOTO)
-				script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(line)));
+				setNextLine(line);
 		}
 		else if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::No))
 		{
-			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, mIfNo.actionParameter()))
+			line = evaluateSubParameter(ok, mIfNo.actionParameter());
+			if(!ok)
 			{
 				mMessageBox->disconnect();
 				mMessageBox->deleteLater();
@@ -164,7 +162,7 @@ namespace Actions
 			}
 
 			if(mIfNo.action() == ActionTools::IfActionValue::GOTO)
-				script.setProperty("nextLine", scriptEngine()->newVariant(QVariant(line)));
+				setNextLine(line);
 		}
 
 		mMessageBox->disconnect();

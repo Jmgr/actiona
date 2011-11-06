@@ -21,7 +21,6 @@
 #ifndef READCLIPBOARDINSTANCE_H
 #define READCLIPBOARDINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 
@@ -40,15 +39,16 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString variable;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
+			QString variable = evaluateVariable(ok, "variable");
+
+			if(!ok)
 				return;
 
 			QClipboard *clipboard = QApplication::clipboard();
 
-			actionInstanceExecutionHelper.setVariable(variable, clipboard->text());
+			setVariable(variable, clipboard->text());
 
 			emit executionEnded();
 		}

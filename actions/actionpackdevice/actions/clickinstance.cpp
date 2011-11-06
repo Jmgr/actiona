@@ -20,7 +20,6 @@
 
 #include "clickinstance.h"
 #include "consolewidget.h"
-#include "actioninstanceexecutionhelper.h"
 
 #include <QPoint>
 #include <QTimer>
@@ -36,17 +35,14 @@ namespace Actions
 	
 	void ClickInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+		bool ok = true;
 	
-		Action action;
-		MouseDevice::Button button;
-		QPoint position;
-		int amount;
+		Action action = evaluateListElement<Action>(ok, actions, "action", "value");
+		MouseDevice::Button button = evaluateListElement<MouseDevice::Button>(ok, buttons, "button", "value");
+		QPoint position = evaluatePoint(ok, "position");
+		int amount = evaluateInteger(ok, "amount");
 	
-		if(!actionInstanceExecutionHelper.evaluateListElement(action, actions, "action", "value") ||
-		   !actionInstanceExecutionHelper.evaluateListElement(button, buttons, "button", "value") ||
-		   !actionInstanceExecutionHelper.evaluatePoint(position, "position") ||
-		   !actionInstanceExecutionHelper.evaluateInteger(amount, "amount"))
+		if(!ok)
 			return;
 	
 		if(action != ClickAction)
@@ -54,7 +50,7 @@ namespace Actions
 	
 		if(amount <= 0)
 		{
-			actionInstanceExecutionHelper.setCurrentParameter("amount");
+			setCurrentParameter("amount");
 			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid click amount"));
 			return;
 		}

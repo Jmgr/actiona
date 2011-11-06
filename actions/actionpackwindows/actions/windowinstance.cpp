@@ -19,7 +19,6 @@
 */
 
 #include "windowinstance.h"
-#include "actioninstanceexecutionhelper.h"
 #include "windowhandle.h"
 
 #include <QRegExp>
@@ -44,27 +43,29 @@ namespace Actions
 
 	void WindowInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+		bool ok = true;
 
-		QString title;
-		Action action;
+		QString title = evaluateString(ok, "title");
+		Action action = evaluateListElement<Action>(ok, actions, "action");
+
+		if(!ok)
+			return;
+
 		QPoint movePosition;
 		int resizeWidth;
 		int resizeHeight;
 
-		if(!actionInstanceExecutionHelper.evaluateString(title, "title") ||
-			!actionInstanceExecutionHelper.evaluateListElement(action, actions, "action"))
-			return;
-
 		if(action == Move)
 		{
-			if(!actionInstanceExecutionHelper.evaluatePoint(movePosition, "movePosition"))
+			movePosition = evaluatePoint(ok, "movePosition");
+			if(!ok)
 				return;
 		}
 		else if(action == Resize)
 		{
-			if(!actionInstanceExecutionHelper.evaluateInteger(resizeWidth, "resizeWidth") ||
-				!actionInstanceExecutionHelper.evaluateInteger(resizeHeight, "resizeHeight"))
+			resizeWidth = evaluateInteger(ok, "resizeWidth");
+			resizeHeight = evaluateInteger(ok, "resizeHeight");
+			if(!ok)
 				return;
 		}
 
@@ -82,7 +83,7 @@ namespace Actions
 
 		if(!foundWindow.isValid())
 		{
-			actionInstanceExecutionHelper.setCurrentParameter("title");
+			setCurrentParameter("title");
 			emit executionException(CannotFindWindowException, tr("Cannot find any window matching \"%1\"").arg(title));
 			return;
 		}
@@ -116,7 +117,7 @@ namespace Actions
 
 		if(!result)
 		{
-			actionInstanceExecutionHelper.setCurrentParameter("action");
+			setCurrentParameter("action");
 			emit executionException(ActionFailedException, tr("\"%1\" failed").arg(actions.second[action]));
 			return;
 		}
