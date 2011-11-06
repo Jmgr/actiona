@@ -37,7 +37,7 @@ namespace Actions
 	#ifdef Q_WS_WIN
 		bool ok = true;
 
-		ActionTools::Registry::Key key = evaluateListElement(ok, keys, "key");
+		ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, keys, "key");
 		QString subKey = evaluateString(ok, "subKey");
 		QString value = evaluateString(ok, "value");
 		QString variable = evaluateVariable(ok, "variable");
