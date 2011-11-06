@@ -70,13 +70,13 @@
 <context>
     <name>Actions::ClickInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="58"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="54"/>
         <source>Invalid click amount</source>
         <translation>Quantité de clics incorrecte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="70"/>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="78"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="66"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="74"/>
         <source>Unable to emulate click: button event failed</source>
         <translation>Impossible de simuler un clic : l&apos;évènement de bouton n&apos;a pas pu être envoyé</translation>
     </message>
@@ -156,7 +156,7 @@
 <context>
     <name>Actions::KeyInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="83"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="80"/>
         <source>Unable to emulate key: failed to send input</source>
         <translation>Impossible de simuler la touche : l&apos;évènement n&apos;a pas pu être envoyé</translation>
     </message>
@@ -195,7 +195,7 @@
 <context>
     <name>Actions::TextInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="39"/>
+        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="38"/>
         <source>Unable to write the text</source>
         <translation>Impossible d&apos;écrire le texte</translation>
     </message>
@@ -221,7 +221,7 @@
 <context>
     <name>Actions::WheelInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/wheelinstance.h" line="54"/>
+        <location filename="../actions/actionpackdevice/actions/wheelinstance.h" line="53"/>
         <source>Unable to emulate wheel: failed to send input</source>
         <translation>Impossible de simuler la molette de souris : l&apos;évènement n&apos;a pas pu être envoyé</translation>
     </message>
@@ -229,17 +229,17 @@
 <context>
     <name>ClickInstance::actions</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
         <source>Click (press and release)</source>
         <translation>Clic (pression et relâchement)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
         <source>Press</source>
         <translation>Pression</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
         <source>Release</source>
         <translation>Relâchement</translation>
     </message>
@@ -247,17 +247,17 @@
 <context>
     <name>ClickInstance::buttons</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
         <source>Left</source>
         <translation>Gauche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
         <source>Middle</source>
         <translation>Milieu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
         <source>Right</source>
         <translation>Droit</translation>
     </message>
@@ -311,27 +311,27 @@
 <context>
     <name>KeyInstance::actions</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
         <source>Press and release</source>
         <translation>Pression et relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
         <source>Press</source>
         <translation>Pression</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
         <source>Release</source>
         <translation>Relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="39"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="38"/>
         <source>Win32</source>
         <translation>Win32</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="39"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="38"/>
         <source>DirectX</source>
         <translation>DirectX</translation>
     </message>

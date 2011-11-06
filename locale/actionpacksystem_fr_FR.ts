@@ -153,7 +153,7 @@
 <context>
     <name>Actions::DetachedCommandInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommandinstance.h" line="69"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommandinstance.h" line="66"/>
         <source>Unable to start the detached command</source>
         <translation>Impossible d&apos;exécuter la commande détachée</translation>
     </message>
@@ -242,7 +242,7 @@
 <context>
     <name>Actions::NotifyInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifyinstance.cpp" line="84"/>
+        <location filename="../actions/actionpacksystem/actions/notifyinstance.cpp" line="81"/>
         <source>Unable to show the notification</source>
         <translation>Impossible d&apos;afficher la notification</translation>
     </message>
@@ -430,12 +430,12 @@
 <context>
     <name>Actions::PlaySoundInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsoundinstance.cpp" line="71"/>
+        <location filename="../actions/actionpacksystem/actions/playsoundinstance.cpp" line="67"/>
         <source>Unable to load file %1: %2</source>
         <translation>Impossible de charger le fichier %1 : %2</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsoundinstance.cpp" line="83"/>
+        <location filename="../actions/actionpacksystem/actions/playsoundinstance.cpp" line="79"/>
         <source>Unable to play file %1: %2</source>
         <translation>Impossible de lire le fichier %1 : %2</translation>
     </message>

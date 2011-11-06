@@ -369,12 +369,12 @@
 <context>
     <name>Actions::WindowInstance</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="86"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="87"/>
         <source>Cannot find any window matching &quot;%1&quot;</source>
         <translation>Impossible de trouver une fenêtre correspondant à &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="120"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="121"/>
         <source>&quot;%1&quot; failed</source>
         <translation>Échec de &quot;%1&quot;</translation>
     </message>
@@ -414,17 +414,17 @@
 <context>
     <name>DataInputInstance::dataTypes</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="34"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="35"/>
         <source>Integer</source>
         <translation>Entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="36"/>
         <source>Decimal</source>
         <translation>Décimal</translation>
     </message>
@@ -596,12 +596,12 @@
         <translation type="obsolete">Fermée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="31"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="30"/>
         <source>Exists</source>
         <translation>Existe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="32"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="31"/>
         <source>Don&apos;t exists</source>
         <translation>N&apos;existe pas</translation>
     </message>
@@ -609,37 +609,37 @@
 <context>
     <name>WindowInstance::actions</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="31"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="33"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="32"/>
         <source>Kill process</source>
         <translation>Fermer processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="33"/>
         <source>Set foreground</source>
         <translation>Mettre au premier plan</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="34"/>
         <source>Minimize</source>
         <translation>Minimiser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="35"/>
         <source>Maximize</source>
         <translation>Maximiser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="36"/>
         <source>Move</source>
         <translation>Déplacer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="38"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="37"/>
         <source>Resize</source>
         <translation>Redimensionner</translation>
     </message>
