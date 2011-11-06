@@ -1,10 +1,10 @@
 #define MyAppName "Actionaz 3"
-#define MyAppVersion "0.1.1"
+#define MyAppVersion "0.1.3"
 #define MyAppIsBeta 1
 #define MyAppPublisher "Actionaz.org"
 #define MyAppURL "http://www.actionaz.org/"
 #define MyAppExeName "actionaz.exe"
-#define MyAppBits 32
+#define MyAppBits 64
 
 [Setup]
 #if MyAppBits == 32
@@ -104,6 +104,7 @@ Source: "C:\actionaz\installer\reference{#MyAppBits}\sfx\*"; DestDir: "{app}\sfx
 Source: "C:\actionaz\installer\reference{#MyAppBits}\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion
 Source: "C:\actionaz\installer\reference{#MyAppBits}\plugins\sqldrivers\*"; DestDir: "{app}\plugins\sqldrivers"; Flags: ignoreversion
 Source: "C:\actionaz\installer\reference{#MyAppBits}\plugins\mediaservice\*"; DestDir: "{app}\plugins\mediaservice"; Flags: ignoreversion
+Source: "C:\actionaz\installer\reference{#MyAppBits}\plugins\playlistformats\*"; DestDir: "{app}\plugins\playlistformats"; Flags: ignoreversion
 Source: "C:\actionaz\installer\reference{#MyAppBits}\code\script\*"; DestDir: "{app}\code\script"; Flags: ignoreversion
 
 [Icons]
