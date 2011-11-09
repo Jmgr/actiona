@@ -27,6 +27,7 @@ namespace Global
 {
 	const Tools::Version	ACTIONAZ_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_VERSION));
 	const Tools::Version	SCRIPT_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_SCRIPT_VERSION));
+	const QString			CONNECTIVITY_URL =	"http://www.actionaz.org/";
 }
 
 #endif // GLOBAL_H

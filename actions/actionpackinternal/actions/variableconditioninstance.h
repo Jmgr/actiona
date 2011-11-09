@@ -21,7 +21,6 @@
 #ifndef VARIABLECONDITIONINSTANCE_H
 #define VARIABLECONDITIONINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "ifactionvalue.h"
 
@@ -49,28 +48,24 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			bool ok = true;
 
-			QString variable;
-			Comparison comparison;
-			QString value;
-			ActionTools::IfActionValue ifEqual;
-			ActionTools::IfActionValue ifDifferent;
+			QString variableName = evaluateVariable(ok, "variable");
+			Comparison comparison = evaluateListElement<Comparison>(ok, comparisons, "comparison");
+			QString value = evaluateString(ok, "value");
+			ActionTools::IfActionValue ifEqual = evaluateIfAction(ok, "ifEqual");
+			ActionTools::IfActionValue ifDifferent = evaluateIfAction(ok, "ifDifferent");
 
-			if(!actionInstanceExecutionHelper.evaluateVariable(variable, "variable") ||
-			   !actionInstanceExecutionHelper.evaluateListElement(comparison, comparisons, "comparison") ||
-			   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(ifEqual, "ifEqual") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(ifDifferent, "ifDifferent"))
+			if(!ok)
 				return;
 
-			bool ok;
-			QVariant variableValue = actionInstanceExecutionHelper.variable(variable);
-			float numberVariableValue = variableValue.toFloat(&ok);
-			float numberValue = value.toFloat(&ok);
+			bool conversionOk = true;
+			QVariant variableValue = variable(variableName);
+			float numberVariableValue = variableValue.toFloat(&conversionOk);
+			float numberValue = value.toFloat(&conversionOk);
 			bool equal;
 
-			if(ok)//Number comparison
+			if(conversionOk)//Number comparison
 			{
 				switch(comparison)
 				{
@@ -133,13 +128,13 @@ namespace Actions
 
 			QString action = (equal ? ifEqual.action() : ifDifferent.action());
 			const ActionTools::SubParameter &actionParameter = (equal ? ifEqual.actionParameter() : ifDifferent.actionParameter());
-			QString line;
+			QString line = evaluateSubParameter(ok, actionParameter);
 
-			if(!actionInstanceExecutionHelper.evaluateSubParameter(line, actionParameter))
+			if(!ok)
 				return;
 
 			if(action == ActionTools::IfActionValue::GOTO)
-				actionInstanceExecutionHelper.setNextLine(line);
+				setNextLine(line);
 
 			emit executionEnded();
 		}

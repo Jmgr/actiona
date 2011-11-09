@@ -151,52 +151,93 @@
     </message>
 </context>
 <context>
-    <name>ActionTools::ActionInstanceExecutionHelper</name>
+    <name>ActionTools::ActionInstance</name>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="92"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="215"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="367"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="373"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="415"/>
-        <source>[Raw data]</source>
-        <translation>[Données brutes]</translation>
-    </message>
-    <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="113"/>
+        <location filename="../actiontools/actioninstance.cpp" line="142"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
-        <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas démarrer par un chiffre.</translation>
+        <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas commencer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="139"/>
-        <source>Expected an integer value.</source>
+        <location filename="../actiontools/actioninstance.cpp" line="165"/>
+        <source>Integer value expected.</source>
         <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="181"/>
-        <source>Expected a decimal value.</source>
+        <location filename="../actiontools/actioninstance.cpp" line="200"/>
+        <source>Decimal value expected.</source>
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="232"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="241"/>
+        <location filename="../actiontools/actioninstance.cpp" line="267"/>
+        <location filename="../actiontools/actioninstance.cpp" line="275"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="284"/>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="293"/>
+        <location filename="../actiontools/actioninstance.cpp" line="345"/>
+        <location filename="../actiontools/actioninstance.cpp" line="353"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.cpp" line="353"/>
-        <source>Variable %1 not found</source>
-        <translation>Variable %1 ne peut pas être trouvée</translation>
+        <location filename="../actiontools/actioninstance.cpp" line="434"/>
+        <source>Undefined variable &quot;%1&quot;</source>
+        <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstanceexecutionhelper.h" line="110"/>
+        <location filename="../actiontools/actioninstance.cpp" line="441"/>
+        <source>[Null]</source>
+        <translation>[Nul]</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.cpp" line="443"/>
+        <source>[Undefined]</source>
+        <translation>[Indéfini]</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.cpp" line="453"/>
+        <source>[Raw data]</source>
+        <translation>[Données brutes]</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.h" line="227"/>
+        <source>&quot;%1&quot; is an invalid value.</source>
+        <translation>&quot;%1&quot; est une valeur incorrecte.</translation>
+    </message>
+</context>
+<context>
+    <name>ActionTools::ActionInstanceExecutionHelper</name>
+    <message>
+        <source>[Raw data]</source>
+        <translation type="obsolete">[Données brutes]</translation>
+    </message>
+    <message>
+        <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
+        <translation type="obsolete">Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas démarrer par un chiffre.</translation>
+    </message>
+    <message>
+        <source>Expected an integer value.</source>
+        <translation type="obsolete">Valeur entière attendue.</translation>
+    </message>
+    <message>
+        <source>Expected a decimal value.</source>
+        <translation type="obsolete">Valeur décimale attendue.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is not a valid position.</source>
+        <translation type="obsolete">&quot;%1&quot; n&apos;est pas une position valide.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is not a valid color.</source>
+        <translation type="obsolete">&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
+    </message>
+    <message>
+        <source>Variable %1 not found</source>
+        <translation type="obsolete">Variable %1 ne peut pas être trouvée</translation>
+    </message>
+    <message>
         <source>&quot;%1&quot; is incorrect.</source>
-        <translation>&quot;%1&quot; est incorrect.</translation>
+        <translation type="obsolete">&quot;%1&quot; est incorrect.</translation>
     </message>
 </context>
 <context>
@@ -619,42 +660,42 @@ Double-cliquez pour afficher</translation>
         <translation>Processus invalide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="301"/>
+        <location filename="../actiontools/code/window.cpp" line="307"/>
         <source>Unable to close the window</source>
         <translation>Impossible de fermer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="312"/>
+        <location filename="../actiontools/code/window.cpp" line="318"/>
         <source>Unable to kill the window creator</source>
         <translation>Impossible de fermer de créateur de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="323"/>
+        <location filename="../actiontools/code/window.cpp" line="329"/>
         <source>Unable to set the window foreground</source>
         <translation>Impossible de placer la fenêtre en premier plan</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="334"/>
+        <location filename="../actiontools/code/window.cpp" line="340"/>
         <source>Unable to minimize the window</source>
         <translation>Impossible de minimiser la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="345"/>
+        <location filename="../actiontools/code/window.cpp" line="351"/>
         <source>Unable to maximize the window</source>
         <translation>Impossible de maximiser la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="356"/>
+        <location filename="../actiontools/code/window.cpp" line="362"/>
         <source>Unable to move the window</source>
         <translation>Impossible de déplacer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="367"/>
+        <location filename="../actiontools/code/window.cpp" line="373"/>
         <source>Unable to resize the window</source>
         <translation>Impossible de redimensionner la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="376"/>
+        <location filename="../actiontools/code/window.cpp" line="382"/>
         <source>Invalid window</source>
         <translation>Fenêtre invalide</translation>
     </message>

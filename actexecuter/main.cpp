@@ -25,6 +25,7 @@
 #include "mainclass.h"
 #include "nativeeventfilteringapplication.h"
 #include "global.h"
+#include "settings.h"
 
 #include <ctime>
 
@@ -37,6 +38,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QUrl>
+#include <QNetworkProxy>
 
 #ifdef Q_WS_X11
 #undef signals
@@ -67,8 +69,6 @@ int main(int argc, char **argv)
 	notify_init("Actionaz executer");
 #endif
 
-	//TODO: Use proxy ?
-
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	const QStringList &arguments = QCoreApplication::arguments();
@@ -84,6 +84,12 @@ int main(int argc, char **argv)
 	options.alias("nocodeqt", "Q");
 	options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
 	options.alias("portable", "p");
+	options.add("proxy-mode", QObject::tr("sets the proxy mode, values are \"none\", \"system\" (default) or \"custom\""));
+	options.add("proxy-type", QObject::tr("sets the custom proxy type, values are \"http\" or \"socks\" (default)"));
+	options.add("proxy-host", QObject::tr("sets the custom proxy host"));
+	options.add("proxy-port", QObject::tr("sets the custom proxy port"));
+	options.add("proxy-user", QObject::tr("sets the custom proxy user"));
+	options.add("proxy-password", QObject::tr("sets the custom proxy password"));
 	options.add("version", QObject::tr("show the program version"));
 	options.alias("version", "v");
 	options.add("help", QObject::tr("show this help text"));
@@ -187,6 +193,72 @@ int main(int argc, char **argv)
 		ActionTools::KeySymHelper::loadKeyCodes();
 	}
 #endif
+
+	// Proxy settings
+	int proxyMode = ActionTools::Settings::PROXY_SYSTEM;
+	if(options.value("proxy-mode").toString() == "none")
+		proxyMode = ActionTools::Settings::PROXY_NONE;
+	else if(options.value("proxy-mode").toString() == "custom")
+		proxyMode = ActionTools::Settings::PROXY_CUSTOM;
+	else if(options.value("proxy-mode").toString() == "system")
+		proxyMode = ActionTools::Settings::PROXY_SYSTEM;
+	else if(!options.value("proxy-mode").toString().isEmpty())
+	{
+		QTextStream stream(stdout);
+		stream << QObject::tr("Unknown proxy mode, values are \"none\", \"system\" (default) or \"custom\"") << "\n";
+		stream.flush();
+		return -1;
+	}
+
+	QNetworkProxy proxy;
+
+	switch(proxyMode)
+	{
+	case ActionTools::Settings::PROXY_NONE:
+		proxy.setType(QNetworkProxy::NoProxy);
+		break;
+	case ActionTools::Settings::PROXY_SYSTEM:
+		{
+			QUrl url(Global::CONNECTIVITY_URL);
+			QNetworkProxyQuery networkProxyQuery(url);
+			QList<QNetworkProxy> listOfProxies = QNetworkProxyFactory::systemProxyForQuery(networkProxyQuery);
+			if(!listOfProxies.isEmpty())
+				proxy = listOfProxies.first();
+			else
+				proxy.setType(QNetworkProxy::NoProxy);
+		}
+		break;
+	case ActionTools::Settings::PROXY_CUSTOM:
+		{
+			int type = ActionTools::Settings::PROXY_TYPE_SOCKS5;
+			if(options.value("proxy-type").toString() == "http")
+				type = ActionTools::Settings::PROXY_TYPE_HTTP;
+			else if(options.value("proxy-type").toString() == "socks")
+				type = ActionTools::Settings::PROXY_TYPE_SOCKS5;
+			else if(!options.value("proxy-type").toString().isEmpty())
+			{
+				QTextStream stream(stdout);
+				stream << QObject::tr("Unknown proxy type, values are \"http\" or \"socks\" (default)") << "\n";
+				stream.flush();
+				return -1;
+			}
+
+			QNetworkProxy proxy;
+
+			if(type == ActionTools::Settings::PROXY_TYPE_HTTP)
+				proxy.setType(QNetworkProxy::HttpProxy);
+			else
+				proxy.setType(QNetworkProxy::Socks5Proxy);
+
+			proxy.setHostName(options.value("proxy-host").toString());
+			proxy.setPort(options.value("proxy-port").toInt());
+			proxy.setUser(options.value("proxy-user").toString());
+			proxy.setPassword(options.value("proxy-password").toString());
+		}
+		break;
+	}
+
+	QNetworkProxy::setApplicationProxy(proxy);
 
 	QUrl protocolUrl = QUrl::fromEncoded(arguments.at(1).toUtf8());
 	if(protocolUrl.isValid() && protocolUrl.scheme() != "actionaz")

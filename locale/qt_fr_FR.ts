@@ -2205,7 +2205,7 @@ en
         <translation>Chaîne de caractères non fermée en fin de ligne</translation>
     </message>
     <message>
-        <source>Illegal escape squence</source>
+        <source>Illegal escape sequence</source>
         <translation>Séquence d&apos;échappement illégale</translation>
     </message>
     <message>

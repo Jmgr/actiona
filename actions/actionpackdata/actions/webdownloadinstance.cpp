@@ -19,7 +19,6 @@
 */
 
 #include "webdownloadinstance.h"
-#include "actioninstanceexecutionhelper.h"
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -50,14 +49,15 @@ namespace Actions
 
 	void WebDownloadInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString urlString;
-		QString file;
+		bool ok = true;
 
-		if(!actionInstanceExecutionHelper.evaluateString(urlString, "url") ||
-		   !actionInstanceExecutionHelper.evaluateListElement(mDestination, destinations, "destination") ||
-		   !actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable") ||
-		   !actionInstanceExecutionHelper.evaluateString(file, "file"))
+		QString urlString = evaluateString(ok, "url");
+		mDestination = evaluateListElement<Destination>(ok, destinations, "destination");
+		mVariable = evaluateVariable(ok, "variable");
+		QString file = evaluateString(ok, "file");
+
+
+		if(!ok)
 			return;
 
 		QUrl url(urlString);
@@ -66,7 +66,7 @@ namespace Actions
 
 		if(!url.isValid())
 		{
-			actionInstanceExecutionHelper.setCurrentParameter("url");
+			setCurrentParameter("url");
 			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid URL"));
 			return;
 		}
@@ -76,7 +76,7 @@ namespace Actions
 			mFile.setFileName(file);
 			if(!mFile.open(QIODevice::WriteOnly))
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("file");
+				setCurrentParameter("file");
 				emit executionException(CannotOpenFileException, tr("Cannot write to file"));
 				return;
 			}
@@ -109,11 +109,7 @@ namespace Actions
 		{
 		case QNetworkReply::NoError:
 			if(mDestination == Variable)
-			{
-				ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-
-				actionInstanceExecutionHelper.setVariable(mVariable, QString::fromUtf8(mReply->readAll()));
-			}
+				setVariable(mVariable, QString::fromUtf8(mReply->readAll()));
 
 			emit executionEnded();
 			break;
@@ -128,8 +124,7 @@ namespace Actions
 				if(mDestination == File)
 					mFile.remove();
 
-				ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-				actionInstanceExecutionHelper.setCurrentParameter("url");
+				setCurrentParameter("url");
 
 				emit executionException(DownloadException, tr("Download error: %1").arg(mReply->errorString()));
 			}

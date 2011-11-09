@@ -21,7 +21,6 @@
 #ifndef READBINARYFILEINSTANCE_H
 #define READBINARYFILEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "datacopyactioninstance.h"
 
 #include <QFile>
@@ -46,18 +45,19 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString filename;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
-			   !actionInstanceExecutionHelper.evaluateVariable(mVariable, "variable"))
+			QString filename = evaluateString(ok, "file");
+			mVariable = evaluateVariable(ok, "variable");
+
+			if(!ok)
 				return;
 
 			mFile.setFileName(filename);
 
 			if(!DataCopyActionInstance::startCopy(&mFile, &mResult))
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("file");
+				setCurrentParameter("file");
 				emit executionException(UnableToReadFileException, tr("Unable to read the file \"%1\"").arg(filename));
 				return;
 			}
@@ -69,8 +69,7 @@ namespace Actions
 	private slots:
 		void done()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			actionInstanceExecutionHelper.setVariable(mVariable, mResult.buffer());
+			setVariable(mVariable, mResult.buffer());
 
 			DataCopyActionInstance::done();
 		}

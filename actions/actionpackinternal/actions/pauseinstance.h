@@ -21,7 +21,6 @@
 #ifndef PAUSEINSTANCE_H
 #define PAUSEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 #include <QTimer>
@@ -54,12 +53,12 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			int duration;
-			Unit unit;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateInteger(duration, "duration") ||
-			   !actionInstanceExecutionHelper.evaluateListElement(unit, units, "unit"))
+			int duration = evaluateInteger(ok, "duration");
+			Unit unit = evaluateListElement<Unit>(ok, units, "unit");
+
+			if(!ok)
 				return;
 
 			if(duration < 0)

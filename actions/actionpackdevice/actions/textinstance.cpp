@@ -19,7 +19,6 @@
 */
 
 #include "textinstance.h"
-#include "actioninstanceexecutionhelper.h"
 
 #include <QTimer>
 
@@ -27,11 +26,11 @@ namespace Actions
 {
 	void TextInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+		bool ok = true;
 	
-		QString text;
+		QString text = evaluateString(ok, "text");
 	
-		if(!actionInstanceExecutionHelper.evaluateString(text, "text"))
+		if(!ok)
 			return;
 		
 		if(!mKeyboardDevice.writeText(text))

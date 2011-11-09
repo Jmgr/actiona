@@ -20,7 +20,6 @@
 
 #include "writeregistryinstance.h"
 #include "readregistryinstance.h"
-#include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_WIN
 #define WIN32_LEAN_AND_MEAN
@@ -31,27 +30,25 @@ namespace Actions
 {
 	void WriteRegistryInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 	#ifdef Q_WS_WIN
-		ActionTools::Registry::Key key;
-		QString subKey;
-		QString value;
-		QVariant data;
+		bool ok = true;
 
-		if(!actionInstanceExecutionHelper.evaluateListElement(key, ReadRegistryInstance::keys, "key") ||
-		   !actionInstanceExecutionHelper.evaluateString(subKey, "subKey") ||
-		   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
-		   !actionInstanceExecutionHelper.evaluateVariant(data, "data"))
+		ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, ReadRegistryInstance::keys, "key");
+		QString subKey = evaluateString(ok, "subKey");
+		QString value = evaluateString(ok, "value");
+		QVariant data = evaluateVariant(ok, "data");
+
+		if(!ok)
 			return;
 
 		switch(ActionTools::Registry::write(data, key, subKey, value))
 		{
 		case ActionTools::Registry::WriteCannotFindSubKey:
-			actionInstanceExecutionHelper.setCurrentParameter("subKey");
+			setCurrentParameter("subKey");
 			emit executionException(CannotFindSubKeyException, tr("Cannot find subKey \"%1\"").arg(subKey));
 			return;
 		case ActionTools::Registry::WriteCannotWriteValue:
-			actionInstanceExecutionHelper.setCurrentParameter("value");
+			setCurrentParameter("value");
 			emit executionException(CannotWriteValueException, tr("Cannot write value \"%1\"").arg(value));
 			return;
 		default:

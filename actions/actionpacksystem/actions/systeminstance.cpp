@@ -36,12 +36,12 @@ namespace Actions
 
 	void SystemInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		Operation operation;
-		bool force;
+		bool ok = true;
 
-		if(!actionInstanceExecutionHelper.evaluateListElement(operation, operations, "operation") ||
-		   !actionInstanceExecutionHelper.evaluateBoolean(force, "force"))
+		Operation operation = evaluateListElement<Operation>(ok, operations, "operation");
+		bool force = evaluateBoolean(ok, "force");
+
+		if(!ok)
 			return;
 
 		SystemSession systemSession;

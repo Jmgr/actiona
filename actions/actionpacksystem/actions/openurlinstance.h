@@ -21,7 +21,6 @@
 #ifndef OPENURLINSTANCE_H
 #define OPENURLINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 
@@ -47,10 +46,11 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString urlString;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(urlString, "url"))
+			QString urlString = evaluateString(ok, "url");
+
+			if(!ok)
 				return;
 
 			QUrl url(urlString, QUrl::TolerantMode);

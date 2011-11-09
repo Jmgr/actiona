@@ -19,7 +19,6 @@
 */
 
 #include "writetextfileinstance.h"
-#include "actioninstanceexecutionhelper.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -32,20 +31,19 @@ namespace Actions
 
 	void WriteTextFileInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-		QString filepath;
-		QString text;
-		Mode mode;
+		bool ok = true;
 
-		if(!actionInstanceExecutionHelper.evaluateString(filepath, "file") ||
-		   !actionInstanceExecutionHelper.evaluateString(text, "text") ||
-		   !actionInstanceExecutionHelper.evaluateListElement(mode, modes, "mode"))
+		QString filepath = evaluateString(ok, "file");
+		QString text = evaluateString(ok, "text");
+		Mode mode = evaluateListElement<Mode>(ok, modes, "mode");
+
+		if(!ok)
 			return;
 
 		QFile file(filepath);
 		if(!file.open(QIODevice::WriteOnly | QIODevice::Text | (mode == Truncate ? QIODevice::Truncate : QIODevice::Append)))
 		{
-			actionInstanceExecutionHelper.setCurrentParameter("file");
+			setCurrentParameter("file");
 			emit executionException(CannotWriteFileException, tr("Cannot open file"));
 			return;
 		}

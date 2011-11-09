@@ -21,7 +21,6 @@
 #ifndef CURSORPATHINSTANCE_H
 #define CURSORPATHINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "../mousedevice.h"
 
@@ -44,11 +43,11 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			bool ok = true;
 
-			mPoints.clear();
+			mPoints = evaluatePolygon(ok, "path");
 
-			if(!actionInstanceExecutionHelper.evaluatePolygon(mPoints, "path"))
+			if(!ok)
 				return;
 
 			mCurrentPoint = 0;

@@ -20,7 +20,6 @@
 
 #include "keyinstance.h"
 #include "keyinput.h"
-#include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_WIN
 #define WIN32_LEAN_AND_MEAN
@@ -46,16 +45,14 @@ namespace Actions
 
 	void KeyInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+		bool ok = true;
 	
-		Action action;
-		Type type;
-		int pause;
+		mKey = evaluateString(ok, "key", "key");
+		Action action = evaluateListElement<Action>(ok, actions, "action");
+		Type type = evaluateListElement<Type>(ok, types, "type");
+		int pause = evaluateInteger(ok, "pause");
 	
-		if(!actionInstanceExecutionHelper.evaluateString(mKey, "key", "key") ||
-		   !actionInstanceExecutionHelper.evaluateListElement(action, actions, "action") ||
-		   !actionInstanceExecutionHelper.evaluateListElement(type, types, "type") ||
-		   !actionInstanceExecutionHelper.evaluateInteger(pause, "pause"))
+		if(!ok)
 			return;
 
 		mKeyboardDevice.setType(static_cast<KeyboardDevice::Type>(type));

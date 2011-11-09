@@ -61,12 +61,12 @@
 <context>
     <name>Actions::CopyFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/copyfileinstance.h" line="63"/>
+        <location filename="../actions/actionpackdata/actions/copyfileinstance.h" line="62"/>
         <source>Unable to read the source file &quot;%1&quot;</source>
         <translation>Impossible de lire de fichier source &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/copyfileinstance.h" line="71"/>
+        <location filename="../actions/actionpackdata/actions/copyfileinstance.h" line="70"/>
         <source>Unable to write to &quot;%1&quot;</source>
         <translation>Impossible d&apos;écrire vers &quot;%1&quot;</translation>
     </message>
@@ -196,12 +196,12 @@
 <context>
     <name>Actions::ReadIniFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.h" line="63"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.h" line="60"/>
         <source>Unable to read the file</source>
         <translation>Impossible de lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.h" line="70"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.h" line="67"/>
         <source>Unable to find the section named &quot;%1&quot;</source>
         <translation>Impossible de trouver la section nommée &quot;%1&quot;</translation>
     </message>
@@ -267,17 +267,17 @@
 <context>
     <name>Actions::ReadRegistryInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="56"/>
+        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="53"/>
         <source>Cannot find subKey &quot;%1&quot;</source>
         <translation>Impossible de trouver la sous-clef &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="60"/>
+        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="57"/>
         <source>Cannot find value &quot;%1&quot;</source>
         <translation>Impossible de trouver la valeur &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="64"/>
+        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="61"/>
         <source>Invalid value type</source>
         <translation>Type de valeur incorrect</translation>
     </message>
@@ -348,22 +348,22 @@
 <context>
     <name>Actions::ReadTextFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="54"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="50"/>
         <source>Invalid first line value : %1</source>
         <translation>Valeur de première ligne incorrecte : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="61"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="57"/>
         <source>Invalid last line value : %1</source>
         <translation>Valeur de dernière ligne incorrecte : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="68"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="64"/>
         <source>The first line has to be smaller than the last line</source>
         <translation>La première ligne doit être plus petite que la dernière</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="77"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="73"/>
         <source>Cannot open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
@@ -464,7 +464,7 @@
         <translation>Téléchargement...</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="134"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="129"/>
         <source>Download error: %1</source>
         <translation>Erreur de téléchargement : %1</translation>
     </message>
@@ -510,7 +510,7 @@
 <context>
     <name>Actions::WriteBinaryFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writebinaryfileinstance.h" line="64"/>
+        <location filename="../actions/actionpackdata/actions/writebinaryfileinstance.h" line="63"/>
         <source>Unable to write to the file &quot;%1&quot;</source>
         <translation>Impossible d&apos;écrire vers le fichier &quot;%1&quot;</translation>
     </message>
@@ -589,7 +589,7 @@
 <context>
     <name>Actions::WriteIniFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="58"/>
         <source>Unable to write to the file</source>
         <translation>Impossible d&apos;écrire vers le fichier</translation>
     </message>
@@ -650,12 +650,12 @@
 <context>
     <name>Actions::WriteRegistryInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistryinstance.cpp" line="51"/>
+        <location filename="../actions/actionpackdata/actions/writeregistryinstance.cpp" line="48"/>
         <source>Cannot find subKey &quot;%1&quot;</source>
         <translation>Impossible de trouver la sous-clef &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistryinstance.cpp" line="55"/>
+        <location filename="../actions/actionpackdata/actions/writeregistryinstance.cpp" line="52"/>
         <source>Cannot write value &quot;%1&quot;</source>
         <translation>Impossible d&apos;écrire la valeur &quot;%1&quot;</translation>
     </message>
@@ -701,7 +701,7 @@
 <context>
     <name>Actions::WriteTextFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="49"/>
+        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="47"/>
         <source>Cannot open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
@@ -1114,12 +1114,12 @@
 <context>
     <name>ReadTextFileInstance::modes</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="30"/>
         <source>Read the entire file</source>
         <translation>Lire le fichier entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="30"/>
         <source>Read only a selection</source>
         <translation>Lire une sélection</translation>
     </message>
@@ -1127,12 +1127,12 @@
 <context>
     <name>WebDownloadInstance::destinations</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="33"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="32"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="33"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
@@ -1140,12 +1140,12 @@
 <context>
     <name>WriteTextFileInstance::modes</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="30"/>
         <source>Overwrite any content</source>
         <translation>Écraser tout contenu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="30"/>
         <source>Append to the end</source>
         <translation>Ajouter à la fin</translation>
     </message>

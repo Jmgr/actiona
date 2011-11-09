@@ -21,7 +21,6 @@
 #ifndef WRITEBINARYFILEINSTANCE_H
 #define WRITEBINARYFILEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "datacopyactioninstance.h"
 
 #include <QFile>
@@ -46,12 +45,12 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString filename;
-			QVariant data;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(filename, "file") ||
-			   !actionInstanceExecutionHelper.evaluateVariant(data, "data"))
+			QString filename = evaluateString(ok, "file");
+			QVariant data = evaluateVariant(ok, "data");
+
+			if(!ok)
 				return;
 
 			mData = data.toByteArray();
@@ -60,7 +59,7 @@ namespace Actions
 
 			if(!DataCopyActionInstance::startCopy(&mDataBuffer, &mFile))
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("file");
+				setCurrentParameter("file");
 				emit executionException(UnableToWriteFileException, tr("Unable to write to the file \"%1\"").arg(filename));
 				return;
 			}

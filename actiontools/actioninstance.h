@@ -24,10 +24,13 @@
 #include "actiontools_global.h"
 #include "parameter.h"
 #include "actionexception.h"
+#include "ifactionvalue.h"
+#include "stringlistpair.h"
 
 #include <QObject>
 #include <QSharedData>
 #include <QColor>
+#include <QScriptValue>
 
 class QScriptEngine;
 class QDataStream;
@@ -142,10 +145,6 @@ namespace ActionTools
 
 		void copyActionDataFrom(const ActionInstance &other);
 
-	protected:
-		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }
-		Script *script() const												{ return d->script; }
-
 	signals:
 		void showProgressDialog(const QString &title, int maximum);
 		void updateProgressDialog(const QString &caption);
@@ -158,7 +157,107 @@ namespace ActionTools
 		void consolePrintWarning(const QString &text);
 		void consolePrintError(const QString &text);
 
+	protected:
+		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }
+
+		/** Parameter management **/
+		QVariant evaluateVariant(bool &ok,
+							const QString &parameterName,
+							const QString &subParameterName = "value");
+		QString evaluateString(bool &ok,
+							const QString &parameterName,
+							const QString &subParameterName = "value");
+		QString evaluateVariable(bool &ok,
+							const QString &parameterName,
+							const QString &subParameterName = "value");
+		int evaluateInteger(bool &ok,
+							 const QString &parameterName,
+							 const QString &subParameterName = "value");
+		bool evaluateBoolean(bool &ok,
+							 const QString &parameterName,
+							 const QString &subParameterName = "value");
+		double evaluateDouble(bool &ok,
+						   const QString &parameterName,
+						   const QString &subParameterName = "value");
+		IfActionValue evaluateIfAction(bool &ok,
+						   const QString &parameterName);
+		QString evaluateSubParameter(bool &ok,
+								  const SubParameter &subParameter);
+
+		template<typename T>
+		T evaluateListElement(bool &ok,
+								 const StringListPair &listElements,
+								 const QString &parameterName,
+								 const QString &subParameterName = "value")
+		{
+			if(!ok)
+				return T();
+
+			const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+			QString result;
+
+			if(subParameter.isCode())
+				result = evaluateCode(ok, subParameter).toString();
+			else
+				result = evaluateText(ok, subParameter);
+
+			if(!ok)
+				return T();
+
+			//Search in the non-translated items
+			for(int i=0;i<listElements.first.size();++i)
+			{
+				if(listElements.first.at(i) == result)
+					return static_cast<T>(i);
+			}
+
+			//Then search in the translated items
+			for(int i=0;i<listElements.second.size();++i)
+			{
+				if(listElements.second.at(i) == result)
+					return static_cast<T>(i);
+			}
+
+			T back = static_cast<T>(result.toInt(&ok));
+
+			if(!ok || back < 0 || back >= listElements.first.count())
+			{
+				ok = false;
+
+				emit executionException(ActionException::BadParameterException, tr("\"%1\" is an invalid value.").arg(result));
+
+				return T();
+			}
+
+			return back;
+		}
+
+		QPoint evaluatePoint(bool &ok,
+						   const QString &parameterName,
+						   const QString &subParameterName = "value");
+		QPolygon evaluatePolygon(bool &ok,
+						   const QString &parameterName,
+						   const QString &subParameterName = "value");
+		QColor evaluateColor(bool &ok,
+						   const QString &parameterName,
+						   const QString &subParameterName = "value");
+
+		QString nextLine() const;
+		void setNextLine(const QString &nextLine);
+
+		void setVariable(const QString &name, const QVariant &value);
+		QVariant variable(const QString &name);
+
+		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
+
 	private:
+		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);
+		QScriptValue evaluateCode(bool &ok, const SubParameter &toEvaluate);
+		QString evaluateText(bool &ok, const SubParameter &toEvaluate);
+
+		static const QRegExp mNameRegExp;
+		static const QRegExp mVariableRegExp;
+
 		QSharedDataPointer<ActionInstanceData> d;
 	};
 

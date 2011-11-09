@@ -26,7 +26,6 @@ SOURCES += actionfactory.cpp \
     parameter.cpp \
     subparameter.cpp \
     actioninstancebuffer.cpp \
-    actioninstanceexecutionhelper.cpp \
     scriptcompleter.cpp \
     keywords.cpp \
     messagehandler.cpp \
@@ -57,7 +56,6 @@ HEADERS += actiontools_global.h \
     windowhandle.h \
     keyinput.h \
     actioninstancebuffer.h \
-    actioninstanceexecutionhelper.h \
     settings.h \
     stringlistpair.h \
     scriptcompleter.h \
@@ -98,3 +96,5 @@ unix {
 
 	INSTALLS += target locales
 }
+
+

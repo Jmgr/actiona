@@ -22,7 +22,6 @@
 #define WHEELINSTANCE_H
 
 #include "actioninstance.h"
-#include "actioninstanceexecutionhelper.h"
 #include "../mousedevice.h"
 
 namespace Actions
@@ -42,11 +41,11 @@ namespace Actions
 	
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			bool ok = true;
 		
-			int intensity;
+			int intensity = evaluateInteger(ok, "intensity");
 		
-			if(!actionInstanceExecutionHelper.evaluateInteger(intensity, "intensity"))
+			if(!ok)
 				return;
 		
 			if(!mMouseDevice.wheel(intensity))

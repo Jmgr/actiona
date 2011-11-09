@@ -21,7 +21,6 @@
 #ifndef KILLPROCESSINSTANCE_H
 #define KILLPROCESSINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 #include "crossplatform.h"
@@ -48,10 +47,11 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			int processId;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateInteger(processId, "processId"))
+			int processId = evaluateInteger(ok, "processId");
+
+			if(!ok)
 				return;
 
 			if(processId != 0)

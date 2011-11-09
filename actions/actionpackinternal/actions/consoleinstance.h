@@ -21,7 +21,6 @@
 #ifndef CONSOLEINSTANCE_H
 #define CONSOLEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 #include <QDebug>
@@ -48,12 +47,12 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString text;
-			Output output;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(text, "text") ||
-			   !actionInstanceExecutionHelper.evaluateListElement(output, outputs, "output"))
+			QString text = evaluateString(ok, "text");
+			Output output = evaluateListElement<Output>(ok, outputs, "output");
+
+			if(!ok)
 				return;
 
 			switch(output)

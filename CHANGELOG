@@ -1,3 +1,19 @@
+0.1.3 (06/11/11)
+- ActExec: added proxy parameters
+- ActExec: using system proxy by default
+- fixed a bug with action parameter evaluation during execution
+- Code: added Window.foreground()
+
+0.1.2 (08/10/11)
+- fixed a bug concerning the last opened script
+- fixed a bug when jumping to another line of the script
+- added a WebDownload action
+- added a Web code object
+- fixed a bug in the cursor path actions
+- added a field to the MessageBox and DataInput actions to specify the title icon to use
+- Sfx: added a "requires Actionaz" option
+- Sfx: added a runner executable to warn about 64 bit compatibility issues
+
 0.1.1 (24/09/11)
 - corrected a bug involving the "goto line" action when the tested pixel was not equal to the wanted value
 - added a new contributor to the about dialog

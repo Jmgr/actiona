@@ -21,7 +21,6 @@
 #ifndef SYSTEMINSTANCE_H
 #define SYSTEMINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 #include "../systemsession.h"

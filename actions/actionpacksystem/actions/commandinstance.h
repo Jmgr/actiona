@@ -21,7 +21,6 @@
 #ifndef COMMANDINSTANCE_H
 #define COMMANDINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "script.h"
 
@@ -47,20 +46,18 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString command;
-			QString parameters;
-			QString workingDirectory;
-			QString processId;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(command, "command") ||
-				!actionInstanceExecutionHelper.evaluateString(parameters, "parameters") ||
-				!actionInstanceExecutionHelper.evaluateString(workingDirectory, "workingDirectory") ||
-				!actionInstanceExecutionHelper.evaluateVariable(mExitCodeVariable, "exitCode") ||
-				!actionInstanceExecutionHelper.evaluateVariable(processId, "processId") ||
-				!actionInstanceExecutionHelper.evaluateVariable(mOutputVariable, "output") ||
-				!actionInstanceExecutionHelper.evaluateVariable(mErrorOutputVariable, "errorOutput") ||
-				!actionInstanceExecutionHelper.evaluateVariable(mExitStatusVariable, "exitStatus"))
+			QString command = evaluateString(ok, "command");
+			QString parameters = evaluateString(ok, "parameters");
+			QString workingDirectory = evaluateString(ok, "workingDirectory");
+			mExitCodeVariable = evaluateVariable(ok, "exitCode");
+			QString processId = evaluateVariable(ok, "processId");
+			mOutputVariable = evaluateVariable(ok, "output");
+			mErrorOutputVariable = evaluateVariable(ok, "errorOutput");
+			mExitStatusVariable = evaluateVariable(ok, "exitStatus");
+
+			if(!ok)
 				return;
 
 			mProcess->setWorkingDirectory(workingDirectory);
@@ -71,11 +68,11 @@ namespace Actions
 	#ifdef Q_WS_WIN
 			_PROCESS_INFORMATION *processInformation = mProcess->pid();
 			if(processInformation)
-				actionInstanceExecutionHelper.setVariable(processId, QString::number(processInformation->dwProcessId));
+				setVariable(processId, QString::number(processInformation->dwProcessId));
 			else
-				actionInstanceExecutionHelper.setVariable(processId, "0");
+				setVariable(processId, "0");
 	#else
-			actionInstanceExecutionHelper.setVariable(processId, QString::number(mProcess->pid()));
+			setVariable(processId, QString::number(mProcess->pid()));
 	#endif
 		}
 
@@ -87,22 +84,21 @@ namespace Actions
 	private slots:
 		void processFinished(int exitCode, QProcess::ExitStatus exitStatus)
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			actionInstanceExecutionHelper.setVariable(mExitCodeVariable, QString::number(exitCode));
+			setVariable(mExitCodeVariable, QString::number(exitCode));
 
 			QString output = QString::fromUtf8(mProcess->readAllStandardOutput());
-			actionInstanceExecutionHelper.setVariable(mOutputVariable, output.trimmed());
+			setVariable(mOutputVariable, output.trimmed());
 
 			QString errorOutput = QString::fromUtf8(mProcess->readAllStandardError());
-			actionInstanceExecutionHelper.setVariable(mErrorOutputVariable, errorOutput.trimmed());
+			setVariable(mErrorOutputVariable, errorOutput.trimmed());
 
 			switch(exitStatus)
 			{
 			case QProcess::NormalExit:
-				actionInstanceExecutionHelper.setVariable(mExitStatusVariable, "normal");
+				setVariable(mExitStatusVariable, "normal");
 				break;
 			case QProcess::CrashExit:
-				actionInstanceExecutionHelper.setVariable(mExitStatusVariable, "crash");
+				setVariable(mExitStatusVariable, "crash");
 				break;
 			}
 

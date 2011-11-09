@@ -21,7 +21,6 @@
 #ifndef TIMECONDITIONINSTANCE_H
 #define TIMECONDITIONINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "ifactionvalue.h"
 
@@ -40,22 +39,20 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString date;
-			ActionTools::IfActionValue ifBefore;
-			ActionTools::IfActionValue ifNow;
-			ActionTools::IfActionValue ifAfter;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(date, "date") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(ifBefore, "ifBefore") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(ifNow, "ifBefore") ||
-			   !actionInstanceExecutionHelper.evaluateIfAction(ifAfter, "ifNow"))
+			QString date = evaluateString(ok, "date");
+			ActionTools::IfActionValue ifBefore = evaluateIfAction(ok, "ifBefore");
+			ActionTools::IfActionValue ifNow = evaluateIfAction(ok, "ifBefore");
+			ActionTools::IfActionValue ifAfter = evaluateIfAction(ok, "ifNow");
+
+			if(!ok)
 				return;
 
 			mTestedDateTime = QDateTime::fromString(date, "dd/MM/yyyy hh:mm:ss");
 			if(!mTestedDateTime.isValid())
 			{
-				actionInstanceExecutionHelper.setCurrentParameter("date");
+				setCurrentParameter("date");
 				emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid date"));
 				return;
 			}
@@ -65,8 +62,9 @@ namespace Actions
 			if(mTestedDateTime < QDateTime::currentDateTime())//Before
 			{
 				action = ifBefore.action();
+				line = evaluateSubParameter(ok, ifBefore.actionParameter());
 
-				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifBefore.actionParameter()))
+				if(!ok)
 					return;
 			}
 			else if(mTestedDateTime > QDateTime::currentDateTime())//After
@@ -81,20 +79,22 @@ namespace Actions
 				}
 
 				action = ifAfter.action();
+				line = evaluateSubParameter(ok, ifAfter.actionParameter());
 
-				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifAfter.actionParameter()))
+				if(!ok)
 					return;
 			}
 			else//Now
 			{
 				action = ifNow.action();
+				line = evaluateSubParameter(ok, ifNow.actionParameter());
 
-				if(!actionInstanceExecutionHelper.evaluateSubParameter(line, ifNow.actionParameter()))
+				if(!ok)
 					return;
 			}
 
 			if(action == ActionTools::IfActionValue::GOTO)
-				actionInstanceExecutionHelper.setNextLine(line);
+				setNextLine(line);
 
 			emit executionEnded();
 		}

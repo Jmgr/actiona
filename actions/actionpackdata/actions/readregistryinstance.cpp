@@ -19,7 +19,6 @@
 */
 
 #include "readregistryinstance.h"
-#include "actioninstanceexecutionhelper.h"
 
 #ifdef Q_WS_WIN
 #define WIN32_LEAN_AND_MEAN
@@ -35,36 +34,34 @@ namespace Actions
 
 	void ReadRegistryInstance::startExecution()
 	{
-		ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
 	#ifdef Q_WS_WIN
-		ActionTools::Registry::Key key;
-		QString subKey;
-		QString value;
-		QString variable;
+		bool ok = true;
 
-		if(!actionInstanceExecutionHelper.evaluateListElement(key, keys, "key") ||
-		   !actionInstanceExecutionHelper.evaluateString(subKey, "subKey") ||
-		   !actionInstanceExecutionHelper.evaluateString(value, "value") ||
-		   !actionInstanceExecutionHelper.evaluateVariable(variable, "variable"))
+		ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, keys, "key");
+		QString subKey = evaluateString(ok, "subKey");
+		QString value = evaluateString(ok, "value");
+		QString variable = evaluateVariable(ok, "variable");
+
+		if(!ok)
 			return;
 
 		QVariant resultValue;
 		switch(ActionTools::Registry::read(resultValue, key, subKey, value))
 		{
 		case ActionTools::Registry::ReadCannotFindSubKey:
-			actionInstanceExecutionHelper.setCurrentParameter("subKey");
+			setCurrentParameter("subKey");
 			emit executionException(CannotFindSubKeyException, tr("Cannot find subKey \"%1\"").arg(subKey));
 			return;
 		case ActionTools::Registry::ReadCannotFindValue:
-			actionInstanceExecutionHelper.setCurrentParameter("value");
+			setCurrentParameter("value");
 			emit executionException(CannotFindValueException, tr("Cannot find value \"%1\"").arg(value));
 			return;
 		case ActionTools::Registry::ReadInvalidValueType:
-			actionInstanceExecutionHelper.setCurrentParameter("value");
+			setCurrentParameter("value");
 			emit executionException(CannotFindValueException, tr("Invalid value type"));
 			return;
 		default:
-			actionInstanceExecutionHelper.setVariable(variable, resultValue);
+			setVariable(variable, resultValue);
 			break;
 		}
 	#endif

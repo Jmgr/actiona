@@ -21,7 +21,6 @@
 #ifndef MOVECURSORINSTANCE_H
 #define MOVECURSORINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 #include "../mousedevice.h"
 
@@ -37,11 +36,11 @@ namespace Actions
 	
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
+			bool ok = true;
 		
-			QPoint position;
+			QPoint position = evaluatePoint(ok, "position");
 		
-			if(!actionInstanceExecutionHelper.evaluatePoint(position, "position"))
+			if(!ok)
 				return;
 			
 			mMouseDevice.setCursorPosition(position);

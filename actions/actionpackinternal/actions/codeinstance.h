@@ -21,7 +21,6 @@
 #ifndef CODEINSTANCE_H
 #define CODEINSTANCE_H
 
-#include "actioninstanceexecutionhelper.h"
 #include "actioninstance.h"
 
 namespace Actions
@@ -36,10 +35,11 @@ namespace Actions
 
 		void startExecution()
 		{
-			ActionTools::ActionInstanceExecutionHelper actionInstanceExecutionHelper(this, script(), scriptEngine());
-			QString code;
+			bool ok = true;
 
-			if(!actionInstanceExecutionHelper.evaluateString(code, "code"))
+			evaluateString(ok, "code");
+
+			if(!ok)
 				return;
 
 			emit executionEnded();
