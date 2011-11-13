@@ -73,6 +73,7 @@ int main(int argc, char **argv)
 
 	const QStringList &arguments = QCoreApplication::arguments();
 
+	//TODO: Fix the bug where the command help text is not translated
 	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
