@@ -94,6 +94,7 @@ int main(int argc, char **argv)
 
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
+	//TODO: Fix the bug where the command help text is not translated
 	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
@@ -230,6 +231,7 @@ int main(int argc, char **argv)
 	if(!options.count("nocodeqt"))
 		app.addLibraryPath(QApplication::applicationDirPath() + "/code");
 
+	//TODO: Move this in the constructor of these classes
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");
 	qRegisterMetaType<ActionTools::Parameter>("Parameter");

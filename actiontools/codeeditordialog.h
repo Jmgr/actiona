@@ -34,8 +34,6 @@ class QAbstractItemModel;
 
 namespace ActionTools
 {
-	class Recorder;
-
 	class ACTIONTOOLSSHARED_EXPORT CodeEditorDialog : public QDialog
 	{
 		Q_OBJECT
@@ -65,7 +63,6 @@ namespace ActionTools
 		void moveCursorToLine(int line);
 
 		Ui::CodeEditorDialog *ui;
-		Recorder *mRecorder;
 
 		Q_DISABLE_COPY(CodeEditorDialog)
 	};
