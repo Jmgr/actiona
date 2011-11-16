@@ -52,7 +52,7 @@ namespace Actions
 			operation->setDefaultValue(SystemInstance::operations.second.at(SystemInstance::Logout));
 			addElement(operation);
 
-			ActionTools::GroupDefinition *operationMode = new ActionTools::GroupDefinition(ActionTools::Name("operationmode", tr("Operation mode")), this);
+			ActionTools::GroupDefinition *operationMode = new ActionTools::GroupDefinition(this);
 			operationMode->setMasterList(operation);
 			operationMode->setMasterValues(QStringList()
 										   << SystemInstance::operations.first.at(SystemInstance::Shutdown)

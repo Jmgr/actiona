@@ -57,6 +57,8 @@ namespace ActionTools
 		virtual void setOperatingSystems(Flag operatingSystems)						{ mOperatingSystems = operatingSystems; }
 		
 		virtual void update(Script *script)											{ Q_UNUSED(script) }
+
+		QWidget *parentWidget()														{ return mParentWidget; }
 		
 	protected:
 		void addEditor(QWidget *editor);
@@ -65,6 +67,7 @@ namespace ActionTools
 		QList<QWidget *> mEditors;
 		QVariant mDefaultValue;
 		Flag mOperatingSystems;
+		QWidget *mParentWidget;
 
 		Q_DISABLE_COPY(ParameterDefinition)
 	};

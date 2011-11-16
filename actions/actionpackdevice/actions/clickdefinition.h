@@ -65,7 +65,7 @@ namespace Actions
 			position->setTooltip(tr("The screen position where to simulate a mouse click"));
 			addElement(position);
 	
-			ActionTools::GroupDefinition *clickGroup = new ActionTools::GroupDefinition(ActionTools::Name("click", tr("Click action")), this);
+			ActionTools::GroupDefinition *clickGroup = new ActionTools::GroupDefinition(this);
 			clickGroup->setMasterList(action);
 			clickGroup->setMasterValues(QStringList() << ClickInstance::actions.first.at(ClickInstance::ClickAction));
 	

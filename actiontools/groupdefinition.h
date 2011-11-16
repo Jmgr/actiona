@@ -28,8 +28,6 @@
 #include <QList>
 #include <QStringList>
 
-class QGroupBox;
-
 namespace ActionTools
 {
 	class ListParameterDefinition;
@@ -40,12 +38,10 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		GroupDefinition(const Name &name, QObject *parent = 0);
+		GroupDefinition(QObject *parent = 0);
 
 		void addMember(ParameterDefinition *parameter, int tab = 0)		{ parameter->setTab(tab); mMembers.append(parameter); }
 		QList<ParameterDefinition *> members() const					{ return mMembers; }
-
-		void setGroupBox(QGroupBox *groupBox)							{ mGroupBox = groupBox; }
 
 		void setMasterList(ListParameterDefinition *masterList);
 		void setMasterValues(const QStringList &masterValues)			{ mMasterValues = masterValues; }
@@ -60,10 +56,11 @@ namespace ActionTools
 		void masterCodeChanged(bool code);
 
 	private:
+		void enableMembers(bool enable);
+
 		QList<ParameterDefinition *> mMembers;
 		ListParameterDefinition *mMasterList;
 		QStringList mMasterValues;
-		QGroupBox *mGroupBox;
 		CodeComboBox *mMasterCodeComboBox;
 
 		Q_DISABLE_COPY(GroupDefinition)

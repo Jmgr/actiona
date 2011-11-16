@@ -82,7 +82,7 @@ namespace Actions
 			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 			addElement(windowIcon, 1);
 
-			ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition(ActionTools::Name("ifyesno", tr("Yes-No action")), this);
+			ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition(this);
 			yesNoGroup->setMasterList(type);
 			yesNoGroup->setMasterValues(QStringList() << MessageBoxInstance::buttons.first.at(MessageBoxInstance::YesNoButtons));
 

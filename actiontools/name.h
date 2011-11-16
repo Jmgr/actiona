@@ -30,6 +30,9 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT Name
 	{
 	public:
+		Name()
+		{
+		}
 		Name(const QString &original, const QString &translated)
 			: mOriginal(original),
 			  mTranslated(translated)

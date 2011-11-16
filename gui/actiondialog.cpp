@@ -247,27 +247,12 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	foreach(ActionTools::ElementDefinition *element, elements)
 	{
 		if(ActionTools::ParameterDefinition *currentParameter = qobject_cast<ActionTools::ParameterDefinition *>(element))
-		{
-#ifdef Q_WS_X11
-			if(!(currentParameter->operatingSystems() & ActionTools::WorksOnGnuLinux))
-				continue;
-#endif
-#ifdef Q_WS_WIN
-			if(!(currentParameter->operatingSystems() & ActionTools::WorksOnWindows))
-				continue;
-#endif
-#ifdef Q_WS_MAC
-			if(!(currentParameter->operatingSystems() & ActionTools::WorksOnMac))
-				continue;
-#endif
-
-			int parameterType = (currentParameter->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);
-
-			QFormLayout *parameterLayout = mParameterLayouts[parameterType][currentParameter->tab()];
-			parameterLayout->addRow(currentParameter->name().translated() + tr(":"), addParameter(currentParameter));
-		}
+			addParameter(currentParameter, currentParameter->tab());
 		else if(ActionTools::GroupDefinition *currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
-			addGroup(currentGroup);
+		{
+			foreach(ActionTools::ParameterDefinition *parameter, currentGroup->members())
+				addParameter(parameter, currentGroup->tab());
+		}
 	}
 
 	foreach(ActionTools::ElementDefinition *element, elements)
@@ -461,35 +446,28 @@ void ActionDialog::currentExceptionActionChanged(int index)
 	widget->setEnabled(exceptionAction == ActionTools::ActionException::GotoLineExceptionAction);
 }
 
-void ActionDialog::addGroup(ActionTools::GroupDefinition *group)
+void ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter, int tab)
 {
-	QGroupBox *groupBox = new QGroupBox(group->name().translated(), this);
-	QFormLayout *groupLayout = new QFormLayout(groupBox);
+#ifdef Q_WS_X11
+	if(!(parameter->operatingSystems() & ActionTools::WorksOnGnuLinux))
+		return;
+#endif
+#ifdef Q_WS_WIN
+	if(!(parameter->operatingSystems() & ActionTools::WorksOnWindows))
+		return;
+#endif
+#ifdef Q_WS_MAC
+	if(!(parameter->operatingSystems() & ActionTools::WorksOnMac))
+		return;
+#endif
 
-	groupLayout->setMargin(5);
-	groupLayout->setSpacing(5);
-
-	groupBox->setLayout(groupLayout);
-
-	group->setGroupBox(groupBox);
-
-	foreach(ActionTools::ParameterDefinition *parameter, group->members())
-	{
-		parameter->setCategory(group->category());
-		groupLayout->addRow(QString(parameter->name().translated() + tr(":")), addParameter(parameter));
-	}
-
-	int parameterType = (group->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);
-	QFormLayout *parameterLayout = mParameterLayouts[parameterType][group->tab()];
-	parameterLayout->addRow(groupBox);
-}
-
-QLayout *ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter)
-{
 	QBoxLayout *layout = new QBoxLayout(parameter->editorsOrientation() == Qt::Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom );
 	layout->setMargin(0);
 
-	parameter->buildEditors(mScript, this);
+	QWidget *parentWidget = new QWidget(this);
+	parentWidget->setLayout(layout);
+
+	parameter->buildEditors(mScript, parentWidget);
 	foreach(QWidget *editor, parameter->editors())
 	{
 		if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(editor))
@@ -500,6 +478,9 @@ QLayout *ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter)
 
 	mParameters.append(parameter);
 
-	return layout;
+	int parameterType = (parameter->category() == ActionTools::ParameterDefinition::INPUT ? InputParameters : OutputParameters);
+
+	QFormLayout *parameterLayout = mParameterLayouts[parameterType][tab];
+	parameterLayout->addRow(parameter->name().translated() + tr(":"), parentWidget);
 }
 

@@ -28,10 +28,9 @@
 
 namespace ActionTools
 {
-	GroupDefinition::GroupDefinition(const Name &name, QObject *parent)
-		: ElementDefinition(name, parent),
+	GroupDefinition::GroupDefinition(QObject *parent)
+		: ElementDefinition(Name(), parent),
 		mMasterList(0),
-		mGroupBox(0),
 		mMasterCodeComboBox(0)
 	{
 	}
@@ -67,23 +66,21 @@ namespace ActionTools
 
 	void GroupDefinition::masterTextChanged(const QString &text)
 	{
-		if(!mGroupBox)
-			return;
-
 		if(!mMasterCodeComboBox->isCode())
-			mGroupBox->setEnabled(mMasterValues.contains(mMasterList->originalNameFromTranslatedName(text)));
+			enableMembers(mMasterValues.contains(mMasterList->originalNameFromTranslatedName(text)));
 	}
 
 	void GroupDefinition::masterCodeChanged(bool code)
 	{
-		if(!mGroupBox)
-			return;
-
 		if(code)
-			mGroupBox->setEnabled(true);
+			enableMembers(true);
 		else
-			mGroupBox->setEnabled(mMasterValues.contains(mMasterList->originalNameFromTranslatedName(mMasterCodeComboBox->currentText())));
+			enableMembers(mMasterValues.contains(mMasterList->originalNameFromTranslatedName(mMasterCodeComboBox->currentText())));
 	}
 
-
+	void GroupDefinition::enableMembers(bool enable)
+	{
+		foreach(ParameterDefinition *parameterDefinition, members())
+			parameterDefinition->parentWidget()->setEnabled(enable);
+	}
 }
