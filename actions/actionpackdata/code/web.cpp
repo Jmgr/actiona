@@ -53,7 +53,7 @@ namespace Code
 				web->mFileValue = it.value();
 		}
 
-		return web->mThisObject = CodeClass::constructor(web, context, engine);
+		return CodeClass::constructor(web, context, engine);
 	}
 
 	Web::Web()
@@ -83,7 +83,7 @@ namespace Code
 			if(!mFile->isOpen() && !mFile->open(QIODevice::WriteOnly))
 			{
 				throwError("OpenFileError", tr("Unable to open the destination file"));
-				return context()->thisObject();
+				return thisObject();
 			}
 		}
 
@@ -171,7 +171,7 @@ namespace Code
 
 		mIsDownloading = true;
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	bool Web::isDownloading() const
@@ -181,7 +181,7 @@ namespace Code
 
 	QScriptValue Web::toImage() const
 	{
-		return Image::constructor(QImage::fromData(mData), context(), engine());
+		return Image::constructor(QImage::fromData(mData), engine());
 	}
 
 	QScriptValue Web::toText(Encoding encoding) const
@@ -191,17 +191,17 @@ namespace Code
 
 	QScriptValue Web::toRawData() const
 	{
-		return RawData::constructor(mData, context(), engine());
+		return RawData::constructor(mData, engine());
 	}
 
 	QScriptValue Web::cancel()
 	{
 		if(!mNetworkReply)
-			return context()->thisObject();
+			return thisObject();
 
 		mNetworkReply->abort();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	void Web::finished()
@@ -215,7 +215,7 @@ namespace Code
 			mFile->close();
 
 		if(mOnFinished.isValid())
-			mOnFinished.call(mThisObject);
+			mOnFinished.call(thisObject());
 
 		mNetworkReply->deleteLater();
 		mNetworkReply = 0;
@@ -229,7 +229,7 @@ namespace Code
 			return;
 
 		if(mOnDownloadProgress.isValid())
-			mOnDownloadProgress.call(mThisObject, QScriptValueList() << static_cast<qsreal>(bytesReceived) << static_cast<qsreal>(bytesTotal));
+			mOnDownloadProgress.call(thisObject(), QScriptValueList() << static_cast<qsreal>(bytesReceived) << static_cast<qsreal>(bytesTotal));
 	}
 
 	void Web::error()
@@ -241,7 +241,7 @@ namespace Code
 			return;
 
 		if(mOnError.isValid())
-			mOnError.call(mThisObject, QScriptValueList() << mNetworkReply->errorString());
+			mOnError.call(thisObject(), QScriptValueList() << mNetworkReply->errorString());
 	}
 
 	void Web::authenticationRequired(QNetworkReply *, QAuthenticator *authenticator)

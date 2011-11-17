@@ -97,7 +97,7 @@ namespace Code
 		if(!mFile.open(static_cast<QIODevice::OpenMode>(mode)))
 			throwError("CannotOpenFileError", tr("Unable to open file"));
 	
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue File::write(const QScriptValue &data)
@@ -114,7 +114,7 @@ namespace Code
 				throwError("WriteFailedError", tr("Write failed"));
 		}
 	
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue File::writeText(const QString &value, Encoding encoding)
@@ -122,12 +122,12 @@ namespace Code
 		if(mFile.write(toEncoding(value, encoding)) == -1)
 			throwError("WriteFailedError", tr("Write failed"));
 	
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue File::read()
 	{
-		return RawData::constructor(mFile.readAll(), context(), engine());
+		return RawData::constructor(mFile.readAll(), engine());
 	}
 	
 	QString File::readText(Encoding encoding)
@@ -139,7 +139,7 @@ namespace Code
 	{
 		mFile.close();
 	
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue File::copy(const QString &destination, bool createDestinationDirectory) const

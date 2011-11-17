@@ -55,7 +55,7 @@ namespace Code
 				messageBox->mOnClosed = it.value();
 		}
 
-		return messageBox->mThisObject = CodeClass::constructor(messageBox, context, engine);
+		return CodeClass::constructor(messageBox, context, engine);
 	}
 
 	MessageBox::MessageBox()
@@ -76,35 +76,35 @@ namespace Code
 	{
 		mMessageBox->setText(text);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MessageBox::setDetailedText(const QString &detailedText)
 	{
 		mMessageBox->setDetailedText(detailedText);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MessageBox::setInformativeText(const QString &informativeText)
 	{
 		mMessageBox->setInformativeText(informativeText);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MessageBox::setButtons(StandardButton buttons)
 	{
 		mMessageBox->setStandardButtons(static_cast<QMessageBox::StandardButton>(buttons));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MessageBox::setIcon(Icon icon)
 	{
 		mMessageBox->setIcon(static_cast<QMessageBox::Icon>(icon));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MessageBox::setIconPixmap(const QScriptValue &image)
@@ -113,7 +113,7 @@ namespace Code
 		{
 			mMessageBox->setIconPixmap(QPixmap());
 
-			return context()->thisObject();
+			return thisObject();
 		}
 
 		QObject *object = image.toQObject();
@@ -124,24 +124,24 @@ namespace Code
 		else
 		{
 			throwError("SetIconPixmapError", tr("Invalid image"));
-			return context()->thisObject();
+			return thisObject();
 		}
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MessageBox::setDefaultButton(StandardButton button)
 	{
 		mMessageBox->setDefaultButton(static_cast<QMessageBox::StandardButton>(button));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MessageBox::setEscapeButton(StandardButton button)
 	{
 		mMessageBox->setEscapeButton(static_cast<QMessageBox::StandardButton>(button));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MessageBox::addCustomButton(StandardButton button, const QString &text)
@@ -150,19 +150,19 @@ namespace Code
 		if(!addedButton)
 		{
 			throwError("AddCustomButtonError", tr("Add custom button failed"));
-			return context()->thisObject();
+			return thisObject();
 		}
 
 		addedButton->setText(text);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MessageBox::show()
 	{
 		mMessageBox->open();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	int MessageBox::showModal()
@@ -173,6 +173,6 @@ namespace Code
 	void MessageBox::finished(int result)
 	{
 		if(mOnClosed.isValid())
-			mOnClosed.call(mThisObject, result);
+			mOnClosed.call(thisObject(), QScriptValueList() << result);
 	}
 }

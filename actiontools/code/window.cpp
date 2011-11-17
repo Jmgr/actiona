@@ -58,9 +58,9 @@ namespace Code
 		return CodeClass::constructor(window, context, engine);
 	}
 	
-	QScriptValue Window::constructor(const ActionTools::WindowHandle &windowHandle, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue Window::constructor(const ActionTools::WindowHandle &windowHandle, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new Window(windowHandle), context, engine);
+		return CodeClass::constructor(new Window(windowHandle), engine);
 	}
 	
 	ActionTools::WindowHandle Window::parameter(QScriptContext *context, QScriptEngine *engine)
@@ -152,26 +152,30 @@ namespace Code
 		QScriptValue back = engine->newArray(foundWindows.count());
 
 		for(int index = 0; index < foundWindows.count(); ++index)
-			back.setProperty(index, constructor(foundWindows.at(index), context, engine));
+			back.setProperty(index, constructor(foundWindows.at(index), engine));
 
 		return back;
 	}
 
 	QScriptValue Window::all(QScriptContext *context, QScriptEngine *engine)
 	{
+		Q_UNUSED(context)
+
 		QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
 
 		QScriptValue back = engine->newArray(windowList.count());
 
 		for(int index = 0; index < windowList.count(); ++index)
-			back.setProperty(index, constructor(windowList.at(index), context, engine));
+			back.setProperty(index, constructor(windowList.at(index), engine));
 
 		return back;
 	}
 
 	QScriptValue Window::foreground(QScriptContext *context, QScriptEngine *engine)
 	{
-		return constructor(ActionTools::WindowHandle::foregroundWindow(), context, engine);
+		Q_UNUSED(context)
+
+		return constructor(ActionTools::WindowHandle::foregroundWindow(), engine);
 	}
 
 	void Window::registerClass(QScriptEngine *scriptEngine)
@@ -233,7 +237,7 @@ namespace Code
 	
 	QScriptValue Window::clone() const
 	{
-		return constructor(mWindowHandle, context(), engine());
+		return constructor(mWindowHandle, engine());
 	}
 
 	bool Window::equals(const QScriptValue &other) const
@@ -287,7 +291,7 @@ namespace Code
 		if(!checkValidity())
 			return QScriptValue();
 
-		return Rect::constructor(mWindowHandle.rect(), context(), engine());
+		return Rect::constructor(mWindowHandle.rect(), engine());
 	}
 	
 	QScriptValue Window::process() const
@@ -295,84 +299,84 @@ namespace Code
 		if(!checkValidity())
 			return -1;
 
-		return ProcessHandle::constructor(mWindowHandle.processId(), context(), engine());
+		return ProcessHandle::constructor(mWindowHandle.processId(), engine());
 	}
 	
 	QScriptValue Window::close() const
 	{
 		if(!checkValidity())
-			return context()->thisObject();
+			return thisObject();
 
 		if(!mWindowHandle.close())
 			throwError("CloseWindowError", tr("Unable to close the window"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Window::killCreator() const
 	{
 		if(!checkValidity())
-			return context()->thisObject();
+			return thisObject();
 
 		if(!mWindowHandle.killCreator())
 			throwError("KillCreatorError", tr("Unable to kill the window creator"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Window::setForeground() const
 	{
 		if(!checkValidity())
-			return context()->thisObject();
+			return thisObject();
 
 		if(!mWindowHandle.setForeground())
 			throwError("SetForegroundError", tr("Unable to set the window foreground"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Window::minimize() const
 	{
 		if(!checkValidity())
-			return context()->thisObject();
+			return thisObject();
 
 		if(!mWindowHandle.minimize())
 			throwError("MinimizeError", tr("Unable to minimize the window"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Window::maximize() const
 	{
 		if(!checkValidity())
-			return context()->thisObject();
+			return thisObject();
 
 		if(!mWindowHandle.maximize())
 			throwError("MaximizeError", tr("Unable to maximize the window"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Window::move() const
 	{
 		if(!checkValidity())
-			return context()->thisObject();
+			return thisObject();
 
 		if(!mWindowHandle.move(Point::parameter(context(), engine())))
 			throwError("MoveError", tr("Unable to move the window"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Window::resize() const
 	{
 		if(!checkValidity())
-			return context()->thisObject();
+			return thisObject();
 
 		if(!mWindowHandle.resize(Size::parameter(context(), engine())))
 			throwError("ResizeError", tr("Unable to resize the window"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	bool Window::checkValidity() const

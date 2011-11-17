@@ -51,7 +51,7 @@ namespace Code
 	{
 		setModePrivate(context(), engine(), mode);
 	
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Clipboard::setText(const QString &value) const
@@ -60,7 +60,7 @@ namespace Code
 
 		clipboard->setText(value, mMode);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Clipboard::setImage(const QScriptValue &data) const
@@ -73,7 +73,7 @@ namespace Code
 		else
 			clipboard->setImage(data.toVariant().value<QImage>(), mMode);
 	
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QString Clipboard::text() const
@@ -87,7 +87,7 @@ namespace Code
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 
-		return Image::constructor(clipboard->image(mMode), context(), engine());
+		return Image::constructor(clipboard->image(mMode), engine());
 	}
 	
 	Clipboard::DataType Clipboard::dataType() const

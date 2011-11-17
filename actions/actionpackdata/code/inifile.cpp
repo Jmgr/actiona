@@ -56,10 +56,10 @@ namespace Code
 		if(!mConfig.load(toEncoding(filename, mEncoding)))
 		{
 			throwError("LoadFileError", tr("Cannot load the file"));
-			return context()->thisObject();
+			return thisObject();
 		}
 	
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue IniFile::save(const QString &filename)
@@ -74,38 +74,38 @@ namespace Code
 		if(!saveResult)
 		{
 			throwError("SaveFileError", tr("Cannot save the file"));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue IniFile::clear()
 	{
 		mConfig.clear();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue IniFile::preserveDeletedData(bool preserve)
 	{
 		mConfig.preserveDeletedData(preserve);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue IniFile::setDelimiter(char delimiter)
 	{
 		mConfig.setDefaultDelimiter(delimiter);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue IniFile::setCommentCharacter(char commentchar)
 	{
 		mConfig.setDefaultCommentCharacter(commentchar);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue IniFile::setSection(const QString &sectionName, bool create)
@@ -113,17 +113,17 @@ namespace Code
 		if(!mConfig.setSection(toEncoding(sectionName, mEncoding), create))
 		{
 			throwError("FindSectionError", tr("Cannot find the section named \"%1\"").arg(sectionName));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue IniFile::setEncoding(Encoding encoding)
 	{
 		mEncoding = encoding;
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QString IniFile::sectionAt(int sectionIndex) const
@@ -142,10 +142,10 @@ namespace Code
 		if(!mConfig.deleteSection(toEncoding(sectionName, mEncoding)))
 		{
 			throwError("FindSectionError", tr("Cannot delete section named \"%1\"").arg(sectionName));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	int IniFile::sectionCount() const
@@ -178,7 +178,7 @@ namespace Code
 	{
 		mConfig.setStringValue(toEncoding(keyName, mEncoding), toEncoding(value, mEncoding));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue IniFile::deleteKey(const QString &keyName)
@@ -186,10 +186,10 @@ namespace Code
 		if(!mConfig.deleteData(toEncoding(keyName, mEncoding)))
 		{
 			throwError("FindSectionError", tr("Cannot delete key named \"%1\"").arg(keyName));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	size_t IniFile::keyCount() const

@@ -55,9 +55,9 @@ namespace Code
 		return CodeClass::constructor(point, context, engine);
 	}
 	
-	QScriptValue Point::constructor(const QPoint &point, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue Point::constructor(const QPoint &point, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new Point(point), context, engine);
+		return CodeClass::constructor(new Point(point), engine);
 	}
 	
 	QPoint Point::parameter(QScriptContext *context, QScriptEngine *engine)
@@ -138,7 +138,7 @@ namespace Code
 	
 	QScriptValue Point::clone() const
 	{
-		return constructor(mPoint, context(), engine());
+		return constructor(mPoint, engine());
 	}
 
 	bool Point::equals(const QScriptValue &other) const
@@ -162,14 +162,14 @@ namespace Code
 	{
 		mPoint.setX(x);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Point::setY(int y)
 	{
 		mPoint.setY(y);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	int Point::x() const

@@ -103,14 +103,14 @@ namespace Code
 		if(!QSqlDatabase::isDriverAvailable(mDriverName))
 		{
 			throwError("DatabaseDriverUnavailableError", tr("The requested database driver is not available"));
-			return context()->thisObject();
+			return thisObject();
 		}
 
 		*mDatabase = QSqlDatabase::addDatabase(mDriverName, QUuid::createUuid().toString());
 		if(!mDatabase->isValid())
 		{
 			throwError("DatabaseDriverUnavailableError", tr("The requested database driver is not available"));
-			return context()->thisObject();
+			return thisObject();
 		}
 
 		QScriptValueIterator it(parameters);
@@ -147,10 +147,10 @@ namespace Code
 		if(!mDatabase->open(userName, password))
 		{
 			throwError("ConnectionError", tr("Unable to establish a connection to the database"));
-			return context()->thisObject();
+			return thisObject();
 		}
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Sql::prepare(const QString &queryString, const QScriptValue &parameters)
@@ -160,7 +160,7 @@ namespace Code
 		if(!mQuery.prepare(queryString))
 		{
 			throwError("PrepareQueryError", tr("Failed to prepare the query"));
-			return context()->thisObject();
+			return thisObject();
 		}
 
 		QScriptValueIterator it(parameters);
@@ -171,7 +171,7 @@ namespace Code
 			mQuery.bindValue(it.name(), it.value().toString());
 		}
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Sql::execute(const QString &queryString)
@@ -186,10 +186,10 @@ namespace Code
 		{
 			QSqlError error = mQuery.lastError();
 			throwError("ExecuteQueryError", tr("Failed to execute the query : %1").arg(error.text()));
-			return context()->thisObject();
+			return thisObject();
 		}
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Sql::fetchResult(IndexStyle indexStyle)
@@ -197,7 +197,7 @@ namespace Code
 		if(!mQuery.isSelect())
 		{
 			throwError("FetchError", tr("Cannot fetch the result of a non-select query"));
-			return context()->thisObject();
+			return thisObject();
 		}
 
 		int size = mQuery.size();
@@ -247,7 +247,7 @@ namespace Code
 	{
 		mDatabase->close();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QString Sql::driverName(Driver driver)

@@ -51,14 +51,14 @@ namespace Code
 		return CodeClass::constructor(rawData, context, engine);
 	}
 	
-	QScriptValue RawData::constructor(const RawData &other, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue RawData::constructor(const RawData &other, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new RawData(other), context, engine);
+		return CodeClass::constructor(new RawData(other), engine);
 	}
 	
-	QScriptValue RawData::constructor(const QByteArray &byteArray, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue RawData::constructor(const QByteArray &byteArray, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new RawData(byteArray), context, engine);
+		return CodeClass::constructor(new RawData(byteArray), engine);
 	}
 
 	void RawData::registerClass(QScriptEngine *scriptEngine)
@@ -114,7 +114,7 @@ namespace Code
 	
 	QScriptValue RawData::clone() const
 	{
-		return constructor(mByteArray, context(), engine());
+		return constructor(mByteArray, engine());
 	}
 	
 	bool RawData::equals(const QScriptValue &other) const
@@ -138,21 +138,21 @@ namespace Code
 	{
 		mByteArray.append(data.toByteArray());
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue RawData::chop(int n)
 	{
 		mByteArray.chop(n);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue RawData::clear()
 	{
 		mByteArray.clear();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	bool RawData::contains(const QVariant &data)
@@ -187,7 +187,7 @@ namespace Code
 	
 	QScriptValue RawData::left(int len) const
 	{
-		return RawData::constructor(mByteArray.left(len), context(), engine());
+		return RawData::constructor(mByteArray.left(len), engine());
 	}
 	
 	int RawData::length() const
@@ -197,47 +197,47 @@ namespace Code
 	
 	QScriptValue RawData::mid(int pos, int len) const
 	{
-		return RawData::constructor(mByteArray.mid(pos, len), context(), engine());
+		return RawData::constructor(mByteArray.mid(pos, len), engine());
 	}
 	
 	QScriptValue RawData::prepend(const QVariant &data)
 	{
 		mByteArray.prepend(data.toByteArray());
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue RawData::remove(int pos, int len)
 	{
 		mByteArray.remove(pos, len);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue RawData::replace(const QString &before, const QString &after)
 	{
 		mByteArray.replace(before.toLatin1(), after.toLatin1());
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue RawData::resize(int size)
 	{
 		mByteArray.resize(size);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue RawData::right(int len) const
 	{
-		return RawData::constructor(mByteArray.right(len), context(), engine());
+		return RawData::constructor(mByteArray.right(len), engine());
 	}
 	
 	QScriptValue RawData::setData(const QVariant &data)
 	{
 		mByteArray = data.toByteArray();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	int RawData::size() const
@@ -264,6 +264,6 @@ namespace Code
 	{
 		mByteArray.truncate(pos);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 }

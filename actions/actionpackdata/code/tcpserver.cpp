@@ -39,7 +39,7 @@ namespace Code
 				tcpServer->mOnNewConnection = it.value();
 		}
 
-		return tcpServer->mThisObject = CodeClass::constructor(tcpServer, context, engine);
+		return CodeClass::constructor(tcpServer, context, engine);
 	}
 	
 	TcpServer::TcpServer()
@@ -58,7 +58,7 @@ namespace Code
 		if(!mTcpServer.listen(QHostAddress(address), port))
 			throwError("ListenError", tr("Unable to start listening"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue TcpServer::waitForNewConnection(int waitTime)
@@ -66,7 +66,7 @@ namespace Code
 		if(!mTcpServer.waitForNewConnection(waitTime))
 			throwError("WaitForNewConnectionError", tr("Waiting for new connection failed"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue TcpServer::nextPendingConnection()
@@ -78,7 +78,7 @@ namespace Code
 			return engine()->undefinedValue();
 		}
 		
-		return Tcp::constructor(tcpSocket, context(), engine());
+		return Tcp::constructor(tcpSocket, engine());
 	}
 	
 	QString TcpServer::address() const
@@ -94,6 +94,6 @@ namespace Code
 	void TcpServer::newConnection()
 	{
 		if(mOnNewConnection.isValid())
-			mOnNewConnection.call(mThisObject);
+			mOnNewConnection.call(thisObject());
 	}
 }

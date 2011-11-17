@@ -71,12 +71,14 @@ namespace Code
 
 	QScriptValue Process::list(QScriptContext *context, QScriptEngine *engine)
 	{
+		Q_UNUSED(context)
+
 		QList<int> processesList = ActionTools::CrossPlatform::runningProcesses();
 
 		QScriptValue back = engine->newArray(processesList.count());
 
 		for(int index = 0; index < processesList.count(); ++index)
-			back.setProperty(index, ProcessHandle::constructor(processesList.at(index), context, engine));
+			back.setProperty(index, ProcessHandle::constructor(processesList.at(index), engine));
 
 		return back;
 	}
@@ -112,15 +114,17 @@ namespace Code
 			return engine->undefinedValue();
 		}
 
-		return ProcessHandle::constructor(processId, context, engine);
+		return ProcessHandle::constructor(processId, engine);
 	}
 
 	QScriptValue Process::thisProcess(QScriptContext *context, QScriptEngine *engine)
 	{
+		Q_UNUSED(context)
+
 #ifdef Q_WS_WIN
-		return ProcessHandle::constructor(GetCurrentProcessId(), context, engine);
+		return ProcessHandle::constructor(GetCurrentProcessId(), engine);
 #else
-		return ProcessHandle::constructor(getpid(), context, engine);
+		return ProcessHandle::constructor(getpid(), engine);
 #endif
 	}
 
@@ -138,7 +142,7 @@ namespace Code
 
 	QScriptValue Process::handle() const
 	{
-		return ProcessHandle::constructor(id(), context(), engine());
+		return ProcessHandle::constructor(id(), engine());
 	}
 
 	int Process::id() const
@@ -176,7 +180,7 @@ namespace Code
 
 		mProcess->start(filename, parameters, openMode);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QProcess::ProcessState Process::state() const
@@ -201,12 +205,12 @@ namespace Code
 
 	QScriptValue Process::readError() const
 	{
-		return RawData::constructor(mProcess->readAllStandardError(), context(), engine());
+		return RawData::constructor(mProcess->readAllStandardError(), engine());
 	}
 
 	QScriptValue Process::read() const
 	{
-		return RawData::constructor(mProcess->readAllStandardOutput(), context(), engine());
+		return RawData::constructor(mProcess->readAllStandardOutput(), engine());
 	}
 
 	QString Process::readErrorText(Encoding encoding) const
@@ -253,7 +257,7 @@ namespace Code
 				throwError("WriteError", tr("Write failed"));
 		}
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::writeText(const QString &data, Encoding encoding)
@@ -261,21 +265,21 @@ namespace Code
 		if(mProcess->write(toEncoding(data, encoding)) == -1)
 			throwError("WriteError", tr("Write failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::setWorkingDirectory(const QString &workingDirectory)
 	{
 		mProcess->setWorkingDirectory(workingDirectory);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::setProcessChannelMode(QProcess::ProcessChannelMode channelMode)
 	{
 		mProcess->setProcessChannelMode(channelMode);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::setEnvironment()
@@ -292,7 +296,7 @@ namespace Code
 
 		mProcess->setProcessEnvironment(environment);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::updateEnvironment()
@@ -309,35 +313,35 @@ namespace Code
 
 		mProcess->setProcessEnvironment(environment);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::setReadChannel(QProcess::ProcessChannel channel)
 	{
 		mProcess->setReadChannel(channel);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::setStandardErrorFile(const QString &fileName, QIODevice::OpenMode openMode)
 	{
 		mProcess->setStandardErrorFile(fileName, openMode);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::setStandardInputFile(const QString &fileName)
 	{
 		mProcess->setStandardInputFile(fileName);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::setStandardOutputFile(const QString &fileName, QIODevice::OpenMode openMode)
 	{
 		mProcess->setStandardOutputFile(fileName, openMode);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::setStandardOutputProcess(const QScriptValue &processValue)
@@ -346,12 +350,12 @@ namespace Code
 		if(!otherProcess)
 		{
 			throwError("InvalidProcessError", tr("Invalid process"));
-			return context()->thisObject();
+			return thisObject();
 		}
 
 		mProcess->setStandardOutputProcess(otherProcess->process());
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::waitForFinished(int waitTime)
@@ -359,7 +363,7 @@ namespace Code
 		if(!mProcess->waitForFinished(waitTime))
 			throwError("WaitForFinishedError", tr("Wait for finished failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::waitForStarted(int waitTime)
@@ -367,7 +371,7 @@ namespace Code
 		if(!mProcess->waitForFinished(waitTime))
 			throwError("WaitForStartedError", tr("Wait for started failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::waitForBytesWritten(int waitTime)
@@ -375,7 +379,7 @@ namespace Code
 		if(!mProcess->waitForReadyRead(waitTime))
 			throwError("WaitForBytesWrittenError", tr("Waiting for bytes written failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::waitForReadyRead(int waitTime)
@@ -383,63 +387,63 @@ namespace Code
 		if(!mProcess->waitForReadyRead(waitTime))
 			throwError("WaitForReadyReadError", tr("Waiting for ready read failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::close()
 	{
 		mProcess->close();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::kill()
 	{
 		mProcess->kill();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Process::terminate()
 	{
 		mProcess->terminate();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	void Process::error(QProcess::ProcessError processError)
 	{
 		if(mOnError.isValid())
-			mOnError.call(mThisObject, processError);
+			mOnError.call(thisObject(), QScriptValueList() << processError);
 	}
 
 	void Process::finished(int exitCode, QProcess::ExitStatus exitStatus)
 	{
 		if(mOnFinished.isValid())
-			mOnFinished.call(mThisObject, QScriptValueList() << exitCode << exitStatus);
+			mOnFinished.call(thisObject(), QScriptValueList() << exitCode << exitStatus);
 	}
 
 	void Process::readyReadStandardError()
 	{
 		if(mOnReadyReadStandardError.isValid())
-			mOnReadyReadStandardError.call(mThisObject);
+			mOnReadyReadStandardError.call(thisObject());
 	}
 
 	void Process::readyReadStandardOutput()
 	{
 		if(mOnReadyReadStandardOutput.isValid())
-			mOnReadyReadStandardOutput.call(mThisObject);
+			mOnReadyReadStandardOutput.call(thisObject());
 	}
 
 	void Process::started()
 	{
 		if(mOnStarted.isValid())
-			mOnStarted.call(mThisObject);
+			mOnStarted.call(thisObject());
 	}
 
 	void Process::stateChanged(QProcess::ProcessState newState)
 	{
 		if(mOnStateChanged.isValid())
-			mOnStateChanged.call(mThisObject, newState);
+			mOnStateChanged.call(thisObject(), QScriptValueList() << newState);
 	}
 }

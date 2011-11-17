@@ -35,14 +35,14 @@ namespace Code
 
 	QScriptValue Mouse::position() const
 	{
-		return Point::constructor(mMouseDevice.cursorPosition(), context(), engine());
+		return Point::constructor(mMouseDevice.cursorPosition(), engine());
 	}
 
 	QScriptValue Mouse::move() const
 	{
 		mMouseDevice.setCursorPosition(Point::parameter(context(), engine()));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	bool Mouse::isButtonPressed(MouseDevice::Button button) const
@@ -55,7 +55,7 @@ namespace Code
 		if(!mMouseDevice.pressButton(button))
 			throwError("PressButtonError", tr("Unable to press the button"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Mouse::release(MouseDevice::Button button)
@@ -63,7 +63,7 @@ namespace Code
 		if(!mMouseDevice.releaseButton(button))
 			throwError("ReleaseButtonError", tr("Unable to release the button"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Mouse::click(MouseDevice::Button button)
@@ -71,7 +71,7 @@ namespace Code
 		if(!mMouseDevice.buttonClick(button))
 			throwError("ClickError", tr("Unable to emulate a button click"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Mouse::wheel(int intensity) const
@@ -79,6 +79,6 @@ namespace Code
 		if(!mMouseDevice.wheel(intensity))
 			throwError("WheelError", tr("Unable to emulate the wheel"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 }

@@ -34,7 +34,7 @@ namespace Code
 		};
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(int processId, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(int processId, QScriptEngine *engine);
 		static int parameter(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);

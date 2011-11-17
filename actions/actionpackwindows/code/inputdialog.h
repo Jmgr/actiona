@@ -101,7 +101,6 @@ namespace Code
 		QInputDialog *mInputDialog;
 		QScriptValue mOnClosed;
 		QScriptValue mOnValueChanged;
-		QScriptValue mThisObject;
 	};
 }
 

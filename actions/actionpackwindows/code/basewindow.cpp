@@ -84,7 +84,7 @@ namespace Code
 		
 		mWindow->setWindowTitle(title);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue BaseWindow::setPosition(const QScriptValue &)
@@ -93,7 +93,7 @@ namespace Code
 
 		mWindow->move(Point::parameter(context(), engine()));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue BaseWindow::setOpacity(float opacity)
@@ -102,7 +102,7 @@ namespace Code
 
 		mWindow->setWindowOpacity(opacity);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue BaseWindow::setEnabled(bool enabled)
@@ -111,7 +111,7 @@ namespace Code
 		
 		mWindow->setEnabled(enabled);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue BaseWindow::setVisible(bool visible)
@@ -120,7 +120,7 @@ namespace Code
 		
 		mWindow->setVisible(visible);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue BaseWindow::setWindowIcon(const QScriptValue &windowIcon)
@@ -131,7 +131,7 @@ namespace Code
 		{
 			mWindow->setWindowIcon(QIcon());
 
-			return context()->thisObject();
+			return thisObject();
 		}
 
 		if(Image *icon = qobject_cast<Image*>(windowIcon.toQObject()))
@@ -139,10 +139,10 @@ namespace Code
 		else
 		{
 			throwError("SetWindowIcon", tr("Invalid image"));
-			return context()->thisObject();
+			return thisObject();
 		}
 
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue BaseWindow::close()
@@ -151,7 +151,7 @@ namespace Code
 		
 		mWindow->close();
 
-		return context()->thisObject();
+		return thisObject();
 	}	
 
 	QString BaseWindow::title() const
@@ -165,7 +165,7 @@ namespace Code
 	{
 		Q_ASSERT(mWindow);
 		
-		return Point::constructor(mWindow->pos(), context(), engine());
+		return Point::constructor(mWindow->pos(), engine());
 	}
 	
 	float BaseWindow::opacity() const

@@ -150,7 +150,6 @@ namespace Code
 		QScriptValue mOnFileSelected;
 		QScriptValue mOnFilesSelected;
 		QScriptValue mOnFilterSelected;
-		QScriptValue mThisObject;
 	};
 }
 

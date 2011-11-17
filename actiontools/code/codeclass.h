@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QScriptable>
 #include <QByteArray>
+#include <QScriptValue>
 
 namespace Code
 {
@@ -50,13 +51,18 @@ namespace Code
 		void throwError(const QString &errorType, const QString &message, const QString &parent = "Error") const;
 
 		static QScriptValue constructor(CodeClass *object, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(CodeClass *object, QScriptEngine *engine);
 		static QByteArray toEncoding(const QString &string, Encoding encoding);
 		static QString fromEncoding(const QByteArray &byteArray, Encoding encoding);
 		static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
 		static QScriptValue stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList);
 
+		QScriptValue thisObject() const { return mThisObject; }
+
 	private:
 		static QScriptValue emptyFunction(QScriptContext *context, QScriptEngine *engine);
+
+		QScriptValue mThisObject;
 	};
 }
 

@@ -71,9 +71,9 @@ namespace Code
 		return CodeClass::constructor(color, context, engine);
 	}
 	
-	QScriptValue Color::constructor(const QColor &color, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue Color::constructor(const QColor &color, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new Color(color), context, engine);
+		return CodeClass::constructor(new Color(color), engine);
 	}
 
 	void Color::registerClass(QScriptEngine *scriptEngine)
@@ -132,7 +132,7 @@ namespace Code
 	
 	QScriptValue Color::clone() const
 	{
-		return constructor(mColor, context(), engine());
+		return constructor(mColor, engine());
 	}
 	
 	bool Color::equals(const QScriptValue &other) const
@@ -156,49 +156,49 @@ namespace Code
 	{
 		mColor.setRed(red);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Color::setGreen(int green)
 	{
 		mColor.setGreen(green);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Color::setBlue(int blue)
 	{
 		mColor.setBlue(blue);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Color::setAlpha(int alpha)
 	{
 		mColor.setAlpha(alpha);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Color::setCmyk(int cyan, int magenta, int yellow, int black, int alpha)
 	{
 		mColor.setCmyk(cyan, magenta, yellow, black, alpha);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Color::setHsl(int hue, int saturation, int lightness, int alpha)
 	{
 		mColor.setHsl(hue, saturation, lightness, alpha);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Color::setHsv(int hue, int saturation, int value, int alpha)
 	{
 		mColor.setHsv(hue, saturation, value, alpha);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Color::setNamedColor(const QString &name)
@@ -206,26 +206,26 @@ namespace Code
 		if(!QColor::isValidColor(name))
 		{
 			throwError("ColorNameError", tr("Invalid color name"));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
 		mColor.setNamedColor(name);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Color::lighter(int factor)
 	{
 		mColor = mColor.lighter(factor);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Color::darker(int factor)
 	{
 		mColor = mColor.darker(factor);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	int Color::red() const

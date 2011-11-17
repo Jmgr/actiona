@@ -60,9 +60,9 @@ namespace Code
 		return CodeClass::constructor(rect, context, engine);
 	}
 	
-	QScriptValue Rect::constructor(const QRect &rect, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue Rect::constructor(const QRect &rect, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new Rect(rect), context, engine);
+		return CodeClass::constructor(new Rect(rect), engine);
 	}
 	
 	QRect Rect::parameter(QScriptContext *context, QScriptEngine *engine)
@@ -145,7 +145,7 @@ namespace Code
 	
 	QScriptValue Rect::clone() const
 	{
-		return constructor(mRect, context(), engine());
+		return constructor(mRect, engine());
 	}
 
 	bool Rect::equals(const QScriptValue &other) const
@@ -169,77 +169,77 @@ namespace Code
 	{
 		mRect = mRect.normalized();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Rect::setTop(int top)
 	{
 		mRect.setTop(top);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setBottom(int bottom)
 	{
 		mRect.setBottom(bottom);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setLeft(int left)
 	{
 		mRect.setLeft(left);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setRight(int right)
 	{
 		mRect.setRight(right);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setX(int x)
 	{
 		mRect.setX(x);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setY(int y)
 	{
 		mRect.setY(y);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setWidth(int width)
 	{
 		mRect.setWidth(width);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setHeight(int height)
 	{
 		mRect.setHeight(height);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setSize()
 	{
 		mRect.setSize(Size::parameter(context(), engine()));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setCoords(int x1, int y1, int x2, int y2)
 	{
 		mRect.setCoords(x1, y1, x2, y2);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::setRect()
@@ -247,14 +247,14 @@ namespace Code
 		const QRect &rect = parameter(context(), engine());
 		mRect.setRect(rect.x(), rect.y(), rect.width(), rect.height());
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Rect::translate()
 	{
 		mRect.translate(Point::parameter(context(), engine()));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	bool Rect::contains(const QScriptValue &point) const
@@ -287,12 +287,12 @@ namespace Code
 	
 	QScriptValue Rect::united() const
 	{
-		return constructor(mRect.united(parameter(context(), engine())), context(), engine());
+		return constructor(mRect.united(parameter(context(), engine())), engine());
 	}
 	
 	QScriptValue Rect::intersected() const
 	{
-		return constructor(mRect.intersected(parameter(context(), engine())), context(), engine());
+		return constructor(mRect.intersected(parameter(context(), engine())), engine());
 	}
 	
 	bool Rect::intersects() const
@@ -307,12 +307,12 @@ namespace Code
 	
 	QScriptValue Rect::center() const
 	{
-		return Point::constructor(mRect.center(), context(), engine());
+		return Point::constructor(mRect.center(), engine());
 	}
 	
 	QScriptValue Rect::size() const
 	{
-		return Size::constructor(mRect.size(), context(), engine());
+		return Size::constructor(mRect.size(), engine());
 	}
 	
 	int Rect::width() const
