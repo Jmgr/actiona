@@ -92,7 +92,7 @@ TRANSLATIONS = ../locale/actiontools_fr_FR.ts
 RESOURCES += actiontools.qrc
 INCLUDEPATH += . \
 	../tools
-win32:INCLUDEPATH += $${OPENCV_INCLUDE}
+win32:INCLUDEPATH += $${BOOST_INCLUDE} $${OPENCV_INCLUDE}
 LIBS += -L.. \
     -ltools
 

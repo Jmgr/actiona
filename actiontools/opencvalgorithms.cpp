@@ -18,12 +18,13 @@
 	Contact : jmgr@jmgr.info
 */
 
+#include <opencv2/imgproc/imgproc.hpp>
+
 #include "opencvalgorithms.h"
 
-#include <QtConcurrentRun>
-
 #include <boost/bind.hpp>
-#include <opencv/cv.h>
+
+#include <QtConcurrentRun>
 
 namespace ActionTools
 {
@@ -184,7 +185,7 @@ namespace ActionTools
 			sourceSize = source->size();
 			targetSize = target->size();
 
-			int twoPowerNumDownPyrs = std::pow(2, downPyrs);
+			int twoPowerNumDownPyrs = std::pow(2.0f, downPyrs);
 
 			// create a copy of the source in order to adjust its ROI for searching
 			for(int currMax = 0; currMax < maximumMatches; ++currMax)
