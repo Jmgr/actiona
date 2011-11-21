@@ -413,7 +413,7 @@ namespace Code
 			const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
 			QScriptValue back = engine()->newObject();
 
-			back.setProperty("point", Point::constructor(matchingPoint.first, engine()));
+			back.setProperty("position", Point::constructor(matchingPoint.first, engine()));
 			back.setProperty("confidence", matchingPoint.second);
 
 			return back;
@@ -462,7 +462,7 @@ namespace Code
 			{
 				QScriptValue object = engine()->newObject();
 
-				object.setProperty("point", Point::constructor(matchingPointIt->first, engine()));
+				object.setProperty("position", Point::constructor(matchingPointIt->first, engine()));
 				object.setProperty("confidence", matchingPointIt->second);
 
 				back.setProperty(index, object);
@@ -567,7 +567,7 @@ namespace Code
 				const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
 				QScriptValue back = mFindSubImageAsyncFunction.engine()->newObject();
 
-				back.setProperty("point", CodeClass::constructor(new Point(matchingPoint.first), mFindSubImageAsyncFunction.engine()));
+				back.setProperty("position", CodeClass::constructor(new Point(matchingPoint.first), mFindSubImageAsyncFunction.engine()));
 				back.setProperty("confidence", matchingPoint.second);
 
 				mFindSubImageAsyncFunction.call(thisObject(), QScriptValueList() << back);
@@ -585,7 +585,7 @@ namespace Code
 				{
 					QScriptValue object = mFindSubImageAsyncFunction.engine()->newObject();
 
-					object.setProperty("point", CodeClass::constructor(new Point(matchingPointIt->first), mFindSubImageAsyncFunction.engine()));
+					object.setProperty("position", CodeClass::constructor(new Point(matchingPointIt->first), mFindSubImageAsyncFunction.engine()));
 					object.setProperty("confidence", matchingPointIt->second);
 
 					back.setProperty(index, object);
