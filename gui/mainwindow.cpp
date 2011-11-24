@@ -2020,6 +2020,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 			event->ignore();//Ignore, since we have to wait until the fade out is done
 		}
+		else
+			QApplication::quit();
 	}
 	else
 		event->ignore();
