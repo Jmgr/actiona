@@ -480,13 +480,13 @@ namespace Code
 		}
 	}
 
-	QScriptValue Image::findSubImageAsync(const QScriptValue &otherImage, const QScriptValue &function, const QScriptValue &options)
+	QScriptValue Image::findSubImageAsync(const QScriptValue &otherImage, const QScriptValue &callback, const QScriptValue &options)
 	{
 		mFindSubImageSearchForOne = true;
 
-		if(!function.isFunction())
+		if(!callback.isFunction())
 		{
-			throwError("FindSubImageError", tr("Parameter \"function\" is not a function"));
+			throwError("FindSubImageError", tr("Parameter \"callback\" is not a function"));
 			return thisObject();
 		}
 
@@ -504,7 +504,7 @@ namespace Code
 				return thisObject();
 			}
 
-			mFindSubImageAsyncFunction = function;
+			mFindSubImageAsyncFunction = callback;
 
 			return thisObject();
 		}
@@ -515,13 +515,13 @@ namespace Code
 		}
 	}
 
-	QScriptValue Image::findSubImagesAsync(const QScriptValue &otherImage, const QScriptValue &function, const QScriptValue &options)
+	QScriptValue Image::findSubImagesAsync(const QScriptValue &otherImage, const QScriptValue &callback, const QScriptValue &options)
 	{
 		mFindSubImageSearchForOne = false;
 
-		if(!function.isFunction())
+		if(!callback.isFunction())
 		{
-			throwError("FindSubImageError", tr("Parameter \"function\" is not a function"));
+			throwError("FindSubImageError", tr("Parameter \"callback\" is not a function"));
 			return thisObject();
 		}
 
@@ -540,7 +540,7 @@ namespace Code
 				return thisObject();
 			}
 
-			mFindSubImageAsyncFunction = function;
+			mFindSubImageAsyncFunction = callback;
 
 			return thisObject();
 		}
