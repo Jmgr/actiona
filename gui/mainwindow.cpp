@@ -75,6 +75,10 @@
 #include <QSystemInfo>
 #include <QScriptValueIterator>
 
+#ifdef Q_WS_X11
+#include <QX11Info>
+#endif
+
 QTM_USE_NAMESPACE
 
 MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
@@ -194,10 +198,6 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	}
 	updateRecentFileActions();
 
-	mOpacityTimer->setSingleShot(false);
-	mOpacityTimer->start(25);
-
-	connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityOpenUpdate()));
 	connect(ui->deleteDropTarget, SIGNAL(actionsDropped(QList<int>)), mScriptModel, SLOT(removeActions(QList<int>)));
 	connect(ui->scriptView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editAction(QModelIndex)));
 	connect(mScriptModel, SIGNAL(wantToAddAction(int, QString)), this, SLOT(wantToAddAction(int, QString)));
@@ -221,6 +221,22 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	setWindowTitle("Actionaz[*]");//Set this to fix some warnings about the [*] placeholder
 
 	QTimer::singleShot(1, this, SLOT(postInit()));
+
+	bool isCompositingManagerRunning = true;
+
+#ifdef Q_WS_X11
+	isCompositingManagerRunning = QX11Info::isCompositingManagerRunning();
+#endif
+
+	if(isCompositingManagerRunning)
+	{
+		connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityOpenUpdate()));
+
+		mOpacityTimer->setSingleShot(false);
+		mOpacityTimer->start(25);
+	}
+	else
+		setWindowOpacity(1.0f);
 }
 
 MainWindow::~MainWindow()
@@ -1991,10 +2007,19 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	{
 		writeSettings();
 
-		mOpacityTimer->start(25);
-		connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityCloseUpdate()));
+		bool isCompositingManagerRunning = true;
 
-		event->ignore();//Ignore, since we have to wait until the fade out is done
+	#ifdef Q_WS_X11
+		isCompositingManagerRunning = QX11Info::isCompositingManagerRunning();
+	#endif
+
+		if(isCompositingManagerRunning)
+		{
+			mOpacityTimer->start(25);
+			connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityCloseUpdate()));
+
+			event->ignore();//Ignore, since we have to wait until the fade out is done
+		}
 	}
 	else
 		event->ignore();
