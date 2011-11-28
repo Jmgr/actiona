@@ -106,8 +106,11 @@ namespace LibExecuter
 
 		Code::CodeTools::addClassToScriptEngine<CodeStdio>("Stdio", scriptEngine);
 		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::print, "print", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::println, "println", scriptEngine);
 		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printWarning, "printWarning", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printlnWarning, "printlnWarning", scriptEngine);
 		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printError, "printError", scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printlnError, "printlnError", scriptEngine);
 
 		int actionPackCount = actionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)

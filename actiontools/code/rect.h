@@ -47,7 +47,7 @@ namespace Code
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QRect &rect, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(const QRect &rect, QScriptEngine *engine);
 		static QRect parameter(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);

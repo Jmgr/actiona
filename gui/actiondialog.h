@@ -69,9 +69,8 @@ private:
 		InputParameters,
 		OutputParameters
 	};
-	
-	void addGroup(ActionTools::GroupDefinition *group);
-	QLayout *addParameter(ActionTools::ParameterDefinition *parameter);
+
+	void addParameter(ActionTools::ParameterDefinition *parameter, int tab);
 
 	Ui::ActionDialog *ui;
 	ActionTools::ActionInstance *mActionInstance;

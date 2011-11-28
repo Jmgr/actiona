@@ -49,7 +49,7 @@ namespace Code
 		};	
 				
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(QTcpSocket *tcpSocket, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(QTcpSocket *tcpSocket, QScriptEngine *engine);
 		
 		Tcp();
 		Tcp(QTcpSocket *tcpSocket);
@@ -94,7 +94,6 @@ namespace Code
 		QScriptValue mOnReadyRead;
 		QScriptValue mOnBytesWritten;
 		QScriptValue mOnError;
-		QScriptValue mThisObject;
 	};
 }
 

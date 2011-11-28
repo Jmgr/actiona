@@ -41,7 +41,7 @@ namespace Code
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QColor &color, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(const QColor &color, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
 		

@@ -109,6 +109,6 @@ namespace Code
 		if(!notify_notification_show(mNotification, 0))
 			throwError("NotificationError", tr("Unable to show the notification"));
 #endif
-		return context()->thisObject();
+		return thisObject();
 	}
 }

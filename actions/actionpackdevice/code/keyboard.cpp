@@ -37,7 +37,7 @@ namespace Code
 		if(!mKeyboardDevice.pressKey(key))
 			throwError("PressKeyError", tr("Unable to press the key"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Keyboard::releaseKey(const QString &key)
@@ -45,7 +45,7 @@ namespace Code
 		if(!mKeyboardDevice.releaseKey(key))
 			throwError("ReleaseKeyError", tr("Unable to release the key"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Keyboard::triggerKey(const QString &key)
@@ -53,7 +53,7 @@ namespace Code
 		if(!mKeyboardDevice.triggerKey(key))
 			throwError("TriggerKeyError", tr("Unable to trigger the key"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Keyboard::writeText(const QString &text) const
@@ -61,6 +61,6 @@ namespace Code
 		if(!mKeyboardDevice.writeText(text))
 			throwError("WriteTextError", tr("Unable to write the text"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 }

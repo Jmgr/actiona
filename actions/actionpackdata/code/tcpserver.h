@@ -59,7 +59,6 @@ namespace Code
 	private:
 		QTcpServer mTcpServer;
 		QScriptValue mOnNewConnection;
-		QScriptValue mThisObject;
 	};
 }
 

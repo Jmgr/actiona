@@ -60,9 +60,9 @@ namespace Code
 		return CodeClass::constructor(process, context, engine);
 	}
 	
-	QScriptValue ProcessHandle::constructor(int processId, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue ProcessHandle::constructor(int processId, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new ProcessHandle(processId), context, engine);
+		return CodeClass::constructor(new ProcessHandle(processId), engine);
 	}
 	
 	int ProcessHandle::parameter(QScriptContext *context, QScriptEngine *engine)
@@ -140,7 +140,7 @@ namespace Code
 	
 	QScriptValue ProcessHandle::clone() const
 	{
-		return constructor(mProcessId, context(), engine());
+		return constructor(mProcessId, engine());
 	}
 
 	bool ProcessHandle::equals(const QScriptValue &other) const

@@ -83,7 +83,6 @@ namespace Code
 		QScriptValue mOnFinished;
 		QScriptValue mOnDownloadProgress;
 		QScriptValue mOnError;
-		QScriptValue mThisObject;
 		QScriptValue mFileValue;
 		QFile *mFile;
 		QByteArray mData;

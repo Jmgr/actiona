@@ -11,6 +11,9 @@ unix:!mac {
 	!system(pkg-config --exists 'xtst') {
 		error(Please install libxtst-dev)
 }
+	!system(pkg-config --exists 'opencv') {
+		error(Please install libcv-dev)
+}
 }
 
 win32-g++:error(Mingw is currently not supported, please use the Microsoft compiler suite)

@@ -85,7 +85,6 @@ namespace Code
 		QScriptValue mOnDisconnected;
 		QScriptValue mOnReadyRead;
 		QScriptValue mOnError;
-		QScriptValue mThisObject;
 	};
 }
 

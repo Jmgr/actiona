@@ -24,11 +24,17 @@
 #include "actiontools_global.h"
 #include "qtimagefilters/QtImageFilter"
 #include "code/codeclass.h"
+#include "matchingpointlist.h"
 
 #include <QObject>
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QImage>
+
+namespace ActionTools
+{
+	class OpenCVAlgorithms;
+}
 
 namespace Code
 {
@@ -63,7 +69,7 @@ namespace Code
 		};
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QImage &image, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(const QImage &image, QScriptEngine *engine);
 
 		static QScriptValue takeScreenshot(QScriptContext *context, QScriptEngine *engine);
 
@@ -72,6 +78,7 @@ namespace Code
 		Image();
 		Image(const Image &other);
 		Image(const QImage &image);
+		Image(const QString &filename);
 		
 		Image &operator=(Image other);
 		Image &operator=(QImage image);
@@ -98,8 +105,17 @@ namespace Code
 		int width() const;
 		int height() const;
 		QScriptValue copy() const;
-	
+		QScriptValue findSubImage(const QScriptValue &otherImage, const QScriptValue &options = QScriptValue()) const;
+		QScriptValue findSubImages(const QScriptValue &otherImage, const QScriptValue &options = QScriptValue()) const;
+		QScriptValue findSubImageAsync(const QScriptValue &otherImage, const QScriptValue &callback, const QScriptValue &options = QScriptValue());
+		QScriptValue findSubImagesAsync(const QScriptValue &otherImage, const QScriptValue &callback, const QScriptValue &options = QScriptValue());
+
+	private slots:
+		void findSubImageAsyncFinished(const ActionTools::MatchingPointList &matchingPointList);
+
 	private:
+		void findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, int *maximumMatches = 0) const;
+
 		enum FilterOption
 		{
 			FilterChannels = QtImageFilter::FilterChannels,
@@ -115,6 +131,9 @@ namespace Code
 		static const QStringList filterOptionsNames;
 		
 		QImage mImage;
+		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
+		QScriptValue mFindSubImageAsyncFunction;
+		bool mFindSubImageSearchForOne;
 	};
 }
 

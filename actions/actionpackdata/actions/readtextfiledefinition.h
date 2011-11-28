@@ -61,7 +61,7 @@ namespace Actions
 			mode->setDefaultValue(ReadTextFileInstance::modes.second.at(ReadTextFileInstance::Full));
 			addElement(mode, 1);
 
-			ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(ActionTools::Name("selectionmode", tr("Selection mode")), this);
+			ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(this);
 			selectionMode->setMasterList(mode);
 			selectionMode->setMasterValues(QStringList() << ReadTextFileInstance::modes.first.at(ReadTextFileInstance::Selection));
 

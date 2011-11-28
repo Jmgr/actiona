@@ -95,7 +95,6 @@ namespace Code
 	private:
 		QMessageBox *mMessageBox;
 		QScriptValue mOnClosed;
-		QScriptValue mThisObject;
 	};
 }
 

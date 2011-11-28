@@ -57,7 +57,7 @@ namespace Actions
 			action->setDefaultValue(WindowInstance::actions.second.at(WindowInstance::Close));
 			addElement(action);
 
-			ActionTools::GroupDefinition *moveGroup = new ActionTools::GroupDefinition(ActionTools::Name("move", tr("Move")), this);
+			ActionTools::GroupDefinition *moveGroup = new ActionTools::GroupDefinition(this);
 			moveGroup->setMasterList(action);
 			moveGroup->setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Move));
 
@@ -67,7 +67,7 @@ namespace Actions
 
 			addElement(moveGroup);
 
-			ActionTools::GroupDefinition *resizeGroup = new ActionTools::GroupDefinition(ActionTools::Name("resize", tr("Resize")), this);
+			ActionTools::GroupDefinition *resizeGroup = new ActionTools::GroupDefinition(this);
 			resizeGroup->setMasterList(action);
 			resizeGroup->setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Resize));
 

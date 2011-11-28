@@ -69,7 +69,6 @@ namespace Code
 		QScriptValue mOnClosed;
 		QScriptValue mOnColorSelected;
 		QScriptValue mOnColorChanged;
-		QScriptValue mThisObject;
 	};
 }
 

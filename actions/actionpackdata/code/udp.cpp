@@ -45,7 +45,7 @@ namespace Code
 				udp->mOnError = it.value();
 		}
 
-		return udp->mThisObject = CodeClass::constructor(udp, context, engine);
+		return CodeClass::constructor(udp, context, engine);
 	}
 	
 	Udp::Udp()
@@ -66,7 +66,7 @@ namespace Code
 	{
 		mUdpSocket->connectToHost(hostname, port, static_cast<QIODevice::OpenMode>(openMode));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Udp::waitForConnected(int waitTime)
@@ -74,7 +74,7 @@ namespace Code
 		if(!mUdpSocket->waitForConnected(waitTime))
 			throwError("ConnectionError", tr("Cannot establish a connection to the host"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Udp::waitForReadyRead(int waitTime)
@@ -82,7 +82,7 @@ namespace Code
 		if(!mUdpSocket->waitForReadyRead(waitTime))
 			throwError("ReadyReadError", tr("Waiting for ready read failed"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Udp::write(const QScriptValue &data)
@@ -99,7 +99,7 @@ namespace Code
 				throwError("WriteError", tr("Write failed"));
 		}
 	
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Udp::writeText(const QString &data, Encoding encoding)
@@ -107,12 +107,12 @@ namespace Code
 		if(mUdpSocket->write(toEncoding(data, encoding)) == -1)
 			throwError("WriteError", tr("Write failed"));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Udp::read()
 	{
-		return RawData::constructor(mUdpSocket->readAll(), context(), engine());
+		return RawData::constructor(mUdpSocket->readAll(), engine());
 	}
 	
 	QString Udp::readText(Encoding encoding)
@@ -124,25 +124,25 @@ namespace Code
 	{
 		mUdpSocket->disconnectFromHost();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	void Udp::connected()
 	{
 		if(mOnConnected.isValid())
-			mOnConnected.call(mThisObject);
+			mOnConnected.call(thisObject());
 	}
 
 	void Udp::disconnected()
 	{
 		if(mOnDisconnected.isValid())
-			mOnDisconnected.call(mThisObject);
+			mOnDisconnected.call(thisObject());
 	}
 
 	void Udp::readyRead()
 	{
 		if(mOnReadyRead.isValid())
-			mOnReadyRead.call(mThisObject);
+			mOnReadyRead.call(thisObject());
 	}
 
 	void Udp::error(QAbstractSocket::SocketError socketError)
@@ -150,6 +150,6 @@ namespace Code
 		Q_UNUSED(socketError)
 
 		if(mOnError.isValid())
-			mOnError.call(mThisObject, mUdpSocket->errorString());
+			mOnError.call(thisObject(), QScriptValueList() << mUdpSocket->errorString());
 	}
 }

@@ -39,7 +39,7 @@ namespace Code
 		
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QPoint &point, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(const QPoint &point, QScriptEngine *engine);
 		static QPoint parameter(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);

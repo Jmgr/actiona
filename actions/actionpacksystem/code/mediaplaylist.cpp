@@ -53,28 +53,28 @@ namespace Code
 	{
 		mMediaPlayer->setPlaybackRate(rate);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue MediaPlaylist::setVolume(qreal volume)
 	{
 		mMediaPlayer->setVolume(volume);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue MediaPlaylist::setPosition(qint64 position)
 	{
 		mMediaPlayer->setPosition(position);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue MediaPlaylist::setMuted(bool muted)
 	{
 		mMediaPlayer->setMuted(muted);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	qint64 MediaPlaylist::duration() const
@@ -126,21 +126,21 @@ namespace Code
 	{
 		mMediaPlayer->play();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue MediaPlaylist::pause()
 	{
 		mMediaPlayer->pause();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue MediaPlaylist::stop()
 	{
 		mMediaPlayer->stop();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue MediaPlaylist::addLocalMedia(const QString &path)
@@ -148,10 +148,10 @@ namespace Code
 		if(!mMediaPlaylist->addMedia(QUrl::fromLocalFile(path)))
 		{
 			throwError("AddMediaError", tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue MediaPlaylist::addDistantMedia(const QString &path)
@@ -159,10 +159,10 @@ namespace Code
 		if(!mMediaPlaylist->addMedia(QUrl(path)))
 		{
 			throwError("AddMediaError", tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MediaPlaylist::insertLocalMedia(int position, const QString &path)
@@ -170,10 +170,10 @@ namespace Code
 		if(!mMediaPlaylist->insertMedia(position, QUrl::fromLocalFile(path)))
 		{
 			throwError("InsertMediaError", tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue MediaPlaylist::insertDistantMedia(int position, const QString &path)
@@ -181,10 +181,10 @@ namespace Code
 		if(!mMediaPlaylist->insertMedia(position, QUrl(path)))
 		{
 			throwError("InsertMediaError", tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MediaPlaylist::clear()
@@ -192,45 +192,45 @@ namespace Code
 		if(!mMediaPlaylist->clear())
 		{
 			throwError("ClearMediaError", tr("Clear failed : %1").arg(mMediaPlaylist->errorString()));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MediaPlaylist::next()
 	{
 		mMediaPlaylist->next();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MediaPlaylist::previous()
 	{
 		mMediaPlaylist->previous();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MediaPlaylist::setCurrentMedia(int mediaIndex)
 	{
 		mMediaPlaylist->setCurrentIndex(mediaIndex);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MediaPlaylist::shuffle()
 	{
 		mMediaPlaylist->shuffle();
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MediaPlaylist::setPlaybackMode(PlaybackMode playbackMode)
 	{
 		mMediaPlaylist->setPlaybackMode(static_cast<QMediaPlaylist::PlaybackMode>(playbackMode));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue MediaPlaylist::removeMedia(int position)
@@ -238,10 +238,10 @@ namespace Code
 		if(!mMediaPlaylist->removeMedia(position))
 		{
 			throwError("RemoveMediaError", tr("Remove media failed : %1").arg(mMediaPlaylist->errorString()));
-			return context()->thisObject();
+			return thisObject();
 		}
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	int MediaPlaylist::currentMedia() const

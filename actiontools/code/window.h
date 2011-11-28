@@ -46,7 +46,7 @@ namespace Code
 		};
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const ActionTools::WindowHandle &windowHandle, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(const ActionTools::WindowHandle &windowHandle, QScriptEngine *engine);
 		static ActionTools::WindowHandle parameter(QScriptContext *context, QScriptEngine *engine);
 
 		static QScriptValue find(QScriptContext *context, QScriptEngine *engine);

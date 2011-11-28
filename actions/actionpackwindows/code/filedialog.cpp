@@ -92,7 +92,7 @@ namespace Code
 				fileDialog->mOnFilterSelected = it.value();
 		}
 
-		return fileDialog->mThisObject = CodeClass::constructor(fileDialog, context, engine);
+		return CodeClass::constructor(fileDialog, context, engine);
 	}
 	
 	FileDialog::FileDialog()
@@ -118,119 +118,119 @@ namespace Code
 	{
 		mFileDialog->setAcceptMode(static_cast<QFileDialog::AcceptMode>(acceptMode));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setFileMode(FileMode fileMode)
 	{
 		mFileDialog->setFileMode(static_cast<QFileDialog::FileMode>(fileMode));
 				
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setViewMode(ViewMode viewMode)
 	{
 		mFileDialog->setViewMode(static_cast<QFileDialog::ViewMode>(viewMode));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setLabelText(DialogLabel dialogLabel, const QString &text)
 	{
 		mFileDialog->setLabelText(static_cast<QFileDialog::DialogLabel>(dialogLabel), text);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::selectFile(const QString &filename)
 	{
 		mFileDialog->selectFile(filename);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::selectNameFilter(const QString &filter)
 	{
 		mFileDialog->selectNameFilter(filter);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setDefaultSuffix(const QString &defaultSuffix)
 	{
 		mFileDialog->setDefaultSuffix(defaultSuffix);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setDirectory(const QString &directory)
 	{
 		mFileDialog->setDirectory(directory);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setFilter(Filters filters)
 	{
 		mFileDialog->setFilter(static_cast<QDir::Filters>(filters));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setNameFilter(const QString &nameFilter)
 	{
 		mFileDialog->setNameFilter(nameFilter);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setNameFilters(const QScriptValue &nameFilters)
 	{
 		mFileDialog->setNameFilters(arrayParameterToStringList(nameFilters));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setShowDirectoriesOnly(bool showDirectoriesOnly)
 	{
 		mFileDialog->setOption(QFileDialog::ShowDirsOnly, showDirectoriesOnly);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setDontResolveSymlinks(bool dontResolveSymlinks)
 	{
 		mFileDialog->setOption(QFileDialog::DontResolveSymlinks, dontResolveSymlinks);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setDontConfirmOverwrite(bool dontConfirmOverwrite)
 	{
 		mFileDialog->setOption(QFileDialog::DontConfirmOverwrite, dontConfirmOverwrite);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setDontUseNativeDialog(bool dontUseNativeDialog)
 	{
 		mFileDialog->setOption(QFileDialog::DontUseNativeDialog, dontUseNativeDialog);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setReadOnly(bool readOnly)
 	{
 		mFileDialog->setOption(QFileDialog::ReadOnly, readOnly);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setHideNameFilterDetails(bool hideNameFilterDetails)
 	{
 		mFileDialog->setOption(QFileDialog::HideNameFilterDetails, hideNameFilterDetails);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue FileDialog::setSidebarUrls(const QScriptValue &sidebarUrls)
@@ -242,7 +242,7 @@ namespace Code
 			
 		mFileDialog->setSidebarUrls(urls);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QString FileDialog::selectedFile() const
@@ -269,7 +269,7 @@ namespace Code
 	{
 		mFileDialog->open();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	int FileDialog::showModal()
@@ -280,36 +280,36 @@ namespace Code
 	void FileDialog::finished(int result)
 	{
 		if(mOnClosed.isValid())
-			mOnClosed.call(mThisObject, result);
+			mOnClosed.call(thisObject(), QScriptValueList() << result);
 	}
 
 	void FileDialog::currentChanged(const QString &path)
 	{
 		if(mOnCurrentChanged.isValid())
-			mOnCurrentChanged.call(mThisObject, path);
+			mOnCurrentChanged.call(thisObject(), QScriptValueList() << path);
 	}
 
 	void FileDialog::directoryEntered(const QString &directory)
 	{
 		if(mOnDirectoryEntered.isValid())
-			mOnDirectoryEntered.call(mThisObject, directory);
+			mOnDirectoryEntered.call(thisObject(), QScriptValueList() << directory);
 	}
 
 	void FileDialog::fileSelected(const QString &file)
 	{
 		if(mOnFileSelected.isValid())
-			mOnFileSelected.call(mThisObject, file);
+			mOnFileSelected.call(thisObject(), QScriptValueList() << file);
 	}
 
 	void FileDialog::filesSelected(const QStringList &files)
 	{
 		if(mOnFilesSelected.isValid())
-			mOnFilesSelected.call(mThisObject, stringListToArrayParameter(engine(), files));
+			mOnFilesSelected.call(thisObject(), QScriptValueList() << stringListToArrayParameter(engine(), files));
 	}
 
 	void FileDialog::filterSelected(const QString &filter)
 	{
 		if(mOnFilterSelected.isValid())
-			mOnFilterSelected.call(mThisObject, filter);
+			mOnFilterSelected.call(thisObject(), QScriptValueList() << filter);
 	}
 }

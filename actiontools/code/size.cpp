@@ -55,9 +55,9 @@ namespace Code
 		return CodeClass::constructor(size, context, engine);
 	}
 	
-	QScriptValue Size::constructor(const QSize &size, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue Size::constructor(const QSize &size, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new Size(size), context, engine);
+		return CodeClass::constructor(new Size(size), engine);
 	}
 	
 	QSize Size::parameter(QScriptContext *context, QScriptEngine *engine)
@@ -138,7 +138,7 @@ namespace Code
 	
 	QScriptValue Size::clone() const
 	{
-		return constructor(mSize, context(), engine());
+		return constructor(mSize, engine());
 	}
 
 	bool Size::equals(const QScriptValue &other) const
@@ -162,14 +162,14 @@ namespace Code
 	{
 		mSize.setWidth(width);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue Size::setHeight(int height)
 	{
 		mSize.setHeight(height);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	int Size::width() const

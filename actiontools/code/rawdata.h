@@ -38,8 +38,8 @@ namespace Code
 	
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const RawData &other, QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QByteArray &byteArray, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue constructor(const RawData &other, QScriptEngine *engine);
+		static QScriptValue constructor(const QByteArray &byteArray, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
 		

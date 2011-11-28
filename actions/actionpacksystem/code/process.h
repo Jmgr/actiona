@@ -124,7 +124,6 @@ namespace Code
 		QScriptValue mOnReadyReadStandardOutput;
 		QScriptValue mOnStarted;
 		QScriptValue mOnStateChanged;
-		QScriptValue mThisObject;
 	};
 }
 

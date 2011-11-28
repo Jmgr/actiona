@@ -53,7 +53,7 @@ namespace Code
 				progressDialog->mOnCanceled = it.value();
 		}
 
-		return progressDialog->mThisObject = CodeClass::constructor(progressDialog, context, engine);
+		return CodeClass::constructor(progressDialog, context, engine);
 	}
 	
 	ProgressDialog::ProgressDialog()
@@ -74,28 +74,28 @@ namespace Code
 	{
 		mProgressDialog->setValue(value);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue ProgressDialog::setLabelText(const QString &labelText)
 	{
 		mProgressDialog->setLabelText(labelText);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue ProgressDialog::setMinimum(int minimum)
 	{
 		mProgressDialog->setMinimum(minimum);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue ProgressDialog::setMaximum(int maximum)
 	{
 		mProgressDialog->setMaximum(maximum);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue ProgressDialog::setRange(int minimum, int maximum)
@@ -103,14 +103,14 @@ namespace Code
 		mProgressDialog->setMinimum(minimum);
 		mProgressDialog->setMaximum(maximum);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue ProgressDialog::show()
 	{
 		mProgressDialog->open();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	int ProgressDialog::showModal()
@@ -126,6 +126,6 @@ namespace Code
 	void ProgressDialog::canceled()
 	{
 		if(mProgressDialog->isVisible() && mOnCanceled.isValid())
-			mOnCanceled.call(mThisObject);
+			mOnCanceled.call(thisObject());
 	}
 }

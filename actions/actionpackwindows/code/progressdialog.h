@@ -60,7 +60,6 @@ namespace Code
 	private:
 		QProgressDialog *mProgressDialog;
 		QScriptValue mOnCanceled;
-		QScriptValue mThisObject;
 	};
 }
 

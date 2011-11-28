@@ -57,12 +57,14 @@ namespace Code
 	QScriptValue CodeClass::constructor(CodeClass *object, QScriptContext *context, QScriptEngine *engine)
 	{
 		if(context->isCalledAsConstructor())
-		{
-			engine->newQObject(context->thisObject(), object, QScriptEngine::ScriptOwnership);
-			return context->thisObject();
-		}
+			return object->mThisObject = engine->newQObject(context->thisObject(), object, QScriptEngine::ScriptOwnership);
 		else
-			return engine->newQObject(object, QScriptEngine::ScriptOwnership);
+			return constructor(object, engine);
+	}
+
+	QScriptValue CodeClass::constructor(CodeClass *object, QScriptEngine *engine)
+	{
+		return object->mThisObject = engine->newQObject(object, QScriptEngine::ScriptOwnership);
 	}
 
 	QByteArray CodeClass::toEncoding(const QString &string, Encoding encoding)

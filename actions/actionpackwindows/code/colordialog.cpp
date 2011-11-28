@@ -49,7 +49,7 @@ namespace Code
 				colorDialog->mOnColorChanged = it.value();
 		}
 
-		return colorDialog->mThisObject = CodeClass::constructor(colorDialog, context, engine);
+		return CodeClass::constructor(colorDialog, context, engine);
 	}
 
 	ColorDialog::ColorDialog()
@@ -72,21 +72,21 @@ namespace Code
 	{
 		mColorDialog->setOption(QColorDialog::ShowAlphaChannel, showAlphaChannel);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue ColorDialog::setColor(const QScriptValue &color)
 	{
 		setColorPrivate(color, context());
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue ColorDialog::show()
 	{
 		mColorDialog->open();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	int ColorDialog::showModal()
@@ -96,25 +96,25 @@ namespace Code
 	
 	QScriptValue ColorDialog::color() const
 	{
-		return Color::constructor(mColorDialog->currentColor(), context(), engine());
+		return Color::constructor(mColorDialog->currentColor(), engine());
 	}
 	
 	void ColorDialog::finished(int result)
 	{
 		if(mOnClosed.isValid())
-			mOnClosed.call(mThisObject, result);
+			mOnClosed.call(thisObject(), QScriptValueList() << result);
 	}
 	
 	void ColorDialog::colorSelected(const QColor &color)
 	{
 		if(mOnColorSelected.isValid())
-			mOnColorSelected.call(mThisObject, Color::constructor(color, context(), engine()));
+			mOnColorSelected.call(thisObject(), QScriptValueList() << Color::constructor(color, engine()));
 	}
 
 	void ColorDialog::currentColorChanged(const QColor &color)
 	{
 		if(mOnColorChanged.isValid())
-			mOnColorChanged.call(mThisObject,Color::constructor(color, context(), engine()));
+			mOnColorChanged.call(thisObject(), QScriptValueList() << Color::constructor(color, engine()));
 	}
 	
 	void ColorDialog::setColorPrivate(const QScriptValue &color, QScriptContext *context)

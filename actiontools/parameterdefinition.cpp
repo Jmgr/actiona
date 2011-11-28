@@ -27,16 +27,18 @@ namespace ActionTools
 {
 	ParameterDefinition::ParameterDefinition(const Name &name, QObject *parent)
 		: ElementDefinition(name, parent),
-		mOperatingSystems(WorksOnGnuLinux |
-						  WorksOnWindows |
-						  WorksOnMac)
+		  mOperatingSystems(WorksOnGnuLinux |
+							WorksOnWindows |
+							WorksOnMac),
+		  mParentWidget(0)
 	{
 	}
 
 	void ParameterDefinition::buildEditors(Script *script, QWidget *parent)
 	{
 		Q_UNUSED(script)
-		Q_UNUSED(parent)
+
+		mParentWidget = parent;
 
 		mEditors.clear();
 	}

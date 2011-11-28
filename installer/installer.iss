@@ -1,6 +1,6 @@
-#define MyAppName "Actionaz 3"
-#define MyAppVersion "0.1.3"
-#define MyAppIsBeta 1
+#define MyAppName "Actionaz"
+#define MyAppVersion "3.0.0"
+#define MyAppIsBeta 0
 #define MyAppPublisher "Actionaz.org"
 #define MyAppURL "http://www.actionaz.org/"
 #define MyAppExeName "actionaz.exe"
@@ -28,7 +28,7 @@ DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=C:\actionaz\installer\reference{#MyAppBits}\LICENSE.txt
 OutputDir=C:\actionaz\installer
-OutputBaseFilename=actionaz3-{#MyAppVersion}-win{#MyAppBits}
+OutputBaseFilename=actionaz-{#MyAppVersion}-win{#MyAppBits}
 SetupIconFile=C:\actionaz\gui\icons\actionaz.ico
 Compression=lzma2/ultra
 SolidCompression=yes

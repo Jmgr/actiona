@@ -71,7 +71,7 @@ namespace Code
 				inputDialog->mOnValueChanged = it.value();
 		}
 
-		return inputDialog->mThisObject = CodeClass::constructor(inputDialog, context, engine);
+		return CodeClass::constructor(inputDialog, context, engine);
 	}
 
 	InputDialog::InputDialog()
@@ -96,56 +96,56 @@ namespace Code
 	{
 		mInputDialog->setLabelText(labelText);
 
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue InputDialog::setOkButtonText(const QString &okButtonText)
 	{
 		mInputDialog->setOkButtonText(okButtonText);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue InputDialog::setCancelButtonText(const QString &cancelButtonText)
 	{
 		mInputDialog->setCancelButtonText(cancelButtonText);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue InputDialog::setTextEchoMode(TextEchoMode textEchoMode)
 	{
 		mInputDialog->setTextEchoMode(static_cast<QLineEdit::EchoMode>(textEchoMode));
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue InputDialog::setFloatDecimals(int decimals)
 	{
 		mInputDialog->setDoubleDecimals(decimals);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue InputDialog::setIntegerStep(int step)
 	{
 		mInputDialog->setIntStep(step);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue InputDialog::setMaximum(const QScriptValue &maximum)
 	{
 		mMaximum = maximum;
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue InputDialog::setMinimum(const QScriptValue &minimum)
 	{
 		mMinimum = minimum;
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue InputDialog::setRange(const QScriptValue &minimum, const QScriptValue &maximum)
@@ -153,35 +153,35 @@ namespace Code
 		mMinimum = minimum;
 		mMaximum = maximum;
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue InputDialog::setInputType(InputType inputType)
 	{
 		mInputType = inputType;
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue InputDialog::setValue(const QScriptValue &value)
 	{
 		mValue = value;
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue InputDialog::setItems(const QScriptValue &items)
 	{
 		mItems = items;
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue InputDialog::setItemsEditable(bool itemsEditable)
 	{
 		mInputDialog->setComboBoxEditable(itemsEditable);
 		
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue InputDialog::show()
@@ -190,7 +190,7 @@ namespace Code
 		
 		mInputDialog->open();
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	int InputDialog::showModal()
@@ -219,25 +219,25 @@ namespace Code
 	void InputDialog::finished(int result)
 	{
 		if(mOnClosed.isValid())
-			mOnClosed.call(mThisObject, result);
+			mOnClosed.call(thisObject(), QScriptValueList() << result);
 	}
 	
 	void InputDialog::doubleValueChanged(double value)
 	{
 		if(mOnValueChanged.isValid())
-			mOnValueChanged.call(mThisObject, value);
+			mOnValueChanged.call(thisObject(), QScriptValueList() << value);
 	}
 
 	void InputDialog::intValueChanged(int value)
 	{
 		if(mOnValueChanged.isValid())
-			mOnValueChanged.call(mThisObject, value);
+			mOnValueChanged.call(thisObject(), QScriptValueList() << value);
 	}
 
 	void InputDialog::textValueChanged(const QString &value)
 	{
 		if(mOnValueChanged.isValid())
-			mOnValueChanged.call(mThisObject, value);
+			mOnValueChanged.call(thisObject(), QScriptValueList() << value);
 	}
 	
 	void InputDialog::setup()

@@ -44,21 +44,21 @@ namespace Actions
 			: ActionDefinition(pack)
 		{
 	#ifdef Q_WS_WIN
-			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition("key", tr("Key"), this);
+			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition(ActionTools::Name("key", tr("Key")), this);
 			key->setTooltip(tr("The registry key to write to"));
 			key->setItems(ReadRegistryInstance::keys);
 			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 			addElement(key);
 
-			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition("subKey", tr("Subkey"), this);
+			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition(ActionTools::Name("subKey", tr("Subkey")), this);
 			subKey->setTooltip(tr("The registry subkey to write to"));
 			addElement(subKey);
 
-			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition("value", tr("Value"), this);
+			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
 			value->setTooltip(tr("The value to write to"));
 			addElement(value);
 
-			ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition("data", tr("Data"), this);
+			ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition(ActionTools::Name("data", tr("Data")), this);
 			data->setTooltip(tr("The data to write"));
 			addElement(data);
 

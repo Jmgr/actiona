@@ -39,7 +39,8 @@ SOURCES += actionfactory.cpp \
     datacopyactioninstance.cpp \
 	nativeeventfilteringapplication.cpp \
 	pointitemdelegate.cpp \
-	actionpack.cpp
+	actionpack.cpp \
+	opencvalgorithms.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -74,16 +75,24 @@ HEADERS += actiontools_global.h \
 	nativeeventfilteringapplication.h \
 	pointitemdelegate.h \
 	actiondefinitionenums.h \
-    name.h
+	name.h \
+	opencvalgorithms.h \
+	matchingpointlist.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \
-    -lPsapi
-unix:LIBS += -lXtst -lX11
+	-lPsapi \
+	-L$${OPENCV_LIB} \
+	-l$${OPENCV_LIB_CORE} \
+	-l$${OPENCV_LIB_IMGPROC}
+unix:LIBS += -lXtst \
+	-lX11 \
+	-lcv
 TRANSLATIONS = ../locale/actiontools_fr_FR.ts
 RESOURCES += actiontools.qrc
 INCLUDEPATH += . \
-    ../tools
+	../tools
+win32:INCLUDEPATH += $${BOOST_INCLUDE} $${OPENCV_INCLUDE}
 LIBS += -L.. \
     -ltools
 

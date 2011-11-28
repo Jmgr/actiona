@@ -79,7 +79,7 @@ namespace Code
 		if(!QDesktopServices::openUrl(QUrl(url)))
 			throwError("OpenUrlError", tr("Cannot open the url"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	int System::screenCount() const
@@ -89,12 +89,12 @@ namespace Code
 
 	QScriptValue System::availableGeometry(int screen) const
 	{
-		return Rect::constructor(QApplication::desktop()->availableGeometry(screen), context(), engine());
+		return Rect::constructor(QApplication::desktop()->availableGeometry(screen), engine());
 	}
 
 	QScriptValue System::screenGeometry(int screen) const
 	{
-		return Rect::constructor(QApplication::desktop()->screenGeometry(screen), context(), engine());
+		return Rect::constructor(QApplication::desktop()->screenGeometry(screen), engine());
 	}
 
 	int System::primaryScreen() const
@@ -222,7 +222,7 @@ namespace Code
 		if(!mSystemSession->logout(force))
 			throwError("LogoutError", tr("Logout failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue System::restart(bool force) const
@@ -230,7 +230,7 @@ namespace Code
 		if(!mSystemSession->restart(force))
 			throwError("RestartError", tr("Restart failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue System::shutdown(bool force) const
@@ -238,7 +238,7 @@ namespace Code
 		if(!mSystemSession->shutdown(force))
 			throwError("ShutdownError", tr("Shutdown failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue System::suspend(bool force) const
@@ -246,7 +246,7 @@ namespace Code
 		if(!mSystemSession->suspend(force))
 			throwError("SuspendError", tr("Suspend failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue System::hibernate(bool force) const
@@ -254,7 +254,7 @@ namespace Code
 		if(!mSystemSession->hibernate(force))
 			throwError("HibernateError", tr("Hibernate failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue System::lockScreen() const
@@ -262,7 +262,7 @@ namespace Code
 		if(!mSystemSession->lockScreen())
 			throwError("LockScreenError", tr("Lock screen failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 
 	QScriptValue System::startScreenSaver() const
@@ -270,6 +270,6 @@ namespace Code
 		if(!mSystemSession->startScreenSaver())
 			throwError("StartScreenSaverError", tr("Start screen saver failed"));
 
-		return context()->thisObject();
+		return thisObject();
 	}
 }

@@ -66,7 +66,7 @@ namespace Code
 		Q_UNUSED(key)
 		Q_UNUSED(subKey)
 	#endif
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Registry::createKey(Key key, const QString &subKey)
@@ -85,7 +85,7 @@ namespace Code
 		Q_UNUSED(key)
 		Q_UNUSED(subKey)
 	#endif
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Registry::setValue(const QString &value, const QVariant &data) const
@@ -150,7 +150,7 @@ namespace Code
 		Q_UNUSED(value)
 		Q_UNUSED(data)
 	#endif
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QVariant Registry::value(const QString &value) const
@@ -344,7 +344,7 @@ namespace Code
 	#else
 		Q_UNUSED(value)
 	#endif
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	#ifdef Q_WS_WIN
@@ -450,7 +450,7 @@ namespace Code
 		Q_UNUSED(key)
 		Q_UNUSED(subKey)
 	#endif
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Registry::deleteKey() const
@@ -460,7 +460,7 @@ namespace Code
 	
 		deleteKey(mRootKey, mSubKey);
 	#endif
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	QScriptValue Registry::closeKey() const
@@ -468,7 +468,7 @@ namespace Code
 	#ifdef Q_WS_WIN
 		RegCloseKey(mHKey);
 	#endif
-		return context()->thisObject();
+		return thisObject();
 	}
 	
 	#ifdef Q_WS_WIN
