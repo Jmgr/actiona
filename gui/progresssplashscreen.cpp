@@ -23,6 +23,10 @@
 #include <QProgressBar>
 #include <QTimer>
 
+#ifdef Q_WS_X11
+#include <QX11Info>
+#endif
+
 ProgressSplashScreen::ProgressSplashScreen(const QPixmap &pixmap, Qt::WindowFlags f)
 	: QSplashScreen(pixmap, f),
 	mProgressBar(new QProgressBar(this)),
@@ -63,7 +67,19 @@ void ProgressSplashScreen::setValue(int value)
 
 void ProgressSplashScreen::fadeOut()
 {
-	mOpacityTimer->start(25);
+	bool isCompositingManagerRunning = true;
+
+#ifdef Q_WS_X11
+	isCompositingManagerRunning = QX11Info::isCompositingManagerRunning();
+#endif
+
+	if(isCompositingManagerRunning)
+		mOpacityTimer->start(25);
+	else
+	{
+		close();
+		deleteLater();
+	}
 }
 
 void ProgressSplashScreen::drawContents(QPainter *painter)

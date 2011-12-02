@@ -32,37 +32,50 @@ namespace LibExecuter
 	
 	QScriptValue CodeStdio::print(QScriptContext *context, QScriptEngine *)
 	{
-		if(context->argumentCount() < 1)
-			return context->thisObject();
+		print(context->argument(0).toString());
 		
-		QTextStream stream(stdout);
-		stream << context->argument(0).toString();
-		stream.flush();
-		
+		return context->thisObject();
+	}
+
+	QScriptValue CodeStdio::println(QScriptContext *context, QScriptEngine *)
+	{
+		print(QString("%1\n").arg(context->argument(0).toString()));
+
 		return context->thisObject();
 	}
 
 	QScriptValue CodeStdio::printWarning(QScriptContext *context, QScriptEngine *)
 	{
-		if(context->argumentCount() < 1)
-			return context->thisObject();
-		
-		QTextStream stream(stdout);
-		stream << tr("Warning: ") << context->argument(0).toString();
-		stream.flush();
-		
+		print(tr("Warning: %1").arg(context->argument(0).toString()));
+
+		return context->thisObject();
+	}
+
+	QScriptValue CodeStdio::printlnWarning(QScriptContext *context, QScriptEngine *)
+	{
+		print(tr("Warning: %1\n").arg(context->argument(0).toString()));
+
 		return context->thisObject();
 	}
 
 	QScriptValue CodeStdio::printError(QScriptContext *context, QScriptEngine *)
 	{
-		if(context->argumentCount() < 1)
-			return context->thisObject();
-		
-		QTextStream stream(stdout);
-		stream << tr("Error: ") << context->argument(0).toString();
-		stream.flush();
+		print(tr("Error: %1").arg(context->argument(0).toString()));
 		
 		return context->thisObject();
+	}
+
+	QScriptValue CodeStdio::printlnError(QScriptContext *context, QScriptEngine *)
+	{
+		print(tr("Error: %1\n").arg(context->argument(0).toString()));
+
+		return context->thisObject();
+	}
+
+	void CodeStdio::print(const QString &text)
+	{
+		QTextStream stream(stdout);
+		stream << text;
+		stream.flush();
 	}
 }

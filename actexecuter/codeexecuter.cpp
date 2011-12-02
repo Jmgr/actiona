@@ -73,8 +73,11 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
 
 	Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeStdio>("Console", mScriptEngine);
 	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::print, "print", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::println, "println", mScriptEngine);
 	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printWarning, "printWarning", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printlnWarning, "printlnWarning", mScriptEngine);
 	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printError, "printError", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printlnError, "printlnError", mScriptEngine);
 
 	Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeActionaz>("Actionaz", mScriptEngine);
 	LibExecuter::CodeActionaz::setActExec(true);

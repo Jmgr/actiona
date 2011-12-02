@@ -21,6 +21,15 @@
 #include "mouse.h"
 #include "code/point.h"
 
+#include <QDebug>
+
+/*
+#ifdef Q_WS_X11
+#include <X11/Xlib.h>
+#include <QX11Info>
+#endif
+*/
+
 namespace Code
 {
 	QScriptValue Mouse::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -31,6 +40,31 @@ namespace Code
 	Mouse::Mouse()
 		: CodeClass()
 	{
+		nativeEventFilteringApp->installNativeEventFilter(this);
+/*
+#ifdef Q_WS_X11
+		if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask | ButtonPressMask | PointerMotionMask, GrabModeAsync, GrabModeAsync,
+						None, None, CurrentTime) != GrabSuccess)
+		{
+			qDebug() << "Unable to grab the pointer.";
+		}
+		if(XGrabKeyboard(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, GrabModeAsync, GrabModeAsync, CurrentTime) != GrabSuccess)
+		{
+			qDebug() << "Unable to grab the keyboard.";
+		}
+#endif
+*/
+	}
+
+	Mouse::~Mouse()
+	{
+		/*
+#ifdef Q_WS_X11
+		XUngrabPointer(QX11Info::display(), CurrentTime);
+		XUngrabKeyboard(QX11Info::display(), CurrentTime);
+#endif
+*/
+		nativeEventFilteringApp->removeNativeEventFilter(this);
 	}
 
 	QScriptValue Mouse::position() const
@@ -81,4 +115,31 @@ namespace Code
 		
 		return thisObject();
 	}
+
+	/*
+#ifdef Q_WS_X11
+	bool Mouse::x11EventFilter(XEvent *event)
+	{
+		if(event->type == ButtonRelease)
+		{
+			XButtonEvent *bevent = (XButtonEvent *)event;
+
+			qDebug() << "release " << bevent->button;
+		}
+		else if(event->type == ButtonPress)
+		{
+			XButtonEvent *bevent = (XButtonEvent *)event;
+
+			qDebug() << "press " << bevent->button;
+		}
+		else if(event->type == MotionNotify)
+			qDebug() << "motion " << QCursor::pos();
+		else if(event->type == KeyPress)
+			qDebug() << "key press";
+		else if(event->type == KeyRelease)
+			qDebug() << "key release";
+		return false;
+	}
+#endif
+*/
 }

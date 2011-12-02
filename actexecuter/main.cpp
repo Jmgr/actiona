@@ -320,7 +320,7 @@ int main(int argc, char **argv)
 			else
 			{
 				QTextStream stream(stdout);
-				stream << QObject::tr("Unknown execution mode, please specify -o (script) or -r (code)") << "\n";
+				stream << QObject::tr("Unknown execution mode, please specify -s (script) or -c (code)") << "\n";
 				stream.flush();
 				return -1;
 			}

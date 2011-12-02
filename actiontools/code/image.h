@@ -107,8 +107,8 @@ namespace Code
 		QScriptValue copy() const;
 		QScriptValue findSubImage(const QScriptValue &otherImage, const QScriptValue &options = QScriptValue()) const;
 		QScriptValue findSubImages(const QScriptValue &otherImage, const QScriptValue &options = QScriptValue()) const;
-		QScriptValue findSubImageAsync(const QScriptValue &otherImage, const QScriptValue &function, const QScriptValue &options = QScriptValue());
-		QScriptValue findSubImagesAsync(const QScriptValue &otherImage, const QScriptValue &function, const QScriptValue &options = QScriptValue());
+		QScriptValue findSubImageAsync(const QScriptValue &otherImage, const QScriptValue &callback, const QScriptValue &options = QScriptValue());
+		QScriptValue findSubImagesAsync(const QScriptValue &otherImage, const QScriptValue &callback, const QScriptValue &options = QScriptValue());
 
 	private slots:
 		void findSubImageAsyncFinished(const ActionTools::MatchingPointList &matchingPointList);
