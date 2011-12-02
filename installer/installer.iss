@@ -1,10 +1,10 @@
 #define MyAppName "Actionaz"
-#define MyAppVersion "3.0.0"
+#define MyAppVersion "3.0.1"
 #define MyAppIsBeta 0
 #define MyAppPublisher "Actionaz.org"
 #define MyAppURL "http://www.actionaz.org/"
 #define MyAppExeName "actionaz.exe"
-#define MyAppBits 64
+#define MyAppBits 32
 
 [Setup]
 #if MyAppBits == 32
