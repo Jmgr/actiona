@@ -41,10 +41,10 @@ namespace Code
 	QScriptValue File::copy(QScriptContext *context, QScriptEngine *engine)
 	{
 		QString source, destination;
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine))
-			copyPrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
+		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine))
+			copyPrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
 
 		return engine->undefinedValue();
 	}
@@ -52,10 +52,10 @@ namespace Code
 	QScriptValue File::move(QScriptContext *context, QScriptEngine *engine)
 	{
 		QString source, destination;
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine))
-			movePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
+		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine))
+			movePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
 
 		return engine->undefinedValue();
 	}
@@ -63,10 +63,10 @@ namespace Code
 	QScriptValue File::rename(QScriptContext *context, QScriptEngine *engine)
 	{
 		QString source, destination;
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine))
-			renamePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
+		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine))
+			renamePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
 
 		return engine->undefinedValue();
 	}
@@ -83,9 +83,9 @@ namespace Code
 
 		filename = context->argument(0).toString();
 
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(context->argument(1), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
+		if(getRemoveParameters(context->argument(1), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
 			removePrivate(filename, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
 
 		return engine->undefinedValue();
@@ -153,10 +153,10 @@ namespace Code
 	
 	QScriptValue File::copy(const QString &destination, const QScriptValue &options) const
 	{
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
-			return copyPrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
+		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
+			return copyPrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context(), engine());
 		else
 			return false;
 	}
@@ -165,20 +165,20 @@ namespace Code
 	{
 		mFile.close();
 	
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
-			return movePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
+		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
+			return movePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context(), engine());
 		else
 			return false;
 	}
 	
 	QScriptValue File::rename(const QString &destination, const QScriptValue &options)
 	{
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
-			return renamePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
+		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
+			return renamePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context(), engine());
 		else
 			return false;
 	}
@@ -187,15 +187,15 @@ namespace Code
 	{
 		mFile.close();
 
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
+		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
 			return removePrivate(mFile.fileName(), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
 		else
 			return false;
 	}
 
-	bool File::getParameters(QString &source, QString &destination, const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, QScriptContext *context, QScriptEngine *engine)
+	bool File::getParameters(QString &source, QString &destination, const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
 	{
 		if(context->argumentCount() < 2)
 		{
@@ -206,10 +206,10 @@ namespace Code
 		source = context->argument(0).toString();
 		destination = context->argument(1).toString();
 
-		return getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo);
+		return getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory);
 	}
 
-	bool File::getRemoveParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo)
+	bool File::getRemoveParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory)
 	{
 		QScriptValueIterator it(options);
 
@@ -217,6 +217,7 @@ namespace Code
 		noConfirmDialog = false;
 		noProgressDialog = false;
 		allowUndo = false;
+		createDestinationDirectory = true;
 
 		while(it.hasNext())
 		{
@@ -230,16 +231,23 @@ namespace Code
 				noProgressDialog = it.value().toBool();
 			else if(it.name() == "allowUndo")
 				allowUndo = it.value().toBool();
+			else if(it.name() == "createDestinationDirectory")
+				createDestinationDirectory = it.value().toBool();
 		}
 
 		return true;
 	}
 
-	QScriptValue File::copyPrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue File::copyPrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(engine)
 
 #ifdef Q_WS_X11
+		Q_UNUSED(noErrorDialog)
+		Q_UNUSED(noConfirmDialog)
+		Q_UNUSED(noProgressDialog)
+		Q_UNUSED(allowUndo)
+
 		QDir destinationDir(destination);
 		QString sourceCopy(source);
 		QString destinationCopy(destination);
@@ -279,6 +287,8 @@ namespace Code
 		}
 #endif
 #ifdef Q_WS_WIN
+		Q_UNUSED(createDestinationDirectory)
+
 		QDir sourceDir(source);
 		QDir destinationDir(destination);
 
@@ -324,11 +334,16 @@ namespace Code
 		return context->thisObject();
 	}
 
-	QScriptValue File::movePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue File::movePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(engine)
 
 #ifdef Q_WS_X11
+		Q_UNUSED(noErrorDialog)
+		Q_UNUSED(noConfirmDialog)
+		Q_UNUSED(noProgressDialog)
+		Q_UNUSED(allowUndo)
+
 		QDir destinationDir(destination);
 		QString sourceCopy(source);
 		QString destinationCopy(destination);
@@ -368,6 +383,8 @@ namespace Code
 		}
 #endif
 #ifdef Q_WS_WIN
+		Q_UNUSED(createDestinationDirectory)
+
 		QDir sourceDir(source);
 		QDir destinationDir(destination);
 
@@ -413,14 +430,16 @@ namespace Code
 		return context->thisObject();
 	}
 
-	QScriptValue File::renamePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue File::renamePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(engine)
 
 #ifdef Q_WS_X11
-		movePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
+		movePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
 #endif
 #ifdef Q_WS_WIN
+		Q_UNUSED(createDestinationDirectory)
+
 		QDir sourceDir(source);
 		QDir destinationDir(destination);
 
