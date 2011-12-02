@@ -68,16 +68,19 @@ namespace Code
 		QScriptValue read();
 		QString readText(Encoding encoding = Native);
 		QScriptValue close();
-		QScriptValue copy(const QString &destination, bool createDestinationDirectory = true) const;
-		QScriptValue move(const QString &destination, bool createDestinationDirectory = true);
-		QScriptValue rename(const QString &destination, bool createDestinationDirectory = true);
-		QScriptValue remove();
+		QScriptValue copy(const QString &destination, const QScriptValue &options = QScriptValue()) const;
+		QScriptValue move(const QString &destination, const QScriptValue &options = QScriptValue());
+		QScriptValue rename(const QString &destination, const QScriptValue &options = QScriptValue());
+		QScriptValue remove(const QScriptValue &options = QScriptValue());
 	
 	private:
-		static bool getParameters(QString &source, QString &destination, bool &createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue copyPrivate(const QString &source, const QString &destination, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue movePrivate(const QString &source, const QString &destination, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue removePrivate(const QString &filename, QScriptContext *context, QScriptEngine *engine);
+		static bool getParameters(QString &source, QString &destination, const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, QScriptContext *context, QScriptEngine *engine);
+		static bool getRemoveParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo);
+		static QScriptValue copyPrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue movePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue renamePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue removePrivate(const QString &filename, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine);
+		static QString getErrorString(int error);
 
 		QFile mFile;
 	};

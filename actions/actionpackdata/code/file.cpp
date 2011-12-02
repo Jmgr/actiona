@@ -24,6 +24,12 @@
 #include <QScriptValueIterator>
 #include <QProcess>
 #include <QDir>
+#include <QDebug>
+
+#ifdef Q_WS_WIN
+#include <Windows.h>
+#include <Shellapi.h>
+#endif
 
 namespace Code
 {
@@ -35,10 +41,10 @@ namespace Code
 	QScriptValue File::copy(QScriptContext *context, QScriptEngine *engine)
 	{
 		QString source, destination;
-		bool createDestinationDirectory;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
 
-		if(getParameters(source, destination, createDestinationDirectory, context, engine))
-			copyPrivate(source, destination, createDestinationDirectory, context, engine);
+		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine))
+			copyPrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
 
 		return engine->undefinedValue();
 	}
@@ -46,10 +52,10 @@ namespace Code
 	QScriptValue File::move(QScriptContext *context, QScriptEngine *engine)
 	{
 		QString source, destination;
-		bool createDestinationDirectory;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
 
-		if(getParameters(source, destination, createDestinationDirectory, context, engine))
-			movePrivate(source, destination, createDestinationDirectory, context, engine);
+		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine))
+			movePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
 
 		return engine->undefinedValue();
 	}
@@ -57,10 +63,10 @@ namespace Code
 	QScriptValue File::rename(QScriptContext *context, QScriptEngine *engine)
 	{
 		QString source, destination;
-		bool createDestinationDirectory;
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
 
-		if(getParameters(source, destination, createDestinationDirectory, context, engine))
-			movePrivate(source, destination, createDestinationDirectory, context, engine);
+		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine))
+			renamePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
 
 		return engine->undefinedValue();
 	}
@@ -77,7 +83,10 @@ namespace Code
 
 		filename = context->argument(0).toString();
 
-		removePrivate(filename, context, engine);
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+
+		if(getRemoveParameters(context->argument(1), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
+			removePrivate(filename, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
 
 		return engine->undefinedValue();
 	}
@@ -142,31 +151,51 @@ namespace Code
 		return thisObject();
 	}
 	
-	QScriptValue File::copy(const QString &destination, bool createDestinationDirectory) const
+	QScriptValue File::copy(const QString &destination, const QScriptValue &options) const
 	{
-		return copyPrivate(mFile.fileName(), destination, createDestinationDirectory, context(), engine());
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+
+		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
+			return copyPrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
+		else
+			return false;
 	}
 	
-	QScriptValue File::move(const QString &destination, bool createDestinationDirectory)
+	QScriptValue File::move(const QString &destination, const QScriptValue &options)
 	{
 		mFile.close();
 	
-		return movePrivate(mFile.fileName(), destination, createDestinationDirectory, context(), engine());
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+
+		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
+			return movePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
+		else
+			return false;
 	}
 	
-	QScriptValue File::rename(const QString &destination, bool createDestinationDirectory)
+	QScriptValue File::rename(const QString &destination, const QScriptValue &options)
 	{
-		return movePrivate(mFile.fileName(), destination, createDestinationDirectory, context(), engine());
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+
+		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
+			return renamePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
+		else
+			return false;
 	}
 	
-	QScriptValue File::remove()
+	QScriptValue File::remove(const QScriptValue &options)
 	{
 		mFile.close();
-	
-		return removePrivate(mFile.fileName(), context(), engine());
+
+		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo;
+
+		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo))
+			return removePrivate(mFile.fileName(), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
+		else
+			return false;
 	}
 
-	bool File::getParameters(QString &source, QString &destination, bool &createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
+	bool File::getParameters(QString &source, QString &destination, const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, QScriptContext *context, QScriptEngine *engine)
 	{
 		if(context->argumentCount() < 2)
 		{
@@ -176,15 +205,37 @@ namespace Code
 
 		source = context->argument(0).toString();
 		destination = context->argument(1).toString();
-		createDestinationDirectory = true;
 
-		if(context->argumentCount() >= 3)
-			createDestinationDirectory = context->argument(2).toBool();
+		return getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo);
+	}
+
+	bool File::getRemoveParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo)
+	{
+		QScriptValueIterator it(options);
+
+		noErrorDialog = false;
+		noConfirmDialog = false;
+		noProgressDialog = false;
+		allowUndo = false;
+
+		while(it.hasNext())
+		{
+			it.next();
+
+			if(it.name() == "noErrorDialog")
+				noErrorDialog = it.value().toBool();
+			else if(it.name() == "noConfirmDialog")
+				noConfirmDialog = it.value().toBool();
+			else if(it.name() == "noProgressDialog")
+				noProgressDialog = it.value().toBool();
+			else if(it.name() == "allowUndo")
+				allowUndo = it.value().toBool();
+		}
 
 		return true;
 	}
 
-	QScriptValue File::copyPrivate(const QString &source, const QString &destination, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue File::copyPrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(engine)
 
@@ -228,34 +279,52 @@ namespace Code
 		}
 #endif
 #ifdef Q_WS_WIN
+		QDir sourceDir(source);
 		QDir destinationDir(destination);
-		if(!destinationDir.exists())
+
+		std::wstring wideSource = QDir::toNativeSeparators(sourceDir.absolutePath()).toStdWString();
+		wideSource += L'\0';
+
+		std::wstring wideDestination = QDir::toNativeSeparators(destinationDir.absolutePath()).toStdWString();
+		wideDestination += L'\0';
+
+		SHFILEOPSTRUCT shFileOpStruct;
+		shFileOpStruct.hwnd = 0;
+		shFileOpStruct.wFunc = FO_COPY;
+		shFileOpStruct.pFrom = wideSource.c_str();
+		shFileOpStruct.pTo = wideDestination.c_str();
+		shFileOpStruct.fFlags = 0;
+		shFileOpStruct.fAnyOperationsAborted = false;
+		shFileOpStruct.lpszProgressTitle = 0;
+		shFileOpStruct.hNameMappings = 0;
+
+		if(noErrorDialog)
+			shFileOpStruct.fFlags |= FOF_NOERRORUI;
+		if(noConfirmDialog)
+			shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
+		if(noProgressDialog)
+			shFileOpStruct.fFlags |= FOF_SILENT;
+		if(allowUndo)
+			shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
+
+		int result = SHFileOperation(&shFileOpStruct);
+		if(result != 0)
 		{
-			if(createDestinationDirectory)
-			{
-				if(QProcess::execute("cmd", QStringList() << "/c" << "mkdir" << QFile::encodeName(destination)))
-				{
-					throwError(context, engine, "DirectoryCreationError", tr("Unable to create destination directory"));
-					return context->thisObject();
-				}
-			}
-			else
-			{
-				throwError(context, engine, "DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
-				return context->thisObject();
-			}
+			throwError(context, engine, "CopyError", tr("Copy failed: %1").arg(getErrorString(result)));
+			return context->thisObject();
 		}
 
-		QStringList args = QStringList() << "/c" << "xcopy" << QFile::encodeName(source) << QFile::encodeName(destination) << "/i /y /e /r /k /a /q /h /c /m /x";
-
-		if(QProcess::execute("cmd", args) > 1)
-			throwError(context, engine, "CopyError", tr("Copy failed"));
+		if(shFileOpStruct.fAnyOperationsAborted)
+		{
+			throwError(context, engine, "CopyAbortedError", tr("Copy failed: aborted"));
+			return context->thisObject();
+		}
 #endif
 
 		return context->thisObject();
 	}
 
-	QScriptValue File::movePrivate(const QString &source, const QString &destination, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue File::movePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(engine)
 
@@ -299,22 +368,112 @@ namespace Code
 		}
 #endif
 #ifdef Q_WS_WIN
-		Q_UNUSED(createDestinationDirectory)
+		QDir sourceDir(source);
+		QDir destinationDir(destination);
 
-		QStringList args = QStringList() << "/c" << "move /y" << QFile::encodeName(source) << QFile::encodeName(destination);
+		std::wstring wideSource = QDir::toNativeSeparators(sourceDir.absolutePath()).toStdWString();
+		wideSource += L'\0';
 
-		if(QProcess::execute("cmd", args))
-			throwError(context, engine, "MoveRenameError", tr("Move/rename failed"));
+		std::wstring wideDestination = QDir::toNativeSeparators(destinationDir.absolutePath()).toStdWString();
+		wideDestination += L'\0';
+
+		SHFILEOPSTRUCT shFileOpStruct;
+		shFileOpStruct.hwnd = 0;
+		shFileOpStruct.wFunc = FO_MOVE;
+		shFileOpStruct.pFrom = wideSource.c_str();
+		shFileOpStruct.pTo = wideDestination.c_str();
+		shFileOpStruct.fFlags = 0;
+		shFileOpStruct.fAnyOperationsAborted = false;
+		shFileOpStruct.lpszProgressTitle = 0;
+		shFileOpStruct.hNameMappings = 0;
+
+		if(noErrorDialog)
+			shFileOpStruct.fFlags |= FOF_NOERRORUI;
+		if(noConfirmDialog)
+			shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
+		if(noProgressDialog)
+			shFileOpStruct.fFlags |= FOF_SILENT;
+		if(allowUndo)
+			shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
+
+		int result = SHFileOperation(&shFileOpStruct);
+		if(result != 0)
+		{
+			throwError(context, engine, "MoveError", tr("Move failed: %1").arg(getErrorString(result)));
+			return context->thisObject();
+		}
+
+		if(shFileOpStruct.fAnyOperationsAborted)
+		{
+			throwError(context, engine, "MoveAbortedError", tr("Move failed: aborted"));
+			return context->thisObject();
+		}
 #endif
 
 		return context->thisObject();
 	}
 
-	QScriptValue File::removePrivate(const QString &filename, QScriptContext *context, QScriptEngine *engine)
+	QScriptValue File::renamePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(engine)
 
 #ifdef Q_WS_X11
+		movePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
+#endif
+#ifdef Q_WS_WIN
+		QDir sourceDir(source);
+		QDir destinationDir(destination);
+
+		std::wstring wideSource = QDir::toNativeSeparators(sourceDir.absolutePath()).toStdWString();
+		wideSource += L'\0';
+
+		std::wstring wideDestination = QDir::toNativeSeparators(destinationDir.absolutePath()).toStdWString();
+		wideDestination += L'\0';
+
+		SHFILEOPSTRUCT shFileOpStruct;
+		shFileOpStruct.hwnd = 0;
+		shFileOpStruct.wFunc = FO_RENAME;
+		shFileOpStruct.pFrom = wideSource.c_str();
+		shFileOpStruct.pTo = wideDestination.c_str();
+		shFileOpStruct.fFlags = 0;
+		shFileOpStruct.fAnyOperationsAborted = false;
+		shFileOpStruct.lpszProgressTitle = 0;
+		shFileOpStruct.hNameMappings = 0;
+
+		if(noErrorDialog)
+			shFileOpStruct.fFlags |= FOF_NOERRORUI;
+		if(noConfirmDialog)
+			shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
+		if(noProgressDialog)
+			shFileOpStruct.fFlags |= FOF_SILENT;
+		if(allowUndo)
+			shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
+
+		int result = SHFileOperation(&shFileOpStruct);
+		if(result != 0)
+		{
+			throwError(context, engine, "RenameError", tr("Rename failed: %1").arg(getErrorString(result)));
+			return context->thisObject();
+		}
+
+		if(shFileOpStruct.fAnyOperationsAborted)
+		{
+			throwError(context, engine, "RenameAbortedError", tr("Rename failed: aborted"));
+			return context->thisObject();
+		}
+#endif
+
+		return context->thisObject();
+	}
+
+	QScriptValue File::removePrivate(const QString &filename, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
+	{
+#ifdef Q_WS_X11
+		Q_UNUSED(noErrorDialog)
+		Q_UNUSED(noConfirmDialog)
+		Q_UNUSED(noProgressDialog)
+		Q_UNUSED(allowUndo)
+
 		QString filenameCopy(filename);
 		filenameCopy.replace(" ", "\\ ");
 
@@ -331,26 +490,80 @@ namespace Code
 		}
 #endif
 #ifdef Q_WS_WIN
-		QProcess funkyWindowsCommand;
+		QDir filenameDir(filename);
 
-		QStringList args = QStringList() << "/c" << "del /q" << QFile::encodeName(filename) << "/f /s /q /as /ah /ar /aa";
-		//Yes, the /q option has to be *before* AND *after* the filename :D
+		std::wstring wideFilename = QDir::toNativeSeparators(filenameDir.absolutePath()).toStdWString();
+		wideFilename += L'\0';
 
-		funkyWindowsCommand.start("cmd", args);
-		funkyWindowsCommand.waitForStarted();
-		funkyWindowsCommand.waitForFinished();
+		SHFILEOPSTRUCT shFileOpStruct;
+		shFileOpStruct.hwnd = 0;
+		shFileOpStruct.wFunc = FO_DELETE;
+		shFileOpStruct.pFrom = wideFilename.c_str();
+		shFileOpStruct.pTo = 0;
+		shFileOpStruct.fFlags = 0;
+		shFileOpStruct.fAnyOperationsAborted = false;
+		shFileOpStruct.lpszProgressTitle = 0;
+		shFileOpStruct.hNameMappings = 0;
 
-		args = QStringList() << "/c" << "rmdir /s /q" << QFile::encodeName(filename);
+		if(noErrorDialog)
+			shFileOpStruct.fFlags |= FOF_NOERRORUI;
+		if(noConfirmDialog)
+			shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
+		if(noProgressDialog)
+			shFileOpStruct.fFlags |= FOF_SILENT;
+		if(allowUndo)
+			shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
 
-		funkyWindowsCommand.start("cmd", args);//Yes, we have to run it *two* times...
-		funkyWindowsCommand.waitForStarted();
-		funkyWindowsCommand.waitForFinished();
+		int result = SHFileOperation(&shFileOpStruct);
+		if(result != 0)
+		{
+			throwError(context, engine, "RemoveError", tr("Remove failed: %1").arg(getErrorString(result)));
+			return context->thisObject();
+		}
 
-		funkyWindowsCommand.start("cmd", args);
-		funkyWindowsCommand.waitForStarted();
-		funkyWindowsCommand.waitForFinished();
+		if(shFileOpStruct.fAnyOperationsAborted)
+		{
+			throwError(context, engine, "RemoveAbortedError", tr("Remove failed: aborted"));
+			return context->thisObject();
+		}
 #endif
 
 		return context->thisObject();
+	}
+
+	QString File::getErrorString(int error)
+	{
+#ifdef Q_WS_X11
+		Q_UNUSED(error)
+
+		return QString();
+#endif
+#ifdef Q_WS_WIN
+		switch(error)
+		{
+		case ERROR_SUCCESS:
+			return QString();
+		case ERROR_FILE_NOT_FOUND:
+			return tr("File not found");
+		case ERROR_PATH_NOT_FOUND:
+			return tr("Path not found");
+		case ERROR_ACCESS_DENIED:
+			return tr("Access denied");
+		case ERROR_SHARING_VIOLATION:
+			return tr("This file is used by another process");
+		case ERROR_DISK_FULL:
+			return tr("The disk is full");
+		case ERROR_FILE_EXISTS:
+		case ERROR_ALREADY_EXISTS:
+			return tr("The file already exists");
+		case ERROR_INVALID_NAME:
+			return tr("Invalid name");
+		case ERROR_CANCELLED:
+			return tr("Canceled");
+		default:
+			return tr("Unknown error (%1)").arg(error);
+		}
+
+#endif
 	}
 }
