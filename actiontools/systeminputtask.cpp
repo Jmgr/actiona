@@ -89,8 +89,8 @@ namespace ActionTools
 	#endif
 
 	#ifdef Q_WS_WIN
-			mMouseHook = SetWindowsHookEx(WH_MOUSE_LL, &SystemInputTask::LowLevelMouseProc, 0, 0);
-			mKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, &SystemInputTask::LowLevelKeyboardProc, 0, 0);
+			mMouseHook = SetWindowsHookEx(WH_MOUSE_LL, &Task::LowLevelMouseProc, 0, 0);
+			mKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, &Task::LowLevelKeyboardProc, 0, 0);
 	#endif
 		}
 
@@ -118,7 +118,7 @@ namespace ActionTools
 		LRESULT CALLBACK Task::LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
 		{
 			if(nCode < 0)
-				return CallNextHookEx(mMouseHook, nCode, wParam, lParam);
+				return CallNextHookEx(mInstance->mMouseHook, nCode, wParam, lParam);
 
 			switch(wParam)
 			{
@@ -140,14 +140,14 @@ namespace ActionTools
 
 			//TODO: send input using mInstance->mouseEvent
 
-			return CallNextHookEx(mMouseHook, nCode, wParam, lParam);
+			return CallNextHookEx(mInstance->mMouseHook, nCode, wParam, lParam);
 		}
 
 		LRESULT CALLBACK Task::LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 		{
 			//TODO: send input using mInstance->keyboardEvent
 
-			return CallNextHookEx(mKeyboardHook, nCode, wParam, lParam);
+			return CallNextHookEx(mInstance->mKeyboardHook, nCode, wParam, lParam);
 		}
 	#endif
 
