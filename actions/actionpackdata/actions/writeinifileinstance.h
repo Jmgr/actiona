@@ -69,6 +69,8 @@ namespace Actions
 
 			config.setConfigFile(filename.toLocal8Bit());
 
+			config.load();
+
 			if(!config.setSection(section.toLatin1(), true))
 				return false;
 
