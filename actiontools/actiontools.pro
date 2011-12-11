@@ -40,7 +40,9 @@ SOURCES += actionfactory.cpp \
 	nativeeventfilteringapplication.cpp \
 	pointitemdelegate.cpp \
 	actionpack.cpp \
-	opencvalgorithms.cpp
+	opencvalgorithms.cpp \
+    systeminputreceiver.cpp \
+    systeminputtask.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -77,7 +79,11 @@ HEADERS += actiontools_global.h \
 	actiondefinitionenums.h \
 	name.h \
 	opencvalgorithms.h \
-	matchingpointlist.h
+	matchingpointlist.h \
+    systeminputreceiver.h \
+    systeminputtask.h \
+    systeminputlistener.h \
+    systeminput.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \
@@ -105,5 +111,11 @@ unix {
 
 	INSTALLS += target locales
 }
+
+
+
+
+
+
 
 

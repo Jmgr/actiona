@@ -1,0 +1,121 @@
+/*
+	Actionaz
+	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
+
+	Actionaz is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Actionaz is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+	Contact : jmgr@jmgr.info
+*/
+
+#include "systeminputreceiver.h"
+#include "systeminputtask.h"
+#include "systeminputlistener.h"
+
+namespace ActionTools
+{
+	namespace SystemInput
+	{
+		QSharedPointer<Receiver> Receiver::mInstance;
+
+		Receiver::Recorder::Recorder(Listener *listener)
+			: mListener(listener)
+		{
+			Receiver::instance().startCapture(listener);
+		}
+
+		Receiver::Recorder::~Recorder()
+		{
+			Receiver::instance().stopCapture(mListener);
+		}
+
+		Receiver &Receiver::instance()
+		{
+			if(!mInstance)
+				mInstance = QSharedPointer<Receiver>(new Receiver());
+
+			return *mInstance;
+		}
+
+		Receiver::Receiver()
+			: QObject(),
+			  mCaptureCount(0),
+			  mTask(new Task(this))
+		{
+			qRegisterMetaType<ActionTools::SystemInput::Button>("ActionTools::SystemInput::Button");
+
+			connect(mTask, SIGNAL(mouseMotion(int,int)), this, SLOT(mouseMotion(int,int)));
+			connect(mTask, SIGNAL(mouseWheel(int)), this, SLOT(mouseWheel(int)));
+			connect(mTask, SIGNAL(keyboardEvent()), this, SLOT(keyboardEvent()));
+			connect(mTask, SIGNAL(mouseButtonPressed(Button)), this, SLOT(mouseButtonPressed(Button)));
+			connect(mTask, SIGNAL(mouseButtonReleased(Button)), this, SLOT(mouseButtonReleased(Button)));
+		}
+
+		Receiver::~Receiver()
+		{
+		}
+
+		void Receiver::mouseMotion(int x, int y)
+		{
+			foreach(Listener *listener, mListeners)
+				listener->mouseMotion(x, y);
+		}
+
+		void Receiver::mouseWheel(int intensity)
+		{
+			foreach(Listener *listener, mListeners)
+				listener->mouseWheel(intensity);
+		}
+
+		void Receiver::mouseButtonPressed(Button button)
+		{
+			foreach(Listener *listener, mListeners)
+				listener->mouseButtonPressed(button);
+		}
+
+		void Receiver::mouseButtonReleased(Button button)
+		{
+			foreach(Listener *listener, mListeners)
+				listener->mouseButtonReleased(button);
+		}
+
+		void Receiver::keyboardEvent()
+		{
+			foreach(Listener *listener, mListeners)
+				listener->keyboardEvent();
+		}
+
+		void Receiver::startCapture(Listener *listener)
+		{
+			if(mCaptureCount == 0)
+				QMetaObject::invokeMethod(mTask, "start");
+
+			++mCaptureCount;
+
+			mListeners.insert(listener);
+		}
+
+		void Receiver::stopCapture(Listener *listener)
+		{
+			mListeners.remove(listener);
+
+			if(mCaptureCount == 0)
+				return;
+
+			--mCaptureCount;
+
+			if(mCaptureCount == 0)
+				QMetaObject::invokeMethod(mTask, "stop");
+		}
+	}
+}
