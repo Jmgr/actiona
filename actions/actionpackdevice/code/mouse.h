@@ -23,7 +23,6 @@
 
 #include "../mousedevice.h"
 #include "code/codeclass.h"
-#include "nativeeventfilter.h"
 
 #include <QObject>
 #include <QScriptValue>
@@ -31,7 +30,7 @@
 
 namespace Code
 {
-	class Mouse : public CodeClass, public ActionTools::NativeEventFilter
+	class Mouse : public CodeClass
 	{
 		Q_OBJECT
 		Q_ENUMS(MouseDevice::Button)
@@ -53,12 +52,6 @@ namespace Code
 		QScriptValue wheel(int intensity = 1) const;
 
 	private:
-/*
-#ifdef Q_WS_X11
-		bool x11EventFilter(XEvent *event);
-#endif
-*/
-
 		MouseDevice mMouseDevice;
 	};
 }
