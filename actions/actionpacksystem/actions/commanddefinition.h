@@ -75,6 +75,8 @@ namespace Actions
 			ActionTools::VariableParameterDefinition *exitStatus = new ActionTools::VariableParameterDefinition(ActionTools::Name("exitStatus", tr("Exit status")), this);
 			exitStatus->setTooltip(tr("The command's exit status"));
 			addElement(exitStatus, 1);
+
+			addException(CommandInstance::FailedToStartException, tr("Failed to start the command"));
 		}
 
 		QString name() const													{ return QObject::tr("Command"); }

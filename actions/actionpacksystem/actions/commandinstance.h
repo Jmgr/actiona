@@ -38,10 +38,14 @@ namespace Actions
 		Q_OBJECT
 
 	public:
+		enum Exceptions
+		{
+			FailedToStartException = ActionTools::ActionException::UserException
+		};
+
 		CommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent), mProcess(new QProcess(this))
 		{
-			connect(mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
 		}
 
 		void startExecution()
@@ -62,6 +66,9 @@ namespace Actions
 
 			mProcess->setWorkingDirectory(workingDirectory);
 
+			connect(mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
+			connect(mProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
+
 			QStringList parameterList = parameters.split(QChar(' '));
 			mProcess->start(command, parameters.isEmpty() ? QStringList() : parameterList);
 
@@ -78,10 +85,22 @@ namespace Actions
 
 		void stopExecution()
 		{
-			mProcess->kill();
+			terminate();
 		}
 
 	private slots:
+		void processError(QProcess::ProcessError error)
+		{
+			switch(error)
+			{
+			case QProcess::FailedToStart:
+				terminate();
+
+				emit executionException(FailedToStartException, tr("Failed to start the command. %1").arg(mProcess->errorString()));
+				return;
+			}
+		}
+
 		void processFinished(int exitCode, QProcess::ExitStatus exitStatus)
 		{
 			setVariable(mExitCodeVariable, QString::number(exitCode));
@@ -106,6 +125,12 @@ namespace Actions
 		}
 
 	private:
+		void terminate()
+		{
+			mProcess->disconnect();
+			mProcess->kill();
+		}
+
 		QProcess *mProcess;
 		QString mExitCodeVariable;
 		QString mOutputVariable;
