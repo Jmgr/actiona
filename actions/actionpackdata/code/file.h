@@ -75,7 +75,7 @@ namespace Code
 	
 	private:
 		static bool getParameters(QString &source, QString &destination, const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
-		static bool getRemoveParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory);
+		static bool getParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory);
 		static QScriptValue copyPrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue movePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue renamePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);

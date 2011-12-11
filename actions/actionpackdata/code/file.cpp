@@ -86,7 +86,7 @@ namespace Code
 
 		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(context->argument(1), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
+		if(getParameters(context->argument(1), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
 			removePrivate(filename, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
 
 		return engine->undefinedValue();
@@ -156,7 +156,7 @@ namespace Code
 	{
 		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
+		if(getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
 			return copyPrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context(), engine());
 		else
 			return false;
@@ -168,7 +168,7 @@ namespace Code
 	
 		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
+		if(getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
 			return movePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context(), engine());
 		else
 			return false;
@@ -178,7 +178,7 @@ namespace Code
 	{
 		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
+		if(getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
 			return renamePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context(), engine());
 		else
 			return false;
@@ -190,7 +190,7 @@ namespace Code
 
 		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
 
-		if(getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
+		if(getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
 			return removePrivate(mFile.fileName(), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
 		else
 			return false;
@@ -207,10 +207,10 @@ namespace Code
 		source = context->argument(0).toString();
 		destination = context->argument(1).toString();
 
-		return getRemoveParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory);
+		return getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory);
 	}
 
-	bool File::getRemoveParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory)
+	bool File::getParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory)
 	{
 		QScriptValueIterator it(options);
 
