@@ -453,9 +453,8 @@
         <translation>L&apos;opération à exécuter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="55"/>
         <source>Operation mode</source>
-        <translation>Mode</translation>
+        <translation type="obsolete">Mode</translation>
     </message>
     <message>
         <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="64"/>
@@ -607,45 +606,45 @@
 <context>
     <name>Code::Process</name>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="89"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="158"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="91"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="162"/>
         <source>Invalid filename</source>
         <translation>Nom de fichier incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="111"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="113"/>
         <source>Unable to start the process</source>
         <translation>Impossible de démarrer le processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="248"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="253"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="262"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="252"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="257"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="266"/>
         <source>Write failed</source>
         <translation>Impossible d&apos;écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="348"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="352"/>
         <source>Invalid process</source>
         <translation>Processus incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="360"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="364"/>
         <source>Wait for finished failed</source>
         <translation>L&apos;attente de terminaison a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="368"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="372"/>
         <source>Wait for started failed</source>
         <translation>L&apos;attente de démarrage a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="376"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="380"/>
         <source>Waiting for bytes written failed</source>
         <translation>L&apos;attente d&apos;écriture a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="384"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="388"/>
         <source>Waiting for ready read failed</source>
         <translation>L&apos;attente de lecture a échouée</translation>
     </message>

@@ -148,9 +148,8 @@
         <translation>L&apos;icône de fenêtre à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="85"/>
         <source>Yes-No action</source>
-        <translation>Action Oui-Non</translation>
+        <translation type="obsolete">Action Oui-Non</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="89"/>
@@ -316,9 +315,8 @@
         <translation>La condition à attendre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="60"/>
         <source>Move</source>
-        <translation>Déplacer</translation>
+        <translation type="obsolete">Déplacer</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="64"/>
@@ -331,9 +329,8 @@
         <translation>La position où déplacer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="70"/>
         <source>Resize</source>
-        <translation>Redimensionner</translation>
+        <translation type="obsolete">Redimensionner</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="74"/>

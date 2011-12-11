@@ -4,7 +4,7 @@
 <context>
     <name>CodeExecuter</name>
     <message>
-        <location filename="../actexecuter/codeexecuter.cpp" line="123"/>
+        <location filename="../actexecuter/codeexecuter.cpp" line="126"/>
         <source>Backtrace: </source>
         <translation>Pile d&apos;appels :</translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actexecuter/codeexecuter.cpp" line="122"/>
+        <location filename="../actexecuter/codeexecuter.cpp" line="125"/>
         <source>Uncaught exception: </source>
         <translation>Exception non gérée :</translation>
     </message>
@@ -121,8 +121,12 @@
     </message>
     <message>
         <location filename="../actexecuter/main.cpp" line="323"/>
+        <source>Unknown execution mode, please specify -s (script) or -c (code)</source>
+        <translation>Mode d&apos;exécution inconnu, merci de spécifier -s (script) ou -c (code)</translation>
+    </message>
+    <message>
         <source>Unknown execution mode, please specify -o (script) or -r (code)</source>
-        <translation>Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
+        <translation type="obsolete">Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
     </message>
     <message>
         <location filename="../actexecuter/main.cpp" line="333"/>

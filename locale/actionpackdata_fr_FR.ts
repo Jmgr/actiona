@@ -315,9 +315,8 @@
         <translation>Le mode de lecture du fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="64"/>
         <source>Selection mode</source>
-        <translation>Mode de sélection</translation>
+        <translation type="obsolete">Mode de sélection</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="68"/>
@@ -722,53 +721,134 @@
 <context>
     <name>Code::File</name>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="74"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="173"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="81"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="203"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="98"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="108"/>
         <source>Unable to open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="109"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="114"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="123"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="119"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="124"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="133"/>
         <source>Write failed</source>
         <translation>L&apos;écriture a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="205"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="238"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="276"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="265"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="361"/>
         <source>Unable to create destination directory</source>
         <translation>Impossible de créer le dossier de destination</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="211"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="244"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="282"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="271"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="367"/>
         <source>Destination directory doesn&apos;t exist</source>
         <translation>Le dossier de destination n&apos;existe pas</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="226"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="252"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="286"/>
         <source>Copy failed</source>
         <translation>Copie échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="297"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="307"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="324"/>
+        <source>Copy failed: %1</source>
+        <translation>Copie échouée : %1</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="330"/>
+        <source>Copy failed: aborted</source>
+        <translation>Copie échouée : annulée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="382"/>
         <source>Move/rename failed</source>
         <translation>Déplacement/renommage échoué</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="329"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="420"/>
+        <source>Move failed: %1</source>
+        <translation>Déplacement échoué : %1</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="426"/>
+        <source>Move failed: aborted</source>
+        <translation>Déplacement échoué : annulé</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="475"/>
+        <source>Rename failed: %1</source>
+        <translation>Renommage échoué : %1</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="481"/>
+        <source>Rename failed: aborted</source>
+        <translation>Renommage échoué : annulé</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="508"/>
         <source>Remove failed</source>
         <translation>Le suppression a échoué</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="540"/>
+        <source>Remove failed: %1</source>
+        <translation>Suppression échouée : %1</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="546"/>
+        <source>Remove failed: aborted</source>
+        <translation>Suppression échouée : annulée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="567"/>
+        <source>File not found</source>
+        <translation>Impossible de trouver le fichier</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="569"/>
+        <source>Path not found</source>
+        <translation>Impossible de trouver le chemin</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="571"/>
+        <source>Access denied</source>
+        <translation>Accès refusé</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="573"/>
+        <source>This file is used by another process</source>
+        <translation>Ce fichier est utilisé par un autre processus</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="575"/>
+        <source>The disk is full</source>
+        <translation>Plus d&apos;espace disponible sur le disque</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="578"/>
+        <source>The file already exists</source>
+        <translation>Le fichier existe déjà</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="580"/>
+        <source>Invalid name</source>
+        <translation>Nom incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="582"/>
+        <source>Canceled</source>
+        <translation>Annulé</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="584"/>
+        <source>Unknown error (%1)</source>
+        <translation>Erreur inconnue (%1)</translation>
     </message>
 </context>
 <context>

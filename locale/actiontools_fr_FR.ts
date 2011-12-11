@@ -417,6 +417,34 @@ Double-cliquez pour afficher</translation>
     </message>
 </context>
 <context>
+    <name>ActionTools::OpenCVAlgorithms</name>
+    <message>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="53"/>
+        <source>FindSubImage is already running</source>
+        <translation>Recherche via FindSubImage en cours</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="104"/>
+        <source>Source image must be larger than target image</source>
+        <translation>L&apos;image source doit être plus grande que l&apos;image cible</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="112"/>
+        <source>Source image and target image must have same depth</source>
+        <translation>L&apos;image source et l&apos;image cible doivent avoir la même profondeur</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="120"/>
+        <source>Source image and target image must have same number of channels</source>
+        <translation>L&apos;image source et l&apos;image cible doivent avoir le même nombre de canaux</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="288"/>
+        <source>OpenCV exception: %1</source>
+        <translation>Exception OpenCV : %1</translation>
+    </message>
+</context>
+<context>
     <name>ActionTools::ScreenPositionWidget</name>
     <message>
         <location filename="../actiontools/screenpositionwidget.cpp" line="48"/>
@@ -500,47 +528,66 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code::Image</name>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="53"/>
+        <location filename="../actiontools/code/image.cpp" line="64"/>
+        <location filename="../actiontools/code/image.cpp" line="423"/>
+        <location filename="../actiontools/code/image.cpp" line="478"/>
+        <location filename="../actiontools/code/image.cpp" line="513"/>
+        <location filename="../actiontools/code/image.cpp" line="549"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="57"/>
+        <location filename="../actiontools/code/image.cpp" line="68"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="84"/>
+        <location filename="../actiontools/code/image.cpp" line="94"/>
         <source>Invalid window</source>
         <translation>Fenêtre invalide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="199"/>
+        <location filename="../actiontools/code/image.cpp" line="227"/>
         <source>Unable to set the image data</source>
         <translation>Impossible de changer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="217"/>
+        <location filename="../actiontools/code/image.cpp" line="245"/>
         <source>Unable to get the image data</source>
         <translation>Impossible de récupérer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="228"/>
+        <location filename="../actiontools/code/image.cpp" line="406"/>
+        <location filename="../actiontools/code/image.cpp" line="448"/>
+        <location filename="../actiontools/code/image.cpp" line="503"/>
+        <location filename="../actiontools/code/image.cpp" line="539"/>
+        <source>Error while searching for a sub-image: %1</source>
+        <translation>Erreur lors de la recherche d&apos;une sous-image : %1</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/image.cpp" line="489"/>
+        <location filename="../actiontools/code/image.cpp" line="524"/>
+        <source>Parameter &quot;callback&quot; is not a function</source>
+        <translation>Le paramètre &quot;callback&quot; n&apos;est pas une fonction</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/image.cpp" line="61"/>
+        <location filename="../actiontools/code/image.cpp" line="256"/>
         <source>Unable to load image from file %1</source>
         <translation>Impossible de charger l&apos;image à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="239"/>
+        <location filename="../actiontools/code/image.cpp" line="267"/>
         <source>Unable to save image to file %1</source>
         <translation>Impossible de sauvegarder l&apos;image dans le fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="251"/>
+        <location filename="../actiontools/code/image.cpp" line="279"/>
         <source>Unable to apply filter</source>
         <translation>Impossible d&apos;appliquer le filtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="288"/>
+        <location filename="../actiontools/code/image.cpp" line="316"/>
         <source>Cannot set filter option %1 %2</source>
         <translation>Impossible de changer les options du filtre %1 %2</translation>
     </message>
@@ -660,42 +707,42 @@ Double-cliquez pour afficher</translation>
         <translation>Processus invalide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="307"/>
+        <location filename="../actiontools/code/window.cpp" line="311"/>
         <source>Unable to close the window</source>
         <translation>Impossible de fermer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="318"/>
+        <location filename="../actiontools/code/window.cpp" line="322"/>
         <source>Unable to kill the window creator</source>
         <translation>Impossible de fermer de créateur de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="329"/>
+        <location filename="../actiontools/code/window.cpp" line="333"/>
         <source>Unable to set the window foreground</source>
         <translation>Impossible de placer la fenêtre en premier plan</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="340"/>
+        <location filename="../actiontools/code/window.cpp" line="344"/>
         <source>Unable to minimize the window</source>
         <translation>Impossible de minimiser la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="351"/>
+        <location filename="../actiontools/code/window.cpp" line="355"/>
         <source>Unable to maximize the window</source>
         <translation>Impossible de maximiser la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="362"/>
+        <location filename="../actiontools/code/window.cpp" line="366"/>
         <source>Unable to move the window</source>
         <translation>Impossible de déplacer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="373"/>
+        <location filename="../actiontools/code/window.cpp" line="377"/>
         <source>Unable to resize the window</source>
         <translation>Impossible de redimensionner la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/window.cpp" line="382"/>
+        <location filename="../actiontools/code/window.cpp" line="386"/>
         <source>Invalid window</source>
         <translation>Fenêtre invalide</translation>
     </message>

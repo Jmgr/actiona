@@ -42,9 +42,8 @@
         <translation>La position à l&apos;écran où simuler le clic de souris</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="68"/>
         <source>Click action</source>
-        <translation>Action de clic</translation>
+        <translation type="obsolete">Action de clic</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="72"/>
@@ -288,22 +287,22 @@
 <context>
     <name>Code::Mouse</name>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="56"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="60"/>
         <source>Unable to press the button</source>
         <translation>Impossible d&apos;appuyer sur le bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="64"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="68"/>
         <source>Unable to release the button</source>
         <translation>Impossible de relâcher le bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="72"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="76"/>
         <source>Unable to emulate a button click</source>
         <translation>Impossible de simuler un clic de bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="80"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="84"/>
         <source>Unable to emulate the wheel</source>
         <translation>Impossible de simuler la molette</translation>
     </message>

@@ -34,14 +34,36 @@
 <context>
     <name>LibExecuter::CodeStdio</name>
     <message>
-        <location filename="../executer/codestdio.cpp" line="51"/>
         <source>Warning: </source>
-        <translation>Avertissement : </translation>
+        <translation type="obsolete">Avertissement : </translation>
+    </message>
+    <message>
+        <source>Error: </source>
+        <translation type="obsolete">Erreur : </translation>
+    </message>
+    <message>
+        <location filename="../executer/codestdio.cpp" line="49"/>
+        <source>Warning: %1</source>
+        <translation>Avertissement : %1</translation>
+    </message>
+    <message>
+        <location filename="../executer/codestdio.cpp" line="56"/>
+        <source>Warning: %1
+</source>
+        <translation>Avertissement : %1
+</translation>
     </message>
     <message>
         <location filename="../executer/codestdio.cpp" line="63"/>
-        <source>Error: </source>
-        <translation>Erreur : </translation>
+        <source>Error: %1</source>
+        <translation>Erreur : %1</translation>
+    </message>
+    <message>
+        <location filename="../executer/codestdio.cpp" line="70"/>
+        <source>Error: %1
+</source>
+        <translation>Erreur : %1
+</translation>
     </message>
 </context>
 <context>
