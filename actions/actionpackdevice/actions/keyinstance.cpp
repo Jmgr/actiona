@@ -23,7 +23,7 @@
 
 #ifdef Q_WS_WIN
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+#include <Windows.h>
 #endif
 
 #include <QDebug>
