@@ -1,3 +1,12 @@
+3.0.1 (11/12/11)
+- Gui: replaced GroupBoxes by invisible widgets (increased readability)
+- Code: fixed a bug that could cause crashes when using events
+- Code: added Image.findSubImage()
+- Code: added Stdio.println(), Stdio.printlnWarning() and Stdio.printlnError()
+- Gui, Linux: set window opacity only if the compositing manager is running
+- Code, Windows: improved the File object
+- Actions: fixed a bug in WriteIniFile where the INI file was overwritten on each edit
+
 3.0.0 (13/11/11)
 - official stable release
 
