@@ -26,9 +26,9 @@
 #include <QVariant>
 
 #ifdef Q_WS_WIN
-
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#endif
 
 namespace ActionTools
 {
@@ -59,16 +59,18 @@ namespace ActionTools
 			WriteCannotWriteValue
 		};
 
+#ifdef Q_WS_WIN
 		static ReadResult read(QVariant &result, Key key, const QString &subkey, const QString &value = QString());
 		static WriteResult write(const QVariant &data, Key key, const QString &subkey, const QString &value = QString());
+#endif
 
 	private:
 		Registry();
 
+#ifdef Q_WS_WIN
 		static HKEY enumToKey(Key key);
+#endif
 	};
 }
-
-#endif
 
 #endif // AT_REGISTRY_H

@@ -144,7 +144,7 @@ namespace ActionTools
 	{
 		foreach(ActionInstance *actionInstance, mActionInstances)
 		{
-			if(actionInstance->isEnabled())
+			if(actionInstance->isEnabled() && actionInstance->definition()->worksUnderThisOS())
 				return true;
 		}
 

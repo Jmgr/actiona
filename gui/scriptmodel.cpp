@@ -171,6 +171,19 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 
 			return QBrush();
 		}
+	case Qt::FontRole:
+		{
+			if(!actionInstance->definition()->worksUnderThisOS())
+			{
+				QFont font = QApplication::font();
+
+				font.setItalic(true);
+
+				return font;
+			}
+
+			return QFont();
+		}
 	case Qt::ForegroundRole:
 		{
 			const QColor &color = actionInstance->color();

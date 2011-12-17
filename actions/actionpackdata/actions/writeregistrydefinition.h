@@ -43,7 +43,6 @@ namespace Actions
 		explicit WriteRegistryDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
-	#ifdef Q_WS_WIN
 			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition(ActionTools::Name("key", tr("Key")), this);
 			key->setTooltip(tr("The registry key to write to"));
 			key->setItems(ReadRegistryInstance::keys);
@@ -64,7 +63,6 @@ namespace Actions
 
 			addException(WriteRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
 			addException(WriteRegistryInstance::CannotWriteValueException, tr("Cannot write value"));
-	#endif
 		}
 
 		QString name() const													{ return QObject::tr("Write registry"); }
