@@ -171,27 +171,17 @@ namespace ActionTools
 				continue;
 			}
 
-		#ifdef Q_WS_WIN
-			if(!(definition->flags() & WorksOnWindows))
-				continue;
-		#endif
-		#ifdef Q_WS_X11
-			if(!(definition->flags() & WorksOnGnuLinux))
-				continue;
-		#endif
-		#ifdef Q_WS_MAC
-			if(!(definition->flags() & WorksOnMac))
-				continue;
-		#endif
-
-			QStringList missingFeatures;
-			if(!definition->requirementCheck(missingFeatures))
+			if(definition->worksUnderThisOS())
 			{
-				emit actionPackLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
-								   .arg(shortFilename)
-								   .arg(definition->id())
-								   .arg(missingFeatures.join("<li>")));//TODO
-				continue;
+				QStringList missingFeatures;
+				if(!definition->requirementCheck(missingFeatures))
+				{
+					emit actionPackLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
+									   .arg(shortFilename)
+									   .arg(definition->id())
+									   .arg(missingFeatures.join("<li>")));
+					continue;
+				}
 			}
 
 			mActionDefinitions << definition;

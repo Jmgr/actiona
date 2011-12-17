@@ -40,6 +40,23 @@ namespace ActionTools
 	{
 		qDeleteAll(mExceptions);
 	}
+
+	bool ActionDefinition::worksUnderThisOS() const
+	{
+#ifdef Q_WS_WIN
+	if(!(flags() & WorksOnWindows))
+		return false;
+#endif
+#ifdef Q_WS_X11
+	if(!(flags() & WorksOnGnuLinux))
+		return false;
+#endif
+#ifdef Q_WS_MAC
+	if(!(flags() & WorksOnMac))
+		return false;
+#endif
+		return true;
+	}
 	
 	QString ActionDefinition::CategoryName[CategoryCount] =
 	{

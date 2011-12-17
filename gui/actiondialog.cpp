@@ -70,6 +70,10 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	ui->actionDescription->setText("<i>" + actionDefinition->description() + "</i>");
 	ui->helpPushButton->setTopic(QString("%1:actions:%2").arg(localeName.left(2)).arg(actionDefinition->id().toLower()));
 
+	bool worksUnderThisOS = actionDefinition->worksUnderThisOS();
+	ui->actionOSAvailability->setVisible(!worksUnderThisOS);
+	ui->actionOSAvailabilityIcon->setVisible(!worksUnderThisOS);
+
 	//Init of tabs & group boxes
 	QStringList tabs = actionDefinition->tabs();
 	if(tabs.count() == 0)

@@ -1403,9 +1403,20 @@ void MainWindow::fillNewActionTreeWidget(NewActionTreeWidget *widget)
 
 		QTreeWidgetItem *parentItem = widget->topLevelItem(actionDefinition->category());
 		QTreeWidgetItem *item = new QTreeWidgetItem(parentItem, QStringList(actionDefinition->name()));
+		QFont itemFont;
+		QString tooltip = actionDefinition->description();
 
+		if(!actionDefinition->worksUnderThisOS())
+		{
+			itemFont.setItalic(true);
+
+			tooltip.append("\n");
+			tooltip.append(tr("Note: does not work under this operating system"));
+		}
+
+		item->setFont(0, itemFont);
 		item->setIcon(0, actionDefinition->icon());
-		item->setToolTip(0, actionDefinition->description());
+		item->setToolTip(0, tooltip);
 		item->setData(0, NewActionTreeWidget::ActionIdRole, actionDefinition->id());
 	}
 
@@ -2081,7 +2092,7 @@ void MainWindow::actionSelectionChanged(int selectionCount)
 		if(!actionInstance)
 			continue;
 
-		if(actionInstance->isEnabled())
+		if(actionInstance->isEnabled() && actionInstance->definition()->worksUnderThisOS())
 		{
 			hasSelectionEnabledActions = true;
 			break;

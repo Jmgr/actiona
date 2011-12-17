@@ -67,6 +67,8 @@ namespace ActionTools
 		const QList<ElementDefinition *> &elements() const								{ return mElements; }
 		const QList<ActionException *> &exceptions() const								{ return mExceptions; }
 
+		bool worksUnderThisOS() const;
+
 		virtual bool requirementCheck(QStringList &missingRequirements) const			{ Q_UNUSED(missingRequirements) return true; }
 
 		static QString CategoryName[CategoryCount];
