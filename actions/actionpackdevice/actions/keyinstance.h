@@ -64,8 +64,14 @@ namespace Actions
 		void sendRelease();
 	
 	private:
+		void pressOrReleaseModifiers(bool press);
+
 		KeyboardDevice mKeyboardDevice;
 		QString mKey;
+		bool mCtrl;
+		bool mAlt;
+		bool mShift;
+		bool mMeta;
 		QTimer mTimer;
 		
 		Q_DISABLE_COPY(KeyInstance)
