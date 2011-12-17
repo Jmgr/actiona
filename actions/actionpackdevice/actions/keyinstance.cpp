@@ -26,8 +26,6 @@
 #include <Windows.h>
 #endif
 
-#include <QDebug>
-
 namespace Actions
 {
 	ActionTools::StringListPair KeyInstance::actions = qMakePair(
@@ -38,7 +36,11 @@ namespace Actions
 			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", "Win32") << QT_TRANSLATE_NOOP("KeyInstance::actions", "DirectX"));
 
 	KeyInstance::KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
-		: ActionTools::ActionInstance(definition, parent)
+		: ActionTools::ActionInstance(definition, parent),
+		  mCtrl(false),
+		  mAlt(false),
+		  mShift(false),
+		  mMeta(false)
 	{
 		connect(&mTimer, SIGNAL(timeout()), this, SLOT(sendRelease()));
 	}
@@ -49,6 +51,10 @@ namespace Actions
 	
 		mKey = evaluateString(ok, "key", "key");
 		Action action = evaluateListElement<Action>(ok, actions, "action");
+		mCtrl = evaluateBoolean(ok, "ctrl");
+		mAlt = evaluateBoolean(ok, "alt");
+		mShift = evaluateBoolean(ok, "shift");
+		mMeta = evaluateBoolean(ok, "meta");
 		Type type = evaluateListElement<Type>(ok, types, "type");
 		int pause = evaluateInteger(ok, "pause");
 	
@@ -62,12 +68,18 @@ namespace Actions
 		switch(action)
 		{
 		case PressAction:
+			pressOrReleaseModifiers(true);
+
 			result &= mKeyboardDevice.pressKey(mKey);
 			break;
 		case ReleaseAction:
+			pressOrReleaseModifiers(false);
+
 			result &= mKeyboardDevice.releaseKey(mKey);
 			break;
 		case PressReleaseAction:
+			pressOrReleaseModifiers(true);
+
 			result &= mKeyboardDevice.pressKey(mKey);
 
 			mTimer.setSingleShot(true);
@@ -97,8 +109,35 @@ namespace Actions
 
 	void KeyInstance::sendRelease()
 	{
+		pressOrReleaseModifiers(false);
 		mKeyboardDevice.releaseKey(mKey);
 
 		emit executionEnded();
+	}
+
+	void KeyInstance::pressOrReleaseModifiers(bool press)
+	{
+		if(press)
+		{
+			if(mCtrl)
+				mKeyboardDevice.pressKey("controlLeft");
+			if(mAlt)
+				mKeyboardDevice.pressKey("altLeft");
+			if(mShift)
+				mKeyboardDevice.pressKey("shiftLeft");
+			if(mMeta)
+				mKeyboardDevice.pressKey("metaLeft");
+		}
+		else
+		{
+			if(mCtrl)
+				mKeyboardDevice.releaseKey("controlLeft");
+			if(mAlt)
+				mKeyboardDevice.releaseKey("altLeft");
+			if(mShift)
+				mKeyboardDevice.releaseKey("shiftLeft");
+			if(mMeta)
+				mKeyboardDevice.releaseKey("metaLeft");
+		}
 	}
 }

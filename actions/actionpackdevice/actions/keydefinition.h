@@ -26,6 +26,7 @@
 #include "keyparameterdefinition.h"
 #include "listparameterdefinition.h"
 #include "numberparameterdefinition.h"
+#include "booleanparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -55,6 +56,28 @@ namespace Actions
 			action->setItems(KeyInstance::actions);
 			action->setDefaultValue(KeyInstance::actions.second.at(KeyInstance::PressReleaseAction));
 			addElement(action);
+
+			ActionTools::BooleanParameterDefinition *ctrl = new ActionTools::BooleanParameterDefinition(ActionTools::Name("ctrl", tr("Ctrl")), this);
+			ctrl->setTooltip(tr("Should the Ctrl key be pressed"));
+			addElement(ctrl);
+
+			ActionTools::BooleanParameterDefinition *alt = new ActionTools::BooleanParameterDefinition(ActionTools::Name("alt", tr("Alt")), this);
+			alt->setTooltip(tr("Should the Alt key be pressed"));
+			addElement(alt);
+
+			ActionTools::BooleanParameterDefinition *shift = new ActionTools::BooleanParameterDefinition(ActionTools::Name("shift", tr("Shift")), this);
+			shift->setTooltip(tr("Should the Shift key be pressed"));
+			addElement(shift);
+
+		#ifdef Q_WS_WIN
+			QString metaKeyName = tr("Windows");
+		#else
+			QString metaKeyName = tr("Meta");
+		#endif
+
+			ActionTools::BooleanParameterDefinition *meta = new ActionTools::BooleanParameterDefinition(ActionTools::Name("meta", metaKeyName), this);
+			meta->setTooltip(tr("Should the %1 key be pressed").arg(metaKeyName));
+			addElement(meta);
 
 			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
 			type->setTooltip(tr("The key type to use"));
