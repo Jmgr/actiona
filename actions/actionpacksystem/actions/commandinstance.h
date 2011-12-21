@@ -98,6 +98,8 @@ namespace Actions
 
 				emit executionException(FailedToStartException, tr("Failed to start the command. %1").arg(mProcess->errorString()));
 				return;
+			default:
+				return;
 			}
 		}
 
