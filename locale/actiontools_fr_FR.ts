@@ -4,27 +4,27 @@
 <context>
     <name>ActionDefinition::CategoryName</name>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="46"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="63"/>
         <source>Windows</source>
         <translation>Fenêtres</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="47"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="64"/>
         <source>Device</source>
         <translation>Périphériques</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="48"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="65"/>
         <source>System</source>
         <translation>Système</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="49"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="66"/>
         <source>Internal</source>
         <translation>Interne</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="50"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="67"/>
         <source>Data</source>
         <translation>Données</translation>
     </message>
@@ -68,12 +68,12 @@
 <context>
     <name>ActionTabs</name>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="53"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="70"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="53"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="70"/>
         <source>Advanced</source>
         <translation>Avancé</translation>
     </message>
@@ -145,7 +145,7 @@
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; est déjà chargé</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="190"/>
+        <location filename="../actiontools/actionfactory.cpp" line="179"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; cannot be loaded:&lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</source>
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; ne peut pas être chargé : &lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</translation>
     </message>
@@ -896,7 +896,7 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Données</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="87"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="104"/>
         <source>missing XTest extension</source>
         <translation>extension XTest manquante</translation>
     </message>

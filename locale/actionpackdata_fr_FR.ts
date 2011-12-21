@@ -209,57 +209,57 @@
 <context>
     <name>Actions::ReadRegistryDefinition</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="47"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="46"/>
         <source>Key</source>
         <translation>Clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="48"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="47"/>
         <source>The registry key to read from</source>
         <translation>La clef de registre à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="53"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="52"/>
         <source>Subkey</source>
         <translation>Sous-clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="54"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="53"/>
         <source>The registry subkey to read from</source>
         <translation>La sous-clef du registre à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="57"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="56"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="58"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="57"/>
         <source>The value to read</source>
         <translation>La valeur à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="60"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="62"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="61"/>
         <source>The variable where to save the value read from the registry</source>
         <translation>La variable où enregistrer la valeur lue à partir du registre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="65"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="64"/>
         <source>Cannot find subKey</source>
         <translation>Impossible de trouver la sous-clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="66"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="65"/>
         <source>Cannot find value</source>
         <translation>Impossible de trouver la valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="67"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="66"/>
         <source>Invalid value type</source>
         <translation>Type de valeur incorrect</translation>
     </message>
@@ -596,52 +596,52 @@
 <context>
     <name>Actions::WriteRegistryDefinition</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="47"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="46"/>
         <source>Key</source>
         <translation>Clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="48"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="47"/>
         <source>The registry key to write to</source>
         <translation>La clef de registre à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="53"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="52"/>
         <source>Subkey</source>
         <translation>Sous-clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="54"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="53"/>
         <source>The registry subkey to write to</source>
         <translation>La sous-clef de registre à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="57"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="56"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="58"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="57"/>
         <source>The value to write to</source>
         <translation>La valeur où écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="60"/>
         <source>Data</source>
         <translation>Données</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="62"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="61"/>
         <source>The data to write</source>
         <translation>Les données à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="65"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="64"/>
         <source>Cannot find subKey</source>
         <translation>Impossible de trouver la sous-clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="66"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="65"/>
         <source>Cannot write value</source>
         <translation>Impossible d&apos;écrire la valeur</translation>
     </message>
@@ -1095,12 +1095,12 @@
         <translation>Lire une entrée dans un fichier INI</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="71"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="69"/>
         <source>Read registry</source>
         <translation>Lire registre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="74"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="72"/>
         <source>Read an entry from the registry</source>
         <translation>Lire une entrée de la base registre</translation>
     </message>
@@ -1153,12 +1153,12 @@
         <translation>Écrire une entrée dans un fichier INI</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="70"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="68"/>
         <source>Write registry</source>
         <translation>Écrire registre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="73"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="71"/>
         <source>Writes an entry to the registry</source>
         <translation>Écrire une entrée dans la base de registres</translation>
     </message>
