@@ -1,13 +1,19 @@
 #define MyAppName "Actionaz"
-#define MyAppVersion "3.0.1"
 #define MyAppIsBeta 0
 #define MyAppPublisher "Actionaz.org"
 #define MyAppURL "http://www.actionaz.org/"
 #define MyAppExeName "actionaz.exe"
+
+#ifndef MyAppVersion
+#error "You need to set the version number"
+#endif
+
+#ifndef MyAppBits
 #define MyAppBits 32
+#endif
 
 [Setup]
-#if MyAppBits == 32
+#if int(MyAppBits) == 32
 AppId={{968D7F40-0B23-457D-AD67-0F7C0012EF1E}
 #else
 AppId={{098CDAF9-5A9B-4731-9F3C-F3F1DF7490C2}
@@ -26,7 +32,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-LicenseFile=C:\actionaz\installer\reference{#MyAppBits}\LICENSE.txt
+LicenseFile=C:\act_base{#MyAppBits}\LICENSE.txt
 OutputDir=C:\actionaz\installer
 OutputBaseFilename=actionaz-{#MyAppVersion}-win{#MyAppBits}
 SetupIconFile=C:\actionaz\gui\icons\actionaz.ico
@@ -36,7 +42,7 @@ WizardImageFile=C:\actionaz\installer\start.bmp
 WizardSmallImageFile=C:\actionaz\installer\icon.bmp
 ChangesAssociations=yes
 MinVersion=0,5.1
-#if MyAppBits == 32
+#if int(MyAppBits) == 32
 ArchitecturesAllowed=x64 x86
 #else
 ArchitecturesAllowed=x64
@@ -97,15 +103,15 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\actionaz\installer\reference{#MyAppBits}\actionaz.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\actionaz\installer\reference{#MyAppBits}\*"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\actionaz\installer\reference{#MyAppBits}\actions\*"; DestDir: "{app}\actions"; Flags: ignoreversion
-Source: "C:\actionaz\installer\reference{#MyAppBits}\sfx\*"; DestDir: "{app}\sfx"; Flags: ignoreversion
-Source: "C:\actionaz\installer\reference{#MyAppBits}\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion
-Source: "C:\actionaz\installer\reference{#MyAppBits}\plugins\sqldrivers\*"; DestDir: "{app}\plugins\sqldrivers"; Flags: ignoreversion
-Source: "C:\actionaz\installer\reference{#MyAppBits}\plugins\mediaservice\*"; DestDir: "{app}\plugins\mediaservice"; Flags: ignoreversion
-Source: "C:\actionaz\installer\reference{#MyAppBits}\plugins\playlistformats\*"; DestDir: "{app}\plugins\playlistformats"; Flags: ignoreversion
-Source: "C:\actionaz\installer\reference{#MyAppBits}\code\script\*"; DestDir: "{app}\code\script"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\actionaz.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\actions\*"; DestDir: "{app}\actions"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\sfx\*"; DestDir: "{app}\sfx"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\plugins\sqldrivers\*"; DestDir: "{app}\plugins\sqldrivers"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\plugins\mediaservice\*"; DestDir: "{app}\plugins\mediaservice"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\plugins\playlistformats\*"; DestDir: "{app}\plugins\playlistformats"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\code\script\*"; DestDir: "{app}\code\script"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
