@@ -43,6 +43,7 @@ namespace ActionTools
 		addAction(swapCodeAction);
 
 		connect(swapCodeAction, SIGNAL(triggered()), this, SLOT(swapCode()));
+		connect(ui->editor, SIGNAL(acceptDialog()), this, SLOT(accept()));
 	}
 
 	CodeEditorDialog::~CodeEditorDialog()

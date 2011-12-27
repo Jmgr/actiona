@@ -51,6 +51,9 @@ namespace ActionTools
 		bool checkSyntax();
 		QString lastSyntaxError() const				{ return mLastSyntaxError; }
 
+	signals:
+		void acceptDialog();
+
 	private slots:
 		void insertCompletion(const QString &completion);
 		void updateLineNumberAreaWidth(int newBlockCount);
@@ -65,6 +68,7 @@ namespace ActionTools
 		void focusInEvent(QFocusEvent *event);
 		void autoComplete();
 		void keyPressEvent(QKeyEvent *event);
+		void keyReleaseEvent(QKeyEvent *event);
 
 		ScriptCompleter *mCompleter;
 		CodeHighlighter *mHighlighter;

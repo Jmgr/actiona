@@ -464,4 +464,12 @@ namespace ActionTools
 		cr.setWidth(mCompleter->popup()->sizeHintForColumn(0) + mCompleter->popup()->verticalScrollBar()->sizeHint().width());
 		mCompleter->complete(cr); // popup it up!
 	}
+
+	void CodeEdit::keyReleaseEvent(QKeyEvent *event)
+	{
+		if(event->key() == Qt::Key_Return && event->modifiers() & Qt::ControlModifier)
+			emit acceptDialog();
+		else
+			QPlainTextEdit::keyReleaseEvent(event);
+	}
 }
