@@ -85,6 +85,7 @@ namespace Code
 		QScriptValue mOnError;
 		QScriptValue mFileValue;
 		QFile *mFile;
+		bool mCloseFile;
 		QByteArray mData;
 		bool mIsDownloading;
 		QString mUser;

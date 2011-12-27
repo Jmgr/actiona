@@ -60,6 +60,8 @@ namespace Code
 		: CodeClass(),
 		  mNetworkAccessManager(new QNetworkAccessManager(this)),
 		  mNetworkReply(0),
+		  mFile(0),
+		  mCloseFile(false),
 		  mIsDownloading(false)
 	{
 		QObject::connect(mNetworkAccessManager, SIGNAL(authenticationRequired(QNetworkReply *, QAuthenticator *)), this, SLOT(authenticationRequired(QNetworkReply *, QAuthenticator *)));
@@ -80,10 +82,17 @@ namespace Code
 			else
 				mFile = new QFile(mFileValue.toString(), this);
 
-			if(!mFile->isOpen() && !mFile->open(QIODevice::WriteOnly))
+			mCloseFile = false;
+
+			if(!mFile->isOpen())
 			{
-				throwError("OpenFileError", tr("Unable to open the destination file"));
-				return thisObject();
+				if(!mFile->open(QIODevice::WriteOnly))
+				{
+					throwError("OpenFileError", tr("Unable to open the destination file"));
+					return thisObject();
+				}
+
+				mCloseFile = true;
 			}
 		}
 
@@ -209,10 +218,18 @@ namespace Code
 		if(!mNetworkReply)
 			return;
 
-		if(!mFile->isOpen())
-			mData = mNetworkReply->readAll();
+		if(mFileValue.isValid() && mFile)
+		{
+			if(mCloseFile)
+			{
+				mFile->close();
+				mFile->deleteLater();
+			}
+
+			mFile = 0;
+		}
 		else
-			mFile->close();
+			mData = mNetworkReply->readAll();
 
 		if(mOnFinished.isValid())
 			mOnFinished.call(thisObject());
@@ -252,7 +269,7 @@ namespace Code
 
 	void Web::readyRead()
 	{
-		if(mFile->isOpen())
+		if(mFileValue.isValid() && mFile)
 			mFile->write(mNetworkReply->readAll());
 	}
 }
