@@ -124,7 +124,7 @@ namespace ActionTools
 				if(!item)
 					continue;
 
-				mHighlighter->addAction(item->text());
+				mHighlighter->addCodeObject(item->text());
 			}
 		}
 	}
@@ -430,10 +430,16 @@ namespace ActionTools
 		bool isShortcut = ((event->modifiers() & Qt::ControlModifier) && event->key() == Qt::Key_Space); // CTRL+Space
 		if(!mCompleter || !isShortcut) // dont process the shortcut when we have a completer
 		{
-			if(event->key() == Qt::Key_Tab)
+			switch(event->key())
 			{
-				indentOrUnindent(!(event->modifiers() & Qt::ControlModifier));
+			case Qt::Key_Tab:
+				indentOrUnindent(true);
 				return;
+			case Qt::Key_Backtab:
+				indentOrUnindent(false);
+				return;
+			default:
+				break;
 			}
 
 			QPlainTextEdit::keyPressEvent(event);
@@ -471,5 +477,22 @@ namespace ActionTools
 			emit acceptDialog();
 		else
 			QPlainTextEdit::keyReleaseEvent(event);
+	}
+
+	bool CodeEdit::event(QEvent *event)
+	{
+		//Block the backtab key from changing the focus, since we use it to unindent
+		if (event->type() == QEvent::KeyPress)
+		{
+			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+			if (keyEvent->key() == Qt::Key_Backtab)
+			{
+				keyPressEvent(keyEvent);
+
+				return true;
+			}
+		}
+
+		return QPlainTextEdit::event(event);
 	}
 }

@@ -17,12 +17,16 @@
 
 	Contact : jmgr@jmgr.info
 */
+// This file uses some code lines from the Ofi Labs X2 project
+// Copyright (C) 2010 Ariya Hidayat <ariya.hidayat@gmail.com>
+// Licensed under GNU/GPLv3
 
 #ifndef CODEHIGHLIGHTER_H
 #define CODEHIGHLIGHTER_H
 
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
+#include <QSet>
 
 #include "actiontools_global.h"
 
@@ -35,24 +39,32 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit CodeHighlighter(QTextDocument *parent = 0);
-		
-		void addAction(const QString &actionName);
+		enum Format
+		{
+			NormalFormat,
+			CommentFormat,
+			NumberFormat,
+			StringFormat,
+			OperatorFormat,
+			IdentifierFormat,
+			KeywordFormat,
+			ReservedFormat,
+			CodeObjectsFormat,
+
+			FormatCount
+		};
+
+		CodeHighlighter(QTextDocument *parent = 0);
+		void addCodeObject(const QString &name);
+
+	protected:
+		void highlightBlock(const QString &text);
 
 	private:
-		void highlightBlock(const QString &text);
-		struct HighlightingRule
-		{
-			QRegExp pattern;
-			QTextCharFormat format;
-		};
-		QVector<HighlightingRule> mHighlightingRules;
-
-		QRegExp mCommentStartExpression;
-		QRegExp mCommentEndExpression;
-
-		QTextCharFormat mMultiLineCommentFormat;
-		QTextCharFormat mCodeClassFormat;
+		QSet<QString> mUsedKeywords;
+		QSet<QString> mReservedKeywords;
+		QSet<QString> mCodeObjects;
+		QTextCharFormat mFormats[FormatCount];
 
 		Q_DISABLE_COPY(CodeHighlighter)
 	};

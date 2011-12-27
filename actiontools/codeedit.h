@@ -69,6 +69,7 @@ namespace ActionTools
 		void autoComplete();
 		void keyPressEvent(QKeyEvent *event);
 		void keyReleaseEvent(QKeyEvent *event);
+		bool event(QEvent *event);
 
 		ScriptCompleter *mCompleter;
 		CodeHighlighter *mHighlighter;
