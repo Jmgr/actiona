@@ -96,6 +96,19 @@
         <source>The command&apos;s exit status</source>
         <translation>Le statut de sortie de la commande</translation>
     </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="79"/>
+        <source>Failed to start the command</source>
+        <translation>Impossible d&apos;exécuter la commande</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::CommandInstance</name>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/commandinstance.h" line="99"/>
+        <source>Failed to start the command. %1</source>
+        <translation>Impossible d&apos;exécuter la commande. %1</translation>
+    </message>
 </context>
 <context>
     <name>Actions::DetachedCommandDefinition</name>
@@ -731,12 +744,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="80"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="82"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="83"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="85"/>
         <source>Executes a command</source>
         <translation>Exécute une commande</translation>
     </message>

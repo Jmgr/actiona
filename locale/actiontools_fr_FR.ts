@@ -292,23 +292,23 @@
 <context>
     <name>ActionTools::CodeEditorDialog</name>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="109"/>
-        <location filename="../actiontools/codeeditordialog.cpp" line="128"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="110"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="129"/>
         <source>Syntax error check</source>
         <translation>Vérification d&apos;erreur de syntaxe</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="109"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="110"/>
         <source>No syntax errors where found.</source>
         <translation>Aucune erreur de syntaxe n&apos;a été trouvée.</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="124"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="125"/>
         <source>Syntax error detected.</source>
         <translation>Des erreurs de syntaxe ont été trouvées.</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="126"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="127"/>
         <source>Syntax error detected: %1</source>
         <translation>Erreur de syntaxe détectée : %1</translation>
     </message>
