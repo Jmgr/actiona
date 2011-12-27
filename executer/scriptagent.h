@@ -59,8 +59,7 @@ namespace LibExecuter
 		void pause(bool pause)												{ mPaused = pause; }
 		void setDebuggerAgent(QScriptEngineAgent *debuggerAgent)			{ mDebuggerAgent = debuggerAgent;  }
 		void setPauseDuration(qint64 duration)								{ mPauseDuration = duration; }
-		void emitStopExecution()											{ mContinueExecution = false; emit stopExecution(); }
-	
+		void stopExecution(bool emitSignal = true)							{ mContinueExecution = false; if(emitSignal) emit stopExecution(); }
 		int currentLine() const												{ return mCurrentLine; }
 		int currentColumn() const											{ return mCurrentColumn; }
 		Context context() const												{ return mContext; }
@@ -68,7 +67,7 @@ namespace LibExecuter
 		QString currentFile() const											{ return mFiles.count() > 0 ? mFiles.back() : QString(); }
 
 	signals:
-		void stopExecution();
+		void executionStopped();
 		void evaluationStarted();
 		void evaluationStopped();
 	

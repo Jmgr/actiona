@@ -57,7 +57,7 @@ namespace LibExecuter
 		Q_UNUSED(engine)
 
 		if(mScriptAgent)
-			mScriptAgent->emitStopExecution();
+			mScriptAgent->stopExecution();
 
 		return context->thisObject();
 	}

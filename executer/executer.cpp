@@ -119,7 +119,7 @@ namespace LibExecuter
 
 		mScriptAgent = new ScriptAgent(mScriptEngine);
 
-		connect(mScriptAgent, SIGNAL(stopExecution()), this, SLOT(stopExecution()));
+		connect(mScriptAgent, SIGNAL(executionStopped()), this, SLOT(stopExecution()));
 		connect(mScriptAgent, SIGNAL(evaluationStarted()), mExecutionWindow, SLOT(enableDebug()));
 		connect(mScriptAgent, SIGNAL(evaluationStopped()), mExecutionWindow, SLOT(disableDebug()));
 
@@ -381,6 +381,7 @@ namespace LibExecuter
 			return;
 		
 		mScriptAgent->pause(false);
+		mScriptAgent->stopExecution(false);
 		mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
 		
 		mExecutionStarted = false;

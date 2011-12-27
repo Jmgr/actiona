@@ -48,7 +48,7 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 {
 	connect(mScriptEngineDebugger, SIGNAL(evaluationResumed()), this, SLOT(onEvaluationResumed()));
 	connect(mScriptEngineDebugger, SIGNAL(evaluationSuspended()), this, SLOT(onEvaluationPaused()));
-	connect(mScriptAgent, SIGNAL(stopExecution()), this, SLOT(stopExecution()));
+	connect(mScriptAgent, SIGNAL(executionStopped()), this, SLOT(stopExecution()));
 
 	foreach(QString extension, mScriptEngine->availableExtensions())
 		mScriptEngine->importExtension(extension);
@@ -145,10 +145,4 @@ void CodeExecuter::onEvaluationPaused()
 void CodeExecuter::stopExecution()
 {
 	mScriptEngine->abortEvaluation();
-	//Qt BUG
-	/*
-	 A bug in Qt 4.6.x and 4.7.0 prevents from aborting a running script
-	 Should be fixed in 4.7.2
-	 See http://bugreports.qt.nokia.com/browse/QTBUG-9433
-	 */
 }

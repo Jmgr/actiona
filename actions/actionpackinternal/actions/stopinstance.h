@@ -39,7 +39,7 @@ namespace Actions
 		void startExecution()
 		{
 			LibExecuter::ScriptAgent *scriptAgent = dynamic_cast<LibExecuter::ScriptAgent *>(scriptEngine()->agent());
-			scriptAgent->emitStopExecution();
+			scriptAgent->stopExecution();
 
 			emit executionEnded();
 		}
