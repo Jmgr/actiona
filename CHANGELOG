@@ -1,10 +1,11 @@
 3.1.1 (27/12/11)
-- added Ctrl+Return shortcut to close the code/text editor
-- added Shift+Tab to unindent the selection in the code/text editor
-- improved the Code syntax highlighter
-- fixed a crash when using the Web object
-- fixed Execution.sleep() and Execution.pause() not working under Linux
-- fixed possible crash when using Execution.sleep() and Execution.pause()
+- Code editor: added Ctrl+Return shortcut to close the code/text editor
+- Code editor: added Shift+Tab to unindent the selection in the code/text editor
+- Code editor: improved the Code syntax highlighter
+- Code: fixed a crash when using the Web object
+- Code: fixed Execution.sleep() and Execution.pause() not working under Linux
+- Code: fixed possible crash when using Execution.sleep() and Execution.pause()
+- Windows: fixed a bug in the installer preventing the use of SFX scripts
 
 3.1.0 (21/12/11)
 - added edition of actions that are not compatible with the current OS
