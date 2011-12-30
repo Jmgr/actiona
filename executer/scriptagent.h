@@ -49,7 +49,6 @@ namespace LibExecuter
 			mContext(Unknown),
 			mPaused(false),
 			mContinueExecution(true),
-			mPauseDuration(0),
 			mDebuggerAgent(0),
 			mEngineLevel(0)
 																			{}
@@ -58,7 +57,6 @@ namespace LibExecuter
 		void setCurrentParameter(int currentParameter)						{ mCurrentParameter = currentParameter; }
 		void pause(bool pause)												{ mPaused = pause; }
 		void setDebuggerAgent(QScriptEngineAgent *debuggerAgent)			{ mDebuggerAgent = debuggerAgent;  }
-		void setPauseDuration(qint64 duration)								{ mPauseDuration = duration; }
 		void stopExecution(bool emitSignal = true)							{ mContinueExecution = false; if(emitSignal) emit stopExecution(); }
 		int currentLine() const												{ return mCurrentLine; }
 		int currentColumn() const											{ return mCurrentColumn; }
@@ -92,7 +90,6 @@ namespace LibExecuter
 		Context mContext;
 		bool mPaused;
 		bool mContinueExecution;
-		qint64 mPauseDuration;
 		QScriptEngineAgent *mDebuggerAgent;
 		int mEngineLevel;
 	};

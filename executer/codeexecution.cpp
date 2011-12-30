@@ -20,6 +20,7 @@
 
 #include "codeexecution.h"
 #include "scriptagent.h"
+#include "crossplatform.h"
 
 #include <QScriptEngine>
 
@@ -38,8 +39,7 @@ namespace LibExecuter
 	{
 		Q_UNUSED(engine)
 
-		if(mScriptAgent)
-			mScriptAgent->setPauseDuration(static_cast<quint64>(context->argument(0).toNumber()));
+		ActionTools::CrossPlatform::sleep(context->argument(0).toInt32());
 
 		return context->thisObject();
 	}

@@ -19,9 +19,6 @@
 */
 
 #include "scriptagent.h"
-#include "crossplatform.h"
-
-#include <QApplication>
 
 namespace LibExecuter
 {
@@ -67,16 +64,6 @@ namespace LibExecuter
 	{
 		if(mDebuggerAgent)
 			mDebuggerAgent->functionExit(scriptId, returnValue);
-
-		while(mContinueExecution && mPauseDuration > 0)
-		{
-			QApplication::processEvents();
-
-			ActionTools::CrossPlatform::sleep(10);
-
-			if(!mPaused)
-				mPauseDuration -= 10;
-		}
 	}
 
 	void ScriptAgent::positionChange(qint64 scriptId, int lineNumber, int columnNumber)
