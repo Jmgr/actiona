@@ -1,4 +1,4 @@
-3.1.1 (27/12/11)
+3.1.1 (30/12/11)
 - Code editor: added Ctrl+Return shortcut to close the code/text editor
 - Code editor: added Shift+Tab to unindent the selection in the code/text editor
 - Code editor: improved the Code syntax highlighter
