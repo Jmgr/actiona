@@ -26,6 +26,9 @@
 #include "variableparameterdefinition.h"
 #include "textparameterdefinition.h"
 #include "listparameterdefinition.h"
+#include "colorparameterdefinition.h"
+#include "positionparameterdefinition.h"
+#include "groupdefinition.h"
 
 namespace ActionTools
 {
@@ -50,15 +53,49 @@ namespace Actions
 			variable->setTooltip(tr("The variable name"));
 			addElement(variable);
 
-			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
-			value->setTooltip(tr("The variable's new value"));
-			addElement(value);
-
 			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
 			type->setTooltip(tr("The variable type"));
 			type->setItems(VariableInstance::types);
 			type->setDefaultValue(VariableInstance::types.second.at(VariableInstance::String));
 			addElement(type);
+
+			ActionTools::GroupDefinition *singleValueGroup = new ActionTools::GroupDefinition(this);
+			singleValueGroup->setMasterList(type);
+			singleValueGroup->setMasterValues(QStringList()
+											  << VariableInstance::types.first.at(VariableInstance::String)
+											  << VariableInstance::types.first.at(VariableInstance::Integer)
+											  << VariableInstance::types.first.at(VariableInstance::Float)
+											  );
+
+			ActionTools::TextParameterDefinition *simpleValue = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
+			simpleValue->setTooltip(tr("The variables new value"));
+			singleValueGroup->addMember(simpleValue);
+
+			addElement(singleValueGroup);
+
+			ActionTools::GroupDefinition *colorValueGroup = new ActionTools::GroupDefinition(this);
+			colorValueGroup->setMasterList(type);
+			colorValueGroup->setMasterValues(QStringList()
+											  << VariableInstance::types.first.at(VariableInstance::Color)
+											  );
+
+			ActionTools::ColorParameterDefinition *colorValue = new ActionTools::ColorParameterDefinition(ActionTools::Name("colorValue", tr("Color")), this);
+			colorValue->setTooltip(tr("The variables new value"));
+			colorValueGroup->addMember(colorValue);
+
+			addElement(colorValueGroup);
+
+			ActionTools::GroupDefinition *positionValueGroup = new ActionTools::GroupDefinition(this);
+			positionValueGroup->setMasterList(type);
+			positionValueGroup->setMasterValues(QStringList()
+											  << VariableInstance::types.first.at(VariableInstance::Position)
+											  );
+
+			ActionTools::PositionParameterDefinition *positionValue = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionValue", tr("Position")), this);
+			positionValue->setTooltip(tr("The variables new value"));
+			positionValueGroup->addMember(positionValue);
+
+			addElement(positionValueGroup);
 
 			addException(VariableInstance::ConversionFailedException, tr("Conversion failed"));
 		}

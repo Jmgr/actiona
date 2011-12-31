@@ -23,6 +23,10 @@
 
 #include "actioninstance.h"
 #include "script.h"
+#include "code/color.h"
+#include "code/point.h"
+
+#include <QPoint>
 
 namespace Actions
 {
@@ -36,7 +40,9 @@ namespace Actions
 		{
 			String,
 			Integer,
-			Float
+			Float,
+			Color,
+			Position
 		};
 		enum Exceptions
 		{
@@ -54,6 +60,8 @@ namespace Actions
 
 			QString variable = evaluateString(ok, "variable");
 			QString value = evaluateString(ok, "value");
+			QColor colorValue = evaluateColor(ok, "colorValue");
+			QPoint positionValue = evaluatePoint(ok, "positionValue");
 			Type type = evaluateListElement<Type>(ok, types, "type");
 
 			if(!ok)
@@ -86,6 +94,16 @@ namespace Actions
 						emit executionException(ConversionFailedException, tr("Cannot evaluate the value as a floating number"));
 						return;
 					}
+				}
+				break;
+			case Color:
+				{
+					setVariableFromScriptValue(variable, Code::Color::constructor(colorValue, scriptEngine()));
+				}
+				break;
+			case Position:
+				{
+					setVariableFromScriptValue(variable, Code::Point::constructor(positionValue, scriptEngine()));
 				}
 				break;
 			}

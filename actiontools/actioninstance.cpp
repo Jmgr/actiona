@@ -259,6 +259,9 @@ namespace ActionTools
 		if(!ok)
 			return QPoint();
 
+		if(result.isEmpty() || result == ":")
+			return QPoint();
+
 		QStringList positionStringList = result.split(":");
 		if(positionStringList.count() != 2)
 		{
@@ -296,6 +299,9 @@ namespace ActionTools
 			result = evaluateText(ok, subParameter);
 
 		if(!ok)
+			return QPolygon();
+
+		if(result.isEmpty() || result == ";")
 			return QPolygon();
 
 		QStringList pointStrings = result.split(';', QString::SkipEmptyParts);
@@ -337,6 +343,9 @@ namespace ActionTools
 		if(!ok)
 			return QColor();
 
+		if(result.isEmpty() || result == "::")
+			return QColor();
+
 		QStringList colorStringList = result.split(":");
 		if(colorStringList.count() != 3)
 		{
@@ -373,6 +382,12 @@ namespace ActionTools
 	{
 		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
 			d->scriptEngine->globalObject().setProperty(name, d->scriptEngine->newVariant(value));
+	}
+
+	void ActionInstance::setVariableFromScriptValue(const QString &name, const QScriptValue &value)
+	{
+		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
+			d->scriptEngine->globalObject().setProperty(name, value);
 	}
 
 	QVariant ActionInstance::variable(const QString &name)

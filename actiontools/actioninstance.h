@@ -246,6 +246,7 @@ namespace ActionTools
 		void setNextLine(const QString &nextLine);
 
 		void setVariable(const QString &name, const QVariant &value);
+		void setVariableFromScriptValue(const QString &name, const QScriptValue &value);
 		QVariant variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");

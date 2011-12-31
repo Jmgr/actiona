@@ -23,9 +23,12 @@
 namespace Actions
 {
 	ActionTools::StringListPair VariableInstance::types = qMakePair(
-			QStringList() << "string" << "integer" << "float",
-			QStringList()
-			<< QT_TRANSLATE_NOOP("VariableInstance::types", "String")
-			<< QT_TRANSLATE_NOOP("VariableInstance::types", "Integer")
-			<< QT_TRANSLATE_NOOP("VariableInstance::types", "Float"));
+				QStringList() << "string" << "integer" << "float" << "color" << "position" << "size",
+				QStringList()
+				<< QT_TRANSLATE_NOOP("VariableInstance::types", "String")
+				<< QT_TRANSLATE_NOOP("VariableInstance::types", "Integer")
+				<< QT_TRANSLATE_NOOP("VariableInstance::types", "Float")
+				<< QT_TRANSLATE_NOOP("VariableInstance::types", "Color")
+				<< QT_TRANSLATE_NOOP("VariableInstance::types", "Position")
+				<< QT_TRANSLATE_NOOP("VariableInstance::types", "Size"));
 }
