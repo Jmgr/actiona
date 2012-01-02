@@ -53,7 +53,7 @@ namespace Actions
 			addElement(title);
 
 			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name("action", tr("Action")), this);
-			action->setTooltip(tr("The condition to wait for"));
+			action->setTooltip(tr("The action to perform"));
 			action->setItems(WindowInstance::actions);
 			action->setDefaultValue(WindowInstance::actions.second.at(WindowInstance::Close));
 			addElement(action);
