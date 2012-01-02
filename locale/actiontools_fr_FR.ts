@@ -168,34 +168,34 @@
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="267"/>
-        <location filename="../actiontools/actioninstance.cpp" line="275"/>
+        <location filename="../actiontools/actioninstance.cpp" line="270"/>
+        <location filename="../actiontools/actioninstance.cpp" line="278"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="345"/>
-        <location filename="../actiontools/actioninstance.cpp" line="353"/>
+        <location filename="../actiontools/actioninstance.cpp" line="354"/>
+        <location filename="../actiontools/actioninstance.cpp" line="362"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="434"/>
+        <location filename="../actiontools/actioninstance.cpp" line="449"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="441"/>
+        <location filename="../actiontools/actioninstance.cpp" line="456"/>
         <source>[Null]</source>
         <translation>[Nul]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="443"/>
+        <location filename="../actiontools/actioninstance.cpp" line="458"/>
         <source>[Undefined]</source>
         <translation>[Indéfini]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="453"/>
+        <location filename="../actiontools/actioninstance.cpp" line="468"/>
         <source>[Raw data]</source>
         <translation>[Données brutes]</translation>
     </message>

@@ -224,37 +224,53 @@
 <context>
     <name>Actions::VariableDefinition</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="48"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="51"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="50"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="53"/>
         <source>The variable name</source>
         <translation>Le nom de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="53"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="70"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="54"/>
         <source>The variable&apos;s new value</source>
-        <translation>La nouvelle valeur de la variable</translation>
+        <translation type="obsolete">La nouvelle valeur de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="57"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="56"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="58"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="57"/>
         <source>The variable type</source>
         <translation>Le type de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="63"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="71"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="83"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="95"/>
+        <source>The variables new value</source>
+        <translation>La nouvelle valeur de la variable</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="82"/>
+        <source>Color</source>
+        <translation>Couleur</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="94"/>
+        <source>Position</source>
+        <translation>Position</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="100"/>
         <source>Conversion failed</source>
         <translation>Echec de convertion</translation>
     </message>
@@ -262,12 +278,12 @@
 <context>
     <name>Actions::VariableInstance</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableinstance.h" line="75"/>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.h" line="83"/>
         <source>Cannot evaluate the value as an integer</source>
         <translation>Impossible d&apos;évaluer la valeur en tant que nombre entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableinstance.h" line="86"/>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.h" line="94"/>
         <source>Cannot evaluate the value as a floating number</source>
         <translation>Impossible d&apos;évaluer la valeur en tant que nombre décimal</translation>
     </message>
@@ -409,12 +425,12 @@
         <translation>Vérifie la valeur d&apos;une variable et effectue une action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="66"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="103"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="69"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="106"/>
         <source>Set the value of a variable</source>
         <translation>Change la valeur d&apos;une variable</translation>
     </message>
@@ -523,6 +539,21 @@
         <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="30"/>
         <source>Float</source>
         <translation>Nombre décimal</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="31"/>
+        <source>Color</source>
+        <translation>Couleur</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="32"/>
+        <source>Position</source>
+        <translation>Position</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="33"/>
+        <source>Size</source>
+        <translation>Taille</translation>
     </message>
 </context>
 </TS>
