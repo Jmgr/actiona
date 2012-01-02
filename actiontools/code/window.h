@@ -75,7 +75,7 @@ namespace Code
 		QString title() const;
 		QString className() const;
 		bool isActive() const;
-		QScriptValue rect() const;
+		QScriptValue rect(bool useBorders = true) const;
 		QScriptValue process() const;
 		QScriptValue close() const;
 		QScriptValue killCreator() const;
@@ -83,7 +83,7 @@ namespace Code
 		QScriptValue minimize() const;
 		QScriptValue maximize() const;
 		QScriptValue move() const;
-		QScriptValue resize() const;
+		QScriptValue resize(bool useBorders = true) const;
 		
 	private:
 		bool checkValidity() const;

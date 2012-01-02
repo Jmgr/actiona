@@ -47,6 +47,7 @@ namespace Actions
 
 		QString title = evaluateString(ok, "title");
 		Action action = evaluateListElement<Action>(ok, actions, "action");
+		bool useBorders = evaluateBoolean(ok, "useBorders");
 
 		if(!ok)
 			return;
@@ -111,7 +112,7 @@ namespace Actions
 			result = foundWindow.move(movePosition);
 			break;
 		case Resize:
-			result = foundWindow.resize(QSize(resizeWidth, resizeHeight));
+			result = foundWindow.resize(QSize(resizeWidth, resizeHeight), useBorders);
 			break;
 		}
 

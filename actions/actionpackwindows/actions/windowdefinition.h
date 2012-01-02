@@ -28,6 +28,7 @@
 #include "groupdefinition.h"
 #include "positionparameterdefinition.h"
 #include "numberparameterdefinition.h"
+#include "booleanparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -82,6 +83,11 @@ namespace Actions
 			resizeHeight->setMinimum(0);
 			resizeHeight->setMaximum(INT_MAX);
 			resizeGroup->addMember(resizeHeight);
+
+			ActionTools::BooleanParameterDefinition *useBorders = new ActionTools::BooleanParameterDefinition(ActionTools::Name("useBorders", tr("Use borders (Windows OS only)")), this);
+			useBorders->setTooltip(tr("Should the border size be taken into account when resizing the window\nWindows OS only, under Linux resizing is done without borders"));
+			useBorders->setDefaultValue(true);
+			resizeGroup->addMember(useBorders);
 
 			addElement(resizeGroup);
 
