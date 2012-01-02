@@ -310,9 +310,8 @@
         <translation>Action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="56"/>
         <source>The condition to wait for</source>
-        <translation>La condition à attendre</translation>
+        <translation type="obsolete">La condition à attendre</translation>
     </message>
     <message>
         <source>Move</source>
@@ -331,6 +330,11 @@
     <message>
         <source>Resize</source>
         <translation type="obsolete">Redimensionner</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="56"/>
+        <source>The action to perform</source>
+        <translation>L&apos;action à effectuer</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="75"/>
