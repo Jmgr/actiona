@@ -21,8 +21,8 @@ unix {
 
 contains(DEFINES, ACT_PROFILE) {
 	!*-msvc*:QMAKE_CXXFLAGS += -include "highresolutiontimer.h"
-	*-msvc*:INCLUDEPATH += . tools ../tools ../../tools
 	*-msvc*:QMAKE_CXXFLAGS += /FI "highresolutiontimer.h"
+	INCLUDEPATH += . tools ../tools ../../tools
 }
 
 *-g++*::QMAKE_CXXFLAGS_DEBUG = -pedantic -Wall -Wextra -Wno-long-long -g -Wpointer-arith -Wcast-qual \
