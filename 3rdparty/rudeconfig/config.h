@@ -31,9 +31,9 @@
 #include <QtGlobal>
 
 #if defined(RUDECONFIG_LIBRARY)
-#  define TOOLSSHARED_EXPORT Q_DECL_EXPORT
+#  define RUDECONFIGSHARED_EXPORT Q_DECL_EXPORT
 #else
-#  define TOOLSSHARED_EXPORT Q_DECL_IMPORT
+#  define RUDECONFIGSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
 namespace rude{
@@ -45,7 +45,7 @@ class ConfigImpl;
 //=
 // rude::Config is the public interface for the config/ini file reader.
 //=
-class TOOLSSHARED_EXPORT Config{
+class RUDECONFIGSHARED_EXPORT Config{
 
 	// Bridge component
 	//
