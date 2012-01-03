@@ -13,12 +13,9 @@ HEADERS += actions/commanddefinition.h \
     actions/detachedcommanddefinition.h \
     actions/detachedcommandinstance.h \
     actions/playsounddefinition.h \
-    actions/playsoundinstance.h \
-    actions/findimagedefinition.h \
-    actions/findimageinstance.h
+	actions/playsoundinstance.h
 SOURCES += actions/killprocessinstance.cpp \
 	actions/notifyinstance.cpp \
 	actions/systeminstance.cpp \
 	actions/pixelcolorinstance.cpp \
-    actions/playsoundinstance.cpp \
-    actions/findimageinstance.cpp
+	actions/playsoundinstance.cpp
