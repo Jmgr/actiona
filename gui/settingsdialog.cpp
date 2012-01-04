@@ -96,7 +96,10 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->checkCodeSyntaxAutomatically->setChecked(settings.value("actions/checkCodeSyntaxAutomatically", QVariant(true)).toBool());
 
 	//NETWORK
-#ifndef ACT_NO_UPDATER
+#ifdef ACT_NO_UPDATER
+	ui->updatesCheck->hide();
+	ui->updatesCheckLabel->hide();
+#else
 	ui->updatesCheck->setCurrentIndex(settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY)).toInt());
 #endif
 
