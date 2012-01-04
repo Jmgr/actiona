@@ -65,6 +65,8 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 
 	QSettings settings;
 
+	ui->settingsTab->setCurrentIndex(settings.value("general/settingsTab", QVariant(0)).toInt());
+
 	ui->noSysTrayLabel->setVisible(!QSystemTrayIcon::isSystemTrayAvailable());
 	ui->noSysTrayMessagesLabel->setVisible(!QSystemTrayIcon::supportsMessages());
 
@@ -240,6 +242,8 @@ void SettingsDialog::accept()
 	}
 
 	QSettings settings;
+
+	settings.setValue("general/settingsTab", ui->settingsTab->currentIndex());
 
 	//GENERAL
 	settings.setValue("general/showLoadingWindow", ui->showLoadingWindow->isChecked());
