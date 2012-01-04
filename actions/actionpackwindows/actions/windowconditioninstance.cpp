@@ -115,20 +115,18 @@ namespace Actions
 
 	ActionTools::WindowHandle WindowConditionInstance::findWindow()
 	{
-		foreach(const ActionTools::WindowHandle &windowHandle, ActionTools::WindowHandle::windowList())
+		ActionTools::WindowHandle foundWindow = ActionTools::WindowHandle::findWindow(mTitleRegExp);
+		if(foundWindow.isValid())
 		{
-			if(mTitleRegExp.exactMatch(windowHandle.title()))
-			{
-				QRect windowRect = windowHandle.rect();
+			QRect windowRect = foundWindow.rect();
 
-				setVariable(mXCoordinate, windowRect.x());
-				setVariable(mYCoordinate, windowRect.y());
-				setVariable(mWidth, windowRect.width());
-				setVariable(mHeight, windowRect.height());
-				setVariable(mProcessId, windowHandle.processId());
+			setVariable(mXCoordinate, windowRect.x());
+			setVariable(mYCoordinate, windowRect.y());
+			setVariable(mWidth, windowRect.width());
+			setVariable(mHeight, windowRect.height());
+			setVariable(mProcessId, foundWindow.processId());
 
-				return windowHandle;
-			}
+			return foundWindow;
 		}
 
 		return ActionTools::WindowHandle();

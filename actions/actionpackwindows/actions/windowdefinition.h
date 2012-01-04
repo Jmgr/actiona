@@ -84,8 +84,8 @@ namespace Actions
 			resizeHeight->setMaximum(INT_MAX);
 			resizeGroup->addMember(resizeHeight);
 
-			ActionTools::BooleanParameterDefinition *useBorders = new ActionTools::BooleanParameterDefinition(ActionTools::Name("useBorders", tr("Use borders (Windows OS only)")), this);
-			useBorders->setTooltip(tr("Should the border size be taken into account when resizing the window\nWindows OS only, under Linux resizing is done without borders"));
+			ActionTools::BooleanParameterDefinition *useBorders = new ActionTools::BooleanParameterDefinition(ActionTools::Name("useBorders", tr("Use borders")), this);
+			useBorders->setTooltip(tr("Should the border size be taken into account when resizing the window"));
 			useBorders->setDefaultValue(true);
 			resizeGroup->addMember(useBorders);
 

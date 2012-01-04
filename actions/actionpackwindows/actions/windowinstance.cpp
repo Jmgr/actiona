@@ -70,17 +70,7 @@ namespace Actions
 				return;
 		}
 
-		QRegExp titleRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix);
-		ActionTools::WindowHandle foundWindow;
-
-		foreach(const ActionTools::WindowHandle &windowHandle, ActionTools::WindowHandle::windowList())
-		{
-			if(titleRegExp.exactMatch(windowHandle.title()))
-			{
-				foundWindow = windowHandle;
-				break;
-			}
-		}
+		ActionTools::WindowHandle foundWindow = ActionTools::WindowHandle::findWindow(QRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix));
 
 		if(!foundWindow.isValid())
 		{
