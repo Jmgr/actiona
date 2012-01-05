@@ -30,6 +30,7 @@
 #include "actions/openurldefinition.h"
 #include "actions/detachedcommanddefinition.h"
 #include "actions/playsounddefinition.h"
+#include "actions/findimagedefinition.h"
 
 #include "code/system.h"
 #include "code/mediaplaylist.h"
@@ -61,6 +62,7 @@ public:
 		addActionDefinition(new Actions::OpenURLDefinition(this));
 		addActionDefinition(new Actions::DetachedCommandDefinition(this));
 		addActionDefinition(new Actions::PlaySoundDefinition(this));
+		addActionDefinition(new Actions::FindImageDefinition(this));
 	}
 
 	QString id() const							{ return "system"; }

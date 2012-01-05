@@ -48,10 +48,9 @@ namespace ActionTools
 	const QRegExp ActionInstance::mVariableRegExp("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 
 	ActionInstance::ActionInstance(const ActionDefinition *definition, QObject *parent)
-		: QObject(parent)
+		: QObject(parent),
+		  d(new ActionInstanceData())
 	{
-		d = new ActionInstanceData();
-
 		d->definition = definition;
 
 		//Set the default values
@@ -59,14 +58,13 @@ namespace ActionTools
 		{
 			foreach(ElementDefinition *element, definition->elements())
 				element->setDefaultValues(this);
-		}
-		
-		//Set the default exception action
-		for(int i = 0; i < ActionTools::ActionException::ExceptionCount; ++i)
-		{
-			
-			setExceptionActionInstance(static_cast<ActionTools::ActionException::Exception>(i),
-									   ActionTools::ActionException::ExceptionActionInstance(ActionTools::ActionException::ExceptionDefaultAction[i], QString()));
+
+			//Set the default exception action
+			for(int i = 0; i < ActionTools::ActionException::ExceptionCount; ++i)
+			{
+				setExceptionActionInstance(static_cast<ActionTools::ActionException::Exception>(i),
+										   ActionTools::ActionException::ExceptionActionInstance(ActionTools::ActionException::ExceptionDefaultAction[i], QString()));
+			}
 		}
 	}
 
