@@ -358,14 +358,22 @@
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="87"/>
-        <source>Use borders (Windows OS only)</source>
-        <translation>Utiliser les bordures (Windows seulement)</translation>
+        <source>Use borders</source>
+        <translation>Utiliser les bords</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="88"/>
+        <source>Should the border size be taken into account when resizing the window</source>
+        <translation>Les bords doivent-ils être pris en compte lors du redimensionnement de la fenêtre</translation>
+    </message>
+    <message>
+        <source>Use borders (Windows OS only)</source>
+        <translation type="obsolete">Utiliser les bordures (Windows seulement)</translation>
+    </message>
+    <message>
         <source>Should the border size be taken into account when resizing the window
 Windows OS only, under Linux resizing is done without borders</source>
-        <translation>Les bordures de la fenêtre doivent-elles être prises en compte lors du redimensionnement
+        <translation type="obsolete">Les bordures de la fenêtre doivent-elles être prises en compte lors du redimensionnement
 Windows seulement, sous Linux les bordures sont ignorées</translation>
     </message>
     <message>
@@ -382,12 +390,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>Actions::WindowInstance</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="88"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="78"/>
         <source>Cannot find any window matching &quot;%1&quot;</source>
         <translation>Impossible de trouver une fenêtre correspondant à &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="122"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="112"/>
         <source>&quot;%1&quot; failed</source>
         <translation>Échec de &quot;%1&quot;</translation>
     </message>

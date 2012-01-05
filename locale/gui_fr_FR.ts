@@ -710,7 +710,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../gui/mainwindow.ui" line="424"/>
         <source>&amp;Save script</source>
-        <translation>&amp;Sauvegarder script</translation>
+        <translation>Enregistrer &amp;script</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.ui" line="436"/>
@@ -1955,7 +1955,7 @@ milliseconds</extracomment>
     <name>SettingsDialog</name>
     <message>
         <location filename="../gui/settingsdialog.ui" line="14"/>
-        <location filename="../gui/settingsdialog.cpp" line="235"/>
+        <location filename="../gui/settingsdialog.cpp" line="240"/>
         <source>Settings</source>
         <translation>Options</translation>
     </message>
@@ -2247,35 +2247,35 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Le test de proxy a échoué : paramètres de proxy incorrects.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="160"/>
-        <location filename="../gui/settingsdialog.cpp" line="214"/>
-        <location filename="../gui/settingsdialog.cpp" line="217"/>
+        <location filename="../gui/settingsdialog.cpp" line="165"/>
+        <location filename="../gui/settingsdialog.cpp" line="219"/>
         <location filename="../gui/settingsdialog.cpp" line="222"/>
+        <location filename="../gui/settingsdialog.cpp" line="227"/>
         <source>Connectivity test ended</source>
         <translation>Fin du test de connectivité</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="160"/>
+        <location filename="../gui/settingsdialog.cpp" line="165"/>
         <source>The connectivity test failed: maximum time exceeded.</source>
         <translation>Le délai maximum du test de connectivité est écoulé.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="214"/>
+        <location filename="../gui/settingsdialog.cpp" line="219"/>
         <source>The connectivity test succeeded.</source>
         <translation>Le test de connectivité s&apos;est achevé avec succès.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="217"/>
+        <location filename="../gui/settingsdialog.cpp" line="222"/>
         <source>The connectivity test failed: invalid username or password.</source>
         <translation>Le test de connectivité a échoué : nom d&apos;utilisateur ou mot de passe incorrect.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="222"/>
+        <location filename="../gui/settingsdialog.cpp" line="227"/>
         <source>The connectivity test failed: incorrect proxy settings.</source>
         <translation>Le test de connectivité a échoué : paramètres de proxy incorrects.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="235"/>
+        <location filename="../gui/settingsdialog.cpp" line="240"/>
         <source>You have set the same key sequence for switching text/code mode and opening the editor, please choose a different one.</source>
         <translation>Vous avez paramétré la même touche pour passer en mode texte/code et pour ouvrir l&apos;éditeur, merci d&apos;en choisir deux différents.</translation>
     </message>
