@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ namespace ActionTools
 
 		QString title() const;
 		QString classname() const;
-		QRect rect() const;
+		QRect rect(bool useBorders = true) const;
 		int processId() const;
 		bool close() const;
 		bool killCreator() const;
@@ -52,11 +52,15 @@ namespace ActionTools
 		bool minimize() const;
 		bool maximize() const;
 		bool move(QPoint position) const;
-		bool resize(QSize size) const;
+		bool resize(QSize size, bool useBorders = true) const;
 		bool isActive() const;
 
 		static WindowHandle foregroundWindow();
 		static QList<WindowHandle> windowList();
+		static WindowHandle findWindow(const QString &title);
+		static WindowHandle findWindow(const QRegExp &regExp);
+		static QList<WindowHandle> findWindows(const QString &title);
+		static QList<WindowHandle> findWindows(const QRegExp &regExp);
 
 	private:
 		WId mValue;

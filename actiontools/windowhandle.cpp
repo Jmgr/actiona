@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -90,27 +90,48 @@ namespace ActionTools
 #endif
 	}
 
-	QRect WindowHandle::rect() const
+	QRect WindowHandle::rect(bool useBorders) const
 	{
 #ifdef Q_WS_X11
-		QRect rect;
 		XWindowAttributes windowAttributes;
 
-		if(XGetWindowAttributes(QX11Info::display(), mValue, &windowAttributes))
-			rect = QRect(windowAttributes.x, windowAttributes.y, windowAttributes.width, windowAttributes.height);
+		if(!XGetWindowAttributes(QX11Info::display(), mValue, &windowAttributes))
+			return QRect();
 
-		return rect;
+		Window unused;
+		int positionX, positionY;
+
+		XTranslateCoordinates(QX11Info::display(), mValue, windowAttributes.root, -windowAttributes.border_width, -windowAttributes.border_width,
+							  &positionX, &positionY, &unused);
+
+		if(useBorders)
+			return QRect(positionX, positionY, windowAttributes.width + windowAttributes.border_width, windowAttributes.height + windowAttributes.border_width);
+		else
+			return QRect(positionX, positionY, windowAttributes.width, windowAttributes.height);
 #endif
 #ifdef Q_WS_WIN
 		RECT rc;
 		QRect rect;
 
-		if(GetWindowRect(mValue, &rc))
+		if(useBorders)
 		{
-			rect.setTop(rc.top);
-			rect.setBottom(rc.bottom);
-			rect.setLeft(rc.left);
-			rect.setRight(rc.right);
+			if(GetWindowRect(mValue, &rc))
+			{
+				rect.setTop(rc.top);
+				rect.setBottom(rc.bottom);
+				rect.setLeft(rc.left);
+				rect.setRight(rc.right);
+			}
+		}
+		else
+		{
+			if(GetClientRect(mValue, &rc))
+			{
+				rect.setTop(rc.top);
+				rect.setBottom(rc.bottom);
+				rect.setLeft(rc.left);
+				rect.setRight(rc.right);
+			}
 		}
 
 		return rect;
@@ -279,12 +300,40 @@ namespace ActionTools
 #endif
 	}
 
-	bool WindowHandle::resize(QSize size) const
+	bool WindowHandle::resize(QSize size, bool useBorders) const
 	{
 #ifdef Q_WS_X11
+		if(useBorders)
+		{
+			XWindowAttributes windowAttributes;
+
+			if(!XGetWindowAttributes(QX11Info::display(), mValue, &windowAttributes))
+				return false;
+
+			size.rwidth() += windowAttributes.border_width;
+			size.rheight() += windowAttributes.border_width;
+		}
+
 		return XResizeWindow(QX11Info::display(), mValue, size.width(), size.height());
 #endif
 #ifdef Q_WS_WIN
+		if(!useBorders)
+		{
+			const QRect &sizeWithBorders = rect(true);
+			const QRect &sizeWithoutBorders = rect(false);
+
+			int borderWidth = sizeWithBorders.width() - sizeWithoutBorders.width();
+			int borderHeight = sizeWithBorders.height() - sizeWithoutBorders.height();
+
+			if(borderWidth < 0)
+				borderWidth = 0;
+			if(borderHeight < 0)
+				borderHeight = 0;
+
+			size.rwidth() += borderWidth;
+			size.rheight() += borderHeight;
+		}
+
 		return SetWindowPos(mValue, 0, 0, 0, size.width(), size.height(), SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOMOVE);
 #endif
 	}
@@ -352,5 +401,56 @@ namespace ActionTools
 #endif
 
 		return gWindowList;
+	}
+
+	WindowHandle WindowHandle::findWindow(const QString &title)
+	{
+		foreach(const WindowHandle &windowHandle, windowList())
+		{
+			if(windowHandle.title() == title)
+				return windowHandle;
+		}
+
+		return WindowHandle();
+	}
+
+	WindowHandle WindowHandle::findWindow(const QRegExp &regExp)
+	{
+		if(!regExp.isValid())
+			return WindowHandle();
+
+		foreach(const WindowHandle &windowHandle, windowList())
+		{
+			if(regExp.exactMatch(windowHandle.title()))
+				return windowHandle;
+		}
+
+		return WindowHandle();
+	}
+
+	QList<WindowHandle> WindowHandle::findWindows(const QString &title)
+	{
+		QList<WindowHandle> back;
+
+		foreach(const WindowHandle &windowHandle, windowList())
+		{
+			if(windowHandle.title() == title)
+				back.append(windowHandle);
+		}
+
+		return back;
+	}
+
+	QList<WindowHandle> WindowHandle::findWindows(const QRegExp &regExp)
+	{
+		QList<WindowHandle> back;
+
+		foreach(const WindowHandle &windowHandle, windowList())
+		{
+			if(regExp.exactMatch(windowHandle.title()))
+				back.append(windowHandle);
+		}
+
+		return back;
 	}
 }

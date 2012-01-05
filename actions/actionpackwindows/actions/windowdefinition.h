@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include "groupdefinition.h"
 #include "positionparameterdefinition.h"
 #include "numberparameterdefinition.h"
+#include "booleanparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -52,7 +53,7 @@ namespace Actions
 			addElement(title);
 
 			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name("action", tr("Action")), this);
-			action->setTooltip(tr("The condition to wait for"));
+			action->setTooltip(tr("The action to perform"));
 			action->setItems(WindowInstance::actions);
 			action->setDefaultValue(WindowInstance::actions.second.at(WindowInstance::Close));
 			addElement(action);
@@ -82,6 +83,11 @@ namespace Actions
 			resizeHeight->setMinimum(0);
 			resizeHeight->setMaximum(INT_MAX);
 			resizeGroup->addMember(resizeHeight);
+
+			ActionTools::BooleanParameterDefinition *useBorders = new ActionTools::BooleanParameterDefinition(ActionTools::Name("useBorders", tr("Use borders")), this);
+			useBorders->setTooltip(tr("Should the border size be taken into account when resizing the window"));
+			useBorders->setDefaultValue(true);
+			resizeGroup->addMember(useBorders);
 
 			addElement(resizeGroup);
 

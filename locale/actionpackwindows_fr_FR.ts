@@ -295,36 +295,35 @@
 <context>
     <name>Actions::WindowDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="50"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="51"/>
         <source>Window title</source>
         <translation>Titre de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="51"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="52"/>
         <source>The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here</source>
         <translation>Le titre de la fenêtre à trouver, vous pouvez utiliser des wildcards comme * (tout caractère) ou ? (un seul caractère) ici</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="54"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="55"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="55"/>
         <source>The condition to wait for</source>
-        <translation>La condition à attendre</translation>
+        <translation type="obsolete">La condition à attendre</translation>
     </message>
     <message>
         <source>Move</source>
         <translation type="obsolete">Déplacer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="64"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="65"/>
         <source>Move position</source>
         <translation>Position du déplacement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="65"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="66"/>
         <source>The position to move the window</source>
         <translation>La position où déplacer la fenêtre</translation>
     </message>
@@ -333,32 +332,49 @@
         <translation type="obsolete">Redimensionner</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="74"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="56"/>
+        <source>The action to perform</source>
+        <translation>L&apos;action à effectuer</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="75"/>
         <source>Resize width</source>
         <translation>Nouvelle largeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="76"/>
         <source>The new width of the window</source>
         <translation>La nouvelle largeur de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="80"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="81"/>
         <source>Resize height</source>
         <translation>Nouvelle hauteur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="81"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="82"/>
         <source>The new height of the window</source>
         <translation>La nouvelle hauteur de la fenêtre</translation>
     </message>
     <message>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="87"/>
+        <source>Use borders (Windows OS only)</source>
+        <translation>Utiliser les bordures (Windows seulement)</translation>
+    </message>
+    <message>
         <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="88"/>
+        <source>Should the border size be taken into account when resizing the window
+Windows OS only, under Linux resizing is done without borders</source>
+        <translation>Les bordures de la fenêtre doivent-elles être prises en compte lors du redimensionnement
+Windows seulement, sous Linux les bordures sont ignorées</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="94"/>
         <source>Cannot find window</source>
         <translation>Impossible de trouver la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="89"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="95"/>
         <source>Action failed</source>
         <translation>Action impossible</translation>
     </message>
@@ -366,12 +382,12 @@
 <context>
     <name>Actions::WindowInstance</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="87"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="88"/>
         <source>Cannot find any window matching &quot;%1&quot;</source>
         <translation>Impossible de trouver une fenêtre correspondant à &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="121"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="122"/>
         <source>&quot;%1&quot; failed</source>
         <translation>Échec de &quot;%1&quot;</translation>
     </message>
@@ -498,12 +514,12 @@
         <translation>Vérifie l&apos;état d&apos;une fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="92"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="98"/>
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="95"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="101"/>
         <source>Do some action on a window</source>
         <translation>Effectue une action sur une fenêtre</translation>
     </message>

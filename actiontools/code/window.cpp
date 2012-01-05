@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -286,12 +286,12 @@ namespace Code
 		return mWindowHandle.isActive();
 	}
 	
-	QScriptValue Window::rect() const
+	QScriptValue Window::rect(bool useBorders) const
 	{
 		if(!checkValidity())
 			return QScriptValue();
 
-		return Rect::constructor(mWindowHandle.rect(), engine());
+		return Rect::constructor(mWindowHandle.rect(useBorders), engine());
 	}
 	
 	QScriptValue Window::process() const
@@ -368,12 +368,12 @@ namespace Code
 		return thisObject();
 	}
 	
-	QScriptValue Window::resize() const
+	QScriptValue Window::resize(bool useBorders) const
 	{
 		if(!checkValidity())
 			return thisObject();
 
-		if(!mWindowHandle.resize(Size::parameter(context(), engine())))
+		if(!mWindowHandle.resize(Size::parameter(context(), engine()), useBorders))
 			throwError("ResizeError", tr("Unable to resize the window"));
 		
 		return thisObject();

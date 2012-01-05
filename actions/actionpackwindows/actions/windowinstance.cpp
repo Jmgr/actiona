@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ namespace Actions
 
 		QString title = evaluateString(ok, "title");
 		Action action = evaluateListElement<Action>(ok, actions, "action");
+		bool useBorders = evaluateBoolean(ok, "useBorders");
 
 		if(!ok)
 			return;
@@ -69,17 +70,7 @@ namespace Actions
 				return;
 		}
 
-		QRegExp titleRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix);
-		ActionTools::WindowHandle foundWindow;
-
-		foreach(const ActionTools::WindowHandle &windowHandle, ActionTools::WindowHandle::windowList())
-		{
-			if(titleRegExp.exactMatch(windowHandle.title()))
-			{
-				foundWindow = windowHandle;
-				break;
-			}
-		}
+		ActionTools::WindowHandle foundWindow = ActionTools::WindowHandle::findWindow(QRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix));
 
 		if(!foundWindow.isValid())
 		{
@@ -111,7 +102,7 @@ namespace Actions
 			result = foundWindow.move(movePosition);
 			break;
 		case Resize:
-			result = foundWindow.resize(QSize(resizeWidth, resizeHeight));
+			result = foundWindow.resize(QSize(resizeWidth, resizeHeight), useBorders);
 			break;
 		}
 

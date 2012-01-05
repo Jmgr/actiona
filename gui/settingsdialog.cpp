@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -65,6 +65,8 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 
 	QSettings settings;
 
+	ui->settingsTab->setCurrentIndex(settings.value("general/settingsTab", QVariant(0)).toInt());
+
 	ui->noSysTrayLabel->setVisible(!QSystemTrayIcon::isSystemTrayAvailable());
 	ui->noSysTrayMessagesLabel->setVisible(!QSystemTrayIcon::supportsMessages());
 
@@ -96,7 +98,10 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->checkCodeSyntaxAutomatically->setChecked(settings.value("actions/checkCodeSyntaxAutomatically", QVariant(true)).toBool());
 
 	//NETWORK
-#ifndef ACT_NO_UPDATER
+#ifdef ACT_NO_UPDATER
+	ui->updatesCheck->hide();
+	ui->updatesCheckLabel->hide();
+#else
 	ui->updatesCheck->setCurrentIndex(settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY)).toInt());
 #endif
 
@@ -237,6 +242,8 @@ void SettingsDialog::accept()
 	}
 
 	QSettings settings;
+
+	settings.setValue("general/settingsTab", ui->settingsTab->currentIndex());
 
 	//GENERAL
 	settings.setValue("general/showLoadingWindow", ui->showLoadingWindow->isChecked());
