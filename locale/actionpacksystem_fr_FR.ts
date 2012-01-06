@@ -247,7 +247,7 @@ Tous les fichiers (*.*)</translation>
         <source>The position is relative to the window
 If this parameter is set to false (not checked) then the position is absolute</source>
         <translation>La position est-elle relative à la fenêtre
-Si ce paramètre est faux (no coché) alors la position est absolue</translation>
+Si ce paramètre est faux (non coché) alors la position est absolue</translation>
     </message>
     <message>
         <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="102"/>
