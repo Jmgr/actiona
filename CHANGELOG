@@ -1,3 +1,12 @@
+3.2.0 (06/01/12)
+- Actions: added the FindImage action
+- Actions: added an option to use window borders to the Window action
+- Actions: added Point (position) and Color variable types to the Variable action
+- Gui: updated the settings dialog to show the last opened tab
+- Gui: fixed check for updates parameter not being hidden when updates are disabled
+- Gui: now hiding exceptions when no parameters are shown
+- Executer: fixed a bug crashing Actionaz when using the Stop action
+
 3.1.1 (30/12/11)
 - Code editor: added Ctrl+Return shortcut to close the code/text editor
 - Code editor: added Shift+Tab to unindent the selection in the code/text editor
