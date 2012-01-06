@@ -57,7 +57,7 @@ namespace LibExecuter
 		void setCurrentParameter(int currentParameter)						{ mCurrentParameter = currentParameter; }
 		void pause(bool pause)												{ mPaused = pause; }
 		void setDebuggerAgent(QScriptEngineAgent *debuggerAgent)			{ mDebuggerAgent = debuggerAgent;  }
-		void stopExecution(bool emitSignal = true)							{ mContinueExecution = false; if(emitSignal) emit stopExecution(); }
+		void stopExecution(bool emitSignal = true)							{ mContinueExecution = false; if(emitSignal) emit executionStopped(); }
 		int currentLine() const												{ return mCurrentLine; }
 		int currentColumn() const											{ return mCurrentColumn; }
 		Context context() const												{ return mContext; }
