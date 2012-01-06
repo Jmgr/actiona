@@ -2,6 +2,7 @@
 - Actions: added the FindImage action
 - Actions: added an option to use window borders to the Window action
 - Actions: added Point (position) and Color variable types to the Variable action
+- Actions: fixed a bug in the Window Condition action, blocking if "goto a line" was selected in "if false"
 - Gui: updated the settings dialog to show the last opened tab
 - Gui: fixed check for updates parameter not being hidden when updates are disabled
 - Gui: now hiding exceptions when no parameters are shown
