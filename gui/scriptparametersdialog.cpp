@@ -34,6 +34,8 @@
 #include <QTimer>
 #include <QComboBox>
 
+#include <limits>
+
 ScriptParametersDialog::ScriptParametersDialog(QAbstractItemModel *completitionModel, ActionTools::Script *script, QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::ScriptParametersDialog),
@@ -267,7 +269,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 	case ActionTools::ScriptParameter::Number:
 		{
 			ActionTools::CodeSpinBox *valueWidget = new ActionTools::CodeSpinBox(this);
-			valueWidget->setRange(INT_MIN, INT_MAX);
+			valueWidget->setRange(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
 

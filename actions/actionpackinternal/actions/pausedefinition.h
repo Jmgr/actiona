@@ -26,7 +26,7 @@
 #include "listparameterdefinition.h"
 #include "pauseinstance.h"
 
-#include <limits.h>
+#include <limits>
 
 namespace ActionTools
 {
@@ -49,7 +49,7 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition(ActionTools::Name("duration", tr("Duration")), this);
 			duration->setTooltip(tr("The duration of the pause"));
 			duration->setMinimum(0);
-			duration->setMaximum(INT_MAX);
+			duration->setMaximum(std::numeric_limits<int>::max());
 			duration->setDefaultValue(5);
 			addElement(duration);
 

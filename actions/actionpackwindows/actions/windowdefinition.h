@@ -30,6 +30,8 @@
 #include "numberparameterdefinition.h"
 #include "booleanparameterdefinition.h"
 
+#include <limits>
+
 namespace ActionTools
 {
 	class ActionPack;
@@ -75,13 +77,13 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *resizeWidth = new ActionTools::NumberParameterDefinition(ActionTools::Name("resizeWidth", tr("Resize width")), this);
 			resizeWidth->setTooltip(tr("The new width of the window"));
 			resizeWidth->setMinimum(0);
-			resizeWidth->setMaximum(INT_MAX);
+			resizeWidth->setMaximum(std::numeric_limits<int>::max());
 			resizeGroup->addMember(resizeWidth);
 
 			ActionTools::NumberParameterDefinition *resizeHeight = new ActionTools::NumberParameterDefinition(ActionTools::Name("resizeHeight", tr("Resize height")), this);
 			resizeHeight->setTooltip(tr("The new height of the window"));
 			resizeHeight->setMinimum(0);
-			resizeHeight->setMaximum(INT_MAX);
+			resizeHeight->setMaximum(std::numeric_limits<int>::max());
 			resizeGroup->addMember(resizeHeight);
 
 			ActionTools::BooleanParameterDefinition *useBorders = new ActionTools::BooleanParameterDefinition(ActionTools::Name("useBorders", tr("Use borders")), this);

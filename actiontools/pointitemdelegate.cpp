@@ -22,6 +22,8 @@
 
 #include <QSpinBox>
 
+#include <limits>
+
 PointItemDelegate::PointItemDelegate(QObject *parent)
 	: QStyledItemDelegate(parent)
 {
@@ -34,7 +36,7 @@ QWidget *PointItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
 
 	QSpinBox *spinBox = new QSpinBox(parent);
 	spinBox->setMinimum(0);
-	spinBox->setMaximum(INT_MAX);
+	spinBox->setMaximum(std::numeric_limits<int>::max());
 	return spinBox;
 }
 

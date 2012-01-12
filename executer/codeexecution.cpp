@@ -53,7 +53,6 @@ namespace LibExecuter
 	
 	QScriptValue CodeExecution::stop(QScriptContext *context, QScriptEngine *engine)
 	{
-		Q_UNUSED(context)
 		Q_UNUSED(engine)
 
 		if(mScriptAgent)

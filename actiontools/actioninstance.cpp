@@ -151,7 +151,7 @@ namespace ActionTools
 	{
 		QString result = evaluateString(ok, parameterName, subParameterName);
 
-		if(!ok)
+		if(!ok || result.isEmpty())
 			return 0;
 
 		int intResult = result.toInt(&ok);
@@ -186,7 +186,7 @@ namespace ActionTools
 	{
 		QString result = evaluateString(ok, parameterName, subParameterName);
 
-		if(!ok)
+		if(!ok || result.isEmpty())
 			return 0.0;
 
 		double doubleResult = result.toDouble(&ok);

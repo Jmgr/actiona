@@ -27,6 +27,8 @@
 #include "numberparameterdefinition.h"
 #include "listparameterdefinition.h"
 
+#include <limits>
+
 namespace ActionTools
 {
 	class ActionPack;
@@ -58,7 +60,7 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name("timeout", tr("Timeout")), this);
 			timeout->setTooltip(tr("The timeout before doing a forceful kill"));
 			timeout->setMinimum(0);
-			timeout->setMaximum(INT_MAX);
+			timeout->setMaximum(std::numeric_limits<int>::max());
 			timeout->setDefaultValue(1000);
 			addElement(timeout, 1);
 		}
