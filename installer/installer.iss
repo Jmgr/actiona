@@ -111,6 +111,7 @@ Source: "C:\act_ref{#MyAppBits}\locale\*"; DestDir: "{app}\locale"; Flags: ignor
 Source: "C:\act_ref{#MyAppBits}\plugins\sqldrivers\*"; DestDir: "{app}\plugins\sqldrivers"; Flags: ignoreversion
 Source: "C:\act_ref{#MyAppBits}\plugins\mediaservice\*"; DestDir: "{app}\plugins\mediaservice"; Flags: ignoreversion
 Source: "C:\act_ref{#MyAppBits}\plugins\playlistformats\*"; DestDir: "{app}\plugins\playlistformats"; Flags: ignoreversion
+Source: "C:\act_ref{#MyAppBits}\plugins\imageformats\*"; DestDir: "{app}\plugins\imageformats"; Flags: ignoreversion
 Source: "C:\act_ref{#MyAppBits}\code\script\*"; DestDir: "{app}\code\script"; Flags: ignoreversion
 
 [Icons]
