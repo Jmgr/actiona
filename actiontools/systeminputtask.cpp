@@ -104,27 +104,66 @@ namespace ActionTools
 			if(nCode < 0)
 				return CallNextHookEx(gMouseHook, nCode, wParam, lParam);
 
-			qDebug() << "Thread?" << QThread::currentThreadId();
+			MSLLHOOKSTRUCT *data = reinterpret_cast<MSLLHOOKSTRUCT *>(lParam);
 
 			switch(wParam)
 			{
 			case WM_MOUSEMOVE:
-				{
-//					const QPoint &position = QCursor::pos();
-
-//					Task::instance()->emitMouseMotion(position.x(), position.y());
-				}
+				Task::instance()->emitMouseMotion(data->pt.x, data->pt.y);
 				break;
 			case WM_MOUSEWHEEL:
+				if(static_cast<qint16>(HIWORD(data->mouseData)) > 0)
+					Task::instance()->emitMouseWheel(1);
+				else
+					Task::instance()->emitMouseWheel(-1);
+				break;
+			case WM_LBUTTONDOWN:
+				Task::instance()->emitMouseButtonPressed(LeftButton);
+				break;
+			case WM_LBUTTONUP:
+				Task::instance()->emitMouseButtonReleased(LeftButton);
+				break;
+			case WM_RBUTTONDOWN:
+				Task::instance()->emitMouseButtonPressed(RightButton);
+				break;
+			case WM_RBUTTONUP:
+				Task::instance()->emitMouseButtonReleased(RightButton);
+				break;
+			case WM_MBUTTONDOWN:
+				Task::instance()->emitMouseButtonPressed(MiddleButton);
+				break;
+			case WM_MBUTTONUP:
+				Task::instance()->emitMouseButtonReleased(MiddleButton);
+				break;
+			case WM_XBUTTONDOWN:
+				switch(HIWORD(data->mouseData))
 				{
-					//Task::instance()->emitMouseWheel();
+				case XBUTTON1:
+					Task::instance()->emitMouseButtonPressed(XButton0);
+					break;
+				case XBUTTON2:
+					Task::instance()->emitMouseButtonPressed(XButton1);
+					break;
+				default:
+					break;
+				}
+				break;
+			case WM_XBUTTONUP:
+				switch(HIWORD(data->mouseData))
+				{
+				case XBUTTON1:
+					Task::instance()->emitMouseButtonReleased(XButton0);
+					break;
+				case XBUTTON2:
+					Task::instance()->emitMouseButtonReleased(XButton1);
+					break;
+				default:
+					break;
 				}
 				break;
 			default:
 				break;
 			}
-
-			//TODO: send input using Task::instance()->mouseEvent
 
 			return CallNextHookEx(gMouseHook, nCode, wParam, lParam);
 		}
@@ -142,9 +181,9 @@ namespace ActionTools
 			: QObject(parent),
 			  mThread(new QThread(this))
 			, mStarted(false)
-	#ifdef Q_WS_X11
+#ifdef Q_WS_X11
 			, mProcessRepliesTimer(new QTimer(this))
-	#endif
+#endif
 		{
 			Q_ASSERT(mInstance == 0);
 
@@ -152,17 +191,13 @@ namespace ActionTools
 
 #ifdef Q_WS_WIN
 			moveToThread(mThread);
+
+			mThread->start();
 #endif
 
 #ifdef Q_WS_X11
 			connect(mProcessRepliesTimer, SIGNAL(timeout()), this, SLOT(processReplies()));
-#endif
 
-			qDebug() << "Main thread" << QThread::currentThreadId();
-
-#ifdef Q_WS_WIN
-			mThread->start();
-#else
 			start();
 #endif
 		}
@@ -181,8 +216,6 @@ namespace ActionTools
 				return;
 
 			mStarted = true;
-
-			qDebug() << "Thread" << QThread::currentThreadId();
 
 #ifdef Q_WS_X11
 			XRecordClientSpec clients = XRecordAllClients;
@@ -228,17 +261,17 @@ namespace ActionTools
 
 			mStarted = false;
 
-	#ifdef Q_WS_X11
+#ifdef Q_WS_X11
 			mProcessRepliesTimer->stop();
 
 			XRecordDisableContext(QX11Info::display(), gXRecordContext);
 			XRecordFreeContext(QX11Info::display(), gXRecordContext);
-	#endif
+#endif
 
-	#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN
 			UnhookWindowsHookEx(gMouseHook);
 			UnhookWindowsHookEx(gKeyboardHook);
-	#endif
+#endif
 		}
 
 #ifdef Q_WS_X11
