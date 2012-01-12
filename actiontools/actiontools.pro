@@ -42,7 +42,8 @@ SOURCES += actionfactory.cpp \
 	actionpack.cpp \
 	opencvalgorithms.cpp \
     systeminputreceiver.cpp \
-    systeminputtask.cpp
+    systeminputtask.cpp \
+    systeminputrecorder.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -83,7 +84,8 @@ HEADERS += actiontools_global.h \
     systeminputreceiver.h \
     systeminputtask.h \
     systeminputlistener.h \
-    systeminput.h
+    systeminput.h \
+    systeminputrecorder.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \
