@@ -35,7 +35,6 @@
 #endif
 
 #ifdef Q_WS_WIN
-#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif
 
@@ -105,13 +104,15 @@ namespace ActionTools
 			if(nCode < 0)
 				return CallNextHookEx(gMouseHook, nCode, wParam, lParam);
 
+			qDebug() << "Thread?" << QThread::currentThreadId();
+
 			switch(wParam)
 			{
 			case WM_MOUSEMOVE:
 				{
-					const QPoint &position = QCursor::pos();
+//					const QPoint &position = QCursor::pos();
 
-					Task::instance()->emitMouseMotion(position.x(), position.y());
+//					Task::instance()->emitMouseMotion(position.x(), position.y());
 				}
 				break;
 			case WM_MOUSEWHEEL:
@@ -157,6 +158,8 @@ namespace ActionTools
 			connect(mProcessRepliesTimer, SIGNAL(timeout()), this, SLOT(processReplies()));
 #endif
 
+			qDebug() << "Main thread" << QThread::currentThreadId();
+
 #ifdef Q_WS_WIN
 			mThread->start();
 #else
@@ -178,6 +181,8 @@ namespace ActionTools
 				return;
 
 			mStarted = true;
+
+			qDebug() << "Thread" << QThread::currentThreadId();
 
 #ifdef Q_WS_X11
 			XRecordClientSpec clients = XRecordAllClients;
@@ -211,8 +216,8 @@ namespace ActionTools
 #endif
 
 #ifdef Q_WS_WIN
-			mMouseHook = SetWindowsHookEx(WH_MOUSE_LL, &Task::LowLevelMouseProc, 0, 0);
-			mKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, &Task::LowLevelKeyboardProc, 0, 0);
+			gMouseHook = SetWindowsHookEx(WH_MOUSE_LL, &LowLevelMouseProc, 0, 0);
+			gKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, &LowLevelKeyboardProc, 0, 0);
 #endif
 		}
 
@@ -231,8 +236,8 @@ namespace ActionTools
 	#endif
 
 	#ifdef Q_WS_WIN
-			UnhookWindowsHookEx(mMouseHook);
-			UnhookWindowsHookEx(mKeyboardHook);
+			UnhookWindowsHookEx(gMouseHook);
+			UnhookWindowsHookEx(gKeyboardHook);
 	#endif
 		}
 

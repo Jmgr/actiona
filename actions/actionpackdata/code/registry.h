@@ -29,7 +29,6 @@
 #include <QStringList>
 
 #ifdef Q_WS_WIN
-#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif
 

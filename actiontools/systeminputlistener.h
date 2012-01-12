@@ -22,12 +22,13 @@
 #define SYSTEMINPUTLISTENER_H
 
 #include "systeminput.h"
+#include "actiontools_global.h"
 
 namespace ActionTools
 {
 	namespace SystemInput
 	{
-		class Listener
+		class ACTIONTOOLSSHARED_EXPORT Listener
 		{
 		public:
 			virtual void keyboardEvent() const {}

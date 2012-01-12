@@ -24,6 +24,7 @@
 #include <QObject>
 
 #include "systeminput.h"
+#include "actiontools_global.h"
 
 class QThread;
 
@@ -35,7 +36,7 @@ namespace ActionTools
 {
 	namespace SystemInput
 	{
-		class Task : public QObject
+		class ACTIONTOOLSSHARED_EXPORT Task : public QObject
 		{
 			Q_OBJECT
 

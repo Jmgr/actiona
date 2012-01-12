@@ -19,6 +19,10 @@ unix {
 	DEFINES += ACT_PREFIX=\"$${PREFIXSTR}\"
 }
 
+win32 {
+	DEFINES += WIN32_LEAN_AND_MEAN NOMINMAX
+}
+
 contains(DEFINES, ACT_PROFILE) {
 	!*-msvc*:QMAKE_CXXFLAGS += -include "highresolutiontimer.h"
 	*-msvc*:QMAKE_CXXFLAGS += /FI "highresolutiontimer.h"

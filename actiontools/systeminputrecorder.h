@@ -21,13 +21,15 @@
 #ifndef SYSTEMINPUTRECORDER_H
 #define SYSTEMINPUTRECORDER_H
 
+#include "actiontools_global.h"
+
 namespace ActionTools
 {
 	namespace SystemInput
 	{
 		class Listener;
 
-		class Recorder
+		class ACTIONTOOLSSHARED_EXPORT Recorder
 		{
 		public:
 			Recorder(Listener *listener);

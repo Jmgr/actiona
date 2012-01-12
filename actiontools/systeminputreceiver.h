@@ -22,6 +22,7 @@
 #define SYSTEMINPUTRECEIVER_H
 
 #include "systeminput.h"
+#include "actiontools_global.h"
 
 #include <QObject>
 #include <QSharedPointer>
@@ -35,7 +36,7 @@ namespace ActionTools
 		class Task;
 		class Listener;
 
-		class Receiver : public QObject
+		class ACTIONTOOLSSHARED_EXPORT Receiver : public QObject
 		{
 			Q_OBJECT
 

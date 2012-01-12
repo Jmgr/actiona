@@ -336,9 +336,7 @@ namespace ActionTools
 
 	QImage OpenCVAlgorithms::toQImage(const cv::Mat &image) const
 	{
-		QImage back(image.data, image.size().width, image.size().height, image.step, QImage::Format_RGB888);
-
-		return back.rgbSwapped();
+		return QImage(image.data, image.size().width, image.size().height, image.step, QImage::Format_RGB888).rgbSwapped();
 	}
 
 	QSharedPointer<cv::Mat> OpenCVAlgorithms::toCVMat(const QImage &image) const
