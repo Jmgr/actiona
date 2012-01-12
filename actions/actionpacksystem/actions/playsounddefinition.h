@@ -27,7 +27,7 @@
 #include "numberparameterdefinition.h"
 #include "booleanparameterdefinition.h"
 
-#include <climits>
+#include <limits>
 
 namespace ActionTools
 {
@@ -77,8 +77,8 @@ namespace Actions
 
 			ActionTools::NumberParameterDefinition *playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name("playbackRate", tr("Playback rate")), this);
 			playbackrate->setTooltip(tr("The playback rate"));
-			playbackrate->setMinimum(INT_MIN);
-			playbackrate->setMaximum(INT_MAX);
+			playbackrate->setMinimum(std::numeric_limits<int>::min());
+			playbackrate->setMaximum(std::numeric_limits<int>::max());
 			playbackrate->setSuffix(tr("%", "percent"));
 			playbackrate->setDefaultValue(100);
 			addElement(playbackrate, 1);

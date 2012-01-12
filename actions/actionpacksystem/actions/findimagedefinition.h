@@ -31,6 +31,8 @@
 #include "windowparameterdefinition.h"
 #include "booleanparameterdefinition.h"
 
+#include <limits>
+
 namespace ActionTools
 {
 	class ActionPack;
@@ -109,21 +111,21 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *maximumMatches = new ActionTools::NumberParameterDefinition(ActionTools::Name("maximumMatches", tr("Maximum matches")), this);
 			maximumMatches->setTooltip(tr("The maximum matching images count\nSetting this parameter higher will increase the duration of the search"));
 			maximumMatches->setMinimum(1);
-			maximumMatches->setMaximum(INT_MAX);
+			maximumMatches->setMaximum(std::numeric_limits<int>::max());
 			maximumMatches->setDefaultValue(1);
 			addElement(maximumMatches, 1);
 
 			ActionTools::NumberParameterDefinition *downPyramidCount = new ActionTools::NumberParameterDefinition(ActionTools::Name("downPyramidCount", tr("Down pyramid count")), this);
 			downPyramidCount->setTooltip(tr("The number of down pyramids to use\nA pyramid is a subdivision of the image used to accelerate the search\nEnter 1 here if the searched image is not very different from the source image"));
 			downPyramidCount->setMinimum(1);
-			downPyramidCount->setMaximum(INT_MAX);
+			downPyramidCount->setMaximum(std::numeric_limits<int>::max());
 			downPyramidCount->setDefaultValue(2);
 			addElement(downPyramidCount, 1);
 
 			ActionTools::NumberParameterDefinition *searchExpansion = new ActionTools::NumberParameterDefinition(ActionTools::Name("searchExpansion", tr("Search expansion")), this);
 			searchExpansion->setTooltip(tr("The number of pixels to shift when searching for another matching image"));
 			searchExpansion->setMinimum(1);
-			searchExpansion->setMaximum(INT_MAX);
+			searchExpansion->setMaximum(std::numeric_limits<int>::max());
 			searchExpansion->setDefaultValue(15);
 			addElement(searchExpansion, 1);
 

@@ -28,7 +28,7 @@
 #include "positionparameterdefinition.h"
 #include "groupdefinition.h"
 
-#include <climits>
+#include <limits>
 
 namespace ActionTools
 {
@@ -72,7 +72,7 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
 			amount->setTooltip(tr("The amount of clicks to simulate"));
 			amount->setMinimum(1);
-			amount->setMaximum(INT_MAX);
+			amount->setMaximum(std::numeric_limits<int>::max());
 			amount->setDefaultValue(1);
 			clickGroup->addMember(amount);
 	

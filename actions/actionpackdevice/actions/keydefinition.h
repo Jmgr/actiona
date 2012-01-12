@@ -28,6 +28,8 @@
 #include "numberparameterdefinition.h"
 #include "booleanparameterdefinition.h"
 
+#include <limits>
+
 namespace ActionTools
 {
 	class ActionPack;
@@ -89,7 +91,7 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition(ActionTools::Name("pause", tr("Press/Release pause")), this);
 			pause->setTooltip(tr("The pause duration between press and release"));
 			pause->setMinimum(0);
-			pause->setMaximum(INT_MAX);
+			pause->setMaximum(std::numeric_limits<int>::max());
 			pause->setDefaultValue(10);
 			pause->setSuffix(tr(" ms", "milliseconds"));
 			addElement(pause, 1);
