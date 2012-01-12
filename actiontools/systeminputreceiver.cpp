@@ -22,22 +22,14 @@
 #include "systeminputtask.h"
 #include "systeminputlistener.h"
 
+#include <QDebug>
+#include <QThread>
+
 namespace ActionTools
 {
 	namespace SystemInput
 	{
 		QSharedPointer<Receiver> Receiver::mInstance;
-
-		Receiver::Recorder::Recorder(Listener *listener)
-			: mListener(listener)
-		{
-			Receiver::instance().startCapture(listener);
-		}
-
-		Receiver::Recorder::~Recorder()
-		{
-			Receiver::instance().stopCapture(mListener);
-		}
 
 		Receiver &Receiver::instance()
 		{
@@ -50,19 +42,20 @@ namespace ActionTools
 		Receiver::Receiver()
 			: QObject(),
 			  mCaptureCount(0),
-			  mTask(new Task(this))
+			  mTask(new Task)
 		{
 			qRegisterMetaType<ActionTools::SystemInput::Button>("ActionTools::SystemInput::Button");
 
 			connect(mTask, SIGNAL(mouseMotion(int,int)), this, SLOT(mouseMotion(int,int)));
 			connect(mTask, SIGNAL(mouseWheel(int)), this, SLOT(mouseWheel(int)));
-			connect(mTask, SIGNAL(keyboardEvent()), this, SLOT(keyboardEvent()));
-			connect(mTask, SIGNAL(mouseButtonPressed(Button)), this, SLOT(mouseButtonPressed(Button)));
-			connect(mTask, SIGNAL(mouseButtonReleased(Button)), this, SLOT(mouseButtonReleased(Button)));
+			//connect(mTask, SIGNAL(keyboardEvent()), this, SLOT(keyboardEvent()));//TODO
+			connect(mTask, SIGNAL(mouseButtonPressed(ActionTools::SystemInput::Button)), this, SLOT(mouseButtonPressed(ActionTools::SystemInput::Button)));
+			connect(mTask, SIGNAL(mouseButtonReleased(ActionTools::SystemInput::Button)), this, SLOT(mouseButtonReleased(ActionTools::SystemInput::Button)));
 		}
 
 		Receiver::~Receiver()
 		{
+			delete mTask;
 		}
 
 		void Receiver::mouseMotion(int x, int y)
@@ -77,13 +70,13 @@ namespace ActionTools
 				listener->mouseWheel(intensity);
 		}
 
-		void Receiver::mouseButtonPressed(Button button)
+		void Receiver::mouseButtonPressed(ActionTools::SystemInput::Button button)
 		{
 			foreach(Listener *listener, mListeners)
 				listener->mouseButtonPressed(button);
 		}
 
-		void Receiver::mouseButtonReleased(Button button)
+		void Receiver::mouseButtonReleased(ActionTools::SystemInput::Button button)
 		{
 			foreach(Listener *listener, mListeners)
 				listener->mouseButtonReleased(button);

@@ -25,6 +25,8 @@
 #include "matchingpointlist.h"
 #include "windowhandle.h"
 
+#include <limits>
+
 namespace ActionTools
 {
 	class OpenCVAlgorithms;
@@ -61,7 +63,7 @@ namespace Actions
 		void searchFinished(const ActionTools::MatchingPointList &matchingPointList);
 
 	private:
-		void validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum = INT_MAX);
+		void validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum = std::numeric_limits<int>::max());
 
 		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
 		QString mPositionVariableName;

@@ -20,16 +20,38 @@
 
 #include "mouse.h"
 #include "code/point.h"
+#include "systeminputreceiver.h"
+
+#include <QScriptValueIterator>
 
 namespace Code
 {
 	QScriptValue Mouse::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new Mouse, context, engine);
+		Mouse *mouse = new Mouse;
+
+		QScriptValueIterator it(context->argument(0));
+
+		while(it.hasNext())
+		{
+			it.next();
+
+			if(it.name() == "onMotion")
+				mouse->mOnMotion = it.value();
+			else if(it.name() == "onWheel")
+				mouse->mOnWheel = it.value();
+			else if(it.name() == "onButtonPressed")
+				mouse->mOnButtonPressed = it.value();
+			else if(it.name() == "onButtonReleased")
+				mouse->mOnButtonReleased = it.value();
+		}
+
+		return CodeClass::constructor(mouse, context, engine);
 	}
 	
 	Mouse::Mouse()
-		: CodeClass()
+		: CodeClass(),
+		  mRecorder(this)
 	{
 	}
 
@@ -84,5 +106,29 @@ namespace Code
 			throwError("WheelError", tr("Unable to emulate the wheel"));
 		
 		return thisObject();
+	}
+
+	void Mouse::mouseMotion(int x, int y)
+	{
+		if(mOnMotion.isValid())
+			mOnMotion.call(thisObject(), QScriptValueList() << x << y);
+	}
+
+	void Mouse::mouseWheel(int intensity)
+	{
+		if(mOnWheel.isValid())
+			mOnWheel.call(thisObject(), QScriptValueList() << intensity);
+	}
+
+	void Mouse::mouseButtonPressed(ActionTools::SystemInput::Button button)
+	{
+		if(mOnButtonPressed.isValid())
+			mOnButtonPressed.call(thisObject(), QScriptValueList() << button);
+	}
+
+	void Mouse::mouseButtonReleased(ActionTools::SystemInput::Button button)
+	{
+		if(mOnButtonReleased.isValid())
+			mOnButtonReleased.call(thisObject(), QScriptValueList() << button);
 	}
 }

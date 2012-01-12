@@ -18,34 +18,22 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXITINSTANCE_H
-#define EXITINSTANCE_H
+#include "systeminputrecorder.h"
+#include "systeminputreceiver.h"
 
-#include "actioninstance.h"
-
-#include <QApplication>
-#include <QWidget>
-
-namespace Actions
+namespace ActionTools
 {
-	class ExitInstance : public ActionTools::ActionInstance
+	namespace SystemInput
 	{
-		Q_OBJECT
-
-	public:
-		ExitInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-			: ActionTools::ActionInstance(definition, parent)										{}
-
-		void startExecution()
+		Recorder::Recorder(Listener *listener)
+			: mListener(listener)
 		{
-			QApplication::quit();
-
-			emit executionEnded();
+			Receiver::instance().startCapture(listener);
 		}
 
-	private:
-		Q_DISABLE_COPY(ExitInstance)
-	};
+		Recorder::~Recorder()
+		{
+			Receiver::instance().stopCapture(mListener);
+		}
+	}
 }
-
-#endif // EXITINSTANCE_H

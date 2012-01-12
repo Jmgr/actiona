@@ -22,14 +22,16 @@
 #include "ui_scriptsettingsdialog.h"
 #include "script.h"
 
+#include <limits>
+
 ScriptSettingsDialog::ScriptSettingsDialog(QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::ScriptSettingsDialog)
 {
     ui->setupUi(this);
 
-	ui->pauseBeforeSpinBox->setRange(0, INT_MAX);
-	ui->pauseAfterSpinBox->setRange(0, INT_MAX);
+	ui->pauseBeforeSpinBox->setRange(0, std::numeric_limits<int>::max());
+	ui->pauseAfterSpinBox->setRange(0, std::numeric_limits<int>::max());
 }
 
 ScriptSettingsDialog::~ScriptSettingsDialog()

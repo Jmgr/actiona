@@ -26,6 +26,8 @@
 #include <QDesktopWidget>
 #include <QIcon>
 
+#include <limits>
+
 namespace Actions
 {
 	ActionTools::StringListPair DataInputInstance::dataTypes = qMakePair(
@@ -96,10 +98,13 @@ namespace Actions
 		case IntegerType:
 			mInputDialog->setInputMode(QInputDialog::IntInput);
 			mInputDialog->setIntValue(integerDefaultValue);
+			mInputDialog->setIntRange(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
 			break;
 		case DecimalType:
 			mInputDialog->setInputMode(QInputDialog::DoubleInput);
 			mInputDialog->setDoubleValue(decimalDefaultValue);
+			mInputDialog->setDoubleRange(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
+			mInputDialog->setDoubleDecimals(4);
 			break;
 		default:
 			mInputDialog->setInputMode(QInputDialog::TextInput);

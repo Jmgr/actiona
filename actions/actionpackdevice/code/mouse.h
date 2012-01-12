@@ -23,6 +23,8 @@
 
 #include "../mousedevice.h"
 #include "code/codeclass.h"
+#include "systeminputlistener.h"
+#include "systeminputrecorder.h"
 
 #include <QObject>
 #include <QScriptValue>
@@ -30,10 +32,15 @@
 
 namespace Code
 {
-	class Mouse : public CodeClass
+	class Mouse : public CodeClass, public ActionTools::SystemInput::Listener
 	{
 		Q_OBJECT
 		Q_ENUMS(MouseDevice::Button)
+		Q_ENUMS(ActionTools::SystemInput::Button)
+		Q_PROPERTY(QScriptValue onMotion READ onMotion WRITE setOnMotion)
+		Q_PROPERTY(QScriptValue onWheel READ onWheel WRITE setOnWheel)
+		Q_PROPERTY(QScriptValue onButtonPressed READ onButtonPressed WRITE setOnButtonPressed)
+		Q_PROPERTY(QScriptValue onButtonReleased READ onButtonReleased WRITE setOnButtonReleased)
 
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
@@ -41,8 +48,18 @@ namespace Code
 		Mouse();
 		~Mouse();
 
+		void setOnMotion(const QScriptValue &onMotion)					{ mOnMotion = onMotion; }
+		void setOnWheel(const QScriptValue &onWheel)					{ mOnWheel = onWheel; }
+		void setOnButtonPressed(const QScriptValue &onButtonPressed)	{ mOnButtonPressed = onButtonPressed; }
+		void setOnButtonReleased(const QScriptValue &onButtonReleased)	{ mOnButtonReleased = onButtonReleased; }
+
+		QScriptValue onMotion() const									{ return mOnMotion; }
+		QScriptValue onWheel() const									{ return mOnWheel; }
+		QScriptValue onButtonPressed() const							{ return mOnButtonPressed; }
+		QScriptValue onButtonReleased() const							{ return mOnButtonReleased; }
+
 	public slots:
-		QString toString() const					{ return "Mouse"; }
+		QString toString() const										{ return "Mouse"; }
 		QScriptValue position() const;
 		QScriptValue move() const;
 		bool isButtonPressed(MouseDevice::Button button) const;
@@ -52,7 +69,18 @@ namespace Code
 		QScriptValue wheel(int intensity = 1) const;
 
 	private:
+		void mouseMotion(int x, int y);
+		void mouseWheel(int intensity);
+		void mouseButtonPressed(ActionTools::SystemInput::Button button);
+		void mouseButtonReleased(ActionTools::SystemInput::Button button);
+
+	private:
 		MouseDevice mMouseDevice;
+		ActionTools::SystemInput::Recorder mRecorder;
+		QScriptValue mOnMotion;
+		QScriptValue mOnWheel;
+		QScriptValue mOnButtonPressed;
+		QScriptValue mOnButtonReleased;
 	};
 }
 

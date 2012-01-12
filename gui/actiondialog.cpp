@@ -42,6 +42,8 @@
 #include <QComboBox>
 #include <QSpinBox>
 
+#include <limits>
+
 ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::ActionDialog),
@@ -131,9 +133,9 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	mPauseAfterSpinBox->setSingleStep(100);
 	mTimeoutSpinBox->setSingleStep(100);
 	
-	mPauseBeforeSpinBox->setMaximum(INT_MAX);
-	mPauseAfterSpinBox->setMaximum(INT_MAX);
-	mTimeoutSpinBox->setMaximum(INT_MAX);
+	mPauseBeforeSpinBox->setMaximum(std::numeric_limits<int>::max());
+	mPauseAfterSpinBox->setMaximum(std::numeric_limits<int>::max());
+	mTimeoutSpinBox->setMaximum(std::numeric_limits<int>::max());
 	
 	mPauseBeforeSpinBox->setSuffix(tr(" ms", "milliseconds"));
 	mPauseAfterSpinBox->setSuffix(tr(" ms", "milliseconds"));

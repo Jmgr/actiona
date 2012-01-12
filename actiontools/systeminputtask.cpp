@@ -21,46 +21,155 @@
 #include "systeminputtask.h"
 
 #include <QDebug>
-
-#ifdef Q_WS_WIN
 #include <QThread>
-#endif
+#include <QSharedPointer>
+#include <QPoint>
 
 #ifdef Q_WS_X11
+#include <QTimer>
 #include <X11/Xlib.h>
+#include <X11/Xlibint.h>
+#include <X11/Xutil.h>
+#include <X11/extensions/record.h>
 #include <QX11Info>
+#endif
+
+#ifdef Q_WS_WIN
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 #endif
 
 namespace ActionTools
 {
 	namespace SystemInput
 	{
+#ifdef Q_WS_X11
+		static XRecordContext gXRecordContext;
+
+		static void xRecordCallback(XPointer, XRecordInterceptData *data)
+		{
+			QSharedPointer<XRecordInterceptData> safeData(data, XRecordFreeData);
+
+			switch(data->category)
+			{
+			case XRecordFromServer:
+			case XRecordFromClient:
+				{
+					xEvent *recordData = reinterpret_cast<xEvent *>(safeData.data()->data);
+
+					switch(recordData->u.u.type)
+					{
+					case KeyPress:
+						//TODO
+						break;
+					case KeyRelease:
+						//TODO
+						break;
+					case ButtonPress:
+						Task::instance()->emitMouseButtonPressed(static_cast<Button>(recordData->u.u.detail - 1));
+						break;
+					case ButtonRelease:
+						Task::instance()->emitMouseButtonReleased(static_cast<Button>(recordData->u.u.detail - 1));
+
+						switch(recordData->u.u.detail)
+						{
+						case Button4:
+							Task::instance()->emitMouseWheel(1);
+							break;
+						case Button5:
+							Task::instance()->emitMouseWheel(-1);
+							break;
+						}
+						break;
+					case MotionNotify:
+						Task::instance()->emitMouseMotion(recordData->u.keyButtonPointer.rootX,
+										 recordData->u.keyButtonPointer.rootY);
+						break;
+					default:
+						break;
+					}
+				}
+				break;
+			default:
+				return;
+			}
+		}
+#endif
+
+#ifdef Q_WS_WIN
+		static HHOOK gMouseHook;
+		static HHOOK gKeyboardHook;
+
+		static LRESULT CALLBACK LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
+		{
+			if(nCode < 0)
+				return CallNextHookEx(gMouseHook, nCode, wParam, lParam);
+
+			switch(wParam)
+			{
+			case WM_MOUSEMOVE:
+				{
+					const QPoint &position = QCursor::pos();
+
+					Task::instance()->emitMouseMotion(position.x(), position.y());
+				}
+				break;
+			case WM_MOUSEWHEEL:
+				{
+					//Task::instance()->emitMouseWheel();
+				}
+				break;
+			default:
+				break;
+			}
+
+			//TODO: send input using Task::instance()->mouseEvent
+
+			return CallNextHookEx(gMouseHook, nCode, wParam, lParam);
+		}
+
+		static LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
+		{
+			//TODO: send input using Task::instance()->keyboardEvent
+
+			return CallNextHookEx(gKeyboardHook, nCode, wParam, lParam);
+		}
+#endif
 		Task *Task::mInstance = 0;
 
 		Task::Task(QObject *parent)
 			: QObject(parent),
-	#ifdef Q_WS_WIN
-			  mThread(new QThread(this)),
+			  mThread(new QThread(this))
+			, mStarted(false)
+	#ifdef Q_WS_X11
+			, mProcessRepliesTimer(new QTimer(this))
 	#endif
-			  mStarted(false)
 		{
 			Q_ASSERT(mInstance == 0);
 
 			mInstance = this;
 
-	#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN
 			moveToThread(mThread);
+#endif
 
+#ifdef Q_WS_X11
+			connect(mProcessRepliesTimer, SIGNAL(timeout()), this, SLOT(processReplies()));
+#endif
+
+#ifdef Q_WS_WIN
 			mThread->start();
-	#endif
+#else
+			start();
+#endif
 		}
 
 		Task::~Task()
 		{
-	#ifdef Q_WS_WIN
 			mThread->quit();
 			mThread->wait();
-	#endif
+
+			delete mThread;
 		}
 
 		void Task::start()
@@ -70,28 +179,41 @@ namespace ActionTools
 
 			mStarted = true;
 
-	#ifdef Q_WS_X11
-			nativeEventFilteringApp->installNativeEventFilter(this);
+#ifdef Q_WS_X11
+			XRecordClientSpec clients = XRecordAllClients;
+			XRecordRange *range = XRecordAllocRange();
 
-			if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask | ButtonPressMask | PointerMotionMask, GrabModeAsync, GrabModeAsync,
-							None, None, CurrentTime) != GrabSuccess)
+			if(!range)
 			{
-				qWarning() << "SystemInputReceiver: Unable to grab the pointer";
+				qWarning() << "Failed to allocate XRecord range";
 
 				return;
 			}
-			if(XGrabKeyboard(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, GrabModeAsync, GrabModeAsync, CurrentTime) != GrabSuccess)
+
+			range->device_events.first = KeyPress;
+			range->device_events.last = MotionNotify;
+
+			XRecordContext gXRecordContext = XRecordCreateContext(QX11Info::display(), 0, &clients, 1, &range, 1);
+
+			XFree(range);
+
+			if(!gXRecordContext)
 			{
-				qWarning() << "SystemInputReceiver: Unable to grab the keyboard";
+				qWarning() << "Failed to create XRecord context";
 
 				return;
 			}
-	#endif
 
-	#ifdef Q_WS_WIN
+			XRecordEnableContextAsync(QX11Info::display(), gXRecordContext, &xRecordCallback, 0);
+
+			mProcessRepliesTimer->setSingleShot(false);
+			mProcessRepliesTimer->start(0);
+#endif
+
+#ifdef Q_WS_WIN
 			mMouseHook = SetWindowsHookEx(WH_MOUSE_LL, &Task::LowLevelMouseProc, 0, 0);
 			mKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, &Task::LowLevelKeyboardProc, 0, 0);
-	#endif
+#endif
 		}
 
 		void Task::stop()
@@ -102,10 +224,10 @@ namespace ActionTools
 			mStarted = false;
 
 	#ifdef Q_WS_X11
-			nativeEventFilteringApp->removeNativeEventFilter(this);
+			mProcessRepliesTimer->stop();
 
-			XUngrabPointer(QX11Info::display(), CurrentTime);
-			XUngrabKeyboard(QX11Info::display(), CurrentTime);
+			XRecordDisableContext(QX11Info::display(), gXRecordContext);
+			XRecordFreeContext(QX11Info::display(), gXRecordContext);
 	#endif
 
 	#ifdef Q_WS_WIN
@@ -114,90 +236,11 @@ namespace ActionTools
 	#endif
 		}
 
-	#ifdef Q_WS_WIN
-		LRESULT CALLBACK Task::LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
+#ifdef Q_WS_X11
+		void Task::processReplies()
 		{
-			if(nCode < 0)
-				return CallNextHookEx(mInstance->mMouseHook, nCode, wParam, lParam);
-
-			switch(wParam)
-			{
-			case WM_MOUSEMOVE:
-				{
-					const QPoint &position = QCursor::pos();
-
-					mInstance->emitMouseMotion(position.x(), position.y());
-				}
-				break;
-			case WM_MOUSEWHEEL:
-				{
-					//mInstance->emitMouseWheel();
-				}
-				break;
-			default:
-				break;
-			}
-
-			//TODO: send input using mInstance->mouseEvent
-
-			return CallNextHookEx(mInstance->mMouseHook, nCode, wParam, lParam);
+			//XRecordProcessReplies(QX11Info::display());
 		}
-
-		LRESULT CALLBACK Task::LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
-		{
-			//TODO: send input using mInstance->keyboardEvent
-
-			return CallNextHookEx(mInstance->mKeyboardHook, nCode, wParam, lParam);
-		}
-	#endif
-
-	#ifdef Q_WS_X11
-		bool Task::x11EventFilter(XEvent *event)
-		{
-			switch(event->type)
-			{
-			case MotionNotify:
-				{
-					const QPoint &position = QCursor::pos();
-
-					emit mouseMotion(position.x(), position.y());
-				}
-				break;
-			case ButtonPress:
-				{
-					XButtonEvent *buttonEvent = reinterpret_cast<XButtonEvent *>(event);
-
-					emit mouseButtonPressed(static_cast<Button>(buttonEvent->button - 1));
-				}
-				break;
-			case ButtonRelease:
-				{
-					XButtonEvent *buttonEvent = reinterpret_cast<XButtonEvent *>(event);
-
-					emit mouseButtonReleased(static_cast<Button>(buttonEvent->button - 1));
-
-					switch(buttonEvent->button)
-					{
-					case Button4:
-						emit mouseWheel(1);
-						break;
-					case Button5:
-						emit mouseWheel(-1);
-						break;
-					}
-				}
-			default:
-				break;
-			}
-
-			/*
-			else if(event->type == KeyPress)
-				qDebug() << "key press";
-			else if(event->type == KeyRelease)
-				qDebug() << "key release";
-	*/
-			return false;
-		}
-	#endif
+#endif
 	}
 }

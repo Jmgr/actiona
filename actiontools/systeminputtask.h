@@ -23,23 +23,19 @@
 
 #include <QObject>
 
-#include "nativeeventfilter.h"
 #include "systeminput.h"
 
-#ifdef Q_WS_WIN
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#endif
-
-#ifdef Q_WS_WIN
 class QThread;
+
+#ifdef Q_WS_X11
+class QTimer;
 #endif
 
 namespace ActionTools
 {
 	namespace SystemInput
 	{
-		class Task : public QObject, public NativeEventFilter
+		class Task : public QObject
 		{
 			Q_OBJECT
 
@@ -47,11 +43,18 @@ namespace ActionTools
 			explicit Task(QObject *parent = 0);
 			~Task();
 
+			static Task *instance()													{ return mInstance; }
+
+			void emitMouseMotion(int x, int y)										{ emit mouseMotion(x, y); }
+			void emitMouseWheel(int intensity)										{ emit mouseWheel(intensity); }
+			void emitMouseButtonPressed(ActionTools::SystemInput::Button button)	{ emit mouseButtonPressed(button); }
+			void emitMouseButtonReleased(ActionTools::SystemInput::Button button)	{ emit mouseButtonReleased(button); }
+
 		signals:
 			void mouseMotion(int x, int y);
 			void mouseWheel(int intensity);
-			void mouseButtonPressed(Button button);
-			void mouseButtonReleased(Button button);
+			void mouseButtonPressed(ActionTools::SystemInput::Button button);
+			void mouseButtonReleased(ActionTools::SystemInput::Button button);
 			void keyPressed(int key);
 			void keyReleased(int key);
 
@@ -59,33 +62,18 @@ namespace ActionTools
 			void start();
 			void stop();
 
-		private:
-#ifdef Q_WS_WIN
-			static LRESULT CALLBACK LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam);
-			static LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
-#endif
-
+		private slots:
 #ifdef Q_WS_X11
-			bool x11EventFilter(XEvent *event);
+			void processReplies();
 #endif
 
-#ifdef Q_WS_WIN
-			void emitMouseMotion(int x, int y) { emit mouseMotion(x, y); }
-			void emitMouseWheel(int intensity) { emit mouseWheel(intensity); }
-			void emitMouseButtonPressed(Button button) { emit mouseButtonPressed(button); }
-			void emitMouseButtonReleased(Button button) { emit mouseButtonReleased(button); }
-#endif
-
+		private:
 			static Task *mInstance;
 
-#ifdef Q_WS_WIN
 			QThread *mThread;
-#endif
 			bool mStarted;
-
-#ifdef Q_WS_WIN
-			HHOOK mMouseHook;
-			HHOOK mKeyboardHook;
+#ifdef Q_WS_X11
+			QTimer *mProcessRepliesTimer;
 #endif
 		};
 	}

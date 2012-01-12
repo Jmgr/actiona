@@ -27,6 +27,8 @@
 #include "numberparameterdefinition.h"
 #include "fileparameterdefinition.h"
 
+#include <limits>
+
 namespace ActionTools
 {
 	class ActionPack;
@@ -54,7 +56,7 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name("timeout", tr("Timeout")), this);
 			timeout->setTooltip(tr("The notification timeout"));
 			timeout->setMinimum(0);
-			timeout->setMaximum(INT_MAX);
+			timeout->setMaximum(std::numeric_limits<int>::max());
 			timeout->setDefaultValue(3000);
 			addElement(timeout, 1);
 

@@ -25,6 +25,8 @@
 #include "wheelinstance.h"
 #include "numberparameterdefinition.h"
 
+#include <limits>
+
 namespace ActionTools
 {
 	class ActionPack;
@@ -43,8 +45,8 @@ namespace Actions
 		{
 			ActionTools::NumberParameterDefinition *intensity = new ActionTools::NumberParameterDefinition(ActionTools::Name("intensity", tr("Intensity")), this);
 			intensity->setTooltip(tr("Intensity of the movement, positive is up, negative is down"));
-			intensity->setMinimum(INT_MIN);
-			intensity->setMaximum(INT_MAX);
+			intensity->setMinimum(std::numeric_limits<int>::min());
+			intensity->setMaximum(std::numeric_limits<int>::max());
 			addElement(intensity);
 			
 			addException(WheelInstance::FailedToSendInputException, tr("Send input failure"));

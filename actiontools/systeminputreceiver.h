@@ -40,16 +40,6 @@ namespace ActionTools
 			Q_OBJECT
 
 		public:
-			class Recorder
-			{
-			public:
-				Recorder(Listener *listener);
-				~Recorder();
-
-			private:
-				Listener *mListener;
-			};
-
 			static Receiver &instance();
 
 			~Receiver();
@@ -57,8 +47,8 @@ namespace ActionTools
 		private slots:
 			void mouseMotion(int x, int y);
 			void mouseWheel(int intensity);
-			void mouseButtonPressed(Button button);
-			void mouseButtonReleased(Button button);
+			void mouseButtonPressed(ActionTools::SystemInput::Button button);
+			void mouseButtonReleased(ActionTools::SystemInput::Button button);
 			void keyboardEvent();
 
 		private:
@@ -74,10 +64,10 @@ namespace ActionTools
 			int mCaptureCount;
 			ListenerSet mListeners;
 			Task *mTask;
+
+			friend class Recorder;
 		};
 	}
 }
-
-Q_DECLARE_METATYPE(ActionTools::SystemInput::Button)
 
 #endif // SYSTEMINPUTRECEIVER_H

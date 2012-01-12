@@ -32,9 +32,9 @@ namespace ActionTools
 		virtual ~NativeEventFilter()
 		{
 			NativeEventFilteringApplication *app = qobject_cast<NativeEventFilteringApplication *>(qApp);
-			Q_ASSERT(app);
-			
-			app->removeNativeEventFilter(this);
+
+			if(app)
+				app->removeNativeEventFilter(this);
 		}
 		
 #ifdef Q_WS_X11

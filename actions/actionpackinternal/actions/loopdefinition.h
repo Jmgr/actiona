@@ -26,6 +26,8 @@
 #include "lineparameterdefinition.h"
 #include "numberparameterdefinition.h"
 
+#include <limits>
+
 namespace ActionTools
 {
 	class ActionPack;
@@ -49,7 +51,7 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *count = new ActionTools::NumberParameterDefinition(ActionTools::Name("count", tr("Count")), this);
 			count->setTooltip(tr("The amount of times (evaluated the first time)"));
 			count->setMinimum(0);
-			count->setMaximum(INT_MAX);
+			count->setMaximum(std::numeric_limits<int>::max());
 			addElement(count);
 		}
 

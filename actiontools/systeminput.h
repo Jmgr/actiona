@@ -21,6 +21,8 @@
 #ifndef SYSTEMINPUT_H
 #define SYSTEMINPUT_H
 
+#include <QMetaType>
+
 namespace ActionTools
 {
 	namespace SystemInput
@@ -45,5 +47,7 @@ namespace ActionTools
 		};
 	}
 }
+
+Q_DECLARE_METATYPE(ActionTools::SystemInput::Button)
 
 #endif // SYSTEMINPUT_H
