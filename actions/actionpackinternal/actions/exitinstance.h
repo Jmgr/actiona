@@ -38,8 +38,7 @@ namespace Actions
 
 		void startExecution()
 		{
-			foreach(QWidget *widget, QApplication::topLevelWidgets())
-				widget->close();
+			QApplication::quit();
 
 			emit executionEnded();
 		}
