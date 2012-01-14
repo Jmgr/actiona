@@ -61,22 +61,22 @@
 <context>
     <name>Actions::LoopDefinition</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="45"/>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="47"/>
         <source>Line</source>
         <translation>Ligne</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="46"/>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="48"/>
         <source>The line (or label) to go to</source>
         <translation>La ligne (ou le label) à aller</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="49"/>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="51"/>
         <source>Count</source>
         <translation>Nombre de fois</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="50"/>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="52"/>
         <source>The amount of times (evaluated the first time)</source>
         <translation>Le nombre de fois (évalué la première fois)</translation>
     </message>
@@ -365,12 +365,12 @@
         <translation>Va à une ligne du script</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="56"/>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="58"/>
         <source>Loop</source>
         <translation>Boucle</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="59"/>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="61"/>
         <source>Go to a script line a specific number of times</source>
         <translation>Va à une ligne du script un certain nombre de fois</translation>
     </message>

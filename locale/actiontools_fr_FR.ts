@@ -243,17 +243,17 @@
 <context>
     <name>ActionTools::ChoosePositionPushButton</name>
     <message>
-        <location filename="../actiontools/choosepositionpushbutton.cpp" line="65"/>
+        <location filename="../actiontools/choosepositionpushbutton.cpp" line="64"/>
         <source>Target a position by clicking this button, moving the cursor to the desired position and releasing the mouse button.</source>
         <translation>Choisissez une position en cliquant sur ce bouton puis déplacez le curseur vers la position désirée et relâchez le bouton de la souris.</translation>
     </message>
     <message>
-        <location filename="../actiontools/choosepositionpushbutton.cpp" line="124"/>
+        <location filename="../actiontools/choosepositionpushbutton.cpp" line="123"/>
         <source>Choose a window</source>
         <translation>Choix de fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/choosepositionpushbutton.cpp" line="124"/>
+        <location filename="../actiontools/choosepositionpushbutton.cpp" line="123"/>
         <source>Unable to grab the pointer.</source>
         <translation>Impossible de récupérer le curseur.</translation>
     </message>
@@ -261,17 +261,17 @@
 <context>
     <name>ActionTools::ChooseWindowPushButton</name>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="88"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="87"/>
         <source>Target a window by clicking this button, moving the cursor to the wanted window and releasing the mouse button.</source>
         <translation>Choisissez une fenêtre en cliquant sur ce bouton puis déplacez le curseur vers la fenêtre ciblée et relâchez le bouton de la souris.</translation>
     </message>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="262"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="261"/>
         <source>Choose a window</source>
         <translation>Choix de fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="262"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="261"/>
         <source>Unable to grab the pointer.</source>
         <translation>Impossible de récupérer le curseur.</translation>
     </message>
@@ -610,34 +610,34 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code::ProcessHandle</name>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="53"/>
-        <location filename="../actiontools/code/processhandle.cpp" line="82"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="52"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="81"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="184"/>
-        <location filename="../actiontools/code/processhandle.cpp" line="217"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="183"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="216"/>
         <source>Unable to open the process</source>
         <translation>Impossible d&apos;ouvrir le processus</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="191"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="190"/>
         <source>Unable to retrieve the executable filename</source>
         <translation>Impossible d&apos;obtenir le nom de l&apos;exécutable</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="203"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="202"/>
         <source>Failed to get the process command</source>
         <translation>Impossible de récupérer la commande de processus</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="239"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="238"/>
         <source>Unable to retrieve the process priority</source>
         <translation>Impossible de récupérer la priorité du processus</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="243"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="242"/>
         <source>This is not available under your operating system</source>
         <translation>Ceci n&apos;est pas disponible sous votre système d&apos;exploitation</translation>
     </message>
@@ -956,137 +956,137 @@ Double-cliquez pour afficher</translation>
         <translation>Attendre</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="48"/>
+        <location filename="../actiontools/keyinput.cpp" line="47"/>
         <source>Left Shift</source>
         <translation>Shift gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="48"/>
+        <location filename="../actiontools/keyinput.cpp" line="47"/>
         <source>Right Shift</source>
         <translation>Shift droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="48"/>
+        <location filename="../actiontools/keyinput.cpp" line="47"/>
         <source>Left Control</source>
         <translation>Contrôle gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="48"/>
+        <location filename="../actiontools/keyinput.cpp" line="47"/>
         <source>Right Control</source>
         <translation>Contrôle droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="49"/>
+        <location filename="../actiontools/keyinput.cpp" line="48"/>
         <source>Left Alt</source>
         <translation>Alt gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="49"/>
+        <location filename="../actiontools/keyinput.cpp" line="48"/>
         <source>Right Alt</source>
         <translation>Alt droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="51"/>
+        <location filename="../actiontools/keyinput.cpp" line="50"/>
         <source>Left Windows</source>
         <translation>Windows gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="51"/>
+        <location filename="../actiontools/keyinput.cpp" line="50"/>
         <source>Right Windows</source>
         <translation>Windows droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="53"/>
+        <location filename="../actiontools/keyinput.cpp" line="52"/>
         <source>Left Meta</source>
         <translation>Méta gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="53"/>
+        <location filename="../actiontools/keyinput.cpp" line="52"/>
         <source>Right Meta</source>
         <translation>Méta droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Alt Gr</source>
         <translation>Alt Gr</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad 0</source>
         <translation>Pavé numérique 0</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad 1</source>
         <translation>Pavé numérique 1</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad 2</source>
         <translation>Pavé numérique 2</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad 3</source>
         <translation>Pavé numérique 3</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad 4</source>
         <translation>Pavé numérique 4</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="55"/>
         <source>Numpad 5</source>
         <translation>Pavé numérique 5</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="55"/>
         <source>Numpad 6</source>
         <translation>Pavé numérique 7</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="55"/>
         <source>Numpad 7</source>
         <translation>Pavé numérique 7</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="55"/>
         <source>Numpad 8</source>
         <translation>Pavé numérique 8</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="55"/>
         <source>Numpad 9</source>
         <translation>Pavé numérique 9</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="57"/>
+        <location filename="../actiontools/keyinput.cpp" line="56"/>
         <source>Numpad *</source>
         <translation>Pavé numérique *</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="57"/>
+        <location filename="../actiontools/keyinput.cpp" line="56"/>
         <source>Numpad +</source>
         <translation>Pavé numérique +</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="57"/>
+        <location filename="../actiontools/keyinput.cpp" line="56"/>
         <source>Numpad Separator</source>
         <translation>Pavé numérique séparateur</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="57"/>
+        <location filename="../actiontools/keyinput.cpp" line="56"/>
         <source>Numpad -</source>
         <translation>Pavé numérique -</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="57"/>
+        <location filename="../actiontools/keyinput.cpp" line="56"/>
         <source>Numpad .</source>
         <translation>Pavé numérique .</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="57"/>
+        <location filename="../actiontools/keyinput.cpp" line="56"/>
         <source>Numpad /</source>
         <translation>Pavé numérique /</translation>
     </message>
