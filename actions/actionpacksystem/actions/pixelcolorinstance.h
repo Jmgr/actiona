@@ -60,9 +60,23 @@ namespace Actions
 			mIfTrue = evaluateIfAction(ok, "ifTrue");
 			ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, "ifFalse");
 			mVariable = evaluateVariable(ok, "variable");
+			int redTolerance = evaluateInteger(ok, "redTolerance");
+			int greenTolerance = evaluateInteger(ok, "greenTolerance");
+			int blueTolerance = evaluateInteger(ok, "blueTolerance");
 
 			if(!ok)
 				return;
+
+			redTolerance = (255 * redTolerance) / 100;
+			greenTolerance = (255 * greenTolerance) / 100;
+			blueTolerance = (255 * blueTolerance) / 100;
+
+			mMinimumColor = QColor(normalizeColor(mPixelColorValue.red() - redTolerance),
+								   normalizeColor(mPixelColorValue.green() - greenTolerance),
+								   normalizeColor(mPixelColorValue.blue() - blueTolerance));
+			mMaximumColor = QColor(normalizeColor(mPixelColorValue.red() + redTolerance),
+								   normalizeColor(mPixelColorValue.green() + greenTolerance),
+								   normalizeColor(mPixelColorValue.blue() + blueTolerance));
 
 			if(testPixel())
 			{
@@ -133,6 +147,8 @@ namespace Actions
 		ActionTools::IfActionValue mIfTrue;
 		QString mVariable;
 		QTimer mTimer;
+		QColor mMinimumColor;
+		QColor mMaximumColor;
 
 		bool testPixel()
 		{
@@ -144,7 +160,9 @@ namespace Actions
 			switch(mComparison)
 			{
 			case Equal:
-				return (pixelColor == mPixelColorValue);
+				return (pixelColor.red() >= mMinimumColor.red() && pixelColor.red() <= mMaximumColor.red() &&
+						pixelColor.green() >= mMinimumColor.green() && pixelColor.green() <= mMaximumColor.green() &&
+						pixelColor.blue() >= mMinimumColor.blue() && pixelColor.blue() <= mMaximumColor.blue());
 			case Darker:
 				return (pixelColor.lightness() < mPixelColorValue.lightness());
 			case Lighter:
@@ -152,6 +170,16 @@ namespace Actions
 			}
 
 			return false;
+		}
+
+		static int normalizeColor(int value)
+		{
+			if(value < 0)
+				value = 0;
+			if(value > 255)
+				value = 255;
+
+			return value;
 		}
 
 		Q_DISABLE_COPY(PixelColorInstance)

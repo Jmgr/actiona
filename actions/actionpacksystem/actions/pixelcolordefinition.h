@@ -69,6 +69,27 @@ namespace Actions
 			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Pixel color variable")), this);
 			variable->setTooltip(tr("Variable name where to store the pixel color"));
 			addElement(variable, 1);
+
+			ActionTools::NumberParameterDefinition *redTolerance = new ActionTools::NumberParameterDefinition(ActionTools::Name("redTolerance", tr("Red tolerance")), this);
+			redTolerance->setTooltip(tr("The tolerance percentage for the red color component"));
+			redTolerance->setMinimum(0);
+			redTolerance->setMaximum(100);
+			redTolerance->setDefaultValue(0);
+			addElement(redTolerance, 1);
+
+			ActionTools::NumberParameterDefinition *greenTolerance = new ActionTools::NumberParameterDefinition(ActionTools::Name("greenTolerance", tr("Green tolerance")), this);
+			greenTolerance->setTooltip(tr("The tolerance percentage for the green color component"));
+			greenTolerance->setMinimum(0);
+			greenTolerance->setMaximum(100);
+			greenTolerance->setDefaultValue(0);
+			addElement(greenTolerance, 1);
+
+			ActionTools::NumberParameterDefinition *blueTolerance = new ActionTools::NumberParameterDefinition(ActionTools::Name("blueTolerance", tr("Blue tolerance")), this);
+			blueTolerance->setTooltip(tr("The tolerance percentage for the blue color component"));
+			blueTolerance->setMinimum(0);
+			blueTolerance->setMaximum(100);
+			blueTolerance->setDefaultValue(0);
+			addElement(blueTolerance, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Pixel color"); }
