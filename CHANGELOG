@@ -1,3 +1,11 @@
+3.2.1 (14/01/12)
+- Actions: added a tolerance value for the Pixel color action
+- Actions: fixed a bug preventing to enter no data in a number parameter
+- Actions: fixed a bug preventing to enter integer or decimal values below 0 or over 100
+- Windows: fixed a bug during installation preventing the use of image formats other than PNG
+- fixed a bug corrupting the Actionaz window when using the Exit Actionaz action
+- fixed some memory leaks
+
 3.2.0 (06/01/12)
 - Actions: added the FindImage action
 - Actions: added an option to use window borders to the Window action
