@@ -3,6 +3,8 @@ QT += script \
     xmlpatterns
 TEMPLATE = lib
 CONFIG += dll
+unix:CONFIG += link_pkgconfig
+unix:PKGCONFIG += opencv
 DEFINES += ACTIONTOOLS_LIBRARY
 TARGET = actiontools
 DESTDIR = ..
@@ -94,8 +96,7 @@ win32:LIBS += -luser32 \
 	-l$${OPENCV_LIB_CORE} \
 	-l$${OPENCV_LIB_IMGPROC}
 unix:LIBS += -lXtst \
-	-lX11 \
-	-lcv
+	-lX11
 TRANSLATIONS = ../locale/actiontools_fr_FR.ts
 RESOURCES += actiontools.qrc
 INCLUDEPATH += . \
