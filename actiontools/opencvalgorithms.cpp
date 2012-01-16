@@ -18,7 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include <opencv/cv.h>
+#include <cv.h>
 
 #include "opencvalgorithms.h"
 
