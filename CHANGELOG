@@ -1,3 +1,6 @@
+3.2.1.1 (16/01/12)
+- Packaging: dependency on OpenCV is now done using Pkgconfig
+
 3.2.1 (14/01/12)
 - Actions: added a tolerance value for the Pixel color action
 - Actions: fixed a bug preventing to enter no data in a number parameter
