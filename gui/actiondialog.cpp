@@ -46,20 +46,20 @@
 
 ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent)
 	: QDialog(parent),
-	ui(new Ui::ActionDialog),
-	mActionInstance(0),
-	mScript(script),
-	mCurrentLine(-1),
-	mCurrentColumn(-1),
-	mCurrentException(-1),
-	mCompletionModel(completionModel),
-	mExceptionsLayout(new QGridLayout),
-	mTabWidget(new QTabWidget(this)),
-	mExceptionsTabWidget(new QWidget),
-	mCommonTabWidget(new QWidget),
-	mPauseBeforeSpinBox(new QSpinBox(this)),
-	mPauseAfterSpinBox(new QSpinBox(this)),
-	mTimeoutSpinBox(new QSpinBox(this))
+	  ui(new Ui::ActionDialog),
+	  mActionInstance(0),
+	  mScript(script),
+	  mCurrentLine(-1),
+	  mCurrentColumn(-1),
+	  mCurrentException(-1),
+	  mCompletionModel(completionModel),
+	  mExceptionsLayout(new QGridLayout),
+	  mTabWidget(new QTabWidget(this)),
+	  mExceptionsTabWidget(new QWidget(mTabWidget)),
+	  mCommonTabWidget(new QWidget(mTabWidget)),
+	  mPauseBeforeSpinBox(new QSpinBox(this)),
+	  mPauseAfterSpinBox(new QSpinBox(this)),
+	  mTimeoutSpinBox(new QSpinBox(this))
 {
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("ActionDialog creation " + actionDefinition->id());
@@ -209,6 +209,8 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 		mTabWidget->addTab(mExceptionsTabWidget, tr("Exceptions"));
 	}
+	else
+		delete mExceptionsLayout;
 
 	//Init of action infos
 	QString informations;

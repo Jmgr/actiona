@@ -65,18 +65,46 @@ namespace ActionTools
 						//TODO
 						break;
 					case ButtonPress:
-						Task::instance()->emitMouseButtonPressed(static_cast<Button>(recordData->u.u.detail - 1));
-						break;
-					case ButtonRelease:
-						Task::instance()->emitMouseButtonReleased(static_cast<Button>(recordData->u.u.detail - 1));
-
 						switch(recordData->u.u.detail)
 						{
+						case Button1:
+							Task::instance()->emitMouseButtonPressed(LeftButton);
+							break;
+						case Button2:
+							Task::instance()->emitMouseButtonPressed(MiddleButton);
+							break;
+						case Button3:
+							Task::instance()->emitMouseButtonPressed(RightButton);
+							break;
+						case Button4:
+						case Button5:
+							// Ignore wheel up & wheel down buttons
+							break;
+						default:
+							Task::instance()->emitMouseButtonPressed(static_cast<Button>(XButton0 + recordData->u.u.detail - Button5 - 1));
+							break;
+						}
+						break;
+					case ButtonRelease:
+						switch(recordData->u.u.detail)
+						{
+						case Button1:
+							Task::instance()->emitMouseButtonReleased(LeftButton);
+							break;
+						case Button2:
+							Task::instance()->emitMouseButtonReleased(MiddleButton);
+							break;
+						case Button3:
+							Task::instance()->emitMouseButtonReleased(RightButton);
+							break;
 						case Button4:
 							Task::instance()->emitMouseWheel(1);
 							break;
 						case Button5:
 							Task::instance()->emitMouseWheel(-1);
+							break;
+						default:
+							Task::instance()->emitMouseButtonReleased(static_cast<Button>(XButton0 + recordData->u.u.detail - Button5 - 1));
 							break;
 						}
 						break;

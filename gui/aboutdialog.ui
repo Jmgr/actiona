@@ -149,6 +149,11 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="act3Ideas">
             <item>
              <property name="text">
+              <string>Astalol</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>cyberia</string>
              </property>
             </item>

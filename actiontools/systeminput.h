@@ -32,8 +32,6 @@ namespace ActionTools
 			LeftButton,
 			MiddleButton,
 			RightButton,
-			WheelUpButton,
-			WheelDownButton,
 			XButton0,
 			XButton1,
 			XButton2,
