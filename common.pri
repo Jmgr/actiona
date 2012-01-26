@@ -32,7 +32,7 @@ contains(DEFINES, ACT_PROFILE) {
 *-g++*::QMAKE_CXXFLAGS += -std=gnu++0x
 *-g++*::QMAKE_CXXFLAGS_DEBUG += -pedantic -Wall -Wextra -Wno-long-long -g -Wpointer-arith -Wcast-qual \
 	-Wcast-align -Woverloaded-virtual -Wwrite-strings -Winit-self -Wundef -Wlogical-op -Winline
-*-g++*::QMAKE_CXXFLAGS_RELEASE += -mmmx -msse -msse2 -mfpmath=sse -O3 -s
+*-g++*::QMAKE_CXXFLAGS_RELEASE += -O3 -s
 *-msvc*::QMAKE_CXXFLAGS_RELEASE += -O2 -fp:fast -GL
 *-msvc*::QMAKE_LFLAGS_RELEASE += /LTCG
 
