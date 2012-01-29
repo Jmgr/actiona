@@ -1,3 +1,8 @@
+3.2.2 (29/01/12)
+- Code: fixed getter functions having the same name as properties
+- Packaging: removed compiler options to allow compilation on non-x86 platforms
+- removed 7z binaries from repository
+
 3.2.1.1 (16/01/12)
 - Packaging: dependency on OpenCV is now done using Pkgconfig
 
