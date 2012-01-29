@@ -48,6 +48,32 @@ namespace Code
 	{
 		delete mVideoWidget;
 	}
+
+	qreal MediaPlaylist::playbackRate() const
+	{
+		return mMediaPlayer->playbackRate();
+	}
+
+	qreal MediaPlaylist::volume() const
+	{
+		return mMediaPlayer->volume();
+	}
+
+	qint64 MediaPlaylist::position() const
+	{
+		return mMediaPlayer->position();
+	}
+
+
+	int MediaPlaylist::currentMedia() const
+	{
+		return mMediaPlaylist->currentIndex();
+	}
+
+	MediaPlaylist::PlaybackMode MediaPlaylist::playbackMode() const
+	{
+		return static_cast<MediaPlaylist::PlaybackMode>(mMediaPlaylist->playbackMode());
+	}
 	
 	QScriptValue MediaPlaylist::setPlaybackRate(qreal rate)
 	{
@@ -90,21 +116,6 @@ namespace Code
 	bool MediaPlaylist::hasVideo() const
 	{
 		return mMediaPlayer->isVideoAvailable();
-	}
-	
-	qreal MediaPlaylist::playbackRate() const
-	{
-		return mMediaPlayer->playbackRate();
-	}
-	
-	qreal MediaPlaylist::volume() const
-	{
-		return mMediaPlayer->volume();
-	}
-	
-	qint64 MediaPlaylist::position() const
-	{
-		return mMediaPlayer->position();
 	}
 	
 	bool MediaPlaylist::isMuted() const
@@ -244,11 +255,6 @@ namespace Code
 		return thisObject();
 	}
 	
-	int MediaPlaylist::currentMedia() const
-	{
-		return mMediaPlaylist->currentIndex();
-	}
-	
 	bool MediaPlaylist::isEmpty() const
 	{
 		return mMediaPlaylist->isEmpty();
@@ -267,11 +273,6 @@ namespace Code
 	int MediaPlaylist::previousMedia() const
 	{
 		return mMediaPlaylist->previousIndex();
-	}
-	
-	MediaPlaylist::PlaybackMode MediaPlaylist::playbackMode() const
-	{
-		return static_cast<MediaPlaylist::PlaybackMode>(mMediaPlaylist->playbackMode());
 	}
 	
 	void MediaPlaylist::videoAvailableChanged(bool videoAvailable)

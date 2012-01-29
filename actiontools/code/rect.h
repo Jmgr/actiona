@@ -63,6 +63,15 @@ namespace Code
 		void swap(QRect &rect);
 		
 		const QRect &rect() const;
+
+		int width() const;
+		int height() const;
+		int x() const;
+		int y() const;
+		int left() const;
+		int right() const;
+		int top() const;
+		int bottom() const;
 		
 	public slots:
 		QScriptValue clone() const;
@@ -88,14 +97,6 @@ namespace Code
 		bool isEmpty() const;
 		QScriptValue center() const;
 		QScriptValue size() const;
-		int width() const;
-		int height() const;
-		int x() const;
-		int y() const;
-		int left() const;
-		int right() const;
-		int top() const;
-		int bottom() const;
 		
 	private:
 		QRect mRect;

@@ -69,6 +69,11 @@ namespace Code
 	{
 		delete mProgressDialog;
 	}
+
+	int ProgressDialog::value() const
+	{
+		return mProgressDialog->value();
+	}
 	
 	QScriptValue ProgressDialog::setValue(int value)
 	{
@@ -116,11 +121,6 @@ namespace Code
 	int ProgressDialog::showModal()
 	{
 		return mProgressDialog->exec();
-	}
-	
-	int ProgressDialog::value() const
-	{
-		return mProgressDialog->value();
 	}
 	
 	void ProgressDialog::canceled()

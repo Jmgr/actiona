@@ -56,6 +56,11 @@ namespace Code
 		void swap(QColor &color);
 		
 		const QColor &color() const;
+
+		int red() const;
+		int green() const;
+		int blue() const;
+		int alpha() const;
 		
 	public slots:
 		QScriptValue clone() const;
@@ -71,10 +76,6 @@ namespace Code
 		QScriptValue setNamedColor(const QString &name);
 		QScriptValue lighter(int factor = 150);
 		QScriptValue darker(int factor = 200);
-		int red() const;
-		int green() const;
-		int blue() const;
-		int alpha() const;
 		int cyan() const;
 		int magenta() const;
 		int yellow() const;

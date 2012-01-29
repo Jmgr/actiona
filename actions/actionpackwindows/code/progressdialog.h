@@ -42,6 +42,7 @@ namespace Code
 		void setOnCanceled(const QScriptValue &onCanceled)					{ mOnCanceled = onCanceled; }
 		
 		QScriptValue onCanceled() const										{ return mOnCanceled; }
+		int value() const;
 		
 	public slots:
 		QString toString() const					{ return "ProgressDialog"; }
@@ -52,7 +53,6 @@ namespace Code
 		QScriptValue setRange(int minimum, int maximum);
 		QScriptValue show();
 		int showModal();
-		int value() const;
 		
 	private slots:
 		void canceled();

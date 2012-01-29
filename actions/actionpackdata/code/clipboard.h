@@ -54,14 +54,15 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	
 		Clipboard();
+
+		QString text() const;
+		QScriptValue image() const;
 	
 	public slots:
 		QString toString() const					{ return "Clipboard"; }
 		QScriptValue setMode(Mode mode);
 		QScriptValue setText(const QString &value) const;
 		QScriptValue setImage(const QScriptValue &data) const;
-		QString text() const;
-		QScriptValue image() const;
 		DataType dataType() const;
 		
 	private:

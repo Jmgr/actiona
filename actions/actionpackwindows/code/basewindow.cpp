@@ -35,6 +35,41 @@ namespace Code
 	{
 	}
 
+	QString BaseWindow::title() const
+	{
+		Q_ASSERT(mWindow);
+
+		return mWindow->windowTitle();
+	}
+
+	QScriptValue BaseWindow::position() const
+	{
+		Q_ASSERT(mWindow);
+
+		return Point::constructor(mWindow->pos(), engine());
+	}
+
+	float BaseWindow::opacity() const
+	{
+		Q_ASSERT(mWindow);
+
+		return mWindow->windowOpacity();
+	}
+
+	bool BaseWindow::enabled() const
+	{
+		Q_ASSERT(mWindow);
+
+		return mWindow->isEnabled();
+	}
+
+	bool BaseWindow::visible() const
+	{
+		Q_ASSERT(mWindow);
+
+		return mWindow->isVisible();
+	}
+
 	void BaseWindow::setWidget(QWidget *widget)
 	{
 		mWindow = widget;
@@ -152,40 +187,5 @@ namespace Code
 		mWindow->close();
 
 		return thisObject();
-	}	
-
-	QString BaseWindow::title() const
-	{
-		Q_ASSERT(mWindow);
-
-		return mWindow->windowTitle();
-	}
-
-	QScriptValue BaseWindow::position() const
-	{
-		Q_ASSERT(mWindow);
-		
-		return Point::constructor(mWindow->pos(), engine());
-	}
-	
-	float BaseWindow::opacity() const
-	{
-		Q_ASSERT(mWindow);
-		
-		return mWindow->windowOpacity();
-	}
-
-	bool BaseWindow::enabled() const
-	{
-		Q_ASSERT(mWindow);
-		
-		return mWindow->isEnabled();
-	}
-	
-	bool BaseWindow::visible() const
-	{
-		Q_ASSERT(mWindow);
-		
-		return mWindow->isVisible();
 	}
 }

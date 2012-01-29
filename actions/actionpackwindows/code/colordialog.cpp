@@ -67,6 +67,11 @@ namespace Code
 	{
 		delete mColorDialog;
 	}
+
+	QScriptValue ColorDialog::color() const
+	{
+		return Color::constructor(mColorDialog->currentColor(), engine());
+	}
 	
 	QScriptValue ColorDialog::showAlphaChannel(bool showAlphaChannel)
 	{
@@ -92,11 +97,6 @@ namespace Code
 	int ColorDialog::showModal()
 	{
 		return mColorDialog->exec();
-	}
-	
-	QScriptValue ColorDialog::color() const
-	{
-		return Color::constructor(mColorDialog->currentColor(), engine());
 	}
 	
 	void ColorDialog::finished(int result)

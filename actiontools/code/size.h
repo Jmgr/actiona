@@ -55,6 +55,9 @@ namespace Code
 		void swap(QSize &size);
 		
 		const QSize &size() const;
+
+		int width() const;
+		int height() const;
 		
 	public slots:
 		QScriptValue clone() const;
@@ -62,8 +65,6 @@ namespace Code
 		QString toString() const;
 		QScriptValue setWidth(int width);
 		QScriptValue setHeight(int height);
-		int width() const;
-		int height() const;
 		
 	private:
 		QSize mSize;

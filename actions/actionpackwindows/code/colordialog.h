@@ -48,13 +48,14 @@ namespace Code
 		QScriptValue onClosed() const									{ return mOnClosed; }
 		QScriptValue onColorSelected() const							{ return mOnColorSelected; }
 		QScriptValue onColorChanged() const								{ return mOnColorChanged; }
+
+		QScriptValue color() const;
 		
 	public slots:
 		QScriptValue showAlphaChannel(bool showAlphaChannel);
 		QScriptValue setColor(const QScriptValue &color);
 		QScriptValue show();
 		int showModal();
-		QScriptValue color() const;
 		
 	private slots:
 		QString toString() const					{ return "ColorDialog"; }

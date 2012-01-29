@@ -55,6 +55,9 @@ namespace Code
 		void swap(QPoint &point);
 		
 		const QPoint &point() const;
+
+		int x() const;
+		int y() const;
 		
 	public slots:
 		QScriptValue clone() const;
@@ -62,8 +65,6 @@ namespace Code
 		QString toString() const;
 		QScriptValue setX(int x);
 		QScriptValue setY(int y);
-		int x() const;
-		int y() const;
 		
 	private:
 		QPoint mPoint;

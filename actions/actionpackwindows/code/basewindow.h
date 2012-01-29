@@ -36,7 +36,6 @@ namespace Code
 		Q_PROPERTY(float opacity READ opacity WRITE setOpacity)
 		Q_PROPERTY(bool enabled READ enabled WRITE setEnabled)
 		Q_PROPERTY(bool visible READ visible WRITE setVisible)
-		Q_PROPERTY(bool windowIcon READ visible WRITE setWindowIcon)
 
 	public slots:
 		QScriptValue setTitle(const QString &title);
@@ -46,14 +45,15 @@ namespace Code
 		QScriptValue setVisible(bool visible);
 		QScriptValue setWindowIcon(const QScriptValue &windowIcon);
 		QScriptValue close();
+
+	protected:
+		BaseWindow();
+
 		QString title() const;
 		QScriptValue position() const;
 		float opacity() const;
 		bool enabled() const;
 		bool visible() const;
-
-	protected:
-		BaseWindow();
 
 		void setWidget(QWidget *widget);
 		void setupConstructorParameters(QScriptContext *context, QScriptEngine *engine, const QScriptValue &parameters);

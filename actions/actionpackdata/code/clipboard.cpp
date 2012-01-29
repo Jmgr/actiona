@@ -46,6 +46,20 @@ namespace Code
 		mMode(QClipboard::Clipboard)
 	{
 	}
+
+	QString Clipboard::text() const
+	{
+		QClipboard *clipboard = QApplication::clipboard();
+
+		return clipboard->text(mMode);
+	}
+
+	QScriptValue Clipboard::image() const
+	{
+		QClipboard *clipboard = QApplication::clipboard();
+
+		return Image::constructor(clipboard->image(mMode), engine());
+	}
 	
 	QScriptValue Clipboard::setMode(Mode mode)
 	{
@@ -74,20 +88,6 @@ namespace Code
 			clipboard->setImage(data.toVariant().value<QImage>(), mMode);
 	
 		return thisObject();
-	}
-	
-	QString Clipboard::text() const
-	{
-		QClipboard *clipboard = QApplication::clipboard();
-		
-		return clipboard->text(mMode);
-	}
-
-	QScriptValue Clipboard::image() const
-	{
-		QClipboard *clipboard = QApplication::clipboard();
-
-		return Image::constructor(clipboard->image(mMode), engine());
 	}
 	
 	Clipboard::DataType Clipboard::dataType() const

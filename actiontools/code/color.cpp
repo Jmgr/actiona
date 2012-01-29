@@ -129,6 +129,26 @@ namespace Code
 	{
 		return mColor;
 	}
+
+	int Color::red() const
+	{
+		return mColor.red();
+	}
+
+	int Color::green() const
+	{
+		return mColor.green();
+	}
+
+	int Color::blue() const
+	{
+		return mColor.blue();
+	}
+
+	int Color::alpha() const
+	{
+		return mColor.alpha();
+	}
 	
 	QScriptValue Color::clone() const
 	{
@@ -149,7 +169,7 @@ namespace Code
 
 	QString Color::toString() const
 	{
-		return QString("Color [red: %1][green: %2][blue: %3][alpha: %4]").arg(red()).arg(green()).arg(blue()).arg(alpha());
+		return QString("Color [red: %1][green: %2][blue: %3][alpha: %4]").arg(mColor.red()).arg(green()).arg(blue()).arg(alpha());
 	}
 	
 	QScriptValue Color::setRed(int red)
@@ -226,26 +246,6 @@ namespace Code
 		mColor = mColor.darker(factor);
 		
 		return thisObject();
-	}
-
-	int Color::red() const
-	{
-		return mColor.red();
-	}
-	
-	int Color::green() const
-	{
-		return mColor.green();
-	}
-	
-	int Color::blue() const
-	{
-		return mColor.blue();
-	}
-	
-	int Color::alpha() const
-	{
-		return mColor.alpha();
 	}
 	
 	int Color::cyan() const

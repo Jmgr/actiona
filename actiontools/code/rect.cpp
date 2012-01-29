@@ -142,6 +142,46 @@ namespace Code
 	{
 		return mRect;
 	}
+
+	int Rect::width() const
+	{
+		return mRect.width();
+	}
+
+	int Rect::height() const
+	{
+		return mRect.height();
+	}
+
+	int Rect::x() const
+	{
+		return mRect.x();
+	}
+
+	int Rect::y() const
+	{
+		return mRect.y();
+	}
+
+	int Rect::left() const
+	{
+		return mRect.left();
+	}
+
+	int Rect::right() const
+	{
+		return mRect.right();
+	}
+
+	int Rect::top() const
+	{
+		return mRect.top();
+	}
+
+	int Rect::bottom() const
+	{
+		return mRect.bottom();
+	}
 	
 	QScriptValue Rect::clone() const
 	{
@@ -313,45 +353,5 @@ namespace Code
 	QScriptValue Rect::size() const
 	{
 		return Size::constructor(mRect.size(), engine());
-	}
-	
-	int Rect::width() const
-	{
-		return mRect.width();
-	}
-	
-	int Rect::height() const
-	{
-		return mRect.height();
-	}
-	
-	int Rect::x() const
-	{
-		return mRect.x();
-	}
-	
-	int Rect::y() const
-	{
-		return mRect.y();
-	}
-	
-	int Rect::left() const
-	{
-		return mRect.left();
-	}
-	
-	int Rect::right() const
-	{
-		return mRect.right();
-	}
-	
-	int Rect::top() const
-	{
-		return mRect.top();
-	}
-	
-	int Rect::bottom() const
-	{
-		return mRect.bottom();
 	}
 }

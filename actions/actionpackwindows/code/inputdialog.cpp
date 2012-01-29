@@ -91,6 +91,22 @@ namespace Code
 	{
 		delete mInputDialog;
 	}
+
+	QScriptValue InputDialog::value() const
+	{
+		switch(mInputType)
+		{
+		case Integer:
+			return engine()->newVariant(mInputDialog->intValue());
+		case Float:
+			return engine()->newVariant(mInputDialog->doubleValue());
+		case Items:
+		case Text:
+		default:
+			return engine()->newVariant(mInputDialog->textValue());
+			break;
+		}
+	}
 	
 	QScriptValue InputDialog::setLabelText(const QString &labelText)
 	{
@@ -198,22 +214,6 @@ namespace Code
 		setup();
 		
 		return mInputDialog->exec();
-	}
-	
-	QScriptValue InputDialog::value() const
-	{
-		switch(mInputType)
-		{
-		case Integer:
-			return engine()->newVariant(mInputDialog->intValue());
-		case Float:
-			return engine()->newVariant(mInputDialog->doubleValue());
-		case Items:
-		case Text:
-		default:
-			return engine()->newVariant(mInputDialog->textValue());
-			break;
-		}
 	}
 	
 	void InputDialog::finished(int result)

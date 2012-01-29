@@ -135,6 +135,16 @@ namespace Code
 	{
 		return mPoint;
 	}
+
+	int Point::x() const
+	{
+		return mPoint.x();
+	}
+
+	int Point::y() const
+	{
+		return mPoint.y();
+	}
 	
 	QScriptValue Point::clone() const
 	{
@@ -170,15 +180,5 @@ namespace Code
 		mPoint.setY(y);
 		
 		return thisObject();
-	}
-
-	int Point::x() const
-	{
-		return mPoint.x();
-	}
-	
-	int Point::y() const
-	{
-		return mPoint.y();
 	}
 }

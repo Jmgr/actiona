@@ -135,6 +135,16 @@ namespace Code
 	{
 		return mSize;
 	}
+
+	int Size::width() const
+	{
+		return mSize.width();
+	}
+
+	int Size::height() const
+	{
+		return mSize.height();
+	}
 	
 	QScriptValue Size::clone() const
 	{
@@ -170,15 +180,5 @@ namespace Code
 		mSize.setHeight(height);
 		
 		return thisObject();
-	}
-
-	int Size::width() const
-	{
-		return mSize.width();
-	}
-	
-	int Size::height() const
-	{
-		return mSize.height();
 	}
 }

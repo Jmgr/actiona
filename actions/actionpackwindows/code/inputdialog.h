@@ -64,6 +64,8 @@ namespace Code
 		
 		QScriptValue onClosed() const										{ return mOnClosed; }
 		QScriptValue onValueChanged() const									{ return mOnValueChanged; }
+
+		QScriptValue value() const;
 		
 	public slots:
 		QString toString() const					{ return "InputDialog"; }
@@ -82,7 +84,6 @@ namespace Code
 		QScriptValue setItemsEditable(bool itemsEditable);
 		QScriptValue show();
 		int showModal();
-		QScriptValue value() const;
 		
 	private slots:
 		void finished(int result);

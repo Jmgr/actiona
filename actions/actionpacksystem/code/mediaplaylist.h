@@ -59,6 +59,12 @@ namespace Code
 		MediaPlaylist();
 		~MediaPlaylist();
 
+		qreal playbackRate() const;
+		qreal volume() const;
+		qint64 position() const;
+		int currentMedia() const;
+		PlaybackMode playbackMode() const;
+
 	public slots:
 		QString toString() const					{ return "MediaPlaylist"; }
 		//Player
@@ -69,9 +75,6 @@ namespace Code
 		qint64 duration() const;
 		bool hasAudio() const;
 		bool hasVideo() const;
-		qreal playbackRate() const;
-		qreal volume() const;
-		qint64 position() const;
 		bool isMuted() const;
 		bool isSeekable() const;
 		int bufferStatus() const;
@@ -91,12 +94,10 @@ namespace Code
 		QScriptValue shuffle();
 		QScriptValue setPlaybackMode(PlaybackMode playbackMode);
 		QScriptValue removeMedia(int position);
-		int currentMedia() const;
 		bool isEmpty() const;
 		int mediaCount() const;
 		int nextMedia() const;
 		int previousMedia() const;
-		PlaybackMode playbackMode() const;
 
 	private slots:
 		void videoAvailableChanged(bool videoAvailable);
