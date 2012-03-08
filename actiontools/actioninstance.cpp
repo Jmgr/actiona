@@ -422,6 +422,13 @@ namespace ActionTools
 			return QScriptValue();
 		}
 
+		if(!result.isValid())
+		{
+			ok = false;
+
+			return QScriptValue();
+		}
+
 		return result;
 	}
 

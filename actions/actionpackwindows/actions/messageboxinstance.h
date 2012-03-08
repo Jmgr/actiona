@@ -71,6 +71,8 @@ namespace Actions
 		void buttonClicked();
 
 	private:
+		void closeAndDelete();
+
 		QMessageBox *mMessageBox;
 		ActionTools::IfActionValue mIfYes;
 		ActionTools::IfActionValue mIfNo;

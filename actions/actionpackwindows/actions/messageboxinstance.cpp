@@ -111,11 +111,7 @@ namespace Actions
 
 	void MessageBoxInstance::stopExecution()
 	{
-		if(mMessageBox)
-		{
-			mMessageBox->close();
-			mMessageBox->deleteLater();
-		}
+		closeAndDelete();
 	}
 
 	QMessageBox::Icon MessageBoxInstance::messageBoxIcon(Icon icon) const
@@ -141,8 +137,7 @@ namespace Actions
 			line = evaluateSubParameter(ok, mIfYes.actionParameter());
 			if(!ok)
 			{
-				mMessageBox->disconnect();
-				mMessageBox->deleteLater();
+				closeAndDelete();
 
 				return;
 			}
@@ -155,8 +150,7 @@ namespace Actions
 			line = evaluateSubParameter(ok, mIfNo.actionParameter());
 			if(!ok)
 			{
-				mMessageBox->disconnect();
-				mMessageBox->deleteLater();
+				closeAndDelete();
 
 				return;
 			}
@@ -165,9 +159,19 @@ namespace Actions
 				setNextLine(line);
 		}
 
-		mMessageBox->disconnect();
-		mMessageBox->deleteLater();
+		closeAndDelete();
 
 		emit executionEnded();
+	}
+
+	void MessageBoxInstance::closeAndDelete()
+	{
+		if(mMessageBox)
+		{
+			mMessageBox->close();
+			mMessageBox->deleteLater();
+
+			mMessageBox = 0;
+		}
 	}
 }
