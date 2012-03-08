@@ -98,6 +98,11 @@ p, li { white-space: pre-wrap; }
               <string>inTenSe</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>David Zaccaria</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
