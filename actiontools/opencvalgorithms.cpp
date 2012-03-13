@@ -18,7 +18,13 @@
 	Contact : jmgr@jmgr.info
 */
 
+#include <QtGlobal>
+
+#ifdef Q_WS_WIN
+#include <opencv2/opencv.hpp>
+#else
 #include <cv.h>
+#endif
 
 #include "opencvalgorithms.h"
 
