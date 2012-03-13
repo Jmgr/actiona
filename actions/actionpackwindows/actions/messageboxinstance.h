@@ -34,6 +34,7 @@ namespace Actions
 		Q_ENUMS(Icon)
 		Q_ENUMS(Buttons)
 		Q_ENUMS(Result)
+		Q_ENUMS(TextMode)
 
 	public:
 		enum Icon
@@ -55,11 +56,18 @@ namespace Actions
 			Yes,
 			No
 		};
+		enum TextMode
+		{
+			AutoTextMode,
+			HtmlTextMode,
+			PlainTextMode
+		};
 
 		MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
 		static ActionTools::StringListPair icons;
 		static ActionTools::StringListPair buttons;
+		static ActionTools::StringListPair textmodes;
 
 		void startExecution();
 		void stopExecution();

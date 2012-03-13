@@ -44,6 +44,13 @@ namespace Actions
 			<< QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Ok")
 			<< QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Yes-No"));
 
+	ActionTools::StringListPair MessageBoxInstance::textmodes = qMakePair(
+			QStringList() << "automatic" << "html" << "text",
+			QStringList()
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Automatic")
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "HTML")
+			<< QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Plain text"));
+
 	MessageBoxInstance::MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
 		mMessageBox(0)
@@ -57,6 +64,7 @@ namespace Actions
 		QString message = evaluateString(ok, "message");
 		QString title = evaluateString(ok, "title");
 		Icon icon = evaluateListElement<Icon>(ok, icons, "icon");
+		TextMode textMode = evaluateListElement<TextMode>(ok, textmodes, "textMode");
 		Buttons button = evaluateListElement<Buttons>(ok, buttons, "type");
 		QString customIcon = evaluateString(ok, "customIcon");
 		QString windowIcon = evaluateString(ok, "windowIcon");
@@ -74,6 +82,20 @@ namespace Actions
 		mMessageBox->setWindowModality(Qt::NonModal);
 		mMessageBox->setText(message);
 		mMessageBox->setWindowTitle(title);
+
+		switch(textMode)
+		{
+		case HtmlTextMode:
+			mMessageBox->setTextFormat(Qt::RichText);
+			break;
+		case PlainTextMode:
+			mMessageBox->setTextFormat(Qt::PlainText);
+			break;
+		case AutoTextMode:
+		default:
+			mMessageBox->setTextFormat(Qt::AutoText);
+			break;
+		}
 
 		if(!customIcon.isEmpty())
 		{

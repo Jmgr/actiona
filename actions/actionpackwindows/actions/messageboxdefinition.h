@@ -47,6 +47,7 @@ namespace Actions
 		{
 			translateItems("MessageBoxInstance::icons", MessageBoxInstance::icons);
 			translateItems("MessageBoxInstance::buttons", MessageBoxInstance::buttons);
+			translateItems("MessageBoxInstance::textmodes", MessageBoxInstance::textmodes);
 
 			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("message", tr("Message")), this);
 			text->setTooltip(tr("The text to show"));
@@ -81,6 +82,12 @@ namespace Actions
 			windowIcon->setCaption(tr("Select the icon to use"));
 			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 			addElement(windowIcon, 1);
+
+			ActionTools::ListParameterDefinition *textMode = new ActionTools::ListParameterDefinition(ActionTools::Name("textMode", tr("Text mode")), this);
+			textMode->setTooltip(tr("The message box text mode"));
+			textMode->setItems(MessageBoxInstance::textmodes);
+			textMode->setDefaultValue(MessageBoxInstance::textmodes.second.at(MessageBoxInstance::AutoTextMode));
+			addElement(textMode, 1);
 
 			ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition(this);
 			yesNoGroup->setMasterList(type);
