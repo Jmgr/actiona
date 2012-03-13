@@ -125,7 +125,7 @@ int main(int argc, char **argv)
 	if(!isPortable)
 	{
 		// Try to access the registry
-		QSettings settings;
+		QSettings settings("HKEY_LOCAL_MACHINE", QSettings::NativeFormat);
 
 		if(!settings.isWritable())
 			isPortable = true;
