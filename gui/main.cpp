@@ -119,7 +119,20 @@ int main(int argc, char **argv)
 	options.alias("help", "h");
 	options.parse(QCoreApplication::arguments());
 
-	if(options.count("portable"))
+	bool isPortable = (options.count("portable") > 0);
+
+#ifdef Q_WS_WIN
+	if(!isPortable)
+	{
+		// Try to access the registry
+		QSettings settings;
+
+		if(!settings.isWritable())
+			isPortable = true;
+	}
+#endif
+
+	if(isPortable)
 	{
 		QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QApplication::applicationDirPath() + "/userSettings");
 		QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope, QApplication::applicationDirPath() + "/systemSettings");
