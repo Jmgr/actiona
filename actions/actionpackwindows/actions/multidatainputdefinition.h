@@ -100,7 +100,7 @@ namespace Actions
 		QString name() const													{ return QObject::tr("Multi data input"); }
 		QString id() const														{ return "ActionMultiDataInput"; }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Ask the user to enter some data"); }
+		QString description() const												{ return QObject::tr("Ask the user to choose from a list"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new MultiDataInputInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
 		QPixmap icon() const													{ return QPixmap(":/icons/datainput.png"); }
