@@ -18,32 +18,34 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "consoletableview.h"
+#ifndef MULTITEXTPARAMETERDEFINITION_H
+#define MULTITEXTPARAMETERDEFINITION_H
 
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <QApplication>
-#include <QKeyEvent>
-#include <QClipboard>
+#include "parameterdefinition.h"
+#include "actiontools_global.h"
 
 namespace ActionTools
 {
-	ConsoleTableView::ConsoleTableView(QWidget *parent)
-		: QTableView(parent)
-	{
-	}
+	class ItemListWidget;
 
-	void ConsoleTableView::keyReleaseEvent(QKeyEvent *event)
+	class ACTIONTOOLSSHARED_EXPORT MultiTextParameterDefinition : public ParameterDefinition
 	{
-		if(event->matches(QKeySequence::Copy))
-		{
-			QStandardItemModel *standardItemModel = qobject_cast<QStandardItemModel *>(model());
-			if(standardItemModel)
-			{
-				QStandardItem *item = standardItemModel->item(currentIndex().row(), 0);
-				if(item && !item->text().isEmpty())
-					QApplication::clipboard()->setText(item->text());
-			}
-		}
-	}
+		Q_OBJECT
+
+	public:
+		MultiTextParameterDefinition(const Name &name, QObject *parent);
+		virtual ~MultiTextParameterDefinition()			{}
+
+		virtual void buildEditors(Script *script, QWidget *parent);
+		void load(const ActionInstance *actionInstance);
+		void save(ActionInstance *actionInstance);
+
+	protected:
+		ItemListWidget *mItemListWidget;
+
+	private:
+		Q_DISABLE_COPY(MultiTextParameterDefinition)
+	};
 }
+
+#endif // MULTITEXTPARAMETERDEFINITION_H

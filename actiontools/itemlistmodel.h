@@ -18,32 +18,24 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "consoletableview.h"
+#ifndef ITEMLISTMODEL_H
+#define ITEMLISTMODEL_H
+
+#include "actiontools_global.h"
 
 #include <QStandardItemModel>
-#include <QStandardItem>
-#include <QApplication>
-#include <QKeyEvent>
-#include <QClipboard>
 
 namespace ActionTools
 {
-	ConsoleTableView::ConsoleTableView(QWidget *parent)
-		: QTableView(parent)
+	class ACTIONTOOLSSHARED_EXPORT ItemListModel : public QStandardItemModel
 	{
-	}
+		Q_OBJECT
 
-	void ConsoleTableView::keyReleaseEvent(QKeyEvent *event)
-	{
-		if(event->matches(QKeySequence::Copy))
-		{
-			QStandardItemModel *standardItemModel = qobject_cast<QStandardItemModel *>(model());
-			if(standardItemModel)
-			{
-				QStandardItem *item = standardItemModel->item(currentIndex().row(), 0);
-				if(item && !item->text().isEmpty())
-					QApplication::clipboard()->setText(item->text());
-			}
-		}
-	}
+	public:
+		ItemListModel();
+
+		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
+	};
 }
+
+#endif // ITEMLISTMODEL_H

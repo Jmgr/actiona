@@ -235,6 +235,9 @@ namespace ActionTools
 		QPoint evaluatePoint(bool &ok,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
+		QStringList evaluateItemList(bool &ok,
+						   const QString &parameterName,
+						   const QString &subParameterName = "value");
 		QPolygon evaluatePolygon(bool &ok,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");

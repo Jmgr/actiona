@@ -18,32 +18,35 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "consoletableview.h"
+#ifndef ITEMLISTVIEW_H
+#define ITEMLISTVIEW_H
 
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <QApplication>
-#include <QKeyEvent>
-#include <QClipboard>
+#include "actiontools_global.h"
+
+#include <QListView>
 
 namespace ActionTools
 {
-	ConsoleTableView::ConsoleTableView(QWidget *parent)
-		: QTableView(parent)
+	class ACTIONTOOLSSHARED_EXPORT ItemListView : public QListView
 	{
-	}
+		Q_OBJECT
+	public:
+		explicit ItemListView(QWidget *parent = 0);
 
-	void ConsoleTableView::keyReleaseEvent(QKeyEvent *event)
-	{
-		if(event->matches(QKeySequence::Copy))
-		{
-			QStandardItemModel *standardItemModel = qobject_cast<QStandardItemModel *>(model());
-			if(standardItemModel)
-			{
-				QStandardItem *item = standardItemModel->item(currentIndex().row(), 0);
-				if(item && !item->text().isEmpty())
-					QApplication::clipboard()->setText(item->text());
-			}
-		}
-	}
+	protected:
+		virtual void keyPressEvent(QKeyEvent *event);
+		virtual void dragMoveEvent(QDragMoveEvent *event);
+		virtual void dragLeaveEvent(QDragLeaveEvent* event);
+		virtual void dropEvent(QDropEvent* event);
+		virtual void paintEvent(QPaintEvent* event);
+
+	signals:
+		void removeCurrentItem();
+		void moveCurrentItem(bool up);
+
+	private:
+		QRect mDropIndicator;
+	};
 }
+
+#endif // ITEMLISTVIEW_H

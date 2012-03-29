@@ -18,25 +18,48 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CONSOLETABLEVIEW_H
-#define CONSOLETABLEVIEW_H
+#ifndef MULTIDATAINPUTINSTANCE_H
+#define MULTIDATAINPUTINSTANCE_H
 
-#include "actiontools_global.h"
+#include "actioninstance.h"
 
-#include <QTableView>
+class QDialog;
 
-namespace ActionTools
+namespace Actions
 {
-	class ACTIONTOOLSSHARED_EXPORT ConsoleTableView : public QTableView
+	class MultiDataInputInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
+		Q_ENUMS(Mode)
 
 	public:
-		explicit ConsoleTableView(QWidget *parent = 0);
+		enum Mode
+		{
+			ComboBoxMode,
+			EditableComboBoxMode,
+			ListMode,
+			CheckboxMode,
+			RadioButtonMode
+		};
+
+		MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+
+		static ActionTools::StringListPair modes;
+
+		void startExecution();
+		void stopExecution();
+
+	private slots:
+		void accepted();
+		void rejected();
 
 	private:
-		void keyReleaseEvent(QKeyEvent *event);
+		void closeDialog();
+
+		QDialog *mDialog;
+
+		Q_DISABLE_COPY(MultiDataInputInstance)
 	};
 }
 
-#endif // CONSOLETABLEVIEW_H
+#endif // MULTIDATAINPUTINSTANCE_H

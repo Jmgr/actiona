@@ -281,6 +281,25 @@ namespace ActionTools
 		return point;
 	}
 
+	QStringList ActionInstance::evaluateItemList(bool &ok, const QString &parameterName, const QString &subParameterName)
+	{
+		if(!ok)
+			return QStringList();
+
+		const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+		QString result;
+
+		if(subParameter.isCode())
+			result = evaluateCode(ok, subParameter).toString();
+		else
+			result = evaluateText(ok, subParameter);
+
+		if(!ok)
+			return QStringList();
+
+		return result.split('\n', QString::SkipEmptyParts);
+	}
+
 	QPolygon ActionInstance::evaluatePolygon(bool &ok,
 					   const QString &parameterName,
 					   const QString &subParameterName)

@@ -14,7 +14,7 @@
    <string>Console</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../actionaz/actionaz.qrc">
+   <iconset resource="../gui/gui.qrc">
     <normaloff>:/icons/paste.png</normaloff>:/icons/paste.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -25,7 +25,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="ConsoleTableView" name="console">
+    <widget class="ActionTools::ConsoleTableView" name="console">
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
@@ -48,15 +48,6 @@
       <bool>true</bool>
      </attribute>
      <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="horizontalHeaderVisible">
       <bool>false</bool>
      </attribute>
     </widget>
@@ -92,13 +83,13 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ConsoleTableView</class>
+   <class>ActionTools::ConsoleTableView</class>
    <extends>QTableView</extends>
    <header>consoletableview.h</header>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../actionaz/actionaz.qrc"/>
+  <include location="../gui/gui.qrc"/>
  </resources>
  <connections/>
 </ui>

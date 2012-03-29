@@ -26,6 +26,7 @@
 #include "actions/datainputdefinition.h"
 #include "actions/windowconditiondefinition.h"
 #include "actions/windowdefinition.h"
+#include "actions/multidatainputdefinition.h"
 
 #include "code/messagebox.h"
 #include "code/inputdialog.h"
@@ -54,6 +55,7 @@ public:
 		addActionDefinition(new Actions::DataInputDefinition(this));
 		addActionDefinition(new Actions::WindowConditionDefinition(this));
 		addActionDefinition(new Actions::WindowDefinition(this));
+		addActionDefinition(new Actions::MultiDataInputDefinition(this));
 	}
 
 	QString id() const							{ return "windows"; }

@@ -1,0 +1,58 @@
+/*
+	Actionaz
+	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+
+	Actionaz is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Actionaz is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+	Contact : jmgr@jmgr.info
+*/
+
+#include "multitextparameterdefinition.h"
+#include "subparameter.h"
+#include "itemlistwidget.h"
+#include "actioninstance.h"
+
+namespace ActionTools
+{
+	MultiTextParameterDefinition::MultiTextParameterDefinition(const Name &name, QObject *parent)
+		: ParameterDefinition(name, parent),
+		mItemListWidget(0)
+	{
+	}
+
+	void MultiTextParameterDefinition::buildEditors(Script *script, QWidget *parent)
+	{
+		ParameterDefinition::buildEditors(script, parent);
+
+		mItemListWidget = new ItemListWidget(parent);
+
+		addEditor(mItemListWidget);
+	}
+
+	void MultiTextParameterDefinition::load(const ActionInstance *actionInstance)
+	{
+		QString textBuffer = actionInstance->subParameter(name().original(), "value").value().toString();
+
+		mItemListWidget->setItems(textBuffer.split('\n', QString::SkipEmptyParts));
+	}
+
+	void MultiTextParameterDefinition::save(ActionInstance *actionInstance)
+	{
+		QString textBuffer;
+		foreach(const QString &text, mItemListWidget->items())
+			textBuffer += QString("%1\n").arg(text);
+
+		actionInstance->setSubParameter(name().original(), "value", textBuffer);
+	}
+}

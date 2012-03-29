@@ -138,6 +138,7 @@ namespace Actions
 		{
 			mInputDialog->close();
 			mInputDialog->deleteLater();
+			mInputDialog = 0;
 		}
 	}
 

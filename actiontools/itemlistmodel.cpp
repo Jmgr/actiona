@@ -18,32 +18,22 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "consoletableview.h"
-
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <QApplication>
-#include <QKeyEvent>
-#include <QClipboard>
+#include "itemlistmodel.h"
 
 namespace ActionTools
 {
-	ConsoleTableView::ConsoleTableView(QWidget *parent)
-		: QTableView(parent)
+	ItemListModel::ItemListModel()
+		: QStandardItemModel(0, 1)
 	{
 	}
 
-	void ConsoleTableView::keyReleaseEvent(QKeyEvent *event)
+	Qt::ItemFlags ItemListModel::flags(const QModelIndex &index) const
 	{
-		if(event->matches(QKeySequence::Copy))
-		{
-			QStandardItemModel *standardItemModel = qobject_cast<QStandardItemModel *>(model());
-			if(standardItemModel)
-			{
-				QStandardItem *item = standardItemModel->item(currentIndex().row(), 0);
-				if(item && !item->text().isEmpty())
-					QApplication::clipboard()->setText(item->text());
-			}
-		}
+		Qt::ItemFlags flags = QStandardItemModel::flags(index);
+
+		if(index.isValid())
+			flags = flags & ~Qt::ItemIsDropEnabled;
+
+		return flags;
 	}
 }
