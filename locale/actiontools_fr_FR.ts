@@ -174,28 +174,28 @@
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="352"/>
-        <location filename="../actiontools/actioninstance.cpp" line="360"/>
+        <location filename="../actiontools/actioninstance.cpp" line="371"/>
+        <location filename="../actiontools/actioninstance.cpp" line="379"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="447"/>
+        <location filename="../actiontools/actioninstance.cpp" line="473"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="454"/>
+        <location filename="../actiontools/actioninstance.cpp" line="480"/>
         <source>[Null]</source>
         <translation>[Nul]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="456"/>
+        <location filename="../actiontools/actioninstance.cpp" line="482"/>
         <source>[Undefined]</source>
         <translation>[Indéfini]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="466"/>
+        <location filename="../actiontools/actioninstance.cpp" line="492"/>
         <source>[Raw data]</source>
         <translation>[Données brutes]</translation>
     </message>
@@ -419,27 +419,27 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::OpenCVAlgorithms</name>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="53"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="59"/>
         <source>FindSubImage is already running</source>
         <translation>Recherche via FindSubImage en cours</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="104"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="110"/>
         <source>Source image must be larger than target image</source>
         <translation>L&apos;image source doit être plus grande que l&apos;image cible</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="112"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="118"/>
         <source>Source image and target image must have same depth</source>
         <translation>L&apos;image source et l&apos;image cible doivent avoir la même profondeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="120"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="126"/>
         <source>Source image and target image must have same number of channels</source>
         <translation>L&apos;image source et l&apos;image cible doivent avoir le même nombre de canaux</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="288"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="294"/>
         <source>OpenCV exception: %1</source>
         <translation>Exception OpenCV : %1</translation>
     </message>
@@ -510,7 +510,7 @@ Double-cliquez pour afficher</translation>
     <name>Code::Color</name>
     <message>
         <location filename="../actiontools/code/color.cpp" line="41"/>
-        <location filename="../actiontools/code/color.cpp" line="208"/>
+        <location filename="../actiontools/code/color.cpp" line="228"/>
         <source>Invalid color name</source>
         <translation>Nom de couleur incorrect</translation>
     </message>
@@ -660,14 +660,14 @@ Double-cliquez pour afficher</translation>
     <message>
         <location filename="../actiontools/code/rect.cpp" line="43"/>
         <location filename="../actiontools/code/rect.cpp" line="78"/>
-        <location filename="../actiontools/code/rect.cpp" line="272"/>
+        <location filename="../actiontools/code/rect.cpp" line="312"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
     <message>
         <location filename="../actiontools/code/rect.cpp" line="53"/>
         <location filename="../actiontools/code/rect.cpp" line="87"/>
-        <location filename="../actiontools/code/rect.cpp" line="283"/>
+        <location filename="../actiontools/code/rect.cpp" line="323"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
@@ -791,7 +791,7 @@ Double-cliquez pour afficher</translation>
         <translation>Console</translation>
     </message>
     <message>
-        <location filename="../actiontools/consolewidget.ui" line="72"/>
+        <location filename="../actiontools/consolewidget.ui" line="63"/>
         <source>Clear</source>
         <translation>Vider</translation>
     </message>
@@ -825,6 +825,34 @@ Double-cliquez pour afficher</translation>
         <location filename="../actiontools/ifactionparameterdefinition.cpp" line="40"/>
         <source>Run code</source>
         <translation>Exécuter code</translation>
+    </message>
+</context>
+<context>
+    <name>ItemListWidget</name>
+    <message>
+        <location filename="../actiontools/itemlistwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Formulaire</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/itemlistwidget.ui" line="44"/>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/itemlistwidget.ui" line="51"/>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/itemlistwidget.ui" line="71"/>
+        <source>Move up</source>
+        <translation>Monter</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/itemlistwidget.ui" line="78"/>
+        <source>Move down</source>
+        <translation>Descendre</translation>
     </message>
 </context>
 <context>

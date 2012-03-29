@@ -20,7 +20,7 @@
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="53"/>
-        <location filename="../gui/aboutdialog.ui" line="275"/>
+        <location filename="../gui/aboutdialog.ui" line="280"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -34,8 +34,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="68"/>
-        <location filename="../gui/aboutdialog.ui" line="236"/>
-        <location filename="../gui/aboutdialog.ui" line="290"/>
+        <location filename="../gui/aboutdialog.ui" line="241"/>
+        <location filename="../gui/aboutdialog.ui" line="295"/>
         <source>Jonathan &quot;Jmgr&quot; Mercier-Ganady</source>
         <translation>Jonathan &quot;Jmgr&quot; Mercier-Ganady</translation>
     </message>
@@ -44,17 +44,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Aucun pour l&apos;instant !</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="157"/>
+        <location filename="../gui/aboutdialog.ui" line="162"/>
         <source>cyberia</source>
         <translation>cyberia</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="209"/>
+        <location filename="../gui/aboutdialog.ui" line="214"/>
         <source>Adrien &quot;Adri2000&quot; Cunin</source>
         <translation>Adrien &quot;Adri2000&quot; Cunin</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="221"/>
+        <location filename="../gui/aboutdialog.ui" line="226"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -67,7 +67,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Documentation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="241"/>
+        <location filename="../gui/aboutdialog.ui" line="246"/>
         <source>Yann Huriez</source>
         <translation>Yann Huriez</translation>
     </message>
@@ -76,18 +76,18 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Sébastien &quot;usx&quot; Crapoulet</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="359"/>
+        <location filename="../gui/aboutdialog.ui" line="364"/>
         <source>Jean-Christophe Champarnaud</source>
         <translation>Jean-Christophe Champarnaud</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="177"/>
+        <location filename="../gui/aboutdialog.ui" line="182"/>
         <source>djez</source>
         <translation>djez</translation>
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="80"/>
-        <location filename="../gui/aboutdialog.ui" line="302"/>
+        <location filename="../gui/aboutdialog.ui" line="307"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -105,8 +105,13 @@ p, li { white-space: pre-wrap; }
         <translation>inTenSe</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="110"/>
-        <location filename="../gui/aboutdialog.ui" line="329"/>
+        <location filename="../gui/aboutdialog.ui" line="103"/>
+        <source>David Zaccaria</source>
+        <translation>David Zaccaria</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutdialog.ui" line="115"/>
+        <location filename="../gui/aboutdialog.ui" line="334"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -123,8 +128,8 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Insérez votre nom ici ;)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="137"/>
-        <location filename="../gui/aboutdialog.ui" line="376"/>
+        <location filename="../gui/aboutdialog.ui" line="142"/>
+        <location filename="../gui/aboutdialog.ui" line="381"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -137,28 +142,28 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Idées / Bugs&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="162"/>
-        <location filename="../gui/aboutdialog.ui" line="246"/>
+        <location filename="../gui/aboutdialog.ui" line="167"/>
+        <location filename="../gui/aboutdialog.ui" line="251"/>
         <source>Fredy123</source>
         <translation>Fredy123</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="167"/>
+        <location filename="../gui/aboutdialog.ui" line="172"/>
         <source>Matthieu Hazon</source>
         <translation>Matthieu Hazon</translation>
     </message>
     <message utf8="true">
-        <location filename="../gui/aboutdialog.ui" line="172"/>
+        <location filename="../gui/aboutdialog.ui" line="177"/>
         <source>Loïc Vauvrecy</source>
         <translation>Loïc Vauvrecy</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="182"/>
+        <location filename="../gui/aboutdialog.ui" line="187"/>
         <source>Le lapin</source>
         <translation>Le lapin</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="194"/>
+        <location filename="../gui/aboutdialog.ui" line="199"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -179,157 +184,157 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Floche</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="125"/>
+        <location filename="../gui/aboutdialog.ui" line="130"/>
         <source>David-Yossef Messika</source>
         <translation>David-Yossef Messika</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="152"/>
+        <location filename="../gui/aboutdialog.ui" line="157"/>
         <source>Astalol</source>
         <translation>Astalol</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="251"/>
+        <location filename="../gui/aboutdialog.ui" line="256"/>
         <source>Floche</source>
         <translation>Floche</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="264"/>
+        <location filename="../gui/aboutdialog.ui" line="269"/>
         <source>Contributors for Actionaz 2</source>
         <translation>Contributeurs d&apos;Actionaz 2</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="317"/>
+        <location filename="../gui/aboutdialog.ui" line="322"/>
         <source>&quot;TDM&quot;</source>
         <translation>&quot;TDM&quot;</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="344"/>
+        <location filename="../gui/aboutdialog.ui" line="349"/>
         <source>G. Delbard (www.delbard.com)</source>
         <translation>G. Delbard (www.delbard.com)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="349"/>
+        <location filename="../gui/aboutdialog.ui" line="354"/>
         <source>Thierry Rougeron</source>
         <translation>Thierry Rougeron</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="354"/>
+        <location filename="../gui/aboutdialog.ui" line="359"/>
         <source>Jean-Jacques Clair</source>
         <translation>Jean-Jacques Clair</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="364"/>
+        <location filename="../gui/aboutdialog.ui" line="369"/>
         <source>Jean-Luc Forveille</source>
         <translation>Jean-Luc Forveille</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="391"/>
+        <location filename="../gui/aboutdialog.ui" line="396"/>
         <source>Philbarfly (philbarfly.free.fr)</source>
         <translation>Philbarfly (philbarfly.free.fr)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="396"/>
+        <location filename="../gui/aboutdialog.ui" line="401"/>
         <source>sogood</source>
         <translation>sogood</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="401"/>
+        <location filename="../gui/aboutdialog.ui" line="406"/>
         <source>mieu</source>
         <translation>mieu</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="406"/>
+        <location filename="../gui/aboutdialog.ui" line="411"/>
         <source>Cyr</source>
         <translation>Cyr</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="411"/>
+        <location filename="../gui/aboutdialog.ui" line="416"/>
         <source>fredagier</source>
         <translation>fredagier</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="416"/>
+        <location filename="../gui/aboutdialog.ui" line="421"/>
         <source>166</source>
         <translation>166</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="421"/>
+        <location filename="../gui/aboutdialog.ui" line="426"/>
         <source>Zeprog</source>
         <translation>Zeprog</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="426"/>
+        <location filename="../gui/aboutdialog.ui" line="431"/>
         <source>love_me</source>
         <translation>love_me</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="431"/>
+        <location filename="../gui/aboutdialog.ui" line="436"/>
         <source>gealf</source>
         <translation>gealf</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="436"/>
+        <location filename="../gui/aboutdialog.ui" line="441"/>
         <source>Ppouet</source>
         <translation>Ppouet</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="441"/>
+        <location filename="../gui/aboutdialog.ui" line="446"/>
         <source>JLC</source>
         <translation>JLC</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="446"/>
+        <location filename="../gui/aboutdialog.ui" line="451"/>
         <source>Kenzo</source>
         <translation>Kenzo</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="451"/>
+        <location filename="../gui/aboutdialog.ui" line="456"/>
         <source>autofill</source>
         <translation>autofill</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="456"/>
+        <location filename="../gui/aboutdialog.ui" line="461"/>
         <source>mat95</source>
         <translation>mat95</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="461"/>
+        <location filename="../gui/aboutdialog.ui" line="466"/>
         <source>ybu</source>
         <translation>ybu</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="466"/>
+        <location filename="../gui/aboutdialog.ui" line="471"/>
         <source>darl-goku4</source>
         <translation>darl-goku4</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="471"/>
+        <location filename="../gui/aboutdialog.ui" line="476"/>
         <source>Jerome</source>
         <translation>Jerome</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="476"/>
+        <location filename="../gui/aboutdialog.ui" line="481"/>
         <source>Thierry</source>
         <translation>Thierry</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="481"/>
+        <location filename="../gui/aboutdialog.ui" line="486"/>
         <source>jcanale</source>
         <translation>jcanale</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="486"/>
+        <location filename="../gui/aboutdialog.ui" line="491"/>
         <source>Falken</source>
         <translation>Falken</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="491"/>
+        <location filename="../gui/aboutdialog.ui" line="496"/>
         <source>el-belgounetos</source>
         <translation>el-belgounetos</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="511"/>
+        <location filename="../gui/aboutdialog.ui" line="516"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -344,7 +349,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:11pt;&quot;&gt;des actions tierces parties et plus !&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="544"/>
+        <location filename="../gui/aboutdialog.ui" line="549"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -472,48 +477,48 @@ p, li { white-space: pre-wrap; }
         <translation>Commun</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="211"/>
+        <location filename="../gui/actiondialog.cpp" line="210"/>
         <source>Exceptions</source>
         <translation>Exceptions</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="224"/>
+        <location filename="../gui/actiondialog.cpp" line="225"/>
         <source>By </source>
         <translation>Par </translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="241"/>
+        <location filename="../gui/actiondialog.cpp" line="242"/>
         <source>Version %1</source>
         <translation>Version %1</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="247"/>
+        <location filename="../gui/actiondialog.cpp" line="248"/>
         <source>Alpha</source>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="248"/>
+        <location filename="../gui/actiondialog.cpp" line="249"/>
         <source>Beta</source>
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="249"/>
+        <location filename="../gui/actiondialog.cpp" line="250"/>
         <source>Testing</source>
         <translation>En test</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="250"/>
+        <location filename="../gui/actiondialog.cpp" line="251"/>
         <source>Stable</source>
         <translation>Stable</translation>
     </message>
     <message>
         <location filename="../gui/actiondialog.cpp" line="186"/>
-        <location filename="../gui/actiondialog.cpp" line="505"/>
+        <location filename="../gui/actiondialog.cpp" line="506"/>
         <source>:</source>
         <translation> :</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="288"/>
+        <location filename="../gui/actiondialog.cpp" line="289"/>
         <source>&lt;i&gt;No parameters&lt;/i&gt;</source>
         <translation>&lt;i&gt;Pas de paramètres&lt;/i&gt;</translation>
     </message>

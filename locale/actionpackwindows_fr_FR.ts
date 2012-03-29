@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackWindows</name>
     <message>
-        <location filename="../actions/actionpackwindows/actionpackwindows.h" line="60"/>
+        <location filename="../actions/actionpackwindows/actionpackwindows.h" line="62"/>
         <source>Actions dealing with windows</source>
         <translation>Actions en rapport avec les fenêtres</translation>
     </message>
@@ -54,21 +54,31 @@
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="67"/>
+        <source>Window title</source>
+        <translation>Titre de la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="68"/>
+        <source>The title of the window</source>
+        <translation>Le titre de la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="71"/>
         <source>Window icon</source>
         <translation>Icône de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="68"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="72"/>
         <source>The window icon to use</source>
         <translation>L&apos;icône de fenêtre à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="70"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="74"/>
         <source>Select the icon to use</source>
         <translation>Sélectionnez l&apos;icône à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="71"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="75"/>
         <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
         <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
     </message>
@@ -76,100 +86,203 @@
 <context>
     <name>Actions::MessageBoxDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="51"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="52"/>
         <source>Message</source>
         <translation>Message</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="52"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="53"/>
         <source>The text to show</source>
         <translation>Le texte à afficher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="55"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="56"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="56"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="57"/>
         <source>The title to show</source>
         <translation>Le titre à afficher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="59"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="60"/>
         <source>Icon</source>
         <translation>Icône</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="60"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="61"/>
         <source>The icon to use</source>
         <translation>L&apos;icône à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="65"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="66"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="66"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="67"/>
         <source>The message box type</source>
         <translation>Le type de la boîte de dialogue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="71"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="72"/>
         <source>Custom icon</source>
         <translation>Icône personnalisée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="72"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="73"/>
         <source>The custom icon to use</source>
         <translation>L&apos;icône personnalisée à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="74"/>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="81"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="82"/>
         <source>Select the icon to use</source>
         <translation>Sélectionnez l&apos;icône à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="75"/>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="82"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="76"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="83"/>
         <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
         <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="78"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="79"/>
         <source>Window icon</source>
         <translation>Icône de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="79"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="80"/>
         <source>The window icon to use</source>
         <translation>L&apos;icône de fenêtre à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="86"/>
+        <source>Text mode</source>
+        <translation>Mode de texte</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="87"/>
+        <source>The message box text mode</source>
+        <translation>Le mode de texte de la boîte de dialogue</translation>
     </message>
     <message>
         <source>Yes-No action</source>
         <translation type="obsolete">Action Oui-Non</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="89"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="96"/>
         <source>If yes</source>
         <translation>Si oui</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="90"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="97"/>
         <source>What to do if the yes button is pressed</source>
         <translation>Ce qui doit être fait si le bouton Oui est pressé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="93"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="100"/>
         <source>If no</source>
         <translation>Si non</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="94"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="101"/>
         <source>What to do if the no button is pressed</source>
         <translation>Ce qui doit être fait si le bouton Non est pressé</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::MultiDataInputDefinition</name>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="52"/>
+        <source>Question</source>
+        <translation>Question</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="53"/>
+        <source>The question to ask</source>
+        <translation>La question à poser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="56"/>
+        <source>Mode</source>
+        <translation>Mode</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="57"/>
+        <source>The input mode</source>
+        <translation>Le mode d&apos;entrée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="62"/>
+        <source>Items</source>
+        <translation>Éléments</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="63"/>
+        <source>The item list</source>
+        <translation>La liste d&apos;éléments</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="66"/>
+        <source>Default value</source>
+        <translation>Valeur par défaut</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="67"/>
+        <source>The default value</source>
+        <translation>La valeur par défaut</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="70"/>
+        <source>Variable</source>
+        <translation>Variable</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="71"/>
+        <source>The variable where to save the entered input</source>
+        <translation>La variable où sauvegarder le ou les éléments choisis</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="74"/>
+        <source>Window title</source>
+        <translation>Titre de la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="75"/>
+        <source>The title of the window</source>
+        <translation>Le titre de la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="78"/>
+        <source>Window icon</source>
+        <translation>Icône de la fenêtre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="79"/>
+        <source>The window icon to use</source>
+        <translation>L&apos;icône de fenêtre à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="81"/>
+        <source>Select the icon to use</source>
+        <translation>Sélectionnez l&apos;icône à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="82"/>
+        <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
+        <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="91"/>
+        <source>Maximum choice count</source>
+        <translation>Nombre maximum de choix</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="92"/>
+        <source>The maximum number of choices that can be made</source>
+        <translation>Le nombre maximum d&apos;éléments à sélectionner</translation>
     </message>
 </context>
 <context>
@@ -403,18 +516,18 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>Code::BaseWindow</name>
     <message>
-        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="47"/>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="82"/>
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="63"/>
-        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="76"/>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="98"/>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="111"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="141"/>
+        <location filename="../actions/actionpackwindows/code/basewindow.cpp" line="176"/>
         <source>Invalid image</source>
         <translation>Image invalide</translation>
     </message>
@@ -492,14 +605,60 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
     </message>
 </context>
 <context>
+    <name>MessageBoxInstance::textmodes</name>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="50"/>
+        <source>Automatic</source>
+        <translation>Automatique</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="51"/>
+        <source>HTML</source>
+        <translation>HTML</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="52"/>
+        <source>Plain text</source>
+        <translation>Texte brut</translation>
+    </message>
+</context>
+<context>
+    <name>MultiDataInputInstance::modes</name>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="45"/>
+        <source>ComboBox</source>
+        <translation>Liste déroulante</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="46"/>
+        <source>Editable ComboBox</source>
+        <translation>Liste déroulante éditable</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="47"/>
+        <source>List</source>
+        <translation>Liste</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="48"/>
+        <source>CheckBox</source>
+        <translation>Cases à cocher</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="49"/>
+        <source>RadioButton</source>
+        <translation>Boutons radio</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="100"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="107"/>
         <source>Message Box</source>
         <translation>Boîte de dialogue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="103"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="110"/>
         <source>Shows a message box</source>
         <translation>Affiche une boîte de dialogue</translation>
     </message>
@@ -596,14 +755,24 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
         <translation type="obsolete">Redimensionner</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="79"/>
         <source>Data input</source>
         <translation>Entrée de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="78"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="82"/>
         <source>Ask the user to enter some data</source>
         <translation>Demande à l&apos;utilisateur d&apos;entrer une donnée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="100"/>
+        <source>Multi data input</source>
+        <translation>Liste de sélection</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="103"/>
+        <source>Ask the user to choose from a list</source>
+        <translation>Demande à l&apos;utilisateur de faire un choix parmi une liste</translation>
     </message>
 </context>
 <context>

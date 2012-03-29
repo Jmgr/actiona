@@ -809,24 +809,24 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Code::MediaPlaylist</name>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="150"/>
         <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="161"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="172"/>
         <source>Add media failed : %1</source>
         <translation>Impossible d&apos;ajouter le média : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="172"/>
         <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="183"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="194"/>
         <source>Insert media failed : %1</source>
         <translation>Impossible d&apos;insérer le média : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="194"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="205"/>
         <source>Clear failed : %1</source>
         <translation>Impossible de vider la liste de lecture : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="240"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="251"/>
         <source>Remove media failed : %1</source>
         <translation>Impossible de supprimer un média : %1</translation>
     </message>
