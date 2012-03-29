@@ -1,3 +1,9 @@
+3.3.0 (29/03/12)
+- Actions: added a window title to the DataInput action
+- Actions: added new action MultiDataInput
+- Actions: added a text mode to the Messagebox action
+- fixed a bug crashing the application when canceling the execution when the debugger is open and a MessageBox action is shown
+
 3.2.2 (29/01/12)
 - Code: fixed getter functions having the same name as properties
 - Packaging: removed compiler options to allow compilation on non-x86 platforms
