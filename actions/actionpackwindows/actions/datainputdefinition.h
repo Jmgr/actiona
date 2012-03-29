@@ -64,6 +64,10 @@ namespace Actions
 			variable->setTooltip(tr("The variable where to save the entered input"));
 			addElement(variable);
 
+			ActionTools::TextParameterDefinition *windowTitle = new ActionTools::TextParameterDefinition(ActionTools::Name("windowTitle", tr("Window title")), this);
+			windowTitle->setTooltip(tr("The title of the window"));
+			addElement(windowTitle, 1);
+
 			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
 			windowIcon->setTooltip(tr("The window icon to use"));
 			windowIcon->setMode(ActionTools::FileEdit::FileOpen);

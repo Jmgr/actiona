@@ -71,6 +71,10 @@ namespace Actions
 			variable->setTooltip(tr("The variable where to save the entered input"));
 			addElement(variable);
 
+			ActionTools::TextParameterDefinition *windowTitle = new ActionTools::TextParameterDefinition(ActionTools::Name("windowTitle", tr("Window title")), this);
+			windowTitle->setTooltip(tr("The title of the window"));
+			addElement(windowTitle, 1);
+
 			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
 			windowIcon->setTooltip(tr("The window icon to use"));
 			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
@@ -84,12 +88,6 @@ namespace Actions
 										 << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::ListMode)
 										 << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::CheckboxMode));
 
-			ActionTools::NumberParameterDefinition *minimumChoiceCount = new ActionTools::NumberParameterDefinition(ActionTools::Name("minimumChoiceCount", tr("Minimum choice count")), this);
-			minimumChoiceCount->setTooltip(tr("The minimum number of choices that can be made"));
-			minimumChoiceCount->setMinimum(0);
-			minimumChoiceCount->setDefaultValue(1);
-			choiceGroup->addMember(minimumChoiceCount);
-
 			ActionTools::NumberParameterDefinition *maximumChoiceCount = new ActionTools::NumberParameterDefinition(ActionTools::Name("maximumChoiceCount", tr("Maximum choice count")), this);
 			maximumChoiceCount->setTooltip(tr("The maximum number of choices that can be made"));
 			maximumChoiceCount->setMinimum(0);
@@ -97,16 +95,6 @@ namespace Actions
 			choiceGroup->addMember(maximumChoiceCount);
 
 			addElement(choiceGroup, 1);
-
-			ActionTools::GroupDefinition *regexpGroup = new ActionTools::GroupDefinition(this);
-			regexpGroup->setMasterList(mode);
-			regexpGroup->setMasterValues(QStringList() << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::EditableComboBoxMode));
-
-			ActionTools::TextParameterDefinition *inputRegexp = new ActionTools::TextParameterDefinition(ActionTools::Name("inputRegexp", tr("Input regexp")), this);
-			inputRegexp->setTooltip(tr("The regular expression used to validate the input"));
-			regexpGroup->addMember(inputRegexp);
-
-			addElement(regexpGroup, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Multi data input"); }

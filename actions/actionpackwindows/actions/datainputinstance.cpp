@@ -50,6 +50,7 @@ namespace Actions
 		QString question = evaluateString(ok, "question");
 		mDataType = evaluateListElement<DataType>(ok, dataTypes, "dataType");
 		mVariable = evaluateVariable(ok, "variable");
+		QString windowTitle = evaluateString(ok, "windowTitle");
 		QString windowIcon = evaluateString(ok, "windowIcon");
 
 		if(!ok)
@@ -84,6 +85,7 @@ namespace Actions
 
 		mInputDialog->setWindowModality(Qt::NonModal);
 		mInputDialog->setLabelText(question);
+		mInputDialog->setWindowTitle(windowTitle);
 
 		if(!windowIcon.isEmpty())
 		{

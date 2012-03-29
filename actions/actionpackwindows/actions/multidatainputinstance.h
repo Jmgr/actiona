@@ -24,6 +24,11 @@
 #include "actioninstance.h"
 
 class QDialog;
+class QGridLayout;
+class QAbstractButton;
+class QComboBox;
+class QListWidget;
+class QButtonGroup;
 
 namespace Actions
 {
@@ -52,11 +57,24 @@ namespace Actions
 	private slots:
 		void accepted();
 		void rejected();
+		void listItemSelectionChanged();
+		void checkboxChecked(QAbstractButton *checkbox);
 
 	private:
+		template<class T>
+		QGridLayout *createRadioButtonsOrCheckboxes(const QString &defaultValue, bool exclusive);
+		void saveSelectedRadioButtonOrCheckBox();
 		void closeDialog();
 
 		QDialog *mDialog;
+		Mode mMode;
+		QString mVariable;
+		QStringList mItems;
+		int mMinimumChoiceCount;
+		int mMaximumChoiceCount;
+		QComboBox *mComboBox;
+		QListWidget *mListWidget;
+		QButtonGroup *mButtonGroup;
 
 		Q_DISABLE_COPY(MultiDataInputInstance)
 	};

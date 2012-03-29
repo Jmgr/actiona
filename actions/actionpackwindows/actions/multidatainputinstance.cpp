@@ -35,6 +35,7 @@
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QButtonGroup>
+#include <QScriptEngine>
 
 namespace Actions
 {
@@ -49,9 +50,14 @@ namespace Actions
 
 	MultiDataInputInstance::MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
-		  mDialog(0)
+		  mDialog(0),
+		  mMode(ComboBoxMode),
+		  mMinimumChoiceCount(1),
+		  mMaximumChoiceCount(1),
+		  mComboBox(0),
+		  mListWidget(0),
+		  mButtonGroup(0)
 	{
-		//TODO: Add windowTitle to this and DataInput
 	}
 
 	void MultiDataInputInstance::startExecution()
@@ -59,129 +65,82 @@ namespace Actions
 		bool ok = true;
 
 		QString question = evaluateString(ok, "question");
-		Mode mode = evaluateListElement<Mode>(ok, modes, "mode");
-		QStringList items = evaluateItemList(ok, "items");
+		mMode = evaluateListElement<Mode>(ok, modes, "mode");
+		mItems = evaluateItemList(ok, "items");
 		QString defaultValue = evaluateString(ok, "defaultValue");
-		QString variable = evaluateVariable(ok, "variable");
+		mVariable = evaluateVariable(ok, "variable");
+		QString windowTitle = evaluateString(ok, "windowTitle");
 		QString windowIcon = evaluateString(ok, "windowIcon");
-		int minimumChoiceCount = evaluateInteger(ok, "minimumChoiceCount");
-		int maximumChoiceCount = evaluateInteger(ok, "maximumChoiceCount");
-		QString inputRegexp = evaluateString(ok, "inputRegexp");
+		mMaximumChoiceCount = evaluateInteger(ok, "maximumChoiceCount");
 
 		if(!ok)
 			return;
+
+		if(mDialog)
+			delete mDialog;
 
 		mDialog = new QDialog;
 		QVBoxLayout *layout = new QVBoxLayout(mDialog);
 
 		mDialog->setLayout(layout);
+		mDialog->setWindowTitle(windowTitle);
+
+		if(!windowIcon.isEmpty())
+		{
+			QPixmap windowIconPixmap;
+
+			if(windowIconPixmap.load(windowIcon))
+				mDialog->setWindowIcon(QIcon(windowIconPixmap));
+		}
 
 		QLabel *questionLabel = new QLabel(mDialog);
 		questionLabel->setText(question);
 		layout->addWidget(questionLabel);
 
-		switch(mode)
+		switch(mMode)
 		{
 		case ComboBoxMode:
 		case EditableComboBoxMode:
 			{
-				QComboBox *comboBox = new QComboBox(mDialog);
-				comboBox->addItems(items);
+				mComboBox = new QComboBox(mDialog);
+				mComboBox->addItems(mItems);
 
-				int currentItem = comboBox->findText(defaultValue);
+				int currentItem = mComboBox->findText(defaultValue);
 				if(currentItem == -1)
 					currentItem = 0;
-				comboBox->setCurrentIndex(currentItem);
+				mComboBox->setCurrentIndex(currentItem);
 
-				comboBox->setEditable(mode == EditableComboBoxMode);
+				mComboBox->setEditable(mMode == EditableComboBoxMode);
 
-				if(mode == EditableComboBoxMode)
-				{
-					QRegExp regExp(inputRegexp);
-					if(!regExp.isValid())
-					{
-						//TODO: Exception here
-					}
-
-					comboBox->lineEdit()->setValidator(new QRegExpValidator(regExp, comboBox));
-				}
-
-				layout->addWidget(comboBox);
+				layout->addWidget(mComboBox);
 			}
 			break;
 		case ListMode:
 			{
-				QListWidget *listWidget = new QListWidget(mDialog);
+				mListWidget = new QListWidget(mDialog);
 
-				listWidget->addItems(items);
+				if(mMaximumChoiceCount <= 1)
+					mListWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+				else
+					mListWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-				QList<QListWidgetItem *> defaultItem = listWidget->findItems(defaultValue, Qt::MatchExactly);
+				mListWidget->addItems(mItems);
+
+				QList<QListWidgetItem *> defaultItem = mListWidget->findItems(defaultValue, Qt::MatchExactly);
 				if(!defaultItem.isEmpty())
-					listWidget->setCurrentItem(defaultItem.first());
+					mListWidget->setCurrentItem(defaultItem.first());
 
-				layout->addWidget(listWidget);
+				layout->addWidget(mListWidget);
+
+				if(mMaximumChoiceCount > 1)
+					connect(mListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(listItemSelectionChanged()));
 			}
 			break;
 		case CheckboxMode:
-			{
-				QButtonGroup *buttonGroup = new QButtonGroup(mDialog);
-				buttonGroup->setExclusive(false);
-
-				int itemCount = items.size();
-				QGridLayout *gridLayout = new QGridLayout;
-
-				for(int i = 0, row = 0, col = 0; i < itemCount; ++i)
-				{
-					QString text = items.at(i);
-					QCheckBox *checkBox = new QCheckBox(text, mDialog);
-
-					if(defaultValue == text)
-						checkBox->setChecked(true);
-
-					gridLayout->addWidget(checkBox, row, col);
-					buttonGroup->addButton(checkBox);
-
-					if(col == 3)
-					{
-						col = 0;
-						++row;
-					}
-					else
-						++col;
-				}
-
-				layout->addLayout(gridLayout);
-			}
+			layout->addLayout(createRadioButtonsOrCheckboxes<QCheckBox>(defaultValue, mMaximumChoiceCount <= 1));
 			break;
 		case RadioButtonMode:
-			{
-				QButtonGroup *buttonGroup = new QButtonGroup(mDialog);
-
-				int itemCount = items.size();
-				QGridLayout *gridLayout = new QGridLayout;
-
-				for(int i = 0, row = 0, col = 0; i < itemCount; ++i)
-				{
-					QString text = items.at(i);
-					QRadioButton *radioButton = new QRadioButton(text, mDialog);
-
-					if(defaultValue == text)
-						radioButton->setChecked(true);
-
-					gridLayout->addWidget(radioButton, row, col);
-					buttonGroup->addButton(radioButton);
-
-					if(col == 3)
-					{
-						col = 0;
-						++row;
-					}
-					else
-						++col;
-				}
-
-				layout->addLayout(gridLayout);
-			}
+			layout->addLayout(createRadioButtonsOrCheckboxes<QRadioButton>(defaultValue, true));
 			break;
 		}
 
@@ -203,7 +162,61 @@ namespace Actions
 
 	void MultiDataInputInstance::accepted()
 	{
-		//TODO: Save selection here
+		switch(mMode)
+		{
+		case ComboBoxMode:
+		case EditableComboBoxMode:
+			setVariable(mVariable, mComboBox->currentText());
+			break;
+		case ListMode:
+			{
+				QList<QListWidgetItem *> selectedItems = mListWidget->selectedItems();
+
+				if(mMaximumChoiceCount <= 1)
+				{
+					if(selectedItems.isEmpty())
+						setVariableFromScriptValue(mVariable, scriptEngine()->nullValue());
+					else
+						setVariable(mVariable, selectedItems.first()->text());
+				}
+				else
+				{
+					QScriptValue back = scriptEngine()->newArray(selectedItems.size());
+
+					for(int index = 0; index < selectedItems.size(); ++index)
+						back.setProperty(index, selectedItems.at(index)->text());
+
+					setVariableFromScriptValue(mVariable, back);
+				}
+			}
+			break;
+		case CheckboxMode:
+			if(mMaximumChoiceCount <= 1)
+				saveSelectedRadioButtonOrCheckBox();
+			else
+			{
+				QStringList selectedButtons;
+
+				foreach(QAbstractButton *button, mButtonGroup->buttons())
+				{
+					if(button->isChecked())
+						selectedButtons.append(button->text());
+				}
+
+				QScriptValue back = scriptEngine()->newArray(selectedButtons.size());
+
+				for(int index = 0; index < selectedButtons.size(); ++index)
+					back.setProperty(index, selectedButtons.at(index));
+
+				setVariableFromScriptValue(mVariable, back);
+			}
+			break;
+		case RadioButtonMode:
+			{
+				saveSelectedRadioButtonOrCheckBox();
+			}
+			break;
+		}
 
 		closeDialog();
 
@@ -215,6 +228,76 @@ namespace Actions
 		closeDialog();
 
 		emit executionEnded();
+	}
+
+	void MultiDataInputInstance::listItemSelectionChanged()
+	{
+		if(mMaximumChoiceCount <= 1)
+			return;
+
+		QList<QListWidgetItem *> selectedItems = mListWidget->selectedItems();
+		int itemsToDeselect = selectedItems.size() - mMaximumChoiceCount;
+
+		for(int itemIndex = 0; itemIndex < selectedItems.size() && itemsToDeselect > 0; ++itemIndex, --itemsToDeselect)
+			selectedItems.at(itemIndex)->setSelected(false);
+	}
+
+	void MultiDataInputInstance::checkboxChecked(QAbstractButton *checkbox)
+	{
+		int checkedButtonCount = 0;
+
+		foreach(QAbstractButton *button, mButtonGroup->buttons())
+		{
+			if(button->isChecked())
+				++checkedButtonCount;
+		}
+
+		if(checkedButtonCount > mMaximumChoiceCount)
+			checkbox->setChecked(false);
+	}
+
+	template<class T>
+	QGridLayout *MultiDataInputInstance::createRadioButtonsOrCheckboxes(const QString &defaultValue, bool exclusive)
+	{
+		mButtonGroup = new QButtonGroup(mDialog);
+		mButtonGroup->setExclusive(exclusive);
+
+		if(!exclusive && mMaximumChoiceCount > 1)
+			connect(mButtonGroup, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(checkboxChecked(QAbstractButton*)));
+
+		int itemCount = mItems.size();
+		QGridLayout *gridLayout = new QGridLayout;
+
+		for(int i = 0, row = 0, col = 0; i < itemCount; ++i)
+		{
+			QString text = mItems.at(i);
+			T *itemWidget = new T(text, mDialog);
+
+			if(defaultValue == text)
+				itemWidget->setChecked(true);
+
+			gridLayout->addWidget(itemWidget, row, col);
+			mButtonGroup->addButton(itemWidget);
+
+			if(col == 3)
+			{
+				col = 0;
+				++row;
+			}
+			else
+				++col;
+		}
+
+		return gridLayout;
+	}
+
+	void MultiDataInputInstance::saveSelectedRadioButtonOrCheckBox()
+	{
+		QAbstractButton *checkedButton = mButtonGroup->checkedButton();
+		if(checkedButton)
+			setVariable(mVariable, checkedButton->text());
+		else
+			setVariableFromScriptValue(mVariable, scriptEngine()->nullValue());
 	}
 
 	void MultiDataInputInstance::closeDialog()
