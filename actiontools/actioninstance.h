@@ -48,7 +48,8 @@ namespace ActionTools
 	class ActionInstanceData : public QSharedData
 	{
 	public:
-		ActionInstanceData() : definition(0), enabled(true), selected(false), pauseBefore(0), pauseAfter(0), timeout(0), script(0), scriptEngine(0)		{}
+		ActionInstanceData() : definition(0), enabled(true), selected(false), pauseBefore(0), pauseAfter(0), timeout(0), script(0), scriptEngine(0), scriptLine(0)
+			{}
 		ActionInstanceData(const ActionInstanceData &other)
 			: QSharedData(other),
 			parametersData(other.parametersData),
@@ -63,7 +64,9 @@ namespace ActionTools
 			pauseAfter(other.pauseAfter),
 			timeout(other.timeout),
 			script(other.script),
-			scriptEngine(other.scriptEngine)																										{}
+			scriptEngine(other.scriptEngine),
+			scriptLine(other.scriptLine)
+			{}
 
 		bool operator==(const ActionInstanceData &other) const;
 		
@@ -80,6 +83,7 @@ namespace ActionTools
 		int timeout;
 		Script *script;
 		QScriptEngine *scriptEngine;
+		int scriptLine;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
@@ -141,7 +145,12 @@ namespace ActionTools
 		virtual void pauseExecution()										{}//This is called when the action should pause its execution
 		virtual void resumeExecution()										{}//This is called when the action should resume its execution
 
-		void setupExecution(QScriptEngine *scriptEngine, Script *script)	{ d->scriptEngine = scriptEngine; d->script = script; }
+		void setupExecution(QScriptEngine *scriptEngine, Script *script, int scriptLine)
+		{
+			d->scriptEngine = scriptEngine;
+			d->script = script;
+			d->scriptLine = scriptLine;
+		}
 
 		void copyActionDataFrom(const ActionInstance &other);
 
@@ -159,6 +168,8 @@ namespace ActionTools
 
 	protected:
 		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }
+		Script *script() const												{ return d->script; }
+		int scriptLine() const												{ return d->scriptLine; }
 
 		/** Parameter management **/
 		QVariant evaluateVariant(bool &ok,

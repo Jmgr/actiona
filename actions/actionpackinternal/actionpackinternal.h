@@ -33,6 +33,9 @@
 #include "actions/exitdefinition.h"
 #include "actions/variableconditiondefinition.h"
 #include "actions/consoledefinition.h"
+#include "actions/beginproceduredefinition.h"
+#include "actions/callproceduredefinition.h"
+#include "actions/endproceduredefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -62,6 +65,9 @@ public:
 		addActionDefinition(new Actions::ExitDefinition(this));
 		addActionDefinition(new Actions::VariableConditionDefinition(this));
 		addActionDefinition(new Actions::ConsoleDefinition(this));
+		addActionDefinition(new Actions::BeginProcedureDefinition(this));
+		addActionDefinition(new Actions::CallProcedureDefinition(this));
+		addActionDefinition(new Actions::EndProcedureDefinition(this));
 	}
 
 	QString id() const								{ return "internal"; }

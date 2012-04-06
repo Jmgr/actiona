@@ -43,7 +43,7 @@ namespace Actions
 		{
 			ActionTools::TextParameterDefinition *code = new ActionTools::TextParameterDefinition(ActionTools::Name("code", tr("Code")), this);
 			code->setTooltip(tr("The code to evaluate"));
-			code->setCodeOnly(true);
+			code->setTextCodeMode(ActionTools::TextParameterDefinition::CodeOnly);
 			addElement(code);
 		}
 

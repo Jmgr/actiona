@@ -264,7 +264,7 @@ namespace LibExecuter
 		{
 			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
 			actionInstance->reset();
-			actionInstance->setupExecution(mScriptEngine, mScript);
+			actionInstance->setupExecution(mScriptEngine, mScript, actionIndex);
 			mActionEnabled.append(true);
 
 			if(canExecuteAction(actionIndex) == CanExecute)

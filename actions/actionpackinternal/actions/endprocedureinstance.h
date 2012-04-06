@@ -18,39 +18,29 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONDEFINITIONENUMS_H
-#define ACTIONDEFINITIONENUMS_H
+#ifndef ENDPROCEDUREINSTANCE_H
+#define ENDPROCEDUREINSTANCE_H
 
-namespace ActionTools
+#include "actioninstance.h"
+
+namespace Actions
 {
-	typedef int Flag;
+	class EndProcedureInstance : public ActionTools::ActionInstance
+	{
+		Q_OBJECT
 
-	enum ActionStatus
-	{
-		Alpha,
-		Beta,
-		Testing,
-		Stable
-	};
-	enum ActionCategory
-	{
-		None = -1,
-		Windows,
-		Device,
-		System,
-		Internal,
-		Data,
-		Procedures,
+	public:
+		EndProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)										{}
 
-		CategoryCount
-	};
-	enum ActionFlags
-	{
-		WorksOnWindows =    1 << 1,
-		WorksOnGnuLinux =	1 << 2,
-		WorksOnMac =	    1 << 3,
-		Official =			1 << 4
+		void startExecution()
+		{
+			emit executionEnded();
+		}
+
+	private:
+		Q_DISABLE_COPY(EndProcedureInstance)
 	};
 }
 
-#endif // ACTIONDEFINITIONENUMS_H
+#endif // ENDPROCEDUREINSTANCE_H

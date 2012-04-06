@@ -27,6 +27,8 @@
 
 #include <QVariant>
 #include <QStringList>
+#include <QHash>
+#include <QString>
 
 class QIODevice;
 

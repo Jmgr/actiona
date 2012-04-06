@@ -64,7 +64,8 @@ namespace ActionTools
 		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Device"),
 		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "System"),
 		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Internal"),
-		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Data")
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Data"),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Procedures")
 	};
 
 	QStringList ActionDefinition::StandardTabs = QStringList() << QT_TRANSLATE_NOOP("ActionTabs", "Standard") << QT_TRANSLATE_NOOP("ActionTabs", "Advanced");

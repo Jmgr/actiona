@@ -23,4 +23,10 @@ HEADERS += actions/stopdefinition.h \
 	actions/noopdefinition.h \
 	actions/noopinstance.h \
     actions/consoledefinition.h \
-    actions/consoleinstance.h
+    actions/consoleinstance.h \
+    actions/beginprocedureinstance.h \
+    actions/beginproceduredefinition.h \
+    actions/endprocedureinstance.h \
+    actions/endproceduredefinition.h \
+    actions/callprocedureinstance.h \
+    actions/callproceduredefinition.h

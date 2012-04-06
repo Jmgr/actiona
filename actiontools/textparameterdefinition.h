@@ -33,6 +33,13 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
+		enum TextCodeMode
+		{
+			TextOnly,
+			CodeOnly,
+			TextAndCode
+		};
+
 		TextParameterDefinition(const Name &name, QObject *parent);
 		virtual ~TextParameterDefinition()			{}
 
@@ -40,10 +47,10 @@ namespace ActionTools
 		void load(const ActionInstance *actionInstance);
 		void save(ActionInstance *actionInstance);
 
-		void setCodeOnly(bool codeOnly)										{ mCodeOnly = codeOnly; }
+		void setTextCodeMode(TextCodeMode textCodeMode)							{ mTextCodeMode = textCodeMode; }
 		
 	protected:
-		bool mCodeOnly;
+		TextCodeMode mTextCodeMode;
 		CodeLineEdit *mLineEdit;
 
 	private:

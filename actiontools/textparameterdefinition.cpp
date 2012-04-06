@@ -29,7 +29,7 @@ namespace ActionTools
 {
 	TextParameterDefinition::TextParameterDefinition(const Name &name, QObject *parent)
 		: ParameterDefinition(name, parent),
-		mCodeOnly(false),
+		mTextCodeMode(TextAndCode),
 		mLineEdit(0)
 	{
 	}
@@ -40,11 +40,20 @@ namespace ActionTools
 
 		mLineEdit = new CodeLineEdit(parent);
 
-		if(mCodeOnly)
+		switch(mTextCodeMode)
 		{
+		case TextOnly:
+			mLineEdit->setCode(false);
+			mLineEdit->setAllowTextCodeChange(false);
+			mLineEdit->update();
+			break;
+		case CodeOnly:
 			mLineEdit->setCode(true);
 			mLineEdit->setAllowTextCodeChange(false);
 			mLineEdit->update();
+			break;
+		default:
+			break;
 		}
 
 		addEditor(mLineEdit);
