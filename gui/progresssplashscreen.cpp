@@ -76,10 +76,7 @@ void ProgressSplashScreen::fadeOut()
 	if(isCompositingManagerRunning)
 		mOpacityTimer->start(25);
 	else
-	{
 		close();
-		deleteLater();
-	}
 }
 
 void ProgressSplashScreen::drawContents(QPainter *painter)
@@ -105,7 +102,6 @@ void ProgressSplashScreen::opacityCloseUpdate()
 	{
 		mOpacityTimer->stop();
 		close();
-		deleteLater();
 	}
 }
 

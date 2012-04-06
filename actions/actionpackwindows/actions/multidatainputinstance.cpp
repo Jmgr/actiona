@@ -305,7 +305,6 @@ namespace Actions
 		if(mDialog)
 		{
 			mDialog->close();
-			mDialog->deleteLater();
 			mDialog = 0;
 		}
 	}

@@ -139,7 +139,6 @@ namespace Actions
 		if(mInputDialog)
 		{
 			mInputDialog->close();
-			mInputDialog->deleteLater();
 			mInputDialog = 0;
 		}
 	}
@@ -149,7 +148,7 @@ namespace Actions
 		setVariable(mVariable, value);
 
 		mInputDialog->disconnect();
-		mInputDialog->deleteLater();
+		mInputDialog->close();
 
 		emit executionEnded();
 	}
@@ -159,7 +158,7 @@ namespace Actions
 		setVariable(mVariable, value);
 
 		mInputDialog->disconnect();
-		mInputDialog->deleteLater();
+		mInputDialog->close();
 
 		emit executionEnded();
 	}
@@ -169,7 +168,7 @@ namespace Actions
 		setVariable(mVariable, value);
 
 		mInputDialog->disconnect();
-		mInputDialog->deleteLater();
+		mInputDialog->close();
 
 		emit executionEnded();
 	}

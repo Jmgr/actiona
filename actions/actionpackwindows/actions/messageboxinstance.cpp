@@ -191,8 +191,6 @@ namespace Actions
 		if(mMessageBox)
 		{
 			mMessageBox->close();
-			mMessageBox->deleteLater();
-
 			mMessageBox = 0;
 		}
 	}
