@@ -65,21 +65,29 @@ namespace Actions
 			ifFalse->setAllowWait(true);
 			addElement(ifFalse);
 
+			ActionTools::VariableParameterDefinition *position = new ActionTools::VariableParameterDefinition(ActionTools::Name("position", tr("Position")), this);
+			position->setTooltip(tr("The position of the found window"));
+			addElement(position, 1);
+
+			ActionTools::VariableParameterDefinition *size = new ActionTools::VariableParameterDefinition(ActionTools::Name("size", tr("Size")), this);
+			size->setTooltip(tr("The size of the found window"));
+			addElement(size, 1);
+
 			ActionTools::VariableParameterDefinition *xCoordinate = new ActionTools::VariableParameterDefinition(ActionTools::Name("xCoordinate", tr("X-coordinate")), this);
 			xCoordinate->setTooltip(tr("The x-coordinate of the found window"));
-			addElement(xCoordinate, 1);
+			addElement(xCoordinate, 2);
 
 			ActionTools::VariableParameterDefinition *yCoordinate = new ActionTools::VariableParameterDefinition(ActionTools::Name("yCoordinate", tr("Y-coordinate")), this);
 			yCoordinate->setTooltip(tr("The y-coordinate of the found window"));
-			addElement(yCoordinate, 1);
+			addElement(yCoordinate, 2);
 
 			ActionTools::VariableParameterDefinition *width = new ActionTools::VariableParameterDefinition(ActionTools::Name("width", tr("Width")), this);
 			width->setTooltip(tr("The width of the found window"));
-			addElement(width, 1);
+			addElement(width, 2);
 
 			ActionTools::VariableParameterDefinition *height = new ActionTools::VariableParameterDefinition(ActionTools::Name("height", tr("Height")), this);
 			height->setTooltip(tr("The height of the found window"));
-			addElement(height, 1);
+			addElement(height, 2);
 
 			ActionTools::VariableParameterDefinition *processId = new ActionTools::VariableParameterDefinition(ActionTools::Name("processId", tr("Process id")), this);
 			processId->setTooltip(tr("The process id of the found window"));
@@ -93,7 +101,7 @@ namespace Actions
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WindowConditionInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
 		QPixmap icon() const													{ return QPixmap(":/icons/windowcondition.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs + QStringList() << tr("Deprecated"); }
 
 	private:
 		Q_DISABLE_COPY(WindowConditionDefinition)

@@ -58,6 +58,8 @@ namespace Actions
 		QRegExp mTitleRegExp;
 		ActionTools::IfActionValue mIfTrue;
 		Condition mCondition;
+		QString mPosition;
+		QString mSize;
 		QString mXCoordinate;
 		QString mYCoordinate;
 		QString mWidth;

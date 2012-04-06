@@ -19,6 +19,8 @@
 */
 
 #include "windowconditioninstance.h"
+#include "code/point.h"
+#include "code/size.h"
 
 #include <QRegExp>
 
@@ -43,6 +45,8 @@ namespace Actions
 		mCondition = evaluateListElement<Condition>(ok, conditions, "condition");
 		mIfTrue = evaluateIfAction(ok, "ifTrue");
 		ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, "ifFalse");
+		mPosition = evaluateVariable(ok, "position");
+		mSize = evaluateVariable(ok, "size");
 		mXCoordinate = evaluateVariable(ok, "xCoordinate");
 		mYCoordinate = evaluateVariable(ok, "yCoordinate");
 		mWidth = evaluateVariable(ok, "width");
@@ -124,6 +128,8 @@ namespace Actions
 		{
 			QRect windowRect = foundWindow.rect();
 
+			setVariableFromScriptValue(mPosition, Code::Point::constructor(windowRect.topLeft(), scriptEngine()));
+			setVariableFromScriptValue(mSize, Code::Size::constructor(windowRect.size(), scriptEngine()));
 			setVariable(mXCoordinate, windowRect.x());
 			setVariable(mYCoordinate, windowRect.y());
 			setVariable(mWidth, windowRect.width());
