@@ -1573,8 +1573,9 @@ void MainWindow::scriptExecutionStopped()
 			mSystemTrayIcon->setToolTip(tr("Actionaz - ready"));
 
 		ui->actionExecute->setEnabled(true);
-		ui->actionExecute_selection->setEnabled(false);
 		mStopExecutionAction->setEnabled(false);
+
+		actionSelectionChanged();
 	}
 }
 
