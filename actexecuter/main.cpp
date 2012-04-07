@@ -47,10 +47,50 @@
 #include "keysymhelper.h"
 #endif
 
+#ifdef Q_WS_WIN
+#include <Windows.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <io.h>
+#include <iostream>
+#include <fstream>
+#endif
+
 static void cleanup()
 {
 	ActionTools::GlobalShortcutManager::clear();
 }
+
+#ifdef Q_WS_WIN
+static void pause()
+{
+	system("pause");
+}
+
+static void createConsole()
+{
+	AllocConsole();
+
+	HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	int conHandle = _open_osfhandle(reinterpret_cast<intptr_t>(stdHandle), _O_TEXT);
+
+	*stdout = *_fdopen(conHandle, "w");
+	setvbuf(stdout, NULL, _IONBF, 0);
+
+	stdHandle = GetStdHandle(STD_INPUT_HANDLE);
+	conHandle = _open_osfhandle(reinterpret_cast<intptr_t>(stdHandle), _O_TEXT);
+
+	*stdin = *_fdopen(conHandle, "r");
+	setvbuf(stdin, NULL, _IONBF, 0);
+
+	stdHandle = GetStdHandle(STD_ERROR_HANDLE);
+	conHandle = _open_osfhandle(reinterpret_cast<intptr_t>(stdHandle), _O_TEXT);
+
+	*stderr = *_fdopen(conHandle, "w");
+	setvbuf(stderr, NULL, _IONBF, 0);
+}
+
+#endif
 
 int main(int argc, char **argv)
 {
@@ -91,11 +131,25 @@ int main(int argc, char **argv)
 	options.add("proxy-port", QObject::tr("sets the custom proxy port"));
 	options.add("proxy-user", QObject::tr("sets the custom proxy user"));
 	options.add("proxy-password", QObject::tr("sets the custom proxy password"));
+#ifdef Q_WS_WIN
+	options.add("console", QObject::tr("create a console to see debug output"));
+	options.add("pause-at-end", QObject::tr("wait for user input at the end of the execution, used only with --console"));
+#endif
 	options.add("version", QObject::tr("show the program version"));
 	options.alias("version", "v");
 	options.add("help", QObject::tr("show this help text"));
 	options.alias("help", "h");
 	options.parse(arguments);
+
+#ifdef Q_WS_WIN
+	if(options.count("console"))
+	{
+		createConsole();
+
+		if(options.count("pause-at-end"))
+			qAddPostRoutine(pause);
+	}
+#endif
 
 	if(options.count("portable"))
 	{
