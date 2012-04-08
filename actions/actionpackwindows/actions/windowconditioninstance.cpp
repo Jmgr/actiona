@@ -65,6 +65,11 @@ namespace Actions
 
 			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
 				setNextLine(line);
+			else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+			{
+				if(!callProcedure(line))
+					return;
+			}
 
 			emit executionEnded();
 		}
@@ -78,6 +83,13 @@ namespace Actions
 			if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
 			{
 				setNextLine(line);
+
+				emit executionEnded();
+			}
+			else if(ifFalse.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+			{
+				if(!callProcedure(line))
+					return;
 
 				emit executionEnded();
 			}
@@ -111,6 +123,11 @@ namespace Actions
 
 			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
 				setNextLine(line);
+			else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+			{
+				if(!callProcedure(line))
+					return;
+			}
 
 			mTimer.stop();
 			emit executionEnded();

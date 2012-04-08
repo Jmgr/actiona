@@ -55,7 +55,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Declares a new procedure"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new BeginProcedureInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Procedures; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/noop.png"); }
+		QPixmap icon() const													{ return QPixmap(":/actions/icons/beginprocedure.png"); }
 
 	private:
 		Q_DISABLE_COPY(BeginProcedureDefinition)

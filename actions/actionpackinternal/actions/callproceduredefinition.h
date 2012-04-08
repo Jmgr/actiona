@@ -23,7 +23,7 @@
 
 #include "actiondefinition.h"
 #include "callprocedureinstance.h"
-#include "textparameterdefinition.h"
+#include "procedureparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -41,8 +41,7 @@ namespace Actions
 		explicit CallProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			//TODO: Make a new parameter definition with a combobox of procedure names
-			ActionTools::TextParameterDefinition *name = new ActionTools::TextParameterDefinition(ActionTools::Name("name", tr("Name")), this);
+			ActionTools::ProcedureParameterDefinition *name = new ActionTools::ProcedureParameterDefinition(ActionTools::Name("name", tr("Name")), this);
 			name->setTooltip(tr("The name of the procedure to call"));
 			addElement(name);
 		}
@@ -53,7 +52,7 @@ namespace Actions
 		QString description() const												{ return QObject::tr("Calls a procedure"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CallProcedureInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Procedures; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/noop.png"); }
+		QPixmap icon() const													{ return QPixmap(":/actions/icons/callprocedure.png"); }
 
 	private:
 		Q_DISABLE_COPY(CallProcedureDefinition)

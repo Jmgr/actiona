@@ -11,5 +11,8 @@
         <file>icons/variable.png</file>
         <file>icons/variablecondition.png</file>
         <file>icons/console.png</file>
+        <file>icons/beginprocedure.png</file>
+        <file>icons/callprocedure.png</file>
+        <file>icons/endprocedure.png</file>
     </qresource>
 </RCC>

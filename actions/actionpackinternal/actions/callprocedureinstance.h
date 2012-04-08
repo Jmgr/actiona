@@ -44,34 +44,8 @@ namespace Actions
 			if(!ok)
 				return;
 
-			//Search for the corresponding ActionBeginProcedure action
-			int startLine = -1;
-
-			for(int line = 0; line < script()->actionCount(); ++line)
-			{
-				ActionTools::ActionInstance *action = script()->actionAt(line);
-
-				if(action->definition()->id() == "ActionBeginProcedure")
-				{
-					const ActionTools::SubParameter &subParameter = action->subParameter("name", "value");
-
-					if(subParameter.value().toString() == name)
-					{
-						startLine = line;
-
-						break;
-					}
-				}
-			}
-
-			if(startLine == -1)
-			{
-				emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to find any procedure named \"%1\"").arg(name));
-
+			if(!callProcedure(name))
 				return;
-			}
-			else
-				setNextLine(QString::number(startLine+2));
 
 			emit executionEnded();
 		}

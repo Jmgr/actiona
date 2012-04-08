@@ -17,7 +17,8 @@ SOURCES += parameterdefinition.cpp \
 	colorpositionparameterdefinition.cpp \
 	pointlistparameterdefinition.cpp \
 	booleanparameterdefinition.cpp \
-	multitextparameterdefinition.cpp
+	multitextparameterdefinition.cpp \
+	procedureparameterdefinition.cpp
 HEADERS += parameterdefinition.h \
     elementdefinition.h \
     groupdefinition.h \
@@ -37,4 +38,5 @@ HEADERS += parameterdefinition.h \
 	colorpositionparameterdefinition.h \
 	pointlistparameterdefinition.h \
 	booleanparameterdefinition.h \
-	multitextparameterdefinition.h
+	multitextparameterdefinition.h \
+	procedureparameterdefinition.h

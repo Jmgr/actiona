@@ -23,7 +23,6 @@
 
 #include "actioninstance.h"
 #include "actiondefinition.h"
-#include "script.h"
 
 namespace Actions
 {
@@ -42,29 +41,7 @@ namespace Actions
 
 		void startExecution()
 		{
-			//Search for the next ActionEndProcedure action
-			int endLine = -1;
-
-			for(int line = scriptLine() + 1; line < script()->actionCount(); ++line)
-			{
-				ActionTools::ActionInstance *action = script()->actionAt(line);
-
-				if(action->definition()->id() == "ActionEndProcedure")
-				{
-					endLine = line;
-
-					break;
-				}
-			}
-
-			if(endLine == -1)
-			{
-				emit executionException(BeginProcedureInstance::CannotFindEndProcedureActionException, tr("Unable to find any End Procedure action"));
-
-				return;
-			}
-			else
-				setNextLine(QString::number(endLine + 1));
+			setNextLine(runtimeParameter("procedureEndLine").toInt() + 2);//Lines start at 1
 
 			emit executionEnded();
 		}

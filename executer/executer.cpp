@@ -259,16 +259,77 @@ namespace LibExecuter
 		mExecutionPaused = false;
 
 		bool initSucceeded = true;
+		int lastBeginProcedure = -1;
+
+		mScript->clearProcedures();
+		mScript->clearCallStack();
 
 		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
 		{
 			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
 			actionInstance->reset();
+			actionInstance->clearRuntimeParameters();
 			actionInstance->setupExecution(mScriptEngine, mScript, actionIndex);
 			mActionEnabled.append(true);
 
 			if(canExecuteAction(actionIndex) == CanExecute)
+			{
 				++mActiveActionsCount;
+
+				if(actionInstance->definition()->id() == "ActionBeginProcedure")
+				{
+					if(lastBeginProcedure != -1)
+					{
+						mConsoleWidget->addActionLine(tr("Invalid Begin procedure action, you have to end the previous procedure before starting another one"), actionIndex, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+
+						return false;
+					}
+
+					lastBeginProcedure = actionIndex;
+
+					const ActionTools::SubParameter &nameParameter = actionInstance->subParameter("name", "value");
+					const QString &procedureName = nameParameter.value().toString();
+
+					if(procedureName.isEmpty())
+					{
+						mConsoleWidget->addActionLine(tr("A procedure name cannot be empty"), actionIndex, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+
+						return false;
+					}
+
+					if(mScript->findProcedure(procedureName) != -1)
+					{
+						mConsoleWidget->addActionLine(tr("A procedure with the name \"%1\" has already been declared").arg(procedureName), actionIndex, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+
+						return false;
+					}
+
+					mScript->addProcedure(procedureName, actionIndex);
+				}
+				else if(actionInstance->definition()->id() == "ActionEndProcedure")
+				{
+					if(lastBeginProcedure == -1)
+					{
+						mConsoleWidget->addActionLine(tr("Invalid End procedure"), actionIndex, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+
+						return false;
+					}
+
+					ActionTools::ActionInstance *beginProcedureActionInstance = mScript->actionAt(lastBeginProcedure);
+
+					actionInstance->setRuntimeParameter("procedureBeginLine", lastBeginProcedure);
+					beginProcedureActionInstance->setRuntimeParameter("procedureEndLine", actionIndex);
+
+					lastBeginProcedure = -1;
+				}
+			}
+		}
+
+		if(lastBeginProcedure != -1)
+		{
+			mConsoleWidget->addActionLine(tr("Begin procedure action without end procedure"), lastBeginProcedure, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+
+			return false;
 		}
 
 		for(int parameterIndex = 0; parameterIndex < mScript->parameterCount(); ++parameterIndex)
@@ -558,9 +619,9 @@ namespace LibExecuter
 			}
 		}
 		else
-			--nextLine;
+			--nextLine;//Make the nextLine value 0-based instead of 1-based
 
-		if(nextLine < 0)//End of the script
+		if(nextLine < 0 || nextLine == mScript->actionCount())//End of the script
 			mCurrentActionIndex = nextLine;
 		else
 		{

@@ -31,6 +31,7 @@
 #include <QSharedData>
 #include <QColor>
 #include <QScriptValue>
+#include <QVariant>
 
 class QScriptEngine;
 class QDataStream;
@@ -65,7 +66,8 @@ namespace ActionTools
 			timeout(other.timeout),
 			script(other.script),
 			scriptEngine(other.scriptEngine),
-			scriptLine(other.scriptLine)
+			scriptLine(other.scriptLine),
+			runtimeParameters(other.runtimeParameters)
 			{}
 
 		bool operator==(const ActionInstanceData &other) const;
@@ -84,6 +86,7 @@ namespace ActionTools
 		Script *script;
 		QScriptEngine *scriptEngine;
 		int scriptLine;
+		QVariantHash runtimeParameters;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
@@ -137,6 +140,10 @@ namespace ActionTools
 		Parameter parameter(const QString &name) const						{ return d->parametersData.value(name); }
 		SubParameter subParameter(const QString &parameterName, const QString &subParameterName) const
 																			{ return parameter(parameterName).subParameter(subParameterName); }
+		void setRuntimeParameter(const QString &parameterName, const QVariant &value)
+																			{ d->runtimeParameters.insert(parameterName, value); }
+		QVariant runtimeParameter(const QString &parameterName) const		{ return d->runtimeParameters.value(parameterName); }
+		void clearRuntimeParameters()										{ d->runtimeParameters.clear(); }
 
 		virtual void reset()												{}//This is called when this action should reset its counter (for loops)
 		virtual void startExecution()										{}//This is called when the action should start its execution
@@ -258,12 +265,15 @@ namespace ActionTools
 
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);
+		void setNextLine(int nextLine);
 
 		void setVariable(const QString &name, const QVariant &value);
 		void setVariableFromScriptValue(const QString &name, const QScriptValue &value);
 		QVariant variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
+
+		bool callProcedure(const QString &procedureName);
 
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);

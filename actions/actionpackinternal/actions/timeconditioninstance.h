@@ -95,6 +95,11 @@ namespace Actions
 
 			if(action == ActionTools::IfActionValue::GOTO)
 				setNextLine(line);
+			else if(action == ActionTools::IfActionValue::CALLPROCEDURE)
+			{
+				if(!callProcedure(line))
+					return;
+			}
 
 			emit executionEnded();
 		}

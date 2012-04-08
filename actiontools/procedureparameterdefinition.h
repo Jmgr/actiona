@@ -18,12 +18,25 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "ifactionvalue.h"
+#ifndef PROCEDUREPARAMETERDEFINITION_H
+#define PROCEDUREPARAMETERDEFINITION_H
+
+#include "listparameterdefinition.h"
+#include "actiontools_global.h"
 
 namespace ActionTools
 {
-	const char *IfActionValue::WAIT = "wait";
-	const char *IfActionValue::GOTO = "goto";
-	const char *IfActionValue::RUNCODE = "run_code";
-	const char *IfActionValue::CALLPROCEDURE = "call_procedure";
+	class ACTIONTOOLSSHARED_EXPORT ProcedureParameterDefinition : public ListParameterDefinition
+	{
+		Q_OBJECT
+
+	public:
+		ProcedureParameterDefinition(const Name &name, QObject *parent)
+			: ListParameterDefinition(name, parent)						{}
+
+		void buildEditors(Script *script, QWidget *parent);
+		void update(Script *script);
+	};
 }
+
+#endif // PROCEDUREPARAMETERDEFINITION_H
