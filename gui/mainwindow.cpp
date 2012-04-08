@@ -1333,7 +1333,10 @@ void MainWindow::logItemClicked(int itemRow, bool doubleClick)
 	case ActionTools::ConsoleWidget::Action:
 	case ActionTools::ConsoleWidget::User:
 		{
-			int action = item->data(ActionTools::ConsoleWidget::ActionRole).toInt();
+			qint64 actionRuntimeId = item->data(ActionTools::ConsoleWidget::ActionRole).toLongLong();
+			int action = mScript->actionIndexFromRuntimeId(actionRuntimeId);
+			if(action == -1)
+				break;
 
 			if(doubleClick)
 			{
@@ -1352,7 +1355,10 @@ void MainWindow::logItemClicked(int itemRow, bool doubleClick)
 		break;
 	case ActionTools::ConsoleWidget::Exception:
 		{
-			int action = item->data(ActionTools::ConsoleWidget::ActionRole).toInt();
+			qint64 actionRuntimeId = item->data(ActionTools::ConsoleWidget::ActionRole).toLongLong();
+			int action = mScript->actionIndexFromRuntimeId(actionRuntimeId);
+			if(action == -1)
+				break;
 
 			if(doubleClick)
 			{

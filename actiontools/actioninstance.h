@@ -95,7 +95,8 @@ namespace ActionTools
 
 	public:
 		ActionInstance(const ActionDefinition *definition = 0, QObject *parent = 0);
-		ActionInstance(const ActionInstance &other) : QObject(), d(other.d)	{}
+		ActionInstance(const ActionInstance &other);
+
 		virtual ~ActionInstance()											{}
 		
 		bool operator==(const ActionInstance &other) const					{ return ((*d) == (*other.d)); }
@@ -144,6 +145,8 @@ namespace ActionTools
 																			{ d->runtimeParameters.insert(parameterName, value); }
 		QVariant runtimeParameter(const QString &parameterName) const		{ return d->runtimeParameters.value(parameterName); }
 		void clearRuntimeParameters()										{ d->runtimeParameters.clear(); }
+
+		qint64 runtimeId() const											{ return mRuntimeId; }
 
 		virtual void reset()												{}//This is called when this action should reset its counter (for loops)
 		virtual void startExecution()										{}//This is called when the action should start its execution
@@ -282,6 +285,9 @@ namespace ActionTools
 
 		static const QRegExp mNameRegExp;
 		static const QRegExp mVariableRegExp;
+		static qint64 mCurrentRuntimeId;
+
+		qint64 mRuntimeId;
 
 		QSharedDataPointer<ActionInstanceData> d;
 	};

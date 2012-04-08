@@ -47,12 +47,15 @@ namespace ActionTools
 
 	const QRegExp ActionInstance::mNameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
 	const QRegExp ActionInstance::mVariableRegExp("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
+	qint64 ActionInstance::mCurrentRuntimeId = 0;
 
 	ActionInstance::ActionInstance(const ActionDefinition *definition, QObject *parent)
 		: QObject(parent),
+		  mRuntimeId(mCurrentRuntimeId),
 		  d(new ActionInstanceData())
 	{
 		d->definition = definition;
+		++mCurrentRuntimeId;
 
 		//Set the default values
 		if(definition)
@@ -67,6 +70,14 @@ namespace ActionTools
 										   ActionTools::ActionException::ExceptionActionInstance(ActionTools::ActionException::ExceptionDefaultAction[i], QString()));
 			}
 		}
+	}
+
+	ActionInstance::ActionInstance(const ActionInstance &other)
+		: QObject(),
+		  mRuntimeId(mCurrentRuntimeId),
+		  d(other.d)
+	{
+		++mCurrentRuntimeId;
 	}
 
 	void ActionInstance::copyActionDataFrom(const ActionInstance &other)

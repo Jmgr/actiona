@@ -548,6 +548,19 @@ namespace ActionTools
 		return true;
 	}
 
+	int Script::actionIndexFromRuntimeId(qint64 runtimeId) const
+	{
+		for(int actionIndex = 0; actionIndex < actionCount(); ++actionIndex)
+		{
+			const ActionInstance *actionInstance = mActionInstances.at(actionIndex);
+
+			if(actionInstance->runtimeId() == runtimeId)
+				return actionIndex;
+		}
+
+		return -1;
+	}
+
 	QStringList Script::procedureNames() const
 	{
 		QStringList back;

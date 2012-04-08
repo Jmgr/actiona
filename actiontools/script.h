@@ -100,6 +100,7 @@ namespace ActionTools
 		int popProcedureCall()												{ return mCallStack.pop(); }
 		void clearCallStack()												{ mCallStack.clear(); }
 
+		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
 		QStringList labels() const;
 

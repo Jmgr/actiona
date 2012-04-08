@@ -65,11 +65,11 @@ namespace ActionTools
 		addLine(message, item, Parameters, type);
 	}
 
-	void ConsoleWidget::addActionLine(const QString &message, int action, const QString &field, const QString &subField, int line, int column, Type type)
+	void ConsoleWidget::addActionLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type)
 	{
 		QStandardItem *item = new QStandardItem();
 
-		item->setData(action, ActionRole);
+		item->setData(actionRuntimeId, ActionRole);
 		item->setData(field, FieldRole);
 		item->setData(subField, SubFieldRole);
 		item->setData(line, LineRole);
@@ -78,11 +78,11 @@ namespace ActionTools
 		addLine(message, item, Action, type);
 	}
 
-	void ConsoleWidget::addUserLine(const QString &message, int action, const QString &field, const QString &subField, int line, int column, const QStringList &backtrace, Type type)
+	void ConsoleWidget::addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, const QStringList &backtrace, Type type)
 	{
 		QStandardItem *item = new QStandardItem();
 
-		item->setData(action, ActionRole);
+		item->setData(actionRuntimeId, ActionRole);
 		item->setData(field, FieldRole);
 		item->setData(subField, SubFieldRole);
 		item->setData(line, LineRole);
@@ -92,11 +92,11 @@ namespace ActionTools
 		addLine(message, item, User, type);
 	}
 	
-	void ConsoleWidget::addExceptionLine(const QString &message, int action, int exception, Type type)
+	void ConsoleWidget::addExceptionLine(const QString &message, qint64 actionRuntimeId, int exception, Type type)
 	{
 		QStandardItem *item = new QStandardItem();
 		
-		item->setData(action, ActionRole);
+		item->setData(actionRuntimeId, ActionRole);
 		item->setData(exception, ExceptionRole);
 
 		addLine(message, item, Exception, type);

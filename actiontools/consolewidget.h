@@ -76,9 +76,9 @@ namespace ActionTools
 		void setup(QStandardItemModel *model = 0);
 
 		void addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type);
-		void addActionLine(const QString &message, int action, const QString &field, const QString &subField, int line, int column, Type type);
-		void addUserLine(const QString &message, int action, const QString &field, const QString &subField, int line, int column, const QStringList &backtrace, Type type);
-		void addExceptionLine(const QString &message, int action, int exception, Type type);
+		void addActionLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type);
+		void addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, const QStringList &backtrace, Type type);
+		void addExceptionLine(const QString &message, qint64 actionRuntimeId, int exception, Type type);
 		void addDesignErrorLine(const QString &message, Type type);
 		void addStartSeparator();
 		void addEndSeparator();

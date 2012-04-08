@@ -159,14 +159,21 @@ namespace LibExecuter
 															  type);
 			break;
 		case ScriptAgent::Actions:
-			executer->consoleWidget()->addUserLine(message,
-												   executer->currentActionIndex(),
-												   context->engine()->property("currentParameter").toString(),
-												   context->engine()->property("currentSubParameter").toString(),
-												   agent->currentLine(),
-												   agent->currentColumn(),
-												   context->backtrace(),
-												   type);
+			{
+				ActionTools::ActionInstance *currentAction = executer->script()->actionAt(executer->currentActionIndex());
+				qint64 currentActionRuntimeId = -1;
+				if(currentAction)
+					currentActionRuntimeId = currentAction->runtimeId();
+
+				executer->consoleWidget()->addUserLine(message,
+													   currentActionRuntimeId,
+													   context->engine()->property("currentParameter").toString(),
+													   context->engine()->property("currentSubParameter").toString(),
+													   agent->currentLine(),
+													   agent->currentColumn(),
+													   context->backtrace(),
+													   type);
+			}
 			break;
 		default:
 			return;
@@ -272,6 +279,10 @@ namespace LibExecuter
 			actionInstance->setupExecution(mScriptEngine, mScript, actionIndex);
 			mActionEnabled.append(true);
 
+			qint64 currentActionRuntimeId = -1;
+			if(actionInstance)
+				currentActionRuntimeId = actionInstance->runtimeId();
+
 			if(canExecuteAction(actionIndex) == CanExecute)
 			{
 				++mActiveActionsCount;
@@ -280,7 +291,7 @@ namespace LibExecuter
 				{
 					if(lastBeginProcedure != -1)
 					{
-						mConsoleWidget->addActionLine(tr("Invalid Begin procedure action, you have to end the previous procedure before starting another one"), actionIndex, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+						mConsoleWidget->addActionLine(tr("Invalid Begin procedure action, you have to end the previous procedure before starting another one"), currentActionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
 
 						return false;
 					}
@@ -292,14 +303,14 @@ namespace LibExecuter
 
 					if(procedureName.isEmpty())
 					{
-						mConsoleWidget->addActionLine(tr("A procedure name cannot be empty"), actionIndex, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+						mConsoleWidget->addActionLine(tr("A procedure name cannot be empty"), currentActionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
 
 						return false;
 					}
 
 					if(mScript->findProcedure(procedureName) != -1)
 					{
-						mConsoleWidget->addActionLine(tr("A procedure with the name \"%1\" has already been declared").arg(procedureName), actionIndex, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+						mConsoleWidget->addActionLine(tr("A procedure with the name \"%1\" has already been declared").arg(procedureName), currentActionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
 
 						return false;
 					}
@@ -310,7 +321,7 @@ namespace LibExecuter
 				{
 					if(lastBeginProcedure == -1)
 					{
-						mConsoleWidget->addActionLine(tr("Invalid End procedure"), actionIndex, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+						mConsoleWidget->addActionLine(tr("Invalid End procedure"), currentActionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
 
 						return false;
 					}
@@ -327,7 +338,12 @@ namespace LibExecuter
 
 		if(lastBeginProcedure != -1)
 		{
-			mConsoleWidget->addActionLine(tr("Begin procedure action without end procedure"), lastBeginProcedure, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+			ActionTools::ActionInstance *actionInstance = mScript->actionAt(lastBeginProcedure);
+			qint64 actionRuntimeId = -1;
+			if(actionInstance)
+				actionRuntimeId = actionInstance->runtimeId();
+
+			mConsoleWidget->addActionLine(tr("Begin procedure action without end procedure"), actionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
 
 			return false;
 		}
@@ -529,7 +545,15 @@ namespace LibExecuter
 
 				if(canExecuteAction(exceptionActionInstance.line()) != CanExecute)
 				{
-					mConsoleWidget->addExceptionLine(tr("Invalid exception line: %1").arg(exceptionActionInstance.line()), mCurrentActionIndex, exception, ActionTools::ConsoleWidget::Error);
+					ActionTools::ActionInstance *currentAction = mScript->actionAt(mCurrentActionIndex);
+					qint64 currentActionRuntimeId = -1;
+					if(currentAction)
+						currentActionRuntimeId = currentAction->runtimeId();
+
+					mConsoleWidget->addExceptionLine(tr("Invalid exception line: %1").arg(exceptionActionInstance.line()),
+													 currentActionRuntimeId,
+													 exception,
+													 ActionTools::ConsoleWidget::Error);
 					shouldStopExecution = true;
 				}
 				else
@@ -556,8 +580,13 @@ namespace LibExecuter
 			else
 				finalMessage = tr("Script %1, line %2: ").arg(currentFile).arg(mCurrentActionIndex+1);
 
+			ActionTools::ActionInstance *currentAction = mScript->actionAt(mCurrentActionIndex);
+			qint64 currentActionRuntimeId = -1;
+			if(currentAction)
+				currentActionRuntimeId = currentAction->runtimeId();
+
 			mConsoleWidget->addActionLine(finalMessage + message,
-										mCurrentActionIndex,
+										currentActionRuntimeId,
 										mScriptEngine->property("currentParameter").toString(),
 										mScriptEngine->property("currentSubParameter").toString(),
 										mScriptAgent->currentLine(),
@@ -792,8 +821,13 @@ namespace LibExecuter
 
 	void Executer::consolePrint(const QString &text, ActionTools::ConsoleWidget::Type type)
 	{
+		ActionTools::ActionInstance *currentAction = mScript->actionAt(currentActionIndex());
+		qint64 currentActionRuntimeId = -1;
+		if(currentAction)
+			currentActionRuntimeId = currentAction->runtimeId();
+
 		consoleWidget()->addUserLine(text,
-									   currentActionIndex(),
+									   currentActionRuntimeId,
 									   mScriptEngine->currentContext()->engine()->property("currentParameter").toString(),
 									   mScriptEngine->currentContext()->engine()->property("currentSubParameter").toString(),
 									   mScriptAgent->currentLine(),
