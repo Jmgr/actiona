@@ -1,3 +1,15 @@
+3.4.0 (08/04/12)
+- Actions: added three actions allowing the use of procedures
+- Actions: added a new "If action" action allowing to call a procedure
+- Actions: deprecated the x-coodinate, y-coordinate, width and height parameters in the Window condition action
+- Actions: added position and size parameters in the Window condition action
+- Packaging: fixed Debian bug #667093 (http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=667093)
+- Gui, Console: clicking on a log console item now selects the corresponding action
+- Gui: fixed a bug where the execute selection button was disabled after an execution even if an action was still selected
+- Gui: fixed a bug where clicking on a console item could select/open another action than the one concerned by the item
+- ActExec, Windows: added a program parameter to show a console
+- fixed some warnings due to useless & dangerous calls to deleteLater (close() auto-deletes QWidgets by default)
+
 3.3.0 (29/03/12)
 - Actions: added a window title to the DataInput action
 - Actions: added new action MultiDataInput
