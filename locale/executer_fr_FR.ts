@@ -70,46 +70,71 @@
     <name>LibExecuter::Executer</name>
     <message>
         <location filename="../executer/executer.cpp" line="283"/>
+        <source>Invalid Begin procedure action, you have to end the previous procedure before starting another one</source>
+        <translation>Début de procédure incorrect, vous devez d&apos;abord terminer la procédure précédente avant d&apos;en débuter une autre</translation>
+    </message>
+    <message>
+        <location filename="../executer/executer.cpp" line="295"/>
+        <source>A procedure name cannot be empty</source>
+        <translation>Le nom d&apos;une procédure ne peut être vide</translation>
+    </message>
+    <message>
+        <location filename="../executer/executer.cpp" line="302"/>
+        <source>A procedure with the name &quot;%1&quot; has already been declared</source>
+        <translation>Une procédure nommée &quot;%1&quot; existe déjà</translation>
+    </message>
+    <message>
+        <location filename="../executer/executer.cpp" line="313"/>
+        <source>Invalid End procedure</source>
+        <translation>Fin de procédure incorrecte</translation>
+    </message>
+    <message>
+        <location filename="../executer/executer.cpp" line="330"/>
+        <source>Begin procedure action without end procedure</source>
+        <translation>Début de procédure sans fin de procédure</translation>
+    </message>
+    <message>
+        <location filename="../executer/executer.cpp" line="344"/>
         <source>Incorrect parameter name: &quot;%1&quot;</source>
         <translation>Nom de paramètre incorrect : &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="298"/>
+        <location filename="../executer/executer.cpp" line="359"/>
         <source>Error while evaluating parameter &quot;%1&quot;, error message: &quot;%2&quot;</source>
         <translation>Erreur lors de l&apos;évaluation du paramètre &quot;%1&quot;, message d&apos;erreur : &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="447"/>
+        <location filename="../executer/executer.cpp" line="508"/>
         <source>Action design error: Invalid exception emitted (%1, line %2)</source>
         <translation>Erreur de conception de l&apos;action : Exception invalide émise (%1, ligne %2)</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="471"/>
+        <location filename="../executer/executer.cpp" line="532"/>
         <source>Invalid exception line: %1</source>
         <translation>Ligne d&apos;exception invalide : %1</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="494"/>
+        <location filename="../executer/executer.cpp" line="555"/>
         <source>Script line %1: </source>
         <translation>Ligne de script %1 : </translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="496"/>
+        <location filename="../executer/executer.cpp" line="557"/>
         <source>Script %1, line %2: </source>
         <translation>Script %1, ligne %2 : </translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="556"/>
+        <location filename="../executer/executer.cpp" line="617"/>
         <source>Unable to find the label named &quot;%1&quot;</source>
         <translation>Impossible de trouver le label nommé &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="570"/>
+        <location filename="../executer/executer.cpp" line="631"/>
         <source>Incorrect Script.nextLine value: %1</source>
         <translation>Valeur de Script.nextLine incorrecte : %1</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="573"/>
+        <location filename="../executer/executer.cpp" line="634"/>
         <source>The action at line %1 is invalid</source>
         <translation>L&apos;action à la ligne %1 est invalide</translation>
     </message>

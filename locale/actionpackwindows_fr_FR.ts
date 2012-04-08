@@ -356,53 +356,78 @@
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="68"/>
+        <source>Position</source>
+        <translation>Position</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="69"/>
+        <source>The position of the found window</source>
+        <translation>La position de la fenêtre trouvée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="72"/>
+        <source>Size</source>
+        <translation>Taille</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="73"/>
+        <source>The size of the found window</source>
+        <translation>La taille de la fenêtre trouvée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="76"/>
         <source>X-coordinate</source>
         <translation>Abscisse</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="69"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="77"/>
         <source>The x-coordinate of the found window</source>
         <translation>L&apos;abscisse de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="72"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="80"/>
         <source>Y-coordinate</source>
         <translation>Ordonnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="73"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="81"/>
         <source>The y-coordinate of the found window</source>
         <translation>L&apos;ordonnée de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="76"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="84"/>
         <source>Width</source>
         <translation>Largeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="77"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="85"/>
         <source>The width of the found window</source>
         <translation>La largeur de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="80"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="88"/>
         <source>Height</source>
         <translation>Hauteur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="81"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="89"/>
         <source>The height of the found window</source>
         <translation>La hauteur de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="84"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="92"/>
         <source>Process id</source>
         <translation>Identifiant de processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="85"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="93"/>
         <source>The process id of the found window</source>
         <translation>L&apos;identifiant de processus de la fenêtre trouvée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="104"/>
+        <source>Deprecated</source>
+        <translation>Obsolète</translation>
     </message>
 </context>
 <context>
@@ -671,12 +696,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
         <translation type="obsolete">Demande à l&apos;utilisateur d&apos;entrer du texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="89"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="97"/>
         <source>Window condition</source>
         <translation>Condition de fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="92"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="100"/>
         <source>Checks for the state of a window</source>
         <translation>Vérifie l&apos;état d&apos;une fenêtre</translation>
     </message>
@@ -786,12 +811,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
         <translation type="obsolete">Fermée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="30"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="32"/>
         <source>Exists</source>
         <translation>Existe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="31"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="33"/>
         <source>Don&apos;t exists</source>
         <translation>N&apos;existe pas</translation>
     </message>

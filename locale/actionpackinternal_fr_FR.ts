@@ -4,9 +4,40 @@
 <context>
     <name>ActionPackInternal</name>
     <message>
-        <location filename="../actions/actionpackinternal/actionpackinternal.h" line="68"/>
+        <location filename="../actions/actionpackinternal/actionpackinternal.h" line="74"/>
         <source>Internal actions</source>
         <translation>Actions internes</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::BeginProcedureDefinition</name>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="44"/>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="45"/>
+        <source>The name of the procedure</source>
+        <translation>Le nom de la procédure</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="49"/>
+        <source>End Procedure action cannot be found</source>
+        <translation>Impossible de trouver la fin de la procédure</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::CallProcedureDefinition</name>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/callproceduredefinition.h" line="44"/>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/callproceduredefinition.h" line="45"/>
+        <source>The name of the procedure to call</source>
+        <translation>Le nom de la procédure à appeler</translation>
     </message>
 </context>
 <context>
@@ -43,6 +74,14 @@
         <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="52"/>
         <source>The console output</source>
         <translation>Le type de sortie</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::EndProcedureInstance</name>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/endprocedureinstance.h" line="43"/>
+        <source>End procedure reached without a call</source>
+        <translation>Fin de procédure atteint sans procédure appelée</translation>
     </message>
 </context>
 <context>
@@ -483,6 +522,36 @@
         <source>Exit Actionaz</source>
         <comment>action description: this exits</comment>
         <translation>Quitte Actionaz</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="52"/>
+        <source>Begin procedure</source>
+        <translation>Début de procédure</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="55"/>
+        <source>Declares a new procedure</source>
+        <translation>Déclare une nouvelle procédure</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/callproceduredefinition.h" line="49"/>
+        <source>Call procedure</source>
+        <translation>Appel de procédure</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/callproceduredefinition.h" line="52"/>
+        <source>Calls a procedure</source>
+        <translation>Appelle une procédure</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/endproceduredefinition.h" line="45"/>
+        <source>End procedure</source>
+        <translation>Fin de procédure</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/endproceduredefinition.h" line="48"/>
+        <source>Ends a procedure</source>
+        <translation>Termine une procédure</translation>
     </message>
 </context>
 <context>

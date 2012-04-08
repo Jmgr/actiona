@@ -28,6 +28,11 @@
         <source>Data</source>
         <translation>Données</translation>
     </message>
+    <message>
+        <location filename="../actiontools/actiondefinition.cpp" line="68"/>
+        <source>Procedures</source>
+        <translation>Procédures</translation>
+    </message>
 </context>
 <context>
     <name>ActionException::ExceptionActionName</name>
@@ -68,12 +73,12 @@
 <context>
     <name>ActionTabs</name>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="70"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="71"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="70"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="71"/>
         <source>Advanced</source>
         <translation>Avancé</translation>
     </message>
@@ -153,54 +158,59 @@
 <context>
     <name>ActionTools::ActionInstance</name>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="140"/>
+        <location filename="../actiontools/actioninstance.cpp" line="141"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
         <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas commencer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="163"/>
+        <location filename="../actiontools/actioninstance.cpp" line="164"/>
         <source>Integer value expected.</source>
         <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="198"/>
+        <location filename="../actiontools/actioninstance.cpp" line="199"/>
         <source>Decimal value expected.</source>
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="268"/>
-        <location filename="../actiontools/actioninstance.cpp" line="276"/>
+        <location filename="../actiontools/actioninstance.cpp" line="269"/>
+        <location filename="../actiontools/actioninstance.cpp" line="277"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="371"/>
-        <location filename="../actiontools/actioninstance.cpp" line="379"/>
+        <location filename="../actiontools/actioninstance.cpp" line="372"/>
+        <location filename="../actiontools/actioninstance.cpp" line="380"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="473"/>
+        <location filename="../actiontools/actioninstance.cpp" line="436"/>
+        <source>Unable to find any procedure named &quot;%1&quot;</source>
+        <translation>Impossible de trouver une procédure nommée &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.cpp" line="497"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="480"/>
+        <location filename="../actiontools/actioninstance.cpp" line="504"/>
         <source>[Null]</source>
         <translation>[Nul]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="482"/>
+        <location filename="../actiontools/actioninstance.cpp" line="506"/>
         <source>[Undefined]</source>
         <translation>[Indéfini]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="492"/>
+        <location filename="../actiontools/actioninstance.cpp" line="516"/>
         <source>[Raw data]</source>
         <translation>[Données brutes]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="227"/>
+        <location filename="../actiontools/actioninstance.h" line="245"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation>&quot;%1&quot; est une valeur incorrecte.</translation>
     </message>
@@ -336,7 +346,7 @@
         <translation>Cliquez ici pour ouvrir l&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="299"/>
+        <location filename="../actiontools/codelineedit.cpp" line="296"/>
         <source>Double-click to edit</source>
         <translation>Double-cliquez pour éditer</translation>
     </message>
@@ -409,7 +419,7 @@
 (%2)</translation>
     </message>
     <message>
-        <location filename="../actiontools/consolewidget.cpp" line="196"/>
+        <location filename="../actiontools/consolewidget.cpp" line="201"/>
         <source>
 Double-click to show</source>
         <translation>
@@ -750,9 +760,13 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>CodeEditorDialog</name>
     <message>
-        <location filename="../actiontools/codeeditordialog.ui" line="14"/>
         <source>Code editor</source>
-        <translation>Éditeur de code</translation>
+        <translation type="obsolete">Éditeur de code</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codeeditordialog.ui" line="14"/>
+        <source>Text/Code editor</source>
+        <translation>Éditeur de texte/code</translation>
     </message>
     <message>
         <location filename="../actiontools/codeeditordialog.ui" line="36"/>
@@ -825,6 +839,11 @@ Double-cliquez pour afficher</translation>
         <location filename="../actiontools/ifactionparameterdefinition.cpp" line="40"/>
         <source>Run code</source>
         <translation>Exécuter code</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="41"/>
+        <source>Call procedure</source>
+        <translation>Appeler une procédure</translation>
     </message>
 </context>
 <context>
@@ -924,7 +943,7 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Données</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="104"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="105"/>
         <source>missing XTest extension</source>
         <translation>extension XTest manquante</translation>
     </message>
@@ -979,7 +998,7 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Aller à une ligne</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="66"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="69"/>
         <source>Wait</source>
         <translation>Attendre</translation>
     </message>
