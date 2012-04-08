@@ -45,8 +45,6 @@ namespace Actions
 			name->setTooltip(tr("The name of the procedure"));
 			name->setTextCodeMode(ActionTools::TextParameterDefinition::TextOnly);
 			addElement(name);
-
-			addException(BeginProcedureInstance::CannotFindEndProcedureActionException, tr("End Procedure action cannot be found"));
 		}
 
 		QString name() const													{ return QObject::tr("Begin procedure"); }

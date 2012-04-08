@@ -31,11 +31,6 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		enum Exceptions
-		{
-			CannotFindEndProcedureActionException = ActionTools::ActionException::UserException
-		};
-
 		BeginProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
