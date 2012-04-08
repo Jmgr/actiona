@@ -146,6 +146,7 @@ private slots:
 	void scriptExecutionStopped();
 	void postExecution();
 	void logItemDoubleClicked(int itemRow);
+	void logItemClicked(int itemRow);
 	void otherInstanceMessage(const QString &message);
 #ifndef ACT_NO_UPDATER
 	void updateError(const QString &message);
@@ -175,6 +176,7 @@ private:
 		Paused =			1 << 3
 	};
 
+	void logItemClicked(int itemRow, bool doubleClick);
 	void updateUndoRedoStatus();
 	void execute(bool onlySelection);
 	void fillNewActionTreeWidget(NewActionTreeWidget *widget);

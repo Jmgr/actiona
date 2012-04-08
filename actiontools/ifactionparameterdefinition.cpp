@@ -33,17 +33,20 @@ namespace ActionTools
 	bool IfActionParameterDefinition::translated = false;
 
 	StringListPair IfActionParameterDefinition::actions = qMakePair(
-		QStringList() << "do_nothing" << "goto" << "run_code",
+		QStringList() << "do_nothing" << "goto" << "run_code" << "call_procedure",
 		QStringList()
 		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Do nothing")
 		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Goto line")
-		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code"));
+		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code")
+		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Call procedure"));
 
 	IfActionParameterDefinition::IfActionParameterDefinition(const Name &name, QObject *parent)
 		: ItemsParameterDefinition(name, parent),
-		mActionEdit(0),
-		mLineEdit(0),
-		mAllowWait(false)
+		  mActionEdit(0),
+		  mLineComboBox(0),
+		  mCodeLineEdit(0),
+		  mProcedureComboBox(0),
+		  mAllowWait(false)
 	{
 		if(!translated)
 		{
@@ -72,11 +75,22 @@ namespace ActionTools
 
 		addEditor(mActionEdit);
 
-		mLineEdit = new LineComboBox(script->labels(), script->actionCount(), parent);
+		mLineComboBox = new LineComboBox(script->labels(), script->actionCount(), parent);
+		mLineComboBox->setVisible(false);
 
-		mLineEdit->setEnabled(false);
+		addEditor(mLineComboBox);
 
-		addEditor(mLineEdit);
+		mCodeLineEdit = new CodeLineEdit(parent);
+		mCodeLineEdit->setCode(true);
+		mCodeLineEdit->setAllowTextCodeChange(false);
+		mCodeLineEdit->setVisible(false);
+
+		addEditor(mCodeLineEdit);
+
+		mProcedureComboBox = new CodeComboBox(parent);
+		mProcedureComboBox->setVisible(false);
+
+		addEditor(mProcedureComboBox);
 
 		connect(mActionEdit->codeLineEdit(), SIGNAL(textChanged(const QString &)), this, SLOT(textChanged(const QString &)));
 		connect(mActionEdit->codeLineEdit(), SIGNAL(codeChanged(bool)), this, SLOT(codeChanged(bool)));
@@ -89,14 +103,52 @@ namespace ActionTools
 		mActionEdit->setEditText(translatedNameFromOriginalName(actionSubParameter.value().toString()));
 
 		const SubParameter &lineSubParameter = actionInstance->subParameter(name().original(), "line");
-		mLineEdit->setCode(lineSubParameter.isCode());
-		mLineEdit->setEditText(lineSubParameter.value().toString());
+		switch(findAppropriateEditor(mActionEdit->codeLineEdit()->text()))
+		{
+		case LineEditor:
+			mLineComboBox->setCode(lineSubParameter.isCode());
+			mLineComboBox->setEditText(lineSubParameter.value().toString());
+			break;
+		case CodeEditor:
+			mCodeLineEdit->setText(lineSubParameter.value().toString());
+			break;
+		case TextCodeEditor:
+			mCodeLineEdit->setCode(lineSubParameter.isCode());
+			mCodeLineEdit->setText(lineSubParameter.value().toString());
+			break;
+		case ProcedureEditor:
+			mProcedureComboBox->setCode(lineSubParameter.isCode());
+			mProcedureComboBox->setEditText(lineSubParameter.value().toString());
+			break;
+		case NoEditor:
+		default:
+			break;
+		}
 	}
 
 	void IfActionParameterDefinition::save(ActionInstance *actionInstance)
 	{
 		actionInstance->setSubParameter(name().original(), "action", mActionEdit->isCode(), originalNameFromTranslatedName(mActionEdit->currentText()));
-		actionInstance->setSubParameter(name().original(), "line", mLineEdit->isCode(), mLineEdit->currentText());
+
+		//Note: this should not be called "line" each time, but we need to keep this name for backward compatibility
+		switch(findAppropriateEditor(mActionEdit->codeLineEdit()->text()))
+		{
+		case LineEditor:
+			actionInstance->setSubParameter(name().original(), "line", mLineComboBox->isCode(), mLineComboBox->currentText());
+			break;
+		case CodeEditor:
+			actionInstance->setSubParameter(name().original(), "line", true, mCodeLineEdit->text());
+			break;
+		case TextCodeEditor:
+			actionInstance->setSubParameter(name().original(), "line", mCodeLineEdit->isCode(), mCodeLineEdit->text());
+			break;
+		case ProcedureEditor:
+			actionInstance->setSubParameter(name().original(), "line", mProcedureComboBox->isCode(), mProcedureComboBox->currentText());
+			break;
+		case NoEditor:
+		default:
+			break;
+		}
 	}
 
 	void IfActionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
@@ -107,7 +159,9 @@ namespace ActionTools
 	
 	void IfActionParameterDefinition::update(Script *script)
 	{
-		mLineEdit->setup(script->labels(), script->actionCount());
+		mLineComboBox->setup(script->labels(), script->actionCount());
+		mProcedureComboBox->clear();
+		mProcedureComboBox->addItems(script->procedureNames());
 	}
 
 	void IfActionParameterDefinition::codeChanged(bool code)
@@ -122,38 +176,54 @@ namespace ActionTools
 		updateStatus(text);
 	}
 
-	void IfActionParameterDefinition::updateStatus(const QString &text)
+	IfActionParameterDefinition::Editor IfActionParameterDefinition::findAppropriateEditor(const QString &actionText) const
 	{
 		if(mActionEdit->codeLineEdit()->isCode())
-		{
-			mLineEdit->setEnabled(true);
-			mLineEdit->codeLineEdit()->setAllowTextCodeChange(true);
-			return;
-		}
+			return TextCodeEditor;
 
-		if(text == mItems.first.at(DoNothing) ||
-			text == mItems.second.at(DoNothing) ||
-			(mAllowWait && (text == mItems.first.at(Wait) || text == mItems.second.at(Wait))))
-		{
-			mLineEdit->setEditText(QString());
-			mLineEdit->setEnabled(false);
-			mLineEdit->codeLineEdit()->setAllowTextCodeChange(true);
-			mLineEdit->setCode(false);
-		}
-		else
-		{
-			mLineEdit->setEnabled(true);
+		if(actionText == mItems.first.at(DoNothing) || actionText == mItems.second.at(DoNothing) ||
+			(mAllowWait && (actionText == mItems.first.at(Wait) || actionText == mItems.second.at(Wait))))
+			return NoEditor;
 
-			if(text == mItems.first.at(RunCode) || text == mItems.second.at(RunCode))
-			{
-				mLineEdit->setCode(true);
-				mLineEdit->codeLineEdit()->setAllowTextCodeChange(false);
-			}
-			else
-			{
-				mLineEdit->codeLineEdit()->setAllowTextCodeChange(true);
-				mLineEdit->setCode(false);
-			}
+		if(actionText == mItems.first.at(Goto) || actionText == mItems.second.at(Goto))
+			return LineEditor;
+
+		if(actionText == mItems.first.at(RunCode) || actionText == mItems.second.at(RunCode))
+			return CodeEditor;
+
+		if(actionText == mItems.first.at(CallProcedure) || actionText == mItems.second.at(CallProcedure))
+			return ProcedureEditor;
+
+		return TextCodeEditor;
+	}
+
+	void IfActionParameterDefinition::updateStatus(const QString &actionText)
+	{
+		mLineComboBox->setVisible(false);
+		mCodeLineEdit->setVisible(false);
+		mProcedureComboBox->setVisible(false);
+
+		switch(findAppropriateEditor(actionText))
+		{
+		case LineEditor:
+			mLineComboBox->setVisible(true);
+			mLineComboBox->codeLineEdit()->setAllowTextCodeChange(true);
+			break;
+		case CodeEditor:
+			mCodeLineEdit->setVisible(true);
+			mCodeLineEdit->setCode(true);
+			mCodeLineEdit->setAllowTextCodeChange(false);
+			break;
+		case TextCodeEditor:
+			mCodeLineEdit->setVisible(true);
+			mCodeLineEdit->setAllowTextCodeChange(true);
+			break;
+		case ProcedureEditor:
+			mProcedureComboBox->setVisible(true);
+			break;
+		case NoEditor:
+		default:
+			break;
 		}
 	}
 }

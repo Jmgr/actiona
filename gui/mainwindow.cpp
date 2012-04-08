@@ -210,6 +210,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 		connect(mSystemTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(systemTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 	connect(mActionFactory, SIGNAL(actionPackLoadError(QString)), this, SLOT(packLoadError(QString)));
 	connect(ui->consoleWidget, SIGNAL(itemDoubleClicked(int)), this, SLOT(logItemDoubleClicked(int)));
+	connect(ui->consoleWidget, SIGNAL(itemClicked(int)), this, SLOT(logItemClicked(int)));
 	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
 	connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
 #ifndef ACT_NO_UPDATER
@@ -1306,6 +1307,70 @@ void MainWindow::checkForUpdate(bool silent)
 }
 #endif
 
+void MainWindow::logItemClicked(int itemRow, bool doubleClick)
+{
+	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->consoleWidget->model());
+	if(!model)
+		return;
+
+	QStandardItem *item = model->item(itemRow, 0);
+	if(!item)
+		return;
+
+	switch(item->data(ActionTools::ConsoleWidget::SourceRole).value<ActionTools::ConsoleWidget::Source>())
+	{
+	case ActionTools::ConsoleWidget::Parameters:
+		{
+			if(doubleClick)
+			{
+				int parameter = item->data(ActionTools::ConsoleWidget::ParameterRole).toInt();
+				int line = item->data(ActionTools::ConsoleWidget::LineRole).toInt();
+				int column = item->data(ActionTools::ConsoleWidget::ColumnRole).toInt();
+				openParametersDialog(parameter, line, column);
+			}
+		}
+		break;
+	case ActionTools::ConsoleWidget::Action:
+	case ActionTools::ConsoleWidget::User:
+		{
+			int action = item->data(ActionTools::ConsoleWidget::ActionRole).toInt();
+
+			if(doubleClick)
+			{
+				QString field = item->data(ActionTools::ConsoleWidget::FieldRole).toString();
+				QString subField = item->data(ActionTools::ConsoleWidget::SubFieldRole).toString();
+				int line = item->data(ActionTools::ConsoleWidget::LineRole).toInt();
+				int column = item->data(ActionTools::ConsoleWidget::ColumnRole).toInt();
+				editAction(mScript->actionAt(action), field, subField, line, column);
+			}
+			else
+			{
+				ui->scriptView->setCurrentIndex(mScriptModel->index(action, 0));
+				ui->scriptView->setFocus();
+			}
+		}
+		break;
+	case ActionTools::ConsoleWidget::Exception:
+		{
+			int action = item->data(ActionTools::ConsoleWidget::ActionRole).toInt();
+
+			if(doubleClick)
+			{
+				int exception = item->data(ActionTools::ConsoleWidget::ExceptionRole).toInt();
+				editAction(mScript->actionAt(action), exception);
+			}
+			else
+			{
+				ui->scriptView->setCurrentIndex(mScriptModel->index(action, 0));
+				ui->scriptView->setFocus();
+			}
+		}
+		break;
+	default:
+		break;
+	}
+}
+
 void MainWindow::updateUndoRedoStatus()
 {
 	ui->actionUndo->setEnabled(mUndoGroup->canUndo());
@@ -1586,45 +1651,12 @@ void MainWindow::postExecution()
 
 void MainWindow::logItemDoubleClicked(int itemRow)
 {
-	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->consoleWidget->model());
-	if(!model)
-		return;
+	logItemClicked(itemRow, true);
+}
 
-	QStandardItem *item = model->item(itemRow, 0);
-	if(!item)
-		return;
-
-	switch(item->data(ActionTools::ConsoleWidget::SourceRole).value<ActionTools::ConsoleWidget::Source>())
-	{
-	case ActionTools::ConsoleWidget::Parameters:
-		{
-			int parameter = item->data(ActionTools::ConsoleWidget::ParameterRole).toInt();
-			int line = item->data(ActionTools::ConsoleWidget::LineRole).toInt();
-			int column = item->data(ActionTools::ConsoleWidget::ColumnRole).toInt();
-			openParametersDialog(parameter, line, column);
-		}
-		break;
-	case ActionTools::ConsoleWidget::Action:
-	case ActionTools::ConsoleWidget::User:
-		{
-			int action = item->data(ActionTools::ConsoleWidget::ActionRole).toInt();
-			QString field = item->data(ActionTools::ConsoleWidget::FieldRole).toString();
-			QString subField = item->data(ActionTools::ConsoleWidget::SubFieldRole).toString();
-			int line = item->data(ActionTools::ConsoleWidget::LineRole).toInt();
-			int column = item->data(ActionTools::ConsoleWidget::ColumnRole).toInt();
-			editAction(mScript->actionAt(action), field, subField, line, column);
-		}
-		break;
-	case ActionTools::ConsoleWidget::Exception:
-		{
-			int action = item->data(ActionTools::ConsoleWidget::ActionRole).toInt();
-			int exception = item->data(ActionTools::ConsoleWidget::ExceptionRole).toInt();
-			editAction(mScript->actionAt(action), exception);
-		}
-		break;
-	default:
-		break;
-	}
+void MainWindow::logItemClicked(int itemRow)
+{
+	logItemClicked(itemRow, false);
 }
 
 void MainWindow::otherInstanceMessage(const QString &message)

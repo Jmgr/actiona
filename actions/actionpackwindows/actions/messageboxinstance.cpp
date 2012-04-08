@@ -166,6 +166,15 @@ namespace Actions
 
 			if(mIfYes.action() == ActionTools::IfActionValue::GOTO)
 				setNextLine(line);
+			else if(mIfYes.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+			{
+				if(!callProcedure(line))
+				{
+					closeAndDelete();
+
+					return;
+				}
+			}
 		}
 		else if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::No))
 		{
@@ -179,6 +188,15 @@ namespace Actions
 
 			if(mIfNo.action() == ActionTools::IfActionValue::GOTO)
 				setNextLine(line);
+			else if(mIfNo.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+			{
+				if(!callProcedure(line))
+				{
+					closeAndDelete();
+
+					return;
+				}
+			}
 		}
 
 		closeAndDelete();

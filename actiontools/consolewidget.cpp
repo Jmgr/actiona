@@ -171,6 +171,11 @@ namespace ActionTools
 	{
 		emit itemDoubleClicked(index.row());
 	}
+
+	void ActionTools::ConsoleWidget::on_console_clicked(const QModelIndex &index)
+	{
+		emit itemClicked(index.row());
+	}
 	
 	void ConsoleWidget::addLine(const QString &message, QStandardItem *item, Source source, Type type)
 	{

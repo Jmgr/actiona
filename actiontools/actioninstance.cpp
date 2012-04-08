@@ -24,6 +24,7 @@
 #include "elementdefinition.h"
 #include "parameterdefinition.h"
 #include "groupdefinition.h"
+#include "script.h"
 #include "code/point.h"
 #include "code/color.h"
 
@@ -395,6 +396,11 @@ namespace ActionTools
 		scriptValue.setProperty("nextLine", d->scriptEngine->newVariant(QVariant(nextLine)));
 	}
 
+	void ActionInstance::setNextLine(int nextLine)
+	{
+		setNextLine(QString::number(nextLine));
+	}
+
 	void ActionInstance::setVariable(const QString &name, const QVariant &value)
 	{
 		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
@@ -419,6 +425,24 @@ namespace ActionTools
 	{
 		d->scriptEngine->globalObject().setProperty("currentParameter", parameterName, QScriptValue::ReadOnly);
 		d->scriptEngine->globalObject().setProperty("currentSubParameter", subParameterName, QScriptValue::ReadOnly);
+	}
+
+	bool ActionInstance::callProcedure(const QString &procedureName)
+	{
+		//Search for the corresponding ActionBeginProcedure action
+		int beginProcedureLine = script()->findProcedure(procedureName);
+		if(beginProcedureLine == -1)
+		{
+			emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to find any procedure named \"%1\"").arg(procedureName));
+
+			return false;
+		}
+
+		setNextLine(beginProcedureLine + 2);//Lines start at 1
+
+		script()->addProcedureCall(scriptLine());
+
+		return true;
 	}
 
 	SubParameter ActionInstance::retreiveSubParameter(const QString &parameterName, const QString &subParameterName)

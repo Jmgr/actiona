@@ -18,12 +18,30 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "ifactionvalue.h"
+#include "procedureparameterdefinition.h"
+#include "codecombobox.h"
+#include "script.h"
+#include "actioninstance.h"
+#include "actiondefinition.h"
 
 namespace ActionTools
 {
-	const char *IfActionValue::WAIT = "wait";
-	const char *IfActionValue::GOTO = "goto";
-	const char *IfActionValue::RUNCODE = "run_code";
-	const char *IfActionValue::CALLPROCEDURE = "call_procedure";
+	void ProcedureParameterDefinition::buildEditors(Script *script, QWidget *parent)
+	{
+		ParameterDefinition::buildEditors(script, parent);
+
+		mComboBox = new CodeComboBox(parent);
+
+		mComboBox->addItems(script->procedureNames());
+
+		addEditor(mComboBox);
+
+		emit editorBuilt();
+	}
+
+	void ProcedureParameterDefinition::update(Script *script)
+	{
+		mComboBox->clear();
+		mComboBox->addItems(script->procedureNames());
+	}
 }

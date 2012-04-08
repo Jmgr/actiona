@@ -40,6 +40,7 @@ namespace ActionTools
 		System,
 		Internal,
 		Data,
+		Procedures,
 
 		CategoryCount
 	};

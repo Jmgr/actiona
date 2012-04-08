@@ -117,10 +117,7 @@ namespace ActionTools
 		if(mShowEditorButton)
 			w += mEditorButton->maximumWidth();
 		
-		if(embedded)
-			setStyleSheet(QString("QLineEdit { padding-right: %1px; }").arg(w));
-		else
-			setStyleSheet(QString("QLineEdit { padding-right: %1px; min-height: %2px; }").arg(w).arg(sizeHint().height()));
+		setStyleSheet(QString("QLineEdit { padding-right: %1px; }").arg(w));
 
 		resizeButtons();
 		update();

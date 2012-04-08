@@ -27,6 +27,8 @@
 
 #include <QVariant>
 #include <QStringList>
+#include <QHash>
+#include <QStack>
 
 class QIODevice;
 
@@ -89,6 +91,16 @@ namespace ActionTools
 		void setPauseBefore(int pauseBefore)								{ mPauseBefore = pauseBefore; }
 		void setPauseAfter(int pauseAfter)									{ mPauseAfter = pauseAfter; }
 
+		void addProcedure(const QString &procedureName, int line)			{ mProcedures.insert(procedureName, line); }
+		int findProcedure(const QString &procedureName) const				{ return mProcedures.value(procedureName, -1); }
+		void clearProcedures()												{ mProcedures.clear(); }
+
+		void addProcedureCall(int callerLine)								{ mCallStack.push(callerLine); }
+		bool hasProcedureCall() const										{ return !mCallStack.isEmpty(); }
+		int popProcedureCall()												{ return mCallStack.pop(); }
+		void clearCallStack()												{ mCallStack.clear(); }
+
+		QStringList procedureNames() const;
 		QStringList labels() const;
 
 	private:
@@ -105,6 +117,8 @@ namespace ActionTools
 		QStringList mMissingActions;
 		int mPauseBefore;
 		int mPauseAfter;
+		QHash<QString, int> mProcedures;
+		QStack<int> mCallStack;
 
 		Q_DISABLE_COPY(Script)
 	};

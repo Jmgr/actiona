@@ -18,12 +18,41 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "ifactionvalue.h"
+#ifndef CALLPROCEDUREINSTANCE_H
+#define CALLPROCEDUREINSTANCE_H
 
-namespace ActionTools
+#include "actioninstance.h"
+#include "actiondefinition.h"
+#include "script.h"
+
+namespace Actions
 {
-	const char *IfActionValue::WAIT = "wait";
-	const char *IfActionValue::GOTO = "goto";
-	const char *IfActionValue::RUNCODE = "run_code";
-	const char *IfActionValue::CALLPROCEDURE = "call_procedure";
+	class CallProcedureInstance : public ActionTools::ActionInstance
+	{
+		Q_OBJECT
+
+	public:
+		CallProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+			: ActionTools::ActionInstance(definition, parent)										{}
+
+		void startExecution()
+		{
+			bool ok = true;
+
+			QString name = evaluateString(ok, "name");
+
+			if(!ok)
+				return;
+
+			if(!callProcedure(name))
+				return;
+
+			emit executionEnded();
+		}
+
+	private:
+		Q_DISABLE_COPY(CallProcedureInstance)
+	};
 }
+
+#endif // CALLPROCEDUREINSTANCE_H

@@ -29,6 +29,7 @@ namespace ActionTools
 {
 	class CodeComboBox;
 	class LineComboBox;
+	class CodeLineEdit;
 
 	class ACTIONTOOLSSHARED_EXPORT IfActionParameterDefinition : public ItemsParameterDefinition
 	{
@@ -59,19 +60,23 @@ namespace ActionTools
 	private:
 		enum Editor
 		{
-			ActionEditor,
-			ParameterEditor
+			LineEditor,
+			CodeEditor,
+			TextCodeEditor,
+			ProcedureEditor,
+			NoEditor
 		};
-
 		enum Actions
 		{
 			DoNothing,
 			Goto,
 			RunCode,
+			CallProcedure,
 			Wait
 		};
 
-		void updateStatus(const QString &text);
+		Editor findAppropriateEditor(const QString &actionText) const;
+		void updateStatus(const QString &actionText);
 		QVariant defaultValue(QVariant defaultValue = QVariant()) const			{ Q_UNUSED(defaultValue); return QVariant(); }
 		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }
 
@@ -79,7 +84,9 @@ namespace ActionTools
 		static StringListPair actions;
 
 		CodeComboBox *mActionEdit;
-		LineComboBox *mLineEdit;
+		LineComboBox *mLineComboBox;
+		CodeLineEdit *mCodeLineEdit;
+		CodeComboBox *mProcedureComboBox;
 		bool mAllowWait;
 		QString mDefaultAction;
 		QString mDefaultLine;

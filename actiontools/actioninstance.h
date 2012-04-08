@@ -31,6 +31,7 @@
 #include <QSharedData>
 #include <QColor>
 #include <QScriptValue>
+#include <QVariant>
 
 class QScriptEngine;
 class QDataStream;
@@ -48,7 +49,8 @@ namespace ActionTools
 	class ActionInstanceData : public QSharedData
 	{
 	public:
-		ActionInstanceData() : definition(0), enabled(true), selected(false), pauseBefore(0), pauseAfter(0), timeout(0), script(0), scriptEngine(0)		{}
+		ActionInstanceData() : definition(0), enabled(true), selected(false), pauseBefore(0), pauseAfter(0), timeout(0), script(0), scriptEngine(0), scriptLine(0)
+			{}
 		ActionInstanceData(const ActionInstanceData &other)
 			: QSharedData(other),
 			parametersData(other.parametersData),
@@ -63,7 +65,10 @@ namespace ActionTools
 			pauseAfter(other.pauseAfter),
 			timeout(other.timeout),
 			script(other.script),
-			scriptEngine(other.scriptEngine)																										{}
+			scriptEngine(other.scriptEngine),
+			scriptLine(other.scriptLine),
+			runtimeParameters(other.runtimeParameters)
+			{}
 
 		bool operator==(const ActionInstanceData &other) const;
 		
@@ -80,6 +85,8 @@ namespace ActionTools
 		int timeout;
 		Script *script;
 		QScriptEngine *scriptEngine;
+		int scriptLine;
+		QVariantHash runtimeParameters;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
@@ -133,6 +140,10 @@ namespace ActionTools
 		Parameter parameter(const QString &name) const						{ return d->parametersData.value(name); }
 		SubParameter subParameter(const QString &parameterName, const QString &subParameterName) const
 																			{ return parameter(parameterName).subParameter(subParameterName); }
+		void setRuntimeParameter(const QString &parameterName, const QVariant &value)
+																			{ d->runtimeParameters.insert(parameterName, value); }
+		QVariant runtimeParameter(const QString &parameterName) const		{ return d->runtimeParameters.value(parameterName); }
+		void clearRuntimeParameters()										{ d->runtimeParameters.clear(); }
 
 		virtual void reset()												{}//This is called when this action should reset its counter (for loops)
 		virtual void startExecution()										{}//This is called when the action should start its execution
@@ -141,7 +152,12 @@ namespace ActionTools
 		virtual void pauseExecution()										{}//This is called when the action should pause its execution
 		virtual void resumeExecution()										{}//This is called when the action should resume its execution
 
-		void setupExecution(QScriptEngine *scriptEngine, Script *script)	{ d->scriptEngine = scriptEngine; d->script = script; }
+		void setupExecution(QScriptEngine *scriptEngine, Script *script, int scriptLine)
+		{
+			d->scriptEngine = scriptEngine;
+			d->script = script;
+			d->scriptLine = scriptLine;
+		}
 
 		void copyActionDataFrom(const ActionInstance &other);
 
@@ -159,6 +175,8 @@ namespace ActionTools
 
 	protected:
 		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }
+		Script *script() const												{ return d->script; }
+		int scriptLine() const												{ return d->scriptLine; }
 
 		/** Parameter management **/
 		QVariant evaluateVariant(bool &ok,
@@ -247,12 +265,15 @@ namespace ActionTools
 
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);
+		void setNextLine(int nextLine);
 
 		void setVariable(const QString &name, const QVariant &value);
 		void setVariableFromScriptValue(const QString &name, const QScriptValue &value);
 		QVariant variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
+
+		bool callProcedure(const QString &procedureName);
 
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);

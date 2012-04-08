@@ -90,10 +90,12 @@ namespace ActionTools
 
 	signals:
 		void itemDoubleClicked(int item);
+		void itemClicked(int item);
 
 	private slots:
 		void on_clearPushButton_clicked();
 		void on_console_doubleClicked(const QModelIndex &index);
+		void on_console_clicked(const QModelIndex &index);
 
 	private:
 		void addLine(const QString &message, QStandardItem *item, Source source, Type type = Information);

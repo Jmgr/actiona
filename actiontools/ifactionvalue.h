@@ -46,6 +46,7 @@ namespace ActionTools
 		static const char *WAIT;
 		static const char *GOTO;
 		static const char *RUNCODE;
+		static const char *CALLPROCEDURE;
 		
 	private:
 		QString mAction;

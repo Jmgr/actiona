@@ -548,6 +548,24 @@ namespace ActionTools
 		return true;
 	}
 
+	QStringList Script::procedureNames() const
+	{
+		QStringList back;
+
+		foreach(const ActionInstance *actionInstance, mActionInstances)
+		{
+			if(actionInstance->definition()->id() == "ActionBeginProcedure")
+			{
+				const ActionTools::SubParameter &nameParameter = actionInstance->subParameter("name", "value");
+				const QString &procedureName = nameParameter.value().toString();
+
+				back.append(procedureName);
+			}
+		}
+
+		return back;
+	}
+
 	QStringList Script::labels() const
 	{
 		QStringList back;
