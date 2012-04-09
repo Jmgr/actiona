@@ -1010,7 +1010,7 @@ void MainWindow::on_actionImport_script_content_triggered()
 	ScriptContentDialog scriptContentDialog(ScriptContentDialog::Write, mScript, this);
 	if(scriptContentDialog.exec() == QDialog::Accepted)
 	{
-		QByteArray newContent(scriptContentDialog.text().toUtf8());
+		QByteArray newContent(scriptContentDialog.text().trimmed().toUtf8());
 		QBuffer buffer(&newContent);
 
 		buffer.open(QIODevice::ReadOnly);

@@ -63,7 +63,7 @@ void ScriptContentDialog::accept()
 		return;
 	}
 	
-	QString content = ui->scriptContent->toPlainText();
+	QString content = ui->scriptContent->toPlainText().trimmed();
 	if(!content.isEmpty() && !mScript->validateContent(content))
 	{
 		if(!mScript->statusMessage().isEmpty())
