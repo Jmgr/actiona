@@ -347,6 +347,33 @@ namespace ActionTools
 			QXmlSchemaValidator validator(schema);
 			if(!validator.validate(device))
 			{
+				//If we could not validate, try to read the settings value to get the version
+				device->reset();
+
+				QXmlStreamReader stream(device);
+				while(!stream.atEnd() && !stream.hasError())
+				{
+					stream.readNext();
+
+					if(stream.isStartDocument())
+						continue;
+
+					if(!stream.isStartElement())
+						continue;
+
+					if(stream.name() == "settings")
+					{
+						const QXmlStreamAttributes &attributes = stream.attributes();
+						mProgramName = attributes.value("program").toString();
+						mProgramVersion = Tools::Version(attributes.value("version").toString());
+						mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
+						mOs = attributes.value("os").toString();
+
+						if(mScriptVersion > scriptVersion)
+							return ReadBadScriptVersion;
+					}
+				}
+
 				mStatusMessage = messageHandler.statusMessage();
 				mLine = messageHandler.line();
 				mColumn = messageHandler.column();
