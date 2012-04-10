@@ -1,3 +1,8 @@
+3.4.1 (10/04/12)
+- Executer: fixed a bug increasing the pause before and after an action
+- Gui: removed spaces at begin and end of imported scripts to prevent an XML import error
+- ActionTools: corrected a bug where a newer version of the script file schema could be seen as a corrupted script
+
 3.4.0 (08/04/12)
 - Actions: added three actions allowing the use of procedures
 - Actions: added a new "If action" action allowing to call a procedure
