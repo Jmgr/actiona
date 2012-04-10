@@ -607,7 +607,7 @@ namespace LibExecuter
 		mExecutionStatus = PostPause;
 
 		mExecutionTimer.start();
-		mExecutionTime = 0;
+		mExecutionTime.start();
 		if(currentActionInstance()->pauseAfter() + mPauseAfter > 0)
 		{
 			mExecutionWindow->setProgressEnabled(true);
@@ -689,7 +689,7 @@ namespace LibExecuter
 		if(actionTimeout > 0)
 		{
 			mExecutionTimer.start();
-			mExecutionTime = 0;
+			mExecutionTime.start();
 			mExecutionWindow->setProgressEnabled(true);
 			mExecutionWindow->setProgressMinimum(0);
 			mExecutionWindow->setProgressMaximum(actionTimeout);
@@ -708,21 +708,19 @@ namespace LibExecuter
 		if(mExecutionPaused)
 			return;
 		
-		mExecutionTime += mExecutionTimer.interval();
-		
 		ActionTools::ActionInstance *actionInstance = currentActionInstance();
 		switch(mExecutionStatus)
 		{
 		case PrePause:
-			if(mExecutionTime >= actionInstance->pauseBefore() + mPauseBefore)
+			if(mExecutionTime.elapsed() >= actionInstance->pauseBefore() + mPauseBefore)
 			{
 				mExecutionTimer.stop();
 				startActionExecution();
 			}
-			mExecutionWindow->setProgressValue(mExecutionTime);
+			mExecutionWindow->setProgressValue(mExecutionTime.elapsed());
 			break;
 		case Executing://Timeout
-			if(mExecutionTime >= actionInstance->timeout())
+			if(mExecutionTime.elapsed() >= actionInstance->timeout())
 			{
 				mExecutionTimer.stop();
 				actionInstance->disconnect();
@@ -730,15 +728,15 @@ namespace LibExecuter
 	
 				executionException(ActionTools::ActionException::TimeoutException, QString());
 			}
-			mExecutionWindow->setProgressValue(mExecutionTime);
+			mExecutionWindow->setProgressValue(mExecutionTime.elapsed());
 			break;
 		case PostPause:
-			if(mExecutionTime >= actionInstance->pauseAfter() + mPauseAfter)
+			if(mExecutionTime.elapsed() >= actionInstance->pauseAfter() + mPauseAfter)
 			{
 				mExecutionTimer.stop();
 				startNextAction();
 			}
-			mExecutionWindow->setProgressValue(mExecutionTime);
+			mExecutionWindow->setProgressValue(mExecutionTime.elapsed());
 			break;
 		default:
 			Q_ASSERT(false && "updateTimerProgress() called, but execution is stopped");
@@ -946,7 +944,7 @@ namespace LibExecuter
 		mExecutionStatus = PrePause;
 
 		mExecutionTimer.start();
-		mExecutionTime = 0;
+		mExecutionTime.start();
 		if(currentActionInstance()->pauseBefore() + mPauseBefore > 0)
 		{
 			mExecutionWindow->setProgressEnabled(true);

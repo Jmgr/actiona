@@ -27,6 +27,7 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QScriptEngineDebugger>
 
 namespace ActionTools
@@ -152,7 +153,7 @@ namespace LibExecuter
 		ScriptAgent *mScriptAgent;
 		QList<bool> mActionEnabled;
 		QTimer mExecutionTimer;
-		qint64 mExecutionTime;
+		QElapsedTimer mExecutionTime;
 		QProgressDialog *mProgressDialog;
 		int mActiveActionsCount;
 		bool mExecutionPaused;
