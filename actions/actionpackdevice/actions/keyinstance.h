@@ -26,10 +26,17 @@
 #include "stringlistpair.h"
 
 #include <QTimer>
+#include <QThread>
 
 namespace Actions
 {
-	class KeyInstance : public ActionTools::ActionInstance
+    class Sleeper : public QThread
+    {
+    public:
+        static void msleep(unsigned long msecs){QThread::msleep(msecs);}
+    };
+
+    class KeyInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
 	
@@ -66,7 +73,8 @@ namespace Actions
 	private:
 		void pressOrReleaseModifiers(bool press);
 
-		KeyboardDevice mKeyboardDevice;
+        Sleeper mSleeper;
+        KeyboardDevice mKeyboardDevice;
 		QString mKey;
 		bool mCtrl;
 		bool mAlt;

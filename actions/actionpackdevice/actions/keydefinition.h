@@ -81,7 +81,14 @@ namespace Actions
 			meta->setTooltip(tr("Should the %1 key be pressed").arg(metaKeyName));
 			addElement(meta);
 
-			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
+            ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
+            amount->setTooltip(tr("The amount of key presses"));
+            amount->setMinimum(1);
+            amount->setMaximum(std::numeric_limits<int>::max());
+            amount->setDefaultValue(1);
+            addElement(amount);
+
+            ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
 			type->setTooltip(tr("The key type to use"));
 			type->setItems(KeyInstance::types);
 			type->setDefaultValue(KeyInstance::types.second.at(KeyInstance::Win32Type));

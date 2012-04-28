@@ -55,45 +55,58 @@ namespace Actions
 		mShift = evaluateBoolean(ok, "shift");
 		mMeta = evaluateBoolean(ok, "meta");
 		Type type = evaluateListElement<Type>(ok, types, "type");
+        int amount = evaluateInteger(ok, "amount");
 		int pause = evaluateInteger(ok, "pause");
 	
-		if(!ok)
+        if(!ok)
 			return;
 
-		mKeyboardDevice.setType(static_cast<KeyboardDevice::Type>(type));
-	
-		bool result = true;
-	
-		switch(action)
-		{
-		case PressAction:
-			pressOrReleaseModifiers(true);
+        if(action != PressReleaseAction)
+            amount = 1;
 
-			result &= mKeyboardDevice.pressKey(mKey);
-			break;
-		case ReleaseAction:
-			pressOrReleaseModifiers(false);
+        if(amount <= 0)
+        {
+            setCurrentParameter("amount");
+            emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid key presses amount"));
+            return;
+        }
 
-			result &= mKeyboardDevice.releaseKey(mKey);
-			break;
-		case PressReleaseAction:
-			pressOrReleaseModifiers(true);
+        mKeyboardDevice.setType(static_cast<KeyboardDevice::Type>(type));
 
-			result &= mKeyboardDevice.pressKey(mKey);
+        bool result = true;
 
-			mTimer.setSingleShot(true);
-			mTimer.start(pause);
-			break;
-		}
-		
-		if(!result)
+        for(int i = 0; i < amount; ++i)
+        {
+            switch(action)
+            {
+            case PressAction:
+                pressOrReleaseModifiers(true);
+
+                result &= mKeyboardDevice.pressKey(mKey);
+                break;
+            case ReleaseAction:
+                pressOrReleaseModifiers(false);
+
+                result &= mKeyboardDevice.releaseKey(mKey);
+                break;
+            case PressReleaseAction:
+                pressOrReleaseModifiers(true);
+
+                result &= mKeyboardDevice.pressKey(mKey);
+                mSleeper.msleep(pause);
+                result &= mKeyboardDevice.releaseKey(mKey);
+                break;
+            }
+        }
+
+
+        if(!result)
 		{
 			emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
 			return;
 		}
 
-		if(action != PressReleaseAction)
-			emit executionEnded();
+        QTimer::singleShot(1, this, SIGNAL(executionEnded()));
 	}
 
 	void KeyInstance::stopExecution()
