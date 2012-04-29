@@ -55,8 +55,9 @@ namespace Actions
 		mShift = evaluateBoolean(ok, "shift");
 		mMeta = evaluateBoolean(ok, "meta");
 		Type type = evaluateListElement<Type>(ok, types, "type");
-        int amount = evaluateInteger(ok, "amount");
-		int pause = evaluateInteger(ok, "pause");
+
+        amount = evaluateInteger(ok, "amount");
+        pause  = evaluateInteger(ok, "pause");
 	
         if(!ok)
 			return;
@@ -75,30 +76,27 @@ namespace Actions
 
         bool result = true;
 
-        for(int i = 0; i < amount; ++i)
+        switch(action)
         {
-            switch(action)
-            {
-            case PressAction:
-                pressOrReleaseModifiers(true);
+        case PressAction:
+            pressOrReleaseModifiers(true);
 
-                result &= mKeyboardDevice.pressKey(mKey);
-                break;
-            case ReleaseAction:
-                pressOrReleaseModifiers(false);
+            result &= mKeyboardDevice.pressKey(mKey);
+            break;
+        case ReleaseAction:
+            pressOrReleaseModifiers(false);
 
-                result &= mKeyboardDevice.releaseKey(mKey);
-                break;
-            case PressReleaseAction:
-                pressOrReleaseModifiers(true);
+            result &= mKeyboardDevice.releaseKey(mKey);
+            break;
+        case PressReleaseAction:
+            pressOrReleaseModifiers(true);
 
-                result &= mKeyboardDevice.pressKey(mKey);
-                mSleeper.msleep(pause);
-                result &= mKeyboardDevice.releaseKey(mKey);
-                break;
-            }
+            result &= mKeyboardDevice.pressKey(mKey);
+
+            mTimer.setSingleShot(true);
+            mTimer.start(pause);
+            break;
         }
-
 
         if(!result)
 		{
@@ -106,7 +104,8 @@ namespace Actions
 			return;
 		}
 
-        QTimer::singleShot(1, this, SIGNAL(executionEnded()));
+        if(action != PressReleaseAction)
+            emit executionEnded();
 	}
 
 	void KeyInstance::stopExecution()
@@ -121,11 +120,33 @@ namespace Actions
 
 	void KeyInstance::sendRelease()
 	{
-		pressOrReleaseModifiers(false);
+        mTimer.stop(); /* useless because mTimer is SingleShot ? */
+
+        pressOrReleaseModifiers(false);
 		mKeyboardDevice.releaseKey(mKey);
 
-		emit executionEnded();
+        if (--amount > 0)
+            emit sendPressKey();
+        else
+            emit executionEnded();
 	}
+
+    void KeyInstance::sendPressKey()
+    {
+        bool result = true;
+
+        pressOrReleaseModifiers(true);
+
+        result &= mKeyboardDevice.pressKey(mKey);
+
+        if(!result)
+        {
+            emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
+            return;
+        }
+
+        mTimer.start(pause);
+    }
 
 	void KeyInstance::pressOrReleaseModifiers(bool press)
 	{
