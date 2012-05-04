@@ -47,7 +47,7 @@ namespace Actions
 	void KeyInstance::startExecution()
 	{
 		bool ok = true;
-	
+
 		mKey = evaluateString(ok, "key", "key");
 		Action action = evaluateListElement<Action>(ok, actions, "action");
 		mCtrl = evaluateBoolean(ok, "ctrl");
@@ -55,57 +55,56 @@ namespace Actions
 		mShift = evaluateBoolean(ok, "shift");
 		mMeta = evaluateBoolean(ok, "meta");
 		Type type = evaluateListElement<Type>(ok, types, "type");
+		
+		mAmount = evaluateInteger(ok, "amount");
+		mPause  = evaluateInteger(ok, "pause");
+		
+		if (!ok) return;
+		
+		if(action != PressReleaseAction)
+			mAmount = 1;
 
-        amount = evaluateInteger(ok, "amount");
-        pause  = evaluateInteger(ok, "pause");
-	
-        if(!ok)
+		if(mAmount <= 0)
+		{
+			setCurrentParameter("amount");
+			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid key presses amount"));
 			return;
+		}
 
-        if(action != PressReleaseAction)
-            amount = 1;
+		mKeyboardDevice.setType(static_cast<KeyboardDevice::Type>(type));
 
-        if(amount <= 0)
-        {
-            setCurrentParameter("amount");
-            emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid key presses amount"));
-            return;
-        }
+		bool result = true;
 
-        mKeyboardDevice.setType(static_cast<KeyboardDevice::Type>(type));
+		switch(action)
+		{
+		case PressAction:
+			pressOrReleaseModifiers(true);
 
-        bool result = true;
+			result &= mKeyboardDevice.pressKey(mKey);
+			break;
+		case ReleaseAction:
+			pressOrReleaseModifiers(false);
 
-        switch(action)
-        {
-        case PressAction:
-            pressOrReleaseModifiers(true);
+			result &= mKeyboardDevice.releaseKey(mKey);
+			break;
+		case PressReleaseAction:
+			pressOrReleaseModifiers(true);
 
-            result &= mKeyboardDevice.pressKey(mKey);
-            break;
-        case ReleaseAction:
-            pressOrReleaseModifiers(false);
+			result &= mKeyboardDevice.pressKey(mKey);
 
-            result &= mKeyboardDevice.releaseKey(mKey);
-            break;
-        case PressReleaseAction:
-            pressOrReleaseModifiers(true);
+			mTimer.setSingleShot(true);
+			mTimer.start(mPause);
+			break;
+		}
 
-            result &= mKeyboardDevice.pressKey(mKey);
-
-            mTimer.setSingleShot(true);
-            mTimer.start(pause);
-            break;
-        }
-
-        if(!result)
+		if(!result)
 		{
 			emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
 			return;
 		}
 
-        if(action != PressReleaseAction)
-            emit executionEnded();
+		if(action != PressReleaseAction)
+			emit executionEnded();
 	}
 
 	void KeyInstance::stopExecution()
@@ -120,33 +119,34 @@ namespace Actions
 
 	void KeyInstance::sendRelease()
 	{
-        mTimer.stop(); /* useless because mTimer is SingleShot ? */
+		mTimer.stop(); /* useless because mTimer is SingleShot ? */
 
-        pressOrReleaseModifiers(false);
+		pressOrReleaseModifiers(false);
 		mKeyboardDevice.releaseKey(mKey);
 
-        if (--amount > 0)
-            emit sendPressKey();
-        else
-            emit executionEnded();
+		mAmount--;
+		if (mAmount > 0)
+			emit sendPressKey();
+		else
+			emit executionEnded();
 	}
 
-    void KeyInstance::sendPressKey()
-    {
-        bool result = true;
+	void KeyInstance::sendPressKey()
+	{
+		bool result = true;
 
-        pressOrReleaseModifiers(true);
+		pressOrReleaseModifiers(true);
 
-        result &= mKeyboardDevice.pressKey(mKey);
+		result &= mKeyboardDevice.pressKey(mKey);
 
-        if(!result)
-        {
-            emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
-            return;
-        }
+		if(!result)
+		{
+			emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
+			return;
+		}
 
-        mTimer.start(pause);
-    }
+		mTimer.start(mPause);
+	}
 
 	void KeyInstance::pressOrReleaseModifiers(bool press)
 	{

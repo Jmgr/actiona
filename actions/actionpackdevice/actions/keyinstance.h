@@ -29,10 +29,10 @@
 
 namespace Actions
 {
-    class KeyInstance : public ActionTools::ActionInstance
+	class KeyInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-	
+
 	public:
 		enum Action
 		{
@@ -50,33 +50,33 @@ namespace Actions
 			FailedToSendInputException = ActionTools::ActionException::UserException,
 			InvalidActionException
 		};
-	
+
 		KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 		
 		static ActionTools::StringListPair actions;
 		static ActionTools::StringListPair types;
-	
+
 		void startExecution();
 		void stopExecution();
 		void stopLongTermExecution();
 
 	private slots:
 		void sendRelease();
-        void sendPressKey();
-	
+		void sendPressKey();
+
 	private:
 		void pressOrReleaseModifiers(bool press);
 
-        KeyboardDevice mKeyboardDevice;
+		KeyboardDevice mKeyboardDevice;
 		QString mKey;
 		bool mCtrl;
 		bool mAlt;
 		bool mShift;
 		bool mMeta;
-        int  amount;
-        int  pause;
+		int  mAmount;
+		int  mPause;
 		QTimer mTimer;
-		
+
 		Q_DISABLE_COPY(KeyInstance)
 	};
 }

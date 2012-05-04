@@ -40,7 +40,7 @@ namespace Actions
 {
 	class KeyDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-	   Q_OBJECT
+		Q_OBJECT
 	
 	public:
 		explicit KeyDefinition(ActionTools::ActionPack *pack)
@@ -81,14 +81,14 @@ namespace Actions
 			meta->setTooltip(tr("Should the %1 key be pressed").arg(metaKeyName));
 			addElement(meta);
 
-            ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
-            amount->setTooltip(tr("The amount of key presses"));
-            amount->setMinimum(1);
-            amount->setMaximum(std::numeric_limits<int>::max());
-            amount->setDefaultValue(1);
-            addElement(amount);
+			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
+			amount->setTooltip(tr("The amount of key presses"));
+			amount->setMinimum(1);
+			amount->setMaximum(std::numeric_limits<int>::max());
+			amount->setDefaultValue(1);
+			addElement(amount);
 
-            ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
+			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
 			type->setTooltip(tr("The key type to use"));
 			type->setItems(KeyInstance::types);
 			type->setDefaultValue(KeyInstance::types.second.at(KeyInstance::Win32Type));
@@ -106,7 +106,7 @@ namespace Actions
 			addException(KeyInstance::FailedToSendInputException, tr("Send input failure"));
 			addException(KeyInstance::InvalidActionException, tr("Invalid action"));
 		}
-	
+
 		QString name() const													{ return QObject::tr("Key"); }
 		QString id() const														{ return "ActionKey"; }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
