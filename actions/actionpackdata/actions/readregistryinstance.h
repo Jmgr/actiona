@@ -30,8 +30,6 @@ namespace Actions
 	class ReadRegistryInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(ActionTools::Registry::Key)
-		Q_ENUMS(ActionTools::Registry::ReadResult)
 
 	public:
 		enum Exceptions

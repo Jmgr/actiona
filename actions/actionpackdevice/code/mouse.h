@@ -32,11 +32,10 @@
 
 namespace Code
 {
-	class Mouse : public CodeClass, public ActionTools::SystemInput::Listener
+	class Mouse : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(MouseDevice::Button)
-		Q_ENUMS(ActionTools::SystemInput::Button)
+		Q_ENUMS(Button)
 		Q_PROPERTY(QScriptValue onMotion READ onMotion WRITE setOnMotion)
 		Q_PROPERTY(QScriptValue onWheel READ onWheel WRITE setOnWheel)
 		Q_PROPERTY(QScriptValue onButtonPressed READ onButtonPressed WRITE setOnButtonPressed)
@@ -44,6 +43,13 @@ namespace Code
 
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+
+		enum Button
+		{
+			LeftButton,
+			MiddleButton,
+			RightButton
+		};
 		
 		Mouse();
 		~Mouse();
@@ -62,10 +68,10 @@ namespace Code
 		QString toString() const										{ return "Mouse"; }
 		QScriptValue position() const;
 		QScriptValue move() const;
-		bool isButtonPressed(MouseDevice::Button button) const;
-		QScriptValue press(MouseDevice::Button button = MouseDevice::LeftButton);
-		QScriptValue release(MouseDevice::Button button = MouseDevice::LeftButton);
-		QScriptValue click(MouseDevice::Button button = MouseDevice::LeftButton);
+		bool isButtonPressed(Button button = LeftButton) const;
+		QScriptValue press(Button button = LeftButton);
+		QScriptValue release(Button button = LeftButton);
+		QScriptValue click(Button button = LeftButton);
 		QScriptValue wheel(int intensity = 1) const;
 
 	private:
@@ -76,12 +82,13 @@ namespace Code
 
 	private:
 		MouseDevice mMouseDevice;
-		ActionTools::SystemInput::Recorder mRecorder;
 		QScriptValue mOnMotion;
 		QScriptValue mOnWheel;
 		QScriptValue mOnButtonPressed;
 		QScriptValue mOnButtonReleased;
 	};
 }
+
+Q_DECLARE_METATYPE(MouseDevice::Button)
 
 #endif // MOUSE_H

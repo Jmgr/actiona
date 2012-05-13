@@ -40,14 +40,58 @@ namespace Code
 		Q_PROPERTY(QScriptValue onReadyReadStandardOutput READ onReadyReadStandardOutput WRITE setOnReadyReadStandardOutput)
 		Q_PROPERTY(QScriptValue onStarted READ onStarted WRITE setOnStarted)
 		Q_PROPERTY(QScriptValue onStateChanged READ onStateChanged WRITE setOnStateChanged)
-		Q_ENUMS(QProcess::ProcessError)
-		Q_ENUMS(QProcess::ExitStatus)
-		Q_ENUMS(QProcess::ProcessState)
-		Q_ENUMS(QProcess::ProcessChannel)
-		Q_ENUMS(QProcess::ProcessChannelMode)
-		Q_FLAGS(QIODevice::OpenMode)
+		Q_ENUMS(ProcessError)
+		Q_ENUMS(ExitStatus)
+		Q_ENUMS(ProcessState)
+		Q_ENUMS(ProcessChannel)
+		Q_ENUMS(ProcessChannelMode)
+		Q_FLAGS(OpenModeFlag OpenMode)
 
 	public:
+		enum ProcessError
+		{
+			FailedToStart = QProcess::FailedToStart,
+			Crashed = QProcess::Crashed,
+			Timedout = QProcess::Timedout,
+			ReadError = QProcess::ReadError,
+			WriteError = QProcess::WriteError,
+			UnknownError = QProcess::UnknownError
+		};
+		enum ExitStatus
+		{
+			NormalExit = QProcess::NormalExit,
+			CrashExit = QProcess::CrashExit
+		};
+		enum ProcessState
+		{
+			NotRunning = QProcess::NotRunning,
+			Starting = QProcess::Starting,
+			Running = QProcess::Running
+		};
+		enum ProcessChannel
+		{
+			StandardOutput = QProcess::StandardOutput,
+			StandardError = QProcess::StandardError
+		};
+		enum ProcessChannelMode
+		{
+			SeparateChannels = QProcess::SeparateChannels,
+			MergedChannels = QProcess::MergedChannels,
+			ForwardedChannels = QProcess::ForwardedChannels
+		};
+		enum OpenModeFlag
+		{
+			NotOpen = QIODevice::NotOpen,
+			ReadOnly = QIODevice::ReadOnly,
+			WriteOnly = QIODevice::WriteOnly,
+			ReadWrite = QIODevice::ReadWrite,
+			Append = QIODevice::Append,
+			Truncate = QIODevice::Truncate,
+			Text = QIODevice::Text,
+			Unbuffered = QIODevice::Unbuffered
+		};
+		Q_DECLARE_FLAGS(OpenMode, OpenModeFlag)
+
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 		static QScriptValue list(QScriptContext *context, QScriptEngine *engine);
@@ -77,10 +121,10 @@ namespace Code
 		QScriptValue handle() const;
 		int id() const;
 		QScriptValue start();
-		QProcess::ProcessState state() const;
-		QProcess::ProcessError error() const;
+		ProcessState state() const;
+		ProcessError error() const;
 		int exitCode() const;
-		QProcess::ExitStatus exitStatus() const;
+		ExitStatus exitStatus() const;
 		QScriptValue readError() const;
 		QScriptValue read() const;
 		QString readErrorText(Encoding encoding = Native) const;
@@ -92,13 +136,13 @@ namespace Code
 		QScriptValue write(const QScriptValue &data);
 		QScriptValue writeText(const QString &data, Encoding encoding = Native);
 		QScriptValue setWorkingDirectory(const QString &workingDirectory);
-		QScriptValue setProcessChannelMode(QProcess::ProcessChannelMode channelMode);
+		QScriptValue setProcessChannelMode(ProcessChannelMode channelMode);
 		QScriptValue setEnvironment();
 		QScriptValue updateEnvironment();
-		QScriptValue setReadChannel(QProcess::ProcessChannel channel);
-		QScriptValue setStandardErrorFile(const QString &fileName, QIODevice::OpenMode openMode = QIODevice::Truncate);
+		QScriptValue setReadChannel(ProcessChannel channel);
+		QScriptValue setStandardErrorFile(const QString &fileName, int openMode = Truncate);
 		QScriptValue setStandardInputFile(const QString &fileName);
-		QScriptValue setStandardOutputFile(const QString &fileName, QIODevice::OpenMode openMode = QIODevice::Truncate);
+		QScriptValue setStandardOutputFile(const QString &fileName, int openMode = Truncate);
 		QScriptValue setStandardOutputProcess(const QScriptValue &processValue);
 		QScriptValue waitForFinished(int waitTime = 30000);
 		QScriptValue waitForStarted(int waitTime = 30000);

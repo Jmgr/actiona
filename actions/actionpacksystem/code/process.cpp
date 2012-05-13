@@ -182,14 +182,14 @@ namespace Code
 		return thisObject();
 	}
 
-	QProcess::ProcessState Process::state() const
+	Process::ProcessState Process::state() const
 	{
-		return mProcess->state();
+		return static_cast<ProcessState>(mProcess->state());
 	}
 
-	QProcess::ProcessError Process::error() const
+	Process::ProcessError Process::error() const
 	{
-		return mProcess->error();
+		return static_cast<ProcessError>(mProcess->error());
 	}
 
 	int Process::exitCode() const
@@ -197,9 +197,9 @@ namespace Code
 		return mProcess->exitCode();
 	}
 
-	QProcess::ExitStatus Process::exitStatus() const
+	Process::ExitStatus Process::exitStatus() const
 	{
-		return mProcess->exitStatus();
+		return static_cast<ExitStatus>(mProcess->exitStatus());
 	}
 
 	QScriptValue Process::readError() const
@@ -274,9 +274,9 @@ namespace Code
 		return thisObject();
 	}
 
-	QScriptValue Process::setProcessChannelMode(QProcess::ProcessChannelMode channelMode)
+	QScriptValue Process::setProcessChannelMode(ProcessChannelMode channelMode)
 	{
-		mProcess->setProcessChannelMode(channelMode);
+		mProcess->setProcessChannelMode(static_cast<QProcess::ProcessChannelMode>(channelMode));
 
 		return thisObject();
 	}
@@ -315,16 +315,16 @@ namespace Code
 		return thisObject();
 	}
 
-	QScriptValue Process::setReadChannel(QProcess::ProcessChannel channel)
+	QScriptValue Process::setReadChannel(ProcessChannel channel)
 	{
-		mProcess->setReadChannel(channel);
+		mProcess->setReadChannel(static_cast<QProcess::ProcessChannel>(channel));
 
 		return thisObject();
 	}
 
-	QScriptValue Process::setStandardErrorFile(const QString &fileName, QIODevice::OpenMode openMode)
+	QScriptValue Process::setStandardErrorFile(const QString &fileName, int openMode)
 	{
-		mProcess->setStandardErrorFile(fileName, openMode);
+		mProcess->setStandardErrorFile(fileName, static_cast<QIODevice::OpenModeFlag>(openMode));
 
 		return thisObject();
 	}
@@ -336,9 +336,9 @@ namespace Code
 		return thisObject();
 	}
 
-	QScriptValue Process::setStandardOutputFile(const QString &fileName, QIODevice::OpenMode openMode)
+	QScriptValue Process::setStandardOutputFile(const QString &fileName, int openMode)
 	{
-		mProcess->setStandardOutputFile(fileName, openMode);
+		mProcess->setStandardOutputFile(fileName, static_cast<QIODevice::OpenModeFlag>(openMode));
 
 		return thisObject();
 	}
@@ -367,7 +367,7 @@ namespace Code
 
 	QScriptValue Process::waitForStarted(int waitTime)
 	{
-		if(!mProcess->waitForFinished(waitTime))
+		if(!mProcess->waitForStarted(waitTime))
 			throwError("WaitForStartedError", tr("Wait for started failed"));
 
 		return thisObject();
@@ -375,7 +375,7 @@ namespace Code
 
 	QScriptValue Process::waitForBytesWritten(int waitTime)
 	{
-		if(!mProcess->waitForReadyRead(waitTime))
+		if(!mProcess->waitForBytesWritten(waitTime))
 			throwError("WaitForBytesWrittenError", tr("Waiting for bytes written failed"));
 
 		return thisObject();
@@ -413,13 +413,13 @@ namespace Code
 	void Process::error(QProcess::ProcessError processError)
 	{
 		if(mOnError.isValid())
-			mOnError.call(thisObject(), QScriptValueList() << processError);
+			mOnError.call(thisObject(), QScriptValueList() << static_cast<ProcessError>(processError));
 	}
 
 	void Process::finished(int exitCode, QProcess::ExitStatus exitStatus)
 	{
 		if(mOnFinished.isValid())
-			mOnFinished.call(thisObject(), QScriptValueList() << exitCode << exitStatus);
+			mOnFinished.call(thisObject(), QScriptValueList() << exitCode << static_cast<ExitStatus>(exitStatus));
 	}
 
 	void Process::readyReadStandardError()
@@ -443,6 +443,6 @@ namespace Code
 	void Process::stateChanged(QProcess::ProcessState newState)
 	{
 		if(mOnStateChanged.isValid())
-			mOnStateChanged.call(thisObject(), QScriptValueList() << newState);
+			mOnStateChanged.call(thisObject(), QScriptValueList() << static_cast<ProcessState>(newState));
 	}
 }

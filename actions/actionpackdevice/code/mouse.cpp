@@ -20,7 +20,6 @@
 
 #include "mouse.h"
 #include "code/point.h"
-#include "systeminputreceiver.h"
 
 #include <QScriptValueIterator>
 
@@ -50,8 +49,7 @@ namespace Code
 	}
 	
 	Mouse::Mouse()
-		: CodeClass(),
-		  mRecorder(this)
+		: CodeClass()
 	{
 	}
 
@@ -71,30 +69,30 @@ namespace Code
 		return thisObject();
 	}
 	
-	bool Mouse::isButtonPressed(MouseDevice::Button button) const
+	bool Mouse::isButtonPressed(Button button) const
 	{
-		return mMouseDevice.isButtonPressed(button);
+		return mMouseDevice.isButtonPressed(static_cast<MouseDevice::Button>(button));
 	}
 	
-	QScriptValue Mouse::press(MouseDevice::Button button)
+	QScriptValue Mouse::press(Button button)
 	{
-		if(!mMouseDevice.pressButton(button))
+		if(!mMouseDevice.pressButton(static_cast<MouseDevice::Button>(button)))
 			throwError("PressButtonError", tr("Unable to press the button"));
 		
 		return thisObject();
 	}
 
-	QScriptValue Mouse::release(MouseDevice::Button button)
+	QScriptValue Mouse::release(Button button)
 	{
-		if(!mMouseDevice.releaseButton(button))
+		if(!mMouseDevice.releaseButton(static_cast<MouseDevice::Button>(button)))
 			throwError("ReleaseButtonError", tr("Unable to release the button"));
 		
 		return thisObject();
 	}
 
-	QScriptValue Mouse::click(MouseDevice::Button button)
+	QScriptValue Mouse::click(Button button)
 	{
-		if(!mMouseDevice.buttonClick(button))
+		if(!mMouseDevice.buttonClick(static_cast<MouseDevice::Button>(button)))
 			throwError("ClickError", tr("Unable to emulate a button click"));
 		
 		return thisObject();

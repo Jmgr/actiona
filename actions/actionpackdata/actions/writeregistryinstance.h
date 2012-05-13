@@ -30,8 +30,6 @@ namespace Actions
 	class WriteRegistryInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(ActionTools::Registry::Key)
-		Q_ENUMS(ActionTools::Registry::WriteResult)
 
 	public:
 		enum Exceptions

@@ -164,9 +164,9 @@ namespace Code
 		return processId();
 	}
 	
-	bool ProcessHandle::kill(ActionTools::CrossPlatform::KillMode killMode, int timeout) const
+	bool ProcessHandle::kill(KillMode killMode, int timeout) const
 	{
-		return ActionTools::CrossPlatform::killProcess(mProcessId, killMode, timeout);
+		return ActionTools::CrossPlatform::killProcess(mProcessId, static_cast<ActionTools::CrossPlatform::KillMode>(killMode), timeout);
 	}
 	
 	bool ProcessHandle::isRunning() const

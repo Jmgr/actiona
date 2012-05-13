@@ -18,11 +18,16 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT ProcessHandle : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(ActionTools::CrossPlatform::KillMode)
-		Q_ENUMS(ActionTools::CrossPlatform::ProcessStatus)
+		Q_ENUMS(KillMode)
 		Q_ENUMS(Priority)
 
 	public:
+		enum KillMode
+		{
+			Graceful,
+			Forceful,
+			GracefulThenForceful
+		};
 		enum Priority
 		{
 			AboveNormal,
@@ -56,7 +61,7 @@ namespace Code
 		bool equals(const QScriptValue &other) const;
 		QString toString() const;
 		int id() const;
-		bool kill(ActionTools::CrossPlatform::KillMode killMode = ActionTools::CrossPlatform::GracefulThenForceful, int timeout = 3000) const;
+		bool kill(KillMode killMode = GracefulThenForceful, int timeout = 3000) const;
 		bool isRunning() const;
 		QString command() const;
 		Priority priority() const;
