@@ -43,8 +43,8 @@ namespace Actions
 
 			QString date = evaluateString(ok, "date");
 			ActionTools::IfActionValue ifBefore = evaluateIfAction(ok, "ifBefore");
-			ActionTools::IfActionValue ifNow = evaluateIfAction(ok, "ifBefore");
-			ActionTools::IfActionValue ifAfter = evaluateIfAction(ok, "ifNow");
+			ActionTools::IfActionValue ifNow = evaluateIfAction(ok, "ifNow");
+			ActionTools::IfActionValue ifAfter = evaluateIfAction(ok, "ifAfter");
 
 			if(!ok)
 				return;
