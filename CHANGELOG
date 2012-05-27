@@ -1,3 +1,9 @@
+3.4.2 (27/05/12)
+- Actions: corrected a bug in the Time Condition action
+- Code: corrected a bug preventing Mouse functions to work with other buttons than the left one
+- Code: corrected bugs in the waitForX Process functions
+- Code: corrected bugs in code classes using enums as function parameters
+
 3.4.1 (10/04/12)
 - Executer: fixed a bug increasing the pause before and after an action
 - Gui: removed spaces at begin and end of imported scripts to prevent an XML import error
