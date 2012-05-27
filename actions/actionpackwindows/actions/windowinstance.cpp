@@ -53,8 +53,8 @@ namespace Actions
 			return;
 
 		QPoint movePosition;
-		int resizeWidth;
-		int resizeHeight;
+		int resizeWidth = 0;
+		int resizeHeight = 0;
 
 		if(action == Move)
 		{

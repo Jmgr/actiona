@@ -57,8 +57,8 @@ namespace Actions
 			return;
 
 		QString textDefaultValue;
-		double decimalDefaultValue;
-		int integerDefaultValue;
+		double decimalDefaultValue = 0.0;
+		int integerDefaultValue = 0;
 
 		mInputDialog = 0;
 
