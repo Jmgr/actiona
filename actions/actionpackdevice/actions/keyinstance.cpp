@@ -47,7 +47,7 @@ namespace Actions
 	void KeyInstance::startExecution()
 	{
 		bool ok = true;
-	
+
 		mKey = evaluateString(ok, "key", "key");
 		Action action = evaluateListElement<Action>(ok, actions, "action");
 		mCtrl = evaluateBoolean(ok, "ctrl");
@@ -55,15 +55,26 @@ namespace Actions
 		mShift = evaluateBoolean(ok, "shift");
 		mMeta = evaluateBoolean(ok, "meta");
 		Type type = evaluateListElement<Type>(ok, types, "type");
-		int pause = evaluateInteger(ok, "pause");
-	
-		if(!ok)
+		
+		mAmount = evaluateInteger(ok, "amount");
+		mPause  = evaluateInteger(ok, "pause");
+		
+		if (!ok) return;
+		
+		if(action != PressReleaseAction)
+			mAmount = 1;
+
+		if(mAmount <= 0)
+		{
+			setCurrentParameter("amount");
+			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid key presses amount"));
 			return;
+		}
 
 		mKeyboardDevice.setType(static_cast<KeyboardDevice::Type>(type));
-	
+
 		bool result = true;
-	
+
 		switch(action)
 		{
 		case PressAction:
@@ -82,10 +93,10 @@ namespace Actions
 			result &= mKeyboardDevice.pressKey(mKey);
 
 			mTimer.setSingleShot(true);
-			mTimer.start(pause);
+			mTimer.start(mPause);
 			break;
 		}
-		
+
 		if(!result)
 		{
 			emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
@@ -108,10 +119,33 @@ namespace Actions
 
 	void KeyInstance::sendRelease()
 	{
+		mTimer.stop(); /* useless because mTimer is SingleShot ? */
+
 		pressOrReleaseModifiers(false);
 		mKeyboardDevice.releaseKey(mKey);
 
-		emit executionEnded();
+		mAmount--;
+		if (mAmount > 0)
+			emit sendPressKey();
+		else
+			emit executionEnded();
+	}
+
+	void KeyInstance::sendPressKey()
+	{
+		bool result = true;
+
+		pressOrReleaseModifiers(true);
+
+		result &= mKeyboardDevice.pressKey(mKey);
+
+		if(!result)
+		{
+			emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
+			return;
+		}
+
+		mTimer.start(mPause);
 	}
 
 	void KeyInstance::pressOrReleaseModifiers(bool press)
