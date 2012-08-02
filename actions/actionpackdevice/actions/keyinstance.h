@@ -25,7 +25,7 @@
 #include "../keyboarddevice.h"
 #include "stringlistpair.h"
 
-#include <QTimer>
+class QTimer;
 
 namespace Actions
 {
@@ -75,7 +75,7 @@ namespace Actions
 		bool mMeta;
 		int  mAmount;
 		int  mPause;
-		QTimer mTimer;
+		QTimer *mTimer;
 
 		Q_DISABLE_COPY(KeyInstance)
 	};

@@ -27,6 +27,7 @@
 #include "listparameterdefinition.h"
 #include "numberparameterdefinition.h"
 #include "booleanparameterdefinition.h"
+#include "groupdefinition.h"
 
 #include <limits>
 
@@ -59,6 +60,19 @@ namespace Actions
 			action->setDefaultValue(KeyInstance::actions.second.at(KeyInstance::PressReleaseAction));
 			addElement(action);
 
+			ActionTools::GroupDefinition *pressAndReleaseGroup = new ActionTools::GroupDefinition(this);
+			pressAndReleaseGroup->setMasterList(action);
+			pressAndReleaseGroup->setMasterValues(QStringList() << KeyInstance::actions.first.at(KeyInstance::PressReleaseAction));
+
+			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
+			amount->setTooltip(tr("The amount of key presses to simulate"));
+			amount->setMinimum(1);
+			amount->setMaximum(std::numeric_limits<int>::max());
+			amount->setDefaultValue(1);
+			pressAndReleaseGroup->addMember(amount);
+
+			addElement(pressAndReleaseGroup);
+
 			ActionTools::BooleanParameterDefinition *ctrl = new ActionTools::BooleanParameterDefinition(ActionTools::Name("ctrl", tr("Ctrl")), this);
 			ctrl->setTooltip(tr("Should the Ctrl key be pressed"));
 			addElement(ctrl);
@@ -80,13 +94,6 @@ namespace Actions
 			ActionTools::BooleanParameterDefinition *meta = new ActionTools::BooleanParameterDefinition(ActionTools::Name("meta", metaKeyName), this);
 			meta->setTooltip(tr("Should the %1 key be pressed").arg(metaKeyName));
 			addElement(meta);
-
-			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
-			amount->setTooltip(tr("The amount of key presses"));
-			amount->setMinimum(1);
-			amount->setMaximum(std::numeric_limits<int>::max());
-			amount->setDefaultValue(1);
-			addElement(amount);
 
 			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
 			type->setTooltip(tr("The key type to use"));

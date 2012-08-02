@@ -25,6 +25,8 @@
 #include <Windows.h>
 #endif
 
+#include <QTimer>
+
 namespace Actions
 {
 	ActionTools::StringListPair KeyInstance::actions = qMakePair(
@@ -39,9 +41,10 @@ namespace Actions
 		  mCtrl(false),
 		  mAlt(false),
 		  mShift(false),
-		  mMeta(false)
+		  mMeta(false),
+		  mTimer(new QTimer(this))
 	{
-		connect(&mTimer, SIGNAL(timeout()), this, SLOT(sendRelease()));
+		connect(mTimer, SIGNAL(timeout()), this, SLOT(sendRelease()));
 	}
 
 	void KeyInstance::startExecution()
@@ -58,8 +61,12 @@ namespace Actions
 		
 		mAmount = evaluateInteger(ok, "amount");
 		mPause  = evaluateInteger(ok, "pause");
+
+		if(mPause < 0)
+			mPause = 0;
 		
-		if (!ok) return;
+		if (!ok)
+			return;
 		
 		if(action != PressReleaseAction)
 			mAmount = 1;
@@ -92,8 +99,8 @@ namespace Actions
 
 			result &= mKeyboardDevice.pressKey(mKey);
 
-			mTimer.setSingleShot(true);
-			mTimer.start(mPause);
+			mTimer->setSingleShot(true);
+			mTimer->start(mPause);
 			break;
 		}
 
@@ -109,7 +116,7 @@ namespace Actions
 
 	void KeyInstance::stopExecution()
 	{
-		mTimer.stop();
+		mTimer->stop();
 	}
 
 	void KeyInstance::stopLongTermExecution()
@@ -119,12 +126,10 @@ namespace Actions
 
 	void KeyInstance::sendRelease()
 	{
-		mTimer.stop(); /* useless because mTimer is SingleShot ? */
-
 		pressOrReleaseModifiers(false);
 		mKeyboardDevice.releaseKey(mKey);
 
-		mAmount--;
+		--mAmount;
 		if (mAmount > 0)
 			emit sendPressKey();
 		else
@@ -145,7 +150,7 @@ namespace Actions
 			return;
 		}
 
-		mTimer.start(mPause);
+		mTimer->start(mPause);
 	}
 
 	void KeyInstance::pressOrReleaseModifiers(bool press)
