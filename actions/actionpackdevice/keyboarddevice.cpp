@@ -21,6 +21,7 @@
 #include "keyboarddevice.h"
 #include "keymapper.h"
 #include "keyinput.h"
+#include "crossplatform.h"
 
 #ifdef Q_WS_X11
 #include "keysymhelper.h"
@@ -120,7 +121,7 @@ static bool sendKey(const char *key)
 }
 #endif
 
-bool KeyboardDevice::writeText(const QString &text) const
+bool KeyboardDevice::writeText(const QString &text, int delay) const
 {
 #ifdef Q_WS_X11
 	bool result = true;
@@ -167,6 +168,9 @@ bool KeyboardDevice::writeText(const QString &text) const
 			else//Single key
 				result &= sendCharacter(keySym[0]);
 		}
+
+		if(delay > 0)
+			ActionTools::CrossPlatform::sleep(delay);
 	}
 
 	return result;
@@ -191,6 +195,9 @@ bool KeyboardDevice::writeText(const QString &text) const
 		input[0].ki.wScan = input[1].ki.wScan = wideString[i];
 
 		result &= (SendInput(2, input, sizeof(INPUT)) != 0);
+
+		if(delay > 0)
+			ActionTools::CrossPlatform::sleep(delay);
 	}
 
 	return result;

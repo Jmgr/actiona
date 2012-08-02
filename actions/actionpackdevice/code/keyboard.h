@@ -44,7 +44,7 @@ namespace Code
 		QScriptValue pressKey(const QString &key);
 		QScriptValue releaseKey(const QString &key);
 		QScriptValue triggerKey(const QString &key);
-		QScriptValue writeText(const QString &text) const;
+		QScriptValue writeText(const QString &text, int delay = 0) const;
 
 	private:
 		KeyboardDevice mKeyboardDevice;
