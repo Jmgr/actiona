@@ -24,6 +24,7 @@
 #include "actiondefinition.h"
 #include "textinstance.h"
 #include "textparameterdefinition.h"
+#include "numberparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -44,7 +45,15 @@ namespace Actions
 			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("text", tr("Text")), this);
 			text->setTooltip(tr("The text to write"));
 			addElement(text);
-	
+
+			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition(ActionTools::Name("pause", tr("Pause between characters")), this);
+			pause->setTooltip(tr("The pause duration between each character"));
+			pause->setMinimum(0);
+			pause->setMaximum(std::numeric_limits<int>::max());
+			pause->setDefaultValue(0);
+			pause->setSuffix(tr(" ms", "milliseconds"));
+			addElement(pause, 1);
+
 			addException(TextInstance::FailedToSendInputException, tr("Send input failure"));
 		}
 	
@@ -56,6 +65,7 @@ namespace Actions
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/text.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 	
 	private:
 		Q_DISABLE_COPY(TextDefinition)

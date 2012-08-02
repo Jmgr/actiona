@@ -53,13 +53,12 @@ namespace Actions
 
 		mKey = evaluateString(ok, "key", "key");
 		Action action = evaluateListElement<Action>(ok, actions, "action");
+		mAmount = evaluateInteger(ok, "amount");
 		mCtrl = evaluateBoolean(ok, "ctrl");
 		mAlt = evaluateBoolean(ok, "alt");
 		mShift = evaluateBoolean(ok, "shift");
 		mMeta = evaluateBoolean(ok, "meta");
 		Type type = evaluateListElement<Type>(ok, types, "type");
-		
-		mAmount = evaluateInteger(ok, "amount");
 		mPause  = evaluateInteger(ok, "pause");
 
 		if(mPause < 0)

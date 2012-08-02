@@ -24,6 +24,8 @@
 #include "actioninstance.h"
 #include "../keyboarddevice.h"
 
+class QTimer;
+
 namespace Actions
 {
 	class TextInstance : public ActionTools::ActionInstance
@@ -36,14 +38,20 @@ namespace Actions
 			FailedToSendInputException = ActionTools::ActionException::UserException
 		};
 	
-		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
-			: ActionTools::ActionInstance(definition, parent)										{}
+		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 	
 		void startExecution();
+		void stopExecution();
 		void stopLongTermExecution();
+
+	private slots:
+		void pressNextKey();
 	
 	private:
 		KeyboardDevice mKeyboardDevice;
+		QTimer *mTimer;
+		QString mText;
+		int mCurrentCharacter;
 		
 		Q_DISABLE_COPY(TextInstance)
 	};
