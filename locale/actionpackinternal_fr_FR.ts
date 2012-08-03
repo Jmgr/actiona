@@ -22,9 +22,8 @@
         <translation>Le nom de la procédure</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="49"/>
         <source>End Procedure action cannot be found</source>
-        <translation>Impossible de trouver la fin de la procédure</translation>
+        <translation type="obsolete">Impossible de trouver la fin de la procédure</translation>
     </message>
 </context>
 <context>
@@ -524,12 +523,12 @@
         <translation>Quitte Actionaz</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="52"/>
+        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="50"/>
         <source>Begin procedure</source>
         <translation>Début de procédure</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="55"/>
+        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="53"/>
         <source>Declares a new procedure</source>
         <translation>Déclare une nouvelle procédure</translation>
     </message>

@@ -96,103 +96,113 @@
 <context>
     <name>Actions::KeyDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="53"/>
         <source>Key</source>
         <translation>Touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="53"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="54"/>
         <source>The key to simulate</source>
         <translation>La touche à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="56"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="57"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="58"/>
         <source>The action to simulate</source>
         <translation>L&apos;action à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="62"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="67"/>
+        <source>Amount</source>
+        <translation>Quantité</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="68"/>
+        <source>The amount of key presses to simulate</source>
+        <translation>La quantité de pressions de touches à simuler</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="76"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="63"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="77"/>
         <source>Should the Ctrl key be pressed</source>
         <translation>La touche Ctrl doit-elle être pressée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="66"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="80"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="67"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="81"/>
         <source>Should the Alt key be pressed</source>
         <translation>La touche Alt doit-elle être pressée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="70"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="84"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="71"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="85"/>
         <source>Should the Shift key be pressed</source>
         <translation>La touche Shift doit-elle être pressée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="75"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="89"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="77"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="91"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="81"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="95"/>
         <source>Should the %1 key be pressed</source>
         <translation>La touche %1 doit-elle être pressée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="84"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="98"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="85"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="99"/>
         <source>The key type to use</source>
         <translation>Le type de touche à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="91"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="105"/>
         <source>Press/Release pause</source>
         <translation>Pause pression/relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="92"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="106"/>
         <source>The pause duration between press and release</source>
         <translation>La durée de la pause entre pression et relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="96"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="110"/>
         <source> ms</source>
         <comment>milliseconds</comment>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="99"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="113"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="100"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="114"/>
         <source>Invalid action</source>
         <translation>Action incorrecte</translation>
     </message>
@@ -200,7 +210,13 @@
 <context>
     <name>Actions::KeyInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="91"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="76"/>
+        <source>Invalid key presses amount</source>
+        <translation>Quantité de pressions de touches incorrecte</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="108"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="148"/>
         <source>Unable to emulate key: failed to send input</source>
         <translation>Impossible de simuler la touche : l&apos;évènement n&apos;a pas pu être envoyé</translation>
     </message>
@@ -221,17 +237,33 @@
 <context>
     <name>Actions::TextDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="44"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="45"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="45"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="46"/>
         <source>The text to write</source>
         <translation>Le texte à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="48"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="49"/>
+        <source>Pause between characters</source>
+        <translation>Pause entre chaque caractère</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="50"/>
+        <source>The pause duration between each character</source>
+        <translation>La durée de la pause entre chaque caractère</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="54"/>
+        <source> ms</source>
+        <comment>milliseconds</comment>
+        <translation> ms</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="57"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
@@ -239,7 +271,8 @@
 <context>
     <name>Actions::TextInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="38"/>
+        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="86"/>
         <source>Unable to write the text</source>
         <translation>Impossible d&apos;écrire le texte</translation>
     </message>
@@ -332,22 +365,22 @@
 <context>
     <name>Code::Mouse</name>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="82"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="80"/>
         <source>Unable to press the button</source>
         <translation>Impossible d&apos;appuyer sur le bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="90"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="88"/>
         <source>Unable to release the button</source>
         <translation>Impossible de relâcher le bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="98"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="96"/>
         <source>Unable to emulate a button click</source>
         <translation>Impossible de simuler un clic de bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="106"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="104"/>
         <source>Unable to emulate the wheel</source>
         <translation>Impossible de simuler la molette</translation>
     </message>
@@ -355,27 +388,27 @@
 <context>
     <name>KeyInstance::actions</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="34"/>
         <source>Press and release</source>
         <translation>Pression et relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="34"/>
         <source>Press</source>
         <translation>Pression</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="34"/>
         <source>Release</source>
         <translation>Relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="37"/>
         <source>Win32</source>
         <translation>Win32</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="37"/>
         <source>DirectX</source>
         <translation>DirectX</translation>
     </message>
@@ -393,12 +426,12 @@
         <translation>Simule un clic de souris</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="103"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="117"/>
         <source>Key</source>
         <translation>Touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="106"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="120"/>
         <source>Emulates a key press</source>
         <translation>Simule la pression d&apos;une touche</translation>
     </message>
@@ -417,12 +450,12 @@
         <translation type="obsolete">Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="51"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="60"/>
         <source>Write text</source>
         <translation>Écriture de texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="54"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="63"/>
         <source>Write some text</source>
         <translation>Écrit du texte</translation>
     </message>
