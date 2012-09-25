@@ -119,7 +119,7 @@ namespace Actions
 			downPyramidCount->setTooltip(tr("The number of down pyramids to use\nA pyramid is a subdivision of the image used to accelerate the search\nEnter 1 here if the searched image is not very different from the source image"));
 			downPyramidCount->setMinimum(1);
 			downPyramidCount->setMaximum(std::numeric_limits<int>::max());
-			downPyramidCount->setDefaultValue(2);
+			downPyramidCount->setDefaultValue(1);
 			addElement(downPyramidCount, 1);
 
 			ActionTools::NumberParameterDefinition *searchExpansion = new ActionTools::NumberParameterDefinition(ActionTools::Name("searchExpansion", tr("Search expansion")), this);
