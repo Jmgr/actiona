@@ -68,6 +68,11 @@ p, li { white-space: pre-wrap; }
               <string>Jonathan &quot;Jmgr&quot; Mercier-Ganady</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>niconil</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
@@ -205,6 +210,11 @@ p, li { white-space: pre-wrap; }
             <item>
              <property name="text">
               <string>Le lapin</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>mchelen</string>
              </property>
             </item>
            </widget>

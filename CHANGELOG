@@ -1,3 +1,9 @@
+3.5.0 (08/12/12)
+- Actions: added a parameter to choose the key press amount in the Key action
+- Actions: added a parameter to trigger a pause between key presses to the Text action
+- Actions: setting the default value for "down pyramid count" to 1 in the Find Image action
+- Code: added a delay to the writeText function
+
 3.4.2 (27/05/12)
 - Actions: corrected a bug in the Time Condition action
 - Code: corrected a bug preventing Mouse functions to work with other buttons than the left one
