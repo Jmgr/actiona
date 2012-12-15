@@ -246,6 +246,22 @@ namespace ActionTools
 
 		stream.writeEndElement();
 
+        stream.writeStartElement("resources");
+
+        QHash<QString, Resource>::const_iterator resourceIt = mResources.constBegin();
+        while(resourceIt != mResources.constEnd())
+        {
+            stream.writeStartElement("resource");
+            stream.writeAttribute("id", resourceIt.key());
+            stream.writeAttribute("type", QString::number(resourceIt.value().type()));
+            stream.writeCharacters(resourceIt.value().data().toBase64());
+            stream.writeEndElement();
+
+            ++resourceIt;
+        }
+
+        stream.writeEndElement();
+
 		stream.writeStartElement("script");
 		stream.writeAttribute("pauseBefore", QString::number(pauseBefore()));
 		stream.writeAttribute("pauseAfter", QString::number(pauseAfter()));
@@ -316,75 +332,21 @@ namespace ActionTools
 		return true;
 	}
 
-	Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion)
+    Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion)
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Script::read");
 #endif
 		mMissingActions.clear();
 
-		MessageHandler messageHandler;
-
-		QFile schemaFile(":/script.xsd");
-		if(!schemaFile.open(QIODevice::ReadOnly))
-			return ReadInternal;
-
-		QXmlSchema schema;
-		schema.setMessageHandler(&messageHandler);
-
-		{
-#ifdef ACT_PROFILE
-			Tools::HighResolutionTimer timer("loading schema file");
-#endif
-			if(!schema.load(&schemaFile))
-				return ReadInternal;
-		}
-
-		{
-#ifdef ACT_PROFILE
-			Tools::HighResolutionTimer timer("validating file");
-#endif
-			QXmlSchemaValidator validator(schema);
-			if(!validator.validate(device))
-			{
-				//If we could not validate, try to read the settings value to get the version
-				device->reset();
-
-				QXmlStreamReader stream(device);
-				while(!stream.atEnd() && !stream.hasError())
-				{
-					stream.readNext();
-
-					if(stream.isStartDocument())
-						continue;
-
-					if(!stream.isStartElement())
-						continue;
-
-					if(stream.name() == "settings")
-					{
-						const QXmlStreamAttributes &attributes = stream.attributes();
-						mProgramName = attributes.value("program").toString();
-						mProgramVersion = Tools::Version(attributes.value("version").toString());
-						mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
-						mOs = attributes.value("os").toString();
-
-						if(mScriptVersion > scriptVersion)
-							return ReadBadScriptVersion;
-					}
-				}
-
-				mStatusMessage = messageHandler.statusMessage();
-				mLine = messageHandler.line();
-				mColumn = messageHandler.column();
-
-				return ReadBadSchema;
-			}
-		}
+        ReadResult result = validateSchema(device, scriptVersion);
+        if(result != ReadSuccess)
+            return result;
 
 		qDeleteAll(mActionInstances);
 		mActionInstances.clear();
 		mParameters.clear();
+        mResources.clear();
 
 		device->reset();
 
@@ -450,6 +412,24 @@ namespace ActionTools
 					mParameters.append(scriptParameter);
 				}
 			}
+            else if(stream.name() == "resources")
+            {
+                stream.readNext();
+
+                for(;!stream.isEndElement() || stream.name() != "resources";stream.readNext())
+                {
+                    if(!stream.isStartElement())
+                        continue;
+
+                    const QXmlStreamAttributes &attributes = stream.attributes();
+                    QString id = attributes.value("id").toString();
+                    QString base64Data = stream.readElementText();
+                    QByteArray data = QByteArray::fromBase64(base64Data.toAscii());
+                    Resource resource(data, static_cast<ResourceType>(attributes.value("type").toString().toInt()));
+
+                    mResources.insert(id, resource);
+                }
+            }
 			else if(stream.name() == "script")
 			{
 				const QXmlStreamAttributes &attributes = stream.attributes();
@@ -542,7 +522,7 @@ namespace ActionTools
 		return ReadSuccess;
 	}
 
-	bool Script::validateContent(const QString &content)
+    bool Script::validateContent(const QString &content, const Tools::Version &scriptVersion)
 	{
 		QByteArray byteArray(content.toUtf8());
 		QBuffer buffer(&byteArray);
@@ -552,7 +532,7 @@ namespace ActionTools
 
 		MessageHandler messageHandler;
 
-		QFile schemaFile(":/script.xsd");
+        QFile schemaFile(QString(":/script%1.xsd").arg(scriptVersion.toString()));
 		if(!schemaFile.open(QIODevice::ReadOnly))
 			return false;
 
@@ -616,6 +596,80 @@ namespace ActionTools
 				back << actionInstance->label();
 		}
 
-		return back;
-	}
+        return back;
+    }
+
+    Script::ReadResult Script::validateSchema(QIODevice *device, const Tools::Version &scriptVersion, bool tryOlderVersions)
+    {
+        MessageHandler messageHandler;
+
+        QFile schemaFile(QString(":/script%1.xsd").arg(scriptVersion.toString()));
+        if(!schemaFile.open(QIODevice::ReadOnly))
+            return ReadInternal;
+
+        QXmlSchema schema;
+        schema.setMessageHandler(&messageHandler);
+
+        {
+#ifdef ACT_PROFILE
+            Tools::HighResolutionTimer timer("loading schema file");
+#endif
+            if(!schema.load(&schemaFile))
+                return ReadInternal;
+        }
+
+        {
+#ifdef ACT_PROFILE
+            Tools::HighResolutionTimer timer("validating file");
+#endif
+            QXmlSchemaValidator validator(schema);
+            if(!validator.validate(device))
+            {
+                mStatusMessage = messageHandler.statusMessage();
+                mLine = messageHandler.line();
+                mColumn = messageHandler.column();
+
+                if(!tryOlderVersions)
+                    return ReadBadSchema;
+
+                //If we could not validate, try to read the settings value to get the version
+                device->reset();
+
+                QXmlStreamReader stream(device);
+                while(!stream.atEnd() && !stream.hasError())
+                {
+                    stream.readNext();
+
+                    if(stream.isStartDocument())
+                        continue;
+
+                    if(!stream.isStartElement())
+                        continue;
+
+                    if(stream.name() == "settings")
+                    {
+                        const QXmlStreamAttributes &attributes = stream.attributes();
+                        mProgramName = attributes.value("program").toString();
+                        mProgramVersion = Tools::Version(attributes.value("version").toString());
+                        mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
+                        mOs = attributes.value("os").toString();
+
+                        device->reset();
+
+                        if(mScriptVersion == scriptVersion)
+                            return ReadBadSchema;
+
+                        if(validateSchema(device, mScriptVersion, false) != ReadSuccess)
+                            return ReadBadSchema;
+
+                        return ReadSuccess;
+                    }
+                }
+
+                return ReadBadSchema;
+            }
+        }
+
+        return ReadSuccess;
+    }
 }
