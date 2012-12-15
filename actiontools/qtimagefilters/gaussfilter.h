@@ -123,7 +123,6 @@ QVariant GaussBlurFilter::option(int option) const
 
 QImage GaussBlurFilter::apply(const QImage &image, const QRect& clipRect ) const
 {
-    bool ok = true;
     if (m_radius > 0.0) {
         int uRadius = (int)ceil(m_radius);
 
@@ -143,8 +142,6 @@ QImage GaussBlurFilter::apply(const QImage &image, const QRect& clipRect ) const
         GaussBlurFilter *localThis = const_cast<GaussBlurFilter*>(this);
         localThis->addKernel(integerMatrixLeft, m_channels, m_borderPolicy);
         localThis->addKernel(integerMatrixRight, m_channels, m_borderPolicy);
-    } else {
-        ok = false;
     }
     return ConvolutionFilter::apply(image, clipRect);
 }
