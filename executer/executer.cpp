@@ -27,6 +27,7 @@
 #include "scriptagent.h"
 #include "actioninstance.h"
 #include "code/codetools.h"
+#include "code/image.h"
 #include "codeactionaz.h"
 
 #include <QDesktopWidget>
@@ -219,6 +220,37 @@ namespace LibExecuter
 		return engine->undefinedValue();
 	}
 
+    QScriptValue imageResourceFunction(QScriptContext *context, QScriptEngine *engine)
+    {
+        if(!Executer::isExecuterRunning())
+            return QScriptValue();
+
+        if(context->argumentCount() < 1)
+            return engine->undefinedValue();
+
+        QScriptValue calleeData = context->callee().data();
+        Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
+        ActionTools::Script *script = executer->script();
+        QString resourceName = context->argument(0).toString();
+
+        if(!script->hasResource(resourceName))
+        {
+            Code::CodeClass::throwError(context, engine, "ScriptResourceError", QObject::tr("Unable to find any resource named %1").arg(resourceName));
+            return engine->undefinedValue();
+        }
+
+        const ActionTools::Resource &resource = script->resource(resourceName);
+        if(resource.type() != ActionTools::Resource::ImageType)
+            return engine->undefinedValue();//Exception ?
+
+        QImage image;
+
+        if(!image.loadFromData(resource.data()))
+            return engine->undefinedValue();//Exception ?
+
+        return Code::Image::constructor(image, engine);
+    }
+
 	bool Executer::startExecution(bool onlySelection)
 	{
 		Q_ASSERT(mScriptAgent);
@@ -241,9 +273,13 @@ namespace LibExecuter
 		CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory);
 		mScriptAgent->setContext(ScriptAgent::Parameters);
 		
-		QScriptValue script = mScriptEngine->newObject();
+        QScriptValue script = mScriptEngine->newObject();
 		mScriptEngine->globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
 		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(1)));
+
+        QScriptValue imageResourceFun = mScriptEngine->newFunction(imageResourceFunction);
+        imageResourceFun.setData(mScriptEngine->newQObject(this));
+        script.setProperty("imageResource", imageResourceFun);
 
 		QScriptValue console = mScriptEngine->newObject();
 		mScriptEngine->globalObject().setProperty("Console", console, QScriptValue::ReadOnly);

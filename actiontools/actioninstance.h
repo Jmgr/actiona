@@ -188,6 +188,9 @@ namespace ActionTools
 		QString evaluateString(bool &ok,
 							const QString &parameterName,
 							const QString &subParameterName = "value");
+        QImage evaluateImage(bool &ok,
+                            const QString &parameterName,
+                            const QString &subParameterName = "value");
 		QString evaluateVariable(bool &ok,
 							const QString &parameterName,
 							const QString &subParameterName = "value");

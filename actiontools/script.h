@@ -24,6 +24,7 @@
 #include "actiontools_global.h"
 #include "version.h"
 #include "scriptparameter.h"
+#include "resource.h"
 
 #include <QVariant>
 #include <QStringList>
@@ -53,7 +54,7 @@ namespace ActionTools
 		Script(ActionFactory *actionFactory, QObject *parent = 0);
 		~Script();
 
-		void appendAction(ActionInstance *actionInstance)					{ mActionInstances.append(actionInstance); }
+        void appendAction(ActionInstance *actionInstance)                               { mActionInstances.append(actionInstance); }
 		ActionInstance *appendAction(const QString &actionDefinitionId);
 		ActionInstance *actionAt(int line) const;
 		void insertAction(int line, ActionInstance *actionInstance);
@@ -63,7 +64,7 @@ namespace ActionTools
 		void removeAction(ActionInstance *actionInstance);
 		void removeAll();
 		void moveAction(int startLine, int endLine);
-		int actionCount() const												{ return mActionInstances.count(); }
+        int actionCount() const                                                         { return mActionInstances.count(); }
 		int labelLine(const QString &label) const;
 		bool hasEnabledActions() const;
 
@@ -71,40 +72,48 @@ namespace ActionTools
 
 		bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion);
 		ReadResult read(QIODevice *device, const Tools::Version &scriptVersion);
-		bool validateContent(const QString &content);
-		const QString &statusMessage() const								{ return mStatusMessage; }
-		int line() const													{ return mLine; }
-		int column() const													{ return mColumn; }
-		const QString &programName() const									{ return mProgramName; }
-		const Tools::Version &programVersion() const						{ return mProgramVersion; }
-		const Tools::Version &scriptVersion() const							{ return mScriptVersion; }
-		const QString &os() const											{ return mOs; }
-		const QStringList &missingActions() const							{ return mMissingActions; }
-		int pauseBefore() const												{ return mPauseBefore; }
-		int pauseAfter() const												{ return mPauseAfter; }
+        bool validateContent(const QString &content, const Tools::Version &scriptVersion);
+        const QString &statusMessage() const                                            { return mStatusMessage; }
+        int line() const                                                                { return mLine; }
+        int column() const                                                          	{ return mColumn; }
+        const QString &programName() const                                          	{ return mProgramName; }
+        const Tools::Version &programVersion() const                                    { return mProgramVersion; }
+        const Tools::Version &scriptVersion() const                                     { return mScriptVersion; }
+        const QString &os() const                                                       { return mOs; }
+        const QStringList &missingActions() const                                       { return mMissingActions; }
+        int pauseBefore() const                                                         { return mPauseBefore; }
+        int pauseAfter() const                                                          { return mPauseAfter; }
 
-		void addParameter(const ScriptParameter &parameter)					{ mParameters.append(parameter); }
-		int parameterCount() const											{ return mParameters.count(); }
-		const ScriptParameter &parameter(int index) const					{ return mParameters.at(index); }
-		void removeAllParameters()											{ mParameters.clear(); }
-		QList<ScriptParameter> parameters() const							{ return mParameters; }
-		void setPauseBefore(int pauseBefore)								{ mPauseBefore = pauseBefore; }
-		void setPauseAfter(int pauseAfter)									{ mPauseAfter = pauseAfter; }
+        void addParameter(const ScriptParameter &parameter)                             { mParameters.append(parameter); }
+        int parameterCount() const                                                      { return mParameters.count(); }
+        const ScriptParameter &parameter(int index) const                               { return mParameters.at(index); }
+        void removeAllParameters()                                                      { mParameters.clear(); }
+        QList<ScriptParameter> parameters() const                                       { return mParameters; }
+        void setPauseBefore(int pauseBefore)                                            { mPauseBefore = pauseBefore; }
+        void setPauseAfter(int pauseAfter)                                              { mPauseAfter = pauseAfter; }
 
-		void addProcedure(const QString &procedureName, int line)			{ mProcedures.insert(procedureName, line); }
-		int findProcedure(const QString &procedureName) const				{ return mProcedures.value(procedureName, -1); }
-		void clearProcedures()												{ mProcedures.clear(); }
+        void addProcedure(const QString &procedureName, int line)                       { mProcedures.insert(procedureName, line); }
+        int findProcedure(const QString &procedureName) const                           { return mProcedures.value(procedureName, -1); }
+        void clearProcedures()                                                          { mProcedures.clear(); }
 
-		void addProcedureCall(int callerLine)								{ mCallStack.push(callerLine); }
-		bool hasProcedureCall() const										{ return !mCallStack.isEmpty(); }
-		int popProcedureCall()												{ return mCallStack.pop(); }
-		void clearCallStack()												{ mCallStack.clear(); }
+        void addProcedureCall(int callerLine)                                           { mCallStack.push(callerLine); }
+        bool hasProcedureCall() const                                                   { return !mCallStack.isEmpty(); }
+        int popProcedureCall()                                                          { return mCallStack.pop(); }
+        void clearCallStack()                                                           { mCallStack.clear(); }
+
+        void addResource(const QString &id, const QByteArray &data, Resource::Type type){ mResources.insert(id, Resource(data, type)); }
+        bool hasResource(const QString &id) const                                       { return mResources.contains(id); }
+        Resource resource(const QString &id) const                                      { return mResources.value(id); }
+        void clearResources()                                                           { mResources.clear(); }
+        const QHash<QString, Resource> resources() const                                { return mResources; }
 
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
 		QStringList labels() const;
 
 	private:
+        Script::ReadResult validateSchema(QIODevice *device, const Tools::Version &scriptVersion, bool tryOlderVersions = true);
+
 		QList<ScriptParameter> mParameters;
 		QList<ActionInstance *> mActionInstances;
 		ActionFactory *mActionFactory;
@@ -120,6 +129,7 @@ namespace ActionTools
 		int mPauseAfter;
 		QHash<QString, int> mProcedures;
 		QStack<int> mCallStack;
+        QHash<QString, Resource> mResources;
 
 		Q_DISABLE_COPY(Script)
 	};

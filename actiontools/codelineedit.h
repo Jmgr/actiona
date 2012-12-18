@@ -67,6 +67,7 @@ namespace ActionTools
 
 	signals:
 		void codeChanged(bool code);
+        void insertResource();
 
 	protected:
 		void contextMenuEvent(QContextMenuEvent *event);
@@ -92,6 +93,7 @@ namespace ActionTools
 		QAbstractItemModel *mCompletionModel;
 		QToolButton *mCodeButton;
 		QToolButton *mEditorButton;
+        QToolButton *mResourceButton;
 
 		Q_DISABLE_COPY(CodeLineEdit)
 	};

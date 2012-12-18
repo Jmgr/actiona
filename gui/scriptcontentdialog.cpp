@@ -21,6 +21,7 @@
 #include "scriptcontentdialog.h"
 #include "ui_scriptcontentdialog.h"
 #include "script.h"
+#include "global.h"
 
 #include <QClipboard>
 #include <QApplication>
@@ -64,7 +65,7 @@ void ScriptContentDialog::accept()
 	}
 	
 	QString content = ui->scriptContent->toPlainText().trimmed();
-	if(!content.isEmpty() && !mScript->validateContent(content))
+    if(!content.isEmpty() && !mScript->validateContent(content, Global::SCRIPT_VERSION))
 	{
 		if(!mScript->statusMessage().isEmpty())
 		{
