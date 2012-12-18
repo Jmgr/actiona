@@ -25,37 +25,40 @@
 
 #include <QSharedData>
 #include <QByteArray>
+#include <QStringList>
 
 namespace ActionTools
 {
-    enum ResourceType
-    {
-        BinaryType,
-        TextType,
-        ImageType
-    };
-
     class ResourceData : public QSharedData
     {
     public:
-        ResourceData() : type(BinaryType)       {}
+        ResourceData() : type(0)                {}
         ResourceData(const ResourceData &other) :
             QSharedData(other),
             data(other.data),
             type(other.type)					{}
 
         QByteArray data;
-        ResourceType type;
+        int type;
     };
 
     class ACTIONTOOLSSHARED_EXPORT Resource
     {
     public:
+        enum Type
+        {
+            BinaryType,
+            TextType,
+            ImageType,
+
+            TypeCount
+        };
+
         Resource()
             : d(new ResourceData())
         {
         }
-        Resource(const QByteArray &data, ResourceType type)
+        Resource(const QByteArray &data, Type type)
             : d(new ResourceData())
         {
             setData(data);
@@ -65,10 +68,12 @@ namespace ActionTools
             : d(other.d)						{}
 
         const QByteArray &data() const          { return d->data; }
-        ResourceType type() const               { return d->type; }
+        Type type() const                       { return static_cast<Type>(d->type); }
 
         void setData(const QByteArray &data)    { d->data = data; }
-        void setType(ResourceType type)         { d->type = type; }
+        void setType(Type type)                 { d->type = type; }
+
+        static QStringList typeNames;
 
     private:
         QSharedDataPointer<ResourceData> d;

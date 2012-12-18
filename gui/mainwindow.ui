@@ -236,6 +236,7 @@
      <string>S&amp;cript</string>
     </property>
     <addaction name="actionParameters"/>
+    <addaction name="actionResources"/>
     <addaction name="separator"/>
     <addaction name="actionScriptSettings"/>
    </widget>
@@ -355,6 +356,7 @@
    <addaction name="actionExecute_selection"/>
    <addaction name="separator"/>
    <addaction name="actionParameters"/>
+   <addaction name="actionResources"/>
   </widget>
   <widget class="QDockWidget" name="consoleDockWidget">
    <property name="features">
@@ -847,11 +849,27 @@
    </property>
   </action>
   <action name="actionScriptSettings">
+   <property name="icon">
+    <iconset resource="gui.qrc">
+     <normaloff>:/icons/options.png</normaloff>:/icons/options.png</iconset>
+   </property>
    <property name="text">
     <string>Script &amp;settings</string>
    </property>
    <property name="shortcut">
     <string>Alt+T</string>
+   </property>
+  </action>
+  <action name="actionResources">
+   <property name="icon">
+    <iconset resource="gui.qrc">
+     <normaloff>:/icons/resources.png</normaloff>:/icons/resources.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Resources</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+R</string>
    </property>
   </action>
  </widget>

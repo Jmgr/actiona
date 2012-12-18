@@ -15,5 +15,6 @@
         <file>images/help.png</file>
         <file>script1.0.0.xsd</file>
         <file>script1.1.0.xsd</file>
+        <file>images/resource.png</file>
     </qresource>
 </RCC>

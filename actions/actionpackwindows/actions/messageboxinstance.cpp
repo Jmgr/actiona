@@ -66,8 +66,8 @@ namespace Actions
 		Icon icon = evaluateListElement<Icon>(ok, icons, "icon");
 		TextMode textMode = evaluateListElement<TextMode>(ok, textmodes, "textMode");
 		Buttons button = evaluateListElement<Buttons>(ok, buttons, "type");
-		QString customIcon = evaluateString(ok, "customIcon");
-		QString windowIcon = evaluateString(ok, "windowIcon");
+        QImage customIcon = evaluateImage(ok, "customIcon");
+        QImage windowIcon = evaluateImage(ok, "windowIcon");
 		mIfYes = evaluateIfAction(ok, "ifYes");
 		mIfNo = evaluateIfAction(ok, "ifNo");
 
@@ -97,21 +97,11 @@ namespace Actions
 			break;
 		}
 
-		if(!customIcon.isEmpty())
-		{
-			QPixmap customIconPixmap;
+        if(!customIcon.isNull())
+            mMessageBox->setIconPixmap(QPixmap::fromImage(customIcon));
 
-			if(customIconPixmap.load(customIcon))
-				mMessageBox->setIconPixmap(customIconPixmap);
-		}
-
-		if(!windowIcon.isEmpty())
-		{
-			QPixmap windowIconPixmap;
-
-			if(windowIconPixmap.load(windowIcon))
-				mMessageBox->setWindowIcon(QIcon(windowIconPixmap));
-		}
+        if(!windowIcon.isNull())
+            mMessageBox->setWindowIcon(QPixmap::fromImage(windowIcon));
 
 		switch(button)
 		{

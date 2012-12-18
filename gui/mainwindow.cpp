@@ -52,6 +52,7 @@
 #include "codeinitializer.h"
 #include "code/codetools.h"
 #include "scriptsettingsdialog.h"
+#include "resourcedialog.h"
 
 #include <QSystemTrayIcon>
 #include <QInputDialog>
@@ -542,6 +543,7 @@ void MainWindow::on_actionNew_triggered()
 	{
 		mScript->removeAll();
 		mScript->removeAllParameters();
+        mScript->clearResources();
 		setCurrentFile(QString());
 		mScriptModel->update();
 
@@ -1054,6 +1056,16 @@ void MainWindow::on_actionScriptSettings_triggered()
 			scriptEdited();
 		}
 	}
+}
+
+void MainWindow::on_actionResources_triggered()
+{
+    ResourceDialog resourceDialog(mScript, this);
+    if(resourceDialog.exec() == QDialog::Accepted)
+    {
+        //TODO
+        scriptEdited();
+    }
 }
 
 void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)

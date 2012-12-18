@@ -52,5 +52,6 @@
         <file>icons/logo.png</file>
         <file>icons/actionaz.ico</file>
         <file>images/start.png</file>
+        <file>icons/resources.png</file>
     </qresource>
 </RCC>

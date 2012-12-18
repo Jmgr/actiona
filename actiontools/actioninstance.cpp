@@ -27,6 +27,7 @@
 #include "script.h"
 #include "code/point.h"
 #include "code/color.h"
+#include "code/image.h"
 
 namespace ActionTools
 {
@@ -133,8 +134,46 @@ namespace ActionTools
 		if(!ok)
 			return QString();
 
-		return result;
-	}
+        return result;
+    }
+
+    QImage ActionInstance::evaluateImage(bool &ok, const QString &parameterName, const QString &subParameterName)
+    {
+        if(!ok)
+            return QImage();
+
+        const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+        QString filename;
+
+        if(subParameter.isCode())
+        {
+            QScriptValue evaluationResult = evaluateCode(ok, subParameter);
+            if(Code::Image *codeImage = qobject_cast<Code::Image*>(evaluationResult.toQObject()))
+                return codeImage->image();
+
+            if(!evaluationResult.isString())
+            {
+                ok = false;
+
+                return QImage();
+            }
+
+            filename = evaluationResult.toString();
+        }
+        else
+            filename = evaluateText(ok, subParameter);
+
+        if(!ok || filename.isEmpty())
+            return QImage();
+
+        QImage image(filename);
+
+        if(!image.isNull())
+            return image;
+
+        ok = false;
+        return QImage();
+    }
 
 	QString ActionInstance::evaluateVariable(bool &ok,
 										const QString &parameterName,

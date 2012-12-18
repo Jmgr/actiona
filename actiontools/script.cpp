@@ -425,7 +425,7 @@ namespace ActionTools
                     QString id = attributes.value("id").toString();
                     QString base64Data = stream.readElementText();
                     QByteArray data = QByteArray::fromBase64(base64Data.toAscii());
-                    Resource resource(data, static_cast<ResourceType>(attributes.value("type").toString().toInt()));
+                    Resource resource(data, static_cast<Resource::Type>(attributes.value("type").toString().toInt()));
 
                     mResources.insert(id, resource);
                 }

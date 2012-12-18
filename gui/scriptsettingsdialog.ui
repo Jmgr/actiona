@@ -7,11 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>340</width>
-    <height>107</height>
+    <height>111</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Script settings</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="gui.qrc">
+    <normaloff>:/icons/options.png</normaloff>:/icons/options.png</iconset>
   </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="2" column="0" colspan="2">
@@ -57,7 +61,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="gui.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

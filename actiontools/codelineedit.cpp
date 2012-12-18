@@ -47,13 +47,15 @@ namespace ActionTools
 		mRegExp(regexpValidation),
 		mCompletionModel(0),
 		mCodeButton(new QToolButton(this)),
-		mEditorButton(new QToolButton(this))
+        mEditorButton(new QToolButton(this)),
+        mResourceButton(new QToolButton(this))
 	{
 		connect(this, SIGNAL(textChanged(const QString &)), this, SLOT(textChanged(const QString &)));
 		connect(mSwitchTextCode, SIGNAL(triggered()), this, SLOT(reverseCode()));
 		connect(mOpenEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
 		connect(mCodeButton, SIGNAL(clicked()), this, SLOT(reverseCode()));
 		connect(mEditorButton, SIGNAL(clicked()), this, SLOT(openEditor()));
+        connect(mResourceButton, SIGNAL(clicked()), this, SIGNAL(insertResource()));
 
 		QSettings settings;
 
@@ -72,8 +74,12 @@ namespace ActionTools
 		mEditorButton->setIcon(QIcon(":/images/editor.png"));
 		mEditorButton->setMaximumWidth(18);
 		mEditorButton->setToolTip(tr("Click here to open the editor"));
+
+        mResourceButton->setIcon(QIcon(":/images/resource.png"));
+        mResourceButton->setMaximumWidth(18);
+        mResourceButton->setToolTip(tr("Click here to insert a resource"));
 		
-		setMinimumWidth(minimumWidth() + 14 + 18);
+        setMinimumWidth(minimumWidth() + mCodeButton->maximumWidth() + mEditorButton->maximumWidth() + mResourceButton->maximumWidth());
 		
 		setEmbedded(false);
 	}
@@ -116,6 +122,7 @@ namespace ActionTools
 			w += mCodeButton->maximumWidth();
 		if(mShowEditorButton)
 			w += mEditorButton->maximumWidth();
+        w += mResourceButton->maximumWidth();
 		
 		setStyleSheet(QString("QLineEdit { padding-right: %1px; }").arg(w));
 
@@ -198,8 +205,8 @@ namespace ActionTools
 		{
 			setText(codeEditorDialog.text());
 			setCode(codeEditorDialog.isCode());
-		}
-	}
+        }
+    }
 
 	void CodeLineEdit::contextMenuEvent(QContextMenuEvent *event)
 	{
@@ -227,6 +234,7 @@ namespace ActionTools
 	{
 		QRect codeButtonGeometry;
 		QRect editorButtonGeometry;
+        QRect resourceButtonGeometry;
 		
 		codeButtonGeometry.setX(rect().right() - mCodeButton->maximumWidth() + (mEmbedded ? 1 : 0));
 		codeButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
@@ -244,6 +252,17 @@ namespace ActionTools
 		editorButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
 		
 		mEditorButton->setGeometry(editorButtonGeometry);
+
+        resourceButtonGeometry.setX(rect().right()
+                                  - (mShowEditorButton ? mEditorButton->maximumWidth() : 0)
+                                  - (mAllowTextCodeChange ? codeButtonGeometry.width() : 0)
+                                  - mResourceButton->maximumWidth()
+                                  + (mEmbedded ? 3 : 2));
+        resourceButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
+        resourceButtonGeometry.setWidth(mResourceButton->maximumWidth());
+        resourceButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
+
+        mResourceButton->setGeometry(resourceButtonGeometry);
 	}
 
 	void CodeLineEdit::mouseMoveEvent(QMouseEvent *event)

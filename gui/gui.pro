@@ -29,7 +29,11 @@ SOURCES += main.cpp \
 	scriptcontentdialog.cpp \
     sfxscriptdialog.cpp \
     progresssplashscreen.cpp \
-    scriptsettingsdialog.cpp
+    scriptsettingsdialog.cpp \
+    resourcedialog.cpp \
+    filetypeguesser.cpp \
+    resourcetablewidget.cpp \
+    resourcetypedelegate.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -46,7 +50,12 @@ HEADERS += mainwindow.h \
 	scriptcontentdialog.h \
     sfxscriptdialog.h \
     progresssplashscreen.h \
-    scriptsettingsdialog.h
+    scriptsettingsdialog.h \
+    resourcedialog.h \
+    filetypeguesser.h \
+    resourcetablewidget.h \
+    resourcetypedelegate.h \
+    resourcesizeitem.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += changelogdialog.cpp
 	HEADERS += changelogdialog.h
@@ -65,7 +74,8 @@ FORMS += mainwindow.ui \
 	changelogdialog.ui \
 	scriptcontentdialog.ui \
     sfxscriptdialog.ui \
-    scriptsettingsdialog.ui
+    scriptsettingsdialog.ui \
+    resourcedialog.ui
 win32:LIBS += -luser32 \
 	-ladvapi32 \
 	-lole32 \

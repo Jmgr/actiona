@@ -101,10 +101,11 @@ namespace ActionTools
         int popProcedureCall()                                                          { return mCallStack.pop(); }
         void clearCallStack()                                                           { mCallStack.clear(); }
 
-        void addResource(const QString &id, const QByteArray &data, ResourceType type)  { mResources.insert(id, Resource(data, type)); }
+        void addResource(const QString &id, const QByteArray &data, Resource::Type type){ mResources.insert(id, Resource(data, type)); }
         bool hasResource(const QString &id) const                                       { return mResources.contains(id); }
         Resource resource(const QString &id) const                                      { return mResources.value(id); }
         void clearResources()                                                           { mResources.clear(); }
+        const QHash<QString, Resource> &resources() const                               { return mResources; }
 
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
