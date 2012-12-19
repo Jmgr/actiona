@@ -87,8 +87,7 @@ HEADERS += actiontools_global.h \
     systeminputtask.h \
     systeminputlistener.h \
     systeminput.h \
-	systeminputrecorder.h \
-    resource.h
+	systeminputrecorder.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \
