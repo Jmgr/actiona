@@ -166,7 +166,7 @@ namespace Actions
 		{
 		case ComboBoxMode:
 		case EditableComboBoxMode:
-			setVariable(mVariable, mComboBox->currentText());
+            setVariable(mVariable, mComboBox->currentText());
 			break;
 		case ListMode:
 			{
@@ -175,9 +175,9 @@ namespace Actions
 				if(mMaximumChoiceCount <= 1)
 				{
 					if(selectedItems.isEmpty())
-						setVariableFromScriptValue(mVariable, scriptEngine()->nullValue());
+                        setVariable(mVariable, scriptEngine()->nullValue());
 					else
-						setVariable(mVariable, selectedItems.first()->text());
+                        setVariable(mVariable, selectedItems.first()->text());
 				}
 				else
 				{
@@ -186,7 +186,7 @@ namespace Actions
 					for(int index = 0; index < selectedItems.size(); ++index)
 						back.setProperty(index, selectedItems.at(index)->text());
 
-					setVariableFromScriptValue(mVariable, back);
+                    setVariable(mVariable, back);
 				}
 			}
 			break;
@@ -208,7 +208,7 @@ namespace Actions
 				for(int index = 0; index < selectedButtons.size(); ++index)
 					back.setProperty(index, selectedButtons.at(index));
 
-				setVariableFromScriptValue(mVariable, back);
+                setVariable(mVariable, back);
 			}
 			break;
 		case RadioButtonMode:
@@ -295,9 +295,9 @@ namespace Actions
 	{
 		QAbstractButton *checkedButton = mButtonGroup->checkedButton();
 		if(checkedButton)
-			setVariable(mVariable, checkedButton->text());
+            setVariable(mVariable, checkedButton->text());
 		else
-			setVariableFromScriptValue(mVariable, scriptEngine()->nullValue());
+            setVariable(mVariable, scriptEngine()->nullValue());
 	}
 
 	void MultiDataInputInstance::closeDialog()
