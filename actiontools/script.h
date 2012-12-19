@@ -105,7 +105,7 @@ namespace ActionTools
         bool hasResource(const QString &id) const                                       { return mResources.contains(id); }
         Resource resource(const QString &id) const                                      { return mResources.value(id); }
         void clearResources()                                                           { mResources.clear(); }
-        const QHash<QString, Resource> resources() const                                { return mResources; }
+        const QHash<QString, Resource> &resources() const                               { return mResources; }
 
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
