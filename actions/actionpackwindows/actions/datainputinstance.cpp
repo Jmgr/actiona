@@ -145,7 +145,7 @@ namespace Actions
 
 	void DataInputInstance::dataEntered(int value)
 	{
-		setVariable(mVariable, value);
+        setVariable(mVariable, value);
 
 		mInputDialog->disconnect();
 		mInputDialog->close();
@@ -155,7 +155,7 @@ namespace Actions
 
 	void DataInputInstance::dataEntered(double value)
 	{
-		setVariable(mVariable, value);
+        setVariable(mVariable, value);
 
 		mInputDialog->disconnect();
 		mInputDialog->close();
@@ -165,7 +165,7 @@ namespace Actions
 
 	void DataInputInstance::dataEntered(const QString &value)
 	{
-		setVariable(mVariable, value);
+        setVariable(mVariable, value);
 
 		mInputDialog->disconnect();
 		mInputDialog->close();

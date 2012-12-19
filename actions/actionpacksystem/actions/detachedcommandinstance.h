@@ -67,7 +67,7 @@ namespace Actions
 				return;
 			}
 
-			setVariable(processId, QString::number(processIdValue));
+            setVariable(processId, QString::number(processIdValue));
 
 			emit executionEnded();
 		}

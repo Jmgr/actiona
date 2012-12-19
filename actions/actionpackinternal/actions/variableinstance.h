@@ -71,13 +71,13 @@ namespace Actions
 			{
 			case String:
 				{
-					setVariable(variable, value);
+                    setVariable(variable, value);
 				}
 				break;
 			case Integer:
 				{
 					bool ok;
-					setVariable(variable, value.toInt(&ok));
+                    setVariable(variable, value.toInt(&ok));
 					if(!ok)
 					{
 						emit executionException(ConversionFailedException, tr("Cannot evaluate the value as an integer"));
@@ -88,7 +88,7 @@ namespace Actions
 			case Float:
 				{
 					bool ok;
-					setVariable(variable, value.toFloat(&ok));
+                    setVariable(variable, value.toFloat(&ok));
 					if(!ok)
 					{
 						emit executionException(ConversionFailedException, tr("Cannot evaluate the value as a floating number"));
@@ -98,12 +98,12 @@ namespace Actions
 				break;
 			case Color:
 				{
-					setVariableFromScriptValue(variable, Code::Color::constructor(colorValue, scriptEngine()));
+                    setVariable(variable, Code::Color::constructor(colorValue, scriptEngine()));
 				}
 				break;
 			case Position:
 				{
-					setVariableFromScriptValue(variable, Code::Point::constructor(positionValue, scriptEngine()));
+                    setVariable(variable, Code::Point::constructor(positionValue, scriptEngine()));
 				}
 				break;
 			}

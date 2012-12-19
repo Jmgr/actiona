@@ -22,6 +22,7 @@
 #define READBINARYFILEINSTANCE_H
 
 #include "datacopyactioninstance.h"
+#include "code/rawdata.h"
 
 #include <QFile>
 #include <QBuffer>
@@ -69,7 +70,7 @@ namespace Actions
 	private slots:
 		void done()
 		{
-			setVariable(mVariable, mResult.buffer());
+            setVariable(mVariable, Code::RawData::constructor(mResult.buffer(), scriptEngine()));
 
 			DataCopyActionInstance::done();
 		}

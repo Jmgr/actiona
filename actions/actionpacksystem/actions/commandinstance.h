@@ -74,11 +74,11 @@ namespace Actions
 	#ifdef Q_WS_WIN
 			_PROCESS_INFORMATION *processInformation = mProcess->pid();
 			if(processInformation)
-				setVariable(processId, QString::number(processInformation->dwProcessId));
+                setVariable(processId, QString::number(processInformation->dwProcessId));
 			else
-				setVariable(processId, "0");
+                setVariable(processId, "0");
 	#else
-			setVariable(processId, QString::number(mProcess->pid()));
+            setVariable(processId, QString::number(mProcess->pid()));
 	#endif
 		}
 
@@ -104,21 +104,21 @@ namespace Actions
 
 		void processFinished(int exitCode, QProcess::ExitStatus exitStatus)
 		{
-			setVariable(mExitCodeVariable, QString::number(exitCode));
+            setVariable(mExitCodeVariable, QString::number(exitCode));
 
 			QString output = QString::fromUtf8(mProcess->readAllStandardOutput());
-			setVariable(mOutputVariable, output.trimmed());
+            setVariable(mOutputVariable, output.trimmed());
 
 			QString errorOutput = QString::fromUtf8(mProcess->readAllStandardError());
-			setVariable(mErrorOutputVariable, errorOutput.trimmed());
+            setVariable(mErrorOutputVariable, errorOutput.trimmed());
 
 			switch(exitStatus)
 			{
 			case QProcess::NormalExit:
-				setVariable(mExitStatusVariable, "normal");
+                setVariable(mExitStatusVariable, "normal");
 				break;
 			case QProcess::CrashExit:
-				setVariable(mExitStatusVariable, "crash");
+                setVariable(mExitStatusVariable, "crash");
 				break;
 			}
 

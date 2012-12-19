@@ -145,13 +145,13 @@ namespace Actions
 		{
 			QRect windowRect = foundWindow.rect();
 
-			setVariableFromScriptValue(mPosition, Code::Point::constructor(windowRect.topLeft(), scriptEngine()));
-			setVariableFromScriptValue(mSize, Code::Size::constructor(windowRect.size(), scriptEngine()));
-			setVariable(mXCoordinate, windowRect.x());
-			setVariable(mYCoordinate, windowRect.y());
-			setVariable(mWidth, windowRect.width());
-			setVariable(mHeight, windowRect.height());
-			setVariable(mProcessId, foundWindow.processId());
+            setVariable(mPosition, Code::Point::constructor(windowRect.topLeft(), scriptEngine()));
+            setVariable(mSize, Code::Size::constructor(windowRect.size(), scriptEngine()));
+            setVariable(mXCoordinate, windowRect.x());
+            setVariable(mYCoordinate, windowRect.y());
+            setVariable(mWidth, windowRect.width());
+            setVariable(mHeight, windowRect.height());
+            setVariable(mProcessId, foundWindow.processId());
 
 			return foundWindow;
 		}
