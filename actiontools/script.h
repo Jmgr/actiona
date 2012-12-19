@@ -36,6 +36,7 @@ namespace ActionTools
 {
 	class ActionInstance;
 	class ActionFactory;
+    class ElementDefinition;
 
 	class ACTIONTOOLSSHARED_EXPORT Script : public QObject
 	{
@@ -103,8 +104,13 @@ namespace ActionTools
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
 		QStringList labels() const;
+        QStringList variables() const;
 
 	private:
+        void parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ActionTools::ElementDefinition *elementDefinition) const;
+
+        static const QRegExp CodeVariableDeclarationRegExp;
+
 		QList<ScriptParameter> mParameters;
 		QList<ActionInstance *> mActionInstances;
 		ActionFactory *mActionFactory;

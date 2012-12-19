@@ -55,6 +55,7 @@ namespace ActionTools
 		void setAllowTextCodeChange(bool allowTextCodeChange);
 		void setShowEditorButton(bool showEditorButton);
 		void setFromSubParameter(const SubParameter &subParameter);
+        void setRegexpValidation(const QRegExp &regexpValidation)       { mRegExp = regexpValidation; }
 
 		void addShortcuts(QMenu *menu);
 		

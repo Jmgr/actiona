@@ -2172,3 +2172,9 @@ void MainWindow::enabledActionsCountChanged(bool hasEnabledActions)
 	ui->actionExecute->setEnabled(hasEnabledActions);
 	ui->actionExecute_selection->setEnabled(hasEnabledActions);
 }
+
+void MainWindow::on_pushButton_clicked()
+{
+    foreach(const QString &var, mScript->variables())
+        qDebug() << var;
+}

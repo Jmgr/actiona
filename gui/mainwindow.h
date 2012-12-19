@@ -166,6 +166,8 @@ private slots:
 	void postDownloadOperation();
 #endif
 
+    void on_pushButton_clicked();
+
 private:
 	enum TaskbarStatus
 	{

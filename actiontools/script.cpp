@@ -25,6 +25,8 @@
 #include "parameter.h"
 #include "subparameter.h"
 #include "messagehandler.h"
+#include "variableparameterdefinition.h"
+#include "groupdefinition.h"
 
 #include <QIODevice>
 #include <QFile>
@@ -35,6 +37,8 @@
 
 namespace ActionTools
 {
+    const QRegExp Script::CodeVariableDeclarationRegExp("^var ([A-Za-z_][A-Za-z0-9_]*) ", Qt::CaseSensitive, QRegExp::RegExp2);
+
 	Script::Script(ActionFactory *actionFactory, QObject *parent)
 		: QObject(parent),
 		mActionFactory(actionFactory),
@@ -616,6 +620,88 @@ namespace ActionTools
 				back << actionInstance->label();
 		}
 
-		return back;
-	}
+        return back;
+    }
+
+    QStringList Script::variables() const
+    {
+        QSet<QString> back;
+
+        foreach(const ActionInstance *actionInstance, mActionInstances)
+        {
+            const ActionDefinition *actionDefinition = actionInstance->definition();
+
+            foreach(const ElementDefinition *elementDefinition, actionDefinition->elements())
+            {
+                if(const GroupDefinition *groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
+                {
+                    foreach(const ParameterDefinition *parameterDefinition, groupDefinition->members())
+                        parametersFromDefinition(back, actionInstance, parameterDefinition);
+                }
+                else
+                    parametersFromDefinition(back, actionInstance, elementDefinition);
+            }
+        }
+
+        return back.toList();
+    }
+
+    void Script::parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ElementDefinition *elementDefinition) const
+    {
+        const Parameter &parameter = actionInstance->parameter(elementDefinition->name().original());
+        const SubParameterHash &subParameters = parameter.subParameters();
+
+        SubParameterHash::ConstIterator it = subParameters.constBegin();
+        for(;it != subParameters.constEnd();++it)
+        {
+            const SubParameter &subParameter = it.value();
+
+            if(!subParameter.value().type() == QVariant::String)
+                continue;
+
+            if(subParameter.isCode())
+            {
+                //Add every variable in any parameter type that is in code mode
+                const QString &code = subParameter.value().toString();
+
+                foreach(const QString &codeLine, code.split(QRegExp("[\n\r;]"), QString::SkipEmptyParts))
+                {
+                    int position = 0;
+
+                    while((position = CodeVariableDeclarationRegExp.indexIn(codeLine, position)) != -1)
+                    {
+                        QString foundVariableName = CodeVariableDeclarationRegExp.cap(1);
+
+                        position += CodeVariableDeclarationRegExp.cap(1).length();
+
+                        variables << foundVariableName;
+                    }
+                }
+            }
+            else
+            {
+                //Add every variable in a variable parameter that is not in code mode
+                if(qobject_cast<const VariableParameterDefinition *>(elementDefinition))
+                {
+                    variables << subParameter.value().toString();
+
+                    continue;
+                }
+
+                //Add every variable in any parameter type that is not in code mode
+                const QString &text = subParameter.value().toString();
+
+                int position = 0;
+
+                while((position = ActionInstance::VariableRegExp.indexIn(text, position)) != -1)
+                {
+                    QString foundVariableName = ActionInstance::VariableRegExp.cap(2);
+
+                    position += ActionInstance::VariableRegExp.cap(1).length();
+
+                    variables << foundVariableName;
+                }
+            }
+        }
+    }
 }

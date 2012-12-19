@@ -25,6 +25,7 @@
 #include "detachedcommandinstance.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
+#include "textparameterdefinition.h"
 
 namespace ActionTools
 {

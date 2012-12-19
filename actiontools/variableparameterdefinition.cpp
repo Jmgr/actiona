@@ -20,7 +20,9 @@
 
 #include "variableparameterdefinition.h"
 #include "codelineedit.h"
+#include "codecombobox.h"
 #include "script.h"
+#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -28,11 +30,22 @@ namespace ActionTools
 	{
 		ParameterDefinition::buildEditors(script, parent);
 
-		mLineEdit = new CodeLineEdit(parent, QRegExp("^[A-Za-z_][A-Za-z0-9_]*$"));
+        mComboBox = new CodeComboBox(parent);
+        mComboBox->codeLineEdit()->setRegexpValidation(ActionInstance::NameRegExp);
 
-		//TODO
-		//Do nothing special here for now, but later we could add a variable list
-		
-		addEditor(mLineEdit);
-	}
+        mComboBox->addItems(script->variables());
+
+        addEditor(mComboBox);
+
+        emit editorBuilt();
+    }
+
+    void VariableParameterDefinition::update(Script *script)
+    {
+        mComboBox->clear();
+        mComboBox->addItems(script->variables());
+
+        //TODO: Add a button to insert variables
+        //TODO: Compute the variable list only once
+    }
 }

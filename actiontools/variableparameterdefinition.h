@@ -21,23 +21,24 @@
 #ifndef VARIABLEPARAMETERDEFINITION_H
 #define VARIABLEPARAMETERDEFINITION_H
 
-#include "textparameterdefinition.h"
+#include "listparameterdefinition.h"
 #include "actiontools_global.h"
 
 namespace ActionTools
 {
-	class ACTIONTOOLSSHARED_EXPORT VariableParameterDefinition : public TextParameterDefinition
+    class ACTIONTOOLSSHARED_EXPORT VariableParameterDefinition : public ListParameterDefinition
 	{
 		Q_OBJECT
 
 	public:
 		VariableParameterDefinition(const Name &name, QObject *parent)
-			: TextParameterDefinition(name, parent)
+            : ListParameterDefinition(name, parent)
 		{
 			setCategory(OUTPUT);
 		}
 
 		void buildEditors(Script *script, QWidget *parent);
+        void update(Script *script);
 	};
 }
 

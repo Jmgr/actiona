@@ -164,6 +164,9 @@ namespace ActionTools
 
 		void copyActionDataFrom(const ActionInstance &other);
 
+        static const QRegExp NameRegExp;
+        static const QRegExp VariableRegExp;
+
 	signals:
 		void showProgressDialog(const QString &title, int maximum);
 		void updateProgressDialog(const QString &caption);
@@ -282,8 +285,6 @@ namespace ActionTools
 		QScriptValue evaluateCode(bool &ok, const SubParameter &toEvaluate);
 		QString evaluateText(bool &ok, const SubParameter &toEvaluate);
 
-		static const QRegExp mNameRegExp;
-		static const QRegExp mVariableRegExp;
 		static qint64 mCurrentRuntimeId;
 
 		qint64 mRuntimeId;

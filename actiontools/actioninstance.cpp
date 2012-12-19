@@ -45,8 +45,8 @@ namespace ActionTools
 				timeout == other.timeout);
 	}
 
-	const QRegExp ActionInstance::mNameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
-	const QRegExp ActionInstance::mVariableRegExp("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
+    const QRegExp ActionInstance::NameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
+    const QRegExp ActionInstance::VariableRegExp("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 	qint64 ActionInstance::mCurrentRuntimeId = 0;
 
 	ActionInstance::ActionInstance(const ActionDefinition *definition, QObject *parent)
@@ -145,7 +145,7 @@ namespace ActionTools
 		if(!ok)
 			return 0;
 
-		if(!result.isEmpty() && !mNameRegExp.exactMatch(result))
+        if(!result.isEmpty() && !NameRegExp.exactMatch(result))
 		{
 			ok = false;
 
@@ -414,13 +414,13 @@ namespace ActionTools
 
     void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
 	{
-		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
+        if(!name.isEmpty() && NameRegExp.exactMatch(name))
 			d->scriptEngine->globalObject().setProperty(name, value);
 	}
 
 	QVariant ActionInstance::variable(const QString &name)
 	{
-		if(name.isEmpty() || !mNameRegExp.exactMatch(name))
+        if(name.isEmpty() || !NameRegExp.exactMatch(name))
 			return QVariant();
 
 		return d->scriptEngine->globalObject().property(name).toVariant();
@@ -488,12 +488,12 @@ namespace ActionTools
 
 		int position = 0;
 
-		while((position = mVariableRegExp.indexIn(value, position)) != -1)
+        while((position = VariableRegExp.indexIn(value, position)) != -1)
 		{
-			QString foundVariableName = mVariableRegExp.cap(2);
+            QString foundVariableName = VariableRegExp.cap(2);
 			QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
 
-			position += mVariableRegExp.cap(1).length();
+            position += VariableRegExp.cap(1).length();
 
 			if(!foundVariable.isValid())
 			{
