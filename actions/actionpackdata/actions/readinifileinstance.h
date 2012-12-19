@@ -68,7 +68,7 @@ namespace Actions
 				return;
 			}
 
-			setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
+            setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
 
 			emit executionEnded();
 		}

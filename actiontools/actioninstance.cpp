@@ -451,13 +451,7 @@ namespace ActionTools
 		setNextLine(QString::number(nextLine));
 	}
 
-	void ActionInstance::setVariable(const QString &name, const QVariant &value)
-	{
-		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
-			d->scriptEngine->globalObject().setProperty(name, d->scriptEngine->newVariant(value));
-	}
-
-	void ActionInstance::setVariableFromScriptValue(const QString &name, const QScriptValue &value)
+    void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
 	{
 		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
 			d->scriptEngine->globalObject().setProperty(name, value);

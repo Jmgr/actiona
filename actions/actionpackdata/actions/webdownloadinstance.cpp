@@ -109,7 +109,7 @@ namespace Actions
 		{
 		case QNetworkReply::NoError:
 			if(mDestination == Variable)
-				setVariable(mVariable, QString::fromUtf8(mReply->readAll()));
+                setVariable(mVariable, QString::fromUtf8(mReply->readAll()));
 
 			emit executionEnded();
 			break;

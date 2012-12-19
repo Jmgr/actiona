@@ -26,6 +26,8 @@
 #include "textparameterdefinition.h"
 #include "numberparameterdefinition.h"
 
+#include <limits>
+
 namespace ActionTools
 {
 	class ActionPack;

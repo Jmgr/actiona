@@ -48,7 +48,7 @@ namespace Actions
 
 			QClipboard *clipboard = QApplication::clipboard();
 
-			setVariable(variable, clipboard->text());
+            setVariable(variable, clipboard->text());
 
 			emit executionEnded();
 		}

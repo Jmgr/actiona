@@ -159,7 +159,7 @@ namespace Actions
 			if(mSource == WindowSource && !mWindowRelativePosition)
 				position += mWindow.rect().topLeft();
 
-			setVariableFromScriptValue(mPositionVariableName, Code::Point::constructor(position, scriptEngine()));
+			setVariable(mPositionVariableName, Code::Point::constructor(position, scriptEngine()));
 		}
 		else
 		{
@@ -168,7 +168,7 @@ namespace Actions
 			for(int i = 0; i < matchingPointList.size(); ++i)
 				arrayResult.setProperty(i, Code::Point::constructor(matchingPointList.at(i).first, scriptEngine()));
 
-			setVariableFromScriptValue(mPositionVariableName, arrayResult);
+			setVariable(mPositionVariableName, arrayResult);
 		}
 
 		emit executionEnded();

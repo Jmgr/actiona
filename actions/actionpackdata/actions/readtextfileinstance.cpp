@@ -104,7 +104,7 @@ namespace Actions
 			}
 		}
 
-		setVariable(variable, result);
+        setVariable(variable, result);
 
 		file.close();
 

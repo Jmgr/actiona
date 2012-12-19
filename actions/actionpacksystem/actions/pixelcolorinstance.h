@@ -24,6 +24,7 @@
 #include "actioninstance.h"
 #include "script.h"
 #include "ifactionvalue.h"
+#include "code/color.h"
 
 #include <QPoint>
 #include <QPixmap>
@@ -172,7 +173,7 @@ namespace Actions
 			QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), mPixelPosition.x(), mPixelPosition.y(), 1, 1);
 			QColor pixelColor = pixel.toImage().pixel(0, 0);
 
-			setVariable(mVariable, pixelColor);
+            setVariable(mVariable, Code::Color::constructor(pixelColor, scriptEngine()));
 
 			switch(mComparison)
 			{
