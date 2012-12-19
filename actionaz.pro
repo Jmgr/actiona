@@ -11,8 +11,8 @@ unix:!mac {
 	!system(pkg-config --exists 'xtst') {
 		error(Please install libxtst-dev)
 }
-	!system(pkg-config --exists 'opencv') {
-		error(Please install libcv-dev)
+        !system(pkg-config --exists 'opencv') {
+                error(Please install libopencv-dev)
 }
 }
 
