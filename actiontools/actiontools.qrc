@@ -14,5 +14,6 @@
         <file>images/editor.png</file>
         <file>script.xsd</file>
         <file>images/help.png</file>
+        <file>images/insert.png</file>
     </qresource>
 </RCC>

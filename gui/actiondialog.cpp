@@ -357,6 +357,7 @@ void ActionDialog::postInit()
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("ActionDialog postInit");
 #endif
+    mScript->findVariables();
 	foreach(ActionTools::ParameterDefinition *parameter, mParameters)
 	{
 		parameter->update(mScript);

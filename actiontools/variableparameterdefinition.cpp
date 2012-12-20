@@ -46,6 +46,5 @@ namespace ActionTools
         mComboBox->addItems(script->variables());
 
         //TODO: Add a button to insert variables
-        //TODO: Compute the variable list only once
     }
 }

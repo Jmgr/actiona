@@ -104,7 +104,8 @@ namespace ActionTools
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
 		QStringList labels() const;
-        QStringList variables() const;
+        void findVariables();
+        QStringList variables() const                                       { return mVariables; }
 
 	private:
         void parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ActionTools::ElementDefinition *elementDefinition) const;
@@ -126,6 +127,7 @@ namespace ActionTools
 		int mPauseAfter;
 		QHash<QString, int> mProcedures;
 		QStack<int> mCallStack;
+        QStringList mVariables;
 
 		Q_DISABLE_COPY(Script)
 	};

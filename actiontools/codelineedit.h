@@ -93,6 +93,7 @@ namespace ActionTools
 		QAbstractItemModel *mCompletionModel;
 		QToolButton *mCodeButton;
 		QToolButton *mEditorButton;
+        QToolButton *mInsertButton;
 
 		Q_DISABLE_COPY(CodeLineEdit)
 	};

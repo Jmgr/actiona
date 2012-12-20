@@ -623,7 +623,7 @@ namespace ActionTools
         return back;
     }
 
-    QStringList Script::variables() const
+    void Script::findVariables()
     {
         QSet<QString> back;
 
@@ -643,7 +643,7 @@ namespace ActionTools
             }
         }
 
-        return back.toList();
+        mVariables = back.toList();
     }
 
     void Script::parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ElementDefinition *elementDefinition) const
@@ -697,7 +697,7 @@ namespace ActionTools
                 {
                     QString foundVariableName = ActionInstance::VariableRegExp.cap(2);
 
-                    position += ActionInstance::VariableRegExp.cap(1).length();
+                    position += ActionInstance::VariableRegExp.cap(0).length();
 
                     variables << foundVariableName;
                 }
