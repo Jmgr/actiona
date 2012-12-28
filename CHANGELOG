@@ -1,3 +1,8 @@
+3.5.1 (28/12/12)
+- ActExec: fixed a bug that prevented the use of the pauseBefore and pauseAfter script parameters
+- Actions: fixed a bug that involved setVariable to create variables of type Object and not of the values type
+- Actions: fixed a bug preventing comparison of variables other than strings in the VariableCondition action
+
 3.5.0 (08/12/12)
 - Actions: added a parameter to choose the key press amount in the Key action
 - Actions: added a parameter to trigger a pause between key presses to the Text action
