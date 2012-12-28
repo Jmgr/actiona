@@ -42,6 +42,7 @@ namespace Code
 	
 	public slots:
 		QString toString() const					{ return "IniFile"; }
+        virtual bool equals(const QScriptValue &other) const;
 		QScriptValue load(const QString &filename);
 		QScriptValue save(const QString &filename = QString());
 		QScriptValue clear();

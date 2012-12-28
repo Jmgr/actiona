@@ -37,6 +37,10 @@ namespace Code
 	public:
 		static void throwError(QScriptContext *context, QScriptEngine *engine, const QString &errorType, const QString &message, const QString &parent = "Error");
 
+    public slots:
+        virtual QString toString() const = 0;
+        virtual bool equals(const QScriptValue &other) const = 0;
+
 	protected:
 		enum Encoding
 		{
@@ -47,6 +51,7 @@ namespace Code
 		};
 
 		explicit CodeClass();
+        virtual ~CodeClass() {}
 
 		void throwError(const QString &errorType, const QString &message, const QString &parent = "Error") const;
 

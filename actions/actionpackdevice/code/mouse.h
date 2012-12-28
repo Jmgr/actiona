@@ -73,6 +73,7 @@ namespace Code
 		QScriptValue release(Button button = LeftButton);
 		QScriptValue click(Button button = LeftButton);
 		QScriptValue wheel(int intensity = 1) const;
+        virtual bool equals(const QScriptValue &other) const { Q_UNUSED(other) return false; }
 
 	private:
 		void mouseMotion(int x, int y);

@@ -158,59 +158,59 @@
 <context>
     <name>ActionTools::ActionInstance</name>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="152"/>
+        <location filename="../actiontools/actioninstance.cpp" line="173"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
         <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas commencer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="175"/>
+        <location filename="../actiontools/actioninstance.cpp" line="196"/>
         <source>Integer value expected.</source>
         <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="210"/>
+        <location filename="../actiontools/actioninstance.cpp" line="231"/>
         <source>Decimal value expected.</source>
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="280"/>
-        <location filename="../actiontools/actioninstance.cpp" line="288"/>
+        <location filename="../actiontools/actioninstance.cpp" line="301"/>
+        <location filename="../actiontools/actioninstance.cpp" line="309"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="383"/>
-        <location filename="../actiontools/actioninstance.cpp" line="391"/>
+        <location filename="../actiontools/actioninstance.cpp" line="404"/>
+        <location filename="../actiontools/actioninstance.cpp" line="412"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="447"/>
+        <location filename="../actiontools/actioninstance.cpp" line="462"/>
         <source>Unable to find any procedure named &quot;%1&quot;</source>
         <translation>Impossible de trouver une procédure nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="508"/>
+        <location filename="../actiontools/actioninstance.cpp" line="523"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="515"/>
+        <location filename="../actiontools/actioninstance.cpp" line="530"/>
         <source>[Null]</source>
         <translation>[Nul]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="517"/>
+        <location filename="../actiontools/actioninstance.cpp" line="532"/>
         <source>[Undefined]</source>
         <translation>[Indéfini]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="527"/>
+        <location filename="../actiontools/actioninstance.cpp" line="542"/>
         <source>[Raw data]</source>
         <translation>[Données brutes]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="248"/>
+        <location filename="../actiontools/actioninstance.h" line="251"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation>&quot;%1&quot; est une valeur incorrecte.</translation>
     </message>
@@ -429,27 +429,27 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::OpenCVAlgorithms</name>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="59"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="55"/>
         <source>FindSubImage is already running</source>
         <translation>Recherche via FindSubImage en cours</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="110"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="106"/>
         <source>Source image must be larger than target image</source>
         <translation>L&apos;image source doit être plus grande que l&apos;image cible</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="118"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="114"/>
         <source>Source image and target image must have same depth</source>
         <translation>L&apos;image source et l&apos;image cible doivent avoir la même profondeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="126"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="122"/>
         <source>Source image and target image must have same number of channels</source>
         <translation>L&apos;image source et l&apos;image cible doivent avoir le même nombre de canaux</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="294"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="290"/>
         <source>OpenCV exception: %1</source>
         <translation>Exception OpenCV : %1</translation>
     </message>
@@ -1349,48 +1349,48 @@ Double-cliquez pour afficher</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="238"/>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="252"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="235"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="249"/>
         <source>option &quot;%1&quot; not found</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="387"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="384"/>
         <source>Short options cannot have optional parameters</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="399"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="396"/>
         <source>positional() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="413"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="410"/>
         <source>unrecognized() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="426"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="423"/>
         <source>count() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="446"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="443"/>
         <source>value() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="461"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="458"/>
         <source>parameters() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="752"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="748"/>
         <source>unrecognized parameters: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="755"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="751"/>
         <source>%1 requires a parameter</source>
         <translation></translation>
     </message>

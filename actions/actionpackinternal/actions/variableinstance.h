@@ -42,7 +42,7 @@ namespace Actions
 			Integer,
 			Float,
 			Color,
-			Position
+            Position
 		};
 		enum Exceptions
 		{

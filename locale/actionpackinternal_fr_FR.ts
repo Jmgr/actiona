@@ -240,23 +240,51 @@
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="64"/>
-        <source>If equal</source>
-        <translation>Si égal</translation>
+        <source>If true</source>
+        <translation>Si vrai</translation>
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="65"/>
-        <source>What to do if the values are equal</source>
-        <translation>Ce qui doit être fait si les valeurs sont égales</translation>
+        <source>What to do if the comparison result is true</source>
+        <translation>Ce qui doit être fait si le résultat de la comparaison est vrai</translation>
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="68"/>
-        <source>If different</source>
-        <translation>Si différent</translation>
+        <source>If false</source>
+        <translation>Si faux</translation>
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="69"/>
+        <source>What to do if the comparison result is false</source>
+        <translation>Ce qui doit être fait si le résultat de la comparaison est faux</translation>
+    </message>
+    <message>
+        <source>If equal</source>
+        <translation type="obsolete">Si égal</translation>
+    </message>
+    <message>
+        <source>What to do if the values are equal</source>
+        <translation type="obsolete">Ce qui doit être fait si les valeurs sont égales</translation>
+    </message>
+    <message>
+        <source>If different</source>
+        <translation type="obsolete">Si différent</translation>
+    </message>
+    <message>
         <source>What to do if the values are different</source>
-        <translation>Ce qui doit être fait si les valeurs sont différentes</translation>
+        <translation type="obsolete">Ce qui doit être fait si les valeurs sont différentes</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::VariableConditionInstance</name>
+    <message>
+        <source>Null variable</source>
+        <translation type="obsolete">Variable nulle</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.h" line="70"/>
+        <source>Invalid variable</source>
+        <translation>Variable invalide</translation>
     </message>
 </context>
 <context>

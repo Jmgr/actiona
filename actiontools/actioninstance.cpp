@@ -94,6 +94,27 @@ namespace ActionTools
 		setTimeout(other.timeout());
 	}
 
+    QScriptValue ActionInstance::evaluateValue(bool &ok,
+                                               const QString &parameterName,
+                                               const QString &subParameterName)
+    {
+        if(!ok)
+            return QScriptValue();
+
+        const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+        QScriptValue result;
+
+        if(subParameter.isCode())
+            result = evaluateCode(ok, subParameter);
+        else
+            result = evaluateText(ok, subParameter);
+
+        if(!ok)
+            return QScriptValue();
+
+        return result;
+    }
+
 	QVariant ActionInstance::evaluateVariant(bool &ok,
 										const QString &parameterName,
 										const QString &subParameterName)
@@ -418,12 +439,12 @@ namespace ActionTools
 			d->scriptEngine->globalObject().setProperty(name, value);
 	}
 
-	QVariant ActionInstance::variable(const QString &name)
+    QScriptValue ActionInstance::variable(const QString &name)
 	{
 		if(name.isEmpty() || !mNameRegExp.exactMatch(name))
-			return QVariant();
+            return QScriptValue();
 
-		return d->scriptEngine->globalObject().property(name).toVariant();
+        return d->scriptEngine->globalObject().property(name);
 	}
 
 	void ActionInstance::setCurrentParameter(const QString &parameterName, const QString &subParameterName)
@@ -624,6 +645,6 @@ namespace ActionTools
 			dbg.space() << exception << "=" << exceptionActionInstancesHash.value(exception);
 		}
 
-		return dbg.maybeSpace();
-	}
+        return dbg.maybeSpace();
+    }
 }

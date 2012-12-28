@@ -118,6 +118,7 @@ namespace Code
 
 	public slots:
 		QString toString() const														{ return "Process"; }
+        virtual bool equals(const QScriptValue &other) const;
 		QScriptValue handle() const;
 		int id() const;
 		QScriptValue start();

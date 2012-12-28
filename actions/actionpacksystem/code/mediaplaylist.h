@@ -67,6 +67,7 @@ namespace Code
 
 	public slots:
 		QString toString() const					{ return "MediaPlaylist"; }
+        virtual bool equals(const QScriptValue &other) const;
 		//Player
 		QScriptValue setPlaybackRate(qreal rate);
 		QScriptValue setVolume(qreal volume);

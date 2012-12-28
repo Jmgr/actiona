@@ -23,6 +23,9 @@
 
 #include "actioninstance.h"
 #include "ifactionvalue.h"
+#include "code/codeclass.h"
+#include "code/rect.h"
+#include "code/point.h"
 
 namespace Actions
 {
@@ -52,82 +55,50 @@ namespace Actions
 
 			QString variableName = evaluateVariable(ok, "variable");
 			Comparison comparison = evaluateListElement<Comparison>(ok, comparisons, "comparison");
-			QString value = evaluateString(ok, "value");
+            QScriptValue value = evaluateValue(ok, "value");
 			ActionTools::IfActionValue ifEqual = evaluateIfAction(ok, "ifEqual");
 			ActionTools::IfActionValue ifDifferent = evaluateIfAction(ok, "ifDifferent");
 
 			if(!ok)
 				return;
 
-			bool conversionOk = true;
-			QVariant variableValue = variable(variableName);
-			float numberVariableValue = variableValue.toFloat(&conversionOk);
-			float numberValue = value.toFloat(&conversionOk);
-			bool equal;
+            QScriptValue variableValue = variable(variableName);
 
-			if(conversionOk)//Number comparison
-			{
-				switch(comparison)
-				{
-				case Equal:
-					equal = (numberVariableValue == numberValue);
-					break;
-				case Different:
-					equal = (numberVariableValue != numberValue);
-					break;
-				case Inferior:
-					equal = (numberVariableValue < numberValue);
-					break;
-				case Superior:
-					equal = (numberVariableValue > numberValue);
-					break;
-				case InferiorEqual:
-					equal = (numberVariableValue <= numberValue);
-					break;
-				case SuperiorEqual:
-					equal = (numberVariableValue >= numberValue);
-					break;
-				case Contains:
-					equal = (variableValue.toString().contains(value));
-					break;
-				default:
-					equal = false;
-					break;
-				}
-			}
-			else//String comparison
-			{
-				switch(comparison)
-				{
-				case Equal:
-					equal = (variableValue.toString() == value);
-					break;
-				case Different:
-					equal = (variableValue.toString() != value);
-					break;
-				case Inferior:
-					equal = (variableValue.toString() < value);
-					break;
-				case Superior:
-					equal = (variableValue.toString() > value);
-					break;
-				case InferiorEqual:
-					equal = (variableValue.toString() <= value);
-					break;
-				case SuperiorEqual:
-					equal = (variableValue.toString() >= value);
-					break;
-				case Contains:
-					equal = (variableValue.toString().contains(value));
-					break;
-				default:
-					equal = false;
-					break;
-				}
-			}
+            if(!variableValue.isValid())
+            {
+                setCurrentParameter("variable");
+                emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid variable"));
 
-			QString action = (equal ? ifEqual.action() : ifDifferent.action());
-			const ActionTools::SubParameter &actionParameter = (equal ? ifEqual.actionParameter() : ifDifferent.actionParameter());
+                return;
+            }
+
+            bool result;
+
+            if(variableValue.isQObject())
+            {
+                QObject *variableObject = variableValue.toQObject();
+
+                Code::Rect *rectObject = qobject_cast<Code::Rect*>(variableObject);
+                Code::Point *pointObject = qobject_cast<Code::Point*>(value.toQObject());
+                if(comparison == Contains && rectObject && pointObject)
+                    result = rectObject->rect().contains(pointObject->point());
+                else if(Code::CodeClass *object = qobject_cast<Code::CodeClass*>(variableObject))
+                    result = object->equals(value);
+            }
+            else if(variableValue.isBool())
+                result = compare(comparison, variableValue.toBool(), value.toBool());
+            else if(variableValue.isNumber())
+                result = compare(comparison, variableValue.toNumber(), value.toNumber());
+            else if(variableValue.isString())
+            {
+                if(comparison == Contains)
+                    result = variableValue.toString().contains(value.toString());
+                else
+                    result = compare(comparison, variableValue.toString(), value.toString());
+            }
+
+            QString action = (result ? ifEqual.action() : ifDifferent.action());
+            const ActionTools::SubParameter &actionParameter = (result ? ifEqual.actionParameter() : ifDifferent.actionParameter());
 			QString line = evaluateSubParameter(ok, actionParameter);
 
 			if(!ok)
@@ -148,6 +119,32 @@ namespace Actions
 
 	private:
 		Q_DISABLE_COPY(VariableConditionInstance)
+
+        template<class T>
+        static bool compare(Comparison comparison, const T &valueA, const T &valueB)
+        {
+            switch(comparison)
+            {
+            case Equal:
+                return (valueA == valueB);
+            case Different:
+                return (valueA != valueB);
+            case Inferior:
+                return (valueA < valueB);
+                break;
+            case Superior:
+                return (valueA > valueB);
+                break;
+            case InferiorEqual:
+                return (valueA <= valueB);
+                break;
+            case SuperiorEqual:
+                return (valueA >= valueB);
+                break;
+            default:
+                return false;
+            }
+        }
 	};
 }
 

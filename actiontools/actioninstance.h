@@ -182,6 +182,9 @@ namespace ActionTools
 		int scriptLine() const												{ return d->scriptLine; }
 
 		/** Parameter management **/
+        QScriptValue evaluateValue(bool &ok,
+                            const QString &parameterName,
+                            const QString &subParameterName = "value");
 		QVariant evaluateVariant(bool &ok,
 							const QString &parameterName,
 							const QString &subParameterName = "value");
@@ -271,7 +274,7 @@ namespace ActionTools
 		void setNextLine(int nextLine);
 
         void setVariable(const QString &name, const QScriptValue &value);
-		QVariant variable(const QString &name);
+        QScriptValue variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
 

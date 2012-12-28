@@ -112,7 +112,7 @@
 <context>
     <name>Actions::ReadBinaryFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readbinaryfileinstance.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/readbinaryfileinstance.h" line="62"/>
         <source>Unable to read the file &quot;%1&quot;</source>
         <translation>Impossible de lire le fichier &quot;%1&quot;</translation>
     </message>
@@ -708,12 +708,12 @@
 <context>
     <name>Code::Clipboard</name>
     <message>
-        <location filename="../actions/actionpackdata/code/clipboard.cpp" line="111"/>
+        <location filename="../actions/actionpackdata/code/clipboard.cpp" line="123"/>
         <source>Selection mode is not supported by your operating system</source>
         <translation>Le mode sélection n&apos;est pas supporté par votre système d&apos;exploitation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/clipboard.cpp" line="118"/>
+        <location filename="../actions/actionpackdata/code/clipboard.cpp" line="130"/>
         <source>Find buffer mode is not supported by your operating system</source>
         <translation>Le mode tampon de recherche n&apos;est pas supporté par votre système d&apos;exploitation</translation>
     </message>
@@ -722,131 +722,131 @@
     <name>Code::File</name>
     <message>
         <location filename="../actions/actionpackdata/code/file.cpp" line="80"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="202"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="214"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="107"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="119"/>
         <source>Unable to open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="118"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="123"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="132"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="130"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="135"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="144"/>
         <source>Write failed</source>
         <translation>L&apos;écriture a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="264"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="360"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="276"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="372"/>
         <source>Unable to create destination directory</source>
         <translation>Impossible de créer le dossier de destination</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="270"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="366"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="282"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="378"/>
         <source>Destination directory doesn&apos;t exist</source>
         <translation>Le dossier de destination n&apos;existe pas</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="285"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="297"/>
         <source>Copy failed</source>
         <translation>Copie échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="323"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="335"/>
         <source>Copy failed: %1</source>
         <translation>Copie échouée : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="329"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="341"/>
         <source>Copy failed: aborted</source>
         <translation>Copie échouée : annulée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="381"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="393"/>
         <source>Move/rename failed</source>
         <translation>Déplacement/renommage échoué</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="419"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="431"/>
         <source>Move failed: %1</source>
         <translation>Déplacement échoué : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="425"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="437"/>
         <source>Move failed: aborted</source>
         <translation>Déplacement échoué : annulé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="474"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="486"/>
         <source>Rename failed: %1</source>
         <translation>Renommage échoué : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="480"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="492"/>
         <source>Rename failed: aborted</source>
         <translation>Renommage échoué : annulé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="507"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="519"/>
         <source>Remove failed</source>
         <translation>Le suppression a échoué</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="539"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="551"/>
         <source>Remove failed: %1</source>
         <translation>Suppression échouée : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="545"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="557"/>
         <source>Remove failed: aborted</source>
         <translation>Suppression échouée : annulée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="566"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="578"/>
         <source>File not found</source>
         <translation>Impossible de trouver le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="568"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="580"/>
         <source>Path not found</source>
         <translation>Impossible de trouver le chemin</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="570"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="582"/>
         <source>Access denied</source>
         <translation>Accès refusé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="572"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="584"/>
         <source>This file is used by another process</source>
         <translation>Ce fichier est utilisé par un autre processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="574"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="586"/>
         <source>The disk is full</source>
         <translation>Plus d&apos;espace disponible sur le disque</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="577"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="589"/>
         <source>The file already exists</source>
         <translation>Le fichier existe déjà</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="579"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="591"/>
         <source>Invalid name</source>
         <translation>Nom incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="581"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="593"/>
         <source>Canceled</source>
         <translation>Annulé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="583"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="595"/>
         <source>Unknown error (%1)</source>
         <translation>Erreur inconnue (%1)</translation>
     </message>
@@ -854,37 +854,37 @@
 <context>
     <name>Code::IniFile</name>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="58"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="70"/>
         <source>Cannot load the file</source>
         <translation>Impossible de charger le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="76"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="88"/>
         <source>Cannot save the file</source>
         <translation>Impossible d&apos;enregistrer le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="115"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="127"/>
         <source>Cannot find the section named &quot;%1&quot;</source>
         <translation>Impossible de trouver la section nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="133"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="145"/>
         <source>Invalid section index</source>
         <translation>Index de section incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="144"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="156"/>
         <source>Cannot delete section named &quot;%1&quot;</source>
         <translation>Impossible de supprimer la section nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="165"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="177"/>
         <source>Invalid key index</source>
         <translation>Index de clef incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="188"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="200"/>
         <source>Cannot delete key named &quot;%1&quot;</source>
         <translation>Impossible de supprimer la clef nommée &quot;%1&quot;</translation>
     </message>
@@ -892,48 +892,48 @@
 <context>
     <name>Code::Registry</name>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="59"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="71"/>
         <source>Unable to open the key</source>
         <translation>Impossible d&apos;ouvrir la clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="78"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="90"/>
         <source>Unable to create the key</source>
         <translation>Impossible de créer la clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="103"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="111"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="126"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="133"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="142"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="115"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="123"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="138"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="145"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="154"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="157"/>
         <source>Cannot set the value data</source>
         <translation>Impossible de changer les données de la valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="164"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="176"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="194"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="223"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="238"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="188"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="206"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="235"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="250"/>
         <source>Cannot find the value to read</source>
         <translation>Impossible de trouver la valeur à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="247"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="259"/>
         <source>Invalid value type</source>
         <translation>Type de valeur incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="267"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="309"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="279"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="321"/>
         <source>Unable to query informations about this key</source>
         <translation>Impossible de récupérer des informations à propos de cette clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="343"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="448"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="355"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="460"/>
         <source>Unable to delete the key</source>
         <translation>Impossible de supprimer la clef</translation>
     </message>
@@ -946,28 +946,28 @@
         <translation>Merci de spécifier le pilote de base de données à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="105"/>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="112"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="117"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="124"/>
         <source>The requested database driver is not available</source>
         <translation>Ce pilote de base de données n&apos;est pas disponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="149"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="161"/>
         <source>Unable to establish a connection to the database</source>
         <translation>Impossible d&apos;établir une connexion vers la base de données</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="162"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="174"/>
         <source>Failed to prepare the query</source>
         <translation>Impossible de préparer la requête</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="188"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="200"/>
         <source>Failed to execute the query : %1</source>
         <translation>Impossible d&apos;exécuter la requête : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="199"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="211"/>
         <source>Cannot fetch the result of a non-select query</source>
         <translation>Impossible de récupérer le résultat d&apos;une requête non-select</translation>
     </message>
@@ -975,29 +975,29 @@
 <context>
     <name>Code::Tcp</name>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="94"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="106"/>
         <source>Cannot establish a connection to the host</source>
         <translation>Impossible d&apos;établir une connexion vers l&apos;hôte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="102"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="114"/>
         <source>Waiting for bytes written failed</source>
         <translation>Attente d&apos;écriture échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="110"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="122"/>
         <source>Waiting for ready read failed</source>
         <translation>Attente de lecture échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="118"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="130"/>
         <source>Waiting for disconnection failed</source>
         <translation>Attente de déconnexion échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="129"/>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="134"/>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="143"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="141"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="146"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="155"/>
         <source>Write failed</source>
         <translation>Écriture échouée</translation>
     </message>
@@ -1005,12 +1005,12 @@
 <context>
     <name>Code::TcpServer</name>
     <message>
-        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="59"/>
+        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="71"/>
         <source>Unable to start listening</source>
         <translation>Impossible de démarrer l&apos;écoute</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="67"/>
+        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="79"/>
         <source>Waiting for new connection failed</source>
         <translation>Attente de nouvelle connexion échouée</translation>
     </message>
@@ -1019,7 +1019,7 @@
         <translation type="obsolete">Attente d&apos;écriture échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="77"/>
+        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="89"/>
         <source>There is no pending connection</source>
         <translation>Il n&apos;y a pas de connexion en attente</translation>
     </message>
@@ -1027,19 +1027,19 @@
 <context>
     <name>Code::Udp</name>
     <message>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="75"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="87"/>
         <source>Cannot establish a connection to the host</source>
         <translation>Impossible d&apos;établir une connexion vers l&apos;hôte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="83"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="95"/>
         <source>Waiting for ready read failed</source>
         <translation>Attente de lecture échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="94"/>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="99"/>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="108"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="106"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="111"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="120"/>
         <source>Write failed</source>
         <translation>Écriture échouée</translation>
     </message>
@@ -1047,7 +1047,7 @@
 <context>
     <name>Code::Web</name>
     <message>
-        <location filename="../actions/actionpackdata/code/web.cpp" line="91"/>
+        <location filename="../actions/actionpackdata/code/web.cpp" line="103"/>
         <source>Unable to open the destination file</source>
         <translation>Impossible d&apos;écrire le fichier de destination</translation>
     </message>

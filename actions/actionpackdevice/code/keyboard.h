@@ -45,6 +45,7 @@ namespace Code
 		QScriptValue releaseKey(const QString &key);
 		QScriptValue triggerKey(const QString &key);
 		QScriptValue writeText(const QString &text, int delay = 0) const;
+        virtual bool equals(const QScriptValue &other) const { Q_UNUSED(other) return false; }
 
 	private:
 		KeyboardDevice mKeyboardDevice;

@@ -93,8 +93,20 @@ namespace Code
 		mDatabase->close();
 		delete mDatabase;
 
-		QSqlDatabase::removeDatabase(connectionName);
-	}
+        QSqlDatabase::removeDatabase(connectionName);
+    }
+
+    bool Sql::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(Sql *otherSql = qobject_cast<Sql*>(object))
+            return (otherSql == this || otherSql->mDatabase == mDatabase);
+
+        return false;
+    }
 
 	QScriptValue Sql::connect(const QScriptValue &parameters) const
 	{

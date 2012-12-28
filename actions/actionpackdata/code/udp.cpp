@@ -59,8 +59,20 @@ namespace Code
 	}
 	
 	Udp::~Udp()
-	{
-	}
+    {
+    }
+
+    bool Udp::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(Udp *otherUdp = qobject_cast<Udp*>(object))
+            return (otherUdp == this || otherUdp->mUdpSocket == mUdpSocket);
+
+        return false;
+    }
 	
 	QScriptValue Udp::connect(const QString &hostname, quint16 port, OpenMode openMode)
 	{

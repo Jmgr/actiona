@@ -58,8 +58,20 @@ namespace Code
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 
-		return Image::constructor(clipboard->image(mMode), engine());
-	}
+        return Image::constructor(clipboard->image(mMode), engine());
+    }
+
+    bool Clipboard::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(Clipboard *otherClipboard = qobject_cast<Clipboard*>(object))
+            return (otherClipboard == this);
+
+        return false;
+    }
 	
 	QScriptValue Clipboard::setMode(Mode mode)
 	{

@@ -136,8 +136,20 @@ namespace Code
 		connect(mProcess, SIGNAL(readyReadStandardError()), SLOT(readyReadStandardError()));
 		connect(mProcess, SIGNAL(readyReadStandardOutput()), SLOT(readyReadStandardOutput()));
 		connect(mProcess, SIGNAL(started()), SLOT(started()));
-		connect(mProcess, SIGNAL(stateChanged(QProcess::ProcessState)), SLOT(stateChanged(QProcess::ProcessState)));
-	}
+        connect(mProcess, SIGNAL(stateChanged(QProcess::ProcessState)), SLOT(stateChanged(QProcess::ProcessState)));
+    }
+
+    bool Process::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(Process *otherProcess = qobject_cast<Process*>(object))
+            return (otherProcess == this || otherProcess->mProcess == mProcess);
+
+        return false;
+    }
 
 	QScriptValue Process::handle() const
 	{

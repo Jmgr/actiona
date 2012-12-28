@@ -60,6 +60,7 @@ namespace Code
 	
 	public slots:
 		QString toString() const					{ return "Clipboard"; }
+        virtual bool equals(const QScriptValue &other) const;
 		QScriptValue setMode(Mode mode);
 		QScriptValue setText(const QString &value) const;
 		QScriptValue setImage(const QScriptValue &data) const;

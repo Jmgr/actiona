@@ -809,24 +809,24 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Code::MediaPlaylist</name>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="161"/>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="172"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="173"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="184"/>
         <source>Add media failed : %1</source>
         <translation>Impossible d&apos;ajouter le média : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="183"/>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="194"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="195"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="206"/>
         <source>Insert media failed : %1</source>
         <translation>Impossible d&apos;insérer le média : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="205"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="217"/>
         <source>Clear failed : %1</source>
         <translation>Impossible de vider la liste de lecture : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="251"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="263"/>
         <source>Remove media failed : %1</source>
         <translation>Impossible de supprimer un média : %1</translation>
     </message>
@@ -843,7 +843,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
     <name>Code::Process</name>
     <message>
         <location filename="../actions/actionpacksystem/code/process.cpp" line="90"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="161"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="173"/>
         <source>Invalid filename</source>
         <translation>Nom de fichier incorrect</translation>
     </message>
@@ -853,34 +853,34 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation>Impossible de démarrer le processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="251"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="256"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="265"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="263"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="268"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="277"/>
         <source>Write failed</source>
         <translation>Impossible d&apos;écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="351"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="363"/>
         <source>Invalid process</source>
         <translation>Processus incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="363"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="375"/>
         <source>Wait for finished failed</source>
         <translation>L&apos;attente de terminaison a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="371"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="383"/>
         <source>Wait for started failed</source>
         <translation>L&apos;attente de démarrage a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="379"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="391"/>
         <source>Waiting for bytes written failed</source>
         <translation>L&apos;attente d&apos;écriture a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="387"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="399"/>
         <source>Waiting for ready read failed</source>
         <translation>L&apos;attente de lecture a échouée</translation>
     </message>

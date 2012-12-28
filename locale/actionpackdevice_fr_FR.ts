@@ -237,33 +237,33 @@
 <context>
     <name>Actions::TextDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="45"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="47"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="46"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="48"/>
         <source>The text to write</source>
         <translation>Le texte à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="49"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="51"/>
         <source>Pause between characters</source>
         <translation>Pause entre chaque caractère</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="50"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="52"/>
         <source>The pause duration between each character</source>
         <translation>La durée de la pause entre chaque caractère</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="54"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="56"/>
         <source> ms</source>
         <comment>milliseconds</comment>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="59"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
@@ -450,12 +450,12 @@
         <translation type="obsolete">Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="60"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="62"/>
         <source>Write text</source>
         <translation>Écriture de texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="63"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="65"/>
         <source>Write some text</source>
         <translation>Écrit du texte</translation>
     </message>

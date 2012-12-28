@@ -63,6 +63,7 @@ namespace Code
 
 	public slots:
 		QString toString() const					{ return "Web"; }
+        virtual bool equals(const QScriptValue &other) const;
 		QScriptValue download(const QString &urlString, const QScriptValue &options = QScriptValue());
 		bool isDownloading() const;
 		QScriptValue toImage() const;

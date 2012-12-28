@@ -69,6 +69,7 @@ namespace Code
 		
 	public slots:
 		QString toString() const					{ return "Sql"; }
+        virtual bool equals(const QScriptValue &other) const;
 		QScriptValue connect(const QScriptValue &parameters) const;
 		QScriptValue prepare(const QString &queryString, const QScriptValue &parameters);
 		QScriptValue execute(const QString &queryString = QString());

@@ -47,6 +47,7 @@ namespace Code
 		
 	public slots:
 		QString toString() const					{ return "TcpServer"; }
+        virtual bool equals(const QScriptValue &other) const;
 		QScriptValue listen(const QString &address = QString(), int port = 0);
 		QScriptValue waitForNewConnection(int waitTime = 30000);
 		QScriptValue nextPendingConnection();

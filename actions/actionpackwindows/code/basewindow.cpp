@@ -186,6 +186,18 @@ namespace Code
 		
 		mWindow->close();
 
-		return thisObject();
-	}
+        return thisObject();
+    }
+
+    bool BaseWindow::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(BaseWindow *otherBaseWindow = qobject_cast<BaseWindow*>(object))
+            return (otherBaseWindow == this || otherBaseWindow->mWindow == mWindow);
+
+        return false;
+    }
 }
