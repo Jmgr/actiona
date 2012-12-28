@@ -20,6 +20,8 @@
 
 #include "readregistryinstance.h"
 
+#include <QScriptEngine>
+
 #ifdef Q_WS_WIN
 #include <Windows.h>
 #endif
@@ -60,7 +62,7 @@ namespace Actions
 			emit executionException(CannotFindValueException, tr("Invalid value type"));
 			return;
 		default:
-			setVariable(variable, resultValue);
+            setVariable(variable, scriptEngine()->newVariant(resultValue));
 			break;
 		}
 	#endif
