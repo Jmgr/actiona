@@ -39,7 +39,8 @@ namespace Actions
 	
 		Action action = evaluateListElement<Action>(ok, actions, "action", "value");
 		MouseDevice::Button button = evaluateListElement<MouseDevice::Button>(ok, buttons, "button", "value");
-		QPoint position = evaluatePoint(ok, "position");
+		QPoint position        = evaluatePoint(ok, "position");
+		QPoint position_offset = evaluatePoint(ok, "position_offset");
 		int amount = evaluateInteger(ok, "amount");
 	
 		if(!ok)
@@ -55,6 +56,7 @@ namespace Actions
 			return;
 		}
 		
+		position += position_offset;
 		mMouseDevice.setCursorPosition(position);
 	
 		for(int i = 0; i < amount; ++i)

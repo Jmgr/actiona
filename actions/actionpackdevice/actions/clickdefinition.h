@@ -78,6 +78,10 @@ namespace Actions
 	
 			addElement(clickGroup);
 			
+			ActionTools::PositionParameterDefinition *position_offset = new ActionTools::PositionParameterDefinition(ActionTools::Name("position_offset", tr("Offset")), this);
+			position_offset->setTooltip(tr("The offset to apply at the click position"));
+			addElement(position_offset, 1);
+
 			addException(ClickInstance::FailedToSendInputException, tr("Send input failure"));
 			addException(ClickInstance::InvalidActionException, tr("Invalid action"));
 		}
@@ -90,6 +94,7 @@ namespace Actions
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/click.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 	
 	private:
 		Q_DISABLE_COPY(ClickDefinition)
