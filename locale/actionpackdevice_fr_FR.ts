@@ -93,14 +93,24 @@
 <context>
     <name>Actions::CursorPathDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="44"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="45"/>
         <source>Path</source>
         <translation>Trajet</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="45"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="46"/>
         <source>The path to follow</source>
         <translation>Le trajet à effectuer</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="49"/>
+        <source>Offset</source>
+        <translation>Décalage</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="50"/>
+        <source>The offset to apply to the path</source>
+        <translation>Le décalage à appliquer aux points du chemin</translation>
     </message>
 </context>
 <context>
@@ -242,6 +252,16 @@
         <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="45"/>
         <source>The position where to move the cursor</source>
         <translation>La position où déplacer le curseur</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="48"/>
+        <source>Offset</source>
+        <translation>Décalage</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="49"/>
+        <source>The offset to apply to the cursor movement</source>
+        <translation>Le décalage à appliquer au mouvement du pointeur de la souris</translation>
     </message>
 </context>
 <context>
@@ -446,12 +466,12 @@
         <translation>Simule la pression d&apos;une touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="49"/>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="53"/>
         <source>Move cursor</source>
         <translation>Déplacement du curseur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="56"/>
         <source>Move the mouse cursor</source>
         <translation>Déplace le curseur de souris</translation>
     </message>
@@ -508,12 +528,12 @@
         <translation type="obsolete">Pression et relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="49"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="54"/>
         <source>Cursor path</source>
         <translation>Trajet du curseur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="57"/>
         <source>Move the mouse cursor on a path</source>
         <translation>Déplace le curseur de la souris sur un trajet</translation>
     </message>
