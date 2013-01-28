@@ -57,11 +57,21 @@
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="81"/>
+        <source>Offset</source>
+        <translation>Décalage</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
+        <source>The offset to apply at the click position</source>
+        <translation>Le décalage à appliquer à la position du clic</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="86"/>
         <source>Invalid action</source>
         <translation>Action incorrecte</translation>
     </message>
@@ -69,13 +79,13 @@
 <context>
     <name>Actions::ClickInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="54"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="55"/>
         <source>Invalid click amount</source>
         <translation>Quantité de clics incorrecte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="66"/>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="74"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="68"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="76"/>
         <source>Unable to emulate click: button event failed</source>
         <translation>Impossible de simuler un clic : l&apos;évènement de bouton n&apos;a pas pu être envoyé</translation>
     </message>
@@ -416,12 +426,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="89"/>
         <source>Click</source>
         <translation>Clic</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="88"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="92"/>
         <source>Emulates a mouse click</source>
         <translation>Simule un clic de souris</translation>
     </message>
