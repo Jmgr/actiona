@@ -93,30 +93,10 @@ int main(int argc, char **argv)
 
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
-	//TODO: Fix the bug where the command help text is not translated
 	QxtCommandOptions options;
-	options.setFlagStyle(QxtCommandOptions::DoubleDash);
-	options.setScreenWidth(0);
-	options.add("nosplash", QObject::tr("disable the splash screen"));
-	options.alias("nosplash", "s");
-	options.add("notrayicon", QObject::tr("disable the tray icon"));
-	options.alias("notrayicon", "t");
-	options.add("noexecutionwindow", QObject::tr("do not show the execution window"));
-	options.alias("noexecutionwindow", "E");
-	options.add("noconsolewindow", QObject::tr("do not show the console window"));
-	options.alias("noconsolewindow", "C");
-	options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
-	options.alias("nocodeqt", "Q");
-	options.add("execute", QObject::tr("execute the current script"));
-	options.alias("execute", "e");
-	options.add("exitatend", QObject::tr("close Actionaz after execution - requires execute"));
-	options.alias("exitatend", "x");
+
 	options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
 	options.alias("portable", "p");
-	options.add("version", QObject::tr("show the program version"));
-	options.alias("version", "v");
-	options.add("help", QObject::tr("show this help text"));
-	options.alias("help", "h");
 	options.parse(QCoreApplication::arguments());
 
 	if(options.count("portable") > 0)
@@ -189,6 +169,30 @@ int main(int argc, char **argv)
 #endif
 	}
 	app.installTranslator(&guiTranslator);
+
+	options.setFlagStyle(QxtCommandOptions::DoubleDash);
+	options.setScreenWidth(0);
+	options.add("nosplash", QObject::tr("disable the splash screen"));
+	options.alias("nosplash", "s");
+	options.add("notrayicon", QObject::tr("disable the tray icon"));
+	options.alias("notrayicon", "t");
+	options.add("noexecutionwindow", QObject::tr("do not show the execution window"));
+	options.alias("noexecutionwindow", "E");
+	options.add("noconsolewindow", QObject::tr("do not show the console window"));
+	options.alias("noconsolewindow", "C");
+	options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
+	options.alias("nocodeqt", "Q");
+	options.add("execute", QObject::tr("execute the current script"));
+	options.alias("execute", "e");
+	options.add("exitatend", QObject::tr("close Actionaz after execution - requires execute"));
+	options.alias("exitatend", "x");
+	options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
+	options.alias("portable", "p");
+	options.add("version", QObject::tr("show the program version"));
+	options.alias("version", "v");
+	options.add("help", QObject::tr("show this help text"));
+	options.alias("help", "h");
+	options.parse(QCoreApplication::arguments());
 
 	if(options.count("version"))
 	{
