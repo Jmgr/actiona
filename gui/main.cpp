@@ -93,6 +93,19 @@ int main(int argc, char **argv)
 
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
+	QxtCommandOptions options;
+
+	options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
+	options.alias("portable", "p");
+	options.parse(QCoreApplication::arguments());
+
+	if(options.count("portable") > 0)
+	{
+		QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QApplication::applicationDirPath() + "/userSettings");
+		QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope, QApplication::applicationDirPath() + "/systemSettings");
+		QSettings::setDefaultFormat(QSettings::IniFormat);
+	}
+
 	QSettings settings;
 
 	QString locale = settings.value("locale").toString();
@@ -157,7 +170,6 @@ int main(int argc, char **argv)
 	}
 	app.installTranslator(&guiTranslator);
 
-	QxtCommandOptions options;
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
 	options.add("nosplash", QObject::tr("disable the splash screen"));
@@ -182,12 +194,6 @@ int main(int argc, char **argv)
 	options.alias("help", "h");
 	options.parse(QCoreApplication::arguments());
 
-	if(options.count("portable") > 0)
-	{
-		QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QApplication::applicationDirPath() + "/userSettings");
-		QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope, QApplication::applicationDirPath() + "/systemSettings");
-		QSettings::setDefaultFormat(QSettings::IniFormat);
-	}
 	if(options.count("version"))
 	{
 		QTextStream stream(stdout);
