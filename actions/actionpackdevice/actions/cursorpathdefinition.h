@@ -24,6 +24,7 @@
 #include "actiondefinition.h"
 #include "cursorpathinstance.h"
 #include "pointlistparameterdefinition.h"
+#include "positionparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -44,6 +45,10 @@ namespace Actions
 			ActionTools::PointListParameterDefinition *path = new ActionTools::PointListParameterDefinition(ActionTools::Name("path", tr("Path")), this);
 			path->setTooltip(tr("The path to follow"));
 			addElement(path);
+
+			ActionTools::PositionParameterDefinition *position_offset = new ActionTools::PositionParameterDefinition(ActionTools::Name("position_offset", tr("Offset")), this);
+			position_offset->setTooltip(tr("The offset to apply to the path"));
+			addElement(position_offset, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Cursor path"); }
@@ -54,6 +59,7 @@ namespace Actions
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(CursorPathDefinition)

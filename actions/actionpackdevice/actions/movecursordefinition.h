@@ -44,6 +44,10 @@ namespace Actions
 			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::Name("position", tr("Position")), this);
 			position->setTooltip(tr("The position where to move the cursor"));
 			addElement(position);
+
+			ActionTools::PositionParameterDefinition *position_offset = new ActionTools::PositionParameterDefinition(ActionTools::Name("position_offset", tr("Offset")), this);
+			position_offset->setTooltip(tr("The offset to apply to the cursor movement"));
+			addElement(position_offset, 1);
 		}
 	
 		QString name() const													{ return QObject::tr("Move cursor"); }
@@ -54,7 +58,8 @@ namespace Actions
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
-	
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+
 	private:
 		Q_DISABLE_COPY(MoveCursorDefinition)
 	};
