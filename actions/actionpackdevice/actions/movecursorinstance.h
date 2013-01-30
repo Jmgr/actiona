@@ -39,12 +39,12 @@ namespace Actions
 			bool ok = true;
 		
 			QPoint position        = evaluatePoint(ok, "position");
-			QPoint position_offset = evaluatePoint(ok, "position_offset");
+			QPoint positionOffset = evaluatePoint(ok, "positionOffset");
 
 			if(!ok)
 				return;
 			
-			position += position_offset;
+			position += positionOffset;
 			mMouseDevice.setCursorPosition(position);
 		
 			emit executionEnded();

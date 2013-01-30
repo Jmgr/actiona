@@ -45,9 +45,9 @@ namespace Actions
 			position->setTooltip(tr("The position where to move the cursor"));
 			addElement(position);
 
-			ActionTools::PositionParameterDefinition *position_offset = new ActionTools::PositionParameterDefinition(ActionTools::Name("position_offset", tr("Offset")), this);
-			position_offset->setTooltip(tr("The offset to apply to the cursor movement"));
-			addElement(position_offset, 1);
+			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
+			positionOffset->setTooltip(tr("The offset to apply to the cursor movement"));
+			addElement(positionOffset, 1);
 		}
 	
 		QString name() const													{ return QObject::tr("Move cursor"); }

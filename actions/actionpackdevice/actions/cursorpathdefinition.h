@@ -46,9 +46,9 @@ namespace Actions
 			path->setTooltip(tr("The path to follow"));
 			addElement(path);
 
-			ActionTools::PositionParameterDefinition *position_offset = new ActionTools::PositionParameterDefinition(ActionTools::Name("position_offset", tr("Offset")), this);
-			position_offset->setTooltip(tr("The offset to apply to the path"));
-			addElement(position_offset, 1);
+			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
+			positionOffset->setTooltip(tr("The offset to apply to the path"));
+			addElement(positionOffset, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Cursor path"); }
