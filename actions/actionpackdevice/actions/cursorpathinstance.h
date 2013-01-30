@@ -45,6 +45,7 @@ namespace Actions
 		{
 			bool ok = true;
 
+			mPosition_offset = evaluatePoint(ok, "position_offset");
 			mPoints = evaluatePolygon(ok, "path");
 
 			if(!ok)
@@ -74,7 +75,7 @@ namespace Actions
 			}
 			else
 			{
-				mMouseDevice.setCursorPosition(mPoints.at(mCurrentPoint));
+				mMouseDevice.setCursorPosition(mPoints.at(mCurrentPoint) + mPosition_offset);
 				++mCurrentPoint;
 			}
 		}
@@ -82,6 +83,7 @@ namespace Actions
 	private:
 		MouseDevice mMouseDevice;
 		QTimer mMoveTimer;
+		QPoint mPosition_offset;
 		QPolygon mPoints;
 		int mCurrentPoint;
 
