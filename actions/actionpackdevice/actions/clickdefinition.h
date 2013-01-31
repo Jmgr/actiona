@@ -79,7 +79,7 @@ namespace Actions
 			addElement(clickGroup);
 			
 			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
-			positionOffset->setTooltip(tr("The offset to apply at the click position"));
+			positionOffset->setTooltip(tr("The offset to apply to the click position"));
 			addElement(positionOffset, 1);
 
 			addException(ClickInstance::FailedToSendInputException, tr("Send input failure"));

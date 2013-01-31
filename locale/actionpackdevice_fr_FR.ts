@@ -42,6 +42,11 @@
         <translation>La position à l&apos;écran où simuler le clic de souris</translation>
     </message>
     <message>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
+        <source>The offset to apply to the click position</source>
+        <translation type="unfinished">Le décalage à appliquer à la position du clic</translation>
+    </message>
+    <message>
         <source>Click action</source>
         <translation type="obsolete">Action de clic</translation>
     </message>
@@ -61,9 +66,8 @@
         <translation>Décalage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
         <source>The offset to apply at the click position</source>
-        <translation>Le décalage à appliquer à la position du clic</translation>
+        <translation type="obsolete">Le décalage à appliquer à la position du clic</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
