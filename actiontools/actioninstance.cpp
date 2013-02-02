@@ -25,7 +25,6 @@
 #include "parameterdefinition.h"
 #include "groupdefinition.h"
 #include "script.h"
-#include "text.h"
 #include "code/point.h"
 #include "code/color.h"
 
@@ -507,16 +506,6 @@ namespace ActionTools
 		ok = true;
 
 		QString value = toEvaluate.value().toString();
-
-		if( value.indexOf("[parser]") == 0 ) {
-			QString result;
-
-			//la chaine commence par "[parser]" on déclenche l'évaluation alternative
-			Text rawString(d, value.right(9););
-			result = rawString.Parse(ok);
-
-			return result;
-		}
 
 		int position = 0;
 
