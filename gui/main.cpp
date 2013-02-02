@@ -93,13 +93,13 @@ int main(int argc, char **argv)
 
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
-	QxtCommandOptions options;
+	QxtCommandOptions preOptions;
 
-	options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
-	options.alias("portable", "p");
-	options.parse(QCoreApplication::arguments());
+	preOptions.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
+	preOptions.alias("portable", "p");
+	preOptions.parse(QCoreApplication::arguments());
 
-	if(options.count("portable") > 0)
+	if(preOptions.count("portable") > 0)
 	{
 		QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QApplication::applicationDirPath() + "/userSettings");
 		QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope, QApplication::applicationDirPath() + "/systemSettings");
@@ -169,6 +169,8 @@ int main(int argc, char **argv)
 #endif
 	}
 	app.installTranslator(&guiTranslator);
+
+	QxtCommandOptions options;
 
 	options.setFlagStyle(QxtCommandOptions::DoubleDash);
 	options.setScreenWidth(0);
