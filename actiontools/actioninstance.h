@@ -288,7 +288,7 @@ namespace ActionTools
 		QString evaluateText_original(bool &ok, const SubParameter &toEvaluate);
 
 		QString evaluateText(bool &ok, const SubParameter &toEvaluate);
-		QString evaluateTextString(bool &ok, const QString toEvaluate, int &pos);
+		QString evaluateTextString(bool &ok, const QString toEvaluate, int *pIndex = NULL);
 
 		static const QRegExp mNameRegExp;
 		static const QRegExp mVariableRegExp;

@@ -564,35 +564,48 @@ namespace ActionTools
 
 		QString value = toEvaluate.value().toString();
 
-		//si la chaine commence par "[parser]" on déclenche l'évaluation alternative
+		//if the string begins with "[parser]" we call the alternative method : evaluateTextString
 		if( value.indexOf("[parser]") == 0 )
 		{
-			int index = 0;
-			return evaluateTextString(ok, (const QString) value.remove(0,8), index);
+			//TODO : is it possible for the first call of evaluateTextString to remove the third parameter ?
+			//yes but, (int &index = 0) is forbidden so we use (int *pIndex = NULL). ask jmgr advice.
+			return evaluateTextString(ok, (const QString) value.remove(0,8));
 		}
 		else
 			return evaluateText_original(ok, toEvaluate);
 	}
 
-	QString ActionInstance::evaluateTextString(bool &ok, const QString toEvaluate, int &pos)
+	QString ActionInstance::evaluateTextString(bool &ok, const QString toEvaluate, int * pIndex)
 	{
 		ok = true;
 
-		int startIndex = pos;
+		int startIndex;
+		int currentIndex = 0;
+
+		if( pIndex == NULL )
+		{
+			//top level evaluation
+			startIndex = 0;
+			pIndex = &currentIndex;
+		}
+		else
+		{
+			startIndex = *pIndex;
+		}
 
 		QString result;
 
-		while(pos < toEvaluate.length())
+		while((*pIndex) < toEvaluate.length())
 		{
-			if( toEvaluate[pos] == QChar('$') )
+			if( toEvaluate[*pIndex] == QChar('$') )
 			{
 				//find a variable name
-				if( mVariableRegExp2.indexIn(toEvaluate , pos) != -1 )
+				if( mVariableRegExp2.indexIn(toEvaluate , *pIndex) != -1 )
 				{
 					QString  foundVariableName = mVariableRegExp2.cap(1);
 					QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
 
-					pos += foundVariableName.length();
+					*pIndex += foundVariableName.length();
 
 					if(!foundVariable.isValid())
 					{
@@ -610,29 +623,28 @@ namespace ActionTools
 						stringEvaluationResult = "[Undefined]";
 					else if(foundVariable.isArray())
 					{
-						if((pos+1 < toEvaluate.length()) && toEvaluate[pos+1] == QChar('['))
+						if((*pIndex + 1 < toEvaluate.length()) && toEvaluate[*pIndex + 1] == QChar('['))
 						{
-							pos += 2;
-							QString indexArray = evaluateTextString(ok, toEvaluate, pos);
-							if(toEvaluate[pos] == QChar(']'))
+							*pIndex += 2;
+							QString indexArray = evaluateTextString(ok, toEvaluate, pIndex);
+							if((*pIndex < toEvaluate.length()) && toEvaluate[*pIndex] == QChar(']'))
 							{
-								//tout va bien la déclaration semble semble ok, on a qq chose de la forme  $Array[indexArray]
-								//comment l'evaluer ??
-								stringEvaluationResult = tr("{Array:\"%1\"}[Index:%2]").arg(foundVariableName, indexArray);
+								//not perfect, but working so far
+								//TODO: look if indexArray is already quoted
+								stringEvaluationResult = d->scriptEngine->evaluate(tr("%1['%2']").arg(foundVariableName,indexArray)).toString();
 							}
 							else
 							{
-								//erreur de syntaxe
+								//syntax error
 								ok = false;
 
-								emit executionException(ActionException::BadParameterException, tr("Mauvais parametre. Chaine impossible à evaluer (pos: %1)").arg(pos));
+								emit executionException(ActionException::BadParameterException, tr("Bad parameter. Unable to evaluate string"));
 								return QString();
 							}
 						}
 						else
 						{
-							//on affiche le tableau
-							stringEvaluationResult = tr("[Array:%1]").arg(foundVariable.toString());
+							stringEvaluationResult = foundVariable.toString();
 						}
 					}
 					else if(foundVariable.isVariant())
@@ -658,33 +670,32 @@ namespace ActionTools
 				}
 
 			}
-			else if ( toEvaluate[pos] == QChar(']') )
+			else if ( toEvaluate[*pIndex] == QChar(']') )
 			{
 				if( startIndex == 0 )
 				{
 					//in top level evaluation isolated character ']' is accepted (for compatibility reason), now prefer "\]"
 					//i.e without matching '['
-					result.append(toEvaluate[pos]);
+					result.append(toEvaluate[*pIndex]);
 				}
 				else
 					//on other levels, the parsing is stopped at this point
 					return result;
 			}
-			else if( toEvaluate[pos] == QChar('\\') )
+			else if( toEvaluate[*pIndex] == QChar('\\') )
 			{
-				pos++;
-				if( pos < toEvaluate.length() )
+				(*pIndex)++;
+				if( *pIndex < toEvaluate.length() )
 				{
-					result.append(toEvaluate[pos]);
+					result.append(toEvaluate[*pIndex]);
 				}
 			}
 			else
 			{
-				result.append(toEvaluate[pos]);
+				result.append(toEvaluate[*pIndex]);
 			}
-			pos++;
+			(*pIndex)++;
 		}
-
 
 		return result;
 	}
