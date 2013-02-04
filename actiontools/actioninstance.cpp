@@ -567,45 +567,36 @@ namespace ActionTools
 		//if the string begins with "[parser]" we call the alternative method : evaluateTextString
 		if( value.indexOf("[parser]") == 0 )
 		{
-			//TODO : is it possible for the first call of evaluateTextString to remove the third parameter ?
-			//yes but, (int &index = 0) is forbidden so we use (int *pIndex = NULL). ask jmgr advice.
 			return evaluateTextString(ok, (const QString) value.remove(0,8));
 		}
 		else
 			return evaluateText_original(ok, toEvaluate);
 	}
 
-	QString ActionInstance::evaluateTextString(bool &ok, const QString toEvaluate, int * pIndex)
+	QString ActionInstance::evaluateTextString(bool &ok, const QString toEvaluate) {
+		int pos = 0;
+		return evaluateTextString(ok, toEvaluate, pos);
+	}
+
+	QString ActionInstance::evaluateTextString(bool &ok, const QString toEvaluate, int &pos)
 	{
 		ok = true;
 
-		int startIndex;
-		int currentIndex = 0;
-
-		if( pIndex == NULL )
-		{
-			//top level evaluation
-			startIndex = 0;
-			pIndex = &currentIndex;
-		}
-		else
-		{
-			startIndex = *pIndex;
-		}
+		int startIndex = pos;
 
 		QString result;
 
-		while((*pIndex) < toEvaluate.length())
+		while(pos < toEvaluate.length())
 		{
-			if( toEvaluate[*pIndex] == QChar('$') )
+			if( toEvaluate[pos] == QChar('$') )
 			{
 				//find a variable name
-				if( mVariableRegExp2.indexIn(toEvaluate , *pIndex) != -1 )
+				if( mVariableRegExp2.indexIn(toEvaluate , pos) != -1 )
 				{
 					QString  foundVariableName = mVariableRegExp2.cap(1);
 					QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
 
-					*pIndex += foundVariableName.length();
+					pos += foundVariableName.length();
 
 					if(!foundVariable.isValid())
 					{
@@ -623,11 +614,11 @@ namespace ActionTools
 						stringEvaluationResult = "[Undefined]";
 					else if(foundVariable.isArray())
 					{
-						if((*pIndex + 1 < toEvaluate.length()) && toEvaluate[*pIndex + 1] == QChar('['))
+						if((pos + 1 < toEvaluate.length()) && toEvaluate[pos + 1] == QChar('['))
 						{
-							*pIndex += 2;
-							QString indexArray = evaluateTextString(ok, toEvaluate, pIndex);
-							if((*pIndex < toEvaluate.length()) && toEvaluate[*pIndex] == QChar(']'))
+							pos += 2;
+							QString indexArray = evaluateTextString(ok, toEvaluate, pos);
+							if((pos < toEvaluate.length()) && toEvaluate[pos] == QChar(']'))
 							{
 								//not perfect, but working so far
 								//TODO: look if indexArray is already quoted
@@ -670,31 +661,31 @@ namespace ActionTools
 				}
 
 			}
-			else if ( toEvaluate[*pIndex] == QChar(']') )
+			else if ( toEvaluate[pos] == QChar(']') )
 			{
 				if( startIndex == 0 )
 				{
 					//in top level evaluation isolated character ']' is accepted (for compatibility reason), now prefer "\]"
 					//i.e without matching '['
-					result.append(toEvaluate[*pIndex]);
+					result.append(toEvaluate[pos]);
 				}
 				else
 					//on other levels, the parsing is stopped at this point
 					return result;
 			}
-			else if( toEvaluate[*pIndex] == QChar('\\') )
+			else if( toEvaluate[pos] == QChar('\\') )
 			{
-				(*pIndex)++;
-				if( *pIndex < toEvaluate.length() )
+				pos++;
+				if( pos < toEvaluate.length() )
 				{
-					result.append(toEvaluate[*pIndex]);
+					result.append(toEvaluate[pos]);
 				}
 			}
 			else
 			{
-				result.append(toEvaluate[*pIndex]);
+				result.append(toEvaluate[pos]);
 			}
-			(*pIndex)++;
+			pos++;
 		}
 
 		return result;
