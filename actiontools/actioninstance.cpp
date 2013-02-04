@@ -47,6 +47,7 @@ namespace ActionTools
 
 	const QRegExp ActionInstance::mNameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
 	const QRegExp ActionInstance::mVariableRegExp("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
+	const QRegExp ActionInstance::mVariableRegExp2("\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 	qint64 ActionInstance::mCurrentRuntimeId = 0;
 
 	ActionInstance::ActionInstance(const ActionDefinition *definition, QObject *parent)
@@ -501,7 +502,7 @@ namespace ActionTools
 		return result;
 	}
 
-	QString ActionInstance::evaluateText(bool &ok, const SubParameter &toEvaluate)
+	QString ActionInstance::evaluateText_original(bool &ok, const SubParameter &toEvaluate)
 	{
 		ok = true;
 
@@ -555,6 +556,137 @@ namespace ActionTools
 		}
 
 		return value;
+	}
+
+	QString ActionInstance::evaluateText(bool &ok, const SubParameter &toEvaluate)
+	{
+		ok = true;
+
+		QString value = toEvaluate.value().toString();
+
+		//si la chaine commence par "[parser]" on déclenche l'évaluation alternative
+		if( value.indexOf("[parser]") == 0 )
+		{
+			int index = 0;
+			return evaluateTextString(ok, (const QString) value.remove(0,8), index);
+		}
+		else
+			return evaluateText_original(ok, toEvaluate);
+	}
+
+	QString ActionInstance::evaluateTextString(bool &ok, const QString toEvaluate, int &pos)
+	{
+		ok = true;
+
+		int startIndex = pos;
+
+		QString result;
+
+		while(pos < toEvaluate.length())
+		{
+			if( toEvaluate[pos] == QChar('$') )
+			{
+				//find a variable name
+				if( mVariableRegExp2.indexIn(toEvaluate , pos) != -1 )
+				{
+					QString  foundVariableName = mVariableRegExp2.cap(1);
+					QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
+
+					pos += foundVariableName.length();
+
+					if(!foundVariable.isValid())
+					{
+						ok = false;
+
+						emit executionException(ActionException::BadParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
+						return QString();
+					}
+
+					QString stringEvaluationResult;
+
+					if(foundVariable.isNull())
+						stringEvaluationResult = "[Null]";
+					else if(foundVariable.isUndefined())
+						stringEvaluationResult = "[Undefined]";
+					else if(foundVariable.isArray())
+					{
+						if((pos+1 < toEvaluate.length()) && toEvaluate[pos+1] == QChar('['))
+						{
+							pos += 2;
+							QString indexArray = evaluateTextString(ok, toEvaluate, pos);
+							if(toEvaluate[pos] == QChar(']'))
+							{
+								//tout va bien la déclaration semble semble ok, on a qq chose de la forme  $Array[indexArray]
+								//comment l'evaluer ??
+								stringEvaluationResult = tr("{Array:\"%1\"}[Index:%2]").arg(foundVariableName, indexArray);
+							}
+							else
+							{
+								//erreur de syntaxe
+								ok = false;
+
+								emit executionException(ActionException::BadParameterException, tr("Mauvais parametre. Chaine impossible à evaluer (pos: %1)").arg(pos));
+								return QString();
+							}
+						}
+						else
+						{
+							//on affiche le tableau
+							stringEvaluationResult = tr("[Array:%1]").arg(foundVariable.toString());
+						}
+					}
+					else if(foundVariable.isVariant())
+					{
+						QVariant variantEvaluationResult = foundVariable.toVariant();
+						switch(variantEvaluationResult.type())
+						{
+						case QVariant::StringList:
+							stringEvaluationResult = variantEvaluationResult.toStringList().join("\n");
+							break;
+						case QVariant::ByteArray:
+							stringEvaluationResult = "[Raw data]";
+							break;
+						default:
+							stringEvaluationResult = foundVariable.toString();
+							break;
+						}
+					}
+					else
+						stringEvaluationResult = foundVariable.toString();
+
+					result.append(stringEvaluationResult);
+				}
+
+			}
+			else if ( toEvaluate[pos] == QChar(']') )
+			{
+				if( startIndex == 0 )
+				{
+					//in top level evaluation isolated character ']' is accepted (for compatibility reason), now prefer "\]"
+					//i.e without matching '['
+					result.append(toEvaluate[pos]);
+				}
+				else
+					//on other levels, the parsing is stopped at this point
+					return result;
+			}
+			else if( toEvaluate[pos] == QChar('\\') )
+			{
+				pos++;
+				if( pos < toEvaluate.length() )
+				{
+					result.append(toEvaluate[pos]);
+				}
+			}
+			else
+			{
+				result.append(toEvaluate[pos]);
+			}
+			pos++;
+		}
+
+
+		return result;
 	}
 
 	QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance)

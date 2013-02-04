@@ -283,10 +283,16 @@ namespace ActionTools
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);
 		QScriptValue evaluateCode(bool &ok, const SubParameter &toEvaluate);
+
+		//just for the time of develop the next evaluateText
+		QString evaluateText_original(bool &ok, const SubParameter &toEvaluate);
+
 		QString evaluateText(bool &ok, const SubParameter &toEvaluate);
+		QString evaluateTextString(bool &ok, const QString toEvaluate, int &pos);
 
 		static const QRegExp mNameRegExp;
 		static const QRegExp mVariableRegExp;
+		static const QRegExp mVariableRegExp2;
 		static qint64 mCurrentRuntimeId;
 
 		qint64 mRuntimeId;
