@@ -46,8 +46,7 @@ namespace ActionTools
 	}
 
 	const QRegExp ActionInstance::mNameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
-	const QRegExp ActionInstance::mVariableRegExp("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
-	const QRegExp ActionInstance::mVariableRegExp2("\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
+	const QRegExp ActionInstance::mVariableRegExp("\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 	qint64 ActionInstance::mCurrentRuntimeId = 0;
 
 	ActionInstance::ActionInstance(const ActionDefinition *definition, QObject *parent)
@@ -502,83 +501,17 @@ namespace ActionTools
 		return result;
 	}
 
-	QString ActionInstance::evaluateText_original(bool &ok, const SubParameter &toEvaluate)
-	{
-		ok = true;
-
-		QString value = toEvaluate.value().toString();
-
-		int position = 0;
-
-		while((position = mVariableRegExp.indexIn(value, position)) != -1)
-		{
-			QString foundVariableName = mVariableRegExp.cap(2);
-			QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
-
-			position += mVariableRegExp.cap(1).length();
-
-			if(!foundVariable.isValid())
-			{
-				ok = false;
-
-				emit executionException(ActionException::BadParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
-				return QString();
-			}
-
-			QString stringEvaluationResult;
-
-			if(foundVariable.isNull())
-				stringEvaluationResult = tr("[Null]");
-			else if(foundVariable.isUndefined())
-				stringEvaluationResult = tr("[Undefined]");
-			else if(foundVariable.isVariant())
-			{
-				QVariant variantEvaluationResult = foundVariable.toVariant();
-				switch(variantEvaluationResult.type())
-				{
-				case QVariant::StringList:
-					stringEvaluationResult = variantEvaluationResult.toStringList().join("\n");
-					break;
-				case QVariant::ByteArray:
-					stringEvaluationResult = tr("[Raw data]");
-					break;
-				default:
-					stringEvaluationResult = foundVariable.toString();
-					break;
-				}
-			}
-			else
-				stringEvaluationResult = foundVariable.toString();
-
-			value.replace(position,
-						  foundVariableName.length() + 1,
-						  stringEvaluationResult);
-		}
-
-		return value;
-	}
-
 	QString ActionInstance::evaluateText(bool &ok, const SubParameter &toEvaluate)
 	{
 		ok = true;
 
+		int pos = 0;
 		QString value = toEvaluate.value().toString();
 
-		//if the string begins with "[parser]" we call the alternative method : evaluateTextString
-		if( value.indexOf("[parser]") == 0 )
-		{
-			return evaluateTextString(ok, (const QString) value.remove(0,8));
-		}
-		else
-			return evaluateText_original(ok, toEvaluate);
+		return evaluateTextString(ok, (const QString) value, pos);
 	}
 
-	QString ActionInstance::evaluateTextString(bool &ok, const QString toEvaluate) {
-		int pos = 0;
-		return evaluateTextString(ok, toEvaluate, pos);
-	}
-
-	QString ActionInstance::evaluateTextString(bool &ok, const QString toEvaluate, int &pos)
+	QString ActionInstance::evaluateTextString(bool &ok, const QString &toEvaluate, int &pos)
 	{
 		ok = true;
 
@@ -591,9 +524,9 @@ namespace ActionTools
 			if( toEvaluate[pos] == QChar('$') )
 			{
 				//find a variable name
-				if( mVariableRegExp2.indexIn(toEvaluate , pos) != -1 )
+				if( mVariableRegExp.indexIn(toEvaluate , pos) != -1 )
 				{
-					QString  foundVariableName = mVariableRegExp2.cap(1);
+					QString  foundVariableName = mVariableRegExp.cap(1);
 					QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
 
 					pos += foundVariableName.length();
