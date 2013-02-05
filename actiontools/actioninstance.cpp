@@ -46,7 +46,7 @@ namespace ActionTools
 	}
 
 	const QRegExp ActionInstance::mNameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
-	const QRegExp ActionInstance::mVariableRegExp("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
+	const QRegExp ActionInstance::mVariableRegExp("\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 	qint64 ActionInstance::mCurrentRuntimeId = 0;
 
 	ActionInstance::ActionInstance(const ActionDefinition *definition, QObject *parent)
@@ -505,56 +505,123 @@ namespace ActionTools
 	{
 		ok = true;
 
+		int pos = 0;
 		QString value = toEvaluate.value().toString();
 
-		int position = 0;
+		return evaluateTextString(ok, (const QString) value, pos);
+	}
 
-		while((position = mVariableRegExp.indexIn(value, position)) != -1)
+	QString ActionInstance::evaluateTextString(bool &ok, const QString &toEvaluate, int &pos)
+	{
+		ok = true;
+
+		int startIndex = pos;
+
+		QString result;
+
+		while(pos < toEvaluate.length())
 		{
-			QString foundVariableName = mVariableRegExp.cap(2);
-			QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
-
-			position += mVariableRegExp.cap(1).length();
-
-			if(!foundVariable.isValid())
+			if( toEvaluate[pos] == QChar('$') )
 			{
-				ok = false;
-
-				emit executionException(ActionException::BadParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
-				return QString();
-			}
-
-			QString stringEvaluationResult;
-
-			if(foundVariable.isNull())
-				stringEvaluationResult = tr("[Null]");
-			else if(foundVariable.isUndefined())
-				stringEvaluationResult = tr("[Undefined]");
-			else if(foundVariable.isVariant())
-			{
-				QVariant variantEvaluationResult = foundVariable.toVariant();
-				switch(variantEvaluationResult.type())
+				//find a variable name
+				if( mVariableRegExp.indexIn(toEvaluate , pos) != -1 )
 				{
-				case QVariant::StringList:
-					stringEvaluationResult = variantEvaluationResult.toStringList().join("\n");
-					break;
-				case QVariant::ByteArray:
-					stringEvaluationResult = tr("[Raw data]");
-					break;
-				default:
-					stringEvaluationResult = foundVariable.toString();
-					break;
+					QString  foundVariableName = mVariableRegExp.cap(1);
+					QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
+
+					pos += foundVariableName.length();
+
+					if(!foundVariable.isValid())
+					{
+						ok = false;
+
+						emit executionException(ActionException::BadParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
+						return QString();
+					}
+
+					QString stringEvaluationResult;
+
+					if(foundVariable.isNull())
+						stringEvaluationResult = "[Null]";
+					else if(foundVariable.isUndefined())
+						stringEvaluationResult = "[Undefined]";
+					else if(foundVariable.isArray())
+					{
+						if((pos + 1 < toEvaluate.length()) && toEvaluate[pos + 1] == QChar('['))
+						{
+							pos += 2;
+							QString indexArray = evaluateTextString(ok, toEvaluate, pos);
+							if((pos < toEvaluate.length()) && toEvaluate[pos] == QChar(']'))
+							{
+								//not perfect, but working so far
+								//TODO: look if indexArray is already quoted
+								stringEvaluationResult = d->scriptEngine->evaluate(tr("%1['%2']").arg(foundVariableName,indexArray)).toString();
+							}
+							else
+							{
+								//syntax error
+								ok = false;
+
+								emit executionException(ActionException::BadParameterException, tr("Bad parameter. Unable to evaluate string"));
+								return QString();
+							}
+						}
+						else
+						{
+							stringEvaluationResult = foundVariable.toString();
+						}
+					}
+					else if(foundVariable.isVariant())
+					{
+						QVariant variantEvaluationResult = foundVariable.toVariant();
+						switch(variantEvaluationResult.type())
+						{
+						case QVariant::StringList:
+							stringEvaluationResult = variantEvaluationResult.toStringList().join("\n");
+							break;
+						case QVariant::ByteArray:
+							stringEvaluationResult = "[Raw data]";
+							break;
+						default:
+							stringEvaluationResult = foundVariable.toString();
+							break;
+						}
+					}
+					else
+						stringEvaluationResult = foundVariable.toString();
+
+					result.append(stringEvaluationResult);
+				}
+
+			}
+			else if ( toEvaluate[pos] == QChar(']') )
+			{
+				if( startIndex == 0 )
+				{
+					//in top level evaluation isolated character ']' is accepted (for compatibility reason), now prefer "\]"
+					//i.e without matching '['
+					result.append(toEvaluate[pos]);
+				}
+				else
+					//on other levels, the parsing is stopped at this point
+					return result;
+			}
+			else if( toEvaluate[pos] == QChar('\\') )
+			{
+				pos++;
+				if( pos < toEvaluate.length() )
+				{
+					result.append(toEvaluate[pos]);
 				}
 			}
 			else
-				stringEvaluationResult = foundVariable.toString();
-
-			value.replace(position,
-						  foundVariableName.length() + 1,
-						  stringEvaluationResult);
+			{
+				result.append(toEvaluate[pos]);
+			}
+			pos++;
 		}
 
-		return value;
+		return result;
 	}
 
 	QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance)
