@@ -273,8 +273,10 @@ namespace ActionTools
 		void setNextLine(const QString &nextLine);
 		void setNextLine(int nextLine);
 
-        void setVariable(const QString &name, const QScriptValue &value);
-        QScriptValue variable(const QString &name);
+		void setArray(const QString &name, const QStringList &stringList);
+		QScriptValue arrayElement(const QString &name, int index);
+		void setVariable(const QString &name, const QScriptValue &value);
+		QScriptValue variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
 

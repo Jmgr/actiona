@@ -433,7 +433,33 @@ namespace ActionTools
 		setNextLine(QString::number(nextLine));
 	}
 
-    void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
+	void ActionInstance::setArray(const QString &name, const QStringList &stringList)
+	{
+		if(stringList.count() == 0)
+			return;
+
+		QScriptValue back = d->scriptEngine->newArray(stringList.count());
+		QStringList key_value;
+
+		for(int index = 0; index < stringList.count(); ++index)
+		{
+			key_value = stringList.at(index).split("=");
+			back.setProperty(key_value.at(0), key_value.at(1));
+		}
+
+		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
+			d->scriptEngine->globalObject().setProperty(name, back);
+	}
+
+	QScriptValue ActionInstance::arrayElement(const QString &name, int index)
+	{
+		if(name.isEmpty() || !mNameRegExp.exactMatch(name))
+			return QScriptValue();
+
+		return d->scriptEngine->globalObject().property(name).property(index);
+	}
+
+	void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
 	{
 		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
 			d->scriptEngine->globalObject().setProperty(name, value);

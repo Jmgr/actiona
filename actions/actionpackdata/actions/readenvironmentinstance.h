@@ -51,13 +51,9 @@ namespace Actions
 				return;
 
 			//is variable an array ? (or set it ?)
-			//QStringList ListVE=QProcess::systemEnvironment();
+			QStringList ListVE=QProcess::systemEnvironment();
 			//how to affect a QStringList to a variable ???
-
-			//while we have not the answer, just read the clipboard :-(
-			QClipboard *clipboard = QApplication::clipboard();
-
-			setVariable(variable, clipboard->text());
+			setArray(variable, ListVE);
 
 			emit executionEnded();
 		}
