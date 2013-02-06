@@ -525,23 +525,13 @@ namespace ActionTools
 			return;
 
 		QScriptValue back = d->scriptEngine->newArray(stringList.count());
+		QStringList key_value;
 
 		for(int index = 0; index < stringList.count(); ++index)
-			back.setProperty(index, stringList.at(index));
-
-		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
-			d->scriptEngine->globalObject().setProperty(name, back);
-	}
-
-	void ActionInstance::setArrayKeyValue(const QString &name, const QStringList &Keys, const QStringList &Values)
-	{
-		if(Keys.count() == 0 || (Keys.count() != Values.count()))
-			return;
-
-		QScriptValue back = d->scriptEngine->newArray(0); //CHECKME: 0 or Keys.count() ?
-
-		for(int index = 0; index < Keys.count(); ++index)
-			back.setProperty(Keys.at(index), Values.at(index));
+		{
+			key_value = stringList.at(index).split("=");
+			back.setProperty(key_value.at(0), key_value.at(1));
+		}
 
 		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
 			d->scriptEngine->globalObject().setProperty(name, back);

@@ -277,9 +277,7 @@ namespace ActionTools
 		void setNextLine(int nextLine);
 
 		void setArray(const QString &name, const QStringList &stringList);
-		void setArrayKeyValue(const QString &name, const QStringList &Keys, const QStringList &Values);
 		QScriptValue arrayElement(const QString &name, int index);
-
 		void setVariable(const QString &name, const QScriptValue &value);
 		QScriptValue variable(const QString &name);
 
