@@ -50,10 +50,19 @@ namespace Actions
 			if(!ok)
 				return;
 
-			//is variable an array ? (or set it ?)
+			QStringList Keys, Values, KeyValue;
+			//read the system environment
 			QStringList ListVE=QProcess::systemEnvironment();
-			//how to affect a QStringList to a variable ???
-			setArray(variable, ListVE);
+
+			//breaks the results in two lists : one for the keys, the other for the values
+			for(int index = 0; index < ListVE.count(); ++index)
+			{
+				KeyValue = ListVE.at(index).split("=");
+				Keys << KeyValue.at(0);
+				Values << KeyValue.at(1);
+			}
+
+			setArrayKeyValue(variable, Keys, Values);
 
 			emit executionEnded();
 		}
