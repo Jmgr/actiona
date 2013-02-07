@@ -547,15 +547,18 @@ namespace ActionTools
 						stringEvaluationResult = "[Undefined]";
 					else if(foundVariable.isArray())
 					{
-						if((pos + 1 < toEvaluate.length()) && toEvaluate[pos + 1] == QChar('['))
+						while( (pos + 1 < toEvaluate.length()) && toEvaluate[pos + 1] == QChar('[') )
 						{
 							pos += 2;
 							QString indexArray = evaluateTextString(ok, toEvaluate, pos);
+
 							if((pos < toEvaluate.length()) && toEvaluate[pos] == QChar(']'))
 							{
-								//not perfect, but working so far
-								//TODO: look if indexArray is already quoted
-								stringEvaluationResult = d->scriptEngine->evaluate(tr("%1['%2']").arg(foundVariableName,indexArray)).toString();
+								foundVariableName = foundVariableName.append("['%1']").arg(indexArray);
+								//FIXME: Not working
+								//foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
+								//alternative way
+								foundVariable = d->scriptEngine->evaluate(foundVariableName);
 							}
 							else
 							{
@@ -565,11 +568,12 @@ namespace ActionTools
 								emit executionException(ActionException::BadParameterException, tr("Bad parameter. Unable to evaluate string"));
 								return QString();
 							}
+
+							//COMPATIBILITY: we break the while loop if foundVariable is no more of Array type
+							if (!foundVariable.isArray()) break;
 						}
-						else
-						{
-							stringEvaluationResult = foundVariable.toString();
-						}
+						//end of while, no more '['
+						stringEvaluationResult = foundVariable.toString();
 					}
 					else if(foundVariable.isVariant())
 					{
