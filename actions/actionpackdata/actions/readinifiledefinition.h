@@ -26,6 +26,9 @@
 #include "textparameterdefinition.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
+#include "booleanparameterdefinition.h"
+#include "groupdefinition.h"
+
 
 namespace ActionTools
 {
@@ -50,6 +53,11 @@ namespace Actions
 			file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
 			addElement(file);
 
+			ActionTools::BooleanParameterDefinition *complete = new ActionTools::BooleanParameterDefinition(ActionTools::Name("complete", tr("Complete File")), this);
+			complete->setTooltip(tr("Should the complete INI file be loaded"));
+			complete->setDefaultValue(true);
+			addElement(complete);
+
 			ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition(ActionTools::Name("section", tr("Section")), this);
 			section->setTooltip(tr("The section name of the parameter"));
 			addElement(section);
@@ -69,7 +77,7 @@ namespace Actions
 		QString name() const													{ return QObject::tr("Read INI file"); }
 		QString id() const														{ return "ActionReadIniFile"; }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read an entry in an INI file"); }
+		QString description() const												{ return QObject::tr("Read one or all the entries in an INI file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadIniFileInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readini.png"); }

@@ -23,6 +23,7 @@
 
 #include "actioninstance.h"
 
+#include <QSettings>
 #include <config.h>
 
 namespace Actions
@@ -49,26 +50,54 @@ namespace Actions
 			QString section = evaluateString(ok, "section");
 			QString parameter = evaluateString(ok, "parameter");
 			QString variable = evaluateVariable(ok, "variable");
+			bool	allFile = evaluateBoolean(ok, "complete");
 
 			if(!ok)
 				return;
 
-			rude::Config config;
-			if(!config.load(filename.toLocal8Bit()))
+			if(allFile)
 			{
-				setCurrentParameter("filename");
-				emit executionException(UnableToReadFileException, tr("Unable to read the file"));
-				return;
-			}
+				QSettings settings( filename, QSettings::IniFormat);
 
-			if(!config.setSection(section.toLatin1(), false))
+				switch( settings.status())
+				{
+					case QSettings::FormatError	:
+						emit executionException(UnableToReadFileException, tr("Bad syntax in the INI the file"));
+						return;
+					case QSettings::AccessError	:
+						emit executionException(UnableToReadFileException, tr("Unable to read the file"));
+						return;
+					case QSettings::NoError :
+						ok = true;
+				}
+
+				QStringList Keys = settings.allKeys();
+				QStringList Values;
+
+				for( int index = 0; Keys.size(); ++index)
+					Values << settings.value(Keys.at(index)).toString();
+
+				setArrayKeyValue(variable, Keys, Values);
+			}
+			else
 			{
-				setCurrentParameter("section");
-				emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
-				return;
-			}
+				rude::Config config;
+				if(!config.load(filename.toLocal8Bit()))
+				{
+					setCurrentParameter("filename");
+					emit executionException(UnableToReadFileException, tr("Unable to read the file"));
+					return;
+				}
 
-            setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
+				if(!config.setSection(section.toLatin1(), false))
+				{
+					setCurrentParameter("section");
+					emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
+					return;
+				}
+
+				setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
+			}
 
 			emit executionEnded();
 		}
