@@ -28,6 +28,8 @@
 #include "code/point.h"
 #include "code/color.h"
 
+#include <QScriptValueIterator>
+
 namespace ActionTools
 {
 	bool ActionInstanceData::operator==(const ActionInstanceData &other) const
@@ -174,6 +176,56 @@ namespace ActionTools
 
 			return QString();
 		}
+
+		return result;
+	}
+
+	QString ActionInstance::evaluateVariableArray(bool &ok, const QScriptValue &scriptValue)
+	{
+		QRegExp rx("(\\d+)");
+
+		QString result;
+
+		QScriptValueIterator it(scriptValue);
+
+		if(scriptValue.isArray())
+		{
+			int lastIndex = -1;
+			result = "[";
+
+			while (it.hasNext()) {
+				it.next();
+
+				if (it.flags() & QScriptValue::SkipInEnumeration)
+					continue;
+
+				QScriptValue nextScriptValue = it.value();
+				//is it an array ?
+				if(nextScriptValue.isArray())
+					result += evaluateVariableArray(ok, nextScriptValue);
+				else
+					if(rx.exactMatch(it.name())) //it.name : numerical only ?
+					{
+						int newIndex = it.name().toInt();
+						if( newIndex > lastIndex+1)
+						{
+							//insert some commas
+							for(lastIndex++ ; lastIndex < newIndex; lastIndex++ )
+								result += ",";
+							lastIndex = newIndex;
+						}
+						result += it.value().toString();
+					}
+					else
+						result += it.name().append("=").append(it.value().toString());
+
+				result += ",";
+			}
+
+			result[result.lastIndexOf(",")] = QChar(']');
+		}
+		else
+			result = it.value().toString();
 
 		return result;
 	}
@@ -433,7 +485,43 @@ namespace ActionTools
 		setNextLine(QString::number(nextLine));
 	}
 
-    void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
+	void ActionInstance::setArray(const QString &name, const QStringList &stringList)
+	{
+		if(stringList.count() == 0)
+			return;
+
+		QScriptValue back = d->scriptEngine->newArray(stringList.count());
+
+		for(int index = 0; index < stringList.count(); ++index)
+			back.setProperty(index, stringList.at(index));
+
+		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
+			d->scriptEngine->globalObject().setProperty(name, back);
+	}
+
+	void ActionInstance::setArrayKeyValue(const QString &name, const QStringList &Keys, const QStringList &Values)
+	{
+		if(Keys.count() == 0 || (Keys.count() != Values.count()))
+			return;
+
+		QScriptValue back = d->scriptEngine->newArray(0); //CHECKME: 0 or Keys.count() ?
+
+		for(int index = 0; index < Keys.count(); ++index)
+			back.setProperty(Keys.at(index), Values.at(index));
+
+		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
+			d->scriptEngine->globalObject().setProperty(name, back);
+	}
+
+	QScriptValue ActionInstance::arrayElement(const QString &name, int index)
+	{
+		if(name.isEmpty() || !mNameRegExp.exactMatch(name))
+			return QScriptValue();
+
+		return d->scriptEngine->globalObject().property(name).property(index);
+	}
+
+	void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
 	{
 		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
 			d->scriptEngine->globalObject().setProperty(name, value);
@@ -573,7 +661,10 @@ namespace ActionTools
 							if (!foundVariable.isArray()) break;
 						}
 						//end of while, no more '['
-						stringEvaluationResult = foundVariable.toString();
+						if(foundVariable.isArray())
+							stringEvaluationResult = evaluateVariableArray(ok, foundVariable);
+						else
+							stringEvaluationResult = foundVariable.toString();
 					}
 					else if(foundVariable.isVariant())
 					{
