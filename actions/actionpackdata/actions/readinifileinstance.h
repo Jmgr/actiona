@@ -74,7 +74,7 @@ namespace Actions
 				QStringList Keys = settings.allKeys();
 				QStringList Values;
 
-				for( int index = 0; Keys.size(); ++index)
+				for( int index = 0; index < Keys.size(); ++index)
 					Values << settings.value(Keys.at(index)).toString();
 
 				setArrayKeyValue(variable, Keys, Values);
