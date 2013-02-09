@@ -28,6 +28,8 @@
 #include "code/point.h"
 #include "code/color.h"
 
+#include <QScriptValueIterator>
+
 namespace ActionTools
 {
 	bool ActionInstanceData::operator==(const ActionInstanceData &other) const
@@ -45,6 +47,7 @@ namespace ActionTools
 				timeout == other.timeout);
 	}
 
+	const QRegExp ActionInstance::mNumericalIndex("(\\d+)");
 	const QRegExp ActionInstance::mNameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
 	const QRegExp ActionInstance::mVariableRegExp("\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 	qint64 ActionInstance::mCurrentRuntimeId = 0;
@@ -174,6 +177,54 @@ namespace ActionTools
 
 			return QString();
 		}
+
+		return result;
+	}
+
+	QString ActionInstance::evaluateVariableArray(bool &ok, const QScriptValue &scriptValue)
+	{
+		QString result;
+
+		QScriptValueIterator it(scriptValue);
+
+		if(scriptValue.isArray())
+		{
+			int lastIndex = -1;
+			result = "[";
+
+			while (it.hasNext()) {
+				it.next();
+
+				if (it.flags() & QScriptValue::SkipInEnumeration)
+					continue;
+
+				QScriptValue nextScriptValue = it.value();
+				//is it an array ?
+				if(nextScriptValue.isArray())
+					result += evaluateVariableArray(ok, nextScriptValue);
+				else
+					if(mNumericalIndex.exactMatch(it.name())) //it.name : numerical only ?
+					{
+						int newIndex = it.name().toInt();
+						if( newIndex > lastIndex+1)
+						{
+							//insert some commas
+							for(lastIndex++ ; lastIndex < newIndex; lastIndex++ )
+								result += ",";
+						}
+						lastIndex = newIndex;
+						result += it.value().toString();
+					}
+					else
+						result += it.name().append("=").append(it.value().toString());
+
+				result += ",";
+			}
+
+			result[result.lastIndexOf(",")] = QChar(']');
+		}
+		else
+			result = it.value().toString();
 
 		return result;
 	}
@@ -433,7 +484,43 @@ namespace ActionTools
 		setNextLine(QString::number(nextLine));
 	}
 
-    void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
+	void ActionInstance::setArray(const QString &name, const QStringList &stringList)
+	{
+		if(stringList.count() == 0)
+			return;
+
+		QScriptValue back = d->scriptEngine->newArray(stringList.count());
+
+		for(int index = 0; index < stringList.count(); ++index)
+			back.setProperty(index, stringList.at(index));
+
+		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
+			d->scriptEngine->globalObject().setProperty(name, back);
+	}
+
+	void ActionInstance::setArrayKeyValue(const QString &name, const QStringList &Keys, const QStringList &Values)
+	{
+		if(Keys.count() == 0 || (Keys.count() != Values.count()))
+			return;
+
+		QScriptValue back = d->scriptEngine->newArray(0); //CHECKME: 0 or Keys.count() ?
+
+		for(int index = 0; index < Keys.count(); ++index)
+			back.setProperty(Keys.at(index), Values.at(index));
+
+		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
+			d->scriptEngine->globalObject().setProperty(name, back);
+	}
+
+	QScriptValue ActionInstance::arrayElement(const QString &name, int index)
+	{
+		if(name.isEmpty() || !mNameRegExp.exactMatch(name))
+			return QScriptValue();
+
+		return d->scriptEngine->globalObject().property(name).property(index);
+	}
+
+	void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
 	{
 		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
 			d->scriptEngine->globalObject().setProperty(name, value);
@@ -547,15 +634,23 @@ namespace ActionTools
 						stringEvaluationResult = "[Undefined]";
 					else if(foundVariable.isArray())
 					{
-						if((pos + 1 < toEvaluate.length()) && toEvaluate[pos + 1] == QChar('['))
+						while( (pos + 1 < toEvaluate.length()) && toEvaluate[pos + 1] == QChar('[') )
 						{
 							pos += 2;
 							QString indexArray = evaluateTextString(ok, toEvaluate, pos);
+
 							if((pos < toEvaluate.length()) && toEvaluate[pos] == QChar(']'))
 							{
-								//not perfect, but working so far
-								//TODO: look if indexArray is already quoted
-								stringEvaluationResult = d->scriptEngine->evaluate(tr("%1['%2']").arg(foundVariableName,indexArray)).toString();
+								QScriptString internalIndexArray = d->scriptEngine->toStringHandle(indexArray) ;
+								bool flag = true;
+								int numIndex = internalIndexArray.toArrayIndex(&flag);
+
+								if(flag)
+									//numIndex is valid
+									foundVariable = foundVariable.property(numIndex);
+								else
+									//use internalIndexArray
+									foundVariable = foundVariable.property(internalIndexArray);
 							}
 							else
 							{
@@ -565,11 +660,15 @@ namespace ActionTools
 								emit executionException(ActionException::BadParameterException, tr("Bad parameter. Unable to evaluate string"));
 								return QString();
 							}
+
+							//COMPATIBILITY: we break the while loop if foundVariable is no more of Array type
+							if (!foundVariable.isArray()) break;
 						}
+						//end of while, no more '['
+						if(foundVariable.isArray())
+							stringEvaluationResult = evaluateVariableArray(ok, foundVariable);
 						else
-						{
 							stringEvaluationResult = foundVariable.toString();
-						}
 					}
 					else if(foundVariable.isVariant())
 					{
