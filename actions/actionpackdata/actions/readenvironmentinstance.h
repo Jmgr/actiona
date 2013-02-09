@@ -25,7 +25,7 @@
 #include "script.h"
 
 #include <QApplication>
-#include <QProcess>
+#include <QProcessEnvironment>
 #include <QStringList>
 
 namespace Actions
@@ -49,7 +49,7 @@ namespace Actions
 
 			QStringList Keys, Values, KeyValue;
 			//read the system environment
-			QStringList ListVE=QProcess::systemEnvironment();
+			QStringList ListVE = QProcessEnvironment::systemEnvironment().toStringList();
 
 			//breaks the results in two lists : one for the keys, the other for the values
 			for(int index = 0; index < ListVE.count(); ++index)
