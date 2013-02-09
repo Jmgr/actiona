@@ -23,7 +23,6 @@
 
 #include "actiondefinition.h"
 #include "readenvironmentinstance.h"
-//#include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 
 namespace ActionTools
@@ -34,12 +33,12 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ReadEnvironmentDefinition : public QObject, public ActionTools::ActionDefinition
+	class ReadEnvironmentVariableDefinition : public QObject, public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
 	public:
-		explicit ReadEnvironmentDefinition(ActionTools::ActionPack *pack)
+		explicit ReadEnvironmentVariableDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
 			ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
@@ -47,16 +46,16 @@ namespace Actions
 			addElement(output);
 		}
 
-		QString name() const													{ return QObject::tr("Read environment"); }
-		QString id() const														{ return "ActionReadEnvironment"; }
+		QString name() const													{ return QObject::tr("Read environment variables"); }
+		QString id() const														{ return "ActionReadEnvironmentVariable"; }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read the system environment"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadEnvironmentInstance(this); }
+		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadEnvironmentVariableInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readenvironment.png"); }
 
 	private:
-		Q_DISABLE_COPY(ReadEnvironmentDefinition)
+		Q_DISABLE_COPY(ReadEnvironmentVariableDefinition)
 	};
 }
 

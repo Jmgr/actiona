@@ -73,7 +73,7 @@ public:
 		addActionDefinition(new Actions::WriteClipboardDefinition(this));
 		addActionDefinition(new Actions::ReadBinaryFileDefinition(this));
 		addActionDefinition(new Actions::WriteBinaryFileDefinition(this));
-		addActionDefinition(new Actions::ReadEnvironmentDefinition(this));
+		addActionDefinition(new Actions::ReadEnvironmentVariableDefinition(this));
 		addActionDefinition(new Actions::CopyFileDefinition(this));
 		addActionDefinition(new Actions::WebDownloadDefinition(this));
 	}
