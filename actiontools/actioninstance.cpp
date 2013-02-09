@@ -47,6 +47,7 @@ namespace ActionTools
 				timeout == other.timeout);
 	}
 
+	const QRegExp ActionInstance::mNumericalIndex("(\\d+)");
 	const QRegExp ActionInstance::mNameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
 	const QRegExp ActionInstance::mVariableRegExp("\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 	qint64 ActionInstance::mCurrentRuntimeId = 0;
@@ -182,8 +183,6 @@ namespace ActionTools
 
 	QString ActionInstance::evaluateVariableArray(bool &ok, const QScriptValue &scriptValue)
 	{
-		QRegExp rx("(\\d+)");
-
 		QString result;
 
 		QScriptValueIterator it(scriptValue);
@@ -204,7 +203,7 @@ namespace ActionTools
 				if(nextScriptValue.isArray())
 					result += evaluateVariableArray(ok, nextScriptValue);
 				else
-					if(rx.exactMatch(it.name())) //it.name : numerical only ?
+					if(mNumericalIndex.exactMatch(it.name())) //it.name : numerical only ?
 					{
 						int newIndex = it.name().toInt();
 						if( newIndex > lastIndex+1)
@@ -212,8 +211,8 @@ namespace ActionTools
 							//insert some commas
 							for(lastIndex++ ; lastIndex < newIndex; lastIndex++ )
 								result += ",";
-							lastIndex = newIndex;
 						}
+						lastIndex = newIndex;
 						result += it.value().toString();
 					}
 					else
@@ -642,11 +641,10 @@ namespace ActionTools
 
 							if((pos < toEvaluate.length()) && toEvaluate[pos] == QChar(']'))
 							{
-								foundVariableName = foundVariableName.append("['%1']").arg(indexArray);
-								//FIXME: Not working
-								//foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
-								//alternative way
-								foundVariable = d->scriptEngine->evaluate(foundVariableName);
+								if(mNumericalIndex.exactMatch(indexArray)) //indexArray : numerical only ?
+									foundVariable = foundVariable.property(indexArray.toInt());
+								else
+									foundVariable = d->scriptEngine->evaluate(foundVariableName.append("['%1']").arg(indexArray));
 							}
 							else
 							{
