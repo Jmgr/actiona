@@ -28,17 +28,14 @@
 #include <QProcess>
 #include <QStringList>
 
-//temp. time to find how to coorectly read the environment
-#include <QClipboard>
-
 namespace Actions
 {
-	class ReadEnvironmentInstance : public ActionTools::ActionInstance
+	class ReadEnvironmentVariableInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
 
 	public:
-		ReadEnvironmentInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
 		void startExecution()
@@ -68,7 +65,7 @@ namespace Actions
 		}
 
 	private:
-		Q_DISABLE_COPY(ReadEnvironmentInstance)
+		Q_DISABLE_COPY(ReadEnvironmentVariableInstance)
 	};
 }
 
