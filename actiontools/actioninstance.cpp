@@ -641,10 +641,16 @@ namespace ActionTools
 
 							if((pos < toEvaluate.length()) && toEvaluate[pos] == QChar(']'))
 							{
-								if(mNumericalIndex.exactMatch(indexArray)) //indexArray : numerical only ?
-									foundVariable = foundVariable.property(indexArray.toInt());
+								QScriptString internalIndexArray = d->scriptEngine->toStringHandle(indexArray) ;
+								bool flag = true;
+								int numIndex = internalIndexArray.toArrayIndex(&flag);
+
+								if(flag)
+									//numIndex is valid
+									foundVariable = foundVariable.property(numIndex);
 								else
-									foundVariable = d->scriptEngine->evaluate(foundVariableName.append("['%1']").arg(indexArray));
+									//use internalIndexArray
+									foundVariable = foundVariable.property(internalIndexArray);
 							}
 							else
 							{
