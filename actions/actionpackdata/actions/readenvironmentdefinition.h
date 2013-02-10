@@ -41,9 +41,9 @@ namespace Actions
 		explicit ReadEnvironmentVariableDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			output->setTooltip(tr("The Array type variable where to save the current system environment"));
-			addElement(output);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
+			variable->setTooltip(tr("The Array type variable where to save the current system environment"));
+			addElement(variable);
 		}
 
 		QString name() const													{ return QObject::tr("Read environment variables"); }

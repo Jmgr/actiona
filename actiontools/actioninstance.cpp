@@ -435,7 +435,7 @@ namespace ActionTools
 
 	void ActionInstance::setArray(const QString &name, const QStringList &stringList)
 	{
-		if(stringList.count() == 0)
+		if(stringList.isEmpty())
 			return;
 
 		QScriptValue back = d->scriptEngine->newArray(stringList.count());
@@ -447,26 +447,21 @@ namespace ActionTools
 			d->scriptEngine->globalObject().setProperty(name, back);
 	}
 
-	void ActionInstance::setArrayKeyValue(const QString &name, const QStringList &Keys, const QStringList &Values)
+	void ActionInstance::setArrayKeyValue(const QString &name, const QHash<QString, QString> &hashKeyValue)
 	{
-		if(Keys.count() == 0 || (Keys.count() != Values.count()))
+		if(hashKeyValue.isEmpty())
 			return;
 
-		QScriptValue back = d->scriptEngine->newArray(0); //CHECKME: 0 or Keys.count() ?
+		QScriptValue back = d->scriptEngine->newArray(hashKeyValue.count());
 
-		for(int index = 0; index < Keys.count(); ++index)
-			back.setProperty(Keys.at(index), Values.at(index));
+		QHashIterator<QString, QString> it(hashKeyValue);
+		while (it.hasNext())
+		{
+			it.next();
+			back.setProperty(it.key(), it.value());
+		}
 
-		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
-			d->scriptEngine->globalObject().setProperty(name, back);
-	}
-
-	QScriptValue ActionInstance::arrayElement(const QString &name, int index)
-	{
-		if(name.isEmpty() || !mNameRegExp.exactMatch(name))
-			return QScriptValue();
-
-		return d->scriptEngine->globalObject().property(name).property(index);
+		setVariable(name, back);
 	}
 
 	void ActionInstance::setVariable(const QString &name, const QScriptValue &value)

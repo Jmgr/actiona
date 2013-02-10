@@ -47,19 +47,18 @@ namespace Actions
 			if(!ok)
 				return;
 
-			QStringList Keys, Values, KeyValue;
-			//read the system environment
-			QStringList ListVE = QProcessEnvironment::systemEnvironment().toStringList();
+			const QStringList &environment = QProcessEnvironment::systemEnvironment().toStringList();
 
-			//breaks the results in two lists : one for the keys, the other for the values
-			for(int index = 0; index < ListVE.count(); ++index)
+			QHash<QString, QString> environmentHashVariableValue;
+			environmentHashVariableValue.reserve(environment.count()+2); //doc said ideally 'slightly more than the maximum nb of item'
+
+			foreach(QString environmentVariableAndValue, environment)
 			{
-				KeyValue = ListVE.at(index).split("=");
-				Keys << KeyValue.at(0);
-				Values << KeyValue.at(1);
+				QStringList KeyValue = environmentVariableAndValue.split("=");
+				environmentHashVariableValue[KeyValue.at(0)] = KeyValue.at(1);
 			}
 
-			setArrayKeyValue(variable, Keys, Values);
+			setArrayKeyValue(variable, environmentHashVariableValue);
 
 			emit executionEnded();
 		}
