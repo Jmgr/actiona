@@ -12,5 +12,6 @@
         <file>icons/writeregistry.png</file>
         <file>icons/writetext.png</file>
         <file>icons/webdownload.png</file>
+        <file>icons/readenvironment.png</file>
     </qresource>
 </RCC>

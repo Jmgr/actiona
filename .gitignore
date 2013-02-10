@@ -10,3 +10,8 @@ generated
 *.so*
 *.log*
 *.cache*
+*.qm
+Makefile
+actionaz
+actexec
+userSettings
