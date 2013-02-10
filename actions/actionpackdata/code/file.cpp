@@ -96,21 +96,28 @@ namespace Code
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&copy, "copy", scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&move, "move", scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&rename, "rename", scriptEngine);
-        CodeTools::addClassGlobalFunctionToScriptEngine<File>(&remove, "remove", scriptEngine);
-    }
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&remove, "remove", scriptEngine);
+	}
 
-    bool File::equals(const QScriptValue &other) const
-    {
-        if(other.isUndefined() || other.isNull())
-            return false;
+	bool File::equals(const QScriptValue &other) const
+	{
+		if(other.isUndefined() || other.isNull())
+			return false;
 
-        QObject *object = other.toQObject();
-        if(File *otherFile = qobject_cast<File*>(object))
-            return (otherFile == this || &otherFile->mFile == &mFile);
+		QObject *object = other.toQObject();
+		if(File *otherFile = qobject_cast<File*>(object))
+			return (otherFile == this || &otherFile->mFile == &mFile);
 
-        return false;
-    }
+		return false;
+	}
 	
+	bool File::exists(const QString &filename)
+	{
+		mFile.setFileName(filename);
+
+		return mFile.exists();
+	}
+
 	QScriptValue File::open(const QString &filename, OpenMode mode)
 	{
 		mFile.setFileName(filename);
