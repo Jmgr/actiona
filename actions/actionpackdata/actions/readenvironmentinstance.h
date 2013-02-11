@@ -33,35 +33,21 @@ namespace Actions
 	class ReadEnvironmentVariableInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
+		Q_ENUMS(Mode)
 
 	public:
+		enum Mode
+		{
+			Full,
+			Selection
+		};
+
 		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
-		void startExecution()
-		{
-			bool ok = true;
+		static ActionTools::StringListPair modes;
 
-			QString variable = evaluateVariable(ok, "variable");
-
-			if(!ok)
-				return;
-
-			const QStringList &environment = QProcessEnvironment::systemEnvironment().toStringList();
-
-			QHash<QString, QString> environmentHashVariableValue;
-			environmentHashVariableValue.reserve(environment.count()+2); //doc said ideally 'slightly more than the maximum nb of item'
-
-			foreach(QString environmentVariableAndValue, environment)
-			{
-				QStringList KeyValue = environmentVariableAndValue.split("=");
-				environmentHashVariableValue[KeyValue.at(0)] = KeyValue.at(1);
-			}
-
-			setArrayKeyValue(variable, environmentHashVariableValue);
-
-			emit executionEnded();
-		}
+		void startExecution();
 
 	private:
 		Q_DISABLE_COPY(ReadEnvironmentVariableInstance)
