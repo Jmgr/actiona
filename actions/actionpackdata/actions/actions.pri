@@ -28,7 +28,8 @@ SOURCES +=	actions/readtextfileinstance.cpp \
 	actions/readregistryinstance.cpp \
 	actions/writeregistryinstance.cpp \
     actions/writetextfileinstance.cpp \
-    actions/webdownloadinstance.cpp
+    actions/webdownloadinstance.cpp \
+    actions/readenvironmentinstance.cpp
 
 
 
