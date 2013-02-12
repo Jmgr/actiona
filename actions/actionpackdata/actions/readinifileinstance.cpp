@@ -19,6 +19,7 @@
 */
 
 #include "readinifileinstance.h"
+#include "stringlistpair.h"
 
 #include <QSettings>
 
@@ -35,8 +36,6 @@ namespace Actions
 		QString filename = evaluateString(ok, "file");
 		QString variable = evaluateVariable(ok, "variable");
 		Mode mode = evaluateListElement<Mode>(ok, modes, "mode");
-		QString section = evaluateString(ok, "section");
-		QString parameter = evaluateString(ok, "parameter");
 
 		if(!ok)
 			return;
@@ -45,7 +44,7 @@ namespace Actions
 		{
 			QSettings settings(filename, QSettings::IniFormat);
 
-			switch( settings.status())
+			switch(settings.status())
 			{
 				case QSettings::FormatError	:
 					emit executionException(UnableToDecodeFileException, tr("Bad syntax in the INI the file"));
@@ -62,13 +61,16 @@ namespace Actions
 			QHash<QString, QString> hashParametersValues;
 			hashParametersValues.reserve(allParameters.count()+2); //doc said ideally 'slightly more than the maximum nb of item'
 
-			foreach(QString parameter, allParameters)
-				hashParametersValues[parameter] = settings.value(parameter).toString();
+			foreach(QString param, allParameters)
+				hashParametersValues[param] = settings.value(param).toString();
 
 			setArrayKeyValue(variable, hashParametersValues);
 		}
 		else
 		{
+			QString section = evaluateString(ok, "section");
+			QString parameter = evaluateString(ok, "parameter");
+
 			rude::Config config;
 			if(!config.load(filename.toLocal8Bit()))
 			{
@@ -90,4 +92,3 @@ namespace Actions
 		emit executionEnded();
 	}
 }
-

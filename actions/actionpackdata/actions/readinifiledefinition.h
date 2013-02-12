@@ -26,9 +26,10 @@
 #include "textparameterdefinition.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
-#include "booleanparameterdefinition.h"
+#include "listparameterdefinition.h"
 #include "groupdefinition.h"
 
+#include <QStringList>
 
 namespace ActionTools
 {
@@ -40,7 +41,7 @@ namespace Actions
 {
 	class ReadIniFileDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-	   Q_OBJECT
+		Q_OBJECT
 
 	public:
 		explicit ReadIniFileDefinition(ActionTools::ActionPack *pack)
@@ -67,7 +68,7 @@ namespace Actions
 
 			ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(this);
 			selectionMode->setMasterList(mode);
-			selectionMode->setMasterValues(QStringList() << ReadIniFileInstance::modes.first.at(ReadIniFileInstance::Selection));
+			selectionMode->setMasterValues(QStringList() << ReadIniFileInstance::modes.first.at(ReadIniFileInstance::Single));
 
 			ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition(ActionTools::Name("section", tr("Section")), this);
 			section->setTooltip(tr("The section name of the parameter"));
@@ -75,7 +76,9 @@ namespace Actions
 
 			ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition(ActionTools::Name("parameter", tr("Parameter")), this);
 			parameter->setTooltip(tr("The parameter name"));
-			selectionMode->addMember(section, 1);
+			selectionMode->addMember(parameter, 1);
+
+			addElement(selectionMode, 1);
 
 			addException(ReadIniFileInstance::UnableToReadFileException, tr("Unable to read file"));
 			addException(ReadIniFileInstance::UnableToFindSectionException, tr("Unable to find section"));
