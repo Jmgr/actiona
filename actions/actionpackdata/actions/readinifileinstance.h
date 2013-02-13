@@ -23,6 +23,7 @@
 
 #include "actioninstance.h"
 
+#include <QSettings>
 #include <config.h>
 
 namespace Actions
@@ -30,48 +31,27 @@ namespace Actions
 	class ReadIniFileInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
+		Q_ENUMS(Mode)
 
 	public:
+		enum Mode
+		{
+			Full,
+			Single
+		};
 		enum Exceptions
 		{
 			UnableToReadFileException = ActionTools::ActionException::UserException,
-			UnableToFindSectionException
+			UnableToFindSectionException,
+			UnableToDecodeFileException
 		};
 
 		ReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)											{}
 
-		void startExecution()
-		{
-			bool ok = true;
+		static ActionTools::StringListPair modes;
 
-			QString filename = evaluateString(ok, "file");
-			QString section = evaluateString(ok, "section");
-			QString parameter = evaluateString(ok, "parameter");
-			QString variable = evaluateVariable(ok, "variable");
-
-			if(!ok)
-				return;
-
-			rude::Config config;
-			if(!config.load(filename.toLocal8Bit()))
-			{
-				setCurrentParameter("filename");
-				emit executionException(UnableToReadFileException, tr("Unable to read the file"));
-				return;
-			}
-
-			if(!config.setSection(section.toLatin1(), false))
-			{
-				setCurrentParameter("section");
-				emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
-				return;
-			}
-
-            setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
-
-			emit executionEnded();
-		}
+		void startExecution();
 
 	private:
 		Q_DISABLE_COPY(ReadIniFileInstance)
