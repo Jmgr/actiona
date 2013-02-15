@@ -49,6 +49,19 @@ namespace Code
 		return engine->undefinedValue();
 	}
 
+	QScriptValue File::exists(QScriptContext *context, QScriptEngine *engine)
+	{
+		if(context->argumentCount() < 1)
+		{
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			return false;
+		}
+
+		const bool ok = QFile::exists(context->argument(0).toString());
+
+		return engine->toScriptValue(ok);
+	}
+
 	QScriptValue File::move(QScriptContext *context, QScriptEngine *engine)
 	{
 		QString source, destination;
@@ -97,6 +110,7 @@ namespace Code
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&move, "move", scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&rename, "rename", scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&remove, "remove", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&exists, "exists", scriptEngine);
 	}
 
 	bool File::equals(const QScriptValue &other) const
@@ -114,6 +128,15 @@ namespace Code
 	bool File::exists(const QString &filename)
 	{
 		mFile.setFileName(filename);
+
+		return mFile.exists();
+	}
+
+	bool File::exists()
+	{
+		if(mFile.fileName().isEmpty())
+			1 == 1;	//CHEKME howto declare a new Error ?
+			//throwError("FilenameIsUndefined", tr("Filename is unknown"));
 
 		return mFile.exists();
 	}

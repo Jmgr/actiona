@@ -50,6 +50,7 @@ namespace Code
 	
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue copy(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue exists(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue move(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue rename(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue remove(QScriptContext *context, QScriptEngine *engine);
@@ -64,6 +65,7 @@ namespace Code
 		QString toString() const					{ return "File"; }
 		virtual bool equals(const QScriptValue &other) const;
 		bool exists(const QString &filename);
+		bool exists();
 		QScriptValue open(const QString &filename, OpenMode mode);
 		QScriptValue write(const QScriptValue &data);
 		QScriptValue writeText(const QString &value, Encoding encoding = Native);
