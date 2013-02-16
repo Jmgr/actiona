@@ -28,6 +28,8 @@
 #include "code/point.h"
 #include "code/color.h"
 
+#include <QDateTime>
+
 namespace ActionTools
 {
 	bool ActionInstanceData::operator==(const ActionInstanceData &other) const
@@ -414,8 +416,42 @@ namespace ActionTools
 			return QColor();
 		}
 
-		return color;
-	}
+        return color;
+    }
+
+    QDateTime ActionInstance::evaluateDateTime(bool &ok, const QString &parameterName, const QString &subParameterName)
+    {
+        if(!ok)
+            return QDateTime();
+
+        const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+        QString result;
+
+        if(subParameter.isCode())
+        {
+            QScriptValue evaluationResult = evaluateCode(ok, subParameter);
+            if(evaluationResult.isDate())
+                return evaluationResult.toDateTime();
+
+            result = evaluationResult.toString();
+        }
+        else
+            result = evaluateText(ok, subParameter);
+
+        if(!ok)
+            return QDateTime();
+
+        QDateTime dateTime = QDateTime::fromString(result, "dd/MM/yyyy hh:mm:ss");
+
+        if(!dateTime.isValid())
+        {
+            ok = false;
+
+            return QDateTime();
+        }
+
+        return dateTime;
+    }
 
 	QString ActionInstance::nextLine() const
 	{

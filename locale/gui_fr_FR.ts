@@ -1717,72 +1717,73 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="100"/>
+        <location filename="../gui/main.cpp" line="177"/>
         <source>disable the splash screen</source>
         <translation>désactiver la fenêtre de démarrage</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="102"/>
+        <location filename="../gui/main.cpp" line="179"/>
         <source>disable the tray icon</source>
         <translation>désactiver l&apos;icône de la barre des tâches</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="104"/>
+        <location filename="../gui/main.cpp" line="181"/>
         <source>do not show the execution window</source>
         <translation>ne pas afficher la fenêtre d&apos;exécution</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="106"/>
+        <location filename="../gui/main.cpp" line="183"/>
         <source>do not show the console window</source>
         <translation>ne pas afficher la fenêtre de console</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="108"/>
+        <location filename="../gui/main.cpp" line="185"/>
         <source>do not include the Qt library into the code</source>
         <translation>ne pas inclure la bibliothèque Qt dans le code</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="110"/>
+        <location filename="../gui/main.cpp" line="187"/>
         <source>execute the current script</source>
         <translation>exécuter le script</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="114"/>
+        <location filename="../gui/main.cpp" line="98"/>
+        <location filename="../gui/main.cpp" line="191"/>
         <source>starts in portable mode, storing the settings in the executable folder</source>
         <translation>démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="116"/>
+        <location filename="../gui/main.cpp" line="193"/>
         <source>show the program version</source>
         <translation>afficher la version du programme</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="112"/>
+        <location filename="../gui/main.cpp" line="189"/>
         <source>close Actionaz after execution - requires execute</source>
         <translation>fermer Actionaz après l&apos;exécution - nécessite execute</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="118"/>
+        <location filename="../gui/main.cpp" line="195"/>
         <source>show this help text</source>
         <translation>afficher ce texte d&apos;aide</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="203"/>
+        <location filename="../gui/main.cpp" line="209"/>
         <source>usage: </source>
         <translation>utilisation : </translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="203"/>
+        <location filename="../gui/main.cpp" line="209"/>
         <source>[parameters]</source>
         <translation>[paramètres]</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="203"/>
+        <location filename="../gui/main.cpp" line="209"/>
         <source>[filename]</source>
         <translation>[nom de fichier]</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="204"/>
+        <location filename="../gui/main.cpp" line="210"/>
         <source>Parameters are:</source>
         <translation>Les paramètres sont :</translation>
     </message>

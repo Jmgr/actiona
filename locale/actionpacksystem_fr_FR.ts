@@ -105,7 +105,7 @@
 <context>
     <name>Actions::CommandInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commandinstance.h" line="98"/>
+        <location filename="../actions/actionpacksystem/actions/commandinstance.h" line="114"/>
         <source>Failed to start the command. %1</source>
         <translation>Impossible d&apos;exécuter la commande. %1</translation>
     </message>

@@ -268,6 +268,9 @@ namespace ActionTools
 		QColor evaluateColor(bool &ok,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
+        QDateTime evaluateDateTime(bool &ok,
+                           const QString &parameterName,
+                           const QString &subParameterName = "value");
 
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);

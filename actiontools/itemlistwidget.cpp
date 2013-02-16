@@ -27,7 +27,7 @@ namespace ActionTools
 	ItemListWidget::ItemListWidget(QWidget *parent)
 	  : QWidget(parent),
 		ui(new Ui::ItemListWidget),
-		mModel(new ItemListModel)
+        mModel(new ItemListModel)
 	{
 		ui->setupUi(this);
 
@@ -42,6 +42,7 @@ namespace ActionTools
 
 	ItemListWidget::~ItemListWidget()
 	{
+        delete mModel;
 		delete ui;
 	}
 
