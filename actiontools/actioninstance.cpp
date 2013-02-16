@@ -28,8 +28,6 @@
 #include "code/point.h"
 #include "code/color.h"
 
-#include <QDateTime>
-
 namespace ActionTools
 {
 	bool ActionInstanceData::operator==(const ActionInstanceData &other) const
@@ -416,42 +414,8 @@ namespace ActionTools
 			return QColor();
 		}
 
-        return color;
-    }
-
-    QDateTime ActionInstance::evaluateDateTime(bool &ok, const QString &parameterName, const QString &subParameterName)
-    {
-        if(!ok)
-            return QDateTime();
-
-        const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
-        QString result;
-
-        if(subParameter.isCode())
-        {
-            QScriptValue evaluationResult = evaluateCode(ok, subParameter);
-            if(evaluationResult.isDate())
-                return evaluationResult.toDateTime();
-
-            result = evaluationResult.toString();
-        }
-        else
-            result = evaluateText(ok, subParameter);
-
-        if(!ok)
-            return QDateTime();
-
-        QDateTime dateTime = QDateTime::fromString(result, "dd/MM/yyyy hh:mm:ss");
-
-        if(!dateTime.isValid())
-        {
-            ok = false;
-
-            return QDateTime();
-        }
-
-        return dateTime;
-    }
+		return color;
+	}
 
 	QString ActionInstance::nextLine() const
 	{
@@ -469,7 +433,38 @@ namespace ActionTools
 		setNextLine(QString::number(nextLine));
 	}
 
-    void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
+	void ActionInstance::setArray(const QString &name, const QStringList &stringList)
+	{
+		if(stringList.isEmpty())
+			return;
+
+		QScriptValue back = d->scriptEngine->newArray(stringList.count());
+
+		for(int index = 0; index < stringList.count(); ++index)
+			back.setProperty(index, stringList.at(index));
+
+		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
+			d->scriptEngine->globalObject().setProperty(name, back);
+	}
+
+	void ActionInstance::setArrayKeyValue(const QString &name, const QHash<QString, QString> &hashKeyValue)
+	{
+		if(hashKeyValue.isEmpty())
+			return;
+
+		QScriptValue back = d->scriptEngine->newArray(hashKeyValue.count());
+
+		QHashIterator<QString, QString> it(hashKeyValue);
+		while (it.hasNext())
+		{
+			it.next();
+			back.setProperty(it.key(), it.value());
+		}
+
+		setVariable(name, back);
+	}
+
+	void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
 	{
 		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
 			d->scriptEngine->globalObject().setProperty(name, value);
