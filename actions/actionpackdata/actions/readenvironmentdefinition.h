@@ -50,19 +50,19 @@ namespace Actions
 			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
 			mode->setTooltip(tr("The environment read mode"));
 			mode->setItems(ReadEnvironmentVariableInstance::modes);
-			mode->setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::Full));
-			addElement(mode, 1);
+			mode->setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariable));
+			addElement(mode);
 
 			ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(this);
 			selectionMode->setMasterList(mode);
-			selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::Selection));
+			selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariable));
 
-			ActionTools::TextParameterDefinition *envVariable = new ActionTools::TextParameterDefinition(ActionTools::Name("envVariable", tr("Variable")), this);
-			envVariable->setTooltip(tr("The specific environment variable to read"));
-			envVariable->setDefaultValue("PATH");
-			selectionMode->addMember(envVariable, 1);
+			ActionTools::TextParameterDefinition *environmentVariable = new ActionTools::TextParameterDefinition(ActionTools::Name("environmentVariable", tr("Variable")), this);
+			environmentVariable->setTooltip(tr("The specific environment variable to read"));
+			environmentVariable->setDefaultValue("PATH");
+			selectionMode->addMember(environmentVariable);
 
-			addElement(selectionMode, 1);
+			addElement(selectionMode);
 		}
 
 		QString name() const													{ return QObject::tr("Read environment variables"); }
@@ -72,7 +72,6 @@ namespace Actions
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadEnvironmentVariableInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readenvironment.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(ReadEnvironmentVariableDefinition)

@@ -26,7 +26,7 @@
 namespace Actions
 {
 	ActionTools::StringListPair ReadEnvironmentVariableInstance::modes = qMakePair(
-			QStringList() << "full" << "selection",
+			QStringList() << "allVariables" << "oneVariable",
 			QStringList() << QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", "Read all the environment variables") << QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", "Read only the specified variable"));
 
 	void ReadEnvironmentVariableInstance::startExecution()
@@ -50,14 +50,17 @@ namespace Actions
 			environmentHashVariableValue[KeyValue.at(0)] = KeyValue.at(1);
 		}
 
-		if(mode == Selection)
+		if(mode == oneVariable)
 		{
-			QString envVariable	= evaluateString(ok, "envVariable");
+			QString environmentVariable	= evaluateString(ok, "envVariable");
 
-			if (environmentHashVariableValue.contains(envVariable))
-				setVariable(variable, environmentHashVariableValue.value(envVariable));
+			if (environmentHashVariableValue.contains(environmentVariable))
+				setVariable(variable, environmentHashVariableValue.value(environmentVariable));
 			else
-				setVariable(variable, tr("[Undefined]"));
+			{
+				emit executionException(IsNotEnvironmentVariable, tr("The specified variable is not set in the system environment"));
+				return;
+			}
 		}
 		else
 			setArrayKeyValue(variable, environmentHashVariableValue);
