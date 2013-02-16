@@ -268,16 +268,16 @@ namespace ActionTools
 		QColor evaluateColor(bool &ok,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
-        QDateTime evaluateDateTime(bool &ok,
-                           const QString &parameterName,
-                           const QString &subParameterName = "value");
 
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);
 		void setNextLine(int nextLine);
 
-        void setVariable(const QString &name, const QScriptValue &value);
-        QScriptValue variable(const QString &name);
+		void setArray(const QString &name, const QStringList &stringList);
+		void setArrayKeyValue(const QString &name, const QHash<QString, QString> &hashKeyValue);
+
+		void setVariable(const QString &name, const QScriptValue &value);
+		QScriptValue variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
 
