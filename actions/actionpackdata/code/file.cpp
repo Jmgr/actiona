@@ -65,9 +65,7 @@ namespace Code
 			return false;
 		}
 
-		const bool ok = QFile::exists(context->argument(0).toString());
-
-		return engine->toScriptValue(ok);
+		return QFile::exists(context->argument(0).toString());
 	}
 
 	QScriptValue File::move(QScriptContext *context, QScriptEngine *engine)
@@ -133,15 +131,8 @@ namespace Code
 		return false;
 	}
 	
-	bool File::exists(const QString &filename)
+	bool File::exists()
 	{
-		if(!filename.isEmpty())
-			mFile.setFileName(filename);
-
-		if(mFile.fileName().isEmpty())
-			1 == 1;	//CHEKME howto declare a new Error ?
-			//throwError("FilenameIsUndefined", tr("Filename is unknown"));
-
 		return mFile.exists();
 	}
 

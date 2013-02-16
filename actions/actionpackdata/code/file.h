@@ -65,7 +65,7 @@ namespace Code
 	public slots:
 		QString toString() const					{ return "File"; }
 		virtual bool equals(const QScriptValue &other) const;
-		bool exists(const QString &filename = QString());
+		bool exists();
 		QScriptValue open(const QString &filename, OpenMode mode);
 		QScriptValue write(const QScriptValue &data);
 		QScriptValue writeText(const QString &value, Encoding encoding = Native);
