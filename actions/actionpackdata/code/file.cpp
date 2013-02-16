@@ -35,7 +35,15 @@ namespace Code
 {
 	QScriptValue File::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new File, context, engine);
+		if(context->argumentCount() > 1)
+		{
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			return false;
+		}
+		if(context->argumentCount() == 1)
+			return CodeClass::constructor(new File(context->argument(0).toString()), context, engine);
+		else
+			return CodeClass::constructor(new File, context, engine);
 	}
 
 	QScriptValue File::copy(QScriptContext *context, QScriptEngine *engine)
@@ -127,13 +135,9 @@ namespace Code
 	
 	bool File::exists(const QString &filename)
 	{
-		mFile.setFileName(filename);
+		if(!filename.isEmpty())
+			mFile.setFileName(filename);
 
-		return mFile.exists();
-	}
-
-	bool File::exists()
-	{
 		if(mFile.fileName().isEmpty())
 			1 == 1;	//CHEKME howto declare a new Error ?
 			//throwError("FilenameIsUndefined", tr("Filename is unknown"));

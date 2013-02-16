@@ -57,15 +57,15 @@ namespace Code
 
 		static void registerClass(QScriptEngine *scriptEngine);
 	
-		~File()						{ mFile.close(); }
+		File(const QString &filename = QString())	{ mFile.setFileName(filename); }
+		~File()										{ mFile.close(); }
 
-		QFile *file()				{ return &mFile; }
+		QFile *file()								{ return &mFile; }
 	
 	public slots:
 		QString toString() const					{ return "File"; }
 		virtual bool equals(const QScriptValue &other) const;
-		bool exists(const QString &filename);
-		bool exists();
+		bool exists(const QString &filename = QString());
 		QScriptValue open(const QString &filename, OpenMode mode);
 		QScriptValue write(const QScriptValue &data);
 		QScriptValue writeText(const QString &value, Encoding encoding = Native);
