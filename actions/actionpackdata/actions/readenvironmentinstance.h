@@ -38,8 +38,12 @@ namespace Actions
 	public:
 		enum Mode
 		{
-			Full,
-			Selection
+			allVariables,
+			oneVariable
+		};
+		enum Exceptions
+		{
+			IsNotEnvironmentVariable = ActionTools::ActionException::BadParameterException
 		};
 
 		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
