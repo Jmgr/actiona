@@ -35,7 +35,7 @@ namespace Code
 {
 	QScriptValue File::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new File, context, engine);
+			return CodeClass::constructor(new File, context, engine);
 	}
 
 	QScriptValue File::copy(QScriptContext *context, QScriptEngine *engine)
@@ -47,6 +47,17 @@ namespace Code
 			copyPrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
 
 		return engine->undefinedValue();
+	}
+
+	QScriptValue File::exists(QScriptContext *context, QScriptEngine *engine)
+	{
+		if(context->argumentCount() != 1)
+		{
+			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			return false;
+		}
+
+		return QFile::exists(context->argument(0).toString());
 	}
 
 	QScriptValue File::move(QScriptContext *context, QScriptEngine *engine)
@@ -96,20 +107,21 @@ namespace Code
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&copy, "copy", scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&move, "move", scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&rename, "rename", scriptEngine);
-        CodeTools::addClassGlobalFunctionToScriptEngine<File>(&remove, "remove", scriptEngine);
-    }
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&remove, "remove", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&exists, "exists", scriptEngine);
+	}
 
-    bool File::equals(const QScriptValue &other) const
-    {
-        if(other.isUndefined() || other.isNull())
-            return false;
+	bool File::equals(const QScriptValue &other) const
+	{
+		if(other.isUndefined() || other.isNull())
+			return false;
 
-        QObject *object = other.toQObject();
-        if(File *otherFile = qobject_cast<File*>(object))
-            return (otherFile == this || &otherFile->mFile == &mFile);
+		QObject *object = other.toQObject();
+		if(File *otherFile = qobject_cast<File*>(object))
+			return (otherFile == this || &otherFile->mFile == &mFile);
 
-        return false;
-    }
+		return false;
+	}
 	
 	QScriptValue File::open(const QString &filename, OpenMode mode)
 	{
