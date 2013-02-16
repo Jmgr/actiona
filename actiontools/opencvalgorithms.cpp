@@ -341,14 +341,14 @@ namespace ActionTools
 		return QImage(image.data, image.size().width, image.size().height, image.step, QImage::Format_RGB888).rgbSwapped();
 	}
 
-	QSharedPointer<cv::Mat> OpenCVAlgorithms::toCVMat(const QImage &image) const
-	{
-		cv::Mat mat = cv::Mat(image.height(), image.width(), CV_8UC4, const_cast<uchar *>(image.bits()), image.bytesPerLine());
-		cv::Mat *back = new cv::Mat(mat.rows, mat.cols, CV_8UC3);
-		int from_to[] = {0,0,  1,1,  2,2};
+    QSharedPointer<cv::Mat> OpenCVAlgorithms::toCVMat(const QImage &image) const
+    {
+        QImage rgbImage = image.convertToFormat(QImage::Format_RGB888).rgbSwapped();
+        cv::Mat *back = new cv::Mat(rgbImage.height(), rgbImage.width(), CV_8UC3);
 
-		cv::mixChannels(&mat, 1, back, 1, from_to, 3);
+        for(int i = 0; i < rgbImage.height(); ++i)
+            memcpy(back->ptr(i), rgbImage.scanLine(i), rgbImage.bytesPerLine());
 
-		return QSharedPointer<cv::Mat>(back);
-	}
+        return QSharedPointer<cv::Mat>(back);
+    }
 }
