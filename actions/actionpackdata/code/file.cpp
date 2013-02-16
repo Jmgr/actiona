@@ -35,14 +35,6 @@ namespace Code
 {
 	QScriptValue File::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		if(context->argumentCount() > 1)
-		{
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
-			return false;
-		}
-		if(context->argumentCount() == 1)
-			return CodeClass::constructor(new File(context->argument(0).toString()), context, engine);
-		else
 			return CodeClass::constructor(new File, context, engine);
 	}
 
@@ -59,7 +51,7 @@ namespace Code
 
 	QScriptValue File::exists(QScriptContext *context, QScriptEngine *engine)
 	{
-		if(context->argumentCount() < 1)
+		if(context->argumentCount() != 1)
 		{
 			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
 			return false;
@@ -131,11 +123,6 @@ namespace Code
 		return false;
 	}
 	
-	bool File::exists()
-	{
-		return mFile.exists();
-	}
-
 	QScriptValue File::open(const QString &filename, OpenMode mode)
 	{
 		mFile.setFileName(filename);
