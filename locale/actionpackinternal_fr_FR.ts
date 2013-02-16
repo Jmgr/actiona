@@ -201,7 +201,7 @@
 <context>
     <name>Actions::TimeConditionInstance</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditioninstance.h" line="56"/>
+        <location filename="../actions/actionpackinternal/actions/timeconditioninstance.h" line="49"/>
         <source>Invalid date</source>
         <translation>Date incorrecte</translation>
     </message>

@@ -44,7 +44,7 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
         <source>The offset to apply to the click position</source>
-        <translation type="unfinished">Le décalage à appliquer à la position du clic</translation>
+        <translation>Le décalage à appliquer à la position du clic</translation>
     </message>
     <message>
         <source>Click action</source>

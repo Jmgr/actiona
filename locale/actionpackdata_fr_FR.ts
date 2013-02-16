@@ -267,17 +267,17 @@
 <context>
     <name>Actions::ReadRegistryInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="52"/>
+        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="54"/>
         <source>Cannot find subKey &quot;%1&quot;</source>
         <translation>Impossible de trouver la sous-clef &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="56"/>
+        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="58"/>
         <source>Cannot find value &quot;%1&quot;</source>
         <translation>Impossible de trouver la valeur &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="60"/>
+        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="62"/>
         <source>Invalid value type</source>
         <translation>Type de valeur incorrect</translation>
     </message>
