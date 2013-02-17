@@ -25,11 +25,11 @@
 
 namespace ActionTools
 {
-	WindowEdit::WindowEdit(QWidget *parent)
+	WindowEdit::WindowEdit(QWidget *parent, bool activeChoose)
 		: QWidget(parent),
 		ui(new Ui::WindowEdit)
 	{
-		ui->setupUi(this);
+		ui->setupUi(this, activeChoose);
 	}
 
 	WindowEdit::~WindowEdit()
