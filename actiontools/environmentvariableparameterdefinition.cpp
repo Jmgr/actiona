@@ -38,7 +38,7 @@ namespace ActionTools
 	{
 		ParameterDefinition::buildEditors(script, parent);
 
-		mWindowEdit = new WindowEdit(parent);
+		mWindowEdit = new WindowEdit(parent, false);
 
 		addEditor(mWindowEdit);
 	}
