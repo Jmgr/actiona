@@ -29,7 +29,8 @@ namespace ActionTools
 		: QWidget(parent),
 		ui(new Ui::WindowEdit)
 	{
-		ui->setupUi(this, activeChoose);
+		ui->setupUi(this);
+		ui->choose->setVisible(activeChoose);
 	}
 
 	WindowEdit::~WindowEdit()
