@@ -14,6 +14,7 @@ SOURCES += parameterdefinition.cpp \
     ifactionparameterdefinition.cpp \
     datetimeparameterdefinition.cpp \
     variableparameterdefinition.cpp \
+    environmentvariableparameterdefinition.cpp \
 	colorpositionparameterdefinition.cpp \
 	pointlistparameterdefinition.cpp \
 	booleanparameterdefinition.cpp \
@@ -35,6 +36,7 @@ HEADERS += parameterdefinition.h \
     ifactionparameterdefinition.h \
     datetimeparameterdefinition.h \
     variableparameterdefinition.h \
+    environmentvariableparameterdefinition.h \
 	colorpositionparameterdefinition.h \
 	pointlistparameterdefinition.h \
 	booleanparameterdefinition.h \
