@@ -36,6 +36,7 @@
 #include "actions/beginproceduredefinition.h"
 #include "actions/callproceduredefinition.h"
 #include "actions/endproceduredefinition.h"
+#include "actions/reconfigureactionazwindowdefinition.h"
 
 #include <QtCore/qplugin.h>
 
@@ -68,6 +69,7 @@ public:
 		addActionDefinition(new Actions::BeginProcedureDefinition(this));
 		addActionDefinition(new Actions::CallProcedureDefinition(this));
 		addActionDefinition(new Actions::EndProcedureDefinition(this));
+		addActionDefinition(new Actions::ReconfigureActionazWindowDefinition(this));
 	}
 
 	QString id() const								{ return "internal"; }

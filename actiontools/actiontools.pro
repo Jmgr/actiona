@@ -45,7 +45,8 @@ SOURCES += actionfactory.cpp \
 	opencvalgorithms.cpp \
     systeminputreceiver.cpp \
     systeminputtask.cpp \
-	systeminputrecorder.cpp
+	systeminputrecorder.cpp \
+    screenpositiondialog.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -87,7 +88,8 @@ HEADERS += actiontools_global.h \
     systeminputtask.h \
     systeminputlistener.h \
     systeminput.h \
-	systeminputrecorder.h
+	systeminputrecorder.h \
+    screenpositiondialog.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \
