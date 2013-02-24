@@ -14,5 +14,6 @@
         <file>icons/beginprocedure.png</file>
         <file>icons/callprocedure.png</file>
         <file>icons/endprocedure.png</file>
+        <file>icons/positionwindow.png</file>
     </qresource>
 </RCC>
