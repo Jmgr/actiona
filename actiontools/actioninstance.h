@@ -276,8 +276,12 @@ namespace ActionTools
 		void setNextLine(const QString &nextLine);
 		void setNextLine(int nextLine);
 
-        void setVariable(const QString &name, const QScriptValue &value);
-        QScriptValue variable(const QString &name);
+		void setArray(const QString &name, const QStringList &stringList);
+		void setArrayKeyValue(const QString &name, const QStringList &Keys, const QStringList &Values);
+		QScriptValue arrayElement(const QString &name, int index);
+
+		void setVariable(const QString &name, const QScriptValue &value);
+		QScriptValue variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
 
@@ -286,8 +290,13 @@ namespace ActionTools
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);
 		QScriptValue evaluateCode(bool &ok, const SubParameter &toEvaluate);
-		QString evaluateText(bool &ok, const SubParameter &toEvaluate);
 
+		QString evaluateVariableArray(bool &ok, const QScriptValue &scriptValue);
+
+		QString evaluateText(bool &ok, const SubParameter &toEvaluate);
+		QString evaluateTextString(bool &ok, const QString &toEvaluate, int &pos);
+
+		static const QRegExp mNumericalIndex;
 		static const QRegExp mNameRegExp;
 		static const QRegExp mVariableRegExp;
 		static qint64 mCurrentRuntimeId;
