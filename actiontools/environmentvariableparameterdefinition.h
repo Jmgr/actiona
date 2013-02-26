@@ -21,29 +21,25 @@
 #ifndef ENVIRONMENTVARIABLEPARAMETERDEFINITION_H
 #define ENVIRONMENTVARIABLEPARAMETERDEFINITION_H
 
-#include "parameterdefinition.h"
+#include "listparameterdefinition.h"
 #include "actiontools_global.h"
 
 namespace ActionTools
 {
-	class WindowEdit;
-
-	class ACTIONTOOLSSHARED_EXPORT EnvironmentVariableParameterDefinition : public ParameterDefinition
+	class ACTIONTOOLSSHARED_EXPORT EnvironmentVariableParameterDefinition : public ListParameterDefinition
 	{
 		Q_OBJECT
 
 	public:
-		EnvironmentVariableParameterDefinition(const Name &name, QObject *parent);
+		EnvironmentVariableParameterDefinition(const Name &name, QObject *parent)
+			: ListParameterDefinition(name, parent)									{}
 
 		void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
+//		void load(const ActionInstance *actionInstance);
+//		void save(ActionInstance *actionInstance);
 		void update(Script *script);
 
-	private:
-		WindowEdit *mWindowEdit;
-
-		Q_DISABLE_COPY(EnvironmentVariableParameterDefinition)
+//		Q_DISABLE_COPY(EnvironmentVariableParameterDefinition)
 	};
 }
 

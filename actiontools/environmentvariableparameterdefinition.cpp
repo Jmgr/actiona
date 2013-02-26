@@ -19,30 +19,28 @@
 */
 
 #include "environmentvariableparameterdefinition.h"
+#include "codecombobox.h"
+#include "script.h"
 #include "subparameter.h"
-#include "windowedit.h"
 #include "actioninstance.h"
-#include "windowhandle.h"
 
 #include <QProcessEnvironment>
 
 namespace ActionTools
 {
-	EnvironmentVariableParameterDefinition::EnvironmentVariableParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
-		mWindowEdit(0)
-	{
-	}
-
 	void EnvironmentVariableParameterDefinition::buildEditors(Script *script, QWidget *parent)
 	{
 		ParameterDefinition::buildEditors(script, parent);
 
-		mWindowEdit = new WindowEdit(parent, false);
+		mComboBox = new CodeComboBox(parent);
 
-		addEditor(mWindowEdit);
+		mComboBox->addItems(script->procedureNames());
+
+		addEditor(mComboBox);
+
+		emit editorBuilt();
 	}
-
+/*
 	void EnvironmentVariableParameterDefinition::load(const ActionInstance *actionInstance)
 	{
 		mWindowEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
@@ -52,14 +50,16 @@ namespace ActionTools
 	{
 		actionInstance->setSubParameter(name().original(), "value", mWindowEdit->isCode(), mWindowEdit->text());
 	}
-
+*/
 	void EnvironmentVariableParameterDefinition::update(Script *script)
 	{
 		Q_UNUSED(script)
 
 		QStringList environmentVariables = QProcessEnvironment::systemEnvironment().keys();
+
 		environmentVariables.sort();
 
-		mWindowEdit->setWindowTitles(environmentVariables);
+		mComboBox->clear();
+		mComboBox->addItems(environmentVariables);
 	}
 }
