@@ -42,7 +42,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit WindowEdit(QWidget *parent = 0, bool activeChoose = true);
+		explicit WindowEdit(QWidget *parent = 0);
 		~WindowEdit();
 
 		void setText(const QString &text);
