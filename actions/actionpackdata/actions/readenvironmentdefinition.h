@@ -25,6 +25,7 @@
 #include "readenvironmentinstance.h"
 #include "variableparameterdefinition.h"
 #include "listparameterdefinition.h"
+#include "environmentvariableparameterdefinition.h"
 #include "groupdefinition.h"
 
 namespace ActionTools
@@ -44,7 +45,7 @@ namespace Actions
 		: ActionDefinition(pack)
 		{
 			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			variable->setTooltip(tr("The Array type variable where to save the current system environment"));
+			variable->setTooltip(tr("The variable used to store the selected information from your system environment"));
 			addElement(variable);
 
 			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
@@ -57,10 +58,9 @@ namespace Actions
 			selectionMode->setMasterList(mode);
 			selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariable));
 
-			ActionTools::TextParameterDefinition *environmentVariable = new ActionTools::TextParameterDefinition(ActionTools::Name("environmentVariable", tr("Variable")), this);
-			environmentVariable->setTooltip(tr("The specific environment variable to read"));
-			environmentVariable->setDefaultValue("PATH");
-			selectionMode->addMember(environmentVariable);
+			ActionTools::EnvironmentVariableParameterDefinition *environmentVariableName = new ActionTools::EnvironmentVariableParameterDefinition(ActionTools::Name("environmentVariableName", tr("Environment Variable")), this);
+			environmentVariableName->setTooltip(tr("The specific environment variable to read"));
+			selectionMode->addMember(environmentVariableName);
 
 			addElement(selectionMode);
 		}

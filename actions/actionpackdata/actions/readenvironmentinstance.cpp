@@ -52,7 +52,7 @@ namespace Actions
 
 		if(mode == oneVariable)
 		{
-			QString environmentVariable	= evaluateString(ok, "envVariable");
+			QString environmentVariable	= evaluateString(ok, "environmentVariableName");
 
 			if (environmentHashVariableValue.contains(environmentVariable))
 				setVariable(variable, environmentHashVariableValue.value(environmentVariable));
