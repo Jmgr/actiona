@@ -35,11 +35,7 @@ namespace ActionTools
 			: ListParameterDefinition(name, parent)									{}
 
 		void buildEditors(Script *script, QWidget *parent);
-//		void load(const ActionInstance *actionInstance);
-//		void save(ActionInstance *actionInstance);
 		void update(Script *script);
-
-//		Q_DISABLE_COPY(EnvironmentVariableParameterDefinition)
 	};
 }
 

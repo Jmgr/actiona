@@ -40,17 +40,7 @@ namespace ActionTools
 
 		emit editorBuilt();
 	}
-/*
-	void EnvironmentVariableParameterDefinition::load(const ActionInstance *actionInstance)
-	{
-		mWindowEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
-	}
 
-	void EnvironmentVariableParameterDefinition::save(ActionInstance *actionInstance)
-	{
-		actionInstance->setSubParameter(name().original(), "value", mWindowEdit->isCode(), mWindowEdit->text());
-	}
-*/
 	void EnvironmentVariableParameterDefinition::update(Script *script)
 	{
 		Q_UNUSED(script)
