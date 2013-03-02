@@ -175,6 +175,7 @@ namespace ActionTools
 		void consolePrint(const QString &text);
 		void consolePrintWarning(const QString &text);
 		void consolePrintError(const QString &text);
+		void consoleClear();
 
 	protected:
 		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }
