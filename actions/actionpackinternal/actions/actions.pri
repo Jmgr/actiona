@@ -1,7 +1,8 @@
 SOURCES += actions/variableconditioninstance.cpp \
     actions/consoleinstance.cpp \
     actions/variableinstance.cpp \
-    actions/pauseinstance.cpp
+    actions/pauseinstance.cpp \
+    actions/reconfigureactionazwindowinstance.cpp
 HEADERS += actions/stopdefinition.h \
 	actions/stopinstance.h \
 	actions/variabledefinition.h \
@@ -29,4 +30,6 @@ HEADERS += actions/stopdefinition.h \
     actions/endprocedureinstance.h \
     actions/endproceduredefinition.h \
     actions/callprocedureinstance.h \
-    actions/callproceduredefinition.h
+    actions/callproceduredefinition.h \
+    actions/reconfigureactionazwindowinstance.h \
+    actions/reconfigureactionazwindowdefinition.h
