@@ -176,6 +176,9 @@ namespace ActionTools
 		void consolePrintWarning(const QString &text);
 		void consolePrintError(const QString &text);
 		void consoleClear();
+		void consoleSetPosition(bool visible, int screen, int screenPosition);
+		void consoleResize(int width, int height);
+		void executionSetPosition(bool visible, int screen, int screenPosition);
 
 	protected:
 		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }

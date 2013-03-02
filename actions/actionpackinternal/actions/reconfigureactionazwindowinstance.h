@@ -31,35 +31,38 @@ namespace Actions
 	class ReconfigureActionazWindowInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
+		Q_ENUMS(cardinalPositions)
 
 	public:
+		/*
+			on the screen we have :		NW	N	NE
+			(9 positions)				W	C	E
+										SW	S	SE
+		*/
+		enum cardinalPositions
+		{
+			NW, //0
+			W,	//1
+			SW,	//2
+			N,	//3
+			C,	//4
+			S,	//5
+			NE,	//6
+			E,	//7
+			SE	//8
+		};
+
 		ReconfigureActionazWindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
-		{
-			bool ok = true;
+		void startExecution();
 
-			int executionVisible		= evaluateBoolean(ok, "executionPosition", "visible");
-			QString executionPosition	= evaluateString(ok, "executionPosition", "windowposition");
-
-			int consoleVisible		= evaluateBoolean(ok, "consolePosition", "visible");
-			QString consolePosition	= evaluateString(ok, "consolePosition", "windowposition");
-
-			bool clearConsole		= evaluateBoolean(ok, "clearConsole");
-			QPoint sizeOfConsole	= evaluatePoint(ok, "sizeOfConsole");
-
-			if(!ok)
-				return;
-
-			//TODO: emit the signals
-			if(clearConsole)
-				emit clearConsole();
-
-			emit executionEnded();
-		}
+		static const QRegExp mPositionExp;
+		static const QStringList screenPositions;
 
 	private:
+		bool convertPosition(QString & stringPosition, int & screenNumber, int & screenPosition);
+
 		Q_DISABLE_COPY(ReconfigureActionazWindowInstance)
 	};
 }

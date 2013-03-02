@@ -109,6 +109,9 @@ namespace LibExecuter
 		void consolePrintWarning(const QString &text);
 		void consolePrintError(const QString &text);
 		void consoleClear();
+		void consoleResize(int width, int height);
+		void consoleSetPosition(bool visible, int screenNumber, int screenPosition);
+		void executionSetPosition(bool visible, int screenNumber, int screenPosition);
 
 	private:
 		enum ExecuteActionResult
@@ -127,6 +130,7 @@ namespace LibExecuter
 			PostPause
 		};
 
+		void windowSetPosition(QWidget *window, int screenNumber, int screenPosition);
 		void consolePrint(const QString &text, ActionTools::ConsoleWidget::Type type);
 		void pauseOrDebug(bool debug);
 		ActionTools::ActionInstance *currentActionInstance() const;

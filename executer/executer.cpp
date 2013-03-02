@@ -394,52 +394,15 @@ namespace LibExecuter
 		if(!initSucceeded || mScript->actionCount() == 0)
 			return false;
 
+
 		if(mShowExecutionWindow)
 		{
-			QRect screenRect = QApplication::desktop()->availableGeometry(mExecutionWindowScreen);
-			QPoint position;
-
-			if(mExecutionWindowPosition >= 0 && mExecutionWindowPosition <= 2)//Left
-				position.setX(screenRect.left());
-			else if(mExecutionWindowPosition >= 3 && mExecutionWindowPosition <= 5)//HCenter
-				position.setX(screenRect.left() + screenRect.width() / 2 - mExecutionWindow->width() / 2);
-			else if(mExecutionWindowPosition >= 6 && mExecutionWindowPosition <= 8)//Right
-				position.setX(screenRect.left() + screenRect.width() - mExecutionWindow->width());
-
-			if(mExecutionWindowPosition == 0 || mExecutionWindowPosition == 3 || mExecutionWindowPosition == 6)//Up
-				position.setY(screenRect.top());
-			else if(mExecutionWindowPosition == 1 || mExecutionWindowPosition == 4 || mExecutionWindowPosition == 7)//VCenter
-				position.setY(screenRect.top() + screenRect.height() / 2 - mExecutionWindow->height() / 2);
-			else if(mExecutionWindowPosition == 2 || mExecutionWindowPosition == 5 || mExecutionWindowPosition == 8)//Down
-				position.setY(screenRect.top() + screenRect.height() - mExecutionWindow->height());
-
+			windowSetPosition(mExecutionWindow, mExecutionWindowScreen, mExecutionWindowPosition);
 			mExecutionWindow->setPauseStatus(false);
-			mExecutionWindow->move(position);
-			mExecutionWindow->show();
 		}
 
 		if(mShowConsoleWindow)
-		{
-			QRect screenRect = QApplication::desktop()->availableGeometry(mConsoleWindowScreen);
-			QPoint position;
-
-			if(mConsoleWindowPosition >= 0 && mConsoleWindowPosition <= 2)//Left
-				position.setX(screenRect.left());
-			else if(mConsoleWindowPosition >= 3 && mConsoleWindowPosition <= 5)//HCenter
-				position.setX(screenRect.left() + screenRect.width() / 2 - mConsoleWidget->width() / 2);
-			else if(mConsoleWindowPosition >= 6 && mConsoleWindowPosition <= 8)//Right
-				position.setX(screenRect.left() + screenRect.width() - mConsoleWidget->width());
-
-			if(mConsoleWindowPosition == 0 || mConsoleWindowPosition == 3 || mConsoleWindowPosition == 6)//Up
-				position.setY(screenRect.top());
-			else if(mConsoleWindowPosition == 1 || mConsoleWindowPosition == 4 || mConsoleWindowPosition == 7)//VCenter
-				position.setY(screenRect.top() + screenRect.height() / 2 - mConsoleWidget->height() / 2);
-			else if(mConsoleWindowPosition == 2 || mConsoleWindowPosition == 5 || mConsoleWindowPosition == 8)//Down
-				position.setY(screenRect.top() + screenRect.height() - mConsoleWidget->height());
-
-			mConsoleWidget->move(position);
-			mConsoleWidget->show();
-		}
+			windowSetPosition(mConsoleWidget, mConsoleWindowScreen, mConsoleWindowPosition);
 
 		mExecutionStarted = true;
 
@@ -819,7 +782,51 @@ namespace LibExecuter
 
 	void Executer::consoleClear()
 	{
-		consoleWidget()->on_clearPushButton_clicked();
+		mConsoleWidget->clear();
+	}
+
+	void Executer::consoleResize(int width, int height)
+	{
+		mConsoleWidget->resize(width, height);
+	}
+
+	void Executer::consoleSetPosition(bool visible, int screenNumber, int screenPosition)
+	{
+		if(visible)
+			windowSetPosition(mConsoleWidget, screenNumber, screenPosition);
+		else
+			mConsoleWidget->hide();
+	}
+
+	void Executer::executionSetPosition(bool visible, int screenNumber, int screenPosition)
+	{
+		if(visible)
+			windowSetPosition(mExecutionWindow, screenNumber, screenPosition);
+		else
+			mExecutionWindow->hide();
+	}
+
+	void Executer::windowSetPosition(QWidget *window, int screenNumber, int screenPosition)
+	{
+		QRect screenRect = QApplication::desktop()->availableGeometry(screenNumber);
+		QPoint position;
+
+		if(screenPosition >= 0 && screenPosition <= 2)//Left
+			position.setX(screenRect.left());
+		else if(screenPosition >= 3 && screenPosition <= 5)//HCenter
+			position.setX(screenRect.left() + screenRect.width() / 2 - window->width() / 2);
+		else if(screenPosition >= 6 && screenPosition <= 8)//Right
+			position.setX(screenRect.left() + screenRect.width() - window->width());
+
+		if(screenPosition == 0 || screenPosition == 3 || screenPosition == 6)//Up
+			position.setY(screenRect.top());
+		else if(screenPosition == 1 || screenPosition == 4 || screenPosition == 7)//VCenter
+			position.setY(screenRect.top() + screenRect.height() / 2 - window->height() / 2);
+		else if(screenPosition == 2 || screenPosition == 5 || screenPosition == 8)//Down
+			position.setY(screenRect.top() + screenRect.height() - window->height());
+
+		window->move(position);
+		window->show();
 	}
 
 	void Executer::consolePrint(const QString &text, ActionTools::ConsoleWidget::Type type)
@@ -946,7 +953,10 @@ namespace LibExecuter
 		connect(actionInstance, SIGNAL(consolePrintWarning(QString)), this, SLOT(consolePrintWarning(QString)));
 		connect(actionInstance, SIGNAL(consolePrintError(QString)), this, SLOT(consolePrintError(QString)));
 		connect(actionInstance, SIGNAL(consoleClear()), this, SLOT(consoleClear()));
-		
+		connect(actionInstance, SIGNAL(consoleSetPosition(bool, int, int)), this, SLOT(consoleSetPosition(bool, int, int)));
+		connect(actionInstance, SIGNAL(consoleResize(int, int)), this, SLOT(consoleResize(int, int)));
+		connect(actionInstance, SIGNAL(executionSetPosition(bool, int, int)), this, SLOT(executionSetPosition(bool, int, int)));
+
 		mExecutionStatus = PrePause;
 
 		mExecutionTimer.start();
