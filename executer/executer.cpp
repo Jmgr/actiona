@@ -817,6 +817,11 @@ namespace LibExecuter
 		return canExecuteAction(nextLine);
 	}
 
+	void Executer::consoleClear()
+	{
+		consoleWidget()->on_clearPushButton_clicked();
+	}
+
 	void Executer::consolePrint(const QString &text, ActionTools::ConsoleWidget::Type type)
 	{
 		ActionTools::ActionInstance *currentAction = mScript->actionAt(currentActionIndex());
@@ -940,6 +945,7 @@ namespace LibExecuter
 		connect(actionInstance, SIGNAL(consolePrint(QString)), this, SLOT(consolePrint(QString)));
 		connect(actionInstance, SIGNAL(consolePrintWarning(QString)), this, SLOT(consolePrintWarning(QString)));
 		connect(actionInstance, SIGNAL(consolePrintError(QString)), this, SLOT(consolePrintError(QString)));
+		connect(actionInstance, SIGNAL(consoleClear()), this, SLOT(consoleClear()));
 		
 		mExecutionStatus = PrePause;
 

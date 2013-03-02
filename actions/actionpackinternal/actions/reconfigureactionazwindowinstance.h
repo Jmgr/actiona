@@ -53,6 +53,8 @@ namespace Actions
 				return;
 
 			//TODO: emit the signals
+			if(clearConsole)
+				emit clearConsole();
 
 			emit executionEnded();
 		}

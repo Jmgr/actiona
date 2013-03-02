@@ -108,6 +108,7 @@ namespace LibExecuter
 		void consolePrint(const QString &text);
 		void consolePrintWarning(const QString &text);
 		void consolePrintError(const QString &text);
+		void consoleClear();
 
 	private:
 		enum ExecuteActionResult
