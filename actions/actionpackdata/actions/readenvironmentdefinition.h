@@ -44,6 +44,8 @@ namespace Actions
 		explicit ReadEnvironmentVariableDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+            translateItems("ReadEnvironmentVariableInstance::modes", ReadEnvironmentVariableInstance::modes);
+
 			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
 			variable->setTooltip(tr("The variable used to store the selected information from your system environment"));
 			addElement(variable);
