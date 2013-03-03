@@ -24,10 +24,6 @@
 #include "actioninstance.h"
 #include "script.h"
 
-#include <QApplication>
-#include <QProcessEnvironment>
-#include <QStringList>
-
 namespace Actions
 {
 	class ReadEnvironmentVariableInstance : public ActionTools::ActionInstance
@@ -38,12 +34,8 @@ namespace Actions
 	public:
 		enum Mode
 		{
-			allVariables,
-			oneVariable
-		};
-		enum Exceptions
-		{
-			IsNotEnvironmentVariable = ActionTools::ActionException::BadParameterException
+            allVariablesMode,
+            oneVariableMode
 		};
 
 		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)

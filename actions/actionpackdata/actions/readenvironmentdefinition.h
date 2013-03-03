@@ -51,12 +51,12 @@ namespace Actions
 			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
 			mode->setTooltip(tr("The environment read mode"));
 			mode->setItems(ReadEnvironmentVariableInstance::modes);
-			mode->setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariable));
+            mode->setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariableMode));
 			addElement(mode);
 
 			ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(this);
 			selectionMode->setMasterList(mode);
-			selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariable));
+            selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode));
 
 			ActionTools::EnvironmentVariableParameterDefinition *environmentVariableName = new ActionTools::EnvironmentVariableParameterDefinition(ActionTools::Name("environmentVariableName", tr("Environment Variable")), this);
 			environmentVariableName->setTooltip(tr("The specific environment variable to read"));
@@ -65,10 +65,10 @@ namespace Actions
 			addElement(selectionMode);
 		}
 
-		QString name() const													{ return QObject::tr("Read environment variables"); }
+        QString name() const													{ return QObject::tr("Read environment variable"); }
 		QString id() const														{ return "ActionReadEnvironmentVariable"; }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read the system environment"); }
+        QString description() const												{ return QObject::tr("Read a single or multiple environment variables"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadEnvironmentVariableInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readenvironment.png"); }

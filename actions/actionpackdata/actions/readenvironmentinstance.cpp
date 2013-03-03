@@ -22,12 +22,15 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QApplication>
+#include <QProcessEnvironment>
+#include <QStringList>
 
 namespace Actions
 {
 	ActionTools::StringListPair ReadEnvironmentVariableInstance::modes = qMakePair(
 			QStringList() << "allVariables" << "oneVariable",
-			QStringList() << QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", "Read all the environment variables") << QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", "Read only the specified variable"));
+            QStringList() << QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", "Read all") << QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", "Read one"));
 
 	void ReadEnvironmentVariableInstance::startExecution()
 	{
@@ -50,7 +53,7 @@ namespace Actions
 			environmentHashVariableValue[KeyValue.at(0)] = KeyValue.at(1);
 		}
 
-		if(mode == oneVariable)
+        if(mode == oneVariableMode)
 		{
 			QString environmentVariable	= evaluateString(ok, "environmentVariableName");
 
@@ -58,7 +61,7 @@ namespace Actions
 				setVariable(variable, environmentHashVariableValue.value(environmentVariable));
 			else
 			{
-				emit executionException(IsNotEnvironmentVariable, tr("The specified variable is not set in the system environment"));
+                emit executionException(ActionTools::ActionException::BadParameterException, tr("The specified variable cannot be found in the system environment"));
 				return;
 			}
 		}
