@@ -133,32 +133,32 @@
 <context>
     <name>Actions::ReadEnvironmentVariableDefinition</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="47"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="49"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="48"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="50"/>
         <source>The variable used to store the selected information from your system environment</source>
         <translation>La variable utilisée pour stocker l&apos;information sélectionnée à partir de votre environnement système</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="51"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="53"/>
         <source>Mode</source>
         <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="54"/>
         <source>The environment read mode</source>
         <translation>Le mode de lecture de l&apos;environnement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="63"/>
         <source>Environment Variable</source>
         <translation>Variable d&apos;environnement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="62"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="64"/>
         <source>The specific environment variable to read</source>
         <translation>La variable d&apos;environnement à lire</translation>
     </message>
@@ -1233,12 +1233,12 @@
         <translation>Télécharge des données à partir du Web</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="68"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="70"/>
         <source>Read environment variable</source>
         <translation>Lire variable d&apos;environnement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="71"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="73"/>
         <source>Read a single or multiple environment variables</source>
         <translation>Lit une ou plusieurs variables d&apos;environnement</translation>
     </message>
