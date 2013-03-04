@@ -1,3 +1,6 @@
+3.6.1 (04/03/13)
+- Actions: fixed a bug in the in-text variable insertions that prevented using backslashes
+
 3.6.0 (03/03/13)
 - Actions: added a position offset in the Click, Move cursor and Cursor path
 - Actions: added an action to read environment variables
