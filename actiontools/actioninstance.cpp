@@ -726,27 +726,44 @@ namespace ActionTools
 			else if ( toEvaluate[pos] == QChar(']') )
 			{
 				if( startIndex == 0 )
-				{
 					//in top level evaluation isolated character ']' is accepted (for compatibility reason), now prefer "\]"
 					//i.e without matching '['
 					result.append(toEvaluate[pos]);
-				}
 				else
 					//on other levels, the parsing is stopped at this point
 					return result;
 			}
 			else if( toEvaluate[pos] == QChar('\\') )
 			{
-				pos++;
-				if( pos < toEvaluate.length() )
+				if(startIndex == 0)
 				{
-					result.append(toEvaluate[pos]);
+					//for ascendant compatibility reason
+					//in top level evaluation '\' is not only an escape character,
+					//but can also be a standard character in some cases
+					if((pos + 1) < toEvaluate.length())
+					{
+						pos++;
+						if(toEvaluate[pos] == QChar('$') || toEvaluate[pos] == QChar('[') || toEvaluate[pos] == QChar(']') )
+							result.append(toEvaluate[pos]);
+						else
+						{
+							pos--;
+							result.append(toEvaluate[pos]);
+						}
+					}
+					else
+						result.append(toEvaluate[pos]);
+				}
+				else
+				{
+					pos++;
+					if( pos < toEvaluate.length() )
+						result.append(toEvaluate[pos]);
 				}
 			}
 			else
-			{
 				result.append(toEvaluate[pos]);
-			}
+
 			pos++;
 		}
 
