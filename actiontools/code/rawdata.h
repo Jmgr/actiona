@@ -54,6 +54,8 @@ namespace Code
 		void swap(QByteArray &byteArray);
 		
 		const QByteArray &byteArray() const;
+
+        virtual int additionalMemoryCost() const { return mByteArray.size(); }
 	
 	public slots:
 		QScriptValue clone() const;

@@ -77,7 +77,7 @@ namespace Code
 
 	QScriptValue Image::constructor(const QImage &image, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new Image(image), engine);
+        return CodeClass::constructor(new Image(image), engine);
 	}
 
 	QScriptValue Image::takeScreenshot(QScriptContext *context, QScriptEngine *engine)
@@ -99,9 +99,9 @@ namespace Code
 			}
 		}
 
-		QPixmap screenPixmap = QPixmap::grabWindow(windowId);
+        QPixmap screenPixmap = QPixmap::grabWindow(windowId);
 
-		return constructor(screenPixmap.toImage(), engine);
+        return constructor(screenPixmap.toImage(), engine);
 	}
 
 	void Image::registerClass(QScriptEngine *scriptEngine)
@@ -163,9 +163,9 @@ namespace Code
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mFindSubImageSearchForOne(false)
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
-	}
-	
+        connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+    }
+
 	Image &Image::operator=(Image other)
 	{
 		swap(other);
