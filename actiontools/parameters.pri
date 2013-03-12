@@ -19,7 +19,8 @@ SOURCES += parameterdefinition.cpp \
 	booleanparameterdefinition.cpp \
 	multitextparameterdefinition.cpp \
 	procedureparameterdefinition.cpp \
-    screenpositionparameterdefinition.cpp
+    screenpositionparameterdefinition.cpp \
+    sizeparameterdefinition.cpp
 HEADERS += parameterdefinition.h \
     elementdefinition.h \
     groupdefinition.h \
@@ -41,4 +42,5 @@ HEADERS += parameterdefinition.h \
 	booleanparameterdefinition.h \
 	multitextparameterdefinition.h \
 	procedureparameterdefinition.h \
-    screenpositionparameterdefinition.h
+    screenpositionparameterdefinition.h \
+    sizeparameterdefinition.h

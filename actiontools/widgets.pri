@@ -7,7 +7,8 @@ FORMS += consolewidget.ui \
 	booleanedit.ui \
     itemlistwidget.ui \
     windowpositionedit.ui \
-    screenpositiondialog.ui
+    screenpositiondialog.ui \
+    sizeedit.ui
 SOURCES += codelineedit.cpp \
     codecombobox.cpp \
     codespinbox.cpp \
@@ -30,7 +31,9 @@ SOURCES += codelineedit.cpp \
 	itemlistwidget.cpp \
 	itemlistview.cpp \
 	itemlistmodel.cpp \
-	windowpositionedit.cpp
+	windowpositionedit.cpp \
+    sizeedit.cpp \
+    choosesizepushbutton.cpp
 HEADERS += codelineedit.h \
     codecombobox.h \
     codespinbox.h \
@@ -54,4 +57,6 @@ HEADERS += codelineedit.h \
 	itemlistwidget.h \
 	itemlistview.h \
 	itemlistmodel.h \
-	windowpositionedit.h
+	windowpositionedit.h \
+    sizeedit.h \
+    choosesizepushbutton.h
