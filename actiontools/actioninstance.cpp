@@ -222,7 +222,10 @@ namespace ActionTools
 				result += ",";
 			}
 
-			result[result.lastIndexOf(",")] = QChar(']');
+			if(result == "[")
+				result += "]";
+			else
+				result[result.lastIndexOf(",")] = QChar(']');
 		}
 		else
 			result = it.value().toString();
@@ -743,7 +746,7 @@ namespace ActionTools
 					if((pos + 1) < toEvaluate.length())
 					{
 						pos++;
-						if(toEvaluate[pos] == QChar('$') || toEvaluate[pos] == QChar('[') || toEvaluate[pos] == QChar(']') )
+						if(toEvaluate[pos] == QChar('$') || toEvaluate[pos] == QChar('[') || toEvaluate[pos] == QChar(']') || toEvaluate[pos] == QChar('\\'))
 							result.append(toEvaluate[pos]);
 						else
 						{
