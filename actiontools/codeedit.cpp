@@ -56,7 +56,6 @@ namespace ActionTools
 
 		updateLineNumberAreaWidth(0);
 		highlightCurrentLine();
-
 		setTabStopWidth(30);
 
 		QFont font;
