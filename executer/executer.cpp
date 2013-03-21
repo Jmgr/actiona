@@ -454,7 +454,7 @@ namespace LibExecuter
 
 	void Executer::stopExecution()
 	{
-		if(!mExecutionStarted)
+        if(!mExecutionStarted)
 			return;
 		
 		mScriptAgent->pause(false);
@@ -463,7 +463,9 @@ namespace LibExecuter
 		
 		mExecutionStarted = false;
 		mExecutionStatus = Stopped;
-		mScriptEngine->abortEvaluation();
+
+        if(mScriptEngine)
+            mScriptEngine->abortEvaluation();
 
 		mExecutionTimer.stop();
 
@@ -479,10 +481,16 @@ namespace LibExecuter
 
 		mScriptEngineDebugger.detach();
 		
-		mScriptAgent->deleteLater();
-		mScriptAgent = 0;
-		mScriptEngine->deleteLater();
-		mScriptEngine = 0;
+        if(mScriptAgent)
+        {
+            mScriptAgent->deleteLater();
+            mScriptAgent = 0;
+        }
+        if(mScriptEngine)
+        {
+            mScriptEngine->deleteLater();
+            mScriptEngine = 0;
+        }
 
 		delete mProgressDialog;
 		mProgressDialog = 0;

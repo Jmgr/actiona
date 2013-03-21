@@ -58,6 +58,7 @@ namespace Actions
 		static ActionTools::StringListPair sources;
 
 		void startExecution();
+        void stopExecution();
 
 	private slots:
 		void searchFinished(const ActionTools::MatchingPointList &matchingPointList);

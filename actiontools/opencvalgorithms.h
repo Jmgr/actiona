@@ -73,7 +73,6 @@
 #include <QVector>
 #include <QFuture>
 #include <QFutureWatcher>
-#include <QSharedPointer>
 #include <QMetaType>
 
 namespace cv
@@ -113,6 +112,7 @@ namespace ActionTools
 						  int maximumMatches = 10,
 						  int downPyrs = 2,
 						  int searchExpansion = 15);
+        void cancelSearch();
 
 		AlgorithmError error() const { return mError; }
 		const QString &errorString() const { return mErrorString; }
@@ -124,7 +124,7 @@ namespace ActionTools
 		void finished();
 
 	private:
-		bool checkInputImages(QSharedPointer<cv::Mat> source, QSharedPointer<cv::Mat> target);
+        bool checkInputImages(const cv::Mat &source, const cv::Mat &target);
 
 		/*=============================================================================
 		  FastMatchTemplate
@@ -148,8 +148,8 @@ namespace ActionTools
 							  with +/- searchExpansion pixels in both the x and y
 							  directions
 		*/
-		MatchingPointList fastMatchTemplate(QSharedPointer<cv::Mat> source,
-											QSharedPointer<cv::Mat> target,
+        MatchingPointList fastMatchTemplate(const cv::Mat &source,
+                                            const cv::Mat &target,
 											int matchPercentage,
 											int maximumMatches,
 											int downPyrs,
@@ -158,7 +158,7 @@ namespace ActionTools
 		QVector<QPoint> multipleMaxLoc(const cv::Mat &image, int maximumMatches) const;
 
 		QImage toQImage(const cv::Mat &image) const;
-		QSharedPointer<cv::Mat> toCVMat(const QImage &image) const;
+        cv::Mat toCVMat(const QImage &image) const;
 
 		AlgorithmError mError;
 		QString mErrorString;

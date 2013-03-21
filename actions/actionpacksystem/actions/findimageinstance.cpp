@@ -141,8 +141,14 @@ namespace Actions
 			emit executionException(ErrorWhileSearchingException, tr("Error while searching: %1").arg(mOpenCVAlgorithms->errorString()));
 
 			return;
-		}
-	}
+        }
+    }
+
+    void FindImageInstance::stopExecution()
+    {
+        mOpenCVAlgorithms->cancelSearch();
+    }
+
 	void FindImageInstance::searchFinished(const ActionTools::MatchingPointList &matchingPointList)
 	{
 		if(matchingPointList.empty())
