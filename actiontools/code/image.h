@@ -79,7 +79,7 @@ namespace Code
 		Image(const Image &other);
 		Image(const QImage &image);
 		Image(const QString &filename);
-		
+
 		Image &operator=(Image other);
 		Image &operator=(QImage image);
 		
@@ -87,6 +87,8 @@ namespace Code
 		void swap(QImage &image);
 		
 		const QImage &image() const;
+
+        virtual int additionalMemoryCost() const { return mImage.byteCount(); }
 	
 	public slots:
 		QScriptValue clone() const;

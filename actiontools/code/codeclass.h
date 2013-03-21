@@ -62,12 +62,10 @@ namespace Code
 		static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
 		static QScriptValue stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList);
 
-		QScriptValue thisObject() const { return mThisObject; }
+        virtual int additionalMemoryCost() const { return 0; }
 
 	private:
 		static QScriptValue emptyFunction(QScriptContext *context, QScriptEngine *engine);
-
-		QScriptValue mThisObject;
 	};
 }
 

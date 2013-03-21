@@ -22,8 +22,8 @@
 
 namespace ActionTools
 {
-	ItemListModel::ItemListModel()
-		: QStandardItemModel(0, 1)
+    ItemListModel::ItemListModel(QObject *parent)
+        : QStandardItemModel(0, 1, parent)
 	{
 	}
 
