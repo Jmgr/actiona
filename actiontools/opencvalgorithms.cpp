@@ -349,11 +349,11 @@ namespace ActionTools
 
     cv::Mat OpenCVAlgorithms::toCVMat(const QImage &image) const
     {
-        QImage rgbImage = image.convertToFormat(QImage::Format_RGB888).rgbSwapped();
-        cv::Mat back(rgbImage.height(), rgbImage.width(), CV_8UC3);
+        cv::Mat mat(image.height(), image.width(), CV_8UC4, const_cast<uchar *>(image.bits()), image.bytesPerLine());
+        cv::Mat back(mat.rows, mat.cols, CV_8UC3);
+        int from_to[] = {0,0,  1,1,  2,2};
 
-        for(int i = 0; i < rgbImage.height(); ++i)
-            memcpy(back.ptr(i), rgbImage.scanLine(i), rgbImage.bytesPerLine());
+        cv::mixChannels(&mat, 1, &back, 1, from_to, 3);
 
         return back;
     }
