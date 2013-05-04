@@ -1,5 +1,6 @@
-3.6.2 (02/05/13)
+3.6.2 (04/05/13)
 - Actions: fixed a regression that caused a memory leak and a crash after a repeated use of the Find Image action
+- Code: fixed a bug that caused a memory leak and a crash after a repeated use of Image.findSubImage and similar
 
 3.6.1 (04/03/13)
 - Actions: fixed a bug in the in-text variable insertions that prevented using backslashes
