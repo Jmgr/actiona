@@ -55,31 +55,40 @@ namespace Actions
 		bool ok = true;
 
 		mSource = evaluateListElement<Source>(ok, sources, "source");
-		QString imageToFindFilename = evaluateString(ok, "imageToFind");
+		mImageToFindFilename = evaluateString(ok, "imageToFind");
 		mPositionVariableName = evaluateVariable(ok, "position");
 		mWindowRelativePosition = evaluateBoolean(ok, "windowRelativePosition");
-		int confidenceMinimum = evaluateInteger(ok, "confidenceMinimum");
+		mPause = evaluateInteger(ok, "pause");
+		mConfidenceMinimum = evaluateInteger(ok, "confidenceMinimum");
 		mMaximumMatches = evaluateInteger(ok, "maximumMatches");
-		int downPyramidCount = evaluateInteger(ok, "downPyramidCount");
-		int searchExpansion = evaluateInteger(ok, "searchExpansion");
+		mDownPyramidCount = evaluateInteger(ok, "downPyramidCount");
+		mSearchExpansion = evaluateInteger(ok, "searchExpansion");
+		mIfTrue = evaluateIfAction(ok, "ifTrue");
+		mIfFalse = evaluateIfAction(ok, "ifFalse");
+		mInactivateTimer = false;
 
 		if(!ok)
 			return;
 
-		validateParameterRange(ok, confidenceMinimum, "confidenceMinimum", tr("minimum confidence"), 0, 100);
+		validateParameterRange(ok, mConfidenceMinimum, "confidenceMinimum", tr("minimum confidence"), 0, 100);
 		validateParameterRange(ok, mMaximumMatches, "maximumMatches", tr("maximum matches"), 1);
-		validateParameterRange(ok, downPyramidCount, "downPyramidCount", tr("down pyramid count"), 1);
-		validateParameterRange(ok, searchExpansion, "searchExpansion", tr("search expansion"), 1);
+		validateParameterRange(ok, mDownPyramidCount, "downPyramidCount", tr("down pyramid count"), 1);
+		validateParameterRange(ok, mSearchExpansion, "searchExpansion", tr("search expansion"), 1);
 
 		if(!ok)
 			return;
 
+		searchImage();
+	}
+
+	void FindImageInstance::searchImage()
+	{
 		QImage imageToFind;
 		QImage imageToSearchIn;
 
-		if(!imageToFind.load(imageToFindFilename))
+		if(!imageToFind.load(mImageToFindFilename))
 		{
-			emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to load image to find from file %1").arg(imageToFindFilename));
+			emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to load image to find from file %1").arg(mImageToFindFilename));
 
 			return;
 		}
@@ -136,24 +145,54 @@ namespace Actions
 			break;
 		}
 
-		if(!mOpenCVAlgorithms->findSubImageAsync(imageToSearchIn, imageToFind, confidenceMinimum, mMaximumMatches, downPyramidCount, searchExpansion))
+		if(!mOpenCVAlgorithms->findSubImageAsync(imageToSearchIn, imageToFind, mConfidenceMinimum, mMaximumMatches, mDownPyramidCount, mSearchExpansion))
 		{
 			emit executionException(ErrorWhileSearchingException, tr("Error while searching: %1").arg(mOpenCVAlgorithms->errorString()));
 
 			return;
-        }
-    }
+		}
+	}
 
-    void FindImageInstance::stopExecution()
-    {
-        mOpenCVAlgorithms->cancelSearch();
-    }
+	void FindImageInstance::stopExecution()
+	{
+		mInactivateTimer = true;
+		mOpenCVAlgorithms->cancelSearch();
+	}
 
 	void FindImageInstance::searchFinished(const ActionTools::MatchingPointList &matchingPointList)
 	{
+		bool ok = true;
+		mIfFalse = evaluateIfAction(ok, "ifFalse");
+
 		if(matchingPointList.empty())
 		{
-			emit executionException(CannotFindTheImageException, tr("Cannot find the image"));
+			setCurrentParameter("ifFalse", "line");
+
+			QString line = evaluateSubParameter(ok, mIfFalse.actionParameter());
+			if(!ok)
+				return;
+
+			if(mIfFalse.action() == ActionTools::IfActionValue::GOTO)
+			{
+				setNextLine(line);
+
+				emit executionEnded();
+			}
+			else if(mIfFalse.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+			{
+				if(!callProcedure(line))
+					return;
+
+				emit executionEnded();
+			}
+			else if(mIfFalse.action() == ActionTools::IfActionValue::WAIT)
+			{
+				//qDebug() << "image absente : attente : Timer demarré !";
+				QTimer::singleShot(mPause, this, SLOT(checkImage()));
+				return;
+			}
+			else
+				emit executionEnded();
 
 			return;
 		}
@@ -177,7 +216,41 @@ namespace Actions
 			setVariable(mPositionVariableName, arrayResult);
 		}
 
-		emit executionEnded();
+		setCurrentParameter("ifTrue", "line");
+
+		QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
+		if(!ok)
+			return;
+
+		if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
+		{
+			setNextLine(line);
+
+			emit executionEnded();
+		}
+		else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+		{
+			if(!callProcedure(line))
+				return;
+
+			emit executionEnded();
+		}
+		else if(mIfTrue.action() == ActionTools::IfActionValue::WAIT)
+		{
+			//qDebug() << "image presente : attente : Timer demarré !";
+			QTimer::singleShot(mPause, this, SLOT(checkImage()));
+			return;
+		}
+		else
+			emit executionEnded();
+	}
+
+	void FindImageInstance::checkImage()
+	{
+		mOpenCVAlgorithms->cancelSearch();
+		//qDebug() << "le timer a sonne, on relance la recherche ...";
+		if(!mInactivateTimer)
+			searchImage();
 	}
 
 	void FindImageInstance::validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum)
