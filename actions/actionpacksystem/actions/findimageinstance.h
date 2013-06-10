@@ -26,6 +26,7 @@
 #include "windowhandle.h"
 
 #include <limits>
+#include <QTimer>
 
 namespace ActionTools
 {
@@ -48,8 +49,7 @@ namespace Actions
 		};
 		enum Exceptions
 		{
-			ErrorWhileSearchingException = ActionTools::ActionException::UserException,
-			CannotFindTheImageException
+			ErrorWhileSearchingException = ActionTools::ActionException::UserException
 		};
 
 		FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
@@ -58,13 +58,16 @@ namespace Actions
 		static ActionTools::StringListPair sources;
 
 		void startExecution();
-        void stopExecution();
+		void stopExecution();
 
 	private slots:
 		void searchFinished(const ActionTools::MatchingPointList &matchingPointList);
+		void checkImage();
 
 	private:
 		void validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum = std::numeric_limits<int>::max());
+
+		void searchImage();
 
 		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
 		QString mPositionVariableName;
@@ -72,6 +75,16 @@ namespace Actions
 		ActionTools::WindowHandle mWindow;
 		Source mSource;
 		int mMaximumMatches;
+		ActionTools::IfActionValue mIfFalse;
+		ActionTools::IfActionValue mIfTrue;
+		QTimer mTimer;
+
+		QString mImageToFindFilename;
+		bool mInactivateTimer;
+		int mPause;
+		int mConfidenceMinimum;
+		int mDownPyramidCount;
+		int mSearchExpansion;
 
 		Q_DISABLE_COPY(FindImageInstance)
 	};

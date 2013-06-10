@@ -26,6 +26,7 @@
 #include "colorpositionparameterdefinition.h"
 #include "listparameterdefinition.h"
 #include "numberparameterdefinition.h"
+#include "positionparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "ifactionparameterdefinition.h"
 
@@ -90,6 +91,10 @@ namespace Actions
 			blueTolerance->setMaximum(100);
 			blueTolerance->setDefaultValue(0);
 			addElement(blueTolerance, 1);
+
+			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
+			positionOffset->setTooltip(tr("The offset to apply to the pixel position"));
+			addElement(positionOffset, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Pixel color"); }

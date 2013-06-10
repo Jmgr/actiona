@@ -27,6 +27,7 @@
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "numberparameterdefinition.h"
+#include "ifactionparameterdefinition.h"
 #include "groupdefinition.h"
 #include "windowparameterdefinition.h"
 #include "booleanparameterdefinition.h"
@@ -87,6 +88,16 @@ namespace Actions
 			imageToFind->setFilter(tr("Image files (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)\nAll files (*.*)"));
 			addElement(imageToFind);
 
+			ActionTools::IfActionParameterDefinition *ifTrue = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifTrue", tr("If true")), this);
+			ifTrue->setTooltip(tr("What to do if the image is found"));
+			ifTrue->setAllowWait(true);
+			addElement(ifTrue);
+
+			ActionTools::IfActionParameterDefinition *ifFalse = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifFalse", tr("If false")), this);
+			ifFalse->setTooltip(tr("What to do if the image is not found"));
+			ifFalse->setAllowWait(true);
+			addElement(ifFalse);
+
 			ActionTools::VariableParameterDefinition *position = new ActionTools::VariableParameterDefinition(ActionTools::Name("position", tr("Position")), this);
 			position->setTooltip(tr("The name of the variable where to store the coordinates of the center of the found image"));
 			addElement(position);
@@ -94,6 +105,15 @@ namespace Actions
 			ActionTools::GroupDefinition *relativePositionGroup = new ActionTools::GroupDefinition(this);
 			relativePositionGroup->setMasterList(source);
 			relativePositionGroup->setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::WindowSource));
+
+			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition(ActionTools::Name("pause", tr("Delay between two searches")), this);
+			pause->setTooltip(tr("The pause duration between two searches"));
+			pause->setMinimum(100);
+			pause->setMaximum(std::numeric_limits<int>::max());
+			pause->setSingleStep(100);
+			pause->setDefaultValue(500);
+			pause->setSuffix(tr(" ms", "milliseconds"));
+			addElement(pause, 1);
 
 			ActionTools::BooleanParameterDefinition *relativePosition = new ActionTools::BooleanParameterDefinition(ActionTools::Name("windowRelativePosition", tr("Window relative position")), this);
 			relativePosition->setTooltip(tr("The position is relative to the window\nIf this parameter is set to false (not checked) then the position is absolute"));
@@ -130,7 +150,6 @@ namespace Actions
 			addElement(searchExpansion, 1);
 
 			addException(FindImageInstance::ErrorWhileSearchingException, tr("Error while searching"));
-			addException(FindImageInstance::CannotFindTheImageException, tr("Cannot find the image"));
 		}
 
 		QString name() const													{ return QObject::tr("Find image"); }

@@ -56,6 +56,7 @@ namespace Actions
 			bool ok = true;
 
 			mPixelPosition = evaluatePoint(ok, "pixel", "position");
+			QPoint positionOffset = evaluatePoint(ok, "positionOffset");
 			mPixelColorValue = evaluateColor(ok, "pixel", "color");
 			mComparison = evaluateListElement<Comparison>(ok, comparisons, "comparison");
 			mIfTrue = evaluateIfAction(ok, "ifTrue");
@@ -67,6 +68,8 @@ namespace Actions
 
 			if(!ok)
 				return;
+
+			mPixelPosition += positionOffset;
 
 			redTolerance = (255 * redTolerance) / 100;
 			greenTolerance = (255 * greenTolerance) / 100;
