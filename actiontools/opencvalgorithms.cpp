@@ -37,12 +37,12 @@ namespace ActionTools
 		qRegisterMetaType<MatchingPointList>("MatchingPointList");
 	}
 
-	bool OpenCVAlgorithms::findSubImageAsync(const QImage &source,
-					  const QImage &target,
-					  int matchPercentage,
-					  int maximumMatches,
-					  int downPyrs,
-					  int searchExpansion)
+    bool OpenCVAlgorithms::findSubImageAsync(const QList<QImage> &sources,
+                      const QImage &target,
+                      int matchPercentage,
+                      int maximumMatches,
+                      int downPyrs,
+                      int searchExpansion)
 	{
 		mError = NoError;
 		mErrorString.clear();
@@ -55,38 +55,48 @@ namespace ActionTools
 			return false;
 		}
 
-        cv::Mat sourceMat = toCVMat(source);
+        QList<cv::Mat> sourcesMat;
+        sourcesMat.reserve(sources.size());
+
+        foreach(const QImage &source, sources)
+            sourcesMat.append(toCVMat(source));
+
         cv::Mat targetMat = toCVMat(target);
 
-		if(!checkInputImages(sourceMat, targetMat))
+        if(!checkInputImages(sourcesMat, targetMat))
 			return false;
 
         connect(&mFutureWatcher, SIGNAL(finished()), this, SLOT(finished()));
 
-		mFuture = QtConcurrent::run(boost::bind(&OpenCVAlgorithms::fastMatchTemplate, this, sourceMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion));
+        mFuture = QtConcurrent::run(boost::bind(&OpenCVAlgorithms::fastMatchTemplate, this, sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion));
 		mFutureWatcher.setFuture(mFuture);
 
 		return true;
 	}
 
-	bool OpenCVAlgorithms::findSubImage(const QImage &source,
-					  const QImage &target,
-					  MatchingPointList &matchingPoints,
-					  int matchPercentage,
-					  int maximumMatches,
-					  int downPyrs,
-					  int searchExpansion)
+    bool OpenCVAlgorithms::findSubImage(const QList<QImage> &sources,
+                      const QImage &target,
+                      MatchingPointList &matchingPoints,
+                      int matchPercentage,
+                      int maximumMatches,
+                      int downPyrs,
+                      int searchExpansion)
 	{
 		mError = NoError;
 		mErrorString.clear();
 
-        cv::Mat sourceMat = toCVMat(source);
+        QList<cv::Mat> sourcesMat;
+        sourcesMat.reserve(sources.size());
+
+        foreach(const QImage &source, sources)
+            sourcesMat.append(toCVMat(source));
+
         cv::Mat targetMat = toCVMat(target);
 
-		if(!checkInputImages(sourceMat, targetMat))
+        if(!checkInputImages(sourcesMat, targetMat))
 			return false;
 
-		matchingPoints = OpenCVAlgorithms::fastMatchTemplate(sourceMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion);
+        matchingPoints = OpenCVAlgorithms::fastMatchTemplate(sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion);
 
         return true;
     }
@@ -102,201 +112,210 @@ namespace ActionTools
 		emit finished(mFutureWatcher.result());
 	}
 
-    bool OpenCVAlgorithms::checkInputImages(const cv::Mat &source, const cv::Mat &target)
+    bool OpenCVAlgorithms::checkInputImages(const QList<cv::Mat> &sources, const cv::Mat &target)
 	{
-		// make sure that the template image is smaller than the source
-        if(target.size().width > source.size().width ||
-           target.size().height > source.size().height)
-		{
-			mError = SourceImageSmallerThanTargerImageError;
-			mErrorString = tr("Source image must be larger than target image");
+        foreach(const cv::Mat &source, sources)
+        {
+            // make sure that the template image is smaller than the source
+            if(target.size().width > source.size().width ||
+               target.size().height > source.size().height)
+            {
+                mError = SourceImageSmallerThanTargerImageError;
+                mErrorString = tr("Source images must be larger than target image");
 
-			return false;
-		}
+                return false;
+            }
 
-        if(source.depth() != target.depth())
-		{
-			mError = NotSameDepthError;
-			mErrorString = tr("Source image and target image must have same depth");
+            if(source.depth() != target.depth())
+            {
+                mError = NotSameDepthError;
+                mErrorString = tr("Source images and target image must have same depth");
 
-			return false;
-		}
+                return false;
+            }
 
-        if(source.channels() != target.channels())
-		{
-			mError = NotSameChannelCountError;
-			mErrorString = tr("Source image and target image must have same number of channels");
+            if(source.channels() != target.channels())
+            {
+                mError = NotSameChannelCountError;
+                mErrorString = tr("Source images and target image must have same number of channels");
 
-			return false;
-		}
+                return false;
+            }
+        }
 
 		return true;
 	}
 
-    MatchingPointList OpenCVAlgorithms::fastMatchTemplate(const cv::Mat &source,
+    MatchingPointList OpenCVAlgorithms::fastMatchTemplate(const QList<cv::Mat> &sources,
                                                                             const cv::Mat &target,
 																			int matchPercentage,
 																			int maximumMatches,
 																			int downPyrs,
 																			int searchExpansion)
 	{
-		MatchingPointList matchingPointList;
+        MatchingPointList matchingPointList;
+        int sourceIndex = 0;
 
-		try
-		{
-			// create copies of the images to modify
-            cv::Mat copyOfSource = source.clone();
-            cv::Mat copyOfTarget = target.clone();
+        foreach(const cv::Mat &source, sources)
+        {
+            try
+            {
+                // create copies of the images to modify
+                cv::Mat copyOfSource = source.clone();
+                cv::Mat copyOfTarget = target.clone();
 
-            cv::Size sourceSize = source.size();
-            cv::Size targetSize = target.size();
+                cv::Size sourceSize = source.size();
+                cv::Size targetSize = target.size();
 
-			// down pyramid the images
-			for(int ii = 0; ii < downPyrs; ii++)
-			{
-				// start with the source image
-				sourceSize.width  = (sourceSize.width  + 1) / 2;
-				sourceSize.height = (sourceSize.height + 1) / 2;
+                // down pyramid the images
+                for(int ii = 0; ii < downPyrs; ii++)
+                {
+                    // start with the source image
+                    sourceSize.width  = (sourceSize.width  + 1) / 2;
+                    sourceSize.height = (sourceSize.height + 1) / 2;
 
-                cv::Mat smallSource(sourceSize, source.type());
-				cv::pyrDown(copyOfSource, smallSource);
+                    cv::Mat smallSource(sourceSize, source.type());
+                    cv::pyrDown(copyOfSource, smallSource);
 
-				// prepare for next loop, if any
-				copyOfSource = smallSource.clone();
+                    // prepare for next loop, if any
+                    copyOfSource = smallSource.clone();
 
-				// next, do the target
-				targetSize.width  = (targetSize.width  + 1) / 2;
-				targetSize.height = (targetSize.height + 1) / 2;
+                    // next, do the target
+                    targetSize.width  = (targetSize.width  + 1) / 2;
+                    targetSize.height = (targetSize.height + 1) / 2;
 
-                cv::Mat smallTarget(targetSize, target.type());
-				pyrDown(copyOfTarget, smallTarget);
+                    cv::Mat smallTarget(targetSize, target.type());
+                    pyrDown(copyOfTarget, smallTarget);
 
-				// prepare for next loop, if any
-				copyOfTarget = smallTarget.clone();
-			}
+                    // prepare for next loop, if any
+                    copyOfTarget = smallTarget.clone();
+                }
 
-			// perform the match on the shrunken images
-			cv::Size smallTargetSize = copyOfTarget.size();
-			cv::Size smallSourceSize = copyOfSource.size();
+                // perform the match on the shrunken images
+                cv::Size smallTargetSize = copyOfTarget.size();
+                cv::Size smallSourceSize = copyOfSource.size();
 
-			cv::Size resultSize;
-			resultSize.width = smallSourceSize.width - smallTargetSize.width + 1;
-			resultSize.height = smallSourceSize.height - smallTargetSize.height + 1;
+                cv::Size resultSize;
+                resultSize.width = smallSourceSize.width - smallTargetSize.width + 1;
+                resultSize.height = smallSourceSize.height - smallTargetSize.height + 1;
 
-			cv::Mat result(resultSize, CV_32FC1);
-			cv::matchTemplate(copyOfSource, copyOfTarget, result, CV_TM_CCOEFF_NORMED);
+                cv::Mat result(resultSize, CV_32FC1);
+                cv::matchTemplate(copyOfSource, copyOfTarget, result, CV_TM_CCOEFF_NORMED);
 
-			// find the top match locations
-			QVector<QPoint> locations = multipleMaxLoc(result, maximumMatches);
+                // find the top match locations
+                QVector<QPoint> locations = multipleMaxLoc(result, maximumMatches);
 
-			// search the large images at the returned locations
-            sourceSize = source.size();
-            targetSize = target.size();
+                // search the large images at the returned locations
+                sourceSize = source.size();
+                targetSize = target.size();
 
-			int twoPowerNumDownPyrs = std::pow(2.0f, downPyrs);
+                int twoPowerNumDownPyrs = std::pow(2.0f, downPyrs);
 
-			// create a copy of the source in order to adjust its ROI for searching
-			for(int currMax = 0; currMax < maximumMatches; ++currMax)
-			{
-				// transform the point to its corresponding point in the larger image
-				QPoint &currMaxLocation = locations[currMax];
-				currMaxLocation *= twoPowerNumDownPyrs;
-				currMaxLocation.setX(currMaxLocation.x() + targetSize.width / 2);
-				currMaxLocation.setY(currMaxLocation.y() + targetSize.height / 2);
+                // create a copy of the source in order to adjust its ROI for searching
+                for(int currMax = 0; currMax < maximumMatches; ++currMax)
+                {
+                    // transform the point to its corresponding point in the larger image
+                    QPoint &currMaxLocation = locations[currMax];
+                    currMaxLocation *= twoPowerNumDownPyrs;
+                    currMaxLocation.setX(currMaxLocation.x() + targetSize.width / 2);
+                    currMaxLocation.setY(currMaxLocation.y() + targetSize.height / 2);
 
-				const QPoint &searchPoint = locations.at(currMax);
+                    const QPoint &searchPoint = locations.at(currMax);
 
-				// if we are searching for multiple targets and we have found a target or
-				//  multiple targets, we don't want to search in the same location(s) again
-				if(maximumMatches > 1 && !matchingPointList.isEmpty())
-				{
-					bool thisTargetFound = false;
+                    // if we are searching for multiple targets and we have found a target or
+                    //  multiple targets, we don't want to search in the same location(s) again
+                    if(maximumMatches > 1 && !matchingPointList.isEmpty())
+                    {
+                        bool thisTargetFound = false;
 
-					for(int currPoint = 0; currPoint < matchingPointList.size(); currPoint++)
-					{
-						const QPoint &foundPoint = matchingPointList.at(currPoint).first;
-						if(std::abs(searchPoint.x() - foundPoint.x()) <= searchExpansion * 2 &&
-						   std::abs(searchPoint.y() - foundPoint.y()) <= searchExpansion * 2)
-						{
-							thisTargetFound = true;
-							break;
-						}
-					}
+                        for(int currPoint = 0; currPoint < matchingPointList.size(); currPoint++)
+                        {
+                            const QPoint &foundPoint = matchingPointList.at(currPoint).position;
+                            if(std::abs(searchPoint.x() - foundPoint.x()) <= searchExpansion * 2 &&
+                               std::abs(searchPoint.y() - foundPoint.y()) <= searchExpansion * 2)
+                            {
+                                thisTargetFound = true;
+                                break;
+                            }
+                        }
 
-					// if the current target has been found, continue onto the next point
-					if(thisTargetFound)
-						continue;
-				}
+                        // if the current target has been found, continue onto the next point
+                        if(thisTargetFound)
+                            continue;
+                    }
 
-				// set the source image's ROI to slightly larger than the target image,
-				//  centred at the current point
-				cv::Rect searchRoi;
-                searchRoi.x = searchPoint.x() - (target.size().width) / 2 - searchExpansion;
-                searchRoi.y = searchPoint.y() - (target.size().height) / 2 - searchExpansion;
-                searchRoi.width = target.size().width + searchExpansion * 2;
-                searchRoi.height = target.size().height + searchExpansion * 2;
+                    // set the source image's ROI to slightly larger than the target image,
+                    //  centred at the current point
+                    cv::Rect searchRoi;
+                    searchRoi.x = searchPoint.x() - (target.size().width) / 2 - searchExpansion;
+                    searchRoi.y = searchPoint.y() - (target.size().height) / 2 - searchExpansion;
+                    searchRoi.width = target.size().width + searchExpansion * 2;
+                    searchRoi.height = target.size().height + searchExpansion * 2;
 
-				// make sure ROI doesn't extend outside of image
-				if(searchRoi.x < 0)
-					searchRoi.x = 0;
+                    // make sure ROI doesn't extend outside of image
+                    if(searchRoi.x < 0)
+                        searchRoi.x = 0;
 
-				if(searchRoi.y < 0)
-					searchRoi.y = 0;
+                    if(searchRoi.y < 0)
+                        searchRoi.y = 0;
 
-				if((searchRoi.x + searchRoi.width) > (sourceSize.width - 1))
-				{
-					int numPixelsOver = (searchRoi.x + searchRoi.width) - (sourceSize.width - 1);
+                    if((searchRoi.x + searchRoi.width) > (sourceSize.width - 1))
+                    {
+                        int numPixelsOver = (searchRoi.x + searchRoi.width) - (sourceSize.width - 1);
 
-					searchRoi.width -= numPixelsOver;
-				}
+                        searchRoi.width -= numPixelsOver;
+                    }
 
-				if((searchRoi.y + searchRoi.height) > (sourceSize.height - 1))
-				{
-					int numPixelsOver = (searchRoi.y + searchRoi.height) - (sourceSize.height - 1);
+                    if((searchRoi.y + searchRoi.height) > (sourceSize.height - 1))
+                    {
+                        int numPixelsOver = (searchRoi.y + searchRoi.height) - (sourceSize.height - 1);
 
-					searchRoi.height -= numPixelsOver;
-				}
+                        searchRoi.height -= numPixelsOver;
+                    }
 
-                cv::Mat searchImage(source, searchRoi);
+                    cv::Mat searchImage(source, searchRoi);
 
-				// perform the search on the large images
-                resultSize.width = searchRoi.width - target.size().width + 1;
-                resultSize.height = searchRoi.height - target.size().height + 1;
+                    // perform the search on the large images
+                    resultSize.width = searchRoi.width - target.size().width + 1;
+                    resultSize.height = searchRoi.height - target.size().height + 1;
 
-				result = cv::Mat(resultSize, CV_32FC1);
-                cv::matchTemplate(searchImage, target, result, CV_TM_CCOEFF_NORMED);
+                    result = cv::Mat(resultSize, CV_32FC1);
+                    cv::matchTemplate(searchImage, target, result, CV_TM_CCOEFF_NORMED);
 
-				// find the best match location
-				double maxValue;
-				cv::Point maxLoc;
-				cv::minMaxLoc(result, 0, &maxValue, 0, &maxLoc);
-				maxValue *= 100.0;
+                    // find the best match location
+                    double maxValue;
+                    cv::Point maxLoc;
+                    cv::minMaxLoc(result, 0, &maxValue, 0, &maxLoc);
+                    maxValue *= 100.0;
 
-				// transform point back to original image
-                maxLoc.x += searchRoi.x + target.size().width / 2;
-                maxLoc.y += searchRoi.y + target.size().height / 2;
+                    // transform point back to original image
+                    maxLoc.x += searchRoi.x + target.size().width / 2;
+                    maxLoc.y += searchRoi.y + target.size().height / 2;
 
-				if(maxValue >= matchPercentage)
-				{
-					// add the point to the list
-					matchingPointList.append(qMakePair<QPoint, int>(QPoint(maxLoc.x, maxLoc.y), maxValue));
+                    if(maxValue >= matchPercentage)
+                    {
+                        // add the point to the list
+                        matchingPointList.append(MatchingPoint(QPoint(maxLoc.x, maxLoc.y), maxValue, sourceIndex));
 
-					// if we are only looking for a single target, we have found it, so we
-					//  can return
-					if(maximumMatches <= 1)
-						break;
-				}
-				else
-					break; // skip the rest
-			}
-		}
-		catch(const cv::Exception &e)
-		{
-			mError = OpenCVException;
-			mErrorString = tr("OpenCV exception: %1").arg(e.what());
+                        // if we are only looking for a single target, we have found it, so we
+                        //  can return
+                        if(maximumMatches <= 1)
+                            break;
+                    }
+                    else
+                        break; // skip the rest
+                }
+            }
+            catch(const cv::Exception &e)
+            {
+                mError = OpenCVException;
+                mErrorString = tr("OpenCV exception: %1").arg(e.what());
 
-			return MatchingPointList();
-		}
+                return MatchingPointList();
+            }
+
+            ++sourceIndex;
+        }
 
 		return matchingPointList;
 	}

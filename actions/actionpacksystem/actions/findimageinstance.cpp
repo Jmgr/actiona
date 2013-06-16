@@ -21,6 +21,7 @@
 #include "findimageinstance.h"
 #include "opencvalgorithms.h"
 #include "code/point.h"
+#include "screenshooter.h"
 
 #include <QPixmap>
 #include <QImage>
@@ -75,7 +76,7 @@ namespace Actions
 			return;
 
 		QImage imageToFind;
-		QImage imageToSearchIn;
+        mImagesToSearchIn.clear();
 
 		if(!imageToFind.load(imageToFindFilename))
 		{
@@ -87,7 +88,7 @@ namespace Actions
 		switch(mSource)
 		{
 		case ScreenshotSource:
-			imageToSearchIn = QPixmap::grabWindow(QApplication::desktop()->winId()).toImage();
+            mImagesToSearchIn = ActionTools::ScreenShooter::captureScreens();
 			break;
 		case WindowSource:
 			{
@@ -98,23 +99,16 @@ namespace Actions
 				if(!ok)
 					return;
 
-				mWindow = ActionTools::WindowHandle::findWindow(QRegExp(windowName, Qt::CaseSensitive, QRegExp::WildcardUnix));
+                mWindows = ActionTools::WindowHandle::findWindows(QRegExp(windowName, Qt::CaseSensitive, QRegExp::WildcardUnix));
 
-				if(!mWindow.isValid())
+                if(mWindows.isEmpty())
 				{
 					emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to find any window named %1").arg(windowName));
 
 					return;
 				}
 
-				imageToSearchIn = QPixmap::grabWindow(mWindow.value()).toImage();
-
-				if(imageToSearchIn.isNull())
-				{
-					emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to take a screenshot of the window named %1").arg(mWindow.title()));
-
-					return;
-				}
+                mImagesToSearchIn = ActionTools::ScreenShooter::captureWindows(mWindows);
 			}
 			break;
 		case ImageSource:
@@ -126,17 +120,28 @@ namespace Actions
 				if(!ok)
 					return;
 
+                QPixmap imageToSearchIn;
+
 				if(!imageToSearchIn.load(imageToSearchInFilename))
 				{
 					emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to load image to search in from file %1").arg(imageToSearchInFilename));
 
 					return;
 				}
+
+                mImagesToSearchIn.append(qMakePair(imageToSearchIn, imageToSearchIn.rect()));
 			}
 			break;
 		}
 
-		if(!mOpenCVAlgorithms->findSubImageAsync(imageToSearchIn, imageToFind, confidenceMinimum, mMaximumMatches, downPyramidCount, searchExpansion))
+        QList<QImage> images;
+        images.reserve(mImagesToSearchIn.size());
+
+        typedef QPair<QPixmap, QRect> PixmapRectPair;
+        foreach(const PixmapRectPair &imageToSearchIn, mImagesToSearchIn)
+            images.append(imageToSearchIn.first.toImage());
+
+        if(!mOpenCVAlgorithms->findSubImageAsync(images, imageToFind, confidenceMinimum, mMaximumMatches, downPyramidCount, searchExpansion))
 		{
 			emit executionException(ErrorWhileSearchingException, tr("Error while searching: %1").arg(mOpenCVAlgorithms->errorString()));
 
@@ -160,10 +165,11 @@ namespace Actions
 
 		if(mMaximumMatches == 1)
 		{
-			QPoint position = matchingPointList.first().first;
+            const ActionTools::MatchingPoint &bestMatchingPoint = matchingPointList.first();
+            QPoint position = bestMatchingPoint.position;
 
-			if(mSource == WindowSource && !mWindowRelativePosition)
-				position += mWindow.rect().topLeft();
+            if(mSource != WindowSource || !mWindowRelativePosition)
+                position += mImagesToSearchIn.at(bestMatchingPoint.imageIndex).second.topLeft();
 
 			setVariable(mPositionVariableName, Code::Point::constructor(position, scriptEngine()));
 		}
@@ -172,7 +178,15 @@ namespace Actions
 			QScriptValue arrayResult = scriptEngine()->newArray(matchingPointList.size());
 
 			for(int i = 0; i < matchingPointList.size(); ++i)
-				arrayResult.setProperty(i, Code::Point::constructor(matchingPointList.at(i).first, scriptEngine()));
+            {
+                const ActionTools::MatchingPoint &matchingPoint = matchingPointList.at(i);
+                QPoint position = matchingPoint.position;
+
+                if(mSource != WindowSource || !mWindowRelativePosition)
+                    position += mImagesToSearchIn.at(matchingPoint.imageIndex).second.topLeft();
+
+                arrayResult.setProperty(i, Code::Point::constructor(position, scriptEngine()));
+            }
 
 			setVariable(mPositionVariableName, arrayResult);
 		}

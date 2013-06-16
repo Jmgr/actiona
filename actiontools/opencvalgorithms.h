@@ -69,6 +69,7 @@
 #include "matchingpointlist.h"
 
 #include <QObject>
+#include <QList>
 #include <QImage>
 #include <QVector>
 #include <QFuture>
@@ -99,13 +100,13 @@ namespace ActionTools
 
 		explicit OpenCVAlgorithms(QObject *parent = 0);
 
-		bool findSubImageAsync(const QImage &source,
+        bool findSubImageAsync(const QList<QImage> &sources,
 						  const QImage &target,
 						  int matchPercentage = 70,
 						  int maximumMatches = 10,
 						  int downPyrs = 2,
 						  int searchExpansion = 15);
-		bool findSubImage(const QImage &source,
+        bool findSubImage(const QList<QImage> &sources,
 						  const QImage &target,
 						  MatchingPointList &matchingPoints,
 						  int matchPercentage = 70,
@@ -124,7 +125,7 @@ namespace ActionTools
 		void finished();
 
 	private:
-        bool checkInputImages(const cv::Mat &source, const cv::Mat &target);
+        bool checkInputImages(const QList<cv::Mat> &sources, const cv::Mat &target);
 
 		/*=============================================================================
 		  FastMatchTemplate
@@ -148,12 +149,12 @@ namespace ActionTools
 							  with +/- searchExpansion pixels in both the x and y
 							  directions
 		*/
-        MatchingPointList fastMatchTemplate(const cv::Mat &source,
+        MatchingPointList fastMatchTemplate(const QList<cv::Mat> &sources,
                                             const cv::Mat &target,
-											int matchPercentage,
-											int maximumMatches,
-											int downPyrs,
-											int searchExpansion);
+                                            int matchPercentage,
+                                            int maximumMatches,
+                                            int downPyrs,
+                                            int searchExpansion);
 
 		QVector<QPoint> multipleMaxLoc(const cv::Mat &image, int maximumMatches) const;
 

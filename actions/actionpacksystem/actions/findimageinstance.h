@@ -69,7 +69,8 @@ namespace Actions
 		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
 		QString mPositionVariableName;
 		bool mWindowRelativePosition;
-		ActionTools::WindowHandle mWindow;
+        QList< QPair<QPixmap, QRect> > mImagesToSearchIn;
+        QList<ActionTools::WindowHandle> mWindows;
 		Source mSource;
 		int mMaximumMatches;
 

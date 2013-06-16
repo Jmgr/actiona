@@ -27,7 +27,20 @@
 
 namespace ActionTools
 {
-	typedef QPair<QPoint, int> MatchingPoint;
+    struct MatchingPoint
+    {
+        MatchingPoint(const QPoint &position, int confidence, int imageIndex)
+            : position(position),
+              confidence(confidence),
+              imageIndex(imageIndex)
+        {
+        }
+
+        QPoint position;
+        int confidence;
+        int imageIndex;
+    };
+
 	typedef QList<MatchingPoint> MatchingPointList;
 }
 

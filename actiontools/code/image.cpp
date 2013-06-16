@@ -28,6 +28,7 @@
 #include "codetools.h"
 #include "opencvalgorithms.h"
 #include "qtimagefilters/QtImageFilterFactory"
+#include "screenshooter.h"
 
 #include <QBuffer>
 #include <QScriptValueIterator>
@@ -82,10 +83,10 @@ namespace Code
 
 	QScriptValue Image::takeScreenshot(QScriptContext *context, QScriptEngine *engine)
 	{
-		WId windowId = QApplication::desktop()->winId();
-
 		if(context->argumentCount() > 0)
 		{
+            WId windowId;
+
 			if(Window *window = qobject_cast<Window *>(context->argument(0).toQObject()))
 				windowId = window->windowHandle().value();
 			else
@@ -97,17 +98,41 @@ namespace Code
 				windowId = context->argument(0).toInt32();
 #endif
 			}
+
+            return constructor(QPixmap::grabWindow(windowId).toImage(), engine);
 		}
 
-        QPixmap screenPixmap = QPixmap::grabWindow(windowId);
+        return constructor(ActionTools::ScreenShooter::captureScreen().toImage(), engine);
+    }
+
+    QScriptValue Image::takeScreenshotUsingScreenIndex(QScriptContext *context, QScriptEngine *engine)
+    {
+        if(context->argumentCount() == 0)
+        {
+            throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+            return engine->undefinedValue();
+        }
+
+        int screenIndex = context->argument(0).toInt32();
+        QDesktopWidget *desktop = QApplication::desktop();
+
+        if(screenIndex < 0 || screenIndex >= desktop->screenCount())
+        {
+            throwError(context, engine, "InvalidScreenIndexError", tr("Invalid screen index"));
+            return engine->undefinedValue();
+        }
+
+        QRect screenGeometry = desktop->screenGeometry(screenIndex);
+        QPixmap screenPixmap = QPixmap::grabWindow(desktop->winId(), screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
 
         return constructor(screenPixmap.toImage(), engine);
-	}
+    }
 
 	void Image::registerClass(QScriptEngine *scriptEngine)
 	{
 		CodeTools::addClassToScriptEngine<Image>(scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshot, "takeScreenshot", scriptEngine);
+        CodeTools::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshotUsingScreenIndex, "takeScreenshotUsingScreenIndex", scriptEngine);
 	}
 	
 	const QString Image::filterNames[] =
@@ -401,7 +426,7 @@ namespace Code
 
 			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion);
 
-			if(!mOpenCVAlgorithms->findSubImage(mImage, codeImage->image(), matchingPointList, confidenceMinimum, 1, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, 1, downPyramidCount, searchExpansion))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return QScriptValue();
@@ -413,8 +438,8 @@ namespace Code
 			const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
 			QScriptValue back = engine()->newObject();
 
-			back.setProperty("position", Point::constructor(matchingPoint.first, engine()));
-			back.setProperty("confidence", matchingPoint.second);
+            back.setProperty("position", Point::constructor(matchingPoint.position, engine()));
+            back.setProperty("confidence", matchingPoint.confidence);
 
 			return back;
 		}
@@ -427,7 +452,7 @@ namespace Code
 
 	bool matchingPointGreaterThan(const ActionTools::MatchingPoint &matchingPoint1, const ActionTools::MatchingPoint &matchingPoint2)
 	{
-		return matchingPoint1.second > matchingPoint2.second;
+        return matchingPoint1.confidence > matchingPoint2.confidence;
 	}
 
 	QScriptValue Image::findSubImages(const QScriptValue &otherImage, const QScriptValue &options) const
@@ -443,7 +468,7 @@ namespace Code
 
 			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &maximumMatches);
 
-			if(!mOpenCVAlgorithms->findSubImage(mImage, codeImage->image(), matchingPointList, confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return QScriptValue();
@@ -462,8 +487,8 @@ namespace Code
 			{
 				QScriptValue object = engine()->newObject();
 
-				object.setProperty("position", Point::constructor(matchingPointIt->first, engine()));
-				object.setProperty("confidence", matchingPointIt->second);
+                object.setProperty("position", Point::constructor(matchingPointIt->position, engine()));
+                object.setProperty("confidence", matchingPointIt->confidence);
 
 				back.setProperty(index, object);
 
@@ -498,7 +523,7 @@ namespace Code
 
 			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion);
 
-			if(!mOpenCVAlgorithms->findSubImageAsync(mImage, codeImage->image(), confidenceMinimum, 1, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, 1, downPyramidCount, searchExpansion))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return thisObject();
@@ -534,7 +559,7 @@ namespace Code
 
 			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &maximumMatches);
 
-			if(!mOpenCVAlgorithms->findSubImageAsync(mImage, codeImage->image(), confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return thisObject();
@@ -567,8 +592,8 @@ namespace Code
 				const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
 				QScriptValue back = mFindSubImageAsyncFunction.engine()->newObject();
 
-				back.setProperty("position", CodeClass::constructor(new Point(matchingPoint.first), mFindSubImageAsyncFunction.engine()));
-				back.setProperty("confidence", matchingPoint.second);
+                back.setProperty("position", CodeClass::constructor(new Point(matchingPoint.position), mFindSubImageAsyncFunction.engine()));
+                back.setProperty("confidence", matchingPoint.confidence);
 
 				mFindSubImageAsyncFunction.call(thisObject(), QScriptValueList() << back);
 			}
@@ -585,8 +610,8 @@ namespace Code
 				{
 					QScriptValue object = mFindSubImageAsyncFunction.engine()->newObject();
 
-					object.setProperty("position", CodeClass::constructor(new Point(matchingPointIt->first), mFindSubImageAsyncFunction.engine()));
-					object.setProperty("confidence", matchingPointIt->second);
+                    object.setProperty("position", CodeClass::constructor(new Point(matchingPointIt->position), mFindSubImageAsyncFunction.engine()));
+                    object.setProperty("confidence", matchingPointIt->confidence);
 
 					back.setProperty(index, object);
 

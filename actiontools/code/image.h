@@ -72,6 +72,7 @@ namespace Code
 		static QScriptValue constructor(const QImage &image, QScriptEngine *engine);
 
 		static QScriptValue takeScreenshot(QScriptContext *context, QScriptEngine *engine);
+        static QScriptValue takeScreenshotUsingScreenIndex(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
 		
