@@ -43,6 +43,7 @@ namespace Code
 		Q_OBJECT
 		Q_ENUMS(Filter)
 		Q_ENUMS(MirrorOrientation)
+        Q_ENUMS(AlgorithmMethod)
 		
 	public:
 		enum Filter
@@ -67,6 +68,12 @@ namespace Code
 			Vertical = 1,
 			Horizontal = 2
 		};
+        enum AlgorithmMethod
+        {
+            CorrelationCoefficient,
+            CrossCorrelation,
+            SquaredDifference
+        };
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QImage &image, QScriptEngine *engine);
@@ -117,7 +124,7 @@ namespace Code
 		void findSubImageAsyncFinished(const ActionTools::MatchingPointList &matchingPointList);
 
 	private:
-		void findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, int *maximumMatches = 0) const;
+        void findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, AlgorithmMethod *method, int *maximumMatches = 0) const;
 
 		enum FilterOption
 		{

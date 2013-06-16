@@ -423,10 +423,11 @@ namespace Code
 			int confidenceMinimum;
 			int downPyramidCount;
 			int searchExpansion;
+            AlgorithmMethod method;
 
-			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion);
+            findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &method);
 
-            if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, 1, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, 1, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return QScriptValue();
@@ -464,11 +465,12 @@ namespace Code
 			int confidenceMinimum;
 			int downPyramidCount;
 			int searchExpansion;
+            AlgorithmMethod method;
 			int maximumMatches;
 
-			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &maximumMatches);
+            findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &method, &maximumMatches);
 
-            if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return QScriptValue();
@@ -520,10 +522,11 @@ namespace Code
 			int confidenceMinimum;
 			int downPyramidCount;
 			int searchExpansion;
+            AlgorithmMethod method;
 
-			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion);
+            findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &method);
 
-            if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, 1, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, 1, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return thisObject();
@@ -555,11 +558,12 @@ namespace Code
 			int confidenceMinimum;
 			int downPyramidCount;
 			int searchExpansion;
+            AlgorithmMethod method;
 			int maximumMatches;
 
-			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &maximumMatches);
+            findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &method, &maximumMatches);
 
-            if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return thisObject();
@@ -624,7 +628,7 @@ namespace Code
 		}
 	}
 
-	void Image::findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, int *maximumMatches) const
+    void Image::findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, AlgorithmMethod *method, int *maximumMatches) const
 	{
 		QScriptValueIterator it(options);
 
@@ -640,6 +644,9 @@ namespace Code
 		if(searchExpansion)
 			*searchExpansion = 15;
 
+        if(method)
+            *method = CorrelationCoefficient;
+
 		while(it.hasNext())
 		{
 			it.next();
@@ -652,6 +659,8 @@ namespace Code
 				*downPyramidCount = it.value().toInt32();
 			else if(searchExpansion && it.name() == "searchExpansion")
 				*searchExpansion = it.value().toInt32();
+            else if(searchExpansion && it.name() == "method")
+                *method = static_cast<AlgorithmMethod>(it.value().toInt32());
 		}
 	}
 }
