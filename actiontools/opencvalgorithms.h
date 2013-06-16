@@ -98,6 +98,13 @@ namespace ActionTools
 			OpenCVException
 		};
 
+        enum AlgorithmMethod
+        {
+            CorrelationCoefficientMethod,
+            CrossCorrelationMethod,
+            SquaredDifferenceMethod
+        };
+
 		explicit OpenCVAlgorithms(QObject *parent = 0);
 
         bool findSubImageAsync(const QList<QImage> &sources,
@@ -105,14 +112,16 @@ namespace ActionTools
 						  int matchPercentage = 70,
 						  int maximumMatches = 10,
 						  int downPyrs = 2,
-						  int searchExpansion = 15);
+                          int searchExpansion = 15,
+                          AlgorithmMethod method = CorrelationCoefficientMethod);
         bool findSubImage(const QList<QImage> &sources,
 						  const QImage &target,
 						  MatchingPointList &matchingPoints,
 						  int matchPercentage = 70,
 						  int maximumMatches = 10,
 						  int downPyrs = 2,
-						  int searchExpansion = 15);
+                          int searchExpansion = 15,
+                          AlgorithmMethod method = CorrelationCoefficientMethod);
         void cancelSearch();
 
 		AlgorithmError error() const { return mError; }
@@ -154,12 +163,14 @@ namespace ActionTools
                                             int matchPercentage,
                                             int maximumMatches,
                                             int downPyrs,
-                                            int searchExpansion);
+                                            int searchExpansion,
+                                            AlgorithmMethod method);
 
-		QVector<QPoint> multipleMaxLoc(const cv::Mat &image, int maximumMatches) const;
+        static QVector<QPoint> multipleMinMaxLoc(const cv::Mat &image, int maximumMatches, AlgorithmMethod method);
 
-		QImage toQImage(const cv::Mat &image) const;
-        cv::Mat toCVMat(const QImage &image) const;
+        static QImage toQImage(const cv::Mat &image);
+        static cv::Mat toCVMat(const QImage &image);
+        static int toOpenCVMethod(AlgorithmMethod method);
 
 		AlgorithmError mError;
 		QString mErrorString;

@@ -242,11 +242,24 @@ namespace ActionTools
 					return static_cast<T>(i);
 			}
 
+            if(result.isEmpty())
+            {
+                ok = false;
+
+                setCurrentParameter(parameterName, subParameterName);
+
+                emit executionException(ActionException::BadParameterException, tr("Please choose a value for this field."));
+
+                return T();
+            }
+
 			T back = static_cast<T>(result.toInt(&ok));
 
 			if(!ok || back < 0 || back >= listElements.first.count())
 			{
 				ok = false;
+
+                setCurrentParameter(parameterName, subParameterName);
 
 				emit executionException(ActionException::BadParameterException, tr("\"%1\" is an invalid value.").arg(result));
 

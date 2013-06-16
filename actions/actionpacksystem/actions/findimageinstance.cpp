@@ -36,12 +36,18 @@ namespace Actions
 			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", "Screenshot")
 			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", "Window")
 			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", "Image"));
+    ActionTools::StringListPair FindImageInstance::methods = qMakePair(
+            QStringList() << "correlationcoefficient" << "crosscorrelation" << "squareddifference",
+            QStringList()
+            << QT_TRANSLATE_NOOP("FindImageInstance::sources", "Correlation Coefficient")
+            << QT_TRANSLATE_NOOP("FindImageInstance::sources", "Cross Correlation")
+            << QT_TRANSLATE_NOOP("FindImageInstance::sources", "Squared Difference"));
 
 	FindImageInstance::FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mWindowRelativePosition(false),
-		  mSource(ScreenshotSource),
+          mSource(ScreenshotSource),
 		  mMaximumMatches(1)
 	{
 		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(searchFinished(ActionTools::MatchingPointList)));
@@ -58,11 +64,13 @@ namespace Actions
 		mSource = evaluateListElement<Source>(ok, sources, "source");
 		QString imageToFindFilename = evaluateString(ok, "imageToFind");
 		mPositionVariableName = evaluateVariable(ok, "position");
+        Method method = evaluateListElement<Method>(ok, methods, "method");
 		mWindowRelativePosition = evaluateBoolean(ok, "windowRelativePosition");
 		int confidenceMinimum = evaluateInteger(ok, "confidenceMinimum");
 		mMaximumMatches = evaluateInteger(ok, "maximumMatches");
 		int downPyramidCount = evaluateInteger(ok, "downPyramidCount");
 		int searchExpansion = evaluateInteger(ok, "searchExpansion");
+        mConfidenceVariableName = evaluateVariable(ok, "confidence");
 
 		if(!ok)
 			return;
@@ -141,7 +149,13 @@ namespace Actions
         foreach(const PixmapRectPair &imageToSearchIn, mImagesToSearchIn)
             images.append(imageToSearchIn.first.toImage());
 
-        if(!mOpenCVAlgorithms->findSubImageAsync(images, imageToFind, confidenceMinimum, mMaximumMatches, downPyramidCount, searchExpansion))
+        if(!mOpenCVAlgorithms->findSubImageAsync(images,
+                                                 imageToFind,
+                                                 confidenceMinimum,
+                                                 mMaximumMatches,
+                                                 downPyramidCount,
+                                                 searchExpansion,
+                                                 static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 		{
 			emit executionException(ErrorWhileSearchingException, tr("Error while searching: %1").arg(mOpenCVAlgorithms->errorString()));
 
@@ -172,10 +186,12 @@ namespace Actions
                 position += mImagesToSearchIn.at(bestMatchingPoint.imageIndex).second.topLeft();
 
 			setVariable(mPositionVariableName, Code::Point::constructor(position, scriptEngine()));
+            setVariable(mConfidenceVariableName, bestMatchingPoint.confidence);
 		}
 		else
 		{
 			QScriptValue arrayResult = scriptEngine()->newArray(matchingPointList.size());
+            QScriptValue arrayConfidenceResult = scriptEngine()->newArray(matchingPointList.size());
 
 			for(int i = 0; i < matchingPointList.size(); ++i)
             {
@@ -186,9 +202,11 @@ namespace Actions
                     position += mImagesToSearchIn.at(matchingPoint.imageIndex).second.topLeft();
 
                 arrayResult.setProperty(i, Code::Point::constructor(position, scriptEngine()));
+                arrayConfidenceResult.setProperty(i, matchingPoint.confidence);
             }
 
 			setVariable(mPositionVariableName, arrayResult);
+            setVariable(mConfidenceVariableName, arrayConfidenceResult);
 		}
 
 		emit executionEnded();

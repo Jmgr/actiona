@@ -42,7 +42,8 @@ namespace ActionTools
                       int matchPercentage,
                       int maximumMatches,
                       int downPyrs,
-                      int searchExpansion)
+                      int searchExpansion,
+                      AlgorithmMethod method)
 	{
 		mError = NoError;
 		mErrorString.clear();
@@ -68,7 +69,7 @@ namespace ActionTools
 
         connect(&mFutureWatcher, SIGNAL(finished()), this, SLOT(finished()));
 
-        mFuture = QtConcurrent::run(boost::bind(&OpenCVAlgorithms::fastMatchTemplate, this, sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion));
+        mFuture = QtConcurrent::run(boost::bind(&OpenCVAlgorithms::fastMatchTemplate, this, sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion, method));
 		mFutureWatcher.setFuture(mFuture);
 
 		return true;
@@ -80,7 +81,8 @@ namespace ActionTools
                       int matchPercentage,
                       int maximumMatches,
                       int downPyrs,
-                      int searchExpansion)
+                      int searchExpansion,
+                      AlgorithmMethod method)
 	{
 		mError = NoError;
 		mErrorString.clear();
@@ -96,7 +98,7 @@ namespace ActionTools
         if(!checkInputImages(sourcesMat, targetMat))
 			return false;
 
-        matchingPoints = OpenCVAlgorithms::fastMatchTemplate(sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion);
+        matchingPoints = OpenCVAlgorithms::fastMatchTemplate(sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion, method);
 
         return true;
     }
@@ -151,7 +153,8 @@ namespace ActionTools
 																			int matchPercentage,
 																			int maximumMatches,
 																			int downPyrs,
-																			int searchExpansion)
+                                                                            int searchExpansion,
+                                                                            AlgorithmMethod method)
 	{
         MatchingPointList matchingPointList;
         int sourceIndex = 0;
@@ -200,10 +203,10 @@ namespace ActionTools
                 resultSize.height = smallSourceSize.height - smallTargetSize.height + 1;
 
                 cv::Mat result(resultSize, CV_32FC1);
-                cv::matchTemplate(copyOfSource, copyOfTarget, result, CV_TM_CCOEFF_NORMED);
+                cv::matchTemplate(copyOfSource, copyOfTarget, result, toOpenCVMethod(method));
 
                 // find the top match locations
-                QVector<QPoint> locations = multipleMaxLoc(result, maximumMatches);
+                QVector<QPoint> locations = multipleMinMaxLoc(result, maximumMatches, method);
 
                 // search the large images at the returned locations
                 sourceSize = source.size();
@@ -280,22 +283,32 @@ namespace ActionTools
                     resultSize.height = searchRoi.height - target.size().height + 1;
 
                     result = cv::Mat(resultSize, CV_32FC1);
-                    cv::matchTemplate(searchImage, target, result, CV_TM_CCOEFF_NORMED);
+                    cv::matchTemplate(searchImage, target, result, toOpenCVMethod(method));
 
                     // find the best match location
+                    double minValue;
                     double maxValue;
+                    cv::Point minLoc;
                     cv::Point maxLoc;
-                    cv::minMaxLoc(result, 0, &maxValue, 0, &maxLoc);
-                    maxValue *= 100.0;
+
+                    cv::minMaxLoc(result, &minValue, &maxValue, &minLoc, &maxLoc);
+
+                    double &value = (method == SquaredDifferenceMethod) ? minValue : maxValue;
+                    cv::Point &loc = (method == SquaredDifferenceMethod) ? minLoc : maxLoc;
+
+                    value *= 100.0;
 
                     // transform point back to original image
-                    maxLoc.x += searchRoi.x + target.size().width / 2;
-                    maxLoc.y += searchRoi.y + target.size().height / 2;
+                    loc.x += searchRoi.x + target.size().width / 2;
+                    loc.y += searchRoi.y + target.size().height / 2;
 
-                    if(maxValue >= matchPercentage)
+                    if(method == SquaredDifferenceMethod)
+                        value = 100.0f - value;
+
+                    if(value >= matchPercentage)
                     {
                         // add the point to the list
-                        matchingPointList.append(MatchingPoint(QPoint(maxLoc.x, maxLoc.y), maxValue, sourceIndex));
+                        matchingPointList.append(MatchingPoint(QPoint(loc.x, loc.y), value, sourceIndex));
 
                         // if we are only looking for a single target, we have found it, so we
                         //  can return
@@ -320,10 +333,10 @@ namespace ActionTools
 		return matchingPointList;
 	}
 
-	QVector<QPoint> OpenCVAlgorithms::multipleMaxLoc(const cv::Mat &image, int maximumMatches) const
+    QVector<QPoint> OpenCVAlgorithms::multipleMinMaxLoc(const cv::Mat &image, int maximumMatches, AlgorithmMethod method)
 	{
 		QVector<QPoint> locations(maximumMatches);
-		QVector<float> maxima(maximumMatches, 0.0f);
+        QVector<float> matches(maximumMatches, (method == SquaredDifferenceMethod) ? std::numeric_limits<float>::max() : -std::numeric_limits<float>::max());
 		cv::Size size = image.size();
 
 		// extract the raw data for analysis
@@ -339,17 +352,18 @@ namespace ActionTools
 				{
 					// require at least 50% confidence on the sub-sampled image
 					// in order to make this as fast as possible
-					if(data > 0.5f && data > maxima.at(j))
+                    if((method == SquaredDifferenceMethod && data < 0.5f && data < matches.at(j)) ||
+                       method != SquaredDifferenceMethod && data > 0.5f && data > matches.at(j))
 					{
 						// move the maxima down
 						for(int k = maximumMatches - 1; k > j; --k)
 						{
-							maxima[k] = maxima.at(k-1);
+                            matches[k] = matches.at(k-1);
 							locations[k] = locations.at(k-1);
 						}
 
 						// insert the value
-						maxima[j] = data;
+                        matches[j] = data;
 						locations[j].setX(x);
 						locations[j].setY(y);
 						break;
@@ -361,12 +375,12 @@ namespace ActionTools
 		return locations;
 	}
 
-	QImage OpenCVAlgorithms::toQImage(const cv::Mat &image) const
+    QImage OpenCVAlgorithms::toQImage(const cv::Mat &image)
 	{
 		return QImage(image.data, image.size().width, image.size().height, image.step, QImage::Format_RGB888).rgbSwapped();
 	}
 
-    cv::Mat OpenCVAlgorithms::toCVMat(const QImage &image) const
+    cv::Mat OpenCVAlgorithms::toCVMat(const QImage &image)
     {
         cv::Mat mat(image.height(), image.width(), CV_8UC4, const_cast<uchar *>(image.bits()), image.bytesPerLine());
         cv::Mat back(mat.rows, mat.cols, CV_8UC3);
@@ -375,5 +389,19 @@ namespace ActionTools
         cv::mixChannels(&mat, 1, &back, 1, from_to, 3);
 
         return back;
+    }
+
+    int OpenCVAlgorithms::toOpenCVMethod(OpenCVAlgorithms::AlgorithmMethod method)
+    {
+        switch(method)
+        {
+        default:
+        case ActionTools::OpenCVAlgorithms::CorrelationCoefficientMethod:
+            return CV_TM_CCOEFF_NORMED;
+        case ActionTools::OpenCVAlgorithms::CrossCorrelationMethod:
+            return CV_TM_CCORR_NORMED;
+        case ActionTools::OpenCVAlgorithms::SquaredDifferenceMethod:
+            return CV_TM_SQDIFF_NORMED;
+        }
     }
 }

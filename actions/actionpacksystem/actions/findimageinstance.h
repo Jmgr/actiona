@@ -38,6 +38,7 @@ namespace Actions
 	{
 		Q_OBJECT
 		Q_ENUMS(Source)
+        Q_ENUMS(Method)
 
 	public:
 		enum Source
@@ -46,6 +47,12 @@ namespace Actions
 			WindowSource,
 			ImageSource
 		};
+        enum Method
+        {
+            CorrelationCoefficientMethod,
+            CrossCorrelationMethod,
+            SquaredDifferenceMethod
+        };
 		enum Exceptions
 		{
 			ErrorWhileSearchingException = ActionTools::ActionException::UserException,
@@ -56,6 +63,7 @@ namespace Actions
 		~FindImageInstance();
 
 		static ActionTools::StringListPair sources;
+        static ActionTools::StringListPair methods;
 
 		void startExecution();
         void stopExecution();
@@ -68,10 +76,11 @@ namespace Actions
 
 		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
 		QString mPositionVariableName;
+        QString mConfidenceVariableName;
 		bool mWindowRelativePosition;
         QList< QPair<QPixmap, QRect> > mImagesToSearchIn;
         QList<ActionTools::WindowHandle> mWindows;
-		Source mSource;
+        Source mSource;
 		int mMaximumMatches;
 
 		Q_DISABLE_COPY(FindImageInstance)

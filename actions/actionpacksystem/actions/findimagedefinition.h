@@ -50,6 +50,7 @@ namespace Actions
 		: ActionDefinition(pack)
 		{
 			translateItems("FindImageInstance::sources", FindImageInstance::sources);
+            translateItems("FindImageInstance::methods", FindImageInstance::methods);
 
 			ActionTools::ListParameterDefinition *source = new ActionTools::ListParameterDefinition(ActionTools::Name("source", tr("Source")), this);
 			source->setTooltip(tr("The source of the image to search in"));
@@ -57,15 +58,19 @@ namespace Actions
 			source->setDefaultValue(FindImageInstance::sources.second.at(FindImageInstance::ScreenshotSource));
 			addElement(source);
 
-			ActionTools::GroupDefinition *windowNameGroup = new ActionTools::GroupDefinition(this);
-			windowNameGroup->setMasterList(source);
-			windowNameGroup->setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::WindowSource));
+            ActionTools::GroupDefinition *windowGroup = new ActionTools::GroupDefinition(this);
+            windowGroup->setMasterList(source);
+            windowGroup->setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::WindowSource));
 
 			ActionTools::WindowParameterDefinition *windowName = new ActionTools::WindowParameterDefinition(ActionTools::Name("windowName", tr("Window name")), this);
 			windowName->setTooltip(tr("The title of the window to search in, you can use wildcards like * (any number of characters) or ? (one character) here"));
-			windowNameGroup->addMember(windowName);
+            windowGroup->addMember(windowName);
 
-			addElement(windowNameGroup);
+            ActionTools::BooleanParameterDefinition *relativePosition = new ActionTools::BooleanParameterDefinition(ActionTools::Name("windowRelativePosition", tr("Window relative position")), this);
+            relativePosition->setTooltip(tr("The position is relative to the window\nIf this parameter is set to false (not checked) then the position is absolute"));
+            windowGroup->addMember(relativePosition);
+
+            addElement(windowGroup);
 
 			ActionTools::GroupDefinition *imageToSearchInGroup = new ActionTools::GroupDefinition(this);
 			imageToSearchInGroup->setMasterList(source);
@@ -91,15 +96,11 @@ namespace Actions
 			position->setTooltip(tr("The name of the variable where to store the coordinates of the center of the found image"));
 			addElement(position);
 
-			ActionTools::GroupDefinition *relativePositionGroup = new ActionTools::GroupDefinition(this);
-			relativePositionGroup->setMasterList(source);
-			relativePositionGroup->setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::WindowSource));
-
-			ActionTools::BooleanParameterDefinition *relativePosition = new ActionTools::BooleanParameterDefinition(ActionTools::Name("windowRelativePosition", tr("Window relative position")), this);
-			relativePosition->setTooltip(tr("The position is relative to the window\nIf this parameter is set to false (not checked) then the position is absolute"));
-			relativePositionGroup->addMember(relativePosition);
-
-			addElement(relativePositionGroup, 1);
+            ActionTools::ListParameterDefinition *method = new ActionTools::ListParameterDefinition(ActionTools::Name("method", tr("Method")), this);
+            method->setTooltip(tr("The matching method to use"));
+            method->setItems(FindImageInstance::methods);
+            method->setDefaultValue(FindImageInstance::methods.second.at(FindImageInstance::CorrelationCoefficientMethod));
+            addElement(method, 1);
 
 			ActionTools::NumberParameterDefinition *confidenceMinimum = new ActionTools::NumberParameterDefinition(ActionTools::Name("confidenceMinimum", tr("Confidence minimum")), this);
 			confidenceMinimum->setTooltip(tr("The minimum confidence percentage required to select a possible matching image"));
@@ -128,6 +129,10 @@ namespace Actions
 			searchExpansion->setMaximum(std::numeric_limits<int>::max());
 			searchExpansion->setDefaultValue(15);
 			addElement(searchExpansion, 1);
+
+            ActionTools::VariableParameterDefinition *confidence = new ActionTools::VariableParameterDefinition(ActionTools::Name("confidence", tr("Confidence")), this);
+            confidence->setTooltip(tr("The name of the variable where to store the confidence value found image"));
+            addElement(confidence, 1);
 
 			addException(FindImageInstance::ErrorWhileSearchingException, tr("Error while searching"));
 			addException(FindImageInstance::CannotFindTheImageException, tr("Cannot find the image"));
