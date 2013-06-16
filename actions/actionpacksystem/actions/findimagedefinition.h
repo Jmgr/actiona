@@ -30,6 +30,7 @@
 #include "groupdefinition.h"
 #include "windowparameterdefinition.h"
 #include "booleanparameterdefinition.h"
+#include "ifactionparameterdefinition.h"
 
 #include <limits>
 
@@ -92,6 +93,16 @@ namespace Actions
 			imageToFind->setFilter(tr("Image files (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)\nAll files (*.*)"));
 			addElement(imageToFind);
 
+            ActionTools::IfActionParameterDefinition *ifFound = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifFound", tr("If found")), this);
+            ifFound->setTooltip(tr("What to do if the image is found"));
+            ifFound->setAllowWait(true);
+            addElement(ifFound);
+
+            ActionTools::IfActionParameterDefinition *ifNotFound = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifNotFound", tr("If not found")), this);
+            ifNotFound->setTooltip(tr("What to do if the image is not found"));
+            ifNotFound->setAllowWait(true);
+            addElement(ifNotFound);
+
 			ActionTools::VariableParameterDefinition *position = new ActionTools::VariableParameterDefinition(ActionTools::Name("position", tr("Position")), this);
 			position->setTooltip(tr("The name of the variable where to store the coordinates of the center of the found image"));
 			addElement(position);
@@ -130,12 +141,19 @@ namespace Actions
 			searchExpansion->setDefaultValue(15);
 			addElement(searchExpansion, 1);
 
+            ActionTools::NumberParameterDefinition *searchDelay = new ActionTools::NumberParameterDefinition(ActionTools::Name("searchDelay", tr("Delay between two searches when waiting")), this);
+            searchDelay->setTooltip(tr("The delay between two searches"));
+            searchDelay->setMinimum(0);
+            searchDelay->setMaximum(std::numeric_limits<int>::max());
+            searchDelay->setDefaultValue(100);
+            searchDelay->setSuffix(tr(" ms", "milliseconds"));
+            addElement(searchDelay, 1);
+
             ActionTools::VariableParameterDefinition *confidence = new ActionTools::VariableParameterDefinition(ActionTools::Name("confidence", tr("Confidence")), this);
             confidence->setTooltip(tr("The name of the variable where to store the confidence value found image"));
             addElement(confidence, 1);
 
 			addException(FindImageInstance::ErrorWhileSearchingException, tr("Error while searching"));
-			addException(FindImageInstance::CannotFindTheImageException, tr("Cannot find the image"));
 		}
 
 		QString name() const													{ return QObject::tr("Find image"); }

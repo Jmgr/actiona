@@ -64,6 +64,7 @@ namespace Actions
 			int redTolerance = evaluateInteger(ok, "redTolerance");
 			int greenTolerance = evaluateInteger(ok, "greenTolerance");
 			int blueTolerance = evaluateInteger(ok, "blueTolerance");
+            QPoint positionOffset = evaluatePoint(ok, "positionOffset");
 
 			if(!ok)
 				return;
@@ -78,6 +79,8 @@ namespace Actions
 			mMaximumColor = QColor(normalizeColor(mPixelColorValue.red() + redTolerance),
 								   normalizeColor(mPixelColorValue.green() + greenTolerance),
 								   normalizeColor(mPixelColorValue.blue() + blueTolerance));
+
+            mPixelPosition += positionOffset;
 
 			if(testPixel())
 			{

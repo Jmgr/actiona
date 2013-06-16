@@ -24,7 +24,6 @@
 #include "screenshooter.h"
 
 #include <QPixmap>
-#include <QImage>
 #include <QApplication>
 #include <QDesktopWidget>
 
@@ -46,11 +45,18 @@ namespace Actions
 	FindImageInstance::FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
+          mMethod(CorrelationCoefficientMethod),
 		  mWindowRelativePosition(false),
+          mConfidenceMinimum(0),
           mSource(ScreenshotSource),
-		  mMaximumMatches(1)
+          mMaximumMatches(1),
+          mDownPyramidCount(0),
+          mSearchExpansion(0)
 	{
 		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(searchFinished(ActionTools::MatchingPointList)));
+        connect(&mWaitTimer, SIGNAL(timeout()), this, SLOT(startSearching()));
+
+        mWaitTimer.setSingleShot(true);
 	}
 
 	FindImageInstance::~FindImageInstance()
@@ -63,119 +69,156 @@ namespace Actions
 
 		mSource = evaluateListElement<Source>(ok, sources, "source");
 		QString imageToFindFilename = evaluateString(ok, "imageToFind");
+        mIfFound = evaluateIfAction(ok, "ifFound");
+        mIfNotFound = evaluateIfAction(ok, "ifNotFound");
 		mPositionVariableName = evaluateVariable(ok, "position");
-        Method method = evaluateListElement<Method>(ok, methods, "method");
+        mMethod = evaluateListElement<Method>(ok, methods, "method");
 		mWindowRelativePosition = evaluateBoolean(ok, "windowRelativePosition");
-		int confidenceMinimum = evaluateInteger(ok, "confidenceMinimum");
+        mConfidenceMinimum = evaluateInteger(ok, "confidenceMinimum");
 		mMaximumMatches = evaluateInteger(ok, "maximumMatches");
-		int downPyramidCount = evaluateInteger(ok, "downPyramidCount");
-		int searchExpansion = evaluateInteger(ok, "searchExpansion");
+        mDownPyramidCount = evaluateInteger(ok, "downPyramidCount");
+        mSearchExpansion = evaluateInteger(ok, "searchExpansion");
         mConfidenceVariableName = evaluateVariable(ok, "confidence");
+        mSearchDelay = evaluateInteger(ok, "searchDelay");
 
 		if(!ok)
 			return;
 
-		validateParameterRange(ok, confidenceMinimum, "confidenceMinimum", tr("minimum confidence"), 0, 100);
+        validateParameterRange(ok, mConfidenceMinimum, "confidenceMinimum", tr("minimum confidence"), 0, 100);
 		validateParameterRange(ok, mMaximumMatches, "maximumMatches", tr("maximum matches"), 1);
-		validateParameterRange(ok, downPyramidCount, "downPyramidCount", tr("down pyramid count"), 1);
-		validateParameterRange(ok, searchExpansion, "searchExpansion", tr("search expansion"), 1);
+        validateParameterRange(ok, mDownPyramidCount, "downPyramidCount", tr("down pyramid count"), 1);
+        validateParameterRange(ok, mSearchExpansion, "searchExpansion", tr("search expansion"), 1);
 
 		if(!ok)
 			return;
 
-		QImage imageToFind;
-        mImagesToSearchIn.clear();
-
-		if(!imageToFind.load(imageToFindFilename))
+        if(!mImageToFind.load(imageToFindFilename))
 		{
 			emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to load image to find from file %1").arg(imageToFindFilename));
 
 			return;
 		}
 
-		switch(mSource)
-		{
-		case ScreenshotSource:
-            mImagesToSearchIn = ActionTools::ScreenShooter::captureScreens();
-			break;
-		case WindowSource:
-			{
-				bool ok = true;
-
-				QString windowName = evaluateString(ok, "windowName");
-
-				if(!ok)
-					return;
-
-                mWindows = ActionTools::WindowHandle::findWindows(QRegExp(windowName, Qt::CaseSensitive, QRegExp::WildcardUnix));
-
-                if(mWindows.isEmpty())
-				{
-					emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to find any window named %1").arg(windowName));
-
-					return;
-				}
-
-                mImagesToSearchIn = ActionTools::ScreenShooter::captureWindows(mWindows);
-			}
-			break;
-		case ImageSource:
-			{
-				bool ok = true;
-
-				QString imageToSearchInFilename = evaluateString(ok, "imageToSearchIn");
-
-				if(!ok)
-					return;
-
-                QPixmap imageToSearchIn;
-
-				if(!imageToSearchIn.load(imageToSearchInFilename))
-				{
-					emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to load image to search in from file %1").arg(imageToSearchInFilename));
-
-					return;
-				}
-
-                mImagesToSearchIn.append(qMakePair(imageToSearchIn, imageToSearchIn.rect()));
-			}
-			break;
-		}
-
-        QList<QImage> images;
-        images.reserve(mImagesToSearchIn.size());
-
-        typedef QPair<QPixmap, QRect> PixmapRectPair;
-        foreach(const PixmapRectPair &imageToSearchIn, mImagesToSearchIn)
-            images.append(imageToSearchIn.first.toImage());
-
-        if(!mOpenCVAlgorithms->findSubImageAsync(images,
-                                                 imageToFind,
-                                                 confidenceMinimum,
-                                                 mMaximumMatches,
-                                                 downPyramidCount,
-                                                 searchExpansion,
-                                                 static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
-		{
-			emit executionException(ErrorWhileSearchingException, tr("Error while searching: %1").arg(mOpenCVAlgorithms->errorString()));
-
-			return;
-        }
+        startSearching();
     }
 
     void FindImageInstance::stopExecution()
     {
         mOpenCVAlgorithms->cancelSearch();
+
+        mWaitTimer.stop();
+    }
+
+    void FindImageInstance::startSearching()
+    {
+        mOpenCVAlgorithms->cancelSearch();
+
+        mImagesToSearchIn.clear();
+
+        switch(mSource)
+        {
+        case ScreenshotSource:
+            mImagesToSearchIn = ActionTools::ScreenShooter::captureScreens();
+            break;
+        case WindowSource:
+            {
+                bool ok = true;
+
+                QString windowName = evaluateString(ok, "windowName");
+
+                if(!ok)
+                    return;
+
+                mWindows = ActionTools::WindowHandle::findWindows(QRegExp(windowName, Qt::CaseSensitive, QRegExp::WildcardUnix));
+
+                if(mWindows.isEmpty())
+                {
+                    emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to find any window named %1").arg(windowName));
+
+                    return;
+                }
+
+                mImagesToSearchIn = ActionTools::ScreenShooter::captureWindows(mWindows);
+            }
+            break;
+        case ImageSource:
+            {
+                bool ok = true;
+
+                QString imageToSearchInFilename = evaluateString(ok, "imageToSearchIn");
+
+                if(!ok)
+                    return;
+
+                QPixmap imageToSearchIn;
+
+                if(!imageToSearchIn.load(imageToSearchInFilename))
+                {
+                    emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to load image to search in from file %1").arg(imageToSearchInFilename));
+
+                    return;
+                }
+
+                mImagesToSearchIn.append(qMakePair(imageToSearchIn, imageToSearchIn.rect()));
+            }
+            break;
+        }
+
+        QList<QImage> sourceImages;
+        sourceImages.reserve(mImagesToSearchIn.size());
+
+        typedef QPair<QPixmap, QRect> PixmapRectPair;
+        foreach(const PixmapRectPair &imageToSearchIn, mImagesToSearchIn)
+            sourceImages.append(imageToSearchIn.first.toImage());
+
+        if(!mOpenCVAlgorithms->findSubImageAsync(sourceImages,
+                                                 mImageToFind,
+                                                 mConfidenceMinimum,
+                                                 mMaximumMatches,
+                                                 mDownPyramidCount,
+                                                 mSearchExpansion,
+                                                 static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(mMethod)))
+        {
+            emit executionException(ErrorWhileSearchingException, tr("Error while searching: %1").arg(mOpenCVAlgorithms->errorString()));
+
+            return;
+        }
     }
 
 	void FindImageInstance::searchFinished(const ActionTools::MatchingPointList &matchingPointList)
 	{
-		if(matchingPointList.empty())
-		{
-			emit executionException(CannotFindTheImageException, tr("Cannot find the image"));
+        bool ok = true;
 
-			return;
-		}
+        if(matchingPointList.empty())
+        {
+            setCurrentParameter("ifNotFound", "line");
+
+            QString line = evaluateSubParameter(ok, mIfNotFound.actionParameter());
+            if(!ok)
+                return;
+
+            if(mIfNotFound.action() == ActionTools::IfActionValue::GOTO)
+            {
+                setNextLine(line);
+
+                emit executionEnded();
+            }
+            else if(mIfNotFound.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+            {
+                if(!callProcedure(line))
+                    return;
+
+                emit executionEnded();
+            }
+            else if(mIfNotFound.action() == ActionTools::IfActionValue::WAIT)
+            {
+                mWaitTimer.start(mSearchDelay);
+            }
+            else
+                emit executionEnded();
+
+            return;
+        }
 
 		if(mMaximumMatches == 1)
 		{
@@ -209,8 +252,32 @@ namespace Actions
             setVariable(mConfidenceVariableName, arrayConfidenceResult);
 		}
 
-		emit executionEnded();
-	}
+        setCurrentParameter("ifFound", "line");
+
+        QString line = evaluateSubParameter(ok, mIfFound.actionParameter());
+        if(!ok)
+            return;
+
+        if(mIfFound.action() == ActionTools::IfActionValue::GOTO)
+        {
+            setNextLine(line);
+
+            emit executionEnded();
+        }
+        else if(mIfFound.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+        {
+            if(!callProcedure(line))
+                return;
+
+            emit executionEnded();
+        }
+        else if(mIfFound.action() == ActionTools::IfActionValue::WAIT)
+        {
+            mWaitTimer.start(mSearchDelay);
+        }
+        else
+            emit executionEnded();
+    }
 
 	void FindImageInstance::validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum)
 	{

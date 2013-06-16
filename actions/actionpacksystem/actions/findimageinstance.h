@@ -25,6 +25,9 @@
 #include "matchingpointlist.h"
 #include "windowhandle.h"
 
+#include <QImage>
+#include <QTimer>
+
 #include <limits>
 
 namespace ActionTools
@@ -55,8 +58,7 @@ namespace Actions
         };
 		enum Exceptions
 		{
-			ErrorWhileSearchingException = ActionTools::ActionException::UserException,
-			CannotFindTheImageException
+            ErrorWhileSearchingException = ActionTools::ActionException::UserException
 		};
 
 		FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
@@ -69,6 +71,7 @@ namespace Actions
         void stopExecution();
 
 	private slots:
+        void startSearching();
 		void searchFinished(const ActionTools::MatchingPointList &matchingPointList);
 
 	private:
@@ -77,11 +80,20 @@ namespace Actions
 		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
 		QString mPositionVariableName;
         QString mConfidenceVariableName;
+        Method mMethod;
 		bool mWindowRelativePosition;
+        int mConfidenceMinimum;
         QList< QPair<QPixmap, QRect> > mImagesToSearchIn;
         QList<ActionTools::WindowHandle> mWindows;
         Source mSource;
+        ActionTools::IfActionValue mIfFound;
+        ActionTools::IfActionValue mIfNotFound;
+        QImage mImageToFind;
 		int mMaximumMatches;
+        int mDownPyramidCount;
+        int mSearchExpansion;
+        int mSearchDelay;
+        QTimer mWaitTimer;
 
 		Q_DISABLE_COPY(FindImageInstance)
 	};
