@@ -104,37 +104,37 @@
         <translation>Erreur lors de l&apos;évaluation du paramètre &quot;%1&quot;, message d&apos;erreur : &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="524"/>
+        <location filename="../executer/executer.cpp" line="532"/>
         <source>Action design error: Invalid exception emitted (%1, line %2)</source>
         <translation>Erreur de conception de l&apos;action : Exception invalide émise (%1, ligne %2)</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="553"/>
+        <location filename="../executer/executer.cpp" line="561"/>
         <source>Invalid exception line: %1</source>
         <translation>Ligne d&apos;exception invalide : %1</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="579"/>
+        <location filename="../executer/executer.cpp" line="587"/>
         <source>Script line %1: </source>
         <translation>Ligne de script %1 : </translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="581"/>
+        <location filename="../executer/executer.cpp" line="589"/>
         <source>Script %1, line %2: </source>
         <translation>Script %1, ligne %2 : </translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="646"/>
+        <location filename="../executer/executer.cpp" line="654"/>
         <source>Unable to find the label named &quot;%1&quot;</source>
         <translation>Impossible de trouver le label nommé &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="660"/>
+        <location filename="../executer/executer.cpp" line="668"/>
         <source>Incorrect Script.nextLine value: %1</source>
         <translation>Valeur de Script.nextLine incorrecte : %1</translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="663"/>
+        <location filename="../executer/executer.cpp" line="671"/>
         <source>The action at line %1 is invalid</source>
         <translation>L&apos;action à la ligne %1 est invalide</translation>
     </message>
