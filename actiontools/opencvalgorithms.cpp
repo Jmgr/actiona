@@ -353,7 +353,7 @@ namespace ActionTools
 					// require at least 50% confidence on the sub-sampled image
 					// in order to make this as fast as possible
                     if((method == SquaredDifferenceMethod && data < 0.5f && data < matches.at(j)) ||
-                       method != SquaredDifferenceMethod && data > 0.5f && data > matches.at(j))
+                       (method != SquaredDifferenceMethod && data > 0.5f && data > matches.at(j)))
 					{
 						// move the maxima down
 						for(int k = maximumMatches - 1; k > j; --k)
