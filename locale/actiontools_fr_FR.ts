@@ -163,39 +163,39 @@
         <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas commencer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="248"/>
+        <location filename="../actiontools/actioninstance.cpp" line="251"/>
         <source>Integer value expected.</source>
         <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="283"/>
+        <location filename="../actiontools/actioninstance.cpp" line="286"/>
         <source>Decimal value expected.</source>
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="353"/>
-        <location filename="../actiontools/actioninstance.cpp" line="361"/>
+        <location filename="../actiontools/actioninstance.cpp" line="356"/>
+        <location filename="../actiontools/actioninstance.cpp" line="364"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="456"/>
-        <location filename="../actiontools/actioninstance.cpp" line="464"/>
+        <location filename="../actiontools/actioninstance.cpp" line="459"/>
+        <location filename="../actiontools/actioninstance.cpp" line="467"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="579"/>
+        <location filename="../actiontools/actioninstance.cpp" line="582"/>
         <source>Unable to find any procedure named &quot;%1&quot;</source>
         <translation>Impossible de trouver une procédure nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="655"/>
+        <location filename="../actiontools/actioninstance.cpp" line="658"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="690"/>
+        <location filename="../actiontools/actioninstance.cpp" line="693"/>
         <source>Bad parameter. Unable to evaluate string</source>
         <translation>Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
     </message>
@@ -213,6 +213,11 @@
     </message>
     <message>
         <location filename="../actiontools/actioninstance.h" line="251"/>
+        <source>Please choose a value for this field.</source>
+        <translation>Merci de choisir une valeur pour ce champ.</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.h" line="264"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation>&quot;%1&quot; est une valeur incorrecte.</translation>
     </message>
@@ -431,27 +436,39 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::OpenCVAlgorithms</name>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="55"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="54"/>
         <source>FindSubImage is already running</source>
         <translation>Recherche via FindSubImage en cours</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="106"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="126"/>
+        <source>Source images must be larger than target image</source>
+        <translation>Les images source doivent être plus grandes que l&apos;image cible</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="134"/>
+        <source>Source images and target image must have same depth</source>
+        <translation>Les images source et l&apos;image cible doivent avoir la même profondeur</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="142"/>
+        <source>Source images and target image must have same number of channels</source>
+        <translation>Les images source et l&apos;image cible doivent avoir le même nombre de canaux</translation>
+    </message>
+    <message>
         <source>Source image must be larger than target image</source>
-        <translation>L&apos;image source doit être plus grande que l&apos;image cible</translation>
+        <translation type="obsolete">L&apos;image source doit être plus grande que l&apos;image cible</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="114"/>
         <source>Source image and target image must have same depth</source>
-        <translation>L&apos;image source et l&apos;image cible doivent avoir la même profondeur</translation>
+        <translation type="obsolete">L&apos;image source et l&apos;image cible doivent avoir la même profondeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="122"/>
         <source>Source image and target image must have same number of channels</source>
-        <translation>L&apos;image source et l&apos;image cible doivent avoir le même nombre de canaux</translation>
+        <translation type="obsolete">L&apos;image source et l&apos;image cible doivent avoir le même nombre de canaux</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="290"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="325"/>
         <source>OpenCV exception: %1</source>
         <translation>Exception OpenCV : %1</translation>
     </message>
@@ -540,66 +557,72 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code::Image</name>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="64"/>
-        <location filename="../actiontools/code/image.cpp" line="423"/>
-        <location filename="../actiontools/code/image.cpp" line="478"/>
-        <location filename="../actiontools/code/image.cpp" line="513"/>
-        <location filename="../actiontools/code/image.cpp" line="549"/>
+        <location filename="../actiontools/code/image.cpp" line="65"/>
+        <location filename="../actiontools/code/image.cpp" line="449"/>
+        <location filename="../actiontools/code/image.cpp" line="505"/>
+        <location filename="../actiontools/code/image.cpp" line="541"/>
+        <location filename="../actiontools/code/image.cpp" line="578"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="68"/>
+        <location filename="../actiontools/code/image.cpp" line="69"/>
+        <location filename="../actiontools/code/image.cpp" line="112"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="94"/>
+        <location filename="../actiontools/code/image.cpp" line="95"/>
         <source>Invalid window</source>
         <translation>Fenêtre invalide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="227"/>
+        <location filename="../actiontools/code/image.cpp" line="121"/>
+        <source>Invalid screen index</source>
+        <translation>Index d&apos;écran non valide</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/image.cpp" line="252"/>
         <source>Unable to set the image data</source>
         <translation>Impossible de changer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="245"/>
+        <location filename="../actiontools/code/image.cpp" line="270"/>
         <source>Unable to get the image data</source>
         <translation>Impossible de récupérer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="406"/>
-        <location filename="../actiontools/code/image.cpp" line="448"/>
-        <location filename="../actiontools/code/image.cpp" line="503"/>
-        <location filename="../actiontools/code/image.cpp" line="539"/>
+        <location filename="../actiontools/code/image.cpp" line="432"/>
+        <location filename="../actiontools/code/image.cpp" line="475"/>
+        <location filename="../actiontools/code/image.cpp" line="531"/>
+        <location filename="../actiontools/code/image.cpp" line="568"/>
         <source>Error while searching for a sub-image: %1</source>
         <translation>Erreur lors de la recherche d&apos;une sous-image : %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="489"/>
-        <location filename="../actiontools/code/image.cpp" line="524"/>
+        <location filename="../actiontools/code/image.cpp" line="516"/>
+        <location filename="../actiontools/code/image.cpp" line="552"/>
         <source>Parameter &quot;callback&quot; is not a function</source>
         <translation>Le paramètre &quot;callback&quot; n&apos;est pas une fonction</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="61"/>
-        <location filename="../actiontools/code/image.cpp" line="256"/>
+        <location filename="../actiontools/code/image.cpp" line="62"/>
+        <location filename="../actiontools/code/image.cpp" line="281"/>
         <source>Unable to load image from file %1</source>
         <translation>Impossible de charger l&apos;image à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="267"/>
+        <location filename="../actiontools/code/image.cpp" line="292"/>
         <source>Unable to save image to file %1</source>
         <translation>Impossible de sauvegarder l&apos;image dans le fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="279"/>
+        <location filename="../actiontools/code/image.cpp" line="304"/>
         <source>Unable to apply filter</source>
         <translation>Impossible d&apos;appliquer le filtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="316"/>
+        <location filename="../actiontools/code/image.cpp" line="341"/>
         <source>Cannot set filter option %1 %2</source>
         <translation>Impossible de changer les options du filtre %1 %2</translation>
     </message>
