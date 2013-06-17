@@ -127,8 +127,8 @@ namespace Actions
 			maximumMatches->setDefaultValue(1);
 			addElement(maximumMatches, 1);
 
-			ActionTools::NumberParameterDefinition *downPyramidCount = new ActionTools::NumberParameterDefinition(ActionTools::Name("downPyramidCount", tr("Down pyramid count")), this);
-			downPyramidCount->setTooltip(tr("The number of down pyramids to use\nA pyramid is a subdivision of the image used to accelerate the search\nEnter 1 here if the searched image is not very different from the source image"));
+			ActionTools::NumberParameterDefinition *downPyramidCount = new ActionTools::NumberParameterDefinition(ActionTools::Name("downPyramidCount", tr("Downsampling")), this);
+			downPyramidCount->setTooltip(tr("The downsampling value to use\nDownsampling is used to accelerate the search when using large images"));
 			downPyramidCount->setMinimum(1);
 			downPyramidCount->setMaximum(std::numeric_limits<int>::max());
 			downPyramidCount->setDefaultValue(1);

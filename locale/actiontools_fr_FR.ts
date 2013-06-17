@@ -484,22 +484,22 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::Script</name>
     <message>
-        <location filename="../actiontools/script.cpp" line="201"/>
+        <location filename="../actiontools/script.cpp" line="202"/>
         <source>Unknown</source>
         <translation>Inconnu</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="203"/>
+        <location filename="../actiontools/script.cpp" line="204"/>
         <source>GNU/Linux</source>
         <translation>GNU/Linux</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="206"/>
+        <location filename="../actiontools/script.cpp" line="207"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="209"/>
+        <location filename="../actiontools/script.cpp" line="210"/>
         <source>Mac</source>
         <translation>Mac</translation>
     </message>
