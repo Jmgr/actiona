@@ -165,6 +165,7 @@ namespace LibExecuter
 		Tools::Version mActionazVersion;
 		Tools::Version mScriptVersion;
 		bool mIsActExec;
+        bool mShowDebuggerOnCodeError;
 
 		Q_DISABLE_COPY(Executer)
 	};

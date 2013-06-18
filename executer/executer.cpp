@@ -24,6 +24,7 @@
 #include "executionwindow.h"
 #include "codeinitializer.h"
 #include "actiondefinition.h"
+#include "actionexception.h"
 #include "scriptagent.h"
 #include "actioninstance.h"
 #include "code/codetools.h"
@@ -48,7 +49,8 @@ namespace LibExecuter
 		mScriptEngine(0),
 		mScriptAgent(0),
 		mHasExecuted(false),
-		mPauseInterrupt(false)
+        mPauseInterrupt(false),
+        mShowDebuggerOnCodeError(true)
 	{
 		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
 		connect(mExecutionWindow, SIGNAL(paused()), this, SLOT(pauseExecution()));
@@ -786,8 +788,13 @@ namespace LibExecuter
 	{
 		mExecutionPaused = true;
 
-		if(!mPauseInterrupt)
-			mDebuggerWindow->show();
+        if(!mPauseInterrupt)
+        {
+            if(mShowDebuggerOnCodeError)
+                mDebuggerWindow->show();
+            else
+                mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
+        }
 		else
 			mPauseInterrupt = false;
 	}
@@ -934,6 +941,10 @@ namespace LibExecuter
 		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(nextLine)));
 
 		ActionTools::ActionInstance *actionInstance = currentActionInstance();
+
+        const ActionTools::ExceptionActionInstancesHash &exceptionActionInstancesHash = actionInstance->exceptionActionInstances();
+        const ActionTools::ActionException::ExceptionActionInstance &exceptionAction = exceptionActionInstancesHash.value(ActionTools::ActionException::CodeErrorException);
+        mShowDebuggerOnCodeError = (exceptionAction.action() == ActionTools::ActionException::StopExecutionExceptionAction);
 
 		mExecutionWindow->setCurrentActionName(actionInstance->definition()->name());
 		mExecutionWindow->setCurrentActionColor(actionInstance->color());

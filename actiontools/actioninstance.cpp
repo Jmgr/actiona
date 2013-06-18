@@ -605,9 +605,9 @@ namespace ActionTools
 		QScriptValue result = d->scriptEngine->evaluate(toEvaluate.value().toString());
 		if(result.isError())
 		{
-			ok = false;
+            ok = false;
 
-			emit executionException(ActionException::CodeErrorException, result.toString());
+            emit executionException(ActionException::CodeErrorException, result.toString());
 			return QScriptValue();
 		}
 
