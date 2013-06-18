@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,6 +47,10 @@ namespace Code
 		static QScriptValue randomString(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
+
+    public slots:
+        virtual QString toString() const { return "Algorithms"; }
+        virtual bool equals(const QScriptValue &other) const { Q_UNUSED(other) return true; }
 
 	private:
 		static int randomInteger(int min, int max);

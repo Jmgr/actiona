@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -93,8 +93,20 @@ namespace Code
 		mDatabase->close();
 		delete mDatabase;
 
-		QSqlDatabase::removeDatabase(connectionName);
-	}
+        QSqlDatabase::removeDatabase(connectionName);
+    }
+
+    bool Sql::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(Sql *otherSql = qobject_cast<Sql*>(object))
+            return (otherSql == this || otherSql->mDatabase == mDatabase);
+
+        return false;
+    }
 
 	QScriptValue Sql::connect(const QScriptValue &parameters) const
 	{

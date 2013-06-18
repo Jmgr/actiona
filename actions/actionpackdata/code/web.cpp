@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -68,8 +68,20 @@ namespace Code
 	}
 
 	Web::~Web()
-	{
-	}
+    {
+    }
+
+    bool Web::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(Web *otherWeb = qobject_cast<Web*>(object))
+            return (otherWeb == this || otherWeb->mNetworkAccessManager == mNetworkAccessManager);
+
+        return false;
+    }
 
 	QScriptValue Web::download(const QString &urlString, const QScriptValue &options)
 	{

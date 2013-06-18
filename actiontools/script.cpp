@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include "script.h"
 #include "actioninstance.h"
 #include "actiondefinition.h"
+#include "elementdefinition.h"
 #include "actionfactory.h"
 #include "parameter.h"
 #include "subparameter.h"
@@ -528,9 +529,18 @@ namespace ActionTools
 						}
 					}
 
+                    //Set default values, will be overwritten afterwards, but this is done to make sure we have valid parameters everywhere
+                    foreach(ElementDefinition *element, actionInstance->definition()->elements())
+                        element->setDefaultValues(actionInstance);
+
 					actionInstance->setLabel(label);
 					actionInstance->setComment(comment);
-					actionInstance->setParametersData(parametersData);
+
+                    ParametersData defaultParametersData = actionInstance->parametersData();
+                    foreach(const QString &parameterKey, parametersData.keys())
+                        defaultParametersData[parameterKey] = parametersData.value(parameterKey);
+
+                    actionInstance->setParametersData(defaultParametersData);
 					actionInstance->setColor(color);
 					actionInstance->setEnabled(enabled);
 					actionInstance->setExceptionActionInstances(exceptionActionsHash);

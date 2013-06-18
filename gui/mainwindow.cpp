@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -542,6 +542,8 @@ void MainWindow::on_actionNew_triggered()
 	{
 		mScript->removeAll();
 		mScript->removeAllParameters();
+        mScript->setPauseBefore(0);
+        mScript->setPauseAfter(0);
 		setCurrentFile(QString());
 		mScriptModel->update();
 

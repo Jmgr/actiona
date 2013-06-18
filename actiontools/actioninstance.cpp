@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,6 +28,9 @@
 #include "code/point.h"
 #include "code/color.h"
 
+#include <QDateTime>
+#include <QScriptValueIterator>
+
 namespace ActionTools
 {
 	bool ActionInstanceData::operator==(const ActionInstanceData &other) const
@@ -45,6 +48,8 @@ namespace ActionTools
 				timeout == other.timeout);
 	}
 
+
+    const QRegExp ActionInstance::NumericalIndex("(\\d+)");
     const QRegExp ActionInstance::NameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
     const QRegExp ActionInstance::VariableRegExp("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 	qint64 ActionInstance::mCurrentRuntimeId = 0;
@@ -93,6 +98,27 @@ namespace ActionTools
 		setPauseAfter(other.pauseAfter());
 		setTimeout(other.timeout());
 	}
+
+    QScriptValue ActionInstance::evaluateValue(bool &ok,
+                                               const QString &parameterName,
+                                               const QString &subParameterName)
+    {
+        if(!ok)
+            return QScriptValue();
+
+        const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+        QScriptValue result;
+
+        if(subParameter.isCode())
+            result = evaluateCode(ok, subParameter);
+        else
+            result = evaluateText(ok, subParameter);
+
+        if(!ok)
+            return QScriptValue();
+
+        return result;
+    }
 
 	QVariant ActionInstance::evaluateVariant(bool &ok,
 										const QString &parameterName,
@@ -153,6 +179,57 @@ namespace ActionTools
 
 			return QString();
 		}
+
+		return result;
+	}
+
+	QString ActionInstance::evaluateVariableArray(bool &ok, const QScriptValue &scriptValue)
+	{
+		QString result;
+
+		QScriptValueIterator it(scriptValue);
+
+		if(scriptValue.isArray())
+		{
+			int lastIndex = -1;
+			result = "[";
+
+			while (it.hasNext()) {
+				it.next();
+
+				if (it.flags() & QScriptValue::SkipInEnumeration)
+					continue;
+
+				QScriptValue nextScriptValue = it.value();
+				//is it an array ?
+				if(nextScriptValue.isArray())
+					result += evaluateVariableArray(ok, nextScriptValue);
+				else
+                    if(NumericalIndex.exactMatch(it.name())) //it.name : numerical only ?
+					{
+						int newIndex = it.name().toInt();
+						if( newIndex > lastIndex+1)
+						{
+							//insert some commas
+							for(lastIndex++ ; lastIndex < newIndex; lastIndex++ )
+								result += ",";
+						}
+						lastIndex = newIndex;
+						result += it.value().toString();
+					}
+					else
+						result += it.name().append("=").append(it.value().toString());
+
+				result += ",";
+			}
+
+			if(result == "[")
+				result += "]";
+			else
+				result[result.lastIndexOf(",")] = QChar(']');
+		}
+		else
+			result = it.value().toString();
 
 		return result;
 	}
@@ -393,8 +470,42 @@ namespace ActionTools
 			return QColor();
 		}
 
-		return color;
-	}
+        return color;
+    }
+
+    QDateTime ActionInstance::evaluateDateTime(bool &ok, const QString &parameterName, const QString &subParameterName)
+    {
+        if(!ok)
+            return QDateTime();
+
+        const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+        QString result;
+
+        if(subParameter.isCode())
+        {
+            QScriptValue evaluationResult = evaluateCode(ok, subParameter);
+            if(evaluationResult.isDate())
+                return evaluationResult.toDateTime();
+
+            result = evaluationResult.toString();
+        }
+        else
+            result = evaluateText(ok, subParameter);
+
+        if(!ok)
+            return QDateTime();
+
+        QDateTime dateTime = QDateTime::fromString(result, "dd/MM/yyyy hh:mm:ss");
+
+        if(!dateTime.isValid())
+        {
+            ok = false;
+
+            return QDateTime();
+        }
+
+        return dateTime;
+    }
 
 	QString ActionInstance::nextLine() const
 	{
@@ -412,18 +523,49 @@ namespace ActionTools
 		setNextLine(QString::number(nextLine));
 	}
 
-    void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
+	void ActionInstance::setArray(const QString &name, const QStringList &stringList)
+	{
+		if(stringList.isEmpty())
+			return;
+
+		QScriptValue back = d->scriptEngine->newArray(stringList.count());
+
+		for(int index = 0; index < stringList.count(); ++index)
+			back.setProperty(index, stringList.at(index));
+
+        if(!name.isEmpty() && NameRegExp.exactMatch(name))
+			d->scriptEngine->globalObject().setProperty(name, back);
+	}
+
+	void ActionInstance::setArrayKeyValue(const QString &name, const QHash<QString, QString> &hashKeyValue)
+	{
+		if(hashKeyValue.isEmpty())
+			return;
+
+		QScriptValue back = d->scriptEngine->newArray(hashKeyValue.count());
+
+		QHashIterator<QString, QString> it(hashKeyValue);
+		while (it.hasNext())
+		{
+			it.next();
+			back.setProperty(it.key(), it.value());
+		}
+
+		setVariable(name, back);
+	}
+
+	void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
 	{
         if(!name.isEmpty() && NameRegExp.exactMatch(name))
 			d->scriptEngine->globalObject().setProperty(name, value);
 	}
 
-	QVariant ActionInstance::variable(const QString &name)
+    QScriptValue ActionInstance::variable(const QString &name)
 	{
         if(name.isEmpty() || !NameRegExp.exactMatch(name))
-			return QVariant();
+            return QScriptValue();
 
-		return d->scriptEngine->globalObject().property(name).toVariant();
+        return d->scriptEngine->globalObject().property(name);
 	}
 
 	void ActionInstance::setCurrentParameter(const QString &parameterName, const QString &subParameterName)
@@ -464,9 +606,9 @@ namespace ActionTools
 		QScriptValue result = d->scriptEngine->evaluate(toEvaluate.value().toString());
 		if(result.isError())
 		{
-			ok = false;
+            ok = false;
 
-			emit executionException(ActionException::CodeErrorException, result.toString());
+            emit executionException(ActionException::CodeErrorException, result.toString());
 			return QScriptValue();
 		}
 
@@ -484,56 +626,152 @@ namespace ActionTools
 	{
 		ok = true;
 
+		int pos = 0;
 		QString value = toEvaluate.value().toString();
 
-		int position = 0;
+		return evaluateTextString(ok, (const QString) value, pos);
+	}
 
-        while((position = VariableRegExp.indexIn(value, position)) != -1)
+	QString ActionInstance::evaluateTextString(bool &ok, const QString &toEvaluate, int &pos)
+	{
+		ok = true;
+
+		int startIndex = pos;
+
+		QString result;
+
+		while(pos < toEvaluate.length())
 		{
-            QString foundVariableName = VariableRegExp.cap(2);
-			QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
-
-            position += VariableRegExp.cap(1).length();
-
-			if(!foundVariable.isValid())
+			if( toEvaluate[pos] == QChar('$') )
 			{
-				ok = false;
-
-				emit executionException(ActionException::BadParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
-				return QString();
-			}
-
-			QString stringEvaluationResult;
-
-			if(foundVariable.isNull())
-				stringEvaluationResult = tr("[Null]");
-			else if(foundVariable.isUndefined())
-				stringEvaluationResult = tr("[Undefined]");
-			else if(foundVariable.isVariant())
-			{
-				QVariant variantEvaluationResult = foundVariable.toVariant();
-				switch(variantEvaluationResult.type())
+				//find a variable name
+                if( VariableRegExp.indexIn(toEvaluate , pos) != -1 )
 				{
-				case QVariant::StringList:
-					stringEvaluationResult = variantEvaluationResult.toStringList().join("\n");
-					break;
-				case QVariant::ByteArray:
-					stringEvaluationResult = tr("[Raw data]");
-					break;
-				default:
-					stringEvaluationResult = foundVariable.toString();
-					break;
+                    QString  foundVariableName = VariableRegExp.cap(1);
+					QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
+
+					pos += foundVariableName.length();
+
+					if(!foundVariable.isValid())
+					{
+						ok = false;
+
+						emit executionException(ActionException::BadParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
+						return QString();
+					}
+
+					QString stringEvaluationResult;
+
+					if(foundVariable.isNull())
+						stringEvaluationResult = "[Null]";
+					else if(foundVariable.isUndefined())
+						stringEvaluationResult = "[Undefined]";
+					else if(foundVariable.isArray())
+					{
+						while( (pos + 1 < toEvaluate.length()) && toEvaluate[pos + 1] == QChar('[') )
+						{
+							pos += 2;
+							QString indexArray = evaluateTextString(ok, toEvaluate, pos);
+
+							if((pos < toEvaluate.length()) && toEvaluate[pos] == QChar(']'))
+							{
+								QScriptString internalIndexArray = d->scriptEngine->toStringHandle(indexArray) ;
+								bool flag = true;
+								int numIndex = internalIndexArray.toArrayIndex(&flag);
+
+								if(flag)
+									//numIndex is valid
+									foundVariable = foundVariable.property(numIndex);
+								else
+									//use internalIndexArray
+									foundVariable = foundVariable.property(internalIndexArray);
+							}
+							else
+							{
+								//syntax error
+								ok = false;
+
+								emit executionException(ActionException::BadParameterException, tr("Bad parameter. Unable to evaluate string"));
+								return QString();
+							}
+
+							//COMPATIBILITY: we break the while loop if foundVariable is no more of Array type
+							if (!foundVariable.isArray()) break;
+						}
+						//end of while, no more '['
+						if(foundVariable.isArray())
+							stringEvaluationResult = evaluateVariableArray(ok, foundVariable);
+						else
+							stringEvaluationResult = foundVariable.toString();
+					}
+					else if(foundVariable.isVariant())
+					{
+						QVariant variantEvaluationResult = foundVariable.toVariant();
+						switch(variantEvaluationResult.type())
+						{
+						case QVariant::StringList:
+							stringEvaluationResult = variantEvaluationResult.toStringList().join("\n");
+							break;
+						case QVariant::ByteArray:
+							stringEvaluationResult = "[Raw data]";
+							break;
+						default:
+							stringEvaluationResult = foundVariable.toString();
+							break;
+						}
+					}
+					else
+						stringEvaluationResult = foundVariable.toString();
+
+					result.append(stringEvaluationResult);
+				}
+
+			}
+			else if ( toEvaluate[pos] == QChar(']') )
+			{
+				if( startIndex == 0 )
+					//in top level evaluation isolated character ']' is accepted (for compatibility reason), now prefer "\]"
+					//i.e without matching '['
+					result.append(toEvaluate[pos]);
+				else
+					//on other levels, the parsing is stopped at this point
+					return result;
+			}
+			else if( toEvaluate[pos] == QChar('\\') )
+			{
+				if(startIndex == 0)
+				{
+					//for ascendant compatibility reason
+					//in top level evaluation '\' is not only an escape character,
+					//but can also be a standard character in some cases
+					if((pos + 1) < toEvaluate.length())
+					{
+						pos++;
+						if(toEvaluate[pos] == QChar('$') || toEvaluate[pos] == QChar('[') || toEvaluate[pos] == QChar(']') || toEvaluate[pos] == QChar('\\'))
+							result.append(toEvaluate[pos]);
+						else
+						{
+							pos--;
+							result.append(toEvaluate[pos]);
+						}
+					}
+					else
+						result.append(toEvaluate[pos]);
+				}
+				else
+				{
+					pos++;
+					if( pos < toEvaluate.length() )
+						result.append(toEvaluate[pos]);
 				}
 			}
 			else
-				stringEvaluationResult = foundVariable.toString();
+				result.append(toEvaluate[pos]);
 
-			value.replace(position,
-						  foundVariableName.length() + 1,
-						  stringEvaluationResult);
+			pos++;
 		}
 
-		return value;
+		return result;
 	}
 
 	QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance)
@@ -624,6 +862,6 @@ namespace ActionTools
 			dbg.space() << exception << "=" << exceptionActionInstancesHash.value(exception);
 		}
 
-		return dbg.maybeSpace();
-	}
+        return dbg.maybeSpace();
+    }
 }

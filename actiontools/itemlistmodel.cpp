@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@
 
 namespace ActionTools
 {
-	ItemListModel::ItemListModel()
-		: QStandardItemModel(0, 1)
+    ItemListModel::ItemListModel(QObject *parent)
+        : QStandardItemModel(0, 1, parent)
 	{
 	}
 

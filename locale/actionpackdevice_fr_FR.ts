@@ -42,6 +42,11 @@
         <translation>La position à l&apos;écran où simuler le clic de souris</translation>
     </message>
     <message>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
+        <source>The offset to apply to the click position</source>
+        <translation>Le décalage à appliquer à la position du clic</translation>
+    </message>
+    <message>
         <source>Click action</source>
         <translation type="obsolete">Action de clic</translation>
     </message>
@@ -57,11 +62,20 @@
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="81"/>
+        <source>Offset</source>
+        <translation>Décalage</translation>
+    </message>
+    <message>
+        <source>The offset to apply at the click position</source>
+        <translation type="obsolete">Le décalage à appliquer à la position du clic</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="86"/>
         <source>Invalid action</source>
         <translation>Action incorrecte</translation>
     </message>
@@ -69,13 +83,13 @@
 <context>
     <name>Actions::ClickInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="54"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="55"/>
         <source>Invalid click amount</source>
         <translation>Quantité de clics incorrecte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="66"/>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="74"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="68"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="76"/>
         <source>Unable to emulate click: button event failed</source>
         <translation>Impossible de simuler un clic : l&apos;évènement de bouton n&apos;a pas pu être envoyé</translation>
     </message>
@@ -83,14 +97,24 @@
 <context>
     <name>Actions::CursorPathDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="44"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="45"/>
         <source>Path</source>
         <translation>Trajet</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="45"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="46"/>
         <source>The path to follow</source>
         <translation>Le trajet à effectuer</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="49"/>
+        <source>Offset</source>
+        <translation>Décalage</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="50"/>
+        <source>The offset to apply to the path</source>
+        <translation>Le décalage à appliquer aux points du chemin</translation>
     </message>
 </context>
 <context>
@@ -233,37 +257,47 @@
         <source>The position where to move the cursor</source>
         <translation>La position où déplacer le curseur</translation>
     </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="48"/>
+        <source>Offset</source>
+        <translation>Décalage</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="49"/>
+        <source>The offset to apply to the cursor movement</source>
+        <translation>Le décalage à appliquer au mouvement du pointeur de la souris</translation>
+    </message>
 </context>
 <context>
     <name>Actions::TextDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="45"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="47"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="46"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="48"/>
         <source>The text to write</source>
         <translation>Le texte à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="49"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="51"/>
         <source>Pause between characters</source>
         <translation>Pause entre chaque caractère</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="50"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="52"/>
         <source>The pause duration between each character</source>
         <translation>La durée de la pause entre chaque caractère</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="54"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="56"/>
         <source> ms</source>
         <comment>milliseconds</comment>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="59"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
@@ -416,12 +450,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="89"/>
         <source>Click</source>
         <translation>Clic</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="88"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="92"/>
         <source>Emulates a mouse click</source>
         <translation>Simule un clic de souris</translation>
     </message>
@@ -436,12 +470,12 @@
         <translation>Simule la pression d&apos;une touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="49"/>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="53"/>
         <source>Move cursor</source>
         <translation>Déplacement du curseur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="56"/>
         <source>Move the mouse cursor</source>
         <translation>Déplace le curseur de souris</translation>
     </message>
@@ -450,12 +484,12 @@
         <translation type="obsolete">Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="60"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="62"/>
         <source>Write text</source>
         <translation>Écriture de texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="63"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="65"/>
         <source>Write some text</source>
         <translation>Écrit du texte</translation>
     </message>
@@ -498,12 +532,12 @@
         <translation type="obsolete">Pression et relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="49"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="54"/>
         <source>Cursor path</source>
         <translation>Trajet du curseur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="57"/>
         <source>Move the mouse cursor on a path</source>
         <translation>Déplace le curseur de la souris sur un trajet</translation>
     </message>

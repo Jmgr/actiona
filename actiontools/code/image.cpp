@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include "codetools.h"
 #include "opencvalgorithms.h"
 #include "qtimagefilters/QtImageFilterFactory"
+#include "screenshooter.h"
 
 #include <QBuffer>
 #include <QScriptValueIterator>
@@ -77,15 +78,15 @@ namespace Code
 
 	QScriptValue Image::constructor(const QImage &image, QScriptEngine *engine)
 	{
-		return CodeClass::constructor(new Image(image), engine);
+        return CodeClass::constructor(new Image(image), engine);
 	}
 
 	QScriptValue Image::takeScreenshot(QScriptContext *context, QScriptEngine *engine)
 	{
-		WId windowId = QApplication::desktop()->winId();
-
 		if(context->argumentCount() > 0)
 		{
+            WId windowId;
+
 			if(Window *window = qobject_cast<Window *>(context->argument(0).toQObject()))
 				windowId = window->windowHandle().value();
 			else
@@ -97,17 +98,41 @@ namespace Code
 				windowId = context->argument(0).toInt32();
 #endif
 			}
+
+            return constructor(QPixmap::grabWindow(windowId).toImage(), engine);
 		}
 
-		QPixmap screenPixmap = QPixmap::grabWindow(windowId);
+        return constructor(ActionTools::ScreenShooter::captureScreen().toImage(), engine);
+    }
 
-		return constructor(screenPixmap.toImage(), engine);
-	}
+    QScriptValue Image::takeScreenshotUsingScreenIndex(QScriptContext *context, QScriptEngine *engine)
+    {
+        if(context->argumentCount() == 0)
+        {
+            throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+            return engine->undefinedValue();
+        }
+
+        int screenIndex = context->argument(0).toInt32();
+        QDesktopWidget *desktop = QApplication::desktop();
+
+        if(screenIndex < 0 || screenIndex >= desktop->screenCount())
+        {
+            throwError(context, engine, "InvalidScreenIndexError", tr("Invalid screen index"));
+            return engine->undefinedValue();
+        }
+
+        QRect screenGeometry = desktop->screenGeometry(screenIndex);
+        QPixmap screenPixmap = QPixmap::grabWindow(desktop->winId(), screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
+
+        return constructor(screenPixmap.toImage(), engine);
+    }
 
 	void Image::registerClass(QScriptEngine *scriptEngine)
 	{
 		CodeTools::addClassToScriptEngine<Image>(scriptEngine);
 		CodeTools::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshot, "takeScreenshot", scriptEngine);
+        CodeTools::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshotUsingScreenIndex, "takeScreenshotUsingScreenIndex", scriptEngine);
 	}
 	
 	const QString Image::filterNames[] =
@@ -163,9 +188,9 @@ namespace Code
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mFindSubImageSearchForOne(false)
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
-	}
-	
+        connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+    }
+
 	Image &Image::operator=(Image other)
 	{
 		swap(other);
@@ -398,10 +423,11 @@ namespace Code
 			int confidenceMinimum;
 			int downPyramidCount;
 			int searchExpansion;
+            AlgorithmMethod method;
 
-			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion);
+            findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &method);
 
-			if(!mOpenCVAlgorithms->findSubImage(mImage, codeImage->image(), matchingPointList, confidenceMinimum, 1, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, 1, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return QScriptValue();
@@ -413,8 +439,8 @@ namespace Code
 			const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
 			QScriptValue back = engine()->newObject();
 
-			back.setProperty("position", Point::constructor(matchingPoint.first, engine()));
-			back.setProperty("confidence", matchingPoint.second);
+            back.setProperty("position", Point::constructor(matchingPoint.position, engine()));
+            back.setProperty("confidence", matchingPoint.confidence);
 
 			return back;
 		}
@@ -427,7 +453,7 @@ namespace Code
 
 	bool matchingPointGreaterThan(const ActionTools::MatchingPoint &matchingPoint1, const ActionTools::MatchingPoint &matchingPoint2)
 	{
-		return matchingPoint1.second > matchingPoint2.second;
+        return matchingPoint1.confidence > matchingPoint2.confidence;
 	}
 
 	QScriptValue Image::findSubImages(const QScriptValue &otherImage, const QScriptValue &options) const
@@ -439,11 +465,12 @@ namespace Code
 			int confidenceMinimum;
 			int downPyramidCount;
 			int searchExpansion;
+            AlgorithmMethod method;
 			int maximumMatches;
 
-			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &maximumMatches);
+            findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &method, &maximumMatches);
 
-			if(!mOpenCVAlgorithms->findSubImage(mImage, codeImage->image(), matchingPointList, confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return QScriptValue();
@@ -462,8 +489,8 @@ namespace Code
 			{
 				QScriptValue object = engine()->newObject();
 
-				object.setProperty("position", Point::constructor(matchingPointIt->first, engine()));
-				object.setProperty("confidence", matchingPointIt->second);
+                object.setProperty("position", Point::constructor(matchingPointIt->position, engine()));
+                object.setProperty("confidence", matchingPointIt->confidence);
 
 				back.setProperty(index, object);
 
@@ -495,10 +522,11 @@ namespace Code
 			int confidenceMinimum;
 			int downPyramidCount;
 			int searchExpansion;
+            AlgorithmMethod method;
 
-			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion);
+            findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &method);
 
-			if(!mOpenCVAlgorithms->findSubImageAsync(mImage, codeImage->image(), confidenceMinimum, 1, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, 1, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return thisObject();
@@ -530,11 +558,12 @@ namespace Code
 			int confidenceMinimum;
 			int downPyramidCount;
 			int searchExpansion;
+            AlgorithmMethod method;
 			int maximumMatches;
 
-			findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &maximumMatches);
+            findSubImageOptions(options, &confidenceMinimum, &downPyramidCount, &searchExpansion, &method, &maximumMatches);
 
-			if(!mOpenCVAlgorithms->findSubImageAsync(mImage, codeImage->image(), confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion))
+            if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
 				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return thisObject();
@@ -567,8 +596,8 @@ namespace Code
 				const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
 				QScriptValue back = mFindSubImageAsyncFunction.engine()->newObject();
 
-				back.setProperty("position", CodeClass::constructor(new Point(matchingPoint.first), mFindSubImageAsyncFunction.engine()));
-				back.setProperty("confidence", matchingPoint.second);
+                back.setProperty("position", CodeClass::constructor(new Point(matchingPoint.position), mFindSubImageAsyncFunction.engine()));
+                back.setProperty("confidence", matchingPoint.confidence);
 
 				mFindSubImageAsyncFunction.call(thisObject(), QScriptValueList() << back);
 			}
@@ -585,8 +614,8 @@ namespace Code
 				{
 					QScriptValue object = mFindSubImageAsyncFunction.engine()->newObject();
 
-					object.setProperty("position", CodeClass::constructor(new Point(matchingPointIt->first), mFindSubImageAsyncFunction.engine()));
-					object.setProperty("confidence", matchingPointIt->second);
+                    object.setProperty("position", CodeClass::constructor(new Point(matchingPointIt->position), mFindSubImageAsyncFunction.engine()));
+                    object.setProperty("confidence", matchingPointIt->confidence);
 
 					back.setProperty(index, object);
 
@@ -599,7 +628,7 @@ namespace Code
 		}
 	}
 
-	void Image::findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, int *maximumMatches) const
+    void Image::findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, AlgorithmMethod *method, int *maximumMatches) const
 	{
 		QScriptValueIterator it(options);
 
@@ -615,6 +644,9 @@ namespace Code
 		if(searchExpansion)
 			*searchExpansion = 15;
 
+        if(method)
+            *method = CorrelationCoefficient;
+
 		while(it.hasNext())
 		{
 			it.next();
@@ -627,6 +659,8 @@ namespace Code
 				*downPyramidCount = it.value().toInt32();
 			else if(searchExpansion && it.name() == "searchExpansion")
 				*searchExpansion = it.value().toInt32();
+            else if(searchExpansion && it.name() == "method")
+                *method = static_cast<AlgorithmMethod>(it.value().toInt32());
 		}
 	}
 }

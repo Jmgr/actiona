@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ namespace Code
 		QScriptValue releaseKey(const QString &key);
 		QScriptValue triggerKey(const QString &key);
 		QScriptValue writeText(const QString &text, int delay = 0) const;
+        virtual bool equals(const QScriptValue &other) const { Q_UNUSED(other) return false; }
 
 	private:
 		KeyboardDevice mKeyboardDevice;

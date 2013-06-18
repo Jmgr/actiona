@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -48,8 +48,20 @@ namespace Code
 	IniFile::IniFile()
 		: CodeClass(),
 		mEncoding(Native)
-	{
-	}
+    {
+    }
+
+    bool IniFile::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(IniFile *otherIniFile = qobject_cast<IniFile*>(object))
+            return (otherIniFile == this);
+
+        return false;
+    }
 	
 	QScriptValue IniFile::load(const QString &filename)
 	{

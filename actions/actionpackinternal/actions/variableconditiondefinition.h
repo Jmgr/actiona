@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -61,12 +61,12 @@ namespace Actions
 			value->setTooltip(tr("The value"));
 			addElement(value);
 
-			ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifEqual", tr("If equal")), this);
-			ifEqual->setTooltip(tr("What to do if the values are equal"));
+            ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifEqual", tr("If true")), this);
+            ifEqual->setTooltip(tr("What to do if the comparison result is true"));
 			addElement(ifEqual);
 
-			ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifDifferent", tr("If different")), this);
-			ifDifferent->setTooltip(tr("What to do if the values are different"));
+            ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifDifferent", tr("If false")), this);
+            ifDifferent->setTooltip(tr("What to do if the comparison result is false"));
 			addElement(ifDifferent);
 		}
 

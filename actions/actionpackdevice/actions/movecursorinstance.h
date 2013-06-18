@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,11 +38,13 @@ namespace Actions
 		{
 			bool ok = true;
 		
-			QPoint position = evaluatePoint(ok, "position");
-		
+			QPoint position        = evaluatePoint(ok, "position");
+			QPoint positionOffset = evaluatePoint(ok, "positionOffset");
+
 			if(!ok)
 				return;
 			
+			position += positionOffset;
 			mMouseDevice.setCursorPosition(position);
 		
 			emit executionEnded();

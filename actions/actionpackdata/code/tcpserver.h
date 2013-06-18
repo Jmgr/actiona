@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ namespace Code
 		
 	public slots:
 		QString toString() const					{ return "TcpServer"; }
+        virtual bool equals(const QScriptValue &other) const;
 		QScriptValue listen(const QString &address = QString(), int port = 0);
 		QScriptValue waitForNewConnection(int waitTime = 30000);
 		QScriptValue nextPendingConnection();

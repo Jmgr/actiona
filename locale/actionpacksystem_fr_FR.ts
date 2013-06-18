@@ -105,7 +105,7 @@
 <context>
     <name>Actions::CommandInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commandinstance.h" line="98"/>
+        <location filename="../actions/actionpacksystem/actions/commandinstance.h" line="114"/>
         <source>Failed to start the command. %1</source>
         <translation>Impossible d&apos;exécuter la commande. %1</translation>
     </message>
@@ -174,192 +174,259 @@
 <context>
     <name>Actions::FindImageDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="56"/>
         <source>Source</source>
         <translation>Source</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="57"/>
         <source>The source of the image to search in</source>
         <translation>La source de l&apos;image où chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="64"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="66"/>
         <source>Window name</source>
         <translation>Titre de fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="65"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="67"/>
         <source>The title of the window to search in, you can use wildcards like * (any number of characters) or ? (one character) here</source>
         <translation>Le titre de la fenêtre où chercher, vous pouvez utiliser des wildcards ici comme * (n&apos;importe quel nombre de caractères) ou ? (un caractère)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="74"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="80"/>
         <source>Image to search in</source>
         <translation>Image où chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="75"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="81"/>
         <source>The image to search in</source>
         <translation>L&apos;image où chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="77"/>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="86"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="83"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="92"/>
         <source>Choose an image file</source>
         <translation>Choisissez un fichier image</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="78"/>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="87"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="84"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="93"/>
         <source>Image files (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)
 All files (*.*)</source>
         <translation>Images (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)
 Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="83"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="89"/>
         <source>Image to find</source>
         <translation>Image à chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="84"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="90"/>
         <source>The image to search for</source>
         <translation>l&apos;image à chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="90"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="96"/>
+        <source>If found</source>
+        <translation>Si trouvé</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="97"/>
+        <source>What to do if the image is found</source>
+        <translation>Ce qui doit être fait si l&apos;image a été trouvée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="101"/>
+        <source>If not found</source>
+        <translation>Si non trouvé</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="102"/>
+        <source>What to do if the image is not found</source>
+        <translation>Ce qui doit être fait si l&apos;image n&apos;a pas été trouvée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="106"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="91"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="107"/>
         <source>The name of the variable where to store the coordinates of the center of the found image</source>
         <translation>Le nom de la variable où stocker les coordonnées du centre de l&apos;image trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="98"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="130"/>
+        <source>Downsampling</source>
+        <translation>Sous-échantillonnage</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="131"/>
+        <source>The downsampling value to use
+Downsampling is used to accelerate the search when using large images</source>
+        <translation>La valeur de sous-échantillonnage à utiliser
+Le sous-échantillonnage sert à accélérer la recherche lors d&apos;une recherche sur de grandes images</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="70"/>
         <source>Window relative position</source>
         <translation>Position relative à la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="99"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="71"/>
         <source>The position is relative to the window
 If this parameter is set to false (not checked) then the position is absolute</source>
         <translation>La position est-elle relative à la fenêtre
 Si ce paramètre est faux (non coché) alors la position est absolue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="104"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="110"/>
+        <source>Method</source>
+        <translation>Méthode</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="111"/>
+        <source>The matching method to use</source>
+        <translation>La méthode de recherche à utiliser</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="116"/>
         <source>Confidence minimum</source>
         <translation>Confiance minimale</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="105"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="117"/>
         <source>The minimum confidence percentage required to select a possible matching image</source>
         <translation>Le pourcentage minimum de confiance nécessaire pour sélectionner un résultat possible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="111"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="123"/>
         <source>Maximum matches</source>
         <translation>Nombre maximum de résultats</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="112"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="124"/>
         <source>The maximum matching images count
 Setting this parameter higher will increase the duration of the search</source>
         <translation>Le nombre maximum de résultats
 Choisir une valeur élevée pour ce paramètre va augmenter la durée de la recherche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="118"/>
         <source>Down pyramid count</source>
-        <translation>Nombre de pyramides descendantes</translation>
+        <translation type="obsolete">Nombre de pyramides descendantes</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="119"/>
         <source>The number of down pyramids to use
 A pyramid is a subdivision of the image used to accelerate the search
 Enter 1 here if the searched image is not very different from the source image</source>
-        <translation>Le nombre de pyramides descendantes à utiliser
+        <translation type="obsolete">Le nombre de pyramides descendantes à utiliser
 Une pyramide est une subdivision de l&apos;image utilisée pour accélérer la recherche
 Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&apos;image source</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="125"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="137"/>
         <source>Search expansion</source>
         <translation>Expansion de la recherche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="126"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="138"/>
         <source>The number of pixels to shift when searching for another matching image</source>
         <translation>Le décalage en pixels à effectuer lors de la recherche d&apos;une autre solution possible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="132"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="144"/>
+        <source>Delay between two searches when waiting</source>
+        <translation>Délai entre deux recherches lors d&apos;une attente</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="145"/>
+        <source>The delay between two searches</source>
+        <translation>Le délai entre deux recherches lors d&apos;une attente</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="149"/>
+        <source> ms</source>
+        <comment>milliseconds</comment>
+        <translation> ms</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="152"/>
+        <source>Confidence</source>
+        <translation>Confiance</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="153"/>
+        <source>The name of the variable where to store the confidence value found image</source>
+        <translation>Le nom de la variable où stocker la confiance en l&apos;image trouvée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="156"/>
         <source>Error while searching</source>
         <translation>Erreur lors de la recherche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="133"/>
         <source>Cannot find the image</source>
-        <translation>Impossible de trouver l&apos;image</translation>
+        <translation type="obsolete">Impossible de trouver l&apos;image</translation>
     </message>
 </context>
 <context>
     <name>Actions::FindImageInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="69"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="87"/>
         <source>minimum confidence</source>
         <translation>confiance minimum</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="70"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="88"/>
         <source>maximum matches</source>
         <translation>nombre maximum de résultats</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="71"/>
         <source>down pyramid count</source>
-        <translation>nombre de pyramides descendantes</translation>
+        <translation type="obsolete">nombre de pyramides descendantes</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="72"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="89"/>
+        <source>downsampling</source>
+        <translation>sous-échantillonnage</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="90"/>
         <source>search expansion</source>
         <translation>expansion de la recherche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="82"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="97"/>
         <source>Unable to load image to find from file %1</source>
         <translation>Impossible de charger l&apos;image à trouver à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="105"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="136"/>
         <source>Unable to find any window named %1</source>
         <translation>Impossible de trouver une fenêtre nommée %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="114"/>
         <source>Unable to take a screenshot of the window named %1</source>
-        <translation>Impossible de prendre une capture d&apos;écran de la fenêtre nommée %1</translation>
+        <translation type="obsolete">Impossible de prendre une capture d&apos;écran de la fenêtre nommée %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="131"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="157"/>
         <source>Unable to load image to search in from file %1</source>
         <translation>Impossible de charger l&apos;image où chercher à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="141"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="182"/>
         <source>Error while searching: %1</source>
         <translation>Erreur lors de la recherche : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="150"/>
         <source>Cannot find the image</source>
-        <translation>Impossible de trouver l&apos;image</translation>
+        <translation type="obsolete">Impossible de trouver l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="184"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="289"/>
         <source>Invalid %1 value : %2</source>
         <translation>Valeur %1 incorrecte : %2</translation>
     </message>
@@ -491,84 +558,94 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Actions::PixelColorDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="50"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="51"/>
         <source>Pixel</source>
         <translation>Pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="51"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="52"/>
         <source>The pixel position and color to check</source>
         <translation>La position et la couleur du pixel à vérifier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="55"/>
         <source>Comparison</source>
         <translation>Comparaison</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="56"/>
         <source>The comparison</source>
         <translation>La comparaison</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="60"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="61"/>
         <source>If true</source>
         <translation>Si vrai</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="61"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="62"/>
         <source>What to to if the pixel comparison is true</source>
         <translation>Ce qui doit être fait si la comparaison de pixel est vraie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="64"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="65"/>
         <source>If false</source>
         <translation>Si faux</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="65"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="66"/>
         <source>What to to if the pixel comparison is false</source>
         <translation>Ce qui doit être fait si la comparaison de pixel est fausse</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="69"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="70"/>
         <source>Pixel color variable</source>
         <translation>Variable de la couleur de pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="70"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="71"/>
         <source>Variable name where to store the pixel color</source>
         <translation>Nom de la variable où stocker la couleur du pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="73"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="74"/>
         <source>Red tolerance</source>
         <translation>Tolérance du rouge</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="74"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="75"/>
         <source>The tolerance percentage for the red color component</source>
         <translation>Le pourcentage de tolérance pour le composant rouge</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="80"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="81"/>
         <source>Green tolerance</source>
         <translation>Tolérance du vert</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="81"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="82"/>
         <source>The tolerance percentage for the green color component</source>
         <translation>Le pourcentage de tolérance pour le composant vert</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="87"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="88"/>
         <source>Blue tolerance</source>
         <translation>Tolérance du bleu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="88"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="89"/>
         <source>The tolerance percentage for the blue color component</source>
         <translation>Le pourcentage de tolérance pour le composant bleu</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="95"/>
+        <source>Offset</source>
+        <translation>Décalage</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="96"/>
+        <source>The offset to apply to the pixel position</source>
+        <translation>Le décalage à appliquer à la position du pixel</translation>
     </message>
 </context>
 <context>
@@ -809,24 +886,24 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Code::MediaPlaylist</name>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="161"/>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="172"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="173"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="184"/>
         <source>Add media failed : %1</source>
         <translation>Impossible d&apos;ajouter le média : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="183"/>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="194"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="195"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="206"/>
         <source>Insert media failed : %1</source>
         <translation>Impossible d&apos;insérer le média : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="205"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="217"/>
         <source>Clear failed : %1</source>
         <translation>Impossible de vider la liste de lecture : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="251"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="263"/>
         <source>Remove media failed : %1</source>
         <translation>Impossible de supprimer un média : %1</translation>
     </message>
@@ -843,7 +920,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
     <name>Code::Process</name>
     <message>
         <location filename="../actions/actionpacksystem/code/process.cpp" line="90"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="161"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="173"/>
         <source>Invalid filename</source>
         <translation>Nom de fichier incorrect</translation>
     </message>
@@ -853,34 +930,34 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation>Impossible de démarrer le processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="251"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="256"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="265"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="263"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="268"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="277"/>
         <source>Write failed</source>
         <translation>Impossible d&apos;écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="351"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="363"/>
         <source>Invalid process</source>
         <translation>Processus incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="363"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="375"/>
         <source>Wait for finished failed</source>
         <translation>L&apos;attente de terminaison a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="371"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="383"/>
         <source>Wait for started failed</source>
         <translation>L&apos;attente de démarrage a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="379"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="391"/>
         <source>Waiting for bytes written failed</source>
         <translation>L&apos;attente d&apos;écriture a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="387"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="399"/>
         <source>Waiting for ready read failed</source>
         <translation>L&apos;attente de lecture a échouée</translation>
     </message>
@@ -944,6 +1021,21 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="37"/>
         <source>Image</source>
         <translation>Image</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="41"/>
+        <source>Correlation Coefficient</source>
+        <translation>Coefficient de corrélation</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="42"/>
+        <source>Cross Correlation</source>
+        <translation>Corrélation croisée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="43"/>
+        <source>Squared Difference</source>
+        <translation>Différence de carrés</translation>
     </message>
 </context>
 <context>
@@ -1015,12 +1107,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation>Affiche un message via le système de notifications</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="95"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="100"/>
         <source>Pixel color</source>
         <translation>Couleur de pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="98"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="103"/>
         <source>Check a pixel color on the screen</source>
         <translation>Vérifie la couleur d&apos;un pixel sur l&apos;écran</translation>
     </message>
@@ -1113,12 +1205,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation>Lit un son</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="136"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="159"/>
         <source>Find image</source>
         <translation>Trouver image</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="139"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="162"/>
         <source>Finds an image on the screen, on a window or on another image</source>
         <translation>Trouve une image sur l&apos;écran, dans une fenêtre ou dans une autre image</translation>
     </message>

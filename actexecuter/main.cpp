@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -111,52 +111,18 @@ int main(int argc, char **argv)
 
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
-	const QStringList &arguments = QCoreApplication::arguments();
+    QxtCommandOptions preOptions;
 
-	//TODO: Fix the bug where the command help text is not translated
-	QxtCommandOptions options;
-	options.setFlagStyle(QxtCommandOptions::DoubleDash);
-	options.setScreenWidth(0);
-	options.add("code", QObject::tr("switch to code mode, may not be used with -s"));
-	options.alias("code", "c");
-	options.add("script", QObject::tr("switch to script mode, may not be used with -c"));
-	options.alias("script", "s");
-	options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
-	options.alias("nocodeqt", "Q");
-	options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
-	options.alias("portable", "p");
-	options.add("proxy-mode", QObject::tr("sets the proxy mode, values are \"none\", \"system\" (default) or \"custom\""));
-	options.add("proxy-type", QObject::tr("sets the custom proxy type, values are \"http\" or \"socks\" (default)"));
-	options.add("proxy-host", QObject::tr("sets the custom proxy host"));
-	options.add("proxy-port", QObject::tr("sets the custom proxy port"));
-	options.add("proxy-user", QObject::tr("sets the custom proxy user"));
-	options.add("proxy-password", QObject::tr("sets the custom proxy password"));
-#ifdef Q_WS_WIN
-	options.add("console", QObject::tr("create a console to see debug output"));
-	options.add("pause-at-end", QObject::tr("wait for user input at the end of the execution, used only with --console"));
-#endif
-	options.add("version", QObject::tr("show the program version"));
-	options.alias("version", "v");
-	options.add("help", QObject::tr("show this help text"));
-	options.alias("help", "h");
-	options.parse(arguments);
+    preOptions.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
+    preOptions.alias("portable", "p");
+    preOptions.parse(QCoreApplication::arguments());
 
-#ifdef Q_WS_WIN
-	if(options.count("console"))
-	{
-		createConsole();
-
-		if(options.count("pause-at-end"))
-			qAddPostRoutine(pause);
-	}
-#endif
-
-	if(options.count("portable"))
-	{
-		QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QApplication::applicationDirPath() + "/userSettings");
-		QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope, QApplication::applicationDirPath() + "/systemSettings");
-		QSettings::setDefaultFormat(QSettings::IniFormat);
-	}
+    if(preOptions.count("portable") > 0)
+    {
+        QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QApplication::applicationDirPath() + "/userSettings");
+        QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope, QApplication::applicationDirPath() + "/systemSettings");
+        QSettings::setDefaultFormat(QSettings::IniFormat);
+    }
 
 	QSettings settings;
 
@@ -205,6 +171,45 @@ int main(int argc, char **argv)
 #endif
 	}
 	app.installTranslator(&actexecuterTranslator);
+
+    const QStringList &arguments = QCoreApplication::arguments();
+
+    QxtCommandOptions options;
+    options.setFlagStyle(QxtCommandOptions::DoubleDash);
+    options.setScreenWidth(0);
+    options.add("code", QObject::tr("switch to code mode, may not be used with -s"));
+    options.alias("code", "c");
+    options.add("script", QObject::tr("switch to script mode, may not be used with -c"));
+    options.alias("script", "s");
+    options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
+    options.alias("nocodeqt", "Q");
+    options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
+    options.alias("portable", "p");
+    options.add("proxy-mode", QObject::tr("sets the proxy mode, values are \"none\", \"system\" (default) or \"custom\""));
+    options.add("proxy-type", QObject::tr("sets the custom proxy type, values are \"http\" or \"socks\" (default)"));
+    options.add("proxy-host", QObject::tr("sets the custom proxy host"));
+    options.add("proxy-port", QObject::tr("sets the custom proxy port"));
+    options.add("proxy-user", QObject::tr("sets the custom proxy user"));
+    options.add("proxy-password", QObject::tr("sets the custom proxy password"));
+#ifdef Q_WS_WIN
+    options.add("console", QObject::tr("create a console to see debug output"));
+    options.add("pause-at-end", QObject::tr("wait for user input at the end of the execution, used only with --console"));
+#endif
+    options.add("version", QObject::tr("show the program version"));
+    options.alias("version", "v");
+    options.add("help", QObject::tr("show this help text"));
+    options.alias("help", "h");
+    options.parse(arguments);
+
+#ifdef Q_WS_WIN
+    if(options.count("console"))
+    {
+        createConsole();
+
+        if(options.count("pause-at-end"))
+            qAddPostRoutine(pause);
+    }
+#endif
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");

@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,7 +27,20 @@
 
 namespace ActionTools
 {
-	typedef QPair<QPoint, int> MatchingPoint;
+    struct MatchingPoint
+    {
+        MatchingPoint(const QPoint &position, int confidence, int imageIndex)
+            : position(position),
+              confidence(confidence),
+              imageIndex(imageIndex)
+        {
+        }
+
+        QPoint position;
+        int confidence;
+        int imageIndex;
+    };
+
 	typedef QList<MatchingPoint> MatchingPointList;
 }
 

@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include "numberparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "ifactionparameterdefinition.h"
+#include "positionparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -90,6 +91,10 @@ namespace Actions
 			blueTolerance->setMaximum(100);
 			blueTolerance->setDefaultValue(0);
 			addElement(blueTolerance, 1);
+
+            ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
+            positionOffset->setTooltip(tr("The offset to apply to the pixel position"));
+            addElement(positionOffset, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Pixel color"); }

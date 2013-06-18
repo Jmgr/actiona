@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -45,6 +45,8 @@ namespace Actions
 		CommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent), mProcess(new QProcess(this))
 		{
+			connect(mProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(readyReadStandardOutput()));
+			connect(mProcess, SIGNAL(readyReadStandardError()), this, SLOT(readyReadStandardError()));
 		}
 
 		void startExecution()
@@ -70,6 +72,8 @@ namespace Actions
 
 			QStringList parameterList = parameters.split(QChar(' '));
 			mProcess->start(command, parameters.isEmpty() ? QStringList() : parameterList);
+			setVariable(mOutputVariable, QString());
+			setVariable(mErrorOutputVariable, QString());
 
 	#ifdef Q_WS_WIN
 			_PROCESS_INFORMATION *processInformation = mProcess->pid();
@@ -88,6 +92,18 @@ namespace Actions
 		}
 
 	private slots:
+		void readyReadStandardOutput()
+		{
+			QString output = QString::fromUtf8(mProcess->readAllStandardOutput());
+			setVariable(mOutputVariable, output.trimmed());
+		}
+
+		void readyReadStandardError()
+		{
+			QString errorOutput = QString::fromUtf8(mProcess->readAllStandardError());
+			setVariable(mErrorOutputVariable, errorOutput.trimmed());
+		}
+
 		void processError(QProcess::ProcessError error)
 		{
 			switch(error)
@@ -105,12 +121,6 @@ namespace Actions
 		void processFinished(int exitCode, QProcess::ExitStatus exitStatus)
 		{
             setVariable(mExitCodeVariable, QString::number(exitCode));
-
-			QString output = QString::fromUtf8(mProcess->readAllStandardOutput());
-            setVariable(mOutputVariable, output.trimmed());
-
-			QString errorOutput = QString::fromUtf8(mProcess->readAllStandardError());
-            setVariable(mErrorOutputVariable, errorOutput.trimmed());
 
 			switch(exitStatus)
 			{
