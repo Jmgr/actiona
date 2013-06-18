@@ -86,7 +86,7 @@ namespace Actions
 
         validateParameterRange(ok, mConfidenceMinimum, "confidenceMinimum", tr("minimum confidence"), 0, 100);
 		validateParameterRange(ok, mMaximumMatches, "maximumMatches", tr("maximum matches"), 1);
-        validateParameterRange(ok, mDownPyramidCount, "downPyramidCount", tr("down pyramid count"), 1);
+		validateParameterRange(ok, mDownPyramidCount, "downPyramidCount", tr("downsampling"), 1);
         validateParameterRange(ok, mSearchExpansion, "searchExpansion", tr("search expansion"), 1);
 
 		if(!ok)

@@ -258,6 +258,18 @@ Tous les fichiers (*.*)</translation>
         <translation>Le nom de la variable où stocker les coordonnées du centre de l&apos;image trouvée</translation>
     </message>
     <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="130"/>
+        <source>Downsampling</source>
+        <translation>Sous-échantillonnage</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="131"/>
+        <source>The downsampling value to use
+Downsampling is used to accelerate the search when using large images</source>
+        <translation>La valeur de sous-échantillonnage à utiliser
+Le sous-échantillonnage sert à accélérer la recherche lors d&apos;une recherche sur de grandes images</translation>
+    </message>
+    <message>
         <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="70"/>
         <source>Window relative position</source>
         <translation>Position relative à la fenêtre</translation>
@@ -302,16 +314,14 @@ Setting this parameter higher will increase the duration of the search</source>
 Choisir une valeur élevée pour ce paramètre va augmenter la durée de la recherche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="130"/>
         <source>Down pyramid count</source>
-        <translation>Nombre de pyramides descendantes</translation>
+        <translation type="obsolete">Nombre de pyramides descendantes</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="131"/>
         <source>The number of down pyramids to use
 A pyramid is a subdivision of the image used to accelerate the search
 Enter 1 here if the searched image is not very different from the source image</source>
-        <translation>Le nombre de pyramides descendantes à utiliser
+        <translation type="obsolete">Le nombre de pyramides descendantes à utiliser
 Une pyramide est une subdivision de l&apos;image utilisée pour accélérer la recherche
 Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&apos;image source</translation>
     </message>
@@ -374,9 +384,13 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation>nombre maximum de résultats</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="89"/>
         <source>down pyramid count</source>
-        <translation>nombre de pyramides descendantes</translation>
+        <translation type="obsolete">nombre de pyramides descendantes</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="89"/>
+        <source>downsampling</source>
+        <translation>sous-échantillonnage</translation>
     </message>
     <message>
         <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="90"/>
