@@ -38,7 +38,7 @@
 
 namespace ActionTools
 {
-    const QRegExp Script::CodeVariableDeclarationRegExp("^var ([A-Za-z_][A-Za-z0-9_]*) ", Qt::CaseSensitive, QRegExp::RegExp2);
+    const QRegExp Script::CodeVariableDeclarationRegExp("^[ \t]*var ([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 
 	Script::Script(ActionFactory *actionFactory, QObject *parent)
 		: QObject(parent),
@@ -654,6 +654,8 @@ namespace ActionTools
         }
 
         mVariables = back.toList();
+
+        qSort(mVariables);
     }
 
     void Script::parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ElementDefinition *elementDefinition) const

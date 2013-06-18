@@ -2177,6 +2177,8 @@ void MainWindow::enabledActionsCountChanged(bool hasEnabledActions)
 
 void MainWindow::on_pushButton_clicked()
 {
+    mScript->findVariables();
+    qDebug() << "*****";
     foreach(const QString &var, mScript->variables())
         qDebug() << var;
 }
