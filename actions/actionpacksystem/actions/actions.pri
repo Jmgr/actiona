@@ -21,4 +21,5 @@ SOURCES += actions/killprocessinstance.cpp \
 	actions/systeminstance.cpp \
 	actions/pixelcolorinstance.cpp \
 	actions/playsoundinstance.cpp \
-	actions/findimageinstance.cpp
+	actions/findimageinstance.cpp \
+    actions/findimagedefinition.cpp

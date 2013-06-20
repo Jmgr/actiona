@@ -58,7 +58,8 @@ namespace Actions
         };
 		enum Exceptions
 		{
-            ErrorWhileSearchingException = ActionTools::ActionException::UserException
+            ErrorWhileSearchingException = ActionTools::ActionException::UserException,
+            CannotFindTheImageException
 		};
 
 		FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);

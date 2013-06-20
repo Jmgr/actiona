@@ -160,14 +160,17 @@ namespace Actions
 		QString id() const														{ return "ActionFindImage"; }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Finds an image on the screen, on a window or on another image"); }
+        Tools::Version version() const                                          { return Tools::Version(1, 1, 0); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new FindImageInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
 		QPixmap icon() const													{ return QPixmap(":/icons/findimage.png"); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
+        void updateAction(ActionTools::ActionInstance *actionInstance, const Tools::Version &version) const;
+
 	private:
-		Q_DISABLE_COPY(FindImageDefinition)
-	};
+        Q_DISABLE_COPY(FindImageDefinition)
+    };
 }
 
 #endif // FINDIMAGEDEFINITION_H

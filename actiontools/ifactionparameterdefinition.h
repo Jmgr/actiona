@@ -36,6 +36,17 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
+        enum Actions
+        {
+            DoNothing,
+            Goto,
+            RunCode,
+            CallProcedure,
+            Wait
+        };
+
+        static StringListPair actions;
+
         IfActionParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
@@ -66,14 +77,6 @@ namespace ActionTools
 			ProcedureEditor,
 			NoEditor
 		};
-		enum Actions
-		{
-			DoNothing,
-			Goto,
-			RunCode,
-			CallProcedure,
-			Wait
-		};
 
 		Editor findAppropriateEditor(const QString &actionText) const;
 		void updateStatus(const QString &actionText);
@@ -81,7 +84,6 @@ namespace ActionTools
 		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }
 
 		static bool translated;
-		static StringListPair actions;
 
 		CodeComboBox *mActionEdit;
 		LineComboBox *mLineComboBox;

@@ -397,6 +397,8 @@ namespace ActionTools
 		Tools::HighResolutionTimer timer2("Reading content");
 #endif
 
+        QHash<ActionDefinition *, Tools::Version> updatableActionDefinitions;
+
 		QXmlStreamReader stream(device);
 		while(!stream.atEnd() && !stream.hasError())
 		{
@@ -430,11 +432,13 @@ namespace ActionTools
 
 					const QXmlStreamAttributes &attributes = stream.attributes();
 					QString name = attributes.value("name").toString();
-					//TODO : Do something with the action version
+                    Tools::Version version(attributes.value("version").toString());
 
 					ActionDefinition *actionDefinition = mActionFactory->actionDefinition(name);
 					if(!actionDefinition)
 						mMissingActions << name;
+                    else if(actionDefinition->version() > version)
+                        updatableActionDefinitions[actionDefinition] = version;
 				}
 			}
 			else if(stream.name() == "parameters")
@@ -552,6 +556,15 @@ namespace ActionTools
 				}
 			}
 		}
+
+        foreach(ActionDefinition *actionDefinition, updatableActionDefinitions.keys())
+        {
+            foreach(ActionInstance *actionInstance, mActionInstances)
+            {
+                if(actionInstance->definition() == actionDefinition)
+                    actionDefinition->updateAction(actionInstance, updatableActionDefinitions.value(actionDefinition));
+            }
+        }
 
 		return ReadSuccess;
 	}

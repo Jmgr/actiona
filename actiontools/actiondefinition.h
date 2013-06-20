@@ -48,28 +48,30 @@ namespace ActionTools
 
 		virtual QString name() const = 0;
 		virtual QString id() const = 0;
-		virtual Flag flags() const														{ return WorksOnWindows | WorksOnGnuLinux | WorksOnMac; }
-		virtual QString description() const												{ return QObject::tr("No description"); }
-		virtual Tools::Version version() const											{ return Tools::Version(1, 0, 0); }
+        virtual Flag flags() const                                                                      { return WorksOnWindows | WorksOnGnuLinux | WorksOnMac; }
+        virtual QString description() const                                                             { return QObject::tr("No description"); }
+        virtual Tools::Version version() const                                                          { return Tools::Version(1, 0, 0); }
 		virtual ActionInstance *newActionInstance() const = 0;
-		virtual ActionStatus status() const													{ return Stable; }
+        virtual ActionStatus status() const                                                             { return Stable; }
 		virtual ActionCategory category() const = 0;
-		virtual QString author() const													{ return (flags() & Official) ? QObject::tr("The Actionaz Team") : QString(); }
-		virtual QString website() const													{ return QString(); }
-		virtual QString email() const													{ return QString(); }
-		virtual QPixmap icon() const													{ return QPixmap(); }
-		virtual QStringList tabs() const												{ return QStringList(); }
+        virtual QString author() const                                                                  { return (flags() & Official) ? QObject::tr("The Actionaz Team") : QString(); }
+        virtual QString website() const                                                                 { return QString(); }
+        virtual QString email() const                                                                   { return QString(); }
+        virtual QPixmap icon() const                                                                    { return QPixmap(); }
+        virtual QStringList tabs() const                                                                { return QStringList(); }
 
-		void setIndex(int index)														{ mIndex = index; }
-		int index() const																{ return mIndex; }
+        virtual void updateAction(ActionInstance *actionInstance, const Tools::Version &version) const  { Q_UNUSED(actionInstance) Q_UNUSED(version) }
 
-		ActionPack *pack() const														{ return mPack; }
-		const QList<ElementDefinition *> &elements() const								{ return mElements; }
-		const QList<ActionException *> &exceptions() const								{ return mExceptions; }
+        void setIndex(int index)                                                                        { mIndex = index; }
+        int index() const                                                                               { return mIndex; }
+
+        ActionPack *pack() const                                                                        { return mPack; }
+        const QList<ElementDefinition *> &elements() const                                              { return mElements; }
+        const QList<ActionException *> &exceptions() const                                              { return mExceptions; }
 
 		bool worksUnderThisOS() const;
 
-		virtual bool requirementCheck(QStringList &missingRequirements) const			{ Q_UNUSED(missingRequirements) return true; }
+        virtual bool requirementCheck(QStringList &missingRequirements) const                           { Q_UNUSED(missingRequirements) return true; }
 
 		static QString CategoryName[CategoryCount];
 		static QStringList StandardTabs;

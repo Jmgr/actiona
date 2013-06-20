@@ -245,7 +245,8 @@ namespace LibExecuter
 		
 		QScriptValue script = mScriptEngine->newObject();
 		mScriptEngine->globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
-		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(1)));
+        script.setProperty("nextLine", 1);
+        script.setProperty("line", 1, QScriptValue::ReadOnly);
 
 		QScriptValue console = mScriptEngine->newObject();
 		mScriptEngine->globalObject().setProperty("Console", console, QScriptValue::ReadOnly);
@@ -933,12 +934,13 @@ namespace LibExecuter
 			return;
 		}
 
-		int nextLine = mCurrentActionIndex+2;
+        int nextLine = mCurrentActionIndex + 2;
 		if(nextLine > mScript->actionCount())
 			nextLine = -1;
 
 		QScriptValue script = mScriptEngine->globalObject().property("Script");
 		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(nextLine)));
+        script.setProperty("line", mCurrentActionIndex + 1, QScriptValue::ReadOnly);
 
 		ActionTools::ActionInstance *actionInstance = currentActionInstance();
 
