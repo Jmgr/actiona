@@ -683,9 +683,6 @@ namespace ActionTools
         {
             const SubParameter &subParameter = it.value();
 
-            if(!subParameter.value().type() == QVariant::String)
-                continue;
-
             if(subParameter.isCode())
             {
                 //Add every variable in any parameter type that is in code mode
