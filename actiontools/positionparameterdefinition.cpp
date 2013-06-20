@@ -24,8 +24,8 @@
 
 namespace ActionTools
 {
-	PositionParameterDefinition::PositionParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    PositionParameterDefinition::PositionParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mPositionEdit(0)
 	{
 	}

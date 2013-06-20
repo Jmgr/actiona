@@ -31,7 +31,7 @@
 
 namespace ActionTools
 {
-	class CodeLineEdit;
+    class CodeLineEdit;
 
 	class CodeComboBoxDelegate : public QStyledItemDelegate
 	{
@@ -55,7 +55,7 @@ namespace ActionTools
 		Q_PROPERTY(bool code READ isCode WRITE setCode)
 
 	public:
-		explicit CodeComboBox(QWidget * parent = 0);
+        explicit CodeComboBox(QWidget * parent = 0);
 
 		CodeLineEdit *codeLineEdit() const;
 
@@ -64,6 +64,8 @@ namespace ActionTools
 
 		void openEditor(int line = -1, int column = -1);
 		void setCompletionModel(QAbstractItemModel *completionModel);
+        void setParameterContainer(const ParameterContainer *parameterContainer);
+        QSet<QString> findVariables() const;
 
 	signals:
 		void codeChanged(bool code);

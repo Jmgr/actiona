@@ -50,6 +50,8 @@ namespace ActionTools
 		void setFromSubParameter(const SubParameter &subParameter);
 		void openEditor(int line, int column);
 		void setCompletionModel(QAbstractItemModel *completionModel);
+        void setParameterContainer(const ParameterContainer *parameterContainer);
+        QSet<QString> findVariables() const;
 
 	private slots:
 		void on_switchTextModePushButton_clicked();

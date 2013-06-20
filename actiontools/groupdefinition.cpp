@@ -29,7 +29,7 @@
 namespace ActionTools
 {
 	GroupDefinition::GroupDefinition(QObject *parent)
-		: ElementDefinition(Name(), parent),
+        : ElementDefinition(Name(), parent),
 		mMasterList(0),
 		mMasterCodeComboBox(0)
 	{

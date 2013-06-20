@@ -78,8 +78,18 @@ namespace ActionTools
 	
 	void ColorEdit::setCompletionModel(QAbstractItemModel *completionModel)
 	{
-		codeLineEdit()->setCompletionModel(completionModel);
-	}
+        codeLineEdit()->setCompletionModel(completionModel);
+    }
+
+    void ColorEdit::setParameterContainer(const ParameterContainer *parameterContainer)
+    {
+        codeLineEdit()->setParameterContainer(parameterContainer);
+    }
+
+    QSet<QString> ColorEdit::findVariables() const
+    {
+        return codeLineEdit()->findVariables();
+    }
 	
 	void ColorEdit::setChooseByPositionButtonVisible(bool visible)
 	{

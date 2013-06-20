@@ -30,24 +30,27 @@
 
 class QMenu;
 class QAbstractItemModel;
-class QToolButton;
 
 namespace ActionTools
 {
+    class ParameterContainer;
+    class CodeLineEditButton;
+
 	class ACTIONTOOLSSHARED_EXPORT CodeLineEdit : public QLineEdit, public AbstractCodeEditor
 	{
 		Q_OBJECT
 		Q_PROPERTY(bool code READ isCode WRITE setCode)
 
 	public:
-		CodeLineEdit(QWidget *parent = 0, const QRegExp &regexpValidation = QRegExp());
+        CodeLineEdit(QWidget *parent, const QRegExp &regexpValidation = QRegExp());
+        virtual ~CodeLineEdit();
 
 		bool isMultiline() const										{ return mMultiline; }
 		bool isCode() const												{ return mCode; }
 		bool isEmbedded() const											{ return mEmbedded; }
 		
-		QToolButton *codeButton() const									{ return mCodeButton; }
-		QToolButton *editorButton() const								{ return mEditorButton; }
+        CodeLineEditButton *codeButton() const							{ return mCodeButton; }
+        CodeLineEditButton *editorButton() const						{ return mEditorButton; }
 
 		void setCode(bool code);
 		void setEmbedded(bool embedded);
@@ -60,6 +63,8 @@ namespace ActionTools
 		void addShortcuts(QMenu *menu);
 		
 		void setCompletionModel(QAbstractItemModel *completionModel);
+        void setParameterContainer(const ParameterContainer *parameterContainer);
+        QSet<QString> findVariables() const;
 
 	public slots:
 		void reverseCode();
@@ -72,8 +77,14 @@ namespace ActionTools
 	protected:
 		void contextMenuEvent(QContextMenuEvent *event);
 		void resizeEvent(QResizeEvent *event);
+        virtual void insertVariable(const QString &variable);
+
+    private slots:
+        void showVariableMenuAsPopup();
+        void insertVariable(QAction *action);
 
 	private:
+        QMenu *createVariablesMenu(QMenu *parentMenu);
 		void resizeButtons();
 		
 		void mouseMoveEvent(QMouseEvent *event);
@@ -82,6 +93,7 @@ namespace ActionTools
 		void mouseDoubleClickEvent(QMouseEvent *event);
 		void paintEvent(QPaintEvent *event);
 
+        const ActionTools::ParameterContainer *mParameterContainer;
 		bool mCode;
 		bool mMultiline;
 		bool mAllowTextCodeChange;
@@ -91,9 +103,9 @@ namespace ActionTools
 		QAction *mOpenEditor;
 		QRegExp mRegExp;
 		QAbstractItemModel *mCompletionModel;
-		QToolButton *mCodeButton;
-		QToolButton *mEditorButton;
-        QToolButton *mInsertButton;
+        CodeLineEditButton *mCodeButton;
+        CodeLineEditButton *mEditorButton;
+        CodeLineEditButton *mInsertButton;
 
 		Q_DISABLE_COPY(CodeLineEdit)
 	};

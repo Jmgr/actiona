@@ -68,8 +68,18 @@ namespace ActionTools
 	
 	void CodeSpinBox::setCompletionModel(QAbstractItemModel *completionModel)
 	{
-		codeLineEdit()->setCompletionModel(completionModel);
-	}
+        codeLineEdit()->setCompletionModel(completionModel);
+    }
+
+    void CodeSpinBox::setParameterContainer(const ParameterContainer *parameterContainer)
+    {
+        codeLineEdit()->setParameterContainer(parameterContainer);
+    }
+
+    QSet<QString> CodeSpinBox::findVariables() const
+    {
+        return codeLineEdit()->findVariables();
+    }
 
 	QString CodeSpinBox::text()
 	{

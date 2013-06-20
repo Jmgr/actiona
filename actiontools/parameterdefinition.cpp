@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	ParameterDefinition::ParameterDefinition(const Name &name, QObject *parent)
-		: ElementDefinition(name, parent),
+    ParameterDefinition::ParameterDefinition(const Name &name, QObject *parent)
+        : ElementDefinition(name, parent),
 		  mOperatingSystems(WorksOnGnuLinux |
 							WorksOnWindows |
 							WorksOnMac),

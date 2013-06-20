@@ -26,8 +26,8 @@
 
 namespace ActionTools
 {
-	ColorPositionParameterDefinition::ColorPositionParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    ColorPositionParameterDefinition::ColorPositionParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mPositionEdit(0),
 		mColorEdit(0)
 	{

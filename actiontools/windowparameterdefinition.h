@@ -33,12 +33,12 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		WindowParameterDefinition(const Name &name, QObject *parent);
+        WindowParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
 		void save(ActionInstance *actionInstance);
-		void update(Script *script);
+        void actionUpdate(Script *script);
 
 	private:
 		WindowEdit *mWindowEdit;

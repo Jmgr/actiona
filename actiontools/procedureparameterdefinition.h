@@ -31,11 +31,11 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ProcedureParameterDefinition(const Name &name, QObject *parent)
-			: ListParameterDefinition(name, parent)						{}
+        ProcedureParameterDefinition(const Name &name, QObject *parent)
+            : ListParameterDefinition(name, parent)						{}
 
 		void buildEditors(Script *script, QWidget *parent);
-		void update(Script *script);
+		void actionUpdate(Script *script);
 	};
 }
 

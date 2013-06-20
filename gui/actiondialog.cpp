@@ -41,6 +41,7 @@
 #include <QGridLayout>
 #include <QComboBox>
 #include <QSpinBox>
+#include <QMenu>
 
 #include <limits>
 
@@ -294,7 +295,33 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 ActionDialog::~ActionDialog()
 {
-	delete ui;
+    delete ui;
+}
+
+QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
+{
+    QSet<QString> thisActionsVariables;
+    foreach(ActionTools::ParameterDefinition *parameter, mParameters)
+    {
+        foreach(QWidget *editor, parameter->editors())
+        {
+            if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(editor))
+                thisActionsVariables.unite(codeEditor->findVariables());
+        }
+    }
+
+    QStringList variableList = thisActionsVariables.unite(mOtherActionsVariables).toList();
+    qSort(variableList);
+
+    if(variableList.isEmpty())
+        return 0;
+
+    QMenu *back = new QMenu(parent);
+
+    foreach(const QString &variable, variableList)
+        back->addAction(variable);
+
+    return back;
 }
 
 void ActionDialog::accept()
@@ -357,10 +384,11 @@ void ActionDialog::postInit()
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("ActionDialog postInit");
 #endif
-    mScript->findVariables();
+    mOtherActionsVariables = mScript->findVariables(0, mActionInstance);//Find in all actions except this one
+
 	foreach(ActionTools::ParameterDefinition *parameter, mParameters)
 	{
-		parameter->update(mScript);
+        parameter->actionUpdate(mScript);
 		parameter->load(mActionInstance);
 	}
 
@@ -466,7 +494,7 @@ void ActionDialog::currentExceptionActionChanged(int index)
 	if(!widget)
 		return;
 
-	widget->setEnabled(exceptionAction == ActionTools::ActionException::GotoLineExceptionAction);
+    widget->setEnabled(exceptionAction == ActionTools::ActionException::GotoLineExceptionAction);
 }
 
 void ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter, int tab)
@@ -494,7 +522,10 @@ void ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter, int
 	foreach(QWidget *editor, parameter->editors())
 	{
 		if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(editor))
+        {
 			codeEditor->setCompletionModel(mCompletionModel);
+            codeEditor->setParameterContainer(this);
+        }
 
 		layout->addWidget(editor);
 	}

@@ -26,8 +26,8 @@
 
 namespace ActionTools
 {
-	WindowParameterDefinition::WindowParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    WindowParameterDefinition::WindowParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mWindowEdit(0)
 	{
 	}
@@ -51,7 +51,7 @@ namespace ActionTools
 		actionInstance->setSubParameter(name().original(), "value", mWindowEdit->isCode(), mWindowEdit->text());
 	}
 
-	void WindowParameterDefinition::update(Script *script)
+    void WindowParameterDefinition::actionUpdate(Script *script)
 	{
 		Q_UNUSED(script)
 

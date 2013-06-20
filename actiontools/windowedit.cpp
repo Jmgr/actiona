@@ -74,8 +74,18 @@ namespace ActionTools
 	
 	void WindowEdit::setCompletionModel(QAbstractItemModel *completionModel)
 	{
-		codeLineEdit()->setCompletionModel(completionModel);
-	}
+        codeLineEdit()->setCompletionModel(completionModel);
+    }
+
+    void WindowEdit::setParameterContainer(const ParameterContainer *parameterContainer)
+    {
+        codeLineEdit()->setParameterContainer(parameterContainer);
+    }
+
+    QSet<QString> WindowEdit::findVariables() const
+    {
+        return codeLineEdit()->findVariables();
+    }
 
 	void WindowEdit::setWindowTitles(const QStringList &windowTitles)
 	{

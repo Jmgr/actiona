@@ -40,25 +40,29 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ParameterDefinition(const Name &name, QObject *parent = 0);
-		virtual ~ParameterDefinition()												{}
+        ParameterDefinition(const Name &name, QObject *parent = 0);
+        virtual ~ParameterDefinition()                                                  {}
 
 		virtual void buildEditors(Script *script, QWidget *parent);
 		virtual void load(const ActionInstance *actionInstance) = 0;
 		virtual void save(ActionInstance *actionInstance) = 0;
 		virtual void setDefaultValues(ActionInstance *actionInstance);
-		virtual Qt::Orientation editorsOrientation() const							{ return Qt::Horizontal; }
+        virtual Qt::Orientation editorsOrientation() const                              { return Qt::Horizontal; }
 
-		const QList<QWidget *> &editors() const										{ return mEditors; }
-		Flag operatingSystems() const												{ return mOperatingSystems; }
+        const QList<QWidget *> &editors() const                                         { return mEditors; }
+        Flag operatingSystems() const                                                   { return mOperatingSystems; }
 		
 		virtual QVariant defaultValue(QVariant defaultValue = QVariant()) const;
-		virtual void setDefaultValue(const QVariant &defaultValue)					{ mDefaultValue = defaultValue; }
-		virtual void setOperatingSystems(Flag operatingSystems)						{ mOperatingSystems = operatingSystems; }
+        virtual void setDefaultValue(const QVariant &defaultValue)                      { mDefaultValue = defaultValue; }
+        virtual void setOperatingSystems(Flag operatingSystems)                         { mOperatingSystems = operatingSystems; }
 		
-		virtual void update(Script *script)											{ Q_UNUSED(script) }
+        //Called when the action is edited
+        virtual void actionUpdate(Script *script)                                       { Q_UNUSED(script) }
 
-		QWidget *parentWidget()														{ return mParentWidget; }
+        QWidget *parentWidget()                                                         { return mParentWidget; }
+
+    signals:
+        void changed();
 		
 	protected:
 		void addEditor(QWidget *editor);

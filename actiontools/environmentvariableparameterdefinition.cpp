@@ -41,7 +41,7 @@ namespace ActionTools
 		emit editorBuilt();
 	}
 
-	void EnvironmentVariableParameterDefinition::update(Script *script)
+    void EnvironmentVariableParameterDefinition::actionUpdate(Script *script)
 	{
 		Q_UNUSED(script)
 

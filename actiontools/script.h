@@ -51,6 +51,8 @@ namespace ActionTools
 			ReadBadScriptVersion	// Script version is newer than ours
 		};
 
+        static const QRegExp CodeVariableDeclarationRegExp;
+
 		Script(ActionFactory *actionFactory, QObject *parent = 0);
 		~Script();
 
@@ -104,13 +106,11 @@ namespace ActionTools
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
 		QStringList labels() const;
-        void findVariables();
-        QStringList variables() const                                       { return mVariables; }
+        QSet<QString> findVariables(ActionInstance *actionInstance = 0, ActionInstance *excludedActionInstance = 0) const;
 
 	private:
         void parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ActionTools::ElementDefinition *elementDefinition) const;
-
-        static const QRegExp CodeVariableDeclarationRegExp;
+        void findVariablesInAction(ActionInstance *actionInstance, QSet<QString> &result) const;
 
 		QList<ScriptParameter> mParameters;
 		QList<ActionInstance *> mActionInstances;
@@ -127,7 +127,6 @@ namespace ActionTools
 		int mPauseAfter;
 		QHash<QString, int> mProcedures;
 		QStack<int> mCallStack;
-        QStringList mVariables;
 
 		Q_DISABLE_COPY(Script)
 	};

@@ -40,7 +40,7 @@ namespace ActionTools
 			TextAndCode
 		};
 
-		TextParameterDefinition(const Name &name, QObject *parent);
+        TextParameterDefinition(const Name &name, QObject *parent);
 		virtual ~TextParameterDefinition()			{}
 
 		virtual void buildEditors(Script *script, QWidget *parent);

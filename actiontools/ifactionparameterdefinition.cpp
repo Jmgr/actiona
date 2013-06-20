@@ -40,8 +40,8 @@ namespace ActionTools
 		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code")
 		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Call procedure"));
 
-	IfActionParameterDefinition::IfActionParameterDefinition(const Name &name, QObject *parent)
-		: ItemsParameterDefinition(name, parent),
+    IfActionParameterDefinition::IfActionParameterDefinition(const Name &name, QObject *parent)
+        : ItemsParameterDefinition(name, parent),
 		  mActionEdit(0),
 		  mLineComboBox(0),
 		  mCodeLineEdit(0),
@@ -157,7 +157,7 @@ namespace ActionTools
 		actionInstance->setSubParameter(name().original(), "line", defaultLine());
 	}
 	
-	void IfActionParameterDefinition::update(Script *script)
+    void IfActionParameterDefinition::actionUpdate(Script *script)
 	{
 		mLineComboBox->setup(script->labels(), script->actionCount());
 		mProcedureComboBox->clear();

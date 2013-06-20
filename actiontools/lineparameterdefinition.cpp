@@ -35,7 +35,7 @@ namespace ActionTools
 		emit editorBuilt();
 	}
 	
-	void LineParameterDefinition::update(Script *script)
+    void LineParameterDefinition::actionUpdate(Script *script)
 	{
 		ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mComboBox);
 		

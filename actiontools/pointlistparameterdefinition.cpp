@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	PointListParameterDefinition::PointListParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    PointListParameterDefinition::PointListParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mPointListWidget(0)
 	{
 	}

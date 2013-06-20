@@ -26,8 +26,8 @@
 
 namespace ActionTools
 {
-	NumberParameterDefinition::NumberParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    NumberParameterDefinition::NumberParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mSpinBox(0),
 		mMaximum(99),
 		mMinimum(0),

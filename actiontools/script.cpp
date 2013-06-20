@@ -633,29 +633,31 @@ namespace ActionTools
         return back;
     }
 
-    void Script::findVariables()
+    QSet<QString> Script::findVariables(ActionInstance *actionInstance, ActionInstance *excludedActionInstance) const
     {
         QSet<QString> back;
 
-        foreach(const ActionInstance *actionInstance, mActionInstances)
+        if(actionInstance)
         {
-            const ActionDefinition *actionDefinition = actionInstance->definition();
-
-            foreach(const ElementDefinition *elementDefinition, actionDefinition->elements())
+            if(actionInstance != excludedActionInstance)
+                findVariablesInAction(actionInstance, back);
+        }
+        else
+        {
+            foreach(const ScriptParameter &scriptParameter, mParameters)
             {
-                if(const GroupDefinition *groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
-                {
-                    foreach(const ParameterDefinition *parameterDefinition, groupDefinition->members())
-                        parametersFromDefinition(back, actionInstance, parameterDefinition);
-                }
-                else
-                    parametersFromDefinition(back, actionInstance, elementDefinition);
+                if(!scriptParameter.name().isEmpty())
+                    back << scriptParameter.name();
+            }
+
+            foreach(ActionInstance *currentActionInstance, mActionInstances)
+            {
+                if(currentActionInstance != excludedActionInstance)
+                    findVariablesInAction(currentActionInstance, back);
             }
         }
 
-        mVariables = back.toList();
-
-        qSort(mVariables);
+        return back;
     }
 
     void Script::parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ElementDefinition *elementDefinition) const
@@ -686,7 +688,8 @@ namespace ActionTools
 
                         position += CodeVariableDeclarationRegExp.cap(1).length();
 
-                        variables << foundVariableName;
+                        if(!foundVariableName.isEmpty())
+                            variables << foundVariableName;
                     }
                 }
             }
@@ -695,7 +698,10 @@ namespace ActionTools
                 //Add every variable in a variable parameter that is not in code mode
                 if(qobject_cast<const VariableParameterDefinition *>(elementDefinition))
                 {
-                    variables << subParameter.value().toString();
+                    const QString &foundVariableName = subParameter.value().toString();
+
+                    if(!foundVariableName.isEmpty())
+                        variables << foundVariableName;
 
                     continue;
                 }
@@ -711,9 +717,26 @@ namespace ActionTools
 
                     position += ActionInstance::VariableRegExp.cap(0).length();
 
-                    variables << foundVariableName;
+                    if(!foundVariableName.isEmpty())
+                        variables << foundVariableName;
                 }
             }
+        }
+    }
+
+    void Script::findVariablesInAction(ActionInstance *actionInstance, QSet<QString> &result) const
+    {
+        const ActionDefinition *actionDefinition = actionInstance->definition();
+
+        foreach(const ElementDefinition *elementDefinition, actionDefinition->elements())
+        {
+            if(const GroupDefinition *groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
+            {
+                foreach(const ParameterDefinition *parameterDefinition, groupDefinition->members())
+                    parametersFromDefinition(result, actionInstance, parameterDefinition);
+            }
+            else
+                parametersFromDefinition(result, actionInstance, elementDefinition);
         }
     }
 }

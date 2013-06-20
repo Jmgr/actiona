@@ -22,8 +22,8 @@
 
 namespace ActionTools
 {
-	LineComboBox::LineComboBox(const QStringList &labels, int lineCount, QWidget *parent)
-		: CodeComboBox(parent)
+    LineComboBox::LineComboBox(const QStringList &labels, int lineCount, QWidget *parent)
+        : CodeComboBox(parent)
 	{
 		setup(labels, lineCount);
 	}

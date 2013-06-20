@@ -25,8 +25,8 @@
 
 namespace ActionTools
 {
-	MultiTextParameterDefinition::MultiTextParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    MultiTextParameterDefinition::MultiTextParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mItemListWidget(0)
 	{
 	}

@@ -33,7 +33,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		NumberParameterDefinition(const Name &name, QObject *parent);
+        NumberParameterDefinition(const Name &namez, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

@@ -69,8 +69,18 @@ namespace ActionTools
 	
 	void CodeDateTimeEdit::setCompletionModel(QAbstractItemModel *completionModel)
 	{
-		codeLineEdit()->setCompletionModel(completionModel);
-	}
+        codeLineEdit()->setCompletionModel(completionModel);
+    }
+
+    void CodeDateTimeEdit::setParameterContainer(const ParameterContainer *parameterContainer)
+    {
+        codeLineEdit()->setParameterContainer(parameterContainer);
+    }
+
+    QSet<QString> CodeDateTimeEdit::findVariables() const
+    {
+        return codeLineEdit()->findVariables();
+    }
 
 	void CodeDateTimeEdit::codeChanged(bool code)
 	{

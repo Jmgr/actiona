@@ -19,10 +19,8 @@
 */
 
 #include "variableparameterdefinition.h"
-#include "codelineedit.h"
-#include "codecombobox.h"
+#include "variablelineedit.h"
 #include "script.h"
-#include "actioninstance.h"
 
 namespace ActionTools
 {
@@ -30,21 +28,8 @@ namespace ActionTools
 	{
 		ParameterDefinition::buildEditors(script, parent);
 
-        mComboBox = new CodeComboBox(parent);
-        mComboBox->codeLineEdit()->setRegexpValidation(ActionInstance::NameRegExp);
+        mLineEdit = new VariableLineEdit(parent);
 
-        mComboBox->addItems(script->variables());
-
-        addEditor(mComboBox);
-
-        emit editorBuilt();
-    }
-
-    void VariableParameterDefinition::update(Script *script)
-    {
-        mComboBox->clear();
-        mComboBox->addItems(script->variables());
-
-        //TODO: Add a button to insert variables
+        addEditor(mLineEdit);
     }
 }

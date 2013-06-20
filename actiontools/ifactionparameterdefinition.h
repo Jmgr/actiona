@@ -36,7 +36,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		IfActionParameterDefinition(const Name &name, QObject *parent);
+        IfActionParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
@@ -51,7 +51,7 @@ namespace ActionTools
 		void setDefaultLine(const QString &line)								{ mDefaultLine = line; }
 		QString defaultLine() const												{ return mDefaultLine; }
 		
-		void update(Script *script);
+		void actionUpdate(Script *script);
 		
 	private slots:
 		void codeChanged(bool code);

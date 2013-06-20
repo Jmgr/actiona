@@ -89,7 +89,8 @@ HEADERS += actiontools_global.h \
     systeminputlistener.h \
     systeminput.h \
 	systeminputrecorder.h \
-    screenshooter.h
+    screenshooter.h \
+    parametercontainer.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \

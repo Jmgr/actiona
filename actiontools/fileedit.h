@@ -60,6 +60,8 @@ namespace ActionTools
 		void setFromSubParameter(const SubParameter &subParameter);
 		void openEditor(int line = -1, int column = -1);
 		void setCompletionModel(QAbstractItemModel *completionModel);
+        void setParameterContainer(const ParameterContainer *parameterContainer);
+        QSet<QString> findVariables() const;
 
 		void setMode(Mode mode)						{ mMode = mode; }
 		void setCaption(const QString &caption)		{ mCaption = caption; }

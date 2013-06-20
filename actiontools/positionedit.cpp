@@ -74,8 +74,18 @@ namespace ActionTools
 	
 	void PositionEdit::setCompletionModel(QAbstractItemModel *completionModel)
 	{
-		codeLineEdit()->setCompletionModel(completionModel);
-	}
+        codeLineEdit()->setCompletionModel(completionModel);
+    }
+
+    void PositionEdit::setParameterContainer(const ParameterContainer *parameterContainer)
+    {
+        codeLineEdit()->setParameterContainer(parameterContainer);
+    }
+
+    QSet<QString> PositionEdit::findVariables() const
+    {
+        return codeLineEdit()->findVariables();
+    }
 
 	void PositionEdit::setPosition(QPoint position)
 	{

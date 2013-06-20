@@ -27,7 +27,9 @@ SOURCES += codelineedit.cpp \
 	switchtextmodepushbutton.cpp \
 	itemlistwidget.cpp \
 	itemlistview.cpp \
-	itemlistmodel.cpp
+	itemlistmodel.cpp \
+    codelineeditbutton.cpp \
+    variablelineedit.cpp
 HEADERS += codelineedit.h \
     codecombobox.h \
     codespinbox.h \
@@ -50,4 +52,6 @@ HEADERS += codelineedit.h \
 	switchtextmodepushbutton.h \
 	itemlistwidget.h \
 	itemlistview.h \
-	itemlistmodel.h
+	itemlistmodel.h \
+    codelineeditbutton.h \
+    variablelineedit.h

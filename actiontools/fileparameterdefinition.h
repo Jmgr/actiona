@@ -32,7 +32,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		FileParameterDefinition(const Name &name, QObject *parent);
+        FileParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

@@ -29,6 +29,8 @@ class QAbstractItemModel;
 
 namespace ActionTools
 {
+    class ParameterContainer;
+
 	class ACTIONTOOLSSHARED_EXPORT AbstractCodeEditor
 	{
 	public:
@@ -36,6 +38,8 @@ namespace ActionTools
 
 		virtual void openEditor(int line = -1, int column = -1) = 0;
 		virtual void setCompletionModel(QAbstractItemModel *completionModel) = 0;
+        virtual void setParameterContainer(const ParameterContainer *parameterContainer) = 0;
+        virtual QSet<QString> findVariables() const = 0;
 	};
 }
 

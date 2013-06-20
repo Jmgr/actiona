@@ -27,8 +27,8 @@
 
 namespace ActionTools
 {
-	TextParameterDefinition::TextParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    TextParameterDefinition::TextParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mTextCodeMode(TextAndCode),
 		mLineEdit(0)
 	{

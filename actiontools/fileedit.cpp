@@ -75,8 +75,18 @@ namespace ActionTools
 	
 	void FileEdit::setCompletionModel(QAbstractItemModel *completionModel)
 	{
-		codeLineEdit()->setCompletionModel(completionModel);
-	}
+        codeLineEdit()->setCompletionModel(completionModel);
+    }
+
+    void FileEdit::setParameterContainer(const ParameterContainer *parameterContainer)
+    {
+        codeLineEdit()->setParameterContainer(parameterContainer);
+    }
+
+    QSet<QString> FileEdit::findVariables() const
+    {
+        return codeLineEdit()->findVariables();
+    }
 
 	void FileEdit::on_browse_clicked()
 	{

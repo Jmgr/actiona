@@ -33,7 +33,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		MultiTextParameterDefinition(const Name &name, QObject *parent);
+        MultiTextParameterDefinition(const Name &namez, QObject *parent);
 		virtual ~MultiTextParameterDefinition()			{}
 
 		virtual void buildEditors(Script *script, QWidget *parent);

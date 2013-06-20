@@ -32,7 +32,7 @@ namespace ActionTools
 	{
 	Q_OBJECT
 	public:
-		PositionParameterDefinition(const Name &name, QObject *parent);
+        PositionParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

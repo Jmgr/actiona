@@ -24,8 +24,8 @@
 
 namespace ActionTools
 {
-	BooleanParameterDefinition::BooleanParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    BooleanParameterDefinition::BooleanParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mBooleanEdit(0)
 	{
 	}

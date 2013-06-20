@@ -39,7 +39,7 @@ namespace ActionTools
 		emit editorBuilt();
 	}
 
-	void ProcedureParameterDefinition::update(Script *script)
+    void ProcedureParameterDefinition::actionUpdate(Script *script)
 	{
 		mComboBox->clear();
 		mComboBox->addItems(script->procedureNames());
