@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackData</name>
     <message>
-        <location filename="../actions/actionpackdata/actionpackdata.h" line="80"/>
+        <location filename="../actions/actionpackdata/actionpackdata.h" line="82"/>
         <source>Data related actions</source>
         <translation>Actions liées aux données</translation>
     </message>
@@ -128,6 +128,47 @@
         <location filename="../actions/actionpackdata/actions/readclipboarddefinition.h" line="46"/>
         <source>The variable where to save the current clipboard value</source>
         <translation>La variable où enregistrer la valeur actuelle du presse-papiers</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::ReadEnvironmentVariableDefinition</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="49"/>
+        <source>Variable</source>
+        <translation>Variable</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="50"/>
+        <source>The variable used to store the selected information from your system environment</source>
+        <translation>La variable utilisée pour stocker l&apos;information sélectionnée à partir de votre environnement système</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="53"/>
+        <source>Mode</source>
+        <translation>Mode</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="54"/>
+        <source>The environment read mode</source>
+        <translation>Le mode de lecture de l&apos;environnement</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="63"/>
+        <source>Environment Variable</source>
+        <translation>Variable d&apos;environnement</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="64"/>
+        <source>The specific environment variable to read</source>
+        <translation>La variable d&apos;environnement à lire</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::ReadEnvironmentVariableInstance</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="64"/>
+        <source>The specified variable cannot be found in the system environment</source>
+        <translation>La variable spécifiée ne peut pas être trouvée dans votre environnement système</translation>
     </message>
 </context>
 <context>
@@ -721,132 +762,133 @@
 <context>
     <name>Code::File</name>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="80"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="214"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="56"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="91"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="226"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="119"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="131"/>
         <source>Unable to open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="130"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="135"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="144"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="142"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="147"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="156"/>
         <source>Write failed</source>
         <translation>L&apos;écriture a échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="276"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="372"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="288"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="384"/>
         <source>Unable to create destination directory</source>
         <translation>Impossible de créer le dossier de destination</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="282"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="378"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="294"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="390"/>
         <source>Destination directory doesn&apos;t exist</source>
         <translation>Le dossier de destination n&apos;existe pas</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="297"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="309"/>
         <source>Copy failed</source>
         <translation>Copie échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="335"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="347"/>
         <source>Copy failed: %1</source>
         <translation>Copie échouée : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="341"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="353"/>
         <source>Copy failed: aborted</source>
         <translation>Copie échouée : annulée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="393"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="405"/>
         <source>Move/rename failed</source>
         <translation>Déplacement/renommage échoué</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="431"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="443"/>
         <source>Move failed: %1</source>
         <translation>Déplacement échoué : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="437"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="449"/>
         <source>Move failed: aborted</source>
         <translation>Déplacement échoué : annulé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="486"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="498"/>
         <source>Rename failed: %1</source>
         <translation>Renommage échoué : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="492"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="504"/>
         <source>Rename failed: aborted</source>
         <translation>Renommage échoué : annulé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="519"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="531"/>
         <source>Remove failed</source>
         <translation>Le suppression a échoué</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="551"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="563"/>
         <source>Remove failed: %1</source>
         <translation>Suppression échouée : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="557"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="569"/>
         <source>Remove failed: aborted</source>
         <translation>Suppression échouée : annulée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="578"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="590"/>
         <source>File not found</source>
         <translation>Impossible de trouver le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="580"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="592"/>
         <source>Path not found</source>
         <translation>Impossible de trouver le chemin</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="582"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="594"/>
         <source>Access denied</source>
         <translation>Accès refusé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="584"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="596"/>
         <source>This file is used by another process</source>
         <translation>Ce fichier est utilisé par un autre processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="586"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="598"/>
         <source>The disk is full</source>
         <translation>Plus d&apos;espace disponible sur le disque</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="589"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="601"/>
         <source>The file already exists</source>
         <translation>Le fichier existe déjà</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="591"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="603"/>
         <source>Invalid name</source>
         <translation>Nom incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="593"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="605"/>
         <source>Canceled</source>
         <translation>Annulé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="595"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="607"/>
         <source>Unknown error (%1)</source>
         <translation>Erreur inconnue (%1)</translation>
     </message>
@@ -1189,6 +1231,29 @@
         <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="96"/>
         <source>Downloads data from the Web</source>
         <translation>Télécharge des données à partir du Web</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="70"/>
+        <source>Read environment variable</source>
+        <translation>Lire variable d&apos;environnement</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="73"/>
+        <source>Read a single or multiple environment variables</source>
+        <translation>Lit une ou plusieurs variables d&apos;environnement</translation>
+    </message>
+</context>
+<context>
+    <name>ReadEnvironmentVariableInstance::modes</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="33"/>
+        <source>Read all</source>
+        <translation>Tout lire</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="33"/>
+        <source>Read one</source>
+        <translation>N&apos;en lire qu&apos;une</translation>
     </message>
 </context>
 <context>

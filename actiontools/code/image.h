@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ namespace Code
 		Image(const Image &other);
 		Image(const QImage &image);
 		Image(const QString &filename);
-		
+
 		Image &operator=(Image other);
 		Image &operator=(QImage image);
 		
@@ -87,6 +87,8 @@ namespace Code
 		void swap(QImage &image);
 		
 		const QImage &image() const;
+
+        virtual int additionalMemoryCost() const { return mImage.byteCount(); }
 	
 	public slots:
 		QScriptValue clone() const;

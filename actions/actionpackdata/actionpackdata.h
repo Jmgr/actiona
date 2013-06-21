@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 #include "actions/writeclipboarddefinition.h"
 #include "actions/readbinaryfiledefinition.h"
 #include "actions/writebinaryfiledefinition.h"
+#include "actions/readenvironmentdefinition.h"
 #include "actions/copyfiledefinition.h"
 #include "actions/webdownloaddefinition.h"
 
@@ -72,6 +73,7 @@ public:
 		addActionDefinition(new Actions::WriteClipboardDefinition(this));
 		addActionDefinition(new Actions::ReadBinaryFileDefinition(this));
 		addActionDefinition(new Actions::WriteBinaryFileDefinition(this));
+		addActionDefinition(new Actions::ReadEnvironmentVariableDefinition(this));
 		addActionDefinition(new Actions::CopyFileDefinition(this));
 		addActionDefinition(new Actions::WebDownloadDefinition(this));
 	}

@@ -158,56 +158,58 @@
 <context>
     <name>ActionTools::ActionInstance</name>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="175"/>
+        <location filename="../actiontools/actioninstance.cpp" line="177"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
         <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas commencer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="198"/>
+        <location filename="../actiontools/actioninstance.cpp" line="248"/>
         <source>Integer value expected.</source>
         <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="233"/>
+        <location filename="../actiontools/actioninstance.cpp" line="283"/>
         <source>Decimal value expected.</source>
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="303"/>
-        <location filename="../actiontools/actioninstance.cpp" line="311"/>
+        <location filename="../actiontools/actioninstance.cpp" line="353"/>
+        <location filename="../actiontools/actioninstance.cpp" line="361"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="406"/>
-        <location filename="../actiontools/actioninstance.cpp" line="414"/>
+        <location filename="../actiontools/actioninstance.cpp" line="456"/>
+        <location filename="../actiontools/actioninstance.cpp" line="464"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="498"/>
+        <location filename="../actiontools/actioninstance.cpp" line="579"/>
         <source>Unable to find any procedure named &quot;%1&quot;</source>
         <translation>Impossible de trouver une procédure nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="559"/>
+        <location filename="../actiontools/actioninstance.cpp" line="655"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="566"/>
+        <location filename="../actiontools/actioninstance.cpp" line="690"/>
+        <source>Bad parameter. Unable to evaluate string</source>
+        <translation>Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
+    </message>
+    <message>
         <source>[Null]</source>
-        <translation>[Nul]</translation>
+        <translation type="obsolete">[Nul]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="568"/>
         <source>[Undefined]</source>
-        <translation>[Indéfini]</translation>
+        <translation type="obsolete">[Indéfini]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="578"/>
         <source>[Raw data]</source>
-        <translation>[Données brutes]</translation>
+        <translation type="obsolete">[Données brutes]</translation>
     </message>
     <message>
         <location filename="../actiontools/actioninstance.h" line="251"/>

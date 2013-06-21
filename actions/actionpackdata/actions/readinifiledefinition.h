@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,6 +26,10 @@
 #include "textparameterdefinition.h"
 #include "fileparameterdefinition.h"
 #include "variableparameterdefinition.h"
+#include "listparameterdefinition.h"
+#include "groupdefinition.h"
+
+#include <QStringList>
 
 namespace ActionTools
 {
@@ -37,12 +41,14 @@ namespace Actions
 {
 	class ReadIniFileDefinition : public QObject, public ActionTools::ActionDefinition
 	{
-	   Q_OBJECT
+		Q_OBJECT
 
 	public:
 		explicit ReadIniFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+			translateItems("ReadIniFileInstance::modes", ReadIniFileInstance::modes);
+
 			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("File")), this);
 			file->setTooltip(tr("The file to read from"));
 			file->setMode(ActionTools::FileEdit::FileOpen);
@@ -50,17 +56,29 @@ namespace Actions
 			file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
 			addElement(file);
 
-			ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition(ActionTools::Name("section", tr("Section")), this);
-			section->setTooltip(tr("The section name of the parameter"));
-			addElement(section);
-
-			ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition(ActionTools::Name("parameter", tr("Parameter")), this);
-			parameter->setTooltip(tr("The parameter name"));
-			addElement(parameter);
-
 			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
 			variable->setTooltip(tr("The variable where to store the data"));
 			addElement(variable);
+
+			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
+			mode->setTooltip(tr("The INI file read mode"));
+            mode->setItems(ReadIniFileInstance::modes);
+            mode->setDefaultValue(ReadIniFileInstance::modes.second.at(ReadIniFileInstance::SingleParameter));
+            addElement(mode);
+
+			ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(this);
+			selectionMode->setMasterList(mode);
+            selectionMode->setMasterValues(QStringList() << ReadIniFileInstance::modes.first.at(ReadIniFileInstance::SingleParameter));
+
+			ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition(ActionTools::Name("section", tr("Section")), this);
+            section->setTooltip(tr("The parameter section"));
+            selectionMode->addMember(section);
+
+			ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition(ActionTools::Name("parameter", tr("Parameter")), this);
+			parameter->setTooltip(tr("The parameter name"));
+            selectionMode->addMember(parameter);
+
+            addElement(selectionMode);
 
 			addException(ReadIniFileInstance::UnableToReadFileException, tr("Unable to read file"));
 			addException(ReadIniFileInstance::UnableToFindSectionException, tr("Unable to find section"));
@@ -69,10 +87,11 @@ namespace Actions
 		QString name() const													{ return QObject::tr("Read INI file"); }
 		QString id() const														{ return "ActionReadIniFile"; }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read an entry in an INI file"); }
+		QString description() const												{ return QObject::tr("Read one or all the entries in an INI file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadIniFileInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readini.png"); }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(ReadIniFileDefinition)

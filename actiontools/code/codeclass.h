@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -62,12 +62,10 @@ namespace Code
 		static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
 		static QScriptValue stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList);
 
-		QScriptValue thisObject() const { return mThisObject; }
+        virtual int additionalMemoryCost() const { return 0; }
 
 	private:
 		static QScriptValue emptyFunction(QScriptContext *context, QScriptEngine *engine);
-
-		QScriptValue mThisObject;
 	};
 }
 

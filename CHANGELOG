@@ -1,3 +1,21 @@
+3.6.2 (04/05/13)
+- Actions: fixed a regression that caused a memory leak and a crash after a repeated use of the Find Image action
+- Code: fixed a bug that caused a memory leak and a crash after a repeated use of Image.findSubImage and similar
+
+3.6.1 (04/03/13)
+- Actions: fixed a bug in the in-text variable insertions that prevented using backslashes
+
+3.6.0 (03/03/13)
+- Actions: added a position offset in the Click, Move cursor and Cursor path
+- Actions: added an action to read environment variables
+- Gui: fixed a bug where pause before and after each action were not reset after creating a new script
+- Code: added the File.exists() function
+- Actions: upgraded the in-text variable insertions to allow inserting table elements
+- ActExec & Gui: fixed a bug that prevented the translation of the parameters usage
+- Actions: fixed a bug in the Command action that prevented getting the standard output and standard error texts
+- Actions: fixed a bug that prevented using Date objects in the Time Condition action
+- Actions: fixed a bug in the Find image action & code that could crash the program in certain cases
+
 3.5.1 (28/12/12)
 - ActExec: fixed a bug that prevented the use of the pauseBefore and pauseAfter script parameters
 - Actions: fixed a bug that involved setVariable to create variables of type Object and not of the values type

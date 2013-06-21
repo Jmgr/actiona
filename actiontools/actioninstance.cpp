@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -222,7 +222,10 @@ namespace ActionTools
 				result += ",";
 			}
 
-			result[result.lastIndexOf(",")] = QChar(']');
+			if(result == "[")
+				result += "]";
+			else
+				result[result.lastIndexOf(",")] = QChar(']');
 		}
 		else
 			result = it.value().toString();
@@ -521,7 +524,7 @@ namespace ActionTools
 
 	void ActionInstance::setArray(const QString &name, const QStringList &stringList)
 	{
-		if(stringList.count() == 0)
+		if(stringList.isEmpty())
 			return;
 
 		QScriptValue back = d->scriptEngine->newArray(stringList.count());
@@ -533,26 +536,21 @@ namespace ActionTools
 			d->scriptEngine->globalObject().setProperty(name, back);
 	}
 
-	void ActionInstance::setArrayKeyValue(const QString &name, const QStringList &Keys, const QStringList &Values)
+	void ActionInstance::setArrayKeyValue(const QString &name, const QHash<QString, QString> &hashKeyValue)
 	{
-		if(Keys.count() == 0 || (Keys.count() != Values.count()))
+		if(hashKeyValue.isEmpty())
 			return;
 
-		QScriptValue back = d->scriptEngine->newArray(0); //CHECKME: 0 or Keys.count() ?
+		QScriptValue back = d->scriptEngine->newArray(hashKeyValue.count());
 
-		for(int index = 0; index < Keys.count(); ++index)
-			back.setProperty(Keys.at(index), Values.at(index));
+		QHashIterator<QString, QString> it(hashKeyValue);
+		while (it.hasNext())
+		{
+			it.next();
+			back.setProperty(it.key(), it.value());
+		}
 
-		if(!name.isEmpty() && mNameRegExp.exactMatch(name))
-			d->scriptEngine->globalObject().setProperty(name, back);
-	}
-
-	QScriptValue ActionInstance::arrayElement(const QString &name, int index)
-	{
-		if(name.isEmpty() || !mNameRegExp.exactMatch(name))
-			return QScriptValue();
-
-		return d->scriptEngine->globalObject().property(name).property(index);
+		setVariable(name, back);
 	}
 
 	void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
@@ -731,27 +729,44 @@ namespace ActionTools
 			else if ( toEvaluate[pos] == QChar(']') )
 			{
 				if( startIndex == 0 )
-				{
 					//in top level evaluation isolated character ']' is accepted (for compatibility reason), now prefer "\]"
 					//i.e without matching '['
 					result.append(toEvaluate[pos]);
-				}
 				else
 					//on other levels, the parsing is stopped at this point
 					return result;
 			}
 			else if( toEvaluate[pos] == QChar('\\') )
 			{
-				pos++;
-				if( pos < toEvaluate.length() )
+				if(startIndex == 0)
 				{
-					result.append(toEvaluate[pos]);
+					//for ascendant compatibility reason
+					//in top level evaluation '\' is not only an escape character,
+					//but can also be a standard character in some cases
+					if((pos + 1) < toEvaluate.length())
+					{
+						pos++;
+						if(toEvaluate[pos] == QChar('$') || toEvaluate[pos] == QChar('[') || toEvaluate[pos] == QChar(']') || toEvaluate[pos] == QChar('\\'))
+							result.append(toEvaluate[pos]);
+						else
+						{
+							pos--;
+							result.append(toEvaluate[pos]);
+						}
+					}
+					else
+						result.append(toEvaluate[pos]);
+				}
+				else
+				{
+					pos++;
+					if( pos < toEvaluate.length() )
+						result.append(toEvaluate[pos]);
 				}
 			}
 			else
-			{
 				result.append(toEvaluate[pos]);
-			}
+
 			pos++;
 		}
 
