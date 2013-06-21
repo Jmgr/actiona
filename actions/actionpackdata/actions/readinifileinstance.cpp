@@ -81,9 +81,9 @@ namespace Actions
             }
 
             setArrayKeyValue(variable, fileContent);
-		}
-		else
-		{
+        }
+        else
+        {
             QString section = evaluateString(ok, "section");
             QString parameter = evaluateString(ok, "parameter");
 

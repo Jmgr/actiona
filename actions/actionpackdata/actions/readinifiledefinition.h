@@ -62,7 +62,7 @@ namespace Actions
 
 			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
 			mode->setTooltip(tr("The INI file read mode"));
-			mode->setItems(ReadIniFileInstance::modes);
+            mode->setItems(ReadIniFileInstance::modes);
             mode->setDefaultValue(ReadIniFileInstance::modes.second.at(ReadIniFileInstance::SingleParameter));
             addElement(mode);
 
@@ -91,6 +91,7 @@ namespace Actions
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadIniFileInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readini.png"); }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(ReadIniFileDefinition)

@@ -39,8 +39,7 @@ namespace Actions
 		enum Exceptions
 		{
 			UnableToReadFileException = ActionTools::ActionException::UserException,
-			UnableToFindSectionException,
-            SyntaxErrorException
+            UnableToFindSectionException
 		};
 
 		ReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
