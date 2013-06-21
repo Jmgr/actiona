@@ -158,44 +158,44 @@
 <context>
     <name>ActionTools::ActionInstance</name>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="177"/>
+        <location filename="../actiontools/actioninstance.cpp" line="178"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
         <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas commencer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="251"/>
+        <location filename="../actiontools/actioninstance.cpp" line="252"/>
         <source>Integer value expected.</source>
         <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="286"/>
+        <location filename="../actiontools/actioninstance.cpp" line="287"/>
         <source>Decimal value expected.</source>
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="356"/>
-        <location filename="../actiontools/actioninstance.cpp" line="364"/>
+        <location filename="../actiontools/actioninstance.cpp" line="357"/>
+        <location filename="../actiontools/actioninstance.cpp" line="365"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="459"/>
-        <location filename="../actiontools/actioninstance.cpp" line="467"/>
+        <location filename="../actiontools/actioninstance.cpp" line="460"/>
+        <location filename="../actiontools/actioninstance.cpp" line="468"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="582"/>
+        <location filename="../actiontools/actioninstance.cpp" line="583"/>
         <source>Unable to find any procedure named &quot;%1&quot;</source>
         <translation>Impossible de trouver une procédure nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="658"/>
+        <location filename="../actiontools/actioninstance.cpp" line="659"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="693"/>
+        <location filename="../actiontools/actioninstance.cpp" line="694"/>
         <source>Bad parameter. Unable to evaluate string</source>
         <translation>Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
     </message>
@@ -212,12 +212,12 @@
         <translation type="obsolete">[Données brutes]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="251"/>
+        <location filename="../actiontools/actioninstance.h" line="255"/>
         <source>Please choose a value for this field.</source>
         <translation>Merci de choisir une valeur pour ce champ.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="264"/>
+        <location filename="../actiontools/actioninstance.h" line="268"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation>&quot;%1&quot; est une valeur incorrecte.</translation>
     </message>
@@ -296,12 +296,12 @@
 <context>
     <name>ActionTools::CodeDateTimeEdit</name>
     <message>
-        <location filename="../actiontools/codedatetimeedit.cpp" line="117"/>
+        <location filename="../actiontools/codedatetimeedit.cpp" line="127"/>
         <source>&amp;Step up</source>
         <translation>&amp;Monter</translation>
     </message>
     <message>
-        <location filename="../actiontools/codedatetimeedit.cpp" line="121"/>
+        <location filename="../actiontools/codedatetimeedit.cpp" line="131"/>
         <source>Step &amp;down</source>
         <translation>&amp;Descendre</translation>
     </message>
@@ -333,27 +333,42 @@
 <context>
     <name>ActionTools::CodeLineEdit</name>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="45"/>
+        <location filename="../actiontools/codelineedit.cpp" line="52"/>
         <source>Set to text/code</source>
         <translation>Changer en texte/code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="46"/>
+        <location filename="../actiontools/codelineedit.cpp" line="53"/>
         <source>Open editor</source>
         <translation>Ouvrir éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="70"/>
+        <location filename="../actiontools/codelineedit.cpp" line="79"/>
         <source>Click here to switch text/code</source>
         <translation>Cliquez ici pour passer en mode texte/code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="74"/>
+        <location filename="../actiontools/codelineedit.cpp" line="83"/>
         <source>Click here to open the editor</source>
         <translation>Cliquez ici pour ouvrir l&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="296"/>
+        <location filename="../actiontools/codelineedit.cpp" line="87"/>
+        <source>Click here to insert a variable</source>
+        <translation>Cliquez ici pour insérer une variable</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="314"/>
+        <source>Insert variable</source>
+        <translation>Insérer une variable</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="319"/>
+        <source>No variables to insert</source>
+        <translation>Pas de variables à insérer</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="419"/>
         <source>Double-click to edit</source>
         <translation>Double-cliquez pour éditer</translation>
     </message>
@@ -361,12 +376,12 @@
 <context>
     <name>ActionTools::CodeSpinBox</name>
     <message>
-        <location filename="../actiontools/codespinbox.cpp" line="146"/>
+        <location filename="../actiontools/codespinbox.cpp" line="156"/>
         <source>&amp;Step up</source>
         <translation>&amp;Monter</translation>
     </message>
     <message>
-        <location filename="../actiontools/codespinbox.cpp" line="150"/>
+        <location filename="../actiontools/codespinbox.cpp" line="160"/>
         <source>Step &amp;down</source>
         <translation>&amp;Descendre</translation>
     </message>
@@ -484,22 +499,22 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::Script</name>
     <message>
-        <location filename="../actiontools/script.cpp" line="202"/>
+        <location filename="../actiontools/script.cpp" line="206"/>
         <source>Unknown</source>
         <translation>Inconnu</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="204"/>
+        <location filename="../actiontools/script.cpp" line="208"/>
         <source>GNU/Linux</source>
         <translation>GNU/Linux</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="207"/>
+        <location filename="../actiontools/script.cpp" line="211"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="210"/>
+        <location filename="../actiontools/script.cpp" line="214"/>
         <source>Mac</source>
         <translation>Mac</translation>
     </message>

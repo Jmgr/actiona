@@ -12,92 +12,92 @@
 <context>
     <name>Actions::CommandDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="45"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="46"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="46"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="47"/>
         <source>The command to execute</source>
         <translation>La commande à exécuter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="49"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="50"/>
         <source>Parameters</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="50"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="51"/>
         <source>The command&apos;s parameters</source>
         <translation>Les paramètres de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="53"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="54"/>
         <source>Working directory</source>
         <translation>Dossier de travail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="55"/>
         <source>The command&apos;s working directory</source>
         <translation>Le dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="56"/>
         <source>Command working directory</source>
         <translation>Dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="59"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="60"/>
         <source>Exit code</source>
         <translation>Code de sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="60"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="61"/>
         <source>The command&apos;s exit code</source>
         <translation>Le code de sortie de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="63"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="64"/>
         <source>Process id</source>
         <translation>Identifiant de processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="64"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="65"/>
         <source>The command&apos;s process id</source>
         <translation>L&apos;identifiant de processus de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="67"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="68"/>
         <source>Output</source>
         <translation>Sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="68"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="69"/>
         <source>The command&apos;s output</source>
         <translation>La sortie de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="71"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="72"/>
         <source>Error output</source>
         <translation>Sortie d&apos;erreur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="72"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="73"/>
         <source>The command&apos;s error output</source>
         <translation>La sortie d&apos;erreur de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="75"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="76"/>
         <source>Exit status</source>
         <translation>Statut de sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="76"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="77"/>
         <source>The command&apos;s exit status</source>
         <translation>Le statut de sortie de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="79"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="80"/>
         <source>Failed to start the command</source>
         <translation>Impossible d&apos;exécuter la commande</translation>
     </message>
@@ -113,52 +113,52 @@
 <context>
     <name>Actions::DetachedCommandDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="45"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="46"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="46"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="47"/>
         <source>The command to execute</source>
         <translation>La commande à exécuter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="49"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="50"/>
         <source>Parameters</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="50"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="51"/>
         <source>The command&apos;s parameters</source>
         <translation>Les paramètres de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="53"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="54"/>
         <source>Working directory</source>
         <translation>Dossier de travail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="55"/>
         <source>The command&apos;s working directory</source>
         <translation>Le dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="56"/>
         <source>Command working directory</source>
         <translation>Dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="59"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="60"/>
         <source>Process id</source>
         <translation>Identifiant de processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="60"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="61"/>
         <source>The command&apos;s process id</source>
         <translation>L&apos;identifiant de processus de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="63"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="64"/>
         <source>Unable to execute the detached command</source>
         <translation>Impossible d&apos;exécuter la commande détachée</translation>
     </message>
@@ -1077,12 +1077,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="82"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="83"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="85"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="86"/>
         <source>Executes a command</source>
         <translation>Exécute une commande</translation>
     </message>
@@ -1185,12 +1185,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation>Ouvre une URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="66"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="67"/>
         <source>Detached command</source>
         <translation>Commande détachée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="69"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="70"/>
         <source>Executes a detached command</source>
         <translation>Exécute une commande détachée</translation>
     </message>

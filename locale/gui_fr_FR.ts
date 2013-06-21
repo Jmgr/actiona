@@ -435,117 +435,117 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Paramètres</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="100"/>
-        <location filename="../gui/actiondialog.cpp" line="124"/>
+        <location filename="../gui/actiondialog.cpp" line="101"/>
+        <location filename="../gui/actiondialog.cpp" line="125"/>
         <source>Input parameters</source>
         <translation>Paramètres d&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="104"/>
+        <location filename="../gui/actiondialog.cpp" line="105"/>
         <source>Output parameters</source>
         <translation>Paramètres de sortie</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="128"/>
+        <location filename="../gui/actiondialog.cpp" line="129"/>
         <source>Pause before executing the action</source>
         <translation>Pause avant d&apos;exécuter l&apos;action</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="129"/>
+        <location filename="../gui/actiondialog.cpp" line="130"/>
         <source>Pause after executing the action</source>
         <translation>Pause après l&apos;exécution de l&apos;action</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="130"/>
+        <location filename="../gui/actiondialog.cpp" line="131"/>
         <source>Action maximal execution time</source>
         <translation>Temps d&apos;exécution maximum</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="140"/>
         <location filename="../gui/actiondialog.cpp" line="141"/>
         <location filename="../gui/actiondialog.cpp" line="142"/>
+        <location filename="../gui/actiondialog.cpp" line="143"/>
         <source> ms</source>
         <comment>milliseconds</comment>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="144"/>
+        <location filename="../gui/actiondialog.cpp" line="145"/>
         <source>No pause before</source>
         <translation>Pas de pause avant</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="145"/>
+        <location filename="../gui/actiondialog.cpp" line="146"/>
         <source>No pause after</source>
         <translation>Pas de pause après</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="146"/>
+        <location filename="../gui/actiondialog.cpp" line="147"/>
         <source>No timeout</source>
         <translation>Pas de temps d&apos;exécution maximum</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="148"/>
+        <location filename="../gui/actiondialog.cpp" line="149"/>
         <source>Pause before:</source>
         <translation>Pause avant :</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="149"/>
+        <location filename="../gui/actiondialog.cpp" line="150"/>
         <source>Pause after:</source>
         <translation>Pause après :</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="150"/>
+        <location filename="../gui/actiondialog.cpp" line="151"/>
         <source>Timeout:</source>
         <translation>Temps d&apos;exécution maximum :</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="155"/>
+        <location filename="../gui/actiondialog.cpp" line="156"/>
         <source>Common</source>
         <translation>Commun</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="210"/>
+        <location filename="../gui/actiondialog.cpp" line="211"/>
         <source>Exceptions</source>
         <translation>Exceptions</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="225"/>
+        <location filename="../gui/actiondialog.cpp" line="226"/>
         <source>By </source>
         <translation>Par </translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="242"/>
+        <location filename="../gui/actiondialog.cpp" line="243"/>
         <source>Version %1</source>
         <translation>Version %1</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="248"/>
+        <location filename="../gui/actiondialog.cpp" line="249"/>
         <source>Alpha</source>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="249"/>
+        <location filename="../gui/actiondialog.cpp" line="250"/>
         <source>Beta</source>
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="250"/>
+        <location filename="../gui/actiondialog.cpp" line="251"/>
         <source>Testing</source>
         <translation>En test</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="251"/>
+        <location filename="../gui/actiondialog.cpp" line="252"/>
         <source>Stable</source>
         <translation>Stable</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="186"/>
-        <location filename="../gui/actiondialog.cpp" line="506"/>
+        <location filename="../gui/actiondialog.cpp" line="187"/>
+        <location filename="../gui/actiondialog.cpp" line="538"/>
         <source>:</source>
         <translation> :</translation>
     </message>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="289"/>
+        <location filename="../gui/actiondialog.cpp" line="290"/>
         <source>&lt;i&gt;No parameters&lt;/i&gt;</source>
         <translation>&lt;i&gt;Pas de paramètres&lt;/i&gt;</translation>
     </message>
@@ -553,7 +553,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ActionTabs</name>
     <message>
-        <location filename="../gui/actiondialog.cpp" line="82"/>
+        <location filename="../gui/actiondialog.cpp" line="83"/>
         <source>Parameters</source>
         <translation>Paramètres</translation>
     </message>
