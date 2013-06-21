@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -57,14 +57,20 @@ namespace Code
 	QScriptValue CodeClass::constructor(CodeClass *object, QScriptContext *context, QScriptEngine *engine)
 	{
 		if(context->isCalledAsConstructor())
-			return object->mThisObject = engine->newQObject(context->thisObject(), object, QScriptEngine::ScriptOwnership);
-		else
+        {
+            engine->reportAdditionalMemoryCost(object->additionalMemoryCost());
+
+            return engine->newQObject(context->thisObject(), object, QScriptEngine::ScriptOwnership);
+        }
+        else
 			return constructor(object, engine);
 	}
 
 	QScriptValue CodeClass::constructor(CodeClass *object, QScriptEngine *engine)
 	{
-		return object->mThisObject = engine->newQObject(object, QScriptEngine::ScriptOwnership);
+        engine->reportAdditionalMemoryCost(object->additionalMemoryCost());
+
+        return engine->newQObject(object, QScriptEngine::ScriptOwnership);
 	}
 
 	QByteArray CodeClass::toEncoding(const QString &string, Encoding encoding)

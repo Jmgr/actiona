@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ namespace ActionTools
 	ItemListWidget::ItemListWidget(QWidget *parent)
 	  : QWidget(parent),
 		ui(new Ui::ItemListWidget),
-        mModel(new ItemListModel)
+        mModel(new ItemListModel(this))
 	{
 		ui->setupUi(this);
 
