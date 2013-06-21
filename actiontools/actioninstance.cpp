@@ -51,7 +51,7 @@ namespace ActionTools
 
     const QRegExp ActionInstance::NumericalIndex("(\\d+)");
     const QRegExp ActionInstance::NameRegExp("^[A-Za-z_][A-Za-z0-9_]*$", Qt::CaseSensitive, QRegExp::RegExp2);
-    const QRegExp ActionInstance::VariableRegExp("([^\\\\]|^)\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
+    const QRegExp ActionInstance::VariableRegExp("\\$([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
 	qint64 ActionInstance::mCurrentRuntimeId = 0;
 
 	ActionInstance::ActionInstance(const ActionDefinition *definition, QObject *parent)
