@@ -23,9 +23,6 @@
 
 #include "actioninstance.h"
 
-#include <QSettings>
-#include <config.h>
-
 namespace Actions
 {
 	class ReadIniFileInstance : public ActionTools::ActionInstance
@@ -36,14 +33,14 @@ namespace Actions
 	public:
 		enum Mode
 		{
-			Full,
-			Single
+            SingleParameter,
+            WholeFile
 		};
 		enum Exceptions
 		{
 			UnableToReadFileException = ActionTools::ActionException::UserException,
 			UnableToFindSectionException,
-			UnableToDecodeFileException
+            SyntaxErrorException
 		};
 
 		ReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)

@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+    Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,13 +21,13 @@
 #include "readinifileinstance.h"
 #include "stringlistpair.h"
 
-#include <QSettings>
+#include <config.h>
 
 namespace Actions
 {
 	ActionTools::StringListPair ReadIniFileInstance::modes = qMakePair(
-			QStringList() << "full" << "single",
-			QStringList() << QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read the entire file") << QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read only a value"));
+            QStringList() << "singleParameter" << "wholeFile",
+            QStringList() << QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read only a parameter") << QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read the entire file"));
 
 	void ReadIniFileInstance::startExecution()
 	{
@@ -40,44 +40,55 @@ namespace Actions
 		if(!ok)
 			return;
 
-		if(mode == Full)
+        if(filename.isEmpty())
+        {
+            emit executionException(UnableToReadFileException, tr("Unable to read the file"));
+            return;
+        }
+
+        rude::Config config;
+        if(!config.load(filename.toLocal8Bit()))
+        {
+            setCurrentParameter("filename");
+            emit executionException(UnableToReadFileException, tr("Unable to read the file"));
+            return;
+        }
+
+        if(mode == WholeFile)
 		{
-			QSettings settings(filename, QSettings::IniFormat);
+            QHash<QString, QString> fileContent;
+            int sectionCount = config.getNumSections();
 
-			switch(settings.status())
-			{
-				case QSettings::FormatError	:
-					emit executionException(UnableToDecodeFileException, tr("Bad syntax in the INI the file"));
-					return;
-				case QSettings::AccessError	:
-					emit executionException(UnableToReadFileException, tr("Unable to read the file"));
-					return;
-				case QSettings::NoError :
-					ok = true;
-			}
+            for(int sectionIndex = 0; sectionIndex < sectionCount; ++sectionIndex)
+            {
+                QString sectionName = QString::fromLatin1(config.getSectionNameAt(sectionIndex));
 
-			const QStringList &allParameters = settings.allKeys();
+                if(!config.setSection(sectionName.toLatin1(), false))
+                {
+                    emit executionException(UnableToReadFileException, tr("Unable to read the file"));
+                    return;
+                }
 
-			QHash<QString, QString> hashParametersValues;
-			hashParametersValues.reserve(allParameters.count()+2); //doc said ideally 'slightly more than the maximum nb of item'
+                int parameterCount = config.getNumDataMembers();
 
-			foreach(QString param, allParameters)
-				hashParametersValues[param] = settings.value(param).toString();
+                for(int parameterIndex = 0; parameterIndex < parameterCount; ++parameterIndex)
+                {
+                    QString parameterName = QString::fromLatin1(config.getDataNameAt(parameterIndex));
+                    QString parameterValue = QString::fromLatin1(config.getStringValue(parameterName.toLatin1()));
 
-			setArrayKeyValue(variable, hashParametersValues);
+                    fileContent[sectionName + "/" + parameterName] = parameterValue;
+                }
+            }
+
+            setArrayKeyValue(variable, fileContent);
 		}
 		else
 		{
-			QString section = evaluateString(ok, "section");
-			QString parameter = evaluateString(ok, "parameter");
+            QString section = evaluateString(ok, "section");
+            QString parameter = evaluateString(ok, "parameter");
 
-			rude::Config config;
-			if(!config.load(filename.toLocal8Bit()))
-			{
-				setCurrentParameter("filename");
-				emit executionException(UnableToReadFileException, tr("Unable to read the file"));
-				return;
-			}
+            if(!ok)
+                return;
 
 			if(!config.setSection(section.toLatin1(), false))
 			{
