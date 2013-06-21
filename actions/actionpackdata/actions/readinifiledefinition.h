@@ -29,8 +29,6 @@
 #include "listparameterdefinition.h"
 #include "groupdefinition.h"
 
-#include <QStringList>
-
 namespace ActionTools
 {
 	class ActionPack;
@@ -91,7 +89,6 @@ namespace Actions
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadIniFileInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
 		QPixmap icon() const													{ return QPixmap(":/icons/readini.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(ReadIniFileDefinition)
