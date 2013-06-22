@@ -94,7 +94,7 @@ namespace Actions
 
         if(!mImageToFind.load(imageToFindFilename))
 		{
-			emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to load image to find from file %1").arg(imageToFindFilename));
+			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to load image to find from file %1").arg(imageToFindFilename));
 
 			return;
 		}
@@ -133,7 +133,7 @@ namespace Actions
 
                 if(mWindows.isEmpty())
                 {
-                    emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to find any window named %1").arg(windowName));
+                    emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to find any window named %1").arg(windowName));
 
                     return;
                 }
@@ -154,7 +154,7 @@ namespace Actions
 
                 if(!imageToSearchIn.load(imageToSearchInFilename))
                 {
-                    emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to load image to search in from file %1").arg(imageToSearchInFilename));
+                    emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to load image to search in from file %1").arg(imageToSearchInFilename));
 
                     return;
                 }
@@ -286,7 +286,7 @@ namespace Actions
 			ok = false;
 
 			setCurrentParameter(parameterName);
-			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid %1 value : %2").arg(parameterTranslatedName).arg(parameter));
+			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid %1 value : %2").arg(parameterTranslatedName).arg(parameter));
 			return;
 		}
 	}

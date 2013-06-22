@@ -26,7 +26,7 @@ namespace ActionTools
 {
 	QString ActionException::ExceptionName[ExceptionCount] =
 	{
-		QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Bad parameter"),
+        QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Invalid parameter"),
 		QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Code error"),
 		QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Timeout")
 	};

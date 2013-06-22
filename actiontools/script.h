@@ -47,8 +47,8 @@ namespace ActionTools
 		{
 			ReadSuccess,			// Ok
 			ReadInternal,			// Internal error
-			ReadBadSchema,			// Did not pass schema validation
-			ReadBadScriptVersion	// Script version is newer than ours
+			ReadInvalidSchema,			// Did not pass schema validation
+			ReadInvalidScriptVersion	// Script version is newer than ours
 		};
 
         static const QRegExp CodeVariableDeclarationRegExp;

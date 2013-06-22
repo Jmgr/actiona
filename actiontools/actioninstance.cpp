@@ -175,7 +175,7 @@ namespace ActionTools
 		{
 			ok = false;
 
-			emit executionException(ActionException::BadParameterException, tr("A variable name can only contain alphanumeric characters and cannot start with a digit."));
+            emit executionException(ActionException::InvalidParameterException, tr("A variable name can only contain alphanumeric characters and cannot start with a digit."));
 
 			return QString();
 		}
@@ -249,7 +249,7 @@ namespace ActionTools
 		{
 			ok = false;
 
-			emit executionException(ActionException::BadParameterException, tr("Integer value expected."));
+            emit executionException(ActionException::InvalidParameterException, tr("Integer value expected."));
 
 			return 0;
 		}
@@ -284,7 +284,7 @@ namespace ActionTools
 		{
 			ok = false;
 
-			emit executionException(ActionException::BadParameterException, tr("Decimal value expected."));
+            emit executionException(ActionException::InvalidParameterException, tr("Decimal value expected."));
 
 			return 0.0;
 		}
@@ -354,7 +354,7 @@ namespace ActionTools
 		{
 			ok = false;
 
-			emit executionException(ActionException::BadParameterException, tr("\"%1\" is not a valid position.").arg(result));
+            emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is not a valid position.").arg(result));
 
 			return QPoint();
 		}
@@ -362,7 +362,7 @@ namespace ActionTools
 		QPoint point = QPoint(positionStringList.at(0).toInt(&ok), positionStringList.at(1).toInt(&ok));
 		if(!ok)
 		{
-			emit executionException(ActionException::BadParameterException, tr("\"%1\" is not a valid position.").arg(result));
+            emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is not a valid position.").arg(result));
 
 			return QPoint();
 		}
@@ -457,7 +457,7 @@ namespace ActionTools
 		{
 			ok = false;
 
-			emit executionException(ActionException::BadParameterException, tr("\"%1\" is not a valid color.").arg(result));
+            emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is not a valid color.").arg(result));
 
 			return QColor();
 		}
@@ -465,7 +465,7 @@ namespace ActionTools
 		QColor color = QColor(colorStringList.at(0).toInt(&ok), colorStringList.at(1).toInt(&ok), colorStringList.at(2).toInt(&ok));
 		if(!ok)
 		{
-			emit executionException(ActionException::BadParameterException, tr("\"%1\" is not a valid color.").arg(result));
+            emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is not a valid color.").arg(result));
 
 			return QColor();
 		}
@@ -580,7 +580,7 @@ namespace ActionTools
 		int beginProcedureLine = script()->findProcedure(procedureName);
 		if(beginProcedureLine == -1)
 		{
-			emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to find any procedure named \"%1\"").arg(procedureName));
+            emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to find any procedure named \"%1\"").arg(procedureName));
 
 			return false;
 		}
@@ -626,64 +626,62 @@ namespace ActionTools
 	{
 		ok = true;
 
-		int pos = 0;
+        int position = 0;
 		QString value = toEvaluate.value().toString();
 
-		return evaluateTextString(ok, (const QString) value, pos);
+        return evaluateTextString(ok, (const QString) value, position);
 	}
 
-	QString ActionInstance::evaluateTextString(bool &ok, const QString &toEvaluate, int &pos)
+    QString ActionInstance::evaluateTextString(bool &ok, const QString &toEvaluate, int &position)
 	{
 		ok = true;
 
-		int startIndex = pos;
+        int startIndex = position;
 
 		QString result;
 
-		while(pos < toEvaluate.length())
+        while(position < toEvaluate.length())
 		{
-			if( toEvaluate[pos] == QChar('$') )
+            if(toEvaluate[position] == QChar('$'))
 			{
 				//find a variable name
-                if( VariableRegExp.indexIn(toEvaluate , pos) != -1 )
+                if(VariableRegExp.indexIn(toEvaluate, position - 1) != -1)
 				{
-                    QString  foundVariableName = VariableRegExp.cap(1);
+                    QString foundVariableName = VariableRegExp.cap(1);
 					QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
 
-					pos += foundVariableName.length();
+                    position += foundVariableName.length();
 
 					if(!foundVariable.isValid())
 					{
 						ok = false;
 
-						emit executionException(ActionException::BadParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
+                        emit executionException(ActionException::InvalidParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
 						return QString();
 					}
 
 					QString stringEvaluationResult;
 
 					if(foundVariable.isNull())
-						stringEvaluationResult = "[Null]";
+                        stringEvaluationResult = "[Null]";
 					else if(foundVariable.isUndefined())
 						stringEvaluationResult = "[Undefined]";
 					else if(foundVariable.isArray())
 					{
-						while( (pos + 1 < toEvaluate.length()) && toEvaluate[pos + 1] == QChar('[') )
+                        while((position + 1 < toEvaluate.length()) && toEvaluate[position + 1] == QChar('['))
 						{
-							pos += 2;
-							QString indexArray = evaluateTextString(ok, toEvaluate, pos);
+                            position += 2;
+                            QString indexArray = evaluateTextString(ok, toEvaluate, position);
 
-							if((pos < toEvaluate.length()) && toEvaluate[pos] == QChar(']'))
+                            if((position < toEvaluate.length()) && toEvaluate[position] == QChar(']'))
 							{
-								QScriptString internalIndexArray = d->scriptEngine->toStringHandle(indexArray) ;
+                                QScriptString internalIndexArray = d->scriptEngine->toStringHandle(indexArray);
 								bool flag = true;
 								int numIndex = internalIndexArray.toArrayIndex(&flag);
 
-								if(flag)
-									//numIndex is valid
+                                if(flag) //numIndex is valid
 									foundVariable = foundVariable.property(numIndex);
-								else
-									//use internalIndexArray
+                                else //use internalIndexArray
 									foundVariable = foundVariable.property(internalIndexArray);
 							}
 							else
@@ -691,12 +689,13 @@ namespace ActionTools
 								//syntax error
 								ok = false;
 
-								emit executionException(ActionException::BadParameterException, tr("Bad parameter. Unable to evaluate string"));
+                                emit executionException(ActionException::InvalidParameterException, tr("Invalid parameter. Unable to evaluate string"));
 								return QString();
 							}
 
 							//COMPATIBILITY: we break the while loop if foundVariable is no more of Array type
-							if (!foundVariable.isArray()) break;
+                            if(!foundVariable.isArray())
+                                break;
 						}
 						//end of while, no more '['
 						if(foundVariable.isArray())
@@ -727,48 +726,48 @@ namespace ActionTools
 				}
 
 			}
-			else if ( toEvaluate[pos] == QChar(']') )
+            else if (toEvaluate[position] == QChar(']'))
 			{
-				if( startIndex == 0 )
+                if(startIndex == 0)
 					//in top level evaluation isolated character ']' is accepted (for compatibility reason), now prefer "\]"
 					//i.e without matching '['
-					result.append(toEvaluate[pos]);
+                    result.append(toEvaluate[position]);
 				else
 					//on other levels, the parsing is stopped at this point
 					return result;
 			}
-			else if( toEvaluate[pos] == QChar('\\') )
+            else if(toEvaluate[position] == QChar('\\'))
 			{
 				if(startIndex == 0)
 				{
 					//for ascendant compatibility reason
 					//in top level evaluation '\' is not only an escape character,
 					//but can also be a standard character in some cases
-					if((pos + 1) < toEvaluate.length())
+                    if((position + 1) < toEvaluate.length())
 					{
-						pos++;
-						if(toEvaluate[pos] == QChar('$') || toEvaluate[pos] == QChar('[') || toEvaluate[pos] == QChar(']') || toEvaluate[pos] == QChar('\\'))
-							result.append(toEvaluate[pos]);
+                        position++;
+                        if(toEvaluate[position] == QChar('$') || toEvaluate[position] == QChar('[') || toEvaluate[position] == QChar(']') || toEvaluate[position] == QChar('\\'))
+                            result.append(toEvaluate[position]);
 						else
 						{
-							pos--;
-							result.append(toEvaluate[pos]);
+                            position--;
+                            result.append(toEvaluate[position]);
 						}
 					}
 					else
-						result.append(toEvaluate[pos]);
+                        result.append(toEvaluate[position]);
 				}
 				else
 				{
-					pos++;
-					if( pos < toEvaluate.length() )
-						result.append(toEvaluate[pos]);
+                    position++;
+                    if( position < toEvaluate.length() )
+                        result.append(toEvaluate[position]);
 				}
 			}
 			else
-				result.append(toEvaluate[pos]);
+                result.append(toEvaluate[position]);
 
-			pos++;
+            position++;
 		}
 
 		return result;

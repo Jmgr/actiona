@@ -40,7 +40,7 @@ namespace Actions
 				setNextLine(script()->popProcedureCall() + 2);//Lines start at 1
 			else
 			{
-				emit executionException(ActionTools::ActionException::BadParameterException, tr("End procedure reached without a call"));
+				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("End procedure reached without a call"));
 
 				return;
 			}

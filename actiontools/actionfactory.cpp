@@ -147,7 +147,7 @@ namespace ActionTools
 		ActionPack *actionPack = qobject_cast<ActionPack *>(actionPackObject);
 		if(!actionPack)
 		{
-			emit actionPackLoadError(tr("%1: bad definition version").arg(shortFilename));
+            emit actionPackLoadError(tr("%1: invalid definition version").arg(shortFilename));
 			return;
 		}
 

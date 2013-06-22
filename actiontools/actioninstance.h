@@ -252,7 +252,7 @@ namespace ActionTools
 
                 setCurrentParameter(parameterName, subParameterName);
 
-                emit executionException(ActionException::BadParameterException, tr("Please choose a value for this field."));
+                emit executionException(ActionException::InvalidParameterException, tr("Please choose a value for this field."));
 
                 return T();
             }
@@ -265,7 +265,7 @@ namespace ActionTools
 
                 setCurrentParameter(parameterName, subParameterName);
 
-				emit executionException(ActionException::BadParameterException, tr("\"%1\" is an invalid value.").arg(result));
+				emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is an invalid value.").arg(result));
 
 				return T();
 			}

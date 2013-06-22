@@ -51,14 +51,14 @@ bool ScriptExecuter::start(QIODevice *device, const QString &filename)
 			stream.flush();
 		}
 		return false;
-	case ActionTools::Script::ReadBadSchema:
+    case ActionTools::Script::ReadInvalidSchema:
 		{
 			QTextStream stream(stdout);
-			stream << QObject::tr("Input script file has a bad script schema") << "\n";
+            stream << QObject::tr("Input script file has an invalid script schema") << "\n";
 			stream.flush();
 		}
 		return false;
-	case ActionTools::Script::ReadBadScriptVersion:
+    case ActionTools::Script::ReadInvalidScriptVersion:
 		{
 			QTextStream stream(stdout);
 			stream << QObject::tr("Input script file is too recent") << "\n";

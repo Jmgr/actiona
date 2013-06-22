@@ -64,7 +64,7 @@ namespace Actions
 
 		if(!mMediaPlaylist->addMedia(url))
 		{
-			emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to load file %1: %2").arg(file).arg(mMediaPlayer->errorString()));
+			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to load file %1: %2").arg(file).arg(mMediaPlayer->errorString()));
 			return;
 		}
 
@@ -76,7 +76,7 @@ namespace Actions
 
 		if(mMediaPlayer->error() != QMediaPlayer::NoError)
 		{
-			emit executionException(ActionTools::ActionException::BadParameterException, tr("Unable to play file %1: %2").arg(file).arg(mMediaPlayer->errorString()));
+			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to play file %1: %2").arg(file).arg(mMediaPlayer->errorString()));
 			return;
 		}
 

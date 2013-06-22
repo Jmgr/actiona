@@ -61,7 +61,7 @@ namespace Actions
 				setVariable(variable, environmentHashVariableValue.value(environmentVariable));
 			else
 			{
-                emit executionException(ActionTools::ActionException::BadParameterException, tr("The specified variable cannot be found in the system environment"));
+                emit executionException(ActionTools::ActionException::InvalidParameterException, tr("The specified variable cannot be found in the system environment"));
 				return;
 			}
 		}

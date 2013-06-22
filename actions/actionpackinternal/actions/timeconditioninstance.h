@@ -46,7 +46,7 @@ namespace Actions
             if(!mTestedDateTime.isValid())
             {
                 setCurrentParameter("date");
-                emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid date"));
+                emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid date"));
                 return;
             }
 

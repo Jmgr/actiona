@@ -63,7 +63,7 @@ namespace Actions
 
 			if(duration < 0)
 			{
-				emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid pause duration"));
+				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid pause duration"));
 				return;
 			}
 

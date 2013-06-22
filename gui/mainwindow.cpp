@@ -1252,7 +1252,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 	case ActionTools::Script::ReadInternal:
 		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script due to an internal error."));
 		return false;
-	case ActionTools::Script::ReadBadSchema:
+	case ActionTools::Script::ReadInvalidSchema:
 		{
 			QMessageBox messageBox(tr("Load script"), tr("Unable to load the script because it has an incorrect schema.%1Line: %2<br>Column: %3")
 								   .arg(mScript->statusMessage())
@@ -1262,7 +1262,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 			messageBox.exec();
 		}
 		return false;
-	case ActionTools::Script::ReadBadScriptVersion:
+	case ActionTools::Script::ReadInvalidScriptVersion:
 		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because it was created with a more recent version of Actionaz.\nPlease update your version of Actionaz to load this script.\nYour version: %1\nScript version: %2")
 							 .arg(Global::SCRIPT_VERSION.toString()).arg(mScript->scriptVersion().toString()));
 		return false;

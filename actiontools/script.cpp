@@ -375,7 +375,7 @@ namespace ActionTools
 						mOs = attributes.value("os").toString();
 
 						if(mScriptVersion > scriptVersion)
-							return ReadBadScriptVersion;
+							return ReadInvalidScriptVersion;
 					}
 				}
 
@@ -383,7 +383,7 @@ namespace ActionTools
 				mLine = messageHandler.line();
 				mColumn = messageHandler.column();
 
-				return ReadBadSchema;
+				return ReadInvalidSchema;
 			}
 		}
 
@@ -419,7 +419,7 @@ namespace ActionTools
 				mOs = attributes.value("os").toString();
 
 				if(mScriptVersion > scriptVersion)
-					return ReadBadScriptVersion;
+					return ReadInvalidScriptVersion;
 			}
 			else if(stream.name() == "actions")
 			{

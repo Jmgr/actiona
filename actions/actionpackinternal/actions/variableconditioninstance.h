@@ -67,7 +67,7 @@ namespace Actions
             if(!variableValue.isValid())
             {
                 setCurrentParameter("variable");
-                emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid variable"));
+                emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid variable"));
 
                 return;
             }

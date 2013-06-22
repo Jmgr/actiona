@@ -73,7 +73,7 @@ namespace Actions
 		if(mAmount <= 0)
 		{
 			setCurrentParameter("amount");
-			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid key presses amount"));
+			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid key presses amount"));
 			return;
 		}
 

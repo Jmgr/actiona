@@ -52,7 +52,7 @@ namespace Actions
 		if(amount <= 0)
 		{
 			setCurrentParameter("amount");
-			emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid click amount"));
+			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid click amount"));
 			return;
 		}
 		

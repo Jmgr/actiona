@@ -32,7 +32,7 @@ namespace ActionTools
 	public:
 		enum Exception
 		{
-			BadParameterException,
+			InvalidParameterException,
 			CodeErrorException,
 			TimeoutException,
 
