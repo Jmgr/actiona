@@ -55,9 +55,13 @@
 <context>
     <name>ActionException::ExceptionName</name>
     <message>
-        <location filename="../actiontools/actionexception.cpp" line="29"/>
         <source>Bad parameter</source>
-        <translation>Mauvais paramètre</translation>
+        <translation type="obsolete">Mauvais paramètre</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actionexception.cpp" line="29"/>
+        <source>Invalid parameter</source>
+        <translation>Paramètre incorrect</translation>
     </message>
     <message>
         <location filename="../actiontools/actionexception.cpp" line="30"/>
@@ -140,9 +144,13 @@
         <translation>%1 : &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="150"/>
         <source>%1: bad definition version</source>
-        <translation>%1 : mauvause définition de version</translation>
+        <translation type="obsolete">%1 : mauvause définition de version</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actionfactory.cpp" line="150"/>
+        <source>%1: invalid definition version</source>
+        <translation>%1 : définition de version incorrecte</translation>
     </message>
     <message>
         <location filename="../actiontools/actionfactory.cpp" line="170"/>
@@ -195,9 +203,13 @@
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="694"/>
-        <source>Bad parameter. Unable to evaluate string</source>
+        <location filename="../actiontools/actioninstance.cpp" line="692"/>
+        <source>Invalid parameter. Unable to evaluate string</source>
         <translation>Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
+    </message>
+    <message>
+        <source>Bad parameter. Unable to evaluate string</source>
+        <translation type="obsolete">Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
     </message>
     <message>
         <source>[Null]</source>

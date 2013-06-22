@@ -174,62 +174,76 @@
 <context>
     <name>Actions::ReadIniFileDefinition</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="46"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="50"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="47"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="51"/>
         <source>The file to read from</source>
         <translation>Le fichier à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="49"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="53"/>
         <source>Choose the INI file</source>
         <translation>Choisissez le fichier INI</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="50"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="54"/>
         <source>INI files (*.ini);;All files (*.*)</source>
         <translation>Fichiers INI (*.ini);;Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="53"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="61"/>
+        <source>Mode</source>
+        <translation>Mode</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="62"/>
+        <source>The INI file read mode</source>
+        <translation>Le mode de lecture du fichier INI</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="71"/>
         <source>Section</source>
         <translation>Section</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="54"/>
         <source>The section name of the parameter</source>
-        <translation>Le nom de section du paramètre</translation>
+        <translation type="obsolete">Le nom de section du paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="57"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="75"/>
         <source>Parameter</source>
         <translation>Paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="58"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="76"/>
         <source>The parameter name</source>
         <translation>Le nom du paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="57"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="62"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="58"/>
         <source>The variable where to store the data</source>
         <translation>La variable où stocker les données</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="65"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="72"/>
+        <source>The parameter section</source>
+        <translation>La section du paramètre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="81"/>
         <source>Unable to read file</source>
         <translation>Impossible de lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="66"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="82"/>
         <source>Unable to find section</source>
         <translation>Impossible de trouver la section</translation>
     </message>
@@ -237,12 +251,14 @@
 <context>
     <name>Actions::ReadIniFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.h" line="60"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="45"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="53"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="68"/>
         <source>Unable to read the file</source>
         <translation>Impossible de lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.h" line="67"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="96"/>
         <source>Unable to find the section named &quot;%1&quot;</source>
         <translation>Impossible de trouver la section nommée &quot;%1&quot;</translation>
     </message>
@@ -1127,14 +1143,18 @@
         <translation>Lit le contenu du presse-papier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="69"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="85"/>
         <source>Read INI file</source>
         <translation>Lire fichier INI</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="72"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="88"/>
+        <source>Read one or all the entries in an INI file</source>
+        <translation>Lire une ou plusieurs entrées d&apos;un fichier INI</translation>
+    </message>
+    <message>
         <source>Read an entry in an INI file</source>
-        <translation>Lire une entrée dans un fichier INI</translation>
+        <translation type="obsolete">Lire une entrée dans un fichier INI</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="69"/>
@@ -1254,6 +1274,19 @@
         <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="33"/>
         <source>Read one</source>
         <translation>N&apos;en lire qu&apos;une</translation>
+    </message>
+</context>
+<context>
+    <name>ReadIniFileInstance::modes</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="30"/>
+        <source>Read a single parameter</source>
+        <translation>Line un seul paramètre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="30"/>
+        <source>Read the entire file</source>
+        <translation>Lire le fichier complet</translation>
     </message>
 </context>
 <context>

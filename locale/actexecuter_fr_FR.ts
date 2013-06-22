@@ -150,8 +150,12 @@
         <translation>La lecture du script a échoué à cause d&apos;une erreur interne</translation>
     </message>
     <message>
-        <location filename="../actexecuter/scriptexecuter.cpp" line="57"/>
         <source>Input script file has a bad script schema</source>
+        <translation type="obsolete">Le fichier d&apos;entrée a un schéma incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/scriptexecuter.cpp" line="57"/>
+        <source>Input script file has an invalid script schema</source>
         <translation>Le fichier d&apos;entrée a un schéma incorrect</translation>
     </message>
     <message>
