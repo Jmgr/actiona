@@ -636,52 +636,52 @@ namespace ActionTools
 	{
 		ok = true;
 
-        int startIndex = position;
+		int startIndex = position;
 
 		QString result;
 
-        while(position < toEvaluate.length())
+		while(position < toEvaluate.length())
 		{
-            if(toEvaluate[position] == QChar('$'))
+			if(toEvaluate[position] == QChar('$'))
 			{
 				//find a variable name
-                if(VariableRegExp.indexIn(toEvaluate, position - 1) != -1)
+				if(VariableRegExp.indexIn(toEvaluate, position) != -1)
 				{
-                    QString foundVariableName = VariableRegExp.cap(1);
+					QString foundVariableName = VariableRegExp.cap(1);
 					QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
 
-                    position += foundVariableName.length();
+					position += foundVariableName.length();
 
 					if(!foundVariable.isValid())
 					{
 						ok = false;
 
-                        emit executionException(ActionException::InvalidParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
+						emit executionException(ActionException::InvalidParameterException, tr("Undefined variable \"%1\"").arg(foundVariableName));
 						return QString();
 					}
 
 					QString stringEvaluationResult;
 
 					if(foundVariable.isNull())
-                        stringEvaluationResult = "[Null]";
+						stringEvaluationResult = "[Null]";
 					else if(foundVariable.isUndefined())
 						stringEvaluationResult = "[Undefined]";
 					else if(foundVariable.isArray())
 					{
-                        while((position + 1 < toEvaluate.length()) && toEvaluate[position + 1] == QChar('['))
+						while((position + 1 < toEvaluate.length()) && toEvaluate[position + 1] == QChar('['))
 						{
-                            position += 2;
-                            QString indexArray = evaluateTextString(ok, toEvaluate, position);
+							position += 2;
+							QString indexArray = evaluateTextString(ok, toEvaluate, position);
 
-                            if((position < toEvaluate.length()) && toEvaluate[position] == QChar(']'))
+							if((position < toEvaluate.length()) && toEvaluate[position] == QChar(']'))
 							{
-                                QScriptString internalIndexArray = d->scriptEngine->toStringHandle(indexArray);
+								QScriptString internalIndexArray = d->scriptEngine->toStringHandle(indexArray);
 								bool flag = true;
 								int numIndex = internalIndexArray.toArrayIndex(&flag);
 
-                                if(flag) //numIndex is valid
+								if(flag) //numIndex is valid
 									foundVariable = foundVariable.property(numIndex);
-                                else //use internalIndexArray
+								else //use internalIndexArray
 									foundVariable = foundVariable.property(internalIndexArray);
 							}
 							else
@@ -689,13 +689,13 @@ namespace ActionTools
 								//syntax error
 								ok = false;
 
-                                emit executionException(ActionException::InvalidParameterException, tr("Invalid parameter. Unable to evaluate string"));
+								emit executionException(ActionException::InvalidParameterException, tr("Invalid parameter. Unable to evaluate string"));
 								return QString();
 							}
 
 							//COMPATIBILITY: we break the while loop if foundVariable is no more of Array type
-                            if(!foundVariable.isArray())
-                                break;
+							if(!foundVariable.isArray())
+								break;
 						}
 						//end of while, no more '['
 						if(foundVariable.isArray())
@@ -726,48 +726,48 @@ namespace ActionTools
 				}
 
 			}
-            else if (toEvaluate[position] == QChar(']'))
+			else if (toEvaluate[position] == QChar(']'))
 			{
-                if(startIndex == 0)
+				if(startIndex == 0)
 					//in top level evaluation isolated character ']' is accepted (for compatibility reason), now prefer "\]"
 					//i.e without matching '['
-                    result.append(toEvaluate[position]);
+					result.append(toEvaluate[position]);
 				else
 					//on other levels, the parsing is stopped at this point
 					return result;
 			}
-            else if(toEvaluate[position] == QChar('\\'))
+			else if(toEvaluate[position] == QChar('\\'))
 			{
 				if(startIndex == 0)
 				{
 					//for ascendant compatibility reason
 					//in top level evaluation '\' is not only an escape character,
 					//but can also be a standard character in some cases
-                    if((position + 1) < toEvaluate.length())
+					if((position + 1) < toEvaluate.length())
 					{
-                        position++;
-                        if(toEvaluate[position] == QChar('$') || toEvaluate[position] == QChar('[') || toEvaluate[position] == QChar(']') || toEvaluate[position] == QChar('\\'))
-                            result.append(toEvaluate[position]);
+						position++;
+						if(toEvaluate[position] == QChar('$') || toEvaluate[position] == QChar('[') || toEvaluate[position] == QChar(']') || toEvaluate[position] == QChar('\\'))
+							result.append(toEvaluate[position]);
 						else
 						{
-                            position--;
-                            result.append(toEvaluate[position]);
+							position--;
+							result.append(toEvaluate[position]);
 						}
 					}
 					else
-                        result.append(toEvaluate[position]);
+						result.append(toEvaluate[position]);
 				}
 				else
 				{
-                    position++;
-                    if( position < toEvaluate.length() )
-                        result.append(toEvaluate[position]);
+					position++;
+					if( position < toEvaluate.length() )
+						result.append(toEvaluate[position]);
 				}
 			}
 			else
-                result.append(toEvaluate[position]);
+				result.append(toEvaluate[position]);
 
-            position++;
+			position++;
 		}
 
 		return result;
