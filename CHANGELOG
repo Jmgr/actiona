@@ -1,3 +1,28 @@
+3.7.0 (28/06/13)
+Actions:
+- added a button to insert detected variables into parameter fields
+- added a more explicit error message when a list field is empty
+- fixed a bug when opening a script that had been created using a previous version of Actionaz: new action parameters did not have default values
+- corrected a bug that prevented using the Code Error exception to skip the current action or go to a line of the script
+- Pixel Color: added an offset to the position to be checked
+- Read INI File: added reading the whole file at once
+- Read INI File: corrected a bug that froze the execution when trying to read a file with an empty filename
+- Find Image: added a field allowing to retreive the confidence value
+- Find Image: added a field to choose which matching method to use
+- Find Image: added a delay between two searches when waiting
+- Find Image: added two conditions actions "if found" and "if not found"
+- Find Image: removed the "Image not found" exception, previous scripts will be automatically upgraded to use the "if found" and "if not found" parameters
+- Find Image: search can now be done in multiple windows if they satisfy the search criterion
+- Find Image: renamed "Down pyramids" to "Downsampling"
+- Find Image: fixed a bug that prevented searching in some screens when using a multiple screen configuration
+- Find Image: fixed a bug that prevented using an absolute position when searching within a window
+Code:
+- Script: added the line attribute
+- Image: added the Image.takeScreenshotUsingScreenIndex function that allows taking screenshots using a screen index
+- Image: added a parameter to the findSubImage functions to choose which matching method to use
+- Image: fixed a bug that prevented searching in some screens when using a multiple screen configuration
+- Image: fixed a bug in the Image.takeScreenshot function that took only a screenshot of the main screen when using a multiple screen configuration
+
 3.6.2 (04/05/13)
 - Actions: fixed a regression that caused a memory leak and a crash after a repeated use of the Find Image action
 - Code: fixed a bug that caused a memory leak and a crash after a repeated use of Image.findSubImage and similar
