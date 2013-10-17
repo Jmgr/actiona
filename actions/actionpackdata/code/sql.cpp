@@ -188,13 +188,21 @@ namespace Code
 
 	QScriptValue Sql::execute(const QString &queryString)
 	{
-		if(!queryString.isEmpty())
-		{
-			mQuery = QSqlQuery(queryString, *mDatabase);
-			mQuery.setForwardOnly(true);
-		}
+        bool result = false;
 
-		if(!mQuery.exec())
+        if(queryString.isEmpty())
+		{
+            result = mQuery.exec();
+		}
+        else
+        {
+            mQuery = QSqlQuery(*mDatabase);
+            mQuery.setForwardOnly(true);
+
+            result = mQuery.exec(queryString);
+        }
+
+        if(!result)
 		{
 			QSqlError error = mQuery.lastError();
 			throwError("ExecuteQueryError", tr("Failed to execute the query : %1").arg(error.text()));
