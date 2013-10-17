@@ -72,29 +72,75 @@ namespace Actions
                 return;
             }
 
-            bool result;
+            bool hasResult = false;
+            bool result = false;
 
-            if(variableValue.isQObject())
+            if(comparison == Contains)
             {
-                QObject *variableObject = variableValue.toQObject();
+                if(variableValue.isQObject())
+                {
+                    QObject *variableObject = variableValue.toQObject();
 
-                Code::Rect *rectObject = qobject_cast<Code::Rect*>(variableObject);
-                Code::Point *pointObject = qobject_cast<Code::Point*>(value.toQObject());
-                if(comparison == Contains && rectObject && pointObject)
-                    result = rectObject->rect().contains(pointObject->point());
-                else if(Code::CodeClass *object = qobject_cast<Code::CodeClass*>(variableObject))
-                    result = object->equals(value);
-            }
-            else if(variableValue.isBool())
-                result = compare(comparison, variableValue.toBool(), value.toBool());
-            else if(variableValue.isNumber())
-                result = compare(comparison, variableValue.toNumber(), value.toNumber());
-            else if(variableValue.isString())
-            {
-                if(comparison == Contains)
+                    Code::Rect *rectObject = qobject_cast<Code::Rect*>(variableObject);
+                    Code::Point *pointObject = qobject_cast<Code::Point*>(value.toQObject());
+                    if(rectObject && pointObject)
+                    {
+                        result = rectObject->rect().contains(pointObject->point());
+
+                        hasResult = true;
+                    }
+                }
+                else if(variableValue.isString())
+                {
                     result = variableValue.toString().contains(value.toString());
-                else
-                    result = compare(comparison, variableValue.toString(), value.toString());
+
+                    hasResult = true;
+                }
+                else if(variableValue.isArray())
+                {
+                    int arrayLength = variableValue.property("length").toInteger();
+
+                    result = false;
+                    hasResult = true;
+
+                    for(int arrayIndex = 0; arrayIndex < arrayLength; ++arrayIndex)
+                    {
+                        if(variableValue.property(arrayIndex).toString() == value.toString())
+                        {
+                            result = true;
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(!hasResult)
+            {
+                switch(comparison)
+                {
+                case Equal:
+                    result = (variableValue.equals(value));
+                    break;
+                case Different:
+                    result = (!variableValue.equals(value));
+                    break;
+                case Inferior:
+                    result = (variableValue.lessThan(value));
+                    break;
+                case Superior:
+                    result = (!variableValue.lessThan(value) && !variableValue.equals(value));
+                    break;
+                case InferiorEqual:
+                    result = (variableValue.lessThan(value) || variableValue.equals(value));
+                    break;
+                case SuperiorEqual:
+                    result = (!variableValue.lessThan(value));
+                    break;
+                default:
+                    result = false;
+                    break;
+                }
             }
 
             QString action = (result ? ifEqual.action() : ifDifferent.action());
@@ -119,32 +165,6 @@ namespace Actions
 
 	private:
 		Q_DISABLE_COPY(VariableConditionInstance)
-
-        template<class T>
-        static bool compare(Comparison comparison, const T &valueA, const T &valueB)
-        {
-            switch(comparison)
-            {
-            case Equal:
-                return (valueA == valueB);
-            case Different:
-                return (valueA != valueB);
-            case Inferior:
-                return (valueA < valueB);
-                break;
-            case Superior:
-                return (valueA > valueB);
-                break;
-            case InferiorEqual:
-                return (valueA <= valueB);
-                break;
-            case SuperiorEqual:
-                return (valueA >= valueB);
-                break;
-            default:
-                return false;
-            }
-        }
 	};
 }
 
