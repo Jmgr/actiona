@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -164,6 +164,10 @@ namespace ActionTools
 
 		void copyActionDataFrom(const ActionInstance &other);
 
+        static const QRegExp NumericalIndex;
+        static const QRegExp NameRegExp;
+        static const QRegExp VariableRegExp;
+
 	signals:
 		void showProgressDialog(const QString &title, int maximum);
 		void updateProgressDialog(const QString &caption);
@@ -182,6 +186,9 @@ namespace ActionTools
 		int scriptLine() const												{ return d->scriptLine; }
 
 		/** Parameter management **/
+        QScriptValue evaluateValue(bool &ok,
+                            const QString &parameterName,
+                            const QString &subParameterName = "value");
 		QVariant evaluateVariant(bool &ok,
 							const QString &parameterName,
 							const QString &subParameterName = "value");
@@ -242,13 +249,26 @@ namespace ActionTools
 					return static_cast<T>(i);
 			}
 
+            if(result.isEmpty())
+            {
+                ok = false;
+
+                setCurrentParameter(parameterName, subParameterName);
+
+                emit executionException(ActionException::InvalidParameterException, tr("Please choose a value for this field."));
+
+                return T();
+            }
+
 			T back = static_cast<T>(result.toInt(&ok));
 
 			if(!ok || back < 0 || back >= listElements.first.count())
 			{
 				ok = false;
 
-				emit executionException(ActionException::BadParameterException, tr("\"%1\" is an invalid value.").arg(result));
+                setCurrentParameter(parameterName, subParameterName);
+
+				emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is an invalid value.").arg(result));
 
 				return T();
 			}
@@ -268,13 +288,19 @@ namespace ActionTools
 		QColor evaluateColor(bool &ok,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
+        QDateTime evaluateDateTime(bool &ok,
+                           const QString &parameterName,
+                           const QString &subParameterName = "value");
 
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);
 		void setNextLine(int nextLine);
 
-        void setVariable(const QString &name, const QScriptValue &value);
-		QVariant variable(const QString &name);
+		void setArray(const QString &name, const QStringList &stringList);
+		void setArrayKeyValue(const QString &name, const QHash<QString, QString> &hashKeyValue);
+
+		void setVariable(const QString &name, const QScriptValue &value);
+		QScriptValue variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
 
@@ -283,10 +309,12 @@ namespace ActionTools
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);
 		QScriptValue evaluateCode(bool &ok, const SubParameter &toEvaluate);
-		QString evaluateText(bool &ok, const SubParameter &toEvaluate);
 
-		static const QRegExp mNameRegExp;
-		static const QRegExp mVariableRegExp;
+		QString evaluateVariableArray(bool &ok, const QScriptValue &scriptValue);
+
+		QString evaluateText(bool &ok, const SubParameter &toEvaluate);
+		QString evaluateTextString(bool &ok, const QString &toEvaluate, int &pos);
+
 		static qint64 mCurrentRuntimeId;
 
 		qint64 mRuntimeId;

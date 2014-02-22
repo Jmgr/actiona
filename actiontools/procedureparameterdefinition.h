@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,11 +31,11 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ProcedureParameterDefinition(const Name &name, QObject *parent)
-			: ListParameterDefinition(name, parent)						{}
+        ProcedureParameterDefinition(const Name &name, QObject *parent)
+            : ListParameterDefinition(name, parent)						{}
 
 		void buildEditors(Script *script, QWidget *parent);
-		void update(Script *script);
+		void actionUpdate(Script *script);
 	};
 }
 

@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -147,7 +147,7 @@ namespace ActionTools
 		ActionPack *actionPack = qobject_cast<ActionPack *>(actionPackObject);
 		if(!actionPack)
 		{
-			emit actionPackLoadError(tr("%1: bad definition version").arg(shortFilename));
+            emit actionPackLoadError(tr("%1: invalid definition version").arg(shortFilename));
 			return;
 		}
 

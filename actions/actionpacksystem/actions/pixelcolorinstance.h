@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -64,6 +64,7 @@ namespace Actions
 			int redTolerance = evaluateInteger(ok, "redTolerance");
 			int greenTolerance = evaluateInteger(ok, "greenTolerance");
 			int blueTolerance = evaluateInteger(ok, "blueTolerance");
+            QPoint positionOffset = evaluatePoint(ok, "positionOffset");
 
 			if(!ok)
 				return;
@@ -78,6 +79,8 @@ namespace Actions
 			mMaximumColor = QColor(normalizeColor(mPixelColorValue.red() + redTolerance),
 								   normalizeColor(mPixelColorValue.green() + greenTolerance),
 								   normalizeColor(mPixelColorValue.blue() + blueTolerance));
+
+            mPixelPosition += positionOffset;
 
 			if(testPixel())
 			{

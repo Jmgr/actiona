@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,21 +47,21 @@ namespace Actions
 			if(firstline < 1)
 			{
 				setCurrentParameter("firstline");
-				emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid first line value : %1").arg(firstline));
+				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid first line value : %1").arg(firstline));
 				return;
 			}
 
 			if(lastline < 1)
 			{
 				setCurrentParameter("lastline");
-				emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid last line value : %1").arg(lastline));
+				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid last line value : %1").arg(lastline));
 				return;
 			}
 
 			if(lastline < firstline)
 			{
 				setCurrentParameter("firstline");
-				emit executionException(ActionTools::ActionException::BadParameterException, tr("The first line has to be smaller than the last line"));
+				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("The first line has to be smaller than the last line"));
 				return;
 			}
 		}

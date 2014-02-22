@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ namespace Actions
 		{
 			bool ok = true;
 
+			mPositionOffset = evaluatePoint(ok, "positionOffset");
 			mPoints = evaluatePolygon(ok, "path");
 
 			if(!ok)
@@ -74,7 +75,7 @@ namespace Actions
 			}
 			else
 			{
-				mMouseDevice.setCursorPosition(mPoints.at(mCurrentPoint));
+				mMouseDevice.setCursorPosition(mPoints.at(mCurrentPoint) + mPositionOffset);
 				++mCurrentPoint;
 			}
 		}
@@ -82,6 +83,7 @@ namespace Actions
 	private:
 		MouseDevice mMouseDevice;
 		QTimer mMoveTimer;
+		QPoint mPositionOffset;
 		QPolygon mPoints;
 		int mCurrentPoint;
 

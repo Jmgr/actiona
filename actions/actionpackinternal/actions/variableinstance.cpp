@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 namespace Actions
 {
 	ActionTools::StringListPair VariableInstance::types = qMakePair(
-				QStringList() << "string" << "integer" << "float" << "color" << "position" << "size",
+                QStringList() << "string" << "integer" << "float" << "color" << "position" << "size",
 				QStringList()
 				<< QT_TRANSLATE_NOOP("VariableInstance::types", "String")
 				<< QT_TRANSLATE_NOOP("VariableInstance::types", "Integer")

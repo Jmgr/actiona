@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -50,18 +50,20 @@ namespace Code
 	
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue copy(QScriptContext *context, QScriptEngine *engine);
+		static QScriptValue exists(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue move(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue rename(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue remove(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
 	
-		~File()						{ mFile.close(); }
+		~File()										{ mFile.close(); }
 
-		QFile *file()				{ return &mFile; }
+		QFile *file()								{ return &mFile; }
 	
 	public slots:
 		QString toString() const					{ return "File"; }
+		virtual bool equals(const QScriptValue &other) const;
 		QScriptValue open(const QString &filename, OpenMode mode);
 		QScriptValue write(const QScriptValue &data);
 		QScriptValue writeText(const QString &value, Encoding encoding = Native);

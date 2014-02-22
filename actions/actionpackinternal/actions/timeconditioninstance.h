@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,21 +41,21 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString date = evaluateString(ok, "date");
+            mTestedDateTime = evaluateDateTime(ok, "date");
+
+            if(!mTestedDateTime.isValid())
+            {
+                setCurrentParameter("date");
+                emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid date"));
+                return;
+            }
+
 			ActionTools::IfActionValue ifBefore = evaluateIfAction(ok, "ifBefore");
 			ActionTools::IfActionValue ifNow = evaluateIfAction(ok, "ifNow");
 			ActionTools::IfActionValue ifAfter = evaluateIfAction(ok, "ifAfter");
 
 			if(!ok)
 				return;
-
-			mTestedDateTime = QDateTime::fromString(date, "dd/MM/yyyy hh:mm:ss");
-			if(!mTestedDateTime.isValid())
-			{
-				setCurrentParameter("date");
-				emit executionException(ActionTools::ActionException::BadParameterException, tr("Invalid date"));
-				return;
-			}
 
 			QString action;
 			QString line;

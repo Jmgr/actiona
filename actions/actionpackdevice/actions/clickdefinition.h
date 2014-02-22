@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -78,6 +78,10 @@ namespace Actions
 	
 			addElement(clickGroup);
 			
+			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
+			positionOffset->setTooltip(tr("The offset to apply to the click position"));
+			addElement(positionOffset, 1);
+
 			addException(ClickInstance::FailedToSendInputException, tr("Send input failure"));
 			addException(ClickInstance::InvalidActionException, tr("Invalid action"));
 		}
@@ -90,6 +94,7 @@ namespace Actions
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/click.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 	
 	private:
 		Q_DISABLE_COPY(ClickDefinition)

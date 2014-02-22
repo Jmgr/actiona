@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ class QAbstractItemModel;
 
 namespace ActionTools
 {
+    class ParameterContainer;
+
 	class ACTIONTOOLSSHARED_EXPORT AbstractCodeEditor
 	{
 	public:
@@ -36,6 +38,8 @@ namespace ActionTools
 
 		virtual void openEditor(int line = -1, int column = -1) = 0;
 		virtual void setCompletionModel(QAbstractItemModel *completionModel) = 0;
+        virtual void setParameterContainer(const ParameterContainer *parameterContainer) = 0;
+        virtual QSet<QString> findVariables() const = 0;
 	};
 }
 

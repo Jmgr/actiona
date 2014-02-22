@@ -55,9 +55,13 @@
 <context>
     <name>ActionException::ExceptionName</name>
     <message>
-        <location filename="../actiontools/actionexception.cpp" line="29"/>
         <source>Bad parameter</source>
-        <translation>Mauvais paramètre</translation>
+        <translation type="obsolete">Mauvais paramètre</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actionexception.cpp" line="29"/>
+        <source>Invalid parameter</source>
+        <translation>Paramètre incorrect</translation>
     </message>
     <message>
         <location filename="../actiontools/actionexception.cpp" line="30"/>
@@ -140,9 +144,13 @@
         <translation>%1 : &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="150"/>
         <source>%1: bad definition version</source>
-        <translation>%1 : mauvause définition de version</translation>
+        <translation type="obsolete">%1 : mauvause définition de version</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actionfactory.cpp" line="150"/>
+        <source>%1: invalid definition version</source>
+        <translation>%1 : définition de version incorrecte</translation>
     </message>
     <message>
         <location filename="../actiontools/actionfactory.cpp" line="170"/>
@@ -158,59 +166,70 @@
 <context>
     <name>ActionTools::ActionInstance</name>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="152"/>
+        <location filename="../actiontools/actioninstance.cpp" line="178"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
         <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas commencer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="175"/>
+        <location filename="../actiontools/actioninstance.cpp" line="252"/>
         <source>Integer value expected.</source>
         <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="210"/>
+        <location filename="../actiontools/actioninstance.cpp" line="287"/>
         <source>Decimal value expected.</source>
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="280"/>
-        <location filename="../actiontools/actioninstance.cpp" line="288"/>
+        <location filename="../actiontools/actioninstance.cpp" line="357"/>
+        <location filename="../actiontools/actioninstance.cpp" line="365"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="383"/>
-        <location filename="../actiontools/actioninstance.cpp" line="391"/>
+        <location filename="../actiontools/actioninstance.cpp" line="460"/>
+        <location filename="../actiontools/actioninstance.cpp" line="468"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="447"/>
+        <location filename="../actiontools/actioninstance.cpp" line="583"/>
         <source>Unable to find any procedure named &quot;%1&quot;</source>
         <translation>Impossible de trouver une procédure nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="508"/>
+        <location filename="../actiontools/actioninstance.cpp" line="659"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="515"/>
+        <location filename="../actiontools/actioninstance.cpp" line="692"/>
+        <source>Invalid parameter. Unable to evaluate string</source>
+        <translation>Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
+    </message>
+    <message>
+        <source>Bad parameter. Unable to evaluate string</source>
+        <translation type="obsolete">Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
+    </message>
+    <message>
         <source>[Null]</source>
-        <translation>[Nul]</translation>
+        <translation type="obsolete">[Nul]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="517"/>
         <source>[Undefined]</source>
-        <translation>[Indéfini]</translation>
+        <translation type="obsolete">[Indéfini]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="527"/>
         <source>[Raw data]</source>
-        <translation>[Données brutes]</translation>
+        <translation type="obsolete">[Données brutes]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="248"/>
+        <location filename="../actiontools/actioninstance.h" line="255"/>
+        <source>Please choose a value for this field.</source>
+        <translation>Merci de choisir une valeur pour ce champ.</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.h" line="268"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation>&quot;%1&quot; est une valeur incorrecte.</translation>
     </message>
@@ -289,12 +308,12 @@
 <context>
     <name>ActionTools::CodeDateTimeEdit</name>
     <message>
-        <location filename="../actiontools/codedatetimeedit.cpp" line="117"/>
+        <location filename="../actiontools/codedatetimeedit.cpp" line="127"/>
         <source>&amp;Step up</source>
         <translation>&amp;Monter</translation>
     </message>
     <message>
-        <location filename="../actiontools/codedatetimeedit.cpp" line="121"/>
+        <location filename="../actiontools/codedatetimeedit.cpp" line="131"/>
         <source>Step &amp;down</source>
         <translation>&amp;Descendre</translation>
     </message>
@@ -326,27 +345,42 @@
 <context>
     <name>ActionTools::CodeLineEdit</name>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="45"/>
+        <location filename="../actiontools/codelineedit.cpp" line="52"/>
         <source>Set to text/code</source>
         <translation>Changer en texte/code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="46"/>
+        <location filename="../actiontools/codelineedit.cpp" line="53"/>
         <source>Open editor</source>
         <translation>Ouvrir éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="70"/>
+        <location filename="../actiontools/codelineedit.cpp" line="79"/>
         <source>Click here to switch text/code</source>
         <translation>Cliquez ici pour passer en mode texte/code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="74"/>
+        <location filename="../actiontools/codelineedit.cpp" line="83"/>
         <source>Click here to open the editor</source>
         <translation>Cliquez ici pour ouvrir l&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="296"/>
+        <location filename="../actiontools/codelineedit.cpp" line="87"/>
+        <source>Click here to insert a variable</source>
+        <translation>Cliquez ici pour insérer une variable</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="314"/>
+        <source>Insert variable</source>
+        <translation>Insérer une variable</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="319"/>
+        <source>No variables to insert</source>
+        <translation>Pas de variables à insérer</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="419"/>
         <source>Double-click to edit</source>
         <translation>Double-cliquez pour éditer</translation>
     </message>
@@ -354,12 +388,12 @@
 <context>
     <name>ActionTools::CodeSpinBox</name>
     <message>
-        <location filename="../actiontools/codespinbox.cpp" line="146"/>
+        <location filename="../actiontools/codespinbox.cpp" line="156"/>
         <source>&amp;Step up</source>
         <translation>&amp;Monter</translation>
     </message>
     <message>
-        <location filename="../actiontools/codespinbox.cpp" line="150"/>
+        <location filename="../actiontools/codespinbox.cpp" line="160"/>
         <source>Step &amp;down</source>
         <translation>&amp;Descendre</translation>
     </message>
@@ -429,27 +463,39 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::OpenCVAlgorithms</name>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="59"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="54"/>
         <source>FindSubImage is already running</source>
         <translation>Recherche via FindSubImage en cours</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="110"/>
-        <source>Source image must be larger than target image</source>
-        <translation>L&apos;image source doit être plus grande que l&apos;image cible</translation>
-    </message>
-    <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="118"/>
-        <source>Source image and target image must have same depth</source>
-        <translation>L&apos;image source et l&apos;image cible doivent avoir la même profondeur</translation>
-    </message>
-    <message>
         <location filename="../actiontools/opencvalgorithms.cpp" line="126"/>
-        <source>Source image and target image must have same number of channels</source>
-        <translation>L&apos;image source et l&apos;image cible doivent avoir le même nombre de canaux</translation>
+        <source>Source images must be larger than target image</source>
+        <translation>Les images source doivent être plus grandes que l&apos;image cible</translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="294"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="134"/>
+        <source>Source images and target image must have same depth</source>
+        <translation>Les images source et l&apos;image cible doivent avoir la même profondeur</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="142"/>
+        <source>Source images and target image must have same number of channels</source>
+        <translation>Les images source et l&apos;image cible doivent avoir le même nombre de canaux</translation>
+    </message>
+    <message>
+        <source>Source image must be larger than target image</source>
+        <translation type="obsolete">L&apos;image source doit être plus grande que l&apos;image cible</translation>
+    </message>
+    <message>
+        <source>Source image and target image must have same depth</source>
+        <translation type="obsolete">L&apos;image source et l&apos;image cible doivent avoir la même profondeur</translation>
+    </message>
+    <message>
+        <source>Source image and target image must have same number of channels</source>
+        <translation type="obsolete">L&apos;image source et l&apos;image cible doivent avoir le même nombre de canaux</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="325"/>
         <source>OpenCV exception: %1</source>
         <translation>Exception OpenCV : %1</translation>
     </message>
@@ -465,22 +511,22 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::Script</name>
     <message>
-        <location filename="../actiontools/script.cpp" line="201"/>
+        <location filename="../actiontools/script.cpp" line="206"/>
         <source>Unknown</source>
         <translation>Inconnu</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="203"/>
+        <location filename="../actiontools/script.cpp" line="208"/>
         <source>GNU/Linux</source>
         <translation>GNU/Linux</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="206"/>
+        <location filename="../actiontools/script.cpp" line="211"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="209"/>
+        <location filename="../actiontools/script.cpp" line="214"/>
         <source>Mac</source>
         <translation>Mac</translation>
     </message>
@@ -538,66 +584,72 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code::Image</name>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="64"/>
-        <location filename="../actiontools/code/image.cpp" line="423"/>
-        <location filename="../actiontools/code/image.cpp" line="478"/>
-        <location filename="../actiontools/code/image.cpp" line="513"/>
-        <location filename="../actiontools/code/image.cpp" line="549"/>
+        <location filename="../actiontools/code/image.cpp" line="65"/>
+        <location filename="../actiontools/code/image.cpp" line="449"/>
+        <location filename="../actiontools/code/image.cpp" line="505"/>
+        <location filename="../actiontools/code/image.cpp" line="541"/>
+        <location filename="../actiontools/code/image.cpp" line="578"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="68"/>
+        <location filename="../actiontools/code/image.cpp" line="69"/>
+        <location filename="../actiontools/code/image.cpp" line="112"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="94"/>
+        <location filename="../actiontools/code/image.cpp" line="95"/>
         <source>Invalid window</source>
         <translation>Fenêtre invalide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="227"/>
+        <location filename="../actiontools/code/image.cpp" line="121"/>
+        <source>Invalid screen index</source>
+        <translation>Index d&apos;écran non valide</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/image.cpp" line="252"/>
         <source>Unable to set the image data</source>
         <translation>Impossible de changer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="245"/>
+        <location filename="../actiontools/code/image.cpp" line="270"/>
         <source>Unable to get the image data</source>
         <translation>Impossible de récupérer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="406"/>
-        <location filename="../actiontools/code/image.cpp" line="448"/>
-        <location filename="../actiontools/code/image.cpp" line="503"/>
-        <location filename="../actiontools/code/image.cpp" line="539"/>
+        <location filename="../actiontools/code/image.cpp" line="432"/>
+        <location filename="../actiontools/code/image.cpp" line="475"/>
+        <location filename="../actiontools/code/image.cpp" line="531"/>
+        <location filename="../actiontools/code/image.cpp" line="568"/>
         <source>Error while searching for a sub-image: %1</source>
         <translation>Erreur lors de la recherche d&apos;une sous-image : %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="489"/>
-        <location filename="../actiontools/code/image.cpp" line="524"/>
+        <location filename="../actiontools/code/image.cpp" line="516"/>
+        <location filename="../actiontools/code/image.cpp" line="552"/>
         <source>Parameter &quot;callback&quot; is not a function</source>
         <translation>Le paramètre &quot;callback&quot; n&apos;est pas une fonction</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="61"/>
-        <location filename="../actiontools/code/image.cpp" line="256"/>
+        <location filename="../actiontools/code/image.cpp" line="62"/>
+        <location filename="../actiontools/code/image.cpp" line="281"/>
         <source>Unable to load image from file %1</source>
         <translation>Impossible de charger l&apos;image à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="267"/>
+        <location filename="../actiontools/code/image.cpp" line="292"/>
         <source>Unable to save image to file %1</source>
         <translation>Impossible de sauvegarder l&apos;image dans le fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="279"/>
+        <location filename="../actiontools/code/image.cpp" line="304"/>
         <source>Unable to apply filter</source>
         <translation>Impossible d&apos;appliquer le filtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="316"/>
+        <location filename="../actiontools/code/image.cpp" line="341"/>
         <source>Cannot set filter option %1 %2</source>
         <translation>Impossible de changer les options du filtre %1 %2</translation>
     </message>
@@ -1349,48 +1401,48 @@ Double-cliquez pour afficher</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="238"/>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="252"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="235"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="249"/>
         <source>option &quot;%1&quot; not found</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="387"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="384"/>
         <source>Short options cannot have optional parameters</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="399"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="396"/>
         <source>positional() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="413"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="410"/>
         <source>unrecognized() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="426"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="423"/>
         <source>count() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="446"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="443"/>
         <source>value() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="461"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="458"/>
         <source>parameters() called before parse()</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="752"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="748"/>
         <source>unrecognized parameters: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="755"/>
+        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="751"/>
         <source>%1 requires a parameter</source>
         <translation></translation>
     </message>

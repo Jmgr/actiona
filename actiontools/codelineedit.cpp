@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,10 @@
 #include "codeeditordialog.h"
 #include "settings.h"
 #include "scriptcompleter.h"
+#include "parametercontainer.h"
+#include "codelineeditbutton.h"
+#include "script.h"
+#include "actioninstance.h"
 
 #include <QMenu>
 #include <QContextMenuEvent>
@@ -32,23 +36,26 @@
 #include <QRegExpValidator>
 #include <QDebug>
 #include <QToolButton>
+#include <QCursor>
+#include <QSet>
 
 namespace ActionTools
 {
-	CodeLineEdit::CodeLineEdit(QWidget *parent, const QRegExp &regexpValidation)
-		: QLineEdit(parent),
+    CodeLineEdit::CodeLineEdit(QWidget *parent, const QRegExp &regexpValidation)
+        : QLineEdit(parent),
+        mParameterContainer(0),
 		mCode(false),
 		mMultiline(false),
 		mAllowTextCodeChange(true),
 		mShowEditorButton(true),
 		mEmbedded(false),
-		mSwitchTextCode(new QAction(tr("Set to text/code"), this)),
-		mOpenEditor(new QAction(tr("Open editor"), this)),
+        mSwitchTextCode(new QAction(QIcon(":/images/code.png"), tr("Set to text/code"), this)),
+        mOpenEditor(new QAction(QIcon(":/images/editor.png"), tr("Open editor"), this)),
 		mRegExp(regexpValidation),
 		mCompletionModel(0),
-		mCodeButton(new QToolButton(this)),
-        mEditorButton(new QToolButton(this)),
-        mResourceButton(new QToolButton(this))
+        mCodeButton(new CodeLineEditButton(this)),
+        mEditorButton(new CodeLineEditButton(this)),
+        mInsertButton(new CodeLineEditButton(this))
 	{
 		connect(this, SIGNAL(textChanged(const QString &)), this, SLOT(textChanged(const QString &)));
 		connect(mSwitchTextCode, SIGNAL(triggered()), this, SLOT(reverseCode()));
@@ -56,6 +63,7 @@ namespace ActionTools
 		connect(mCodeButton, SIGNAL(clicked()), this, SLOT(reverseCode()));
 		connect(mEditorButton, SIGNAL(clicked()), this, SLOT(openEditor()));
         connect(mResourceButton, SIGNAL(clicked()), this, SIGNAL(insertResource()));
+        connect(mInsertButton, SIGNAL(clicked()), this, SLOT(showVariableMenuAsPopup()));
 
 		QSettings settings;
 
@@ -66,7 +74,7 @@ namespace ActionTools
 
 		addAction(mSwitchTextCode);
 		addAction(mOpenEditor);
-		
+
 		mCodeButton->setIcon(QIcon(":/images/code.png"));
 		mCodeButton->setMaximumWidth(14);
 		mCodeButton->setToolTip(tr("Click here to switch text/code"));
@@ -75,14 +83,26 @@ namespace ActionTools
 		mEditorButton->setMaximumWidth(18);
 		mEditorButton->setToolTip(tr("Click here to open the editor"));
 
+        /*
         mResourceButton->setIcon(QIcon(":/images/resource.png"));
         mResourceButton->setMaximumWidth(18);
         mResourceButton->setToolTip(tr("Click here to insert a resource"));
 		
         setMinimumWidth(minimumWidth() + mCodeButton->maximumWidth() + mEditorButton->maximumWidth() + mResourceButton->maximumWidth());
+        */
+
+        mInsertButton->setIcon(QIcon(":/images/insert.png"));
+        mInsertButton->setMaximumWidth(18);
+        mInsertButton->setToolTip(tr("Click here to insert a variable"));
 		
-		setEmbedded(false);
-	}
+        setMinimumWidth(minimumWidth() + mCodeButton->maximumWidth() + mEditorButton->maximumWidth() + mInsertButton->maximumWidth());
+
+        setEmbedded(false);
+    }
+
+    CodeLineEdit::~CodeLineEdit()
+    {
+    }
 	
 	void CodeLineEdit::setCode(bool code)
 	{
@@ -122,7 +142,10 @@ namespace ActionTools
 			w += mCodeButton->maximumWidth();
 		if(mShowEditorButton)
 			w += mEditorButton->maximumWidth();
+/*
         w += mResourceButton->maximumWidth();
+*/
+        w += mInsertButton->maximumWidth();
 		
 		setStyleSheet(QString("QLineEdit { padding-right: %1px; }").arg(w));
 
@@ -174,8 +197,52 @@ namespace ActionTools
 		mCompletionModel = completionModel;
 		
 		if(mCode)
-			setCompleter(new ScriptCompleter(mCompletionModel, this));
-	}
+            setCompleter(new ScriptCompleter(mCompletionModel, this));
+    }
+
+    void CodeLineEdit::setParameterContainer(const ParameterContainer *parameterContainer)
+    {
+        mParameterContainer = parameterContainer;
+    }
+
+    QSet<QString> CodeLineEdit::findVariables() const
+    {
+        QSet<QString> back;
+
+        if(isCode())
+        {
+            foreach(const QString &codeLine, text().split(QRegExp("[\n\r;]"), QString::SkipEmptyParts))
+            {
+                int position = 0;
+
+                while((position = Script::CodeVariableDeclarationRegExp.indexIn(codeLine, position)) != -1)
+                {
+                    QString foundVariableName = Script::CodeVariableDeclarationRegExp.cap(1);
+
+                    position += Script::CodeVariableDeclarationRegExp.cap(1).length();
+
+                    if(!foundVariableName.isEmpty())
+                        back << foundVariableName;
+                }
+            }
+        }
+        else
+        {
+            int position = 0;
+
+            while((position = ActionInstance::VariableRegExp.indexIn(text(), position)) != -1)
+            {
+                QString foundVariableName = ActionInstance::VariableRegExp.cap(2);
+
+                position += ActionInstance::VariableRegExp.cap(0).length();
+
+                if(!foundVariableName.isEmpty())
+                    back << foundVariableName;
+            }
+        }
+
+        return back;
+    }
 
 	void CodeLineEdit::reverseCode()
 	{
@@ -216,6 +283,13 @@ namespace ActionTools
 
 		addShortcuts(menu);
 
+        menu->addSeparator();
+
+        QMenu *variablesMenu = createVariablesMenu(menu);
+        variablesMenu->setIcon(QIcon(":/images/insert.png"));
+
+        menu->addMenu(variablesMenu);
+
 		menu->exec(event->globalPos());
 
 		delete menu;
@@ -227,14 +301,56 @@ namespace ActionTools
 	{
 		resizeButtons();
 		
-		QLineEdit::resizeEvent(event);
-	}
+        QLineEdit::resizeEvent(event);
+    }
+
+    void CodeLineEdit::insertVariable(const QString &variable)
+    {
+        if(isCode())
+            insert(variable);
+        else
+            insert("$" + variable);
+    }
+
+    void CodeLineEdit::insertVariable(QAction *action)
+    {
+        insertVariable(action->text());
+    }
+
+    QMenu *CodeLineEdit::createVariablesMenu(QMenu *parentMenu)
+    {
+        Q_ASSERT(mParameterContainer);
+        QMenu *variablesMenu = mParameterContainer->createVariablesMenu(parentMenu);
+        if(variablesMenu)
+        {
+            variablesMenu->setTitle(tr("Insert variable"));
+            connect(variablesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+        }
+        else
+        {
+            variablesMenu = new QMenu(tr("No variables to insert"), parentMenu);
+            variablesMenu->setEnabled(false);
+        }
+
+        return variablesMenu;
+    }
+
+    void CodeLineEdit::showVariableMenuAsPopup()
+    {
+        QMenu *menu = new QMenu;
+
+        menu->addMenu(createVariablesMenu(menu));
+
+        menu->exec(QCursor::pos());
+
+        delete menu;
+    }
 	
 	void CodeLineEdit::resizeButtons()
 	{
 		QRect codeButtonGeometry;
-		QRect editorButtonGeometry;
-        QRect resourceButtonGeometry;
+        QRect editorButtonGeometry;
+        QRect insertButtonGeometry;
 		
 		codeButtonGeometry.setX(rect().right() - mCodeButton->maximumWidth() + (mEmbedded ? 1 : 0));
 		codeButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
@@ -242,27 +358,27 @@ namespace ActionTools
 		codeButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
 		
 		mCodeButton->setGeometry(codeButtonGeometry);
-		
-		editorButtonGeometry.setX(rect().right()
-								  - (mShowEditorButton ? mEditorButton->maximumWidth() : 0)
-								  - (mAllowTextCodeChange ? codeButtonGeometry.width() : 0)
-								  + (mEmbedded ? 2 : 1));
-		editorButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
-		editorButtonGeometry.setWidth(mEditorButton->maximumWidth());
-		editorButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
-		
-		mEditorButton->setGeometry(editorButtonGeometry);
 
-        resourceButtonGeometry.setX(rect().right()
+        insertButtonGeometry.setX(rect().right()
                                   - (mShowEditorButton ? mEditorButton->maximumWidth() : 0)
                                   - (mAllowTextCodeChange ? codeButtonGeometry.width() : 0)
-                                  - mResourceButton->maximumWidth()
-                                  + (mEmbedded ? 3 : 2));
-        resourceButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
-        resourceButtonGeometry.setWidth(mResourceButton->maximumWidth());
-        resourceButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
+                                  + (mEmbedded ? 2 : 1));
+        insertButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
+        insertButtonGeometry.setWidth(mInsertButton->maximumWidth());
+        insertButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
 
-        mResourceButton->setGeometry(resourceButtonGeometry);
+        mInsertButton->setGeometry(insertButtonGeometry);
+
+        editorButtonGeometry.setX(rect().right()
+                                  - (mShowEditorButton ? mEditorButton->maximumWidth() : 0)
+                                  - (mAllowTextCodeChange ? codeButtonGeometry.width() : 0)
+                                  - insertButtonGeometry.width()
+                                  + (mEmbedded ? 2 : 1));
+        editorButtonGeometry.setY(rect().top() + (mEmbedded ? -1 : 0));
+        editorButtonGeometry.setWidth(mEditorButton->maximumWidth());
+        editorButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
+
+        mEditorButton->setGeometry(editorButtonGeometry);
 	}
 
 	void CodeLineEdit::mouseMoveEvent(QMouseEvent *event)
@@ -336,6 +452,6 @@ namespace ActionTools
 				painter.setBrush(QBrush(color));
 				painter.drawPolygon(polygon);
 			}
-		}
-	}
+        }
+    }
 }

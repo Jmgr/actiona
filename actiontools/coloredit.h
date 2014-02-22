@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -54,6 +54,8 @@ namespace ActionTools
 		void setFromSubParameter(const SubParameter &subParameter);
 		void openEditor(int line = -1, int column = -1);
 		void setCompletionModel(QAbstractItemModel *completionModel);
+        void setParameterContainer(const ParameterContainer *parameterContainer);
+        QSet<QString> findVariables() const;
 		void setChooseByPositionButtonVisible(bool visible);
 		
 	signals:

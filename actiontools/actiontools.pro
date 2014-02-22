@@ -47,7 +47,8 @@ SOURCES += actionfactory.cpp \
     systeminputtask.cpp \
 	systeminputrecorder.cpp \
     numberformat.cpp \
-    resource.cpp
+    resource.cpp \
+    screenshooter.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -91,8 +92,9 @@ HEADERS += actiontools_global.h \
     systeminput.h \
 	systeminputrecorder.h \
     resource.h \
-    numberformat.h
-
+    numberformat.h \
+    screenshooter.h \
+    parametercontainer.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \

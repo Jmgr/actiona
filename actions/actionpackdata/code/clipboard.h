@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -60,6 +60,7 @@ namespace Code
 	
 	public slots:
 		QString toString() const					{ return "Clipboard"; }
+        virtual bool equals(const QScriptValue &other) const;
 		QScriptValue setMode(Mode mode);
 		QScriptValue setText(const QString &value) const;
 		QScriptValue setImage(const QScriptValue &data) const;

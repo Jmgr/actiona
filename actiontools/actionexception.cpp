@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ namespace ActionTools
 {
 	QString ActionException::ExceptionName[ExceptionCount] =
 	{
-		QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Bad parameter"),
+        QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Invalid parameter"),
 		QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Code error"),
 		QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Timeout")
 	};

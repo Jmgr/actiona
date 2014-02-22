@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,6 +37,10 @@ namespace Code
 	public:
 		static void throwError(QScriptContext *context, QScriptEngine *engine, const QString &errorType, const QString &message, const QString &parent = "Error");
 
+    public slots:
+        virtual QString toString() const = 0;
+        virtual bool equals(const QScriptValue &other) const = 0;
+
 	protected:
 		enum Encoding
 		{
@@ -47,6 +51,7 @@ namespace Code
 		};
 
 		explicit CodeClass();
+        virtual ~CodeClass() {}
 
 		void throwError(const QString &errorType, const QString &message, const QString &parent = "Error") const;
 
@@ -57,12 +62,10 @@ namespace Code
 		static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
 		static QScriptValue stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList);
 
-		QScriptValue thisObject() const { return mThisObject; }
+        virtual int additionalMemoryCost() const { return 0; }
 
 	private:
 		static QScriptValue emptyFunction(QScriptContext *context, QScriptEngine *engine);
-
-		QScriptValue mThisObject;
 	};
 }
 

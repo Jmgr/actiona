@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include "executionwindow.h"
 #include "codeinitializer.h"
 #include "actiondefinition.h"
+#include "actionexception.h"
 #include "scriptagent.h"
 #include "actioninstance.h"
 #include "code/codetools.h"
@@ -49,7 +50,8 @@ namespace LibExecuter
 		mScriptEngine(0),
 		mScriptAgent(0),
 		mHasExecuted(false),
-		mPauseInterrupt(false)
+        mPauseInterrupt(false),
+        mShowDebuggerOnCodeError(true)
 	{
 		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
 		connect(mExecutionWindow, SIGNAL(paused()), this, SLOT(pauseExecution()));
@@ -275,7 +277,8 @@ namespace LibExecuter
 		
         QScriptValue script = mScriptEngine->newObject();
 		mScriptEngine->globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
-		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(1)));
+        script.setProperty("nextLine", 1);
+        script.setProperty("line", 1, QScriptValue::ReadOnly);
 
         QScriptValue imageResourceFun = mScriptEngine->newFunction(imageResourceFunction);
         imageResourceFun.setData(mScriptEngine->newQObject(this));
@@ -490,7 +493,7 @@ namespace LibExecuter
 
 	void Executer::stopExecution()
 	{
-		if(!mExecutionStarted)
+        if(!mExecutionStarted)
 			return;
 		
 		mScriptAgent->pause(false);
@@ -499,7 +502,9 @@ namespace LibExecuter
 		
 		mExecutionStarted = false;
 		mExecutionStatus = Stopped;
-		mScriptEngine->abortEvaluation();
+
+        if(mScriptEngine)
+            mScriptEngine->abortEvaluation();
 
 		mExecutionTimer.stop();
 
@@ -515,10 +520,16 @@ namespace LibExecuter
 
 		mScriptEngineDebugger.detach();
 		
-		mScriptAgent->deleteLater();
-		mScriptAgent = 0;
-		mScriptEngine->deleteLater();
-		mScriptEngine = 0;
+        if(mScriptAgent)
+        {
+            mScriptAgent->deleteLater();
+            mScriptAgent = 0;
+        }
+        if(mScriptEngine)
+        {
+            mScriptEngine->deleteLater();
+            mScriptEngine = 0;
+        }
 
 		delete mProgressDialog;
 		mProgressDialog = 0;
@@ -814,8 +825,13 @@ namespace LibExecuter
 	{
 		mExecutionPaused = true;
 
-		if(!mPauseInterrupt)
-			mDebuggerWindow->show();
+        if(!mPauseInterrupt)
+        {
+            if(mShowDebuggerOnCodeError)
+                mDebuggerWindow->show();
+            else
+                mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
+        }
 		else
 			mPauseInterrupt = false;
 	}
@@ -954,14 +970,19 @@ namespace LibExecuter
 			return;
 		}
 
-		int nextLine = mCurrentActionIndex+2;
+        int nextLine = mCurrentActionIndex + 2;
 		if(nextLine > mScript->actionCount())
 			nextLine = -1;
 
 		QScriptValue script = mScriptEngine->globalObject().property("Script");
 		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(nextLine)));
+        script.setProperty("line", mCurrentActionIndex + 1, QScriptValue::ReadOnly);
 
 		ActionTools::ActionInstance *actionInstance = currentActionInstance();
+
+        const ActionTools::ExceptionActionInstancesHash &exceptionActionInstancesHash = actionInstance->exceptionActionInstances();
+        const ActionTools::ActionException::ExceptionActionInstance &exceptionAction = exceptionActionInstancesHash.value(ActionTools::ActionException::CodeErrorException);
+        mShowDebuggerOnCodeError = (exceptionAction.action() == ActionTools::ActionException::StopExecutionExceptionAction);
 
 		mExecutionWindow->setCurrentActionName(actionInstance->definition()->name());
 		mExecutionWindow->setCurrentActionColor(actionInstance->color());

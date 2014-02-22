@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 */
 
 #include "variableparameterdefinition.h"
-#include "codelineedit.h"
+#include "variablelineedit.h"
 #include "script.h"
 
 namespace ActionTools
@@ -28,11 +28,8 @@ namespace ActionTools
 	{
 		ParameterDefinition::buildEditors(script, parent);
 
-		mLineEdit = new CodeLineEdit(parent, QRegExp("^[A-Za-z_][A-Za-z0-9_]*$"));
+        mLineEdit = new VariableLineEdit(parent);
 
-		//TODO
-		//Do nothing special here for now, but later we could add a variable list
-		
-		addEditor(mLineEdit);
-	}
+        addEditor(mLineEdit);
+    }
 }

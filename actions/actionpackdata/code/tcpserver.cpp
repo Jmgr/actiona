@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -50,8 +50,20 @@ namespace Code
 	
 	TcpServer::~TcpServer()
 	{
-		mTcpServer.close();
-	}
+        mTcpServer.close();
+    }
+
+    bool TcpServer::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(TcpServer *otherTcpServer = qobject_cast<TcpServer*>(object))
+            return (otherTcpServer == this || &otherTcpServer->mTcpServer == &mTcpServer);
+
+        return false;
+    }
 	
 	QScriptValue TcpServer::listen(const QString &address, int port)
 	{

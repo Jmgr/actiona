@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,9 +21,12 @@
 #ifndef ACTIONDIALOG_H
 #define ACTIONDIALOG_H
 
+#include "parametercontainer.h"
+
 #include <QDialog>
 #include <QVector>
 #include <QList>
+#include <QSet>
 
 namespace Ui
 {
@@ -46,13 +49,15 @@ class QTabWidget;
 class QSpinBox;
 class QTranslator;
 
-class ActionDialog : public QDialog
+class ActionDialog : public QDialog, public ActionTools::ParameterContainer
 {
 	Q_OBJECT
 
 public:
 	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent = 0);
 	~ActionDialog();
+
+    virtual QMenu *createVariablesMenu(QWidget *parent) const;
 
 public slots:
 	void accept();
@@ -91,6 +96,7 @@ private:
 	QSpinBox *mPauseBeforeSpinBox;
 	QSpinBox *mPauseAfterSpinBox;
 	QSpinBox *mTimeoutSpinBox;
+    QSet<QString> mOtherActionsVariables;
 
 	Q_DISABLE_COPY(ActionDialog)
 };

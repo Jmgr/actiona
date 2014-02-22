@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ namespace Code
 		Q_OBJECT
 		Q_ENUMS(Filter)
 		Q_ENUMS(MirrorOrientation)
+        Q_ENUMS(AlgorithmMethod)
 		
 	public:
 		enum Filter
@@ -67,11 +68,18 @@ namespace Code
 			Vertical = 1,
 			Horizontal = 2
 		};
+        enum AlgorithmMethod
+        {
+            CorrelationCoefficient,
+            CrossCorrelation,
+            SquaredDifference
+        };
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QImage &image, QScriptEngine *engine);
 
 		static QScriptValue takeScreenshot(QScriptContext *context, QScriptEngine *engine);
+        static QScriptValue takeScreenshotUsingScreenIndex(QScriptContext *context, QScriptEngine *engine);
 
 		static void registerClass(QScriptEngine *scriptEngine);
 		
@@ -79,7 +87,7 @@ namespace Code
 		Image(const Image &other);
 		Image(const QImage &image);
 		Image(const QString &filename);
-		
+
 		Image &operator=(Image other);
 		Image &operator=(QImage image);
 		
@@ -87,6 +95,8 @@ namespace Code
 		void swap(QImage &image);
 		
 		const QImage &image() const;
+
+        virtual int additionalMemoryCost() const { return mImage.byteCount(); }
 	
 	public slots:
 		QScriptValue clone() const;
@@ -114,7 +124,7 @@ namespace Code
 		void findSubImageAsyncFinished(const ActionTools::MatchingPointList &matchingPointList);
 
 	private:
-		void findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, int *maximumMatches = 0) const;
+        void findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, AlgorithmMethod *method, int *maximumMatches = 0) const;
 
 		enum FilterOption
 		{

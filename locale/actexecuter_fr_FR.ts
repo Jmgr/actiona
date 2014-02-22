@@ -25,112 +25,113 @@
         <translation type="obsolete">passer en mode script, ne peut pas être utiliser avec -o</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="120"/>
+        <location filename="../actexecuter/main.cpp" line="180"/>
         <source>switch to code mode, may not be used with -s</source>
         <translation>passer en mode code, ne peut pas être utilisé avec -s</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="122"/>
+        <location filename="../actexecuter/main.cpp" line="182"/>
         <source>switch to script mode, may not be used with -c</source>
         <translation>passer en mode script, ne peut pas être utiliser avec -c</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="124"/>
+        <location filename="../actexecuter/main.cpp" line="184"/>
         <source>do not include the Qt library into the code</source>
         <translation>ne pas inclure la bibliothèque Qt dans le code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="126"/>
+        <location filename="../actexecuter/main.cpp" line="116"/>
+        <location filename="../actexecuter/main.cpp" line="186"/>
         <source>starts in portable mode, storing the settings in the executable folder</source>
         <translation>démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="128"/>
+        <location filename="../actexecuter/main.cpp" line="188"/>
         <source>sets the proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;</source>
         <translation>change le mode de proxy, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="129"/>
+        <location filename="../actexecuter/main.cpp" line="189"/>
         <source>sets the custom proxy type, values are &quot;http&quot; or &quot;socks&quot; (default)</source>
         <translation>change de type de proxy, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="130"/>
+        <location filename="../actexecuter/main.cpp" line="190"/>
         <source>sets the custom proxy host</source>
         <translation>change l&apos;hôte du proxy</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="131"/>
+        <location filename="../actexecuter/main.cpp" line="191"/>
         <source>sets the custom proxy port</source>
         <translation>change le port du proxy</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="132"/>
+        <location filename="../actexecuter/main.cpp" line="192"/>
         <source>sets the custom proxy user</source>
         <translation>change le nom d&apos;utilisateur du proxy</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="133"/>
+        <location filename="../actexecuter/main.cpp" line="193"/>
         <source>sets the custom proxy password</source>
         <translation>change le mot de passe du proxy</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="135"/>
+        <location filename="../actexecuter/main.cpp" line="195"/>
         <source>create a console to see debug output</source>
         <translation>crée une console pour voir la sortie de débogage</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="136"/>
+        <location filename="../actexecuter/main.cpp" line="196"/>
         <source>wait for user input at the end of the execution, used only with --console</source>
         <translation>attendre une action de la part de l&apos;utilisateur avant de fermer le programme, utilisé seulement avec --console</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="138"/>
+        <location filename="../actexecuter/main.cpp" line="198"/>
         <source>show the program version</source>
         <translation>afficher la version du programme</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="140"/>
+        <location filename="../actexecuter/main.cpp" line="200"/>
         <source>show this help text</source>
         <translation>afficher ce texte d&apos;aide</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="230"/>
+        <location filename="../actexecuter/main.cpp" line="235"/>
         <source>usage: </source>
         <translation>utilisation : </translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="230"/>
+        <location filename="../actexecuter/main.cpp" line="235"/>
         <source>[parameters]</source>
         <translation>[paramètres]</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="230"/>
+        <location filename="../actexecuter/main.cpp" line="235"/>
         <source>filename</source>
         <translation>nom de fichier</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="231"/>
+        <location filename="../actexecuter/main.cpp" line="236"/>
         <source>Parameters are:</source>
         <translation>Les paramètres sont :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="263"/>
+        <location filename="../actexecuter/main.cpp" line="268"/>
         <source>Unknown proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;</source>
         <translation>Mode de proxy inconnu, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="296"/>
+        <location filename="../actexecuter/main.cpp" line="301"/>
         <source>Unknown proxy type, values are &quot;http&quot; or &quot;socks&quot; (default)</source>
         <translation>Type de proxy inconnu, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="351"/>
+        <location filename="../actexecuter/main.cpp" line="356"/>
         <source>Unknown execution mode, please specify mode=script or mode=code</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier mode=script ou mode=code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="377"/>
+        <location filename="../actexecuter/main.cpp" line="382"/>
         <source>Unknown execution mode, please specify -s (script) or -c (code)</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier -s (script) ou -c (code)</translation>
     </message>
@@ -139,7 +140,7 @@
         <translation type="obsolete">Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="387"/>
+        <location filename="../actexecuter/main.cpp" line="392"/>
         <source>Unable to read input file</source>
         <translation>Impossible de lire le fichier d&apos;entrée</translation>
     </message>
@@ -149,8 +150,12 @@
         <translation>La lecture du script a échoué à cause d&apos;une erreur interne</translation>
     </message>
     <message>
-        <location filename="../actexecuter/scriptexecuter.cpp" line="57"/>
         <source>Input script file has a bad script schema</source>
+        <translation type="obsolete">Le fichier d&apos;entrée a un schéma incorrect</translation>
+    </message>
+    <message>
+        <location filename="../actexecuter/scriptexecuter.cpp" line="57"/>
+        <source>Input script file has an invalid script schema</source>
         <translation>Le fichier d&apos;entrée a un schéma incorrect</translation>
     </message>
     <message>

@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -72,8 +72,20 @@ namespace Code
 
 	MediaPlaylist::PlaybackMode MediaPlaylist::playbackMode() const
 	{
-		return static_cast<MediaPlaylist::PlaybackMode>(mMediaPlaylist->playbackMode());
-	}
+        return static_cast<MediaPlaylist::PlaybackMode>(mMediaPlaylist->playbackMode());
+    }
+
+    bool MediaPlaylist::equals(const QScriptValue &other) const
+    {
+        if(other.isUndefined() || other.isNull())
+            return false;
+
+        QObject *object = other.toQObject();
+        if(MediaPlaylist *otherMediaPlaylist = qobject_cast<MediaPlaylist*>(object))
+            return (otherMediaPlaylist == this || otherMediaPlaylist->mMediaPlaylist == mMediaPlaylist);
+
+        return false;
+    }
 	
 	QScriptValue MediaPlaylist::setPlaybackRate(qreal rate)
 	{

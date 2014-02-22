@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include "actiondefinition.h"
 #include "cursorpathinstance.h"
 #include "pointlistparameterdefinition.h"
+#include "positionparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -44,6 +45,10 @@ namespace Actions
 			ActionTools::PointListParameterDefinition *path = new ActionTools::PointListParameterDefinition(ActionTools::Name("path", tr("Path")), this);
 			path->setTooltip(tr("The path to follow"));
 			addElement(path);
+
+			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
+			positionOffset->setTooltip(tr("The offset to apply to the path"));
+			addElement(positionOffset, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Cursor path"); }
@@ -54,6 +59,7 @@ namespace Actions
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
 		QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(CursorPathDefinition)

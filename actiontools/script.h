@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ namespace ActionTools
 {
 	class ActionInstance;
 	class ActionFactory;
+    class ElementDefinition;
 
 	class ACTIONTOOLSSHARED_EXPORT Script : public QObject
 	{
@@ -47,9 +48,11 @@ namespace ActionTools
 		{
 			ReadSuccess,			// Ok
 			ReadInternal,			// Internal error
-			ReadBadSchema,			// Did not pass schema validation
-			ReadBadScriptVersion	// Script version is newer than ours
+			ReadInvalidSchema,			// Did not pass schema validation
+			ReadInvalidScriptVersion	// Script version is newer than ours
 		};
+
+        static const QRegExp CodeVariableDeclarationRegExp;
 
 		Script(ActionFactory *actionFactory, QObject *parent = 0);
 		~Script();
@@ -110,9 +113,12 @@ namespace ActionTools
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
 		QStringList labels() const;
+        QSet<QString> findVariables(ActionInstance *actionInstance = 0, ActionInstance *excludedActionInstance = 0) const;
 
 	private:
         Script::ReadResult validateSchema(QIODevice *device, const Tools::Version &scriptVersion, bool tryOlderVersions = true);
+        void parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ActionTools::ElementDefinition *elementDefinition) const;
+        void findVariablesInAction(ActionInstance *actionInstance, QSet<QString> &result) const;
 
 		QList<ScriptParameter> mParameters;
 		QList<ActionInstance *> mActionInstances;

@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -90,8 +90,18 @@ namespace ActionTools
 
 	void BooleanEdit::setCompletionModel(QAbstractItemModel *completionModel)
 	{
-		ui->comboBox->setCompletionModel(completionModel);
-	}
+        ui->comboBox->setCompletionModel(completionModel);
+    }
+
+    void BooleanEdit::setParameterContainer(const ParameterContainer *parameterContainer)
+    {
+        ui->comboBox->setParameterContainer(parameterContainer);
+    }
+
+    QSet<QString> BooleanEdit::findVariables() const
+    {
+        return ui->comboBox->findVariables();
+    }
 
 	void BooleanEdit::on_switchTextModePushButton_clicked()
 	{

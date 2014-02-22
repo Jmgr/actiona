@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -36,7 +36,18 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		IfActionParameterDefinition(const Name &name, QObject *parent);
+        enum Actions
+        {
+            DoNothing,
+            Goto,
+            RunCode,
+            CallProcedure,
+            Wait
+        };
+
+        static StringListPair actions;
+
+        IfActionParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
@@ -51,7 +62,7 @@ namespace ActionTools
 		void setDefaultLine(const QString &line)								{ mDefaultLine = line; }
 		QString defaultLine() const												{ return mDefaultLine; }
 		
-		void update(Script *script);
+		void actionUpdate(Script *script);
 		
 	private slots:
 		void codeChanged(bool code);
@@ -66,14 +77,6 @@ namespace ActionTools
 			ProcedureEditor,
 			NoEditor
 		};
-		enum Actions
-		{
-			DoNothing,
-			Goto,
-			RunCode,
-			CallProcedure,
-			Wait
-		};
 
 		Editor findAppropriateEditor(const QString &actionText) const;
 		void updateStatus(const QString &actionText);
@@ -81,7 +84,6 @@ namespace ActionTools
 		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }
 
 		static bool translated;
-		static StringListPair actions;
 
 		CodeComboBox *mActionEdit;
 		LineComboBox *mLineComboBox;

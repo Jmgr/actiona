@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,6 +23,9 @@
 
 #include "actioninstance.h"
 #include "ifactionvalue.h"
+#include "code/codeclass.h"
+#include "code/rect.h"
+#include "code/point.h"
 
 namespace Actions
 {
@@ -52,82 +55,96 @@ namespace Actions
 
 			QString variableName = evaluateVariable(ok, "variable");
 			Comparison comparison = evaluateListElement<Comparison>(ok, comparisons, "comparison");
-			QString value = evaluateString(ok, "value");
+            QScriptValue value = evaluateValue(ok, "value");
 			ActionTools::IfActionValue ifEqual = evaluateIfAction(ok, "ifEqual");
 			ActionTools::IfActionValue ifDifferent = evaluateIfAction(ok, "ifDifferent");
 
 			if(!ok)
 				return;
 
-			bool conversionOk = true;
-			QVariant variableValue = variable(variableName);
-			float numberVariableValue = variableValue.toFloat(&conversionOk);
-			float numberValue = value.toFloat(&conversionOk);
-			bool equal;
+            QScriptValue variableValue = variable(variableName);
 
-			if(conversionOk)//Number comparison
-			{
-				switch(comparison)
-				{
-				case Equal:
-					equal = (numberVariableValue == numberValue);
-					break;
-				case Different:
-					equal = (numberVariableValue != numberValue);
-					break;
-				case Inferior:
-					equal = (numberVariableValue < numberValue);
-					break;
-				case Superior:
-					equal = (numberVariableValue > numberValue);
-					break;
-				case InferiorEqual:
-					equal = (numberVariableValue <= numberValue);
-					break;
-				case SuperiorEqual:
-					equal = (numberVariableValue >= numberValue);
-					break;
-				case Contains:
-					equal = (variableValue.toString().contains(value));
-					break;
-				default:
-					equal = false;
-					break;
-				}
-			}
-			else//String comparison
-			{
-				switch(comparison)
-				{
-				case Equal:
-					equal = (variableValue.toString() == value);
-					break;
-				case Different:
-					equal = (variableValue.toString() != value);
-					break;
-				case Inferior:
-					equal = (variableValue.toString() < value);
-					break;
-				case Superior:
-					equal = (variableValue.toString() > value);
-					break;
-				case InferiorEqual:
-					equal = (variableValue.toString() <= value);
-					break;
-				case SuperiorEqual:
-					equal = (variableValue.toString() >= value);
-					break;
-				case Contains:
-					equal = (variableValue.toString().contains(value));
-					break;
-				default:
-					equal = false;
-					break;
-				}
-			}
+            if(!variableValue.isValid())
+            {
+                setCurrentParameter("variable");
+                emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid variable"));
 
-			QString action = (equal ? ifEqual.action() : ifDifferent.action());
-			const ActionTools::SubParameter &actionParameter = (equal ? ifEqual.actionParameter() : ifDifferent.actionParameter());
+                return;
+            }
+
+            bool hasResult = false;
+            bool result = false;
+
+            if(comparison == Contains)
+            {
+                if(variableValue.isQObject())
+                {
+                    QObject *variableObject = variableValue.toQObject();
+
+                    Code::Rect *rectObject = qobject_cast<Code::Rect*>(variableObject);
+                    Code::Point *pointObject = qobject_cast<Code::Point*>(value.toQObject());
+                    if(rectObject && pointObject)
+                    {
+                        result = rectObject->rect().contains(pointObject->point());
+
+                        hasResult = true;
+                    }
+                }
+                else if(variableValue.isString())
+                {
+                    result = variableValue.toString().contains(value.toString());
+
+                    hasResult = true;
+                }
+                else if(variableValue.isArray())
+                {
+                    int arrayLength = variableValue.property("length").toInteger();
+
+                    result = false;
+                    hasResult = true;
+
+                    for(int arrayIndex = 0; arrayIndex < arrayLength; ++arrayIndex)
+                    {
+                        if(variableValue.property(arrayIndex).toString() == value.toString())
+                        {
+                            result = true;
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(!hasResult)
+            {
+                switch(comparison)
+                {
+                case Equal:
+                    result = (variableValue.equals(value));
+                    break;
+                case Different:
+                    result = (!variableValue.equals(value));
+                    break;
+                case Inferior:
+                    result = (variableValue.lessThan(value));
+                    break;
+                case Superior:
+                    result = (!variableValue.lessThan(value) && !variableValue.equals(value));
+                    break;
+                case InferiorEqual:
+                    result = (variableValue.lessThan(value) || variableValue.equals(value));
+                    break;
+                case SuperiorEqual:
+                    result = (!variableValue.lessThan(value));
+                    break;
+                default:
+                    result = false;
+                    break;
+                }
+            }
+
+            QString action = (result ? ifEqual.action() : ifDifferent.action());
+            const ActionTools::SubParameter &actionParameter = (result ? ifEqual.actionParameter() : ifDifferent.actionParameter());
 			QString line = evaluateSubParameter(ok, actionParameter);
 
 			if(!ok)

@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@
 
 #include "codecombobox.h"
 #include "codelineedit.h"
+#include "codelineeditbutton.h"
 
 #include <QPainter>
 #include <QAbstractItemView>
-#include <QToolButton>
 
 namespace ActionTools
 {
@@ -61,13 +61,13 @@ namespace ActionTools
 		return flags;
 	}
 
-	CodeComboBox::CodeComboBox(QWidget *parent) :
+    CodeComboBox::CodeComboBox(QWidget *parent) :
 		QComboBox(parent)
 	{
 		setModel(new CodeComboBoxModel(this));
 		setItemDelegate(new CodeComboBoxDelegate(this));
 
-		CodeLineEdit *codeLineEdit = new CodeLineEdit(parent);
+        CodeLineEdit *codeLineEdit = new CodeLineEdit(parent);
 		codeLineEdit->setEmbedded(true);
 		
 		setLineEdit(codeLineEdit);
@@ -103,6 +103,16 @@ namespace ActionTools
 	
 	void CodeComboBox::setCompletionModel(QAbstractItemModel *completionModel)
 	{
-		codeLineEdit()->setCompletionModel(completionModel);
-	}
+        codeLineEdit()->setCompletionModel(completionModel);
+    }
+
+    void CodeComboBox::setParameterContainer(const ParameterContainer *parameterContainer)
+    {
+        codeLineEdit()->setParameterContainer(parameterContainer);
+    }
+
+    QSet<QString> CodeComboBox::findVariables() const
+    {
+        return codeLineEdit()->findVariables();
+    }
 }

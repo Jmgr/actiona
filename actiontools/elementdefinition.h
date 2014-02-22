@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 
 namespace ActionTools
 {
+    class ParameterContainer;
 	class ActionInstance;
 	
 	class ACTIONTOOLSSHARED_EXPORT ElementDefinition : public QObject
@@ -41,20 +42,20 @@ namespace ActionTools
 			OUTPUT
 		};
 
-		ElementDefinition(const Name &name, QObject *parent);
-		virtual ~ElementDefinition()							{}
+        ElementDefinition(const Name &name, QObject *parent);
+        virtual ~ElementDefinition()                                {}
 
-		const Name &name() const								{ return mName; }
-		const QString &tooltip() const							{ return mTooltip; }
-		Category category() const								{ return mCategory; }
-		const QString &description() const						{ return mDescription; }
-		int tab() const											{ return mTab; }
+        const Name &name() const                                    { return mName; }
+        const QString &tooltip() const                              { return mTooltip; }
+        Category category() const                                   { return mCategory; }
+        const QString &description() const                          { return mDescription; }
+        int tab() const                                             { return mTab; }
 
-		void setName(const Name &name)							{ mName = name; }
-		void setTooltip(const QString &tooltip)					{ mTooltip = tooltip; }
-		void setCategory(Category category)						{ mCategory = category; }
-		void setDescription(const QString &description)			{ mDescription = description; }
-		void setTab(int tab)									{ mTab = tab; }
+        void setName(const Name &name)                              { mName = name; }
+        void setTooltip(const QString &tooltip)                     { mTooltip = tooltip; }
+        void setCategory(Category category)                         { mCategory = category; }
+        void setDescription(const QString &description)             { mDescription = description; }
+        void setTab(int tab)                                        { mTab = tab; }
 		
 		virtual void setDefaultValues(ActionInstance *actionInstance) = 0;
 

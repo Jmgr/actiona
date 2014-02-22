@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@
 
 namespace ActionTools
 {
-	ColorPositionParameterDefinition::ColorPositionParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    ColorPositionParameterDefinition::ColorPositionParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mPositionEdit(0),
 		mColorEdit(0)
 	{

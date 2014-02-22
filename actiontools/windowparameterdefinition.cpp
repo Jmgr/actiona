@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@
 
 namespace ActionTools
 {
-	WindowParameterDefinition::WindowParameterDefinition(const Name &name, QObject *parent)
-		: ParameterDefinition(name, parent),
+    WindowParameterDefinition::WindowParameterDefinition(const Name &name, QObject *parent)
+        : ParameterDefinition(name, parent),
 		mWindowEdit(0)
 	{
 	}
@@ -51,7 +51,7 @@ namespace ActionTools
 		actionInstance->setSubParameter(name().original(), "value", mWindowEdit->isCode(), mWindowEdit->text());
 	}
 
-	void WindowParameterDefinition::update(Script *script)
+    void WindowParameterDefinition::actionUpdate(Script *script)
 	{
 		Q_UNUSED(script)
 

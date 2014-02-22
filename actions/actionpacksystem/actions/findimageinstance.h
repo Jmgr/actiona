@@ -1,6 +1,6 @@
 /*
 	Actionaz
-	Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
 	Actionaz is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,9 @@
 #include "matchingpointlist.h"
 #include "windowhandle.h"
 
+#include <QImage>
+#include <QTimer>
+
 #include <limits>
 
 namespace ActionTools
@@ -38,6 +41,7 @@ namespace Actions
 	{
 		Q_OBJECT
 		Q_ENUMS(Source)
+        Q_ENUMS(Method)
 
 	public:
 		enum Source
@@ -46,20 +50,29 @@ namespace Actions
 			WindowSource,
 			ImageSource
 		};
+        enum Method
+        {
+            CorrelationCoefficientMethod,
+            CrossCorrelationMethod,
+            SquaredDifferenceMethod
+        };
 		enum Exceptions
 		{
-			ErrorWhileSearchingException = ActionTools::ActionException::UserException,
-			CannotFindTheImageException
+            ErrorWhileSearchingException = ActionTools::ActionException::UserException,
+            CannotFindTheImageException
 		};
 
 		FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 		~FindImageInstance();
 
 		static ActionTools::StringListPair sources;
+        static ActionTools::StringListPair methods;
 
 		void startExecution();
+        void stopExecution();
 
 	private slots:
+        void startSearching();
 		void searchFinished(const ActionTools::MatchingPointList &matchingPointList);
 
 	private:
@@ -67,10 +80,21 @@ namespace Actions
 
 		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
 		QString mPositionVariableName;
+        QString mConfidenceVariableName;
+        Method mMethod;
 		bool mWindowRelativePosition;
-		ActionTools::WindowHandle mWindow;
-		Source mSource;
+        int mConfidenceMinimum;
+        QList< QPair<QPixmap, QRect> > mImagesToSearchIn;
+        QList<ActionTools::WindowHandle> mWindows;
+        Source mSource;
+        ActionTools::IfActionValue mIfFound;
+        ActionTools::IfActionValue mIfNotFound;
+        QImage mImageToFind;
 		int mMaximumMatches;
+        int mDownPyramidCount;
+        int mSearchExpansion;
+        int mSearchDelay;
+        QTimer mWaitTimer;
 
 		Q_DISABLE_COPY(FindImageInstance)
 	};
