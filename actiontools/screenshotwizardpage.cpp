@@ -33,13 +33,12 @@ namespace ActionTools
     ScreenshotWizardPage::ScreenshotWizardPage(QWidget *parent)
       : QWizardPage(parent),
         ui(new Ui::ScreenshotWizardPage),
-        mTargetWindow(new ActionTools::TargetWindow),
+        mTargetWindow(0),
         mDisableEscape(false)
     {
         ui->setupUi(this);
 
         connect(ui->captureWindowPushButton, SIGNAL(searchEnded(ActionTools::WindowHandle)), this, SLOT(onWindowSearchEnded(ActionTools::WindowHandle)));
-        connect(mTargetWindow, SIGNAL(rectangleSelected(QRect)), this, SLOT(onRectangleSelected(QRect)), Qt::QueuedConnection);
 
         QDesktopWidget *desktopWidget = QApplication::desktop();
 
@@ -87,6 +86,10 @@ namespace ActionTools
     void ScreenshotWizardPage::on_captureScreenPartPushButton_clicked()
     {
         mDisableEscape = true;
+        if(mTargetWindow)
+            delete mTargetWindow;
+        mTargetWindow = new ActionTools::TargetWindow;
+        connect(mTargetWindow, SIGNAL(rectangleSelected(QRect)), this, SLOT(onRectangleSelected(QRect)), Qt::QueuedConnection);
         mTargetWindow->show();
 
         emit completeChanged();
@@ -104,6 +107,8 @@ namespace ActionTools
     void ScreenshotWizardPage::onRectangleSelected(QRect rect)
     {
         mDisableEscape = false;
+        mTargetWindow->deleteLater();
+        mTargetWindow = 0;
 
         if(rect != QRect())
         {
