@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionDefinition::CategoryName</name>
     <message>
@@ -166,44 +166,54 @@
 <context>
     <name>ActionTools::ActionInstance</name>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="178"/>
+        <location filename="../actiontools/actioninstance.cpp" line="300"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
         <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas commencer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="252"/>
+        <location filename="../actiontools/actioninstance.cpp" line="374"/>
         <source>Integer value expected.</source>
         <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="287"/>
+        <location filename="../actiontools/actioninstance.cpp" line="409"/>
         <source>Decimal value expected.</source>
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="357"/>
-        <location filename="../actiontools/actioninstance.cpp" line="365"/>
+        <location filename="../actiontools/actioninstance.cpp" line="497"/>
+        <location filename="../actiontools/actioninstance.cpp" line="505"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="460"/>
-        <location filename="../actiontools/actioninstance.cpp" line="468"/>
+        <location filename="../actiontools/actioninstance.cpp" line="602"/>
+        <location filename="../actiontools/actioninstance.cpp" line="610"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="583"/>
+        <location filename="../actiontools/actioninstance.cpp" line="97"/>
         <source>Unable to find any procedure named &quot;%1&quot;</source>
         <translation>Impossible de trouver une procédure nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="659"/>
+        <location filename="../actiontools/actioninstance.cpp" line="262"/>
+        <source>Invalid image.</source>
+        <translation>Image invalide.</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.cpp" line="282"/>
+        <source>Unable to load image: %1</source>
+        <translation>Impossible de charger l&apos;image : %1</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.cpp" line="808"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="692"/>
+        <location filename="../actiontools/actioninstance.cpp" line="841"/>
         <source>Invalid parameter. Unable to evaluate string</source>
         <translation>Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
     </message>
@@ -224,12 +234,12 @@
         <translation type="obsolete">[Données brutes]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="255"/>
+        <location filename="../actiontools/actioninstance.h" line="262"/>
         <source>Please choose a value for this field.</source>
         <translation>Merci de choisir une valeur pour ce champ.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="268"/>
+        <location filename="../actiontools/actioninstance.h" line="275"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation>&quot;%1&quot; est une valeur incorrecte.</translation>
     </message>
@@ -321,23 +331,33 @@
 <context>
     <name>ActionTools::CodeEditorDialog</name>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="110"/>
-        <location filename="../actiontools/codeeditordialog.cpp" line="129"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="128"/>
+        <source>No variables to insert</source>
+        <translation>Pas de variables à insérer</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codeeditordialog.cpp" line="133"/>
+        <source>Insert variable</source>
+        <translation>Insérer une variable</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codeeditordialog.cpp" line="154"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="186"/>
         <source>Syntax error check</source>
         <translation>Vérification d&apos;erreur de syntaxe</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="110"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="154"/>
         <source>No syntax errors where found.</source>
         <translation>Aucune erreur de syntaxe n&apos;a été trouvée.</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="125"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="182"/>
         <source>Syntax error detected.</source>
         <translation>Des erreurs de syntaxe ont été trouvées.</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="127"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="184"/>
         <source>Syntax error detected: %1</source>
         <translation>Erreur de syntaxe détectée : %1</translation>
     </message>
@@ -345,32 +365,69 @@
 <context>
     <name>ActionTools::CodeLineEdit</name>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="52"/>
+        <location filename="../actiontools/codelineedit.cpp" line="53"/>
         <source>Set to text/code</source>
         <translation>Changer en texte/code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="53"/>
+        <location filename="../actiontools/codelineedit.cpp" line="54"/>
         <source>Open editor</source>
         <translation>Ouvrir éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="79"/>
+        <location filename="../actiontools/codelineedit.cpp" line="80"/>
         <source>Click here to switch text/code</source>
         <translation>Cliquez ici pour passer en mode texte/code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="83"/>
+        <location filename="../actiontools/codelineedit.cpp" line="84"/>
         <source>Click here to open the editor</source>
         <translation>Cliquez ici pour ouvrir l&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="87"/>
-        <source>Click here to insert a variable</source>
-        <translation>Cliquez ici pour insérer une variable</translation>
+        <location filename="../actiontools/codelineedit.cpp" line="88"/>
+        <source>Click here to insert a variable or a resource</source>
+        <translation>Cliquez ici pour insérer une variable ou une ressource</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="314"/>
+        <location filename="../actiontools/codelineedit.cpp" line="268"/>
+        <source>Insert variable/resource</source>
+        <translation>Insérer une variable/ressource</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="268"/>
+        <source>Inserting a variable or a resource will replace the current parameter value.
+Are you sure?</source>
+        <translation>Insérer une variable ou une ressource va remplacer la valeur actuelle du paramètre.
+Êtes-vous sûr ?</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="306"/>
+        <location filename="../actiontools/codelineedit.cpp" line="335"/>
+        <source>Cannot insert in a multiline parameter</source>
+        <translation>Impossible d&apos;insérer dans un paramètre multiligne</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="343"/>
+        <source>Insert resource</source>
+        <translation>Insérer une ressource</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="346"/>
+        <source>No resources to insert</source>
+        <translation>Aucune ressource à insérer</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="460"/>
+        <source>Multiline, double-click to edit</source>
+        <translation>Multiligne, double-cliquez pour éditer</translation>
+    </message>
+    <message>
+        <source>Click here to insert a variable</source>
+        <translation type="obsolete">Cliquez ici pour insérer une variable</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codelineedit.cpp" line="315"/>
         <source>Insert variable</source>
         <translation>Insérer une variable</translation>
     </message>
@@ -380,9 +437,8 @@
         <translation>Pas de variables à insérer</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="419"/>
         <source>Double-click to edit</source>
-        <translation>Double-cliquez pour éditer</translation>
+        <translation type="obsolete">Double-cliquez pour éditer</translation>
     </message>
 </context>
 <context>
@@ -401,12 +457,12 @@
 <context>
     <name>ActionTools::ConsoleWidget</name>
     <message>
-        <location filename="../actiontools/consolewidget.cpp" line="115"/>
+        <location filename="../actiontools/consolewidget.cpp" line="124"/>
         <source>Execution started at %1</source>
         <translation>Exécution démarrée à %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="127"/>
+        <location filename="../actiontools/consolewidget.cpp" line="136"/>
         <source>%n day(s) </source>
         <translation>
             <numerusform>%n jour </numerusform>
@@ -414,7 +470,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="137"/>
+        <location filename="../actiontools/consolewidget.cpp" line="146"/>
         <source>%n hour(s) </source>
         <translation>
             <numerusform>%n heure </numerusform>
@@ -422,7 +478,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="139"/>
+        <location filename="../actiontools/consolewidget.cpp" line="148"/>
         <source>%n minute(s) </source>
         <translation>
             <numerusform>%n minute </numerusform>
@@ -430,7 +486,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="141"/>
+        <location filename="../actiontools/consolewidget.cpp" line="150"/>
         <source>%n second(s) </source>
         <translation>
             <numerusform>%n seconde </numerusform>
@@ -438,7 +494,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="146"/>
+        <location filename="../actiontools/consolewidget.cpp" line="155"/>
         <source>%n millisecond(s)</source>
         <translation>
             <numerusform>%n milliseconde</numerusform>
@@ -446,14 +502,14 @@
         </translation>
     </message>
     <message>
-        <location filename="../actiontools/consolewidget.cpp" line="148"/>
+        <location filename="../actiontools/consolewidget.cpp" line="157"/>
         <source>Execution ended at %1
 (%2)</source>
         <translation>Exécution terminée à %1
 (%2)</translation>
     </message>
     <message>
-        <location filename="../actiontools/consolewidget.cpp" line="201"/>
+        <location filename="../actiontools/consolewidget.cpp" line="210"/>
         <source>
 Double-click to show</source>
         <translation>
@@ -501,6 +557,42 @@ Double-cliquez pour afficher</translation>
     </message>
 </context>
 <context>
+    <name>ActionTools::PositionParameterDefinition</name>
+    <message>
+        <location filename="../actiontools/positionparameterdefinition.cpp" line="49"/>
+        <source>pixels</source>
+        <translation>pixels</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/positionparameterdefinition.cpp" line="49"/>
+        <source>percents</source>
+        <translation>pourcentage</translation>
+    </message>
+</context>
+<context>
+    <name>ActionTools::SaveScreenshotWizardPage</name>
+    <message>
+        <location filename="../actiontools/savescreenshotwizardpage.cpp" line="59"/>
+        <source>Select the file where to save the screenshot</source>
+        <translation>Sélectionnez le fichier où enregistrer la capture d&apos;écran</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/savescreenshotwizardpage.cpp" line="60"/>
+        <source>Images (*.png *.jpg *.jpeg *.bmp *.ppm *.xbm *.xpm);;All files (*.*)</source>
+        <translation>Images (*.png *.jpg *.jpeg *.bmp *.ppm *.xbm *.xpm);;Tous les fichiers (*.*)</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/savescreenshotwizardpage.cpp" line="70"/>
+        <source>Failed to save the screenshot</source>
+        <translation>Impossible d&apos;enregistrer la capture d&apos;écran</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/savescreenshotwizardpage.cpp" line="70"/>
+        <source>Failed to save the screenshot.</source>
+        <translation>Impossible d&apos;enregistrer la capture d&apos;écran.</translation>
+    </message>
+</context>
+<context>
     <name>ActionTools::ScreenPositionWidget</name>
     <message>
         <location filename="../actiontools/screenpositionwidget.cpp" line="48"/>
@@ -509,26 +601,120 @@ Double-cliquez pour afficher</translation>
     </message>
 </context>
 <context>
+    <name>ActionTools::ScreenshotWizard</name>
+    <message>
+        <location filename="../actiontools/screenshotwizard.cpp" line="33"/>
+        <source>Screenshot wizard</source>
+        <translation>Assistant capture d&apos;écran</translation>
+    </message>
+</context>
+<context>
+    <name>ActionTools::ScreenshotWizardPage</name>
+    <message>
+        <location filename="../actiontools/screenshotwizardpage.cpp" line="46"/>
+        <source>All screens</source>
+        <translation>Tous les écrans</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/screenshotwizardpage.cpp" line="49"/>
+        <source>Screen %1</source>
+        <translation>Écran %1</translation>
+    </message>
+</context>
+<context>
     <name>ActionTools::Script</name>
     <message>
-        <location filename="../actiontools/script.cpp" line="206"/>
+        <location filename="../actiontools/script.cpp" line="200"/>
+        <source>Writing...</source>
+        <translation>Écriture...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="208"/>
         <source>Unknown</source>
         <translation>Inconnu</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="208"/>
+        <location filename="../actiontools/script.cpp" line="210"/>
         <source>GNU/Linux</source>
         <translation>GNU/Linux</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="211"/>
+        <location filename="../actiontools/script.cpp" line="213"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="214"/>
+        <location filename="../actiontools/script.cpp" line="216"/>
         <source>Mac</source>
         <translation>Mac</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="247"/>
+        <source>Writing parameters...</source>
+        <translation>Écriture des paramètres...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="267"/>
+        <source>Writing resources...</source>
+        <translation>Écriture des ressources...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="288"/>
+        <source>Writing actions...</source>
+        <translation>Écriture des actions...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="363"/>
+        <source>Reading schema...</source>
+        <translation>Lecture du schéma...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="369"/>
+        <source>Listing file content...</source>
+        <translation>Création de la liste de contenu du fichier...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="441"/>
+        <source>Reading content...</source>
+        <translation>Lecture du contenu...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="496"/>
+        <source>Reading parameters...</source>
+        <translation>Lecture des paramètres...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="516"/>
+        <source>Reading resources...</source>
+        <translation>Lecture des ressources...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/script.cpp" line="565"/>
+        <source>Reading actions...</source>
+        <translation>Lecture des actions...</translation>
+    </message>
+</context>
+<context>
+    <name>ActionTools::TargetWindow</name>
+    <message>
+        <location filename="../actiontools/targetwindow.cpp" line="147"/>
+        <location filename="../actiontools/targetwindow.cpp" line="155"/>
+        <source>Choose a screen rectangle</source>
+        <translation>Choix d&apos;un rectangle sur l&apos;écran</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/targetwindow.cpp" line="147"/>
+        <location filename="../actiontools/targetwindow.cpp" line="155"/>
+        <source>Unable to grab the pointer.</source>
+        <translation>Impossible de prendre le contrôle du curseur.</translation>
+    </message>
+</context>
+<context>
+    <name>ActionTools::VariableLineEdit</name>
+    <message>
+        <location filename="../actiontools/variablelineedit.cpp" line="58"/>
+        <source>Cannot insert resources here</source>
+        <translation>Impossible d&apos;insérer des ressources ici</translation>
     </message>
 </context>
 <context>
@@ -821,17 +1007,22 @@ Double-cliquez pour afficher</translation>
         <translation>Éditeur de texte/code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.ui" line="36"/>
+        <location filename="../actiontools/codeeditordialog.ui" line="27"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.ui" line="49"/>
+        <location filename="../actiontools/codeeditordialog.ui" line="40"/>
         <source>Code</source>
         <translation>Code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.ui" line="84"/>
+        <location filename="../actiontools/codeeditordialog.ui" line="60"/>
+        <source>Insert...</source>
+        <translation>Insérer...</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/codeeditordialog.ui" line="86"/>
         <source>Check syntax</source>
         <translation>Vérifier la syntaxe</translation>
     </message>
@@ -1282,6 +1473,34 @@ Double-cliquez pour afficher</translation>
         <source>Generic convolutionfilter.</source>
         <translation></translation>
     </message>
+    <message numerus="yes">
+        <location filename="../actiontools/numberformat.cpp" line="30"/>
+        <source>%n byte(s)</source>
+        <translation>
+            <numerusform>%n octet(s)</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../actiontools/numberformat.cpp" line="32"/>
+        <source>KB</source>
+        <translation>Ko</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/numberformat.cpp" line="32"/>
+        <source>MB</source>
+        <translation>Mo</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/numberformat.cpp" line="32"/>
+        <source>GB</source>
+        <translation>Go</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/numberformat.cpp" line="32"/>
+        <source>TB</source>
+        <translation>To</translation>
+    </message>
 </context>
 <context>
     <name>QxtCommandOptions</name>
@@ -1445,6 +1664,89 @@ Double-cliquez pour afficher</translation>
         <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="751"/>
         <source>%1 requires a parameter</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>Resource::typeNames</name>
+    <message>
+        <location filename="../actiontools/resource.cpp" line="26"/>
+        <source>Binary</source>
+        <translation>Binaire</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/resource.cpp" line="27"/>
+        <source>Text</source>
+        <translation>Texte</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/resource.cpp" line="28"/>
+        <source>Image</source>
+        <translation>Image</translation>
+    </message>
+</context>
+<context>
+    <name>ResourceNameDialog</name>
+    <message>
+        <location filename="../actiontools/resourcenamedialog.ui" line="14"/>
+        <source>Resource name</source>
+        <translation>Nom de la ressource</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/resourcenamedialog.ui" line="30"/>
+        <source>Resource name:</source>
+        <translation>Nom de la ressource :</translation>
+    </message>
+</context>
+<context>
+    <name>SaveScreenshotWizardPage</name>
+    <message>
+        <location filename="../actiontools/savescreenshotwizardpage.ui" line="14"/>
+        <source>WizardPage</source>
+        <translation>PageD&apos;Assistant</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/savescreenshotwizardpage.ui" line="20"/>
+        <source>Save to file</source>
+        <translation>Enregistrer dans un fichier</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/savescreenshotwizardpage.ui" line="27"/>
+        <source>Save to resource</source>
+        <translation>Enregistrer dans une ressource</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/savescreenshotwizardpage.ui" line="34"/>
+        <source>Save to clipboard</source>
+        <translation>Enregistrer dans le presse-papiers</translation>
+    </message>
+</context>
+<context>
+    <name>ScreenshotWizardPage</name>
+    <message>
+        <location filename="../actiontools/screenshotwizardpage.ui" line="14"/>
+        <source>WizardPage</source>
+        <translation>PageD&apos;Assistant</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/screenshotwizardpage.ui" line="25"/>
+        <source>Capture whole screen:</source>
+        <translation>Capturer tout l&apos;écran :</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/screenshotwizardpage.ui" line="37"/>
+        <location filename="../actiontools/screenshotwizardpage.ui" line="53"/>
+        <source>Capture</source>
+        <translation>Capturer</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/screenshotwizardpage.ui" line="46"/>
+        <source>Capture screen part:</source>
+        <translation>Capturer une partie de l&apos;écran :</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/screenshotwizardpage.ui" line="60"/>
+        <source>Capture window:</source>
+        <translation>Capturer une fenêtre :</translation>
     </message>
 </context>
 <context>

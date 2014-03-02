@@ -1020,12 +1020,12 @@
         <translation>Impossible de préparer la requête</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="200"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="208"/>
         <source>Failed to execute the query : %1</source>
         <translation>Impossible d&apos;exécuter la requête : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="211"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="219"/>
         <source>Cannot fetch the result of a non-select query</source>
         <translation>Impossible de récupérer le résultat d&apos;une requête non-select</translation>
     </message>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionPackWindows</name>
     <message>
@@ -461,9 +461,8 @@
         <translation>Position du déplacement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="68"/>
         <source>The position to move the window</source>
-        <translation>La position où déplacer la fenêtre</translation>
+        <translation type="obsolete">La position où déplacer la fenêtre</translation>
     </message>
     <message>
         <source>Resize</source>
@@ -473,6 +472,11 @@
         <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="58"/>
         <source>The action to perform</source>
         <translation>L&apos;action à effectuer</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="68"/>
+        <source>The position where to move the window</source>
+        <translation>La position où déplacer la fenêtre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="77"/>
