@@ -1,3 +1,23 @@
+3.8.0 (02/03/14)
+Global:
+- added in-script resources
+- added an Image parameter
+- added a percent positioning to the position parameter
+- set the positions as floating point
+- added the evaluation of text-mode variables as non-text if they are the only entry of a parameter
+- fixed some bugs in variable insertion in parameters
+- replaced input masks by validators in position and color parameters
+- fixed the default value in DateTime parameters
+- VariableCondition: added a Contains operation allowing to test for the presence of a string in a string list
+- VariableCondition: corrected the comparison of values, allowing for more intuitive comparisons
+Interface:
+- added a screen capture wizard
+- added the insertion of variables & resources in the code editor
+- added a progress bar to the loading and saving of scripts
+Code:
+- added Script.callProcedure
+- SQL: corrected a bug that ran a SQL request two times when using exec() with a non-prepared request
+
 3.7.0 (28/06/13)
 Actions:
 - added a button to insert detected variables into parameter fields
