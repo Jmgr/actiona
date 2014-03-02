@@ -131,7 +131,12 @@ namespace ActionTools
     {
         Q_UNUSED(event)
 
+#ifdef Q_WS_WIN
         resize(100, 100);
+#endif
+#ifdef Q_WS_X11
+        resize(1, 1);
+#endif
 
         mUpdateTimer.start(1);
 
@@ -178,7 +183,8 @@ namespace ActionTools
     void TargetWindow::update()
     {
 #ifdef Q_WS_X11
-        setMask(QRegion(rect()).subtracted(QRegion(QRect(2, 2, width() - 4, height() - 4))));
+        if(mMousePressed)
+            setMask(QRegion(rect()).subtracted(QRegion(QRect(2, 2, width() - 4, height() - 4))));
 #endif
 
         if(mMousePressed)
