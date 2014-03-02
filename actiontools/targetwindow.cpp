@@ -49,6 +49,7 @@ namespace ActionTools
           , mGrabbingKeyboard(false)
 #endif
     {
+        setWindowModality(Qt::ApplicationModal);
         setAttribute(Qt::WA_TranslucentBackground);
         setMinimumSize(1, 1);
         setCursor(Qt::CrossCursor);
@@ -136,6 +137,11 @@ namespace ActionTools
         mMousePressed = false;
         mResult = QRect();
 
+#ifdef Q_WS_WIN
+        foreach(QWidget *widget, qApp->topLevelWidgets())
+            widget->setWindowOpacity(0.0f);
+#endif
+
 #ifdef Q_WS_X11
         QCursor newCursor(Qt::CrossCursor);
 
@@ -165,6 +171,11 @@ namespace ActionTools
         Q_UNUSED(event)
 
         mUpdateTimer.stop();
+
+#ifdef Q_WS_WIN
+        foreach(QWidget *widget, qApp->topLevelWidgets())
+            widget->setWindowOpacity(1.0f);
+#endif
 
 #ifdef Q_WS_X11
         ungrab();
