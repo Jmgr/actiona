@@ -30,6 +30,18 @@
 
 namespace ActionTools
 {
+    QPixmap ScreenShooter::captureScreen(int screenIndex)
+    {
+        QDesktopWidget *desktop = QApplication::desktop();
+
+        if(screenIndex < 0 || screenIndex >= desktop->screenCount())
+            return QPixmap();
+
+        const QRect &screenGeometry = desktop->screenGeometry(screenIndex);
+
+        return QPixmap::grabWindow(desktop->winId(), screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
+    }
+
     QList< QPair<QPixmap, QRect> > ScreenShooter::captureScreens()
     {
         QDesktopWidget *desktop = QApplication::desktop();
@@ -63,7 +75,19 @@ namespace ActionTools
         return result;
     }
 
-    QPixmap ScreenShooter::captureScreen()
+    QPixmap ScreenShooter::captureWindow(WindowHandle window)
+    {
+        QDesktopWidget *desktop = QApplication::desktop();
+
+        if(!window.isValid())
+            return QPixmap();
+
+        const QRect &windowGeometry = window.rect();
+
+        return QPixmap::grabWindow(desktop->winId(), windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height());
+    }
+
+    QPixmap ScreenShooter::captureAllScreens()
     {
         const QList< QPair<QPixmap, QRect> > &screens = captureScreens();
         QRect resultRect;
@@ -83,6 +107,8 @@ namespace ActionTools
         }
 
         QImage result(resultRect.width(), resultRect.height(), QImage::Format_RGB32);
+        result.fill(Qt::black);
+
         {
             QPainter painter(&result);
 
@@ -95,5 +121,12 @@ namespace ActionTools
         }
 
         return QPixmap::fromImage(result);
+    }
+
+    QPixmap ScreenShooter::captureRect(const QRect &rect)
+    {
+        QDesktopWidget *desktop = QApplication::desktop();
+
+        return QPixmap::grabWindow(desktop->winId(), rect.x(), rect.y(), rect.width(), rect.height());
     }
 }

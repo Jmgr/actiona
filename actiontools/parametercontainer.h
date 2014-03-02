@@ -28,18 +28,20 @@ class QWidget;
 
 namespace ActionTools
 {
+    class Script;
+
     class ACTIONTOOLSSHARED_EXPORT ParameterContainer
     {
     public:
-        ParameterContainer()
-        {
-        }
+        ParameterContainer(Script *script);
 
-        virtual ~ParameterContainer()
-        {
-        }
+        virtual ~ParameterContainer();
 
         virtual QMenu *createVariablesMenu(QWidget *parent) const = 0;
+        virtual QMenu *createResourcesMenu(QWidget *parent) const;
+
+    private:
+        Script *mScript;
     };
 }
 

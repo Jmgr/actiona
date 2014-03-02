@@ -21,7 +21,7 @@
    <item>
     <widget class="ResourceTableWidget" name="resourcesTableWidget">
      <property name="editTriggers">
-      <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+      <set>QAbstractItemView::AllEditTriggers</set>
      </property>
      <property name="dragDropMode">
       <enum>QAbstractItemView::DropOnly</enum>

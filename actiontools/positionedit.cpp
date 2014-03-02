@@ -21,15 +21,18 @@
 #include "positionedit.h"
 #include "ui_positionedit.h"
 
+#include <QRegExpValidator>
+
 namespace ActionTools
 {
 	PositionEdit::PositionEdit(QWidget *parent)
 		: QWidget(parent),
-		ui(new Ui::PositionEdit)
+        ui(new Ui::PositionEdit),
+        mValidator(new QRegExpValidator(QRegExp("^\\d+(\\.\\d{1,2})?:\\d+(\\.\\d{1,2})?$", Qt::CaseSensitive, QRegExp::RegExp2), this))
 	{
 		ui->setupUi(this);
 
-		ui->position->setInputMask("#000900:#009000");
+        ui->position->setValidator(mValidator);
 	}
 
 	PositionEdit::~PositionEdit()
@@ -87,16 +90,16 @@ namespace ActionTools
         return codeLineEdit()->findVariables();
     }
 
-	void PositionEdit::setPosition(QPoint position)
+    void PositionEdit::setPosition(QPointF position)
 	{
 		ui->position->setText(QString("%1:%2").arg(position.x()).arg(position.y()));
 	}
 
-	void PositionEdit::on_choose_positionChosen(QPoint position)
+    void PositionEdit::on_choose_positionChosen(QPointF position)
 	{
 		setPosition(position);
 		
-		emit positionChosen(position);
+        emit positionChosen(position);
 	}
 
 	void PositionEdit::on_position_codeChanged(bool code)
@@ -104,10 +107,10 @@ namespace ActionTools
 		if(code)
 		{
 			QString oldText = ui->position->text();
-			ui->position->setInputMask(QString());
+            ui->position->setValidator(0);
 			ui->position->setText(oldText);
 		}
-		else
-			ui->position->setInputMask("#000900:#009000");
+        else
+            ui->position->setValidator(mValidator);
 	}
 }

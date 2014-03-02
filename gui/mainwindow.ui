@@ -25,7 +25,16 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <item>
@@ -129,7 +138,7 @@
      <x>0</x>
      <y>0</y>
      <width>767</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -230,6 +239,7 @@
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
     <addaction name="actionCreate_shortcut"/>
+    <addaction name="actionTake_screenshot"/>
    </widget>
    <widget class="QMenu" name="menuScript">
     <property name="title">
@@ -289,7 +299,16 @@
      <property name="spacing">
       <number>0</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -373,7 +392,16 @@
      <property name="spacing">
       <number>0</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -647,7 +675,7 @@
      <normaloff>:/icons/shortcut.png</normaloff>:/icons/shortcut.png</iconset>
    </property>
    <property name="text">
-    <string>Create shortcut to script</string>
+    <string>&amp;Create shortcut to script</string>
    </property>
   </action>
   <action name="actionGet_window_title">
@@ -854,10 +882,10 @@
      <normaloff>:/icons/options.png</normaloff>:/icons/options.png</iconset>
    </property>
    <property name="text">
-    <string>Script &amp;settings</string>
+    <string>Script s&amp;ettings</string>
    </property>
    <property name="shortcut">
-    <string>Alt+T</string>
+    <string>Alt+I</string>
    </property>
   </action>
   <action name="actionResources">
@@ -870,6 +898,18 @@
    </property>
    <property name="shortcut">
     <string>Alt+R</string>
+   </property>
+  </action>
+  <action name="actionTake_screenshot">
+   <property name="icon">
+    <iconset resource="../actiontools/actiontools.qrc">
+     <normaloff>:/images/capture.png</normaloff>:/images/capture.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ta&amp;ke screenshot</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+K</string>
    </property>
   </action>
  </widget>
@@ -898,6 +938,7 @@
  </customwidgets>
  <resources>
   <include location="gui.qrc"/>
+  <include location="../actiontools/actiontools.qrc"/>
  </resources>
  <connections>
   <connection>

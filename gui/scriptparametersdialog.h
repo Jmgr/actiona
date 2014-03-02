@@ -22,6 +22,7 @@
 #define SCRIPTPARAMETERSDIALOG_H
 
 #include "scriptparameter.h"
+#include "parametercontainer.h"
 
 #include <QDialog>
 
@@ -39,12 +40,12 @@ namespace ActionTools
 
 class QAbstractItemModel;
 
-class ScriptParametersDialog : public QDialog
+class ScriptParametersDialog : public QDialog, public ActionTools::ParameterContainer
 {
 	Q_OBJECT
 
 public:
-	ScriptParametersDialog(QAbstractItemModel *completitionModel, ActionTools::Script *script, QWidget *parent = 0);
+    ScriptParametersDialog(ActionTools::Script *script, QWidget *parent = 0);
 	~ScriptParametersDialog();
 
 	void setCurrentParameter(int parameter)						{ mCurrentParameter = parameter; }
@@ -52,6 +53,8 @@ public:
 	void setCurrentColumn(int column)							{ mCurrentColumn = column; }
 
 	int exec();
+
+    virtual QMenu *createVariablesMenu(QWidget *parent) const;
 
 private slots:
 	void postInit();
@@ -65,8 +68,7 @@ private:
 	void setupValueParameter(int row, ActionTools::ScriptParameter::ParameterType type, const QString &value = QString(), bool code = false);
 	bool eventFilter(QObject *obj, QEvent *event);
 
-	Ui::ScriptParametersDialog *ui;
-	ActionTools::CodeEditorDialog *mCodeEditorDialog;
+    Ui::ScriptParametersDialog *ui;
 	ActionTools::Script *mScript;
 	int mCurrentParameter;
 	int mCurrentLine;

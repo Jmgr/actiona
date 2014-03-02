@@ -58,7 +58,7 @@ namespace ActionTools
 		void setWindowTitles(const QStringList &windowTitles);
 
 	private slots:
-		void on_choose_searchEnded(const WindowHandle &handle);
+        void on_choose_searchEnded(const ActionTools::WindowHandle &handle);
 
 	private:
 		Ui::WindowEdit *ui;

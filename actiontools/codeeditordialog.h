@@ -31,6 +31,7 @@ namespace Ui
 }
 
 class QAbstractItemModel;
+class QMenu;
 
 namespace ActionTools
 {
@@ -38,7 +39,7 @@ namespace ActionTools
 	{
 		Q_OBJECT
 	public:
-		CodeEditorDialog(QAbstractItemModel *completionModel, QWidget *parent = 0);
+        CodeEditorDialog(QAbstractItemModel *completionModel, QMenu *variablesMenu, QMenu *resourcesMenu, QWidget *parent = 0);
 		~CodeEditorDialog();
 
 		void setText(const QString &text);
@@ -55,14 +56,19 @@ namespace ActionTools
 
 	private slots:
 		void on_codePushButton_toggled(bool checked);
+        void on_insertPushButton_clicked();
 		void on_checkSyntax_clicked();
 		void swapCode();
+        void insertVariable(QAction *action);
 
-	private:
+    private:
+        void insertVariable(const QString &variable);
 		void showSyntaxCheckError();
 		void moveCursorToLine(int line);
 
 		Ui::CodeEditorDialog *ui;
+        QMenu *mVariablesMenu;
+        QMenu *mResourcesMenu;
 
 		Q_DISABLE_COPY(CodeEditorDialog)
 	};

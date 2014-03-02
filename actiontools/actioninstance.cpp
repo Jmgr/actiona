@@ -31,6 +31,8 @@
 
 #include <QDateTime>
 #include <QScriptValueIterator>
+#include <QApplication>
+#include <QDesktopWidget>
 
 namespace ActionTools
 {
@@ -86,6 +88,24 @@ namespace ActionTools
 		++mCurrentRuntimeId;
 	}
 
+    bool ActionInstance::callProcedure(const QString &procedureName)
+    {
+        //Search for the corresponding ActionBeginProcedure action
+        int beginProcedureLine = script()->findProcedure(procedureName);
+        if(beginProcedureLine == -1)
+        {
+            emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to find any procedure named \"%1\"").arg(procedureName));
+
+            return false;
+        }
+
+        setNextLine(beginProcedureLine + 2);//Lines start at 1
+
+        script()->addProcedureCall(scriptLine());
+
+        return true;
+    }
+
 	void ActionInstance::copyActionDataFrom(const ActionInstance &other)
 	{
 		setComment(other.comment());
@@ -97,8 +117,66 @@ namespace ActionTools
 		setExceptionActionInstances(other.exceptionActionInstances());
 		setPauseBefore(other.pauseBefore());
 		setPauseAfter(other.pauseAfter());
-		setTimeout(other.timeout());
-	}
+        setTimeout(other.timeout());
+    }
+
+    QString ActionInstance::convertToVariableName(const QString &input)
+    {
+        QString back = input;
+
+        for(int i = 0; i < back.size(); ++i)
+        {
+            if(back[i] >= QChar('a') && back[i] <= QChar('z'))
+                continue;
+            if(back[i] >= QChar('A') && back[i] <= QChar('Z'))
+                continue;
+            if(i > 0 && back[i] >= QChar('0') && back[i] <= QChar('9'))
+                continue;
+
+            back[i] = QChar('_');
+        }
+
+        return back;
+    }
+
+    QSet<QString> ActionInstance::findVariables(const QString &input, bool code)
+    {
+        QSet<QString> back;
+
+        if(code)
+        {
+            foreach(const QString &codeLine, input.split(QRegExp("[\n\r;]"), QString::SkipEmptyParts))
+            {
+                int position = 0;
+
+                while((position = Script::CodeVariableDeclarationRegExp.indexIn(codeLine, position)) != -1)
+                {
+                    QString foundVariableName = Script::CodeVariableDeclarationRegExp.cap(1);
+
+                    position += Script::CodeVariableDeclarationRegExp.cap(1).length();
+
+                    if(!foundVariableName.isEmpty())
+                        back << foundVariableName;
+                }
+            }
+        }
+        else
+        {
+            int position = 0;
+
+            while((position = ActionInstance::VariableRegExp.indexIn(input, position)) != -1)
+            {
+                QString foundVariableName = ActionInstance::VariableRegExp.cap(1);
+
+                position += ActionInstance::VariableRegExp.cap(0).length();
+
+                if(!foundVariableName.isEmpty())
+                    back << foundVariableName;
+            }
+        }
+
+        return back;
+    }
 
     QScriptValue ActionInstance::evaluateValue(bool &ok,
                                                const QString &parameterName,
@@ -181,6 +259,8 @@ namespace ActionTools
             {
                 ok = false;
 
+                emit executionException(ActionException::InvalidParameterException, tr("Invalid image."));
+
                 return QImage();
             }
 
@@ -198,6 +278,9 @@ namespace ActionTools
             return image;
 
         ok = false;
+
+        emit executionException(ActionException::InvalidParameterException, tr("Unable to load image: %1").arg(filename));
+
         return QImage();
     }
 
@@ -361,21 +444,39 @@ namespace ActionTools
 		return result;
 	}
 
-	QPoint ActionInstance::evaluatePoint(bool &ok,
+    void computePercentPosition(QPointF &point, const SubParameter &unitSubParameter)
+    {
+        if(unitSubParameter.value().toInt() == 1)//Percents
+        {
+            QRect screenGeometry = QApplication::desktop()->screenGeometry();
+
+            point.setX((point.x() * screenGeometry.width()) / 100.0f);
+            point.setY((point.y() * screenGeometry.height()) / 100.0f);
+        }
+    }
+
+    QPoint ActionInstance::evaluatePoint(bool &ok,
 					   const QString &parameterName,
 					   const QString &subParameterName)
 	{
 		if(!ok)
-			return QPoint();
+            return QPoint();
 
 		const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+        const SubParameter &unitSubParameter = retreiveSubParameter(parameterName, "unit");
 		QString result;
 
 		if(subParameter.isCode())
 		{
 			QScriptValue evaluationResult = evaluateCode(ok, subParameter);
 			if(Code::Point *codePoint = qobject_cast<Code::Point*>(evaluationResult.toQObject()))
-				return codePoint->point();
+            {
+                QPointF point = QPointF(codePoint->point().x(), codePoint->point().y());
+
+                computePercentPosition(point, unitSubParameter);
+
+                return QPoint(point.x(), point.y());
+            }
 
 			result = evaluationResult.toString();
 		}
@@ -383,10 +484,10 @@ namespace ActionTools
 			result = evaluateText(ok, subParameter);
 
 		if(!ok)
-			return QPoint();
+            return QPoint();
 
 		if(result.isEmpty() || result == ":")
-			return QPoint();
+            return QPoint();
 
 		QStringList positionStringList = result.split(":");
 		if(positionStringList.count() != 2)
@@ -395,18 +496,20 @@ namespace ActionTools
 
             emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is not a valid position.").arg(result));
 
-			return QPoint();
+            return QPoint();
 		}
 
-		QPoint point = QPoint(positionStringList.at(0).toInt(&ok), positionStringList.at(1).toInt(&ok));
+        QPointF point(positionStringList.at(0).toFloat(&ok), positionStringList.at(1).toFloat(&ok));
 		if(!ok)
 		{
             emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is not a valid position.").arg(result));
 
-			return QPoint();
+            return QPoint();
 		}
 
-		return point;
+        computePercentPosition(point, unitSubParameter);
+
+        return QPoint(point.x(), point.y());
 	}
 
 	QStringList ActionInstance::evaluateItemList(bool &ok, const QString &parameterName, const QString &subParameterName)
@@ -613,36 +716,34 @@ namespace ActionTools
 		d->scriptEngine->globalObject().setProperty("currentSubParameter", subParameterName, QScriptValue::ReadOnly);
 	}
 
-	bool ActionInstance::callProcedure(const QString &procedureName)
-	{
-		//Search for the corresponding ActionBeginProcedure action
-		int beginProcedureLine = script()->findProcedure(procedureName);
-		if(beginProcedureLine == -1)
-		{
-            emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to find any procedure named \"%1\"").arg(procedureName));
-
-			return false;
-		}
-
-		setNextLine(beginProcedureLine + 2);//Lines start at 1
-
-		script()->addProcedureCall(scriptLine());
-
-		return true;
-	}
-
 	SubParameter ActionInstance::retreiveSubParameter(const QString &parameterName, const QString &subParameterName)
 	{
 		setCurrentParameter(parameterName, subParameterName);
 
-		return subParameter(parameterName, subParameterName);
+        SubParameter back = subParameter(parameterName, subParameterName);
+
+        // Re-evaluate the field as code if it contains a single variable
+        if(!back.isCode() && back.value().toString().startsWith(QChar('$')))
+        {
+            QString stringValue = back.value().toString();
+            QString variableName = stringValue.right(stringValue.size() - 1);
+            const QScriptValue &value = d->scriptEngine->globalObject().property(variableName);
+
+            if(value.isValid())
+            {
+                back.setCode(true);
+                back.setValue(variableName);
+            }
+        }
+
+        return back;
 	}
 
-	QScriptValue ActionInstance::evaluateCode(bool &ok, const SubParameter &toEvaluate)
+    QScriptValue ActionInstance::evaluateCode(bool &ok, const QString &toEvaluate)
 	{
 		ok = true;
 
-		QScriptValue result = d->scriptEngine->evaluate(toEvaluate.value().toString());
+        QScriptValue result = d->scriptEngine->evaluate(toEvaluate);
 		if(result.isError())
 		{
             ok = false;
@@ -658,18 +759,27 @@ namespace ActionTools
 			return QScriptValue();
 		}
 
-		return result;
-	}
+        return result;
+    }
 
-	QString ActionInstance::evaluateText(bool &ok, const SubParameter &toEvaluate)
+    QScriptValue ActionInstance::evaluateCode(bool &ok, const SubParameter &toEvaluate)
+    {
+        return evaluateCode(ok, toEvaluate.value().toString());
+    }
+
+    QString ActionInstance::evaluateText(bool &ok, const QString &toEvaluate)
 	{
 		ok = true;
 
         int position = 0;
-		QString value = toEvaluate.value().toString();
 
-        return evaluateTextString(ok, (const QString) value, position);
-	}
+        return evaluateTextString(ok, toEvaluate, position);
+    }
+
+    QString ActionInstance::evaluateText(bool &ok, const SubParameter &toEvaluate)
+    {
+        return evaluateText(ok, toEvaluate.value().toString());
+    }
 
     QString ActionInstance::evaluateTextString(bool &ok, const QString &toEvaluate, int &position)
 	{

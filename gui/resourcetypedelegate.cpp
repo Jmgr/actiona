@@ -1,6 +1,6 @@
 /*
     Actionaz
-    Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+    Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
     Actionaz is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -59,6 +59,20 @@ void ResourceTypeDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
     {
         model->setData(index, comboBox->currentIndex(), Qt::UserRole);
         model->setData(index, ActionTools::Resource::typeNames[comboBox->currentIndex()], Qt::DisplayRole);
+
+        switch(static_cast<ActionTools::Resource::Type>(comboBox->currentIndex()))
+        {
+        case ActionTools::Resource::BinaryType:
+        case ActionTools::Resource::TypeCount:
+            model->setData(index, QIcon(":/images/binary.png"), Qt::DecorationRole);
+            break;
+        case ActionTools::Resource::TextType:
+            model->setData(index, QIcon(":/images/text.png"), Qt::DecorationRole);
+            break;
+        case ActionTools::Resource::ImageType:
+            model->setData(index, QIcon(":/images/image.png"), Qt::DecorationRole);
+            break;
+        }
     }
     else
         QStyledItemDelegate::setModelData(editor, model, index);

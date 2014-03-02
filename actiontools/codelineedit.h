@@ -73,7 +73,6 @@ namespace ActionTools
 
 	signals:
 		void codeChanged(bool code);
-        void insertResource();
 
 	protected:
 		void contextMenuEvent(QContextMenuEvent *event);
@@ -84,9 +83,13 @@ namespace ActionTools
         void showVariableMenuAsPopup();
         void insertVariable(QAction *action);
 
-	private:
-        QMenu *createVariablesMenu(QMenu *parentMenu);
+    protected:
+        virtual QMenu *createVariablesMenu(QMenu *parentMenu, bool ignoreMultiline = false);
+        virtual QMenu *createResourcesMenu(QMenu *parentMenu, bool ignoreMultiline = false);
+
+    private:
 		void resizeButtons();
+        void addVariablesAndResourcesMenus(QMenu *menu);
 		
 		void mouseMoveEvent(QMouseEvent *event);
 		void multilineCheck(const QString &text);

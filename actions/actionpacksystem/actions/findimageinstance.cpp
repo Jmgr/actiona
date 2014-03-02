@@ -68,7 +68,7 @@ namespace Actions
 		bool ok = true;
 
 		mSource = evaluateListElement<Source>(ok, sources, "source");
-		QString imageToFindFilename = evaluateString(ok, "imageToFind");
+        mImageToFind = evaluateImage(ok, "imageToFind");
         mIfFound = evaluateIfAction(ok, "ifFound");
         mIfNotFound = evaluateIfAction(ok, "ifNotFound");
 		mPositionVariableName = evaluateVariable(ok, "position");
@@ -92,9 +92,9 @@ namespace Actions
 		if(!ok)
 			return;
 
-        if(!mImageToFind.load(imageToFindFilename))
+        if(mImageToFind.isNull())
 		{
-			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to load image to find from file %1").arg(imageToFindFilename));
+            emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid image to find"));
 
 			return;
 		}
@@ -145,21 +145,19 @@ namespace Actions
             {
                 bool ok = true;
 
-                QString imageToSearchInFilename = evaluateString(ok, "imageToSearchIn");
+                QImage imageToSearchIn = evaluateImage(ok, "imageToSearchIn");
 
                 if(!ok)
                     return;
 
-                QPixmap imageToSearchIn;
-
-                if(!imageToSearchIn.load(imageToSearchInFilename))
+                if(imageToSearchIn.isNull())
                 {
-                    emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to load image to search in from file %1").arg(imageToSearchInFilename));
+                    emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid image to search in"));
 
                     return;
                 }
 
-                mImagesToSearchIn.append(qMakePair(imageToSearchIn, imageToSearchIn.rect()));
+                mImagesToSearchIn.append(qMakePair(QPixmap::fromImage(imageToSearchIn), imageToSearchIn.rect()));
             }
             break;
         }

@@ -40,8 +40,8 @@ namespace ActionTools
 		delete ui->list->itemDelegate();
 		ui->list->setItemDelegate(new PointItemDelegate(this));
 
-		connect(ui->addPositionPushButton, SIGNAL(positionChosen(QPoint)), this, SLOT(positionChosen(QPoint)));
-		connect(ui->capturePathPushButton, SIGNAL(positionChosen(QPoint)), this, SLOT(stopCapture()));
+        connect(ui->addPositionPushButton, SIGNAL(positionChosen(QPointF)), this, SLOT(positionChosen(QPointF)));
+        connect(ui->capturePathPushButton, SIGNAL(positionChosen(QPointF)), this, SLOT(stopCapture()));
 		connect(&mCaptureTimer, SIGNAL(timeout()), this, SLOT(capture()));
 	}
 
@@ -121,9 +121,9 @@ namespace ActionTools
 		updateClearStatus();
 	}
 
-	void PointListWidget::positionChosen(QPoint position)
+    void PointListWidget::positionChosen(QPointF position)
 	{
-		addPoint(position);
+        addPoint(QPoint(position.x(), position.y()));
 	}
 
 	void PointListWidget::on_list_itemSelectionChanged()

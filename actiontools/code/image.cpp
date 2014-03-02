@@ -102,7 +102,7 @@ namespace Code
             return constructor(QPixmap::grabWindow(windowId).toImage(), engine);
 		}
 
-        return constructor(ActionTools::ScreenShooter::captureScreen().toImage(), engine);
+        return constructor(ActionTools::ScreenShooter::captureAllScreens().toImage(), engine);
     }
 
     QScriptValue Image::takeScreenshotUsingScreenIndex(QScriptContext *context, QScriptEngine *engine)

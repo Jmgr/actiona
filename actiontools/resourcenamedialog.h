@@ -1,0 +1,61 @@
+/*
+    Actionaz
+    Copyright (C) 2008-2013 Jonathan Mercier-Ganady
+
+    Actionaz is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Actionaz is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+    Contact : jmgr@jmgr.info
+*/
+
+#ifndef RESOURCENAMEDIALOG_H
+#define RESOURCENAMEDIALOG_H
+
+#include "actiontools_global.h"
+
+#include <QDialog>
+
+namespace Ui
+{
+    class ResourceNameDialog;
+}
+
+namespace ActionTools
+{
+    class Script;
+
+    class ACTIONTOOLSSHARED_EXPORT ResourceNameDialog : public QDialog
+    {
+        Q_OBJECT
+
+    public:
+        ResourceNameDialog(ActionTools::Script *script, QWidget *parent = 0);
+        ~ResourceNameDialog();
+
+        QString resourceName() const;
+
+    public slots:
+        virtual void accept();
+
+    private slots:
+        void onTextChanged(const QString &text);
+
+    private:
+        bool acceptable() const;
+
+        Ui::ResourceNameDialog *ui;
+        ActionTools::Script *mScript;
+    };
+}
+
+#endif // RESOURCENAMEDIALOG_H

@@ -8,7 +8,10 @@ unix:PKGCONFIG += opencv
 DEFINES += ACTIONTOOLS_LIBRARY
 TARGET = actiontools
 DESTDIR = ..
-FORMS += codeeditordialog.ui
+FORMS += codeeditordialog.ui \
+    resourcenamedialog.ui \
+    screenshotwizardpage.ui \
+    savescreenshotwizardpage.ui
 include(globalshortcut/globalshortcut.pri)
 include(qxtcommandoptions/qxtcommandoptions.pri)
 include(widgets.pri)
@@ -48,7 +51,14 @@ SOURCES += actionfactory.cpp \
 	systeminputrecorder.cpp \
     numberformat.cpp \
     resource.cpp \
-    screenshooter.cpp
+    screenshooter.cpp \
+    targetwindow.cpp \
+    imagelabel.cpp \
+    resourcenamedialog.cpp \
+    screenshotwizard.cpp \
+    screenshotwizardpage.cpp \
+    savescreenshotwizardpage.cpp \
+    parametercontainer.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -94,7 +104,13 @@ HEADERS += actiontools_global.h \
     resource.h \
     numberformat.h \
     screenshooter.h \
-    parametercontainer.h
+    parametercontainer.h \
+    targetwindow.h \
+    imagelabel.h \
+    resourcenamedialog.h \
+    screenshotwizard.h \
+    screenshotwizardpage.h \
+    savescreenshotwizardpage.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \

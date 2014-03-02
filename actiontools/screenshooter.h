@@ -34,9 +34,12 @@ namespace ActionTools
     class ACTIONTOOLSSHARED_EXPORT ScreenShooter
     {
     public:
+        static QPixmap captureScreen(int screenIndex);
         static QList< QPair<QPixmap, QRect> > captureScreens();
         static QList< QPair<QPixmap, QRect> > captureWindows(const QList<WindowHandle> &windows);
-        static QPixmap captureScreen();
+        static QPixmap captureWindow(WindowHandle window);
+        static QPixmap captureAllScreens();
+        static QPixmap captureRect(const QRect &rect);
 
     private:
         ScreenShooter();

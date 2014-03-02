@@ -197,6 +197,8 @@ namespace ActionTools
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Script::write");
 #endif
+        emit scriptProcessing(0, 0, tr("Writing..."));
+
 		QXmlStreamWriter stream(device);
 		stream.setAutoFormatting(true);
 
@@ -239,14 +241,19 @@ namespace ActionTools
 
 		stream.writeStartElement("parameters");
 
+        int parameterIndex = 0;
 		foreach(const ScriptParameter &parameter, mParameters)
 		{
+            emit scriptProcessing(parameterIndex, mParameters.size() - 1, tr("Writing parameters..."));
+
 			stream.writeStartElement("parameter");
 			stream.writeAttribute("name", parameter.name());
 			stream.writeAttribute("code", QString("%1").arg(parameter.isCode()));
 			stream.writeAttribute("type", QString::number(parameter.type()));
 			stream.writeCharacters(parameter.value());
 			stream.writeEndElement();
+
+            ++parameterIndex;
 		}
 
 		stream.writeEndElement();
@@ -254,15 +261,19 @@ namespace ActionTools
         stream.writeStartElement("resources");
 
         QHash<QString, Resource>::const_iterator resourceIt = mResources.constBegin();
+        int resourceIndex = 0;
         while(resourceIt != mResources.constEnd())
         {
+            emit scriptProcessing(resourceIndex , mResources.size() - 1, tr("Writing resources..."));
+
             stream.writeStartElement("resource");
             stream.writeAttribute("id", resourceIt.key());
             stream.writeAttribute("type", QString::number(resourceIt.value().type()));
-            stream.writeCharacters(resourceIt.value().data().toBase64());
+            stream.writeCharacters(qCompress(resourceIt.value().data()).toBase64());
             stream.writeEndElement();
 
             ++resourceIt;
+            ++resourceIndex;
         }
 
         stream.writeEndElement();
@@ -271,8 +282,11 @@ namespace ActionTools
 		stream.writeAttribute("pauseBefore", QString::number(pauseBefore()));
 		stream.writeAttribute("pauseAfter", QString::number(pauseAfter()));
 
+        int actionIndex = 0;
 		foreach(ActionInstance *actionInstance, mActionInstances)
 		{
+            emit scriptProcessing(actionIndex, mActionInstances.size() - 1, tr("Writing actions..."));
+
 			stream.writeStartElement("action");
 			stream.writeAttribute("name", actionInstance->definition()->id());
 
@@ -327,6 +341,8 @@ namespace ActionTools
 			}
 
 			stream.writeEndElement();
+
+            ++actionIndex;
 		}
 
 		stream.writeEndElement();
@@ -344,67 +360,71 @@ namespace ActionTools
 #endif
 		mMissingActions.clear();
 
+        emit scriptProcessing(0, 0, tr("Reading schema..."));
+
         ReadResult result = validateSchema(device, scriptVersion);
         if(result != ReadSuccess)
             return result;
 
-		MessageHandler messageHandler;
+        emit scriptProcessing(0, 0, tr("Listing file content..."));
 
-		QFile schemaFile(":/script.xsd");
-		if(!schemaFile.open(QIODevice::ReadOnly))
-			return ReadInternal;
+        //List the script content
+        device->reset();
 
-		QXmlSchema schema;
-		schema.setMessageHandler(&messageHandler);
+        int parameterCount = 0;
+        int resourceCount = 0;
+        int actionCount = 0;
 
-		{
+        {
 #ifdef ACT_PROFILE
-			Tools::HighResolutionTimer timer("loading schema file");
+            Tools::HighResolutionTimer timer("Listing script content");
 #endif
-			if(!schema.load(&schemaFile))
-				return ReadInternal;
-		}
 
-		{
-#ifdef ACT_PROFILE
-			Tools::HighResolutionTimer timer("validating file");
-#endif
-			QXmlSchemaValidator validator(schema);
-			if(!validator.validate(device))
-			{
-				//If we could not validate, try to read the settings value to get the version
-				device->reset();
+            QXmlStreamReader stream(device);
+            while(!stream.atEnd() && !stream.hasError())
+            {
+                stream.readNext();
 
-				QXmlStreamReader stream(device);
-				while(!stream.atEnd() && !stream.hasError())
-				{
-					stream.readNext();
+                if(stream.isStartDocument() || !stream.isStartElement())
+                    continue;
 
-					if(stream.isStartDocument())
-						continue;
+                if(stream.name() == "parameters")
+                {
+                    stream.readNext();
 
-					if(!stream.isStartElement())
-						continue;
+                    for(;!stream.isEndElement() || stream.name() != "parameters";stream.readNext())
+                    {
+                        if(!stream.isStartElement())
+                            continue;
 
-					if(stream.name() == "settings")
-					{
-						const QXmlStreamAttributes &attributes = stream.attributes();
-						mProgramName = attributes.value("program").toString();
-						mProgramVersion = Tools::Version(attributes.value("version").toString());
-						mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
-						mOs = attributes.value("os").toString();
+                        ++parameterCount;
+                    }
+                }
+                else if(stream.name() == "resources")
+                {
+                    stream.readNext();
 
-						if(mScriptVersion > scriptVersion)
-							return ReadInvalidScriptVersion;
-					}
-				}
+                    for(;!stream.isEndElement() || stream.name() != "resources";stream.readNext())
+                    {
+                        if(!stream.isStartElement())
+                            continue;
 
-				mStatusMessage = messageHandler.statusMessage();
-				mLine = messageHandler.line();
-				mColumn = messageHandler.column();
+                        ++resourceCount;
+                    }
+                }
+                else if(stream.name() == "script")
+                {
+                    stream.readNext();
 
-				return ReadInvalidSchema;
-			}
+                    for(;!stream.isEndElement() || stream.name() != "script";stream.readNext())
+                    {
+                        if(!stream.isStartElement())
+                            continue;
+
+                        ++actionCount;
+                    }
+                }
+            }
         }
 
 		qDeleteAll(mActionInstances);
@@ -417,6 +437,8 @@ namespace ActionTools
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer2("Reading content");
 #endif
+
+        emit scriptProcessing(0, 0, tr("Reading content..."));
 
         QHash<ActionDefinition *, Tools::Version> updatableActionDefinitions;
 
@@ -471,6 +493,8 @@ namespace ActionTools
 					if(!stream.isStartElement())
 						continue;
 
+                    emit scriptProcessing(mParameters.size(), parameterCount - 1, tr("Reading parameters..."));
+
 					const QXmlStreamAttributes &attributes = stream.attributes();
 					ScriptParameter scriptParameter(	attributes.value("name").toString(),
 														stream.readElementText(),
@@ -489,10 +513,12 @@ namespace ActionTools
                     if(!stream.isStartElement())
                         continue;
 
+                    emit scriptProcessing(mResources.size(), resourceCount - 1, tr("Reading resources..."));
+
                     const QXmlStreamAttributes &attributes = stream.attributes();
                     QString id = attributes.value("id").toString();
                     QString base64Data = stream.readElementText();
-                    QByteArray data = QByteArray::fromBase64(base64Data.toAscii());
+                    QByteArray data = qUncompress(QByteArray::fromBase64(base64Data.toAscii()));
                     Resource resource(data, static_cast<Resource::Type>(attributes.value("type").toString().toInt()));
 
                     mResources.insert(id, resource);
@@ -535,6 +561,8 @@ namespace ActionTools
 					{
 						if(!stream.isStartElement())
 							continue;
+
+                        emit scriptProcessing(mActionInstances.size(), actionCount - 1, tr("Reading actions..."));
 
 						if(stream.name() == "exception")
 						{
@@ -716,7 +744,7 @@ namespace ActionTools
                 mColumn = messageHandler.column();
 
                 if(!tryOlderVersions)
-                    return ReadBadSchema;
+                    return ReadInvalidSchema;
 
                 //If we could not validate, try to read the settings value to get the version
                 device->reset();
@@ -743,16 +771,16 @@ namespace ActionTools
                         device->reset();
 
                         if(mScriptVersion == scriptVersion)
-                            return ReadBadSchema;
+                            return ReadInvalidSchema;
 
                         if(validateSchema(device, mScriptVersion, false) != ReadSuccess)
-                            return ReadBadSchema;
+                            return ReadInvalidSchema;
 
                         return ReadSuccess;
                     }
                 }
 
-                return ReadBadSchema;
+                return ReadInvalidSchema;
             }
         }
 
@@ -790,6 +818,7 @@ namespace ActionTools
     {
         const Parameter &parameter = actionInstance->parameter(elementDefinition->name().original());
         const SubParameterHash &subParameters = parameter.subParameters();
+        QRegExp newLineRegExp("[\n\r;]");
 
         SubParameterHash::ConstIterator it = subParameters.constBegin();
         for(;it != subParameters.constEnd();++it)
@@ -801,7 +830,7 @@ namespace ActionTools
                 //Add every variable in any parameter type that is in code mode
                 const QString &code = subParameter.value().toString();
 
-                foreach(const QString &codeLine, code.split(QRegExp("[\n\r;]"), QString::SkipEmptyParts))
+                foreach(const QString &codeLine, code.split(newLineRegExp, QString::SkipEmptyParts))
                 {
                     int position = 0;
 
@@ -836,7 +865,7 @@ namespace ActionTools
 
                 while((position = ActionInstance::VariableRegExp.indexIn(text, position)) != -1)
                 {
-                    QString foundVariableName = ActionInstance::VariableRegExp.cap(2);
+                    QString foundVariableName = ActionInstance::VariableRegExp.cap(1);
 
                     position += ActionInstance::VariableRegExp.cap(0).length();
 

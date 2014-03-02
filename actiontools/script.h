@@ -46,10 +46,11 @@ namespace ActionTools
 	public:
 		enum ReadResult
 		{
-			ReadSuccess,			// Ok
-			ReadInternal,			// Internal error
+            ReadSuccess,                // Ok
+            ReadInternal,               // Internal error
 			ReadInvalidSchema,			// Did not pass schema validation
-			ReadInvalidScriptVersion	// Script version is newer than ours
+            ReadInvalidScriptVersion,	// Script version is newer than ours
+            ReadCanceled                // Loading was canceled
 		};
 
         static const QRegExp CodeVariableDeclarationRegExp;
@@ -114,6 +115,9 @@ namespace ActionTools
 		QStringList procedureNames() const;
 		QStringList labels() const;
         QSet<QString> findVariables(ActionInstance *actionInstance = 0, ActionInstance *excludedActionInstance = 0) const;
+
+    signals:
+        void scriptProcessing(int progress, int total, const QString &description);
 
 	private:
         Script::ReadResult validateSchema(QIODevice *device, const Tools::Version &scriptVersion, bool tryOlderVersions = true);

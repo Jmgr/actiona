@@ -40,8 +40,8 @@ namespace ActionTools
 		~ChooseWindowPushButton();
 
 	signals:
-		void foundValidWindow(const WindowHandle &handle);
-		void searchEnded(const WindowHandle &handle);
+        void foundValidWindow(const ActionTools::WindowHandle &handle);
+        void searchEnded(const ActionTools::WindowHandle &handle);
 
 	private:
 		void paintEvent(QPaintEvent *event);

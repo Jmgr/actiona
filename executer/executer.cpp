@@ -29,6 +29,7 @@
 #include "actioninstance.h"
 #include "code/codetools.h"
 #include "code/image.h"
+#include "code/rawdata.h"
 #include "codeactionaz.h"
 
 #include <QDesktopWidget>
@@ -137,6 +138,14 @@ namespace LibExecuter
 		mConsoleWidget->updateClearButton();
 	}
 	
+    ActionTools::ActionInstance *Executer::currentActionInstance() const
+    {
+        if(mCurrentActionIndex < 0 || mCurrentActionIndex >= mScript->actionCount())
+            return 0;
+
+        return mScript->actionAt(mCurrentActionIndex);
+    }
+
 	void printCall(QScriptContext *context, ActionTools::ConsoleWidget::Type type)
 	{
 		QApplication::processEvents();//Call this to prevent UI freeze when calling print often
@@ -170,8 +179,8 @@ namespace LibExecuter
 
 				executer->consoleWidget()->addUserLine(message,
 													   currentActionRuntimeId,
-													   context->engine()->property("currentParameter").toString(),
-													   context->engine()->property("currentSubParameter").toString(),
+                                                       context->engine()->globalObject().property("currentParameter").toString(),
+                                                       context->engine()->globalObject().property("currentSubParameter").toString(),
 													   agent->currentLine(),
 													   agent->currentColumn(),
 													   context->backtrace(),
@@ -222,7 +231,7 @@ namespace LibExecuter
 		return engine->undefinedValue();
 	}
 
-    QScriptValue imageResourceFunction(QScriptContext *context, QScriptEngine *engine)
+    QScriptValue callProcedureFunction(QScriptContext *context, QScriptEngine *engine)
     {
         if(!Executer::isExecuterRunning())
             return QScriptValue();
@@ -232,25 +241,12 @@ namespace LibExecuter
 
         QScriptValue calleeData = context->callee().data();
         Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
-        ActionTools::Script *script = executer->script();
-        QString resourceName = context->argument(0).toString();
+        ActionTools::ActionInstance *currentActionInstance = executer->currentActionInstance();
 
-        if(!script->hasResource(resourceName))
-        {
-            Code::CodeClass::throwError(context, engine, "ScriptResourceError", QObject::tr("Unable to find any resource named %1").arg(resourceName));
-            return engine->undefinedValue();
-        }
+        if(currentActionInstance)
+            currentActionInstance->callProcedure(context->argument(0).toString());
 
-        const ActionTools::Resource &resource = script->resource(resourceName);
-        if(resource.type() != ActionTools::Resource::ImageType)
-            return engine->undefinedValue();//Exception ?
-
-        QImage image;
-
-        if(!image.loadFromData(resource.data()))
-            return engine->undefinedValue();//Exception ?
-
-        return Code::Image::constructor(image, engine);
+        return engine->undefinedValue();
     }
 
 	bool Executer::startExecution(bool onlySelection)
@@ -279,10 +275,9 @@ namespace LibExecuter
 		mScriptEngine->globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
         script.setProperty("nextLine", 1);
         script.setProperty("line", 1, QScriptValue::ReadOnly);
-
-        QScriptValue imageResourceFun = mScriptEngine->newFunction(imageResourceFunction);
-        imageResourceFun.setData(mScriptEngine->newQObject(this));
-        script.setProperty("imageResource", imageResourceFun);
+        QScriptValue callProcedureFun = mScriptEngine->newFunction(callProcedureFunction);
+        callProcedureFun.setData(mScriptEngine->newQObject(this));
+        script.setProperty("callProcedure", callProcedureFun);
 
 		QScriptValue console = mScriptEngine->newObject();
 		mScriptEngine->globalObject().setProperty("Console", console, QScriptValue::ReadOnly);
@@ -309,6 +304,40 @@ namespace LibExecuter
 
 		mScript->clearProcedures();
 		mScript->clearCallStack();
+
+        const QHash<QString, ActionTools::Resource> &resources = mScript->resources();
+        foreach(const QString &key, resources.keys())
+        {
+            const ActionTools::Resource &resource = resources.value(key);
+            QScriptValue value;
+
+            switch(resource.type())
+            {
+            case ActionTools::Resource::BinaryType:
+            case ActionTools::Resource::TypeCount:
+                value = Code::RawData::constructor(resource.data(), mScriptEngine);
+                break;
+            case ActionTools::Resource::TextType:
+                value = QString::fromUtf8(resource.data(), resource.data().size());
+                break;
+            case ActionTools::Resource::ImageType:
+                {
+                    QImage image;
+
+                    if(!image.loadFromData(resource.data()))
+                    {
+                        mConsoleWidget->addResourceLine(tr("Invalid image resource"), key, ActionTools::ConsoleWidget::Error);
+
+                        return false;
+                    }
+
+                    value = Code::Image::constructor(image, mScriptEngine);
+                }
+                break;
+            }
+
+            mScriptEngine->globalObject().setProperty(key, value, QScriptValue::ReadOnly | QScriptValue::Undeletable);
+        }
 
 		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
 		{
@@ -620,12 +649,7 @@ namespace LibExecuter
 
 		if(shouldStopExecution)
 		{
-			QString currentFile = mScriptAgent->currentFile();
-			QString finalMessage;
-			if(currentFile.isEmpty())
-				finalMessage = tr("Script line %1: ").arg(mCurrentActionIndex+1);
-			else
-				finalMessage = tr("Script %1, line %2: ").arg(currentFile).arg(mCurrentActionIndex+1);
+            QString finalMessage = tr("Script line %1: ").arg(mCurrentActionIndex+1);
 
 			ActionTools::ActionInstance *currentAction = mScript->actionAt(mCurrentActionIndex);
 			qint64 currentActionRuntimeId = -1;
@@ -634,8 +658,8 @@ namespace LibExecuter
 
 			mConsoleWidget->addActionLine(finalMessage + message,
 										currentActionRuntimeId,
-										mScriptEngine->property("currentParameter").toString(),
-										mScriptEngine->property("currentSubParameter").toString(),
+                                        mScriptEngine->globalObject().property("currentParameter").toString(),
+                                        mScriptEngine->globalObject().property("currentSubParameter").toString(),
 										mScriptAgent->currentLine(),
 										mScriptAgent->currentColumn(),
 										exceptionType);
@@ -878,8 +902,8 @@ namespace LibExecuter
 
 		consoleWidget()->addUserLine(text,
 									   currentActionRuntimeId,
-									   mScriptEngine->currentContext()->engine()->property("currentParameter").toString(),
-									   mScriptEngine->currentContext()->engine()->property("currentSubParameter").toString(),
+                                       mScriptEngine->globalObject().property("currentParameter").toString(),
+                                       mScriptEngine->globalObject().property("currentSubParameter").toString(),
 									   mScriptAgent->currentLine(),
 									   mScriptAgent->currentColumn(),
 									   mScriptEngine->currentContext()->backtrace(),
@@ -927,14 +951,6 @@ namespace LibExecuter
 		}
 
 		mExecutionWindow->setPauseStatus(mExecutionPaused);
-	}
-	
-	ActionTools::ActionInstance *Executer::currentActionInstance() const
-	{
-		if(mCurrentActionIndex < 0 || mCurrentActionIndex >= mScript->actionCount())
-			return 0;
-		
-		return mScript->actionAt(mCurrentActionIndex);
 	}
 
 	Executer::ExecuteActionResult Executer::canExecuteAction(int index) const

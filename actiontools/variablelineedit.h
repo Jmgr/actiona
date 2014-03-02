@@ -36,6 +36,7 @@ namespace ActionTools
 
     protected:
         virtual void insertVariable(const QString &variable);
+        virtual QMenu *createResourcesMenu(QMenu *parentMenu, bool ignoreMultiline = false);
     };
 }
 

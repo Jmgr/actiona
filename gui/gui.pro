@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     resourcedialog.cpp \
     filetypeguesser.cpp \
     resourcetablewidget.cpp \
-    resourcetypedelegate.cpp
+    resourcetypedelegate.cpp \
+    resourcenamedelegate.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -55,7 +56,8 @@ HEADERS += mainwindow.h \
     filetypeguesser.h \
     resourcetablewidget.h \
     resourcetypedelegate.h \
-    resourcesizeitem.h
+    resourcesizeitem.h \
+    resourcenamedelegate.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += changelogdialog.cpp
 	HEADERS += changelogdialog.h

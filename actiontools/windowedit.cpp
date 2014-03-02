@@ -93,7 +93,7 @@ namespace ActionTools
 		ui->window->addItems(windowTitles);
 	}
 
-	void WindowEdit::on_choose_searchEnded(const WindowHandle &handle)
+    void WindowEdit::on_choose_searchEnded(const ActionTools::WindowHandle &handle)
 	{
 		ui->window->codeLineEdit()->setText(handle.title());
 	}

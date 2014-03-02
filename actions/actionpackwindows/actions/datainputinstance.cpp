@@ -51,7 +51,7 @@ namespace Actions
 		mDataType = evaluateListElement<DataType>(ok, dataTypes, "dataType");
 		mVariable = evaluateVariable(ok, "variable");
 		QString windowTitle = evaluateString(ok, "windowTitle");
-		QString windowIcon = evaluateString(ok, "windowIcon");
+        QImage windowIcon = evaluateImage(ok, "windowIcon");
 
 		if(!ok)
 			return;
@@ -87,13 +87,8 @@ namespace Actions
 		mInputDialog->setLabelText(question);
 		mInputDialog->setWindowTitle(windowTitle);
 
-		if(!windowIcon.isEmpty())
-		{
-			QPixmap windowIconPixmap;
-
-			if(windowIconPixmap.load(windowIcon))
-				mInputDialog->setWindowIcon(QIcon(windowIconPixmap));
-		}
+        if(!windowIcon.isNull())
+            mInputDialog->setWindowIcon(QIcon(QPixmap::fromImage(windowIcon)));
 
 		switch(mDataType)
 		{

@@ -52,7 +52,7 @@ namespace ActionTools
 		void on_addPositionPushButton_clicked();
 		void on_removePushButton_clicked();
 		void on_clearPushButton_clicked();
-		void positionChosen(QPoint position);
+        void positionChosen(QPointF position);
 		void on_list_itemSelectionChanged();
 		void on_capturePathPushButton_chooseStarted();
 		void capture();

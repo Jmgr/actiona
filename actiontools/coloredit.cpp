@@ -29,11 +29,12 @@ namespace ActionTools
 	ColorEdit::ColorEdit(QWidget *parent)
 		: QWidget(parent),
 		ui(new Ui::ColorEdit),
-		mColorDialog(new QColorDialog(this))
+        mColorDialog(new QColorDialog(this)),
+        mValidator(new QRegExpValidator(QRegExp("^\\d\\d{0,2}:\\d\\d{0,2}:\\d\\d{0,2}$", Qt::CaseSensitive, QRegExp::RegExp2), this))
 	{
 		ui->setupUi(this);
 
-		ui->colorLineEdit->setInputMask("009:009:009");
+        ui->colorLineEdit->setValidator(mValidator);
 	}
 
 	ColorEdit::~ColorEdit()
@@ -96,7 +97,7 @@ namespace ActionTools
 		ui->chooseByPosition->setVisible(visible);
 	}
 	
-	void ColorEdit::setPosition(QPoint position)
+    void ColorEdit::setPosition(QPointF position)
 	{
 		QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), position.x(), position.y(), 1, 1);
 		QColor pixelColor = pixel.toImage().pixel(0, 0);
@@ -105,7 +106,7 @@ namespace ActionTools
 		on_colorLineEdit_textChanged(QString());
 	}
 
-	void ColorEdit::on_chooseByPosition_positionChosen(QPoint position)
+    void ColorEdit::on_chooseByPosition_positionChosen(QPointF position)
 	{
 		setPosition(position);
 		
@@ -143,14 +144,14 @@ namespace ActionTools
 		if(code)
 		{
 			QString oldText = ui->colorLineEdit->text();
-			ui->colorLineEdit->setInputMask(QString());
+            ui->colorLineEdit->setValidator(0);
 			ui->colorLineEdit->setText(oldText);
 			ui->colorLineEdit->setPalette(palette());
 		}
 		else
 		{
 			QColor oldColor = currentColor();
-			ui->colorLineEdit->setInputMask("009:009:009");
+            ui->colorLineEdit->setValidator(mValidator);
 			mColorDialog->setCurrentColor(oldColor);
 			onColorSelected();
 		}

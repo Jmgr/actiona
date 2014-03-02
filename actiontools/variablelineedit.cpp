@@ -22,6 +22,7 @@
 #include "actioninstance.h"
 
 #include <QSet>
+#include <QMenu>
 
 namespace ActionTools
 {
@@ -46,5 +47,18 @@ namespace ActionTools
             insert(variable);
         else
             setText(variable);
+    }
+
+    QMenu *VariableLineEdit::createResourcesMenu(QMenu *parentMenu, bool ignoreMultiline)
+    {
+        Q_UNUSED(ignoreMultiline)
+
+        //Do not allow inserting resources here, it doen't make any sense since we cannot overwrite resources
+
+        QMenu *resourceMenu = new QMenu(tr("Cannot insert resources here"), parentMenu);
+        resourceMenu->setEnabled(false);
+        resourceMenu->setIcon(QIcon(":/images/resource.png"));
+
+        return resourceMenu;
     }
 }

@@ -40,7 +40,7 @@ namespace ActionTools
 
 	signals:
 		void chooseStarted();
-		void positionChosen(QPoint position);
+        void positionChosen(QPointF position);
 		
 	private:
 		void paintEvent(QPaintEvent *event);

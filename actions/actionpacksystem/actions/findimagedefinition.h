@@ -25,6 +25,7 @@
 #include "findimageinstance.h"
 #include "listparameterdefinition.h"
 #include "fileparameterdefinition.h"
+#include "imageparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "numberparameterdefinition.h"
 #include "groupdefinition.h"
@@ -77,7 +78,7 @@ namespace Actions
 			imageToSearchInGroup->setMasterList(source);
 			imageToSearchInGroup->setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::ImageSource));
 
-			ActionTools::FileParameterDefinition *imageToSearchIn = new ActionTools::FileParameterDefinition(ActionTools::Name("imageToSearchIn", tr("Image to search in")), this);
+            ActionTools::ImageParameterDefinition *imageToSearchIn = new ActionTools::ImageParameterDefinition(ActionTools::Name("imageToSearchIn", tr("Image to search in")), this);
 			imageToSearchIn->setTooltip(tr("The image to search in"));
 			imageToSearchIn->setMode(ActionTools::FileEdit::FileOpen);
 			imageToSearchIn->setCaption(tr("Choose an image file"));
@@ -86,7 +87,7 @@ namespace Actions
 
 			addElement(imageToSearchInGroup);
 
-			ActionTools::FileParameterDefinition *imageToFind = new ActionTools::FileParameterDefinition(ActionTools::Name("imageToFind", tr("Image to find")), this);
+            ActionTools::ImageParameterDefinition *imageToFind = new ActionTools::ImageParameterDefinition(ActionTools::Name("imageToFind", tr("Image to find")), this);
 			imageToFind->setTooltip(tr("The image to search for"));
 			imageToFind->setMode(ActionTools::FileEdit::FileOpen);
 			imageToFind->setCaption(tr("Choose an image file"));

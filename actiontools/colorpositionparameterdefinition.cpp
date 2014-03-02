@@ -46,8 +46,8 @@ namespace ActionTools
 
 		addEditor(mColorEdit);
 		
-		connect(mPositionEdit, SIGNAL(positionChosen(QPoint)), mColorEdit, SLOT(setPosition(QPoint)));
-		connect(mColorEdit, SIGNAL(positionChosen(QPoint)), mPositionEdit, SLOT(setPosition(QPoint)));
+        connect(mPositionEdit, SIGNAL(positionChosen(QPointF)), mColorEdit, SLOT(setPosition(QPointF)));
+        connect(mColorEdit, SIGNAL(positionChosen(QPointF)), mPositionEdit, SLOT(setPosition(QPointF)));
 	}
 
 	void ColorPositionParameterDefinition::load(const ActionInstance *actionInstance)
@@ -65,6 +65,8 @@ namespace ActionTools
 	void ColorPositionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
 		actionInstance->setSubParameter(name().original(), "position", defaultPosition());
-		actionInstance->setSubParameter(name().original(), "color", defaultColor());
+
+        QColor localDefaultColor = defaultColor();
+        actionInstance->setSubParameter(name().original(), "color", QString("%1:%2:%3").arg(localDefaultColor.red()).arg(localDefaultColor.green()).arg(localDefaultColor.blue()));
 	}
 }

@@ -22,11 +22,16 @@
 #include "positionedit.h"
 #include "actioninstance.h"
 
+#include <QComboBox>
+#include <QApplication>
+#include <QDesktopWidget>
+
 namespace ActionTools
 {
     PositionParameterDefinition::PositionParameterDefinition(const Name &name, QObject *parent)
         : ParameterDefinition(name, parent),
-		mPositionEdit(0)
+        mPositionEdit(0),
+        mPositionUnitComboBox(0)
 	{
 	}
 
@@ -35,17 +40,37 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mPositionEdit = new PositionEdit(parent);
+        connect(mPositionEdit, SIGNAL(positionChosen(QPointF)), this, SLOT(positionChosen(QPointF)));
 
 		addEditor(mPositionEdit);
+
+        mPositionUnitComboBox = new QComboBox(parent);
+
+        mPositionUnitComboBox->addItems(QStringList() << tr("pixels") << tr("percents"));
+
+        addEditor(mPositionUnitComboBox);
 	}
 
 	void PositionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
 		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
+        mPositionUnitComboBox->setCurrentIndex(actionInstance->subParameter(name().original(), "unit").value().toInt());
 	}
 
 	void PositionParameterDefinition::save(ActionInstance *actionInstance)
 	{
 		actionInstance->setSubParameter(name().original(), "value", mPositionEdit->isCode(), mPositionEdit->text());
-	}
+        actionInstance->setSubParameter(name().original(), "unit", QVariant(mPositionUnitComboBox->currentIndex()));
+    }
+
+    void PositionParameterDefinition::positionChosen(QPointF position)
+    {
+        if(mPositionUnitComboBox->currentIndex() == 1)//Percents
+        {
+            QRect screenGeometry = QApplication::desktop()->screenGeometry();
+
+            mPositionEdit->setPosition(QPointF((position.x() * 100) / screenGeometry.width(),
+                                              (position.y() * 100) / screenGeometry.height()));
+        }
+    }
 }

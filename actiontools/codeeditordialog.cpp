@@ -20,16 +20,20 @@
 
 #include "codeeditordialog.h"
 #include "ui_codeeditordialog.h"
+#include "actioninstance.h"
 
 #include <QtScript>
 #include <QSettings>
 #include <QMessageBox>
+#include <QMenu>
 
 namespace ActionTools
 {
-	CodeEditorDialog::CodeEditorDialog(QAbstractItemModel *completionModel, QWidget *parent)
+    CodeEditorDialog::CodeEditorDialog(QAbstractItemModel *completionModel, QMenu *variablesMenu, QMenu *resourcesMenu, QWidget *parent)
 		: QDialog(parent),
-		ui(new Ui::CodeEditorDialog)
+        ui(new Ui::CodeEditorDialog),
+        mVariablesMenu(variablesMenu),
+        mResourcesMenu(resourcesMenu)
 	{
 		ui->setupUi(this);
 		
@@ -44,6 +48,8 @@ namespace ActionTools
 
 		connect(swapCodeAction, SIGNAL(triggered()), this, SLOT(swapCode()));
 		connect(ui->editor, SIGNAL(acceptDialog()), this, SLOT(accept()));
+        if(mResourcesMenu)//TMP
+            connect(mResourcesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
 	}
 
 	CodeEditorDialog::~CodeEditorDialog()
@@ -66,7 +72,8 @@ namespace ActionTools
 
 	void CodeEditorDialog::setAllowTextCodeChange(bool allowTextCodeChange)
 	{
-		ui->textCodeGroupBox->setEnabled(allowTextCodeChange);
+        ui->codePushButton->setEnabled(allowTextCodeChange);
+        ui->textPushButton->setEnabled(allowTextCodeChange);
 	}
 
 	void CodeEditorDialog::setCurrentLine(int line)
@@ -101,8 +108,45 @@ namespace ActionTools
 	void CodeEditorDialog::on_codePushButton_toggled(bool checked)
 	{
 		ui->editor->setCode(checked);
-		ui->checkSyntax->setEnabled(checked);
-	}
+        ui->checkSyntax->setEnabled(checked);
+    }
+
+    void CodeEditorDialog::on_insertPushButton_clicked()
+    {
+        QSet<QString> variables = ActionTools::ActionInstance::findVariables(text(), isCode());
+
+        foreach(QAction *action, mVariablesMenu->actions())
+            variables.insert(action->text());
+
+        QStringList variableList = variables.toList();
+        qSort(variableList);
+
+        QMenu *variablesMenu = 0;
+
+        if(variableList.isEmpty())
+        {
+            variablesMenu = new QMenu(tr("No variables to insert"));
+            variablesMenu->setEnabled(false);
+        }
+        else
+        {
+            variablesMenu = new QMenu(tr("Insert variable"));
+            connect(variablesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+            foreach(const QString &variable, variableList)
+                variablesMenu->addAction(variable);
+        }
+
+        variablesMenu->setIcon(QIcon(":/images/variable.png"));
+
+        QMenu *menu = new QMenu;
+
+        menu->addMenu(variablesMenu);
+        menu->addMenu(mResourcesMenu);
+
+        menu->exec(QCursor::pos());
+
+        delete menu;
+    }
 
 	void CodeEditorDialog::on_checkSyntax_clicked()
 	{
@@ -114,8 +158,21 @@ namespace ActionTools
 
 	void CodeEditorDialog::swapCode()
 	{
-		setCode(!ui->editor->isCode());
-	}
+        setCode(!ui->editor->isCode());
+    }
+
+    void CodeEditorDialog::insertVariable(QAction *action)
+    {
+        insertVariable(action->text());
+    }
+
+    void CodeEditorDialog::insertVariable(const QString &variable)
+    {
+        if(isCode())
+            ui->editor->insertPlainText(variable);
+        else
+            ui->editor->insertPlainText("$" + variable);
+    }
 
 	void CodeEditorDialog::showSyntaxCheckError()
 	{

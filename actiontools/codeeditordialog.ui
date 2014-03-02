@@ -22,41 +22,43 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QGroupBox" name="textCodeGroupBox">
-         <property name="title">
-          <string/>
+        <widget class="QPushButton" name="textPushButton">
+         <property name="text">
+          <string>Text</string>
          </property>
          <property name="checkable">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QPushButton" name="textPushButton">
-            <property name="text">
-             <string>Text</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="codePushButton">
-            <property name="text">
-             <string>Code</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="codePushButton">
+         <property name="text">
+          <string>Code</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="insertPushButton">
+         <property name="text">
+          <string>Insert...</string>
+         </property>
         </widget>
        </item>
        <item>

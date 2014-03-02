@@ -17,5 +17,10 @@
         <file>script1.1.0.xsd</file>
         <file>images/resource.png</file>
         <file>images/insert.png</file>
+        <file>images/variable.png</file>
+        <file>images/capture.png</file>
+        <file>images/binary.png</file>
+        <file>images/text.png</file>
+        <file>images/image.png</file>
     </qresource>
 </RCC>

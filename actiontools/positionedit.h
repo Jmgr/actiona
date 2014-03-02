@@ -32,6 +32,8 @@ namespace Ui
 	class PositionEdit;
 }
 
+class QRegExpValidator;
+
 namespace ActionTools
 {
 	class CodeLineEdit;
@@ -56,17 +58,18 @@ namespace ActionTools
         QSet<QString> findVariables() const;
 
 	signals:
-		void positionChosen(QPoint position);
+        void positionChosen(QPointF position);
 		
 	public slots:
-		void setPosition(QPoint position);
+        void setPosition(QPointF position);
 
 	private slots:
-		void on_choose_positionChosen(QPoint position);
+        void on_choose_positionChosen(QPointF position);
 		void on_position_codeChanged(bool code);
 
 	private:
 		Ui::PositionEdit *ui;
+        QRegExpValidator *mValidator;
 
 		Q_DISABLE_COPY(PositionEdit)
 	};

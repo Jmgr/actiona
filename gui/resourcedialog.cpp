@@ -1,6 +1,6 @@
 /*
     Actionaz
-    Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+    Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
     Actionaz is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,9 +22,11 @@
 #include "ui_resourcedialog.h"
 #include "filetypeguesser.h"
 #include "numberformat.h"
+#include "resourcenamedelegate.h"
 #include "resourcetypedelegate.h"
 #include "resourcesizeitem.h"
 #include "script.h"
+#include "actioninstance.h"
 
 #include <QFileDialog>
 #include <QFile>
@@ -42,6 +44,7 @@ ResourceDialog::ResourceDialog(ActionTools::Script *script, QWidget *parent)
     connect(ui->resourcesTableWidget, SIGNAL(removeSelection()), this, SLOT(removeSelection()));
     connect(ui->resourcesTableWidget, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
 
+    ui->resourcesTableWidget->setItemDelegateForColumn(0, new ResourceNameDelegate(ui->resourcesTableWidget, this));
     ui->resourcesTableWidget->setItemDelegateForColumn(1, new ResourceTypeDelegate(this));
     ui->removeSelectedPushButton->setEnabled(false);
     ui->resourcesTableWidget->setSortingEnabled(false);
@@ -65,6 +68,17 @@ ResourceDialog::ResourceDialog(ActionTools::Script *script, QWidget *parent)
 ResourceDialog::~ResourceDialog()
 {
     delete ui;
+}
+
+void ResourceDialog::setCurrentResource(const QString &resource)
+{
+    QList<QTableWidgetItem*> items = ui->resourcesTableWidget->findItems(resource, Qt::MatchFixedString | Qt::MatchCaseSensitive);
+    if(!items.isEmpty())
+    {
+        QTableWidgetItem *selectedItem = items.first();
+
+        ui->resourcesTableWidget->selectRow(selectedItem->row());
+    }
 }
 
 void ResourceDialog::accept()
@@ -106,7 +120,7 @@ void ResourceDialog::insertFiles(const QStringList &filenames)
 
         QFileInfo fileInfo(file);
         QByteArray fileData = file.readAll();
-        QString resourceName = ui->resourcesTableWidget->checkResourceName(fileInfo.baseName());
+        QString resourceName = ui->resourcesTableWidget->checkResourceName(ActionTools::ActionInstance::convertToVariableName(fileInfo.fileName()));
         ActionTools::Resource::Type resourceType = FiletypeGuesser::guessFiletype(fileData, fileInfo.fileName());
 
         addResource(resourceName, fileData, resourceType);
@@ -196,6 +210,19 @@ void ResourceDialog::addResource(const QString &name, const QByteArray &data, Ac
     item->setData(Qt::UserRole, type);
     item->setData(Qt::DisplayRole, ActionTools::Resource::typeNames[type]);
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable);
+    switch(type)
+    {
+    case ActionTools::Resource::BinaryType:
+    case ActionTools::Resource::TypeCount:
+        item->setIcon(QIcon(":/images/binary.png"));
+        break;
+    case ActionTools::Resource::TextType:
+        item->setIcon(QIcon(":/images/text.png"));
+        break;
+    case ActionTools::Resource::ImageType:
+        item->setIcon(QIcon(":/images/image.png"));
+        break;
+    }
     ui->resourcesTableWidget->setItem(row, 1, item);
 
     item = new ResourceSizeItem;

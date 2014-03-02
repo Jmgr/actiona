@@ -21,7 +21,6 @@
 #include "scriptparametersdialog.h"
 #include "ui_scriptparametersdialog.h"
 
-#include "codeeditordialog.h"
 #include "script.h"
 #include "codelineedit.h"
 #include "codespinbox.h"
@@ -33,13 +32,14 @@
 #include <QScriptEngine>
 #include <QTimer>
 #include <QComboBox>
+#include <QMenu>
 
 #include <limits>
 
-ScriptParametersDialog::ScriptParametersDialog(QAbstractItemModel *completitionModel, ActionTools::Script *script, QWidget *parent)
+ScriptParametersDialog::ScriptParametersDialog(ActionTools::Script *script, QWidget *parent)
 	: QDialog(parent),
-	ui(new Ui::ScriptParametersDialog),
-	mCodeEditorDialog(new ActionTools::CodeEditorDialog(completitionModel, this)),
+    ParameterContainer(script),
+    ui(new Ui::ScriptParametersDialog),
 	mScript(script),
 	mCurrentParameter(-1),
 	mCurrentLine(-1),
@@ -69,7 +69,41 @@ int ScriptParametersDialog::exec()
 {
 	QTimer::singleShot(1, this, SLOT(postInit()));
 
-	return QDialog::exec();
+    return QDialog::exec();
+}
+
+QMenu *ScriptParametersDialog::createVariablesMenu(QWidget *parent) const
+{
+    int rowCount = ui->parameterTable->rowCount();
+
+    QSet<QString> variableSet;
+    for(int row = 0; row < rowCount; ++row)
+    {
+        QWidget *nameWidget = ui->parameterTable->cellWidget(row, 0);
+        QLineEdit *nameLineEdit = qobject_cast<QLineEdit *>(nameWidget);
+        QWidget *valueWidget = ui->parameterTable->cellWidget(row, 1);
+        if(!nameLineEdit || !valueWidget)
+            continue;
+
+        if(!nameLineEdit->text().isEmpty())
+            variableSet.insert(nameLineEdit->text());
+
+        if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(valueWidget))
+            variableSet.unite(codeEditor->findVariables());
+    }
+
+    QStringList variableList = variableSet.toList();
+    qSort(variableList);
+
+    if(variableList.isEmpty())
+        return 0;
+
+    QMenu *back = new QMenu(parent);
+
+    foreach(const QString &variable, variableList)
+        back->addAction(variable);
+
+    return back;
 }
 
 void ScriptParametersDialog::postInit()
@@ -262,6 +296,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 			ActionTools::CodeLineEdit *valueWidget = new ActionTools::CodeLineEdit(this);
 			valueWidget->setCode(code);
 			valueWidget->setText(value);
+            valueWidget->setParameterContainer(this);
 
 			ui->parameterTable->setCellWidget(row, 1, valueWidget);
 		}
@@ -272,6 +307,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 			valueWidget->setRange(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
+            valueWidget->setParameterContainer(this);
 
 			ui->parameterTable->setCellWidget(row, 1, valueWidget);
 		}
@@ -281,6 +317,8 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 			ActionTools::WindowEdit *valueWidget = new ActionTools::WindowEdit(this);
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
+            valueWidget->setParameterContainer(this);
+            valueWidget->setWindowTitles(ActionTools::WindowHandle::windowTitles());
 
 			ui->parameterTable->setCellWidget(row, 1, valueWidget);
 		}
@@ -290,6 +328,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 			ActionTools::FileEdit *valueWidget = new ActionTools::FileEdit(this);
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
+            valueWidget->setParameterContainer(this);
 
 			ui->parameterTable->setCellWidget(row, 1, valueWidget);
 		}
@@ -299,6 +338,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 			ActionTools::LineComboBox *valueWidget = new ActionTools::LineComboBox(mScript->labels(), mScript->actionCount(), this);
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
+            valueWidget->setParameterContainer(this);
 
 			ui->parameterTable->setCellWidget(row, 1, valueWidget);
 		}

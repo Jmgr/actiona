@@ -79,6 +79,8 @@ namespace LibExecuter
 		
 		static bool isExecuterRunning()						{ return (mExecutionStatus != Stopped); }
 
+        ActionTools::ActionInstance *currentActionInstance() const;
+
 	public slots:
 		bool startExecution(bool onlySelection);
 		void stopExecution();
@@ -128,7 +130,6 @@ namespace LibExecuter
 
 		void consolePrint(const QString &text, ActionTools::ConsoleWidget::Type type);
 		void pauseOrDebug(bool debug);
-		ActionTools::ActionInstance *currentActionInstance() const;
 		ExecuteActionResult canExecuteAction(const QString &line) const;
 		ExecuteActionResult canExecuteAction(int index) const;
 		void executeCurrentAction();

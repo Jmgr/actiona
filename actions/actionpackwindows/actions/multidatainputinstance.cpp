@@ -70,7 +70,7 @@ namespace Actions
 		QString defaultValue = evaluateString(ok, "defaultValue");
 		mVariable = evaluateVariable(ok, "variable");
 		QString windowTitle = evaluateString(ok, "windowTitle");
-		QString windowIcon = evaluateString(ok, "windowIcon");
+        QImage windowIcon = evaluateImage(ok, "windowIcon");
 		mMaximumChoiceCount = evaluateInteger(ok, "maximumChoiceCount");
 
 		if(!ok)
@@ -85,13 +85,8 @@ namespace Actions
 		mDialog->setLayout(layout);
 		mDialog->setWindowTitle(windowTitle);
 
-		if(!windowIcon.isEmpty())
-		{
-			QPixmap windowIconPixmap;
-
-			if(windowIconPixmap.load(windowIcon))
-				mDialog->setWindowIcon(QIcon(windowIconPixmap));
-		}
+        if(!windowIcon.isNull())
+            mDialog->setWindowIcon(QIcon(QPixmap::fromImage(windowIcon)));
 
 		QLabel *questionLabel = new QLabel(mDialog);
 		questionLabel->setText(question);

@@ -47,6 +47,7 @@
 
 ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent)
 	: QDialog(parent),
+      ParameterContainer(script),
 	  ui(new Ui::ActionDialog),
 	  mActionInstance(0),
 	  mScript(script),
@@ -66,6 +67,8 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	Tools::HighResolutionTimer timer("ActionDialog creation " + actionDefinition->id());
 #endif
 	ui->setupUi(this);
+
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
 
 	//Init of texts & images
 	ui->actionIcon->setPixmap(actionDefinition->icon());
@@ -514,6 +517,7 @@ void ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter, int
 
 	QBoxLayout *layout = new QBoxLayout(parameter->editorsOrientation() == Qt::Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom );
 	layout->setMargin(0);
+    layout->setSpacing(1);
 
 	QWidget *parentWidget = new QWidget(this);
 	parentWidget->setLayout(layout);

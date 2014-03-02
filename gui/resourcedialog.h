@@ -1,6 +1,6 @@
 ﻿/*
     Actionaz
-    Copyright (C) 2008-2012 Jonathan Mercier-Ganady
+    Copyright (C) 2008-2013 Jonathan Mercier-Ganady
 
     Actionaz is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -44,6 +44,8 @@ class ResourceDialog : public QDialog
 public:
     explicit ResourceDialog(ActionTools::Script *script, QWidget *parent = 0);
     ~ResourceDialog();
+
+    void setCurrentResource(const QString &resource);
 
 public slots:
     virtual void accept();

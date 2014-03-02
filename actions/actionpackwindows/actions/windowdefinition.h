@@ -65,7 +65,7 @@ namespace Actions
 			moveGroup->setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Move));
 
 			ActionTools::PositionParameterDefinition *movePosition = new ActionTools::PositionParameterDefinition(ActionTools::Name("movePosition", tr("Move position")), this);
-			movePosition->setTooltip(tr("The position to move the window"));
+            movePosition->setTooltip(tr("The position where to move the window"));
 			moveGroup->addMember(movePosition);
 
 			addElement(moveGroup);

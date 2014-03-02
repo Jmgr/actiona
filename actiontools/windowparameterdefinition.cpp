@@ -55,19 +55,6 @@ namespace ActionTools
 	{
 		Q_UNUSED(script)
 
-		QStringList windowTitles;
-
-		foreach(const ActionTools::WindowHandle &windowHandle, ActionTools::WindowHandle::windowList())
-		{
-			QString title = windowHandle.title();
-			if(title.isEmpty())
-				continue;
-
-			windowTitles << title;
-		}
-
-		windowTitles.sort();
-
-		mWindowEdit->setWindowTitles(windowTitles);
+        mWindowEdit->setWindowTitles(ActionTools::WindowHandle::windowTitles());
 	}
 }

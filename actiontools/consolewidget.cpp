@@ -62,8 +62,17 @@ namespace ActionTools
 		item->setData(line, LineRole);
 		item->setData(column, ColumnRole);
 
-		addLine(message, item, Parameters, type);
-	}
+        addLine(message, item, Parameters, type);
+    }
+
+    void ConsoleWidget::addResourceLine(const QString &message, const QString &resourceKey, ConsoleWidget::Type type)
+    {
+        QStandardItem *item = new QStandardItem();
+
+        item->setData(resourceKey, ResourceRole);
+
+        addLine(message, item, Resources, type);
+    }
 
 	void ConsoleWidget::addActionLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type)
 	{

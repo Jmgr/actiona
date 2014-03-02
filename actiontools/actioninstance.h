@@ -148,6 +148,8 @@ namespace ActionTools
 
 		qint64 runtimeId() const											{ return mRuntimeId; }
 
+        bool callProcedure(const QString &procedureName);
+
 		virtual void reset()												{}//This is called when this action should reset its counter (for loops)
 		virtual void startExecution()										{}//This is called when the action should start its execution
 		virtual void stopExecution()										{}//This is called when the action should break its execution
@@ -167,6 +169,8 @@ namespace ActionTools
         static const QRegExp NumericalIndex;
         static const QRegExp NameRegExp;
         static const QRegExp VariableRegExp;
+        static QString convertToVariableName(const QString &input);
+        static QSet<QString> findVariables(const QString &input, bool code);
 
 	signals:
 		void showProgressDialog(const QString &title, int maximum);
@@ -276,7 +280,7 @@ namespace ActionTools
 			return back;
 		}
 
-		QPoint evaluatePoint(bool &ok,
+        QPoint evaluatePoint(bool &ok,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
 		QStringList evaluateItemList(bool &ok,
@@ -304,15 +308,15 @@ namespace ActionTools
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
 
-		bool callProcedure(const QString &procedureName);
-
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);
-		QScriptValue evaluateCode(bool &ok, const SubParameter &toEvaluate);
+        QScriptValue evaluateCode(bool &ok, const QString &toEvaluate);
+        QScriptValue evaluateCode(bool &ok, const SubParameter &toEvaluate);
 
 		QString evaluateVariableArray(bool &ok, const QScriptValue &scriptValue);
 
-		QString evaluateText(bool &ok, const SubParameter &toEvaluate);
+        QString evaluateText(bool &ok, const QString &toEvaluate);
+        QString evaluateText(bool &ok, const SubParameter &toEvaluate);
 		QString evaluateTextString(bool &ok, const QString &toEvaluate, int &pos);
 
 		static qint64 mCurrentRuntimeId;

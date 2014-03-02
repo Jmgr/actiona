@@ -38,6 +38,7 @@
 #include <QToolButton>
 #include <QCursor>
 #include <QSet>
+#include <QMessageBox>
 
 namespace ActionTools
 {
@@ -62,7 +63,6 @@ namespace ActionTools
 		connect(mOpenEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
 		connect(mCodeButton, SIGNAL(clicked()), this, SLOT(reverseCode()));
 		connect(mEditorButton, SIGNAL(clicked()), this, SLOT(openEditor()));
-        connect(mResourceButton, SIGNAL(clicked()), this, SIGNAL(insertResource()));
         connect(mInsertButton, SIGNAL(clicked()), this, SLOT(showVariableMenuAsPopup()));
 
 		QSettings settings;
@@ -83,17 +83,9 @@ namespace ActionTools
 		mEditorButton->setMaximumWidth(18);
 		mEditorButton->setToolTip(tr("Click here to open the editor"));
 
-        /*
-        mResourceButton->setIcon(QIcon(":/images/resource.png"));
-        mResourceButton->setMaximumWidth(18);
-        mResourceButton->setToolTip(tr("Click here to insert a resource"));
-		
-        setMinimumWidth(minimumWidth() + mCodeButton->maximumWidth() + mEditorButton->maximumWidth() + mResourceButton->maximumWidth());
-        */
-
         mInsertButton->setIcon(QIcon(":/images/insert.png"));
         mInsertButton->setMaximumWidth(18);
-        mInsertButton->setToolTip(tr("Click here to insert a variable"));
+        mInsertButton->setToolTip(tr("Click here to insert a variable or a resource"));
 		
         setMinimumWidth(minimumWidth() + mCodeButton->maximumWidth() + mEditorButton->maximumWidth() + mInsertButton->maximumWidth());
 
@@ -142,9 +134,7 @@ namespace ActionTools
 			w += mCodeButton->maximumWidth();
 		if(mShowEditorButton)
 			w += mEditorButton->maximumWidth();
-/*
-        w += mResourceButton->maximumWidth();
-*/
+
         w += mInsertButton->maximumWidth();
 		
 		setStyleSheet(QString("QLineEdit { padding-right: %1px; }").arg(w));
@@ -184,6 +174,8 @@ namespace ActionTools
 		if(mAllowTextCodeChange)
 			setCode(subParameter.isCode());
 
+        QString t = subParameter.value().toString();
+
 		setText(subParameter.value().toString());
 	}
 
@@ -207,41 +199,7 @@ namespace ActionTools
 
     QSet<QString> CodeLineEdit::findVariables() const
     {
-        QSet<QString> back;
-
-        if(isCode())
-        {
-            foreach(const QString &codeLine, text().split(QRegExp("[\n\r;]"), QString::SkipEmptyParts))
-            {
-                int position = 0;
-
-                while((position = Script::CodeVariableDeclarationRegExp.indexIn(codeLine, position)) != -1)
-                {
-                    QString foundVariableName = Script::CodeVariableDeclarationRegExp.cap(1);
-
-                    position += Script::CodeVariableDeclarationRegExp.cap(1).length();
-
-                    if(!foundVariableName.isEmpty())
-                        back << foundVariableName;
-                }
-            }
-        }
-        else
-        {
-            int position = 0;
-
-            while((position = ActionInstance::VariableRegExp.indexIn(text(), position)) != -1)
-            {
-                QString foundVariableName = ActionInstance::VariableRegExp.cap(2);
-
-                position += ActionInstance::VariableRegExp.cap(0).length();
-
-                if(!foundVariableName.isEmpty())
-                    back << foundVariableName;
-            }
-        }
-
-        return back;
+        return ActionTools::ActionInstance::findVariables(text(), isCode());
     }
 
 	void CodeLineEdit::reverseCode()
@@ -260,7 +218,7 @@ namespace ActionTools
 		if(!mShowEditorButton)
 			return;
 		
-		CodeEditorDialog codeEditorDialog(mCompletionModel, this);
+        CodeEditorDialog codeEditorDialog(mCompletionModel, createVariablesMenu(0, true), createResourcesMenu(0, true), this);
 
 		codeEditorDialog.setText(text());
 		codeEditorDialog.setCode(isCode());
@@ -285,10 +243,7 @@ namespace ActionTools
 
         menu->addSeparator();
 
-        QMenu *variablesMenu = createVariablesMenu(menu);
-        variablesMenu->setIcon(QIcon(":/images/insert.png"));
-
-        menu->addMenu(variablesMenu);
+        addVariablesAndResourcesMenus(menu);
 
 		menu->exec(event->globalPos());
 
@@ -306,10 +261,35 @@ namespace ActionTools
 
     void CodeLineEdit::insertVariable(const QString &variable)
     {
+        //If a validator is set this means that the insertion will fail
+        //In this case, reset the content and set the code mode
+        if(validator())
+        {
+            if(!text().isEmpty() && QMessageBox::question(this, tr("Insert variable/resource"), tr("Inserting a variable or a resource will replace the current parameter value.\nAre you sure?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) != QMessageBox::Yes)
+                return;
+
+            setCode(true);
+            setText(QString());
+        }
+
+        //Temporarily remove the completer so that we don't get a popup
+        QCompleter *currentCompleter = completer();
+        if(currentCompleter)
+        {
+            currentCompleter->setParent(0);
+            setCompleter(0);
+        }
+
         if(isCode())
             insert(variable);
         else
             insert("$" + variable);
+
+        if(currentCompleter)
+        {
+            currentCompleter->setParent(this);
+            setCompleter(currentCompleter);
+        }
     }
 
     void CodeLineEdit::insertVariable(QAction *action)
@@ -317,29 +297,67 @@ namespace ActionTools
         insertVariable(action->text());
     }
 
-    QMenu *CodeLineEdit::createVariablesMenu(QMenu *parentMenu)
+    QMenu *CodeLineEdit::createVariablesMenu(QMenu *parentMenu, bool ignoreMultiline)
     {
-        Q_ASSERT(mParameterContainer);
-        QMenu *variablesMenu = mParameterContainer->createVariablesMenu(parentMenu);
-        if(variablesMenu)
+        QMenu *variablesMenu = 0;
+
+        if(!ignoreMultiline && isMultiline())
         {
-            variablesMenu->setTitle(tr("Insert variable"));
-            connect(variablesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+            variablesMenu = new QMenu(tr("Cannot insert in a multiline parameter"), parentMenu);
+            variablesMenu->setEnabled(false);
         }
         else
         {
-            variablesMenu = new QMenu(tr("No variables to insert"), parentMenu);
-            variablesMenu->setEnabled(false);
+            Q_ASSERT(mParameterContainer);
+            variablesMenu = mParameterContainer->createVariablesMenu(parentMenu);
+            if(variablesMenu)
+            {
+                variablesMenu->setTitle(tr("Insert variable"));
+            }
+            else
+            {
+                variablesMenu = new QMenu(tr("No variables to insert"), parentMenu);
+                variablesMenu->setEnabled(false);
+            }
         }
 
+        variablesMenu->setIcon(QIcon(":/images/variable.png"));
+
         return variablesMenu;
+    }
+
+    QMenu *CodeLineEdit::createResourcesMenu(QMenu *parentMenu, bool ignoreMultiline)
+    {
+        QMenu *resourceMenu = 0;
+
+        if(!ignoreMultiline && isMultiline())
+        {
+            resourceMenu = new QMenu(tr("Cannot insert in a multiline parameter"), parentMenu);
+            resourceMenu->setEnabled(false);
+        }
+        else
+        {
+            Q_ASSERT(mParameterContainer);
+            resourceMenu = mParameterContainer->createResourcesMenu(parentMenu);
+            if(resourceMenu)
+                resourceMenu->setTitle(tr("Insert resource"));
+            else
+            {
+                resourceMenu = new QMenu(tr("No resources to insert"), parentMenu);
+                resourceMenu->setEnabled(false);
+            }
+        }
+
+        resourceMenu->setIcon(QIcon(":/images/resource.png"));
+
+        return resourceMenu;
     }
 
     void CodeLineEdit::showVariableMenuAsPopup()
     {
         QMenu *menu = new QMenu;
 
-        menu->addMenu(createVariablesMenu(menu));
+        addVariablesAndResourcesMenus(menu);
 
         menu->exec(QCursor::pos());
 
@@ -379,7 +397,18 @@ namespace ActionTools
         editorButtonGeometry.setHeight(height() + (mEmbedded ? 2 : 0));
 
         mEditorButton->setGeometry(editorButtonGeometry);
-	}
+    }
+
+    void CodeLineEdit::addVariablesAndResourcesMenus(QMenu *menu)
+    {
+        QMenu *variablesMenu = createVariablesMenu(menu);
+        connect(variablesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+        menu->addMenu(variablesMenu);
+
+        QMenu *resourcesMenu = createResourcesMenu(menu);
+        connect(resourcesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+        menu->addMenu(resourcesMenu);
+    }
 
 	void CodeLineEdit::mouseMoveEvent(QMouseEvent *event)
 	{
@@ -428,7 +457,7 @@ namespace ActionTools
 				QPalette pal = palette();
 				pal.setCurrentColorGroup(QPalette::Disabled);
 
-				style()->drawItemText(&painter, rect(), Qt::AlignCenter, pal, false, tr("Double-click to edit"), QPalette::Text);
+                style()->drawItemText(&painter, rect(), Qt::AlignCenter, pal, false, tr("Multiline, double-click to edit"), QPalette::Text);
 			}
 
 			if(mCode)

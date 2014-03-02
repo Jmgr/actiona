@@ -53,6 +53,7 @@
 #include "code/codetools.h"
 #include "scriptsettingsdialog.h"
 #include "resourcedialog.h"
+#include "screenshotwizard.h"
 
 #include <QSystemTrayIcon>
 #include <QInputDialog>
@@ -101,7 +102,8 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mCommandOptions(commandOptions),
 	mAddActionRow(0),
 	mStopExecutionAction(new QAction(tr("S&top execution"), this)),
-	mUsedLocale(usedLocale)
+    mUsedLocale(usedLocale),
+    mScriptProgressDialog(new QProgressDialog(this))
 #ifndef ACT_NO_UPDATER
 	,mNetworkAccessManager(new QNetworkAccessManager(this)),
 	mUpdateDownloadNetworkReply(0),
@@ -118,6 +120,11 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 #endif
 
 	ui->setupUi(this);
+
+    mScriptProgressDialog->setWindowModality(Qt::ApplicationModal);
+    mScriptProgressDialog->setCancelButton(0);
+    mScriptProgressDialog->setAutoClose(false);
+    mScriptProgressDialog->setMinimumDuration(0);
 
 	if(Global::ACTIONAZ_VERSION >= Tools::Version(1, 0, 0))
 		ui->reportBugPushButton->setVisible(false);
@@ -214,6 +221,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	connect(ui->consoleWidget, SIGNAL(itemClicked(int)), this, SLOT(logItemClicked(int)));
 	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
 	connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
+    connect(mScript, SIGNAL(scriptProcessing(int,int,QString)), this, SLOT(scriptProcessing(int,int,QString)));
 #ifndef ACT_NO_UPDATER
 	connect(mUpdater, SIGNAL(error(QString)), this, SLOT(updateError(QString)));
 	connect(mUpdater, SIGNAL(noResult()), this, SLOT(updateNoResult()));
@@ -222,7 +230,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 
 	setWindowTitle("Actionaz[*]");//Set this to fix some warnings about the [*] placeholder
 
-	QTimer::singleShot(1, this, SLOT(postInit()));
+    QTimer::singleShot(0, this, SLOT(postInit()));
 
 	bool isCompositingManagerRunning = true;
 
@@ -253,6 +261,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::postInit()
 {
+    QApplication::processEvents();
+
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("postInit");
 #endif
@@ -313,6 +323,8 @@ void MainWindow::postInit()
 			setTaskbarProgress(actionDefinitionIndex, mActionFactory->actionDefinitionCount() - 1);
 
 			mActionDialogs.append(new ActionDialog(mCompletionModel, mScript, actionDefinition, mUsedLocale, this));
+
+            QApplication::processEvents();
 		}
 	}
 
@@ -360,6 +372,8 @@ void MainWindow::postInit()
 #endif
 
 	setCurrentFile(QString());
+
+    QApplication::processEvents();
 
 	{
 #ifdef ACT_PROFILE
@@ -1019,15 +1033,7 @@ void MainWindow::on_actionImport_script_content_triggered()
 
 		buffer.open(QIODevice::ReadOnly);
 
-		ActionTools::Script::ReadResult result = mScript->read(&buffer, Global::SCRIPT_VERSION);
-		if(result == ActionTools::Script::ReadSuccess)
-		{
-			mScriptModel->update();
-
-			scriptEdited();
-		}
-
-		checkReadResult(result);
+        checkReadResult(readScript(&buffer));
 	}
 }
 
@@ -1036,11 +1042,11 @@ void MainWindow::on_actionExport_script_content_triggered()
 	QBuffer buffer;
 	buffer.open(QIODevice::WriteOnly);
 
-	mScript->write(&buffer, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
+    writeScript(&buffer);
 
-	ScriptContentDialog scriptContentDialog(ScriptContentDialog::Read, mScript, this);
-	scriptContentDialog.setText(QString::fromUtf8(buffer.buffer()));
-	scriptContentDialog.exec();
+    ScriptContentDialog scriptContentDialog(ScriptContentDialog::Read, mScript, this);
+    scriptContentDialog.setText(QString::fromUtf8(buffer.buffer()));
+    scriptContentDialog.exec();
 }
 
 void MainWindow::on_actionScriptSettings_triggered()
@@ -1062,12 +1068,7 @@ void MainWindow::on_actionScriptSettings_triggered()
 
 void MainWindow::on_actionResources_triggered()
 {
-    ResourceDialog resourceDialog(mScript, this);
-    if(resourceDialog.exec() == QDialog::Accepted)
-    {
-        //TODO
-        scriptEdited();
-    }
+    openResourceDialog();
 }
 
 void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
@@ -1078,6 +1079,12 @@ void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
 void MainWindow::on_actionHelp_triggered()
 {
 	QDesktopServices::openUrl(QUrl(QString("http://wiki.actionaz.org/")));
+}
+
+void MainWindow::on_actionTake_screenshot_triggered()
+{
+    ActionTools::ScreenshotWizard screenshotWizard(mScript, true, this);
+    screenshotWizard.exec();
 }
 
 void MainWindow::on_reportBugPushButton_clicked()
@@ -1308,6 +1315,40 @@ void MainWindow::setTaskbarStatus(TaskbarStatus status)
 #endif
 }
 
+ActionTools::Script::ReadResult MainWindow::readScript(QIODevice *device)
+{
+    mScriptProgressDialog->setLabelText(tr("Loading script..."));
+    mScriptProgressDialog->setWindowTitle(tr("Loading script"));
+    mScriptProgressDialog->open();
+
+    QApplication::processEvents();
+
+    ActionTools::Script::ReadResult result = mScript->read(device, Global::SCRIPT_VERSION);
+    if(result == ActionTools::Script::ReadSuccess)
+    {
+        mScriptModel->update();
+
+        scriptEdited();
+    }
+
+    mScriptProgressDialog->close();
+
+    return result;
+}
+
+bool MainWindow::writeScript(QIODevice *device)
+{
+    mScriptProgressDialog->setLabelText(tr("Saving script..."));
+    mScriptProgressDialog->setWindowTitle(tr("Saving script"));
+    mScriptProgressDialog->open();
+
+    bool result = mScript->write(device, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
+
+    mScriptProgressDialog->close();
+
+    return result;
+}
+
 #ifndef ACT_NO_UPDATER
 void MainWindow::checkForUpdate(bool silent)
 {
@@ -1344,6 +1385,15 @@ void MainWindow::logItemClicked(int itemRow, bool doubleClick)
 			}
 		}
 		break;
+    case ActionTools::ConsoleWidget::Resources:
+        {
+            if(doubleClick)
+            {
+                const QString &resource = item->data(ActionTools::ConsoleWidget::ResourceRole).toString();
+                openResourceDialog(resource);
+            }
+        }
+        break;
 	case ActionTools::ConsoleWidget::Action:
 	case ActionTools::ConsoleWidget::User:
 		{
@@ -1546,15 +1596,7 @@ void MainWindow::scriptContentDropped(const QString &scriptContent)
 
 		buffer.open(QIODevice::ReadOnly);
 
-		ActionTools::Script::ReadResult result = mScript->read(&buffer, Global::SCRIPT_VERSION);
-		if(result == ActionTools::Script::ReadSuccess)
-		{
-			mScriptModel->update();
-
-			scriptEdited();
-		}
-
-		checkReadResult(result);
+        checkReadResult(readScript(&buffer));
 	}
 }
 
@@ -1695,7 +1737,14 @@ void MainWindow::otherInstanceMessage(const QString &message)
 
 			emit needToShow();
 		}
-	}
+    }
+}
+
+void MainWindow::scriptProcessing(int progress, int total, const QString &description)
+{
+    mScriptProgressDialog->setLabelText(description);
+    mScriptProgressDialog->setRange(0, total);
+    mScriptProgressDialog->setValue(progress);
 }
 
 #ifndef ACT_NO_UPDATER
@@ -1934,13 +1983,25 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exc
 
 void MainWindow::openParametersDialog(int parameter, int line, int column)
 {
-	ScriptParametersDialog scriptParametersDialog(mCompletionModel, mScript, this);
+    ScriptParametersDialog scriptParametersDialog(mScript, this);
 	QList<ActionTools::ScriptParameter> parameters = mScript->parameters();
 	scriptParametersDialog.setCurrentParameter(parameter);
 	scriptParametersDialog.setCurrentLine(line);
 	scriptParametersDialog.setCurrentColumn(column);
 	if(scriptParametersDialog.exec() == QDialog::Accepted && mScript->parameters() != parameters)
-		scriptWasModified(true);
+        scriptWasModified(true);
+}
+
+void MainWindow::openResourceDialog(const QString &resource)
+{
+    ResourceDialog resourceDialog(mScript, this);
+    resourceDialog.setCurrentResource(resource);
+    QHash<QString, ActionTools::Resource> resources = mScript->resources();
+    if(resourceDialog.exec() == QDialog::Accepted)
+    {
+        if(resources != mScript->resources())
+            scriptEdited();
+    }
 }
 
 QList<int> MainWindow::selectedRows() const
@@ -1982,25 +2043,14 @@ bool MainWindow::loadFile(const QString &fileName, bool verbose)
 		return false;
 	}
 
-	QApplication::setOverrideCursor(Qt::WaitCursor);
-
-	ActionTools::Script::ReadResult result = mScript->read(&loadFile, Global::SCRIPT_VERSION);
-
-	QApplication::restoreOverrideCursor();
-
-	loadFile.close();
-
+    ActionTools::Script::ReadResult result = readScript(&loadFile);
 	if(result == ActionTools::Script::ReadSuccess)
 	{
 		QSettings settings;
 
 		settings.setValue("general/lastScript", fileName);
 
-		mScriptModel->update();
-
 		statusBar()->showMessage(tr("File loaded"), 2000);
-
-		scriptEdited();
 
 		setCurrentFile(fileName);
 	}
@@ -2020,14 +2070,7 @@ bool MainWindow::saveFile(const QString &fileName, bool copy)
 		return false;
 	}
 
-	QApplication::setOverrideCursor(Qt::WaitCursor);
-
-	bool result = mScript->write(&saveFile, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
-
-	QApplication::restoreOverrideCursor();
-
-	saveFile.close();
-
+    bool result = writeScript(&saveFile);
 	if(result)
 	{
 		if(!copy)
@@ -2110,8 +2153,10 @@ bool MainWindow::save()
 {
 	if(mCurrentFile.isEmpty())
 		return saveAs();
-	else
+    else if(mScriptModified)
 		return saveFile(mCurrentFile);
+    else
+        return false;
 }
 
 bool MainWindow::saveAs()

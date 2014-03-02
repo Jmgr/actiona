@@ -399,8 +399,26 @@ namespace ActionTools
 		CloseDesktop(hdesk);
 #endif
 
-		return gWindowList;
-	}
+        return gWindowList;
+    }
+
+    QStringList WindowHandle::windowTitles()
+    {
+        QStringList windowTitles;
+
+        foreach(const ActionTools::WindowHandle &windowHandle, windowList())
+        {
+            QString title = windowHandle.title();
+            if(title.isEmpty())
+                continue;
+
+            windowTitles << title;
+        }
+
+        windowTitles.sort();
+
+        return windowTitles;
+    }
 
 	WindowHandle WindowHandle::findWindow(const QString &title)
 	{

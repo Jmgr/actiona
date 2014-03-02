@@ -57,6 +57,7 @@ namespace ActionTools
 
 		static WindowHandle foregroundWindow();
 		static QList<WindowHandle> windowList();
+        static QStringList windowTitles();
 		static WindowHandle findWindow(const QString &title);
 		static WindowHandle findWindow(const QRegExp &regExp);
 		static QList<WindowHandle> findWindows(const QString &title);

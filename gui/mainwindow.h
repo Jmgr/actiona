@@ -127,6 +127,7 @@ private slots:
     void on_actionResources_triggered();
 	void on_scriptView_customContextMenuRequested(const QPoint &pos);
 	void on_actionHelp_triggered();
+    void on_actionTake_screenshot_triggered();
 	void on_reportBugPushButton_clicked();
 	void systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
 	void scriptEdited();
@@ -148,7 +149,8 @@ private slots:
 	void postExecution();
 	void logItemDoubleClicked(int itemRow);
 	void logItemClicked(int itemRow);
-	void otherInstanceMessage(const QString &message);
+    void otherInstanceMessage(const QString &message);
+    void scriptProcessing(int progress, int total, const QString &description);
 #ifndef ACT_NO_UPDATER
 	void updateError(const QString &message);
 	void updateNoResult();
@@ -184,6 +186,7 @@ private:
 	bool editAction(ActionTools::ActionInstance *actionInstance, const QString &field = QString(), const QString &subField = QString(), int line = -1, int column = -1);
 	bool editAction(ActionTools::ActionInstance *actionInstance, int exception);
 	void openParametersDialog(int parameter = -1, int line = -1, int column = -1);
+    void openResourceDialog(const QString &resource = QString());
 	QList<int> selectedRows() const;
 	bool loadFile(const QString &fileName, bool verbose = true);
 	bool saveFile(const QString &fileName, bool copy = false);
@@ -204,6 +207,8 @@ private:
 	bool checkReadResult(ActionTools::Script::ReadResult result);
 	void setTaskbarProgress(int value, int max);
 	void setTaskbarStatus(TaskbarStatus status);
+    ActionTools::Script::ReadResult readScript(QIODevice *device);
+    bool writeScript(QIODevice *device);
 #ifndef ACT_NO_UPDATER
 	void checkForUpdate(bool silent);
 #endif
@@ -235,6 +240,7 @@ private:
 	QAction *mStopExecutionAction;
 	QList<ActionDialog *> mActionDialogs;
 	QString mUsedLocale;
+    QProgressDialog *mScriptProgressDialog;
 #ifndef ACT_NO_UPDATER
 	QNetworkAccessManager *mNetworkAccessManager;
 	QNetworkReply *mUpdateDownloadNetworkReply;

@@ -24,22 +24,29 @@
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
 
+class QComboBox;
+
 namespace ActionTools
 {
 	class PositionEdit;
 
 	class ACTIONTOOLSSHARED_EXPORT PositionParameterDefinition : public ParameterDefinition
 	{
-	Q_OBJECT
+        Q_OBJECT
+
 	public:
         PositionParameterDefinition(const Name &name, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);
 		void save(ActionInstance *actionInstance);
+
+    private slots:
+        void positionChosen(QPointF position);
 		
 	private:
 		PositionEdit *mPositionEdit;
+        QComboBox *mPositionUnitComboBox;
 
 		Q_DISABLE_COPY(PositionParameterDefinition)
 	};

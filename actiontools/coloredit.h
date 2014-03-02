@@ -33,6 +33,7 @@ namespace Ui
 }
 
 class QColorDialog;
+class QRegExpValidator;
 
 namespace ActionTools
 {
@@ -59,13 +60,13 @@ namespace ActionTools
 		void setChooseByPositionButtonVisible(bool visible);
 		
 	signals:
-		void positionChosen(QPoint position);
+        void positionChosen(QPointF position);
 		
 	public slots:
-		void setPosition(QPoint position);
+        void setPosition(QPointF position);
 		
 	private slots:
-		void on_chooseByPosition_positionChosen(QPoint position);
+        void on_chooseByPosition_positionChosen(QPointF position);
 		void on_choose_clicked();
 		void on_colorLineEdit_textChanged(const QString &text);
 		void on_colorLineEdit_codeChanged(bool code);
@@ -76,6 +77,7 @@ namespace ActionTools
 
 		Ui::ColorEdit *ui;
 		QColorDialog *mColorDialog;
+        QRegExpValidator *mValidator;
 
 		Q_DISABLE_COPY(ColorEdit)
 	};
