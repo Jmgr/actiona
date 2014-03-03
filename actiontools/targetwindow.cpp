@@ -30,6 +30,10 @@
 #include <X11/Xlib.h>
 #endif
 
+#ifdef Q_WS_WIN
+#include <Windows.h>
+#endif
+
 namespace ActionTools
 {
     TargetWindow::TargetWindow()
@@ -185,6 +189,11 @@ namespace ActionTools
 #ifdef Q_WS_X11
         if(mMousePressed)
             setMask(QRegion(rect()).subtracted(QRegion(QRect(2, 2, width() - 4, height() - 4))));
+#endif
+
+#ifdef Q_WS_WIN
+        if(GetKeyState(VK_ESCAPE) < 0)
+            close();
 #endif
 
         if(mMousePressed)
