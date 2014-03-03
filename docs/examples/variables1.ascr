@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scriptfile>
-    <settings program="actionaz" version="0.1.0" scriptVersion="1.0.0" os="GNU/Linux"/>
+    <settings program="actionaz" version="3.8.0" scriptVersion="1.1.0" os="GNU/Linux"/>
     <actions>
         <action name="ActionMessageBox" version="1.0.0"/>
         <action name="ActionDataInput" version="1.0.0"/>
     </actions>
     <parameters/>
+    <resources/>
     <script pauseBefore="0" pauseAfter="0">
         <action name="ActionDataInput" comment="Ask the name">
             <exception id="0" action="0" line="001"/>
@@ -13,6 +14,9 @@
             <exception id="2" action="1" line="001"/>
             <parameter name="defaultValue">
                 <subParameter name="value" code="0">NoName</subParameter>
+            </parameter>
+            <parameter name="windowIcon">
+                <subParameter name="value" code="0"></subParameter>
             </parameter>
             <parameter name="dataType">
                 <subParameter name="value" code="0">text</subParameter>
@@ -23,20 +27,32 @@
             <parameter name="question">
                 <subParameter name="value" code="0">Please enter your name</subParameter>
             </parameter>
+            <parameter name="windowTitle">
+                <subParameter name="value" code="0"></subParameter>
+            </parameter>
         </action>
         <action name="ActionMessageBox" comment="Show the result">
             <exception id="0" action="0" line="001"/>
             <exception id="1" action="0" line="001"/>
             <exception id="2" action="1" line="001"/>
+            <parameter name="windowIcon">
+                <subParameter name="value" code="0"></subParameter>
+            </parameter>
             <parameter name="message">
                 <subParameter name="value" code="0">Your name is $name.</subParameter>
             </parameter>
             <parameter name="title">
                 <subParameter name="value" code="0">Name</subParameter>
             </parameter>
+            <parameter name="textMode">
+                <subParameter name="value" code="0">Automatic</subParameter>
+            </parameter>
             <parameter name="ifYes">
                 <subParameter name="line" code="0"></subParameter>
                 <subParameter name="action" code="0">do_nothing</subParameter>
+            </parameter>
+            <parameter name="customIcon">
+                <subParameter name="value" code="0"></subParameter>
             </parameter>
             <parameter name="icon">
                 <subParameter name="value" code="0">information</subParameter>

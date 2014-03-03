@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scriptfile>
-    <settings program="actionaz" version="0.1.0" scriptVersion="1.0.0" os="GNU/Linux"/>
+    <settings program="actionaz" version="3.8.0" scriptVersion="1.1.0" os="GNU/Linux"/>
     <actions>
-        <action name="ActionGoto" version="1.0.0"/>
         <action name="ActionMessageBox" version="1.0.0"/>
-        <action name="ActionStop" version="1.0.0"/>
-        <action name="ActionDataInput" version="1.0.0"/>
         <action name="ActionVariable" version="1.0.0"/>
+        <action name="ActionDataInput" version="1.0.0"/>
+        <action name="ActionGoto" version="1.0.0"/>
+        <action name="ActionStop" version="1.0.0"/>
     </actions>
     <parameters/>
+    <resources/>
     <script pauseBefore="0" pauseAfter="0">
         <action name="ActionVariable" comment="Set the result variable to a start value">
             <exception id="0" action="0" line="start"/>
             <exception id="1" action="0" line="start"/>
             <exception id="2" action="1" line="start"/>
             <exception id="32" action="0" line="start"/>
+            <parameter name="colorValue">
+                <subParameter name="value" code="0"></subParameter>
+            </parameter>
             <parameter name="variable">
                 <subParameter name="value" code="0">power</subParameter>
+            </parameter>
+            <parameter name="type">
+                <subParameter name="value" code="0">integer</subParameter>
             </parameter>
             <parameter name="value">
                 <subParameter name="value" code="0">0</subParameter>
             </parameter>
-            <parameter name="type">
-                <subParameter name="value" code="0">integer</subParameter>
+            <parameter name="positionValue">
+                <subParameter name="value" code="0"></subParameter>
             </parameter>
         </action>
         <action name="ActionDataInput" label="start" comment="Ask to enter the power of two">
@@ -31,6 +38,9 @@
             <exception id="2" action="1" line="start"/>
             <parameter name="defaultValue">
                 <subParameter name="value" code="0">$power</subParameter>
+            </parameter>
+            <parameter name="windowIcon">
+                <subParameter name="value" code="0"></subParameter>
             </parameter>
             <parameter name="dataType">
                 <subParameter name="value" code="0">integer</subParameter>
@@ -41,35 +51,53 @@
             <parameter name="question">
                 <subParameter name="value" code="0">What power of two do you want? (0-30)</subParameter>
             </parameter>
+            <parameter name="windowTitle">
+                <subParameter name="value" code="0"></subParameter>
+            </parameter>
         </action>
         <action name="ActionVariable" comment="Compute the power of two">
             <exception id="0" action="0" line="invalid"/>
             <exception id="1" action="0" line="invalid"/>
             <exception id="2" action="1" line="invalid"/>
             <exception id="32" action="2" line="invalid"/>
+            <parameter name="colorValue">
+                <subParameter name="value" code="0"></subParameter>
+            </parameter>
             <parameter name="variable">
                 <subParameter name="value" code="0">result</subParameter>
+            </parameter>
+            <parameter name="type">
+                <subParameter name="value" code="0">integer</subParameter>
             </parameter>
             <parameter name="value">
                 <subParameter name="value" code="1">Math.pow(2, power)</subParameter>
             </parameter>
-            <parameter name="type">
-                <subParameter name="value" code="0">integer</subParameter>
+            <parameter name="positionValue">
+                <subParameter name="value" code="0"></subParameter>
             </parameter>
         </action>
         <action name="ActionMessageBox" comment="Show the result" timeout="3000">
             <exception id="0" action="0" line="error"/>
             <exception id="1" action="0" line="error"/>
             <exception id="2" action="1" line="error"/>
+            <parameter name="windowIcon">
+                <subParameter name="value" code="0"></subParameter>
+            </parameter>
             <parameter name="message">
                 <subParameter name="value" code="0">The result of 2^$power is $result.</subParameter>
             </parameter>
             <parameter name="title">
                 <subParameter name="value" code="0">Result</subParameter>
             </parameter>
+            <parameter name="textMode">
+                <subParameter name="value" code="0">Automatic</subParameter>
+            </parameter>
             <parameter name="ifYes">
                 <subParameter name="line" code="0"></subParameter>
                 <subParameter name="action" code="0">do_nothing</subParameter>
+            </parameter>
+            <parameter name="customIcon">
+                <subParameter name="value" code="0"></subParameter>
             </parameter>
             <parameter name="icon">
                 <subParameter name="value" code="0">information</subParameter>
@@ -91,15 +119,24 @@
             <exception id="0" action="0" line="error"/>
             <exception id="1" action="0" line="error"/>
             <exception id="2" action="1" line="error"/>
+            <parameter name="windowIcon">
+                <subParameter name="value" code="0"></subParameter>
+            </parameter>
             <parameter name="message">
                 <subParameter name="value" code="0">The value you entered is not valid.</subParameter>
             </parameter>
             <parameter name="title">
                 <subParameter name="value" code="0">Error</subParameter>
             </parameter>
+            <parameter name="textMode">
+                <subParameter name="value" code="0">Automatic</subParameter>
+            </parameter>
             <parameter name="ifYes">
                 <subParameter name="line" code="0"></subParameter>
                 <subParameter name="action" code="0">do_nothing</subParameter>
+            </parameter>
+            <parameter name="customIcon">
+                <subParameter name="value" code="0"></subParameter>
             </parameter>
             <parameter name="icon">
                 <subParameter name="value" code="0">error</subParameter>
