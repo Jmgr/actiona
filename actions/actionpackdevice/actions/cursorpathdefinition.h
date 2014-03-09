@@ -24,6 +24,7 @@
 #include "actiondefinition.h"
 #include "cursorpathinstance.h"
 #include "pointlistparameterdefinition.h"
+#include "listparameterdefinition.h"
 #include "positionparameterdefinition.h"
 
 namespace ActionTools
@@ -42,9 +43,17 @@ namespace Actions
 		explicit CursorPathDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
+            translateItems("CursorPathInstance::buttons", CursorPathInstance::buttons);
+
 			ActionTools::PointListParameterDefinition *path = new ActionTools::PointListParameterDefinition(ActionTools::Name("path", tr("Path")), this);
 			path->setTooltip(tr("The path to follow"));
 			addElement(path);
+
+            ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::Name("button", tr("Button")), this);
+            button->setTooltip(tr("The button to simulate"));
+            button->setItems(CursorPathInstance::buttons);
+            button->setDefaultValue(CursorPathInstance::buttons.second.at(CursorPathInstance::NoButton));
+            addElement(button);
 
 			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
 			positionOffset->setTooltip(tr("The offset to apply to the path"));

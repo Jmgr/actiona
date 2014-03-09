@@ -12,4 +12,5 @@ HEADERS += actions/wheeldefinition.h \
     actions/cursorpathinstance.h
 SOURCES += actions/textinstance.cpp \
     actions/keyinstance.cpp \
-	actions/clickinstance.cpp
+	actions/clickinstance.cpp \
+    actions/cursorpathinstance.cpp

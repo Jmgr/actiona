@@ -27,7 +27,7 @@
 #include "listparameterdefinition.h"
 #include "groupdefinition.h"
 #include "ifactionparameterdefinition.h"
-#include "fileparameterdefinition.h"
+#include "imageparameterdefinition.h"
 
 namespace ActionTools
 {
@@ -69,14 +69,14 @@ namespace Actions
 			type->setDefaultValue(MessageBoxInstance::buttons.second.at(MessageBoxInstance::OkButton));
 			addElement(type, 1);
 
-			ActionTools::FileParameterDefinition *customIcon = new ActionTools::FileParameterDefinition(ActionTools::Name("customIcon", tr("Custom icon")), this);
+            ActionTools::ImageParameterDefinition *customIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name("customIcon", tr("Custom icon")), this);
 			customIcon->setTooltip(tr("The custom icon to use"));
 			customIcon->setMode(ActionTools::FileEdit::FileOpen);
 			customIcon->setCaption(tr("Select the icon to use"));
 			customIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 			addElement(customIcon, 1);
 
-			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
+            ActionTools::ImageParameterDefinition *windowIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
 			windowIcon->setTooltip(tr("The window icon to use"));
 			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
 			windowIcon->setCaption(tr("Select the icon to use"));

@@ -25,7 +25,7 @@
 #include "multidatainputinstance.h"
 #include "multitextparameterdefinition.h"
 #include "listparameterdefinition.h"
-#include "fileparameterdefinition.h"
+#include "imageparameterdefinition.h"
 #include "textparameterdefinition.h"
 #include "variableparameterdefinition.h"
 #include "numberparameterdefinition.h"
@@ -75,7 +75,7 @@ namespace Actions
 			windowTitle->setTooltip(tr("The title of the window"));
 			addElement(windowTitle, 1);
 
-			ActionTools::FileParameterDefinition *windowIcon = new ActionTools::FileParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
+            ActionTools::ImageParameterDefinition *windowIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
 			windowIcon->setTooltip(tr("The window icon to use"));
 			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
 			windowIcon->setCaption(tr("Select the icon to use"));

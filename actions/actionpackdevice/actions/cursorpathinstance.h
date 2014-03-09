@@ -34,29 +34,61 @@ namespace Actions
 		Q_OBJECT
 
 	public:
+        enum Button
+        {
+            NoButton,
+            LeftButton,
+            MiddleButton,
+            RightButton
+        };
+
 		CursorPathInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent),
-			mCurrentPoint(0)
+            mCurrentPoint(0),
+            mButton(NoButton)
 		{
 			connect(&mMoveTimer, SIGNAL(timeout()), this, SLOT(moveToNextPosition()));
 		}
+
+        static ActionTools::StringListPair buttons;
 
 		void startExecution()
 		{
 			bool ok = true;
 
 			mPositionOffset = evaluatePoint(ok, "positionOffset");
+            mButton = evaluateListElement<Button>(ok, buttons, "button");
 			mPoints = evaluatePolygon(ok, "path");
 
 			if(!ok)
 				return;
 
-			mCurrentPoint = 0;
 			mMoveTimer.start(25);
+
+            mCurrentPoint = 0;
+            mMouseDevice.setCursorPosition(mPoints.at(mCurrentPoint) + mPositionOffset);
+            ++mCurrentPoint;
+
+            switch(mButton)
+            {
+            case NoButton:
+                break;
+            case LeftButton:
+                mMouseDevice.pressButton(MouseDevice::LeftButton);
+                break;
+            case MiddleButton:
+                mMouseDevice.pressButton(MouseDevice::MiddleButton);
+                break;
+            case RightButton:
+                mMouseDevice.pressButton(MouseDevice::RightButton);
+                break;
+            }
 		}
 
 		void stopExecution()
 		{
+            releaseButton();
+
 			mMoveTimer.stop();
 		}
 
@@ -70,6 +102,8 @@ namespace Actions
 		{
 			if(mCurrentPoint >= mPoints.size())
 			{
+                releaseButton();
+
 				emit executionEnded();
 				mMoveTimer.stop();
 			}
@@ -81,11 +115,30 @@ namespace Actions
 		}
 
 	private:
+        void releaseButton()
+        {
+            switch(mButton)
+            {
+            case NoButton:
+                break;
+            case LeftButton:
+                mMouseDevice.releaseButton(MouseDevice::LeftButton);
+                break;
+            case MiddleButton:
+                mMouseDevice.releaseButton(MouseDevice::MiddleButton);
+                break;
+            case RightButton:
+                mMouseDevice.releaseButton(MouseDevice::RightButton);
+                break;
+            }
+        }
+
 		MouseDevice mMouseDevice;
 		QTimer mMoveTimer;
 		QPoint mPositionOffset;
 		QPolygon mPoints;
 		int mCurrentPoint;
+        Button mButton;
 
 		Q_DISABLE_COPY(CursorPathInstance)
 	};
