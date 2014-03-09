@@ -1,4 +1,4 @@
-3.8.0 (02/03/14)
+3.8.0 (09/03/14)
 Global:
 - added in-script resources
 - added an Image parameter
@@ -10,6 +10,7 @@ Global:
 - fixed the default value in DateTime parameters
 - VariableCondition: added a Contains operation allowing to test for the presence of a string in a string list
 - VariableCondition: corrected the comparison of values, allowing for more intuitive comparisons
+- CursorPath: added a mouse button that can be pressed during the action execution
 Interface:
 - added a screen capture wizard
 - added the insertion of variables & resources in the code editor
