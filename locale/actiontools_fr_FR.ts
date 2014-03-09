@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ActionDefinition::CategoryName</name>
     <message>
@@ -611,12 +611,12 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::ScreenshotWizardPage</name>
     <message>
-        <location filename="../actiontools/screenshotwizardpage.cpp" line="46"/>
+        <location filename="../actiontools/screenshotwizardpage.cpp" line="45"/>
         <source>All screens</source>
         <translation>Tous les écrans</translation>
     </message>
     <message>
-        <location filename="../actiontools/screenshotwizardpage.cpp" line="49"/>
+        <location filename="../actiontools/screenshotwizardpage.cpp" line="48"/>
         <source>Screen %1</source>
         <translation>Écran %1</translation>
     </message>
@@ -697,14 +697,14 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::TargetWindow</name>
     <message>
-        <location filename="../actiontools/targetwindow.cpp" line="147"/>
-        <location filename="../actiontools/targetwindow.cpp" line="155"/>
+        <location filename="../actiontools/targetwindow.cpp" line="158"/>
+        <location filename="../actiontools/targetwindow.cpp" line="166"/>
         <source>Choose a screen rectangle</source>
         <translation>Choix d&apos;un rectangle sur l&apos;écran</translation>
     </message>
     <message>
-        <location filename="../actiontools/targetwindow.cpp" line="147"/>
-        <location filename="../actiontools/targetwindow.cpp" line="155"/>
+        <location filename="../actiontools/targetwindow.cpp" line="158"/>
+        <location filename="../actiontools/targetwindow.cpp" line="166"/>
         <source>Unable to grab the pointer.</source>
         <translation>Impossible de prendre le contrôle du curseur.</translation>
     </message>

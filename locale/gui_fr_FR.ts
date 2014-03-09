@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -152,7 +152,7 @@ p, li { white-space: pre-wrap; }
         <source>Matthieu Hazon</source>
         <translation>Matthieu Hazon</translation>
     </message>
-    <message>
+    <message utf8="true">
         <location filename="../gui/aboutdialog.ui" line="202"/>
         <source>Loïc Vauvrecy</source>
         <translation>Loïc Vauvrecy</translation>

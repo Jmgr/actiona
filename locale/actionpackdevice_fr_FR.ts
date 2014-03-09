@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionPackDevice</name>
     <message>
@@ -97,22 +97,32 @@
 <context>
     <name>Actions::CursorPathDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="45"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="48"/>
         <source>Path</source>
         <translation>Trajet</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="46"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="49"/>
         <source>The path to follow</source>
         <translation>Le trajet à effectuer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="49"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="52"/>
+        <source>Button</source>
+        <translation>Bouton</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="53"/>
+        <source>The button to simulate</source>
+        <translation>Le bouton à simuler</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="58"/>
         <source>Offset</source>
         <translation>Décalage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="50"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="59"/>
         <source>The offset to apply to the path</source>
         <translation>Le décalage à appliquer aux points du chemin</translation>
     </message>
@@ -420,6 +430,29 @@
     </message>
 </context>
 <context>
+    <name>CursorPathInstance::buttons</name>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="27"/>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="27"/>
+        <source>Left</source>
+        <translation>Gauche</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="27"/>
+        <source>Middle</source>
+        <translation>Milieu</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="27"/>
+        <source>Right</source>
+        <translation>Droit</translation>
+    </message>
+</context>
+<context>
     <name>KeyInstance::actions</name>
     <message>
         <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="34"/>
@@ -532,12 +565,12 @@
         <translation type="obsolete">Pression et relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="54"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="63"/>
         <source>Cursor path</source>
         <translation>Trajet du curseur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="66"/>
         <source>Move the mouse cursor on a path</source>
         <translation>Déplace le curseur de la souris sur un trajet</translation>
     </message>
