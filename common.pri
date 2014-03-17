@@ -15,9 +15,12 @@ OBJECTS_DIR = generated
 
 unix {
 	isEmpty(PREFIX): PREFIX=/usr/local
+	isEmpty(LIBDIR): LIBDIR=lib
 
 	PREFIXSTR = '\\"$${PREFIX}\\"'
+	LIBDIRSTR = '\\"$${LIBDIR}\\"'
 	DEFINES += ACT_PREFIX=\"$${PREFIXSTR}\"
+	DEFINES += ACT_LIBDIR=\"$${LIBDIRSTR}\"
 }
 
 win32 {

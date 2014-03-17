@@ -47,6 +47,6 @@ RCC_DIR = generated
 OBJECTS_DIR = generated
 
 unix {
-	target.path = $${PREFIX}/lib/actionaz
+	target.path = $${PREFIX}/$${LIBDIR}/actionaz
 	INSTALLS += target
 }

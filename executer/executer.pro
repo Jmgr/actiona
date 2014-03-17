@@ -33,7 +33,7 @@ TRANSLATIONS = ../locale/executer_fr_FR.ts
 RESOURCES += executer.qrc
 
 unix {
-	target.path = $${PREFIX}/lib/actionaz
+	target.path = $${PREFIX}/$${LIBDIR}/actionaz
 
 	locales.path = $${PREFIX}/share/actionaz/locale
 	locales.files = ../locale/executer_fr_FR.qm

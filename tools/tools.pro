@@ -21,7 +21,7 @@ TRANSLATIONS = ../locale/tools_fr_FR.ts
 win32:LIBS += User32.lib
 
 unix {
-	target.path = $${PREFIX}/lib/actionaz
+	target.path = $${PREFIX}/$${LIBDIR}/actionaz
 
 	locales.path = $${PREFIX}/share/actionaz/locale
 	locales.files = ../locale/tools_fr_FR.qm
