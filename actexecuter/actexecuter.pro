@@ -1,5 +1,5 @@
 include(../common.pri)
-unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/lib/actionaz
+unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIBDIR}/actionaz
 QT += xml \
     network \
     script \

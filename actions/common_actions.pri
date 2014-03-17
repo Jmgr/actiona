@@ -13,6 +13,6 @@ LIBS += -L../.. \
 	-lactiontools
 
 unix {
-	target.path = $${PREFIX}/lib/actionaz/actions
+	target.path = $${PREFIX}/$${LIBDIR}/actionaz/actions
 	INSTALLS += target
 }
