@@ -50,7 +50,7 @@ bool Executer::start(QIODevice *device, const QString &filename)
 	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", locale);
 #ifndef Q_WS_WIN
 	if(mActionFactory->actionPackCount() == 0)
-		mActionFactory->loadActionPacks(QString("%1/lib/actionaz/actions/").arg(ACT_PREFIX), locale);
+        mActionFactory->loadActionPacks(QString("%1/%2/actionaz/actions/").arg(ACT_PREFIX).arg(ACT_LIBDIR), locale);
 #endif
 
 	if(mActionLoadingFailed)
