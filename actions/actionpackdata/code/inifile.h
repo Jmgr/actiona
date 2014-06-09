@@ -27,7 +27,7 @@
 #include <QScriptValue>
 #include <QScriptEngine>
 
-#include <config.h>
+#include <boost/property_tree/ptree.hpp>
 
 namespace Code
 {
@@ -46,12 +46,9 @@ namespace Code
 		QScriptValue load(const QString &filename);
 		QScriptValue save(const QString &filename = QString());
 		QScriptValue clear();
-		QScriptValue preserveDeletedData(bool preserve);
-		QScriptValue setDelimiter(char delimiter);
-		QScriptValue setCommentCharacter(char commentchar);
 		QScriptValue setSection(const QString &sectionName, bool create = true);
 		QScriptValue setEncoding(Encoding encoding);
-		QString sectionAt(int sectionIndex) const;
+        QString sectionAt(int sectionIndex) const;
 		QScriptValue deleteSection(const QString &sectionName);
 		int sectionCount() const;
 		bool keyExists(const QString &keyName) const;
@@ -59,11 +56,14 @@ namespace Code
 		QString keyValue(const QString &keyName) const;
 		QScriptValue setKeyValue(const QString &keyName, const QString &value);
 		QScriptValue deleteKey(const QString &keyName);
-		size_t keyCount() const;
+        int keyCount() const;
 	
 	private:
-		rude::Config mConfig;
-		Encoding mEncoding;
+        Encoding mEncoding;
+        boost::property_tree::ptree mCurrentSection;
+        boost::property_tree::ptree mTree;
+        QByteArray mCurrentSectionName;
+        QString mLatestFilename;
 	};
 }
 

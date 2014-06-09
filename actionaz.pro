@@ -50,8 +50,7 @@ locale_release.commands = \
 locale_release.CONFIG = no_link
 QMAKE_EXTRA_TARGETS += locale_release
 
-SUBDIRS += 3rdparty \
-	tools \
+SUBDIRS += tools \
 	actiontools \
 	executer \
 	actexecuter \

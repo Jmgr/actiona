@@ -21,7 +21,8 @@
 #include "readinifileinstance.h"
 #include "stringlistpair.h"
 
-#include <config.h>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/ini_parser.hpp>
 
 namespace Actions
 {
@@ -46,8 +47,13 @@ namespace Actions
             return;
         }
 
-        rude::Config config;
-        if(!config.load(filename.toLocal8Bit()))
+        boost::property_tree::ptree tree;
+
+        try
+        {
+            boost::property_tree::ini_parser::read_ini(filename.toStdString(), tree);
+        }
+        catch(const std::runtime_error &e)
         {
             setCurrentParameter("filename");
             emit executionException(UnableToReadFileException, tr("Unable to read the file"));
@@ -57,26 +63,12 @@ namespace Actions
         if(mode == WholeFile)
 		{
             QHash<QString, QString> fileContent;
-            int sectionCount = config.getNumSections();
 
-            for(int sectionIndex = 0; sectionIndex < sectionCount; ++sectionIndex)
+            for(const auto &section: tree)
             {
-                QString sectionName = QString::fromLatin1(config.getSectionNameAt(sectionIndex));
-
-                if(!config.setSection(sectionName.toLatin1(), false))
+                for(const auto &parameter: section.second)
                 {
-                    emit executionException(UnableToReadFileException, tr("Unable to read the file"));
-                    return;
-                }
-
-                int parameterCount = config.getNumDataMembers();
-
-                for(int parameterIndex = 0; parameterIndex < parameterCount; ++parameterIndex)
-                {
-                    QString parameterName = QString::fromLatin1(config.getDataNameAt(parameterIndex));
-                    QString parameterValue = QString::fromLatin1(config.getStringValue(parameterName.toLatin1()));
-
-                    fileContent[sectionName + "/" + parameterName] = parameterValue;
+                    fileContent[QString::fromStdString(section.first + "/" + parameter.first)] = QString::fromStdString(parameter.second.get_value<std::string>());
                 }
             }
 
@@ -90,15 +82,25 @@ namespace Actions
             if(!ok)
                 return;
 
-			if(!config.setSection(section.toLatin1(), false))
-			{
-				setCurrentParameter("section");
-				emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
-				return;
-			}
+            auto sectionNode = tree.get_child_optional(section.toStdString());
+            if(!sectionNode)
+            {
+                setCurrentParameter("section");
+                emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
+                return;
+            }
 
-			setVariable(variable, QString::fromLatin1(config.getStringValue(parameter.toLatin1())));
-		}
+            try
+            {
+                setVariable(variable, QString::fromStdString((*sectionNode).get<std::string>(parameter.toStdString())));
+            }
+            catch(const std::runtime_error &e)
+            {
+                setCurrentParameter("parameter");
+                emit executionException(UnableToFindSectionException, tr("Unable to find the parameter named \"%1\"").arg(parameter));
+                return;
+            }
+        }
 
 		emit executionEnded();
 	}

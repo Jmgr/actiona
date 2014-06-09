@@ -23,7 +23,8 @@
 
 #include "actioninstance.h"
 
-#include <config.h>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/ini_parser.hpp>
 
 namespace Actions
 {
@@ -53,33 +54,49 @@ namespace Actions
 				return;
 
 			if(!write(filename, section, parameter, value))
-			{
-				setCurrentParameter("filename");
-				emit executionException(UnableToWriteFileException, tr("Unable to write to the file"));
 				return;
-			}
 
 			emit executionEnded();
 		}
 
 	private:
-		bool write(const QString &filename, const QString &section, const QString &parameter, const QString &value)
+        bool write(const QString &filename, QString section, const QString &parameter, const QString &value)
 		{
-			rude::Config config;
+            try
+            {
+                boost::property_tree::ptree tree;
 
-			config.setConfigFile(filename.toLocal8Bit());
+                boost::property_tree::ini_parser::read_ini(filename.toStdString(), tree);
 
-			config.load();
+                //Create/get the parameter and the value
+                boost::property_tree::ptree sectionTree;
+                if(tree.count(section.toStdString()) > 0)
+                    sectionTree = tree.get_child(section.toStdString());
 
-			if(!config.setSection(section.toLatin1(), true))
-				return false;
+                sectionTree.put(parameter.toStdString(), value.toStdString());
 
-			config.setStringValue(parameter.toLatin1(), value.toLatin1());
+                if(section.isEmpty())
+                {
+                    setCurrentParameter("filename");
+                    emit executionException(UnableToWriteFileException, tr("Unable to write to the file: the section name cannot be empty"));
 
-			if(!config.save())
-				return false;
+                    return false;
+                }
 
-			return true;
+                //Create the section
+                tree.put_child(section.toStdString(), sectionTree);
+
+                boost::property_tree::ini_parser::write_ini(filename.toStdString(), tree);
+            }
+            catch(const std::runtime_error &e)
+            {
+                setCurrentParameter("filename");
+                emit executionException(UnableToWriteFileException, tr("Unable to write to the file: %1").arg(e.what()));
+
+                return false;
+            }
+
+            return true;
 		}
 
 		Q_DISABLE_COPY(WriteIniFileInstance)
