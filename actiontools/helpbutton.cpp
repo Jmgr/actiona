@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -42,6 +42,6 @@ namespace ActionTools
 		if(mTopic.isEmpty())
 			return;
 
-		QDesktopServices::openUrl(QUrl(QString("http://wiki.actionaz.org/doku.php?id=%1").arg(mTopic)));
+        QDesktopServices::openUrl(QUrl(QString("http://wiki.actiona.tools/doku.php?id=%1").arg(mTopic)));
 	}
 }

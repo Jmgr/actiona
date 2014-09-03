@@ -1,13 +1,13 @@
 /*
-	Actionaz
+	Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+	Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -54,7 +54,7 @@ namespace ActionTools
 		virtual ActionInstance *newActionInstance() const = 0;
         virtual ActionStatus status() const                                                             { return Stable; }
 		virtual ActionCategory category() const = 0;
-        virtual QString author() const                                                                  { return (flags() & Official) ? QObject::tr("The Actionaz Team") : QString(); }
+        virtual QString author() const                                                                  { return (flags() & Official) ? QObject::tr("The Actiona Team") : QString(); }
         virtual QString website() const                                                                 { return QString(); }
         virtual QString email() const                                                                   { return QString(); }
         virtual QPixmap icon() const                                                                    { return QPixmap(); }

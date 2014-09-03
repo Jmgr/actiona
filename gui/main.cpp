@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
     Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -68,7 +68,7 @@ static void cleanup()
 int main(int argc, char **argv)
 {
 #if (QT_VERSION < 0x040700)
-		#error("You need Qt 4.7.0 or later to compile Actionaz");
+        #error("You need Qt 4.7.0 or later to compile Actiona");
 #endif
 
 #ifdef ACT_PROFILE
@@ -79,13 +79,13 @@ int main(int argc, char **argv)
 	CoInitializeEx(0, COINIT_APARTMENTTHREADED | COINIT_SPEED_OVER_MEMORY);
 #endif
 
-	ActionTools::NativeEventFilteringApplication app("actionaz-gui", argc, argv);
+    ActionTools::NativeEventFilteringApplication app("actiona-gui", argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
-	app.setOrganizationName("Actionaz");
-	app.setOrganizationDomain("actionaz.org");
-	app.setApplicationName("Actionaz");
-	app.setApplicationVersion(Global::ACTIONAZ_VERSION.toString());
+    app.setOrganizationName("Actiona");
+    app.setOrganizationDomain("actiona.tools");
+    app.setApplicationName("Actiona");
+    app.setApplicationVersion(Global::ACTIONA_VERSION.toString());
 
 	qAddPostRoutine(cleanup);
 
@@ -138,7 +138,7 @@ int main(int argc, char **argv)
 	if(!toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
 #ifndef Q_WS_WIN
-		toolsTranslator.load(QString("%1/share/actionaz/locale/tools_%2").arg(ACT_PREFIX).arg(locale));
+        toolsTranslator.load(QString("%1/share/actiona/locale/tools_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
 	app.installTranslator(&toolsTranslator);
@@ -147,7 +147,7 @@ int main(int argc, char **argv)
 	if(!actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
 #ifndef Q_WS_WIN
-		actionToolsTranslator.load(QString("%1/share/actionaz/locale/actiontools_%2").arg(ACT_PREFIX).arg(locale));
+        actionToolsTranslator.load(QString("%1/share/actiona/locale/actiontools_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
 	app.installTranslator(&actionToolsTranslator);
@@ -156,7 +156,7 @@ int main(int argc, char **argv)
 	if(!executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
 #ifndef Q_WS_WIN
-		executerTranslator.load(QString("%1/share/actionaz/locale/executer_%2").arg(ACT_PREFIX).arg(locale));
+        executerTranslator.load(QString("%1/share/actiona/locale/executer_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
 	app.installTranslator(&executerTranslator);
@@ -165,7 +165,7 @@ int main(int argc, char **argv)
 	if(!guiTranslator.load(QString("%1/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
 #ifndef Q_WS_WIN
-		guiTranslator.load(QString("%1/share/actionaz/locale/gui_%2").arg(ACT_PREFIX).arg(locale));
+        guiTranslator.load(QString("%1/share/actiona/locale/gui_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
 	app.installTranslator(&guiTranslator);
@@ -186,7 +186,7 @@ int main(int argc, char **argv)
 	options.alias("nocodeqt", "Q");
 	options.add("execute", QObject::tr("execute the current script"));
 	options.alias("execute", "e");
-	options.add("exitatend", QObject::tr("close Actionaz after execution - requires execute"));
+    options.add("exitatend", QObject::tr("close Actiona after execution - requires execute"));
 	options.alias("exitatend", "x");
 	options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
 	options.alias("portable", "p");
@@ -199,7 +199,7 @@ int main(int argc, char **argv)
 	if(options.count("version"))
 	{
 		QTextStream stream(stdout);
-		stream << "Actionaz version " << Global::ACTIONAZ_VERSION.toString() << ", script version " << Global::SCRIPT_VERSION.toString() << "\n";
+        stream << "Actiona version " << Global::ACTIONA_VERSION.toString() << ", script version " << Global::SCRIPT_VERSION.toString() << "\n";
 		stream.flush();
 		return 0;
 	}
@@ -223,7 +223,7 @@ int main(int argc, char **argv)
 		return 0;
 
 #ifdef Q_WS_X11
-	notify_init("Actionaz");
+    notify_init("Actiona");
 #endif
 
 #ifdef Q_WS_WIN

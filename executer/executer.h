@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -65,7 +65,7 @@ namespace LibExecuter
 				   int consoleWindowScreen,
 				   int pauseBefore,
 				   int pauseAfter,
-				   Tools::Version actionazVersion,
+                   Tools::Version actionaVersion,
 				   Tools::Version scriptVersion,
 				   bool isActExec,
 				   QStandardItemModel *consoleModel);
@@ -163,7 +163,7 @@ namespace LibExecuter
 		bool mPauseInterrupt;
 		int mPauseBefore;
 		int mPauseAfter;
-		Tools::Version mActionazVersion;
+        Tools::Version mActionaVersion;
 		Tools::Version mScriptVersion;
 		bool mIsActExec;
         bool mShowDebuggerOnCodeError;

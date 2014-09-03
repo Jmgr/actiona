@@ -14,7 +14,7 @@ SOURCES += mousedevice.cpp \
     keyboarddevice.cpp
 
 unix {
-	locales.path = $${PREFIX}/share/actionaz/locale
+        locales.path = $${PREFIX}/share/actiona/locale
 	locales.files = ../../locale/actionpackdevice_fr_FR.qm
 	locales.CONFIG = no_check_exist
 

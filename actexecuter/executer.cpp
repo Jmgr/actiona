@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -50,7 +50,7 @@ bool Executer::start(QIODevice *device, const QString &filename)
 	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", locale);
 #ifndef Q_WS_WIN
 	if(mActionFactory->actionPackCount() == 0)
-        mActionFactory->loadActionPacks(QString("%1/%2/actionaz/actions/").arg(ACT_PREFIX).arg(ACT_LIBDIR), locale);
+        mActionFactory->loadActionPacks(QString("%1/%2/actiona/actions/").arg(ACT_PREFIX).arg(ACT_LIBDIR), locale);
 #endif
 
 	if(mActionLoadingFailed)

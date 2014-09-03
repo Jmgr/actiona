@@ -1205,8 +1205,12 @@ Double-cliquez pour afficher</translation>
     </message>
     <message>
         <location filename="../actiontools/actiondefinition.h" line="57"/>
+        <source>The Actiona Team</source>
+        <translation>L&apos;équipe d&apos;Actiona</translation>
+    </message>
+    <message>
         <source>The Actionaz Team</source>
-        <translation>L&apos;équipe d&apos;Actionaz</translation>
+        <translation type="obsolete">L&apos;équipe d&apos;Actionaz</translation>
     </message>
     <message>
         <source>Bad parameter</source>

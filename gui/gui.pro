@@ -1,5 +1,5 @@
 include(../common.pri)
-unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIBDIR}/actionaz
+unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIBDIR}/actiona
 QT += xml \
 	network \
 	script \
@@ -9,8 +9,8 @@ contains(DEFINES, ACT_PROFILE) {
 CONFIG += console
 }
 MOBILITY += systeminfo
-TARGET = actionaz
-VERSION = $$ACTIONAZ_VERSION
+TARGET = actiona
+VERSION = $$ACTIONA_VERSION
 DESTDIR = ..
 SOURCES += main.cpp \
 	mainwindow.cpp \
@@ -98,24 +98,24 @@ unix:!mac:PKGCONFIG += libnotify
 unix {
 	target.path = $${PREFIX}/bin
 
-	locales.path = $${PREFIX}/share/actionaz/locale
+        locales.path = $${PREFIX}/share/actiona/locale
 	locales.files = ../locale/gui_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
 	icon.path = $${PREFIX}/share/pixmaps
-	icon.files = icons/actionaz.png
+        icon.files = icons/actiona.png
 
 	desktopicon.path = $${PREFIX}/share/icons/hicolor/48x48/apps
-	desktopicon.files = icons/actionaz.png
+        desktopicon.files = icons/actiona.png
 
 	desktopfile.path = $${PREFIX}/share/applications
-	desktopfile.files = ../actionaz.desktop
+        desktopfile.files = ../actiona.desktop
 
 	manfile.path = $${PREFIX}/share/man/man1
-	manfile.files = ../docs/actionaz.1
+        manfile.files = ../docs/actiona.1
 
 	mimefile.path = $${PREFIX}/share/mime/packages/
-	mimefile.files = ../docs/actionaz.xml
+        mimefile.files = ../docs/actiona.xml
 
 	INSTALLS += target locales icon desktopicon desktopfile manfile mimefile
 }

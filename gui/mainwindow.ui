@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Actionaz</string>
+   <string>Actiona</string>
   </property>
   <property name="windowIcon">
    <iconset resource="gui.qrc">
@@ -685,7 +685,7 @@
   </action>
   <action name="actionParameters">
    <property name="icon">
-    <iconset resource="gui.qrc">
+    <iconset>
      <normaloff>:/icons/text.png</normaloff>:/icons/text.png</iconset>
    </property>
    <property name="text">
@@ -759,7 +759,7 @@
   </action>
   <action name="actionGlobal_code">
    <property name="icon">
-    <iconset resource="gui.qrc">
+    <iconset>
      <normaloff>:/icons/text.png</normaloff>:/icons/text.png</iconset>
    </property>
    <property name="text">
@@ -937,8 +937,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="gui.qrc"/>
   <include location="../actiontools/actiontools.qrc"/>
+  <include location="gui.qrc"/>
  </resources>
  <connections>
   <connection>

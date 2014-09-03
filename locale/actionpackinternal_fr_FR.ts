@@ -539,16 +539,14 @@
         <translation>Écrit une entrée dans la console</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/exitdefinition.h" line="45"/>
         <source>Exit Actionaz</source>
         <comment>action name: to exit</comment>
-        <translation>Quitter Actionaz</translation>
+        <translation type="obsolete">Quitter Actionaz</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/exitdefinition.h" line="48"/>
         <source>Exit Actionaz</source>
         <comment>action description: this exits</comment>
-        <translation>Quitte Actionaz</translation>
+        <translation type="obsolete">Quitte Actionaz</translation>
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="50"/>
@@ -579,6 +577,18 @@
         <location filename="../actions/actionpackinternal/actions/endproceduredefinition.h" line="48"/>
         <source>Ends a procedure</source>
         <translation>Termine une procédure</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/exitdefinition.h" line="45"/>
+        <source>Exit Actiona</source>
+        <comment>action name: to exit</comment>
+        <translation>Quitter Actiona</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/exitdefinition.h" line="48"/>
+        <source>Exit Actiona</source>
+        <comment>action description: this exits</comment>
+        <translation>Quitte Actiona</translation>
     </message>
 </context>
 <context>

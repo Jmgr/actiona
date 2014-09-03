@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -32,13 +32,13 @@ DeleteActionPushButton::DeleteActionPushButton(QWidget *parent)
 
 void DeleteActionPushButton::dragEnterEvent(QDragEnterEvent *event)
 {
-	if(event->mimeData()->hasFormat("application/actionaz.action"))
+    if(event->mimeData()->hasFormat("application/actiona.action"))
 		event->acceptProposedAction();
 }
 
 void DeleteActionPushButton::dropEvent(QDropEvent *event)
 {
-	QByteArray encodedData = event->mimeData()->data("application/actionaz.action");
+    QByteArray encodedData = event->mimeData()->data("application/actiona.action");
 	QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
 	QList<int> rowIdList;

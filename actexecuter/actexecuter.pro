@@ -1,11 +1,11 @@
 include(../common.pri)
-unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIBDIR}/actionaz
+unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIBDIR}/actiona
 QT += xml \
     network \
     script \
     scripttools
 TARGET = actexec
-VERSION = $$ACTIONAZ_VERSION
+VERSION = $$ACTIONA_VERSION
 DESTDIR = ..
 SOURCES += main.cpp \
     executer.cpp \
@@ -38,7 +38,7 @@ unix:!mac:PKGCONFIG += libnotify
 unix {
 	target.path = $${PREFIX}/bin
 
-	locales.path = $${PREFIX}/share/actionaz/locale
+        locales.path = $${PREFIX}/share/actiona/locale
 	locales.files = ../locale/actexecuter_fr_FR.qm
 	locales.CONFIG = no_check_exist
 

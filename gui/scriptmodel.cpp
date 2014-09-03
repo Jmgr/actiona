@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -411,7 +411,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 		stream << ActionTools::ActionInstanceBuffer(actionInstance->definition()->id(), *actionInstance);
 	}
 
-	mimeDataPtr->setData("application/actionaz.action", encodedData);
+    mimeDataPtr->setData("application/actiona.action", encodedData);
 	return mimeDataPtr;
 }
 
@@ -425,9 +425,9 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 	if(parent.isValid())
 		return false;
 
-	if(data->hasFormat("application/actionaz.add.action"))
+    if(data->hasFormat("application/actiona.add.action"))
 	{
-		QByteArray encodedData = data->data("application/actionaz.add.action");
+        QByteArray encodedData = data->data("application/actiona.add.action");
 
 		if(row == -1)
 			row = rowCount(QModelIndex());
@@ -436,9 +436,9 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 
 		return true;
 	}
-	else if(data->hasFormat("application/actionaz.action"))
+    else if(data->hasFormat("application/actiona.action"))
 	{
-		QByteArray encodedData = data->data("application/actionaz.action");
+        QByteArray encodedData = data->data("application/actiona.action");
 		QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
 		if(row == -1)
@@ -490,8 +490,8 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 QStringList ScriptModel::mimeTypes() const
 {
 	return QStringList()
-			<< "application/actionaz.action"
-			<< "application/actionaz.add.action"
+            << "application/actiona.action"
+            << "application/actiona.add.action"
 			<< "text/uri-list"
 			<< "text/plain";
 }

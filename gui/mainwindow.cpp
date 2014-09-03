@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -126,7 +126,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
     mScriptProgressDialog->setAutoClose(false);
     mScriptProgressDialog->setMinimumDuration(0);
 
-	if(Global::ACTIONAZ_VERSION >= Tools::Version(1, 0, 0))
+    if(Global::ACTIONA_VERSION >= Tools::Version(1, 0, 0))
 		ui->reportBugPushButton->setVisible(false);
 	
 	ui->consoleWidget->setup();
@@ -168,7 +168,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 		trayMenu->addSeparator();
 		trayMenu->addAction(ui->actionQuit);
 
-		mSystemTrayIcon->setToolTip(tr("Actionaz - ready"));
+        mSystemTrayIcon->setToolTip(tr("Actiona - ready"));
 		mSystemTrayIcon->setContextMenu(trayMenu);
 	}
 
@@ -228,7 +228,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	connect(mUpdater, SIGNAL(success(Tools::Version,QDate,QString,QString,QString,int,QString)), this, SLOT(updateSuccess(Tools::Version,QDate,QString,QString,QString,int,QString)));
 #endif
 
-	setWindowTitle("Actionaz[*]");//Set this to fix some warnings about the [*] placeholder
+    setWindowTitle("Actiona[*]");//Set this to fix some warnings about the [*] placeholder
 
     QTimer::singleShot(0, this, SLOT(postInit()));
 
@@ -275,7 +275,7 @@ void MainWindow::postInit()
 	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", mUsedLocale);
 #ifndef Q_WS_WIN
 	if(mActionFactory->actionPackCount() == 0)
-        mActionFactory->loadActionPacks(QString("%1/%2/actionaz/actions/").arg(ACT_PREFIX).arg(ACT_LIBDIR), mUsedLocale);
+        mActionFactory->loadActionPacks(QString("%1/%2/actiona/actions/").arg(ACT_PREFIX).arg(ACT_LIBDIR), mUsedLocale);
 #endif
 
 	QSettings settings;
@@ -422,7 +422,7 @@ void MainWindow::postInit()
 	{
 		if(QMessageBox::question(this,
 								 tr("Automatic updates"),
-								 tr("Do you want Actionaz to check once per day if a new version is available ?\nYou can change this setting later in the settings dialog."),
+                                 tr("Do you want Actiona to check once per day if a new version is available ?\nYou can change this setting later in the settings dialog."),
 								 QMessageBox::Yes | QMessageBox::No,
 								 QMessageBox::Yes) == QMessageBox::Yes)
 			settings.setValue("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY));
@@ -476,14 +476,14 @@ void MainWindow::postInit()
 
 	if(mCommandOptions->count("execute"))
 		execute(false);
-	else if(Global::ACTIONAZ_VERSION < Tools::Version(1, 0, 0))
+    else if(Global::ACTIONA_VERSION < Tools::Version(1, 0, 0))
 	{
 		if(!settings.value("hasGotPreVersionMessage", false).toBool())
 		{
 			settings.setValue("hasGotPreVersionMessage", true);
 
 			QMessageBox::information(this, tr("Beta test"),
-									 tr("Thank you for beta-testing this new version of Actionaz !<br>"
+                                     tr("Thank you for beta-testing this new version of Actiona !<br>"
 										"<br>Please test as many features as you can, and remember that any comments are welcome !<br><br>To report a bug or write a comment please use the <b>Report a bug</b> button.<br>"
 										"<br>Remember that this is a <b>beta</b> version so please do not write any critical scripts with it since the script format may change before the final release.<br>"));
 		}
@@ -530,7 +530,7 @@ void MainWindow::on_actionSave_as_triggered()
 
 void MainWindow::on_actionSave_copy_as_triggered()
 {
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save copy"), QString(), tr("Actionaz script (*.ascr)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save copy"), QString(), tr("Actiona script (*.ascr)"));
 	if(fileName.isEmpty())
 		return;
 
@@ -545,7 +545,7 @@ void MainWindow::on_actionOpen_triggered()
 {
 	if(maybeSave())
 	{
-		QString fileName = QFileDialog::getOpenFileName(this, tr("Open script"), QString(), tr("Actionaz script (*.ascr)"));
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Open script"), QString(), tr("Actiona script (*.ascr)"));
 		if(!fileName.isEmpty())
 			loadFile(fileName);
 	}
@@ -664,7 +664,7 @@ void MainWindow::on_actionExport_executable_triggered()
 	const QString scriptPath = QDir::temp().filePath("script.ascr");
 	QString sourceArchive;
 
-	if(sfxScriptDialog.requiresActionaz())
+    if(sfxScriptDialog.requiresActiona())
 		sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx.7z");
 	else
 	{
@@ -699,7 +699,7 @@ void MainWindow::on_actionExport_executable_triggered()
 		QMessageBox::warning(this, tr("Create SFX script"), tr("Unable to write the script to %1.").arg(scriptPath));
 		return;
 	}
-	mScript->write(&file, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
+    mScript->write(&file, Global::ACTIONA_VERSION, Global::SCRIPT_VERSION);
 	file.close();
 
 	progressDialog.setLabelText(tr("Writing config file..."));
@@ -713,7 +713,7 @@ void MainWindow::on_actionExport_executable_triggered()
 	if(useActExec)
 		configFileStream << QString("ExecuteParameters=\"%1 open actexec \\\"script.ascr\\\"\"").arg(mUsedLocale) << "\r\n";
 	else
-		configFileStream << QString("ExecuteParameters=\"%1 open actionaz \\\"-%2 script.ascr\\\"\"").arg(mUsedLocale).arg(parameters) << "\r\n";
+        configFileStream << QString("ExecuteParameters=\"%1 open actiona \\\"-%2 script.ascr\\\"\"").arg(mUsedLocale).arg(parameters) << "\r\n";
 
 	configFileStream << "GUIMode=\"2\"" << "\r\n";
 	configFileStream << ";!@InstallEnd@!";
@@ -1078,7 +1078,7 @@ void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::on_actionHelp_triggered()
 {
-	QDesktopServices::openUrl(QUrl(QString("http://wiki.actionaz.org/")));
+    QDesktopServices::openUrl(QUrl(QString("http://wiki.actiona.tools/")));
 }
 
 void MainWindow::on_actionTake_screenshot_triggered()
@@ -1089,7 +1089,7 @@ void MainWindow::on_actionTake_screenshot_triggered()
 
 void MainWindow::on_reportBugPushButton_clicked()
 {
-	QDesktopServices::openUrl(QUrl(QString("http://bugs.actionaz.org?language=%1&program=actionaz3&version=%2&os=%3").arg(mUsedLocale).arg(Global::ACTIONAZ_VERSION.toString()).arg(Global::currentOS())));
+    QDesktopServices::openUrl(QUrl(QString("http://bugs.actiona.tools?language=%1&program=actiona3&version=%2&os=%3").arg(mUsedLocale).arg(Global::ACTIONA_VERSION.toString()).arg(Global::currentOS())));
 }
 
 void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
@@ -1251,7 +1251,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 		{
 			if(mScript->scriptVersion() < Global::SCRIPT_VERSION)
 			{
-				QMessageBox::warning(this, tr("Load script"), tr("This script was created with an older version of Actionaz.\nIt will be updated when you save it.\nYour version: %1\nScript version: %2")
+                QMessageBox::warning(this, tr("Load script"), tr("This script was created with an older version of Actiona.\nIt will be updated when you save it.\nYour version: %1\nScript version: %2")
 									 .arg(Global::SCRIPT_VERSION.toString()).arg(mScript->scriptVersion().toString()));
 			}
 
@@ -1282,7 +1282,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 		}
 		return false;
 	case ActionTools::Script::ReadInvalidScriptVersion:
-		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because it was created with a more recent version of Actionaz.\nPlease update your version of Actionaz to load this script.\nYour version: %1\nScript version: %2")
+        QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because it was created with a more recent version of Actiona.\nPlease update your version of Actiona to load this script.\nYour version: %1\nScript version: %2")
 							 .arg(Global::SCRIPT_VERSION.toString()).arg(mScript->scriptVersion().toString()));
 		return false;
 	default:
@@ -1342,7 +1342,7 @@ bool MainWindow::writeScript(QIODevice *device)
     mScriptProgressDialog->setWindowTitle(tr("Saving script"));
     mScriptProgressDialog->open();
 
-    bool result = mScript->write(device, Global::ACTIONAZ_VERSION, Global::SCRIPT_VERSION);
+    bool result = mScript->write(device, Global::ACTIONA_VERSION, Global::SCRIPT_VERSION);
 
     mScriptProgressDialog->close();
 
@@ -1358,7 +1358,7 @@ void MainWindow::checkForUpdate(bool silent)
 	mUpdaterProgressDialog->open(this, SLOT(updateCanceled()));
 	mUpdaterProgressDialog->setWindowTitle(tr("Checking for updates"));
 	mSilentUpdate = silent;
-	mUpdater->checkForUpdates("actionaz3", Global::ACTIONAZ_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), QSystemInfo().currentLanguage());
+    mUpdater->checkForUpdates("actiona3", Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), QSystemInfo().currentLanguage());
 }
 #endif
 
@@ -1483,7 +1483,7 @@ void MainWindow::execute(bool onlySelection)
 						 consoleWindowScreen,
 						 mScript->pauseBefore(),
 						 mScript->pauseAfter(),
-						 Global::ACTIONAZ_VERSION,
+                         Global::ACTIONA_VERSION,
 						 Global::SCRIPT_VERSION,
 						 false,
 						 ui->consoleWidget->model());
@@ -1499,7 +1499,7 @@ void MainWindow::execute(bool onlySelection)
 		ui->consoleDockWidget->hide();
 
 		if(mSystemTrayIcon)
-			mSystemTrayIcon->setToolTip(tr("Actionaz - executing"));
+            mSystemTrayIcon->setToolTip(tr("Actiona - executing"));
 
 		ui->actionExecute->setEnabled(false);
 		ui->actionExecute_selection->setEnabled(false);
@@ -1697,7 +1697,7 @@ void MainWindow::scriptExecutionStopped()
 		QTimer::singleShot(50, this, SLOT(postExecution()));
 
 		if(mSystemTrayIcon)
-			mSystemTrayIcon->setToolTip(tr("Actionaz - ready"));
+            mSystemTrayIcon->setToolTip(tr("Actiona - ready"));
 
 		ui->actionExecute->setEnabled(true);
 		mStopExecutionAction->setEnabled(false);
@@ -1778,7 +1778,7 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 {
 	mUpdaterProgressDialog->hide();
 
-	if(version <= Global::ACTIONAZ_VERSION)
+    if(version <= Global::ACTIONA_VERSION)
 	{
 		if(!mSilentUpdate)
 			QMessageBox::information(this, tr("Update"), tr("No new version is available."));
@@ -2039,7 +2039,7 @@ bool MainWindow::loadFile(const QString &fileName, bool verbose)
 	if(fileName.endsWith(".acod"))
 	{
 		if(verbose)
-			QMessageBox::warning(this, tr("Load script"), tr("Actionaz currently has no builtin editor for Code files (.acod). Please use an external code editor."));
+            QMessageBox::warning(this, tr("Load script"), tr("Actiona currently has no builtin editor for Code files (.acod). Please use an external code editor."));
 		return false;
 	}
 
@@ -2161,7 +2161,7 @@ bool MainWindow::save()
 
 bool MainWindow::saveAs()
 {
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save script"), QString(), tr("Actionaz script (*.ascr)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save script"), QString(), tr("Actiona script (*.ascr)"));
 	if(fileName.isEmpty())
 		return false;
 

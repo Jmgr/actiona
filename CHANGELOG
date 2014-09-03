@@ -23,7 +23,7 @@ Code:
 Actions:
 - added a button to insert detected variables into parameter fields
 - added a more explicit error message when a list field is empty
-- fixed a bug when opening a script that had been created using a previous version of Actionaz: new action parameters did not have default values
+- fixed a bug when opening a script that had been created using a previous version of Actiona: new action parameters did not have default values
 - corrected a bug that prevented using the Code Error exception to skip the current action or go to a line of the script
 - Pixel Color: added an offset to the position to be checked
 - Read INI File: added reading the whole file at once
@@ -115,7 +115,7 @@ Code:
 - Actions: fixed a bug preventing to enter no data in a number parameter
 - Actions: fixed a bug preventing to enter integer or decimal values below 0 or over 100
 - Windows: fixed a bug during installation preventing the use of image formats other than PNG
-- fixed a bug corrupting the Actionaz window when using the Exit Actionaz action
+- fixed a bug corrupting the Actiona window when using the Exit Actiona action
 - fixed some memory leaks
 
 3.2.0 (06/01/12)
@@ -126,7 +126,7 @@ Code:
 - Gui: updated the settings dialog to show the last opened tab
 - Gui: fixed check for updates parameter not being hidden when updates are disabled
 - Gui: now hiding exceptions when no parameters are shown
-- Executer: fixed a bug crashing Actionaz when using the Stop action
+- Executer: fixed a bug crashing Actiona when using the Stop action
 
 3.1.1 (30/12/11)
 - Code editor: added Ctrl+Return shortcut to close the code/text editor
@@ -166,7 +166,7 @@ Code:
 - added a Web code object
 - fixed a bug in the cursor path actions
 - added a field to the MessageBox and DataInput actions to specify the title icon to use
-- Sfx: added a "requires Actionaz" option
+- Sfx: added a "requires Actiona" option
 - Sfx: added a runner executable to warn about 64 bit compatibility issues
 
 0.1.1 (24/09/11)

@@ -21,7 +21,7 @@
    <item>
     <widget class="QTabWidget" name="settingsTab">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="icon">
@@ -175,14 +175,14 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QCheckBox" name="associateASCRCheckBox">
            <property name="text">
-            <string>Associate .ascr files with Actionaz</string>
+            <string>Associate .ascr files with Actiona</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="associateACODCheckBox">
            <property name="text">
-            <string>Associate .acod files with Actionaz</string>
+            <string>Associate .acod files with Actiona</string>
            </property>
           </widget>
          </item>
@@ -223,7 +223,16 @@ p, li { white-space: pre-wrap; }
             <property name="spacing">
              <number>0</number>
             </property>
-            <property name="margin">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>
@@ -248,7 +257,16 @@ p, li { white-space: pre-wrap; }
             <property name="spacing">
              <number>0</number>
             </property>
-            <property name="margin">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>

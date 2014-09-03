@@ -8,7 +8,7 @@ RESOURCES += actionpackwindows.qrc
 TRANSLATIONS = ../../locale/actionpackwindows_fr_FR.ts
 
 unix {
-	locales.path = $${PREFIX}/share/actionaz/locale
+        locales.path = $${PREFIX}/share/actiona/locale
 	locales.files = ../../locale/actionpackwindows_fr_FR.qm
 	locales.CONFIG = no_check_exist
 

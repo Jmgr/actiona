@@ -1,13 +1,13 @@
 /*
-	Actionaz
+	Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+	Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -42,9 +42,9 @@ SFXScriptDialog::SFXScriptDialog(QWidget *parent)
 	ui->showExecutionWindow->setChecked(settings.value("sfxScript/showExecutionWindow", false).toBool());
 	ui->closeAfterExecution->setChecked(settings.value("sfxScript/closeAfterExecution", true).toBool());
 	ui->use32BitBinaries->setChecked(settings.value("sfxScript/use32BitBinaries", true).toBool());
-	ui->requiresActionaz->setChecked(settings.value("sfxScript/requiresActionaz", false).toBool());
+    ui->requiresActiona->setChecked(settings.value("sfxScript/requiresActiona", false).toBool());
 
-	on_requiresActionaz_clicked();
+    on_requiresActiona_clicked();
 }
 
 SFXScriptDialog::~SFXScriptDialog()
@@ -77,9 +77,9 @@ bool SFXScriptDialog::use32BitBinaries() const
 	return ui->use32BitBinaries->isChecked();
 }
 
-bool SFXScriptDialog::requiresActionaz() const
+bool SFXScriptDialog::requiresActiona() const
 {
-	return ui->requiresActionaz->isChecked();
+    return ui->requiresActiona->isChecked();
 }
 
 void SFXScriptDialog::accept()
@@ -90,15 +90,15 @@ void SFXScriptDialog::accept()
 	settings.setValue("sfxScript/showExecutionWindow", ui->showExecutionWindow->isChecked());
 	settings.setValue("sfxScript/closeAfterExecution", ui->closeAfterExecution->isChecked());
 	settings.setValue("sfxScript/use32BitBinaries", ui->use32BitBinaries->isChecked());
-	settings.setValue("sfxScript/requiresActionaz", ui->requiresActionaz->isChecked());
+    settings.setValue("sfxScript/requiresActiona", ui->requiresActiona->isChecked());
 
 	QDialog::accept();
 }
 
-void SFXScriptDialog::on_requiresActionaz_clicked()
+void SFXScriptDialog::on_requiresActiona_clicked()
 {
-	bool requiresActionaz = ui->requiresActionaz->isChecked();
+    bool requiresActiona = ui->requiresActiona->isChecked();
 
-	ui->use32BitBinaries->setEnabled(!requiresActionaz);
-	ui->use32BitBinariesLabel->setEnabled(!requiresActionaz);
+    ui->use32BitBinaries->setEnabled(!requiresActiona);
+    ui->use32BitBinariesLabel->setEnabled(!requiresActiona);
 }

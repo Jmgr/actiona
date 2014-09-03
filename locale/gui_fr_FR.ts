@@ -4,19 +4,16 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="14"/>
         <source>About Actionaz</source>
-        <translation>À propos d&apos;Actionaz</translation>
+        <translation type="obsolete">À propos d&apos;Actionaz</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="26"/>
         <source>Actionaz [Version here]</source>
-        <translation>Actionaz [Version ici]</translation>
+        <translation type="obsolete">Actionaz [Version ici]</translation>
     </message>
     <message>
-        <location filename="../gui/aboutdialog.ui" line="42"/>
         <source>Contributors for Actionaz 3</source>
-        <translation>Contributeurs d&apos;Actionaz 3</translation>
+        <translation type="obsolete">Contributeurs d&apos;Actionaz 3</translation>
     </message>
     <message>
         <location filename="../gui/aboutdialog.ui" line="53"/>
@@ -216,6 +213,21 @@ p, li { white-space: pre-wrap; }
         <translation>niconil</translation>
     </message>
     <message>
+        <location filename="../gui/aboutdialog.ui" line="14"/>
+        <source>About Actiona</source>
+        <translation>À propos d&apos;Actiona</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutdialog.ui" line="26"/>
+        <source>Actiona [Version here]</source>
+        <translation>Actiona [Version ici]</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutdialog.ui" line="42"/>
+        <source>Contributors for Actiona 3 &amp;&amp; Actionaz 3</source>
+        <translation>Contributeurs d&apos;Actiona 3 &amp;&amp; d&apos;Actionaz 3</translation>
+    </message>
+    <message>
         <location filename="../gui/aboutdialog.ui" line="217"/>
         <source>mchelen</source>
         <translation>mchelen</translation>
@@ -365,10 +377,24 @@ p, li { white-space: pre-wrap; }
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:11pt;&quot;&gt;Visit &lt;/span&gt;&lt;a href=&quot;http://actiona.tools&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:11pt; text-decoration: underline; color:#0000ff;&quot;&gt;actiona.tools&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:11pt;&quot;&gt; to get information about new releases,&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:11pt;&quot;&gt;third-party actions and more !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Visitez &lt;/span&gt;&lt;a href=&quot;http://actiona.tools&quot;&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#0000ff;&quot;&gt;actiona.tools&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; pour obtenir des informations à propos de nouvelles versions,&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:11pt;&quot;&gt;des actions tierces parties et plus !&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Visit &lt;/span&gt;&lt;a href=&quot;http://www.actionaz.org&quot;&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#0000ff;&quot;&gt;www.actionaz.org&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; to get information about new releases,&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:11pt;&quot;&gt;third-party actions and more !&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -397,8 +423,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/aboutdialog.cpp" line="46"/>
+        <source>&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actiona %1&lt;/h2&gt;</source>
+        <translation>&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actiona %1&lt;/h2&gt;</translation>
+    </message>
+    <message>
         <source>&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actionaz %1&lt;/h2&gt;</source>
-        <translation>&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actionaz %1&lt;/h2&gt;</translation>
+        <translation type="obsolete">&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actionaz %1&lt;/h2&gt;</translation>
     </message>
     <message>
         <location filename="../gui/aboutdialog.cpp" line="48"/>
@@ -566,17 +596,29 @@ p, li { white-space: pre-wrap; }
         <translation>Nouvelle version disponible</translation>
     </message>
     <message>
-        <location filename="../gui/changelogdialog.ui" line="20"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;A new version of Actionaz is available, do you want to download and/or install it ?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Une nouvelle version d&apos;Actionaz est disponible, voulez-vous la télécharger et/ou l&apos;installer ?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../gui/changelogdialog.ui" line="20"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:600;&quot;&gt;A new version of Actiona is available, do you want to download and/or install it ?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Une nouvelle version d&apos;Actiona est disponible, voulez-vous la télécharger et/ou l&apos;installer ?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../gui/changelogdialog.ui" line="46"/>
@@ -624,9 +666,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.ui" line="14"/>
         <source>Actionaz</source>
-        <translation>Actionaz</translation>
+        <translation type="obsolete">Actionaz</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.ui" line="103"/>
@@ -697,6 +738,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../gui/mainwindow.ui" line="263"/>
         <source>&amp;Window</source>
         <translation>Fe&amp;nêtre</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.ui" line="14"/>
+        <source>Actiona</source>
+        <translation>Actiona</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.ui" line="127"/>
@@ -1213,10 +1259,8 @@ p, li { white-space: pre-wrap; }
         <translation>Création de la fenêtre principale...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="171"/>
-        <location filename="../gui/mainwindow.cpp" line="1700"/>
         <source>Actionaz - ready</source>
-        <translation>Actionaz - prêt</translation>
+        <translation type="obsolete">Actionaz - prêt</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="273"/>
@@ -1259,10 +1303,9 @@ p, li { white-space: pre-wrap; }
         <translation>Mises à jour automatiques</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="425"/>
         <source>Do you want Actionaz to check once per day if a new version is available ?
 You can change this setting later in the settings dialog.</source>
-        <translation>Voulez-vous que Actionaz vérifie une fois par jour si une nouvelle version est disponible ?
+        <translation type="obsolete">Voulez-vous que Actionaz vérifie une fois par jour si une nouvelle version est disponible ?
 Vous pouvez changer ce paramètre plus tard dans la fenêtre d&apos;options.</translation>
     </message>
     <message>
@@ -1278,11 +1321,8 @@ Vous pouvez changer ce paramètre plus tard dans la fenêtre d&apos;options.</tr
         <translation type="obsolete">Merci à vous de beta-tester cette nouvelle version d&apos;Actionaz !&lt;br&gt;&lt;br&gt;Testez autant de fonctionnalités que possible, et rappelez vous que tout commentaire est bienvenu !&lt;br&gt;&lt;br&gt;Pour rapporter un bug ou écrire un commentaire merci d&apos;utiliser le bouton &lt;b&gt;Rapporter un bug&lt;/b&gt;.&lt;br&gt;&lt;br&gt;Souvenez vous que ceci est une version &lt;b&gt;alpha&lt;/b&gt; et que vous ne devriez pas écrire de scripts critiques avec cette version car le format des scripts pourrait changer d&apos;ici la version finale.&lt;br&gt;&lt;br&gt;&lt;i&gt;Merci de ne pas distribuer cette version car elle n&apos;a pas encore reçue suffisamment de retours pour l&apos;instant.&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="533"/>
-        <location filename="../gui/mainwindow.cpp" line="548"/>
-        <location filename="../gui/mainwindow.cpp" line="2164"/>
         <source>Actionaz script (*.ascr)</source>
-        <translation>Script Actionaz (*.ascr)</translation>
+        <translation type="obsolete">Script Actionaz (*.ascr)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="637"/>
@@ -1311,9 +1351,8 @@ Vous pouvez changer ce paramètre plus tard dans la fenêtre d&apos;options.</tr
         <translation>Beta test</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="486"/>
         <source>Thank you for beta-testing this new version of Actionaz !&lt;br&gt;&lt;br&gt;Please test as many features as you can, and remember that any comments are welcome !&lt;br&gt;&lt;br&gt;To report a bug or write a comment please use the &lt;b&gt;Report a bug&lt;/b&gt; button.&lt;br&gt;&lt;br&gt;Remember that this is a &lt;b&gt;beta&lt;/b&gt; version so please do not write any critical scripts with it since the script format may change before the final release.&lt;br&gt;</source>
-        <translation>Merci à vous de beta-tester cette nouvelle version d&apos;Actionaz !&lt;br&gt;&lt;br&gt;Testez autant de fonctionnalités que possible, et rappelez vous que tout commentaire est bienvenu ! Pour rapporter un bug ou écrire un commentaire merci d&apos;utiliser le bouton &lt;b&gt;Rapporter un bug&lt;/b&gt;.&lt;br&gt;&lt;br&gt;Souvenez vous que ceci est une version &lt;b&gt;beta&lt;/b&gt; et que vous ne devriez pas écrire de scripts critiques avec cette version car le format des scripts pourrait changer d&apos;ici la version finale.&lt;br&gt;</translation>
+        <translation type="obsolete">Merci à vous de beta-tester cette nouvelle version d&apos;Actionaz !&lt;br&gt;&lt;br&gt;Testez autant de fonctionnalités que possible, et rappelez vous que tout commentaire est bienvenu ! Pour rapporter un bug ou écrire un commentaire merci d&apos;utiliser le bouton &lt;b&gt;Rapporter un bug&lt;/b&gt;.&lt;br&gt;&lt;br&gt;Souvenez vous que ceci est une version &lt;b&gt;beta&lt;/b&gt; et que vous ne devriez pas écrire de scripts critiques avec cette version car le format des scripts pourrait changer d&apos;ici la version finale.&lt;br&gt;</translation>
     </message>
     <message>
         <source>The output file you selected is not writable.</source>
@@ -1401,12 +1440,11 @@ Vous pouvez changer ce paramètre plus tard dans la fenêtre d&apos;options.</tr
         <translation>Charger script</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1254"/>
         <source>This script was created with an older version of Actionaz.
 It will be updated when you save it.
 Your version: %1
 Script version: %2</source>
-        <translation>Ce script a été créé avec une version plus ancienne d&apos;Actionaz.
+        <translation type="obsolete">Ce script a été créé avec une version plus ancienne d&apos;Actionaz.
 Il sera mis à jour quand vous l&apos;enregistrerez.
 Votre version : %1
 Version du script : %2</translation>
@@ -1427,12 +1465,11 @@ Version du script : %2</translation>
         <translation>Impossible de charger le script car celui-ci a un schéma incorrect.%1Ligne : %2&lt;br&gt;Colonne : %3</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1285"/>
         <source>Unable to load the script because it was created with a more recent version of Actionaz.
 Please update your version of Actionaz to load this script.
 Your version: %1
 Script version: %2</source>
-        <translation>Impossible de charger le script car celui-ci a été créé avec une version plus récente d&apos;Actionaz.
+        <translation type="obsolete">Impossible de charger le script car celui-ci a été créé avec une version plus récente d&apos;Actionaz.
 Merci de mettre à jour votre version d&apos;Actionaz pour pouvoir charger ce script.
 Votre version : %1
 Version du script : %2</translation>
@@ -1468,9 +1505,60 @@ Version du script : %2</translation>
         <translation>Verifie si une mise à jour est disponible</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1502"/>
         <source>Actionaz - executing</source>
-        <translation>Actionaz - exécution</translation>
+        <translation type="obsolete">Actionaz - exécution</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="171"/>
+        <location filename="../gui/mainwindow.cpp" line="1700"/>
+        <source>Actiona - ready</source>
+        <translation>Actiona - prêt</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="425"/>
+        <source>Do you want Actiona to check once per day if a new version is available ?
+You can change this setting later in the settings dialog.</source>
+        <translation>Voulez-vous qu&apos;Actiona vérifie une fois par jour si une nouvelle version est disponible ?
+Vous pouvez changer ce paramètre plus tard dans la fenêtre d&apos;options.</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="486"/>
+        <source>Thank you for beta-testing this new version of Actiona !&lt;br&gt;&lt;br&gt;Please test as many features as you can, and remember that any comments are welcome !&lt;br&gt;&lt;br&gt;To report a bug or write a comment please use the &lt;b&gt;Report a bug&lt;/b&gt; button.&lt;br&gt;&lt;br&gt;Remember that this is a &lt;b&gt;beta&lt;/b&gt; version so please do not write any critical scripts with it since the script format may change before the final release.&lt;br&gt;</source>
+        <translation>Merci à vous de beta-tester cette nouvelle version d&apos;Actiona !&lt;br&gt;&lt;br&gt;Testez autant de fonctionnalités que possible, et rappelez vous que tout commentaire est bienvenu ! Pour rapporter un bug ou écrire un commentaire merci d&apos;utiliser le bouton &lt;b&gt;Rapporter un bug&lt;/b&gt;.&lt;br&gt;&lt;br&gt;Souvenez vous que ceci est une version &lt;b&gt;beta&lt;/b&gt; et que vous ne devriez pas écrire de scripts critiques avec cette version car le format des scripts pourrait changer d&apos;ici la version finale.&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="533"/>
+        <location filename="../gui/mainwindow.cpp" line="548"/>
+        <location filename="../gui/mainwindow.cpp" line="2164"/>
+        <source>Actiona script (*.ascr)</source>
+        <translation>Script Actiona (*.ascr)</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1254"/>
+        <source>This script was created with an older version of Actiona.
+It will be updated when you save it.
+Your version: %1
+Script version: %2</source>
+        <translation>Ce script a été créé avec une version plus ancienne d&apos;Actiona.
+Il sera mis à jour quand vous l&apos;enregistrerez.
+Votre version : %1
+Version du script : %2</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1285"/>
+        <source>Unable to load the script because it was created with a more recent version of Actiona.
+Please update your version of Actiona to load this script.
+Your version: %1
+Script version: %2</source>
+        <translation>Impossible de charger le script car celui-ci a été créé avec une version plus récente d&apos;Actiona.
+Merci de mettre à jour votre version d&apos;Actiona pour pouvoir charger ce script.
+Votre version : %1
+Version du script : %2</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1502"/>
+        <source>Actiona - executing</source>
+        <translation>Actiona - exécution</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1549"/>
@@ -1589,8 +1677,12 @@ Message d&apos;erreur : %1</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2042"/>
+        <source>Actiona currently has no builtin editor for Code files (.acod). Please use an external code editor.</source>
+        <translation>Actiona ne possède pour l&apos;instant pas d&apos;éditeur intégré pour les fichiers de Code (.acod). Merci d&apos;utiliser un éditeur externe.</translation>
+    </message>
+    <message>
         <source>Actionaz currently has no builtin editor for Code files (.acod). Please use an external code editor.</source>
-        <translation>Actionaz ne possède pour l&apos;instant pas d&apos;éditeur intégré pour les fichiers de Code (.acod). Merci d&apos;utiliser un éditeur externe.</translation>
+        <translation type="obsolete">Actionaz ne possède pour l&apos;instant pas d&apos;éditeur intégré pour les fichiers de Code (.acod). Merci d&apos;utiliser un éditeur externe.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2053"/>
@@ -1805,14 +1897,18 @@ p, li { white-space: pre-wrap; }
         <translation>démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable</translation>
     </message>
     <message>
+        <location filename="../gui/main.cpp" line="189"/>
+        <source>close Actiona after execution - requires execute</source>
+        <translation>fermer Actiona après l&apos;exécution - nécessite execute</translation>
+    </message>
+    <message>
         <location filename="../gui/main.cpp" line="193"/>
         <source>show the program version</source>
         <translation>afficher la version du programme</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="189"/>
         <source>close Actionaz after execution - requires execute</source>
-        <translation>fermer Actionaz après l&apos;exécution - nécessite execute</translation>
+        <translation type="obsolete">fermer Actionaz après l&apos;exécution - nécessite execute</translation>
     </message>
     <message>
         <location filename="../gui/main.cpp" line="195"/>
@@ -1946,8 +2042,17 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/sfxscriptdialog.ui" line="65"/>
+        <source>Close Actiona after execution:</source>
+        <translation>Fermer Actiona après exécution :</translation>
+    </message>
+    <message>
+        <location filename="../gui/sfxscriptdialog.ui" line="103"/>
+        <source>Requires Actiona:</source>
+        <translation>Nécessite Actiona :</translation>
+    </message>
+    <message>
         <source>Close Actionaz after execution:</source>
-        <translation>Fermer Actionaz après exécution :</translation>
+        <translation type="obsolete">Fermer Actionaz après exécution :</translation>
     </message>
     <message>
         <location filename="../gui/sfxscriptdialog.ui" line="89"/>
@@ -1955,9 +2060,8 @@ p, li { white-space: pre-wrap; }
         <translation>Utiliser les binaires 32 bit :</translation>
     </message>
     <message>
-        <location filename="../gui/sfxscriptdialog.ui" line="103"/>
         <source>Requires Actionaz:</source>
-        <translation>Nécessite Actionaz :</translation>
+        <translation type="obsolete">Nécessite Actionaz :</translation>
     </message>
 </context>
 <context>
@@ -2188,32 +2292,42 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/icons/warning.png&quot; /&gt;  Les messages de la barre des tâches ne sont pas disponibles.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
+        <location filename="../gui/settingsdialog.ui" line="178"/>
+        <source>Associate .ascr files with Actiona</source>
+        <translation>Associer les fichiers .ascr avec Actiona</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.ui" line="185"/>
+        <source>Associate .acod files with Actiona</source>
+        <translation>Associer les fichiers .acod avec Actiona</translation>
+    </message>
+    <message>
         <location filename="../gui/settingsdialog.ui" line="199"/>
         <source>Actions</source>
         <translation>Actions</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="334"/>
+        <location filename="../gui/settingsdialog.ui" line="352"/>
         <source>Network</source>
         <translation>Réseau</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="354"/>
+        <location filename="../gui/settingsdialog.ui" line="372"/>
         <source>Never</source>
         <translation>Jamais</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="359"/>
+        <location filename="../gui/settingsdialog.ui" line="377"/>
         <source>Once a day</source>
         <translation>Une fois par jour</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="364"/>
+        <location filename="../gui/settingsdialog.ui" line="382"/>
         <source>Once a week</source>
         <translation>Une fois par semaine</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="369"/>
+        <location filename="../gui/settingsdialog.ui" line="387"/>
         <source>Once a month</source>
         <translation>Une fois par mois</translation>
     </message>
@@ -2265,14 +2379,12 @@ p, li { white-space: pre-wrap; }
         <translation>Associations de fichiers :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="178"/>
         <source>Associate .ascr files with Actionaz</source>
-        <translation>Associer les fichiers .ascr avec Actionaz</translation>
+        <translation type="obsolete">Associer les fichiers .ascr avec Actionaz</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="185"/>
         <source>Associate .acod files with Actionaz</source>
-        <translation>Associer les fichiers .acod avec Actionaz</translation>
+        <translation type="obsolete">Associer les fichiers .acod avec Actionaz</translation>
     </message>
     <message>
         <location filename="../gui/settingsdialog.ui" line="208"/>
@@ -2285,72 +2397,72 @@ p, li { white-space: pre-wrap; }
         <translation>Fenêtre d&apos;exécution</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="242"/>
+        <location filename="../gui/settingsdialog.ui" line="251"/>
         <source>Console window</source>
         <translation>Fenêtre de console</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="265"/>
+        <location filename="../gui/settingsdialog.ui" line="283"/>
         <source>Stop execution hotkey:</source>
         <translation>Touche pour stopper l&apos;exécution :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="275"/>
+        <location filename="../gui/settingsdialog.ui" line="293"/>
         <source>Switch text/code key:</source>
         <translation>Touche pour passer en mode texte/code :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="285"/>
+        <location filename="../gui/settingsdialog.ui" line="303"/>
         <source>Open editor key:</source>
         <translation>Touche pour ouvrir l&apos;éditeur :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="295"/>
+        <location filename="../gui/settingsdialog.ui" line="313"/>
         <source>Code syntax:</source>
         <translation>Syntaxe du code :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="302"/>
+        <location filename="../gui/settingsdialog.ui" line="320"/>
         <source>Check code syntax automatically</source>
         <translation>Vérifier la syntaxe du code automatiquement</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="312"/>
+        <location filename="../gui/settingsdialog.ui" line="330"/>
         <source>Console window:</source>
         <translation>Fenêtre de console :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="319"/>
+        <location filename="../gui/settingsdialog.ui" line="337"/>
         <source>Pause/Resume execution hotkey:</source>
         <translation>Touche pour mettre en pause/reprendre :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="343"/>
+        <location filename="../gui/settingsdialog.ui" line="361"/>
         <source>Check for updates:</source>
         <translation>Vérifier les mises à jour :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="377"/>
+        <location filename="../gui/settingsdialog.ui" line="395"/>
         <source>Proxy:</source>
         <translation>Proxy :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="386"/>
+        <location filename="../gui/settingsdialog.ui" line="404"/>
         <source>Do not use a proxy</source>
         <translation>Ne pas utiliser de proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="393"/>
+        <location filename="../gui/settingsdialog.ui" line="411"/>
         <source>Use the system proxy</source>
         <translation>Utiliser le proxy du système</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="400"/>
+        <location filename="../gui/settingsdialog.ui" line="418"/>
         <source>Use custom proxy settings</source>
         <translation>Utiliser des paramètres de proxy personnalisés</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="485"/>
+        <location filename="../gui/settingsdialog.ui" line="503"/>
         <source>Test connectivity</source>
         <translation>Test de connectivité</translation>
     </message>
@@ -2359,42 +2471,42 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Utiliser un proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="410"/>
+        <location filename="../gui/settingsdialog.ui" line="428"/>
         <source>Proxy settings</source>
         <translation>Paramètres du proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="416"/>
+        <location filename="../gui/settingsdialog.ui" line="434"/>
         <source>Host :</source>
         <translation>Hôte :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="429"/>
+        <location filename="../gui/settingsdialog.ui" line="447"/>
         <source>Port :</source>
         <translation>Port :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="436"/>
+        <location filename="../gui/settingsdialog.ui" line="454"/>
         <source>User :</source>
         <translation>Utilisateur :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="443"/>
+        <location filename="../gui/settingsdialog.ui" line="461"/>
         <source>Password :</source>
         <translation>Mot de passe :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="456"/>
+        <location filename="../gui/settingsdialog.ui" line="474"/>
         <source>Proxy type :</source>
         <translation>Type de proxy :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="464"/>
+        <location filename="../gui/settingsdialog.ui" line="482"/>
         <source>Http</source>
         <translation>Http</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="469"/>
+        <location filename="../gui/settingsdialog.ui" line="487"/>
         <source>Socks5</source>
         <translation>Socks5</translation>
     </message>

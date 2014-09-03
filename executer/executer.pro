@@ -13,7 +13,7 @@ SOURCES += executer.cpp \
     codeexecution.cpp \
 	codestdio.cpp \
     scriptagent.cpp \
-    codeactionaz.cpp
+    codeactiona.cpp
 HEADERS += executer_global.h \
 	executer.h \
 	executionwindow.h \
@@ -21,7 +21,7 @@ HEADERS += executer_global.h \
     codeinitializer.h \
     codeexecution.h \
 	codestdio.h \
-    codeactionaz.h
+    codeactiona.h
 INCLUDEPATH += src \
 	../tools \
 	../actiontools
@@ -33,9 +33,9 @@ TRANSLATIONS = ../locale/executer_fr_FR.ts
 RESOURCES += executer.qrc
 
 unix {
-	target.path = $${PREFIX}/$${LIBDIR}/actionaz
+        target.path = $${PREFIX}/$${LIBDIR}/actiona
 
-	locales.path = $${PREFIX}/share/actionaz/locale
+        locales.path = $${PREFIX}/share/actiona/locale
 	locales.files = ../locale/executer_fr_FR.qm
 	locales.CONFIG = no_check_exist
 

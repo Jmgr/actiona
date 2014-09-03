@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -18,8 +18,8 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEACTIONAZ_H
-#define CODEACTIONAZ_H
+#ifndef CODEACTIONA_H
+#define CODEACTIONA_H
 
 #include "executer_global.h"
 #include "version.h"
@@ -32,7 +32,7 @@ class QScriptEngine;
 
 namespace LibExecuter
 {
-	class EXECUTERSHARED_EXPORT CodeActionaz : public QObject
+    class EXECUTERSHARED_EXPORT CodeActiona : public QObject
 	{
 		Q_OBJECT
 
@@ -42,16 +42,16 @@ namespace LibExecuter
 		static QScriptValue version(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue scriptVersion(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue isActExec(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue isActionaz(QScriptContext *context, QScriptEngine *engine);
+        static QScriptValue isActiona(QScriptContext *context, QScriptEngine *engine);
 
 		static void setActExec(bool isActExec);
-		static void setActionazVersion(const Tools::Version &version);
+        static void setActionaVersion(const Tools::Version &version);
 		static void setScriptVersion(const Tools::Version &version);
 	private:
 		static bool mIsActExec;
-		static Tools::Version mActionazVersion;
+        static Tools::Version mActionaVersion;
 		static Tools::Version mScriptVersion;
 	};
 }
 
-#endif // CODEACTIONAZ_H
+#endif // CODEACTIONA_H

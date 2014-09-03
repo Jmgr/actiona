@@ -47,9 +47,9 @@
         <file>icons/calc.png</file>
         <file>icons/native.png</file>
         <file>icons/class.png</file>
-        <file>icons/actionaz.png</file>
+        <file>icons/actiona.png</file>
         <file>icons/logo.png</file>
-        <file>icons/actionaz.ico</file>
+        <file>icons/actiona.ico</file>
         <file>images/start.png</file>
         <file>icons/resources.png</file>
     </qresource>

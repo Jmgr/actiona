@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -43,7 +43,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	QString os = tr("Mac");
 #endif
 
-	QString message = tr("<img src=':/icons/logo.png'><h2>Actionaz %1</h2>").arg(Global::ACTIONAZ_VERSION.toString());
+    QString message = tr("<img src=':/icons/logo.png'><h2>Actiona %1</h2>").arg(Global::ACTIONA_VERSION.toString());
     message += " 2008-2014 Jonathan \"Jmgr\" Mercier-Ganady <a href='mailto:jmgr@jmgr.info'>jmgr@jmgr.info</a><br/><br/>";
 	message += tr("<i>Emulates clics, key presses and other actions</i><br/><br/>Using Qt %1 (runtime %2) under %3 (%4 bit)</center><br/>")
 			   .arg(QT_VERSION_STR)

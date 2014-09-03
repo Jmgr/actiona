@@ -251,16 +251,20 @@
 <context>
     <name>Actions::ReadIniFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="45"/>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="53"/>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="68"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="46"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="59"/>
         <source>Unable to read the file</source>
         <translation>Impossible de lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="96"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="89"/>
         <source>Unable to find the section named &quot;%1&quot;</source>
         <translation>Impossible de trouver la section nommée &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="100"/>
+        <source>Unable to find the parameter named &quot;%1&quot;</source>
+        <translation>Impossible de trouver le paramètre nommé &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -645,9 +649,18 @@
 <context>
     <name>Actions::WriteIniFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="58"/>
         <source>Unable to write to the file</source>
-        <translation>Impossible d&apos;écrire vers le fichier</translation>
+        <translation type="obsolete">Impossible d&apos;écrire vers le fichier</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="81"/>
+        <source>Unable to write to the file: the section name cannot be empty</source>
+        <translation>Impossible d&apos;écrire le fichier : le nom de section ne peut être vide</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="94"/>
+        <source>Unable to write to the file: %1</source>
+        <translation>Impossible d&apos;écrire le fichier : %1</translation>
     </message>
 </context>
 <context>
@@ -912,37 +925,37 @@
 <context>
     <name>Code::IniFile</name>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="70"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="72"/>
         <source>Cannot load the file</source>
         <translation>Impossible de charger le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="88"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="91"/>
         <source>Cannot save the file</source>
         <translation>Impossible d&apos;enregistrer le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="127"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="113"/>
         <source>Cannot find the section named &quot;%1&quot;</source>
         <translation>Impossible de trouver la section nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="145"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="138"/>
         <source>Invalid section index</source>
         <translation>Index de section incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="156"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="155"/>
         <source>Cannot delete section named &quot;%1&quot;</source>
         <translation>Impossible de supprimer la section nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="177"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="178"/>
         <source>Invalid key index</source>
         <translation>Index de clef incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="200"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="209"/>
         <source>Cannot delete key named &quot;%1&quot;</source>
         <translation>Impossible de supprimer la clef nommée &quot;%1&quot;</translation>
     </message>
@@ -1279,12 +1292,12 @@
 <context>
     <name>ReadIniFileInstance::modes</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="30"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="31"/>
         <source>Read a single parameter</source>
         <translation>Line un seul paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="30"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="31"/>
         <source>Read the entire file</source>
         <translation>Lire le fichier complet</translation>
     </message>

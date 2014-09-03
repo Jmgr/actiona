@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
     Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -25,7 +25,7 @@
 #include "actionpack.h"
 #include "executer/codestdio.h"
 #include "code/codetools.h"
-#include "executer/codeactionaz.h"
+#include "executer/codeactiona.h"
 #include "global.h"
 
 #include <QFile>
@@ -79,14 +79,14 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
 	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printError, "printError", mScriptEngine);
 	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printlnError, "printlnError", mScriptEngine);
 
-	Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeActionaz>("Actionaz", mScriptEngine);
-	LibExecuter::CodeActionaz::setActExec(true);
-	LibExecuter::CodeActionaz::setActionazVersion(Global::ACTIONAZ_VERSION);
-	LibExecuter::CodeActionaz::setScriptVersion(Global::SCRIPT_VERSION);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &LibExecuter::CodeActionaz::version, "version", mScriptEngine);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &LibExecuter::CodeActionaz::scriptVersion, "scriptVersion", mScriptEngine);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &LibExecuter::CodeActionaz::isActExec, "isActExec", mScriptEngine);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &LibExecuter::CodeActionaz::isActionaz, "isActionaz", mScriptEngine);
+    Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeActiona>("Actiona", mScriptEngine);
+    LibExecuter::CodeActiona::setActExec(true);
+    LibExecuter::CodeActiona::setActionaVersion(Global::ACTIONA_VERSION);
+    LibExecuter::CodeActiona::setScriptVersion(Global::SCRIPT_VERSION);
+    Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::version, "version", mScriptEngine);
+    Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::scriptVersion, "scriptVersion", mScriptEngine);
+    Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActExec, "isActExec", mScriptEngine);
+    Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActiona, "isActiona", mScriptEngine);
 
 	QSettings settings;
 	QString locale = settings.value("locale").toString();

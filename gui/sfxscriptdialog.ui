@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>188</width>
-    <height>161</height>
+    <width>226</width>
+    <height>173</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,7 +62,7 @@
    <item row="3" column="0">
     <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Close Actionaz after execution:</string>
+      <string>Close Actiona after execution:</string>
      </property>
     </widget>
    </item>
@@ -100,12 +100,12 @@
    <item row="4" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Requires Actionaz:</string>
+      <string>Requires Actiona:</string>
      </property>
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QCheckBox" name="requiresActionaz">
+    <widget class="QCheckBox" name="requiresActiona">
      <property name="text">
       <string/>
      </property>

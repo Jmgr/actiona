@@ -1,13 +1,13 @@
 /*
-	Actionaz
+    Actiona
 	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
 
-	Actionaz is free software: you can redistribute it and/or modify
+    Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	Actionaz is distributed in the hope that it will be useful,
+    Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
@@ -30,7 +30,7 @@
 #include "code/codetools.h"
 #include "code/image.h"
 #include "code/rawdata.h"
-#include "codeactionaz.h"
+#include "codeactiona.h"
 
 #include <QDesktopWidget>
 #include <QAction>
@@ -87,7 +87,7 @@ namespace LibExecuter
 			   int consoleWindowScreen,
 			   int pauseBefore,
 			   int pauseAfter,
-			   Tools::Version actionazVersion,
+               Tools::Version actionaVersion,
 			   Tools::Version scriptVersion,
 			   bool isActExec,
 			   QStandardItemModel *consoleModel)
@@ -114,7 +114,7 @@ namespace LibExecuter
 		mProgressDialog = 0;
 		mActiveActionsCount = 0;
 		mExecutionPaused = false;
-		mActionazVersion = actionazVersion;
+        mActionaVersion = actionaVersion;
 		mScriptVersion = scriptVersion;
 		mIsActExec = isActExec;
 		
@@ -258,14 +258,14 @@ namespace LibExecuter
 		Tools::HighResolutionTimer timer("Executer::startExecution");
 	#endif
 
-		Code::CodeTools::addClassToScriptEngine<CodeActionaz>("Actionaz", mScriptEngine);
-		CodeActionaz::setActExec(mIsActExec);
-		CodeActionaz::setActionazVersion(mActionazVersion);
-		CodeActionaz::setScriptVersion(mScriptVersion);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &CodeActionaz::version, "version", mScriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &CodeActionaz::scriptVersion, "scriptVersion", mScriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &CodeActionaz::isActExec, "isActExec", mScriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actionaz", &CodeActionaz::isActionaz, "isActionaz", mScriptEngine);
+        Code::CodeTools::addClassToScriptEngine<CodeActiona>("Actiona", mScriptEngine);
+        CodeActiona::setActExec(mIsActExec);
+        CodeActiona::setActionaVersion(mActionaVersion);
+        CodeActiona::setScriptVersion(mScriptVersion);
+        Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::version, "version", mScriptEngine);
+        Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::scriptVersion, "scriptVersion", mScriptEngine);
+        Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::isActExec, "isActExec", mScriptEngine);
+        Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::isActiona, "isActiona", mScriptEngine);
 		
 		mScriptAgent->setContext(ScriptAgent::ActionInit);
 		CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory);
