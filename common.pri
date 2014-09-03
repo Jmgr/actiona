@@ -4,7 +4,6 @@ DEFINES += QT_USE_FAST_CONCATENATION \
 ACTIONAZ_VERSION	= 3.8.0
 SCRIPT_VERSION		= 1.1.0
 
-
 DEFINES *= ACT_VERSION=$$ACTIONAZ_VERSION
 DEFINES *= ACT_SCRIPT_VERSION=$$SCRIPT_VERSION
 
@@ -33,10 +32,10 @@ contains(DEFINES, ACT_PROFILE) {
 	INCLUDEPATH += . tools ../tools ../../tools
 }
 
-*-g++*::QMAKE_CXXFLAGS += -std=gnu++0x
-*-g++*::QMAKE_CXXFLAGS_DEBUG += -pedantic -Wall -Wextra -Wno-long-long -g -Wpointer-arith -Wcast-qual \
+*clang*|*-g++*::QMAKE_CXXFLAGS += -std=c++11
+*clang*|*-g++*::QMAKE_CXXFLAGS_DEBUG += -pedantic -Wall -Wextra -Wno-long-long -g -Wpointer-arith -Wcast-qual \
 	-Wcast-align -Woverloaded-virtual -Wwrite-strings -Winit-self -Wundef -Wlogical-op -Winline
-*-g++*::QMAKE_CXXFLAGS_RELEASE += -O3 -s
+*clang*|*-g++*::QMAKE_CXXFLAGS_RELEASE += -O3 -s
 *-msvc*::QMAKE_CXXFLAGS_RELEASE += -O2 -fp:fast -GL
 *-msvc*::QMAKE_LFLAGS_RELEASE += /LTCG
 

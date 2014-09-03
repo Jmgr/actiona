@@ -4,8 +4,6 @@ include(code/code.pri)
 TARGET = ActionPackData
 QT += script network sql
 HEADERS += actionpackdata.h
-INCLUDEPATH += ../../3rdparty/rudeconfig
-LIBS += -L../.. -lrudeconfig
 win32:LIBS += -ladvapi32 \
 	-lshell32
 
