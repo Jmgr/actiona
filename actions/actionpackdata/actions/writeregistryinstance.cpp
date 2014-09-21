@@ -21,7 +21,7 @@
 #include "writeregistryinstance.h"
 #include "readregistryinstance.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -29,7 +29,7 @@ namespace Actions
 {
 	void WriteRegistryInstance::startExecution()
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		bool ok = true;
 
 		ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, ReadRegistryInstance::keys, "key");

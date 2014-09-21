@@ -95,7 +95,7 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
 	{
 		locale = QLocale::system().name();
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QString installerLanguage = settings.value("installerLanguage").toString();
 		if(!installerLanguage.isEmpty())
 		{

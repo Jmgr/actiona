@@ -26,7 +26,7 @@
 #include <QDir>
 #include <QDebug>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #include <Shellapi.h>
 #endif
@@ -266,7 +266,7 @@ namespace Code
 	{
 		Q_UNUSED(engine)
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		Q_UNUSED(noErrorDialog)
 		Q_UNUSED(noConfirmDialog)
 		Q_UNUSED(noProgressDialog)
@@ -310,7 +310,7 @@ namespace Code
 			return context->thisObject();
 		}
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		Q_UNUSED(createDestinationDirectory)
 
 		QDir sourceDir(source);
@@ -362,7 +362,7 @@ namespace Code
 	{
 		Q_UNUSED(engine)
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		Q_UNUSED(noErrorDialog)
 		Q_UNUSED(noConfirmDialog)
 		Q_UNUSED(noProgressDialog)
@@ -406,7 +406,7 @@ namespace Code
 			return context->thisObject();
 		}
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		Q_UNUSED(createDestinationDirectory)
 
 		QDir sourceDir(source);
@@ -458,10 +458,10 @@ namespace Code
 	{
 		Q_UNUSED(engine)
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		movePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		Q_UNUSED(createDestinationDirectory)
 
 		QDir sourceDir(source);
@@ -511,7 +511,7 @@ namespace Code
 
 	QScriptValue File::removePrivate(const QString &filename, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		Q_UNUSED(noErrorDialog)
 		Q_UNUSED(noConfirmDialog)
 		Q_UNUSED(noProgressDialog)
@@ -532,7 +532,7 @@ namespace Code
 			return context->thisObject();
 		}
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QDir filenameDir(filename);
 
 		std::wstring wideFilename = QDir::toNativeSeparators(filenameDir.absolutePath()).toStdWString();
@@ -576,12 +576,12 @@ namespace Code
 
 	QString File::getErrorString(int error)
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		Q_UNUSED(error)
 
 		return QString();
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		switch(error)
 		{
 		case ERROR_SUCCESS:

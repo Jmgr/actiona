@@ -26,7 +26,11 @@
 
 #include <boost/bind.hpp>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QtConcurrent/QtConcurrentRun>
+#else
 #include <QtConcurrentRun>
+#endif
 
 namespace ActionTools
 {

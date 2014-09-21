@@ -33,8 +33,8 @@
 
 #ifdef KeyPress
 // defined by X11 headers
-const int XKeyPress   = KeyPress;
-const int XKeyRelease = KeyRelease;
+//const int XKeyPress   = KeyPress;
+//const int XKeyRelease = KeyRelease;
 #undef KeyPress
 #endif
 
@@ -194,7 +194,7 @@ namespace ActionTools
 	public:
 		static bool convertKeySequence(const QKeySequence& ks, unsigned int* _mod, Qt_XK_Keygroup* _kg)
 		{
-			int code = ks;
+            int code = (ks.count() >= 1) ? ks[0] : 0;
 			ensureModifiers();
 	
 			unsigned int mod = 0;
@@ -303,7 +303,7 @@ namespace ActionTools
 		 */
 		Impl(GlobalShortcutManager::KeyTrigger* t, const QKeySequence& ks)
 			: trigger_(t)
-			, qkey_(ks)
+            , qkey_((ks.count() >= 1) ? ks[0] : 0)
 		{
 			X11KeyTriggerManager::instance()->addTrigger(this);
 	

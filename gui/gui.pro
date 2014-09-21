@@ -4,6 +4,9 @@ QT += xml \
 	network \
 	script \
 	scripttools
+equals(QT_MAJOR_VERSION, 5) {
+QT += widgets x11extras
+}
 CONFIG += mobility
 contains(DEFINES, ACT_PROFILE) {
 CONFIG += console

@@ -19,7 +19,10 @@
 */
 
 #include "choosepositionpushbutton.h"
+
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 #include "nativeeventfilteringapplication.h"
+#endif
 
 #include <QStylePainter>
 #include <QStyleOptionButton>
@@ -29,13 +32,21 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QDebug>
+#include <QApplication>
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <QX11Info>
 #include <X11/Xlib.h>
 #endif
 
-#ifdef Q_WS_WIN
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#ifdef Q_OS_LINUX
+#include <X11/cursorfont.h>
+#include <xcb/xcb.h>
+#endif
+#endif
+
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -46,11 +57,16 @@ namespace ActionTools
 	mCrossIcon(new QPixmap(":/images/cross.png")),
 	mSearching(false),
 	mMainWindow(0)
-#ifdef Q_WS_WIN
+#ifdef Q_OS_LINUX
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
+#endif
+#endif
+#ifdef Q_OS_WIN
 	,mPreviousCursor(NULL)
 #endif
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		foreach(QWidget *widget, QApplication::topLevelWidgets())
 		{
 			if(QMainWindow *mainWindow = qobject_cast<QMainWindow*>(widget))
@@ -69,10 +85,20 @@ namespace ActionTools
 		if(mSearching)
 			stopMouseCapture();
 
-		nativeEventFilteringApp->removeNativeEventFilter(this);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QCoreApplication::instance()->removeNativeEventFilter(this);
+#else
+        nativeEventFilteringApp->removeNativeEventFilter(this);
+#endif
 
-		delete mCrossIcon;
-	}
+#ifdef Q_OS_LINUX
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        XFreeCursor(QX11Info::display(), mCrossCursor);
+#endif
+#endif
+
+        delete mCrossIcon;
+    }
 
 	void ChoosePositionPushButton::paintEvent(QPaintEvent *event)
 	{
@@ -98,11 +124,26 @@ namespace ActionTools
 		mSearching = true;
 		update();
 
-#ifdef Q_WS_X11
-		if(mMainWindow)
-			mMainWindow->showMinimized();
+#ifdef Q_OS_LINUX
+        mShownWindows.clear();
+
+        foreach(QWidget *widget, qApp->topLevelWidgets())
+        {
+            if(mMainWindow == widget)
+                continue;
+
+            if(widget->isVisible() && !widget->windowTitle().isEmpty())
+            {
+                mShownWindows.append(widget);
+
+                XUnmapWindow(QX11Info::display(), widget->winId());
+            }
+        }
+
+        if(mMainWindow)
+            mMainWindow->hide();
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		foreach(QWidget *widget, qApp->topLevelWidgets())
 			widget->setWindowOpacity(0.0f);
 #endif
@@ -111,33 +152,69 @@ namespace ActionTools
 
 		emit chooseStarted();
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		mPreviousCursor = SetCursor(newCursor.handle());
 #endif
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QCoreApplication::instance()->installNativeEventFilter(this);
+#else
 		nativeEventFilteringApp->installNativeEventFilter(this);
-
-		if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
-						None, newCursor.handle(), CurrentTime) != GrabSuccess)
-		{
-			QMessageBox::warning(this, tr("Choose a window"), tr("Unable to grab the pointer."));
-			event->ignore();
-		}
 #endif
-	}
 
-#ifdef Q_WS_WIN
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
+                        None, mCrossCursor, CurrentTime) != GrabSuccess)
+        {
+            QMessageBox::warning(this, tr("Choose a window"), tr("Unable to grab the pointer."));
+            event->ignore();
+        }
+#else
+        if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
+                        None, newCursor.handle(), CurrentTime) != GrabSuccess)
+        {
+            QMessageBox::warning(this, tr("Choose a window"), tr("Unable to grab the pointer."));
+            event->ignore();
+        }
+#endif
+#endif
+    }
+
+#ifdef Q_OS_WIN
 	void ChoosePositionPushButton::mouseReleaseEvent(QMouseEvent *event)
 	{
 		QPushButton::mouseReleaseEvent(event);
 
-		emit positionChosen(event->globalPos());
+        emit positionChosen(event->globalPos());
 
-		stopMouseCapture();
+        stopMouseCapture();
 	}
 #endif
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    bool ChoosePositionPushButton::nativeEventFilter(const QByteArray &eventType, void *message, long *)
+    {
+        if(eventType == "xcb_generic_event_t")
+        {
+            xcb_generic_event_t* event = static_cast<xcb_generic_event_t *>(message);
+
+            switch(event->response_type)
+            {
+            case XCB_BUTTON_RELEASE:
+                emit positionChosen(QCursor::pos());
+
+                stopMouseCapture();
+
+                return false;
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+#else
 	bool ChoosePositionPushButton::x11EventFilter(XEvent *event)
 	{
 		if(event->type == ButtonRelease)
@@ -152,26 +229,41 @@ namespace ActionTools
 		return false;
 	}
 #endif
+#endif
 
 	void ChoosePositionPushButton::stopMouseCapture()
 	{
 		mSearching = false;
-		update();
+        update();
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		if(mPreviousCursor)
 			SetCursor(mPreviousCursor);
 
 		foreach(QWidget *widget, qApp->topLevelWidgets())
 			widget->setWindowOpacity(1.0f);
 #endif
-#ifdef Q_WS_X11
-		XUngrabPointer(QX11Info::display(), CurrentTime);
+#ifdef Q_OS_LINUX
+        XUngrabPointer(QX11Info::display(), CurrentTime);
+        XFlush(QX11Info::display());
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QCoreApplication::instance()->removeNativeEventFilter(this);
+#else
 		nativeEventFilteringApp->removeNativeEventFilter(this);
+#endif
 
-		if(mMainWindow)
-			mMainWindow->showNormal();
+        for(int windowIndex = 0; windowIndex < mShownWindows.size(); ++windowIndex)
+        {
+            QWidget *window = mShownWindows[windowIndex];
+
+            XMapWindow(QX11Info::display(), window->winId());
+        }
+
+        if(mMainWindow)
+            mMainWindow->showNormal();
+
+
 #endif
 	}
 }

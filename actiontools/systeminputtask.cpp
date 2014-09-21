@@ -25,7 +25,7 @@
 #include <QSharedPointer>
 #include <QPoint>
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <QTimer>
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
@@ -34,7 +34,7 @@
 #include <QX11Info>
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -42,7 +42,7 @@ namespace ActionTools
 {
 	namespace SystemInput
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		static XRecordContext gXRecordContext;
 
 		static void xRecordCallback(XPointer, XRecordInterceptData *data)
@@ -123,7 +123,7 @@ namespace ActionTools
 		}
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		static HHOOK gMouseHook;
 		static HHOOK gKeyboardHook;
 
@@ -209,7 +209,7 @@ namespace ActionTools
 			: QObject(parent),
 			  mThread(new QThread(this))
 			, mStarted(false)
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 			, mProcessRepliesTimer(new QTimer(this))
 #endif
 		{
@@ -217,13 +217,13 @@ namespace ActionTools
 
 			mInstance = this;
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 			moveToThread(mThread);
 
 			mThread->start();
 #endif
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 			connect(mProcessRepliesTimer, SIGNAL(timeout()), this, SLOT(processReplies()));
 
 			start();
@@ -245,7 +245,7 @@ namespace ActionTools
 
 			mStarted = true;
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 			XRecordClientSpec clients = XRecordAllClients;
 			XRecordRange *range = XRecordAllocRange();
 
@@ -276,7 +276,7 @@ namespace ActionTools
 			mProcessRepliesTimer->start(0);
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 			gMouseHook = SetWindowsHookEx(WH_MOUSE_LL, &LowLevelMouseProc, 0, 0);
 			gKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, &LowLevelKeyboardProc, 0, 0);
 #endif
@@ -289,20 +289,20 @@ namespace ActionTools
 
 			mStarted = false;
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 			mProcessRepliesTimer->stop();
 
 			XRecordDisableContext(QX11Info::display(), gXRecordContext);
 			XRecordFreeContext(QX11Info::display(), gXRecordContext);
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 			UnhookWindowsHookEx(gMouseHook);
 			UnhookWindowsHookEx(gKeyboardHook);
 #endif
 		}
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		void Task::processReplies()
 		{
 			//XRecordProcessReplies(QX11Info::display());

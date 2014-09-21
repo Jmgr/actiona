@@ -74,14 +74,21 @@
 #include <QProcess>
 #include <QTemporaryFile>
 #include <QListWidget>
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 #include <QSystemInfo>
+#endif
 #include <QScriptValueIterator>
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QStandardPaths>
+#endif
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <QX11Info>
 #endif
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 QTM_USE_NAMESPACE
+#endif
 
 MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
 	: QMainWindow(0),
@@ -111,7 +118,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mUpdaterProgressDialog(new QProgressDialog(this)),
 	mHashCalculator(QCryptographicHash::Md5)
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	,mTaskbarList(0)
 #endif
 {
@@ -131,7 +138,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	
 	ui->consoleWidget->setup();
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	HRESULT result = CoCreateInstance(CLSID_TaskbarList, 0, CLSCTX_INPROC_SERVER, IID_ITaskbarList3, reinterpret_cast<LPVOID*>(&mTaskbarList));
 	if(SUCCEEDED(result))
 		mTaskbarList->HrInit();
@@ -175,7 +182,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mUndoGroup->addStack(mScriptModel->undoStack());
 	mScriptModel->undoStack()->setActive(true);
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	ui->actionExport_executable->setEnabled(false);
 	ui->actionExport_executable->setVisible(false);
 #endif
@@ -189,7 +196,12 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 
 	mScriptModel->setSelectionModel(ui->scriptView->selectionModel());
 
-	ui->scriptView->horizontalHeader()->setMovable(true);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    ui->scriptView->horizontalHeader()->setSectionsMovable(true);
+#else
+    ui->scriptView->horizontalHeader()->setMovable(true);
+#endif
 	ui->actionQuit->setShortcut(QKeySequence(tr("Alt+F4")));
 	readSettings();
 
@@ -232,26 +244,20 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 
     QTimer::singleShot(0, this, SLOT(postInit()));
 
-	bool isCompositingManagerRunning = true;
+#ifdef Q_OS_WIN
+    connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityOpenUpdate()));
 
-#ifdef Q_WS_X11
-	isCompositingManagerRunning = QX11Info::isCompositingManagerRunning();
+    mOpacityTimer->setSingleShot(false);
+    mOpacityTimer->start(25);
 #endif
-
-	if(isCompositingManagerRunning)
-	{
-		connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityOpenUpdate()));
-
-		mOpacityTimer->setSingleShot(false);
-		mOpacityTimer->start(25);
-	}
-	else
-		setWindowOpacity(1.0f);
+#ifdef Q_OS_LINUX
+    setWindowOpacity(1.0f);
+#endif
 }
 
 MainWindow::~MainWindow()
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	if(mTaskbarList)
 		mTaskbarList->Release();
 #endif
@@ -273,7 +279,7 @@ void MainWindow::postInit()
 		mSplashScreen->showMessage(tr("Loading actions..."));
 
 	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", mUsedLocale);
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	if(mActionFactory->actionPackCount() == 0)
         mActionFactory->loadActionPacks(QString("%1/%2/actiona/actions/").arg(ACT_PREFIX).arg(ACT_LIBDIR), mUsedLocale);
 #endif
@@ -367,7 +373,7 @@ void MainWindow::postInit()
 		mSplashScreen = 0;
 	}
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	ActionTools::CrossPlatform::setForegroundWindow(this);
 #endif
 
@@ -632,7 +638,7 @@ void MainWindow::on_actionClear_triggered()
 
 void MainWindow::on_actionExport_executable_triggered()
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	QSettings settings;
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Choose the SFX script destination"), settings.value("sfxScript/destination").toString(), "Executable file (*.exe)");
 	if(fileName.isEmpty())
@@ -755,7 +761,7 @@ void MainWindow::on_actionExport_executable_triggered()
 	sfxStubFile.close();
 
 	//Copy the config file
-	outFile.write(configFile.toAscii());
+    outFile.write(configFile.toLatin1());
 
 	progressDialog.setLabelText(tr("Creating SFX archive..."));
 	QApplication::processEvents();
@@ -1007,14 +1013,19 @@ void MainWindow::on_actionCreate_shortcut_triggered()
 			return;
 	}
 
-	QString defaultDestination = QDir(QDesktopServices::storageLocation(QDesktopServices::DesktopLocation))
-								 .filePath(QFileInfo(mCurrentFile).fileName());
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QString defaultDestination = QDir(QStandardPaths::locate(QStandardPaths::DesktopLocation, QString(), QStandardPaths::LocateDirectory))
+                                 .filePath(QFileInfo(mCurrentFile).fileName());
+#else
+    QString defaultDestination = QDir(QDesktopServices::storageLocation(QDesktopServices::DesktopLocation))
+                                 .filePath(QFileInfo(mCurrentFile).fileName());
+#endif
 
 	QString filePath = QFileDialog::getSaveFileName(this, tr("Choose the shortcut destination"), defaultDestination);
 	if(filePath.isEmpty())
 		return;
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	filePath += ".lnk";
 #endif
 
@@ -1292,7 +1303,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 
 void MainWindow::setTaskbarProgress(int value, int max)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	if(!mTaskbarList)
 		return;
 
@@ -1305,7 +1316,7 @@ void MainWindow::setTaskbarProgress(int value, int max)
 
 void MainWindow::setTaskbarStatus(TaskbarStatus status)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	if(!mTaskbarList)
 		return;
 
@@ -1358,7 +1369,18 @@ void MainWindow::checkForUpdate(bool silent)
 	mUpdaterProgressDialog->open(this, SLOT(updateCanceled()));
 	mUpdaterProgressDialog->setWindowTitle(tr("Checking for updates"));
 	mSilentUpdate = silent;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QString localeName = QLocale::system().name();
+    QStringList localeParts = localeName.split(QChar('_'));
+    QString languageName = localeName;
+
+    if(localeParts.size() >= 2)
+        languageName = localeParts[0];
+
+    mUpdater->checkForUpdates("actiona3", Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), languageName);
+#else
     mUpdater->checkForUpdates("actiona3", Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), QSystemInfo().currentLanguage());
+#endif
 }
 #endif
 
@@ -1555,7 +1577,7 @@ void MainWindow::fillNewActionTreeWidget(NewActionTreeWidget *widget)
 		item->setData(0, NewActionTreeWidget::ActionIdRole, actionDefinition->id());
 	}
 
-	widget->expandAll();
+    widget->expandAll();
 }
 
 void MainWindow::editAction(const QModelIndex &index)
@@ -1805,9 +1827,15 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 	QString updateFilename;
 	if(changelogDialog.changelogAction() == ChangelogDialog::DownloadOnly)
 	{
-		updateFilename = QFileDialog::getSaveFileName(	this,
-									tr("Select where to save the installation file"),
-									QDir(QDesktopServices::storageLocation(QDesktopServices::DesktopLocation)).filePath(QFileInfo(filename).fileName()));
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        updateFilename = QFileDialog::getSaveFileName(	this,
+                                    tr("Select where to save the installation file"),
+                                    QDir(QStandardPaths::locate(QStandardPaths::DownloadLocation, QString(), QStandardPaths::LocateDirectory)).filePath(QFileInfo(filename).fileName()));
+#else
+        updateFilename = QFileDialog::getSaveFileName(	this,
+                                    tr("Select where to save the installation file"),
+                                    QDir(QDesktopServices::storageLocation(QDesktopServices::DesktopLocation)).filePath(QFileInfo(filename).fileName()));
+#endif
 		mInstallAfterUpdateDownload = false;
 	}
 	else if(changelogDialog.changelogAction() == ChangelogDialog::DownloadAndInstall)
@@ -1935,13 +1963,24 @@ void MainWindow::postDownloadOperation()
 }
 #endif
 
+ActionDialog *MainWindow::actionDialog(ActionTools::ActionInstance *actionInstance)
+{
+    ActionDialog *actionDialogPointer = mActionDialogs.at(actionInstance->definition()->index());
+
+    QSize sizeDifference = size() / 2 - actionDialogPointer->size() / 2;
+    actionDialogPointer->move(pos().x() + sizeDifference.width(), pos().y() + sizeDifference.height());
+
+    return actionDialogPointer;
+}
+
+
 bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, const QString &field, const QString &subField, int line, int column)
 {
 	if(!actionInstance)
 		return false;
 
 	ActionTools::ActionInstance oldAction = *actionInstance;
-	ActionDialog *dialog = mActionDialogs.at(actionInstance->definition()->index());
+    ActionDialog *dialog = actionDialog(actionInstance);
 	if(!dialog)
 	{
 		qWarning("Unable to create an ActionDialog");
@@ -1964,7 +2003,7 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exc
 		return false;
 
 	ActionTools::ActionInstance oldAction = *actionInstance;
-	ActionDialog *dialog = mActionDialogs.at(actionInstance->definition()->index());
+    ActionDialog *dialog = actionDialog(actionInstance);
 	if(!dialog)
 	{
 		qWarning("Unable to create an ActionDialog");
@@ -2114,21 +2153,15 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	{
 		writeSettings();
 
-		bool isCompositingManagerRunning = true;
+#ifdef Q_OS_WIN
+        mOpacityTimer->start(25);
+        connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityCloseUpdate()));
 
-	#ifdef Q_WS_X11
-		isCompositingManagerRunning = QX11Info::isCompositingManagerRunning();
-	#endif
-
-		if(isCompositingManagerRunning)
-		{
-			mOpacityTimer->start(25);
-			connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityCloseUpdate()));
-
-			event->ignore();//Ignore, since we have to wait until the fade out is done
-		}
-		else
-			QApplication::quit();
+        event->ignore();//Ignore, since we have to wait until the fade out is done
+#endif
+#ifdef Q_OS_LINUX
+        QApplication::quit();
+#endif
 	}
 	else
 		event->ignore();

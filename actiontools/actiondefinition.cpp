@@ -28,7 +28,7 @@
 #include <QSysInfo>
 #include <QApplication>
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
 #include "xdisplayhelper.h"
@@ -43,15 +43,15 @@ namespace ActionTools
 
 	bool ActionDefinition::worksUnderThisOS() const
 	{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	if(!(flags() & WorksOnWindows))
 		return false;
 #endif
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	if(!(flags() & WorksOnGnuLinux))
 		return false;
 #endif
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 	if(!(flags() & WorksOnMac))
 		return false;
 #endif
@@ -96,7 +96,7 @@ namespace ActionTools
 
 	bool ActionDefinition::requirementCheckXTest(QStringList &missingRequirements) const
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		int unused;
 		XDisplayHelper xDisplayHelper;
 		

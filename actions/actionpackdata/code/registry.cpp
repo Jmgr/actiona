@@ -23,7 +23,7 @@
 #include <QtEndian>
 #include <QDebug>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <strsafe.h>
 #endif
 
@@ -36,7 +36,7 @@ namespace Code
 	
 	Registry::Registry()
 		: CodeClass()
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		, mHKey(0)
 		, mRootKey(ClassesRoot)
 	#endif
@@ -45,7 +45,7 @@ namespace Code
 	
 	Registry::~Registry()
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		RegCloseKey(mHKey);
 #endif
     }
@@ -64,7 +64,7 @@ namespace Code
 	
 	QScriptValue Registry::openKey(Key key, const QString &subKey)
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		HKEY hKey = enumToKey(key);
 	
 		if(RegOpenKeyEx(hKey, subKey.toStdWString().c_str(), 0, KEY_ALL_ACCESS, &mHKey) != ERROR_SUCCESS)
@@ -83,7 +83,7 @@ namespace Code
 	
 	QScriptValue Registry::createKey(Key key, const QString &subKey)
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		HKEY hKey = enumToKey(key);
 	
 		if(RegCreateKeyEx(hKey, subKey.toStdWString().c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &mHKey, 0) != ERROR_SUCCESS)
@@ -102,7 +102,7 @@ namespace Code
 	
 	QScriptValue Registry::setValue(const QString &value, const QVariant &data) const
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		std::wstring wideValue = value.toStdWString();
 	
 		switch(data.type())
@@ -167,7 +167,7 @@ namespace Code
 	
 	QVariant Registry::value(const QString &value) const
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		DWORD size;
 		DWORD type;
 		std::wstring wideValue = value.toStdWString();
@@ -269,7 +269,7 @@ namespace Code
 	
 	QStringList Registry::valueNames() const
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		int index = 0;
 		DWORD valueCount;
 		DWORD maxValueNameLength;
@@ -311,7 +311,7 @@ namespace Code
 	
 	QStringList Registry::keys() const
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		int index = 0;
 		DWORD subKeyCount;
 		DWORD maxSubKeyNameLength;
@@ -350,7 +350,7 @@ namespace Code
 	
 	QScriptValue Registry::deleteValue(const QString &value) const
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		if(RegDeleteValue(mHKey, value.toStdWString().c_str()) != ERROR_SUCCESS)
 			throwError("InvalidKeyError", tr("Unable to delete the key"));
 	#else
@@ -359,7 +359,7 @@ namespace Code
 		return thisObject();
 	}
 	
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 	BOOL RegDelnodeRecurse (HKEY hKeyRoot, LPTSTR lpSubKey)
 	{
 		LPTSTR lpEnd;
@@ -453,7 +453,7 @@ namespace Code
 	
 	QScriptValue Registry::deleteKey(Key key, const QString &subKey) const
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		HKEY hKey = enumToKey(key);
 	
 		if(!RegDelnode(hKey, subKey.toStdWString().c_str()))
@@ -467,7 +467,7 @@ namespace Code
 	
 	QScriptValue Registry::deleteKey() const
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		RegCloseKey(mHKey);
 	
 		deleteKey(mRootKey, mSubKey);
@@ -477,13 +477,13 @@ namespace Code
 	
 	QScriptValue Registry::closeKey() const
 	{
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		RegCloseKey(mHKey);
 	#endif
 		return thisObject();
 	}
 	
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 	HKEY Registry::enumToKey(Key key) const
 	{
 		switch(key)

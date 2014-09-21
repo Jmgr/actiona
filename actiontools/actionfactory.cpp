@@ -53,13 +53,13 @@ namespace ActionTools
 
 		QDir actionDirectory(directory);
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QString actionMask = "ActionPack*.dll";
 #endif
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 		QString actionMask = "libActionPack*.dylib";
 #endif
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		QString actionMask = "libActionPack*.so";
 #endif
 
@@ -155,7 +155,7 @@ namespace ActionTools
 
 		if(!actionPackTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale)))
 		{
-	#ifndef Q_WS_WIN
+    #ifndef Q_OS_WIN
             actionPackTranslator->load(QString("%1/share/actiona/locale/actionpack%2_%3").arg(ACT_PREFIX).arg(actionPack->id()).arg(locale));
 	#endif
 		}

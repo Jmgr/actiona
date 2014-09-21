@@ -33,13 +33,13 @@ AboutDialog::AboutDialog(QWidget *parent)
 {
 	ui->setupUi(this);
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	QString os = tr("Windows");
 #endif
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	QString os = tr("GNU/Linux");
 #endif
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 	QString os = tr("Mac");
 #endif
 

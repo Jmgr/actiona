@@ -2,6 +2,10 @@ include(../common_actions.pri)
 include(actions/actions.pri)
 TARGET = ActionPackInternal
 QT += script
+equals(QT_MAJOR_VERSION, 5) {
+QT += widgets
+OTHER_FILES += internal.json
+}
 HEADERS += actionpackinternal.h
 RESOURCES += actionpackinternal.qrc
 TRANSLATIONS = ../../locale/actionpackinternal_fr_FR.ts

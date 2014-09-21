@@ -27,6 +27,8 @@
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QStringList>
+
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 #include <qmobilityglobal.h>
 
 QTM_BEGIN_NAMESPACE
@@ -35,6 +37,13 @@ class QSystemStorageInfo;
 class QSystemDisplayInfo;
 class QSystemDeviceInfo;
 QTM_END_NAMESPACE
+#endif
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+class QDeviceInfo;
+class QBatteryInfo;
+class QStorageInfo;
+#endif
 
 class SystemSession;
 
@@ -55,6 +64,9 @@ namespace Code
 			RemovableDrive,
 			RemoteDrive,
 			CdromDrive
+#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
+            , RamDrive
+#endif
 		};
 		enum PowerState
 		{
@@ -63,20 +75,43 @@ namespace Code
 			WallPower,
 			WallPowerChargingBattery
 		};
-		enum StorageLocation
-		{
-			Desktop,
-			Documents,
-			Fonts,
-			Applications,
-			Music,
-			Movies,
-			Pictures,
-			Temp,
-			Home,
-			Data,
-			Cache
-		};
+#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
+        enum StorageLocation
+        {
+            Desktop,
+            Documents,
+            Fonts,
+            Applications,
+            Music,
+            Movies,
+            Pictures,
+            Temp,
+            Home,
+            Data,
+            Cache,
+            GenericData,
+            Runtime,
+            Config,
+            Download,
+            GenericCache,
+            GenericConfig
+        };
+#else
+        enum StorageLocation
+        {
+            Desktop,
+            Documents,
+            Fonts,
+            Applications,
+            Music,
+            Movies,
+            Pictures,
+            Temp,
+            Home,
+            Data,
+            Cache
+        };
+#endif
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	
@@ -123,10 +158,16 @@ namespace Code
 		
 	private:
 		SystemSession *mSystemSession;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QDeviceInfo *mDeviceInfo;
+        QBatteryInfo *mBatteryInfo;
+        QStorageInfo *mStorageInfo;
+#else
 		QTM_PREPEND_NAMESPACE(QSystemInfo) *mSystemInfo;
 		QTM_PREPEND_NAMESPACE(QSystemStorageInfo) *mSystemStorageInfo;
 		QTM_PREPEND_NAMESPACE(QSystemDisplayInfo) *mSystemDisplayInfo;
 		QTM_PREPEND_NAMESPACE(QSystemDeviceInfo) *mSystemDeviceInfo;
+#endif
 	};
 }
 

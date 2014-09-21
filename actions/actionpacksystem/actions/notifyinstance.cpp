@@ -22,7 +22,7 @@
 
 #include "notifyinstance.h"
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #undef signals
 #include <libnotify/notify.h>
 #define signals
@@ -42,7 +42,7 @@ namespace Actions
 
 	NotifyInstance::~NotifyInstance()
 	{
-	#ifdef Q_WS_X11
+	#ifdef Q_OS_LINUX
 		if(mNotification)
 		{
 			notify_notification_close(mNotification, 0);
@@ -53,7 +53,7 @@ namespace Actions
 
 	void NotifyInstance::startExecution()
 	{
-	#ifdef Q_WS_X11
+	#ifdef Q_OS_LINUX
 		bool ok = true;
 
 		QString title = evaluateString(ok, "title");

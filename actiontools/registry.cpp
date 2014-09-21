@@ -23,7 +23,7 @@
 #include <QtEndian>
 #include <QStringList>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 
 namespace ActionTools
 {

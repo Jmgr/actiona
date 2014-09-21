@@ -26,6 +26,10 @@
 #include <QImage>
 #include <QPainter>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QScreen>
+#endif
+
 #include <limits>
 
 namespace ActionTools
@@ -39,7 +43,11 @@ namespace ActionTools
 
         const QRect &screenGeometry = desktop->screenGeometry(screenIndex);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
+#else
         return QPixmap::grabWindow(desktop->winId(), screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
+#endif
     }
 
     QList< QPair<QPixmap, QRect> > ScreenShooter::captureScreens()
@@ -51,7 +59,11 @@ namespace ActionTools
         {
             const QRect &screenGeometry = desktop->screenGeometry(screenIndex);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+            result.append(qMakePair(QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height()), screenGeometry));
+#else
             result.append(qMakePair(QPixmap::grabWindow(desktop->winId(), screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height()), screenGeometry));
+#endif
         }
 
         return result;
@@ -69,7 +81,11 @@ namespace ActionTools
 
             const QRect &windowGeometry = window.rect();
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+            result.append(qMakePair(QGuiApplication::primaryScreen()->grabWindow(desktop->winId(), windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height()), windowGeometry));
+#else
             result.append(qMakePair(QPixmap::grabWindow(desktop->winId(), windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height()), windowGeometry));
+#endif
         }
 
         return result;
@@ -77,14 +93,18 @@ namespace ActionTools
 
     QPixmap ScreenShooter::captureWindow(WindowHandle window)
     {
-        QDesktopWidget *desktop = QApplication::desktop();
-
         if(!window.isValid())
             return QPixmap();
 
         const QRect &windowGeometry = window.rect();
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return QGuiApplication::primaryScreen()->grabWindow(0, windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height());
+#else
+        QDesktopWidget *desktop = QApplication::desktop();
+
         return QPixmap::grabWindow(desktop->winId(), windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height());
+#endif
     }
 
     QPixmap ScreenShooter::captureAllScreens()
@@ -125,8 +145,12 @@ namespace ActionTools
 
     QPixmap ScreenShooter::captureRect(const QRect &rect)
     {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return QGuiApplication::primaryScreen()->grabWindow(0, rect.x(), rect.y(), rect.width(), rect.height());
+#else
         QDesktopWidget *desktop = QApplication::desktop();
 
         return QPixmap::grabWindow(desktop->winId(), rect.x(), rect.y(), rect.width(), rect.height());
+#endif
     }
 }

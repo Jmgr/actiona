@@ -24,6 +24,7 @@
 #include <QDragEnterEvent>
 #include <QUrl>
 #include <QKeyEvent>
+#include <QMimeData>
 
 ResourceTableWidget::ResourceTableWidget(QWidget *parent)
    : QTableWidget(parent)

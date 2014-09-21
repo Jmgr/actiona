@@ -22,13 +22,13 @@
 
 #include <QCursor>
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <QX11Info>
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -54,7 +54,7 @@ void MouseDevice::reset()
 
 bool MouseDevice::isButtonPressed(Button button) const
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	switch(button)
 	{
 	case LeftButton:
@@ -67,7 +67,7 @@ bool MouseDevice::isButtonPressed(Button button) const
 		return false;
 	}
 #endif
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	Window unusedWindow;
 	int unusedInt;
 	unsigned int buttonMask;
@@ -115,14 +115,14 @@ bool MouseDevice::pressButton(Button button)
 {
 	mPressedButtons[button] = true;
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), True, CurrentTime))
 		return false;
 	
 	XFlush(QX11Info::display());
 #endif
 	
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	INPUT input;
 	input.type = INPUT_MOUSE;
 	input.mi.dx = 0;
@@ -142,14 +142,14 @@ bool MouseDevice::releaseButton(Button button)
 {
 	mPressedButtons[button] = false;
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), False, CurrentTime))
 		return false;
 	
 	XFlush(QX11Info::display());
 #endif
 	
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	INPUT input;
 	input.type = INPUT_MOUSE;
 	input.mi.dx = 0;
@@ -167,7 +167,7 @@ bool MouseDevice::releaseButton(Button button)
 
 bool MouseDevice::wheel(int intensity) const
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	int button;
 	if(intensity < 0)
 	{
@@ -191,7 +191,7 @@ bool MouseDevice::wheel(int intensity) const
 		return false;
 #endif
 	
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	INPUT input;
 
 	input.type = INPUT_MOUSE;
@@ -207,14 +207,14 @@ bool MouseDevice::wheel(int intensity) const
 	return true;
 }
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 int MouseDevice::toX11Button(Button button) const
 {
 	return button + 1;
 }
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 int MouseDevice::toWinButton(Button button, bool press) const
 {
 	switch(button)

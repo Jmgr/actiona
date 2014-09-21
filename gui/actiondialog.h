@@ -59,6 +59,7 @@ public:
 
     virtual QMenu *createVariablesMenu(QWidget *parent) const;
 
+    using QDialog::exec;
 public slots:
 	void accept();
 	int exec(ActionTools::ActionInstance *actionInstance, const QString &field, const QString &subField, int currentLine, int currentColumn);

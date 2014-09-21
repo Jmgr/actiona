@@ -25,11 +25,21 @@
 #include <QTimer>
 
 #include "actiontools_global.h"
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QAbstractNativeEventFilter>
+#else
 #include "nativeeventfilter.h"
+#endif
 
 namespace ActionTools
 {
-    class ACTIONTOOLSSHARED_EXPORT TargetWindow : public QWidget, public NativeEventFilter
+    class ACTIONTOOLSSHARED_EXPORT TargetWindow : public QWidget
+#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
+            , public QAbstractNativeEventFilter
+#else
+            , public NativeEventFilter
+#endif
     {
         Q_OBJECT
     public:
@@ -40,7 +50,7 @@ namespace ActionTools
         void rectangleSelected(const QRect &rect);
 
     protected:
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
         virtual void keyPressEvent(QKeyEvent *event);
         virtual void mousePressEvent(QMouseEvent *event);
         virtual void mouseReleaseEvent(QMouseEvent *event);
@@ -53,8 +63,12 @@ namespace ActionTools
         void update();
 
     private:
-#ifdef Q_WS_X11
-        virtual bool x11EventFilter(XEvent *event);
+#ifdef Q_OS_LINUX
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+        bool x11EventFilter(XEvent *event);
+#else
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
+#endif
         void ungrab();
 #endif
         void mouseButtonReleased();
@@ -63,9 +77,12 @@ namespace ActionTools
         QPoint mMouseClickPosition;
         bool mMousePressed;
         QRect mResult;
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
         bool mGrabbingPointer;
         bool mGrabbingKeyboard;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        unsigned long mCrossCursor;
+#endif
 #endif
     };
 }

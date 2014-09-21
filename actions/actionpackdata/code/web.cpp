@@ -31,6 +31,10 @@
 #include <QAuthenticator>
 #include <QDebug>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QUrlQuery>
+#endif
+
 namespace Code
 {
 	QScriptValue Web::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -112,6 +116,10 @@ namespace Code
 		if(url.scheme() == QString())
 			url = QUrl("http://" + urlString, QUrl::TolerantMode);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QUrlQuery urlQuery;
+#endif
+
 		QNetworkRequest request;
 
 		QScriptValueIterator it(options);
@@ -139,17 +147,31 @@ namespace Code
 			}
 			else if(it.name() == "postData")
 			{
-				QScriptValueIterator postDataIt(it.value());
-				QUrl postDataParameters;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+                QScriptValueIterator postDataIt(it.value());
+                QUrlQuery postDataParameters;
 
-				while(postDataIt.hasNext())
-				{
-					postDataIt.next();
+                while(postDataIt.hasNext())
+                {
+                    postDataIt.next();
 
-					postDataParameters.addQueryItem(postDataIt.name(), postDataIt.value().toString());
-				}
+                    postDataParameters.addQueryItem(postDataIt.name(), postDataIt.value().toString());
+                }
 
-				postData = postDataParameters.encodedQuery();
+                postData = postDataParameters.toString(QUrl::FullyEncoded).toLatin1();
+#else
+                QScriptValueIterator postDataIt(it.value());
+                QUrl postDataParameters;
+
+                while(postDataIt.hasNext())
+                {
+                    postDataIt.next();
+
+                    postDataParameters.addQueryItem(postDataIt.name(), postDataIt.value().toString());
+                }
+
+                postData = postDataParameters.encodedQuery();
+#endif
 			}
 			else if(it.name() == "query")
 			{
@@ -159,7 +181,11 @@ namespace Code
 				{
 					queryIt.next();
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+                    urlQuery.addQueryItem(queryIt.name(), queryIt.value().toString());
+#else
 					url.addQueryItem(queryIt.name(), queryIt.value().toString());
+#endif
 				}
 			}
 			else if(it.name() == "user")
@@ -172,7 +198,11 @@ namespace Code
 			}
 		}
 
-		request.setUrl(url);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        url.setQuery(urlQuery);
+#endif
+
+        request.setUrl(url);
 
 		switch(method)
 		{

@@ -48,6 +48,9 @@ class ActionPackInternal : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 	Q_INTERFACES(ActionTools::ActionPack)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "internal.json")
+#endif
 
 public:
 	ActionPackInternal()							{}
@@ -78,6 +81,8 @@ private:
 	Q_DISABLE_COPY(ActionPackInternal)
 };
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 Q_EXPORT_PLUGIN2(ActionPackInternal, ActionPackInternal)
+#endif
 
 #endif // ACTIONPACKINTERNAL_H

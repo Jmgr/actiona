@@ -26,7 +26,11 @@ namespace ActionTools
 	NativeEventFilteringApplication::NativeEventFilteringApplication(const QString &appId, int &argc, char **argv)
 		: QtSingleApplication(appId, argc, argv)
 	{
-	}
+    }
+
+    NativeEventFilteringApplication::~NativeEventFilteringApplication()
+    {
+    }
 	
 	void NativeEventFilteringApplication::installNativeEventFilter(NativeEventFilter *filter)
 	{
@@ -39,10 +43,10 @@ namespace ActionTools
 
 	void NativeEventFilteringApplication::removeNativeEventFilter(NativeEventFilter *filter)
 	{
-		mNativeFilters.removeAll(filter);
-	}
-	
-#ifdef Q_WS_X11
+        mNativeFilters.removeAll(filter);
+    }
+
+#ifdef Q_OS_LINUX
 	bool NativeEventFilteringApplication::x11EventFilter(XEvent *event)
 	{
 		foreach(NativeEventFilter *filter, mNativeFilters)
@@ -55,7 +59,7 @@ namespace ActionTools
 	}
 #endif
 	
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	bool NativeEventFilteringApplication::winEventFilter(MSG *msg, long *result)
 	{
 		foreach(NativeEventFilter *filter, mNativeFilters)
@@ -65,6 +69,6 @@ namespace ActionTools
 		}
 		
 		return QApplication::winEventFilter(msg, result);
-	}	
+    }
 #endif
 }

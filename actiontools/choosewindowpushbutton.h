@@ -23,7 +23,12 @@
 
 #include "actiontools_global.h"
 #include "windowhandle.h"
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QAbstractNativeEventFilter>
+#else
 #include "nativeeventfilter.h"
+#endif
 
 #include <QPushButton>
 
@@ -31,7 +36,12 @@ class QMainWindow;
 
 namespace ActionTools
 {
-	class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton, public NativeEventFilter
+    class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton
+#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
+            , public QAbstractNativeEventFilter
+#else
+            , public NativeEventFilter
+#endif
 	{
 		Q_OBJECT
 
@@ -46,14 +56,14 @@ namespace ActionTools
 	private:
 		void paintEvent(QPaintEvent *event);
 		void mousePressEvent(QMouseEvent *event);
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		void mouseReleaseEvent(QMouseEvent *event);
 
 		void foundWindow(const WindowHandle &handle);
 #endif
 		bool isWindowValid(const WindowHandle &handle) const;
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		void refreshWindow(const WindowHandle &handle);
 		void highlightWindow(const WindowHandle &handle);
 #endif
@@ -61,12 +71,18 @@ namespace ActionTools
 		void startMouseCapture();
 		void stopMouseCapture();
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		WId windowAtPointer() const;
-		bool x11EventFilter(XEvent *event);
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+        bool x11EventFilter(XEvent *event);
+#else
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
 #endif
-#ifdef Q_WS_WIN
+#endif
+#ifdef Q_OS_WIN
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 		bool winEventFilter(MSG *msg, long *result);
+#endif
 #endif
 
 		QList<QWidget *> mWindowIgnoreList;
@@ -74,7 +90,13 @@ namespace ActionTools
 		WindowHandle mLastFoundWindow;
 		bool mSearching;
 		QMainWindow *mMainWindow;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_LINUX
+        QList<QWidget*> mShownWindows;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        unsigned long mCrossCursor;
+#endif
+#endif
+#ifdef Q_OS_WIN
 		HCURSOR mPreviousCursor;
 		HPEN	mRectanglePen;
 #endif

@@ -23,7 +23,11 @@
 #include "actioninstance.h"
 #include "version.h"
 #include "mainclass.h"
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include "qtsingleapplication/qtsingleapplication.h"
+#else
 #include "nativeeventfilteringapplication.h"
+#endif
 #include "global.h"
 #include "settings.h"
 
@@ -40,14 +44,18 @@
 #include <QUrl>
 #include <QNetworkProxy>
 
-#ifdef Q_WS_X11
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QUrlQuery>
+#endif
+
+#ifdef Q_OS_LINUX
 #undef signals
 #include <libnotify/notify.h>
 #define signals
 #include "keysymhelper.h"
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -61,7 +69,7 @@ static void cleanup()
 	ActionTools::GlobalShortcutManager::clear();
 }
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 static void pause()
 {
 	system("pause");
@@ -98,18 +106,24 @@ int main(int argc, char **argv)
         #error("You need Qt 4.7.0 or later to compile Actiona Executer");
 #endif
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QtSingleApplication app("actiona-exec", argc, argv);
+#else
     ActionTools::NativeEventFilteringApplication app("actiona-exec", argc, argv);
+#endif
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);
 
 	qsrand(std::time(NULL));
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
     notify_init("Actiona executer");
 #endif
 
-	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+#endif
 
     QxtCommandOptions preOptions;
 
@@ -129,7 +143,7 @@ int main(int argc, char **argv)
 	QString locale = settings.value("locale", QLocale::system().name()).toString();
 
 	QTranslator qtTranslator;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	qtTranslator.load(QString("%1/locale/qt_%2").arg(QApplication::applicationDirPath()).arg(locale));
 #else
 	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
@@ -139,7 +153,7 @@ int main(int argc, char **argv)
 	QTranslator toolsTranslator;
 	if(!toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         toolsTranslator.load(QString("%1/share/actiona/locale/tools_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
@@ -148,7 +162,7 @@ int main(int argc, char **argv)
 	QTranslator actionToolsTranslator;
 	if(!actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         actionToolsTranslator.load(QString("%1/share/actiona/locale/actiontools_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
@@ -157,7 +171,7 @@ int main(int argc, char **argv)
 	QTranslator executerTranslator;
 	if(!executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         executerTranslator.load(QString("%1/share/actiona/locale/executer_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
@@ -166,7 +180,7 @@ int main(int argc, char **argv)
 	QTranslator actexecuterTranslator;
 	if(!actexecuterTranslator.load(QString("%1/locale/actexecuter_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         actexecuterTranslator.load(QString("%1/share/actiona/locale/actexecuter_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
@@ -191,7 +205,7 @@ int main(int argc, char **argv)
     options.add("proxy-port", QObject::tr("sets the custom proxy port"));
     options.add("proxy-user", QObject::tr("sets the custom proxy user"));
     options.add("proxy-password", QObject::tr("sets the custom proxy password"));
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     options.add("console", QObject::tr("create a console to see debug output"));
     options.add("pause-at-end", QObject::tr("wait for user input at the end of the execution, used only with --console"));
 #endif
@@ -201,7 +215,7 @@ int main(int argc, char **argv)
     options.alias("help", "h");
     options.parse(arguments);
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     if(options.count("console"))
     {
         createConsole();
@@ -245,7 +259,7 @@ int main(int argc, char **argv)
 	if(!options.count("nocodeqt"))
 		app.addLibraryPath(QApplication::applicationDirPath() + "/code");
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Load key codes");
@@ -331,7 +345,11 @@ int main(int argc, char **argv)
 	{
 		QString mode;
 		typedef QPair<QString, QString> QStringPair;
-		foreach(const QStringPair &queryItem, protocolUrl.queryItems())
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        foreach(const QStringPair &queryItem, QUrlQuery(protocolUrl.query()).queryItems())
+#else
+        foreach(const QStringPair &queryItem, protocolUrl.queryItems())
+#endif
 		{
 			if(queryItem.first == "mode")
 			{

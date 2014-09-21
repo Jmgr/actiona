@@ -25,11 +25,11 @@
 #include <QDir>
 #include <QScriptValueIterator>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <unistd.h>
 #endif
 
@@ -120,7 +120,7 @@ namespace Code
 	{
 		Q_UNUSED(context)
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		return ProcessHandle::constructor(GetCurrentProcessId(), engine);
 #else
 		return ProcessHandle::constructor(getpid(), engine);
@@ -158,7 +158,7 @@ namespace Code
 
 	int Process::id() const
 	{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
             return mProcess->pid()->dwProcessId;
 #else
             return mProcess->pid();

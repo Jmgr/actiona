@@ -109,8 +109,8 @@ bool ConvolutionFilter::setOption(int option, const QVariant &value)
         break;
         case QtImageFilter::ConvolutionKernelMatrix:
         {
-            if (qVariantCanConvert<QtConvolutionKernelMatrix>(value)) {
-                QtConvolutionKernelMatrix kernel = qVariantValue<QtConvolutionKernelMatrix>(value);
+            if (value.canConvert<QtConvolutionKernelMatrix>()) {
+                QtConvolutionKernelMatrix kernel = value.value<QtConvolutionKernelMatrix>();
                 addKernel(kernel, m_channels, m_borderPolicy);
             }
         }

@@ -63,7 +63,7 @@ class QNetworkAccessManager;
 class ActionDialog;
 class QModelIndex;
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Shobjidl.h>
 #endif
 
@@ -183,6 +183,7 @@ private:
 	void updateUndoRedoStatus();
 	void execute(bool onlySelection);
 	void fillNewActionTreeWidget(NewActionTreeWidget *widget);
+    ActionDialog *actionDialog(ActionTools::ActionInstance *actionInstance);
 	bool editAction(ActionTools::ActionInstance *actionInstance, const QString &field = QString(), const QString &subField = QString(), int line = -1, int column = -1);
 	bool editAction(ActionTools::ActionInstance *actionInstance, int exception);
 	void openParametersDialog(int parameter = -1, int line = -1, int column = -1);
@@ -253,7 +254,7 @@ private:
 	QString mUpdateFileHash;
 	QCryptographicHash mHashCalculator;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	ITaskbarList3 *mTaskbarList;
 #endif
 

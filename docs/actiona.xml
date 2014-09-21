@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="application/actiona-script">
+    <sub-class-of type="application/xml"/>
+    <comment>Actiona script file</comment>
+    <comment xml:lang="fr">Fichier script d'Actiona</comment>
+    <glob pattern="*.ascr"/>
+    <icon name="actiona"/>
+  </mime-type>
+  <mime-type type="application/actiona-code">
+    <sub-class-of type="application/ecmascript"/>
+    <comment>Actiona code file</comment>
+    <comment xml:lang="fr">Fichier code d'Actiona</comment>
+    <glob pattern="*.acod"/>
+    <icon name="actiona"/>
+  </mime-type>
+</mime-info>

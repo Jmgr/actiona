@@ -25,7 +25,7 @@
 
 #include <QtGlobal>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #else
 #include <sys/time.h>
@@ -52,7 +52,7 @@ namespace Tools
 		bool mRunning;
 		QString mTaskName;
 		QTextStream mTextStream;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		LARGE_INTEGER mTimeStart;
 		LARGE_INTEGER mTimeStop;
 		LARGE_INTEGER mFrequency;

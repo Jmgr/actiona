@@ -1,5 +1,5 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-SOURCES += convolutionfilter.cpp qtimagefilter.cpp punchfilter.cpp qtimagefilterfactory.cpp
-HEADERS += qtimagefilter.h convolutionfilter.h gaussfilter.h punchfilter.h qtmatrix.h
+SOURCES += $$PWD/convolutionfilter.cpp $$PWD/qtimagefilter.cpp $$PWD/punchfilter.cpp $$PWD/qtimagefilterfactory.cpp
+HEADERS += $$PWD/qtimagefilter.h $$PWD/convolutionfilter.h $$PWD/gaussfilter.h $$PWD/punchfilter.h $$PWD/qtmatrix.h

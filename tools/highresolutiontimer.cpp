@@ -29,7 +29,7 @@ namespace Tools
 		mTaskName(taskName),
 		mTextStream(stdout, QIODevice::WriteOnly)
 	{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QueryPerformanceFrequency(&mFrequency);
 		mTimeStart.QuadPart = 0;
 		mTimeStop.QuadPart = 0;
@@ -62,7 +62,7 @@ namespace Tools
 	void HighResolutionTimer::start()
 	{
 		mRunning = true;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QueryPerformanceCounter(&mTimeStart);
 #else
 		gettimeofday(&mTimeStart, 0);
@@ -72,7 +72,7 @@ namespace Tools
 	void HighResolutionTimer::stop()
 	{
 		mRunning = false;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QueryPerformanceCounter(&mTimeStop);
 #else
 		gettimeofday(&mTimeStop, 0);
@@ -86,7 +86,7 @@ namespace Tools
 		if(mRunning)
 			stop();
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		startTime = mTimeStart.QuadPart * (1000000.0 / mFrequency.QuadPart);
 		endTime = mTimeStop.QuadPart * (1000000.0 / mFrequency.QuadPart);
 #else

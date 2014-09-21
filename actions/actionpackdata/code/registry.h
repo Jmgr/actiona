@@ -28,7 +28,7 @@
 #include <QScriptEngine>
 #include <QStringList>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -69,7 +69,7 @@ namespace Code
 		QScriptValue closeKey() const;
 	
 	private:
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		HKEY enumToKey(Key key) const;
 	
 		HKEY mHKey;

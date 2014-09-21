@@ -30,7 +30,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT KeyMapper
 	{
 	public:
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		static int toDirectXKey(int nativeKey);
 #endif
 		static int toNativeKey(Qt::Key key);

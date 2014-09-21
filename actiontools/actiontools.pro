@@ -1,6 +1,9 @@
 include(../common.pri)
 QT += script \
     xmlpatterns
+equals(QT_MAJOR_VERSION, 5) {
+QT += widgets x11extras
+}
 TEMPLATE = lib
 CONFIG += dll
 unix:CONFIG += link_pkgconfig
@@ -42,7 +45,6 @@ SOURCES += actionfactory.cpp \
     registry.cpp \
     devicecopythread.cpp \
     datacopyactioninstance.cpp \
-	nativeeventfilteringapplication.cpp \
 	pointitemdelegate.cpp \
 	actionpack.cpp \
 	opencvalgorithms.cpp \
@@ -89,8 +91,6 @@ HEADERS += actiontools_global.h \
     registry.h \
     devicecopythread.h \
     datacopyactioninstance.h \
-    nativeeventfilter.h \
-	nativeeventfilteringapplication.h \
 	pointitemdelegate.h \
 	actiondefinitionenums.h \
 	name.h \
@@ -111,6 +111,11 @@ HEADERS += actiontools_global.h \
     screenshotwizard.h \
     screenshotwizardpage.h \
     savescreenshotwizardpage.h
+equals(QT_MAJOR_VERSION, 4) {
+SOURCES += nativeeventfilteringapplication.cpp
+HEADERS += nativeeventfilteringapplication.h \
+    nativeeventfilter.h
+}
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \

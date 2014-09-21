@@ -27,6 +27,10 @@
 #include <QDate>
 #include <QTimer>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QUrlQuery>
+#endif
+
 namespace Tools
 {
 	Updater::Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent)
@@ -58,48 +62,94 @@ namespace Tools
 			return;
 		
 		QUrl url(mUrl);
-		url.addQueryItem("request", "program");
-		url.addQueryItem("protocol", QString::number(Protocol));
-		switch(fileType)
-		{
-		case Source:
-			url.addQueryItem("type", "source");
-			break;
-		case Binary:
-			url.addQueryItem("type", "binary");
-			break;
-		}
-		switch(containerType)
-		{
-		case Installer:
-			url.addQueryItem("container", "installer");
-			break;
-		case SevenZip:
-			url.addQueryItem("container", "7z");
-			break;
-		case Zip:
-			url.addQueryItem("container", "zip");
-			break;
-		case TarGz:
-			url.addQueryItem("container", "targz");
-			break;
-		case TarBz2:
-			url.addQueryItem("container", "tarbz2");
-			break;
-		case Deb:
-			url.addQueryItem("container", "deb");
-			break;
-		case Rpm:
-			url.addQueryItem("container", "rpm");
-			break;
-		}
-		url.addQueryItem("osName", operatingSystem);
-		url.addQueryItem("osBits", QString::number(operatingSystemBits));
-		url.addQueryItem("language", language);
-		url.addQueryItem("program", program);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QUrlQuery urlQuery;
+
+        urlQuery.addQueryItem("request", "program");
+        urlQuery.addQueryItem("protocol", QString::number(Protocol));
+        switch(fileType)
+        {
+        case Source:
+            urlQuery.addQueryItem("type", "source");
+            break;
+        case Binary:
+            urlQuery.addQueryItem("type", "binary");
+            break;
+        }
+        switch(containerType)
+        {
+        case Installer:
+            urlQuery.addQueryItem("container", "installer");
+            break;
+        case SevenZip:
+            urlQuery.addQueryItem("container", "7z");
+            break;
+        case Zip:
+            urlQuery.addQueryItem("container", "zip");
+            break;
+        case TarGz:
+            urlQuery.addQueryItem("container", "targz");
+            break;
+        case TarBz2:
+            urlQuery.addQueryItem("container", "tarbz2");
+            break;
+        case Deb:
+            urlQuery.addQueryItem("container", "deb");
+            break;
+        case Rpm:
+            urlQuery.addQueryItem("container", "rpm");
+            break;
+        }
+        urlQuery.addQueryItem("osName", operatingSystem);
+        urlQuery.addQueryItem("osBits", QString::number(operatingSystemBits));
+        urlQuery.addQueryItem("language", language);
+        urlQuery.addQueryItem("program", program);
+
+        url.setQuery(urlQuery);
+#else
+        url.addQueryItem("request", "program");
+        url.addQueryItem("protocol", QString::number(Protocol));
+        switch(fileType)
+        {
+        case Source:
+            url.addQueryItem("type", "source");
+            break;
+        case Binary:
+            url.addQueryItem("type", "binary");
+            break;
+        }
+        switch(containerType)
+        {
+        case Installer:
+            url.addQueryItem("container", "installer");
+            break;
+        case SevenZip:
+            url.addQueryItem("container", "7z");
+            break;
+        case Zip:
+            url.addQueryItem("container", "zip");
+            break;
+        case TarGz:
+            url.addQueryItem("container", "targz");
+            break;
+        case TarBz2:
+            url.addQueryItem("container", "tarbz2");
+            break;
+        case Deb:
+            url.addQueryItem("container", "deb");
+            break;
+        case Rpm:
+            url.addQueryItem("container", "rpm");
+            break;
+        }
+        url.addQueryItem("osName", operatingSystem);
+        url.addQueryItem("osBits", QString::number(operatingSystemBits));
+        url.addQueryItem("language", language);
+        url.addQueryItem("program", program);
+#endif
 
 		QNetworkRequest request(url);
-		request.setRawHeader("User-Agent", QString("%1 %2").arg(program).arg(programVersion.toString()).toAscii());
+        request.setRawHeader("User-Agent", QString("%1 %2").arg(program).arg(programVersion.toString()).toLatin1());
 		
 		mCurrentReply = mNetworkAccessManager->get(request);
 

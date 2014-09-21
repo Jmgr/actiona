@@ -22,11 +22,19 @@
 #include "code/rect.h"
 #include "../systemsession.h"
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QStandardPaths>
+#include <QDeviceInfo>
+#include <QBatteryInfo>
+#include <QStorageInfo>
+#include <QLocale>
+#else
 #include <QSystemInfo>
-#include <QDesktopServices>
 #include <QSystemStorageInfo>
 #include <QSystemDisplayInfo>
 #include <QSystemDeviceInfo>
+#endif
+#include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QUrl>
@@ -34,12 +42,14 @@
 #include <QDateTime>
 #include <cstdlib>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #include <LMCons.h>
 #endif
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 QTM_USE_NAMESPACE
+#endif
 
 namespace Code
 {
@@ -50,11 +60,17 @@ namespace Code
 
 	System::System()
 		: CodeClass(),
-		mSystemSession(new SystemSession),
-		mSystemInfo(new QSystemInfo(this)),
+        mSystemSession(new SystemSession)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        , mDeviceInfo(new QDeviceInfo(this)),
+        mBatteryInfo(new QBatteryInfo(this)),
+        mStorageInfo(new QStorageInfo(this))
+#else
+        , mSystemInfo(new QSystemInfo(this)),
 		mSystemStorageInfo(new QSystemStorageInfo(this)),
 		mSystemDisplayInfo(new QSystemDisplayInfo(this)),
 		mSystemDeviceInfo(new QSystemDeviceInfo(this))
+#endif
 	{
 	}
 
@@ -65,12 +81,20 @@ namespace Code
 
 	QString System::storageLocationPath(StorageLocation location) const
 	{
-		return QDesktopServices::storageLocation(static_cast<QDesktopServices::StandardLocation>(location));
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return QStandardPaths::locate(static_cast<QStandardPaths::StandardLocation>(location), QString(), QStandardPaths::LocateDirectory);
+#else
+        return QDesktopServices::storageLocation(static_cast<QDesktopServices::StandardLocation>(location));
+#endif
 	}
 
 	QString System::storageLocationName(StorageLocation location) const
 	{
-		return QDesktopServices::displayName(static_cast<QDesktopServices::StandardLocation>(location));
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return QStandardPaths::displayName(static_cast<QStandardPaths::StandardLocation>(location));
+#else
+        return QDesktopServices::displayName(static_cast<QDesktopServices::StandardLocation>(location));
+#endif
 	}
 
 	QScriptValue System::openUrl(const QString &url) const
@@ -113,20 +137,20 @@ namespace Code
 
 	QString System::username() const
 	{
-	#ifdef Q_WS_WIN
+    #ifdef Q_OS_WIN
 		TCHAR buffer[UNLEN+1];
 		DWORD size = sizeof(buffer);
 		GetUserName(buffer, &size);
 
 		return QString::fromWCharArray(buffer);
 	#else
-		return QString::fromAscii(std::getenv("USER"));
+        return QString::fromLatin1(std::getenv("USER"));
 	#endif
 	}
 
 	QString System::variable(const QString &name) const
 	{
-		return QString::fromAscii(std::getenv(name.toAscii()));
+        return QString::fromLatin1(std::getenv(name.toLatin1()));
 	}
 
 	uint System::timestamp() const
@@ -136,84 +160,162 @@ namespace Code
 
 	QString System::osName() const
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		return "GNU/Linux";
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		return "Windows";
 #endif
 	}
 
 	QString System::version() const
 	{
-		return mSystemInfo->version(QSystemInfo::Os);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return mDeviceInfo->version(QDeviceInfo::Os);
+#else
+        return mSystemInfo->version(QSystemInfo::Os);
+#endif
 	}
 
 	QString System::countryCode() const
 	{
-		return mSystemInfo->currentCountryCode();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QString localeName = QLocale::system().name();
+        QStringList localeParts = localeName.split(QChar('_'));
+
+        if(localeParts.size() >= 2)
+            return localeParts[1];
+        else
+            return QString();
+#else
+    return mSystemInfo->currentCountryCode();
+#endif
 	}
 
 	QString System::language() const
 	{
-		return mSystemInfo->currentLanguage();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QString localeName = QLocale::system().name();
+        QStringList localeParts = localeName.split(QChar('_'));
+
+        if(localeParts.size() >= 2)
+            return localeParts[0];
+        else
+            return QString();
+#else
+        return mSystemInfo->currentLanguage();
+#endif
 	}
 
 	QStringList System::logicalDrives() const
 	{
-		return QSystemStorageInfo::logicalDrives();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return mStorageInfo->allLogicalDrives();
+#else
+        return QSystemStorageInfo::logicalDrives();
+#endif
 	}
 
 	qlonglong System::availableDiskSpace(const QString &drive) const
 	{
-		return mSystemStorageInfo->availableDiskSpace(drive);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return mStorageInfo->availableDiskSpace(drive);
+#else
+        return mSystemStorageInfo->availableDiskSpace(drive);
+#endif
 	}
 
 	qlonglong System::totalDiskSpace(const QString &drive) const
 	{
-		return mSystemStorageInfo->totalDiskSpace(drive);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return mStorageInfo->totalDiskSpace(drive);
+#else
+        return mSystemStorageInfo->totalDiskSpace(drive);
+#endif
 	}
 
 	System::DriveType System::driveType(const QString &drive) const
 	{
-		return static_cast<DriveType>(mSystemStorageInfo->typeForDrive(drive));
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return static_cast<DriveType>(mStorageInfo->driveType(drive));
+#else
+        return static_cast<DriveType>(mSystemStorageInfo->typeForDrive(drive));
+#endif
 	}
 
 	int System::colorDepth(int screenId) const
 	{
-		int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
-		return mSystemDisplayInfo->colorDepth(screen);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return 0;// Sadly, no easy way to get this information
+#else
+        int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
+        return mSystemDisplayInfo->colorDepth(screen);
+#endif
 	}
 
 	int System::displayBrightness(int screenId) const
 	{
-		int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
-		return mSystemDisplayInfo->displayBrightness(screen);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return 0;// Sadly, no easy way to get this information
+#else
+        int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
+        return mSystemDisplayInfo->displayBrightness(screen);
+#endif
 	}
 
 	int System::batteryLevel() const
 	{
-		return mSystemDeviceInfo->batteryLevel();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return mBatteryInfo->level();
+#else
+        return mSystemDeviceInfo->batteryLevel();
+#endif
 	}
 
 	System::PowerState System::powerState() const
 	{
-		return static_cast<System::PowerState>(mSystemDeviceInfo->currentPowerState());
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        switch(mBatteryInfo->chargingState())
+        {
+        case QBatteryInfo::Discharging:
+            return BatteryPower;
+        case QBatteryInfo::Charging:
+            return WallPowerChargingBattery;
+        case QBatteryInfo::IdleChargingState:
+            return WallPower;
+        default:
+            return UnknownState;
+        }
+#else
+        return static_cast<System::PowerState>(mSystemDeviceInfo->currentPowerState());
+#endif
 	}
 
 	QString System::manufacturer() const
 	{
-		return mSystemDeviceInfo->manufacturer();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return mDeviceInfo->manufacturer();
+#else
+        return mSystemDeviceInfo->manufacturer();
+#endif
 	}
 
 	QString System::model() const
 	{
-		return mSystemDeviceInfo->model();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return mDeviceInfo->model();
+#else
+        return mSystemDeviceInfo->model();
+#endif
 	}
 
 	QString System::productName() const
 	{
-		return mSystemDeviceInfo->productName();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        return mDeviceInfo->productName();
+#else
+        return mSystemDeviceInfo->productName();
+#endif
 	}
 
 	QScriptValue System::logout(bool force) const

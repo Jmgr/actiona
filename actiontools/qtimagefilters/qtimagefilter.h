@@ -52,7 +52,7 @@
 #include <QtCore/QStringList>
 #include "qtmatrix.h"
 
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
 #  if !defined(QT_QTIMAGEFILTERS_EXPORT) && !defined(QT_QTIMAGEFILTER_IMPORT)
 #    define QT_QTIMAGEFILTERS_EXPORT
 #  elif defined(QT_QTIMAGEFILTER_IMPORT)

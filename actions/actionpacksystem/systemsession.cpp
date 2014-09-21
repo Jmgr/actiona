@@ -20,25 +20,25 @@
 
 #include "systemsession.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #include <powrprof.h>
 #include <QMessageBox>
 #endif
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <QProcess>
 #include <QDBusInterface>
 #include <QDBusReply>
 #endif
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 int SystemSession::mCapabilities = 0;
 #endif
 
 SystemSession::SystemSession()
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		if(!mCapabilities)
 			checkOperatingSystemCapabilities();
 #endif
@@ -46,7 +46,7 @@ SystemSession::SystemSession()
 
 bool SystemSession::logout(bool force) const
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	if(mCapabilities & GnomeSessionManager)
 	{
 		QDBusInterface dbusInterface("org.gnome.SessionManager", "/org/gnome/SessionManager", "org.gnome.SessionManager", QDBusConnection::sessionBus());
@@ -67,14 +67,14 @@ bool SystemSession::logout(bool force) const
 
 	return false;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	return ExitWindowsEx(EWX_LOGOFF | (force ? EWX_FORCE : 0), SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER);
 #endif
 }
 
 bool SystemSession::restart(bool force) const
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	if(mCapabilities & GnomeSessionManager)
 	{
 		QDBusInterface dbusInterface("org.gnome.SessionManager", "/org/gnome/SessionManager", "org.gnome.SessionManager", QDBusConnection::sessionBus());
@@ -110,14 +110,14 @@ bool SystemSession::restart(bool force) const
 
 	return false;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	return ExitWindowsEx(EWX_REBOOT | (force ? EWX_FORCE : 0), SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER);
 #endif
 }
 
 bool SystemSession::shutdown(bool force) const
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	if(mCapabilities & GnomeSessionManager)
 	{
 		QDBusInterface dbusInterface("org.gnome.SessionManager", "/org/gnome/SessionManager", "org.gnome.SessionManager", QDBusConnection::sessionBus());
@@ -153,14 +153,14 @@ bool SystemSession::shutdown(bool force) const
 
 	return false;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	return ExitWindowsEx(EWX_POWEROFF | (force ? EWX_FORCE : 0), SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER);
 #endif
 }
 
 bool SystemSession::suspend(bool force) const
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	Q_UNUSED(force)
 
 	if(mCapabilities & FreedesktopUPower)
@@ -190,14 +190,14 @@ bool SystemSession::suspend(bool force) const
 
 	return false;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	return SetSuspendState(false, force, true);
 #endif
 }
 
 bool SystemSession::hibernate(bool force) const
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	Q_UNUSED(force)
 
 	if(mCapabilities & FreedesktopUPower)
@@ -227,14 +227,14 @@ bool SystemSession::hibernate(bool force) const
 
 	return false;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	return SetSuspendState(true, force, false);
 #endif
 }
 
 bool SystemSession::lockScreen() const
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	if(mCapabilities & GnomeScreenSaver)
 	{
 		QDBusInterface dbusInterface("org.gnome.ScreenSaver", "/ScreenSaver", "org.gnome.ScreenSaver", QDBusConnection::sessionBus());
@@ -256,14 +256,14 @@ bool SystemSession::lockScreen() const
 
 	return false;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	return LockWorkStation();
 #endif
 }
 
 bool SystemSession::startScreenSaver() const
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	if(mCapabilities & GnomeScreenSaver)
 	{
 		QDBusInterface dbusInterface("org.gnome.ScreenSaver", "/ScreenSaver", "org.gnome.ScreenSaver", QDBusConnection::sessionBus());
@@ -291,14 +291,14 @@ bool SystemSession::startScreenSaver() const
 
 	return false;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	SendMessage(GetDesktopWindow(), WM_SYSCOMMAND, SC_SCREENSAVE, 0);
 
 	return true;
 #endif
 }
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 bool SystemSession::checkForDBusInterface(const QString &service, const QString &path, const QString &interface, const QString &testMethod, bool systemBus) const
 {
 	QDBusInterface dbusInterface(service, path, interface, systemBus ? QDBusConnection::systemBus() : QDBusConnection::sessionBus());

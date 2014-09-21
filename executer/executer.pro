@@ -1,7 +1,16 @@
 include(../common.pri)
 QT += script scripttools
+equals(QT_MAJOR_VERSION, 5) {
+QT += widgets
+}
 TEMPLATE = lib
-CONFIG += dll uitools
+CONFIG += dll
+equals(QT_MAJOR_VERSION, 4) {
+CONFIG += uitools
+}
+equals(QT_MAJOR_VERSION, 5) {
+QT += uitools
+}
 DEFINES += EXECUTER_LIBRARY
 win32:DEFINES += _CRT_SECURE_NO_WARNINGS
 TARGET = executer

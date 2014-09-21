@@ -24,6 +24,7 @@
 #include "actiontools_global.h"
 
 #include <QMetaType>
+#include <QString>
 
 namespace ActionTools
 {

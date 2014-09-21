@@ -48,7 +48,7 @@ bool Executer::start(QIODevice *device, const QString &filename)
 	QString locale = settings.value("locale", QLocale::system().name()).toString();
 
 	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", locale);
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	if(mActionFactory->actionPackCount() == 0)
         mActionFactory->loadActionPacks(QString("%1/%2/actiona/actions/").arg(ACT_PREFIX).arg(ACT_LIBDIR), locale);
 #endif

@@ -23,7 +23,7 @@
 #include "keyinput.h"
 #include "crossplatform.h"
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include "keysymhelper.h"
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
@@ -36,7 +36,7 @@
 #include <QX11Info>
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -73,7 +73,7 @@ bool KeyboardDevice::triggerKey(const QString &key)
 	return doKeyAction(Trigger, stringToNativeKey(key));
 }
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 static KeyCode keyToKeycode(const char *key)
 {
 	KeySym keySym = XStringToKeysym(key);
@@ -123,7 +123,7 @@ static bool sendKey(const char *key)
 
 bool KeyboardDevice::writeText(const QString &text, int delay) const
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	bool result = true;
 	KeySym keySym[2];
 	std::wstring wideString = text.toStdWString();
@@ -176,7 +176,7 @@ bool KeyboardDevice::writeText(const QString &text, int delay) const
 	return result;
 #endif
 	
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	INPUT input[2];
 	std::wstring wideString = text.toStdWString();
 	bool result = true;
@@ -208,7 +208,7 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey)
 {
 	bool result = true;
 	
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	KeyCode keyCode = XKeysymToKeycode(QX11Info::display(), nativeKey);
 	
 	if(action == Press || action == Trigger)
@@ -219,7 +219,7 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey)
 	XFlush(QX11Info::display());
 #endif
 	
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	INPUT input;
 	input.type = INPUT_KEYBOARD;
 	input.ki.time = 0;

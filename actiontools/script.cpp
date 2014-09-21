@@ -206,13 +206,13 @@ namespace ActionTools
 		stream.writeStartElement("scriptfile");
 
 		QString osName = tr("Unknown");
-	#ifdef Q_WS_X11
+    #ifdef Q_OS_LINUX
 		osName = tr("GNU/Linux");
 	#endif
-	#ifdef Q_WS_WIN
+    #ifdef Q_OS_WIN
 		osName = tr("Windows");
 	#endif
-	#ifdef Q_WS_MAC
+    #ifdef Q_OS_MAC
 		osName = tr("Mac");
 	#endif
 
@@ -518,7 +518,7 @@ namespace ActionTools
                     const QXmlStreamAttributes &attributes = stream.attributes();
                     QString id = attributes.value("id").toString();
                     QString base64Data = stream.readElementText();
-                    QByteArray data = qUncompress(QByteArray::fromBase64(base64Data.toAscii()));
+                    QByteArray data = qUncompress(QByteArray::fromBase64(base64Data.toLatin1()));
                     Resource resource(data, static_cast<Resource::Type>(attributes.value("type").toString().toInt()));
 
                     mResources.insert(id, resource);

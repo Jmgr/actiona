@@ -502,15 +502,15 @@ void ActionDialog::currentExceptionActionChanged(int index)
 
 void ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter, int tab)
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	if(!(parameter->operatingSystems() & ActionTools::WorksOnGnuLinux))
 		return;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	if(!(parameter->operatingSystems() & ActionTools::WorksOnWindows))
 		return;
 #endif
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 	if(!(parameter->operatingSystems() & ActionTools::WorksOnMac))
 		return;
 #endif

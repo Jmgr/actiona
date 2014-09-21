@@ -23,6 +23,7 @@
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QPersistentModelIndex>
+#include <QMimeData>
 
 DeleteActionPushButton::DeleteActionPushButton(QWidget *parent)
 	: QPushButton(parent)

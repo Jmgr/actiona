@@ -20,7 +20,7 @@
 
 #include "keymapper.h"
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #define XK_MISCELLANY
 #define XK_LATIN1
 #define XK_KOREAN
@@ -28,13 +28,13 @@
 #include <X11/keysymdef.h>
 #include <X11/XF86keysym.h>
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
 namespace ActionTools
 {
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	static const int KeyTbl[] = {
 		// misc keys
 
@@ -337,7 +337,7 @@ namespace ActionTools
 		0,                          0
 	};
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	static const uint KeyTbl[] = { // Keyboard mapping table
 							// Dec |  Hex | Windows Virtual key
 		Qt::Key_unknown,    //   0   0x00
@@ -601,7 +601,7 @@ namespace ActionTools
 	};
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	int KeyMapper::toDirectXKey(int nativeKey)
 	{
 		switch(nativeKey)
@@ -826,7 +826,7 @@ namespace ActionTools
 
 	int KeyMapper::toNativeKey(Qt::Key key)
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		if(key >= Qt::Key_Space && key <= Qt::Key_AsciiTilde)//Ascii
 			return key;
 
@@ -838,7 +838,7 @@ namespace ActionTools
 			i += 2;
 		}
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		for(int i = 0; i < 255; ++i)
 		{
 			if(KeyTbl[i] == key)

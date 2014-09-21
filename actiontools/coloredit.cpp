@@ -24,6 +24,11 @@
 #include <QColorDialog>
 #include <QDesktopWidget>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QApplication>
+#include <QScreen>
+#endif
+
 namespace ActionTools
 {
 	ColorEdit::ColorEdit(QWidget *parent)
@@ -99,7 +104,12 @@ namespace ActionTools
 	
     void ColorEdit::setPosition(QPointF position)
 	{
-		QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), position.x(), position.y(), 1, 1);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QPixmap pixel = QGuiApplication::primaryScreen()->grabWindow(0, position.x(), position.y(), 1, 1);
+#else
+        QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), position.x(), position.y(), 1, 1);
+#endif
+
 		QColor pixelColor = pixel.toImage().pixel(0, 0);
 		mColorDialog->setCurrentColor(pixelColor);
 		onColorSelected();

@@ -26,7 +26,7 @@
 class SystemSession
 {
 public:
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	enum Capabilities
 	{
 		GnomeSessionManager = 1<<0,
@@ -52,7 +52,7 @@ public:
 	bool startScreenSaver() const;
 
 private:
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	bool checkForDBusInterface(const QString &service, const QString &path, const QString &interface, const QString &testMethod, bool systemBus) const;
 	bool checkForDBusInterface(const QString &service, const QString &path, const QString &testMethod, bool systemBus) const;
 	void checkOperatingSystemCapabilities();

@@ -24,7 +24,7 @@
 #include "ui_settingsdialog.h"
 #include "global.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include "registry.h"
 #include <Shlwapi.h>
 #include <ShlObj.h>
@@ -53,7 +53,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 {
 	ui->setupUi(this);
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	ui->fileAssociationsLabel->setVisible(false);
 	ui->associateASCRCheckBox->setVisible(false);
 	ui->associateACODCheckBox->setVisible(false);
@@ -127,7 +127,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->proxyPassword->setText(settings.value("network/proxyPassword", QVariant()).toString());
 	ui->proxyType->setCurrentIndex(settings.value("network/proxyType", QVariant(ActionTools::Settings::PROXY_TYPE_HTTP)).toInt());
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	QVariant result;
 	mPreviousASCRAssociation = (ActionTools::Registry::read(result, ActionTools::Registry::ClassesRoot, ".ascr") == ActionTools::Registry::ReadOk);
 	mPreviousACODAssociation = (ActionTools::Registry::read(result, ActionTools::Registry::ClassesRoot, ".acod") == ActionTools::Registry::ReadOk);
@@ -277,7 +277,7 @@ void SettingsDialog::accept()
 	settings.setValue("network/proxyPassword", ui->proxyPassword->text());
 	settings.setValue("network/proxyType", ui->proxyType->currentIndex());
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	bool associateASCR = (ui->associateASCRCheckBox->checkState() == Qt::Checked);
 	bool associateACOD = (ui->associateACODCheckBox->checkState() == Qt::Checked);
 

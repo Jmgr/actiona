@@ -23,7 +23,7 @@
 
 #include "actiontools_global.h"
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <X11/Xlib.h>
 
 namespace ActionTools

@@ -375,7 +375,7 @@ QtImageFilter *QtImageFilterFactory::createImageFilter(const QString &name)
         registerDefaultImageFilters();
     }
 
-    ImageFilterFactoryFunction fnFactory = g_availableFilters.value(name.toAscii());
+    ImageFilterFactoryFunction fnFactory = g_availableFilters.value(name.toLatin1());
     return fnFactory ? fnFactory() : 0;
 }
 
@@ -411,7 +411,7 @@ void QtImageFilterFactory::registerImageFilter(const QString &name, ImageFilterF
     if (g_availableFilters.isEmpty()) {
         registerDefaultImageFilters();
     }
-    g_availableFilters.insert(name.toAscii(), func);
+    g_availableFilters.insert(name.toLatin1(), func);
 }
 
 /*!

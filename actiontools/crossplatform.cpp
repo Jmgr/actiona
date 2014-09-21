@@ -26,7 +26,7 @@
 #include <QDebug>
 #include <QDir>
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <X11/Xlib.h>
 #include <signal.h>
 #include <sys/types.h>
@@ -35,7 +35,7 @@
 #include <QX11Info>
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #include <Tlhelp32.h>
 #endif
@@ -47,10 +47,10 @@ namespace ActionTools
 
 	void CrossPlatform::setForegroundWindow(QWidget *window)
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		XRaiseWindow(QX11Info::display(), window->winId());
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		if(IsIconic(window->winId()))
 			ShowWindow(window->winId(), SW_RESTORE);
 		else
@@ -66,7 +66,7 @@ namespace ActionTools
 
 	bool CrossPlatform::killProcess(int id, KillMode killMode, int timeout)
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		switch(killMode)
 		{
 		case Graceful:
@@ -139,7 +139,7 @@ namespace ActionTools
 
 		return false;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		HANDLE process = OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_INFORMATION, FALSE, id);
 		if(!process)
 		{
@@ -208,10 +208,10 @@ namespace ActionTools
 
 	CrossPlatform::ProcessStatus CrossPlatform::processStatus(int id)
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		return (kill(id, 0) == 0) ? Running : Stopped;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, id);
 		if(process)
 		{
@@ -225,7 +225,7 @@ namespace ActionTools
 
 	QList<int> CrossPlatform::runningProcesses()
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		QDir procDir("/proc");
 		QList<int> back;
 
@@ -244,7 +244,7 @@ namespace ActionTools
 
 		return back;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QList<int> back;
 		HANDLE handle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 		if(!handle)
@@ -278,7 +278,7 @@ namespace ActionTools
 
 	void CrossPlatform::sleep(int milliseconds)
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		struct timespec timeout0;
 		struct timespec timeout1;
 		struct timespec* tmp;
@@ -295,20 +295,20 @@ namespace ActionTools
 			t1 = tmp;
 		}
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		Sleep(milliseconds);
 #endif
 	}
 
 	void CrossPlatform::setupLastError()
 	{
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		mLastError = errno;
 
 		char *errorStr = strerror(errno);
 		mLastErrorString = QString::fromUtf8(errorStr);
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		mLastError = GetLastError();
 		LPTSTR message;
 

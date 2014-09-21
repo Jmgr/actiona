@@ -85,7 +85,7 @@ namespace Actions
 			shift->setTooltip(tr("Should the Shift key be pressed"));
 			addElement(shift);
 
-		#ifdef Q_WS_WIN
+		#ifdef Q_OS_WIN
 			QString metaKeyName = tr("Windows");
 		#else
 			QString metaKeyName = tr("Meta");

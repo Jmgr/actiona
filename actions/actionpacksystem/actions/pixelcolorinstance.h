@@ -32,6 +32,10 @@
 #include <QDesktopWidget>
 #include <QTimer>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QScreen>
+#endif
+
 namespace Actions
 {
 	class PixelColorInstance : public ActionTools::ActionInstance
@@ -173,7 +177,11 @@ namespace Actions
 
 		bool testPixel()
 		{
-			QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), mPixelPosition.x(), mPixelPosition.y(), 1, 1);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+            QPixmap pixel = QGuiApplication::primaryScreen()->grabWindow(0, mPixelPosition.x(), mPixelPosition.y(), 1, 1);
+#else
+            QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), mPixelPosition.x(), mPixelPosition.y(), 1, 1);
+#endif
 			QColor pixelColor = pixel.toImage().pixel(0, 0);
 
             setVariable(mVariable, Code::Color::constructor(pixelColor, scriptEngine()));

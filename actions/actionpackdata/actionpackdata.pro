@@ -3,6 +3,10 @@ include(actions/actions.pri)
 include(code/code.pri)
 TARGET = ActionPackData
 QT += script network sql
+equals(QT_MAJOR_VERSION, 5) {
+QT += widgets
+OTHER_FILES += data.json
+}
 HEADERS += actionpackdata.h
 win32:LIBS += -ladvapi32 \
 	-lshell32

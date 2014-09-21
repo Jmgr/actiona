@@ -25,7 +25,7 @@
 
 #include <QVariant>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -58,7 +58,7 @@ namespace ActionTools
 			WriteCannotWriteValue
 		};
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		static ReadResult read(QVariant &result, Key key, const QString &subkey, const QString &value = QString());
 		static WriteResult write(const QVariant &data, Key key, const QString &subkey, const QString &value = QString());
 #endif
@@ -66,7 +66,7 @@ namespace ActionTools
 	private:
 		Registry();
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		static HKEY enumToKey(Key key);
 #endif
 	};

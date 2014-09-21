@@ -26,7 +26,7 @@
 
 #include <QProcess>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -75,7 +75,7 @@ namespace Actions
 			setVariable(mOutputVariable, QString());
 			setVariable(mErrorOutputVariable, QString());
 
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 			_PROCESS_INFORMATION *processInformation = mProcess->pid();
 			if(processInformation)
                 setVariable(processId, QString::number(processInformation->dwProcessId));

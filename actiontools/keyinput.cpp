@@ -25,7 +25,7 @@
 #include <QKeySequence>
 #include <QDebug>
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #define XK_MISCELLANY
 #define XK_LATIN1
 #define XK_KOREAN
@@ -34,7 +34,7 @@
 #include <X11/XF86keysym.h>
 #include <QX11Info>
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -46,7 +46,7 @@ namespace ActionTools
 		<< "numpadMultiply" << "numpadAdd" << "numpadSeparator" << "numpadSubstract" << "numpadDecimal" << "numpadDivide",
 		QStringList() << QString() << QObject::tr("Left Shift") << QObject::tr("Right Shift") << QObject::tr("Left Control") << QObject::tr("Right Control")
 		<< QObject::tr("Left Alt") << QObject::tr("Right Alt")
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		<< QObject::tr("Left Windows") << QObject::tr("Right Windows")
 #else
 		<< QObject::tr("Left Meta") << QObject::tr("Right Meta")
@@ -156,7 +156,7 @@ namespace ActionTools
 
 		switch(event->key())
 		{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		case Qt::Key_Shift:
 		case Qt::Key_Control:
 		case Qt::Key_Alt:
@@ -206,7 +206,7 @@ namespace ActionTools
 
 		mNativeKey[InvalidKey] = 0;
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 		mNativeKey[ShiftLeft] = XK_Shift_L;
 		mNativeKey[ShiftRight] = XK_Shift_R;
 		mNativeKey[ControlLeft] = XK_Control_L;
@@ -233,7 +233,7 @@ namespace ActionTools
 		mNativeKey[NumpadDecimal] = XK_KP_Decimal;
 		mNativeKey[NumpadDivide] = XK_KP_Divide;
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		mNativeKey[ShiftLeft] = VK_LSHIFT;
 		mNativeKey[ShiftRight] = VK_RSHIFT;
 		mNativeKey[ControlLeft] = VK_LCONTROL;

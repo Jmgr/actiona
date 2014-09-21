@@ -22,7 +22,12 @@
 #define CHOOSEPOSITIONPUSHBUTTON_H
 
 #include "actiontools_global.h"
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QAbstractNativeEventFilter>
+#else
 #include "nativeeventfilter.h"
+#endif
 
 #include <QPushButton>
 #include <QList>
@@ -31,7 +36,12 @@ class QMainWindow;
 
 namespace ActionTools
 {
-	class ACTIONTOOLSSHARED_EXPORT ChoosePositionPushButton : public QPushButton, public NativeEventFilter
+    class ACTIONTOOLSSHARED_EXPORT ChoosePositionPushButton : public QPushButton
+#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
+            , public QAbstractNativeEventFilter
+#else
+            , public NativeEventFilter
+#endif
 	{
 		Q_OBJECT
 	public:
@@ -45,11 +55,15 @@ namespace ActionTools
 	private:
 		void paintEvent(QPaintEvent *event);
 		void mousePressEvent(QMouseEvent *event);
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		void mouseReleaseEvent(QMouseEvent *event);
 #endif
-#ifdef Q_WS_X11
-		bool x11EventFilter(XEvent *event);
+#ifdef Q_OS_LINUX
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+        bool x11EventFilter(XEvent *event);
+#else
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
+#endif
 #endif
 		void stopMouseCapture();
 
@@ -57,7 +71,13 @@ namespace ActionTools
 		bool mSearching;
 		QPoint mResult;
 		QMainWindow *mMainWindow;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_LINUX
+        QList<QWidget*> mShownWindows;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        unsigned long mCrossCursor;
+#endif
+#endif
+#ifdef Q_OS_WIN
 		HCURSOR mPreviousCursor;
 		HPEN	mRectanglePen;
 #endif

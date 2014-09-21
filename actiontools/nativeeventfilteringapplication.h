@@ -36,6 +36,7 @@ namespace ActionTools
 		
 	public:
 		NativeEventFilteringApplication(const QString &appId, int &argc, char **argv);
+        ~NativeEventFilteringApplication();
 		
 		void installNativeEventFilter(NativeEventFilter *filter);
 		void removeNativeEventFilter(NativeEventFilter *filter);
@@ -46,11 +47,11 @@ namespace ActionTools
 		}
 		
 	private:
-#ifdef Q_WS_X11
-		bool x11EventFilter(XEvent *event);
+#ifdef Q_OS_LINUX
+        bool x11EventFilter(XEvent *event);
 #endif
-#ifdef Q_WS_WIN
-		bool winEventFilter(MSG *msg, long *result);
+#ifdef Q_OS_WIN
+        bool winEventFilter(MSG *msg, long *result);
 #endif
 		
 		QList<NativeEventFilter*> mNativeFilters;

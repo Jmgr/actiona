@@ -27,6 +27,7 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QApplication>
+#include <QDrag>
 
 ScriptTableView::ScriptTableView(QWidget *parent)
 	: QTableView(parent)

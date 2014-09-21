@@ -4,6 +4,9 @@ QT += xml \
     network \
     script \
     scripttools
+equals(QT_MAJOR_VERSION, 5) {
+QT += widgets
+}
 TARGET = actexec
 VERSION = $$ACTIONA_VERSION
 DESTDIR = ..

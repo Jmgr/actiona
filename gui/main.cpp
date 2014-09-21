@@ -30,7 +30,11 @@
 #include "globalshortcut/globalshortcutmanager.h"
 #include "qxtcommandoptions/qxtcommandoptions.h"
 #include "progresssplashscreen.h"
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include "qtsingleapplication/qtsingleapplication.h"
+#else
 #include "nativeeventfilteringapplication.h"
+#endif
 
 #include <ctime>
 
@@ -43,7 +47,7 @@
 #include <QLibraryInfo>
 #include <QSettings>
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #undef signals
 #include <libnotify/notify.h>
 #define signals
@@ -52,13 +56,13 @@
 #include "keysymhelper.h"
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
 static void cleanup()
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	CoUninitialize();
 #endif
 
@@ -75,11 +79,15 @@ int main(int argc, char **argv)
 	Tools::HighResolutionTimer timer("Application run");
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	CoInitializeEx(0, COINIT_APARTMENTTHREADED | COINIT_SPEED_OVER_MEMORY);
 #endif
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QtSingleApplication app("actiona-gui", argc, argv);
+#else
     ActionTools::NativeEventFilteringApplication app("actiona-gui", argc, argv);
+#endif
 	app.setQuitOnLastWindowClosed(false);
 
     app.setOrganizationName("Actiona");
@@ -91,7 +99,9 @@ int main(int argc, char **argv)
 
 	qsrand(std::time(NULL));
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+#endif
 
 	QxtCommandOptions preOptions;
 
@@ -114,7 +124,7 @@ int main(int argc, char **argv)
 	{
 		locale = QLocale::system().name();
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QString installerLanguage = settings.value("installerLanguage").toString();
 		if(!installerLanguage.isEmpty())
 		{
@@ -127,7 +137,7 @@ int main(int argc, char **argv)
 	}
 
 	QTranslator qtTranslator;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	qtTranslator.load(QString("%1/locale/qt_%2").arg(QApplication::applicationDirPath()).arg(locale));
 #else
 	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
@@ -137,7 +147,7 @@ int main(int argc, char **argv)
 	QTranslator toolsTranslator;
 	if(!toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         toolsTranslator.load(QString("%1/share/actiona/locale/tools_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
@@ -146,7 +156,7 @@ int main(int argc, char **argv)
 	QTranslator actionToolsTranslator;
 	if(!actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         actionToolsTranslator.load(QString("%1/share/actiona/locale/actiontools_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
@@ -155,7 +165,7 @@ int main(int argc, char **argv)
 	QTranslator executerTranslator;
 	if(!executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         executerTranslator.load(QString("%1/share/actiona/locale/executer_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
@@ -164,7 +174,7 @@ int main(int argc, char **argv)
 	QTranslator guiTranslator;
 	if(!guiTranslator.load(QString("%1/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale)))
 	{
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         guiTranslator.load(QString("%1/share/actiona/locale/gui_%2").arg(ACT_PREFIX).arg(locale));
 #endif
 	}
@@ -222,11 +232,11 @@ int main(int argc, char **argv)
 	if(app.sendMessage(fileInfo.filePath()))
 		return 0;
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
     notify_init("Actiona");
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	AllowSetForegroundWindow(ASFW_ANY);
 #endif
 
@@ -250,7 +260,7 @@ int main(int argc, char **argv)
 	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");
 	qRegisterMetaTypeStreamOperators<Tools::Version>("Version");
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Load key codes");

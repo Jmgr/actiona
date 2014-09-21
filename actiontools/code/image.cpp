@@ -36,6 +36,10 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QScreen>
+#endif
+
 namespace Code
 {
 	QScriptValue Image::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -91,7 +95,7 @@ namespace Code
 				windowId = window->windowHandle().value();
 			else
 			{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 				throwError(context, engine, "InvalidWindowError", tr("Invalid window"));
 				return engine->undefinedValue();
 #else
@@ -99,7 +103,11 @@ namespace Code
 #endif
 			}
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+            return constructor(QGuiApplication::primaryScreen()->grabWindow(windowId).toImage(), engine);
+#else
             return constructor(QPixmap::grabWindow(windowId).toImage(), engine);
+#endif
 		}
 
         return constructor(ActionTools::ScreenShooter::captureAllScreens().toImage(), engine);
@@ -123,8 +131,12 @@ namespace Code
         }
 
         QRect screenGeometry = desktop->screenGeometry(screenIndex);
-        QPixmap screenPixmap = QPixmap::grabWindow(desktop->winId(), screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        QPixmap screenPixmap = QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
+#else
+        QPixmap screenPixmap = QPixmap::grabWindow(desktop->winId(), screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
+#endif
         return constructor(screenPixmap.toImage(), engine);
     }
 

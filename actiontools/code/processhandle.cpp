@@ -23,7 +23,7 @@
 
 #include <QProcess>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #include <Psapi.h>
 #endif
@@ -176,7 +176,7 @@ namespace Code
 
 	QString ProcessHandle::command() const
 	{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, id());
 		if(!process)
 		{
@@ -209,7 +209,7 @@ namespace Code
 
 	ProcessHandle::Priority ProcessHandle::priority() const
 	{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, id());
 		if(!process)
 		{
