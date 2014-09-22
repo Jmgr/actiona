@@ -51,14 +51,14 @@ namespace ActionTools
 		XRaiseWindow(QX11Info::display(), window->winId());
 #endif
 #ifdef Q_OS_WIN
-		if(IsIconic(window->winId()))
-			ShowWindow(window->winId(), SW_RESTORE);
+        if(IsIconic(reinterpret_cast<HWND>(window->winId())))
+            ShowWindow(reinterpret_cast<HWND>(window->winId()), SW_RESTORE);
 		else
 		{
-			if(!SetForegroundWindow(window->winId()))
+            if(!SetForegroundWindow(reinterpret_cast<HWND>(window->winId())))
 				setupLastError();
 
-			if(!SetWindowPos(window->winId(), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE))
+            if(!SetWindowPos(reinterpret_cast<HWND>(window->winId()), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE))
 				setupLastError();
 		}
 #endif

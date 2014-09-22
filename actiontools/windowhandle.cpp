@@ -51,13 +51,13 @@ namespace ActionTools
 #ifdef Q_OS_WIN
 		QString title;
 
-		int titleLength = GetWindowTextLength(mValue);
+        int titleLength = GetWindowTextLength(reinterpret_cast<HWND>(mValue));
 
 		if(titleLength >= 0)
 		{
 			wchar_t *titleName = new wchar_t[titleLength + 1];
 
-			titleLength = GetWindowText(mValue, titleName, titleLength + 1);
+            titleLength = GetWindowText(reinterpret_cast<HWND>(mValue), titleName, titleLength + 1);
 			title = QString::fromWCharArray(titleName);
 
 			delete[] titleName;
@@ -83,7 +83,7 @@ namespace ActionTools
 #ifdef Q_OS_WIN
 		wchar_t className[255];
 
-		GetClassName(mValue, className, sizeof(className)-1);
+        GetClassName(reinterpret_cast<HWND>(mValue), className, sizeof(className)-1);
 
 		return QString::fromWCharArray(className);
 #endif
@@ -114,7 +114,7 @@ namespace ActionTools
 
 		if(useBorders)
 		{
-			if(GetWindowRect(mValue, &rc))
+            if(GetWindowRect(reinterpret_cast<HWND>(mValue), &rc))
 			{
 				rect.setTop(rc.top);
 				rect.setBottom(rc.bottom);
@@ -124,7 +124,7 @@ namespace ActionTools
 		}
 		else
 		{
-			if(GetClientRect(mValue, &rc))
+            if(GetClientRect(reinterpret_cast<HWND>(mValue), &rc))
 			{
 				rect.setTop(rc.top);
 				rect.setBottom(rc.bottom);
@@ -170,7 +170,7 @@ namespace ActionTools
 #ifdef Q_OS_WIN
 		DWORD procID;
 
-		GetWindowThreadProcessId(mValue, &procID);
+        GetWindowThreadProcessId(reinterpret_cast<HWND>(mValue), &procID);
 
 		return procID;
 #endif
@@ -182,7 +182,7 @@ namespace ActionTools
 		return XDestroyWindow(QX11Info::display(), mValue);
 #endif
 #ifdef Q_OS_WIN
-		return SendNotifyMessage(mValue, WM_CLOSE, 0, 0);
+        return SendNotifyMessage(reinterpret_cast<HWND>(mValue), WM_CLOSE, 0, 0);
 #endif
 	}
 
@@ -225,14 +225,14 @@ namespace ActionTools
 		return XSendEvent(QX11Info::display(), windowAttributes.screen->root, False, SubstructureNotifyMask | SubstructureRedirectMask, &event);
 #endif
 #ifdef Q_OS_WIN
-		if(IsIconic(mValue))
-			ShowWindow(mValue, SW_RESTORE);
+        if(IsIconic(reinterpret_cast<HWND>(mValue)))
+            ShowWindow(reinterpret_cast<HWND>(mValue), SW_RESTORE);
 		else
 		{
-			if(!SetForegroundWindow(mValue))
+            if(!SetForegroundWindow(reinterpret_cast<HWND>(mValue)))
 				return false;
 
-			if(!SetWindowPos(mValue, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE))
+            if(!SetWindowPos(reinterpret_cast<HWND>(mValue), HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE))
 				return false;
 		}
 
@@ -246,7 +246,7 @@ namespace ActionTools
 		return XIconifyWindow(QX11Info::display(), mValue, DefaultScreen(QX11Info::display()));
 #endif
 #ifdef Q_OS_WIN
-		return (!SendMessage(mValue, WM_SYSCOMMAND, SC_MINIMIZE, 0));
+        return (!SendMessage(reinterpret_cast<HWND>(mValue), WM_SYSCOMMAND, SC_MINIMIZE, 0));
 #endif
 	}
 
@@ -285,7 +285,7 @@ namespace ActionTools
 		return XSendEvent(QX11Info::display(), windowAttributes.screen->root, False, SubstructureNotifyMask | SubstructureRedirectMask, &event);
 #endif
 #ifdef Q_OS_WIN
-		return (!SendMessage(mValue, WM_SYSCOMMAND, SC_MAXIMIZE, 0));
+        return (!SendMessage(reinterpret_cast<HWND>(mValue), WM_SYSCOMMAND, SC_MAXIMIZE, 0));
 #endif
 	}
 
@@ -295,7 +295,7 @@ namespace ActionTools
 		return XMoveWindow(QX11Info::display(), mValue, position.x(), position.y());
 #endif
 #ifdef Q_OS_WIN
-		return SetWindowPos(mValue, 0, position.x(), position.y(), 0, 0, SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSIZE);
+        return SetWindowPos(reinterpret_cast<HWND>(mValue), 0, position.x(), position.y(), 0, 0, SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSIZE);
 #endif
 	}
 
@@ -333,7 +333,7 @@ namespace ActionTools
 			size.rheight() += borderHeight;
 		}
 
-		return SetWindowPos(mValue, 0, 0, 0, size.width(), size.height(), SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOMOVE);
+        return SetWindowPos(reinterpret_cast<HWND>(mValue), 0, 0, 0, size.width(), size.height(), SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOMOVE);
 #endif
 	}
 
@@ -353,7 +353,7 @@ namespace ActionTools
 		return focus;
 #endif
 #ifdef Q_OS_WIN
-		return GetForegroundWindow();
+        return reinterpret_cast<WId>(GetForegroundWindow());
 #endif
 	}
 
@@ -363,7 +363,7 @@ namespace ActionTools
 		Q_UNUSED(lParam)
 
 		if(IsWindowVisible(hwnd))
-			gWindowList.append(hwnd);
+            gWindowList.append(reinterpret_cast<WId>(hwnd));
 
 		return true;
 	}

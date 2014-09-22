@@ -11,6 +11,8 @@ HEADERS += actionpackdata.h
 win32:LIBS += -ladvapi32 \
 	-lshell32
 
+win32:INCLUDEPATH += $${BOOST_INCLUDE}
+
 TRANSLATIONS = ../../locale/actionpackdata_fr_FR.ts
 
 RESOURCES += \

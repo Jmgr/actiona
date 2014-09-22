@@ -4,7 +4,8 @@ include(code/code.pri)
 TARGET = ActionPackDevice
 QT += script
 equals(QT_MAJOR_VERSION, 5) {
-QT += widgets x11extras
+unix:QT += x11extras
+QT += widgets
 OTHER_FILES += device.json
 }
 HEADERS += actionpackdevice.h \

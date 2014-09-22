@@ -5,7 +5,8 @@ QT += xml \
 	script \
 	scripttools
 equals(QT_MAJOR_VERSION, 5) {
-QT += widgets x11extras
+unix:QT += x11extras
+QT += widgets
 }
 CONFIG += mobility
 contains(DEFINES, ACT_PROFILE) {

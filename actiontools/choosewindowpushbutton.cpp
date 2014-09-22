@@ -222,7 +222,7 @@ namespace ActionTools
 			return false;
 
 #ifdef Q_OS_WIN
-		if(!IsWindow(handle.value()))
+        if(!IsWindow(reinterpret_cast<HWND>(handle.value())))
 			return false;
 #endif
 
@@ -238,15 +238,15 @@ namespace ActionTools
 #ifdef Q_OS_WIN
 	void ChooseWindowPushButton::refreshWindow(const WindowHandle &handle)
 	{
-		InvalidateRect(handle.value(), NULL, TRUE);
-		UpdateWindow(handle.value());
-		RedrawWindow(handle.value(), NULL, NULL, RDW_FRAME | RDW_INVALIDATE | RDW_ERASENOW | RDW_UPDATENOW | RDW_ALLCHILDREN);
+        InvalidateRect(reinterpret_cast<HWND>(handle.value()), NULL, TRUE);
+        UpdateWindow(reinterpret_cast<HWND>(handle.value()));
+        RedrawWindow(reinterpret_cast<HWND>(handle.value()), NULL, NULL, RDW_FRAME | RDW_INVALIDATE | RDW_ERASENOW | RDW_UPDATENOW | RDW_ALLCHILDREN);
 
-		HWND hParent = GetParent(handle.value());
+        HWND hParent = GetParent(reinterpret_cast<HWND>(handle.value()));
 		if(hParent)
 		{
 			RECT rc;
-			GetWindowRect(handle.value(), &rc);
+            GetWindowRect(reinterpret_cast<HWND>(handle.value()), &rc);
 			POINT ptTopLeft		= RectTopLeft(rc);
 			POINT ptBottomRight	= RectBottomRight(rc);
 			ScreenToClient(hParent, &ptTopLeft);
@@ -269,8 +269,8 @@ namespace ActionTools
 		HGDIOBJ	hPrevBrush = NULL; // Handle of the existing brush in the DC of the found window.
 		RECT	rect;              // Rectangle area of the found window.
 
-		GetWindowRect(handle.value(), &rect);
-		hWindowDC = GetWindowDC(handle.value());
+        GetWindowRect(reinterpret_cast<HWND>(handle.value()), &rect);
+        hWindowDC = GetWindowDC(reinterpret_cast<HWND>(handle.value()));
 
 		if(hWindowDC)
 		{
@@ -282,7 +282,7 @@ namespace ActionTools
 			SelectObject(hWindowDC, hPrevPen);
 			SelectObject(hWindowDC, hPrevBrush);
 
-			ReleaseDC(handle.value(), hWindowDC);
+            ReleaseDC(reinterpret_cast<HWND>(handle.value()), hWindowDC);
 		}
 	}
 #endif
@@ -296,7 +296,11 @@ namespace ActionTools
 		QCursor newCursor(*mCrossIcon);
 
 #ifdef Q_OS_WIN
-		mPreviousCursor = SetCursor(newCursor.handle());
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        mPreviousCursor = SetCursor(LoadCursor(0, IDC_CROSS));
+#else
+        mPreviousCursor = SetCursor(newCursor.handle());
+#endif
 #endif
 #ifdef Q_OS_LINUX
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
@@ -356,8 +360,8 @@ namespace ActionTools
         nativeEventFilteringApp->removeNativeEventFilter(this);
 #endif
 
-		emit searchEnded(mLastFoundWindow);
-	}
+        emit searchEnded(mLastFoundWindow);
+    }
 
 #ifdef Q_OS_LINUX
 	WId ChooseWindowPushButton::windowAtPointer() const
@@ -433,6 +437,109 @@ namespace ActionTools
 #endif
 
 #ifdef Q_OS_WIN
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    bool ChooseWindowPushButton::nativeEventFilter(const QByteArray &, void *message, long *)
+    {
+        MSG *msg = static_cast<MSG*>(message);
+
+        if(!msg || !mSearching)
+            return false;
+
+        switch(msg->message)
+        {
+        case WM_LBUTTONUP:
+            stopMouseCapture();
+            break;
+
+        case WM_MOUSEMOVE:
+            {
+                POINT screenpoint;
+                GetCursorPos(&screenpoint);
+
+                HWND window = NULL;
+                HWND firstWindow = WindowFromPoint(screenpoint);
+                if(firstWindow && IsWindow(firstWindow))
+                {
+                    // try to go to child window
+                    if(!GetParent(firstWindow))
+                    {
+                        POINT pt;
+                        pt.x = screenpoint.x;
+                        pt.y = screenpoint.y;
+                        ScreenToClient(firstWindow, &pt);
+                        HWND childWindow = ChildWindowFromPoint(firstWindow, pt);
+                        if(firstWindow != childWindow)
+                        {
+                            RECT rc;
+                            GetWindowRect(childWindow, &rc);
+                            if(PtInRect(screenpoint, rc))
+                                // it may seem strange to check this condition after above lines
+                                // but try to comment it and work with MSDN main window,
+                                // you will hardly "find" it
+                                firstWindow	= childWindow;
+                        }
+                    }
+
+                    // find the best child
+                    if(GetParent(firstWindow))
+                    {
+                        RECT rcFirst;
+                        GetWindowRect(firstWindow, &rcFirst);
+
+                        // find next/prev windows in the Z-order
+                        bool bBestFound = false;
+                        HWND hOther = firstWindow;
+                        do
+                        {
+                            hOther	= GetNextWindow(hOther, GW_HWNDPREV);
+                            if(!hOther)
+                                break;
+                            RECT rcOther;
+                            GetWindowRect(hOther, &rcOther);
+                            if(PtInRect(screenpoint, rcOther) &&
+                                PtInRect(RectTopLeft(rcOther), rcFirst) &&
+                                PtInRect(RectBottomRight(rcOther), rcFirst))
+                            {
+                                firstWindow = hOther;
+                                bBestFound = true;
+                            }
+                        }
+                        while(!bBestFound);
+
+                        if(!bBestFound)
+                        {
+                            hOther = firstWindow;
+                            do
+                            {
+                                hOther = GetNextWindow(hOther, GW_HWNDNEXT);
+                                if (!hOther) break;
+                                RECT rcOther;
+                                GetWindowRect(hOther, &rcOther);
+                                if(PtInRect(screenpoint, rcOther) &&
+                                    PtInRect(RectTopLeft(rcOther), rcFirst) &&
+                                    PtInRect(RectBottomRight(rcOther), rcFirst))
+                                {
+                                    firstWindow	= hOther;
+                                    bBestFound = true;
+                                }
+                            }
+                            while(!bBestFound);
+                        }
+                    }
+
+                    window = firstWindow;
+                }
+                else
+                    break;
+
+                foundWindow(WindowHandle(reinterpret_cast<WId>(window)));
+            }
+            break;
+        }
+
+        return false;
+    }
+#else
 	bool ChooseWindowPushButton::winEventFilter(MSG *msg, long *result)
 	{
 		Q_UNUSED(result);
@@ -534,5 +641,6 @@ namespace ActionTools
 
 		return false;
 	}
+#endif
 #endif
 }

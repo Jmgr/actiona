@@ -85,13 +85,13 @@ namespace ActionTools
 		if(mSearching)
 			stopMouseCapture();
 
+#ifdef Q_OS_LINUX
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QCoreApplication::instance()->removeNativeEventFilter(this);
 #else
         nativeEventFilteringApp->removeNativeEventFilter(this);
 #endif
 
-#ifdef Q_OS_LINUX
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         XFreeCursor(QX11Info::display(), mCrossCursor);
 #endif
@@ -153,7 +153,11 @@ namespace ActionTools
 		emit chooseStarted();
 
 #ifdef Q_OS_WIN
-		mPreviousCursor = SetCursor(newCursor.handle());
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        mPreviousCursor = SetCursor(LoadCursor(0, IDC_CROSS));
+#else
+        mPreviousCursor = SetCursor(newCursor.handle());
+#endif
 #endif
 #ifdef Q_OS_LINUX
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))

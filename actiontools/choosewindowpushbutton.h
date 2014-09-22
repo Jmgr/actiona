@@ -79,9 +79,12 @@ namespace ActionTools
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
 #endif
 #endif
+
 #ifdef Q_OS_WIN
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 		bool winEventFilter(MSG *msg, long *result);
+#else
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
 #endif
 #endif
 

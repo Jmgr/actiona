@@ -23,10 +23,12 @@
 
 #include "actiontools_global.h"
 
+#ifdef Q_OS_LINUX
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QAbstractNativeEventFilter>
 #else
 #include "nativeeventfilter.h"
+#endif
 #endif
 
 #include <QPushButton>
@@ -37,10 +39,12 @@ class QMainWindow;
 namespace ActionTools
 {
     class ACTIONTOOLSSHARED_EXPORT ChoosePositionPushButton : public QPushButton
+#ifdef Q_OS_LINUX
 #if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
             , public QAbstractNativeEventFilter
 #else
             , public NativeEventFilter
+#endif
 #endif
 	{
 		Q_OBJECT

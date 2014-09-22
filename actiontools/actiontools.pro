@@ -2,7 +2,8 @@ include(../common.pri)
 QT += script \
     xmlpatterns
 equals(QT_MAJOR_VERSION, 5) {
-QT += widgets x11extras
+unix:QT += x11extras
+QT += widgets
 }
 TEMPLATE = lib
 CONFIG += dll

@@ -1,5 +1,8 @@
 include(../common.pri)
 QT += network
+equals(QT_MAJOR_VERSION, 5) {
+QT += widgets
+}
 TEMPLATE = lib
 CONFIG += dll
 DEFINES += TOOLS_LIBRARY
