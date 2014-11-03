@@ -37,6 +37,13 @@ namespace Actions
 		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer")
 		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal"));
 
+    ActionTools::StringListPair DataInputInstance::editorTypes = qMakePair(
+        QStringList() << "line" << "multiline" << "password",
+        QStringList()
+        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line")
+        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Multiline")
+        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Password"));
+
 	DataInputInstance::DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
 		mInputDialog(0)
@@ -49,6 +56,7 @@ namespace Actions
 
 		QString question = evaluateString(ok, "question");
 		mDataType = evaluateListElement<DataType>(ok, dataTypes, "dataType");
+        EditorType editorType = evaluateListElement<EditorType>(ok, editorTypes, "editorType");
 		mVariable = evaluateVariable(ok, "variable");
 		QString windowTitle = evaluateString(ok, "windowTitle");
         QImage windowIcon = evaluateImage(ok, "windowIcon");
@@ -86,6 +94,18 @@ namespace Actions
 		mInputDialog->setWindowModality(Qt::NonModal);
 		mInputDialog->setLabelText(question);
 		mInputDialog->setWindowTitle(windowTitle);
+
+        switch(editorType)
+        {
+        case LineEditorType:
+            break;
+        case MultilineEditorType:
+            mInputDialog->setOption(QInputDialog::UsePlainTextEditForTextInput);
+            break;
+        case PasswordEditorType:
+            mInputDialog->setTextEchoMode(QLineEdit::Password);
+            break;
+        }
 
         if(!windowIcon.isNull())
             mInputDialog->setWindowIcon(QIcon(QPixmap::fromImage(windowIcon)));

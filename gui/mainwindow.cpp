@@ -99,7 +99,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mActionFactory(new ActionTools::ActionFactory(this)),
 	mScript(new ActionTools::Script(mActionFactory, this)),
 	mScriptModel(new ScriptModel(mScript, mActionFactory, this)),
-	mSystemTrayIcon(commandOptions->count("notrayicon") ? 0 : new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
+    mSystemTrayIcon(commandOptions->count("notrayicon") ? 0 : new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
 	mSplashScreen(splashScreen),
 	mWasNewActionDockShown(false),
 	mWasConsoleDockShown(false),

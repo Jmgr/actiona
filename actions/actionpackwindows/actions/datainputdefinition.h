@@ -45,6 +45,7 @@ namespace Actions
 		: ActionDefinition(pack)
 		{
 			translateItems("DataInputInstance::dataTypes", DataInputInstance::dataTypes);
+            translateItems("DataInputInstance::editorTypes", DataInputInstance::editorTypes);
 
 			ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition(ActionTools::Name("question", tr("Question")), this);
 			question->setTooltip(tr("The question to ask"));
@@ -55,6 +56,12 @@ namespace Actions
 			dataType->setItems(DataInputInstance::dataTypes);
 			dataType->setDefaultValue(DataInputInstance::dataTypes.second.at(DataInputInstance::TextType));
 			addElement(dataType);
+
+            ActionTools::ListParameterDefinition *editorType = new ActionTools::ListParameterDefinition(ActionTools::Name("editorType", tr("Editor type")), this);
+            editorType->setTooltip(tr("The editor type"));
+            editorType->setItems(DataInputInstance::editorTypes);
+            editorType->setDefaultValue(DataInputInstance::editorTypes.second.at(DataInputInstance::LineEditorType));
+            addElement(editorType);
 
 			ActionTools::TextParameterDefinition *defaultValue = new ActionTools::TextParameterDefinition(ActionTools::Name("defaultValue", tr("Default value")), this);
 			defaultValue->setTooltip(tr("The default value"));

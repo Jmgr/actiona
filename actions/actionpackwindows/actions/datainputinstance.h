@@ -39,10 +39,17 @@ namespace Actions
 			IntegerType,
 			DecimalType
 		};
+        enum EditorType
+        {
+            LineEditorType,
+            MultilineEditorType,
+            PasswordEditorType
+        };
 
 		DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
 		static ActionTools::StringListPair dataTypes;
+        static ActionTools::StringListPair editorTypes;
 
 		void startExecution();
 		void stopExecution();
