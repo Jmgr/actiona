@@ -246,6 +246,8 @@ namespace Code
 	int System::colorDepth(int screenId) const
 	{
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        Q_UNUSED(screenId)
+
         return 0;// Sadly, no easy way to get this information
 #else
         int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
@@ -256,6 +258,8 @@ namespace Code
 	int System::displayBrightness(int screenId) const
 	{
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        Q_UNUSED(screenId)
+
         return 0;// Sadly, no easy way to get this information
 #else
         int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
