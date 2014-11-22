@@ -45,7 +45,7 @@ bool Executer::start(QIODevice *device, const QString &filename)
 	Q_UNUSED(filename)
 
 	QSettings settings;
-	QString locale = settings.value("locale", QLocale::system().name()).toString();
+    QString locale = settings.value("gui/locale", QLocale::system().name()).toString();
 
 	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", locale);
 #ifndef Q_OS_WIN

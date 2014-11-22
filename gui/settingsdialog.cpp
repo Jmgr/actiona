@@ -23,6 +23,7 @@
 #include "settings.h"
 #include "ui_settingsdialog.h"
 #include "global.h"
+#include "languages.h"
 
 #ifdef Q_OS_WIN
 #include "registry.h"
@@ -49,7 +50,8 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	mTimeoutTimer(new QTimer(this)),
 	mSystemTrayIcon(systemTrayIcon),
 	mPreviousASCRAssociation(false),
-	mPreviousACODAssociation(false)
+    mPreviousACODAssociation(false),
+    mLocaleChangeWarning(false)
 {
 	ui->setupUi(this);
 
@@ -70,7 +72,18 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->noSysTrayLabel->setVisible(!QSystemTrayIcon::isSystemTrayAvailable());
 	ui->noSysTrayMessagesLabel->setVisible(!QSystemTrayIcon::supportsMessages());
 
+    ui->languageComboBox->clear();
+
+    int languageIndex = 0;
+    for(const QString &language: languagesName.second)
+    {
+        ui->languageComboBox->addItem(language, languageIndex);
+
+        ++languageIndex;
+    }
+
 	//GENERAL
+    ui->languageComboBox->setCurrentIndex(languageNameToIndex(settings.value("gui/locale", languagesName.first.first()).toString()));
 	ui->showLoadingWindow->setChecked(settings.value("gui/showLoadingWindow", QVariant(true)).toBool());
 	ui->showTaskbarIcon->setChecked(settings.value("gui/showTaskbarIcon", QVariant(true)).toBool());
 	ui->showWindowAfterExecution->setChecked(settings.value("gui/showWindowAfterExecution", QVariant(true)).toBool());
@@ -136,6 +149,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->associateACODCheckBox->setChecked(mPreviousACODAssociation);
 #endif
 
+    connect(ui->languageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged()));
 	connect(mTimeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
 	if(systemTrayIcon)
@@ -246,6 +260,7 @@ void SettingsDialog::accept()
 	settings.setValue("gui/settingsTab", ui->settingsTab->currentIndex());
 
 	//GENERAL
+    settings.setValue("gui/locale", languagesName.first[ui->languageComboBox->currentIndex()]);
 	settings.setValue("gui/showLoadingWindow", ui->showLoadingWindow->isChecked());
 	settings.setValue("gui/showTaskbarIcon", ui->showTaskbarIcon->isChecked());
 	settings.setValue("gui/showWindowAfterExecution", ui->showWindowAfterExecution->isChecked());
@@ -341,7 +356,17 @@ void SettingsDialog::done(int result)
 	if(mNetworkReply)
 		mNetworkReply->abort();
 
-	QDialog::done(result);
+    QDialog::done(result);
+}
+
+void SettingsDialog::languageChanged()
+{
+    if(mLocaleChangeWarning)
+        return;
+
+    mLocaleChangeWarning = true;
+
+    QMessageBox::information(this, tr("Language change"), tr("The language change will be taken into account next time you restart Actiona."));
 }
 
 void SettingsDialog::setCustomProxyEnabled(bool enabled)

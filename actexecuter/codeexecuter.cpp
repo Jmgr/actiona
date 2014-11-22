@@ -89,7 +89,7 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
     Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActiona, "isActiona", mScriptEngine);
 
 	QSettings settings;
-	QString locale = settings.value("locale").toString();
+    QString locale = settings.value("gui/locale").toString();
 
 	if(locale.isEmpty())
 	{

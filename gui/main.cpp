@@ -118,7 +118,7 @@ int main(int argc, char **argv)
 
 	QSettings settings;
 
-	QString locale = settings.value("locale").toString();
+    QString locale = settings.value("gui/locale").toString();
 
 	if(locale.isEmpty())
 	{

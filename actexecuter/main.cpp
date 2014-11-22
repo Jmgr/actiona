@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 
 	QSettings settings;
 
-	QString locale = settings.value("locale", QLocale::system().name()).toString();
+    QString locale = settings.value("gui/locale", QLocale::system().name()).toString();
 
 	QTranslator qtTranslator;
 #ifdef Q_OS_WIN

@@ -51,6 +51,7 @@ private slots:
 	void proxyTestFinished();
 	void accept();
 	void done(int result);
+    void languageChanged();
 
 private:
 	void setCustomProxyEnabled(bool enabled);
@@ -65,6 +66,7 @@ private:
 	QSystemTrayIcon *mSystemTrayIcon;
 	bool mPreviousASCRAssociation;
 	bool mPreviousACODAssociation;
+    bool mLocaleChangeWarning;
 
 	Q_DISABLE_COPY(SettingsDialog)
 };

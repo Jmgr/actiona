@@ -35,14 +35,14 @@
        <property name="fieldGrowthPolicy">
         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
        </property>
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
           <string>Loading window:</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QCheckBox" name="showLoadingWindow">
          <property name="text">
           <string>Show the loading window</string>
@@ -52,14 +52,14 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_13">
          <property name="text">
           <string>Taskbar icon:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="2" column="1">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QCheckBox" name="showTaskbarIcon">
@@ -95,14 +95,14 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="showWindowAfterExecutionLabel">
          <property name="text">
           <string>Show window after execution:</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QCheckBox" name="showWindowAfterExecution">
          <property name="text">
           <string>Set the main window as the foreground window after execution</string>
@@ -112,14 +112,14 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="label_12">
          <property name="text">
           <string>Console start/end separators:</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QCheckBox" name="addStartEndSeparators">
          <property name="text">
           <string>Add start/end separators</string>
@@ -129,28 +129,28 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="label_14">
          <property name="text">
           <string>Last opened script:</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QCheckBox" name="reopenLastScript">
          <property name="text">
           <string>Reopen the last opened script</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="label_15">
          <property name="text">
           <string>Maximum recent files:</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="6" column="1">
         <widget class="QSpinBox" name="maxRecentFiles">
          <property name="minimum">
           <number>0</number>
@@ -163,14 +163,14 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="fileAssociationsLabel">
          <property name="text">
           <string>File associations:</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
           <widget class="QCheckBox" name="associateASCRCheckBox">
@@ -187,6 +187,16 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Language:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="languageComboBox"/>
        </item>
       </layout>
      </widget>
