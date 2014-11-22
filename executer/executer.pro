@@ -38,14 +38,16 @@ LIBS += -L.. \
 	-ltools \
 	-lactiontools
 win32:LIBS += -ladvapi32
-TRANSLATIONS = ../locale/executer_fr_FR.ts
+TRANSLATIONS = ../locale/executer_fr_FR.ts \
+                ../locale/executer_de_DE.ts
 RESOURCES += executer.qrc
 
 unix {
         target.path = $${PREFIX}/$${LIBDIR}/actiona
 
         locales.path = $${PREFIX}/share/actiona/locale
-	locales.files = ../locale/executer_fr_FR.qm
+        locales.files = ../locale/executer_fr_FR.qm \
+                        ../locale/executer_de_DE.qm
 	locales.CONFIG = no_check_exist
 
 	INSTALLS += target locales
