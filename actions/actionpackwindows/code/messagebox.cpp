@@ -28,7 +28,7 @@ namespace Code
 {
 	QScriptValue MessageBox::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		MessageBox *messageBox = new MessageBox;
+        MessageBox *messageBox = new MessageBox;
 		messageBox->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
@@ -62,6 +62,8 @@ namespace Code
 		: BaseWindow(),
 		mMessageBox(new QMessageBox)
 	{
+        mMessageBox->setWindowFlags(mMessageBox->windowFlags() | Qt::WindowContextHelpButtonHint);
+
 		setWidget(mMessageBox);
 
 		connect(mMessageBox, SIGNAL(finished(int)), this, SLOT(finished(int)));

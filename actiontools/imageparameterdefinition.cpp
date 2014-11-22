@@ -48,6 +48,8 @@ namespace ActionTools
     {
         ScreenshotWizard screenshotWizard(mScript, false, mParent);
 
+        screenshotWizard.setWindowFlags(screenshotWizard.windowFlags() | Qt::WindowContextHelpButtonHint);
+
         if(screenshotWizard.exec() == QDialog::Accepted)
         {
             switch(screenshotWizard.saveTarget())

@@ -60,6 +60,8 @@ namespace Code
 		: BaseWindow(),
 		mProgressDialog(new QProgressDialog)
 	{
+        mProgressDialog->setWindowFlags(mProgressDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+
 		setWidget(mProgressDialog);
 
 		connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(canceled()));

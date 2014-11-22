@@ -81,6 +81,9 @@ namespace ActionTools
     void SaveScreenshotWizardPage::on_saveToResourceCommandLinkButton_clicked()
     {
         ResourceNameDialog resourceNameDialog(mScript, this);
+
+        resourceNameDialog.setWindowFlags(resourceNameDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+
         if(resourceNameDialog.exec() != QDialog::Accepted)
             return;
 

@@ -56,6 +56,8 @@ namespace Code
 		: BaseWindow(),
 		mColorDialog(new QColorDialog)
 	{
+        mColorDialog->setWindowFlags(mColorDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+
 		setWidget(mColorDialog);
 		
 		connect(mColorDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));

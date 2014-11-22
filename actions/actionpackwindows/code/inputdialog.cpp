@@ -79,6 +79,8 @@ namespace Code
 		mInputType(Text),
 		mInputDialog(new QInputDialog)
 	{
+        mInputDialog->setWindowFlags(mInputDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+
 		setWidget(mInputDialog);
 		
 		connect(mInputDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));

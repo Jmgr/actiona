@@ -82,6 +82,7 @@ namespace Actions
 		mMessageBox->setWindowModality(Qt::NonModal);
 		mMessageBox->setText(message);
 		mMessageBox->setWindowTitle(title);
+        mMessageBox->setWindowFlags(mMessageBox->windowFlags() | Qt::WindowContextHelpButtonHint);
 
 		switch(textMode)
 		{

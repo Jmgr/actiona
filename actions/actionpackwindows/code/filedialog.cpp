@@ -99,6 +99,8 @@ namespace Code
 		: BaseWindow(),
 		mFileDialog(new QFileDialog)
 	{
+        mFileDialog->setWindowFlags(mFileDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+
 		setWidget(mFileDialog);
 		
 		connect(mFileDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));

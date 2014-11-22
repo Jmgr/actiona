@@ -80,6 +80,9 @@ namespace Actions
 			delete mDialog;
 
 		mDialog = new QDialog;
+
+        mDialog->setWindowFlags(mDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+
 		QVBoxLayout *layout = new QVBoxLayout(mDialog);
 
 		mDialog->setLayout(layout);
