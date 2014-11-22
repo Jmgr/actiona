@@ -150,6 +150,9 @@ namespace Actions
 		connect(mDialog, SIGNAL(accepted()), this, SLOT(accepted()));
 		connect(mDialog, SIGNAL(rejected()), this, SLOT(rejected()));
 
+        for(QLabel *label: mDialog->findChildren<QLabel*>())
+            label->setOpenExternalLinks(true);
+
 		mDialog->show();
 	}
 

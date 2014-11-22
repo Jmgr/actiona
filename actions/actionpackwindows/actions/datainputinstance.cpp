@@ -25,6 +25,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QIcon>
+#include <QLabel>
 
 #include <limits>
 
@@ -134,6 +135,9 @@ namespace Actions
 		QRect screenGeometry = QApplication::desktop()->availableGeometry();
 		mInputDialog->move(screenGeometry.center());
 		mInputDialog->move(mInputDialog->pos().x() - mInputDialog->width()/2, mInputDialog->pos().y() - mInputDialog->height()/2);
+
+        for(QLabel *label: mInputDialog->findChildren<QLabel*>())
+            label->setOpenExternalLinks(true);
 
 		switch(mDataType)
 		{
