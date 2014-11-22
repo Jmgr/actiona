@@ -147,15 +147,6 @@ namespace ActionTools
 	{
 		QPushButton::mousePressEvent(event);
 
-		mWindowIgnoreList.clear();
-		foreach(QWidget *widget, QApplication::allWidgets())
-		{
-#ifdef Q_OS_WIN
-			if(widget->isWindow())
-#endif
-				mWindowIgnoreList.append(widget);
-		}
-
 #ifdef Q_OS_LINUX
         mShownWindows.clear();
 
@@ -226,7 +217,7 @@ namespace ActionTools
 			return false;
 #endif
 
-		foreach(QWidget *widget, mWindowIgnoreList)
+        foreach(QWidget *widget, QApplication::allWidgets())
 		{
 			if(widget->winId() == handle.value())
 				return false;
