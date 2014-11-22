@@ -132,7 +132,7 @@ namespace Code
 
 		QList<ActionTools::WindowHandle> foundWindows;
 
-		foreach(const ActionTools::WindowHandle &windowHandle, windowList)
+        for(const ActionTools::WindowHandle &windowHandle: windowList)
 		{
 			if(!titlePattern.isNull() && !titleRegExp.exactMatch(windowHandle.title()))
 				continue;

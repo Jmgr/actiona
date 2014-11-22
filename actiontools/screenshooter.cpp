@@ -74,7 +74,7 @@ namespace ActionTools
         QDesktopWidget *desktop = QApplication::desktop();
         QList< QPair<QPixmap, QRect> > result;
 
-        foreach(const WindowHandle &window, windows)
+        for(const WindowHandle &window: windows)
         {
             if(!window.isValid())
                 continue;
@@ -114,7 +114,7 @@ namespace ActionTools
         QPoint minimalTopLeft(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 
         typedef QPair<QPixmap, QRect> PixmapRectPair;
-        foreach(const PixmapRectPair &screen, screens)
+        for(const PixmapRectPair &screen: screens)
         {
             const QRect &screenRect = screen.second;
 
@@ -132,7 +132,7 @@ namespace ActionTools
         {
             QPainter painter(&result);
 
-            foreach(const PixmapRectPair &screen, screens)
+            for(const PixmapRectPair &screen: screens)
             {
                 const QRect &screenRect = screen.second;
 

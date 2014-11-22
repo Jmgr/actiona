@@ -105,16 +105,16 @@ namespace ActionTools
 										 << "log(x)" << "max(x, y, ...)" << "min(x, y, ...)" << "pow(x, y)" << "random()" << "round(x)" << "sin(x)" << "sqrt(x)"
 										 << "tan(x)";
 
-		foreach(const QString &keyword, usedKeywords)
+		for(const QString &keyword: usedKeywords)
 			model->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), keyword));
-		foreach(const QString &keyword, reservedKeywords)
+		for(const QString &keyword: reservedKeywords)
 			model->appendRow(new QStandardItem(QIcon(":/icons/no.png"), keyword));
 		
-		foreach(const QString &keyword, globalKeywords)
+		for(const QString &keyword: globalKeywords)
 			model->appendRow(new QStandardItem(QIcon(":/icons/native.png"), keyword));
 		
 		QStandardItem *mathItem = new QStandardItem(QIcon(":/icons/calc.png"), "Math");
-		foreach(const QString &keyword, mathKeywords)
+		for(const QString &keyword: mathKeywords)
 			mathItem->appendRow(new QStandardItem(QIcon(":/icons/calc.png"), keyword));
 		model->appendRow(mathItem);
 	}

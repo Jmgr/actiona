@@ -346,9 +346,9 @@ int main(int argc, char **argv)
 		QString mode;
 		typedef QPair<QString, QString> QStringPair;
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-        foreach(const QStringPair &queryItem, QUrlQuery(protocolUrl.query()).queryItems())
+        for(const QStringPair &queryItem: QUrlQuery(protocolUrl.query()).queryItems())
 #else
-        foreach(const QStringPair &queryItem, protocolUrl.queryItems())
+        for(const QStringPair &queryItem: protocolUrl.queryItems())
 #endif
 		{
 			if(queryItem.first == "mode")

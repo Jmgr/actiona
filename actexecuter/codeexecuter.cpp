@@ -50,7 +50,7 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 	connect(mScriptEngineDebugger, SIGNAL(evaluationSuspended()), this, SLOT(onEvaluationPaused()));
 	connect(mScriptAgent, SIGNAL(executionStopped()), this, SLOT(stopExecution()));
 
-	foreach(QString extension, mScriptEngine->availableExtensions())
+    for(QString extension: mScriptEngine->availableExtensions())
 		mScriptEngine->importExtension(extension);
 	
 	mScriptEngineDebugger->setAutoShowStandardWindow(false);

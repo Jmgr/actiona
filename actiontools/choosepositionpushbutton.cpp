@@ -67,7 +67,7 @@ namespace ActionTools
 #endif
 	{
 #ifdef Q_OS_LINUX
-		foreach(QWidget *widget, QApplication::topLevelWidgets())
+        for(QWidget *widget: QApplication::topLevelWidgets())
 		{
 			if(QMainWindow *mainWindow = qobject_cast<QMainWindow*>(widget))
 			{
@@ -127,7 +127,7 @@ namespace ActionTools
 #ifdef Q_OS_LINUX
         mShownWindows.clear();
 
-        foreach(QWidget *widget, qApp->topLevelWidgets())
+        for(QWidget *widget: qApp->topLevelWidgets())
         {
             if(mMainWindow == widget)
                 continue;
@@ -144,7 +144,7 @@ namespace ActionTools
             mMainWindow->hide();
 #endif
 #ifdef Q_OS_WIN
-		foreach(QWidget *widget, qApp->topLevelWidgets())
+        for(QWidget *widget: qApp->topLevelWidgets())
 			widget->setWindowOpacity(0.0f);
 #endif
 
@@ -244,7 +244,7 @@ namespace ActionTools
 		if(mPreviousCursor)
 			SetCursor(mPreviousCursor);
 
-		foreach(QWidget *widget, qApp->topLevelWidgets())
+        for(QWidget *widget: qApp->topLevelWidgets())
 			widget->setWindowOpacity(1.0f);
 #endif
 #ifdef Q_OS_LINUX

@@ -166,7 +166,7 @@ namespace Actions
         sourceImages.reserve(mImagesToSearchIn.size());
 
         typedef QPair<QPixmap, QRect> PixmapRectPair;
-        foreach(const PixmapRectPair &imageToSearchIn, mImagesToSearchIn)
+        for(const PixmapRectPair &imageToSearchIn: mImagesToSearchIn)
             sourceImages.append(imageToSearchIn.first.toImage());
 
         if(!mOpenCVAlgorithms->findSubImageAsync(sourceImages,

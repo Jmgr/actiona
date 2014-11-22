@@ -68,7 +68,7 @@ namespace ActionTools
 		//Set the default values
 		if(definition)
 		{
-			foreach(ElementDefinition *element, definition->elements())
+            for(ElementDefinition *element: definition->elements())
 				element->setDefaultValues(this);
 
 			//Set the default exception action
@@ -145,7 +145,7 @@ namespace ActionTools
 
         if(code)
         {
-            foreach(const QString &codeLine, input.split(QRegExp("[\n\r;]"), QString::SkipEmptyParts))
+            for(const QString &codeLine: input.split(QRegExp("[\n\r;]"), QString::SkipEmptyParts))
             {
                 int position = 0;
 
@@ -555,7 +555,7 @@ namespace ActionTools
 		QStringList pointStrings = result.split(';', QString::SkipEmptyParts);
 		QPolygon polygon;
 
-		foreach(const QString &pointString, pointStrings)
+        for(const QString &pointString: pointStrings)
 		{
 			QStringList pointComponents = pointString.split(':', QString::SkipEmptyParts);
 			if(pointComponents.size() != 2)
@@ -995,7 +995,7 @@ namespace ActionTools
 
 	QDebug &operator << (QDebug &dbg, const ParametersData &parametersData)
 	{
-		foreach(const QString &parameterName, parametersData.keys())
+        for(const QString &parameterName: parametersData.keys())
 		{
 			dbg.space() << parameterName << "=" << parametersData.value(parameterName);
 		}
@@ -1005,7 +1005,7 @@ namespace ActionTools
 	
 	QDebug &operator << (QDebug &dbg, const ExceptionActionInstancesHash &exceptionActionInstancesHash)
 	{
-		foreach(ActionException::Exception exception, exceptionActionInstancesHash.keys())
+        for(ActionException::Exception exception: exceptionActionInstancesHash.keys())
 		{
 			dbg.space() << exception << "=" << exceptionActionInstancesHash.value(exception);
 		}

@@ -63,7 +63,7 @@ namespace ActionTools
         QList<cv::Mat> sourcesMat;
         sourcesMat.reserve(sources.size());
 
-        foreach(const QImage &source, sources)
+        for(const QImage &source: sources)
             sourcesMat.append(toCVMat(source));
 
         cv::Mat targetMat = toCVMat(target);
@@ -94,7 +94,7 @@ namespace ActionTools
         QList<cv::Mat> sourcesMat;
         sourcesMat.reserve(sources.size());
 
-        foreach(const QImage &source, sources)
+        for(const QImage &source: sources)
             sourcesMat.append(toCVMat(source));
 
         cv::Mat targetMat = toCVMat(target);
@@ -120,7 +120,7 @@ namespace ActionTools
 
     bool OpenCVAlgorithms::checkInputImages(const QList<cv::Mat> &sources, const cv::Mat &target)
 	{
-        foreach(const cv::Mat &source, sources)
+        for(const cv::Mat &source: sources)
         {
             // make sure that the template image is smaller than the source
             if(target.size().width > source.size().width ||
@@ -163,7 +163,7 @@ namespace ActionTools
         MatchingPointList matchingPointList;
         int sourceIndex = 0;
 
-        foreach(const cv::Mat &source, sources)
+        for(const cv::Mat &source: sources)
         {
             try
             {

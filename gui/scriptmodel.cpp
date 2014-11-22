@@ -120,7 +120,7 @@ void ScriptModel::copyActions(const QList<int> &rows)
 {
 	QModelIndexList indexes;
 
-	foreach(int row, rows)
+	for(int row: rows)
 	{
 		indexes << index(row, 0, QModelIndex());
 	}
@@ -389,7 +389,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 
 	QList<int> rowIdList;
 
-	foreach(const QModelIndex &index, indexes)
+	for(const QModelIndex &index: indexes)
 	{
 		if(!index.isValid() || index.column() != ColumnLabel)
 			continue;
@@ -400,7 +400,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 
 	qSort(rowIdList.begin(), rowIdList.end(), qGreater<int>());
 
-	foreach(int row, rowIdList)
+	for(int row: rowIdList)
 	{
 		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
 

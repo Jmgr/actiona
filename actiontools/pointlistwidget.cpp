@@ -65,7 +65,7 @@ namespace ActionTools
 	{
 		on_clearPushButton_clicked();
 
-		foreach(const QPoint &point, points)
+		for(const QPoint &point: points)
 			addPoint(point);
 
 		updateClearStatus();

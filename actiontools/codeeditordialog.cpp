@@ -115,7 +115,7 @@ namespace ActionTools
     {
         QSet<QString> variables = ActionTools::ActionInstance::findVariables(text(), isCode());
 
-        foreach(QAction *action, mVariablesMenu->actions())
+        for(QAction *action: mVariablesMenu->actions())
             variables.insert(action->text());
 
         QStringList variableList = variables.toList();
@@ -132,7 +132,7 @@ namespace ActionTools
         {
             variablesMenu = new QMenu(tr("Insert variable"));
             connect(variablesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
-            foreach(const QString &variable, variableList)
+            for(const QString &variable: variableList)
                 variablesMenu->addAction(variable);
         }
 
