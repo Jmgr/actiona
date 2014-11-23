@@ -271,19 +271,18 @@ namespace Code
 		return thisObject();
 	}
 	
-	QScriptValue Image::data() const
+    QScriptValue Image::data(const QString &format) const
 	{
-		QByteArray dataByteArray;
-		QBuffer dataBuffer(&dataByteArray);
+        QBuffer dataBuffer;
 		dataBuffer.open(QIODevice::WriteOnly);
 		
-		if(!mImage.save(&dataBuffer, "BMP"))
+        if(!mImage.save(&dataBuffer, format.toLatin1()))
 		{
 			throwError("ImageDataError", tr("Unable to get the image data"));
 			return engine()->undefinedValue();
 		}
 		
-		return RawData::constructor(dataByteArray, engine());
+        return RawData::constructor(dataBuffer.buffer(), engine());
 	}
 	
 	QScriptValue Image::loadFromFile(const QString &filename)

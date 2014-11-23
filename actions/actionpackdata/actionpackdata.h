@@ -35,6 +35,7 @@
 #include "actions/readenvironmentdefinition.h"
 #include "actions/copyfiledefinition.h"
 #include "actions/webdownloaddefinition.h"
+#include "actions/sendmaildefinition.h"
 
 #include "code/file.h"
 #include "code/clipboard.h"
@@ -45,6 +46,9 @@
 #include "code/sql.h"
 #include "code/tcpserver.h"
 #include "code/web.h"
+#include "code/mailattachment.h"
+#include "code/mailmessage.h"
+#include "code/mail.h"
 
 #include <QtCore/qplugin.h>
 
@@ -79,6 +83,7 @@ public:
 		addActionDefinition(new Actions::ReadEnvironmentVariableDefinition(this));
 		addActionDefinition(new Actions::CopyFileDefinition(this));
 		addActionDefinition(new Actions::WebDownloadDefinition(this));
+        addActionDefinition(new Actions::SendMailDefinition(this));
 	}
 
 	QString id() const								{ return "data"; }
@@ -98,6 +103,9 @@ public:
 		Code::Sql::registerClass(scriptEngine);
 		addCodeClass<Code::TcpServer>("TcpServer", scriptEngine);
 		addCodeClass<Code::Web>("Web", scriptEngine);
+        addCodeClass<Code::MailAttachment>("MailAttachment", scriptEngine);
+        addCodeClass<Code::MailMessage>("MailMessage", scriptEngine);
+        addCodeClass<Code::Mail>("Mail", scriptEngine);
 	}
 
 private:

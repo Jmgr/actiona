@@ -63,8 +63,8 @@ namespace Code
 		QScriptValue onError() const									{ return mOnError; }
 
 	public slots:
-		QString toString() const					{ return "Udp"; }
-        virtual bool equals(const QScriptValue &other) const;
+        QString toString() const                                        { return "Udp"; }
+        virtual bool equals(const QScriptValue &other) const            { return defaultEqualsImplementation<Udp>(other); }
 		QScriptValue connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
 		QScriptValue waitForConnected(int waitTime = 30000);
 		QScriptValue waitForReadyRead(int waitTime = 30000);

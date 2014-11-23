@@ -49,18 +49,6 @@ namespace Code
 		RegCloseKey(mHKey);
 #endif
     }
-
-    bool Registry::equals(const QScriptValue &other) const
-    {
-        if(other.isUndefined() || other.isNull())
-            return false;
-
-        QObject *object = other.toQObject();
-        if(Registry *otherRegistry = qobject_cast<Registry*>(object))
-            return (otherRegistry == this);
-
-        return false;
-    }
 	
 	QScriptValue Registry::openKey(Key key, const QString &subKey)
 	{

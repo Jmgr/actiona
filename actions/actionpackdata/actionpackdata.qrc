@@ -13,5 +13,6 @@
         <file>icons/writetext.png</file>
         <file>icons/webdownload.png</file>
         <file>icons/readenvironment.png</file>
+        <file>icons/sendmail.png</file>
     </qresource>
 </RCC>

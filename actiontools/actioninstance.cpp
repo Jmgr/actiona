@@ -199,27 +199,6 @@ namespace ActionTools
         return result;
     }
 
-	QVariant ActionInstance::evaluateVariant(bool &ok,
-										const QString &parameterName,
-										const QString &subParameterName)
-	{
-		if(!ok)
-			return QVariant();
-
-		const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
-		QVariant result;
-
-		if(subParameter.isCode())
-			result = evaluateCode(ok, subParameter).toVariant();
-		else
-			result = evaluateText(ok, subParameter);
-
-		if(!ok)
-			return QVariant();
-
-		return result;
-	}
-
 	QString ActionInstance::evaluateString(bool &ok,
 										const QString &parameterName,
 										const QString &subParameterName)
@@ -442,7 +421,44 @@ namespace ActionTools
 			return QString();
 
 		return result;
-	}
+    }
+
+    QString ActionInstance::evaluateEditableListElement(bool &ok, const StringListPair &listElements, const QString &parameterName, const QString &subParameterName)
+    {
+        if(!ok)
+            return QString();
+
+        const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+        QString result;
+
+        if(subParameter.isCode())
+            result = evaluateCode(ok, subParameter).toString();
+        else
+            result = evaluateText(ok, subParameter);
+
+        if(!ok)
+            return QString();
+
+        //Search in the translated items
+        for(int i=0;i<listElements.second.size();++i)
+        {
+            if(listElements.second.at(i) == result)
+                return listElements.first.at(i);
+        }
+
+        if(result.isEmpty())
+        {
+            ok = false;
+
+            setCurrentParameter(parameterName, subParameterName);
+
+            emit executionException(ActionException::InvalidParameterException, tr("Please choose a value for this field."));
+
+            return QString();
+        }
+
+        return result;
+    }
 
     void computePercentPosition(QPointF &point, const SubParameter &unitSubParameter)
     {
@@ -456,20 +472,20 @@ namespace ActionTools
     }
 
     QPoint ActionInstance::evaluatePoint(bool &ok,
-					   const QString &parameterName,
-					   const QString &subParameterName)
-	{
-		if(!ok)
+                                         const QString &parameterName,
+                                         const QString &subParameterName)
+    {
+        if(!ok)
             return QPoint();
 
-		const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
+        const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
         const SubParameter &unitSubParameter = retreiveSubParameter(parameterName, "unit");
-		QString result;
+        QString result;
 
-		if(subParameter.isCode())
-		{
-			QScriptValue evaluationResult = evaluateCode(ok, subParameter);
-			if(Code::Point *codePoint = qobject_cast<Code::Point*>(evaluationResult.toQObject()))
+        if(subParameter.isCode())
+        {
+            QScriptValue evaluationResult = evaluateCode(ok, subParameter);
+            if(Code::Point *codePoint = qobject_cast<Code::Point*>(evaluationResult.toQObject()))
             {
                 QPointF point = QPointF(codePoint->point().x(), codePoint->point().y());
 
@@ -478,30 +494,30 @@ namespace ActionTools
                 return QPoint(point.x(), point.y());
             }
 
-			result = evaluationResult.toString();
-		}
-		else
-			result = evaluateText(ok, subParameter);
+            result = evaluationResult.toString();
+        }
+        else
+            result = evaluateText(ok, subParameter);
 
-		if(!ok)
+        if(!ok)
             return QPoint();
 
-		if(result.isEmpty() || result == ":")
+        if(result.isEmpty() || result == ":")
             return QPoint();
 
-		QStringList positionStringList = result.split(":");
-		if(positionStringList.count() != 2)
-		{
-			ok = false;
+        QStringList positionStringList = result.split(":");
+        if(positionStringList.count() != 2)
+        {
+            ok = false;
 
             emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is not a valid position.").arg(result));
 
             return QPoint();
-		}
+        }
 
         QPointF point(positionStringList.at(0).toFloat(&ok), positionStringList.at(1).toFloat(&ok));
-		if(!ok)
-		{
+        if(!ok)
+        {
             emit executionException(ActionException::InvalidParameterException, tr("\"%1\" is not a valid position.").arg(result));
 
             return QPoint();
@@ -647,6 +663,18 @@ namespace ActionTools
         }
 
         return dateTime;
+    }
+
+    void ActionInstance::validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum)
+    {
+        if(ok && (parameter < minimum || parameter > maximum))
+        {
+            ok = false;
+
+            setCurrentParameter(parameterName);
+            emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid %1 value : %2").arg(parameterTranslatedName).arg(parameter));
+            return;
+        }
     }
 
 	QString ActionInstance::nextLine() const

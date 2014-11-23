@@ -395,14 +395,14 @@ void MainWindow::postInit()
 		}
 		else
 		{
-			if(settings.value("general/reopenLastScript", QVariant(false)).toBool())
+            if(settings.value("gui/reopenLastScript", QVariant(false)).toBool())
 			{
-				QString lastFilename = settings.value("general/lastScript", QString()).toString();
+                QString lastFilename = settings.value("gui/lastScript", QString()).toString();
 
 				if(!lastFilename.isEmpty())
 				{
 					if(!loadFile(lastFilename, false))
-						settings.setValue("general/lastScript", QString());
+                        settings.setValue("gui/lastScript", QString());
 				}
 			}
 		}
@@ -799,7 +799,7 @@ void MainWindow::on_actionSettings_triggered()
 
 		updateProxySettings();
 
-		int recentFileCount = settings.value("general/maxRecentFiles", 5).toInt();
+        int recentFileCount = settings.value("gui/maxRecentFiles", 5).toInt();
 		if(recentFileCount != mMaxRecentFiles)
 		{
 			mMaxRecentFiles = recentFileCount;
@@ -1159,15 +1159,15 @@ void MainWindow::readSettings()
 
 	restoreGeometry(settings.value("geometry").toByteArray());
 	restoreState(settings.value("windowState").toByteArray());
-	mMaxRecentFiles = settings.value("general/maxRecentFiles", 5).toInt();
+    mMaxRecentFiles = settings.value("gui/maxRecentFiles", 5).toInt();
 	if(mSystemTrayIcon)
-		mSystemTrayIcon->setVisible(settings.value("general/showTaskbarIcon", true).toBool());
+        mSystemTrayIcon->setVisible(settings.value("gui/showTaskbarIcon", true).toBool());
 
 	QList<QVariant> customColors = settings.value("customColors").toList();
 	for(int colorIndex = 0; colorIndex < customColors.count(); ++colorIndex)
 		QColorDialog::setCustomColor(colorIndex, customColors.at(colorIndex).value<QRgb>());
 
-	ui->clearBeforeExecutionCheckBox->setChecked(settings.value("general/clearConsoleBeforeExecution", true).toBool());
+    ui->clearBeforeExecutionCheckBox->setChecked(settings.value("gui/clearConsoleBeforeExecution", true).toBool());
 }
 
 void MainWindow::writeSettings()
@@ -1176,16 +1176,16 @@ void MainWindow::writeSettings()
 
 	settings.setValue("geometry", saveGeometry());
 	settings.setValue("windowState", saveState());
-	settings.setValue("general/maxRecentFiles", mMaxRecentFiles);
+    settings.setValue("gui/maxRecentFiles", mMaxRecentFiles);
 	if(mSystemTrayIcon)
-		settings.setValue("general/showTaskbarIcon", mSystemTrayIcon->isVisible());
+        settings.setValue("gui/showTaskbarIcon", mSystemTrayIcon->isVisible());
 
 	QList<QVariant> customColors;
 	for(int colorIndex = 0; colorIndex < QColorDialog::customCount(); ++colorIndex)
 		customColors << QColorDialog::customColor(colorIndex);
 	settings.setValue("customColors", customColors);
 
-	settings.setValue("general/clearConsoleBeforeExecution", ui->clearBeforeExecutionCheckBox->isChecked());
+    settings.setValue("gui/clearConsoleBeforeExecution", ui->clearBeforeExecutionCheckBox->isChecked());
 }
 
 void MainWindow::updateRecentFileActions()
@@ -1476,7 +1476,7 @@ void MainWindow::execute(bool onlySelection)
 
 	QSettings settings;
 
-	if(settings.value("general/addConsoleStartEndSeparators", QVariant(true)).toBool())
+    if(settings.value("gui/addConsoleStartEndSeparators", QVariant(true)).toBool())
 		ui->consoleWidget->addStartSeparator();
 
 	bool showExecutionWindow = settings.value("actions/showExecutionWindow", QVariant(true)).toBool();
@@ -1531,7 +1531,7 @@ void MainWindow::execute(bool onlySelection)
 	{
 		ui->consoleWidget->updateClearButton();
 
-		if(settings.value("general/addConsoleStartEndSeparators", QVariant(true)).toBool())
+        if(settings.value("gui/addConsoleStartEndSeparators", QVariant(true)).toBool())
 			ui->consoleWidget->addEndSeparator();
 	}
 }
@@ -1702,7 +1702,7 @@ void MainWindow::scriptExecutionStopped()
 {
 	QSettings settings;
 
-	if(settings.value("general/addConsoleStartEndSeparators", QVariant(true)).toBool())
+    if(settings.value("gui/addConsoleStartEndSeparators", QVariant(true)).toBool())
 		ui->consoleWidget->addEndSeparator();
 
 	ui->consoleWidget->updateClearButton();
@@ -2087,7 +2087,7 @@ bool MainWindow::loadFile(const QString &fileName, bool verbose)
 	{
 		QSettings settings;
 
-		settings.setValue("general/lastScript", fileName);
+        settings.setValue("gui/lastScript", fileName);
 
 		statusBar()->showMessage(tr("File loaded"), 2000);
 
@@ -2118,7 +2118,7 @@ bool MainWindow::saveFile(const QString &fileName, bool copy)
 
 		QSettings settings;
 
-		settings.setValue("general/lastScript", fileName);
+        settings.setValue("gui/lastScript", fileName);
 	}
 
 	return result;

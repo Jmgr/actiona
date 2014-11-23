@@ -276,17 +276,5 @@ namespace Actions
         else
             emit executionEnded();
     }
-
-	void FindImageInstance::validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum)
-	{
-		if(ok && (parameter < minimum || parameter > maximum))
-		{
-			ok = false;
-
-			setCurrentParameter(parameterName);
-			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid %1 value : %2").arg(parameterTranslatedName).arg(parameter));
-			return;
-		}
-	}
 }
 

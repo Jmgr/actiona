@@ -48,12 +48,12 @@ namespace Actions
 			bool ok = true;
 
 			QString filename = evaluateString(ok, "file");
-			QVariant data = evaluateVariant(ok, "data");
+            QScriptValue data = evaluateValue(ok, "data");
 
 			if(!ok)
 				return;
 
-			mData = data.toByteArray();
+            mData = data.toVariant().toByteArray();
 			mFile.setFileName(filename);
 			mDataBuffer.setBuffer(&mData);
 

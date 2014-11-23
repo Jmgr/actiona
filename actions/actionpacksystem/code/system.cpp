@@ -266,7 +266,13 @@ namespace Code
 	int System::batteryLevel() const
 	{
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-        return mBatteryInfo->level();
+        if(mBatteryInfo->batteryCount() == 0)
+            return -1;
+
+        if(mBatteryInfo->remainingCapacity() == -1 || mBatteryInfo->maximumCapacity() <= 0)
+            return -1;
+
+        return (mBatteryInfo->remainingCapacity() * 100) / mBatteryInfo->maximumCapacity();
 #else
         return mSystemDeviceInfo->batteryLevel();
 #endif

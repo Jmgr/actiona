@@ -33,7 +33,7 @@ namespace LibExecuter
 		Q_UNUSED(engine)
 
 		return context->thisObject();
-	}
+    }
 
 	QScriptValue CodeExecution::pause(QScriptContext *context, QScriptEngine *engine)
 	{

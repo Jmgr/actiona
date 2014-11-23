@@ -103,7 +103,7 @@ namespace Code
 		bool equals(const QScriptValue &other) const;
 		QString toString() const;
 		QScriptValue setData(const QScriptValue &data);
-		QScriptValue data() const;
+        QScriptValue data(const QString &format = "BMP") const;
 		QScriptValue loadFromFile(const QString &filename);
 		QScriptValue saveToFile(const QString &filename) const;
 		QScriptValue applyFilter(Filter filter, const QScriptValue &options = QScriptValue());

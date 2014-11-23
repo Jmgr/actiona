@@ -193,9 +193,6 @@ namespace ActionTools
         QScriptValue evaluateValue(bool &ok,
                             const QString &parameterName,
                             const QString &subParameterName = "value");
-		QVariant evaluateVariant(bool &ok,
-							const QString &parameterName,
-							const QString &subParameterName = "value");
 		QString evaluateString(bool &ok,
 							const QString &parameterName,
 							const QString &subParameterName = "value");
@@ -280,6 +277,11 @@ namespace ActionTools
 			return back;
 		}
 
+        QString evaluateEditableListElement(bool &ok,
+                                 const StringListPair &listElements,
+                                 const QString &parameterName,
+                                 const QString &subParameterName = "value");
+
         QPoint evaluatePoint(bool &ok,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
@@ -295,6 +297,8 @@ namespace ActionTools
         QDateTime evaluateDateTime(bool &ok,
                            const QString &parameterName,
                            const QString &subParameterName = "value");
+
+        void validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum = std::numeric_limits<int>::max());
 
 		QString nextLine() const;
 		void setNextLine(const QString &nextLine);
