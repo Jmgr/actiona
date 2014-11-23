@@ -116,7 +116,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		widget->setLayout(layout);
 
 		mParameterTabWidgets.append(widget);
-		mTabWidget->addTab(widget, QApplication::translate("ActionTabs", tab.toLatin1()));
+        mTabWidget->addTab(widget, QApplication::translate("ActionTabs", tab.toUtf8()));
 
 		++tabIndex;
 	}
