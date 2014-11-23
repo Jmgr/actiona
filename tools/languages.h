@@ -18,10 +18,22 @@
     Contact : jmgr@jmgr.info
 */
 
-#include "languages.h"
+#ifndef LANGUAGES_H
+#define LANGUAGES_H
 
-const QPair<QStringList, QStringList> languagesName = qMakePair(
-            QStringList()   << "" << "en_US" << "fr_FR",
-            QStringList()   << QT_TRANSLATE_NOOP("languagesName", "System language (if available)")
-                            << QT_TRANSLATE_NOOP("languagesName", "English (US)")
-                            << QT_TRANSLATE_NOOP("languagesName", "French (France)"));
+#include "tools_global.h"
+
+#include <QPair>
+#include <QStringList>
+
+namespace Tools
+{
+    extern TOOLSSHARED_EXPORT const QPair<QStringList, QStringList> languagesName;
+
+    QString TOOLSSHARED_EXPORT locale();
+    void TOOLSSHARED_EXPORT installQtTranslator(const QString &locale);
+    void TOOLSSHARED_EXPORT installTranslator(const QString &componentName, const QString &locale);
+    int TOOLSSHARED_EXPORT languageNameToIndex(const QString &languageName);
+}
+
+#endif // LANGUAGES_H

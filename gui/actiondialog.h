@@ -47,7 +47,6 @@ class QFormLayout;
 class QGridLayout;
 class QTabWidget;
 class QSpinBox;
-class QTranslator;
 
 class ActionDialog : public QDialog, public ActionTools::ParameterContainer
 {

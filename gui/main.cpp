@@ -30,6 +30,7 @@
 #include "globalshortcut/globalshortcutmanager.h"
 #include "qxtcommandoptions/qxtcommandoptions.h"
 #include "progresssplashscreen.h"
+#include "languages.h"
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include "qtsingleapplication/qtsingleapplication.h"
 #else
@@ -43,8 +44,6 @@
 #include <QTextStream>
 #include <QTextCodec>
 #include <QElapsedTimer>
-#include <QTranslator>
-#include <QLibraryInfo>
 #include <QSettings>
 
 #ifdef Q_OS_LINUX
@@ -116,69 +115,13 @@ int main(int argc, char **argv)
 		QSettings::setDefaultFormat(QSettings::IniFormat);
 	}
 
-	QSettings settings;
+    QString locale = Tools::locale();
 
-    QString locale = settings.value("gui/locale").toString();
-
-	if(locale.isEmpty())
-	{
-		locale = QLocale::system().name();
-
-#ifdef Q_OS_WIN
-		QString installerLanguage = settings.value("installerLanguage").toString();
-		if(!installerLanguage.isEmpty())
-		{
-			if(installerLanguage == "english")
-				locale = "en_US";
-			else if(installerLanguage == "french")
-				locale = "fr_FR";
-		}
-#endif
-	}
-
-	QTranslator qtTranslator;
-#ifdef Q_OS_WIN
-	qtTranslator.load(QString("%1/locale/qt_%2").arg(QApplication::applicationDirPath()).arg(locale));
-#else
-	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-#endif
-	app.installTranslator(&qtTranslator);
-
-	QTranslator toolsTranslator;
-	if(!toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
-	{
-#ifndef Q_OS_WIN
-        toolsTranslator.load(QString("%1/share/actiona/locale/tools_%2").arg(ACT_PREFIX).arg(locale));
-#endif
-	}
-	app.installTranslator(&toolsTranslator);
-
-	QTranslator actionToolsTranslator;
-	if(!actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
-	{
-#ifndef Q_OS_WIN
-        actionToolsTranslator.load(QString("%1/share/actiona/locale/actiontools_%2").arg(ACT_PREFIX).arg(locale));
-#endif
-	}
-	app.installTranslator(&actionToolsTranslator);
-
-	QTranslator executerTranslator;
-	if(!executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale)))
-	{
-#ifndef Q_OS_WIN
-        executerTranslator.load(QString("%1/share/actiona/locale/executer_%2").arg(ACT_PREFIX).arg(locale));
-#endif
-	}
-	app.installTranslator(&executerTranslator);
-
-	QTranslator guiTranslator;
-	if(!guiTranslator.load(QString("%1/locale/gui_%2").arg(QApplication::applicationDirPath()).arg(locale)))
-	{
-#ifndef Q_OS_WIN
-        guiTranslator.load(QString("%1/share/actiona/locale/gui_%2").arg(ACT_PREFIX).arg(locale));
-#endif
-	}
-	app.installTranslator(&guiTranslator);
+    Tools::installQtTranslator(locale);
+    Tools::installTranslator("tools", locale);
+    Tools::installTranslator("actiontools", locale);
+    Tools::installTranslator("executer", locale);
+    Tools::installTranslator("gui", locale);
 
 	QxtCommandOptions options;
 

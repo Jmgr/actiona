@@ -21,12 +21,12 @@
 #include "actionfactory.h"
 #include "actionpack.h"
 #include "actiondefinition.h"
+#include "languages.h"
 
 #include <QPluginLoader>
 #include <QDir>
 #include <QFileInfo>
 #include <QApplication>
-#include <QTranslator>
 
 namespace ActionTools
 {
@@ -151,15 +151,7 @@ namespace ActionTools
 			return;
 		}
 
-		QTranslator *actionPackTranslator = new QTranslator(this);
-
-		if(!actionPackTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale)))
-		{
-    #ifndef Q_OS_WIN
-            actionPackTranslator->load(QString("%1/share/actiona/locale/actionpack%2_%3").arg(ACT_PREFIX).arg(actionPack->id()).arg(locale));
-	#endif
-		}
-		QApplication::installTranslator(actionPackTranslator);
+        Tools::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
 
 		actionPack->createDefinitions();
 

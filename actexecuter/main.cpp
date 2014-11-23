@@ -30,6 +30,7 @@
 #endif
 #include "global.h"
 #include "settings.h"
+#include "languages.h"
 
 #include <ctime>
 
@@ -39,8 +40,6 @@
 #include <QTextCodec>
 #include <QFile>
 #include <QSettings>
-#include <QTranslator>
-#include <QLibraryInfo>
 #include <QUrl>
 #include <QNetworkProxy>
 
@@ -138,53 +137,13 @@ int main(int argc, char **argv)
         QSettings::setDefaultFormat(QSettings::IniFormat);
     }
 
-	QSettings settings;
+    QString locale = Tools::locale();
 
-    QString locale = settings.value("gui/locale", QLocale::system().name()).toString();
-
-	QTranslator qtTranslator;
-#ifdef Q_OS_WIN
-	qtTranslator.load(QString("%1/locale/qt_%2").arg(QApplication::applicationDirPath()).arg(locale));
-#else
-	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-#endif
-	app.installTranslator(&qtTranslator);
-
-	QTranslator toolsTranslator;
-	if(!toolsTranslator.load(QString("%1/locale/tools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
-	{
-#ifndef Q_OS_WIN
-        toolsTranslator.load(QString("%1/share/actiona/locale/tools_%2").arg(ACT_PREFIX).arg(locale));
-#endif
-	}
-	app.installTranslator(&toolsTranslator);
-
-	QTranslator actionToolsTranslator;
-	if(!actionToolsTranslator.load(QString("%1/locale/actiontools_%2").arg(QApplication::applicationDirPath()).arg(locale)))
-	{
-#ifndef Q_OS_WIN
-        actionToolsTranslator.load(QString("%1/share/actiona/locale/actiontools_%2").arg(ACT_PREFIX).arg(locale));
-#endif
-	}
-	app.installTranslator(&actionToolsTranslator);
-
-	QTranslator executerTranslator;
-	if(!executerTranslator.load(QString("%1/locale/executer_%2").arg(QApplication::applicationDirPath()).arg(locale)))
-	{
-#ifndef Q_OS_WIN
-        executerTranslator.load(QString("%1/share/actiona/locale/executer_%2").arg(ACT_PREFIX).arg(locale));
-#endif
-	}
-	app.installTranslator(&executerTranslator);
-
-	QTranslator actexecuterTranslator;
-	if(!actexecuterTranslator.load(QString("%1/locale/actexecuter_%2").arg(QApplication::applicationDirPath()).arg(locale)))
-	{
-#ifndef Q_OS_WIN
-        actexecuterTranslator.load(QString("%1/share/actiona/locale/actexecuter_%2").arg(ACT_PREFIX).arg(locale));
-#endif
-	}
-	app.installTranslator(&actexecuterTranslator);
+    Tools::installQtTranslator(locale);
+    Tools::installTranslator("tools", locale);
+    Tools::installTranslator("actiontools", locale);
+    Tools::installTranslator("executer", locale);
+    Tools::installTranslator("actexecuter", locale);
 
     const QStringList &arguments = QCoreApplication::arguments();
 

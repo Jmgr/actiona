@@ -9,11 +9,13 @@ DEFINES += TOOLS_LIBRARY
 TARGET = tools
 DESTDIR = ..
 SOURCES += version.cpp \
-    highresolutiontimer.cpp
+    highresolutiontimer.cpp \
+    languages.cpp
 win32:SOURCES += sevenziparchivewrite.cpp
 HEADERS += version.h \
-	tools_global.h \
-    highresolutiontimer.h
+    tools_global.h \
+    highresolutiontimer.h \
+    languages.h
 win32:HEADERS += sevenziparchivewrite.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += updater.cpp
