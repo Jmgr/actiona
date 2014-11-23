@@ -80,6 +80,9 @@ namespace Actions
 			delete mDialog;
 
 		mDialog = new QDialog;
+
+        mDialog->setWindowFlags(mDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+
 		QVBoxLayout *layout = new QVBoxLayout(mDialog);
 
 		mDialog->setLayout(layout);
@@ -147,6 +150,9 @@ namespace Actions
 		connect(mDialog, SIGNAL(accepted()), this, SLOT(accepted()));
 		connect(mDialog, SIGNAL(rejected()), this, SLOT(rejected()));
 
+        for(QLabel *label: mDialog->findChildren<QLabel*>())
+            label->setOpenExternalLinks(true);
+
 		mDialog->show();
 	}
 
@@ -192,7 +198,7 @@ namespace Actions
 			{
 				QStringList selectedButtons;
 
-				foreach(QAbstractButton *button, mButtonGroup->buttons())
+                for(QAbstractButton *button: mButtonGroup->buttons())
 				{
 					if(button->isChecked())
 						selectedButtons.append(button->text());
@@ -241,7 +247,7 @@ namespace Actions
 	{
 		int checkedButtonCount = 0;
 
-		foreach(QAbstractButton *button, mButtonGroup->buttons())
+        for(QAbstractButton *button: mButtonGroup->buttons())
 		{
 			if(button->isChecked())
 				++checkedButtonCount;

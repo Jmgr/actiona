@@ -88,7 +88,6 @@ namespace ActionTools
 #endif
 #endif
 
-		QList<QWidget *> mWindowIgnoreList;
 		QPixmap *mCrossIcon;
 		WindowHandle mLastFoundWindow;
 		bool mSearching;

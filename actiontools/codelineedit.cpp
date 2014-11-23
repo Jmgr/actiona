@@ -220,6 +220,8 @@ namespace ActionTools
 		
         CodeEditorDialog codeEditorDialog(mCompletionModel, createVariablesMenu(0, true), createResourcesMenu(0, true), this);
 
+        codeEditorDialog.setWindowFlags(codeEditorDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+
 		codeEditorDialog.setText(text());
 		codeEditorDialog.setCode(isCode());
 		codeEditorDialog.setCurrentLine(line);

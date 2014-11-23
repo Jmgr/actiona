@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     filetypeguesser.cpp \
     resourcetablewidget.cpp \
     resourcetypedelegate.cpp \
-    resourcenamedelegate.cpp
+    resourcenamedelegate.cpp \
+    languages.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -61,7 +62,8 @@ HEADERS += mainwindow.h \
     resourcetablewidget.h \
     resourcetypedelegate.h \
     resourcesizeitem.h \
-    resourcenamedelegate.h
+    resourcenamedelegate.h \
+    languages.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += changelogdialog.cpp
 	HEADERS += changelogdialog.h
@@ -94,8 +96,10 @@ LIBS += -L.. \
 	-lexecuter
 RESOURCES += gui.qrc
 win32:RC_FILE = gui.rc
-TRANSLATIONS = ../locale/gui_fr_FR.ts
+TRANSLATIONS = ../locale/gui_fr_FR.ts \
+                ../locale/gui_de_DE.ts
 win32:system(lrelease ../locale/qt_fr_FR.ts) #For Windows we need to copy the qt translation files
+win32:system(lrelease ../locale/qt_de_DE.ts)
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
 
@@ -103,7 +107,8 @@ unix {
 	target.path = $${PREFIX}/bin
 
         locales.path = $${PREFIX}/share/actiona/locale
-	locales.files = ../locale/gui_fr_FR.qm
+        locales.files = ../locale/gui_fr_FR.qm \
+                        ../locale/gui_de_DE.qm
 	locales.CONFIG = no_check_exist
 
 	icon.path = $${PREFIX}/share/pixmaps

@@ -50,7 +50,7 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 	connect(mScriptEngineDebugger, SIGNAL(evaluationSuspended()), this, SLOT(onEvaluationPaused()));
 	connect(mScriptAgent, SIGNAL(executionStopped()), this, SLOT(stopExecution()));
 
-	foreach(QString extension, mScriptEngine->availableExtensions())
+    for(QString extension: mScriptEngine->availableExtensions())
 		mScriptEngine->importExtension(extension);
 	
 	mScriptEngineDebugger->setAutoShowStandardWindow(false);
@@ -89,7 +89,7 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
     Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActiona, "isActiona", mScriptEngine);
 
 	QSettings settings;
-	QString locale = settings.value("locale").toString();
+    QString locale = settings.value("gui/locale").toString();
 
 	if(locale.isEmpty())
 	{

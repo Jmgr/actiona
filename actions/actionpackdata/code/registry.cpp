@@ -116,7 +116,7 @@ namespace Code
 				const QStringList &stringList = data.toStringList();
 				std::wstring wideData;
 	
-				foreach(const QString &string, stringList)
+                for(const QString &string: stringList)
 				{
 					wideData += string.toStdWString();
 					wideData += L'\0';

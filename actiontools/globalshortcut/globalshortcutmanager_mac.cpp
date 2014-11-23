@@ -84,7 +84,7 @@ namespace ActionTools
 	
 		void activated(int id)
 		{
-			foreach(MacKeyTrigger* trigger, triggers_) {
+			for(MacKeyTrigger* trigger: triggers_) {
 				if (trigger->isAccepted(id)) {
 					trigger->activate();
 					break;

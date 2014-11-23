@@ -20,14 +20,16 @@ win32:HEADERS += sevenziparchivewrite.h
 	HEADERS += updater.h
 }
 INCLUDEPATH += src
-TRANSLATIONS = ../locale/tools_fr_FR.ts
+TRANSLATIONS = ../locale/tools_fr_FR.ts \
+                ../locale/tools_de_DE.ts
 win32:LIBS += User32.lib
 
 unix {
         target.path = $${PREFIX}/$${LIBDIR}/actiona
 
         locales.path = $${PREFIX}/share/actiona/locale
-	locales.files = ../locale/tools_fr_FR.qm
+        locales.files = ../locale/tools_fr_FR.qm \
+                        ../locale/tools_de_DE.qm
 	locales.CONFIG = no_check_exist
 
 	INSTALLS += target locales

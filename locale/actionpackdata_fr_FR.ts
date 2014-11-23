@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionPackData</name>
     <message>
-        <location filename="../actions/actionpackdata/actionpackdata.h" line="82"/>
+        <location filename="../actions/actionpackdata/actionpackdata.h" line="85"/>
         <source>Data related actions</source>
         <translation>Actions liées aux données</translation>
     </message>
@@ -1118,7 +1118,7 @@
 <context>
     <name>Code::Web</name>
     <message>
-        <location filename="../actions/actionpackdata/code/web.cpp" line="103"/>
+        <location filename="../actions/actionpackdata/code/web.cpp" line="107"/>
         <source>Unable to open the destination file</source>
         <translation>Impossible d&apos;écrire le fichier de destination</translation>
     </message>

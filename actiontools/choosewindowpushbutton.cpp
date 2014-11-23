@@ -90,7 +90,7 @@ namespace ActionTools
 #endif
 	{
 #ifdef Q_OS_LINUX
-		foreach(QWidget *widget, QApplication::topLevelWidgets())
+        for(QWidget *widget: QApplication::topLevelWidgets())
 		{
 			if(QMainWindow *mainWindow = qobject_cast<QMainWindow*>(widget))
 			{
@@ -147,19 +147,10 @@ namespace ActionTools
 	{
 		QPushButton::mousePressEvent(event);
 
-		mWindowIgnoreList.clear();
-		foreach(QWidget *widget, QApplication::allWidgets())
-		{
-#ifdef Q_OS_WIN
-			if(widget->isWindow())
-#endif
-				mWindowIgnoreList.append(widget);
-		}
-
 #ifdef Q_OS_LINUX
         mShownWindows.clear();
 
-        foreach(QWidget *widget, qApp->topLevelWidgets())
+        for(QWidget *widget: qApp->topLevelWidgets())
         {
             if(mMainWindow == widget)
                 continue;
@@ -176,7 +167,7 @@ namespace ActionTools
             mMainWindow->hide();
 #endif
 #ifdef Q_OS_WIN
-		foreach(QWidget *widget, qApp->topLevelWidgets())
+        for(QWidget *widget: qApp->topLevelWidgets())
 			widget->setWindowOpacity(0.0f);
 #endif
 
@@ -226,7 +217,7 @@ namespace ActionTools
 			return false;
 #endif
 
-		foreach(QWidget *widget, mWindowIgnoreList)
+        for(QWidget *widget: QApplication::allWidgets())
 		{
 			if(widget->winId() == handle.value())
 				return false;
@@ -336,7 +327,7 @@ namespace ActionTools
 		if(mLastFoundWindow)
 			refreshWindow(mLastFoundWindow);
 
-		foreach(QWidget *widget, qApp->topLevelWidgets())
+        for(QWidget *widget: qApp->topLevelWidgets())
 			widget->setWindowOpacity(1.0f);
 	#endif
 	#ifdef Q_OS_LINUX

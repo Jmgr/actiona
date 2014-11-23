@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionPackSystem</name>
     <message>
-        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="69"/>
+        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="72"/>
         <source>Actions dealing with the operating system</source>
         <translation>Actions en rapport avec le système d&apos;exploitation</translation>
     </message>
@@ -973,42 +973,42 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Code::System</name>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="79"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="103"/>
         <source>Cannot open the url</source>
         <translation>Impossible d&apos;ouvrir l&apos;url</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="222"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="337"/>
         <source>Logout failed</source>
         <translation>Échec de la déconnexion</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="230"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="345"/>
         <source>Restart failed</source>
         <translation>Échec du redémarrage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="238"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="353"/>
         <source>Shutdown failed</source>
         <translation>Échec de l&apos;extinction</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="246"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="361"/>
         <source>Suspend failed</source>
         <translation>Échec de la mise en veille</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="254"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="369"/>
         <source>Hibernate failed</source>
         <translation>Échec de la mise en hibernation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="262"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="377"/>
         <source>Lock screen failed</source>
         <translation>Échec du verrouillage de l&apos;écran</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="270"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="385"/>
         <source>Start screen saver failed</source>
         <translation>Échec du démarrage de l&apos;écran de veille</translation>
     </message>

@@ -25,6 +25,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QIcon>
+#include <QLabel>
 
 #include <limits>
 
@@ -36,6 +37,13 @@ namespace Actions
 		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Text")
 		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer")
 		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal"));
+
+    ActionTools::StringListPair DataInputInstance::editorTypes = qMakePair(
+        QStringList() << "line" << "multiline" << "password",
+        QStringList()
+        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line")
+        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Multiline")
+        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Password"));
 
 	DataInputInstance::DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
@@ -49,6 +57,7 @@ namespace Actions
 
 		QString question = evaluateString(ok, "question");
 		mDataType = evaluateListElement<DataType>(ok, dataTypes, "dataType");
+        EditorType editorType = evaluateListElement<EditorType>(ok, editorTypes, "editorType");
 		mVariable = evaluateVariable(ok, "variable");
 		QString windowTitle = evaluateString(ok, "windowTitle");
         QImage windowIcon = evaluateImage(ok, "windowIcon");
@@ -83,9 +92,22 @@ namespace Actions
 
 		mInputDialog = new QInputDialog();
 
+        mInputDialog->setWindowFlags(mInputDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
 		mInputDialog->setWindowModality(Qt::NonModal);
 		mInputDialog->setLabelText(question);
 		mInputDialog->setWindowTitle(windowTitle);
+
+        switch(editorType)
+        {
+        case LineEditorType:
+            break;
+        case MultilineEditorType:
+            mInputDialog->setOption(QInputDialog::UsePlainTextEditForTextInput);
+            break;
+        case PasswordEditorType:
+            mInputDialog->setTextEchoMode(QLineEdit::Password);
+            break;
+        }
 
         if(!windowIcon.isNull())
             mInputDialog->setWindowIcon(QIcon(QPixmap::fromImage(windowIcon)));
@@ -113,6 +135,9 @@ namespace Actions
 		QRect screenGeometry = QApplication::desktop()->availableGeometry();
 		mInputDialog->move(screenGeometry.center());
 		mInputDialog->move(mInputDialog->pos().x() - mInputDialog->width()/2, mInputDialog->pos().y() - mInputDialog->height()/2);
+
+        for(QLabel *label: mInputDialog->findChildren<QLabel*>())
+            label->setOpenExternalLinks(true);
 
 		switch(mDataType)
 		{

@@ -71,8 +71,8 @@ static void cleanup()
 
 int main(int argc, char **argv)
 {
-#if (QT_VERSION < 0x040700)
-        #error("You need Qt 4.7.0 or later to compile Actiona");
+#if (QT_VERSION < 0x050200)
+        #error("You need Qt 5.2.0 or later to compile Actiona");
 #endif
 
 #ifdef ACT_PROFILE
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
 
 	QSettings settings;
 
-	QString locale = settings.value("locale").toString();
+    QString locale = settings.value("gui/locale").toString();
 
 	if(locale.isEmpty())
 	{

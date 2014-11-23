@@ -27,9 +27,9 @@ namespace Global
 {
     const Tools::Version	ACTIONA_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_VERSION));
 	const Tools::Version	SCRIPT_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_SCRIPT_VERSION));
-    const QString			UPDATE_URL =		"http://updates.actiona.tools/";
+    const QString			UPDATE_URL =		"https://updates.actiona.tools/";
 	const int				UPDATE_TIMEOUT =	5000;
-    const QString			CONNECTIVITY_URL =	"http://actiona.tools/";
+    const QString			CONNECTIVITY_URL =	"https://actiona.tools/";
 
 	QString currentOS();
 	QString currentOSType();

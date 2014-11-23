@@ -102,8 +102,8 @@ static void createConsole()
 
 int main(int argc, char **argv)
 {
-#if (QT_VERSION < 0x040700)
-        #error("You need Qt 4.7.0 or later to compile Actiona Executer");
+#if (QT_VERSION < 0x050200)
+        #error("You need Qt 5.2.0 or later to compile Actiona Executer");
 #endif
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 
 	QSettings settings;
 
-	QString locale = settings.value("locale", QLocale::system().name()).toString();
+    QString locale = settings.value("gui/locale", QLocale::system().name()).toString();
 
 	QTranslator qtTranslator;
 #ifdef Q_OS_WIN
@@ -346,9 +346,9 @@ int main(int argc, char **argv)
 		QString mode;
 		typedef QPair<QString, QString> QStringPair;
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-        foreach(const QStringPair &queryItem, QUrlQuery(protocolUrl.query()).queryItems())
+        for(const QStringPair &queryItem: QUrlQuery(protocolUrl.query()).queryItems())
 #else
-        foreach(const QStringPair &queryItem, protocolUrl.queryItems())
+        for(const QStringPair &queryItem: protocolUrl.queryItems())
 #endif
 		{
 			if(queryItem.first == "mode")

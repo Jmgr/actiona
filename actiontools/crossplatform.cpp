@@ -154,16 +154,16 @@ namespace ActionTools
 			if(!ret)
 				setupLastError();
 
-			return ret;
+            return ret;
 		}
 		
-		foreach(const ActionTools::WindowHandle &windowHandle, ActionTools::WindowHandle::windowList())
+        for(const ActionTools::WindowHandle &windowHandle: ActionTools::WindowHandle::windowList())
 		{
 			if(windowHandle.processId() == id)
 				windowHandle.close();
 		}
 
-		QElapsedTimer timer;
+        QElapsedTimer timer;
 		timer.start();
 
 		DWORD exitCode;
@@ -233,7 +233,7 @@ namespace ActionTools
 			return back;
 
 		QStringList processes = procDir.entryList(QDir::Dirs);
-		foreach(const QString &processId, processes)
+        for(const QString &processId: processes)
 		{
 			bool success;
 			int id = processId.toInt(&success);

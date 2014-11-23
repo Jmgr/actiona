@@ -95,7 +95,7 @@ namespace LibExecuter
 		mScript = script;
 		mScriptEngine = new QScriptEngine(this);
 
-		foreach(QString extension, mScriptEngine->availableExtensions())
+		for(QString extension: mScriptEngine->availableExtensions())
 			mScriptEngine->importExtension(extension);
 		
 		mActionFactory = actionFactory;
@@ -306,7 +306,7 @@ namespace LibExecuter
 		mScript->clearCallStack();
 
         const QHash<QString, ActionTools::Resource> &resources = mScript->resources();
-        foreach(const QString &key, resources.keys())
+        for(const QString &key: resources.keys())
         {
             const ActionTools::Resource &resource = resources.value(key);
             QScriptValue value;
@@ -586,7 +586,7 @@ namespace LibExecuter
 		bool standardException = (exception >= 0 && exception < ActionTools::ActionException::ExceptionCount);
 		bool customException = false;
 
-		foreach(ActionTools::ActionException *actionException, actionInstance->definition()->exceptions())
+		for(ActionTools::ActionException *actionException: actionInstance->definition()->exceptions())
 		{
 			if(actionException->id() == exception)
 			{

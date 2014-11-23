@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionPackInternal</name>
     <message>
-        <location filename="../actions/actionpackinternal/actionpackinternal.h" line="74"/>
+        <location filename="../actions/actionpackinternal/actionpackinternal.h" line="77"/>
         <source>Internal actions</source>
         <translation>Actions internes</translation>
     </message>

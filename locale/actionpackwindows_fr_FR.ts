@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionPackWindows</name>
     <message>
-        <location filename="../actions/actionpackwindows/actionpackwindows.h" line="62"/>
+        <location filename="../actions/actionpackwindows/actionpackwindows.h" line="65"/>
         <source>Actions dealing with windows</source>
         <translation>Actions en rapport avec les fenêtres</translation>
     </message>
@@ -12,73 +12,83 @@
 <context>
     <name>Actions::DataInputDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="49"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="50"/>
         <source>Question</source>
         <translatorcomment>Question</translatorcomment>
         <translation>Question</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="50"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="51"/>
         <source>The question to ask</source>
         <translation>La question à poser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="53"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="54"/>
         <source>Data type</source>
         <translation>Type de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="54"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="55"/>
         <source>The data type</source>
         <translation>Le type de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="59"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="60"/>
+        <source>Editor type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="61"/>
+        <source>The editor type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="66"/>
         <source>Default value</source>
         <translation>Valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="60"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="67"/>
         <source>The default value</source>
         <translation>La valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="63"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="70"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="64"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="71"/>
         <source>The variable where to save the entered input</source>
         <translation>La variable où sauvegarder l&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="67"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="74"/>
         <source>Window title</source>
         <translation>Titre de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="68"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="75"/>
         <source>The title of the window</source>
         <translation>Le titre de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="71"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="78"/>
         <source>Window icon</source>
         <translation>Icône de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="72"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="79"/>
         <source>The window icon to use</source>
         <translation>L&apos;icône de fenêtre à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="74"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="81"/>
         <source>Select the icon to use</source>
         <translation>Sélectionnez l&apos;icône à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="82"/>
         <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
         <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
     </message>
@@ -564,12 +574,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>Code::MessageBox</name>
     <message>
-        <location filename="../actions/actionpackwindows/code/messagebox.cpp" line="126"/>
+        <location filename="../actions/actionpackwindows/code/messagebox.cpp" line="128"/>
         <source>Invalid image</source>
         <translation>Image invalide</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/code/messagebox.cpp" line="152"/>
+        <location filename="../actions/actionpackwindows/code/messagebox.cpp" line="154"/>
         <source>Add custom button failed</source>
         <translation>Échec de l&apos;ajout de bouton personnalisé</translation>
     </message>
@@ -577,19 +587,37 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>DataInputInstance::dataTypes</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="37"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="38"/>
         <source>Integer</source>
         <translation>Entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="38"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="39"/>
         <source>Decimal</source>
         <translation>Décimal</translation>
+    </message>
+</context>
+<context>
+    <name>DataInputInstance::editorTypes</name>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="44"/>
+        <source>Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="45"/>
+        <source>Multiline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="46"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -784,12 +812,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
         <translation type="obsolete">Redimensionner</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="79"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="86"/>
         <source>Data input</source>
         <translation>Entrée de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="82"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="89"/>
         <source>Ask the user to enter some data</source>
         <translation>Demande à l&apos;utilisateur d&apos;entrer une donnée</translation>
     </message>

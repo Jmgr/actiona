@@ -64,7 +64,7 @@ namespace Code
 
 		QScriptValue back = engine->newArray(driverList.size());
 		int index = 0;
-		foreach(const Driver &driver, driverList)
+        for(const Driver &driver: driverList)
 		{
 			back.setProperty(index, driver);
 

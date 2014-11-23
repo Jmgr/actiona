@@ -31,7 +31,7 @@ ChangeEnabledCommand::ChangeEnabledCommand(const QList<int> &rows, bool enabled,
 	mRows(rows),
 	mNew(enabled)
 {
-	foreach(int row, mRows)
+	for(int row: mRows)
 	{
 		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
 		if(!actionInstance)
@@ -45,7 +45,7 @@ ChangeEnabledCommand::ChangeEnabledCommand(const QList<int> &rows, bool enabled,
 
 void ChangeEnabledCommand::redo()
 {
-	foreach(int row, mRows)
+	for(int row: mRows)
 	{
 		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
 		if(!actionInstance)
@@ -83,7 +83,7 @@ ChangeColorCommand::ChangeColorCommand(const QList<int> &rows, const QColor &col
 	mRows(rows),
 	mNew(color)
 {
-	foreach(int row, mRows)
+	for(int row: mRows)
 	{
 		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
 		if(!actionInstance)
@@ -97,7 +97,7 @@ ChangeColorCommand::ChangeColorCommand(const QList<int> &rows, const QColor &col
 
 void ChangeColorCommand::redo()
 {
-	foreach(int row, mRows)
+	for(int row: mRows)
 	{
 		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
 		if(!actionInstance)
@@ -251,7 +251,7 @@ CopyActionCommand::CopyActionCommand(int row, const QList<ActionTools::ActionIns
 
 void CopyActionCommand::redo()
 {
-	foreach(const ActionTools::ActionInstanceBuffer &actionInstanceBuffer, mActionInstanceBuffers)
+	for(const ActionTools::ActionInstanceBuffer &actionInstanceBuffer: mActionInstanceBuffers)
 	{
 		mModel->insertRow(mRow);
 		mModel->setData(mModel->index(mRow, 0), actionInstanceBuffer.actionInstanceId(), ScriptModel::ActionIdRole);
@@ -293,7 +293,7 @@ RemoveActionCommand::RemoveActionCommand(const QList<int> &rows, ScriptModel *mo
 	mRows(rows),
 	mModel(model)
 {
-	foreach(int row, rows)
+	for(int row: rows)
 	{
 		mActionInstanceBuffers << ActionTools::ActionInstanceBuffer(model->mScript->actionAt(row)->definition()->id(),
 											  *model->mScript->actionAt(row));
@@ -304,7 +304,7 @@ RemoveActionCommand::RemoveActionCommand(const QList<int> &rows, ScriptModel *mo
 
 void RemoveActionCommand::redo()
 {
-	foreach(int row, mRows)
+	for(int row: mRows)
 	{
 		mModel->removeRow(row);
 	}

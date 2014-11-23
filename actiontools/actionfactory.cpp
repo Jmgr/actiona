@@ -63,7 +63,7 @@ namespace ActionTools
 		QString actionMask = "libActionPack*.so";
 #endif
 
-		foreach(const QString actionFilename, actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
+        for(const QString actionFilename: actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
 
 		qSort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
@@ -74,7 +74,7 @@ namespace ActionTools
 
 	ActionDefinition *ActionFactory::actionDefinition(const QString &actionId) const
 	{
-		foreach(ActionDefinition *actionDefinition, mActionDefinitions)
+        for(ActionDefinition *actionDefinition: mActionDefinitions)
 		{
 			if(actionDefinition->id() == actionId)
 				return actionDefinition;
@@ -115,7 +115,7 @@ namespace ActionTools
 			return mActionDefinitions.count();
 
 		int count = 0;
-		foreach(const ActionDefinition *actionDefinition, mActionDefinitions)
+        for(const ActionDefinition *actionDefinition: mActionDefinitions)
 		{
 			if(actionDefinition->category() == category)
 				++count;
@@ -163,7 +163,7 @@ namespace ActionTools
 
 		actionPack->createDefinitions();
 
-		foreach(ActionDefinition *definition, actionPack->actionsDefinitions())
+        for(ActionDefinition *definition: actionPack->actionsDefinitions())
 		{
 			if(actionDefinition(definition->id()))
 			{

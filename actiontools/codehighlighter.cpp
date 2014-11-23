@@ -50,10 +50,10 @@ namespace ActionTools
 
 		mFormats[StringFormat].setForeground(Qt::darkRed);
 
-		foreach(const QString &keyword, usedKeywords)
+        for(const QString &keyword: usedKeywords)
 			mUsedKeywords.insert(keyword);
 
-		foreach(const QString &keyword, reservedKeywords)
+        for(const QString &keyword: reservedKeywords)
 			mReservedKeywords.insert(keyword);
 	}
 

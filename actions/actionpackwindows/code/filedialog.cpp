@@ -73,7 +73,7 @@ namespace Code
 			{
 				QList<QUrl> urls;
 				
-				foreach(const QString &url, arrayParameterToStringList(it.value()))
+                for(const QString &url: arrayParameterToStringList(it.value()))
 					urls.append(QUrl::fromLocalFile(url));
 					
 				fileDialog->mFileDialog->setSidebarUrls(urls);
@@ -99,6 +99,8 @@ namespace Code
 		: BaseWindow(),
 		mFileDialog(new QFileDialog)
 	{
+        mFileDialog->setWindowFlags(mFileDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+
 		setWidget(mFileDialog);
 		
 		connect(mFileDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));
@@ -237,7 +239,7 @@ namespace Code
 	{
 		QList<QUrl> urls;
 		
-		foreach(const QString &url, arrayParameterToStringList(sidebarUrls))
+        for(const QString &url: arrayParameterToStringList(sidebarUrls))
 			urls.append(QUrl::fromLocalFile(url));
 			
 		mFileDialog->setSidebarUrls(urls);

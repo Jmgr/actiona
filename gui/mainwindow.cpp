@@ -99,7 +99,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mActionFactory(new ActionTools::ActionFactory(this)),
 	mScript(new ActionTools::Script(mActionFactory, this)),
 	mScriptModel(new ScriptModel(mScript, mActionFactory, this)),
-	mSystemTrayIcon(commandOptions->count("notrayicon") ? 0 : new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
+    mSystemTrayIcon(commandOptions->count("notrayicon") ? 0 : new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
 	mSplashScreen(splashScreen),
 	mWasNewActionDockShown(false),
 	mWasConsoleDockShown(false),
@@ -328,7 +328,11 @@ void MainWindow::postInit()
 
 			setTaskbarProgress(actionDefinitionIndex, mActionFactory->actionDefinitionCount() - 1);
 
-			mActionDialogs.append(new ActionDialog(mCompletionModel, mScript, actionDefinition, mUsedLocale, this));
+            ActionDialog *newActionDialog = new ActionDialog(mCompletionModel, mScript, actionDefinition, mUsedLocale, this);
+
+            newActionDialog->setWindowFlags(newActionDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+
+            mActionDialogs.append(newActionDialog);
 
             QApplication::processEvents();
 		}
@@ -413,7 +417,7 @@ void MainWindow::postInit()
 		QString message = tr("<b>Unable to load %n action(s):</b>\n", "", mPackLoadErrors.count());
 		message += "<ul>";
 
-		foreach(const QString &error, mPackLoadErrors)
+		for(const QString &error: mPackLoadErrors)
 		{
 			message += "<li>" + error + "</li>";
 		}
@@ -625,6 +629,9 @@ void MainWindow::on_actionInverse_selection_triggered()
 void MainWindow::on_actionAbout_triggered()
 {
 	AboutDialog aboutDialog(this);
+
+    aboutDialog.setWindowFlags(aboutDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+
 	aboutDialog.exec();
 }
 
@@ -647,6 +654,9 @@ void MainWindow::on_actionExport_executable_triggered()
 	settings.setValue("sfxScript/destination", fileName);
 
 	SFXScriptDialog sfxScriptDialog(this);
+
+    sfxScriptDialog.setWindowFlags(sfxScriptDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+
 	if(!sfxScriptDialog.exec())
 		return;
 
@@ -793,6 +803,9 @@ void MainWindow::on_actionExport_executable_triggered()
 void MainWindow::on_actionSettings_triggered()
 {
 	SettingsDialog settingsDialog(mSystemTrayIcon, this);
+
+    settingsDialog.setWindowFlags(settingsDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+
 	if(settingsDialog.exec() == QDialog::Accepted)
 	{
 		QSettings settings;
@@ -863,7 +876,7 @@ void MainWindow::on_actionExecute_selection_triggered()
 	}
 
 	//Set the current selection
-	foreach(int row, selection)
+	for(int row: selection)
 	{
 		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
 		if(!actionInstance)
@@ -924,6 +937,7 @@ void MainWindow::on_actionSet_action_color_triggered()
 		return;
 
 	QColorDialog colorDialog(firstActionInstance->color(), this);
+    colorDialog.setWindowFlags(colorDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 	colorDialog.setOptions(QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
 	colorDialog.setCurrentColor(firstActionInstance->color());
 
@@ -962,6 +976,7 @@ void MainWindow::on_actionNew_action_triggered()
 		return;
 
 	NewActionDialog dialog(mActionFactory, this);
+    dialog.setWindowFlags(dialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 	fillNewActionTreeWidget(dialog.newActionTreeWidget());
 	if(dialog.exec() == QDialog::Accepted)
 		wantToAddAction(dialog.selectedAction());
@@ -982,6 +997,7 @@ void MainWindow::on_actionJump_to_line_triggered()
 		return;
 
 	QInputDialog inputDialog(this);
+    inputDialog.setWindowFlags(inputDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 	inputDialog.setWindowTitle(tr("Jump to line"));
 	inputDialog.setLabelText(tr("Line:"));
 	inputDialog.setInputMode(QInputDialog::IntInput);
@@ -1037,6 +1053,7 @@ void MainWindow::on_actionCreate_shortcut_triggered()
 void MainWindow::on_actionImport_script_content_triggered()
 {
 	ScriptContentDialog scriptContentDialog(ScriptContentDialog::Write, mScript, this);
+    scriptContentDialog.setWindowFlags(scriptContentDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 	if(scriptContentDialog.exec() == QDialog::Accepted)
 	{
 		QByteArray newContent(scriptContentDialog.text().trimmed().toUtf8());
@@ -1056,6 +1073,7 @@ void MainWindow::on_actionExport_script_content_triggered()
     writeScript(&buffer);
 
     ScriptContentDialog scriptContentDialog(ScriptContentDialog::Read, mScript, this);
+    scriptContentDialog.setWindowFlags(scriptContentDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
     scriptContentDialog.setText(QString::fromUtf8(buffer.buffer()));
     scriptContentDialog.exec();
 }
@@ -1063,6 +1081,7 @@ void MainWindow::on_actionExport_script_content_triggered()
 void MainWindow::on_actionScriptSettings_triggered()
 {
 	ScriptSettingsDialog scriptSettingsDialog(this);
+    scriptSettingsDialog.setWindowFlags(scriptSettingsDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 	scriptSettingsDialog.setPauseBefore(mScript->pauseBefore());
 	scriptSettingsDialog.setPauseAfter(mScript->pauseAfter());
 	if(scriptSettingsDialog.exec() == QDialog::Accepted)
@@ -1095,6 +1114,7 @@ void MainWindow::on_actionHelp_triggered()
 void MainWindow::on_actionTake_screenshot_triggered()
 {
     ActionTools::ScreenshotWizard screenshotWizard(mScript, true, this);
+    screenshotWizard.setWindowFlags(screenshotWizard.windowFlags() | Qt::WindowContextHelpButtonHint);
     screenshotWizard.exec();
 }
 
@@ -1270,7 +1290,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 			{
 				QString missingActions(tr("Script loaded, some actions are missing:<ul>"));
 
-				foreach(const QString &missingAction, mScript->missingActions())
+				for(const QString &missingAction: mScript->missingActions())
 					missingActions += "<li>" + missingAction + "</li>";
 
 				missingActions += "</ul>";
@@ -1288,6 +1308,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 								   .arg(mScript->statusMessage())
 								   .arg(mScript->line())
 								   .arg(mScript->column()), QMessageBox::Warning, QMessageBox::Ok, 0, 0, this);
+            messageBox.setWindowFlags(messageBox.windowFlags() | Qt::WindowContextHelpButtonHint);
 			messageBox.setTextFormat(Qt::RichText);
 			messageBox.exec();
 		}
@@ -1808,6 +1829,7 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 	}
 
 	ChangelogDialog changelogDialog(this);
+    changelogDialog.setWindowFlags(changelogDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 	changelogDialog.setVersion(version);
 	changelogDialog.setReleaseDate(releaseDate);
 
@@ -2023,6 +2045,7 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exc
 void MainWindow::openParametersDialog(int parameter, int line, int column)
 {
     ScriptParametersDialog scriptParametersDialog(mScript, this);
+    scriptParametersDialog.setWindowFlags(scriptParametersDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 	QList<ActionTools::ScriptParameter> parameters = mScript->parameters();
 	scriptParametersDialog.setCurrentParameter(parameter);
 	scriptParametersDialog.setCurrentLine(line);
@@ -2034,6 +2057,7 @@ void MainWindow::openParametersDialog(int parameter, int line, int column)
 void MainWindow::openResourceDialog(const QString &resource)
 {
     ResourceDialog resourceDialog(mScript, this);
+    resourceDialog.setWindowFlags(resourceDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
     resourceDialog.setCurrentResource(resource);
     QHash<QString, ActionTools::Resource> resources = mScript->resources();
     if(resourceDialog.exec() == QDialog::Accepted)
@@ -2052,7 +2076,7 @@ QList<int> MainWindow::selectedRows() const
 
 	QList<int> selectedRows;
 
-	foreach(const QModelIndex &index, selectedIndexes)
+	for(const QModelIndex &index: selectedIndexes)
 	{
 		if(index.column() == ScriptModel::ColumnLabel)
 			selectedRows << index.row();
@@ -2217,7 +2241,7 @@ void MainWindow::actionSelectionChanged(int selectionCount)
 	bool hasSelection = (selectionCount > 0);
 
 	bool hasSelectionEnabledActions = false;
-	foreach(int row, selectedRows())
+	for(int row: selectedRows())
 	{
 		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
 		if(!actionInstance)

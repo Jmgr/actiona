@@ -269,10 +269,10 @@ namespace Code
         if(mBatteryInfo->batteryCount() == 0)
             return -1;
 
-        if(mBatteryInfo->remainingCapacity() == -1 || mBatteryInfo->maximumCapacity() <= 0)
+        if(mBatteryInfo->remainingCapacity(0) == -1 || mBatteryInfo->maximumCapacity(0) <= 0)
             return -1;
 
-        return (mBatteryInfo->remainingCapacity() * 100) / mBatteryInfo->maximumCapacity();
+        return (mBatteryInfo->remainingCapacity(0) * 100) / mBatteryInfo->maximumCapacity(0);
 #else
         return mSystemDeviceInfo->batteryLevel();
 #endif
@@ -281,13 +281,16 @@ namespace Code
 	System::PowerState System::powerState() const
 	{
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-        switch(mBatteryInfo->chargingState())
+        if(mBatteryInfo->batteryCount() == 0)
+            return UnknownState;
+
+        switch(mBatteryInfo->chargingState(0))
         {
         case QBatteryInfo::Discharging:
             return BatteryPower;
         case QBatteryInfo::Charging:
             return WallPowerChargingBattery;
-        case QBatteryInfo::IdleChargingState:
+        case QBatteryInfo::Full:
             return WallPower;
         default:
             return UnknownState;
