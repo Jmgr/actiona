@@ -245,6 +245,8 @@ namespace Code
 
 	int System::colorDepth(int screenId) const
 	{
+        Q_UNUSED(screenId)
+
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return 0;// Sadly, no easy way to get this information
 #else
@@ -255,6 +257,8 @@ namespace Code
 
 	int System::displayBrightness(int screenId) const
 	{
+        Q_UNUSED(screenId)
+
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return 0;// Sadly, no easy way to get this information
 #else
@@ -269,10 +273,10 @@ namespace Code
         if(mBatteryInfo->batteryCount() == 0)
             return -1;
 
-        if(mBatteryInfo->remainingCapacity(0) == -1 || mBatteryInfo->maximumCapacity(0) <= 0)
+        if(mBatteryInfo->remainingCapacity() == -1 || mBatteryInfo->maximumCapacity() <= 0)
             return -1;
 
-        return (mBatteryInfo->remainingCapacity(0) * 100) / mBatteryInfo->maximumCapacity(0);
+        return (mBatteryInfo->remainingCapacity() * 100) / mBatteryInfo->maximumCapacity();
 #else
         return mSystemDeviceInfo->batteryLevel();
 #endif
@@ -284,13 +288,13 @@ namespace Code
         if(mBatteryInfo->batteryCount() == 0)
             return UnknownState;
 
-        switch(mBatteryInfo->chargingState(0))
+        switch(mBatteryInfo->chargingState())
         {
         case QBatteryInfo::Discharging:
             return BatteryPower;
         case QBatteryInfo::Charging:
             return WallPowerChargingBattery;
-        case QBatteryInfo::Full:
+        case QBatteryInfo::IdleChargingState:
             return WallPower;
         default:
             return UnknownState;

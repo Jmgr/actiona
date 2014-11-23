@@ -280,6 +280,8 @@ void QxtSmtpPrivate::socketRead()
                 sendNext();
             }
             break;
+        default:
+            break;
         }
     }
 }
