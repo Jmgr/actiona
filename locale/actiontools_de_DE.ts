@@ -114,59 +114,65 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="262"/>
+        <location filename="../actiontools/actioninstance.cpp" line="241"/>
         <source>Invalid image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="282"/>
+        <location filename="../actiontools/actioninstance.cpp" line="261"/>
         <source>Unable to load image: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="300"/>
+        <location filename="../actiontools/actioninstance.cpp" line="279"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="374"/>
+        <location filename="../actiontools/actioninstance.cpp" line="353"/>
         <source>Integer value expected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="409"/>
+        <location filename="../actiontools/actioninstance.cpp" line="388"/>
         <source>Decimal value expected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="497"/>
-        <location filename="../actiontools/actioninstance.cpp" line="505"/>
+        <location filename="../actiontools/actioninstance.cpp" line="513"/>
+        <location filename="../actiontools/actioninstance.cpp" line="521"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="602"/>
-        <location filename="../actiontools/actioninstance.cpp" line="610"/>
+        <location filename="../actiontools/actioninstance.cpp" line="618"/>
+        <location filename="../actiontools/actioninstance.cpp" line="626"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="808"/>
+        <location filename="../actiontools/actioninstance.cpp" line="675"/>
+        <source>Invalid %1 value : %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.cpp" line="836"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="841"/>
+        <location filename="../actiontools/actioninstance.cpp" line="869"/>
         <source>Invalid parameter. Unable to evaluate string</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="262"/>
+        <location filename="../actiontools/actioninstance.cpp" line="455"/>
+        <location filename="../actiontools/actioninstance.h" line="259"/>
         <source>Please choose a value for this field.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="275"/>
+        <location filename="../actiontools/actioninstance.h" line="272"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -199,14 +205,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="310"/>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="317"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="301"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="308"/>
         <source>Choose a window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="310"/>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="317"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="301"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="308"/>
         <source>Unable to grab the pointer.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -631,16 +637,16 @@ Double-click to show</source>
     <name>Code::Image</name>
     <message>
         <location filename="../actiontools/code/image.cpp" line="66"/>
-        <location filename="../actiontools/code/image.cpp" line="293"/>
+        <location filename="../actiontools/code/image.cpp" line="292"/>
         <source>Unable to load image from file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../actiontools/code/image.cpp" line="69"/>
-        <location filename="../actiontools/code/image.cpp" line="461"/>
-        <location filename="../actiontools/code/image.cpp" line="517"/>
-        <location filename="../actiontools/code/image.cpp" line="553"/>
-        <location filename="../actiontools/code/image.cpp" line="590"/>
+        <location filename="../actiontools/code/image.cpp" line="460"/>
+        <location filename="../actiontools/code/image.cpp" line="516"/>
+        <location filename="../actiontools/code/image.cpp" line="552"/>
+        <location filename="../actiontools/code/image.cpp" line="589"/>
         <source>Incorrect parameter type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -666,36 +672,36 @@ Double-click to show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="282"/>
+        <location filename="../actiontools/code/image.cpp" line="281"/>
         <source>Unable to get the image data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="304"/>
+        <location filename="../actiontools/code/image.cpp" line="303"/>
         <source>Unable to save image to file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="316"/>
+        <location filename="../actiontools/code/image.cpp" line="315"/>
         <source>Unable to apply filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="353"/>
+        <location filename="../actiontools/code/image.cpp" line="352"/>
         <source>Cannot set filter option %1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="444"/>
-        <location filename="../actiontools/code/image.cpp" line="487"/>
-        <location filename="../actiontools/code/image.cpp" line="543"/>
-        <location filename="../actiontools/code/image.cpp" line="580"/>
+        <location filename="../actiontools/code/image.cpp" line="443"/>
+        <location filename="../actiontools/code/image.cpp" line="486"/>
+        <location filename="../actiontools/code/image.cpp" line="542"/>
+        <location filename="../actiontools/code/image.cpp" line="579"/>
         <source>Error while searching for a sub-image: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="528"/>
-        <location filename="../actiontools/code/image.cpp" line="564"/>
+        <location filename="../actiontools/code/image.cpp" line="527"/>
+        <location filename="../actiontools/code/image.cpp" line="563"/>
         <source>Parameter &quot;callback&quot; is not a function</source>
         <translation type="unfinished"></translation>
     </message>

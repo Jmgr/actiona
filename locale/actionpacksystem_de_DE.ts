@@ -393,11 +393,6 @@ Downsampling is used to accelerate the search when using large images</source>
         <source>Error while searching: %1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="287"/>
-        <source>Invalid %1 value : %2</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Actions::KillProcessDefinition</name>
@@ -770,24 +765,24 @@ Downsampling is used to accelerate the search when using large images</source>
 <context>
     <name>Code::MediaPlaylist</name>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="173"/>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="184"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="161"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="172"/>
         <source>Add media failed : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="195"/>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="206"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="183"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="194"/>
         <source>Insert media failed : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="217"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="205"/>
         <source>Clear failed : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="263"/>
+        <location filename="../actions/actionpacksystem/code/mediaplaylist.cpp" line="251"/>
         <source>Remove media failed : %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -804,7 +799,7 @@ Downsampling is used to accelerate the search when using large images</source>
     <name>Code::Process</name>
     <message>
         <location filename="../actions/actionpacksystem/code/process.cpp" line="90"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="173"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="161"/>
         <source>Invalid filename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -814,34 +809,34 @@ Downsampling is used to accelerate the search when using large images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="263"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="268"/>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="277"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="251"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="256"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="265"/>
         <source>Write failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="363"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="351"/>
         <source>Invalid process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="375"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="363"/>
         <source>Wait for finished failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="383"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="371"/>
         <source>Wait for started failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="391"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="379"/>
         <source>Waiting for bytes written failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/process.cpp" line="399"/>
+        <location filename="../actions/actionpacksystem/code/process.cpp" line="387"/>
         <source>Waiting for ready read failed</source>
         <translation type="unfinished"></translation>
     </message>
