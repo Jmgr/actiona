@@ -24,9 +24,9 @@
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QStandardPaths>
-#include <QDeviceInfo>
-#include <QBatteryInfo>
-#include <QStorageInfo>
+#include "qdeviceinfo.h"
+#include "qbatteryinfo.h"
+#include "qstorageinfo.h"
 #include <QLocale>
 #else
 #include <QSystemInfo>
