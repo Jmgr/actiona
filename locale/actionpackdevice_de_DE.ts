@@ -519,7 +519,7 @@
     <message>
         <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="62"/>
         <source>Write text</source>
-        <translation>Schreibt Text</translation>
+        <translation>Text schreiben</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="65"/>
