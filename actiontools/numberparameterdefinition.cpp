@@ -46,17 +46,28 @@ namespace ActionTools
 		mSpinBox->setMaximum(mMaximum);
 		mSpinBox->setMinimum(mMinimum);
 		mSpinBox->setSingleStep(mSingleStep);
+        mSpinBox->setSpecialValueText(mSpecialValueText);
 
 		addEditor(mSpinBox);
 	}
 
 	void NumberParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mSpinBox->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
+        SubParameter subParameter = actionInstance->subParameter(name().original(), "value");
+
+        mSpinBox->setFromSubParameter(subParameter);
+
+        if(!subParameter.isCode() && !mSpecialValueText.isEmpty() && subParameter.value().toString() == QString::number(mMinimum))
+            mSpinBox->setValue(mMinimum);//Special case to display the special value text
 	}
 
 	void NumberParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", mSpinBox->isCode(), mSpinBox->text());
+        QString text = mSpinBox->text();
+
+        if(!mSpecialValueText.isEmpty() && text == mSpecialValueText)
+            text = QString::number(mSpinBox->value());
+
+        actionInstance->setSubParameter(name().original(), "value", mSpinBox->isCode(), text);
 	}
 }

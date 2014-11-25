@@ -49,7 +49,7 @@ namespace ActionTools
 #ifdef Q_OS_LINUX
 	bool NativeEventFilteringApplication::x11EventFilter(XEvent *event)
 	{
-		foreach(NativeEventFilter *filter, mNativeFilters)
+		for(NativeEventFilter *filter: mNativeFilters)
 		{
 			if(filter && filter->x11EventFilter(event))
 				return true;
@@ -62,7 +62,7 @@ namespace ActionTools
 #ifdef Q_OS_WIN
 	bool NativeEventFilteringApplication::winEventFilter(MSG *msg, long *result)
 	{
-		foreach(NativeEventFilter *filter, mNativeFilters)
+		for(NativeEventFilter *filter: mNativeFilters)
 		{
 			if(filter && filter->winEventFilter(msg, result))
 				return true;

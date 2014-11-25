@@ -50,7 +50,7 @@ namespace ActionTools
 	void MultiTextParameterDefinition::save(ActionInstance *actionInstance)
 	{
 		QString textBuffer;
-		foreach(const QString &text, mItemListWidget->items())
+		for(const QString &text: mItemListWidget->items())
 			textBuffer += QString("%1\n").arg(text);
 
 		actionInstance->setSubParameter(name().original(), "value", textBuffer);

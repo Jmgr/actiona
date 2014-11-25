@@ -23,14 +23,17 @@ HEADERS += actions/readtextfiledefinition.h \
     actions/webdownloaddefinition.h \
     actions/webdownloadinstance.h \
     actions/readenvironmentdefinition.h \
-    actions/readenvironmentinstance.h
+    actions/readenvironmentinstance.h \
+    actions/sendmaildefinition.h \
+    actions/sendmailinstance.h
 SOURCES +=	actions/readtextfileinstance.cpp \
 	actions/readregistryinstance.cpp \
 	actions/writeregistryinstance.cpp \
     actions/writetextfileinstance.cpp \
     actions/webdownloadinstance.cpp \
     actions/readenvironmentinstance.cpp \
-    actions/readinifileinstance.cpp
+    actions/readinifileinstance.cpp \
+    actions/sendmailinstance.cpp
 
 
 

@@ -417,7 +417,7 @@ void MainWindow::postInit()
 		QString message = tr("<b>Unable to load %n action(s):</b>\n", "", mPackLoadErrors.count());
 		message += "<ul>";
 
-		foreach(const QString &error, mPackLoadErrors)
+		for(const QString &error: mPackLoadErrors)
 		{
 			message += "<li>" + error + "</li>";
 		}
@@ -876,7 +876,7 @@ void MainWindow::on_actionExecute_selection_triggered()
 	}
 
 	//Set the current selection
-	foreach(int row, selection)
+	for(int row: selection)
 	{
 		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
 		if(!actionInstance)
@@ -1290,7 +1290,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 			{
 				QString missingActions(tr("Script loaded, some actions are missing:<ul>"));
 
-				foreach(const QString &missingAction, mScript->missingActions())
+				for(const QString &missingAction: mScript->missingActions())
 					missingActions += "<li>" + missingAction + "</li>";
 
 				missingActions += "</ul>";
@@ -2076,7 +2076,7 @@ QList<int> MainWindow::selectedRows() const
 
 	QList<int> selectedRows;
 
-	foreach(const QModelIndex &index, selectedIndexes)
+	for(const QModelIndex &index: selectedIndexes)
 	{
 		if(index.column() == ScriptModel::ColumnLabel)
 			selectedRows << index.row();
@@ -2241,7 +2241,7 @@ void MainWindow::actionSelectionChanged(int selectionCount)
 	bool hasSelection = (selectionCount > 0);
 
 	bool hasSelectionEnabledActions = false;
-	foreach(int row, selectedRows())
+	for(int row: selectedRows())
 	{
 		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
 		if(!actionInstance)

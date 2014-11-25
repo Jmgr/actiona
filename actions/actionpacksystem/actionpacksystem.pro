@@ -2,12 +2,15 @@ include(../common_actions.pri)
 include(actions/actions.pri)
 include(code/code.pri)
 TARGET = ActionPackSystem
-QT += script
+QT += script network
 equals(QT_MAJOR_VERSION, 5) {
-QT += widgets multimedia multimediawidgets systeminfo
+QT += widgets multimedia multimediawidgets network
 OTHER_FILES += system.json
 }
 unix:QT += dbus
+
+include(systeminfo/systeminfo.pri)
+
 HEADERS += actionpacksystem.h \
     systemsession.h
 RESOURCES += actionpacksystem.qrc

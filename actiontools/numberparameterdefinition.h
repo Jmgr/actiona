@@ -44,6 +44,7 @@ namespace ActionTools
 		void setMaximum(int maximum)									{ mMaximum = maximum; }
 		void setMinimum(int minimum)									{ mMinimum = minimum; }
 		void setSingleStep(int singleStep)								{ mSingleStep = singleStep; }
+        void setSpecialValueText(const QString &specialValueText)       { mSpecialValueText = specialValueText; }
 		
 	private:
 		CodeSpinBox *mSpinBox;
@@ -52,6 +53,7 @@ namespace ActionTools
 		int mMaximum;
 		int mMinimum;
 		int mSingleStep;
+        QString mSpecialValueText;
 
 		Q_DISABLE_COPY(NumberParameterDefinition)
 	};

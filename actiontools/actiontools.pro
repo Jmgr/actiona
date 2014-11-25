@@ -18,6 +18,8 @@ FORMS += codeeditordialog.ui \
     savescreenshotwizardpage.ui
 include(globalshortcut/globalshortcut.pri)
 include(qxtcommandoptions/qxtcommandoptions.pri)
+include(qxtsmtp/qxtsmtp.pri)
+include(qxtcore/qxtcore.pri)
 include(widgets.pri)
 include(parameters.pri)
 include(code/code.pri)

@@ -406,7 +406,7 @@ namespace ActionTools
     {
         QStringList windowTitles;
 
-        foreach(const ActionTools::WindowHandle &windowHandle, windowList())
+        for(const ActionTools::WindowHandle &windowHandle: windowList())
         {
             QString title = windowHandle.title();
             if(title.isEmpty())
@@ -422,7 +422,7 @@ namespace ActionTools
 
 	WindowHandle WindowHandle::findWindow(const QString &title)
 	{
-		foreach(const WindowHandle &windowHandle, windowList())
+		for(const WindowHandle &windowHandle: windowList())
 		{
 			if(windowHandle.title() == title)
 				return windowHandle;
@@ -436,7 +436,7 @@ namespace ActionTools
 		if(!regExp.isValid())
 			return WindowHandle();
 
-		foreach(const WindowHandle &windowHandle, windowList())
+		for(const WindowHandle &windowHandle: windowList())
 		{
 			if(regExp.exactMatch(windowHandle.title()))
 				return windowHandle;
@@ -449,7 +449,7 @@ namespace ActionTools
 	{
 		QList<WindowHandle> back;
 
-		foreach(const WindowHandle &windowHandle, windowList())
+		for(const WindowHandle &windowHandle: windowList())
 		{
 			if(windowHandle.title() == title)
 				back.append(windowHandle);
@@ -462,7 +462,7 @@ namespace ActionTools
 	{
 		QList<WindowHandle> back;
 
-		foreach(const WindowHandle &windowHandle, windowList())
+		for(const WindowHandle &windowHandle: windowList())
 		{
 			if(regExp.exactMatch(windowHandle.title()))
 				back.append(windowHandle);

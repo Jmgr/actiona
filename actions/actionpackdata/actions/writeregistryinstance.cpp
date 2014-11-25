@@ -35,12 +35,12 @@ namespace Actions
 		ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, ReadRegistryInstance::keys, "key");
 		QString subKey = evaluateString(ok, "subKey");
 		QString value = evaluateString(ok, "value");
-		QVariant data = evaluateVariant(ok, "data");
+        QScriptValue data = evaluateValue(ok, "data");
 
 		if(!ok)
 			return;
 
-		switch(ActionTools::Registry::write(data, key, subKey, value))
+        switch(ActionTools::Registry::write(data.toVariant(), key, subKey, value))
 		{
 		case ActionTools::Registry::WriteCannotFindSubKey:
 			setCurrentParameter("subKey");

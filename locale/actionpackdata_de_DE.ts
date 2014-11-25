@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackData</name>
     <message>
-        <location filename="../actions/actionpackdata/actionpackdata.h" line="85"/>
+        <location filename="../actions/actionpackdata/actionpackdata.h" line="90"/>
         <source>Data related actions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -421,6 +421,324 @@
     </message>
 </context>
 <context>
+    <name>Actions::SendMailDefinition</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="50"/>
+        <source>Server name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="51"/>
+        <source>The name or IP of the SMTP server to use
+Example: mail.example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="54"/>
+        <source>Secure connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="55"/>
+        <source>Secure (encrypted) connection to the server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="59"/>
+        <source>User name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="60"/>
+        <source>The user (or login) name to use
+Many SMTP servers use the e-mail address as user name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="63"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="64"/>
+        <source>The password to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="67"/>
+        <source>Sender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="68"/>
+        <source>The sender&apos;s e-mail address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="71"/>
+        <source>Receivers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="72"/>
+        <source>The receiver&apos;s e-mail address
+Can contain multiple receivers separated with a comma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="75"/>
+        <source>Subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="76"/>
+        <source>The e-mail&apos;s subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="79"/>
+        <source>Body</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="80"/>
+        <source>The e-mail&apos;s body</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="83"/>
+        <source>Attachment name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="84"/>
+        <source>The attachment name, an empty name means that there is no attachment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="87"/>
+        <source>Attachment data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="88"/>
+        <source>The data to attach to the e-mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="91"/>
+        <source>Attachment content type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="92"/>
+        <source>The MIME content type of the attachment
+If left empty, Actiona will try to deduce it from the data type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="97"/>
+        <source>Carbon copy (Cc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="98"/>
+        <source>The carbon copy receiver&apos;s e-mail address
+Can contain multiple receivers separated with a comma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="101"/>
+        <source>Blind carbon copy (Bcc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="102"/>
+        <source>The blind carbon copy receiver&apos;s e-mail address
+Can contain multiple receivers separated with a comma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="105"/>
+        <source>Server port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="106"/>
+        <source>The server port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="110"/>
+        <source>Default port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="113"/>
+        <source>Extra headers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="114"/>
+        <source>Extra headers to add to the e-mail
+Should contain one header per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="117"/>
+        <source>Connection error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="118"/>
+        <source>Error while sending e-mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="128"/>
+        <source>Attachment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Actions::SendMailInstance</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="115"/>
+        <source>Failed to auto detect the attachment content type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="120"/>
+        <source>server port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="163"/>
+        <source>Failed to parse an extra header: &quot;%1&quot; has to be in the form &quot;name: value&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="175"/>
+        <source>Invalid attachment data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="197"/>
+        <source>Unknown image type; supported types are PNG and JPG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="207"/>
+        <source>Invalid image data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="245"/>
+        <source>Sending e-mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="246"/>
+        <source>Connecting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="260"/>
+        <source>Connection failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="267"/>
+        <source>Encryption failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="274"/>
+        <source>Authentication failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="280"/>
+        <source>Sending e-mail...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="289"/>
+        <source>Sender %1 has been rejected: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="298"/>
+        <source>Recipient %1 has been rejected: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="312"/>
+        <source>No recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="315"/>
+        <source>Command unrecognized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="318"/>
+        <source>Syntax error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="321"/>
+        <source>Command not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="324"/>
+        <source>Bad sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="327"/>
+        <source>Parameter not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="330"/>
+        <source>Mailbox unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="333"/>
+        <source>User not local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="336"/>
+        <source>Message is too large</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="339"/>
+        <source>Invalid mailbox name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="342"/>
+        <source>Transaction failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="345"/>
+        <source>Unknown error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="349"/>
+        <source>Failed sending e-mail: %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Actions::WebDownloadDefinition</name>
     <message>
         <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="51"/>
@@ -766,12 +1084,12 @@
 <context>
     <name>Code::Clipboard</name>
     <message>
-        <location filename="../actions/actionpackdata/code/clipboard.cpp" line="123"/>
+        <location filename="../actions/actionpackdata/code/clipboard.cpp" line="113"/>
         <source>Selection mode is not supported by your operating system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/clipboard.cpp" line="130"/>
+        <location filename="../actions/actionpackdata/code/clipboard.cpp" line="120"/>
         <source>Find buffer mode is not supported by your operating system</source>
         <translation type="unfinished"></translation>
     </message>
@@ -781,131 +1099,131 @@
     <message>
         <location filename="../actions/actionpackdata/code/file.cpp" line="56"/>
         <location filename="../actions/actionpackdata/code/file.cpp" line="91"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="226"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="214"/>
         <source>Incorrect parameter count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="131"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="119"/>
         <source>Unable to open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="142"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="147"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="156"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="130"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="135"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="144"/>
         <source>Write failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="288"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="384"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="276"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="372"/>
         <source>Unable to create destination directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="294"/>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="390"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="282"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="378"/>
         <source>Destination directory doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="309"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="297"/>
         <source>Copy failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="347"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="335"/>
         <source>Copy failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="353"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="341"/>
         <source>Copy failed: aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="405"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="393"/>
         <source>Move/rename failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="443"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="431"/>
         <source>Move failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="449"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="437"/>
         <source>Move failed: aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="498"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="486"/>
         <source>Rename failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="504"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="492"/>
         <source>Rename failed: aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="531"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="519"/>
         <source>Remove failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="563"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="551"/>
         <source>Remove failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="569"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="557"/>
         <source>Remove failed: aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="590"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="578"/>
         <source>File not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="592"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="580"/>
         <source>Path not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="594"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="582"/>
         <source>Access denied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="596"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="584"/>
         <source>This file is used by another process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="598"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="586"/>
         <source>The disk is full</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="601"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="589"/>
         <source>The file already exists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="603"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="591"/>
         <source>Invalid name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="605"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="593"/>
         <source>Canceled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/file.cpp" line="607"/>
+        <location filename="../actions/actionpackdata/code/file.cpp" line="595"/>
         <source>Unknown error (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -913,86 +1231,127 @@
 <context>
     <name>Code::IniFile</name>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="72"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="60"/>
         <source>Cannot load the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="91"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="79"/>
         <source>Cannot save the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="113"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="101"/>
         <source>Cannot find the section named &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="138"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="126"/>
         <source>Invalid section index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="155"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="143"/>
         <source>Cannot delete section named &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="178"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="166"/>
         <source>Invalid key index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="209"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="197"/>
         <source>Cannot delete key named &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Code::Mail</name>
+    <message>
+        <location filename="../actions/actionpackdata/code/mail.cpp" line="117"/>
+        <source>Incorrect parameter type: not a MailMessage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/mail.cpp" line="126"/>
+        <source>Cannot establish a connection to the server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/mail.cpp" line="135"/>
+        <source>Cannot encrypt the connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/mail.cpp" line="144"/>
+        <source>Cannot authenticate to the server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/mail.cpp" line="153"/>
+        <source>Wait for finished failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/mail.cpp" line="162"/>
+        <source>Wait for disconnected failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Code::MailMessage</name>
+    <message>
+        <location filename="../actions/actionpackdata/code/mailmessage.cpp" line="85"/>
+        <source>Incorrect parameter type: not a MailAttachment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Code::Registry</name>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="71"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="59"/>
         <source>Unable to open the key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="90"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="78"/>
         <source>Unable to create the key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="115"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="123"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="138"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="103"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="111"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="126"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="133"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="142"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="145"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="154"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="157"/>
         <source>Cannot set the value data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="164"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="176"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="188"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="206"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="235"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="250"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="194"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="223"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="238"/>
         <source>Cannot find the value to read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="259"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="247"/>
         <source>Invalid value type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="279"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="321"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="267"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="309"/>
         <source>Unable to query informations about this key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="355"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="460"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="343"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="448"/>
         <source>Unable to delete the key</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1005,28 +1364,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="117"/>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="124"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="105"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="112"/>
         <source>The requested database driver is not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="161"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="149"/>
         <source>Unable to establish a connection to the database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="174"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="162"/>
         <source>Failed to prepare the query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="208"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="196"/>
         <source>Failed to execute the query : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/sql.cpp" line="219"/>
+        <location filename="../actions/actionpackdata/code/sql.cpp" line="207"/>
         <source>Cannot fetch the result of a non-select query</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1034,29 +1393,29 @@
 <context>
     <name>Code::Tcp</name>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="106"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="94"/>
         <source>Cannot establish a connection to the host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="114"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="102"/>
         <source>Waiting for bytes written failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="122"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="110"/>
         <source>Waiting for ready read failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="130"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="118"/>
         <source>Waiting for disconnection failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="141"/>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="146"/>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="155"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="129"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="134"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="143"/>
         <source>Write failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1064,17 +1423,17 @@
 <context>
     <name>Code::TcpServer</name>
     <message>
-        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="71"/>
+        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="59"/>
         <source>Unable to start listening</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="79"/>
+        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="67"/>
         <source>Waiting for new connection failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="89"/>
+        <location filename="../actions/actionpackdata/code/tcpserver.cpp" line="77"/>
         <source>There is no pending connection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1082,19 +1441,19 @@
 <context>
     <name>Code::Udp</name>
     <message>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="87"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="75"/>
         <source>Cannot establish a connection to the host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="95"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="83"/>
         <source>Waiting for ready read failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="106"/>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="111"/>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="120"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="94"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="99"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="108"/>
         <source>Write failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1102,7 +1461,7 @@
 <context>
     <name>Code::Web</name>
     <message>
-        <location filename="../actions/actionpackdata/code/web.cpp" line="107"/>
+        <location filename="../actions/actionpackdata/code/web.cpp" line="95"/>
         <source>Unable to open the destination file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1239,6 +1598,16 @@
         <source>Write a plain text file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="121"/>
+        <source>Send e-mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="124"/>
+        <source>Sends an e-mail</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ReadEnvironmentVariableInstance::modes</name>
@@ -1276,6 +1645,34 @@
     <message>
         <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="30"/>
         <source>Read only a selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SendMailInstance::attachmentContentTypes</name>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="41"/>
+        <source>Auto detect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="42"/>
+        <source>Binary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="43"/>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="44"/>
+        <source>Jpg image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="45"/>
+        <source>Png image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -41,7 +41,7 @@ namespace ActionTools
 
         QMenu *back = new QMenu(parent);
 
-        foreach(const QString &key, mScript->resources().keys())
+        for(const QString &key: mScript->resources().keys())
         {
             const ActionTools::Resource &resource = mScript->resources().value(key);
             switch(resource.type())

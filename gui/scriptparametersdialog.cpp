@@ -100,7 +100,7 @@ QMenu *ScriptParametersDialog::createVariablesMenu(QWidget *parent) const
 
     QMenu *back = new QMenu(parent);
 
-    foreach(const QString &variable, variableList)
+    for(const QString &variable: variableList)
         back->addAction(variable);
 
     return back;

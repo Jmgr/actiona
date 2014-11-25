@@ -55,8 +55,8 @@ namespace Code
 		~Registry();
 	
 	public slots:
-		QString toString() const					{ return "Registry"; }
-        virtual bool equals(const QScriptValue &other) const;
+        QString toString() const                                { return "Registry"; }
+        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Registry>(other); }
 		QScriptValue openKey(Key key, const QString &subKey);
 		QScriptValue createKey(Key key, const QString &subKey);
 		QScriptValue setValue(const QString &value, const QVariant &data) const;

@@ -107,28 +107,9 @@ namespace Code
 
 	QStringList CodeClass::arrayParameterToStringList(const QScriptValue &scriptValue)
 	{
-		QStringList back;
+        QStringList back;
 
-		QScriptValueIterator it(scriptValue);
-		while(it.hasNext())
-		{
-			it.next();
-
-			back << it.value().toString();
-		}
-
-		return back;
-	}
-
-	QScriptValue CodeClass::stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList)
-	{
-		if(stringList.count() == 0)
-			return engine->undefinedValue();
-
-		QScriptValue back = engine->newArray(stringList.count());
-
-		for(int index = 0; index < stringList.count(); ++index)
-			back.setProperty(index, stringList.at(index));
+        qScriptValueToSequence(scriptValue, back);
 
 		return back;
 	}

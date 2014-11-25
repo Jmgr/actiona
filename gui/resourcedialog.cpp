@@ -108,7 +108,7 @@ void ResourceDialog::insertFiles(const QStringList &filenames)
     if(wasSortingEnabled)
         ui->resourcesTableWidget->setSortingEnabled(false);
 
-    foreach(const QString &filename, filenames)
+    for(const QString &filename: filenames)
     {
         QFile file(filename);
         if(!file.open(QIODevice::ReadOnly))
@@ -144,7 +144,7 @@ void ResourceDialog::removeSelection()
         return (first.topRow() > second.topRow());
     });
 
-    foreach(const QTableWidgetSelectionRange &selectionRange, selectionRanges)
+    for(const QTableWidgetSelectionRange &selectionRange: selectionRanges)
     {
         for(int row = selectionRange.bottomRow(); row >= selectionRange.topRow(); --row)
             ui->resourcesTableWidget->removeRow(row);

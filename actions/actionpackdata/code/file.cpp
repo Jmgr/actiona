@@ -111,18 +111,6 @@ namespace Code
 		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&exists, "exists", scriptEngine);
 	}
 
-	bool File::equals(const QScriptValue &other) const
-	{
-		if(other.isUndefined() || other.isNull())
-			return false;
-
-		QObject *object = other.toQObject();
-		if(File *otherFile = qobject_cast<File*>(object))
-			return (otherFile == this || &otherFile->mFile == &mFile);
-
-		return false;
-	}
-	
 	QScriptValue File::open(const QString &filename, OpenMode mode)
 	{
 		mFile.setFileName(filename);

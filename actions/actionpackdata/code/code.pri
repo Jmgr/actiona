@@ -6,7 +6,10 @@ HEADERS += code/file.h \
     code/tcp.h \
     code/sql.h \
     code/tcpserver.h \
-    code/web.h
+    code/web.h \
+    code/mail.h \
+    code/mailmessage.h \
+    code/mailattachment.h
 
 SOURCES += code/file.cpp \
     code/clipboard.cpp \
@@ -16,6 +19,9 @@ SOURCES += code/file.cpp \
     code/tcp.cpp \
     code/sql.cpp \
     code/tcpserver.cpp \
-    code/web.cpp
+    code/web.cpp \
+    code/mail.cpp \
+    code/mailmessage.cpp \
+    code/mailattachment.cpp
 
 

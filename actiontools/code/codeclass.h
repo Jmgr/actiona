@@ -53,14 +53,26 @@ namespace Code
 		explicit CodeClass();
         virtual ~CodeClass() {}
 
+        template<class T>
+        bool defaultEqualsImplementation(const QScriptValue &other) const
+        {
+            if(other.isUndefined() || other.isNull())
+                return false;
+
+            QObject *object = other.toQObject();
+            if(T *otherObject = qobject_cast<T*>(object))
+                return (otherObject == this);
+
+            return false;
+        }
+
 		void throwError(const QString &errorType, const QString &message, const QString &parent = "Error") const;
 
 		static QScriptValue constructor(CodeClass *object, QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(CodeClass *object, QScriptEngine *engine);
 		static QByteArray toEncoding(const QString &string, Encoding encoding);
 		static QString fromEncoding(const QByteArray &byteArray, Encoding encoding);
-		static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
-		static QScriptValue stringListToArrayParameter(QScriptEngine *engine, const QStringList &stringList);
+        static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
 
         virtual int additionalMemoryCost() const { return 0; }
 

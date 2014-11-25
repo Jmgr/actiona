@@ -75,18 +75,6 @@ namespace Code
     {
     }
 
-    bool Web::equals(const QScriptValue &other) const
-    {
-        if(other.isUndefined() || other.isNull())
-            return false;
-
-        QObject *object = other.toQObject();
-        if(Web *otherWeb = qobject_cast<Web*>(object))
-            return (otherWeb == this || otherWeb->mNetworkAccessManager == mNetworkAccessManager);
-
-        return false;
-    }
-
 	QScriptValue Web::download(const QString &urlString, const QScriptValue &options)
 	{
 		mData.clear();

@@ -53,18 +53,6 @@ namespace Code
         mTcpServer.close();
     }
 
-    bool TcpServer::equals(const QScriptValue &other) const
-    {
-        if(other.isUndefined() || other.isNull())
-            return false;
-
-        QObject *object = other.toQObject();
-        if(TcpServer *otherTcpServer = qobject_cast<TcpServer*>(object))
-            return (otherTcpServer == this || &otherTcpServer->mTcpServer == &mTcpServer);
-
-        return false;
-    }
-	
 	QScriptValue TcpServer::listen(const QString &address, int port)
 	{
 		if(!mTcpServer.listen(QHostAddress(address), port))

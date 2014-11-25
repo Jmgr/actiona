@@ -52,7 +52,7 @@ KeyboardDevice::~KeyboardDevice()
 
 void KeyboardDevice::reset()
 {
-	foreach(int nativeKey, mPressedKeys)
+    for(int nativeKey: mPressedKeys)
 	{
 		doKeyAction(Release, nativeKey);
 	}

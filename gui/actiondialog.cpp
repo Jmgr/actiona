@@ -96,7 +96,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	}
 
 	int tabIndex = 0;
-	foreach(const QString &tab, tabs)
+	for(const QString &tab: tabs)
 	{
 		QWidget *widget = new QWidget;
 		QVBoxLayout *layout = new QVBoxLayout(widget);
@@ -116,7 +116,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		widget->setLayout(layout);
 
 		mParameterTabWidgets.append(widget);
-		mTabWidget->addTab(widget, QApplication::translate("ActionTabs", tab.toLatin1()));
+        mTabWidget->addTab(widget, QApplication::translate("ActionTabs", tab.toUtf8()));
 
 		++tabIndex;
 	}
@@ -260,18 +260,18 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	ui->actionInfo->setText(informations);
 	
 	//Init of parameters
-	foreach(ActionTools::ElementDefinition *element, elements)
+	for(ActionTools::ElementDefinition *element: elements)
 	{
 		if(ActionTools::ParameterDefinition *currentParameter = qobject_cast<ActionTools::ParameterDefinition *>(element))
 			addParameter(currentParameter, currentParameter->tab());
 		else if(ActionTools::GroupDefinition *currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
 		{
-			foreach(ActionTools::ParameterDefinition *parameter, currentGroup->members())
+			for(ActionTools::ParameterDefinition *parameter: currentGroup->members())
 				addParameter(parameter, currentGroup->tab());
 		}
 	}
 
-	foreach(ActionTools::ElementDefinition *element, elements)
+	for(ActionTools::ElementDefinition *element: elements)
 	{
 		if(ActionTools::GroupDefinition *currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
 			currentGroup->init();
@@ -304,9 +304,9 @@ ActionDialog::~ActionDialog()
 QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
 {
     QSet<QString> thisActionsVariables;
-    foreach(ActionTools::ParameterDefinition *parameter, mParameters)
+    for(ActionTools::ParameterDefinition *parameter: mParameters)
     {
-        foreach(QWidget *editor, parameter->editors())
+        for(QWidget *editor: parameter->editors())
         {
             if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(editor))
                 thisActionsVariables.unite(codeEditor->findVariables());
@@ -321,7 +321,7 @@ QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
 
     QMenu *back = new QMenu(parent);
 
-    foreach(const QString &variable, variableList)
+    for(const QString &variable: variableList)
         back->addAction(variable);
 
     return back;
@@ -333,7 +333,7 @@ void ActionDialog::accept()
 	Tools::HighResolutionTimer timer("ActionDialog accept");
 #endif
 	
-	foreach(ActionTools::ParameterDefinition *parameter, mParameters)
+	for(ActionTools::ParameterDefinition *parameter: mParameters)
 		parameter->save(mActionInstance);
 	
 	if(!mParameters.empty())
@@ -389,7 +389,7 @@ void ActionDialog::postInit()
 #endif
     mOtherActionsVariables = mScript->findVariables(0, mActionInstance);//Find in all actions except this one
 
-	foreach(ActionTools::ParameterDefinition *parameter, mParameters)
+	for(ActionTools::ParameterDefinition *parameter: mParameters)
 	{
         parameter->actionUpdate(mScript);
 		parameter->load(mActionInstance);
@@ -437,7 +437,7 @@ void ActionDialog::postInit()
 	
 	if(!mCurrentField.isEmpty())
 	{
-		foreach(ActionTools::ParameterDefinition *parameterDefinition, mParameters)
+		for(ActionTools::ParameterDefinition *parameterDefinition: mParameters)
 		{
 			if(parameterDefinition->name().original() == mCurrentField && parameterDefinition->editors().count() > 0)
 			{
@@ -523,7 +523,7 @@ void ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter, int
 	parentWidget->setLayout(layout);
 
 	parameter->buildEditors(mScript, parentWidget);
-	foreach(QWidget *editor, parameter->editors())
+	for(QWidget *editor: parameter->editors())
 	{
 		if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(editor))
         {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ActionDefinition::CategoryName</name>
     <message>
@@ -166,29 +166,29 @@
 <context>
     <name>ActionTools::ActionInstance</name>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="300"/>
+        <location filename="../actiontools/actioninstance.cpp" line="279"/>
         <source>A variable name can only contain alphanumeric characters and cannot start with a digit.</source>
         <translation>Un nom de variable ne peut contenir que des caractères alphanumériques et ne peut pas commencer par un chiffre.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="374"/>
+        <location filename="../actiontools/actioninstance.cpp" line="353"/>
         <source>Integer value expected.</source>
         <translation>Valeur entière attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="409"/>
+        <location filename="../actiontools/actioninstance.cpp" line="388"/>
         <source>Decimal value expected.</source>
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="497"/>
-        <location filename="../actiontools/actioninstance.cpp" line="505"/>
+        <location filename="../actiontools/actioninstance.cpp" line="513"/>
+        <location filename="../actiontools/actioninstance.cpp" line="521"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="602"/>
-        <location filename="../actiontools/actioninstance.cpp" line="610"/>
+        <location filename="../actiontools/actioninstance.cpp" line="618"/>
+        <location filename="../actiontools/actioninstance.cpp" line="626"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
@@ -198,22 +198,27 @@
         <translation>Impossible de trouver une procédure nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="262"/>
+        <location filename="../actiontools/actioninstance.cpp" line="241"/>
         <source>Invalid image.</source>
         <translation>Image invalide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="282"/>
+        <location filename="../actiontools/actioninstance.cpp" line="261"/>
         <source>Unable to load image: %1</source>
         <translation>Impossible de charger l&apos;image : %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="808"/>
+        <location filename="../actiontools/actioninstance.cpp" line="675"/>
+        <source>Invalid %1 value : %2</source>
+        <translation>Valeur %1 incorrecte : %2</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/actioninstance.cpp" line="836"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="841"/>
+        <location filename="../actiontools/actioninstance.cpp" line="869"/>
         <source>Invalid parameter. Unable to evaluate string</source>
         <translation>Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
     </message>
@@ -234,12 +239,13 @@
         <translation type="obsolete">[Données brutes]</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="262"/>
+        <location filename="../actiontools/actioninstance.cpp" line="455"/>
+        <location filename="../actiontools/actioninstance.h" line="259"/>
         <source>Please choose a value for this field.</source>
         <translation>Merci de choisir une valeur pour ce champ.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="275"/>
+        <location filename="../actiontools/actioninstance.h" line="272"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation>&quot;%1&quot; est une valeur incorrecte.</translation>
     </message>
@@ -307,14 +313,14 @@
         <translation>Choisissez une fenêtre en cliquant sur ce bouton puis déplacez le curseur vers la fenêtre ciblée et relâchez le bouton de la souris.</translation>
     </message>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="310"/>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="317"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="301"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="308"/>
         <source>Choose a window</source>
         <translation>Choix de fenêtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="310"/>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="317"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="301"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="308"/>
         <source>Unable to grab the pointer.</source>
         <translation>Impossible de récupérer le curseur.</translation>
     </message>
@@ -777,10 +783,10 @@ Double-cliquez pour afficher</translation>
     <name>Code::Image</name>
     <message>
         <location filename="../actiontools/code/image.cpp" line="69"/>
-        <location filename="../actiontools/code/image.cpp" line="461"/>
-        <location filename="../actiontools/code/image.cpp" line="517"/>
-        <location filename="../actiontools/code/image.cpp" line="553"/>
-        <location filename="../actiontools/code/image.cpp" line="590"/>
+        <location filename="../actiontools/code/image.cpp" line="460"/>
+        <location filename="../actiontools/code/image.cpp" line="516"/>
+        <location filename="../actiontools/code/image.cpp" line="552"/>
+        <location filename="../actiontools/code/image.cpp" line="589"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
@@ -806,42 +812,42 @@ Double-cliquez pour afficher</translation>
         <translation>Impossible de changer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="282"/>
+        <location filename="../actiontools/code/image.cpp" line="281"/>
         <source>Unable to get the image data</source>
         <translation>Impossible de récupérer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="444"/>
-        <location filename="../actiontools/code/image.cpp" line="487"/>
-        <location filename="../actiontools/code/image.cpp" line="543"/>
-        <location filename="../actiontools/code/image.cpp" line="580"/>
+        <location filename="../actiontools/code/image.cpp" line="443"/>
+        <location filename="../actiontools/code/image.cpp" line="486"/>
+        <location filename="../actiontools/code/image.cpp" line="542"/>
+        <location filename="../actiontools/code/image.cpp" line="579"/>
         <source>Error while searching for a sub-image: %1</source>
         <translation>Erreur lors de la recherche d&apos;une sous-image : %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="528"/>
-        <location filename="../actiontools/code/image.cpp" line="564"/>
+        <location filename="../actiontools/code/image.cpp" line="527"/>
+        <location filename="../actiontools/code/image.cpp" line="563"/>
         <source>Parameter &quot;callback&quot; is not a function</source>
         <translation>Le paramètre &quot;callback&quot; n&apos;est pas une fonction</translation>
     </message>
     <message>
         <location filename="../actiontools/code/image.cpp" line="66"/>
-        <location filename="../actiontools/code/image.cpp" line="293"/>
+        <location filename="../actiontools/code/image.cpp" line="292"/>
         <source>Unable to load image from file %1</source>
         <translation>Impossible de charger l&apos;image à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="304"/>
+        <location filename="../actiontools/code/image.cpp" line="303"/>
         <source>Unable to save image to file %1</source>
         <translation>Impossible de sauvegarder l&apos;image dans le fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="316"/>
+        <location filename="../actiontools/code/image.cpp" line="315"/>
         <source>Unable to apply filter</source>
         <translation>Impossible d&apos;appliquer le filtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="353"/>
+        <location filename="../actiontools/code/image.cpp" line="352"/>
         <source>Cannot set filter option %1 %2</source>
         <translation>Impossible de changer les options du filtre %1 %2</translation>
     </message>
@@ -1487,8 +1493,8 @@ Double-cliquez pour afficher</translation>
         <location filename="../actiontools/numberformat.cpp" line="30"/>
         <source>%n byte(s)</source>
         <translation>
-            <numerusform>%n octet(s)</numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n octet</numerusform>
+            <numerusform>%n octets</numerusform>
         </translation>
     </message>
     <message>

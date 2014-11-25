@@ -90,7 +90,7 @@ namespace ActionTools
 				if (k->modifiers() & Qt::MetaModifier)
 					qkey |= Qt::META;
 	
-				foreach(X11KeyTrigger* trigger, triggers_) {
+				for(X11KeyTrigger* trigger: triggers_) {
 					if (trigger->isAccepted(qkey)) {
 						trigger->activate();
 						return true;
@@ -286,7 +286,7 @@ namespace ActionTools
 			failed = false;
 			XErrorHandler savedErrorHandler = XSetErrorHandler(XGrabErrorHandler);
 			WId w = QX11Info::appRootWindow();
-			foreach(long mask_mod, X11KeyTriggerManager::ignModifiersList()) {
+			for(long mask_mod: X11KeyTriggerManager::ignModifiersList()) {
 				XGrabKey(QX11Info::display(), code, mod | mask_mod, w, False, GrabModeAsync, GrabModeAsync);
 				GrabbedKey grabbedKey;
 				grabbedKey.code = code;
@@ -321,7 +321,7 @@ namespace ActionTools
 		{
 			X11KeyTriggerManager::instance()->removeTrigger(this);
 	
-			foreach(GrabbedKey key, grabbedKeys_)
+			for(GrabbedKey key: grabbedKeys_)
 				XUngrabKey(QX11Info::display(), key.code, key.mod, QX11Info::appRootWindow());
 		}
 	

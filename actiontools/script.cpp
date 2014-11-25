@@ -147,7 +147,7 @@ namespace ActionTools
 
 	bool Script::hasEnabledActions() const
 	{
-		foreach(ActionInstance *actionInstance, mActionInstances)
+        for(ActionInstance *actionInstance: mActionInstances)
 		{
 			if(actionInstance->isEnabled() && actionInstance->definition()->worksUnderThisOS())
 				return true;
@@ -166,14 +166,14 @@ namespace ActionTools
 			actions << mActionFactory->actionDefinition(actionIndex)->id();
 
 		//First add all the actions contained in the script, then search in all data fields that are in code mode
-		foreach(ActionInstance *actionInstance, mActionInstances)
+        for(ActionInstance *actionInstance: mActionInstances)
 		{
 			result << actionInstance->definition()->index();
 
 			const ParametersData &parametersData = actionInstance->parametersData();
-			foreach(const Parameter &parameter, parametersData)
+            for(const Parameter &parameter: parametersData)
 			{
-				foreach(const SubParameter &subParameter, parameter.subParameters())
+                for(const SubParameter &subParameter: parameter.subParameters())
 				{
 					if(subParameter.isCode())
 					{
@@ -227,7 +227,7 @@ namespace ActionTools
 
 		stream.writeStartElement("actions");
 
-		foreach(int actionIndex, usedActions())
+        for(int actionIndex: usedActions())
 		{
 			ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionIndex);
 
@@ -242,7 +242,7 @@ namespace ActionTools
 		stream.writeStartElement("parameters");
 
         int parameterIndex = 0;
-		foreach(const ScriptParameter &parameter, mParameters)
+        for(const ScriptParameter &parameter: mParameters)
 		{
             emit scriptProcessing(parameterIndex, mParameters.size() - 1, tr("Writing parameters..."));
 
@@ -283,7 +283,7 @@ namespace ActionTools
 		stream.writeAttribute("pauseAfter", QString::number(pauseAfter()));
 
         int actionIndex = 0;
-		foreach(ActionInstance *actionInstance, mActionInstances)
+        for(ActionInstance *actionInstance: mActionInstances)
 		{
             emit scriptProcessing(actionIndex, mActionInstances.size() - 1, tr("Writing actions..."));
 
@@ -306,7 +306,7 @@ namespace ActionTools
 				stream.writeAttribute("timeout", QVariant(actionInstance->timeout()).toString());
 
 			const ExceptionActionInstancesHash &exceptionActionsHash = actionInstance->exceptionActionInstances();
-			foreach(ActionException::Exception exception, exceptionActionsHash.keys())
+            for(ActionException::Exception exception: exceptionActionsHash.keys())
 			{
 				ActionException::ExceptionActionInstance exceptionActionInstance = exceptionActionsHash.value(exception);
 				stream.writeStartElement("exception");
@@ -317,14 +317,14 @@ namespace ActionTools
 			}
 
 			const ParametersData &parametersData = actionInstance->parametersData();
-			foreach(const QString &parameter, parametersData.keys())
+            for(const QString &parameter: parametersData.keys())
 			{
 				const Parameter &parameterData = parametersData.value(parameter);
 
 				stream.writeStartElement("parameter");
 				stream.writeAttribute("name", parameter);
 
-				foreach(const QString &subParameter, parameterData.subParameters().keys())
+                for(const QString &subParameter: parameterData.subParameters().keys())
 				{
 					const SubParameter &subParameterData = parameterData.subParameters().value(subParameter);
 
@@ -601,14 +601,14 @@ namespace ActionTools
 					}
 
                     //Set default values, will be overwritten afterwards, but this is done to make sure we have valid parameters everywhere
-                    foreach(ElementDefinition *element, actionInstance->definition()->elements())
+                    for(ElementDefinition *element: actionInstance->definition()->elements())
                         element->setDefaultValues(actionInstance);
 
 					actionInstance->setLabel(label);
 					actionInstance->setComment(comment);
 
                     ParametersData defaultParametersData = actionInstance->parametersData();
-                    foreach(const QString &parameterKey, parametersData.keys())
+                    for(const QString &parameterKey: parametersData.keys())
                         defaultParametersData[parameterKey] = parametersData.value(parameterKey);
 
                     actionInstance->setParametersData(defaultParametersData);
@@ -624,9 +624,9 @@ namespace ActionTools
 			}
 		}
 
-        foreach(ActionDefinition *actionDefinition, updatableActionDefinitions.keys())
+        for(ActionDefinition *actionDefinition: updatableActionDefinitions.keys())
         {
-            foreach(ActionInstance *actionInstance, mActionInstances)
+            for(ActionInstance *actionInstance: mActionInstances)
             {
                 if(actionInstance->definition() == actionDefinition)
                     actionDefinition->updateAction(actionInstance, updatableActionDefinitions.value(actionDefinition));
@@ -686,7 +686,7 @@ namespace ActionTools
 	{
 		QStringList back;
 
-		foreach(const ActionInstance *actionInstance, mActionInstances)
+        for(const ActionInstance *actionInstance: mActionInstances)
 		{
 			if(actionInstance->definition()->id() == "ActionBeginProcedure")
 			{
@@ -704,7 +704,7 @@ namespace ActionTools
 	{
 		QStringList back;
 
-		foreach(const ActionInstance *actionInstance, mActionInstances)
+        for(const ActionInstance *actionInstance: mActionInstances)
 		{
 			if(!actionInstance->label().isEmpty())
 				back << actionInstance->label();
@@ -798,13 +798,13 @@ namespace ActionTools
         }
         else
         {
-            foreach(const ScriptParameter &scriptParameter, mParameters)
+            for(const ScriptParameter &scriptParameter: mParameters)
             {
                 if(!scriptParameter.name().isEmpty())
                     back << scriptParameter.name();
             }
 
-            foreach(ActionInstance *currentActionInstance, mActionInstances)
+            for(ActionInstance *currentActionInstance: mActionInstances)
             {
                 if(currentActionInstance != excludedActionInstance)
                     findVariablesInAction(currentActionInstance, back);
@@ -830,7 +830,7 @@ namespace ActionTools
                 //Add every variable in any parameter type that is in code mode
                 const QString &code = subParameter.value().toString();
 
-                foreach(const QString &codeLine, code.split(newLineRegExp, QString::SkipEmptyParts))
+                for(const QString &codeLine: code.split(newLineRegExp, QString::SkipEmptyParts))
                 {
                     int position = 0;
 
@@ -880,11 +880,11 @@ namespace ActionTools
     {
         const ActionDefinition *actionDefinition = actionInstance->definition();
 
-        foreach(const ElementDefinition *elementDefinition, actionDefinition->elements())
+        for(const ElementDefinition *elementDefinition: actionDefinition->elements())
         {
             if(const GroupDefinition *groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
             {
-                foreach(const ParameterDefinition *parameterDefinition, groupDefinition->members())
+                for(const ParameterDefinition *parameterDefinition: groupDefinition->members())
                     parametersFromDefinition(result, actionInstance, parameterDefinition);
             }
             else

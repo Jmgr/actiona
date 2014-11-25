@@ -66,8 +66,8 @@ namespace Code
 		PlaybackMode playbackMode() const;
 
 	public slots:
-		QString toString() const					{ return "MediaPlaylist"; }
-        virtual bool equals(const QScriptValue &other) const;
+        QString toString() const                                { return "MediaPlaylist"; }
+        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<MediaPlaylist>(other); }
 		//Player
 		QScriptValue setPlaybackRate(qreal rate);
 		QScriptValue setVolume(qreal volume);

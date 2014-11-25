@@ -49,18 +49,6 @@ namespace Code
     {
     }
 
-    bool IniFile::equals(const QScriptValue &other) const
-    {
-        if(other.isUndefined() || other.isNull())
-            return false;
-
-        QObject *object = other.toQObject();
-        if(IniFile *otherIniFile = qobject_cast<IniFile*>(object))
-            return (otherIniFile == this);
-
-        return false;
-    }
-	
 	QScriptValue IniFile::load(const QString &filename)
 	{
         try

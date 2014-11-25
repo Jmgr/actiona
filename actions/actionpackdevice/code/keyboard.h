@@ -40,12 +40,12 @@ namespace Code
 		Keyboard();
 
 	public slots:
-		QString toString() const					{ return "Keyboard"; }
+        QString toString() const                                { return "Keyboard"; }
+        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Keyboard>(other); }
 		QScriptValue pressKey(const QString &key);
 		QScriptValue releaseKey(const QString &key);
 		QScriptValue triggerKey(const QString &key);
 		QScriptValue writeText(const QString &text, int delay = 0) const;
-        virtual bool equals(const QScriptValue &other) const { Q_UNUSED(other) return false; }
 
 	private:
 		KeyboardDevice mKeyboardDevice;

@@ -27,6 +27,7 @@
 #include "code/codetools.h"
 #include "executer/codeactiona.h"
 #include "global.h"
+#include "languages.h"
 
 #include <QFile>
 #include <QScriptEngine>
@@ -37,7 +38,6 @@
 #include <QStringList>
 #include <QApplication>
 #include <QSettings>
-#include <QTranslator>
 
 CodeExecuter::CodeExecuter(QObject *parent) :
     Executer(parent),
@@ -50,7 +50,7 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 	connect(mScriptEngineDebugger, SIGNAL(evaluationSuspended()), this, SLOT(onEvaluationPaused()));
 	connect(mScriptAgent, SIGNAL(executionStopped()), this, SLOT(stopExecution()));
 
-	foreach(QString extension, mScriptEngine->availableExtensions())
+    for(QString extension: mScriptEngine->availableExtensions())
 		mScriptEngine->importExtension(extension);
 	
 	mScriptEngineDebugger->setAutoShowStandardWindow(false);
@@ -88,32 +88,13 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
     Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActExec, "isActExec", mScriptEngine);
     Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActiona, "isActiona", mScriptEngine);
 
-	QSettings settings;
-	QString locale = settings.value("locale").toString();
-
-	if(locale.isEmpty())
-	{
-		locale = QLocale::system().name();
-
-#ifdef Q_OS_WIN
-		QString installerLanguage = settings.value("installerLanguage").toString();
-		if(!installerLanguage.isEmpty())
-		{
-			if(installerLanguage == "english")
-				locale = "en_US";
-			else if(installerLanguage == "french")
-				locale = "fr_FR";
-		}
-#endif
-	}
+    QString locale = Tools::locale();
 
 	for(int actionPackIndex = 0; actionPackIndex < actionFactory()->actionPackCount(); ++actionPackIndex)
 	{
 		ActionTools::ActionPack *actionPack = actionFactory()->actionPack(actionPackIndex);
 
-		QTranslator *actionTranslator = new QTranslator(this);
-		actionTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale));
-		QApplication::installTranslator(actionTranslator);
+        Tools::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
 	}
 
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::Parameters);

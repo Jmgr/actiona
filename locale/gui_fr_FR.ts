@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -2230,7 +2230,7 @@ p, li { white-space: pre-wrap; }
     <name>SettingsDialog</name>
     <message>
         <location filename="../gui/settingsdialog.ui" line="14"/>
-        <location filename="../gui/settingsdialog.cpp" line="240"/>
+        <location filename="../gui/settingsdialog.cpp" line="254"/>
         <source>Settings</source>
         <translation>Options</translation>
     </message>
@@ -2301,32 +2301,32 @@ p, li { white-space: pre-wrap; }
         <translation>Associer les fichiers .acod avec Actiona</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="199"/>
+        <location filename="../gui/settingsdialog.ui" line="209"/>
         <source>Actions</source>
         <translation>Actions</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="352"/>
+        <location filename="../gui/settingsdialog.ui" line="362"/>
         <source>Network</source>
         <translation>Réseau</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="372"/>
+        <location filename="../gui/settingsdialog.ui" line="382"/>
         <source>Never</source>
         <translation>Jamais</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="377"/>
+        <location filename="../gui/settingsdialog.ui" line="387"/>
         <source>Once a day</source>
         <translation>Une fois par jour</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="382"/>
+        <location filename="../gui/settingsdialog.ui" line="392"/>
         <source>Once a week</source>
         <translation>Une fois par semaine</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="387"/>
+        <location filename="../gui/settingsdialog.ui" line="397"/>
         <source>Once a month</source>
         <translation>Une fois par mois</translation>
     </message>
@@ -2336,8 +2336,9 @@ p, li { white-space: pre-wrap; }
         <translation>Afficher la fenêtre après exécution :</translation>
     </message>
     <message>
+        <location filename="../gui/settingsdialog.ui" line="194"/>
         <source>Language:</source>
-        <translation type="obsolete">Langue :</translation>
+        <translation>Langue :</translation>
     </message>
     <message>
         <source>English</source>
@@ -2386,82 +2387,82 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Associer les fichiers .acod avec Actionaz</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="208"/>
+        <location filename="../gui/settingsdialog.ui" line="218"/>
         <source>Execution window:</source>
         <translation>Fenêtre d&apos;exécution :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="217"/>
+        <location filename="../gui/settingsdialog.ui" line="227"/>
         <source>Execution window</source>
         <translation>Fenêtre d&apos;exécution</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="251"/>
+        <location filename="../gui/settingsdialog.ui" line="261"/>
         <source>Console window</source>
         <translation>Fenêtre de console</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="283"/>
+        <location filename="../gui/settingsdialog.ui" line="293"/>
         <source>Stop execution hotkey:</source>
         <translation>Touche pour stopper l&apos;exécution :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="293"/>
+        <location filename="../gui/settingsdialog.ui" line="303"/>
         <source>Switch text/code key:</source>
         <translation>Touche pour passer en mode texte/code :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="303"/>
+        <location filename="../gui/settingsdialog.ui" line="313"/>
         <source>Open editor key:</source>
         <translation>Touche pour ouvrir l&apos;éditeur :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="313"/>
+        <location filename="../gui/settingsdialog.ui" line="323"/>
         <source>Code syntax:</source>
         <translation>Syntaxe du code :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="320"/>
+        <location filename="../gui/settingsdialog.ui" line="330"/>
         <source>Check code syntax automatically</source>
         <translation>Vérifier la syntaxe du code automatiquement</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="330"/>
+        <location filename="../gui/settingsdialog.ui" line="340"/>
         <source>Console window:</source>
         <translation>Fenêtre de console :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="337"/>
+        <location filename="../gui/settingsdialog.ui" line="347"/>
         <source>Pause/Resume execution hotkey:</source>
         <translation>Touche pour mettre en pause/reprendre :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="361"/>
+        <location filename="../gui/settingsdialog.ui" line="371"/>
         <source>Check for updates:</source>
         <translation>Vérifier les mises à jour :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="395"/>
+        <location filename="../gui/settingsdialog.ui" line="405"/>
         <source>Proxy:</source>
         <translation>Proxy :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="404"/>
+        <location filename="../gui/settingsdialog.ui" line="414"/>
         <source>Do not use a proxy</source>
         <translation>Ne pas utiliser de proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="411"/>
+        <location filename="../gui/settingsdialog.ui" line="421"/>
         <source>Use the system proxy</source>
         <translation>Utiliser le proxy du système</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="418"/>
+        <location filename="../gui/settingsdialog.ui" line="428"/>
         <source>Use custom proxy settings</source>
         <translation>Utiliser des paramètres de proxy personnalisés</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="503"/>
+        <location filename="../gui/settingsdialog.ui" line="513"/>
         <source>Test connectivity</source>
         <translation>Test de connectivité</translation>
     </message>
@@ -2470,42 +2471,42 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Utiliser un proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="428"/>
+        <location filename="../gui/settingsdialog.ui" line="438"/>
         <source>Proxy settings</source>
         <translation>Paramètres du proxy</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="434"/>
+        <location filename="../gui/settingsdialog.ui" line="444"/>
         <source>Host :</source>
         <translation>Hôte :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="447"/>
+        <location filename="../gui/settingsdialog.ui" line="457"/>
         <source>Port :</source>
         <translation>Port :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="454"/>
+        <location filename="../gui/settingsdialog.ui" line="464"/>
         <source>User :</source>
         <translation>Utilisateur :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="461"/>
+        <location filename="../gui/settingsdialog.ui" line="471"/>
         <source>Password :</source>
         <translation>Mot de passe :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="474"/>
+        <location filename="../gui/settingsdialog.ui" line="484"/>
         <source>Proxy type :</source>
         <translation>Type de proxy :</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="482"/>
+        <location filename="../gui/settingsdialog.ui" line="492"/>
         <source>Http</source>
         <translation>Http</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.ui" line="487"/>
+        <location filename="../gui/settingsdialog.ui" line="497"/>
         <source>Socks5</source>
         <translation>Socks5</translation>
     </message>
@@ -2530,37 +2531,65 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Le test de proxy a échoué : paramètres de proxy incorrects.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="165"/>
-        <location filename="../gui/settingsdialog.cpp" line="219"/>
-        <location filename="../gui/settingsdialog.cpp" line="222"/>
-        <location filename="../gui/settingsdialog.cpp" line="227"/>
+        <location filename="../gui/settingsdialog.cpp" line="179"/>
+        <location filename="../gui/settingsdialog.cpp" line="233"/>
+        <location filename="../gui/settingsdialog.cpp" line="236"/>
+        <location filename="../gui/settingsdialog.cpp" line="241"/>
         <source>Connectivity test ended</source>
         <translation>Fin du test de connectivité</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="165"/>
+        <location filename="../gui/settingsdialog.cpp" line="179"/>
         <source>The connectivity test failed: maximum time exceeded.</source>
         <translation>Le délai maximum du test de connectivité est écoulé.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="219"/>
+        <location filename="../gui/settingsdialog.cpp" line="233"/>
         <source>The connectivity test succeeded.</source>
         <translation>Le test de connectivité s&apos;est achevé avec succès.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="222"/>
+        <location filename="../gui/settingsdialog.cpp" line="236"/>
         <source>The connectivity test failed: invalid username or password.</source>
         <translation>Le test de connectivité a échoué : nom d&apos;utilisateur ou mot de passe incorrect.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="227"/>
+        <location filename="../gui/settingsdialog.cpp" line="241"/>
         <source>The connectivity test failed: incorrect proxy settings.</source>
         <translation>Le test de connectivité a échoué : paramètres de proxy incorrects.</translation>
     </message>
     <message>
-        <location filename="../gui/settingsdialog.cpp" line="240"/>
+        <location filename="../gui/settingsdialog.cpp" line="254"/>
         <source>You have set the same key sequence for switching text/code mode and opening the editor, please choose a different one.</source>
         <translation>Vous avez paramétré la même touche pour passer en mode texte/code et pour ouvrir l&apos;éditeur, merci d&apos;en choisir deux différents.</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.cpp" line="369"/>
+        <source>Language change</source>
+        <translation>Changement de langue</translation>
+    </message>
+    <message>
+        <location filename="../gui/settingsdialog.cpp" line="369"/>
+        <source>The language change will be taken into account next time you restart Actiona.</source>
+        <translation>Le changement de langue va être pris en compte lors du prochain redémarrage d&apos;Actiona.</translation>
+    </message>
+</context>
+<context>
+    <name>languagesName</name>
+    <message>
+        <location filename="../gui/languages.cpp" line="25"/>
+        <source>System language (if available)</source>
+        <translation>Langue du système (si disponible)</translation>
+    </message>
+    <message>
+        <location filename="../gui/languages.cpp" line="26"/>
+        <source>English (US)</source>
+        <translation>Anglais (États-Unis)</translation>
+    </message>
+    <message>
+        <location filename="../gui/languages.cpp" line="27"/>
+        <source>French (France)</source>
+        <translation>Français (France)</translation>
     </message>
 </context>
 </TS>

@@ -76,8 +76,6 @@ namespace Actions
 		void searchFinished(const ActionTools::MatchingPointList &matchingPointList);
 
 	private:
-		void validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum = std::numeric_limits<int>::max());
-
 		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
 		QString mPositionVariableName;
         QString mConfidenceVariableName;

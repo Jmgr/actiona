@@ -47,7 +47,7 @@ namespace Actions
 		QHash<QString, QString> environmentHashVariableValue;
 		environmentHashVariableValue.reserve(environment.count()+2); //doc said ideally 'slightly more than the maximum nb of item'
 
-		foreach(QString environmentVariableAndValue, environment)
+		for(QString environmentVariableAndValue: environment)
 		{
 			QStringList KeyValue = environmentVariableAndValue.split("=");
 			environmentHashVariableValue[KeyValue.at(0)] = KeyValue.at(1);

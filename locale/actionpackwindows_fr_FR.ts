@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ActionPackWindows</name>
     <message>
@@ -35,12 +35,12 @@
     <message>
         <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="60"/>
         <source>Editor type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;éditeur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="61"/>
         <source>The editor type</source>
-        <translation type="unfinished"></translation>
+        <translation>Le type de l&apos;éditeur</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="66"/>
@@ -607,17 +607,17 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
     <message>
         <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="44"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="45"/>
         <source>Multiline</source>
-        <translation type="unfinished"></translation>
+        <translation>Multiligne</translation>
     </message>
     <message>
         <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="46"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Mot de passe</translation>
     </message>
 </context>
 <context>

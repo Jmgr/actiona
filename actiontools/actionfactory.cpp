@@ -21,12 +21,12 @@
 #include "actionfactory.h"
 #include "actionpack.h"
 #include "actiondefinition.h"
+#include "languages.h"
 
 #include <QPluginLoader>
 #include <QDir>
 #include <QFileInfo>
 #include <QApplication>
-#include <QTranslator>
 
 namespace ActionTools
 {
@@ -63,7 +63,7 @@ namespace ActionTools
 		QString actionMask = "libActionPack*.so";
 #endif
 
-		foreach(const QString actionFilename, actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
+        for(const QString actionFilename: actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
 
 		qSort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
@@ -74,7 +74,7 @@ namespace ActionTools
 
 	ActionDefinition *ActionFactory::actionDefinition(const QString &actionId) const
 	{
-		foreach(ActionDefinition *actionDefinition, mActionDefinitions)
+        for(ActionDefinition *actionDefinition: mActionDefinitions)
 		{
 			if(actionDefinition->id() == actionId)
 				return actionDefinition;
@@ -115,7 +115,7 @@ namespace ActionTools
 			return mActionDefinitions.count();
 
 		int count = 0;
-		foreach(const ActionDefinition *actionDefinition, mActionDefinitions)
+        for(const ActionDefinition *actionDefinition: mActionDefinitions)
 		{
 			if(actionDefinition->category() == category)
 				++count;
@@ -151,19 +151,11 @@ namespace ActionTools
 			return;
 		}
 
-		QTranslator *actionPackTranslator = new QTranslator(this);
-
-		if(!actionPackTranslator->load(QString("%1/locale/actionpack%2_%3").arg(QApplication::applicationDirPath()).arg(actionPack->id()).arg(locale)))
-		{
-    #ifndef Q_OS_WIN
-            actionPackTranslator->load(QString("%1/share/actiona/locale/actionpack%2_%3").arg(ACT_PREFIX).arg(actionPack->id()).arg(locale));
-	#endif
-		}
-		QApplication::installTranslator(actionPackTranslator);
+        Tools::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
 
 		actionPack->createDefinitions();
 
-		foreach(ActionDefinition *definition, actionPack->actionsDefinitions())
+        for(ActionDefinition *definition: actionPack->actionsDefinitions())
 		{
 			if(actionDefinition(definition->id()))
 			{

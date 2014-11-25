@@ -46,7 +46,7 @@ namespace ActionTools
 		QPolygon polygon;
 		QStringList pointStrings = pointBuffer.split(';', QString::SkipEmptyParts);
 
-		foreach(const QString &pointString, pointStrings)
+		for(const QString &pointString: pointStrings)
 		{
 			QStringList pointComponents = pointString.split(':', QString::SkipEmptyParts);
 			if(pointComponents.size() != 2)
@@ -61,7 +61,7 @@ namespace ActionTools
 	void PointListParameterDefinition::save(ActionInstance *actionInstance)
 	{
 		QString pointBuffer;
-		foreach(const QPoint &point, mPointListWidget->points())
+		for(const QPoint &point: mPointListWidget->points())
 			pointBuffer += QString("%1:%2;").arg(point.x()).arg(point.y());
 
 		actionInstance->setSubParameter(name().original(), "value", pointBuffer);

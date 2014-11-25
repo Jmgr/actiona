@@ -198,7 +198,7 @@ namespace Actions
 			{
 				QStringList selectedButtons;
 
-				foreach(QAbstractButton *button, mButtonGroup->buttons())
+                for(QAbstractButton *button: mButtonGroup->buttons())
 				{
 					if(button->isChecked())
 						selectedButtons.append(button->text());
@@ -247,7 +247,7 @@ namespace Actions
 	{
 		int checkedButtonCount = 0;
 
-		foreach(QAbstractButton *button, mButtonGroup->buttons())
+        for(QAbstractButton *button: mButtonGroup->buttons())
 		{
 			if(button->isChecked())
 				++checkedButtonCount;

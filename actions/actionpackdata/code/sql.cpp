@@ -64,7 +64,7 @@ namespace Code
 
 		QScriptValue back = engine->newArray(driverList.size());
 		int index = 0;
-		foreach(const Driver &driver, driverList)
+        for(const Driver &driver: driverList)
 		{
 			back.setProperty(index, driver);
 
@@ -94,18 +94,6 @@ namespace Code
 		delete mDatabase;
 
         QSqlDatabase::removeDatabase(connectionName);
-    }
-
-    bool Sql::equals(const QScriptValue &other) const
-    {
-        if(other.isUndefined() || other.isNull())
-            return false;
-
-        QObject *object = other.toQObject();
-        if(Sql *otherSql = qobject_cast<Sql*>(object))
-            return (otherSql == this || otherSql->mDatabase == mDatabase);
-
-        return false;
     }
 
 	QScriptValue Sql::connect(const QScriptValue &parameters) const
