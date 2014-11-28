@@ -55,6 +55,7 @@
 #if !defined( Q_CC_MINGW)
 #ifndef Q_OS_WINCE
 #include "qwmihelper_win_p.h"
+#include <Winioctl.h>
 
 enum NDIS_MEDIUM {
     NdisMedium802_3 = 0,

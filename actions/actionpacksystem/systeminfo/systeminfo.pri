@@ -1,4 +1,4 @@
-INCLUDEPATH += systeminfo
+INCLUDEPATH += systeminfo systeminfo/windows
 
 PUBLIC_HEADERS = systeminfo/qsysteminfoglobal.h \
                  systeminfo/qdeviceinfo.h \
@@ -36,7 +36,7 @@ win32: !simulator: {
                        systeminfo/windows/qbatteryinfo_win_p.h \
                        systeminfo/windows/qnetworkinfo_win_p.h \
                        systeminfo/windows/qwmihelper_win_p.h \
-                       systeminfo/windows/qsysteminfoglobal_p.h
+                       systeminfo/qsysteminfoglobal_p.h
 
     SOURCES += systeminfo/windows/qscreensaver_win.cpp \
                systeminfo/windows/qdeviceinfo_win.cpp \

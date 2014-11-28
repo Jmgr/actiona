@@ -49,6 +49,7 @@
 
 #if !defined (Q_CC_MINGW) || defined(__MINGW64_VERSION_MAJOR)
 #  include <batclass.h>
+#  include <Winioctl.h>
 #endif
 
 #include <QtCore/qmetaobject.h>
