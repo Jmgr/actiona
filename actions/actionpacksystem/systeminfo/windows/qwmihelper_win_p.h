@@ -53,8 +53,6 @@
 // We mean it.
 //
 
-#include "../qsysteminfoglobal_p.h"
-
 #if !defined (Q_CC_MINGW) || defined(__MINGW64_VERSION_MAJOR)
 #include <QObject>
 #include <QVariant>
@@ -65,7 +63,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_SYSTEMINFO_PRIVATE_EXPORT WMIHelper : public QObject
+class WMIHelper : public QObject
 {
     Q_OBJECT
 
@@ -104,7 +102,7 @@ private:
     bool initialized;
 };
 
-class Q_SYSTEMINFO_PRIVATE_EXPORT EventSink : public IWbemObjectSink
+class EventSink : public IWbemObjectSink
 {
     LONG m_lRef;
     bool bDone;
