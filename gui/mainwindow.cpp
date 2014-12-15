@@ -187,6 +187,27 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	ui->actionExport_executable->setVisible(false);
 #endif
 
+#ifdef Q_OS_WIN
+    {
+        QFileInfo sfxFileInfo(QDir(QApplication::applicationDirPath()).filePath("sfx/7zsd.sfx"));
+        QFileInfo sfxBaseArchiveInfo(QDir(QApplication::applicationDirPath()).filePath("sfx/sfx.7z"));
+        QFileInfo sfx32BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath("sfx/sfx32.7z"));
+        bool has64BitArchive = true;
+
+        if(QSysInfo::WordSize == 64)
+        {
+            QFileInfo sfx64BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath("sfx/sfx64.7z"));
+
+            has64BitArchive = sfx64BitArchiveInfo.isReadable();
+        }
+
+        ui->actionExport_executable->setEnabled(sfxFileInfo.isReadable() &&
+                                                sfxBaseArchiveInfo.isReadable() &&
+                                                sfx32BitArchiveInfo.isReadable() &&
+                                                has64BitArchive);
+    }
+#endif
+
 	ui->actionsDockWidget->setWidget(ui->newActionTreeWidget);
 	ui->scriptView->setIconSize(QSize(16, 16));
 
