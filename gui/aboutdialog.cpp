@@ -1,6 +1,6 @@
 /*
     Actiona
-	Copyright (C) 2008-2014 Jonathan Mercier-Ganady
+	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ AboutDialog::AboutDialog(QWidget *parent)
         buildName = " - " ACT_BUILD_NAME;
 
     QString message = tr("<img src=':/icons/logo.png'><h2>Actiona %1%2</h2>").arg(Global::ACTIONA_VERSION.toString()).arg(buildName);
-    message += " 2008-2014 Jonathan \"Jmgr\" Mercier-Ganady <a href='mailto:jmgr@jmgr.info'>jmgr@jmgr.info</a><br/><br/>";
+    message += " 2008-2015 Jonathan \"Jmgr\" Mercier-Ganady <a href='mailto:jmgr@jmgr.info'>jmgr@jmgr.info</a><br/><br/>";
     message += tr("<i>Emulates clics, key presses and other actions</i><br/><br/>Using Qt %1 (runtime %2) under %3 (%4 bit)<br/>Build date: %5 %6</center><br/>")
 			   .arg(QT_VERSION_STR)
 			   .arg(qVersion())
