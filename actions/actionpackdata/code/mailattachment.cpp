@@ -76,4 +76,9 @@ namespace Code
 
         return thisObject();
     }
+
+    QScriptValue MailAttachment::clone() const
+    {
+        return constructor(mAttachment, engine());
+    }
 }
