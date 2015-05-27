@@ -26,6 +26,7 @@
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #include <Psapi.h>
+#include <TlHelp32.h>
 #endif
 
 namespace Code
