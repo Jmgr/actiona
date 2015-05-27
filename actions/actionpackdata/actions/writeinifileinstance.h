@@ -26,6 +26,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 
+#include <QFileInfo>
+
 namespace Actions
 {
 	class WriteIniFileInstance : public ActionTools::ActionInstance
@@ -66,7 +68,10 @@ namespace Actions
             {
                 boost::property_tree::ptree tree;
 
-                boost::property_tree::ini_parser::read_ini(filename.toStdString(), tree);
+                QFileInfo fileInfo(filename);
+
+                if(fileInfo.isReadable())
+                    boost::property_tree::ini_parser::read_ini(filename.toStdString(), tree);
 
                 //Create/get the parameter and the value
                 boost::property_tree::ptree sectionTree;
