@@ -52,6 +52,7 @@ namespace Code
         const QxtMailAttachment &attachment() const                             { return mAttachment; }
 
     public slots:
+        QScriptValue clone() const;
         QString toString() const                                                { return "MailAttachment"; }
         virtual bool equals(const QScriptValue &other) const                    { return defaultEqualsImplementation<MailAttachment>(other); }
 
