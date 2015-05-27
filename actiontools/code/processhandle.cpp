@@ -161,8 +161,66 @@ namespace Code
 	
 	int ProcessHandle::id() const
 	{
-		return processId();
-	}
+        return processId();
+    }
+
+    int ProcessHandle::parentId() const
+    {
+#ifdef Q_OS_WIN
+        HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+        if(!snapshot)
+        {
+            throwError("CreateSnapshotError", tr("Unable to create a snapshot"));
+            return QString();
+        }
+
+        PROCESSENTRY32 processEntry;
+        ZeroMemory(&processEntry, sizeof(processEntry));
+        processEntry.dwSize = sizeof(processEntry);
+
+        if(!Process32First(snapshot, &processEntry))
+        {
+            CloseHandle(snapshot);
+
+            throwError("GetFirstProcessError", tr("Unable to get the first process"));
+            return QString();
+        }
+
+        do
+        {
+            if(processEntry.th32ProcessID == id())
+            {
+                CloseHandle(snapshot);
+
+                return processEntry.th32ParentProcessID;
+            }
+        }
+        while(Process32Next(snapshot, &processEntry));
+
+        CloseHandle(snapshot);
+
+        return 0;
+#else
+        QProcess process;
+        process.start(QString("ps h -p %1 -oppid").arg(id()), QIODevice::ReadOnly);
+        if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
+        {
+            throwError("GetProcessError", tr("Failed to get the process parent id"));
+            return 0;
+        }
+
+        bool ok = true;
+        int result = process.readAll().trimmed().toInt(&ok);
+
+        if(!ok)
+        {
+            throwError("GetProcessError", tr("Failed to get the process parent id"));
+            return 0;
+        }
+
+        return result;
+#endif
+    }
 	
 	bool ProcessHandle::kill(KillMode killMode, int timeout) const
 	{
@@ -203,7 +261,7 @@ namespace Code
 			return QString();
 		}
 
-		return process.readAll();
+        return process.readAll().trimmed();
 #endif
 	}
 

@@ -61,6 +61,7 @@ namespace Code
 		bool equals(const QScriptValue &other) const;
 		QString toString() const;
 		int id() const;
+        int parentId() const;
 		bool kill(KillMode killMode = GracefulThenForceful, int timeout = 3000) const;
 		bool isRunning() const;
 		QString command() const;
