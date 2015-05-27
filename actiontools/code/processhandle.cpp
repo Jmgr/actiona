@@ -172,7 +172,7 @@ namespace Code
         if(!snapshot)
         {
             throwError("CreateSnapshotError", tr("Unable to create a snapshot"));
-            return QString();
+            return 0;
         }
 
         PROCESSENTRY32 processEntry;
@@ -184,7 +184,7 @@ namespace Code
             CloseHandle(snapshot);
 
             throwError("GetFirstProcessError", tr("Unable to get the first process"));
-            return QString();
+            return 0;
         }
 
         do
