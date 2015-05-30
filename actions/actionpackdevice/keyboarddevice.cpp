@@ -178,7 +178,6 @@ bool KeyboardDevice::writeText(const QString &text, int delay) const
 	
 #ifdef Q_OS_WIN
 	INPUT input[2];
-	std::wstring wideString = text.toStdWString();
 	bool result = true;
 
 	for(int i = 0; i < 2; ++i)
@@ -187,14 +186,14 @@ bool KeyboardDevice::writeText(const QString &text, int delay) const
 		input[i].ki.wVk = 0;
 		input[i].ki.dwFlags = KEYEVENTF_UNICODE | (i == 0 ? 0 : KEYEVENTF_KEYUP);
 		input[i].ki.time = 0;
-		input[i].ki.dwExtraInfo = 0;
-	}
+        input[i].ki.dwExtraInfo = GetMessageExtraInfo();
+    }
 
 	for(int i = 0; i < text.length(); ++i)
 	{
-		input[0].ki.wScan = input[1].ki.wScan = wideString[i];
+        input[0].ki.wScan = input[1].ki.wScan = text[i].unicode();
 
-		result &= (SendInput(2, input, sizeof(INPUT)) != 0);
+        result &= (SendInput(2, input, sizeof(INPUT)) != 0);
 
 		if(delay > 0)
 			ActionTools::CrossPlatform::sleep(delay);
@@ -223,14 +222,26 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey)
 	INPUT input;
 	input.type = INPUT_KEYBOARD;
 	input.ki.time = 0;
-	input.ki.dwExtraInfo = 0;
+    input.ki.dwExtraInfo = GetMessageExtraInfo();
 	input.ki.dwFlags = 0;
 
 	switch(mType)
 	{
 	case Win32:
-		input.ki.wVk = nativeKey;
-		input.ki.wScan = 0;
+    {
+        input.ki.wVk = nativeKey;
+
+        if(QSysInfo::windowsVersion() < QSysInfo::WV_VISTA)
+            input.ki.wScan = 0;
+        else
+        {
+            HKL keyboardLayout = GetKeyboardLayout(0);
+            input.ki.wScan = MapVirtualKeyEx(nativeKey, MAPVK_VK_TO_VSC_EX, keyboardLayout);
+
+            if((input.ki.wScan & 0xff00) == 0xe000)
+                input.ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+        }
+    }
 		break;
 	case DirectX:
 		input.ki.wVk = 0;
