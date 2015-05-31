@@ -109,6 +109,8 @@ namespace Code
 		QScriptValue applyFilter(Filter filter, const QScriptValue &options = QScriptValue());
 		QScriptValue pixel(int x, int y) const;
 		QScriptValue setPixel(int x, int y, const QScriptValue &color);
+        QScriptValue pixels() const;
+        QScriptValue pixelData() const;
 		QScriptValue mirror(MirrorOrientation mirrorOrientation);
 		QScriptValue setSize();
 		QScriptValue size() const;

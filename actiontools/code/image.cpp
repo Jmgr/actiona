@@ -385,8 +385,47 @@ namespace Code
 			mImage.setPixel(x, y, color.rgb());
 		}
 
-		return thisObject();
-	}
+        return thisObject();
+    }
+
+    QScriptValue Image::pixels() const
+    {
+        if(mImage.isNull())
+            return QScriptValue();
+
+        QImage argbImage = mImage.convertToFormat(QImage::Format_ARGB32);
+        int pixelCount = argbImage.width() * argbImage.height();
+        QScriptValue pixelArray = engine()->newArray(pixelCount);
+        const QRgb *pixelData = reinterpret_cast<const QRgb *>(argbImage.constBits());
+
+        for(int pixelIndex = 0; pixelIndex < pixelCount; ++pixelIndex)
+            pixelArray.setProperty(pixelIndex, Color::constructor(QColor(pixelData[pixelIndex]), engine()));
+
+        return pixelArray;
+    }
+
+    QScriptValue Image::pixelData() const
+    {
+        if(mImage.isNull())
+            return QScriptValue();
+
+        QImage argbImage = mImage.convertToFormat(QImage::Format_ARGB32);
+        int pixelCount = argbImage.width() * argbImage.height();
+        QScriptValue pixelArray = engine()->newArray(pixelCount * 4);
+        const QRgb *pixelData = reinterpret_cast<const QRgb *>(argbImage.constBits());
+
+        for(int pixelIndex = 0; pixelIndex < pixelCount; ++pixelIndex)
+        {
+            QRgb pixel = pixelData[pixelIndex];
+
+            pixelArray.setProperty(pixelIndex * 4 + 0, qRed(pixel) / 255.0f);
+            pixelArray.setProperty(pixelIndex * 4 + 1, qGreen(pixel) / 255.0f);
+            pixelArray.setProperty(pixelIndex * 4 + 2, qBlue(pixel) / 255.0f);
+            pixelArray.setProperty(pixelIndex * 4 + 3, qAlpha(pixel) / 255.0f);
+        }
+
+        return pixelArray;
+    }
 	
 	QScriptValue Image::mirror(MirrorOrientation mirrorOrientation)
 	{
