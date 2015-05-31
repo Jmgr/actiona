@@ -37,7 +37,27 @@
 #endif
 
 #ifdef Q_OS_WIN
+#include <unordered_set>
 #include <Windows.h>
+
+// https://msdn.microsoft.com/en-us/library/windows/desktop/ms646267(v=vs.85).aspx
+static const std::unordered_set<int> extendedKeys =
+{{
+    VK_RMENU, // Alt
+    VK_RCONTROL,
+    VK_INSERT,
+    VK_DELETE,
+    VK_HOME,
+    VK_END,
+    VK_PRIOR, // Page Up
+    VK_NEXT, // Page Down
+    VK_UP,
+    VK_DOWN,
+    VK_LEFT,
+    VK_RIGHT,
+    VK_NUMLOCK,
+    VK_PRINT
+}};
 #endif
 
 KeyboardDevice::KeyboardDevice()
@@ -121,7 +141,7 @@ static bool sendKey(const char *key)
 }
 #endif
 
-bool KeyboardDevice::writeText(const QString &text, int delay) const
+bool KeyboardDevice::writeText(const QString &text, int delay, bool noUnicodeCharacters) const
 {
 #ifdef Q_OS_LINUX
 	bool result = true;
@@ -178,23 +198,82 @@ bool KeyboardDevice::writeText(const QString &text, int delay) const
 	
 #ifdef Q_OS_WIN
 	INPUT input[2];
-	std::wstring wideString = text.toStdWString();
 	bool result = true;
 
 	for(int i = 0; i < 2; ++i)
 	{
 		input[i].type = INPUT_KEYBOARD;
 		input[i].ki.wVk = 0;
-		input[i].ki.dwFlags = KEYEVENTF_UNICODE | (i == 0 ? 0 : KEYEVENTF_KEYUP);
+        if(noUnicodeCharacters)
+            input[i].ki.dwFlags = KEYEVENTF_SCANCODE | (i == 0 ? 0 : KEYEVENTF_KEYUP);
+        else
+            input[i].ki.dwFlags = KEYEVENTF_UNICODE | (i == 0 ? 0 : KEYEVENTF_KEYUP);
 		input[i].ki.time = 0;
-		input[i].ki.dwExtraInfo = 0;
-	}
+        input[i].ki.dwExtraInfo = 0;
+    }
+
+    HKL keyboardLayout = GetKeyboardLayout(0);
+
+    auto sendModifiersFunction = [&keyboardLayout](int key, int additionalFlags)
+    {
+        INPUT modifierInput;
+        ZeroMemory(&modifierInput, sizeof(modifierInput));
+
+        modifierInput.type = INPUT_KEYBOARD;
+        modifierInput.ki.dwFlags = KEYEVENTF_SCANCODE | additionalFlags;
+        modifierInput.ki.wScan = MapVirtualKeyEx(key, MAPVK_VK_TO_VSC, keyboardLayout);
+
+        if(extendedKeys.count(key) > 0)
+            modifierInput.ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+
+        SendInput(1, &modifierInput, sizeof(INPUT));
+    };
 
 	for(int i = 0; i < text.length(); ++i)
 	{
-		input[0].ki.wScan = input[1].ki.wScan = wideString[i];
+        SHORT virtualKey = 0;
 
-		result &= (SendInput(2, input, sizeof(INPUT)) != 0);
+        if(noUnicodeCharacters)
+        {
+            virtualKey = VkKeyScanEx(text[i].unicode(), keyboardLayout);
+            auto scanCode = MapVirtualKeyEx(LOBYTE(virtualKey), MAPVK_VK_TO_VSC, keyboardLayout);
+
+            if(extendedKeys.count(virtualKey) > 0)
+            {
+                input[0].ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+                input[1].ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+            }
+
+            if(HIBYTE(virtualKey) & 1) //Shift
+                sendModifiersFunction(VK_LSHIFT, 0);
+
+            if(HIBYTE(virtualKey) & 2) //Control
+                sendModifiersFunction(VK_LCONTROL, 0);
+
+            if(HIBYTE(virtualKey) & 4) //Alt
+                sendModifiersFunction(VK_LMENU, 0);
+
+            input[0].ki.wVk = input[1].ki.wVk = virtualKey;
+            input[0].ki.wScan = input[1].ki.wScan = scanCode;
+        }
+        else
+        {
+            input[0].ki.wScan = input[1].ki.wScan = text[i].unicode();
+        }
+
+        result &= (SendInput(2, input, sizeof(INPUT)) != 0);
+
+        if(noUnicodeCharacters)
+        {
+            if(HIBYTE(virtualKey) & 4) //Alt
+                sendModifiersFunction(VK_LMENU, KEYEVENTF_KEYUP);
+
+            if(HIBYTE(virtualKey) & 2) //Control
+                sendModifiersFunction(VK_LCONTROL, KEYEVENTF_KEYUP);
+
+            if(HIBYTE(virtualKey) & 1) //Shift
+                sendModifiersFunction(VK_LSHIFT, KEYEVENTF_KEYUP);
+        }
 
 		if(delay > 0)
 			ActionTools::CrossPlatform::sleep(delay);
@@ -223,14 +302,21 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey)
 	INPUT input;
 	input.type = INPUT_KEYBOARD;
 	input.ki.time = 0;
-	input.ki.dwExtraInfo = 0;
+    input.ki.dwExtraInfo = 0;
 	input.ki.dwFlags = 0;
 
 	switch(mType)
 	{
 	case Win32:
-		input.ki.wVk = nativeKey;
-		input.ki.wScan = 0;
+    {
+        input.ki.wVk = nativeKey;
+
+        HKL keyboardLayout = GetKeyboardLayout(0);
+        input.ki.wScan = MapVirtualKeyEx(nativeKey, MAPVK_VK_TO_VSC, keyboardLayout);
+
+        if(extendedKeys.count(nativeKey) > 0)
+            input.ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+    }
 		break;
 	case DirectX:
 		input.ki.wVk = 0;
