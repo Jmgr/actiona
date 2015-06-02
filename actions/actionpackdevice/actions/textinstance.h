@@ -51,8 +51,8 @@ namespace Actions
 		KeyboardDevice mKeyboardDevice;
 		QTimer *mTimer;
 		QString mText;
+        int mCurrentCharacter;
         bool mNoUnicodeCharacters;
-		int mCurrentCharacter;
 		
 		Q_DISABLE_COPY(TextInstance)
 	};
