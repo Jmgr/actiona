@@ -104,6 +104,7 @@ namespace Code
 			return engine()->newVariant(mInputDialog->doubleValue());
 		case Items:
 		case Text:
+        case MultilineText:
 		default:
 			return engine()->newVariant(mInputDialog->textValue());
 			break;
@@ -244,6 +245,8 @@ namespace Code
 	
 	void InputDialog::setup()
 	{
+        mInputDialog->setOption(QInputDialog::UsePlainTextEditForTextInput, mInputType == MultilineText);
+
 		switch(mInputType)
 		{
 		case Integer:
@@ -280,6 +283,7 @@ namespace Code
 				mInputDialog->setTextValue(mValue.toString());
 			}
 			break;
+        case MultilineText:
 		case Text:
 		default:
 			mInputDialog->setInputMode(QInputDialog::TextInput);

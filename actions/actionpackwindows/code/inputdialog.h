@@ -44,7 +44,8 @@ namespace Code
 			Text,
 			Integer,
 			Float,
-			Items
+            Items,
+            MultilineText
 		};
 		enum TextEchoMode
 		{
