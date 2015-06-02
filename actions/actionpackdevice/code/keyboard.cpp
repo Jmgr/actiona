@@ -56,9 +56,9 @@ namespace Code
 		return thisObject();
 	}
 	
-	QScriptValue Keyboard::writeText(const QString &text, int delay) const
+    QScriptValue Keyboard::writeText(const QString &text, int delay, bool noUnicodeCharacters) const
 	{
-		if(!mKeyboardDevice.writeText(text, delay))
+        if(!mKeyboardDevice.writeText(text, delay, noUnicodeCharacters))
 			throwError("WriteTextError", tr("Unable to write the text"));
 		
 		return thisObject();

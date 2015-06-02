@@ -51,7 +51,7 @@ public:
 	bool pressKey(const QString &key);
 	bool releaseKey(const QString &key);
 	bool triggerKey(const QString &key);
-	bool writeText(const QString &text, int delay = 0) const;
+    bool writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) const;
 
 private:
 	bool doKeyAction(Action action, int nativeKey);

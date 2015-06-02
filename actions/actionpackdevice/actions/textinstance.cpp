@@ -27,7 +27,8 @@ namespace Actions
 	TextInstance::TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
 		  mTimer(new QTimer(this)),
-		  mCurrentCharacter(0)
+          mCurrentCharacter(0),
+          mNoUnicodeCharacters(false)
 	{
 		connect(mTimer, SIGNAL(timeout()), this, SLOT(pressNextKey()));
 
@@ -40,6 +41,7 @@ namespace Actions
 	
 		mText = evaluateString(ok, "text");
 		int pause  = evaluateInteger(ok, "pause");
+        mNoUnicodeCharacters = evaluateBoolean(ok, "noUnicodeCharacters");
 
 		if(pause < 0)
 			pause = 0;
@@ -52,7 +54,7 @@ namespace Actions
 		
 		if(pause == 0)
 		{
-			if(!mKeyboardDevice.writeText(mText))
+            if(!mKeyboardDevice.writeText(mText, 0, mNoUnicodeCharacters))
 			{
 				emit executionException(FailedToSendInputException, tr("Unable to write the text"));
 				return;
@@ -80,7 +82,7 @@ namespace Actions
 
 	void TextInstance::pressNextKey()
 	{
-		if(!mKeyboardDevice.writeText(QString(mText.at(mCurrentCharacter))))
+        if(!mKeyboardDevice.writeText(QString(mText.at(mCurrentCharacter)), 0, mNoUnicodeCharacters))
 		{
 			mTimer->stop();
 			emit executionException(FailedToSendInputException, tr("Unable to write the text"));

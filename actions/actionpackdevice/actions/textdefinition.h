@@ -25,6 +25,7 @@
 #include "textinstance.h"
 #include "textparameterdefinition.h"
 #include "numberparameterdefinition.h"
+#include "booleanparameterdefinition.h"
 
 #include <limits>
 
@@ -55,6 +56,12 @@ namespace Actions
 			pause->setDefaultValue(0);
 			pause->setSuffix(tr(" ms", "milliseconds"));
 			addElement(pause, 1);
+
+            ActionTools::BooleanParameterDefinition *noUnicodeCharacters = new ActionTools::BooleanParameterDefinition(ActionTools::Name("noUnicodeCharacters", tr("Do not send Unicode characters")), this);
+            noUnicodeCharacters->setTooltip(tr("Prevent using Unicode characters. Enables a limited set of characters on some programs."));
+            noUnicodeCharacters->setDefaultValue(false);
+            noUnicodeCharacters->setOperatingSystems(ActionTools::WorksOnWindows);
+            addElement(noUnicodeCharacters, 1);
 
 			addException(TextInstance::FailedToSendInputException, tr("Send input failure"));
 		}
