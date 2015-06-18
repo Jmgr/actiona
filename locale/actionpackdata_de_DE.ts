@@ -959,12 +959,12 @@ Should contain one header per line</source>
 <context>
     <name>Actions::WriteIniFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="81"/>
+        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="86"/>
         <source>Unable to write to the file: the section name cannot be empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="94"/>
+        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="99"/>
         <source>Unable to write to the file: %1</source>
         <translation type="unfinished"></translation>
     </message>

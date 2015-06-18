@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionPackData</name>
     <message>
@@ -978,12 +978,12 @@ Doit contenir un entête par ligne</translation>
         <translation type="obsolete">Impossible d&apos;écrire vers le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="81"/>
+        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="86"/>
         <source>Unable to write to the file: the section name cannot be empty</source>
         <translation>Impossible d&apos;écrire le fichier : le nom de section ne peut être vide</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="94"/>
+        <location filename="../actions/actionpackdata/actions/writeinifileinstance.h" line="99"/>
         <source>Unable to write to the file: %1</source>
         <translation>Impossible d&apos;écrire le fichier : %1</translation>
     </message>

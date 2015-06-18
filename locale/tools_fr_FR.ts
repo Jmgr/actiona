@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>Tools::Updater</name>
     <message>
@@ -28,6 +28,24 @@
         <location filename="../tools/updater.cpp" line="201"/>
         <source>Connection error.</source>
         <translation>Erreur de connexion.</translation>
+    </message>
+</context>
+<context>
+    <name>languagesName</name>
+    <message>
+        <location filename="../tools/languages.cpp" line="34"/>
+        <source>System language (if available)</source>
+        <translation>Langue du système (si disponible)</translation>
+    </message>
+    <message>
+        <location filename="../tools/languages.cpp" line="35"/>
+        <source>English (US)</source>
+        <translation>Anglais (États-Unis)</translation>
+    </message>
+    <message>
+        <location filename="../tools/languages.cpp" line="36"/>
+        <source>French (France)</source>
+        <translation>Français (France)</translation>
     </message>
 </context>
 </TS>

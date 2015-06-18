@@ -153,12 +153,12 @@
         <translation>%1 : définition de version incorrecte</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="170"/>
+        <location filename="../actiontools/actionfactory.cpp" line="162"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; already loaded</source>
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; est déjà chargé</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="179"/>
+        <location filename="../actiontools/actionfactory.cpp" line="171"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; cannot be loaded:&lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</source>
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; ne peut pas être chargé : &lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</translation>
     </message>
@@ -783,10 +783,10 @@ Double-cliquez pour afficher</translation>
     <name>Code::Image</name>
     <message>
         <location filename="../actiontools/code/image.cpp" line="69"/>
-        <location filename="../actiontools/code/image.cpp" line="460"/>
-        <location filename="../actiontools/code/image.cpp" line="516"/>
-        <location filename="../actiontools/code/image.cpp" line="552"/>
-        <location filename="../actiontools/code/image.cpp" line="589"/>
+        <location filename="../actiontools/code/image.cpp" line="499"/>
+        <location filename="../actiontools/code/image.cpp" line="555"/>
+        <location filename="../actiontools/code/image.cpp" line="591"/>
+        <location filename="../actiontools/code/image.cpp" line="628"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
@@ -817,16 +817,16 @@ Double-cliquez pour afficher</translation>
         <translation>Impossible de récupérer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="443"/>
-        <location filename="../actiontools/code/image.cpp" line="486"/>
-        <location filename="../actiontools/code/image.cpp" line="542"/>
-        <location filename="../actiontools/code/image.cpp" line="579"/>
+        <location filename="../actiontools/code/image.cpp" line="482"/>
+        <location filename="../actiontools/code/image.cpp" line="525"/>
+        <location filename="../actiontools/code/image.cpp" line="581"/>
+        <location filename="../actiontools/code/image.cpp" line="618"/>
         <source>Error while searching for a sub-image: %1</source>
         <translation>Erreur lors de la recherche d&apos;une sous-image : %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="527"/>
-        <location filename="../actiontools/code/image.cpp" line="563"/>
+        <location filename="../actiontools/code/image.cpp" line="566"/>
+        <location filename="../actiontools/code/image.cpp" line="602"/>
         <source>Parameter &quot;callback&quot; is not a function</source>
         <translation>Le paramètre &quot;callback&quot; n&apos;est pas une fonction</translation>
     </message>
@@ -870,34 +870,50 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code::ProcessHandle</name>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="52"/>
-        <location filename="../actiontools/code/processhandle.cpp" line="81"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="53"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="82"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="183"/>
-        <location filename="../actiontools/code/processhandle.cpp" line="216"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="174"/>
+        <source>Unable to create a snapshot</source>
+        <translation>Impossible de créer une capture</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="186"/>
+        <source>Unable to get the first process</source>
+        <translation>Impossible de récupérer le premier processus</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="209"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="218"/>
+        <source>Failed to get the process parent id</source>
+        <translation>Impossible de récupérer l&apos;identifiant du processus parent</translation>
+    </message>
+    <message>
+        <location filename="../actiontools/code/processhandle.cpp" line="242"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="275"/>
         <source>Unable to open the process</source>
         <translation>Impossible d&apos;ouvrir le processus</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="190"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="249"/>
         <source>Unable to retrieve the executable filename</source>
         <translation>Impossible d&apos;obtenir le nom de l&apos;exécutable</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="202"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="261"/>
         <source>Failed to get the process command</source>
         <translation>Impossible de récupérer la commande de processus</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="238"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="297"/>
         <source>Unable to retrieve the process priority</source>
         <translation>Impossible de récupérer la priorité du processus</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/processhandle.cpp" line="242"/>
+        <location filename="../actiontools/code/processhandle.cpp" line="301"/>
         <source>This is not available under your operating system</source>
         <translation>Ceci n&apos;est pas disponible sous votre système d&apos;exploitation</translation>
     </message>

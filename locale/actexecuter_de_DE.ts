@@ -4,7 +4,7 @@
 <context>
     <name>CodeExecuter</name>
     <message>
-        <location filename="../actexecuter/codeexecuter.cpp" line="126"/>
+        <location filename="../actexecuter/codeexecuter.cpp" line="107"/>
         <source>Backtrace: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,123 +12,123 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actexecuter/codeexecuter.cpp" line="125"/>
+        <location filename="../actexecuter/codeexecuter.cpp" line="106"/>
         <source>Uncaught exception: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="130"/>
-        <location filename="../actexecuter/main.cpp" line="200"/>
+        <location filename="../actexecuter/main.cpp" line="129"/>
+        <location filename="../actexecuter/main.cpp" line="159"/>
         <source>starts in portable mode, storing the settings in the executable folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="194"/>
+        <location filename="../actexecuter/main.cpp" line="153"/>
         <source>switch to code mode, may not be used with -s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="196"/>
+        <location filename="../actexecuter/main.cpp" line="155"/>
         <source>switch to script mode, may not be used with -c</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="198"/>
+        <location filename="../actexecuter/main.cpp" line="157"/>
         <source>do not include the Qt library into the code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="202"/>
+        <location filename="../actexecuter/main.cpp" line="161"/>
         <source>sets the proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="203"/>
+        <location filename="../actexecuter/main.cpp" line="162"/>
         <source>sets the custom proxy type, values are &quot;http&quot; or &quot;socks&quot; (default)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="204"/>
+        <location filename="../actexecuter/main.cpp" line="163"/>
         <source>sets the custom proxy host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="205"/>
+        <location filename="../actexecuter/main.cpp" line="164"/>
         <source>sets the custom proxy port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="206"/>
+        <location filename="../actexecuter/main.cpp" line="165"/>
         <source>sets the custom proxy user</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="207"/>
+        <location filename="../actexecuter/main.cpp" line="166"/>
         <source>sets the custom proxy password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="209"/>
+        <location filename="../actexecuter/main.cpp" line="168"/>
         <source>create a console to see debug output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="210"/>
+        <location filename="../actexecuter/main.cpp" line="169"/>
         <source>wait for user input at the end of the execution, used only with --console</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="212"/>
+        <location filename="../actexecuter/main.cpp" line="171"/>
         <source>show the program version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="214"/>
+        <location filename="../actexecuter/main.cpp" line="173"/>
         <source>show this help text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="249"/>
+        <location filename="../actexecuter/main.cpp" line="208"/>
         <source>usage: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="249"/>
+        <location filename="../actexecuter/main.cpp" line="208"/>
         <source>[parameters]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="249"/>
+        <location filename="../actexecuter/main.cpp" line="208"/>
         <source>filename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="250"/>
+        <location filename="../actexecuter/main.cpp" line="209"/>
         <source>Parameters are:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="282"/>
+        <location filename="../actexecuter/main.cpp" line="241"/>
         <source>Unknown proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="315"/>
+        <location filename="../actexecuter/main.cpp" line="274"/>
         <source>Unknown proxy type, values are &quot;http&quot; or &quot;socks&quot; (default)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="374"/>
+        <location filename="../actexecuter/main.cpp" line="333"/>
         <source>Unknown execution mode, please specify mode=script or mode=code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="400"/>
+        <location filename="../actexecuter/main.cpp" line="359"/>
         <source>Unknown execution mode, please specify -s (script) or -c (code)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="410"/>
+        <location filename="../actexecuter/main.cpp" line="369"/>
         <source>Unable to read input file</source>
         <translation type="unfinished"></translation>
     </message>

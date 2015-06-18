@@ -30,4 +30,22 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>languagesName</name>
+    <message>
+        <location filename="../tools/languages.cpp" line="34"/>
+        <source>System language (if available)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tools/languages.cpp" line="35"/>
+        <source>English (US)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tools/languages.cpp" line="36"/>
+        <source>French (France)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

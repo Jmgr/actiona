@@ -273,33 +273,43 @@
 <context>
     <name>Actions::TextDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="47"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="48"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="48"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="49"/>
         <source>The text to write</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="51"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="52"/>
         <source>Pause between characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="53"/>
         <source>The pause duration between each character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="56"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="57"/>
         <source> ms</source>
         <comment>milliseconds</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="59"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="60"/>
+        <source>Do not send Unicode characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="61"/>
+        <source>Prevent using Unicode characters. Enables a limited set of characters on some programs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="66"/>
         <source>Send input failure</source>
         <translation type="unfinished"></translation>
     </message>
@@ -307,8 +317,8 @@
 <context>
     <name>Actions::TextInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="57"/>
-        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="86"/>
+        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="59"/>
+        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="88"/>
         <source>Unable to write the text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -515,12 +525,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="62"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="69"/>
         <source>Write text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="65"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="72"/>
         <source>Write some text</source>
         <translation type="unfinished"></translation>
     </message>

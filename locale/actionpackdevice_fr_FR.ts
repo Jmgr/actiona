@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ActionPackDevice</name>
     <message>
@@ -281,33 +281,43 @@
 <context>
     <name>Actions::TextDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="47"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="48"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="48"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="49"/>
         <source>The text to write</source>
         <translation>Le texte à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="51"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="52"/>
         <source>Pause between characters</source>
         <translation>Pause entre chaque caractère</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="53"/>
         <source>The pause duration between each character</source>
         <translation>La durée de la pause entre chaque caractère</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="56"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="57"/>
         <source> ms</source>
         <comment>milliseconds</comment>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="59"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="60"/>
+        <source>Do not send Unicode characters</source>
+        <translation>Ne pas envoyer de caractères Unicode</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="61"/>
+        <source>Prevent using Unicode characters. Enables a limited set of characters on some programs.</source>
+        <translation>Empêche l&apos;utilisation de caractères Unicode. Permet d&apos;utiliser un nombre limité de caractères sur certains programmes.</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="66"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
@@ -315,8 +325,8 @@
 <context>
     <name>Actions::TextInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="57"/>
-        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="86"/>
+        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="59"/>
+        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="88"/>
         <source>Unable to write the text</source>
         <translation>Impossible d&apos;écrire le texte</translation>
     </message>
@@ -517,12 +527,12 @@
         <translation type="obsolete">Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="62"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="69"/>
         <source>Write text</source>
         <translation>Écriture de texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="65"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="72"/>
         <source>Write some text</source>
         <translation>Écrit du texte</translation>
     </message>
