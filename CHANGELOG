@@ -1,3 +1,34 @@
+3.9.0 (??/06/15)
+Global:
+- renamed Actionaz to Actiona (sounds better in French)
+- now using Qt5 instead of Qt4 (minimal version is 5.2)
+- ActionDataInput: added editor type (line, multiline or password)
+- added a SendMail action
+- Windows: added a "no unicode character" option to the WriteText action, should allow for a limited text writing in some applications like Remote Desktop
+- fixed DataInput & MultiDataInput not opening URLS in their question fields
+- fixed a crash when using the ChooseWindow button (fixes #31)
+- Linux: fixed missing F1-F35 keys in the KeyMapper
+- WriteIniFile: fixed a bug that prevented the creation of new ini files
+- Windows: fixed keyboard keys not being simulated on some applications (Remote Desktop for example) Note that this doesn't include simulating unicode text input, for which there is, afaik, no solution
+
+Interface:
+- enabled secure connections for checking Internet connectivity, fetching update information and downloading new versions
+- added a language change setting
+- now checking if the SFX files are available to enable/disable the export SFX feature
+- fixed a bug preventing saving the values of some settings (caused by the Qt5 migration): users will see those settings reset to their default values
+- fixed a bug in localized tab names in action dialogs
+- removed unused context help button on dialogs
+
+Code:
+- added a Mail object
+- added ProcessHandle::parentId()
+- added a MultilineText option to the InputDialog object
+- Image: added the pixels() and pixelData() methods to retreive the pixel values at once
+
+Internal:
+- replaced RudeConfig with boost::property_tree
+- replaced Qt's foreach by C++11's range-based for
+
 3.8.0 (09/03/14)
 Global:
 - added in-script resources
