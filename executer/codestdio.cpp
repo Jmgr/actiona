@@ -72,6 +72,13 @@ namespace LibExecuter
 		return context->thisObject();
 	}
 
+    QScriptValue CodeStdio::clear(QScriptContext *context, QScriptEngine *)
+    {
+        // Do nothing here
+
+        return context->thisObject();
+    }
+
 	void CodeStdio::print(const QString &text)
 	{
 		QTextStream stream(stdout);

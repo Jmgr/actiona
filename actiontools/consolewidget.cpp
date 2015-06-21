@@ -168,8 +168,26 @@ namespace ActionTools
 	{
 		mModel->removeRows(0, mModel->rowCount());
 
-		ui->clearPushButton->setEnabled(false);
-	}
+        ui->clearPushButton->setEnabled(false);
+    }
+
+    void ConsoleWidget::clearExceptSeparators()
+    {
+        int rowCount = mModel->rowCount();
+
+        for(int index = rowCount - 1; index >= 0; --index)
+        {
+            QStandardItem *item = mModel->item(index);
+
+            Type type = item->data(TypeRole).value<Type>();
+
+            if(type != Separator)
+                mModel->removeRow(index);
+        }
+
+        if(mModel->rowCount() == 0)
+            ui->clearPushButton->setEnabled(false);
+    }
 
 	void ConsoleWidget::updateClearButton()
 	{
@@ -206,6 +224,9 @@ namespace ActionTools
 		case Error:
 			icon = QIcon(":/images/error.png");
 			break;
+        case Separator:
+            Q_ASSERT(false && "Should use addSeparator instead");
+            break;
 		}
 
 		item->setText(message);
@@ -233,6 +254,7 @@ namespace ActionTools
 		appFont.setPointSize(7);
 
 		item->setFont(appFont);
+        item->setData(QVariant::fromValue<Type>(Separator), TypeRole);
 
 		mModel->appendRow(item);
 	}

@@ -231,6 +231,21 @@ namespace LibExecuter
 		return engine->undefinedValue();
 	}
 
+    QScriptValue clearConsoleFunction(QScriptContext *context, QScriptEngine *engine)
+    {
+        if(!Executer::isExecuterRunning())
+            return QScriptValue();
+
+        QApplication::processEvents();//Call this to prevent UI freeze when calling clear often
+
+        QScriptValue calleeData = context->callee().data();
+        Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
+
+        executer->consoleWidget()->clearExceptSeparators();
+
+        return engine->undefinedValue();
+    }
+
     QScriptValue callProcedureFunction(QScriptContext *context, QScriptEngine *engine)
     {
         if(!Executer::isExecuterRunning())
@@ -282,18 +297,22 @@ namespace LibExecuter
 		QScriptValue console = mScriptEngine->newObject();
 		mScriptEngine->globalObject().setProperty("Console", console, QScriptValue::ReadOnly);
 
-		QScriptValue printFun = mScriptEngine->newFunction(printFunction);
-		printFun.setData(mScriptEngine->newQObject(this));
-		console.setProperty("print", printFun);
+        QScriptValue function = mScriptEngine->newFunction(printFunction);
+        function.setData(mScriptEngine->newQObject(this));
+        console.setProperty("print", function);
 
-		printFun = mScriptEngine->newFunction(printWarningFunction);
-		printFun.setData(mScriptEngine->newQObject(this));
-		console.setProperty("printWarning", printFun);
+        function = mScriptEngine->newFunction(printWarningFunction);
+        function.setData(mScriptEngine->newQObject(this));
+        console.setProperty("printWarning", function);
 
-		printFun = mScriptEngine->newFunction(printErrorFunction);
-		printFun.setData(mScriptEngine->newQObject(this));
-		console.setProperty("printError", printFun);
-		
+        function = mScriptEngine->newFunction(printErrorFunction);
+        function.setData(mScriptEngine->newQObject(this));
+        console.setProperty("printError", function);
+
+        function = mScriptEngine->newFunction(clearConsoleFunction);
+        function.setData(mScriptEngine->newQObject(this));
+        console.setProperty("clear", function);
+
 		mExecuteOnlySelection = onlySelection;
 		mCurrentActionIndex = 0;
 		mActiveActionsCount = 0;

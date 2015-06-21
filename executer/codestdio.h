@@ -44,6 +44,7 @@ namespace LibExecuter
 		static QScriptValue printlnWarning(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue printError(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue printlnError(QScriptContext *context, QScriptEngine *engine);
+        static QScriptValue clear(QScriptContext *context, QScriptEngine *engine);
 
 	private:
 		static void print(const QString &text);

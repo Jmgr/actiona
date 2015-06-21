@@ -46,7 +46,8 @@ namespace ActionTools
 		{
 			Information,
 			Warning,
-			Error
+            Error,
+            Separator
 		};
 		enum Source
 		{
@@ -86,6 +87,7 @@ namespace ActionTools
 		void addStartSeparator();
 		void addEndSeparator();
 		void clear();
+        void clearExceptSeparators();
 
 		void updateClearButton();
 
