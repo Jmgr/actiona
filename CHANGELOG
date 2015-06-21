@@ -23,6 +23,7 @@ Code:
 - added a Mail object
 - added ProcessHandle::parentId()
 - added a MultilineText option to the InputDialog object
+- added Console.clear()
 - Image: added the pixels() and pixelData() methods to retreive the pixel values at once
 
 Internal:
