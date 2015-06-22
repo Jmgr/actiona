@@ -1,4 +1,4 @@
-3.9.0 (??/06/15)
+3.9.0 (22/06/15)
 Global:
 - renamed Actionaz to Actiona (sounds better in French)
 - now using Qt5 instead of Qt4 (minimal version is 5.2)
