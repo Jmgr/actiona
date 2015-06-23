@@ -1,20 +1,20 @@
 /*
-	Actionaz
-	Copyright (C) 2008-2011 Jonathan Mercier-Ganady
-
-	Actionaz is free software: you can redistribute it and/or modify
+	Actiona
+	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	
+	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
-
-	Actionaz is distributed in the hope that it will be useful,
+	
+	Actiona is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
-
+	
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
-
+	
 	Contact : jmgr@jmgr.info
 */
 
@@ -59,15 +59,15 @@ static const wchar_t * const texts[TEXT_COUNT][LANG_COUNT] =
 	},
 	{
 		L"This SFX script can only be run on a 64 bit operating system.",
-		L"Ce script SFX ne peut être exécuté que sur un système d'exploitation 64 bit."
+		L"Ce script SFX ne peut Ãªtre exÃ©cutÃ© que sur un systÃ¨me d'exploitation 64 bit."
 	},
 	{
-		L"Please install Actionaz (www.actionaz.org) before executing this SFX script.",
-		L"Merci d'installer Actionaz (www.actionaz.org) avant d'exécuter ce script SFX."
+		L"Please install Actiona (actiona.tools) before executing this SFX script.",
+		L"Merci d'installer Actiona (actiona.tools) avant d'exÃ©cuter ce script SFX."
 	},
 	{
 		L"Unable to start SFX execution.",
-		L"Impossible d'exécuter le script SFX."
+		L"Impossible d'exÃ©cuter le script SFX."
 	}
 };
 
