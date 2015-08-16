@@ -52,5 +52,6 @@
         <file>icons/actiona.ico</file>
         <file>images/start.png</file>
         <file>icons/resources.png</file>
+        <file>icons/text.png</file>
     </qresource>
 </RCC>
