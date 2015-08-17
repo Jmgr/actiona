@@ -21,6 +21,7 @@
 #include "subparameter.h"
 
 #include <QDebug>
+#include <QDataStream>
 
 namespace ActionTools
 {

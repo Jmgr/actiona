@@ -20,6 +20,8 @@
 
 #include "actioninstancebuffer.h"
 
+#include <QDataStream>
+
 namespace ActionTools
 {
 	QDataStream &operator << (QDataStream &s, const ActionInstanceBuffer &actionInstanceBuffer)

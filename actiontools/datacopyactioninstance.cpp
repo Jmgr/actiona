@@ -21,6 +21,8 @@
 #include "datacopyactioninstance.h"
 #include "devicecopythread.h"
 
+#include <QIODevice>
+
 namespace ActionTools
 {
 	DataCopyActionInstance::DataCopyActionInstance(const ActionDefinition *definition, QObject *parent)

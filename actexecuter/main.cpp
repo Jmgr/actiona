@@ -42,6 +42,7 @@
 #include <QSettings>
 #include <QUrl>
 #include <QNetworkProxy>
+#include <QDataStream>
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QUrlQuery>

@@ -21,6 +21,7 @@
 #include "numberformat.h"
 
 #include <QStringList>
+#include <QObject>
 
 namespace ActionTools
 {

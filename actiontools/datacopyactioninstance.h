@@ -26,6 +26,8 @@
 
 #include <QTimer>
 
+class QIODevice;
+
 namespace ActionTools
 {
 	class DeviceCopyThread;

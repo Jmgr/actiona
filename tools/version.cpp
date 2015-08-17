@@ -22,6 +22,7 @@
 
 #include <QRegExp>
 #include <QStringList>
+#include <QDataStream>
 
 namespace Tools
 {
