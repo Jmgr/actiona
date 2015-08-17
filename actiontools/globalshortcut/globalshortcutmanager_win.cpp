@@ -83,7 +83,7 @@ namespace ActionTools
 #else
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *)
         {
-            if(eventType != "windows_dispatcher_MSG")
+            if(eventType != "windows_generic_MSG")
                 return false;
 
             MSG *msg = static_cast<MSG*>(message);
