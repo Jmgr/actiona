@@ -10,4 +10,5 @@ Icon=actiona
 Type=Application
 Categories=Utility;
 Version=1.0
-MimeType=application/actiona-script;application/actiona-code;application/actionaz-script;application/actionaz-code
+MimeType=application/actiona-script;application/actiona-code;application/actionaz-script;application/actionaz-code;
+Keywords=automate;bot;macro;script;action;asrc;acod;
