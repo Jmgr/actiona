@@ -33,24 +33,28 @@ namespace ActionTools
 	class ActionFactory;
 }
 
-class NewActionTreeWidget;
+class NewActionTreeView;
 class QTreeWidgetItem;
+class NewActionModel;
+class NewActionProxyModel;
 
 class NewActionDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	NewActionDialog(ActionTools::ActionFactory *actionFactory, QWidget *parent = 0);
+    NewActionDialog(ActionTools::ActionFactory *actionFactory,
+                    NewActionModel *newActionModel,
+                    QWidget *parent = 0);
 	~NewActionDialog();
 
-	NewActionTreeWidget *newActionTreeWidget() const;
 	QString selectedAction() const							{ return mSelectedAction; }
 	int exec();
 
 private slots:
-	void on_newActionTreeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
-	void on_newActionTreeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_newActionTreeView_doubleClicked(const QModelIndex &index);
+    void on_filterLineEdit_textChanged(const QString &text);
+    void onCurrentChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
 	void accept();
@@ -58,6 +62,8 @@ private:
 	Ui::NewActionDialog *ui;
 	QString mSelectedAction;
 	ActionTools::ActionFactory *mActionFactory;
+    NewActionModel *mNewActionModel;
+    NewActionProxyModel *mNewActionProxyModel;
 };
 
 #endif // NEWACTIONDIALOG_H

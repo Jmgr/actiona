@@ -18,27 +18,29 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTTABLEVIEW_H
-#define SCRIPTTABLEVIEW_H
+#ifndef NEWACTIONMODEL_H
+#define NEWACTIONMODEL_H
 
-#include <QTreeView>
+#include <QStandardItemModel>
 
-class ScriptTableView : public QTreeView
+class NewActionModel : public QStandardItemModel
 {
 	Q_OBJECT
 
 public:
-	explicit ScriptTableView(QWidget *parent = 0);
+	enum NewActionRole
+	{
+		ActionIdRole = Qt::UserRole
+	};
+
+    explicit NewActionModel(QObject *parent = 0);
 
 protected:
-	void startDrag(Qt::DropActions supportedActions);
-	void dragMoveEvent(QDragMoveEvent *event);
-	void dragLeaveEvent(QDragLeaveEvent* event);
-	void dropEvent(QDropEvent* event);
-	void paintEvent(QPaintEvent* event);
+	Qt::DropActions supportedDropActions() const;
+    QMimeData *mimeData(const QModelIndexList &indexes) const;
 
 private:
-	QRect mDropIndicator;
+    Q_DISABLE_COPY(NewActionModel)
 };
 
-#endif // SCRIPTTABLEVIEW_H
+#endif // NEWACTIONMODEL_H

@@ -30,7 +30,7 @@
 #include <QDrag>
 
 ScriptTableView::ScriptTableView(QWidget *parent)
-	: QTableView(parent)
+    : QTreeView(parent)
 {
 	setDropIndicatorShown(false);
 }
@@ -93,26 +93,26 @@ void ScriptTableView::dragMoveEvent(QDragMoveEvent *event)
 		mDropIndicator = mDropIndicator.translated(0, mDropIndicator.height());
 	}
 
-	QTableView::dragMoveEvent(event);
+    QTreeView::dragMoveEvent(event);
 }
 
 void ScriptTableView::dragLeaveEvent(QDragLeaveEvent* event)
 {
 	mDropIndicator = QRect(0, 0, 0, 0);
 
-	QTableView::dragLeaveEvent(event);
+    QTreeView::dragLeaveEvent(event);
 }
 
 void ScriptTableView::dropEvent(QDropEvent* event)
 {
 	mDropIndicator = QRect(0, 0, 0, 0);
 
-	QTableView::dropEvent(event);
+    QTreeView::dropEvent(event);
 }
 
 void ScriptTableView::paintEvent(QPaintEvent* event)
 {
-	QTableView::paintEvent(event);
+    QTreeView::paintEvent(event);
 
 	if(!mDropIndicator.size().isEmpty())
 	{

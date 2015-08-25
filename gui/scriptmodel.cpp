@@ -23,6 +23,7 @@
 #include "actioninstance.h"
 #include "actiondefinition.h"
 #include "actionfactory.h"
+#include "scriptproxymodel.h"
 
 #include <QIcon>
 #include <QClipboard>
@@ -38,7 +39,8 @@ ScriptModel::ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory
 	: QAbstractTableModel(parent),
 	mScript(script),
 	mActionFactory(actionFactory),
-	mSelectionModel(0),
+    mSelectionModel(nullptr),
+    mProxyModel(nullptr),
 	mUndoStack(new QUndoStack(this))
 {
 }
@@ -79,8 +81,10 @@ void ScriptModel::insertAction(int row, const ActionTools::ActionInstanceBuffer 
 {
 	mUndoStack->push(new InsertNewActionCommand(row, actionInstanceBuffer, this));
 
-	mSelectionModel->select(index(row, 0), QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
-	mSelectionModel->setCurrentIndex(index(row, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    auto actionIndex = mProxyModel->mapFromSource(index(row, 0));
+
+    mSelectionModel->select(actionIndex, QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    mSelectionModel->setCurrentIndex(actionIndex, QItemSelectionModel::Select | QItemSelectionModel::Rows);
 
 	emit scriptEdited();
 }
@@ -102,8 +106,10 @@ void ScriptModel::removeActions(const QList<int> &rows)
 		if(lastPosition > rowCount() - 1)
 			lastPosition = rowCount() - 1;
 
-		mSelectionModel->select(index(lastPosition, 0), QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
-		mSelectionModel->setCurrentIndex(index(lastPosition, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        auto actionIndex = mProxyModel->mapFromSource(index(lastPosition, 0));
+
+        mSelectionModel->select(actionIndex, QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        mSelectionModel->setCurrentIndex(actionIndex, QItemSelectionModel::Select | QItemSelectionModel::Rows);
 	}
 
 	emit scriptEdited();
@@ -259,7 +265,7 @@ QVariant ScriptModel::headerData(int section, Qt::Orientation orientation, int r
 	switch(section)
 	{
 	case ColumnLabel:
-		return tr("Line/ID");
+        return tr("Line/Label");
 	case ColumnActionName:
 		return tr("Action");
 	case ColumnComment:

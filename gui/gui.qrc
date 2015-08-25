@@ -53,5 +53,6 @@
         <file>images/start.png</file>
         <file>icons/resources.png</file>
         <file>icons/text.png</file>
+        <file>icons/search.png</file>
     </qresource>
 </RCC>

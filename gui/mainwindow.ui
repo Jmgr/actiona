@@ -21,7 +21,7 @@
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -37,6 +37,40 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="FilterLineEdit" name="filterScriptLineEdit"/>
+      </item>
+      <item>
+       <widget class="QComboBox" name="filterScriptCriterionComboBox">
+        <item>
+         <property name="text">
+          <string>All</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Label</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Action name</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Comment</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
     <item>
      <widget class="ScriptTableView" name="scriptView">
       <property name="contextMenuPolicy">
@@ -63,33 +97,18 @@
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::ExtendedSelection</enum>
+      </property>
       <property name="selectionBehavior">
        <enum>QAbstractItemView::SelectRows</enum>
       </property>
-      <property name="showGrid">
+      <property name="rootIsDecorated">
+       <bool>true</bool>
+      </property>
+      <property name="sortingEnabled">
        <bool>false</bool>
       </property>
-      <attribute name="horizontalHeaderHighlightSections">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderStretchLastSection">
-       <bool>true</bool>
-      </attribute>
-      <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderDefaultSectionSize">
-       <number>20</number>
-      </attribute>
-      <attribute name="verticalHeaderHighlightSections">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderMinimumSectionSize">
-       <number>0</number>
-      </attribute>
      </widget>
     </item>
     <item>
@@ -312,7 +331,10 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="NewActionTreeWidget" name="newActionTreeWidget">
+      <widget class="FilterLineEdit" name="filterActionLineEdit"/>
+     </item>
+     <item>
+      <widget class="QTreeView" name="newActionTreeView">
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -331,17 +353,9 @@
        <property name="animated">
         <bool>true</bool>
        </property>
-       <property name="columnCount">
-        <number>1</number>
-       </property>
        <attribute name="headerVisible">
         <bool>false</bool>
        </attribute>
-       <column>
-        <property name="text">
-         <string/>
-        </property>
-       </column>
       </widget>
      </item>
     </layout>
@@ -685,7 +699,7 @@
   </action>
   <action name="actionParameters">
    <property name="icon">
-    <iconset>
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/text.png</normaloff>:/icons/text.png</iconset>
    </property>
    <property name="text">
@@ -759,7 +773,7 @@
   </action>
   <action name="actionGlobal_code">
    <property name="icon">
-    <iconset>
+    <iconset resource="gui.qrc">
      <normaloff>:/icons/text.png</normaloff>:/icons/text.png</iconset>
    </property>
    <property name="text">
@@ -920,20 +934,20 @@
    <header>deleteactionpushbutton.h</header>
   </customwidget>
   <customwidget>
-   <class>NewActionTreeWidget</class>
-   <extends>QTreeWidget</extends>
-   <header>newactiontreewidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ScriptTableView</class>
-   <extends>QTableView</extends>
-   <header>scripttableview.h</header>
-  </customwidget>
-  <customwidget>
    <class>ActionTools::ConsoleWidget</class>
    <extends>QWidget</extends>
    <header>consolewidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ScriptTableView</class>
+   <extends>QTreeView</extends>
+   <header>scripttableview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FilterLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>filterlineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

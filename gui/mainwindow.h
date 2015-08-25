@@ -52,7 +52,7 @@ class ScriptModel;
 class ProgressSplashScreen;
 class QTreeWidget;
 class QTreeWidgetItem;
-class NewActionTreeWidget;
+class NewActionModel;
 class QNetworkReply;
 class QFile;
 class QProgressDialog;
@@ -62,6 +62,8 @@ class QxtCommandOptions;
 class QNetworkAccessManager;
 class ActionDialog;
 class QModelIndex;
+class NewActionProxyModel;
+class ScriptProxyModel;
 
 #ifdef Q_OS_WIN
 #include <Shobjidl.h>
@@ -82,8 +84,6 @@ signals:
 
 private slots:
 	void postInit();
-	void opacityOpenUpdate();
-	void opacityCloseUpdate();
 	void on_actionSave_triggered();
 	void on_actionSave_as_triggered();
 	void on_actionSave_copy_as_triggered();
@@ -129,6 +129,9 @@ private slots:
 	void on_actionHelp_triggered();
     void on_actionTake_screenshot_triggered();
 	void on_reportBugPushButton_clicked();
+    void on_filterActionLineEdit_textChanged(const QString &text);
+    void on_filterScriptLineEdit_textChanged(const QString &text);
+    void on_filterScriptCriterionComboBox_currentIndexChanged(int index);
 	void systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
 	void scriptEdited();
 	void actionSelectionChanged();
@@ -139,7 +142,7 @@ private slots:
 	void scriptContentDropped(const QString &scriptContent);
 	void addAction();
 	void openRecentFile();
-	void newActionDoubleClicked(QTreeWidgetItem *item, int column);
+    void newActionDoubleClicked(const QModelIndex &index);
 	void actionEnabled();
 	void packLoadError(const QString &error);
 	void stopExecution();
@@ -182,7 +185,7 @@ private:
 	void logItemClicked(int itemRow, bool doubleClick);
 	void updateUndoRedoStatus();
 	void execute(bool onlySelection);
-	void fillNewActionTreeWidget(NewActionTreeWidget *widget);
+    void fillNewActionModel();
     ActionDialog *actionDialog(ActionTools::ActionInstance *actionInstance);
 	bool editAction(ActionTools::ActionInstance *actionInstance, const QString &field = QString(), const QString &subField = QString(), int line = -1, int column = -1);
 	bool editAction(ActionTools::ActionInstance *actionInstance, int exception);
@@ -215,8 +218,6 @@ private:
 #endif
 
 	Ui::MainWindow *ui;
-	float mOpacity;
-	QTimer *mOpacityTimer;
 	bool mScriptModified;
 	QString mCurrentFile;
 	int mMaxRecentFiles;
@@ -242,6 +243,9 @@ private:
 	QList<ActionDialog *> mActionDialogs;
 	QString mUsedLocale;
     QProgressDialog *mScriptProgressDialog;
+    NewActionProxyModel *mNewActionProxyModel;
+    ScriptProxyModel *mScriptProxyModel;
+    NewActionModel *mNewActionModel;
 #ifndef ACT_NO_UPDATER
 	QNetworkAccessManager *mNetworkAccessManager;
 	QNetworkReply *mUpdateDownloadNetworkReply;

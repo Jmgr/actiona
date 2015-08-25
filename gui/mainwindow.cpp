@@ -54,6 +54,9 @@
 #include "scriptsettingsdialog.h"
 #include "resourcedialog.h"
 #include "screenshotwizard.h"
+#include "newactionmodel.h"
+#include "newactionproxymodel.h"
+#include "scriptproxymodel.h"
 
 #include <QSystemTrayIcon>
 #include <QInputDialog>
@@ -93,8 +96,6 @@ QTM_USE_NAMESPACE
 MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
 	: QMainWindow(0),
 	ui(new Ui::MainWindow),
-	mOpacity(0.0f),
-	mOpacityTimer(new QTimer(this)),
 	mScriptModified(false),
 	mActionFactory(new ActionTools::ActionFactory(this)),
 	mScript(new ActionTools::Script(mActionFactory, this)),
@@ -110,7 +111,10 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mAddActionRow(0),
 	mStopExecutionAction(new QAction(tr("S&top execution"), this)),
     mUsedLocale(usedLocale),
-    mScriptProgressDialog(new QProgressDialog(this))
+    mScriptProgressDialog(new QProgressDialog(this)),
+    mNewActionProxyModel(new NewActionProxyModel(this)),
+    mScriptProxyModel(new ScriptProxyModel(mScript, this)),
+    mNewActionModel(new NewActionModel(this))
 #ifndef ACT_NO_UPDATER
 	,mNetworkAccessManager(new QNetworkAccessManager(this)),
 	mUpdateDownloadNetworkReply(0),
@@ -126,7 +130,12 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	Tools::HighResolutionTimer timer("MainWindow constructor");
 #endif
 
+    setEnabled(false);
+
 	ui->setupUi(this);
+
+    mNewActionProxyModel->setDynamicSortFilter(false);
+    mScriptProxyModel->setDynamicSortFilter(false);
 
     mScriptProgressDialog->close();
     mScriptProgressDialog->setWindowModality(Qt::ApplicationModal);
@@ -213,21 +222,27 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
     }
 #endif
 
-	ui->actionsDockWidget->setWidget(ui->newActionTreeWidget);
 	ui->scriptView->setIconSize(QSize(16, 16));
 
-	QItemSelectionModel *oldModel = ui->scriptView->selectionModel();
-	ui->scriptView->setModel(mScriptModel);
-	delete oldModel;
+    {
+        QItemSelectionModel *oldModel = ui->newActionTreeView->selectionModel();
+        mNewActionProxyModel->setSourceModel(mNewActionModel);
+        ui->newActionTreeView->setModel(mNewActionProxyModel);
+        delete oldModel;
+    }
+
+    {
+        QItemSelectionModel *oldModel = ui->scriptView->selectionModel();
+        mScriptProxyModel->setSourceModel(mScriptModel);
+        ui->scriptView->setModel(mScriptProxyModel);
+        delete oldModel;
+    }
 
 	mScriptModel->setSelectionModel(ui->scriptView->selectionModel());
+    mScriptModel->setProxyModel(mScriptProxyModel);
 
+    ui->scriptView->header()->setSectionsMovable(true);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    ui->scriptView->horizontalHeader()->setSectionsMovable(true);
-#else
-    ui->scriptView->horizontalHeader()->setMovable(true);
-#endif
 	ui->actionQuit->setShortcut(QKeySequence(tr("Alt+F4")));
 	readSettings();
 
@@ -251,7 +266,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	connect(mScriptModel, SIGNAL(scriptContentDropped(QString)), this, SLOT(scriptContentDropped(QString)));
 	connect(ui->scriptView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(actionSelectionChanged()));
 	connect(mScriptModel, SIGNAL(scriptEdited()), this, SLOT(scriptEdited()));
-	connect(ui->newActionTreeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(newActionDoubleClicked(QTreeWidgetItem*,int)));
+    connect(ui->newActionTreeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(newActionDoubleClicked(QModelIndex)));
 	if(mSystemTrayIcon)
 		connect(mSystemTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(systemTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 	connect(mActionFactory, SIGNAL(actionPackLoadError(QString)), this, SLOT(packLoadError(QString)));
@@ -269,16 +284,6 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
     setWindowTitle("Actiona[*]");//Set this to fix some warnings about the [*] placeholder
 
     QTimer::singleShot(0, this, SLOT(postInit()));
-
-#ifdef Q_OS_WIN
-    connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityOpenUpdate()));
-
-    mOpacityTimer->setSingleShot(false);
-    mOpacityTimer->start(25);
-#endif
-#ifdef Q_OS_LINUX
-    setWindowOpacity(1.0f);
-#endif
 }
 
 MainWindow::~MainWindow()
@@ -383,9 +388,9 @@ void MainWindow::postInit()
 
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("filling NewActionTreeWidget");
+        Tools::HighResolutionTimer timer("filling NewActionModel");
 #endif
-		fillNewActionTreeWidget(ui->newActionTreeWidget);
+        fillNewActionModel();
 	}
 
 	statusBar()->showMessage(tr("Ready, loaded %1 actions from %2 packs").arg(mActionFactory->actionDefinitionCount()).arg(mActionFactory->actionPackCount()));
@@ -526,32 +531,10 @@ void MainWindow::postInit()
 	}
 
 	actionSelectionChanged();
-}
 
-void MainWindow::opacityOpenUpdate()
-{
-	if(mOpacity < 1.0f)
-	{
-		mOpacity += 0.04f;
-		setWindowOpacity(mOpacity);
-	}
-	else
-	{
-		setWindowOpacity(1.0f);
-		mOpacityTimer->stop();
-		mOpacityTimer->disconnect();
-	}
-}
+    setEnabled(true);
 
-void MainWindow::opacityCloseUpdate()
-{
-	if(mOpacity > 0.0f)
-	{
-		mOpacity -= 0.06f;
-		setWindowOpacity(mOpacity);
-	}
-	else
-		QApplication::quit();
+    ui->scriptView->setFocus();
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -646,9 +629,12 @@ void MainWindow::on_actionSelect_none_triggered()
 
 void MainWindow::on_actionInverse_selection_triggered()
 {
+    auto selection = mScriptProxyModel->mapSelectionFromSource(
+                QItemSelection(mScriptModel->index(0, 0),
+                               mScriptModel->index(mScriptModel->rowCount() - 1, 0)));
+
 	ui->scriptView->selectionModel()->select(
-			QItemSelection(mScriptModel->index(0, 0),
-						   mScriptModel->index(mScriptModel->rowCount() - 1, 0)),
+            selection,
 			QItemSelectionModel::Toggle | QItemSelectionModel::Rows);
 }
 
@@ -1001,9 +987,10 @@ void MainWindow::on_actionNew_action_triggered()
 	if(mActionFactory->actionDefinitionCount() == 0)
 		return;
 
-	NewActionDialog dialog(mActionFactory, this);
+    NewActionDialog dialog(mActionFactory,
+                           mNewActionModel,
+                           this);
     dialog.setWindowFlags(dialog.windowFlags() | Qt::WindowContextHelpButtonHint);
-	fillNewActionTreeWidget(dialog.newActionTreeWidget());
 	if(dialog.exec() == QDialog::Accepted)
 		wantToAddAction(dialog.selectedAction());
 }
@@ -1035,7 +1022,7 @@ void MainWindow::on_actionJump_to_line_triggered()
 		if(line >= 0 && line < mScript->actionCount())
 		{
 			ui->scriptView->setFocus();
-			ui->scriptView->selectRow(line);
+            //ui->scriptView->selectRow(line);
 		}
 	}
 }
@@ -1149,6 +1136,26 @@ void MainWindow::on_reportBugPushButton_clicked()
     QDesktopServices::openUrl(QUrl(QString("http://bugs.actiona.tools?language=%1&program=actiona3&version=%2&os=%3").arg(mUsedLocale).arg(Global::ACTIONA_VERSION.toString()).arg(Global::currentOS())));
 }
 
+void MainWindow::on_filterActionLineEdit_textChanged(const QString &text)
+{
+    mNewActionProxyModel->setFilterString(text);
+    ui->newActionTreeView->expandAll();
+}
+
+void MainWindow::on_filterScriptLineEdit_textChanged(const QString &text)
+{
+    mScriptProxyModel->setFilterString(text);
+    ui->scriptView->resizeColumnToContents(0);
+    ui->scriptView->resizeColumnToContents(1);
+}
+
+void MainWindow::on_filterScriptCriterionComboBox_currentIndexChanged(int index)
+{
+    mScriptProxyModel->setFilteringCriterion(static_cast<ScriptProxyModel::FilteringCriterion>(index));
+    ui->scriptView->resizeColumnToContents(0);
+    ui->scriptView->resizeColumnToContents(1);
+}
+
 void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
 	if(reason == QSystemTrayIcon::DoubleClick)
@@ -1189,7 +1196,7 @@ void MainWindow::actionSelectionChanged()
 	int columnCount = mScriptModel->columnCount();
 	if(columnCount == 0 )
 		actionSelectionChanged(0);
-	else
+    else
 		actionSelectionChanged(ui->scriptView->selectionModel()->selectedIndexes().count() / columnCount);
 }
 
@@ -1583,48 +1590,59 @@ void MainWindow::execute(bool onlySelection)
 	}
 }
 
-void MainWindow::fillNewActionTreeWidget(NewActionTreeWidget *widget)
+void MainWindow::fillNewActionModel()
 {
-	for(int i = 0; i < ActionTools::CategoryCount; ++i)
-	{
-		QTreeWidgetItem *item = new QTreeWidgetItem(QStringList(QApplication::translate("ActionDefinition::CategoryName", ActionTools::ActionDefinition::CategoryName[i].toLatin1())));
-		QFont boldFont;
+    mNewActionModel->clear();
 
-		boldFont.setWeight(QFont::Bold);
-		item->setFont(0, boldFont);
+    // Add categories
+    {
+        QFont boldFont;
+        boldFont.setWeight(QFont::Bold);
 
-		widget->addTopLevelItem(item);
+        for(int categoryIndex = 0; categoryIndex < ActionTools::CategoryCount; ++categoryIndex)
+        {
+            QString categoryName = QApplication::translate("ActionDefinition::CategoryName", ActionTools::ActionDefinition::CategoryName[categoryIndex].toLatin1());
+            QStandardItem *categoryItem = new QStandardItem(categoryName);
 
-		if(mActionFactory->actionDefinitionCount(static_cast<ActionTools::ActionCategory>(i)) == 0)
-			item->setFlags(Qt::NoItemFlags);
-		else
-			item->setFlags(Qt::ItemIsEnabled);
-	}
+            categoryItem->setFont(boldFont);
 
-	for(int i = 0; i < mActionFactory->actionDefinitionCount(); ++i)
-	{
-		ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(i);
+            if(mActionFactory->actionDefinitionCount(static_cast<ActionTools::ActionCategory>(categoryIndex)) == 0)
+                categoryItem->setFlags(Qt::NoItemFlags);
+            else
+                categoryItem->setFlags(Qt::ItemIsEnabled);
 
-		QTreeWidgetItem *parentItem = widget->topLevelItem(actionDefinition->category());
-		QTreeWidgetItem *item = new QTreeWidgetItem(parentItem, QStringList(actionDefinition->name()));
-		QFont itemFont;
-		QString tooltip = actionDefinition->description();
+            mNewActionModel->appendRow(categoryItem);
+        }
+    }
 
-		if(!actionDefinition->worksUnderThisOS())
-		{
-			itemFont.setItalic(true);
+    // Add actions
+    {
+        QFont italicFont;
+        italicFont.setItalic(true);
 
-			tooltip.append("\n");
-			tooltip.append(tr("Note: does not work under this operating system"));
-		}
+        for(int i = 0; i < mActionFactory->actionDefinitionCount(); ++i)
+        {
+            ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(i);
+            QStandardItem *categoryItem = mNewActionModel->item(actionDefinition->category(), 0);
+            QString tooltip = actionDefinition->description();
+            QStandardItem *actionItem = new QStandardItem(actionDefinition->icon(), actionDefinition->name());
 
-		item->setFont(0, itemFont);
-		item->setIcon(0, actionDefinition->icon());
-		item->setToolTip(0, tooltip);
-		item->setData(0, NewActionTreeWidget::ActionIdRole, actionDefinition->id());
-	}
+            if(!actionDefinition->worksUnderThisOS())
+            {
+                actionItem->setFont(italicFont);
 
-    widget->expandAll();
+                tooltip.append("\n");
+                tooltip.append(tr("Note: does not work under this operating system"));
+            }
+
+            actionItem->setToolTip(tooltip);
+            actionItem->setData(actionDefinition->id(), NewActionModel::ActionIdRole);
+
+            categoryItem->appendRow(actionItem);
+        }
+    }
+
+    ui->newActionTreeView->expandAll();
 }
 
 void MainWindow::editAction(const QModelIndex &index)
@@ -1709,12 +1727,14 @@ void MainWindow::openRecentFile()
 	}
 }
 
-void MainWindow::newActionDoubleClicked(QTreeWidgetItem *item, int column)
+void MainWindow::newActionDoubleClicked(const QModelIndex &index)
 {
-	if(column != ScriptModel::ColumnLabel)
-		return;
+    auto modelIndex = mNewActionProxyModel->mapToSource(index);
 
-	wantToAddAction(item->data(0, NewActionTreeWidget::ActionIdRole).toString());
+    QString actionId = modelIndex.data(NewActionModel::ActionIdRole).toString();
+
+    if(!actionId.isEmpty())
+        wantToAddAction(actionId);
 }
 
 void MainWindow::actionEnabled()
@@ -2097,6 +2117,9 @@ QList<int> MainWindow::selectedRows() const
 {
 	QModelIndexList selectedIndexes = ui->scriptView->selectionModel()->selectedIndexes();
 
+    for(QModelIndex &modelIndex: selectedIndexes)
+        modelIndex = mScriptProxyModel->mapToSource(modelIndex);
+
 	if(selectedIndexes.count() == 0)
 		return QList<int>();
 
@@ -2203,15 +2226,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	{
 		writeSettings();
 
-#ifdef Q_OS_WIN
-        mOpacityTimer->start(25);
-        connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityCloseUpdate()));
-
-        event->ignore();//Ignore, since we have to wait until the fade out is done
-#endif
-#ifdef Q_OS_LINUX
         QApplication::quit();
-#endif
 	}
 	else
 		event->ignore();

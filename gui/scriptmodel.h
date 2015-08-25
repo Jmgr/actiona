@@ -36,6 +36,7 @@ namespace ActionTools
 
 class QItemSelectionModel;
 class QUndoStack;
+class ScriptProxyModel;
 
 class ScriptModel : public QAbstractTableModel
 {
@@ -76,6 +77,7 @@ public:
 
 	void update()														{ emit layoutChanged(); }
 	void setSelectionModel(QItemSelectionModel *selectionModel)			{ mSelectionModel = selectionModel; }
+    void setProxyModel(ScriptProxyModel *proxyModel)                    { mProxyModel = proxyModel; }
 	QUndoStack *undoStack() const										{ return mUndoStack; }
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -117,6 +119,7 @@ private:
 	ActionTools::Script *mScript;
 	ActionTools::ActionFactory *mActionFactory;
 	QItemSelectionModel *mSelectionModel;
+    ScriptProxyModel *mProxyModel;
 	QUndoStack *mUndoStack;
 
 	Q_DISABLE_COPY(ScriptModel)

@@ -25,7 +25,6 @@ SOURCES += main.cpp \
 	scriptparametersdialog.cpp \
 	settingsdialog.cpp \
 	settingskeyedit.cpp \
-	newactiontreewidget.cpp \
 	scripttableview.cpp \
 	scriptmodelundocommands.cpp \
 	newactiondialog.cpp \
@@ -38,7 +37,11 @@ SOURCES += main.cpp \
     filetypeguesser.cpp \
     resourcetablewidget.cpp \
     resourcetypedelegate.cpp \
-    resourcenamedelegate.cpp
+    resourcenamedelegate.cpp \
+    newactionmodel.cpp \
+    newactionproxymodel.cpp \
+    scriptproxymodel.cpp \
+    filterlineedit.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -48,7 +51,6 @@ HEADERS += mainwindow.h \
 	scriptparametersdialog.h \
 	settingsdialog.h \
 	settingskeyedit.h \
-	newactiontreewidget.h \
 	scripttableview.h \
 	scriptmodelundocommands.h \
 	newactiondialog.h \
@@ -61,7 +63,11 @@ HEADERS += mainwindow.h \
     resourcetablewidget.h \
     resourcetypedelegate.h \
     resourcesizeitem.h \
-    resourcenamedelegate.h
+    resourcenamedelegate.h \
+    newactionmodel.h \
+    newactionproxymodel.h \
+    scriptproxymodel.h \
+    filterlineedit.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += changelogdialog.cpp
 	HEADERS += changelogdialog.h

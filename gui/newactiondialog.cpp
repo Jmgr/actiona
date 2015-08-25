@@ -22,13 +22,38 @@
 #include "ui_newactiondialog.h"
 #include "actionfactory.h"
 #include "actiondefinition.h"
+#include "newactionmodel.h"
+#include "newactionproxymodel.h"
 
-NewActionDialog::NewActionDialog(ActionTools::ActionFactory *actionFactory, QWidget *parent)
+#include <QPushButton>
+
+NewActionDialog::NewActionDialog(ActionTools::ActionFactory *actionFactory,
+                                 NewActionModel *newActionModel,
+                                 QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::NewActionDialog),
-	mActionFactory(actionFactory)
+    mActionFactory(actionFactory),
+    mNewActionModel(newActionModel),
+    mNewActionProxyModel(new NewActionProxyModel(this))
 {
 	ui->setupUi(this);
+
+    mNewActionProxyModel->setDynamicSortFilter(false);
+
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+
+    {
+        QItemSelectionModel *model = ui->newActionTreeView->selectionModel();
+        mNewActionProxyModel->setSourceModel(mNewActionModel);
+        ui->newActionTreeView->setModel(mNewActionProxyModel);
+        delete model;
+    }
+
+    QItemSelectionModel *selectionModel = ui->newActionTreeView->selectionModel();
+
+    connect(selectionModel, &QItemSelectionModel::currentChanged, this, &NewActionDialog::onCurrentChanged);
+
+    ui->newActionTreeView->expandAll();
 }
 
 NewActionDialog::~NewActionDialog()
@@ -36,86 +61,99 @@ NewActionDialog::~NewActionDialog()
 	delete ui;
 }
 
-NewActionTreeWidget *NewActionDialog::newActionTreeWidget() const
-{
-	return ui->newActionTreeWidget;
-}
-
 int NewActionDialog::exec()
 {
-	QTreeWidgetItem *chosenItem = 0;
-	for(int topLevelItemIndex = 0; topLevelItemIndex < ui->newActionTreeWidget->topLevelItemCount(); ++topLevelItemIndex)
-	{
-		QTreeWidgetItem *topLevelItem = ui->newActionTreeWidget->topLevelItem(topLevelItemIndex);
-		if(!topLevelItem)
-			continue;
+    QStandardItem *selectedItem = nullptr;
 
-		if(topLevelItem->childCount() > 0)
-		{
-			chosenItem = topLevelItem->child(0);
-			break;
-		}
-	}
+    for(int rowIndex = 0; rowIndex < mNewActionModel->rowCount(); ++rowIndex)
+    {
+        QStandardItem *currentItem = mNewActionModel->item(rowIndex);
+        if(!currentItem)
+            continue;
 
-	if(chosenItem)
-		ui->newActionTreeWidget->setCurrentItem(chosenItem);
+        if(currentItem->hasChildren())
+        {
+            selectedItem = currentItem->child(0);
+            break;
+        }
+    }
+
+    if(selectedItem)
+        ui->newActionTreeView->setCurrentIndex(mNewActionProxyModel->mapFromSource(selectedItem->index()));
 
 	return QDialog::exec();
 }
 
-void NewActionDialog::on_newActionTreeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column)
+void NewActionDialog::on_newActionTreeView_doubleClicked(const QModelIndex &index)
 {
-	Q_UNUSED(item)
-	Q_UNUSED(column)
+    Q_UNUSED(index)
 
-	accept();
+    accept();
 }
 
-void NewActionDialog::on_newActionTreeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void NewActionDialog::on_filterLineEdit_textChanged(const QString &text)
 {
-	Q_UNUSED(previous)
+    mNewActionProxyModel->setFilterString(text);
+    ui->newActionTreeView->expandAll();
+}
 
-	const QString &actionId = current->data(0, NewActionTreeWidget::ActionIdRole).toString();
-	ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionId);
-	if(!actionDefinition)
-		return;
+void NewActionDialog::onCurrentChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(previous)
 
-	ui->actionDescription->setText(actionDefinition->description());
-	ui->versionLabel->setText(actionDefinition->version().toString());
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
-	QString status;
-	switch(actionDefinition->status())
-	{
-	case ActionTools::Alpha:
-		status = tr("Alpha");
-		break;
-	case ActionTools::Beta:
-		status = tr("Beta");
-		break;
-	case ActionTools::Testing:
-		status = tr("Testing");
-		break;
-	case ActionTools::Stable:
-		status = tr("Stable");
-		break;
-	}
-	ui->statusLabel->setText(status);
+    auto index = mNewActionProxyModel->mapToSource(current);
+    const QString &actionId = index.data(NewActionModel::ActionIdRole).toString();
+    ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionId);
+    if(!actionDefinition)
+        return;
 
-	QString official;
-	if(actionDefinition->flags() & ActionTools::Official)
-		official = tr("Yes");
-	else
-		official = tr("No");
-	ui->officialLabel->setText(official);
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+
+    ui->actionDescription->setText(actionDefinition->description());
+    ui->versionLabel->setText(actionDefinition->version().toString());
+
+    QString status;
+    switch(actionDefinition->status())
+    {
+    case ActionTools::Alpha:
+        status = tr("Alpha");
+        break;
+    case ActionTools::Beta:
+        status = tr("Beta");
+        break;
+    case ActionTools::Testing:
+        status = tr("Testing");
+        break;
+    case ActionTools::Stable:
+        status = tr("Stable");
+        break;
+    }
+    ui->statusLabel->setText(status);
+
+    QString official;
+    if(actionDefinition->flags() & ActionTools::Official)
+        official = tr("Yes");
+    else
+        official = tr("No");
+    ui->officialLabel->setText(official);
 }
 
 void NewActionDialog::accept()
 {
-	QTreeWidgetItem *currentItem = ui->newActionTreeWidget->currentItem();
-	if(!currentItem)
-		return;
+    auto selectedIndexes = ui->newActionTreeView->selectionModel()->selectedRows(0);
+    if(selectedIndexes.isEmpty())
+        return;
 
-	mSelectedAction = currentItem->data(0, NewActionTreeWidget::ActionIdRole).toString();
+    auto firstIndex = mNewActionProxyModel->mapToSource(selectedIndexes.first());
+
+    QString selectedAction = firstIndex.data(NewActionModel::ActionIdRole).toString();
+
+    if(selectedAction.isEmpty())
+        return;
+
+    mSelectedAction = selectedAction;
 
 	QDialog::accept();
 }

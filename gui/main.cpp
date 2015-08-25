@@ -238,9 +238,6 @@ int main(int argc, char **argv)
 	}
 
 	MainWindow mainWindow(&options, splash, startScript, locale);
-#ifndef Q_OS_LINUX
-    mainWindow.setWindowOpacity(0.0);
-#endif
 
 	QObject::connect(&app, SIGNAL(messageReceived(const QString &)), &mainWindow, SLOT(otherInstanceMessage(const QString &)));
 
