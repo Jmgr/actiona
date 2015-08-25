@@ -18,17 +18,17 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTTABLEVIEW_H
-#define SCRIPTTABLEVIEW_H
+#ifndef SCRIPTTREEVIEW_H
+#define SCRIPTTREEVIEW_H
 
 #include <QTreeView>
 
-class ScriptTableView : public QTreeView
+class ScriptTreeView : public QTreeView
 {
 	Q_OBJECT
 
 public:
-	explicit ScriptTableView(QWidget *parent = 0);
+    explicit ScriptTreeView(QWidget *parent = 0);
 
 protected:
 	void startDrag(Qt::DropActions supportedActions);
@@ -41,4 +41,4 @@ private:
 	QRect mDropIndicator;
 };
 
-#endif // SCRIPTTABLEVIEW_H
+#endif // SCRIPTTREEVIEW_H

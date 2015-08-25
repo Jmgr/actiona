@@ -1488,7 +1488,7 @@ void MainWindow::logItemClicked(int itemRow, bool doubleClick)
 			}
 			else
 			{
-				ui->scriptView->setCurrentIndex(mScriptModel->index(action, 0));
+                ui->scriptView->setCurrentIndex(mScriptProxyModel->mapFromSource(mScriptModel->index(action, 0)));
 				ui->scriptView->setFocus();
 			}
 		}
@@ -1507,7 +1507,7 @@ void MainWindow::logItemClicked(int itemRow, bool doubleClick)
 			}
 			else
 			{
-				ui->scriptView->setCurrentIndex(mScriptModel->index(action, 0));
+                ui->scriptView->setCurrentIndex(mScriptProxyModel->mapFromSource(mScriptModel->index(action, 0)));
 				ui->scriptView->setFocus();
 			}
 		}

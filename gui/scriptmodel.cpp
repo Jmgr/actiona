@@ -52,7 +52,7 @@ void ScriptModel::setActionsEnabled(bool enabled)
 	for(int row = 0; row < rowCount(); ++row)
 		rows << row;
 
-	mUndoStack->push(new ChangeEnabledCommand(rows, enabled, this));
+    mUndoStack->push(new ChangeEnabledCommand(rows, enabled, this, mProxyModel));
 
 	emit scriptEdited();
 }
@@ -62,7 +62,7 @@ void ScriptModel::setActionsEnabled(const QList<int> &rows, bool enabled)
 	if(rows.count() == 0)
 		return;
 
-	mUndoStack->push(new ChangeEnabledCommand(rows, enabled, this));
+    mUndoStack->push(new ChangeEnabledCommand(rows, enabled, this, mProxyModel));
 
 	emit scriptEdited();
 }
@@ -72,14 +72,14 @@ void ScriptModel::setActionsColor(const QList<int> &rows, const QColor &color)
 	if(rows.count() == 0)
 		return;
 
-	mUndoStack->push(new ChangeColorCommand(rows, color, this));
+    mUndoStack->push(new ChangeColorCommand(rows, color, this, mProxyModel));
 
 	emit scriptEdited();
 }
 
 void ScriptModel::insertAction(int row, const ActionTools::ActionInstanceBuffer &actionInstanceBuffer)
 {
-	mUndoStack->push(new InsertNewActionCommand(row, actionInstanceBuffer, this));
+    mUndoStack->push(new InsertNewActionCommand(row, actionInstanceBuffer, this, mProxyModel));
 
     auto actionIndex = mProxyModel->mapFromSource(index(row, 0));
 
@@ -98,7 +98,7 @@ void ScriptModel::removeActions(const QList<int> &rows)
 
 	qSort(localRows.begin(), localRows.end(), qGreater<int>());
 
-	mUndoStack->push(new RemoveActionCommand(localRows, this));
+    mUndoStack->push(new RemoveActionCommand(localRows, this, mProxyModel));
 
 	if(rowCount() > 0)
 	{
@@ -117,7 +117,7 @@ void ScriptModel::removeActions(const QList<int> &rows)
 
 void ScriptModel::moveActions(MoveDirection moveDirection, const QList<int> &rows)
 {
-	mUndoStack->push(new MoveActionOneRowCommand(rows, (moveDirection == UP), this));
+    mUndoStack->push(new MoveActionOneRowCommand(rows, (moveDirection == UP), this, mProxyModel));
 
 	emit scriptEdited();
 }
@@ -127,9 +127,7 @@ void ScriptModel::copyActions(const QList<int> &rows)
 	QModelIndexList indexes;
 
 	for(int row: rows)
-	{
-		indexes << index(row, 0, QModelIndex());
-	}
+        indexes << mProxyModel->mapFromSource(index(row, 0, QModelIndex()));
 
 	QClipboard *clipboard = QApplication::clipboard();
 	clipboard->setMimeData(mimeData(indexes));
@@ -309,7 +307,7 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 		switch(role)
 		{
 		case Qt::CheckStateRole:
-			mUndoStack->push(new ChangeEnabledCommand(QList<int>() << index.row(), value.toBool(), this));
+            mUndoStack->push(new ChangeEnabledCommand(QList<int>() << index.row(), value.toBool(), this, mProxyModel));
 
 			emit scriptEdited();
 			return true;
@@ -328,7 +326,7 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 			if(labelString == actionInstance->label() || labelString == lineNumber)
 				return true;
 
-			mUndoStack->push(new ChangeLabelCommand(finalValue, index.row(), this));
+            mUndoStack->push(new ChangeLabelCommand(finalValue, index.row(), this, mProxyModel));
 
 			emit scriptEdited();
 			return true;
@@ -339,7 +337,7 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 		if(value.toString() == actionInstance->comment())
 			return true;
 
-		mUndoStack->push(new ChangeCommentCommand(value.toString(), index.row(), this));
+        mUndoStack->push(new ChangeCommentCommand(value.toString(), index.row(), this, mProxyModel));
 
 		emit scriptEdited();
 		return true;
@@ -466,9 +464,9 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 		}
 
 		if(action == Qt::CopyAction)
-			mUndoStack->push(new CopyActionCommand(row, actionInstanceBuffers, this));
+            mUndoStack->push(new CopyActionCommand(row, actionInstanceBuffers, this, mProxyModel));
 		else if(action == Qt::MoveAction)
-			mUndoStack->push(new MoveActionCommand(row, previousRows, this));
+            mUndoStack->push(new MoveActionCommand(row, previousRows, this, mProxyModel));
 
 		emit scriptEdited();
 

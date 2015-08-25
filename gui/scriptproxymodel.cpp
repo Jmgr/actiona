@@ -24,6 +24,8 @@
 #include "actioninstance.h"
 #include "actiondefinition.h"
 
+#include <QDebug>
+
 ScriptProxyModel::ScriptProxyModel(ActionTools::Script *script, QObject *parent)
     : QSortFilterProxyModel(parent),
       mScript(script),
@@ -51,8 +53,24 @@ bool ScriptProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sourc
         return true;
 
     QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
+    if(!index.isValid())
+        return false;
+
+    if(index.row() >= mScript->actionCount())
+        return false;
+
+    int g = mScript->actionCount();
+    int g3 = index.row();
+
     ActionTools::ActionInstance *actionInstance = mScript->actionAt(index.row());
-    Q_ASSERT(actionInstance);
+
+    if(!actionInstance)
+    {
+        //int gg = 5;
+        return false;
+    }
+
+    //Q_ASSERT(actionInstance);
     const ActionTools::ActionDefinition *actionDefinition = actionInstance->definition();
 
     if((mFilteringCriterion == FilteringCriterion::All || mFilteringCriterion == FilteringCriterion::ActionName) &&

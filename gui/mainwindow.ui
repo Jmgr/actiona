@@ -72,7 +72,7 @@
      </layout>
     </item>
     <item>
-     <widget class="ScriptTableView" name="scriptView">
+     <widget class="ScriptTreeView" name="scriptView">
       <property name="contextMenuPolicy">
        <enum>Qt::CustomContextMenu</enum>
       </property>
@@ -940,14 +940,14 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ScriptTableView</class>
-   <extends>QTreeView</extends>
-   <header>scripttableview.h</header>
-  </customwidget>
-  <customwidget>
    <class>FilterLineEdit</class>
    <extends>QLineEdit</extends>
    <header>filterlineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ScriptTreeView</class>
+   <extends>QTreeView</extends>
+   <header>scripttreeview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

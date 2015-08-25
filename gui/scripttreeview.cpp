@@ -18,7 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "scripttableview.h"
+#include "scripttreeview.h"
 #include "scriptmodel.h"
 
 #include <QMimeData>
@@ -29,13 +29,13 @@
 #include <QApplication>
 #include <QDrag>
 
-ScriptTableView::ScriptTableView(QWidget *parent)
+ScriptTreeView::ScriptTreeView(QWidget *parent)
     : QTreeView(parent)
 {
 	setDropIndicatorShown(false);
 }
 
-void ScriptTableView::startDrag(Qt::DropActions supportedActions)
+void ScriptTreeView::startDrag(Qt::DropActions supportedActions)
 {
 	QModelIndexList indexes = selectedIndexes();
 	for(int i = indexes.count() - 1 ; i >= 0; --i)
@@ -65,7 +65,7 @@ void ScriptTableView::startDrag(Qt::DropActions supportedActions)
 	drag->exec(supportedActions, finalDefaultDropAction);
 }
 
-void ScriptTableView::dragMoveEvent(QDragMoveEvent *event)
+void ScriptTreeView::dragMoveEvent(QDragMoveEvent *event)
 {
 	QModelIndex index = indexAt(event->pos());
 	bool afterLastItem = false;
@@ -96,21 +96,21 @@ void ScriptTableView::dragMoveEvent(QDragMoveEvent *event)
     QTreeView::dragMoveEvent(event);
 }
 
-void ScriptTableView::dragLeaveEvent(QDragLeaveEvent* event)
+void ScriptTreeView::dragLeaveEvent(QDragLeaveEvent* event)
 {
 	mDropIndicator = QRect(0, 0, 0, 0);
 
     QTreeView::dragLeaveEvent(event);
 }
 
-void ScriptTableView::dropEvent(QDropEvent* event)
+void ScriptTreeView::dropEvent(QDropEvent* event)
 {
 	mDropIndicator = QRect(0, 0, 0, 0);
 
     QTreeView::dropEvent(event);
 }
 
-void ScriptTableView::paintEvent(QPaintEvent* event)
+void ScriptTreeView::paintEvent(QPaintEvent* event)
 {
     QTreeView::paintEvent(event);
 

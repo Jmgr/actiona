@@ -25,7 +25,6 @@ SOURCES += main.cpp \
 	scriptparametersdialog.cpp \
 	settingsdialog.cpp \
 	settingskeyedit.cpp \
-	scripttableview.cpp \
 	scriptmodelundocommands.cpp \
 	newactiondialog.cpp \
 	global.cpp \
@@ -41,7 +40,8 @@ SOURCES += main.cpp \
     newactionmodel.cpp \
     newactionproxymodel.cpp \
     scriptproxymodel.cpp \
-    filterlineedit.cpp
+    filterlineedit.cpp \
+    scripttreeview.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -51,7 +51,6 @@ HEADERS += mainwindow.h \
 	scriptparametersdialog.h \
 	settingsdialog.h \
 	settingskeyedit.h \
-	scripttableview.h \
 	scriptmodelundocommands.h \
 	newactiondialog.h \
 	scriptcontentdialog.h \
@@ -67,7 +66,8 @@ HEADERS += mainwindow.h \
     newactionmodel.h \
     newactionproxymodel.h \
     scriptproxymodel.h \
-    filterlineedit.h
+    filterlineedit.h \
+    scripttreeview.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += changelogdialog.cpp
 	HEADERS += changelogdialog.h
