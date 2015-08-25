@@ -165,7 +165,7 @@ namespace Actions
         QList<QImage> sourceImages;
         sourceImages.reserve(mImagesToSearchIn.size());
 
-        typedef QPair<QPixmap, QRect> PixmapRectPair;
+        using PixmapRectPair = QPair<QPixmap, QRect>;
         for(const PixmapRectPair &imageToSearchIn: mImagesToSearchIn)
             sourceImages.append(imageToSearchIn.first.toImage());
 

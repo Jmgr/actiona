@@ -113,7 +113,7 @@ namespace ActionTools
         QRect resultRect;
         QPoint minimalTopLeft(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 
-        typedef QPair<QPixmap, QRect> PixmapRectPair;
+        using PixmapRectPair = QPair<QPixmap, QRect>;
         for(const PixmapRectPair &screen: screens)
         {
             const QRect &screenRect = screen.second;

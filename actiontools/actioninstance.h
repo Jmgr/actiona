@@ -43,8 +43,8 @@ namespace ActionTools
 	class ParameterDefinition;
 	class Script;
 
-	typedef QHash<QString, Parameter> ParametersData;
-	typedef QHash<ActionException::Exception, ActionException::ExceptionActionInstance> ExceptionActionInstancesHash;
+    using ParametersData = QHash<QString, Parameter>;
+    using ExceptionActionInstancesHash = QHash<ActionException::Exception, ActionException::ExceptionActionInstance>;
 
 	class ActionInstanceData : public QSharedData
 	{

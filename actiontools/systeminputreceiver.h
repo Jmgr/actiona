@@ -53,7 +53,7 @@ namespace ActionTools
 			void keyboardEvent();
 
 		private:
-			typedef QSet<Listener *> ListenerSet;
+            using ListenerSet = QSet<Listener *>;
 
 			Receiver();
 

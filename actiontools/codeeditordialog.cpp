@@ -27,6 +27,8 @@
 #include <QMessageBox>
 #include <QMenu>
 
+#include <algorithm>
+
 namespace ActionTools
 {
     CodeEditorDialog::CodeEditorDialog(QAbstractItemModel *completionModel, QMenu *variablesMenu, QMenu *resourcesMenu, QWidget *parent)
@@ -119,7 +121,7 @@ namespace ActionTools
             variables.insert(action->text());
 
         QStringList variableList = variables.toList();
-        qSort(variableList);
+        std::sort(variableList.begin(), variableList.end());
 
         QMenu *variablesMenu = 0;
 

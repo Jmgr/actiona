@@ -41,7 +41,7 @@ namespace ActionTools
         int imageIndex;
     };
 
-	typedef QList<MatchingPoint> MatchingPointList;
+    using MatchingPointList = QList<MatchingPoint>;
 }
 
 #endif // MATCHINGPOINTLIST_H

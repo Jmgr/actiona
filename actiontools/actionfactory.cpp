@@ -28,6 +28,8 @@
 #include <QFileInfo>
 #include <QApplication>
 
+#include <algorithm>
+
 namespace ActionTools
 {
 	ActionFactory::ActionFactory(QObject *parent) :
@@ -66,7 +68,7 @@ namespace ActionTools
         for(const QString actionFilename: actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
 
-		qSort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
+        std::sort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
 
 		for(int index = 0; index < mActionDefinitions.count(); ++index)
 			mActionDefinitions.at(index)->setIndex(index);

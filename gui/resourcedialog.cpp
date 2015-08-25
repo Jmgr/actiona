@@ -33,6 +33,8 @@
 #include <QFileInfo>
 #include <QMessageBox>
 
+#include <algorithm>
+
 ResourceDialog::ResourceDialog(ActionTools::Script *script, QWidget *parent)
   : QDialog(parent),
     ui(new Ui::ResourceDialog),
@@ -139,7 +141,7 @@ void ResourceDialog::removeSelection()
         return;
 
     QList<QTableWidgetSelectionRange> selectionRanges = ui->resourcesTableWidget->selectedRanges();
-    qSort(selectionRanges.begin(), selectionRanges.end(), [](const QTableWidgetSelectionRange &first, const QTableWidgetSelectionRange &second)
+    std::sort(selectionRanges.begin(), selectionRanges.end(), [](const QTableWidgetSelectionRange &first, const QTableWidgetSelectionRange &second)
     {
         return (first.topRow() > second.topRow());
     });

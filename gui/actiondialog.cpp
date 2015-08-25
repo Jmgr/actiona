@@ -44,6 +44,7 @@
 #include <QMenu>
 
 #include <limits>
+#include <algorithm>
 
 ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent)
 	: QDialog(parent),
@@ -314,7 +315,7 @@ QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
     }
 
     QStringList variableList = thisActionsVariables.unite(mOtherActionsVariables).toList();
-    qSort(variableList);
+    std::sort(variableList.begin(), variableList.end());
 
     if(variableList.isEmpty())
         return 0;

@@ -27,7 +27,7 @@
 
 namespace ActionTools
 {
-	typedef QPair<QStringList, QStringList> StringListPair;
+    using StringListPair = QPair<QStringList, QStringList>;
 }
 
 Q_DECLARE_METATYPE(ActionTools::StringListPair)

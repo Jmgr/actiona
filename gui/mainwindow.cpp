@@ -86,6 +86,8 @@
 #include <QX11Info>
 #endif
 
+#include <algorithm>
+
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 QTM_USE_NAMESPACE
 #endif
@@ -929,7 +931,7 @@ void MainWindow::on_actionCopy_triggered()
 void MainWindow::on_actionPaste_triggered()
 {
 	QList<int> selection = selectedRows();
-	qSort(selection);
+    std::sort(selection.begin(), selection.end());
 	int destination = mScript->actionCount();
 
 	if(selection.count() > 0)

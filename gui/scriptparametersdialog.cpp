@@ -35,6 +35,7 @@
 #include <QMenu>
 
 #include <limits>
+#include <algorithm>
 
 ScriptParametersDialog::ScriptParametersDialog(ActionTools::Script *script, QWidget *parent)
 	: QDialog(parent),
@@ -93,7 +94,7 @@ QMenu *ScriptParametersDialog::createVariablesMenu(QWidget *parent) const
     }
 
     QStringList variableList = variableSet.toList();
-    qSort(variableList);
+    std::sort(variableList.begin(), variableList.end());
 
     if(variableList.isEmpty())
         return 0;

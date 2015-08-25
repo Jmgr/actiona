@@ -23,7 +23,7 @@
 
 namespace ActionTools
 {
-	typedef int Flag;
+    using Flag = int;
 
 	enum ActionStatus
 	{

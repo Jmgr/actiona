@@ -31,7 +31,7 @@ namespace ActionTools
 {
 	class ActionDefinition;
 
-	typedef QList<ActionDefinition *> ActionDefinitionList;
+    using ActionDefinitionList = QList<ActionDefinition *>;
 
 	class ACTIONTOOLSSHARED_EXPORT ActionPack
 	{

@@ -40,6 +40,8 @@
 #include <QScreen>
 #endif
 
+#include <algorithm>
+
 namespace Code
 {
 	QScriptValue Image::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -529,7 +531,7 @@ namespace Code
 			if(matchingPointList.isEmpty())
 				return QScriptValue();
 
-			qSort(matchingPointList.begin(), matchingPointList.end(), matchingPointGreaterThan);
+            std::sort(matchingPointList.begin(), matchingPointList.end(), matchingPointGreaterThan);
 
 			ActionTools::MatchingPointList::ConstIterator matchingPointIt = matchingPointList.constBegin();
 			QScriptValue back = engine()->newArray(matchingPointList.size());
@@ -654,7 +656,7 @@ namespace Code
 			else
 			{
 				ActionTools::MatchingPointList matchingPointListCopy(matchingPointList);
-				qSort(matchingPointListCopy.begin(), matchingPointListCopy.end(), matchingPointGreaterThan);
+                std::sort(matchingPointListCopy.begin(), matchingPointListCopy.end(), matchingPointGreaterThan);
 
 				ActionTools::MatchingPointList::ConstIterator matchingPointIt = matchingPointListCopy.constBegin();
 				QScriptValue back = mFindSubImageAsyncFunction.engine()->newArray(matchingPointListCopy.size());
