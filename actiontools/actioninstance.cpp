@@ -199,66 +199,6 @@ namespace ActionTools
         return result;
     }
 
-    void prettyPrintScriptValueImpl(QString &result, std::size_t tabCount, const QScriptValue &value);
-
-    void prettyPrintArrayOrObject(QString &result, std::size_t tabCount, const QScriptValue &value)
-    {
-        bool isArray = value.isArray();
-
-        result += isArray ? QStringLiteral("[\n") : QStringLiteral("{\n");
-
-        ++tabCount;
-
-        QScriptValueIterator it(value);
-        bool first{true};
-        while(it.hasNext())
-        {
-            it.next();
-
-            if(it.flags() & QScriptValue::SkipInEnumeration)
-                continue;
-
-            if(first)
-                first = false;
-            else
-                result += QStringLiteral(",\n");
-
-            for(std::size_t tabIndex{}; tabIndex < tabCount; ++tabIndex)
-                result += QStringLiteral("    ");
-
-            if(!isArray)
-                result += it.name() + QStringLiteral(": ");
-
-            prettyPrintScriptValueImpl(result, tabCount, it.value());
-        }
-
-        result += QStringLiteral("\n");
-
-        --tabCount;
-
-        for(std::size_t tabIndex{}; tabIndex < tabCount; ++tabIndex)
-            result += QStringLiteral("    ");
-
-        result += isArray ? QStringLiteral("]") : QStringLiteral("}");
-    }
-
-    void prettyPrintScriptValueImpl(QString &result, std::size_t tabCount, const QScriptValue &value)
-    {
-        if(value.isQObject())
-            result += value.toString();
-        else if(value.isArray() || value.isObject())
-            prettyPrintArrayOrObject(result, tabCount, value);
-        else if(value.isString())
-            result += QStringLiteral("\"") + value.toString() + QStringLiteral("\"");
-        else
-            result += value.toString();
-    }
-
-    void prettyPrintScriptValue(QString &result, const QScriptValue &value)
-    {
-        prettyPrintScriptValueImpl(result, 0, value);
-    }
-
 	QString ActionInstance::evaluateString(bool &ok,
 										const QString &parameterName,
 										const QString &subParameterName)
@@ -270,7 +210,7 @@ namespace ActionTools
 		QString result;
 
 		if(subParameter.isCode())
-            prettyPrintScriptValue(result, evaluateCode(ok, subParameter));
+            result = evaluateCode(ok, subParameter).toString();
 		else
 			result = evaluateText(ok, subParameter);
 
