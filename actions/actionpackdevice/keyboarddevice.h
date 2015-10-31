@@ -54,7 +54,7 @@ public:
     bool writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) const;
 
 private:
-	bool doKeyAction(Action action, int nativeKey);
+    bool doKeyAction(Action action, int nativeKey, bool alterPressedKeys = true);
 	int stringToNativeKey(const QString &key) const;
 	
 	QSet<int> mPressedKeys;

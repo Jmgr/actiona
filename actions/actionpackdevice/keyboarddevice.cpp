@@ -73,9 +73,9 @@ KeyboardDevice::~KeyboardDevice()
 void KeyboardDevice::reset()
 {
     for(int nativeKey: mPressedKeys)
-	{
-		doKeyAction(Release, nativeKey);
-	}
+        doKeyAction(Release, nativeKey, false);
+
+    mPressedKeys.clear();
 }
 
 bool KeyboardDevice::pressKey(const QString &key)
@@ -283,7 +283,7 @@ bool KeyboardDevice::writeText(const QString &text, int delay, bool noUnicodeCha
 #endif
 }
 
-bool KeyboardDevice::doKeyAction(Action action, int nativeKey)
+bool KeyboardDevice::doKeyAction(Action action, int nativeKey, bool alterPressedKeys)
 {
 	bool result = true;
 	
@@ -334,17 +334,20 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey)
 	}
 #endif
 	
-	if(action == Press)
-		mPressedKeys.insert(nativeKey);
-	else if(action == Release)
-		mPressedKeys.remove(nativeKey);
+    if(alterPressedKeys)
+    {
+        if(action == Press)
+            mPressedKeys.insert(nativeKey);
+        else if(action == Release)
+            mPressedKeys.remove(nativeKey);
+    }
 
-	return result;
+    return result;
 }
 
 int KeyboardDevice::stringToNativeKey(const QString &key) const
 {
-	ActionTools::KeyInput keyInput;
+    ActionTools::KeyInput keyInput;
 	keyInput.fromPortableText(key);
 	
 	if(keyInput.isQtKey())
