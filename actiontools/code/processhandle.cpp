@@ -157,7 +157,7 @@ namespace Code
 
 	QString ProcessHandle::toString() const
 	{
-		return QString("ProcessHandle [id: %1]").arg(processId());
+        return QString("ProcessHandle {id: %1}").arg(processId());
 	}
 	
 	int ProcessHandle::id() const

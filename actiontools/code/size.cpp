@@ -165,7 +165,7 @@ namespace Code
 
 	QString Size::toString() const
 	{
-		return QString("Size [width: %1][height: %2]").arg(width()).arg(height());
+        return QString("Size {width: %1, height: %2}").arg(width()).arg(height());
 	}
 
 	QScriptValue Size::setWidth(int width)

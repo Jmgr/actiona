@@ -131,7 +131,7 @@ namespace Code
 
 	QString RawData::toString() const
 	{
-		return QString("RawData [size: %1]").arg(size());
+        return QString("RawData {size: %1}").arg(size());
 	}
 	
 	QScriptValue RawData::append(const QVariant &data)

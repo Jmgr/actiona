@@ -254,7 +254,7 @@ namespace Code
 
 	QString Window::toString() const
 	{
-		return QString("Window [title: %1][className: %2]").arg(title()).arg(className());
+        return QString("Window  {title: \"%1\", className: \"%2\"}").arg(title()).arg(className());
 	}
 
 	bool Window::isValid() const

@@ -165,7 +165,7 @@ namespace Code
 
 	QString Point::toString() const
 	{
-		return QString("Point [x: %1][y: %2]").arg(x()).arg(y());
+        return QString("Point {x: %1, y: %2}").arg(x()).arg(y());
 	}
 
 	QScriptValue Point::setX(int x)

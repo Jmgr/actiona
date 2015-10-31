@@ -169,7 +169,7 @@ namespace Code
 
 	QString Color::toString() const
 	{
-		return QString("Color [red: %1][green: %2][blue: %3][alpha: %4]").arg(mColor.red()).arg(green()).arg(blue()).arg(alpha());
+        return QString("Color {red: %1, green: %2, blue: %3, alpha: %4}").arg(mColor.red()).arg(green()).arg(blue()).arg(alpha());
 	}
 	
 	QScriptValue Color::setRed(int red)

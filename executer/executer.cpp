@@ -39,6 +39,7 @@
 #include <QLocale>
 #include <QProgressDialog>
 #include <QScriptEngine>
+#include <QScriptValueIterator>
 
 namespace LibExecuter
 {
@@ -76,6 +77,72 @@ namespace LibExecuter
 		delete mExecutionWindow;
 		delete mConsoleWidget;
 	}
+
+    void prettyPrintScriptValueImpl(QString &result, std::size_t tabCount, const QScriptValue &value, bool quoteString);
+
+    void prettyPrintArrayOrObject(QString &result, std::size_t tabCount, const QScriptValue &value)
+    {
+        bool isArray = value.isArray();
+
+        result += isArray ? QStringLiteral("[\n") : QStringLiteral("{\n");
+
+        ++tabCount;
+
+        QScriptValueIterator it(value);
+        bool first{true};
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.flags() & QScriptValue::SkipInEnumeration)
+                continue;
+
+            if(first)
+                first = false;
+            else
+                result += QStringLiteral(",\n");
+
+            for(std::size_t tabIndex{}; tabIndex < tabCount; ++tabIndex)
+                result += QStringLiteral("    ");
+
+            if(!isArray)
+                result += it.name() + QStringLiteral(": ");
+
+            prettyPrintScriptValueImpl(result, tabCount, it.value(), true);
+        }
+
+        result += QStringLiteral("\n");
+
+        --tabCount;
+
+        for(std::size_t tabIndex{}; tabIndex < tabCount; ++tabIndex)
+            result += QStringLiteral("    ");
+
+        result += isArray ? QStringLiteral("]") : QStringLiteral("}");
+    }
+
+    void prettyPrintScriptValueImpl(QString &result, std::size_t tabCount, const QScriptValue &value, bool quoteString)
+    {
+        if(value.isQObject())
+            result += value.toString();
+        else if(value.isArray() || value.isObject())
+            prettyPrintArrayOrObject(result, tabCount, value);
+        else if(value.isString() && quoteString)
+            result += QStringLiteral("\"") + value.toString() + QStringLiteral("\"");
+        else
+            result += value.toString();
+    }
+
+    QScriptValue toStringFunction(QScriptContext *context, QScriptEngine *engine)
+    {
+        Q_UNUSED(engine)
+
+        QString result;
+
+        prettyPrintScriptValueImpl(result, 0, context->thisObject(), false);
+
+        return result;
+    }
 	
 	void Executer::setup(ActionTools::Script *script,
 			   ActionTools::ActionFactory *actionFactory,
@@ -117,6 +184,12 @@ namespace LibExecuter
         mActionaVersion = actionaVersion;
 		mScriptVersion = scriptVersion;
 		mIsActExec = isActExec;
+
+        // Replace the default toString() functions for Array and Object with a more readable one
+        QScriptValue arrayPrototypeScriptValue = mScriptEngine->globalObject().property("Array").property("prototype");
+        arrayPrototypeScriptValue.setProperty("toString", mScriptEngine->newFunction(toStringFunction));
+        QScriptValue objectPrototypeScriptValue = mScriptEngine->globalObject().property("Object").property("prototype");
+        objectPrototypeScriptValue.setProperty("toString", mScriptEngine->newFunction(toStringFunction));
 		
 		mScriptEngineDebugger.attachTo(mScriptEngine);
 		mDebuggerWindow = mScriptEngineDebugger.standardWindow();
