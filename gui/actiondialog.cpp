@@ -426,6 +426,9 @@ void ActionDialog::postInit()
 			QComboBox *exceptionActionComboBox = qobject_cast<QComboBox *>(mExceptionsLayout->itemAtPosition(i, 1)->widget());
 			ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mExceptionsLayout->itemAtPosition(i, 2)->widget());
 
+            lineComboBox->setCompletionModel(mCompletionModel);
+            lineComboBox->setParameterContainer(this);
+
 			exceptionActionComboBox->setCurrentIndex(exceptionActionInstance.action());
 			lineComboBox->codeLineEdit()->setText(exceptionActionInstance.line());
 			lineComboBox->setEnabled(exceptionActionInstance.action() == ActionTools::ActionException::GotoLineExceptionAction);
