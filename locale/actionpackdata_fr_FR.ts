@@ -1670,7 +1670,7 @@ Doit contenir un entête par ligne</translation>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="31"/>
         <source>Read a single parameter</source>
-        <translation>Line un seul paramètre</translation>
+        <translation>Lire un seul paramètre</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="31"/>
