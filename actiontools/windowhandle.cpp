@@ -32,21 +32,95 @@
 #include <Windows.h>
 #endif
 
+#include <memory>
+
 namespace ActionTools
 {
 	static QList<WindowHandle> gWindowList;
 
+#ifdef Q_OS_LINUX
+    // from wmctrl 1.07 (http://tomas.styblo.name/wmctrl/) by Tomas Styblo + UBUNTU PATCH for 64bit
+    // from giuspen-x-osk by Giuseppe Penone
+    #define MAX_PROPERTY_VALUE_LEN 4096
+
+    QString get_property(Display *disp, Window win, Atom xa_prop_type, const char *prop_name)
+    {
+        Atom           xa_prop_name;
+        Atom           xa_ret_type;
+        int            ret_format;
+        unsigned long  ret_nitems;
+        unsigned long  ret_bytes_after;
+        unsigned long  tmp_size;
+
+        xa_prop_name = XInternAtom(disp, prop_name, False);
+
+        /* MAX_PROPERTY_VALUE_LEN / 4 explanation (XGetWindowProperty manpage):
+         *
+         * long_length = Specifies the length in 32-bit multiples of the
+         *               data to be retrieved.
+         *
+         * NOTE:  see
+         * http://mail.gnome.org/archives/wm-spec-list/2003-March/msg00067.html
+         * In particular:
+         *
+         * 	When the X window system was ported to 64-bit architectures, a
+         * rather peculiar design decision was made. 32-bit quantities such
+         * as Window IDs, atoms, etc, were kept as longs in the client side
+         * APIs, even when long was changed to 64 bits.
+         *
+         */
+        unsigned char *property{nullptr};
+
+        if(XGetWindowProperty(disp, win, xa_prop_name, 0, MAX_PROPERTY_VALUE_LEN / 4, False,
+                              xa_prop_type, &xa_ret_type, &ret_format,
+                              &ret_nitems, &ret_bytes_after, &property) != Success)
+        {
+            XFree(property);
+
+            qDebug("Cannot get %s property.\n", prop_name);
+
+            return {};
+        }
+
+        auto ret_prop = std::unique_ptr<unsigned char, void(*)(unsigned char *)>(property, [](unsigned char *pointer){ XFree(pointer); });
+
+        if(xa_ret_type != xa_prop_type)
+        {
+            qDebug("Invalid type of %s property.\n", prop_name);
+
+            return {};
+        }
+
+        /* null terminate the result to make string handling easier */
+        tmp_size = (ret_format / 8) * ret_nitems;
+
+        /* UBUNTU PATCH Correct 64 Architecture implementation of 32 bit data */
+        if(ret_format==32) tmp_size *= sizeof(long)/4;
+
+        return QString::fromLocal8Bit(reinterpret_cast<const char*>(ret_prop.get()), tmp_size);
+    }
+
+    QString get_window_title(Display *disp, Window win)
+    {
+        QString wm_name = get_property(disp, win, XA_STRING, "WM_NAME");
+        QString net_wm_name = get_property(disp, win, XInternAtom(disp, "UTF8_STRING", False), "_NET_WM_NAME");
+
+        if(!net_wm_name.isNull())
+            return net_wm_name;
+        else
+            return wm_name;
+    }
+
+    QString get_window_class(Display *disp, Window win)
+    {
+        return get_property(disp, win, XA_STRING, "WM_CLASS");
+    }
+#endif
+
 	QString WindowHandle::title() const
 	{
 #ifdef Q_OS_LINUX
-		QString name;
-		char *str = 0;
-
-		if(XFetchName(QX11Info::display(), mValue, &str))
-			name = QString::fromLatin1(str);
-
-		XFree(str);
-		return name;
+        return get_window_title(QX11Info::display(), mValue);
 #endif
 #ifdef Q_OS_WIN
 		QString title;
@@ -70,15 +144,7 @@ namespace ActionTools
 	QString WindowHandle::classname() const
 	{
 #ifdef Q_OS_LINUX
-		XClassHint *hint = XAllocClassHint();
-		QString back;
-
-		if(XGetClassHint(QX11Info::display(), mValue, hint))
-			back = QString::fromLatin1(hint->res_class);
-
-		XFree(hint);
-
-		return back;
+        return get_window_class(QX11Info::display(), mValue);
 #endif
 #ifdef Q_OS_WIN
 		wchar_t className[255];
@@ -376,14 +442,14 @@ namespace ActionTools
 #ifdef Q_OS_LINUX
 		static Atom net_clients = None;
 		if(!net_clients)
-			net_clients = XInternAtom(QX11Info::display(), "_NET_CLIENT_LIST_STACKING", True);
+            net_clients = XInternAtom(QX11Info::display(), "_NET_CLIENT_LIST_STACKING", True);
 
 		int count = 0;
 		Window* list = 0;
 		Atom type = 0;
 		int format = 0;
 		unsigned long after = 0;
-		XGetWindowProperty(QX11Info::display(), QX11Info::appRootWindow(), net_clients, 0, 256 * sizeof(Window), False, AnyPropertyType,
+        XGetWindowProperty(QX11Info::display(), QX11Info::appRootWindow(), net_clients, 0, 256 * sizeof(Window), False, AnyPropertyType,
 						   &type, &format, reinterpret_cast<unsigned long*>(&count), &after, reinterpret_cast<unsigned char**>(&list));
 
 		for (int i = 0; i < count; ++i)
