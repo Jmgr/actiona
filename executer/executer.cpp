@@ -78,7 +78,7 @@ namespace LibExecuter
 		delete mConsoleWidget;
 	}
 
-    void prettyPrintScriptValueImpl(QString &result, std::size_t tabCount, const QScriptValue &value, bool quoteString);
+    void prettyPrintScriptValue(QString &result, std::size_t tabCount, const QScriptValue &value, bool quoteString);
 
     void prettyPrintArrayOrObject(QString &result, std::size_t tabCount, const QScriptValue &value)
     {
@@ -108,7 +108,7 @@ namespace LibExecuter
             if(!isArray)
                 result += it.name() + QStringLiteral(": ");
 
-            prettyPrintScriptValueImpl(result, tabCount, it.value(), true);
+            prettyPrintScriptValue(result, tabCount, it.value(), true);
         }
 
         result += QStringLiteral("\n");
@@ -121,7 +121,7 @@ namespace LibExecuter
         result += isArray ? QStringLiteral("]") : QStringLiteral("}");
     }
 
-    void prettyPrintScriptValueImpl(QString &result, std::size_t tabCount, const QScriptValue &value, bool quoteString)
+    void prettyPrintScriptValue(QString &result, std::size_t tabCount, const QScriptValue &value, bool quoteString)
     {
         if(value.isQObject())
             result += value.toString();
@@ -139,7 +139,7 @@ namespace LibExecuter
 
         QString result;
 
-        prettyPrintScriptValueImpl(result, 0, context->thisObject(), false);
+        prettyPrintScriptValue(result, 0, context->thisObject(), false);
 
         return result;
     }
