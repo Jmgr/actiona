@@ -89,7 +89,7 @@ namespace ActionTools
         if(mTargetWindow)
             delete mTargetWindow;
         mTargetWindow = new ActionTools::TargetWindow;
-        connect(mTargetWindow, SIGNAL(rectangleSelected(QRect)), this, SLOT(onRectangleSelected(QRect)), Qt::QueuedConnection);
+        connect(mTargetWindow, SIGNAL(rectangleSelected(QRect)), this, SLOT(onRectangleSelected(QRect)));
         mTargetWindow->show();
 
         emit completeChanged();

@@ -25,6 +25,7 @@
 #include "actionpack.h"
 #include "executer/codestdio.h"
 #include "code/codetools.h"
+#include "code/prettyprinting.h"
 #include "executer/codeactiona.h"
 #include "global.h"
 #include "languages.h"
@@ -52,6 +53,8 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 
     for(QString extension: mScriptEngine->availableExtensions())
 		mScriptEngine->importExtension(extension);
+
+    Code::setupPrettyPrinting(*mScriptEngine);
 	
 	mScriptEngineDebugger->setAutoShowStandardWindow(false);
 	mScriptEngineDebugger->attachTo(mScriptEngine);
