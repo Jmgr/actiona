@@ -60,6 +60,8 @@ static const std::unordered_set<int> extendedKeys =
 }};
 #endif
 
+#include <array>
+
 KeyboardDevice::KeyboardDevice()
 	: mType(Win32)
 {
@@ -197,7 +199,8 @@ bool KeyboardDevice::writeText(const QString &text, int delay, bool noUnicodeCha
 #endif
 	
 #ifdef Q_OS_WIN
-	INPUT input[2];
+    std::array<INPUT, 2> input;
+    SecureZeroMemory(input.data(), input.size() * sizeof(INPUT));
 	bool result = true;
 
 	for(int i = 0; i < 2; ++i)
@@ -217,7 +220,7 @@ bool KeyboardDevice::writeText(const QString &text, int delay, bool noUnicodeCha
     auto sendModifiersFunction = [&keyboardLayout](int key, int additionalFlags)
     {
         INPUT modifierInput;
-        ZeroMemory(&modifierInput, sizeof(modifierInput));
+        SecureZeroMemory(&modifierInput, sizeof(INPUT));
 
         modifierInput.type = INPUT_KEYBOARD;
         modifierInput.ki.dwFlags = KEYEVENTF_SCANCODE | additionalFlags;
@@ -261,7 +264,7 @@ bool KeyboardDevice::writeText(const QString &text, int delay, bool noUnicodeCha
             input[0].ki.wScan = input[1].ki.wScan = text[i].unicode();
         }
 
-        result &= (SendInput(2, input, sizeof(INPUT)) != 0);
+        result &= (SendInput(2, input.data(), sizeof(INPUT)) != 0);
 
         if(noUnicodeCharacters)
         {
@@ -300,10 +303,8 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey, bool alterPressed
 	
 #ifdef Q_OS_WIN
 	INPUT input;
+    SecureZeroMemory(&input, sizeof(INPUT));
 	input.type = INPUT_KEYBOARD;
-	input.ki.time = 0;
-    input.ki.dwExtraInfo = 0;
-	input.ki.dwFlags = 0;
 
 	switch(mType)
 	{
@@ -325,12 +326,12 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey, bool alterPressed
 	}
 
 	if(action == Press || action == Trigger)
-		result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
+        result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 	if(action == Release || action == Trigger)
 	{
 		input.ki.dwFlags |= KEYEVENTF_KEYUP;
 
-		result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
+        result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
 	}
 #endif
 	
