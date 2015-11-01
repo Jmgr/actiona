@@ -241,6 +241,10 @@ namespace ActionTools
 
 		mModel->appendRow(item);
 
+        qApp->processEvents(); // This is needed so that the console output gets displayed before a blocking call (such as sleep)
+        // It would be better not to have any blocking code calls, but then this would cause some bugs when the user cancels the execution during a non-blocking sleep
+        // Pausing the execution and then resuming it after some time seems to be the best way to do this, but would require important changes in the code
+
 		ui->clearPushButton->setEnabled(true);
 	}
 
