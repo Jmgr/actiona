@@ -746,6 +746,8 @@ void MainWindow::on_actionExport_executable_triggered()
     mScript->write(&file, Global::ACTIONA_VERSION, Global::SCRIPT_VERSION);
 	file.close();
 
+    mScriptProgressDialog->close();
+
 	progressDialog.setLabelText(tr("Writing config file..."));
 	QApplication::processEvents();
 

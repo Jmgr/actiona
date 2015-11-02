@@ -117,8 +117,15 @@ namespace Code
 	{
 		mProgressDialog->open();
 
-		return thisObject();
-	}
+        return thisObject();
+    }
+
+    QScriptValue ProgressDialog::close()
+    {
+        mProgressDialog->close();
+
+        return thisObject();
+    }
 
 	int ProgressDialog::showModal()
 	{
