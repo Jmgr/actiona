@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionDefinition::CategoryName</name>
     <message>
@@ -37,17 +37,17 @@
 <context>
     <name>ActionException::ExceptionActionName</name>
     <message>
-        <location filename="../actiontools/actionexception.cpp" line="43"/>
+        <location filename="../actiontools/actionexception.cpp" line="44"/>
         <source>Stop execution</source>
         <translation>Stopper l&apos;exécution</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionexception.cpp" line="44"/>
+        <location filename="../actiontools/actionexception.cpp" line="45"/>
         <source>Skip current action</source>
         <translation>Passer l&apos;action courante</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionexception.cpp" line="45"/>
+        <location filename="../actiontools/actionexception.cpp" line="46"/>
         <source>Goto a line</source>
         <translation>Aller à une ligne</translation>
     </message>
@@ -59,17 +59,17 @@
         <translation type="obsolete">Mauvais paramètre</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionexception.cpp" line="29"/>
+        <location filename="../actiontools/actionexception.cpp" line="30"/>
         <source>Invalid parameter</source>
         <translation>Paramètre incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionexception.cpp" line="30"/>
+        <location filename="../actiontools/actionexception.cpp" line="31"/>
         <source>Code error</source>
         <translation>Erreur de code</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionexception.cpp" line="31"/>
+        <location filename="../actiontools/actionexception.cpp" line="32"/>
         <source>Timeout</source>
         <translation>Délai écoulé</translation>
     </message>
@@ -139,7 +139,7 @@
 <context>
     <name>ActionTools::ActionFactory</name>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="143"/>
+        <location filename="../actiontools/actionfactory.cpp" line="145"/>
         <source>%1: &quot;%2&quot;</source>
         <translation>%1 : &quot;%2&quot;</translation>
     </message>
@@ -148,17 +148,17 @@
         <translation type="obsolete">%1 : mauvause définition de version</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="150"/>
+        <location filename="../actiontools/actionfactory.cpp" line="152"/>
         <source>%1: invalid definition version</source>
         <translation>%1 : définition de version incorrecte</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="162"/>
+        <location filename="../actiontools/actionfactory.cpp" line="164"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; already loaded</source>
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; est déjà chargé</translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="171"/>
+        <location filename="../actiontools/actionfactory.cpp" line="173"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; cannot be loaded:&lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</source>
         <translation>%1 : &lt;b&gt;%2&lt;/b&gt; ne peut pas être chargé : &lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</translation>
     </message>
@@ -341,33 +341,33 @@
 <context>
     <name>ActionTools::CodeEditorDialog</name>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="128"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="130"/>
         <source>No variables to insert</source>
         <translation>Pas de variables à insérer</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="133"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="135"/>
         <source>Insert variable</source>
         <translation>Insérer une variable</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="154"/>
-        <location filename="../actiontools/codeeditordialog.cpp" line="186"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="156"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="188"/>
         <source>Syntax error check</source>
         <translation>Vérification d&apos;erreur de syntaxe</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="154"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="156"/>
         <source>No syntax errors where found.</source>
         <translation>Aucune erreur de syntaxe n&apos;a été trouvée.</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="182"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="184"/>
         <source>Syntax error detected.</source>
         <translation>Des erreurs de syntaxe ont été trouvées.</translation>
     </message>
     <message>
-        <location filename="../actiontools/codeeditordialog.cpp" line="184"/>
+        <location filename="../actiontools/codeeditordialog.cpp" line="186"/>
         <source>Syntax error detected: %1</source>
         <translation>Erreur de syntaxe détectée : %1</translation>
     </message>
@@ -519,7 +519,7 @@ Are you sure?</source>
 (%2)</translation>
     </message>
     <message>
-        <location filename="../actiontools/consolewidget.cpp" line="215"/>
+        <location filename="../actiontools/consolewidget.cpp" line="236"/>
         <source>
 Double-click to show</source>
         <translation>
@@ -782,72 +782,72 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Code::Image</name>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="69"/>
-        <location filename="../actiontools/code/image.cpp" line="499"/>
-        <location filename="../actiontools/code/image.cpp" line="555"/>
-        <location filename="../actiontools/code/image.cpp" line="591"/>
-        <location filename="../actiontools/code/image.cpp" line="628"/>
+        <location filename="../actiontools/code/image.cpp" line="71"/>
+        <location filename="../actiontools/code/image.cpp" line="501"/>
+        <location filename="../actiontools/code/image.cpp" line="557"/>
+        <location filename="../actiontools/code/image.cpp" line="593"/>
+        <location filename="../actiontools/code/image.cpp" line="630"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="73"/>
-        <location filename="../actiontools/code/image.cpp" line="120"/>
+        <location filename="../actiontools/code/image.cpp" line="75"/>
+        <location filename="../actiontools/code/image.cpp" line="122"/>
         <source>Incorrect parameter count</source>
         <translation>Nombre de paramètres incorrect</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="99"/>
+        <location filename="../actiontools/code/image.cpp" line="101"/>
         <source>Invalid window</source>
         <translation>Fenêtre invalide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="129"/>
+        <location filename="../actiontools/code/image.cpp" line="131"/>
         <source>Invalid screen index</source>
         <translation>Index d&apos;écran non valide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="264"/>
+        <location filename="../actiontools/code/image.cpp" line="266"/>
         <source>Unable to set the image data</source>
         <translation>Impossible de changer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="281"/>
+        <location filename="../actiontools/code/image.cpp" line="283"/>
         <source>Unable to get the image data</source>
         <translation>Impossible de récupérer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="482"/>
-        <location filename="../actiontools/code/image.cpp" line="525"/>
-        <location filename="../actiontools/code/image.cpp" line="581"/>
-        <location filename="../actiontools/code/image.cpp" line="618"/>
+        <location filename="../actiontools/code/image.cpp" line="484"/>
+        <location filename="../actiontools/code/image.cpp" line="527"/>
+        <location filename="../actiontools/code/image.cpp" line="583"/>
+        <location filename="../actiontools/code/image.cpp" line="620"/>
         <source>Error while searching for a sub-image: %1</source>
         <translation>Erreur lors de la recherche d&apos;une sous-image : %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="566"/>
-        <location filename="../actiontools/code/image.cpp" line="602"/>
+        <location filename="../actiontools/code/image.cpp" line="568"/>
+        <location filename="../actiontools/code/image.cpp" line="604"/>
         <source>Parameter &quot;callback&quot; is not a function</source>
         <translation>Le paramètre &quot;callback&quot; n&apos;est pas une fonction</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="66"/>
-        <location filename="../actiontools/code/image.cpp" line="292"/>
+        <location filename="../actiontools/code/image.cpp" line="68"/>
+        <location filename="../actiontools/code/image.cpp" line="294"/>
         <source>Unable to load image from file %1</source>
         <translation>Impossible de charger l&apos;image à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="303"/>
+        <location filename="../actiontools/code/image.cpp" line="305"/>
         <source>Unable to save image to file %1</source>
         <translation>Impossible de sauvegarder l&apos;image dans le fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="315"/>
+        <location filename="../actiontools/code/image.cpp" line="317"/>
         <source>Unable to apply filter</source>
         <translation>Impossible d&apos;appliquer le filtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="352"/>
+        <location filename="../actiontools/code/image.cpp" line="354"/>
         <source>Cannot set filter option %1 %2</source>
         <translation>Impossible de changer les options du filtre %1 %2</translation>
     </message>
@@ -1506,7 +1506,7 @@ Double-cliquez pour afficher</translation>
         <translation></translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/numberformat.cpp" line="30"/>
+        <location filename="../actiontools/numberformat.cpp" line="31"/>
         <source>%n byte(s)</source>
         <translation>
             <numerusform>%n octet</numerusform>
@@ -1514,22 +1514,22 @@ Double-cliquez pour afficher</translation>
         </translation>
     </message>
     <message>
-        <location filename="../actiontools/numberformat.cpp" line="32"/>
+        <location filename="../actiontools/numberformat.cpp" line="33"/>
         <source>KB</source>
         <translation>Ko</translation>
     </message>
     <message>
-        <location filename="../actiontools/numberformat.cpp" line="32"/>
+        <location filename="../actiontools/numberformat.cpp" line="33"/>
         <source>MB</source>
         <translation>Mo</translation>
     </message>
     <message>
-        <location filename="../actiontools/numberformat.cpp" line="32"/>
+        <location filename="../actiontools/numberformat.cpp" line="33"/>
         <source>GB</source>
         <translation>Go</translation>
     </message>
     <message>
-        <location filename="../actiontools/numberformat.cpp" line="32"/>
+        <location filename="../actiontools/numberformat.cpp" line="33"/>
         <source>TB</source>
         <translation>To</translation>
     </message>

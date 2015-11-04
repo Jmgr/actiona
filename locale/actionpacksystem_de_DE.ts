@@ -289,13 +289,13 @@ All files (*.*)</source>
     </message>
     <message>
         <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="124"/>
-        <source>Maximum matches</source>
+        <source>Maximum amount of images to find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="125"/>
-        <source>The maximum matching images count
-Setting this parameter higher will increase the duration of the search</source>
+        <source>The maximum amount of images to find
+Setting this parameter higher will increase the search duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

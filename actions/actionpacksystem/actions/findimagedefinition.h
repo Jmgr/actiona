@@ -121,8 +121,8 @@ namespace Actions
 			confidenceMinimum->setDefaultValue(70);
 			addElement(confidenceMinimum, 1);
 
-			ActionTools::NumberParameterDefinition *maximumMatches = new ActionTools::NumberParameterDefinition(ActionTools::Name("maximumMatches", tr("Maximum matches")), this);
-			maximumMatches->setTooltip(tr("The maximum matching images count\nSetting this parameter higher will increase the duration of the search"));
+            ActionTools::NumberParameterDefinition *maximumMatches = new ActionTools::NumberParameterDefinition(ActionTools::Name("maximumMatches", tr("Maximum amount of images to find")), this);
+            maximumMatches->setTooltip(tr("The maximum amount of images to find\nSetting this parameter higher will increase the search duration"));
 			maximumMatches->setMinimum(1);
 			maximumMatches->setMaximum(std::numeric_limits<int>::max());
 			maximumMatches->setDefaultValue(1);
