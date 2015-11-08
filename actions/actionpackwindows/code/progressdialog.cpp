@@ -120,13 +120,6 @@ namespace Code
         return thisObject();
     }
 
-    QScriptValue ProgressDialog::close()
-    {
-        mProgressDialog->close();
-
-        return thisObject();
-    }
-
 	int ProgressDialog::showModal()
 	{
 		return mProgressDialog->exec();

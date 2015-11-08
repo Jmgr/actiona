@@ -15,7 +15,6 @@ Code:
 - fixed not being able to display the value of an array variable in a text field
 - fixed console output by way of code not being displayed until after a call to sleep() or pause()
 - added "pretty printing" of Array and Object
-- added ProgressDialog.close()
 
 3.9.0 (22/06/15)
 Global:
