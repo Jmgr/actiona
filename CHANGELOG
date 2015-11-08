@@ -1,7 +1,7 @@
 3.9.1 (04/11/15)
 Global:
 - Windows: fixed click simulation failures in some cases
-- fixed a crash when cancelling a script execution while a key was being pressed
+- fixed a crash when canceling a script execution while a key was being pressed
 - fixed SFX scripts not being run when a local installation of Actiona was required
 
 Interface:
