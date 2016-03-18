@@ -42,7 +42,7 @@ QTM_END_NAMESPACE
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 class QDeviceInfo;
 class QBatteryInfo;
-class QStorageInfo;
+class QStorageInfo_Custom;
 #endif
 
 class SystemSession;
@@ -161,7 +161,7 @@ namespace Code
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QDeviceInfo *mDeviceInfo;
         QBatteryInfo *mBatteryInfo;
-        QStorageInfo *mStorageInfo;
+        QStorageInfo_Custom *mStorageInfo;
 #else
 		QTM_PREPEND_NAMESPACE(QSystemInfo) *mSystemInfo;
 		QTM_PREPEND_NAMESPACE(QSystemStorageInfo) *mSystemStorageInfo;

@@ -51,16 +51,16 @@
 #  include "mac/qstorageinfo_mac_p.h"
 #else
 QT_BEGIN_NAMESPACE
-class QStorageInfoPrivate
+class QStorageInfo_CustomPrivate
 {
 public:
-    QStorageInfoPrivate(QStorageInfo *) {}
+    QStorageInfo_CustomPrivate(QStorageInfo_Custom *) {}
 
     qlonglong availableDiskSpace(const QString &) { return -1; }
     qlonglong totalDiskSpace(const QString &) { return -1; }
     QString uriForDrive(const QString &) { return QString(); }
     QStringList allLogicalDrives() { return QStringList(); }
-    QStorageInfo::DriveType driveType(const QString &) { return QStorageInfo::UnknownDrive; }
+    QStorageInfo_Custom::DriveType driveType(const QString &) { return QStorageInfo_Custom::UnknownDrive; }
 };
 QT_END_NAMESPACE
 #endif
@@ -70,14 +70,14 @@ QT_END_NAMESPACE
 QT_BEGIN_NAMESPACE
 
 /*!
-    \class QStorageInfo
+    \class QStorageInfo_Custom
     \inmodule QtSystemInfo
     \ingroup systeminfo
-    \brief The QStorageInfo class provides various disk storage information about the system.
+    \brief The QStorageInfo_Custom class provides various disk storage information about the system.
 */
 
 /*!
-    \enum QStorageInfo::DriveType
+    \enum QStorageInfo_Custom::DriveType
     This enum describes the type of drive or volume
 
     \value UnknownDrive         Drive type unknown.
@@ -89,35 +89,35 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QStorageInfo::logicalDriveChanged(const QString &drive, bool added)
+    \fn void QStorageInfo_Custom::logicalDriveChanged(const QString &drive, bool added)
 
     This signal gets emitted when a new \a drive storage has been \a added or removed.
 */
 
 /*!
-    Constructs a QStorageInfo object with the given \a parent.
+    Constructs a QStorageInfo_Custom object with the given \a parent.
 */
-QStorageInfo::QStorageInfo(QObject *parent)
+QStorageInfo_Custom::QStorageInfo_Custom(QObject *parent)
     : QObject(parent)
-    , d_ptr(new QStorageInfoPrivate(this))
+    , d_ptr(new QStorageInfo_CustomPrivate(this))
 {
 }
 
 /*!
     Destroys the object
 */
-QStorageInfo::~QStorageInfo()
+QStorageInfo_Custom::~QStorageInfo_Custom()
 {
 }
 
 /*!
-    \property QStorageInfo::allLogicalDrives
+    \property QStorageInfo_Custom::allLogicalDrives
     \brief The  list of all drives.
 
     Returns a list of all logical drives or volumes, or an empty list if no drives are found or
     on error.
 */
-QStringList QStorageInfo::allLogicalDrives()
+QStringList QStorageInfo_Custom::allLogicalDrives()
 {
     return d_ptr->allLogicalDrives();
 }
@@ -126,7 +126,7 @@ QStringList QStorageInfo::allLogicalDrives()
     Returns the available free space on the \a drive, in bytes. -1 is returned if the drive doesn't
     exist, or the information is not available.
 */
-qlonglong QStorageInfo::availableDiskSpace(const QString &drive) const
+qlonglong QStorageInfo_Custom::availableDiskSpace(const QString &drive) const
 {
     return d_ptr->availableDiskSpace(drive);
 }
@@ -135,7 +135,7 @@ qlonglong QStorageInfo::availableDiskSpace(const QString &drive) const
     Returns the total space of the \a drive, in bytes. -1 is returned if the drive doesn't exist,
     or the information is not available.
 */
-qlonglong QStorageInfo::totalDiskSpace(const QString &drive) const
+qlonglong QStorageInfo_Custom::totalDiskSpace(const QString &drive) const
 {
     return d_ptr->totalDiskSpace(drive);
 }
@@ -144,7 +144,7 @@ qlonglong QStorageInfo::totalDiskSpace(const QString &drive) const
     Returns the URI, or unique identifier for the given \a drive. If the drive doesn't exist, or the
     information is not available, an empty string is returned.
 */
-QString QStorageInfo::uriForDrive(const QString &drive) const
+QString QStorageInfo_Custom::uriForDrive(const QString &drive) const
 {
     return d_ptr->uriForDrive(drive);
 }
@@ -152,7 +152,7 @@ QString QStorageInfo::uriForDrive(const QString &drive) const
 /*!
     Returns the type of the given \a drive.
 */
-QStorageInfo::DriveType QStorageInfo::driveType(const QString &drive) const
+QStorageInfo_Custom::DriveType QStorageInfo_Custom::driveType(const QString &drive) const
 {
     return d_ptr->driveType(drive);
 }
@@ -162,7 +162,7 @@ extern QMetaMethod proxyToSourceSignal(const QMetaMethod &, QObject *);
 /*!
     \internal
 */
-void QStorageInfo::connectNotify(const QMetaMethod &signal)
+void QStorageInfo_Custom::connectNotify(const QMetaMethod &signal)
 {
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN) || defined(Q_OS_MAC)
     QMetaMethod sourceSignal = proxyToSourceSignal(signal, d_ptr);
@@ -175,7 +175,7 @@ void QStorageInfo::connectNotify(const QMetaMethod &signal)
 /*!
     \internal
 */
-void QStorageInfo::disconnectNotify(const QMetaMethod &signal)
+void QStorageInfo_Custom::disconnectNotify(const QMetaMethod &signal)
 {
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN) || defined(Q_OS_MAC)
     // We can only disconnect with the private implementation, when there is no receivers for the signal.

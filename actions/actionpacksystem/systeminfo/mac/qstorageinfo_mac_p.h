@@ -65,19 +65,19 @@
 QT_BEGIN_NAMESPACE
 
 class QDASessionThread;
-class QStorageInfoPrivate : public QObject
+class QStorageInfo_CustomPrivate : public QObject
 {
     Q_OBJECT
 
 public:
-    QStorageInfoPrivate(QStorageInfo *parent);
-    ~QStorageInfoPrivate();
+    QStorageInfo_CustomPrivate(QStorageInfo_Custom *parent);
+    ~QStorageInfo_CustomPrivate();
 
     qlonglong availableDiskSpace(const QString &drive);
     qlonglong totalDiskSpace(const QString &drive);
     QString uriForDrive(const QString &drive);
     QStringList allLogicalDrives();
-    QStorageInfo::DriveType driveType(const QString &drive);
+    QStorageInfo_Custom::DriveType driveType(const QString &drive);
 
 public Q_SLOTS:
     void storageChanged( bool added,const QString &vol);
@@ -90,14 +90,14 @@ protected:
     void disconnectNotify(const QMetaMethod &signal);
 
 private:
-    QStorageInfo * const q_ptr;
-    Q_DECLARE_PUBLIC(QStorageInfo)
+    QStorageInfo_Custom * const q_ptr;
+    Q_DECLARE_PUBLIC(QStorageInfo_Custom)
 
     QMap<QString, QString> mountEntriesMap;
     bool updateVolumesMap();
     void mountEntries();
     bool sessionThread();
-//    QMap<QString, QStorageInfo::StorageState> stateMap;
+//    QMap<QString, QStorageInfo_Custom::StorageState> stateMap;
     QDASessionThread *daSessionThread;
     bool sessionThreadStarted;
 

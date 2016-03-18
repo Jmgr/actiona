@@ -48,9 +48,9 @@
 
 QT_BEGIN_NAMESPACE
 
-class QStorageInfoPrivate;
+class QStorageInfo_CustomPrivate;
 
-class Q_SYSTEMINFO_EXPORT QStorageInfo : public QObject
+class Q_SYSTEMINFO_EXPORT QStorageInfo_Custom : public QObject
 {
     Q_OBJECT
     Q_ENUMS(DriveType)
@@ -66,15 +66,15 @@ public:
         RamDrive
     };
 
-    QStorageInfo(QObject *parent = 0);
-    virtual ~QStorageInfo();
+    QStorageInfo_Custom(QObject *parent = 0);
+    virtual ~QStorageInfo_Custom();
 
     QStringList allLogicalDrives();
 
     Q_INVOKABLE qlonglong availableDiskSpace(const QString &drive) const;
     Q_INVOKABLE qlonglong totalDiskSpace(const QString &drive) const;
     Q_INVOKABLE QString uriForDrive(const QString &drive) const;
-    Q_INVOKABLE QStorageInfo::DriveType driveType(const QString &drive) const;
+    Q_INVOKABLE QStorageInfo_Custom::DriveType driveType(const QString &drive) const;
 
 Q_SIGNALS:
     void logicalDriveChanged(const QString &drive, bool added);
@@ -84,9 +84,9 @@ protected:
     void disconnectNotify(const QMetaMethod &signal);
 
 private:
-    Q_DISABLE_COPY(QStorageInfo)
-    QStorageInfoPrivate * const d_ptr;
-    Q_DECLARE_PRIVATE(QStorageInfo)
+    Q_DISABLE_COPY(QStorageInfo_Custom)
+    QStorageInfo_CustomPrivate * const d_ptr;
+    Q_DECLARE_PRIVATE(QStorageInfo_Custom)
 };
 
 QT_END_NAMESPACE
