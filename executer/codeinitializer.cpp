@@ -39,12 +39,41 @@
 #include <QScriptEngine>
 #include <QFile>
 #include <QUiLoader>
+#include <QDir>
+#include <QFileInfo>
+
+namespace
+{
+    QString prefixFilenameWithCurrentPath(const QString &filename, QScriptEngine *engine)
+    {
+        if(QDir::isAbsolutePath(filename))
+            return filename;
+
+        QScriptValue executionObject = engine->globalObject().property("Execution");
+        if(executionObject.isNull())
+            return filename;
+
+        QString scriptOrCodeFilename = executionObject.property("filename").toString();
+        if(scriptOrCodeFilename.isEmpty())
+            return filename;
+
+        QDir scriptOrCodeFilenameDir = QFileInfo(scriptOrCodeFilename).absoluteDir();
+        if(!scriptOrCodeFilenameDir.isReadable())
+            return filename;
+
+        QString newFilename = scriptOrCodeFilenameDir.absoluteFilePath(filename);
+        if(!QFileInfo(newFilename).isReadable())
+            return filename;
+
+        return newFilename;
+    }
+}
 
 namespace LibExecuter
 {
 	static QScriptValue loadUIFunction(QScriptContext *context, QScriptEngine *engine)
 	{
-		QString filename = context->argument(0).toString();
+        QString filename = prefixFilenameWithCurrentPath(context->argument(0).toString(), engine);
 		QFile file(filename);
 		if(!file.open(QIODevice::ReadOnly))
 		{
@@ -56,29 +85,29 @@ namespace LibExecuter
 	}
 
 	static QScriptValue includeFunction(QScriptContext *context, QScriptEngine *engine)
-	{
-		QString filename = context->argument(0).toString();
-		QFile file(filename);
-		if(!file.open(QIODevice::ReadOnly))
-		{
-			Code::CodeClass::throwError(context, engine, "IncludeFileError", QObject::tr("Unable to include file %1").arg(filename));
-			return context->thisObject();
-		}
+    {
+        QString filename = prefixFilenameWithCurrentPath(context->argument(0).toString(), engine);
+        QFile file(filename);
+        if(!file.open(QIODevice::ReadOnly))
+        {
+            Code::CodeClass::throwError(context, engine, "IncludeFileError", QObject::tr("Unable to include file %1").arg(filename));
+            return context->thisObject();
+        }
 
-		QString fileContent = file.readAll();
-		file.close();
+        QString fileContent = file.readAll();
+        file.close();
 
-		QScriptContext *parent = context->parentContext();
-		if(parent)
-		{
-			context->setActivationObject(parent->activationObject());
-			context->setThisObject(parent->thisObject());
-		}
+        QScriptContext *parent = context->parentContext();
+        if(parent)
+        {
+            context->setActivationObject(parent->activationObject());
+            context->setThisObject(parent->thisObject());
+        }
 
 		return engine->evaluate(fileContent, filename);
 	}
 
-	void CodeInitializer::initialize(QScriptEngine *scriptEngine, ScriptAgent *scriptAgent, ActionTools::ActionFactory *actionFactory)
+    void CodeInitializer::initialize(QScriptEngine *scriptEngine, ScriptAgent *scriptAgent, ActionTools::ActionFactory *actionFactory, const QString &filename)
 	{
 		scriptEngine->setProcessEventsInterval(50);
 
@@ -103,6 +132,9 @@ namespace LibExecuter
 		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::pause, "pause", scriptEngine);
 		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::sleep, "sleep", scriptEngine);
 		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::stop, "stop", scriptEngine);
+
+        QScriptValue executionObject = scriptEngine->globalObject().property("Execution");
+        executionObject.setProperty("filename", filename, QScriptValue::ReadOnly);
 
 		Code::CodeTools::addClassToScriptEngine<CodeStdio>("Stdio", scriptEngine);
 		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::print, "print", scriptEngine);

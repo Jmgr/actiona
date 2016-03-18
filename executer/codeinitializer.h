@@ -37,7 +37,10 @@ namespace LibExecuter
 	class EXECUTERSHARED_EXPORT CodeInitializer
 	{
 	public:
-		static void initialize(QScriptEngine *scriptEngine, ScriptAgent *scriptAgent, ActionTools::ActionFactory *actionFactory);
+        static void initialize(QScriptEngine *scriptEngine,
+                               ScriptAgent *scriptAgent,
+                               ActionTools::ActionFactory *actionFactory,
+                               const QString &filename);
 	};
 }
 

@@ -82,7 +82,7 @@ namespace LibExecuter
         ActionTools::ActionInstance *currentActionInstance() const;
 
 	public slots:
-		bool startExecution(bool onlySelection);
+        bool startExecution(bool onlySelection, const QString &filename);
 		void stopExecution();
 		void pauseExecution();
 		void debugExecution();

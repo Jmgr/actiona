@@ -320,7 +320,7 @@ void MainWindow::postInit()
 #endif
 
 		QScriptEngine engine;
-		LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory);
+        LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory, mCurrentFile);
 
 		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), "include"));
 		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), "loadUI"));
@@ -1562,7 +1562,7 @@ void MainWindow::execute(bool onlySelection)
 						 ui->consoleWidget->model());
 	}
 
-	if(mExecuter.startExecution(onlySelection))
+    if(mExecuter.startExecution(onlySelection, mCurrentFile))
 	{
 		mPreviousWindowPosition = pos();
 		hide();

@@ -268,7 +268,7 @@ namespace LibExecuter
         return engine->undefinedValue();
     }
 
-	bool Executer::startExecution(bool onlySelection)
+    bool Executer::startExecution(bool onlySelection, const QString &filename)
 	{
 		Q_ASSERT(mScriptAgent);
 		Q_ASSERT(mScriptEngine);
@@ -287,7 +287,7 @@ namespace LibExecuter
         Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::isActiona, "isActiona", mScriptEngine);
 		
 		mScriptAgent->setContext(ScriptAgent::ActionInit);
-		CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory);
+        CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory, filename);
 		mScriptAgent->setContext(ScriptAgent::Parameters);
 		
         QScriptValue script = mScriptEngine->newObject();
