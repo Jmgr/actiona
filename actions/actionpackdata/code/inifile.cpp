@@ -163,7 +163,7 @@ namespace Code
 	{
         if(keyIndex < 0 || keyIndex >= static_cast<int>(mCurrentSection.size()))
 		{
-			throwError("FindSectionError", tr("Invalid key index"));
+            throwError("KeyError", tr("Invalid key index"));
 			return QString();
 		}
 
@@ -176,6 +176,12 @@ namespace Code
 	
 	QString IniFile::keyValue(const QString &keyName) const
 	{
+        if(!keyExists(keyName))
+        {
+            throwError("KeyError", tr("Cannot find any key named \"%1\"").arg(keyName));
+            return QString();
+        }
+
         return QString::fromStdString(mCurrentSection.get<std::string>(toEncoding(keyName, mEncoding).constData()));
 	}
 	
@@ -194,7 +200,7 @@ namespace Code
 
         if(!mCurrentSection.erase(keyNameByteArray.constData()))
         {
-            throwError("FindSectionError", tr("Cannot delete key named \"%1\"").arg(keyName));
+            throwError("KeyError", tr("Cannot delete key named \"%1\"").arg(keyName));
             return thisObject();
         }
 
