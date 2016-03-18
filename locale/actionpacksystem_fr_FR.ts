@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ActionPackSystem</name>
     <message>
@@ -315,12 +315,12 @@ Si ce paramètre est faux (non coché) alors la position est absolue</translatio
     </message>
     <message>
         <source>Maximum matches</source>
-        <translation type="vanished">Nombre maximum de résultats</translation>
+        <translation type="obsolete">Nombre maximum de résultats</translation>
     </message>
     <message>
         <source>The maximum matching images count
 Setting this parameter higher will increase the duration of the search</source>
-        <translation type="vanished">Le nombre maximum de résultats
+        <translation type="obsolete">Le nombre maximum de résultats
 Choisir une valeur élevée pour ce paramètre va augmenter la durée de la recherche</translation>
     </message>
     <message>
@@ -445,7 +445,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
     </message>
     <message>
         <source>Invalid %1 value : %2</source>
-        <translation type="vanished">Valeur %1 incorrecte : %2</translation>
+        <translation type="obsolete">Valeur %1 incorrecte : %2</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<TS version="2.0" language="de_DE">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -139,7 +139,7 @@ p, li { white-space: pre-wrap; }
         <source>Matthieu Hazon</source>
         <translation>Matthieu Hazon</translation>
     </message>
-    <message>
+    <message utf8="true">
         <location filename="../gui/aboutdialog.ui" line="202"/>
         <source>Loïc Vauvrecy</source>
         <translation>Loïc Vauvrecy</translation>
@@ -382,16 +382,21 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/aboutdialog.cpp" line="55"/>
-        <source>&lt;i&gt;Emulates clics, key presses and other actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Using Qt %1 (runtime %2) under %3 (%4 bit)&lt;br/&gt;Build date: %5 %6&lt;/center&gt;&lt;br/&gt;</source>
+        <source>&lt;i&gt;Emulates clics, key presses and other actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Using Qt %1 (runtime %2) under %3 (%4 bit)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutdialog.cpp" line="61"/>
+        <source>&lt;br/&gt;Build date: %1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actiona %1&lt;/h2&gt;</source>
-        <translation type="vanished">&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actiona %1&lt;/h2&gt;</translation>
+        <translation type="obsolete">&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actiona %1&lt;/h2&gt;</translation>
     </message>
     <message>
         <source>&lt;i&gt;Emulates clics, key presses and other actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Using Qt %1 (runtime %2) under %3 (%4 bit)&lt;/center&gt;&lt;br/&gt;</source>
-        <translation type="vanished">&lt;i&gt;Simule des clics, des pressions de touches et d&apos;autres actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Utilise Qt %1 (runtime %2) sous %3 (%4 bit)&lt;/center&gt;&lt;br/&gt;</translation>
+        <translation type="obsolete">&lt;i&gt;Simule des clics, des pressions de touches et d&apos;autres actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Utilise Qt %1 (runtime %2) sous %3 (%4 bit)&lt;/center&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <source>About Actionaz</source>
@@ -2230,7 +2235,9 @@ p, li { white-space: pre-wrap; }
         <location filename="../gui/scriptsettingsdialog.ui" line="51"/>
         <location filename="../gui/scriptsettingsdialog.ui" line="58"/>
         <source> ms</source>
-        <extracomment>milliseconds</extracomment>
+        <extracomment>milliseconds
+----------
+milliseconds</extracomment>
         <translation> ms</translation>
     </message>
 </context>

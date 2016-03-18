@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -149,7 +149,7 @@ p, li { white-space: pre-wrap; }
         <source>Matthieu Hazon</source>
         <translation>Matthieu Hazon</translation>
     </message>
-    <message>
+    <message utf8="true">
         <location filename="../gui/aboutdialog.ui" line="202"/>
         <source>Loïc Vauvrecy</source>
         <translation>Loïc Vauvrecy</translation>
@@ -428,12 +428,21 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui/aboutdialog.cpp" line="55"/>
+        <source>&lt;i&gt;Emulates clics, key presses and other actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Using Qt %1 (runtime %2) under %3 (%4 bit)</source>
+        <translation>&lt;i&gt;Simule des clics, des pressions de touches et d&apos;autres actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Utilise Qt %1 (runtime %2) sous %3 (%4 bit)</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutdialog.cpp" line="61"/>
+        <source>&lt;br/&gt;Build date: %1 %2</source>
+        <translation>&lt;br/&gt;Date de compilation: %1 %2</translation>
+    </message>
+    <message>
         <source>&lt;i&gt;Emulates clics, key presses and other actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Using Qt %1 (runtime %2) under %3 (%4 bit)&lt;br/&gt;Build date: %5 %6&lt;/center&gt;&lt;br/&gt;</source>
-        <translation>&lt;i&gt;Simule des clics, des pressions de touches et d&apos;autres actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Utilise Qt %1 (runtime %2) sous %3 (%4 bit)&lt;br/&gt;Date de compilation: %5 %6&lt;/center&gt;&lt;br/&gt;</translation>
+        <translation type="obsolete">&lt;i&gt;Simule des clics, des pressions de touches et d&apos;autres actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Utilise Qt %1 (runtime %2) sous %3 (%4 bit)&lt;br/&gt;Date de compilation: %5 %6&lt;/center&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <source>&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actiona %1&lt;/h2&gt;</source>
-        <translation type="vanished">&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actiona %1&lt;/h2&gt;</translation>
+        <translation type="obsolete">&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actiona %1&lt;/h2&gt;</translation>
     </message>
     <message>
         <source>&lt;img src=&apos;:/icons/logo.png&apos;&gt;&lt;h2&gt;Actionaz %1&lt;/h2&gt;</source>
@@ -441,7 +450,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;i&gt;Emulates clics, key presses and other actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Using Qt %1 (runtime %2) under %3 (%4 bit)&lt;/center&gt;&lt;br/&gt;</source>
-        <translation type="vanished">&lt;i&gt;Simule des clics, des pressions de touches et d&apos;autres actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Utilise Qt %1 (runtime %2) sous %3 (%4 bit)&lt;/center&gt;&lt;br/&gt;</translation>
+        <translation type="obsolete">&lt;i&gt;Simule des clics, des pressions de touches et d&apos;autres actions&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Utilise Qt %1 (runtime %2) sous %3 (%4 bit)&lt;/center&gt;&lt;br/&gt;</translation>
     </message>
 </context>
 <context>
@@ -2230,7 +2239,9 @@ p, li { white-space: pre-wrap; }
         <location filename="../gui/scriptsettingsdialog.ui" line="51"/>
         <location filename="../gui/scriptsettingsdialog.ui" line="58"/>
         <source> ms</source>
-        <extracomment>milliseconds</extracomment>
+        <extracomment>milliseconds
+----------
+milliseconds</extracomment>
         <translation> ms</translation>
     </message>
 </context>
@@ -2586,15 +2597,15 @@ p, li { white-space: pre-wrap; }
     <name>languagesName</name>
     <message>
         <source>System language (if available)</source>
-        <translation type="vanished">Langue du système (si disponible)</translation>
+        <translation type="obsolete">Langue du système (si disponible)</translation>
     </message>
     <message>
         <source>English (US)</source>
-        <translation type="vanished">Anglais (États-Unis)</translation>
+        <translation type="obsolete">Anglais (États-Unis)</translation>
     </message>
     <message>
         <source>French (France)</source>
-        <translation type="vanished">Français (France)</translation>
+        <translation type="obsolete">Français (France)</translation>
     </message>
 </context>
 </TS>
