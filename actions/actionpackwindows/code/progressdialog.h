@@ -52,7 +52,6 @@ namespace Code
 		QScriptValue setMaximum(int maximum);
 		QScriptValue setRange(int minimum, int maximum);
 		QScriptValue show();
-        QScriptValue close();
 		int showModal();
 		
 	private slots:

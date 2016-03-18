@@ -1,7 +1,7 @@
 3.9.1 (04/11/15)
 Global:
 - Windows: fixed click simulation failures in some cases
-- fixed a crash when cancelling a script execution while a key was being pressed
+- fixed a crash when canceling a script execution while a key was being pressed
 - fixed SFX scripts not being run when a local installation of Actiona was required
 
 Interface:
@@ -15,7 +15,6 @@ Code:
 - fixed not being able to display the value of an array variable in a text field
 - fixed console output by way of code not being displayed until after a call to sleep() or pause()
 - added "pretty printing" of Array and Object
-- added ProgressDialog.close()
 
 3.9.0 (22/06/15)
 Global:
