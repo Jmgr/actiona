@@ -33,6 +33,11 @@ namespace ActionTools
         return numberFormat(QStringList() << QObject::tr("KB") << QObject::tr("MB") << QObject::tr("GB") << QObject::tr("TB"), static_cast<double>(size));
     }
 
+    QString NumberFormat::labelIndexString(int rowIndex)
+    {
+        return QString("%1").arg(rowIndex + 1, 3, 10, QChar('0'));
+    }
+
     QString NumberFormat::numberFormat(const QStringList &units, double value)
     {
         Q_ASSERT(!units.isEmpty());

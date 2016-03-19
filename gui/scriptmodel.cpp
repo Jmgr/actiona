@@ -24,6 +24,7 @@
 #include "actiondefinition.h"
 #include "actionfactory.h"
 #include "scriptproxymodel.h"
+#include "numberformat.h"
 
 #include <QIcon>
 #include <QClipboard>
@@ -225,7 +226,7 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 				if(!labelString.isNull() && !labelString.isEmpty())
 					return labelString;
 
-				return QString("%1").arg(index.row() + 1, 3, 10, QChar('0'));
+                return ActionTools::NumberFormat::labelIndexString(index.row());
 			}
 			case Qt::EditRole:
 				return actionInstance->label();

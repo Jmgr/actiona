@@ -31,6 +31,7 @@ namespace ActionTools
     {
     public:
         static QString sizeString(quint64 size);
+        static QString labelIndexString(int rowIndex);
 
     private:
         static QString numberFormat(const QStringList &units, double value);

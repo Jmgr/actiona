@@ -1,6 +1,6 @@
 /*
     Actiona
-    Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+    Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include "script.h"
 #include "actioninstance.h"
 #include "actiondefinition.h"
+#include "numberformat.h"
 
 #include <QDebug>
 
@@ -59,25 +60,18 @@ bool ScriptProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sourc
     if(index.row() >= mScript->actionCount())
         return false;
 
-    int g = mScript->actionCount();
-    int g3 = index.row();
-
     ActionTools::ActionInstance *actionInstance = mScript->actionAt(index.row());
 
     if(!actionInstance)
-    {
-        //int gg = 5;
         return false;
-    }
 
-    //Q_ASSERT(actionInstance);
     const ActionTools::ActionDefinition *actionDefinition = actionInstance->definition();
 
     if((mFilteringCriterion == FilteringCriterion::All || mFilteringCriterion == FilteringCriterion::ActionName) &&
             actionDefinition->name().contains(mFilterString, Qt::CaseInsensitive))
         return true;
     if((mFilteringCriterion == FilteringCriterion::All || mFilteringCriterion == FilteringCriterion::Label) &&
-            actionInstance->label().contains(mFilterString, Qt::CaseInsensitive))
+            ((actionInstance->label().contains(mFilterString, Qt::CaseInsensitive)) || ActionTools::NumberFormat::labelIndexString(index.row()).contains(mFilterString, Qt::CaseInsensitive)))
         return true;
     if((mFilteringCriterion == FilteringCriterion::All || mFilteringCriterion == FilteringCriterion::Comment) &&
             actionInstance->comment().contains(mFilterString, Qt::CaseInsensitive))
