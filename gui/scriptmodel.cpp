@@ -1,6 +1,6 @@
 /*
     Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@
 #include <QApplication>
 #include <QMimeData>
 #include <QUrl>
+
+#include <algorithm>
 
 ScriptModel::ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory *actionFactory, QObject *parent)
 	: QAbstractTableModel(parent),
@@ -96,7 +98,7 @@ void ScriptModel::removeActions(const QList<int> &rows)
 	if(localRows.count() == 0)
 		return;
 
-	qSort(localRows.begin(), localRows.end(), qGreater<int>());
+    std::sort(localRows.begin(), localRows.end(), qGreater<int>());
 
     mUndoStack->push(new RemoveActionCommand(localRows, this, mProxyModel));
 
@@ -402,7 +404,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 			rowIdList << index.row();
 	}
 
-	qSort(rowIdList.begin(), rowIdList.end(), qGreater<int>());
+    std::sort(rowIdList.begin(), rowIdList.end(), qGreater<int>());
 
 	for(int row: rowIdList)
 	{

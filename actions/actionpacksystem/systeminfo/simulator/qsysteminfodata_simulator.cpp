@@ -285,7 +285,7 @@ QDataStream &operator>>(QDataStream &in, QStorageInfoData::DriveInfo &s)
     in >> s.uri;
     qint32 type;
     in >> type;
-    s.type = static_cast<QStorageInfo::DriveType>(type);
+    s.type = static_cast<QStorageInfo_Custom::DriveType>(type);
 
     return in;
 }

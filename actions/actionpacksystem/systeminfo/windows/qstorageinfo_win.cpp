@@ -54,7 +54,7 @@
 
 QT_BEGIN_NAMESPACE
 
-QStorageInfoPrivate::QStorageInfoPrivate(QStorageInfo *parent)
+QStorageInfo_CustomPrivate::QStorageInfo_CustomPrivate(QStorageInfo_Custom *parent)
     : QObject(parent)
     , q_ptr(parent)
 {
@@ -73,11 +73,11 @@ QStorageInfoPrivate::QStorageInfoPrivate(QStorageInfo *parent)
 #endif
 }
 
-QStorageInfoPrivate::~QStorageInfoPrivate()
+QStorageInfo_CustomPrivate::~QStorageInfo_CustomPrivate()
 {
 }
 
-qlonglong QStorageInfoPrivate::availableDiskSpace(const QString &drive)
+qlonglong QStorageInfo_CustomPrivate::availableDiskSpace(const QString &drive)
 {
     qlonglong availableBytes(-1);
     if (!GetDiskFreeSpaceEx((WCHAR *)drive.utf16(), 0, 0, (PULARGE_INTEGER)&availableBytes))
@@ -85,7 +85,7 @@ qlonglong QStorageInfoPrivate::availableDiskSpace(const QString &drive)
     return availableBytes;
 }
 
-qlonglong QStorageInfoPrivate::totalDiskSpace(const QString &drive)
+qlonglong QStorageInfo_CustomPrivate::totalDiskSpace(const QString &drive)
 {
     qlonglong totalBytes(-1);
     if (!GetDiskFreeSpaceEx((WCHAR *)drive.utf16(), 0, (PULARGE_INTEGER)&totalBytes, 0))
@@ -93,7 +93,7 @@ qlonglong QStorageInfoPrivate::totalDiskSpace(const QString &drive)
     return totalBytes;
 }
 
-QString QStorageInfoPrivate::uriForDrive(const QString &drive)
+QString QStorageInfo_CustomPrivate::uriForDrive(const QString &drive)
 {
     WCHAR uri[50];
     if (GetVolumeNameForVolumeMountPoint((WCHAR *)drive.utf16(), uri, 50))
@@ -101,7 +101,7 @@ QString QStorageInfoPrivate::uriForDrive(const QString &drive)
     return QString();
 }
 
-QStringList QStorageInfoPrivate::allLogicalDrives()
+QStringList QStorageInfo_CustomPrivate::allLogicalDrives()
 {
     mountEntriesList.clear();
     QFileInfoList drives = QDir::drives();
@@ -110,42 +110,42 @@ QStringList QStorageInfoPrivate::allLogicalDrives()
     return mountEntriesList;
 }
 
-QStorageInfo::DriveType QStorageInfoPrivate::driveType(const QString &drive)
+QStorageInfo_Custom::DriveType QStorageInfo_CustomPrivate::driveType(const QString &drive)
 {
     UINT type = GetDriveType((WCHAR *)drive.utf16());
     switch (type) {
     case DRIVE_REMOVABLE:
-        return QStorageInfo::RemovableDrive;
+        return QStorageInfo_Custom::RemovableDrive;
     case DRIVE_FIXED:
-        return QStorageInfo::InternalDrive;
+        return QStorageInfo_Custom::InternalDrive;
     case DRIVE_REMOTE:
-        return QStorageInfo::RemoteDrive;
+        return QStorageInfo_Custom::RemoteDrive;
     case DRIVE_CDROM:
-        return QStorageInfo::CdromDrive;
+        return QStorageInfo_Custom::CdromDrive;
     case DRIVE_RAMDISK:
-        return QStorageInfo::RamDrive;
+        return QStorageInfo_Custom::RamDrive;
     case DRIVE_UNKNOWN:
     case DRIVE_NO_ROOT_DIR:
     default:
-        return QStorageInfo::UnknownDrive;
+        return QStorageInfo_Custom::UnknownDrive;
     };
 }
 
-void QStorageInfoPrivate::connectNotify(const QMetaMethod &signal)
+void QStorageInfo_CustomPrivate::connectNotify(const QMetaMethod &signal)
 {
-    static const QMetaMethod logicalDriveChangedSignal = QMetaMethod::fromSignal(&QStorageInfoPrivate::logicalDriveChanged);
+    static const QMetaMethod logicalDriveChangedSignal = QMetaMethod::fromSignal(&QStorageInfo_CustomPrivate::logicalDriveChanged);
     if (signal == logicalDriveChangedSignal) {
     }
 }
 
-void QStorageInfoPrivate::disconnectNotify(const QMetaMethod &signal)
+void QStorageInfo_CustomPrivate::disconnectNotify(const QMetaMethod &signal)
 {
-    static const QMetaMethod logicalDriveChangedSignal = QMetaMethod::fromSignal(&QStorageInfoPrivate::logicalDriveChanged);
+    static const QMetaMethod logicalDriveChangedSignal = QMetaMethod::fromSignal(&QStorageInfo_CustomPrivate::logicalDriveChanged);
     if (signal == logicalDriveChangedSignal) {
     }
 }
 
-void QStorageInfoPrivate::notificationArrived()
+void QStorageInfo_CustomPrivate::notificationArrived()
 {
     QStringList oldDrives;
 

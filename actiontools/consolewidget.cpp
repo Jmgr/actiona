@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -240,6 +240,10 @@ namespace ActionTools
 		item->setData(QVariant::fromValue<Type>(type), TypeRole);
 
 		mModel->appendRow(item);
+
+        qApp->processEvents(); // This is needed so that the console output gets displayed before a blocking call (such as sleep)
+        // It would be better not to have any blocking code calls, but then this would cause some bugs when the user cancels the execution during a non-blocking sleep
+        // Pausing the execution and then resuming it after some time seems to be the best way to do this, but would require important changes in the code
 
 		ui->clearPushButton->setEnabled(true);
 	}

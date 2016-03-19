@@ -1,6 +1,6 @@
 /*
     Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -304,7 +304,7 @@ int main(int argc, char **argv)
 	if(protocolUrl.isValid())
 	{
 		QString mode;
-		typedef QPair<QString, QString> QStringPair;
+        using QStringPair = QPair<QString, QString>;
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         for(const QStringPair &queryItem: QUrlQuery(protocolUrl.query()).queryItems())
 #else

@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ public:
     bool writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) const;
 
 private:
-	bool doKeyAction(Action action, int nativeKey);
+    bool doKeyAction(Action action, int nativeKey, bool alterPressedKeys = true);
 	int stringToNativeKey(const QString &key) const;
 	
 	QSet<int> mPressedKeys;

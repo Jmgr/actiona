@@ -1,6 +1,6 @@
 /*
     Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 #include "code/codetools.h"
 #include "code/image.h"
 #include "code/rawdata.h"
+#include "code/prettyprinting.h"
 #include "codeactiona.h"
 
 #include <QDesktopWidget>
@@ -39,6 +40,7 @@
 #include <QLocale>
 #include <QProgressDialog>
 #include <QScriptEngine>
+#include <QScriptValueIterator>
 
 namespace LibExecuter
 {
@@ -117,6 +119,8 @@ namespace LibExecuter
         mActionaVersion = actionaVersion;
 		mScriptVersion = scriptVersion;
 		mIsActExec = isActExec;
+
+        Code::setupPrettyPrinting(*mScriptEngine);
 		
 		mScriptEngineDebugger.attachTo(mScriptEngine);
 		mDebuggerWindow = mScriptEngineDebugger.standardWindow();
@@ -264,7 +268,7 @@ namespace LibExecuter
         return engine->undefinedValue();
     }
 
-	bool Executer::startExecution(bool onlySelection)
+    bool Executer::startExecution(bool onlySelection, const QString &filename)
 	{
 		Q_ASSERT(mScriptAgent);
 		Q_ASSERT(mScriptEngine);
@@ -283,7 +287,7 @@ namespace LibExecuter
         Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::isActiona, "isActiona", mScriptEngine);
 		
 		mScriptAgent->setContext(ScriptAgent::ActionInit);
-		CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory);
+        CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory, filename);
 		mScriptAgent->setContext(ScriptAgent::Parameters);
 		
         QScriptValue script = mScriptEngine->newObject();

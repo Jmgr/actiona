@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -165,7 +165,7 @@ namespace Actions
         QList<QImage> sourceImages;
         sourceImages.reserve(mImagesToSearchIn.size());
 
-        typedef QPair<QPixmap, QRect> PixmapRectPair;
+        using PixmapRectPair = QPair<QPixmap, QRect>;
         for(const PixmapRectPair &imageToSearchIn: mImagesToSearchIn)
             sourceImages.append(imageToSearchIn.first.toImage());
 

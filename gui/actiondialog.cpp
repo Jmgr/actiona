@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@
 #include <QMenu>
 
 #include <limits>
+#include <algorithm>
 
 ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent)
 	: QDialog(parent),
@@ -314,7 +315,7 @@ QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
     }
 
     QStringList variableList = thisActionsVariables.unite(mOtherActionsVariables).toList();
-    qSort(variableList);
+    std::sort(variableList.begin(), variableList.end());
 
     if(variableList.isEmpty())
         return 0;
@@ -424,6 +425,9 @@ void ActionDialog::postInit()
 
 			QComboBox *exceptionActionComboBox = qobject_cast<QComboBox *>(mExceptionsLayout->itemAtPosition(i, 1)->widget());
 			ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mExceptionsLayout->itemAtPosition(i, 2)->widget());
+
+            lineComboBox->setCompletionModel(mCompletionModel);
+            lineComboBox->setParameterContainer(this);
 
 			exceptionActionComboBox->setCurrentIndex(exceptionActionInstance.action());
 			lineComboBox->codeLineEdit()->setText(exceptionActionInstance.line());

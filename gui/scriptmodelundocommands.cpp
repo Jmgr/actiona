@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@
 #include "actiondefinition.h"
 #include "script.h"
 #include "scriptproxymodel.h"
+
+#include <algorithm>
 
 //ChangeEnabledCommand
 ChangeEnabledCommand::ChangeEnabledCommand(const QList<int> &rows, bool enabled, ScriptModel *model, ScriptProxyModel *proxyModel)
@@ -350,7 +352,7 @@ MoveActionCommand::MoveActionCommand(int row, const QList<int> &previousRows, Sc
 
 void MoveActionCommand::redo()
 {
-	qSort(mPreviousRows.begin(), mPreviousRows.end(), qGreater<int>());
+    std::sort(mPreviousRows.begin(), mPreviousRows.end(), qGreater<int>());
 
 	mChangePrevious = 0;
 	mChangeDest = 0;
@@ -380,7 +382,7 @@ void MoveActionCommand::redo()
 
 void MoveActionCommand::undo()
 {
-	qSort(mPreviousRows.begin(), mPreviousRows.end(), qLess<int>());
+    std::sort(mPreviousRows.begin(), mPreviousRows.end(), qLess<int>());
 
 	for(QList<int>::iterator i = mPreviousRows.begin(); i != mPreviousRows.end();)
 	{
@@ -419,9 +421,9 @@ MoveActionOneRowCommand::MoveActionOneRowCommand(const QList<int> &rows, bool mo
 void MoveActionOneRowCommand::redo()
 {
 	if(mMoveUp)
-		qSort(mRows.begin(), mRows.end(), qLess<int>());
+        std::sort(mRows.begin(), mRows.end(), qLess<int>());
 	else
-		qSort(mRows.begin(), mRows.end(), qGreater<int>());
+        std::sort(mRows.begin(), mRows.end(), qGreater<int>());
 
 	moveAllActions(mMoveUp ? -1 : 1);
 }
@@ -429,9 +431,9 @@ void MoveActionOneRowCommand::redo()
 void MoveActionOneRowCommand::undo()
 {
 	if(!mMoveUp)
-		qSort(mRows.begin(), mRows.end(), qLess<int>());
+        std::sort(mRows.begin(), mRows.end(), qLess<int>());
 	else
-		qSort(mRows.begin(), mRows.end(), qGreater<int>());
+        std::sort(mRows.begin(), mRows.end(), qGreater<int>());
 
 	moveAllActions(mMoveUp ? 1 : -1);
 }

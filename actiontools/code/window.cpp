@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -254,7 +254,7 @@ namespace Code
 
 	QString Window::toString() const
 	{
-		return QString("Window [title: %1][className: %2]").arg(title()).arg(className());
+        return QString("Window  {title: \"%1\", className: \"%2\"}").arg(title()).arg(className());
 	}
 
 	bool Window::isValid() const

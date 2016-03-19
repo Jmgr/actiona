@@ -1,6 +1,6 @@
 /*
     Actiona
-    Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+    Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include "actionpack.h"
 #include "executer/codestdio.h"
 #include "code/codetools.h"
+#include "code/prettyprinting.h"
 #include "executer/codeactiona.h"
 #include "global.h"
 #include "languages.h"
@@ -52,6 +53,8 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 
     for(QString extension: mScriptEngine->availableExtensions())
 		mScriptEngine->importExtension(extension);
+
+    Code::setupPrettyPrinting(*mScriptEngine);
 	
 	mScriptEngineDebugger->setAutoShowStandardWindow(false);
 	mScriptEngineDebugger->attachTo(mScriptEngine);
@@ -69,7 +72,7 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
 	device->close();
 	
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::ActionInit);
-	LibExecuter::CodeInitializer::initialize(mScriptEngine, mScriptAgent, actionFactory());
+    LibExecuter::CodeInitializer::initialize(mScriptEngine, mScriptAgent, actionFactory(), filename);
 
 	Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeStdio>("Console", mScriptEngine);
 	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::print, "print", mScriptEngine);

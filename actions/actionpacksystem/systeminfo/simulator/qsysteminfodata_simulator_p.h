@@ -154,7 +154,7 @@ struct QStorageInfoData
       qint64 totalSpace;
       qint64 availableSpace;
       QString uri;
-      QStorageInfo::DriveType type;
+      QStorageInfo_Custom::DriveType type;
     };
     QHash<QString, DriveInfo> drives;
 };

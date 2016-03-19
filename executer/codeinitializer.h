@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,7 +37,10 @@ namespace LibExecuter
 	class EXECUTERSHARED_EXPORT CodeInitializer
 	{
 	public:
-		static void initialize(QScriptEngine *scriptEngine, ScriptAgent *scriptAgent, ActionTools::ActionFactory *actionFactory);
+        static void initialize(QScriptEngine *scriptEngine,
+                               ScriptAgent *scriptAgent,
+                               ActionTools::ActionFactory *actionFactory,
+                               const QString &filename);
 	};
 }
 

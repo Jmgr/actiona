@@ -1,6 +1,6 @@
 /*
 	Actiona
-    Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+    Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QMenu>
+
+#include <algorithm>
 
 namespace ActionTools
 {
@@ -119,7 +121,7 @@ namespace ActionTools
             variables.insert(action->text());
 
         QStringList variableList = variables.toList();
-        qSort(variableList);
+        std::sort(variableList.begin(), variableList.end());
 
         QMenu *variablesMenu = 0;
 

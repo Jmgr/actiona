@@ -1,6 +1,6 @@
 /*
     Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -88,6 +88,8 @@
 #ifdef Q_OS_LINUX
 #include <QX11Info>
 #endif
+
+#include <algorithm>
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 QTM_USE_NAMESPACE
@@ -323,7 +325,7 @@ void MainWindow::postInit()
 #endif
 
 		QScriptEngine engine;
-		LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory);
+        LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory, mCurrentFile);
 
 		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), "include"));
 		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), "loadUI"));
@@ -730,6 +732,8 @@ void MainWindow::on_actionExport_executable_triggered()
     mScript->write(&file, Global::ACTIONA_VERSION, Global::SCRIPT_VERSION);
 	file.close();
 
+    mScriptProgressDialog->close();
+
 	progressDialog.setLabelText(tr("Writing config file..."));
 	QApplication::processEvents();
 
@@ -915,7 +919,7 @@ void MainWindow::on_actionCopy_triggered()
 void MainWindow::on_actionPaste_triggered()
 {
 	QList<int> selection = selectedRows();
-	qSort(selection);
+    std::sort(selection.begin(), selection.end());
 	int destination = mScript->actionCount();
 
 	if(selection.count() > 0)
@@ -1565,7 +1569,7 @@ void MainWindow::execute(bool onlySelection)
 						 ui->consoleWidget->model());
 	}
 
-	if(mExecuter.startExecution(onlySelection))
+    if(mExecuter.startExecution(onlySelection, mCurrentFile))
 	{
 		mPreviousWindowPosition = pos();
 		hide();

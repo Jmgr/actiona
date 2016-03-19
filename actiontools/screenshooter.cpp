@@ -1,6 +1,6 @@
 /*
     Actiona
-    Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+    Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -113,7 +113,7 @@ namespace ActionTools
         QRect resultRect;
         QPoint minimalTopLeft(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 
-        typedef QPair<QPixmap, QRect> PixmapRectPair;
+        using PixmapRectPair = QPair<QPixmap, QRect>;
         for(const PixmapRectPair &screen: screens)
         {
             const QRect &screenRect = screen.second;

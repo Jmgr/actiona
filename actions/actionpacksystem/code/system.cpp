@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ namespace Code
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         , mDeviceInfo(new QDeviceInfo(this)),
         mBatteryInfo(new QBatteryInfo(this)),
-        mStorageInfo(new QStorageInfo(this))
+        mStorageInfo(new QStorageInfo_Custom(this))
 #else
         , mSystemInfo(new QSystemInfo(this)),
 		mSystemStorageInfo(new QSystemStorageInfo(this)),

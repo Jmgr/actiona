@@ -17,4 +17,4 @@
 # Contact : jmgr@jmgr.info
 
 all: main.obj
-		cl /Fe../sfx/runner.exe main.c /Os /link /nologo /SUBSYSTEM:WINDOWS /NODEFAULTLIB /ENTRY:wmainCRTStartup libcmt.lib User32.lib Shell32.lib Kernel32.lib
+                cl /Fe../sfx/runner.exe main.c /Os /D_USING_V110_SDK71_ /DPSAPI_VERSION=1 /link /nologo /SUBSYSTEM:WINDOWS,5.01 /NODEFAULTLIB /ENTRY:wmainCRTStartup libcmt.lib User32.lib Shell32.lib Kernel32.lib

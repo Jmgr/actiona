@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mPositionEdit = new PositionEdit(parent);
-        connect(mPositionEdit, SIGNAL(positionChosen(QPointF)), this, SLOT(positionChosen(QPointF)), Qt::QueuedConnection);
+        connect(mPositionEdit, SIGNAL(positionChosen(QPointF)), this, SLOT(positionChosen(QPointF)));
 
 		addEditor(mPositionEdit);
 

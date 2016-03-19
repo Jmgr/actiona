@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -46,8 +46,8 @@ namespace ActionTools
 
 		addEditor(mColorEdit);
 		
-        connect(mPositionEdit, SIGNAL(positionChosen(QPointF)), mColorEdit, SLOT(setPosition(QPointF)), Qt::QueuedConnection);
-        connect(mColorEdit, SIGNAL(positionChosen(QPointF)), mPositionEdit, SLOT(setPosition(QPointF)), Qt::QueuedConnection);
+        connect(mPositionEdit, SIGNAL(positionChosen(QPointF)), mColorEdit, SLOT(setPosition(QPointF)));
+        connect(mColorEdit, SIGNAL(positionChosen(QPointF)), mPositionEdit, SLOT(setPosition(QPointF)));
 	}
 
 	void ColorPositionParameterDefinition::load(const ActionInstance *actionInstance)

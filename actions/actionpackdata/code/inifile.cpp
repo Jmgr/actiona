@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -163,7 +163,7 @@ namespace Code
 	{
         if(keyIndex < 0 || keyIndex >= static_cast<int>(mCurrentSection.size()))
 		{
-			throwError("FindSectionError", tr("Invalid key index"));
+            throwError("KeyError", tr("Invalid key index"));
 			return QString();
 		}
 
@@ -176,6 +176,12 @@ namespace Code
 	
 	QString IniFile::keyValue(const QString &keyName) const
 	{
+        if(!keyExists(keyName))
+        {
+            throwError("KeyError", tr("Cannot find any key named \"%1\"").arg(keyName));
+            return QString();
+        }
+
         return QString::fromStdString(mCurrentSection.get<std::string>(toEncoding(keyName, mEncoding).constData()));
 	}
 	
@@ -194,7 +200,7 @@ namespace Code
 
         if(!mCurrentSection.erase(keyNameByteArray.constData()))
         {
-            throwError("FindSectionError", tr("Cannot delete key named \"%1\"").arg(keyName));
+            throwError("KeyError", tr("Cannot delete key named \"%1\"").arg(keyName));
             return thisObject();
         }
 

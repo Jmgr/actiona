@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -124,14 +124,11 @@ bool MouseDevice::pressButton(Button button)
 	
 #ifdef Q_OS_WIN
 	INPUT input;
+    SecureZeroMemory(&input, sizeof(INPUT));
 	input.type = INPUT_MOUSE;
-	input.mi.dx = 0;
-	input.mi.dy = 0;
-	input.mi.mouseData = 0;
 	input.mi.dwFlags = toWinButton(button, true);
-	input.mi.time = 0;
 
-	if(!SendInput(1, &input, sizeof(INPUT)))
+    if(!SendInput(1, &input, sizeof(INPUT)))
 		return false;
 #endif
 	
@@ -151,14 +148,11 @@ bool MouseDevice::releaseButton(Button button)
 	
 #ifdef Q_OS_WIN
 	INPUT input;
+    SecureZeroMemory(&input, sizeof(INPUT));
 	input.type = INPUT_MOUSE;
-	input.mi.dx = 0;
-	input.mi.dy = 0;
-	input.mi.mouseData = 0;
 	input.mi.dwFlags = toWinButton(button, false);
-	input.mi.time = 0;
 
-	if(!SendInput(1, &input, sizeof(INPUT)))
+    if(!SendInput(1, &input, sizeof(INPUT)))
 		return false;
 #endif
 	
@@ -193,14 +187,12 @@ bool MouseDevice::wheel(int intensity) const
 	
 #ifdef Q_OS_WIN
 	INPUT input;
-
+    SecureZeroMemory(&input, sizeof(INPUT));
 	input.type = INPUT_MOUSE;
 	input.mi.dwFlags = MOUSEEVENTF_WHEEL;
-	input.mi.time = 0;
-    input.mi.dwExtraInfo = 0;
 	input.mi.mouseData = intensity * WHEEL_DELTA;
 
-	if(!SendInput(1, &input, sizeof(INPUT)))
+    if(!SendInput(1, &input, sizeof(INPUT)))
 		return false;
 #endif
 	

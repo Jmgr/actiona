@@ -1,6 +1,6 @@
 /*
     Actiona
-    Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+    Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,6 +32,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
+
+#include <algorithm>
 
 ResourceDialog::ResourceDialog(ActionTools::Script *script, QWidget *parent)
   : QDialog(parent),
@@ -139,7 +141,7 @@ void ResourceDialog::removeSelection()
         return;
 
     QList<QTableWidgetSelectionRange> selectionRanges = ui->resourcesTableWidget->selectedRanges();
-    qSort(selectionRanges.begin(), selectionRanges.end(), [](const QTableWidgetSelectionRange &first, const QTableWidgetSelectionRange &second)
+    std::sort(selectionRanges.begin(), selectionRanges.end(), [](const QTableWidgetSelectionRange &first, const QTableWidgetSelectionRange &second)
     {
         return (first.topRow() > second.topRow());
     });

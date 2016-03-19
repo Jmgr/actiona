@@ -1,6 +1,6 @@
 /*
     Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QApplication>
+
+#include <algorithm>
 
 namespace ActionTools
 {
@@ -66,7 +68,7 @@ namespace ActionTools
         for(const QString actionFilename: actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
 
-		qSort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
+        std::sort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
 
 		for(int index = 0; index < mActionDefinitions.count(); ++index)
 			mActionDefinitions.at(index)->setIndex(index);

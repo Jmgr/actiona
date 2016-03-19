@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,6 +39,8 @@
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QScreen>
 #endif
+
+#include <algorithm>
 
 namespace Code
 {
@@ -251,7 +253,7 @@ namespace Code
 
 	QString Image::toString() const
 	{
-		return QString("Image [width: %1][height: %2]").arg(width()).arg(height());
+        return QString("Image {width: %1, height: %2}").arg(width()).arg(height());
 	}
 	
 	QScriptValue Image::setData(const QScriptValue &data)
@@ -529,7 +531,7 @@ namespace Code
 			if(matchingPointList.isEmpty())
 				return QScriptValue();
 
-			qSort(matchingPointList.begin(), matchingPointList.end(), matchingPointGreaterThan);
+            std::sort(matchingPointList.begin(), matchingPointList.end(), matchingPointGreaterThan);
 
 			ActionTools::MatchingPointList::ConstIterator matchingPointIt = matchingPointList.constBegin();
 			QScriptValue back = engine()->newArray(matchingPointList.size());
@@ -654,7 +656,7 @@ namespace Code
 			else
 			{
 				ActionTools::MatchingPointList matchingPointListCopy(matchingPointList);
-				qSort(matchingPointListCopy.begin(), matchingPointListCopy.end(), matchingPointGreaterThan);
+                std::sort(matchingPointListCopy.begin(), matchingPointListCopy.end(), matchingPointGreaterThan);
 
 				ActionTools::MatchingPointList::ConstIterator matchingPointIt = matchingPointListCopy.constBegin();
 				QScriptValue back = mFindSubImageAsyncFunction.engine()->newArray(matchingPointListCopy.size());

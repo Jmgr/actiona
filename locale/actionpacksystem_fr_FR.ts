@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ActionPackSystem</name>
     <message>
@@ -258,6 +258,18 @@ Tous les fichiers (*.*)</translation>
         <translation>Le nom de la variable où stocker les coordonnées du centre de l&apos;image trouvée</translation>
     </message>
     <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="124"/>
+        <source>Maximum amount of images to find</source>
+        <translation>Nombre maximum d&apos;images à chercher</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="125"/>
+        <source>The maximum amount of images to find
+Setting this parameter higher will increase the search duration</source>
+        <translation>Le nombre maximum d&apos;images à chercher
+Choisir une valeur élevée pour ce paramètre va augmenter la durée de la recherche</translation>
+    </message>
+    <message>
         <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="131"/>
         <source>Downsampling</source>
         <translation>Sous-échantillonnage</translation>
@@ -302,15 +314,13 @@ Si ce paramètre est faux (non coché) alors la position est absolue</translatio
         <translation>Le pourcentage minimum de confiance nécessaire pour sélectionner un résultat possible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="124"/>
         <source>Maximum matches</source>
-        <translation>Nombre maximum de résultats</translation>
+        <translation type="obsolete">Nombre maximum de résultats</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="125"/>
         <source>The maximum matching images count
 Setting this parameter higher will increase the duration of the search</source>
-        <translation>Le nombre maximum de résultats
+        <translation type="obsolete">Le nombre maximum de résultats
 Choisir une valeur élevée pour ce paramètre va augmenter la durée de la recherche</translation>
     </message>
     <message>
@@ -435,7 +445,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
     </message>
     <message>
         <source>Invalid %1 value : %2</source>
-        <translation type="vanished">Valeur %1 incorrecte : %2</translation>
+        <translation type="obsolete">Valeur %1 incorrecte : %2</translation>
     </message>
 </context>
 <context>

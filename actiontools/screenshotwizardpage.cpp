@@ -1,6 +1,6 @@
 /*
     Actiona
-    Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+    Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ namespace ActionTools
         if(mTargetWindow)
             delete mTargetWindow;
         mTargetWindow = new ActionTools::TargetWindow;
-        connect(mTargetWindow, SIGNAL(rectangleSelected(QRect)), this, SLOT(onRectangleSelected(QRect)), Qt::QueuedConnection);
+        connect(mTargetWindow, SIGNAL(rectangleSelected(QRect)), this, SLOT(onRectangleSelected(QRect)));
         mTargetWindow->show();
 
         emit completeChanged();

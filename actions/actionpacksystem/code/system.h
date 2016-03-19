@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2008-2015 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ QTM_END_NAMESPACE
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 class QDeviceInfo;
 class QBatteryInfo;
-class QStorageInfo;
+class QStorageInfo_Custom;
 #endif
 
 class SystemSession;
@@ -161,7 +161,7 @@ namespace Code
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QDeviceInfo *mDeviceInfo;
         QBatteryInfo *mBatteryInfo;
-        QStorageInfo *mStorageInfo;
+        QStorageInfo_Custom *mStorageInfo;
 #else
 		QTM_PREPEND_NAMESPACE(QSystemInfo) *mSystemInfo;
 		QTM_PREPEND_NAMESPACE(QSystemStorageInfo) *mSystemStorageInfo;
