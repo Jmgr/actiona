@@ -24,24 +24,14 @@
 #include "actiontools_global.h"
 #include "windowhandle.h"
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QAbstractNativeEventFilter>
-#else
-#include "nativeeventfilter.h"
-#endif
-
 #include <QPushButton>
 
 class QMainWindow;
 
 namespace ActionTools
 {
-    class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton
-#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
-            , public QAbstractNativeEventFilter
-#else
-            , public NativeEventFilter
-#endif
+    class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton, public QAbstractNativeEventFilter
 	{
 		Q_OBJECT
 
@@ -73,20 +63,9 @@ namespace ActionTools
 
 #ifdef Q_OS_LINUX
 		WId windowAtPointer() const;
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        bool x11EventFilter(XEvent *event);
-#else
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
-#endif
 #endif
 
-#ifdef Q_OS_WIN
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-		bool winEventFilter(MSG *msg, long *result);
-#else
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
-#endif
-#endif
 
 		QPixmap *mCrossIcon;
 		WindowHandle mLastFoundWindow;
@@ -94,9 +73,7 @@ namespace ActionTools
 		QMainWindow *mMainWindow;
 #ifdef Q_OS_LINUX
         QList<QWidget*> mShownWindows;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         unsigned long mCrossCursor;
-#endif
 #endif
 #ifdef Q_OS_WIN
 		HCURSOR mPreviousCursor;

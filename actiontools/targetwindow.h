@@ -27,22 +27,14 @@
 #include "actiontools_global.h"
 
 #ifdef Q_OS_LINUX
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QAbstractNativeEventFilter>
-#else
-#include "nativeeventfilter.h"
-#endif
 #endif
 
 namespace ActionTools
 {
     class ACTIONTOOLSSHARED_EXPORT TargetWindow : public QWidget
 #ifdef Q_OS_LINUX
-#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
             , public QAbstractNativeEventFilter
-#else
-            , public NativeEventFilter
-#endif
 #endif
     {
         Q_OBJECT
@@ -68,11 +60,7 @@ namespace ActionTools
 
     private:
 #ifdef Q_OS_LINUX
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        bool x11EventFilter(XEvent *event);
-#else
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
-#endif
         void ungrab();
 #endif
         void mouseButtonReleased();
@@ -84,9 +72,7 @@ namespace ActionTools
 #ifdef Q_OS_LINUX
         bool mGrabbingPointer;
         bool mGrabbingKeyboard;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         unsigned long mCrossCursor;
-#endif
 #endif
     };
 }

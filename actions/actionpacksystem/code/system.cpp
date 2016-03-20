@@ -22,18 +22,11 @@
 #include "code/rect.h"
 #include "../systemsession.h"
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QStandardPaths>
 #include "qdeviceinfo.h"
 #include "qbatteryinfo.h"
 #include "qstorageinfo.h"
 #include <QLocale>
-#else
-#include <QSystemInfo>
-#include <QSystemStorageInfo>
-#include <QSystemDisplayInfo>
-#include <QSystemDeviceInfo>
-#endif
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QApplication>
@@ -47,10 +40,6 @@
 #include <LMCons.h>
 #endif
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-QTM_USE_NAMESPACE
-#endif
-
 namespace Code
 {
 	QScriptValue System::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -61,16 +50,9 @@ namespace Code
 	System::System()
 		: CodeClass(),
         mSystemSession(new SystemSession)
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         , mDeviceInfo(new QDeviceInfo(this)),
         mBatteryInfo(new QBatteryInfo(this)),
         mStorageInfo(new QStorageInfo_Custom(this))
-#else
-        , mSystemInfo(new QSystemInfo(this)),
-		mSystemStorageInfo(new QSystemStorageInfo(this)),
-		mSystemDisplayInfo(new QSystemDisplayInfo(this)),
-		mSystemDeviceInfo(new QSystemDeviceInfo(this))
-#endif
 	{
 	}
 
@@ -81,20 +63,12 @@ namespace Code
 
 	QString System::storageLocationPath(StorageLocation location) const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return QStandardPaths::locate(static_cast<QStandardPaths::StandardLocation>(location), QString(), QStandardPaths::LocateDirectory);
-#else
-        return QDesktopServices::storageLocation(static_cast<QDesktopServices::StandardLocation>(location));
-#endif
 	}
 
 	QString System::storageLocationName(StorageLocation location) const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return QStandardPaths::displayName(static_cast<QStandardPaths::StandardLocation>(location));
-#else
-        return QDesktopServices::displayName(static_cast<QDesktopServices::StandardLocation>(location));
-#endif
 	}
 
 	QScriptValue System::openUrl(const QString &url) const
@@ -170,16 +144,11 @@ namespace Code
 
 	QString System::version() const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return mDeviceInfo->version(QDeviceInfo::Os);
-#else
-        return mSystemInfo->version(QSystemInfo::Os);
-#endif
 	}
 
 	QString System::countryCode() const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QString localeName = QLocale::system().name();
         QStringList localeParts = localeName.split(QChar('_'));
 
@@ -187,14 +156,10 @@ namespace Code
             return localeParts[1];
         else
             return QString();
-#else
-    return mSystemInfo->currentCountryCode();
-#endif
 	}
 
 	QString System::language() const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QString localeName = QLocale::system().name();
         QStringList localeParts = localeName.split(QChar('_'));
 
@@ -202,74 +167,50 @@ namespace Code
             return localeParts[0];
         else
             return QString();
-#else
-        return mSystemInfo->currentLanguage();
-#endif
 	}
 
 	QStringList System::logicalDrives() const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return mStorageInfo->allLogicalDrives();
-#else
-        return QSystemStorageInfo::logicalDrives();
-#endif
 	}
 
 	qlonglong System::availableDiskSpace(const QString &drive) const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return mStorageInfo->availableDiskSpace(drive);
-#else
-        return mSystemStorageInfo->availableDiskSpace(drive);
-#endif
 	}
 
 	qlonglong System::totalDiskSpace(const QString &drive) const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return mStorageInfo->totalDiskSpace(drive);
-#else
-        return mSystemStorageInfo->totalDiskSpace(drive);
-#endif
 	}
 
 	System::DriveType System::driveType(const QString &drive) const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return static_cast<DriveType>(mStorageInfo->driveType(drive));
-#else
-        return static_cast<DriveType>(mSystemStorageInfo->typeForDrive(drive));
-#endif
 	}
 
 	int System::colorDepth(int screenId) const
 	{
         Q_UNUSED(screenId)
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return 0;// Sadly, no easy way to get this information
-#else
-        int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
-        return mSystemDisplayInfo->colorDepth(screen);
-#endif
+
+        //Qt 4: int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
+        //Qt 4: return mSystemDisplayInfo->colorDepth(screen);
 	}
 
 	int System::displayBrightness(int screenId) const
 	{
         Q_UNUSED(screenId)
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return 0;// Sadly, no easy way to get this information
-#else
-        int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
-        return mSystemDisplayInfo->displayBrightness(screen);
-#endif
+
+        //Qt 4: int screen = (screenId == -1 ? QApplication::desktop()->primaryScreen() : screenId);
+        //Qt 4: return mSystemDisplayInfo->displayBrightness(screen);
 	}
 
 	int System::batteryLevel() const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         if(mBatteryInfo->batteryCount() == 0)
             return -1;
 
@@ -277,14 +218,10 @@ namespace Code
             return -1;
 
         return (mBatteryInfo->remainingCapacity() * 100) / mBatteryInfo->maximumCapacity();
-#else
-        return mSystemDeviceInfo->batteryLevel();
-#endif
 	}
 
 	System::PowerState System::powerState() const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         if(mBatteryInfo->batteryCount() == 0)
             return UnknownState;
 
@@ -299,36 +236,21 @@ namespace Code
         default:
             return UnknownState;
         }
-#else
-        return static_cast<System::PowerState>(mSystemDeviceInfo->currentPowerState());
-#endif
 	}
 
 	QString System::manufacturer() const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return mDeviceInfo->manufacturer();
-#else
-        return mSystemDeviceInfo->manufacturer();
-#endif
 	}
 
 	QString System::model() const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return mDeviceInfo->model();
-#else
-        return mSystemDeviceInfo->model();
-#endif
 	}
 
 	QString System::productName() const
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         return mDeviceInfo->productName();
-#else
-        return mSystemDeviceInfo->productName();
-#endif
 	}
 
 	QScriptValue System::logout(bool force) const

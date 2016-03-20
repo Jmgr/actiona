@@ -35,10 +35,7 @@
 #include <QPixmap>
 #include <QApplication>
 #include <QDesktopWidget>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QScreen>
-#endif
 
 #include <algorithm>
 
@@ -105,11 +102,7 @@ namespace Code
 #endif
 			}
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
             return constructor(QGuiApplication::primaryScreen()->grabWindow(windowId).toImage(), engine);
-#else
-            return constructor(QPixmap::grabWindow(windowId).toImage(), engine);
-#endif
 		}
 
         return constructor(ActionTools::ScreenShooter::captureAllScreens().toImage(), engine);
@@ -133,12 +126,8 @@ namespace Code
         }
 
         QRect screenGeometry = desktop->screenGeometry(screenIndex);
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QPixmap screenPixmap = QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
-#else
-        QPixmap screenPixmap = QPixmap::grabWindow(desktop->winId(), screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
-#endif
+
         return constructor(screenPixmap.toImage(), engine);
     }
 

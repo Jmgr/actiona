@@ -23,11 +23,7 @@
 #include "actioninstance.h"
 #include "version.h"
 #include "mainclass.h"
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include "qtsingleapplication/qtsingleapplication.h"
-#else
-#include "nativeeventfilteringapplication.h"
-#endif
 #include "global.h"
 #include "settings.h"
 #include "languages.h"
@@ -43,10 +39,7 @@
 #include <QUrl>
 #include <QNetworkProxy>
 #include <QDataStream>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QUrlQuery>
-#endif
 
 #ifdef Q_OS_LINUX
 #undef signals
@@ -106,11 +99,7 @@ int main(int argc, char **argv)
         #error("You need Qt 5.2.0 or later to compile Actiona Executer");
 #endif
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QtSingleApplication app("actiona-exec", argc, argv);
-#else
-    ActionTools::NativeEventFilteringApplication app("actiona-exec", argc, argv);
-#endif
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);
@@ -119,10 +108,6 @@ int main(int argc, char **argv)
 
 #ifdef Q_OS_LINUX
     notify_init("Actiona executer");
-#endif
-
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 #endif
 
     QxtCommandOptions preOptions;
@@ -305,11 +290,7 @@ int main(int argc, char **argv)
 	{
 		QString mode;
         using QStringPair = QPair<QString, QString>;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         for(const QStringPair &queryItem: QUrlQuery(protocolUrl.query()).queryItems())
-#else
-        for(const QStringPair &queryItem: protocolUrl.queryItems())
-#endif
 		{
 			if(queryItem.first == "mode")
 			{

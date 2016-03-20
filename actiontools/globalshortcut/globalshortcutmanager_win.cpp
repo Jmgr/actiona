@@ -23,19 +23,14 @@
 
 #include <QWidget>
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QAbstractNativeEventFilter>
 #include <QApplication>
-#endif
 
 #include <windows.h>
 
 namespace ActionTools
 {
-	class GlobalShortcutManager::KeyTrigger::Impl : public QWidget
-#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
-    , QAbstractNativeEventFilter
-#endif
+	class GlobalShortcutManager::KeyTrigger::Impl : public QWidget, QAbstractNativeEventFilter
 	{
 	public:
 		/**
@@ -45,9 +40,7 @@ namespace ActionTools
 			: trigger_(t)
 			, id_(0)
 		{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
             QApplication::instance()->installNativeEventFilter(this);
-#endif
 
 			UINT mod, key;
 			if (convertKeySequence(ks, &mod, &key))
@@ -60,9 +53,7 @@ namespace ActionTools
 		 */
 		~Impl()
 		{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
             QApplication::instance()->removeNativeEventFilter(this);
-#endif
 
 			if (id_)
                 UnregisterHotKey(reinterpret_cast<HWND>(winId()), id_);
@@ -71,16 +62,6 @@ namespace ActionTools
 		/**
 		 * Triggers triggered() signal when the hotkey is activated.
 		 */
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        bool winEvent(MSG* m, long* result)
-        {
-            if (m->message == WM_HOTKEY && m->wParam == id_) {
-                emit trigger_->triggered();
-                return true;
-            }
-            return QWidget::winEvent(m, result);
-        }
-#else
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *)
         {
             if(eventType != "windows_generic_MSG")
@@ -95,7 +76,6 @@ namespace ActionTools
 
             return false;
         }
-#endif
 	
 	private:
 		KeyTrigger* trigger_;

@@ -114,11 +114,6 @@ HEADERS += actiontools_global.h \
     screenshotwizard.h \
     screenshotwizardpage.h \
     savescreenshotwizardpage.h
-equals(QT_MAJOR_VERSION, 4) {
-SOURCES += nativeeventfilteringapplication.cpp
-HEADERS += nativeeventfilteringapplication.h \
-    nativeeventfilter.h
-}
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \

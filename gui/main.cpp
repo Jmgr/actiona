@@ -31,11 +31,7 @@
 #include "qxtcommandoptions/qxtcommandoptions.h"
 #include "progresssplashscreen.h"
 #include "languages.h"
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include "qtsingleapplication/qtsingleapplication.h"
-#else
-#include "nativeeventfilteringapplication.h"
-#endif
 
 #include <ctime>
 
@@ -82,11 +78,8 @@ int main(int argc, char **argv)
 	CoInitializeEx(0, COINIT_APARTMENTTHREADED | COINIT_SPEED_OVER_MEMORY);
 #endif
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QtSingleApplication app("actiona-gui", argc, argv);
-#else
-    ActionTools::NativeEventFilteringApplication app("actiona-gui", argc, argv);
-#endif
+
 	app.setQuitOnLastWindowClosed(false);
 
     app.setOrganizationName("Actiona");
@@ -97,10 +90,6 @@ int main(int argc, char **argv)
 	qAddPostRoutine(cleanup);
 
 	qsrand(std::time(NULL));
-
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-#endif
 
 	QxtCommandOptions preOptions;
 

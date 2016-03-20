@@ -77,23 +77,14 @@
 #include <QProcess>
 #include <QTemporaryFile>
 #include <QListWidget>
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-#include <QSystemInfo>
-#endif
 #include <QScriptValueIterator>
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QStandardPaths>
-#endif
 
 #ifdef Q_OS_LINUX
 #include <QX11Info>
 #endif
 
 #include <algorithm>
-
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-QTM_USE_NAMESPACE
-#endif
 
 MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
 	: QMainWindow(0),
@@ -1046,14 +1037,8 @@ void MainWindow::on_actionCreate_shortcut_triggered()
 			return;
 	}
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QString defaultDestination = QDir(QStandardPaths::locate(QStandardPaths::DesktopLocation, QString(), QStandardPaths::LocateDirectory))
                                  .filePath(QFileInfo(mCurrentFile).fileName());
-#else
-    QString defaultDestination = QDir(QDesktopServices::storageLocation(QDesktopServices::DesktopLocation))
-                                 .filePath(QFileInfo(mCurrentFile).fileName());
-#endif
-
 	QString filePath = QFileDialog::getSaveFileName(this, tr("Choose the shortcut destination"), defaultDestination);
 	if(filePath.isEmpty())
 		return;
@@ -1427,7 +1412,6 @@ void MainWindow::checkForUpdate(bool silent)
 	mUpdaterProgressDialog->open(this, SLOT(updateCanceled()));
 	mUpdaterProgressDialog->setWindowTitle(tr("Checking for updates"));
 	mSilentUpdate = silent;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QString localeName = QLocale::system().name();
     QStringList localeParts = localeName.split(QChar('_'));
     QString languageName = localeName;
@@ -1436,9 +1420,6 @@ void MainWindow::checkForUpdate(bool silent)
         languageName = localeParts[0];
 
     mUpdater->checkForUpdates("actiona3", Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), languageName);
-#else
-    mUpdater->checkForUpdates("actiona3", Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), QSystemInfo().currentLanguage());
-#endif
 }
 #endif
 
@@ -1899,15 +1880,10 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 	QString updateFilename;
 	if(changelogDialog.changelogAction() == ChangelogDialog::DownloadOnly)
 	{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         updateFilename = QFileDialog::getSaveFileName(	this,
                                     tr("Select where to save the installation file"),
                                     QDir(QStandardPaths::locate(QStandardPaths::DownloadLocation, QString(), QStandardPaths::LocateDirectory)).filePath(QFileInfo(filename).fileName()));
-#else
-        updateFilename = QFileDialog::getSaveFileName(	this,
-                                    tr("Select where to save the installation file"),
-                                    QDir(QDesktopServices::storageLocation(QDesktopServices::DesktopLocation)).filePath(QFileInfo(filename).fileName()));
-#endif
+
 		mInstallAfterUpdateDownload = false;
 	}
 	else if(changelogDialog.changelogAction() == ChangelogDialog::DownloadAndInstall)
