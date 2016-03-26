@@ -25,7 +25,7 @@
 
 FilterLineEdit::FilterLineEdit(QWidget *parent)
     : QLineEdit(parent),
-      mIcon(":/icons/search.png")
+      mIcon(":/icons/look.png")
 {
     Q_ASSERT(!mIcon.isNull());
 
