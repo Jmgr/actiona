@@ -41,7 +41,7 @@ unix:!mac:PKGCONFIG += libnotify
 
 win32 {
     CONFIG += embed_manifest_exe
-    QMAKE_LFLAGS += /MANIFESTUAC:"level='asInvoker' uiAccess='true'"
+    QMAKE_LFLAGS += /MANIFESTUAC:"level='asInvoker'uiAccess='true'"
 }
 
 unix {
