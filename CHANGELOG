@@ -1,3 +1,16 @@
+3.9.2 (28/05/16)
+Global:
+- Windows: fixed mouse and keyboard simulation on some applications (started with admin privileges)
+
+Code:
+- fixed loadUI and include functions not using the current script or code filename directory as working directory
+- added the Execution.filename readonly property, containing the current script or code filename
+- ActionPackSystem, Debian/Ubuntu/...: fixed a crash when using the System object
+- ActionPackData: fixed crash when trying to read a non-existing key
+
+Installer/Packages:
+- Windows installer: fixed setup of PATH environment variable and removal when uninstalling
+
 3.9.1 (04/11/15)
 Global:
 - Windows: fixed click simulation failures in some cases
