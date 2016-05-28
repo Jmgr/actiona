@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionPackData</name>
     <message>
@@ -1280,7 +1280,12 @@ Doit contenir un entête par ligne</translation>
         <translation>Index de clef incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="197"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="181"/>
+        <source>Cannot find any key named &quot;%1&quot;</source>
+        <translation>Impossible de trouver une-clef nommée &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="203"/>
         <source>Cannot delete key named &quot;%1&quot;</source>
         <translation>Impossible de supprimer la clef nommée &quot;%1&quot;</translation>
     </message>
