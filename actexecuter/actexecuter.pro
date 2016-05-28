@@ -39,6 +39,11 @@ TRANSLATIONS = ../locale/actexecuter_fr_FR.ts \
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
 
+win32 {
+    CONFIG += embed_manifest_exe
+    QMAKE_LFLAGS += $$quote( /MANIFESTUAC:\"level=\'asInvoker\' uiAccess=\'true\'\" )
+}
+
 unix {
 	target.path = $${PREFIX}/bin
 

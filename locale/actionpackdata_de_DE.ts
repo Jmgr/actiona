@@ -1261,7 +1261,12 @@ Should contain one header per line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/inifile.cpp" line="197"/>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="181"/>
+        <source>Cannot find any key named &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdata/code/inifile.cpp" line="203"/>
         <source>Cannot delete key named &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
