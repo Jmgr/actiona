@@ -23,6 +23,7 @@
 
 #include "actiontools_global.h"
 
+#include <QDataStream>
 #include <QMetaType>
 #include <QString>
 

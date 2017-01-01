@@ -24,6 +24,7 @@
 #include "tools_global.h"
 
 #include <QString>
+#include <QDataStream>
 #include <QDebug>
 #include <QSharedData>
 #include <QMetaType>

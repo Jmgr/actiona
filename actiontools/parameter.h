@@ -24,6 +24,7 @@
 #include "subparameter.h"
 #include "actiontools_global.h"
 
+#include <QDataStream>
 #include <QSharedData>
 
 namespace ActionTools
