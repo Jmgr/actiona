@@ -37,7 +37,7 @@ namespace Actions
 		void startExecution()
 		{
 			if(script()->hasProcedureCall())
-				setNextLine(script()->popProcedureCall() + 2);//Lines start at 1
+                setNextLine(script()->popProcedureCall() + 2, true);//Lines start at 1
 			else
 			{
 				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("End procedure reached without a call"));
