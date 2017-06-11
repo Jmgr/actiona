@@ -142,6 +142,9 @@ namespace Actions
 			break;
 		}
 
+        if(mMode != ListMode)
+            layout->addStretch(1);
+
 		QDialogButtonBox *dialogButtonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, mDialog);
 		layout->addWidget(dialogButtonBox);
 
