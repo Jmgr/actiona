@@ -473,8 +473,12 @@ namespace ActionTools
 
     QPoint ActionInstance::evaluatePoint(bool &ok,
                                          const QString &parameterName,
-                                         const QString &subParameterName)
+                                         const QString &subParameterName,
+                                         bool *empty)
     {
+        if(empty)
+            *empty = false;
+
         if(!ok)
             return QPoint();
 
@@ -503,7 +507,12 @@ namespace ActionTools
             return QPoint();
 
         if(result.isEmpty() || result == ":")
+        {
+            if(empty)
+                *empty = true;
+
             return QPoint();
+        }
 
         QStringList positionStringList = result.split(":");
         if(positionStringList.count() != 2)

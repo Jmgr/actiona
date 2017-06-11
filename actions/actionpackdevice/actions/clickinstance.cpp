@@ -36,10 +36,11 @@ namespace Actions
 	void ClickInstance::startExecution()
 	{
 		bool ok = true;
+        bool isPositionEmpty = false;
 	
 		Action action = evaluateListElement<Action>(ok, actions, "action", "value");
 		MouseDevice::Button button = evaluateListElement<MouseDevice::Button>(ok, buttons, "button", "value");
-		QPoint position        = evaluatePoint(ok, "position");
+        QPoint position = evaluatePoint(ok, "position", "value", &isPositionEmpty);
 		QPoint positionOffset = evaluatePoint(ok, "positionOffset");
 		int amount = evaluateInteger(ok, "amount");
 	
@@ -56,8 +57,11 @@ namespace Actions
 			return;
 		}
 		
-		position += positionOffset;
-		mMouseDevice.setCursorPosition(position);
+        if(!isPositionEmpty)
+        {
+            position += positionOffset;
+            mMouseDevice.setCursorPosition(position);
+        }
 	
 		for(int i = 0; i < amount; ++i)
 		{

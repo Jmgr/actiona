@@ -283,8 +283,9 @@ namespace ActionTools
                                  const QString &subParameterName = "value");
 
         QPoint evaluatePoint(bool &ok,
-						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+                           const QString &parameterName,
+                           const QString &subParameterName = "value",
+                             bool *empty = nullptr);
 		QStringList evaluateItemList(bool &ok,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
