@@ -104,6 +104,7 @@ int main(int argc, char **argv)
 
 	QxtCommandOptions preOptions;
 
+    preOptions.setFlagStyle(QxtCommandOptions::DoubleDash);
 	preOptions.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
 	preOptions.alias("portable", "p");
 	preOptions.parse(QCoreApplication::arguments());
