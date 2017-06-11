@@ -116,14 +116,14 @@ namespace Actions
 		{
 		case IntegerType:
 			mInputDialog->setInputMode(QInputDialog::IntInput);
-			mInputDialog->setIntValue(integerDefaultValue);
 			mInputDialog->setIntRange(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
+            mInputDialog->setIntValue(integerDefaultValue);
 			break;
 		case DecimalType:
 			mInputDialog->setInputMode(QInputDialog::DoubleInput);
-			mInputDialog->setDoubleValue(decimalDefaultValue);
 			mInputDialog->setDoubleRange(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
-			mInputDialog->setDoubleDecimals(4);
+            mInputDialog->setDoubleDecimals(4);
+            mInputDialog->setDoubleValue(decimalDefaultValue);
 			break;
 		default:
 			mInputDialog->setInputMode(QInputDialog::TextInput);
