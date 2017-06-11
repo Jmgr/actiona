@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -149,7 +149,7 @@ p, li { white-space: pre-wrap; }
         <source>Matthieu Hazon</source>
         <translation>Matthieu Hazon</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../gui/aboutdialog.ui" line="202"/>
         <source>Loïc Vauvrecy</source>
         <translation>Loïc Vauvrecy</translation>
@@ -1879,48 +1879,48 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="130"/>
+        <location filename="../gui/main.cpp" line="131"/>
         <source>disable the splash screen</source>
         <translation>désactiver la fenêtre de démarrage</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="132"/>
+        <location filename="../gui/main.cpp" line="133"/>
         <source>disable the tray icon</source>
         <translation>désactiver l&apos;icône de la barre des tâches</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="134"/>
+        <location filename="../gui/main.cpp" line="135"/>
         <source>do not show the execution window</source>
         <translation>ne pas afficher la fenêtre d&apos;exécution</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="136"/>
+        <location filename="../gui/main.cpp" line="137"/>
         <source>do not show the console window</source>
         <translation>ne pas afficher la fenêtre de console</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="138"/>
+        <location filename="../gui/main.cpp" line="139"/>
         <source>do not include the Qt library into the code</source>
         <translation>ne pas inclure la bibliothèque Qt dans le code</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="140"/>
+        <location filename="../gui/main.cpp" line="141"/>
         <source>execute the current script</source>
         <translation>exécuter le script</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="107"/>
-        <location filename="../gui/main.cpp" line="144"/>
+        <location filename="../gui/main.cpp" line="108"/>
+        <location filename="../gui/main.cpp" line="145"/>
         <source>starts in portable mode, storing the settings in the executable folder</source>
         <translation>démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="142"/>
+        <location filename="../gui/main.cpp" line="143"/>
         <source>close Actiona after execution - requires execute</source>
         <translation>fermer Actiona après l&apos;exécution - nécessite execute</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="146"/>
+        <location filename="../gui/main.cpp" line="147"/>
         <source>show the program version</source>
         <translation>afficher la version du programme</translation>
     </message>
@@ -1929,27 +1929,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">fermer Actionaz après l&apos;exécution - nécessite execute</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="148"/>
+        <location filename="../gui/main.cpp" line="149"/>
         <source>show this help text</source>
         <translation>afficher ce texte d&apos;aide</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="162"/>
+        <location filename="../gui/main.cpp" line="163"/>
         <source>usage: </source>
         <translation>utilisation : </translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="162"/>
+        <location filename="../gui/main.cpp" line="163"/>
         <source>[parameters]</source>
         <translation>[paramètres]</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="162"/>
+        <location filename="../gui/main.cpp" line="163"/>
         <source>[filename]</source>
         <translation>[nom de fichier]</translation>
     </message>
     <message>
-        <location filename="../gui/main.cpp" line="163"/>
+        <location filename="../gui/main.cpp" line="164"/>
         <source>Parameters are:</source>
         <translation>Les paramètres sont :</translation>
     </message>
@@ -2239,9 +2239,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../gui/scriptsettingsdialog.ui" line="51"/>
         <location filename="../gui/scriptsettingsdialog.ui" line="58"/>
         <source> ms</source>
-        <extracomment>milliseconds
-----------
-milliseconds</extracomment>
+        <extracomment>milliseconds</extracomment>
         <translation> ms</translation>
     </message>
 </context>

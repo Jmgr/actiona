@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>ExecutionWindow</name>
     <message>
@@ -52,72 +52,72 @@
 <context>
     <name>LibExecuter::Executer</name>
     <message>
-        <location filename="../executer/executer.cpp" line="352"/>
+        <location filename="../executer/executer.cpp" line="353"/>
         <source>Invalid image resource</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="385"/>
+        <location filename="../executer/executer.cpp" line="386"/>
         <source>Invalid Begin procedure action, you have to end the previous procedure before starting another one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="397"/>
+        <location filename="../executer/executer.cpp" line="398"/>
         <source>A procedure name cannot be empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="404"/>
+        <location filename="../executer/executer.cpp" line="405"/>
         <source>A procedure with the name &quot;%1&quot; has already been declared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="415"/>
+        <location filename="../executer/executer.cpp" line="416"/>
         <source>Invalid End procedure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="437"/>
+        <location filename="../executer/executer.cpp" line="438"/>
         <source>Begin procedure action without end procedure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="451"/>
+        <location filename="../executer/executer.cpp" line="452"/>
         <source>Incorrect parameter name: &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="466"/>
+        <location filename="../executer/executer.cpp" line="467"/>
         <source>Error while evaluating parameter &quot;%1&quot;, error message: &quot;%2&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="623"/>
+        <location filename="../executer/executer.cpp" line="624"/>
         <source>Action design error: Invalid exception emitted (%1, line %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="652"/>
+        <location filename="../executer/executer.cpp" line="653"/>
         <source>Invalid exception line: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="675"/>
+        <location filename="../executer/executer.cpp" line="676"/>
         <source>Script line %1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="740"/>
+        <location filename="../executer/executer.cpp" line="741"/>
         <source>Unable to find the label named &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="754"/>
+        <location filename="../executer/executer.cpp" line="755"/>
         <source>Incorrect Script.nextLine value: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="757"/>
+        <location filename="../executer/executer.cpp" line="758"/>
         <source>The action at line %1 is invalid</source>
         <translation type="unfinished"></translation>
     </message>
