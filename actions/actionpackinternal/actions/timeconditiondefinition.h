@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ namespace Actions
 			date->setTooltip(tr("The date to compare"));
 			addElement(date);
 
-			ActionTools::IfActionParameterDefinition *ifBefore = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifBefore", tr("If before")), this);
+            ActionTools::IfActionParameterDefinition *ifBefore = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifBefore", tr("If in the past")), this);
 			ifBefore->setTooltip(tr("What to do if the date is in the past"));
 			addElement(ifBefore);
 
@@ -54,7 +54,7 @@ namespace Actions
 			ifNow->setTooltip(tr("What to do if the date is the current date"));
 			addElement(ifNow);
 
-			ActionTools::IfActionParameterDefinition *ifAfter = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifAfter", tr("If after")), this);
+            ActionTools::IfActionParameterDefinition *ifAfter = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifAfter", tr("If in the future")), this);
 			ifAfter->setTooltip(tr("What to do if the date is in the future"));
 			ifAfter->setAllowWait(true);
 			addElement(ifAfter);

@@ -1,6 +1,6 @@
 /*
     Actiona
-    Copyright (C) 2005-2016 Jonathan Mercier-Ganady
+    Copyright (C) 2005-2017 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -93,6 +93,7 @@ int main(int argc, char **argv)
 
 	QxtCommandOptions preOptions;
 
+    preOptions.setFlagStyle(QxtCommandOptions::DoubleDash);
 	preOptions.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
 	preOptions.alias("portable", "p");
 	preOptions.parse(QCoreApplication::arguments());

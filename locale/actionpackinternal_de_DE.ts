@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>ActionPackInternal</name>
     <message>
@@ -160,7 +160,7 @@
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="49"/>
-        <source>If before</source>
+        <source>If in the past</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -180,7 +180,7 @@
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="57"/>
-        <source>If after</source>
+        <source>If in the future</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

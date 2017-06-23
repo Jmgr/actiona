@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionPackInternal</name>
     <message>
@@ -168,9 +168,13 @@
         <translation>La date à comparer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="49"/>
         <source>If before</source>
-        <translation>Si avant</translation>
+        <translation type="vanished">Si avant</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="49"/>
+        <source>If in the past</source>
+        <translation>Si dans le passé</translation>
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="50"/>
@@ -189,8 +193,12 @@
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="57"/>
+        <source>If in the future</source>
+        <translation>Si dans le futur</translation>
+    </message>
+    <message>
         <source>If after</source>
-        <translation>Si après</translation>
+        <translation type="vanished">Si après</translation>
     </message>
     <message>
         <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="58"/>

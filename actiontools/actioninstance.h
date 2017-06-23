@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -283,8 +283,9 @@ namespace ActionTools
                                  const QString &subParameterName = "value");
 
         QPoint evaluatePoint(bool &ok,
-						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+                           const QString &parameterName,
+                           const QString &subParameterName = "value",
+                             bool *empty = nullptr);
 		QStringList evaluateItemList(bool &ok,
 						   const QString &parameterName,
 						   const QString &subParameterName = "value");
@@ -301,8 +302,8 @@ namespace ActionTools
         void validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum = std::numeric_limits<int>::max());
 
 		QString nextLine() const;
-		void setNextLine(const QString &nextLine);
-		void setNextLine(int nextLine);
+        void setNextLine(const QString &nextLine, bool doNotResetPreviousActions = false);
+        void setNextLine(int nextLine, bool doNotResetPreviousActions = false);
 
 		void setArray(const QString &name, const QStringList &stringList);
 		void setArrayKeyValue(const QString &name, const QHash<QString, QString> &hashKeyValue);

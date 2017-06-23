@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ namespace Actions
 		void startExecution()
 		{
 			if(script()->hasProcedureCall())
-				setNextLine(script()->popProcedureCall() + 2);//Lines start at 1
+                setNextLine(script()->popProcedureCall() + 2, true);//Lines start at 1
 			else
 			{
 				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("End procedure reached without a call"));

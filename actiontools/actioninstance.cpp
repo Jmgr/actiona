@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -473,8 +473,12 @@ namespace ActionTools
 
     QPoint ActionInstance::evaluatePoint(bool &ok,
                                          const QString &parameterName,
-                                         const QString &subParameterName)
+                                         const QString &subParameterName,
+                                         bool *empty)
     {
+        if(empty)
+            *empty = false;
+
         if(!ok)
             return QPoint();
 
@@ -503,7 +507,12 @@ namespace ActionTools
             return QPoint();
 
         if(result.isEmpty() || result == ":")
+        {
+            if(empty)
+                *empty = true;
+
             return QPoint();
+        }
 
         QStringList positionStringList = result.split(":");
         if(positionStringList.count() != 2)
@@ -682,15 +691,16 @@ namespace ActionTools
 		return d->scriptEngine->property("Script.nextLine").toString();
 	}
 
-	void ActionInstance::setNextLine(const QString &nextLine)
+    void ActionInstance::setNextLine(const QString &nextLine, bool doNotResetPreviousActions)
 	{
 		QScriptValue scriptValue = d->scriptEngine->globalObject().property("Script");
 		scriptValue.setProperty("nextLine", d->scriptEngine->newVariant(QVariant(nextLine)));
+        scriptValue.setProperty("doNotResetPreviousActions", doNotResetPreviousActions);
 	}
 
-	void ActionInstance::setNextLine(int nextLine)
+    void ActionInstance::setNextLine(int nextLine, bool doNotResetPreviousActions)
 	{
-		setNextLine(QString::number(nextLine));
+        setNextLine(QString::number(nextLine), doNotResetPreviousActions);
 	}
 
 	void ActionInstance::setArray(const QString &name, const QStringList &stringList)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>ActionDefinition::CategoryName</name>
     <message>
@@ -156,12 +156,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="836"/>
+        <location filename="../actiontools/actioninstance.cpp" line="837"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="869"/>
+        <location filename="../actiontools/actioninstance.cpp" line="870"/>
         <source>Invalid parameter. Unable to evaluate string</source>
         <translation type="unfinished"></translation>
     </message>

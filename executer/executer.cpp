@@ -1,6 +1,6 @@
 /*
     Actiona
-	Copyright (C) 2005-2016 Jonathan Mercier-Ganady
+	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -293,6 +293,7 @@ namespace LibExecuter
         QScriptValue script = mScriptEngine->newObject();
 		mScriptEngine->globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
         script.setProperty("nextLine", 1);
+        script.setProperty("doNotResetPreviousActions", false);
         script.setProperty("line", 1, QScriptValue::ReadOnly);
         QScriptValue callProcedureFun = mScriptEngine->newFunction(callProcedureFunction);
         callProcedureFun.setData(mScriptEngine->newQObject(this));
@@ -764,11 +765,17 @@ namespace LibExecuter
 			}
 		}
 
-		if(mCurrentActionIndex >= 0)
-		{
+        bool doNotResetPreviousActions = script.property("doNotResetPreviousActions").toBool();
+
+        if(doNotResetPreviousActions)
+        {
+            script.setProperty("doNotResetPreviousActions", false);
+        }
+        else if(mCurrentActionIndex >= 0)
+        {
 			for(int actionIndex = mCurrentActionIndex; actionIndex < previousLine; ++actionIndex)
 				mScript->actionAt(actionIndex)->reset();
-		}
+        }
 
 		executeCurrentAction();
 	}
