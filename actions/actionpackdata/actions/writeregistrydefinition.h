@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITEREGISTRYDEFINITION_H
-#define WRITEREGISTRYDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "writeregistryinstance.h"
@@ -78,4 +77,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITEREGISTRYDEFINITION_H

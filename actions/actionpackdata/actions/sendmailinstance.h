@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SENDMAILINSTANCE_H
-#define SENDMAILINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -80,4 +79,3 @@ namespace Actions
 	};
 }
 
-#endif // SENDMAILINSTANCE_H

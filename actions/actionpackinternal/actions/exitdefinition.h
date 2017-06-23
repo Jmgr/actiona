@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXITDEFINITION_H
-#define EXITDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "exitinstance.h"
@@ -55,4 +54,3 @@ namespace Actions
 	};
 }
 
-#endif // EXITDEFINITION_H

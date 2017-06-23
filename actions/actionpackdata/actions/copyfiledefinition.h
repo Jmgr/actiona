@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COPYFILEDEFINITION_H
-#define COPYFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "copyfileinstance.h"
@@ -72,4 +71,3 @@ namespace Actions
 	};
 }
 
-#endif // COPYFILEDEFINITION_H

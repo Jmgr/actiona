@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ITEMLISTVIEW_H
-#define ITEMLISTVIEW_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -49,4 +48,3 @@ namespace ActionTools
 	};
 }
 
-#endif // ITEMLISTVIEW_H

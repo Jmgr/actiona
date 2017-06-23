@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef POINT_H
-#define POINT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "codeclass.h"
@@ -71,4 +70,3 @@ namespace Code
 	};
 }
 
-#endif // POINT_H

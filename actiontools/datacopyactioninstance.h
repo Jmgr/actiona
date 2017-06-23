@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DATACOPYACTIONINSTANCE_H
-#define DATACOPYACTIONINSTANCE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "actioninstance.h"
@@ -62,4 +61,3 @@ namespace ActionTools
 	};
 }
 
-#endif // DATACOPYACTIONINSTANCE_H

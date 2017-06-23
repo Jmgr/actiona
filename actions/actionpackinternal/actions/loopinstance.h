@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LOOPINSTANCE_H
-#define LOOPINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -88,4 +87,3 @@ namespace Actions
 	};
 }
 
-#endif // LOOPINSTANCE_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTMODEL_H
-#define SCRIPTMODEL_H
+#pragma once
 
 #include <QAbstractTableModel>
 #include <QItemSelectionModel>
@@ -125,4 +124,3 @@ private:
 	Q_DISABLE_COPY(ScriptModel)
 };
 
-#endif // SCRIPTMODEL_H

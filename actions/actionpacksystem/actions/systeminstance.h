@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINSTANCE_H
-#define SYSTEMINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -61,4 +60,3 @@ namespace Actions
 	};
 }
 
-#endif // SYSTEMINSTANCE_H

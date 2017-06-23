@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MESSAGEBOX_H
-#define MESSAGEBOX_H
+#pragma once
 
 #include "basewindow.h"
 
@@ -98,4 +97,3 @@ namespace Code
 	};
 }
 
-#endif // MESSAGEBOX_H

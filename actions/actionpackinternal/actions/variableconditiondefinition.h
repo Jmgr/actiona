@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef VARIABLECONDITIONDEFINITION_H
-#define VARIABLECONDITIONDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "variableconditioninstance.h"
@@ -83,4 +82,3 @@ namespace Actions
 	};
 }
 
-#endif // VARIABLECONDITIONDEFINITION_H

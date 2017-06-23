@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef SCREENSHOOTER_H
-#define SCREENSHOOTER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -46,4 +45,3 @@ namespace ActionTools
     };
 }
 
-#endif // SCREENSHOOTER_H

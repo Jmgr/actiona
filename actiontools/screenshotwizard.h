@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef SCREENSHOTWIZARD_H
-#define SCREENSHOTWIZARD_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -57,4 +56,3 @@ namespace ActionTools
     };
 }
 
-#endif // SCREENSHOTWIZARD_H

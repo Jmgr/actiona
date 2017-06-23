@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PIXELCOLORINSTANCE_H
-#define PIXELCOLORINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -208,4 +207,3 @@ namespace Actions
 	};
 }
 
-#endif // PIXELCOLORINSTANCE_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MOUSE_H
-#define MOUSE_H
+#pragma once
 
 #include "../mousedevice.h"
 #include "code/codeclass.h"
@@ -92,4 +91,3 @@ namespace Code
 
 Q_DECLARE_METATYPE(MouseDevice::Button)
 
-#endif // MOUSE_H

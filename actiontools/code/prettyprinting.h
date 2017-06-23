@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef PRETTYPRINTING_H
-#define PRETTYPRINTING_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -30,4 +29,3 @@ namespace Code
     void ACTIONTOOLSSHARED_EXPORT setupPrettyPrinting(QScriptEngine &scriptEngine);
 }
 
-#endif // PRETTYPRINTING_H

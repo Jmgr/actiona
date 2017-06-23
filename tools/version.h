@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef VERSION_H
-#define VERSION_H
+#pragma once
 
 #include "tools_global.h"
 
@@ -117,4 +116,3 @@ QDebug TOOLSSHARED_EXPORT &operator<<(QDebug &dbg, const Tools::Version &version
 
 Q_DECLARE_METATYPE(Tools::Version)
 
-#endif // VERSION_H

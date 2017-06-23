@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WEBDOWNLOADDEFINITION_H
-#define WEBDOWNLOADDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "webdownloadinstance.h"
@@ -104,4 +103,3 @@ namespace Actions
 	};
 }
 
-#endif // WEBDOWNLOADDEFINITION_H

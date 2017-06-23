@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONINSTANCE_H
-#define ACTIONINSTANCE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "parameter.h"
@@ -340,4 +339,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::ActionInstance)
 
-#endif // ACTIONINSTANCE_H

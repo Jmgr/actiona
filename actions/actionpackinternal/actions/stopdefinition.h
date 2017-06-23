@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef STOPDEFINITION_H
-#define STOPDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "stopinstance.h"
@@ -55,4 +54,3 @@ namespace Actions
 	};
 }
 
-#endif // STOPDEFINITION_H

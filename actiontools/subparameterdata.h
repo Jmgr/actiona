@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SUBPARAMETER_H
-#define SUBPARAMETER_H
+#pragma once
 
 #include <QObject>
 #include <QVariant>
@@ -49,4 +48,3 @@ namespace ActionTools
 	};
 }
 
-#endif // SUBPARAMETER_H

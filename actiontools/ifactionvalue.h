@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef IFACTIONVALUE_H
-#define IFACTIONVALUE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -54,4 +53,3 @@ namespace ActionTools
 	};
 }
 
-#endif // IFACTIONVALUE_H

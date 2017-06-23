@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTMODELUNDOCOMMANDS_H
-#define SCRIPTMODELUNDOCOMMANDS_H
+#pragma once
 
 #include <QUndoCommand>
 #include <QModelIndex>
@@ -179,4 +178,3 @@ private:
     ScriptProxyModel *mProxyModel;
 };
 
-#endif // SCRIPTMODELUNDOCOMMANDS_H

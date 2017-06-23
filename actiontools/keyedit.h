@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYEDIT_H
-#define KEYEDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "codecombobox.h"
@@ -49,4 +48,3 @@ namespace ActionTools
 	};
 }
 
-#endif // KEYEDIT_H

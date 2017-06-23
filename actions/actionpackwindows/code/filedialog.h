@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef FILEDIALOG_H
-#define FILEDIALOG_H
+#pragma once
 
 #include "basewindow.h"
 
@@ -153,4 +152,3 @@ namespace Code
 	};
 }
 
-#endif // FILEDIALOG_H

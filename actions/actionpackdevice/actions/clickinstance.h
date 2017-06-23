@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CLICKINSTANCE_H
-#define CLICKINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../mousedevice.h"
@@ -60,4 +59,3 @@ namespace Actions
 	};
 }
 
-#endif // CLICKINSTANCE_H

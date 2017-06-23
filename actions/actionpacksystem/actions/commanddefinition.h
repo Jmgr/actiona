@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COMMANDDEFINITION_H
-#define COMMANDDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "commandinstance.h"
@@ -94,4 +93,3 @@ namespace Actions
 	};
 }
 
-#endif // COMMANDDEFINITION_H

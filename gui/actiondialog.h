@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONDIALOG_H
-#define ACTIONDIALOG_H
+#pragma once
 
 #include "parametercontainer.h"
 
@@ -101,4 +100,3 @@ private:
 	Q_DISABLE_COPY(ActionDialog)
 };
 
-#endif // ACTIONDIALOG_H

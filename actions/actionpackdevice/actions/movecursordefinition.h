@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MOVECURSORDEFINITION_H
-#define MOVECURSORDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "movecursorinstance.h"
@@ -65,4 +64,3 @@ namespace Actions
 	};
 }
 
-#endif // MOVECURSORDEFINITION_H

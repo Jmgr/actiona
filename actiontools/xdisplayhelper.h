@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef XDISPLAYHELPER_H
-#define XDISPLAYHELPER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -45,4 +44,3 @@ namespace ActionTools
 
 #endif
 
-#endif // XDISPLAYHELPER_H

@@ -2,8 +2,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PROCESSHANDLE_H
-#define PROCESSHANDLE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "crossplatform.h"
@@ -72,4 +71,3 @@ namespace Code
 	};
 }
 
-#endif // PROCESSHANDLE_H

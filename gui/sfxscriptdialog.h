@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SFXSCRIPTDIALOG_H
-#define SFXSCRIPTDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -53,4 +52,3 @@ private:
 	Ui::SFXScriptDialog *ui;
 };
 
-#endif // SFXSCRIPTDIALOG_H

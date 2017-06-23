@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITECLIPBOARDINSTANCE_H
-#define WRITECLIPBOARDINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -56,4 +55,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITECLIPBOARDINSTANCE_H

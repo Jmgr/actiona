@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef FILTERLINEEDIT_HPP
-#define FILTERLINEEDIT_HPP
+#pragma once
 
 #include <QLineEdit>
 #include <QImage>
@@ -36,4 +35,3 @@ private:
     QImage mIcon;
 };
 
-#endif // FILTERLINEEDIT_HPP

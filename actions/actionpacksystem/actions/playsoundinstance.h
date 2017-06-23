@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PLAYSOUNDINSTANCE_H
-#define PLAYSOUNDINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -54,4 +53,3 @@ namespace Actions
 	};
 }
 
-#endif // PLAYSOUNDINSTANCE_H

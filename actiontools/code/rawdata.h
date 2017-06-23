@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef RAWDATA_H
-#define RAWDATA_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "codetools.h"
@@ -90,4 +89,3 @@ namespace Code
 	};
 }
 
-#endif // RAWDATA_H

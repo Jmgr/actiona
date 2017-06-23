@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MULTITEXTPARAMETERDEFINITION_H
-#define MULTITEXTPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -48,4 +47,3 @@ namespace ActionTools
 	};
 }
 
-#endif // MULTITEXTPARAMETERDEFINITION_H

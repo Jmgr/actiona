@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITEBINARYFILEDEFINITION_H
-#define WRITEBINARYFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "writebinaryfileinstance.h"
@@ -69,4 +68,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITEBINARYFILEDEFINITION_H

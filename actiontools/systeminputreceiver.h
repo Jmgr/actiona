@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINPUTRECEIVER_H
-#define SYSTEMINPUTRECEIVER_H
+#pragma once
 
 #include "systeminput.h"
 #include "actiontools_global.h"
@@ -71,4 +70,3 @@ namespace ActionTools
 	}
 }
 
-#endif // SYSTEMINPUTRECEIVER_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READBINARYFILEDEFINITION_H
-#define READBINARYFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readbinaryfileinstance.h"
@@ -69,4 +68,3 @@ namespace Actions
 	};
 }
 
-#endif // READBINARYFILEDEFINITION_H

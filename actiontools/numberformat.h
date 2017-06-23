@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef NUMBERFORMAT_H
-#define NUMBERFORMAT_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -40,4 +39,3 @@ namespace ActionTools
     };
 }
 
-#endif // NUMBERFORMAT_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef REGISTRY_H
-#define REGISTRY_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -79,4 +78,3 @@ namespace Code
 	};
 }
 
-#endif // REGISTRY_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CHOOSEPOSITIONPUSHBUTTON_H
-#define CHOOSEPOSITIONPUSHBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -76,4 +75,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CHOOSEPOSITIONPUSHBUTTON_H

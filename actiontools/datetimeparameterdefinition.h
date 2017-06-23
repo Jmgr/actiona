@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DATETIMEPARAMETERDEFINITION_H
-#define DATETIMEPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -47,4 +46,3 @@ namespace ActionTools
 	};
 }
 
-#endif // DATETIMEPARAMETERDEFINITION_H

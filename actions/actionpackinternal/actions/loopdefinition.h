@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LOOPDEFINITION_H
-#define LOOPDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "loopinstance.h"
@@ -68,4 +67,3 @@ namespace Actions
 	};
 }
 
-#endif // LOOPDEFINITION_H

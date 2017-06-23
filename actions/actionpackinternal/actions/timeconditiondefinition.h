@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TIMECONDITIONDEFINITION_H
-#define TIMECONDITIONDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "timeconditioninstance.h"
@@ -73,4 +72,3 @@ namespace Actions
 	};
 }
 
-#endif // TIMECONDITIONDEFINITION_H

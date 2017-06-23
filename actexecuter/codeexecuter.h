@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEEXECUTER_H
-#define CODEEXECUTER_H
+#pragma once
 
 #include "executer.h"
 
@@ -53,4 +52,3 @@ private:
 	QMainWindow *mDebuggerWindow;
 };
 
-#endif // CODEEXECUTER_H

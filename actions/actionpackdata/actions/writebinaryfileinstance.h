@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITEBINARYFILEINSTANCE_H
-#define WRITEBINARYFILEINSTANCE_H
+#pragma once
 
 #include "datacopyactioninstance.h"
 
@@ -85,4 +84,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITEBINARYFILEINSTANCE_H

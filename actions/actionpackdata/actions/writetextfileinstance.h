@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITETEXTFILEINSTANCE_H
-#define WRITETEXTFILEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -54,4 +53,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITETEXTFILEINSTANCE_H

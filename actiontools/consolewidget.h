@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CONSOLEWIDGET_H
-#define CONSOLEWIDGET_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -117,4 +116,3 @@ namespace ActionTools
 Q_DECLARE_METATYPE(ActionTools::ConsoleWidget::Type)
 Q_DECLARE_METATYPE(ActionTools::ConsoleWidget::Source)
 
-#endif // CONSOLEWIDGET_H

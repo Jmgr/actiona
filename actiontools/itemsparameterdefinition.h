@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ITEMSPARAMETERDEFINITION_H
-#define ITEMSPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "stringlistpair.h"
@@ -46,4 +45,3 @@ namespace ActionTools
 	};
 }
 
-#endif // ITEMSPARAMETERDEFINITION_H

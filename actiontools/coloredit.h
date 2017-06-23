@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COLOREDIT_H
-#define COLOREDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -83,4 +82,3 @@ namespace ActionTools
 	};
 }
 
-#endif // COLOREDIT_H

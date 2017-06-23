@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONTOOLS_GLOBAL_H
-#define ACTIONTOOLS_GLOBAL_H
+#pragma once
 
 #include <QtGlobal>
 
@@ -29,4 +28,3 @@
 #  define ACTIONTOOLSSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // ACTIONTOOLS_GLOBAL_H

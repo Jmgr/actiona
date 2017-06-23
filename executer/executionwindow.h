@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXECUTIONWINDOW_H
-#define EXECUTIONWINDOW_H
+#pragma once
 
 #include <QWidget>
 
@@ -66,4 +65,3 @@ namespace LibExecuter
 	};
 }
 
-#endif // EXECUTIONWINDOW_H

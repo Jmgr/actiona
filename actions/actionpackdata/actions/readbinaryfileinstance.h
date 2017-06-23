@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READBINARYFILEINSTANCE_H
-#define READBINARYFILEINSTANCE_H
+#pragma once
 
 #include "datacopyactioninstance.h"
 #include "code/rawdata.h"
@@ -91,4 +90,3 @@ namespace Actions
 	};
 }
 
-#endif // READBINARYFILEINSTANCE_H

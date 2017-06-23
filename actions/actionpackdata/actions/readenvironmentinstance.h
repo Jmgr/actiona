@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READENVIRONMENTINSTANCE_H
-#define READENVIRONMENTINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -50,4 +49,3 @@ namespace Actions
 	};
 }
 
-#endif // READENVIRONMENTINSTANCE_H

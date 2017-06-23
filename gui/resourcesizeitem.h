@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCESIZEITEM_H
-#define RESOURCESIZEITEM_H
+#pragma once
 
 #include <QTableWidgetItem>
 
@@ -37,4 +36,3 @@ public:
     }
 };
 
-#endif // RESOURCESIZEITEM_H

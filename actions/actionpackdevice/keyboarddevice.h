@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYBOARDDEVICE_H
-#define KEYBOARDDEVICE_H
+#pragma once
 
 #include <QSet>
 #include <QObject>
@@ -61,4 +60,3 @@ private:
 	Type mType;
 };
 
-#endif // KEYBOARDDEVICE_H

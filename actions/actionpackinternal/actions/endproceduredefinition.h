@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ENDPROCEDUREDEFINITION_H
-#define ENDPROCEDUREDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "endprocedureinstance.h"
@@ -55,4 +54,3 @@ namespace Actions
 	};
 }
 
-#endif // ENDPROCEDUREDEFINITION_H

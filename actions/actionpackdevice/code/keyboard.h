@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#pragma once
 
 #include "../keyboarddevice.h"
 #include "code/codeclass.h"
@@ -52,4 +51,3 @@ namespace Code
 	};
 }
 
-#endif // KEYBOARD_H

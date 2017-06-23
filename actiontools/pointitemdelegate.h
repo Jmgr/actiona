@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef POINTITEMDELEGATE_H
-#define POINTITEMDELEGATE_H
+#pragma once
 
 #include <QStyledItemDelegate>
 
@@ -35,4 +34,3 @@ public:
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 };
 
-#endif // POINTITEMDELEGATE_H

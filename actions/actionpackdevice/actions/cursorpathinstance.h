@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CURSORPATHINSTANCE_H
-#define CURSORPATHINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../mousedevice.h"
@@ -144,4 +143,3 @@ namespace Actions
 	};
 }
 
-#endif // CURSORPATHINSTANCE_H

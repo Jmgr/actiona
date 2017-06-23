@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWCONDITIONDEFINITION_H
-#define WINDOWCONDITIONDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "windowconditioninstance.h"
@@ -108,4 +107,3 @@ namespace Actions
 	};
 }
 
-#endif // WINDOWCONDITIONDEFINITION_H

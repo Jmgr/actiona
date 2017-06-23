@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXITINSTANCE_H
-#define EXITINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -48,4 +47,3 @@ namespace Actions
 	};
 }
 
-#endif // EXITINSTANCE_H

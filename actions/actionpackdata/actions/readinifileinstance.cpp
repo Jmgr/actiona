@@ -53,7 +53,7 @@ namespace Actions
         {
             boost::property_tree::ini_parser::read_ini(filename.toStdString(), tree);
         }
-        catch(const std::runtime_error &e)
+        catch(const std::runtime_error &)
         {
             setCurrentParameter("filename");
             emit executionException(UnableToReadFileException, tr("Unable to read the file"));
@@ -94,7 +94,7 @@ namespace Actions
             {
                 setVariable(variable, QString::fromStdString((*sectionNode).get<std::string>(parameter.toStdString())));
             }
-            catch(const std::runtime_error &e)
+            catch(const std::runtime_error &)
             {
                 setCurrentParameter("parameter");
                 emit executionException(UnableToFindSectionException, tr("Unable to find the parameter named \"%1\"").arg(parameter));

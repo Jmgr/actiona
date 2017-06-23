@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef BASEWINDOW_H
-#define BASEWINDOW_H
+#pragma once
 
 #include <QScriptValue>
 #include <QScriptEngine>
@@ -64,4 +63,3 @@ namespace Code
 	};
 }
 
-#endif // BASEWINDOW_H

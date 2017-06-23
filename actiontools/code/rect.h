@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef RECT_H
-#define RECT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "code/codeclass.h"
@@ -103,4 +102,3 @@ namespace Code
 	};
 }
 
-#endif // RECT_H

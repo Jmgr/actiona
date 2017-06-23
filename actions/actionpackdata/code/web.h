@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WEB_H
-#define WEB_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -94,4 +93,3 @@ namespace Code
 	};
 }
 
-#endif // WEB_H

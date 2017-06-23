@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCENAMEDELEGATE_H
-#define RESOURCENAMEDELEGATE_H
+#pragma once
 
 #include <QStyledItemDelegate>
 
@@ -40,4 +39,3 @@ private:
     ResourceTableWidget *mResourceTableWidget;
 };
 
-#endif // RESOURCENAMEDELEGATE_H

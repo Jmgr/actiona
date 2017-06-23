@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef POSITIONEDIT_H
-#define POSITIONEDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -75,4 +74,3 @@ namespace ActionTools
 	};
 }
 
-#endif // POSITIONEDIT_H

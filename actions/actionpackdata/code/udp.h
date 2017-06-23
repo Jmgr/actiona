@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef UDP_H
-#define UDP_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -89,4 +88,3 @@ namespace Code
 	};
 }
 
-#endif // UDP_H

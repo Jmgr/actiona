@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PROGRESSDIALOG_H
-#define PROGRESSDIALOG_H
+#pragma once
 
 #include "basewindow.h"
 
@@ -63,4 +62,3 @@ namespace Code
 	};
 }
 
-#endif // PROGRESSDIALOG_H

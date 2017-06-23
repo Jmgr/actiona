@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPT_H
-#define SCRIPT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "version.h"
@@ -145,4 +144,3 @@ namespace ActionTools
 	};
 }
 
-#endif // SCRIPT_H

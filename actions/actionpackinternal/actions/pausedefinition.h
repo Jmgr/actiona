@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PAUSEDEFINITION_H
-#define PAUSEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "numberparameterdefinition.h"
@@ -73,4 +72,3 @@ namespace Actions
 	};
 }
 
-#endif // PAUSEDEFINITION_H

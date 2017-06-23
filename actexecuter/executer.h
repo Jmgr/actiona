@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXECUTER_H
-#define EXECUTER_H
+#pragma once
 
 #include <QObject>
 
@@ -51,4 +50,3 @@ private:
 	bool mActionLoadingFailed;
 };
 
-#endif // EXECUTER_H

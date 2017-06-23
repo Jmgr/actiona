@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MESSAGEHANDLER_H
-#define MESSAGEHANDLER_H
+#pragma once
 
 #include <QAbstractMessageHandler>
 
@@ -44,4 +43,3 @@ namespace ActionTools
 	};
 }
 
-#endif // MESSAGEHANDLER_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef BEGINPROCEDUREDEFINITION_H
-#define BEGINPROCEDUREDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "beginprocedureinstance.h"
@@ -60,4 +59,3 @@ namespace Actions
 	};
 }
 
-#endif // BEGINPROCEDUREDEFINITION_H

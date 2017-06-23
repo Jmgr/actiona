@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCENAMEDIALOG_H
-#define RESOURCENAMEDIALOG_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -58,4 +57,3 @@ namespace ActionTools
     };
 }
 
-#endif // RESOURCENAMEDIALOG_H

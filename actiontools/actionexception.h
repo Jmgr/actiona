@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONEXCEPTION_H
-#define ACTIONEXCEPTION_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -97,4 +96,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::ActionException::Exception)
 
-#endif // ACTIONEXCEPTION_H

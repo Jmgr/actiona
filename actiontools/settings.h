@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#pragma once
 
 //Settings stuff
 //Warning : all enums have to be in the same order as in the combo boxes !
@@ -52,4 +51,3 @@ namespace ActionTools
 	}
 }
 
-#endif // SETTINGS_H

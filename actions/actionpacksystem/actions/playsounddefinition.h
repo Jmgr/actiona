@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PLAYSOUNDDEFINITION_H
-#define PLAYSOUNDDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "playsoundinstance.h"
@@ -98,4 +97,3 @@ namespace Actions
 	};
 }
 
-#endif // PLAYSOUNDDEFINITION_H

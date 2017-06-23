@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READINIFILEINSTANCE_H
-#define READINIFILEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -54,4 +53,3 @@ namespace Actions
 	};
 }
 
-#endif // READINIFILEINSTANCE_H

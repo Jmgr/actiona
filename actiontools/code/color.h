@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COLOR_H
-#define COLOR_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "codeclass.h"
@@ -90,4 +89,3 @@ namespace Code
 	};
 }
 
-#endif // COLOR_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NEWACTIONMODEL_H
-#define NEWACTIONMODEL_H
+#pragma once
 
 #include <QStandardItemModel>
 
@@ -43,4 +42,3 @@ private:
     Q_DISABLE_COPY(NewActionModel)
 };
 
-#endif // NEWACTIONMODEL_H

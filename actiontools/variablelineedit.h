@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef VARIABLELINEEDIT_H
-#define VARIABLELINEEDIT_H
+#pragma once
 
 #include "codelineedit.h"
 
@@ -40,4 +39,3 @@ namespace ActionTools
     };
 }
 
-#endif // VARIABLELINEEDIT_H

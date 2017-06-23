@@ -55,7 +55,7 @@ namespace Code
         {
             boost::property_tree::ini_parser::read_ini(toEncoding(filename, mEncoding).constData(), mTree);
         }
-        catch(const std::runtime_error &e)
+        catch(const std::runtime_error &)
         {
             throwError("LoadFileError", tr("Cannot load the file"));
             return thisObject();
@@ -74,7 +74,7 @@ namespace Code
         {
             boost::property_tree::ini_parser::write_ini(filenameByteArray.constData(), mTree);
         }
-        catch(const std::runtime_error &e)
+        catch(const std::runtime_error &)
         {
             throwError("SaveFileError", tr("Cannot save the file"));
             return thisObject();

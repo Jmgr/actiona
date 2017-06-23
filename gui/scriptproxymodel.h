@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTPROXYMODEL_HPP
-#define SCRIPTPROXYMODEL_HPP
+#pragma once
 
 #include <QSortFilterProxyModel>
 
@@ -53,4 +52,3 @@ private:
     FilteringCriterion mFilteringCriterion;
 };
 
-#endif // SCRIPTPROXYMODEL_HPP

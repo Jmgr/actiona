@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEINITIALIZER_H
-#define CODEINITIALIZER_H
+#pragma once
 
 #include "executer_global.h"
 
@@ -44,4 +43,3 @@ namespace LibExecuter
 	};
 }
 
-#endif // CODEINITIALIZER_H

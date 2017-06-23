@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef NEWACTIONPROXYMODEL_HPP
-#define NEWACTIONPROXYMODEL_HPP
+#pragma once
 
 #include <QSortFilterProxyModel>
 
@@ -38,5 +37,3 @@ protected:
 private:
     QString mFilterString;
 };
-
-#endif // NEWACTIONPROXYMODEL_HPP

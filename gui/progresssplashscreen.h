@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PROGRESSSPLASHSCREEN_H
-#define PROGRESSSPLASHSCREEN_H
+#pragma once
 
 #include <QSplashScreen>
 
@@ -55,4 +54,3 @@ private:
 	QTimer *mOpacityTimer;
 };
 
-#endif // PROGRESSSPLASHSCREEN_H

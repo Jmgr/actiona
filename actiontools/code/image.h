@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef IMAGE_H
-#define IMAGE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "qtimagefilters/QtImageFilter"
@@ -149,4 +148,3 @@ namespace Code
 	};
 }
 
-#endif // IMAGE_H

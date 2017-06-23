@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NEWACTIONTREEWIDGET_H
-#define NEWACTIONTREEWIDGET_H
+#pragma once
 
 #include <QTreeWidget>
 
@@ -43,4 +42,3 @@ private:
 	Q_DISABLE_COPY(NewActionTreeWidget)
 };
 
-#endif // NEWACTIONTREEWIDGET_H

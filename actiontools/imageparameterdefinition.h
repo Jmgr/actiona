@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef IMAGEPARAMETERDEFINITION_H
-#define IMAGEPARAMETERDEFINITION_H
+#pragma once
 
 #include "fileparameterdefinition.h"
 #include "actiontools_global.h"
@@ -46,4 +45,3 @@ namespace ActionTools
     };
 }
 
-#endif // IMAGEPARAMETERDEFINITION_H

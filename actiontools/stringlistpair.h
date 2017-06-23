@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef STRINGLISTPAIR_H
-#define STRINGLISTPAIR_H
+#pragma once
 
 #include <QPair>
 #include <QStringList>
@@ -32,4 +31,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::StringListPair)
 
-#endif // STRINGLISTPAIR_H

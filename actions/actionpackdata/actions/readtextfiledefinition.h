@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READTEXTFILEDEFINITION_H
-#define READTEXTFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readtextfileinstance.h"
@@ -96,4 +95,3 @@ namespace Actions
 	};
 }
 
-#endif // READTEXTFILEDEFINITION_H

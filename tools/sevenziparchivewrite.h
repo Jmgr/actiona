@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SEVENZIPARCHIVEWRITE_H
-#define SEVENZIPARCHIVEWRITE_H
+#pragma once
 
 #include "tools_global.h"
 
@@ -40,4 +39,3 @@ namespace Tools
 	};
 }
 
-#endif // SEVENZIPARCHIVEWRITE_H

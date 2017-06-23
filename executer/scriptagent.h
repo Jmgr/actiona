@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTAGENT_H
-#define SCRIPTAGENT_H
+#pragma once
 
 #include "executer_global.h"
 
@@ -95,4 +94,3 @@ namespace LibExecuter
 	};
 }
 
-#endif // SCRIPTAGENT_H

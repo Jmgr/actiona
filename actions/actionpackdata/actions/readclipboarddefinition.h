@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READCLIPBOARDDEFINITION_H
-#define READCLIPBOARDDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readclipboardinstance.h"
@@ -60,4 +59,3 @@ namespace Actions
 	};
 }
 
-#endif // READCLIPBOARDDEFINITION_H

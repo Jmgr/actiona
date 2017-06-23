@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWEDIT_H
-#define WINDOWEDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -67,4 +66,3 @@ namespace ActionTools
 	};
 }
 
-#endif // WINDOWEDIT_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CLIPBOARD_H
-#define CLIPBOARD_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -73,4 +72,3 @@ namespace Code
 	};
 }
 
-#endif // CLIPBOARD_H

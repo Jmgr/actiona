@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CHANGELOGDIALOG_H
-#define CHANGELOGDIALOG_H
+#pragma once
 
 #include "version.h"
 
@@ -62,4 +61,3 @@ private:
 	ChangelogAction mChangelogAction;
 };
 
-#endif // CHANGELOGDIALOG_H

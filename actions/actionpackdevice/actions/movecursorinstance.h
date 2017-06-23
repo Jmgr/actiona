@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MOVECURSORINSTANCE_H
-#define MOVECURSORINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../mousedevice.h"
@@ -62,4 +61,3 @@ namespace Actions
 	};
 }
 
-#endif // MOVECURSORINSTANCE_H

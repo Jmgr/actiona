@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef FINDIMAGEINSTANCE_H
-#define FINDIMAGEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "matchingpointlist.h"
@@ -98,4 +97,3 @@ namespace Actions
 	};
 }
 
-#endif // FINDIMAGEINSTANCE_H

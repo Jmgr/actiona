@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PAUSEINSTANCE_H
-#define PAUSEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -119,4 +118,3 @@ namespace Actions
 	};
 }
 
-#endif // PAUSEINSTANCE_H

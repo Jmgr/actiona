@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READCLIPBOARDINSTANCE_H
-#define READCLIPBOARDINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -58,4 +57,3 @@ namespace Actions
 	};
 }
 
-#endif // READCLIPBOARDINSTANCE_H

@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCETYPEDELEGATE_H
-#define RESOURCETYPEDELEGATE_H
+#pragma once
 
 #include <QStyledItemDelegate>
 
@@ -35,4 +34,3 @@ public:
     virtual void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 };
 
-#endif // RESOURCETYPEDELEGATE_H

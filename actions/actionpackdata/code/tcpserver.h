@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TCPSERVER_H
-#define TCPSERVER_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -63,4 +62,3 @@ namespace Code
 	};
 }
 
-#endif // TCPSERVER_H

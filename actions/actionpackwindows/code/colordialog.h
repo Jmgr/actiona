@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COLORDIALOG_H
-#define COLORDIALOG_H
+#pragma once
 
 #include "basewindow.h"
 
@@ -73,4 +72,3 @@ namespace Code
 	};
 }
 
-#endif // COLORDIALOG_H
