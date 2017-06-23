@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef HELPBUTTON_H
-#define HELPBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -44,4 +43,3 @@ namespace ActionTools
 	};
 }
 
-#endif // HELPBUTTON_H

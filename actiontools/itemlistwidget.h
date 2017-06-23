@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ITEMLISTWIDGET_H
-#define ITEMLISTWIDGET_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -69,4 +68,3 @@ namespace ActionTools
 	};
 }
 
-#endif // ITEMLISTWIDGET_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODESPINBOX_H
-#define CODESPINBOX_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -66,4 +65,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CODESPINBOX_H

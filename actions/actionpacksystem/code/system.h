@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEM_H
-#define SYSTEM_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -132,4 +131,3 @@ namespace Code
 	};
 }
 
-#endif // SYSTEM_H

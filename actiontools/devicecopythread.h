@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DEVICECOPYTHREAD_H
-#define DEVICECOPYTHREAD_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -50,4 +49,3 @@ namespace ActionTools
 	};
 }
 
-#endif // DEVICECOPYTHREAD_H

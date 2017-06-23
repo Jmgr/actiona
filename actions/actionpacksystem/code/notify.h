@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOTIFY_H
-#define NOTIFY_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -56,4 +55,3 @@ namespace Code
 	};
 }
 
-#endif // NOTIFY_H

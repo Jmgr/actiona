@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SENDMAILDEFINITION_H
-#define SENDMAILDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "sendmailinstance.h"
@@ -132,4 +131,3 @@ namespace Actions
 	};
 }
 
-#endif // SENDMAILDEFINITION_H

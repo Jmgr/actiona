@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DELETEACTIONLABEL_H
-#define DELETEACTIONLABEL_H
+#pragma once
 
 #include <QPushButton>
 
@@ -40,4 +39,3 @@ private:
 	Q_DISABLE_COPY(DeleteActionPushButton)
 };
 
-#endif // DELETEACTIONLABEL_H

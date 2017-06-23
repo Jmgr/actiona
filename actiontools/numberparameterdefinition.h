@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NUMBERPARAMETERDEFINITION_H
-#define NUMBERPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -59,4 +58,3 @@ namespace ActionTools
 	};
 }
 
-#endif // NUMBERPARAMETERDEFINITION_H

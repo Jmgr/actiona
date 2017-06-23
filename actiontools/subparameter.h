@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SUBPARAMETERDATA_H
-#define SUBPARAMETERDATA_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -70,4 +69,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::SubParameter)
 
-#endif // SUBPARAMETERDATA_H

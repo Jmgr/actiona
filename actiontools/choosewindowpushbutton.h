@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CHOOSEWINDOWPUSHBUTTON_H
-#define CHOOSEWINDOWPUSHBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "windowhandle.h"
@@ -84,4 +83,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CHOOSEWINDOWPUSHBUTTON_H

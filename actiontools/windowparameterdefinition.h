@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWPARAMETERDEFINITION_H
-#define WINDOWPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -47,4 +46,3 @@ namespace ActionTools
 	};
 }
 
-#endif // WINDOWPARAMETERDEFINITION_H

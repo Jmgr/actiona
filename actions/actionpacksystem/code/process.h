@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PROCESS_H
-#define PROCESS_H
+#pragma once
 
 #include <QObject>
 #include <QScriptValue>
@@ -172,4 +171,3 @@ namespace Code
 	};
 }
 
-#endif // PROCESS_H

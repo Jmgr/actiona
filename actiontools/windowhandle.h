@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWHANDLE_H
-#define WINDOWHANDLE_H
+#pragma once
 
 #include <QWidget>
 #include <QMetaType>
@@ -70,4 +69,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::WindowHandle)
 
-#endif // WINDOWHANDLE_H

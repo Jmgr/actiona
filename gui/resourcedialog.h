@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCEDIALOG_H
-#define RESOURCEDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -67,4 +66,3 @@ private:
     ActionTools::Script *mScript;
 };
 
-#endif // RESOURCEDIALOG_H

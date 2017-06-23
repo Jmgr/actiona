@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef VARIABLEDEFINITION_H
-#define VARIABLEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "variableinstance.h"
@@ -113,4 +112,3 @@ namespace Actions
 	};
 }
 
-#endif // VARIABLEDEFINITION_H

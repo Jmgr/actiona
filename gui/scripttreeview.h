@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTTREEVIEW_H
-#define SCRIPTTREEVIEW_H
+#pragma once
 
 #include <QTreeView>
 
@@ -41,4 +40,3 @@ private:
 	QRect mDropIndicator;
 };
 
-#endif // SCRIPTTREEVIEW_H

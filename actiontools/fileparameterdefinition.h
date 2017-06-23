@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef FILEPARAMETERDEFINITION_H
-#define FILEPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -57,4 +56,3 @@ namespace ActionTools
 	};
 }
 
-#endif // FILEPARAMETERDEFINITION_H

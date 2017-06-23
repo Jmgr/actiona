@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEDEFINITION_H
-#define CODEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "codeinstance.h"
@@ -60,4 +59,3 @@ namespace Actions
 	};
 }
 
-#endif // CODEDEFINITION_H

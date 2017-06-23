@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SQL_H
-#define SQL_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -85,4 +84,3 @@ namespace Code
 	};
 }
 
-#endif // SQL_H

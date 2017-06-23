@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NAME_H
-#define NAME_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -69,4 +68,3 @@ namespace ActionTools
 	};
 }
 
-#endif // NAME_H

@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -85,4 +84,3 @@ namespace ActionTools
     }
 }
 
-#endif // RESOURCE_H

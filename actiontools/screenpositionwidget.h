@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCREENPOSITIONWIDGET_H
-#define SCREENPOSITIONWIDGET_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -53,4 +52,3 @@ namespace ActionTools
 	};
 }
 
-#endif // SCREENPOSITIONWIDGET_H

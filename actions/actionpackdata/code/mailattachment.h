@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef MAILATTACHMENT_H
-#define MAILATTACHMENT_H
+#pragma once
 
 #include "code/codeclass.h"
 #include "qxtsmtp/qxtmailattachment.h"
@@ -67,4 +66,3 @@ namespace Code
     };
 }
 
-#endif // MAILATTACHMENT_H

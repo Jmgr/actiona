@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef BOOLEANEDIT_H
-#define BOOLEANEDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "abstractcodeeditor.h"
@@ -61,4 +60,3 @@ namespace ActionTools
 	};
 }
 
-#endif // BOOLEANEDIT_H

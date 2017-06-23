@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACKWINDOWS_H
-#define ACTIONPACKWINDOWS_H
+#pragma once
 
 #include "actionpack.h"
 #include "actions/messageboxdefinition.h"
@@ -76,4 +75,3 @@ private:
 	Q_DISABLE_COPY(ActionPackWindows)
 };
 
-#endif // ACTIONPACKWINDOWS_H

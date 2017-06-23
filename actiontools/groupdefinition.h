@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef GROUPDEFINITION_H
-#define GROUPDEFINITION_H
+#pragma once
 
 #include "elementdefinition.h"
 #include "parameterdefinition.h"
@@ -67,4 +66,3 @@ namespace ActionTools
 	};
 }
 
-#endif // GROUPDEFINITION_H

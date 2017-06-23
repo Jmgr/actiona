@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CALLPROCEDUREINSTANCE_H
-#define CALLPROCEDUREINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "actiondefinition.h"
@@ -55,4 +54,3 @@ namespace Actions
 	};
 }
 
-#endif // CALLPROCEDUREINSTANCE_H

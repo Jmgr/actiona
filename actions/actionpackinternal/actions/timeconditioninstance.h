@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TIMECONDITIONINSTANCE_H
-#define TIMECONDITIONINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "ifactionvalue.h"
@@ -127,4 +126,3 @@ namespace Actions
 	};
 }
 
-#endif // TIMECONDITIONINSTANCE_H

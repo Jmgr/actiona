@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTCOMPLETER_H
-#define SCRIPTCOMPLETER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -42,4 +41,3 @@ namespace ActionTools
 	};
 }
 
-#endif // SCRIPTCOMPLETER_H

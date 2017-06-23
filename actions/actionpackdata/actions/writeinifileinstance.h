@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITEINIFILEINSTANCE_H
-#define WRITEINIFILEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -108,4 +107,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITEINIFILEINSTANCE_H

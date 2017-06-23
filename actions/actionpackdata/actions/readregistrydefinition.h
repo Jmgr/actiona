@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READREGISTRYDEFINITION_H
-#define READREGISTRYDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readregistryinstance.h"
@@ -79,4 +78,3 @@ namespace Actions
 	};
 }
 
-#endif // READREGISTRYDEFINITION_H

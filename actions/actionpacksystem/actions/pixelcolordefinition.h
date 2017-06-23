@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PIXELCOLORDEFINITION_H
-#define PIXELCOLORDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "pixelcolorinstance.h"
@@ -111,4 +110,3 @@ namespace Actions
 	};
 }
 
-#endif // PIXELCOLORDEFINITION_H

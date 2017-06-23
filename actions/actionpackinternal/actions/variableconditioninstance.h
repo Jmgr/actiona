@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef VARIABLECONDITIONINSTANCE_H
-#define VARIABLECONDITIONINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "ifactionvalue.h"
@@ -168,4 +167,3 @@ namespace Actions
 	};
 }
 
-#endif // VARIABLECONDITIONINSTANCE_H

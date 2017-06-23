@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NEWACTIONDIALOG_H
-#define NEWACTIONDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -66,4 +65,3 @@ private:
     NewActionProxyModel *mNewActionProxyModel;
 };
 
-#endif // NEWACTIONDIALOG_H

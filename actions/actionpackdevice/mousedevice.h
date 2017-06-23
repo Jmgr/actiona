@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MOUSEDEVICE_H
-#define MOUSEDEVICE_H
+#pragma once
 
 #include <QPoint>
 #include <QObject>
@@ -65,4 +64,3 @@ private:
 	bool mPressedButtons[ButtonCount];
 };
 
-#endif // MOUSEDEVICE_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEINSTANCE_H
-#define CODEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -50,4 +49,3 @@ namespace Actions
 	};
 }
 
-#endif // CODEINSTANCE_H

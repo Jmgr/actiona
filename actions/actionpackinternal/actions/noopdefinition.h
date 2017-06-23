@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOOPDEFINITION_H
-#define NOOPDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "noopinstance.h"
@@ -55,4 +54,3 @@ namespace Actions
 	};
 }
 
-#endif // NOOPDEFINITION_H

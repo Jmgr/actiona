@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WEBDOWNLOADINSTANCE_H
-#define WEBDOWNLOADINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -76,4 +75,3 @@ namespace Actions
 	};
 }
 
-#endif // WEBDOWNLOADINSTANCE_H

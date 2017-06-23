@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONDEFINITIONENUMS_H
-#define ACTIONDEFINITIONENUMS_H
+#pragma once
 
 namespace ActionTools
 {
@@ -53,4 +52,3 @@ namespace ActionTools
 	};
 }
 
-#endif // ACTIONDEFINITIONENUMS_H

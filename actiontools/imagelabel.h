@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef IMAGELABEL_H
-#define IMAGELABEL_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -46,4 +45,3 @@ namespace ActionTools
     };
 }
 
-#endif // IMAGELABEL_H

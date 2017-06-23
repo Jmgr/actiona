@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYPARAMETERDEFINITION_H
-#define KEYPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -50,4 +49,3 @@ namespace ActionTools
 	};
 }
 
-#endif // KEYPARAMETERDEFINITION_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MULTIDATAINPUTDEFINITION_H
-#define MULTIDATAINPUTDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "multidatainputinstance.h"
@@ -111,4 +110,3 @@ namespace Actions
 	};
 }
 
-#endif // MULTIDATAINPUTDEFINITION_H

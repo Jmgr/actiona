@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTSETTINGSDIALOG_H
-#define SCRIPTSETTINGSDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -46,4 +45,3 @@ private:
     Ui::ScriptSettingsDialog *ui;
 };
 
-#endif // SCRIPTSETTINGSDIALOG_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef VARIABLEINSTANCE_H
-#define VARIABLEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -116,4 +115,3 @@ namespace Actions
 	};
 }
 
-#endif // VARIABLEINSTANCE_H

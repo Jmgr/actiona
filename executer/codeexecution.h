@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEEXECUTION_H
-#define CODEEXECUTION_H
+#pragma once
 
 #include "executer_global.h"
 
@@ -50,4 +49,3 @@ namespace LibExecuter
 	};
 }
 
-#endif // CODEEXECUTION_H

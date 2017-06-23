@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef TARGETWINDOW_H
-#define TARGETWINDOW_H
+#pragma once
 
 #include <QWidget>
 #include <QTimer>
@@ -77,4 +76,3 @@ namespace ActionTools
     };
 }
 
-#endif // TARGETWINDOW_H

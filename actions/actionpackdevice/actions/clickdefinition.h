@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CLICKDEFINITION_H
-#define CLICKDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "clickinstance.h"
@@ -101,4 +100,3 @@ namespace Actions
 	};
 }
 
-#endif // CLICKDEFINITION_H

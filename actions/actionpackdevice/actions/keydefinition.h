@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYDEFINITION_H
-#define KEYDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "keyinstance.h"
@@ -129,4 +128,3 @@ namespace Actions
 	};
 }
 
-#endif // KEYDEFINITION_H

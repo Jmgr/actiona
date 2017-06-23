@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYINPUT_H
-#define KEYINPUT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "stringlistpair.h"
@@ -88,4 +87,3 @@ namespace ActionTools
 	};
 }
 
-#endif // KEYINPUT_H

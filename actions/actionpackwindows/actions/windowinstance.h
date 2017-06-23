@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWINSTANCE_H
-#define WINDOWINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -59,4 +58,3 @@ namespace Actions
 	};
 }
 
-#endif // WINDOWINSTANCE_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WHEELINSTANCE_H
-#define WHEELINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../mousedevice.h"
@@ -69,4 +68,3 @@ namespace Actions
 	};
 }
 
-#endif // WHEELINSTANCE_H

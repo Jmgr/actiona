@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef LANGUAGES_H
-#define LANGUAGES_H
+#pragma once
 
 #include "tools_global.h"
 
@@ -36,4 +35,3 @@ namespace Tools
     int TOOLSSHARED_EXPORT languageNameToIndex(const QString &languageName);
 }
 
-#endif // LANGUAGES_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEEDIT_H
-#define CODEEDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -82,4 +81,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CODEEDIT_H

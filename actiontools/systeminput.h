@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINPUT_H
-#define SYSTEMINPUT_H
+#pragma once
 
 #include <QMetaType>
 
@@ -48,4 +47,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::SystemInput::Button)
 
-#endif // SYSTEMINPUT_H

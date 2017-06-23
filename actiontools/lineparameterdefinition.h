@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LINEPARAMETERDEFINITION_H
-#define LINEPARAMETERDEFINITION_H
+#pragma once
 
 #include "listparameterdefinition.h"
 #include "actiontools_global.h"
@@ -39,4 +38,3 @@ namespace ActionTools
 	};
 }
 
-#endif // LINEPARAMETERDEFINITION_H

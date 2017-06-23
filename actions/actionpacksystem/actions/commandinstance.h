@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COMMANDINSTANCE_H
-#define COMMANDINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -152,4 +151,3 @@ namespace Actions
 	};
 }
 
-#endif // COMMANDINSTANCE_H

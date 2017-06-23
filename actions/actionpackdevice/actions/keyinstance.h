@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYINSTANCE_H
-#define KEYINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../keyboarddevice.h"
@@ -81,4 +80,3 @@ namespace Actions
 	};
 }
 
-#endif // KEYINSTANCE_H

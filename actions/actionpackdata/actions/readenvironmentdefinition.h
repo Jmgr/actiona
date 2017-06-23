@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READENVIRONMENTDEFINITION_H
-#define READENVIRONMENTDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readenvironmentinstance.h"
@@ -80,4 +79,3 @@ namespace Actions
 	};
 }
 
-#endif // READENVIRONMENTDEFINITION_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MESSAGEBOXINSTANCE_H
-#define MESSAGEBOXINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "ifactionvalue.h"
@@ -89,4 +88,3 @@ namespace Actions
 	};
 }
 
-#endif // MESSAGEBOXINSTANCE

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KILLPROCESSINSTANCE_H
-#define KILLPROCESSINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -65,4 +64,3 @@ namespace Actions
 	};
 }
 
-#endif // KILLPROCESSINSTANCE_H

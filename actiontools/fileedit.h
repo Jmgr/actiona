@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef FILEEDIT_H
-#define FILEEDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -87,4 +86,3 @@ namespace ActionTools
 	};
 }
 
-#endif // FILEEDIT_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXECUTER_GLOBAL_H
-#define EXECUTER_GLOBAL_H
+#pragma once
 
 #include <QtGlobal>
 
@@ -29,4 +28,3 @@
 #  define EXECUTERSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // EXECUTER_GLOBAL_H

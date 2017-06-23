@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef POINTLISTWIDGET_H
-#define POINTLISTWIDGET_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -68,4 +67,3 @@ namespace ActionTools
 	};
 }
 
-#endif // POINTLISTWIDGET_H

@@ -62,8 +62,7 @@
   Original files: http://opencv.willowgarage.com/wiki/FastMatchTemplate
 */
 
-#ifndef OPENCVALGORITHMS_H
-#define OPENCVALGORITHMS_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "matchingpointlist.h"
@@ -181,4 +180,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::MatchingPointList)
 
-#endif // OPENCVALGORITHMS_H

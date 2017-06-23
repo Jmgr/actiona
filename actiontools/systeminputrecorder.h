@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINPUTRECORDER_H
-#define SYSTEMINPUTRECORDER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -41,4 +40,3 @@ namespace ActionTools
 	}
 }
 
-#endif // SYSTEMINPUTRECORDER_H

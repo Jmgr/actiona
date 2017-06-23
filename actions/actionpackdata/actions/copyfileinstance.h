@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COPYFILEINSTANCE_H
-#define COPYFILEINSTANCE_H
+#pragma once
 
 #include "datacopyactioninstance.h"
 
@@ -85,4 +84,3 @@ namespace Actions
 	};
 }
 
-#endif // COPYFILEINSTANCE_H

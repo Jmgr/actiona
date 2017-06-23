@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODECOMBOBOX_H
-#define CODECOMBOBOX_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -75,4 +74,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CODECOMBOBOX_H

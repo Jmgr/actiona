@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTEXECUTER_H
-#define SCRIPTEXECUTER_H
+#pragma once
 
 #include "executer.h"
 
@@ -51,4 +50,3 @@ private:
 	LibExecuter::Executer *mExecuter;
 };
 
-#endif // SCRIPTEXECUTER_H

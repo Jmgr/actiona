@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOW_H
-#define WINDOW_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "windowhandle.h"
@@ -92,4 +91,3 @@ namespace Code
 	};
 }
 
-#endif // WINDOW_H

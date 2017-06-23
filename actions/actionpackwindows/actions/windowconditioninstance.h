@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWCONDITIONINSTANCE_H
-#define WINDOWCONDITIONINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -72,4 +71,3 @@ namespace Actions
 	};
 }
 
-#endif // WINDOWCONDITIONINSTANCE_H

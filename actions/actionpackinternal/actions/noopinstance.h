@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOOPINSTANCE_H
-#define NOOPINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -43,4 +42,3 @@ namespace Actions
 	};
 }
 
-#endif // NOOPINSTANCE_H

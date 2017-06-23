@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMSESSION_H
-#define SYSTEMSESSION_H
+#pragma once
 
 #include <QObject>
 
@@ -63,4 +62,3 @@ private:
 	Q_DISABLE_COPY(SystemSession)
 };
 
-#endif // SYSTEMSESSION_H

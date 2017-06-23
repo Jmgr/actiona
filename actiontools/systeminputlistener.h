@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINPUTLISTENER_H
-#define SYSTEMINPUTLISTENER_H
+#pragma once
 
 #include "systeminput.h"
 #include "actiontools_global.h"
@@ -44,4 +43,3 @@ namespace ActionTools
 	}
 }
 
-#endif // SYSTEMINPUTLISTENER_H

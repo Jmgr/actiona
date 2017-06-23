@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ALGORITHMS_H
-#define ALGORITHMS_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "codeclass.h"
@@ -57,4 +56,3 @@ namespace Code
 	};
 }
 
-#endif // ALGORITHMS_H

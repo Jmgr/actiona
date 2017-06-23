@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DATAINPUTINSTANCE_H
-#define DATAINPUTINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -69,4 +68,3 @@ namespace Actions
 	};
 }
 
-#endif // DATAINPUTINSTANCE_H

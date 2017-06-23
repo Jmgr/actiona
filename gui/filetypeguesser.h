@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef FILETYPEGUESSER_H
-#define FILETYPEGUESSER_H
+#pragma once
 
 #include "resource.h"
 
@@ -35,4 +34,3 @@ private:
     FiletypeGuesser() {}
 };
 
-#endif // FILETYPEGUESSER_H

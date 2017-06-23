@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READTEXTFILEINSTANCE_H
-#define READTEXTFILEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -54,4 +53,3 @@ namespace Actions
 	};
 }
 
-#endif // READTEXTFILEINSTANCE_H

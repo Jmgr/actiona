@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TEXTDEFINITION_H
-#define TEXTDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "textinstance.h"
@@ -81,4 +80,3 @@ namespace Actions
 	};
 }
 
-#endif // TEXTDEFINITION_H

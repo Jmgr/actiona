@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LINENUMBERAREA_H
-#define LINENUMBERAREA_H
+#pragma once
 
 #include <QWidget>
 
@@ -54,4 +53,3 @@ namespace ActionTools
 	};
 }
 
-#endif // LINENUMBERAREA_H

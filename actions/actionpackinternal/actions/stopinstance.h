@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef STOPINSTANCE_H
-#define STOPINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "scriptagent.h"
@@ -49,4 +48,3 @@ namespace Actions
 	};
 }
 
-#endif // STOPINSTANCE_H

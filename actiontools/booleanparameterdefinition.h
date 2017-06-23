@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef BOOLEANPARAMETERDEFINITION_H
-#define BOOLEANPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -45,4 +44,3 @@ namespace ActionTools
 	};
 }
 
-#endif // BOOLEANPARAMETERDEFINITION_H

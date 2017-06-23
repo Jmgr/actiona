@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITETEXTFILEDEFINITION_H
-#define WRITETEXTFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "writetextfileinstance.h"
@@ -76,4 +75,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITETEXTFILEDEFINITION_H

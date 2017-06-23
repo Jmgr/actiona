@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef INPUTDIALOG_H
-#define INPUTDIALOG_H
+#pragma once
 
 #include "basewindow.h"
 
@@ -106,4 +105,3 @@ namespace Code
 	};
 }
 
-#endif // INPUTDIALOG_H

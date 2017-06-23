@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#pragma once
 
 #include <QDialog>
 #include <QButtonGroup>
@@ -70,6 +69,4 @@ private:
 
 	Q_DISABLE_COPY(SettingsDialog)
 };
-
-#endif // SETTINGSDIALOG_H
 

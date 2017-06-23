@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SETTINGSKEYEDIT_H
-#define SETTINGSKEYEDIT_H
+#pragma once
 
 #include <QLineEdit>
 
@@ -42,4 +41,3 @@ private:
 	Q_DISABLE_COPY(SettingsKeyEdit)
 };
 
-#endif // SETTINGSKEYEDIT_H

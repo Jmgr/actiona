@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MEDIAPLAYLIST_H
-#define MEDIAPLAYLIST_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -110,4 +109,3 @@ namespace Code
 	};
 }
 
-#endif // MEDIAPLAYLIST_H

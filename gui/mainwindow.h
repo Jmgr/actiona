@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include "script.h"
 #include "executer.h"
@@ -265,4 +264,3 @@ private:
 	Q_DISABLE_COPY(MainWindow)
 };
 
-#endif // MAINWINDOW_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEACTIONA_H
-#define CODEACTIONA_H
+#pragma once
 
 #include "executer_global.h"
 #include "version.h"
@@ -54,4 +53,3 @@ namespace LibExecuter
 	};
 }
 
-#endif // CODEACTIONA_H

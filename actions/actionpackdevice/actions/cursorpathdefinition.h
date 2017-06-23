@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CURSORPATHDEFINITION_H
-#define CURSORPATHDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "cursorpathinstance.h"
@@ -75,4 +74,3 @@ namespace Actions
 	};
 }
 
-#endif // CURSORPATHDEFINITION_H

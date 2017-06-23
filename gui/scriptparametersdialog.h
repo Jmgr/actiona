@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTPARAMETERSDIALOG_H
-#define SCRIPTPARAMETERSDIALOG_H
+#pragma once
 
 #include "scriptparameter.h"
 #include "parametercontainer.h"
@@ -78,4 +77,3 @@ private:
 	Q_DISABLE_COPY(ScriptParametersDialog)
 };
 
-#endif // SCRIPTPARAMETERSDIALOG_H

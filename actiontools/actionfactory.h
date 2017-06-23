@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONFACTORY_H
-#define ACTIONFACTORY_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "actiondefinitionenums.h"
@@ -62,4 +61,3 @@ namespace ActionTools
 	};
 }
 
-#endif // ACTIONFACTORY_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITECLIPBOARDDEFINITION_H
-#define WRITECLIPBOARDDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "writeclipboardinstance.h"
@@ -60,4 +59,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITECLIPBOARDDEFINITION_H

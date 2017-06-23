@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef OPENURLINSTANCE_H
-#define OPENURLINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -77,4 +76,3 @@ namespace Actions
 	};
 }
 
-#endif // OPENURLINSTANCE_H

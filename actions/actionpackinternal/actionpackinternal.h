@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACKINTERNAL_H
-#define ACTIONPACKINTERNAL_H
+#pragma once
 
 #include "actionpack.h"
 #include "actions/pausedefinition.h"
@@ -79,4 +78,3 @@ private:
 	Q_DISABLE_COPY(ActionPackInternal)
 };
 
-#endif // ACTIONPACKINTERNAL_H

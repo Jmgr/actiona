@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READINIFILEDEFINITION_H
-#define READINIFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readinifileinstance.h"
@@ -95,4 +94,3 @@ namespace Actions
 	};
 }
 
-#endif // READINIFILEDEFINITION_H

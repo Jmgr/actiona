@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WHEELDEFINITION_H
-#define WHEELDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "wheelinstance.h"
@@ -66,4 +65,3 @@ namespace Actions
 	};
 }
 
-#endif // WHEELDEFINITION_H

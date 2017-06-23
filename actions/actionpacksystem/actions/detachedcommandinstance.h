@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DETACHEDCOMMANDINSTANCE_H
-#define DETACHEDCOMMANDINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -77,4 +76,3 @@ namespace Actions
 	};
 }
 
-#endif // DETACHEDCOMMANDINSTANCE_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITEREGISTRYINSTANCE_H
-#define WRITEREGISTRYINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -48,4 +47,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITEREGISTRYINSTANCE_H

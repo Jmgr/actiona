@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWDEFINITION_H
-#define WINDOWDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "windowinstance.h"
@@ -110,4 +109,3 @@ namespace Actions
 	};
 }
 
-#endif // WINDOWDEFINITION_H

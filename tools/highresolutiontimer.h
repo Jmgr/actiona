@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef HIGHRESOLUTIONTIMER_H
-#define HIGHRESOLUTIONTIMER_H
+#pragma once
 
 #include "tools_global.h"
 
@@ -63,4 +62,3 @@ namespace Tools
 	};
 }
 
-#endif // HIGHRESOLUTIONTIMER_H

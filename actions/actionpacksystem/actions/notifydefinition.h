@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOTIFYDEFINITION_H
-#define NOTIFYDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "notifyinstance.h"
@@ -81,4 +80,3 @@ namespace Actions
 	};
 }
 
-#endif // NOTIFYDEFINITION_H

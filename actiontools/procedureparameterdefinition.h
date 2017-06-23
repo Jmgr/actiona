@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PROCEDUREPARAMETERDEFINITION_H
-#define PROCEDUREPARAMETERDEFINITION_H
+#pragma once
 
 #include "listparameterdefinition.h"
 #include "actiontools_global.h"
@@ -39,4 +38,3 @@ namespace ActionTools
 	};
 }
 
-#endif // PROCEDUREPARAMETERDEFINITION_H

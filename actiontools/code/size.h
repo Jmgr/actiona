@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SIZE_H
-#define SIZE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "code/codeclass.h"
@@ -71,4 +70,3 @@ namespace Code
 	};
 }
 
-#endif // SIZE_H

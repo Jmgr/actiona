@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MATCHINGPOINTLIST_H
-#define MATCHINGPOINTLIST_H
+#pragma once
 
 #include <QPair>
 #include <QPoint>
@@ -44,4 +43,3 @@ namespace ActionTools
     using MatchingPointList = QList<MatchingPoint>;
 }
 
-#endif // MATCHINGPOINTLIST_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LIB_EXECUTER_H
-#define LIB_EXECUTER_H
+#pragma once
 
 #include "executer_global.h"
 #include "consolewidget.h"
@@ -172,4 +171,3 @@ namespace LibExecuter
 	};
 }
 
-#endif // LIB_EXECUTER_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef GOTODEFINITION_H
-#define GOTODEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "gotoinstance.h"
@@ -59,4 +58,3 @@ namespace Actions
 	};
 }
 
-#endif // GOTODEFINITION_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LINECOMBOBOX_H
-#define LINECOMBOBOX_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "codecombobox.h"
@@ -40,4 +39,3 @@ namespace ActionTools
 	};
 }
 
-#endif // LINECOMBOBOX_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CROSSPLATFORM_H
-#define CROSSPLATFORM_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -71,4 +70,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CROSSPLATFORM_H

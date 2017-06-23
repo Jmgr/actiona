@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINPUTTASK_H
-#define SYSTEMINPUTTASK_H
+#pragma once
 
 #include <QObject>
 
@@ -80,4 +79,3 @@ namespace ActionTools
 	}
 }
 
-#endif // SYSTEMINPUTTASK_H

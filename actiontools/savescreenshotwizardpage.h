@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef SAVESCREENSHOTWIZARDPAGE_H
-#define SAVESCREENSHOTWIZARDPAGE_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -60,4 +59,3 @@ namespace ActionTools
     };
 }
 
-#endif // SAVESCREENSHOTWIZARDPAGE_H

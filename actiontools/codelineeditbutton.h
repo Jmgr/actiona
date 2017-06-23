@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef CODELINEEDITBUTTON_H
-#define CODELINEEDITBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -36,4 +35,3 @@ namespace ActionTools
     };
 }
 
-#endif // CODELINEEDITBUTTON_H

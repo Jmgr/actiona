@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef SCREENSHOTPUSHBUTTON_H
-#define SCREENSHOTPUSHBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -39,4 +38,3 @@ namespace ActionTools
     };
 }
 
-#endif // SCREENSHOTPUSHBUTTON_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODECLASS_H
-#define CODECLASS_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -81,4 +80,3 @@ namespace Code
 	};
 }
 
-#endif // CODECLASS_H

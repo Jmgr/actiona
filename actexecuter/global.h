@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#pragma once
 
 #include "version.h"
 
@@ -30,4 +29,3 @@ namespace Global
     const QString			CONNECTIVITY_URL =	"http://actiona.tools/";
 }
 
-#endif // GLOBAL_H

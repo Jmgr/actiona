@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONINSTANCEBUFFER_H
-#define ACTIONINSTANCEBUFFER_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "actioninstance.h"
@@ -83,4 +82,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::ActionInstanceBuffer)
 
-#endif // ACTIONINSTANCEBUFFER_H

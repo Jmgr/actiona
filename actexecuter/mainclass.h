@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MAINCLASS_H
-#define MAINCLASS_H
+#pragma once
 
 #include "version.h"
 
@@ -60,4 +59,3 @@ private:
 	QUrl mUrl;
 };
 
-#endif // MAINCLASS_H

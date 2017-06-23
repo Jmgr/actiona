@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -47,4 +46,3 @@ private:
 	Q_DISABLE_COPY(AboutDialog)
 };
 
-#endif // ABOUTDIALOG_H

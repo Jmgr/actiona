@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DATAINPUTDEFINITION_H
-#define DATAINPUTDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "datainputinstance.h"
@@ -97,4 +96,3 @@ namespace Actions
 	};
 }
 
-#endif // DATAINPUTDEFINITION_H

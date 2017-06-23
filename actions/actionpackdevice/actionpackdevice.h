@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACKDEVICE_H
-#define ACTIONPACKDEVICE_H
+#pragma once
 
 #include "actionpack.h"
 #include "actions/textdefinition.h"
@@ -72,4 +71,3 @@ private:
 	Q_DISABLE_COPY(ActionPackDevice)
 };
 
-#endif // ACTIONPACKDEVICE_H

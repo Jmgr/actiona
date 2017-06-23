@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CONSOLEDEFINITION_H
-#define CONSOLEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "consoleinstance.h"
@@ -68,4 +67,3 @@ namespace Actions
 	};
 }
 
-#endif // CONSOLEDEFINITION_H

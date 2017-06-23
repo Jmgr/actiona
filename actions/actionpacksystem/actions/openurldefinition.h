@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef OPENURLDEFINITION_H
-#define OPENURLDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "openurlinstance.h"
@@ -61,4 +60,3 @@ namespace Actions
 	};
 }
 
-#endif // OPENURLDEFINITION_H

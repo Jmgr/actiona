@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef UPDATER_H
-#define UPDATER_H
+#pragma once
 
 #include "tools_global.h"
 #include "version.h"
@@ -94,4 +93,3 @@ namespace Tools
 	};
 }
 
-#endif // UPDATER_H

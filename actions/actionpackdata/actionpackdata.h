@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACKDATA_H
-#define ACTIONPACKDATA_H
+#pragma once
 
 #include "actionpack.h"
 #include "actions/writetextfiledefinition.h"
@@ -110,4 +109,3 @@ private:
 	Q_DISABLE_COPY(ActionPackData)
 };
 
-#endif // ACTIONPACKDATA_H

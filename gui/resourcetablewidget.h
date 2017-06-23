@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCETABLEWIDGET_H
-#define RESOURCETABLEWIDGET_H
+#pragma once
 
 #include <QTableWidget>
 
@@ -44,4 +43,3 @@ signals:
     void removeSelection();
 };
 
-#endif // RESOURCETABLEWIDGET_H

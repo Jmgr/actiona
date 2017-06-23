@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SWITCHTEXTMODEPUSHBUTTON_H
-#define SWITCHTEXTMODEPUSHBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -39,4 +38,3 @@ namespace ActionTools
 	};
 }
 
-#endif // SWITCHTEXTMODEPUSHBUTTON_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COLORPARAMETERDEFINITION_H
-#define COLORPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -46,4 +45,3 @@ namespace ActionTools
 	};
 }
 
-#endif // COLORPARAMETERDEFINITION_H

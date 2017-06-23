@@ -21,8 +21,7 @@
 // Copyright (C) 2010 Ariya Hidayat <ariya.hidayat@gmail.com>
 // Licensed under GNU/GPLv3
 
-#ifndef CODEHIGHLIGHTER_H
-#define CODEHIGHLIGHTER_H
+#pragma once
 
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
@@ -70,4 +69,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CODEHIGHLIGHTER_H

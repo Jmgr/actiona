@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef FINDIMAGEDEFINITION_H
-#define FINDIMAGEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "findimageinstance.h"
@@ -174,4 +173,3 @@ namespace Actions
     };
 }
 
-#endif // FINDIMAGEDEFINITION_H
