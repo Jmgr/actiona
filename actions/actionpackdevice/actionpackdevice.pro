@@ -2,12 +2,9 @@ include(../common_actions.pri)
 include(actions/actions.pri)
 include(code/code.pri)
 TARGET = ActionPackDevice
-QT += script
-equals(QT_MAJOR_VERSION, 5) {
+QT += script widgets
 unix:QT += x11extras
-QT += widgets
 OTHER_FILES += device.json
-}
 HEADERS += actionpackdevice.h \
     mousedevice.h \
     keyboarddevice.h

@@ -3,11 +3,9 @@ unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIB
 QT += xml \
 	network \
 	script \
-	scripttools
-equals(QT_MAJOR_VERSION, 5) {
+        scripttools \
+        widgets
 unix:QT += x11extras
-QT += widgets
-}
 CONFIG += mobility
 contains(DEFINES, ACT_PROFILE) {
 CONFIG += console

@@ -1,8 +1,5 @@
 include(../common.pri)
-QT += network
-equals(QT_MAJOR_VERSION, 5) {
-QT += widgets
-}
+QT += network widgets
 TEMPLATE = lib
 CONFIG += dll
 DEFINES += TOOLS_LIBRARY

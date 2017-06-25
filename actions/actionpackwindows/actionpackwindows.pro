@@ -2,11 +2,8 @@ include(../common_actions.pri)
 include(actions/actions.pri)
 include(code/code.pri)
 TARGET = ActionPackWindows
-QT += script
-equals(QT_MAJOR_VERSION, 5) {
-QT += widgets
+QT += script widgets
 OTHER_FILES += windows.json
-}
 HEADERS += actionpackwindows.h
 RESOURCES += actionpackwindows.qrc
 TRANSLATIONS = ../../locale/actionpackwindows_fr_FR.ts \

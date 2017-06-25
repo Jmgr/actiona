@@ -2,11 +2,8 @@ include(../common_actions.pri)
 include(actions/actions.pri)
 include(code/code.pri)
 TARGET = ActionPackSystem
-QT += script network
-equals(QT_MAJOR_VERSION, 5) {
-QT += widgets multimedia multimediawidgets network
+QT += script network widgets multimedia multimediawidgets network
 OTHER_FILES += system.json
-}
 unix:QT += dbus
 
 include(systeminfo/systeminfo.pri)

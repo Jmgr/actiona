@@ -1,10 +1,8 @@
 include(../common.pri)
 QT += script \
-    xmlpatterns
-equals(QT_MAJOR_VERSION, 5) {
+    xmlpatterns \
+    widgets
 unix:QT += x11extras
-QT += widgets
-}
 TEMPLATE = lib
 CONFIG += dll
 unix:CONFIG += link_pkgconfig

@@ -3,10 +3,8 @@ unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIB
 QT += xml \
     network \
     script \
-    scripttools
-equals(QT_MAJOR_VERSION, 5) {
-QT += widgets
-}
+    scripttools \
+    widgets
 TARGET = actexec
 VERSION = $$ACTIONA_VERSION
 DESTDIR = ..
