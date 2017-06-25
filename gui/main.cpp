@@ -179,8 +179,8 @@ int main(int argc, char **argv)
 	if(!options.count("nocodeqt"))
 		app.addLibraryPath(QApplication::applicationDirPath() + "/code");
 
-	//TODO: Move this in the constructor of these classes
-	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
+    //TODO: Move this in the constructor of these classes
+    qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
 	qRegisterMetaType<ActionTools::ActionException::Exception>("Exception");
 	qRegisterMetaType<ActionTools::Parameter>("Parameter");
 	qRegisterMetaType<ActionTools::SubParameter>("SubParameter");

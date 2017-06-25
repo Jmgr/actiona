@@ -20,6 +20,7 @@
 
 #include "version.h"
 
+#if (QT_VERSION < 0x050600)
 #include <QRegExp>
 #include <QStringList>
 #include <QDataStream>
@@ -371,3 +372,4 @@ QDebug &operator<<(QDebug &dbg, const Tools::Version &version)
 
 	return dbg.maybeSpace();
 }
+#endif

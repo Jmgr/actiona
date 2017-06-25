@@ -457,8 +457,13 @@ namespace ActionTools
 			{
 				const QXmlStreamAttributes &attributes = stream.attributes();
 				mProgramName = attributes.value("program").toString();
-				mProgramVersion = Tools::Version(attributes.value("version").toString());
-				mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
+#if (QT_VERSION >= 0x050600)
+                mProgramVersion = QVersionNumber::fromString(attributes.value("version").toString());
+                mScriptVersion = QVersionNumber::fromString(attributes.value("scriptVersion").toString());
+#else
+                mProgramVersion = Tools::Version(attributes.value("version").toString());
+                mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
+#endif
 				mOs = attributes.value("os").toString();
 
 				if(mScriptVersion > scriptVersion)
@@ -475,7 +480,11 @@ namespace ActionTools
 
 					const QXmlStreamAttributes &attributes = stream.attributes();
 					QString name = attributes.value("name").toString();
+#if (QT_VERSION >= 0x050600)
+                    Tools::Version version = QVersionNumber::fromString(attributes.value("version").toString());
+#else
                     Tools::Version version(attributes.value("version").toString());
+#endif
 
 					ActionDefinition *actionDefinition = mActionFactory->actionDefinition(name);
 					if(!actionDefinition)
@@ -764,8 +773,13 @@ namespace ActionTools
                     {
                         const QXmlStreamAttributes &attributes = stream.attributes();
                         mProgramName = attributes.value("program").toString();
+#if (QT_VERSION >= 0x050600)
+                        mProgramVersion = QVersionNumber::fromString(attributes.value("version").toString());
+                        mScriptVersion = QVersionNumber::fromString(attributes.value("scriptVersion").toString());
+#else
                         mProgramVersion = Tools::Version(attributes.value("version").toString());
                         mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
+#endif
                         mOs = attributes.value("os").toString();
 
                         device->reset();

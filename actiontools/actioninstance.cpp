@@ -61,7 +61,7 @@ namespace ActionTools
 		: QObject(parent),
 		  mRuntimeId(mCurrentRuntimeId),
 		  d(new ActionInstanceData())
-	{
+    {
 		d->definition = definition;
 		++mCurrentRuntimeId;
 

@@ -186,7 +186,11 @@ namespace Tools
 				return;
 			}
 			else if(stream.name() == "version")
+#if (QT_VERSION >= 0x050600)
+                version = QVersionNumber::fromString(stream.readElementText());
+#else
 				version.setFromString(stream.readElementText());
+#endif
 			else if(stream.name() == "releaseDate")
 				date = QDate::fromString(stream.readElementText(), Qt::ISODate);
 			else if(stream.name() == "type")

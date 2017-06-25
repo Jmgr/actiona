@@ -26,6 +26,7 @@
 
 #include <QFile>
 #include <QApplication>
+#include <QTextStream>
 
 ScriptExecuter::ScriptExecuter(QObject *parent) :
     Executer(parent),
