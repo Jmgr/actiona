@@ -128,7 +128,6 @@ private slots:
 	void on_scriptView_customContextMenuRequested(const QPoint &pos);
 	void on_actionHelp_triggered();
     void on_actionTake_screenshot_triggered();
-	void on_reportBugPushButton_clicked();
 	void systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
 	void scriptEdited();
 	void actionSelectionChanged();

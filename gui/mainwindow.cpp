@@ -54,6 +54,7 @@
 #include "scriptsettingsdialog.h"
 #include "resourcedialog.h"
 #include "screenshotwizard.h"
+#include "languages.h"
 
 #include <QSystemTrayIcon>
 #include <QInputDialog>
@@ -83,6 +84,7 @@
 #endif
 
 #ifdef Q_OS_LINUX
+#include <QProcessEnvironment>
 #include <QX11Info>
 #endif
 
@@ -130,6 +132,24 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 
 	ui->setupUi(this);
 
+#ifdef Q_OS_LINUX
+    auto environment = QProcessEnvironment::systemEnvironment();
+    auto sessionType = environment.value("XDG_SESSION_TYPE", "x11"); // Consider an empty value as being X11
+    auto x11Session = (sessionType == "x11");
+
+    connect(ui->x11NotDetectedLabel, &QLabel::linkActivated, [](const QString &link)
+    {
+        if(link == "x11notdetected")
+            QDesktopServices::openUrl(QUrl(QString("https://wiki.actiona.tools/doku.php?id=%1:x11notdetected").arg(Tools::locale().mid(0, 2))));
+    });
+
+    ui->x11NotDetectedLabel->setVisible(!x11Session);
+    ui->x11NotDetectedIconLabel->setVisible(!x11Session);
+#else
+    ui->x11NotDetectedLabel->setVisible(false);
+    ui->x11NotDetectedIconLabel->setVisible(false);
+#endif
+
     mScriptProgressDialog->close();
     mScriptProgressDialog->setWindowModality(Qt::ApplicationModal);
     mScriptProgressDialog->setCancelButton(0);
@@ -140,9 +160,6 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
     mUpdaterProgressDialog->close();
 #endif
 
-    if(Global::ACTIONA_VERSION >= Tools::Version(1, 0, 0))
-		ui->reportBugPushButton->setVisible(false);
-	
 	ui->consoleWidget->setup();
 
 #ifdef Q_OS_WIN
@@ -1146,11 +1163,6 @@ void MainWindow::on_actionTake_screenshot_triggered()
     ActionTools::ScreenshotWizard screenshotWizard(mScript, true, this);
     screenshotWizard.setWindowFlags(screenshotWizard.windowFlags() | Qt::WindowContextHelpButtonHint);
     screenshotWizard.exec();
-}
-
-void MainWindow::on_reportBugPushButton_clicked()
-{
-    QDesktopServices::openUrl(QUrl(QString("http://bugs.actiona.tools?language=%1&program=actiona3&version=%2&os=%3").arg(mUsedLocale).arg(Global::ACTIONA_VERSION.toString()).arg(Global::currentOS())));
 }
 
 void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
