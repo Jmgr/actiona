@@ -49,7 +49,6 @@ namespace Actions
           mSmtp(nullptr),
 		  mProgressDialog(new QProgressDialog)
 	{
-		connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(canceled()));
 	}
 
     SendMailInstance::~SendMailInstance()
@@ -133,6 +132,8 @@ namespace Actions
         connect(mSmtp, SIGNAL(mailFailed(int,int,QByteArray)), this, SLOT(mailFailed(int,int,QByteArray)));
         connect(mSmtp, SIGNAL(mailSent(int)), this, SLOT(mailSent(int)));
         connect(mSmtp, SIGNAL(disconnected()), this, SLOT(disconnected()));
+
+        connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(canceled()));
 
         mSmtp->setUsername(userName.toUtf8());
         mSmtp->setPassword(password.toUtf8());
@@ -372,8 +373,10 @@ namespace Actions
 
     void SendMailInstance::cleanup()
     {
+        mSmtp->disconnect();
         mSmtp->disconnectFromHost();
 
+        mProgressDialog->disconnect();
         mProgressDialog->close();
     }
 }

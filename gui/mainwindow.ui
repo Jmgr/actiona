@@ -21,7 +21,7 @@
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0,0">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -112,9 +112,9 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,10,0">
       <property name="spacing">
-       <number>6</number>
+       <number>8</number>
       </property>
       <item>
        <widget class="DeleteActionPushButton" name="deleteDropTarget">
@@ -124,6 +124,35 @@
         <property name="icon">
          <iconset resource="gui.qrc">
           <normaloff>:/icons/delete_cursor.png</normaloff>:/icons/delete_cursor.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="x11NotDetectedIconLabel">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="gui.qrc">:/icons/warning.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="x11NotDetectedLabel">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;X11 has not been detected! Please restart Actiona on a X11 session. &lt;a href=&quot;x11notdetected&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Why am I seeing this?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -140,13 +169,6 @@
         </property>
        </spacer>
       </item>
-      <item>
-       <widget class="QPushButton" name="reportBugPushButton">
-        <property name="text">
-         <string>Report a bug</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
@@ -157,7 +179,7 @@
      <x>0</x>
      <y>0</y>
      <width>767</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

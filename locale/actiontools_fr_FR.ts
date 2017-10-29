@@ -181,14 +181,14 @@
         <translation>Valeur décimale attendue.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="513"/>
-        <location filename="../actiontools/actioninstance.cpp" line="521"/>
+        <location filename="../actiontools/actioninstance.cpp" line="522"/>
+        <location filename="../actiontools/actioninstance.cpp" line="530"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation>&quot;%1&quot; n&apos;est pas une position valide.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="618"/>
-        <location filename="../actiontools/actioninstance.cpp" line="626"/>
+        <location filename="../actiontools/actioninstance.cpp" line="627"/>
+        <location filename="../actiontools/actioninstance.cpp" line="635"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation>&quot;%1&quot; n&apos;est pas une couleur valide.</translation>
     </message>
@@ -208,17 +208,17 @@
         <translation>Impossible de charger l&apos;image : %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="675"/>
+        <location filename="../actiontools/actioninstance.cpp" line="684"/>
         <source>Invalid %1 value : %2</source>
         <translation>Valeur %1 incorrecte : %2</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="837"/>
+        <location filename="../actiontools/actioninstance.cpp" line="846"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="870"/>
+        <location filename="../actiontools/actioninstance.cpp" line="879"/>
         <source>Invalid parameter. Unable to evaluate string</source>
         <translation>Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
     </message>

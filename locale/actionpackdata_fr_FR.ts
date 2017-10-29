@@ -618,137 +618,137 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>Actions::SendMailInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="115"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="114"/>
         <source>Failed to auto detect the attachment content type</source>
         <translation>Impossible de détecter automatiquement le type de contenu de la pièce jointe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="120"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="119"/>
         <source>server port</source>
         <translation>port du serveur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="163"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="164"/>
         <source>Failed to parse an extra header: &quot;%1&quot; has to be in the form &quot;name: value&quot;</source>
         <translation>Impossible d&apos;analyser l&apos;entête supplémentaire : &quot;%1&quot; doit être sous la forme &quot;nom: valeur&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="175"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="176"/>
         <source>Invalid attachment data</source>
         <translation>Données de pièce jointe invalides</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="197"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="198"/>
         <source>Unknown image type; supported types are PNG and JPG</source>
         <translation>Type d&apos;image inconnu; les types supportés sont PNG et JPG</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="207"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="208"/>
         <source>Invalid image data</source>
         <translation>Données d&apos;image invalides</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="245"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="246"/>
         <source>Sending e-mail</source>
         <translation>Envoi de l&apos;e-mail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="246"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="247"/>
         <source>Connecting...</source>
         <translation>Connexion...</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="260"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="261"/>
         <source>Connection failed: %1</source>
         <translation>Impossible de se connecter : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="267"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="268"/>
         <source>Encryption failed: %1</source>
         <translation>Impossible de chiffrer la connexion : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="274"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="275"/>
         <source>Authentication failed: %1</source>
         <translation>L&apos;authentification a échouée : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="280"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="281"/>
         <source>Sending e-mail...</source>
         <translation>Envoi de l&apos;e-mail...</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="289"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="290"/>
         <source>Sender %1 has been rejected: %2</source>
         <translation>L&apos;expéditeur %1 a été rejeté : %2</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="298"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="299"/>
         <source>Recipient %1 has been rejected: %2</source>
         <translation>Le destinataire %1 a été rejeté : %2</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="312"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="313"/>
         <source>No recipients</source>
         <translation>Pas de destinataires</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="315"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="316"/>
         <source>Command unrecognized</source>
         <translation>Commande inconnue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="318"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="319"/>
         <source>Syntax error</source>
         <translation>Erreur de syntaxe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="321"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="322"/>
         <source>Command not implemented</source>
         <translation>Commande non implémentée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="324"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="325"/>
         <source>Bad sequence</source>
         <translation>Mauvaise séquence</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="327"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="328"/>
         <source>Parameter not implemented</source>
         <translation>Paramètre non implémenté</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="330"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="331"/>
         <source>Mailbox unavailable</source>
         <translation>Boîte de réception indisponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="333"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="334"/>
         <source>User not local</source>
         <translation>Utilisateur non local</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="336"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="337"/>
         <source>Message is too large</source>
         <translation>Le message est trop grand</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="339"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="340"/>
         <source>Invalid mailbox name</source>
         <translation>Nom de boîte de réception invalide</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="342"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="343"/>
         <source>Transaction failed</source>
         <translation>Échec de la transaction</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="345"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="346"/>
         <source>Unknown error</source>
         <translation>Erreur inconnue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="349"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="350"/>
         <source>Failed sending e-mail: %1 (%2)</source>
         <translation>Impossible d&apos;envoyer l&apos;e-mail : %1 (%2)</translation>
     </message>

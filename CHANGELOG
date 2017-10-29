@@ -1,3 +1,17 @@
+3.9.3 (28/10/17)
+Global:
+- Windows: fixed compatibility with Windows 10
+- SendMail action: fixed a bug where no exception was thrown when an error occured when sending the e-mail
+- Click action: fixed not specifying a position would move the mouse cursor to the upper-left screen position
+- Procedures: fixed a bug where actions were reset when a procedure ends
+- TimeCondition action: fixed the "if after" and "if before" labels not being intuitive (replaced by "if in the future" and "if in the past")
+- MultiDataInput action: fixed stretching occuring at the wrong place
+- DataInput action: fixed default value being capped at 99
+- Windows: fixed Actiona still writing an entry into the registry when starting with the --portable parameter
+
+Interface:
+- Linux: added a warning when starting Actiona on a non-X11 session
+
 3.9.2 (28/05/16)
 Global:
 - Windows: fixed mouse and keyboard simulation on some applications (started with admin privileges)

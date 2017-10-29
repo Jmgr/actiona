@@ -83,13 +83,13 @@
 <context>
     <name>Actions::ClickInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="55"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="56"/>
         <source>Invalid click amount</source>
         <translation>Quantité de clics incorrecte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="68"/>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="76"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="72"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="80"/>
         <source>Unable to emulate click: button event failed</source>
         <translation>Impossible de simuler un clic : l&apos;évènement de bouton n&apos;a pas pu être envoyé</translation>
     </message>

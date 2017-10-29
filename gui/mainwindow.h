@@ -127,7 +127,6 @@ private slots:
 	void on_scriptView_customContextMenuRequested(const QPoint &pos);
 	void on_actionHelp_triggered();
     void on_actionTake_screenshot_triggered();
-	void on_reportBugPushButton_clicked();
     void on_filterActionLineEdit_textChanged(const QString &text);
     void on_filterScriptLineEdit_textChanged(const QString &text);
     void on_filterScriptCriterionComboBox_currentIndexChanged(int index);
