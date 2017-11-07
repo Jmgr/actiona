@@ -39,7 +39,8 @@ SOURCES += main.cpp \
     newactionproxymodel.cpp \
     scriptproxymodel.cpp \
     filterlineedit.cpp \
-    scripttreeview.cpp
+    scripttreeview.cpp \
+    flagscombobox.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -65,7 +66,9 @@ HEADERS += mainwindow.h \
     newactionproxymodel.h \
     scriptproxymodel.h \
     filterlineedit.h \
-    scripttreeview.h
+    scripttreeview.h \
+    flagscombobox.h \
+    actionfilteringflags.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += changelogdialog.cpp
 	HEADERS += changelogdialog.h

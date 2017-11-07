@@ -43,31 +43,10 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="FilterLineEdit" name="filterScriptLineEdit"/>
+       <widget class="FilterLineEdit" name="scriptFilterLineEdit"/>
       </item>
       <item>
-       <widget class="QComboBox" name="filterScriptCriterionComboBox">
-        <item>
-         <property name="text">
-          <string>All</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Label</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Action name</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Comment</string>
-         </property>
-        </item>
-       </widget>
+       <widget class="FlagsComboBox" name="scriptFilterCriteriaFlagsComboBox"/>
       </item>
      </layout>
     </item>
@@ -353,7 +332,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="FilterLineEdit" name="filterActionLineEdit"/>
+      <widget class="FilterLineEdit" name="actionsfilterLineEdit"/>
      </item>
      <item>
       <widget class="QTreeView" name="newActionTreeView">
@@ -970,6 +949,11 @@
    <class>ScriptTreeView</class>
    <extends>QTreeView</extends>
    <header>scripttreeview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FlagsComboBox</class>
+   <extends>QComboBox</extends>
+   <header>flagscombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

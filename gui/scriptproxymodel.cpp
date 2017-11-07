@@ -30,7 +30,7 @@
 ScriptProxyModel::ScriptProxyModel(ActionTools::Script *script, QObject *parent)
     : QSortFilterProxyModel(parent),
       mScript(script),
-      mFilteringCriterion(FilteringCriterion::All)
+      mFilteringFlags(ActionFilteringFlag::AllFlags)
 {
 }
 
@@ -41,9 +41,9 @@ void ScriptProxyModel::setFilterString(const QString &filterString)
     invalidateFilter();
 }
 
-void ScriptProxyModel::setFilteringCriterion(FilteringCriterion filteringCriterion)
+void ScriptProxyModel::setFilteringFlags(ActionFilteringFlags filteringFlags)
 {
-    mFilteringCriterion = filteringCriterion;
+    mFilteringFlags = filteringFlags;
 
     invalidateFilter();
 }
@@ -67,15 +67,34 @@ bool ScriptProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sourc
 
     const ActionTools::ActionDefinition *actionDefinition = actionInstance->definition();
 
-    if((mFilteringCriterion == FilteringCriterion::All || mFilteringCriterion == FilteringCriterion::ActionName) &&
-            actionDefinition->name().contains(mFilterString, Qt::CaseInsensitive))
+    if((mFilteringFlags == 0 || mFilteringFlags.testFlag(ActionFilteringFlag::ActionName)) && actionDefinition->name().contains(mFilterString, Qt::CaseInsensitive))
         return true;
-    if((mFilteringCriterion == FilteringCriterion::All || mFilteringCriterion == FilteringCriterion::Label) &&
-            ((actionInstance->label().contains(mFilterString, Qt::CaseInsensitive)) || ActionTools::NumberFormat::labelIndexString(index.row()).contains(mFilterString, Qt::CaseInsensitive)))
+    if((mFilteringFlags == 0 || mFilteringFlags.testFlag(ActionFilteringFlag::Label)) && ((actionInstance->label().contains(mFilterString, Qt::CaseInsensitive)) || ActionTools::NumberFormat::labelIndexString(index.row()).contains(mFilterString, Qt::CaseInsensitive)))
         return true;
-    if((mFilteringCriterion == FilteringCriterion::All || mFilteringCriterion == FilteringCriterion::Comment) &&
-            actionInstance->comment().contains(mFilterString, Qt::CaseInsensitive))
+    if(((mFilteringFlags == 0 || mFilteringFlags.testFlag(ActionFilteringFlag::Comment)) && actionInstance->comment().contains(mFilterString, Qt::CaseInsensitive)))
         return true;
+    if(mFilteringFlags == 0 || mFilteringFlags.testFlag(ActionFilteringFlag::CodeParameters))
+    {
+        for(const auto &parameter: actionInstance->parametersData())
+        {
+            for(const auto &subParameter: parameter.subParameters())
+            {
+                if(subParameter.isCode() && subParameter.value().toString().contains(mFilterString, Qt::CaseInsensitive))
+                    return true;
+            }
+        }
+    }
+    if(mFilteringFlags == 0 || mFilteringFlags.testFlag(ActionFilteringFlag::TextParameters))
+    {
+        for(const auto &parameter: actionInstance->parametersData())
+        {
+            for(const auto &subParameter: parameter.subParameters())
+            {
+                if(!subParameter.isCode() && subParameter.value().toString().contains(mFilterString, Qt::CaseInsensitive))
+                    return true;
+            }
+        }
+    }
 
     return false;
 }

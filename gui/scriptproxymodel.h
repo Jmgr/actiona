@@ -22,6 +22,8 @@
 
 #include <QSortFilterProxyModel>
 
+#include "actionfilteringflags.h"
+
 namespace ActionTools
 {
     class Script;
@@ -30,18 +32,10 @@ namespace ActionTools
 class ScriptProxyModel : public QSortFilterProxyModel
 {
 public:
-    enum class FilteringCriterion
-    {
-        All,
-        Label,
-        ActionName,
-        Comment
-    };
-
     ScriptProxyModel(ActionTools::Script *script, QObject *parent = 0);
 
     void setFilterString(const QString &filterString);
-    void setFilteringCriterion(FilteringCriterion filteringCriterion);
+    void setFilteringFlags(ActionFilteringFlags filteringFlags);
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
@@ -49,6 +43,6 @@ protected:
 private:
     ActionTools::Script *mScript;
     QString mFilterString;
-    FilteringCriterion mFilteringCriterion;
+    ActionFilteringFlags mFilteringFlags;
 };
 

@@ -129,6 +129,14 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 
 	ui->setupUi(this);
 
+    ui->scriptFilterCriteriaFlagsComboBox->addFlag(tr("Label"), static_cast<unsigned int>(ActionFilteringFlag::Label));
+    ui->scriptFilterCriteriaFlagsComboBox->addFlag(tr("Action name"), static_cast<unsigned int>(ActionFilteringFlag::ActionName));
+    ui->scriptFilterCriteriaFlagsComboBox->addFlag(tr("Comment"), static_cast<unsigned int>(ActionFilteringFlag::Comment));
+    ui->scriptFilterCriteriaFlagsComboBox->addFlag(tr("Code parameters"), static_cast<unsigned int>(ActionFilteringFlag::CodeParameters));
+    ui->scriptFilterCriteriaFlagsComboBox->addFlag(tr("Text parameters"), static_cast<unsigned int>(ActionFilteringFlag::TextParameters));
+    ui->scriptFilterCriteriaFlagsComboBox->setAllCheckedText(tr("Everything"));
+    ui->scriptFilterCriteriaFlagsComboBox->setNoneCheckedText(tr("Everything"));
+
     mNewActionProxyModel->setDynamicSortFilter(false);
     mScriptProxyModel->setDynamicSortFilter(false);
 
@@ -1137,22 +1145,22 @@ void MainWindow::on_actionTake_screenshot_triggered()
     screenshotWizard.exec();
 }
 
-void MainWindow::on_filterActionLineEdit_textChanged(const QString &text)
+void MainWindow::on_actionsfilterLineEdit_textChanged(const QString &text)
 {
     mNewActionProxyModel->setFilterString(text);
     ui->newActionTreeView->expandAll();
 }
 
-void MainWindow::on_filterScriptLineEdit_textChanged(const QString &text)
+void MainWindow::on_scriptFilterLineEdit_textChanged(const QString &text)
 {
     mScriptProxyModel->setFilterString(text);
     ui->scriptView->resizeColumnToContents(0);
     ui->scriptView->resizeColumnToContents(1);
 }
 
-void MainWindow::on_filterScriptCriterionComboBox_currentIndexChanged(int index)
+void MainWindow::on_scriptFilterCriteriaFlagsComboBox_flagsChanged(unsigned int flags)
 {
-    mScriptProxyModel->setFilteringCriterion(static_cast<ScriptProxyModel::FilteringCriterion>(index));
+    mScriptProxyModel->setFilteringFlags(ActionFilteringFlags{flags});
     ui->scriptView->resizeColumnToContents(0);
     ui->scriptView->resizeColumnToContents(1);
 }

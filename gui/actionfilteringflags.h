@@ -18,27 +18,18 @@
     Contact : jmgr@jmgr.info
 */
 
-#include "filterlineedit.h"
+#pragma once
 
-#include <QPaintEvent>
-#include <QPainter>
+#include <QFlags>
 
-FilterLineEdit::FilterLineEdit(QWidget *parent)
-    : QLineEdit(parent),
-      mIcon(":/icons/look.png")
+enum class ActionFilteringFlag
 {
-    Q_ASSERT(!mIcon.isNull());
-
-    setPlaceholderText(tr("Filter"));
-    setClearButtonEnabled(true);
-    setStyleSheet("padding-left: 18px;"
-                  "padding-right: 5px;");
-}
-
-void FilterLineEdit::paintEvent(QPaintEvent *event)
-{
-    QLineEdit::paintEvent(event);
-
-    QPainter painter(this);
-    painter.drawImage(3, 3, mIcon);
-}
+    AllFlags = 0,
+    Label = 1,
+    ActionName = 2,
+    Comment = 4,
+    CodeParameters = 8,
+    TextParameters = 16
+};
+Q_DECLARE_FLAGS(ActionFilteringFlags, ActionFilteringFlag)
+Q_DECLARE_OPERATORS_FOR_FLAGS(ActionFilteringFlags)
