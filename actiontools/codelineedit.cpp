@@ -174,8 +174,6 @@ namespace ActionTools
 		if(mAllowTextCodeChange)
 			setCode(subParameter.isCode());
 
-        QString t = subParameter.value().toString();
-
 		setText(subParameter.value().toString());
 	}
 
