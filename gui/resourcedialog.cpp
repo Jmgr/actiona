@@ -51,8 +51,8 @@ ResourceDialog::ResourceDialog(ActionTools::Script *script, QWidget *parent)
     ui->removeSelectedPushButton->setEnabled(false);
     ui->resourcesTableWidget->setSortingEnabled(false);
 
-    QHash<QString, ActionTools::Resource> resources = script->resources();
-    QHash<QString, ActionTools::Resource>::const_iterator resourceIt = resources.constBegin();
+	QMap<QString, ActionTools::Resource> resources = script->resources();
+	QMap<QString, ActionTools::Resource>::const_iterator resourceIt = resources.constBegin();
     while(resourceIt != resources.constEnd())
     {
         addResource(resourceIt.key(), resourceIt.value().data(), resourceIt.value().type());

@@ -333,7 +333,7 @@ namespace LibExecuter
 		mScript->clearProcedures();
 		mScript->clearCallStack();
 
-        const QHash<QString, ActionTools::Resource> &resources = mScript->resources();
+		const QMap<QString, ActionTools::Resource> &resources = mScript->resources();
         for(const QString &key: resources.keys())
         {
             const ActionTools::Resource &resource = resources.value(key);

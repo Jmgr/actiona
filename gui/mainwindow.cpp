@@ -2109,7 +2109,7 @@ void MainWindow::openResourceDialog(const QString &resource)
     ResourceDialog resourceDialog(mScript, this);
     resourceDialog.setWindowFlags(resourceDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
     resourceDialog.setCurrentResource(resource);
-    QHash<QString, ActionTools::Resource> resources = mScript->resources();
+	QMap<QString, ActionTools::Resource> resources = mScript->resources();
     if(resourceDialog.exec() == QDialog::Accepted)
     {
         if(resources != mScript->resources())

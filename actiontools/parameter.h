@@ -27,7 +27,7 @@
 
 namespace ActionTools
 {
-    using SubParameterHash = QHash<QString, SubParameter>;
+	using SubParameterHash = QMap<QString, SubParameter>;
 
 	class ParameterData : public QSharedData
 	{

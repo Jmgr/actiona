@@ -264,7 +264,7 @@ namespace ActionTools
 
         stream.writeStartElement("resources");
 
-        QHash<QString, Resource>::const_iterator resourceIt = mResources.constBegin();
+		QMap<QString, Resource>::const_iterator resourceIt = mResources.constBegin();
         int resourceIndex = 0;
         while(resourceIt != mResources.constEnd())
         {

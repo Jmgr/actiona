@@ -27,7 +27,7 @@
 
 #include <QVariant>
 #include <QStringList>
-#include <QHash>
+#include <QMap>
 #include <QStack>
 
 class QIODevice;
@@ -108,7 +108,7 @@ namespace ActionTools
         bool hasResource(const QString &id) const                                       { return mResources.contains(id); }
         Resource resource(const QString &id) const                                      { return mResources.value(id); }
         void clearResources()                                                           { mResources.clear(); }
-        const QHash<QString, Resource> &resources() const                               { return mResources; }
+		const QMap<QString, Resource> &resources() const								{ return mResources; }
 
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
@@ -136,9 +136,9 @@ namespace ActionTools
 		QStringList mMissingActions;
 		int mPauseBefore;
 		int mPauseAfter;
-		QHash<QString, int> mProcedures;
+		QMap<QString, int> mProcedures;
 		QStack<int> mCallStack;
-        QHash<QString, Resource> mResources;
+		QMap<QString, Resource> mResources;
 
 		Q_DISABLE_COPY(Script)
 	};
