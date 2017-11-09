@@ -454,7 +454,7 @@ void ActionDialog::postInit()
 
 				if(!mCurrentSubField.isEmpty())
 				{
-					QString value = mActionInstance->subParameter(mCurrentField, mCurrentSubField).value().toString();
+                    QString value = mActionInstance->subParameter(mCurrentField, mCurrentSubField).value();
 					if(value.contains('\n'))//Multiline : open the editor
 					{
 						if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(editorWidget))

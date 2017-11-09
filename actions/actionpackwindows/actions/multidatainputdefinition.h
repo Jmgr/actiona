@@ -90,7 +90,7 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *maximumChoiceCount = new ActionTools::NumberParameterDefinition(ActionTools::Name("maximumChoiceCount", tr("Maximum choice count")), this);
 			maximumChoiceCount->setTooltip(tr("The maximum number of choices that can be made"));
 			maximumChoiceCount->setMinimum(0);
-			maximumChoiceCount->setDefaultValue(1);
+            maximumChoiceCount->setDefaultValue("1");
 			choiceGroup->addMember(maximumChoiceCount);
 
 			addElement(choiceGroup, 1);

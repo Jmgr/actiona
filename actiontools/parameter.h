@@ -48,7 +48,7 @@ namespace ActionTools
 		const SubParameterHash &subParameters() const								{ return d->subParameters; }
 		SubParameterHash &subParameters()											{ return d->subParameters; }
 		void setSubParameter(const QString &name, const SubParameter &subParameter)	{ d->subParameters.insert(name, subParameter); }
-		void setSubParameter(const QString &name, bool code, const QVariant &value)	{ setSubParameter(name, SubParameter(code, value)); }
+        void setSubParameter(const QString &name, bool code, const QString &value)	{ setSubParameter(name, SubParameter(code, value)); }
 		void setSubParameters(const SubParameterHash &subParameters)				{ d->subParameters = subParameters; }
 		SubParameter subParameter(const QString &name) const						{ return d->subParameters.value(name); }
 
@@ -59,8 +59,8 @@ namespace ActionTools
 		QSharedDataPointer<ParameterData> d;
 	};
 
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const Parameter &parameter);
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, Parameter &parameter);
+    ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const Parameter &parameter);
+    ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, Parameter &parameter);
 	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const Parameter &parameter);
 }
 

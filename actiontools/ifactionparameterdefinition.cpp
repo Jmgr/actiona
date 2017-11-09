@@ -100,25 +100,25 @@ namespace ActionTools
 	{
 		const SubParameter &actionSubParameter = actionInstance->subParameter(name().original(), "action");
 		mActionEdit->setCode(actionSubParameter.isCode());
-		mActionEdit->setEditText(translatedNameFromOriginalName(actionSubParameter.value().toString()));
+        mActionEdit->setEditText(translatedNameFromOriginalName(actionSubParameter.value()));
 
 		const SubParameter &lineSubParameter = actionInstance->subParameter(name().original(), "line");
 		switch(findAppropriateEditor(mActionEdit->codeLineEdit()->text()))
 		{
 		case LineEditor:
 			mLineComboBox->setCode(lineSubParameter.isCode());
-			mLineComboBox->setEditText(lineSubParameter.value().toString());
+            mLineComboBox->setEditText(lineSubParameter.value());
 			break;
 		case CodeEditor:
-			mCodeLineEdit->setText(lineSubParameter.value().toString());
+            mCodeLineEdit->setText(lineSubParameter.value());
 			break;
 		case TextCodeEditor:
 			mCodeLineEdit->setCode(lineSubParameter.isCode());
-			mCodeLineEdit->setText(lineSubParameter.value().toString());
+            mCodeLineEdit->setText(lineSubParameter.value());
 			break;
 		case ProcedureEditor:
 			mProcedureComboBox->setCode(lineSubParameter.isCode());
-			mProcedureComboBox->setEditText(lineSubParameter.value().toString());
+            mProcedureComboBox->setEditText(lineSubParameter.value());
 			break;
 		case NoEditor:
 		default:

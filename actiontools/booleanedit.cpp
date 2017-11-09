@@ -78,7 +78,7 @@ namespace ActionTools
 
 	void BooleanEdit::setFromSubParameter(const SubParameter &subParameter)
 	{
-		setText(subParameter.isCode(), subParameter.value().toString());
+        setText(subParameter.isCode(), subParameter.value());
 
 		on_switchTextModePushButton_clicked();
 	}

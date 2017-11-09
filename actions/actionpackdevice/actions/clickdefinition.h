@@ -72,7 +72,7 @@ namespace Actions
 			amount->setTooltip(tr("The amount of clicks to simulate"));
 			amount->setMinimum(1);
 			amount->setMaximum(std::numeric_limits<int>::max());
-			amount->setDefaultValue(1);
+            amount->setDefaultValue("1");
 			clickGroup->addMember(amount);
 	
 			addElement(clickGroup);

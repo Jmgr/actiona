@@ -60,7 +60,7 @@ namespace ActionTools
 	void PositionParameterDefinition::save(ActionInstance *actionInstance)
 	{
 		actionInstance->setSubParameter(name().original(), "value", mPositionEdit->isCode(), mPositionEdit->text());
-        actionInstance->setSubParameter(name().original(), "unit", QVariant(mPositionUnitComboBox->currentIndex()));
+        actionInstance->setSubParameter(name().original(), "unit", QString::number(mPositionUnitComboBox->currentIndex()));
     }
 
     void PositionParameterDefinition::positionChosen(QPointF position)

@@ -58,7 +58,7 @@ namespace ActionTools
 	void CodeSpinBox::setFromSubParameter(const SubParameter &subParameter)
 	{
 		setCode(subParameter.isCode());
-		codeLineEdit()->setText(subParameter.value().toString());
+        codeLineEdit()->setText(subParameter.value());
 	}
 
 	void CodeSpinBox::openEditor(int line, int column)

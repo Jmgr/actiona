@@ -56,7 +56,7 @@ namespace Actions
 			timeout->setTooltip(tr("The notification timeout"));
 			timeout->setMinimum(0);
 			timeout->setMaximum(std::numeric_limits<int>::max());
-			timeout->setDefaultValue(3000);
+            timeout->setDefaultValue("3000");
 			addElement(timeout, 1);
 
 			ActionTools::FileParameterDefinition *icon = new ActionTools::FileParameterDefinition(ActionTools::Name("icon", tr("Icon")), this);

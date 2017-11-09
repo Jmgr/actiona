@@ -391,7 +391,7 @@ namespace LibExecuter
 					lastBeginProcedure = actionIndex;
 
 					const ActionTools::SubParameter &nameParameter = actionInstance->subParameter("name", "value");
-					const QString &procedureName = nameParameter.value().toString();
+                    const QString &procedureName = nameParameter.value();
 
 					if(procedureName.isEmpty())
 					{

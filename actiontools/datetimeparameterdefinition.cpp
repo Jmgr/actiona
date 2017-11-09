@@ -52,6 +52,6 @@ namespace ActionTools
 
     void DateTimeParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
     {
-        actionInstance->setSubParameter(name().original(), "value", QDateTime::currentDateTime());
+        actionInstance->setSubParameter(name().original(), "value", QDateTime::currentDateTime().toString(QStringLiteral("dd/MM/yyyy hh:mm:ss")));
     }
 }

@@ -53,7 +53,7 @@ namespace Actions
 
 			ActionTools::BooleanParameterDefinition *url = new ActionTools::BooleanParameterDefinition(ActionTools::Name("url", tr("URL")), this);
 			url->setTooltip(tr("Is the sound resource an URL"));
-			url->setDefaultValue(false);
+            url->setDefaultValue("false");
 			addElement(url);
 
 			ActionTools::NumberParameterDefinition *volume = new ActionTools::NumberParameterDefinition(ActionTools::Name("volume", tr("Volume")), this);
@@ -61,17 +61,17 @@ namespace Actions
 			volume->setMinimum(0);
 			volume->setMaximum(100);
 			volume->setSuffix(tr("%", "percent"));
-			volume->setDefaultValue(100);
+            volume->setDefaultValue("100");
 			addElement(volume);
 
 			ActionTools::BooleanParameterDefinition *blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name("blocking", tr("Wait until played")), this);
 			blocking->setTooltip(tr("Should the action end only when the sound has finished playing"));
-			blocking->setDefaultValue(true);
+            blocking->setDefaultValue("true");
 			addElement(blocking);
 
 			ActionTools::BooleanParameterDefinition *loop = new ActionTools::BooleanParameterDefinition(ActionTools::Name("looping", tr("Looping")), this);
 			loop->setTooltip(tr("Should the sound loop"));
-			loop->setDefaultValue(false);
+            loop->setDefaultValue("false");
 			addElement(loop, 1);
 
 			ActionTools::NumberParameterDefinition *playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name("playbackRate", tr("Playback rate")), this);
@@ -79,7 +79,7 @@ namespace Actions
 			playbackrate->setMinimum(std::numeric_limits<int>::min());
 			playbackrate->setMaximum(std::numeric_limits<int>::max());
 			playbackrate->setSuffix(tr("%", "percent"));
-			playbackrate->setDefaultValue(100);
+            playbackrate->setDefaultValue("100");
 			addElement(playbackrate, 1);
 		}
 

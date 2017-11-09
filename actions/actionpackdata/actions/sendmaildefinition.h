@@ -52,7 +52,7 @@ namespace Actions
 
             ActionTools::BooleanParameterDefinition *secureConnection  = new ActionTools::BooleanParameterDefinition(ActionTools::Name("secureConnection", tr("Secure connection")), this);
             secureConnection->setTooltip(tr("Secure (encrypted) connection to the server"));
-            secureConnection->setDefaultValue(true);
+            secureConnection->setDefaultValue("true");
             addElement(secureConnection);
 
             ActionTools::TextParameterDefinition *userName = new ActionTools::TextParameterDefinition(ActionTools::Name("userName", tr("User name")), this);
@@ -105,7 +105,7 @@ namespace Actions
             serverPort->setTooltip(tr("The server port"));
             serverPort->setMinimum(0);
             serverPort->setMaximum(65535);
-            serverPort->setDefaultValue(0);
+            serverPort->setDefaultValue("0");
             serverPort->setSpecialValueText(tr("Default port"));
             addElement(serverPort, 2);
 

@@ -43,9 +43,9 @@ namespace ActionTools
 		mEditors.clear();
 	}
 
-	QVariant ParameterDefinition::defaultValue(QVariant defaultValue) const
+    QString ParameterDefinition::defaultValue(QString defaultValue) const
 	{
-		if(!mDefaultValue.isValid())
+        if(mDefaultValue.isEmpty())
 			return defaultValue;
 			
 		return mDefaultValue;

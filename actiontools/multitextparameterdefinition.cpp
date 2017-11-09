@@ -42,7 +42,7 @@ namespace ActionTools
 
 	void MultiTextParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		QString textBuffer = actionInstance->subParameter(name().original(), "value").value().toString();
+        QString textBuffer = actionInstance->subParameter(name().original(), "value").value();
 
 		mItemListWidget->setItems(textBuffer.split('\n', QString::SkipEmptyParts));
 	}

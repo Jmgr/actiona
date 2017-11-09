@@ -117,35 +117,35 @@ namespace Actions
 			confidenceMinimum->setTooltip(tr("The minimum confidence percentage required to select a possible matching image"));
 			confidenceMinimum->setMinimum(0);
 			confidenceMinimum->setMaximum(100);
-			confidenceMinimum->setDefaultValue(70);
+            confidenceMinimum->setDefaultValue("70");
 			addElement(confidenceMinimum, 1);
 
             ActionTools::NumberParameterDefinition *maximumMatches = new ActionTools::NumberParameterDefinition(ActionTools::Name("maximumMatches", tr("Maximum amount of images to find")), this);
             maximumMatches->setTooltip(tr("The maximum amount of images to find\nSetting this parameter higher will increase the search duration"));
 			maximumMatches->setMinimum(1);
 			maximumMatches->setMaximum(std::numeric_limits<int>::max());
-			maximumMatches->setDefaultValue(1);
+            maximumMatches->setDefaultValue("1");
 			addElement(maximumMatches, 1);
 
 			ActionTools::NumberParameterDefinition *downPyramidCount = new ActionTools::NumberParameterDefinition(ActionTools::Name("downPyramidCount", tr("Downsampling")), this);
 			downPyramidCount->setTooltip(tr("The downsampling value to use\nDownsampling is used to accelerate the search when using large images"));
 			downPyramidCount->setMinimum(1);
 			downPyramidCount->setMaximum(std::numeric_limits<int>::max());
-			downPyramidCount->setDefaultValue(1);
+            downPyramidCount->setDefaultValue("1");
 			addElement(downPyramidCount, 1);
 
 			ActionTools::NumberParameterDefinition *searchExpansion = new ActionTools::NumberParameterDefinition(ActionTools::Name("searchExpansion", tr("Search expansion")), this);
 			searchExpansion->setTooltip(tr("The number of pixels to shift when searching for another matching image"));
 			searchExpansion->setMinimum(1);
 			searchExpansion->setMaximum(std::numeric_limits<int>::max());
-			searchExpansion->setDefaultValue(15);
+            searchExpansion->setDefaultValue("15");
 			addElement(searchExpansion, 1);
 
             ActionTools::NumberParameterDefinition *searchDelay = new ActionTools::NumberParameterDefinition(ActionTools::Name("searchDelay", tr("Delay between two searches when waiting")), this);
             searchDelay->setTooltip(tr("The delay between two searches"));
             searchDelay->setMinimum(0);
             searchDelay->setMaximum(std::numeric_limits<int>::max());
-            searchDelay->setDefaultValue(100);
+            searchDelay->setDefaultValue("100");
             searchDelay->setSuffix(tr(" ms", "milliseconds"));
             addElement(searchDelay, 1);
 

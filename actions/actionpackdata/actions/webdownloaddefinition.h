@@ -82,7 +82,7 @@ namespace Actions
 
 			ActionTools::BooleanParameterDefinition *showProgress = new ActionTools::BooleanParameterDefinition(ActionTools::Name("showProgress", tr("Show progress")), this);
 			showProgress->setTooltip(tr("Should the download progress be shown"));
-			showProgress->setDefaultValue(true);
+            showProgress->setDefaultValue("true");
 			addElement(showProgress, 1);
 
 			addException(WebDownloadInstance::CannotOpenFileException, tr("Cannot write to file"));

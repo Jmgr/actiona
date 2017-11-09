@@ -51,8 +51,8 @@ namespace ActionTools
         const QList<QWidget *> &editors() const                                         { return mEditors; }
         Flag operatingSystems() const                                                   { return mOperatingSystems; }
 		
-		virtual QVariant defaultValue(QVariant defaultValue = QVariant()) const;
-        virtual void setDefaultValue(const QVariant &defaultValue)                      { mDefaultValue = defaultValue; }
+        virtual QString defaultValue(QString defaultValue = QString()) const;
+        virtual void setDefaultValue(const QString &defaultValue)                       { mDefaultValue = defaultValue; }
         virtual void setOperatingSystems(Flag operatingSystems)                         { mOperatingSystems = operatingSystems; }
 		
         //Called when the action is edited
@@ -68,7 +68,7 @@ namespace ActionTools
 		
 	private:
 		QList<QWidget *> mEditors;
-		QVariant mDefaultValue;
+        QString mDefaultValue;
 		Flag mOperatingSystems;
 		QWidget *mParentWidget;
 

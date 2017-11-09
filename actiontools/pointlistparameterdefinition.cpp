@@ -42,7 +42,7 @@ namespace ActionTools
 
 	void PointListParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		QString pointBuffer = actionInstance->subParameter(name().original(), "value").value().toString();
+        QString pointBuffer = actionInstance->subParameter(name().original(), "value").value();
 		QPolygon polygon;
 		QStringList pointStrings = pointBuffer.split(';', QString::SkipEmptyParts);
 

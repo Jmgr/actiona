@@ -67,7 +67,7 @@ namespace Actions
 			amount->setTooltip(tr("The amount of key presses to simulate"));
 			amount->setMinimum(1);
 			amount->setMaximum(std::numeric_limits<int>::max());
-			amount->setDefaultValue(1);
+            amount->setDefaultValue("1");
 			pressAndReleaseGroup->addMember(amount);
 
 			addElement(pressAndReleaseGroup);
@@ -105,7 +105,7 @@ namespace Actions
 			pause->setTooltip(tr("The pause duration between press and release"));
 			pause->setMinimum(0);
 			pause->setMaximum(std::numeric_limits<int>::max());
-			pause->setDefaultValue(10);
+            pause->setDefaultValue("10");
 			pause->setSuffix(tr(" ms", "milliseconds"));
 			addElement(pause, 1);
 

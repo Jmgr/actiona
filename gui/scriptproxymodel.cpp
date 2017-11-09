@@ -79,7 +79,7 @@ bool ScriptProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sourc
         {
             for(const auto &subParameter: parameter.subParameters())
             {
-                if(subParameter.isCode() && subParameter.value().toString().contains(mFilterString, Qt::CaseInsensitive))
+                if(subParameter.isCode() && subParameter.value().contains(mFilterString, Qt::CaseInsensitive))
                     return true;
             }
         }
@@ -90,7 +90,7 @@ bool ScriptProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sourc
         {
             for(const auto &subParameter: parameter.subParameters())
             {
-                if(!subParameter.isCode() && subParameter.value().toString().contains(mFilterString, Qt::CaseInsensitive))
+                if(!subParameter.isCode() && subParameter.value().contains(mFilterString, Qt::CaseInsensitive))
                     return true;
             }
         }

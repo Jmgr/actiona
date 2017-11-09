@@ -74,21 +74,21 @@ namespace Actions
 			redTolerance->setTooltip(tr("The tolerance percentage for the red color component"));
 			redTolerance->setMinimum(0);
 			redTolerance->setMaximum(100);
-			redTolerance->setDefaultValue(0);
+            redTolerance->setDefaultValue("0");
 			addElement(redTolerance, 1);
 
 			ActionTools::NumberParameterDefinition *greenTolerance = new ActionTools::NumberParameterDefinition(ActionTools::Name("greenTolerance", tr("Green tolerance")), this);
 			greenTolerance->setTooltip(tr("The tolerance percentage for the green color component"));
 			greenTolerance->setMinimum(0);
 			greenTolerance->setMaximum(100);
-			greenTolerance->setDefaultValue(0);
+            greenTolerance->setDefaultValue("0");
 			addElement(greenTolerance, 1);
 
 			ActionTools::NumberParameterDefinition *blueTolerance = new ActionTools::NumberParameterDefinition(ActionTools::Name("blueTolerance", tr("Blue tolerance")), this);
 			blueTolerance->setTooltip(tr("The tolerance percentage for the blue color component"));
 			blueTolerance->setMinimum(0);
 			blueTolerance->setMaximum(100);
-			blueTolerance->setDefaultValue(0);
+            blueTolerance->setDefaultValue("0");
 			addElement(blueTolerance, 1);
 
             ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);

@@ -407,7 +407,7 @@ namespace ActionTools
 	QString ActionInstance::evaluateSubParameter(bool &ok,
 							  const SubParameter &subParameter)
 	{
-		if(!ok || subParameter.value().toString().isEmpty())
+        if(!ok || subParameter.value().isEmpty())
 			return QString();
 
 		QString result;
@@ -761,9 +761,9 @@ namespace ActionTools
         SubParameter back = subParameter(parameterName, subParameterName);
 
         // Re-evaluate the field as code if it contains a single variable
-        if(!back.isCode() && back.value().toString().startsWith(QChar('$')))
+        if(!back.isCode() && back.value().startsWith(QChar('$')))
         {
-            QString stringValue = back.value().toString();
+            QString stringValue = back.value();
             QString variableName = stringValue.right(stringValue.size() - 1);
             const QScriptValue &value = d->scriptEngine->globalObject().property(variableName);
 
@@ -802,7 +802,7 @@ namespace ActionTools
 
     QScriptValue ActionInstance::evaluateCode(bool &ok, const SubParameter &toEvaluate)
     {
-        return evaluateCode(ok, toEvaluate.value().toString());
+        return evaluateCode(ok, toEvaluate.value());
     }
 
     QString ActionInstance::evaluateText(bool &ok, const QString &toEvaluate)
@@ -816,7 +816,7 @@ namespace ActionTools
 
     QString ActionInstance::evaluateText(bool &ok, const SubParameter &toEvaluate)
     {
-        return evaluateText(ok, toEvaluate.value().toString());
+        return evaluateText(ok, toEvaluate.value());
     }
 
     QString ActionInstance::evaluateTextString(bool &ok, const QString &toEvaluate, int &position)

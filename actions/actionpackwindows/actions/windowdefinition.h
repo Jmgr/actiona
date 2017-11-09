@@ -87,7 +87,7 @@ namespace Actions
 
 			ActionTools::BooleanParameterDefinition *useBorders = new ActionTools::BooleanParameterDefinition(ActionTools::Name("useBorders", tr("Use borders")), this);
 			useBorders->setTooltip(tr("Should the border size be taken into account when resizing the window"));
-			useBorders->setDefaultValue(true);
+            useBorders->setDefaultValue("true");
 			resizeGroup->addMember(useBorders);
 
 			addElement(resizeGroup);

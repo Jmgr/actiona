@@ -51,7 +51,7 @@ namespace ActionTools
 		{
 			KeyInput keyInput;
 			
-			keyInput.fromPortableText(key.value().toString(), actionInstance->subParameter(name().original(), "isQtKey").value().toBool());
+            keyInput.fromPortableText(key.value(), actionInstance->subParameter(name().original(), "isQtKey").value() == "true");
 			
 			mKeyEdit->setKeyInput(keyInput);
 		}
@@ -64,13 +64,13 @@ namespace ActionTools
 		if(mKeyEdit->isCode())
 		{
 			actionInstance->setSubParameter(originalName, "key", mKeyEdit->isCode(), mKeyEdit->codeLineEdit()->text());
-			actionInstance->setSubParameter(originalName, "isQtKey", QVariant(false));
+            actionInstance->setSubParameter(originalName, "isQtKey", QStringLiteral("false"));
 		}
 		else
 		{
 			const KeyInput &keyInput = mKeyEdit->keyInput();
 			actionInstance->setSubParameter(originalName, "key", keyInput.toPortableText());
-			actionInstance->setSubParameter(originalName, "isQtKey", QVariant(keyInput.isQtKey()));
+            actionInstance->setSubParameter(originalName, "isQtKey", keyInput.isQtKey() ? QStringLiteral("true") : QStringLiteral("false"));
 		}
 	}
 	

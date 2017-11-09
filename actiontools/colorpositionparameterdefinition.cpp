@@ -64,7 +64,9 @@ namespace ActionTools
 
 	void ColorPositionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "position", defaultPosition());
+        auto position = defaultPosition();
+
+        actionInstance->setSubParameter(name().original(), "position", QString("%1:%2").arg(position.x()).arg(position.y()));
 
         QColor localDefaultColor = defaultColor();
         actionInstance->setSubParameter(name().original(), "color", QString("%1:%2:%3").arg(localDefaultColor.red()).arg(localDefaultColor.green()).arg(localDefaultColor.blue()));

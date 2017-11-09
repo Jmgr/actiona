@@ -36,7 +36,7 @@ namespace ActionTools
 	QDataStream &operator >> (QDataStream &s, SubParameter &subParameter)
 	{
 		bool code;
-		QVariant value;
+        QString value;
 
 		s >> code;
 		s >> value;

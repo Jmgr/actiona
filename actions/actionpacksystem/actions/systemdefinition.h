@@ -62,7 +62,7 @@ namespace Actions
 
 			ActionTools::BooleanParameterDefinition *force = new ActionTools::BooleanParameterDefinition(ActionTools::Name("force", tr("Force")), this);
 			force->setTooltip(tr("Should the operation be forced"));
-			force->setDefaultValue(false);
+            force->setDefaultValue("false");
 			operationMode->addMember(force);
 
 			addElement(operationMode);

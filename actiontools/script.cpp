@@ -177,7 +177,7 @@ namespace ActionTools
 				{
 					if(subParameter.isCode())
 					{
-						const QString &value = subParameter.value().toString();
+                        const QString &value = subParameter.value();
 
 						for(int actionIdIndex = 0; actionIdIndex < actions.count(); ++actionIdIndex)
 						{
@@ -332,7 +332,7 @@ namespace ActionTools
 					stream.writeAttribute("name", subParameter);
 
 					stream.writeAttribute("code", QString("%1").arg(subParameterData.isCode()));
-					stream.writeCharacters(subParameterData.value().toString());
+                    stream.writeCharacters(subParameterData.value());
 
 					stream.writeEndElement();
 				}
@@ -700,7 +700,7 @@ namespace ActionTools
 			if(actionInstance->definition()->id() == "ActionBeginProcedure")
 			{
 				const ActionTools::SubParameter &nameParameter = actionInstance->subParameter("name", "value");
-				const QString &procedureName = nameParameter.value().toString();
+                const QString &procedureName = nameParameter.value();
 
 				back.append(procedureName);
 			}
@@ -842,7 +842,7 @@ namespace ActionTools
             if(subParameter.isCode())
             {
                 //Add every variable in any parameter type that is in code mode
-                const QString &code = subParameter.value().toString();
+                const QString &code = subParameter.value();
 
                 for(const QString &codeLine: code.split(newLineRegExp, QString::SkipEmptyParts))
                 {
@@ -864,7 +864,7 @@ namespace ActionTools
                 //Add every variable in a variable parameter that is not in code mode
                 if(qobject_cast<const VariableParameterDefinition *>(elementDefinition))
                 {
-                    const QString &foundVariableName = subParameter.value().toString();
+                    const QString &foundVariableName = subParameter.value();
 
                     if(!foundVariableName.isEmpty())
                         variables << foundVariableName;
@@ -873,7 +873,7 @@ namespace ActionTools
                 }
 
                 //Add every variable in any parameter type that is not in code mode
-                const QString &text = subParameter.value().toString();
+                const QString &text = subParameter.value();
 
                 int position = 0;
 

@@ -40,8 +40,8 @@ namespace ActionTools
 		void setDefaultValues(ActionInstance *actionInstance);
 		
 	private:
-		QVariant defaultValue(QVariant defaultValue = QVariant()) const			{ Q_UNUSED(defaultValue); return QVariant(); }
-		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }
+        QString defaultValue(QString defaultValue = {}) const                   { Q_UNUSED(defaultValue); return {}; }
+        void setDefaultValue(const QString &defaultValue)						{ Q_UNUSED(defaultValue); }
 		
 		KeyEdit *mKeyEdit;
 

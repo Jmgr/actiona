@@ -49,7 +49,7 @@ namespace Actions
 			duration->setTooltip(tr("The duration of the pause"));
 			duration->setMinimum(0);
 			duration->setMaximum(std::numeric_limits<int>::max());
-			duration->setDefaultValue(5);
+            duration->setDefaultValue("5");
 			addElement(duration);
 
 			ActionTools::ListParameterDefinition *unit = new ActionTools::ListParameterDefinition(ActionTools::Name("unit", tr("Unit")), this);

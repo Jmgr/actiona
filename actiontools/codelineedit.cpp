@@ -174,7 +174,7 @@ namespace ActionTools
 		if(mAllowTextCodeChange)
 			setCode(subParameter.isCode());
 
-		setText(subParameter.value().toString());
+        setText(subParameter.value());
 	}
 
 	void CodeLineEdit::addShortcuts(QMenu *menu)

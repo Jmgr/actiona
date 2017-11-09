@@ -133,9 +133,9 @@ namespace ActionTools
 		void setParameter(const QString &name, const Parameter &parameter)	{ d->parametersData.insert(name, parameter); }
 		void setSubParameter(const QString &parameterName, const QString &subParameterName, const SubParameter &subParameter)
 																			{ d->parametersData[parameterName].setSubParameter(subParameterName, subParameter); }
-		void setSubParameter(const QString &parameterName, const QString &subParameterName, bool code, const QVariant &value)
+        void setSubParameter(const QString &parameterName, const QString &subParameterName, bool code, const QString &value)
 																			{ setSubParameter(parameterName, subParameterName, SubParameter(code, value)); }
-		void setSubParameter(const QString &parameterName, const QString &subParameterName, const QVariant &value)
+        void setSubParameter(const QString &parameterName, const QString &subParameterName, const QString &value)
 																			{ setSubParameter(parameterName, subParameterName, SubParameter(false, value)); }
 		Parameter parameter(const QString &name) const						{ return d->parametersData.value(name); }
 		SubParameter subParameter(const QString &parameterName, const QString &subParameterName) const
@@ -330,8 +330,8 @@ namespace ActionTools
 		QSharedDataPointer<ActionInstanceData> d;
 	};
 
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance);
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, ActionInstance &actionInstance);
+    ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance);
+    ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, ActionInstance &actionInstance);
 	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ActionInstance &actionInstance);
 	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ParametersData &parametersData);
 	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ExceptionActionInstancesHash &exceptionActionInstancesHash);

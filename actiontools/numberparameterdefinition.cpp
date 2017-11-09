@@ -57,7 +57,7 @@ namespace ActionTools
 
         mSpinBox->setFromSubParameter(subParameter);
 
-        if(!subParameter.isCode() && !mSpecialValueText.isEmpty() && subParameter.value().toString() == QString::number(mMinimum))
+        if(!subParameter.isCode() && !mSpecialValueText.isEmpty() && subParameter.value() == QString::number(mMinimum))
             mSpinBox->setValue(mMinimum);//Special case to display the special value text
 	}
 

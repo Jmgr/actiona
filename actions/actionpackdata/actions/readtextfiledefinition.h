@@ -67,13 +67,13 @@ namespace Actions
 			ActionTools::NumberParameterDefinition *firstline = new ActionTools::NumberParameterDefinition(ActionTools::Name("firstline", tr("First line")), this);
 			firstline->setTooltip(tr("The line where to start reading the file"));
 			firstline->setMinimum(1);
-			firstline->setDefaultValue(1);
+            firstline->setDefaultValue("1");
 			selectionMode->addMember(firstline, 1);
 
 			ActionTools::NumberParameterDefinition *lastline = new ActionTools::NumberParameterDefinition(ActionTools::Name("lastline", tr("Last line")), this);
 			lastline->setTooltip(tr("The line where to stop reading the file"));
 			lastline->setMinimum(1);
-			lastline->setDefaultValue(1);
+            lastline->setDefaultValue("1");
 			selectionMode->addMember(lastline, 1);
 
 			addElement(selectionMode, 1);

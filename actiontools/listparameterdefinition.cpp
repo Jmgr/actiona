@@ -58,7 +58,7 @@ namespace ActionTools
 		const SubParameter &subParameter = actionInstance->subParameter(name().original(), "value");
 
 		mComboBox->setCode(subParameter.isCode());
-		mComboBox->setEditText(translatedNameFromOriginalName(subParameter.value().toString()));
+        mComboBox->setEditText(translatedNameFromOriginalName(subParameter.value()));
 	}
 
 	void ListParameterDefinition::save(ActionInstance *actionInstance)

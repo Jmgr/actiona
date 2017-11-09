@@ -59,7 +59,7 @@ namespace ActionTools
 	void CodeDateTimeEdit::setFromSubParameter(const SubParameter &subParameter)
 	{
 		setCode(subParameter.isCode());
-		codeLineEdit()->setText(subParameter.value().toString());
+        codeLineEdit()->setText(subParameter.value());
 	}
 
 	void CodeDateTimeEdit::openEditor(int line, int column)
