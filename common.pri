@@ -31,12 +31,6 @@ win32 {
 	DEFINES += WIN32_LEAN_AND_MEAN NOMINMAX
 }
 
-contains(DEFINES, ACT_PROFILE) {
-	!*-msvc*:QMAKE_CXXFLAGS += -include "highresolutiontimer.h"
-	*-msvc*:QMAKE_CXXFLAGS += /FI "highresolutiontimer.h"
-	INCLUDEPATH += . tools ../tools ../../tools
-}
-
 *clang*|*-g++*::QMAKE_CXXFLAGS += -std=c++11
 *clang*|*-g++*::QMAKE_CXXFLAGS_DEBUG += -pedantic -Wall -Wextra -Wno-long-long -g -Wpointer-arith -Wcast-qual \
 	-Wcast-align -Woverloaded-virtual -Wwrite-strings -Winit-self -Wundef -Wlogical-op -Winline

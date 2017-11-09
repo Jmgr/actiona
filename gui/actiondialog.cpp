@@ -31,6 +31,10 @@
 #include "linecombobox.h"
 #include "helpbutton.h"
 
+#ifdef ACT_PROFILE
+#include "highresolutiontimer.h"
+#endif
+
 #include <QGroupBox>
 #include <QLabel>
 #include <QTimer>

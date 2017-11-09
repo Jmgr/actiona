@@ -28,6 +28,10 @@
 #include "settings.h"
 #include "languages.h"
 
+#ifdef ACT_PROFILE
+#include "highresolutiontimer.h"
+#endif
+
 #include <ctime>
 
 #include <QApplication>

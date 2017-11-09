@@ -29,6 +29,10 @@
 #include "variableparameterdefinition.h"
 #include "groupdefinition.h"
 
+#ifdef ACT_PROFILE
+#include "highresolutiontimer.h"
+#endif
+
 #include <QIODevice>
 #include <QFile>
 #include <QXmlStreamReader>

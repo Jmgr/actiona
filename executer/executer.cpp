@@ -33,6 +33,10 @@
 #include "code/prettyprinting.h"
 #include "codeactiona.h"
 
+#ifdef ACT_PROFILE
+#include "highresolutiontimer.h"
+#endif
+
 #include <QDesktopWidget>
 #include <QAction>
 #include <QMainWindow>

@@ -59,6 +59,10 @@
 #include "scriptproxymodel.h"
 #include "languages.h"
 
+#ifdef ACT_PROFILE
+#include "highresolutiontimer.h"
+#endif
+
 #include <QSystemTrayIcon>
 #include <QInputDialog>
 #include <QStandardItemModel>
