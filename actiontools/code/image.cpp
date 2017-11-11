@@ -95,7 +95,7 @@ namespace Code
 			else
 			{
 #ifdef Q_OS_WIN
-				throwError(context, engine, "InvalidWindowError", tr("Invalid window"));
+                throwError(context, engine, QStringLiteral("InvalidWindowError"), tr("Invalid window"));
 				return engine->undefinedValue();
 #else
 				windowId = context->argument(0).toInt32();

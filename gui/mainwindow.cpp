@@ -1164,7 +1164,7 @@ void MainWindow::on_scriptFilterLineEdit_textChanged(const QString &text)
 
 void MainWindow::on_scriptFilterCriteriaFlagsComboBox_flagsChanged(unsigned int flags)
 {
-    mScriptProxyModel->setFilteringFlags(ActionFilteringFlags{flags});
+    mScriptProxyModel->setFilteringFlags(static_cast<ActionFilteringFlags>(flags));
     ui->scriptView->resizeColumnToContents(0);
     ui->scriptView->resizeColumnToContents(1);
 }

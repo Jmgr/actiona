@@ -306,10 +306,10 @@ void SettingsDialog::accept()
             valueData = L"Actiona Script File";
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaScriptFile", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
-			valueData = QString("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
+            valueData = QStringLiteral("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaScriptFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
-			valueData = QString(QString("\"%1\" ").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())) + "\"%1\"").toStdWString();
+            valueData = QString(QStringLiteral("\"%1\" ").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())) + QStringLiteral("\"%1\"")).toStdWString();
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaScriptFile\\shell\\open\\command", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 		}
 		else
@@ -329,7 +329,7 @@ void SettingsDialog::accept()
             valueData = L"Actiona Code File";
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaCodeFile", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
-			valueData = QString("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
+            valueData = QStringLiteral("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaCodeFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 		}
 		else

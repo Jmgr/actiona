@@ -56,7 +56,7 @@ namespace Code
 		HKEY hKey = enumToKey(key);
 	
 		if(RegOpenKeyEx(hKey, subKey.toStdWString().c_str(), 0, KEY_ALL_ACCESS, &mHKey) != ERROR_SUCCESS)
-			throwError("OpenKeyError", tr("Unable to open the key"));
+            throwError(QStringLiteral("OpenKeyError"), tr("Unable to open the key"));
 		else
 		{
 			mRootKey = key;
@@ -75,7 +75,7 @@ namespace Code
 		HKEY hKey = enumToKey(key);
 	
 		if(RegCreateKeyEx(hKey, subKey.toStdWString().c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &mHKey, 0) != ERROR_SUCCESS)
-			throwError("CreateKeyError", tr("Unable to create the key"));
+            throwError(QStringLiteral("CreateKeyError"), tr("Unable to create the key"));
 		else
 		{
 			mRootKey = key;
@@ -100,7 +100,7 @@ namespace Code
 			{
 				int intData = data.toInt();
 				if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_DWORD, reinterpret_cast<LPBYTE>(&intData), sizeof(int)) != ERROR_SUCCESS)
-					throwError("SetValueError", tr("Cannot set the value data"));
+                    throwError(QStringLiteral("SetValueError"), tr("Cannot set the value data"));
 			}
 			break;
 		case QVariant::LongLong:
@@ -108,7 +108,7 @@ namespace Code
 			{
 				long long intData = data.toLongLong();
 				if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_QWORD, reinterpret_cast<LPBYTE>(&intData), sizeof(long long)) != ERROR_SUCCESS)
-					throwError("SetValueError", tr("Cannot set the value data"));
+                    throwError(QStringLiteral("SetValueError"), tr("Cannot set the value data"));
 			}
 			break;
 		case QVariant::StringList:
@@ -123,14 +123,14 @@ namespace Code
 				}
 	
 				if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_MULTI_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), static_cast<DWORD>(wideData.size() * sizeof(wchar_t))) != ERROR_SUCCESS)
-					throwError("SetValueError", tr("Cannot set the value data"));
+                    throwError(QStringLiteral("SetValueError"), tr("Cannot set the value data"));
 			}
 			break;
 		case QVariant::ByteArray:
 			{
 				QByteArray byteArray = data.toByteArray();
 				if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_BINARY, reinterpret_cast<LPBYTE>(byteArray.data()), static_cast<DWORD>(byteArray.size())) != ERROR_SUCCESS)
-					throwError("SetValueError", tr("Cannot set the value data"));
+                    throwError(QStringLiteral("SetValueError"), tr("Cannot set the value data"));
 			}
 			break;
 		default:
@@ -139,10 +139,10 @@ namespace Code
 				{
 					std::wstring wideData = data.toString().toStdWString();
 					if(RegSetValueEx(mHKey, wideValue.c_str(), 0, REG_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), static_cast<DWORD>(wideData.size() * sizeof(wchar_t))) != ERROR_SUCCESS)
-						throwError("SetValueError", tr("Cannot set the value data"));
+                        throwError(QStringLiteral("SetValueError"), tr("Cannot set the value data"));
 				}
 				else
-					throwError("SetValueError", tr("Cannot set the value data"));
+                    throwError(QStringLiteral("SetValueError"), tr("Cannot set the value data"));
 			}
 			break;
 		}
@@ -161,7 +161,7 @@ namespace Code
 		std::wstring wideValue = value.toStdWString();
 		if(RegQueryValueEx(mHKey, wideValue.c_str(), 0, &type, 0, &size) != ERROR_SUCCESS)
 		{
-			throwError("FindValueError", tr("Cannot find the value to read"));
+            throwError(QStringLiteral("FindValueError"), tr("Cannot find the value to read"));
 			return QVariant();
 		}
 	
@@ -173,7 +173,7 @@ namespace Code
 				qint32 value;
 				if(RegQueryValueEx(mHKey, wideValue.c_str(), 0, 0, reinterpret_cast<LPBYTE>(&value), &size) != ERROR_SUCCESS)
 				{
-					throwError("FindValueError", tr("Cannot find the value to read"));
+                    throwError(QStringLiteral("FindValueError"), tr("Cannot find the value to read"));
 					return QVariant();
 				}
 	
@@ -191,7 +191,7 @@ namespace Code
 				wchar_t *buffer = new wchar_t[size];
 				if(RegQueryValueEx(mHKey, wideValue.c_str(), 0, 0, reinterpret_cast<LPBYTE>(buffer), &size) != ERROR_SUCCESS)
 				{
-					throwError("FindValueError", tr("Cannot find the value to read"));
+                    throwError(QStringLiteral("FindValueError"), tr("Cannot find the value to read"));
 					return QVariant();
 				}
 	
@@ -220,7 +220,7 @@ namespace Code
 				char *buffer = new char[size];
 				if(RegQueryValueEx(mHKey, wideValue.c_str(), 0, 0, reinterpret_cast<LPBYTE>(buffer), &size) != ERROR_SUCCESS)
 				{
-					throwError("FindValueError", tr("Cannot find the value to read"));
+                    throwError(QStringLiteral("FindValueError"), tr("Cannot find the value to read"));
 					return QVariant();
 				}
 	
@@ -235,7 +235,7 @@ namespace Code
 				qint64 value;
 				if(RegQueryValueEx(mHKey, wideValue.c_str(), 0, 0, reinterpret_cast<LPBYTE>(&value), &size) != ERROR_SUCCESS)
 				{
-					throwError("FindValueError", tr("Cannot find the value to read"));
+                    throwError(QStringLiteral("FindValueError"), tr("Cannot find the value to read"));
 					return QVariant();
 				}
 	
@@ -244,7 +244,7 @@ namespace Code
 			break;
 		case REG_NONE:
 		default:
-			throwError("InvalidValueError", tr("Invalid value type"));
+            throwError(QStringLiteral("InvalidValueError"), tr("Invalid value type"));
 			return QVariant();
 			break;
 		}
@@ -264,7 +264,7 @@ namespace Code
 	
 		if(RegQueryInfoKey(mHKey, 0, 0, 0, 0, 0, 0, &valueCount, &maxValueNameLength, 0, 0, 0) != ERROR_SUCCESS)
 		{
-			throwError("InvalidKeyError", tr("Unable to query informations about this key"));
+            throwError(QStringLiteral("InvalidKeyError"), tr("Unable to query informations about this key"));
 			return QStringList();
 		}
 	
@@ -306,7 +306,7 @@ namespace Code
 	
 		if(RegQueryInfoKey(mHKey, 0, 0, 0, &subKeyCount, &maxSubKeyNameLength, 0, 0, 0, 0, 0, 0) != ERROR_SUCCESS)
 		{
-			throwError("InvalidKeyError", tr("Unable to query informations about this key"));
+            throwError(QStringLiteral("InvalidKeyError"), tr("Unable to query informations about this key"));
 			return QStringList();
 		}
 	
@@ -340,7 +340,7 @@ namespace Code
 	{
 	#ifdef Q_OS_WIN
 		if(RegDeleteValue(mHKey, value.toStdWString().c_str()) != ERROR_SUCCESS)
-			throwError("InvalidKeyError", tr("Unable to delete the key"));
+            throwError(QStringLiteral("InvalidKeyError"), tr("Unable to delete the key"));
 	#else
 		Q_UNUSED(value)
 	#endif
@@ -445,7 +445,7 @@ namespace Code
 		HKEY hKey = enumToKey(key);
 	
 		if(!RegDelnode(hKey, subKey.toStdWString().c_str()))
-			throwError("InvalidKeyError", tr("Unable to delete the key"));
+            throwError(QStringLiteral("InvalidKeyError"), tr("Unable to delete the key"));
 	#else
 		Q_UNUSED(key)
 		Q_UNUSED(subKey)

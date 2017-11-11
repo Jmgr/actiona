@@ -131,7 +131,7 @@ namespace ActionTools
         font.setPointSize(18);
         painter.setFont(font);
 
-        painter.drawText(rect(), Qt::AlignCenter, QString::number(width()) + " x " + QString::number(height()));
+        painter.drawText(rect(), Qt::AlignCenter, QString::number(width()) + QStringLiteral(" x ") + QString::number(height()));
 #endif
     }
 
