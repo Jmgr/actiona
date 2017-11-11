@@ -99,7 +99,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	mActionFactory(new ActionTools::ActionFactory(this)),
 	mScript(new ActionTools::Script(mActionFactory, this)),
 	mScriptModel(new ScriptModel(mScript, mActionFactory, this)),
-    mSystemTrayIcon(commandOptions->count("notrayicon") ? 0 : new QSystemTrayIcon(QIcon(":/icons/logo.png"), this)),
+	mSystemTrayIcon(commandOptions->count(QStringLiteral("notrayicon")) ? 0 : new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/logo.png")), this)),
 	mSplashScreen(splashScreen),
 	mWasNewActionDockShown(false),
 	mWasConsoleDockShown(false),
@@ -146,13 +146,13 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 
 #ifdef Q_OS_LINUX
     auto environment = QProcessEnvironment::systemEnvironment();
-    auto sessionType = environment.value("XDG_SESSION_TYPE", "x11"); // Consider an empty value as being X11
-    auto x11Session = (sessionType == "x11");
+	auto sessionType = environment.value(QStringLiteral("XDG_SESSION_TYPE"), QStringLiteral("x11")); // Consider an empty value as being X11
+	auto x11Session = (sessionType == QLatin1String("x11"));
 
     connect(ui->x11NotDetectedLabel, &QLabel::linkActivated, [](const QString &link)
     {
-        if(link == "x11notdetected")
-            QDesktopServices::openUrl(QUrl(QString("https://wiki.actiona.tools/doku.php?id=%1:x11notdetected").arg(Tools::locale().mid(0, 2))));
+		if(link == QLatin1String("x11notdetected"))
+			QDesktopServices::openUrl(QUrl(QStringLiteral("https://wiki.actiona.tools/doku.php?id=%1:x11notdetected").arg(Tools::locale().mid(0, 2))));
     });
 
     ui->x11NotDetectedLabel->setVisible(!x11Session);
@@ -225,14 +225,14 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 
 #ifdef Q_OS_WIN
     {
-        QFileInfo sfxFileInfo(QDir(QApplication::applicationDirPath()).filePath("sfx/7zsd.sfx"));
-        QFileInfo sfxBaseArchiveInfo(QDir(QApplication::applicationDirPath()).filePath("sfx/sfx.7z"));
-        QFileInfo sfx32BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath("sfx/sfx32.7z"));
+		QFileInfo sfxFileInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/7zsd.sfx")));
+		QFileInfo sfxBaseArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx.7z")));
+		QFileInfo sfx32BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx32.7z")));
         bool has64BitArchive = true;
 
         if(QSysInfo::WordSize == 64)
         {
-            QFileInfo sfx64BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath("sfx/sfx64.7z"));
+			QFileInfo sfx64BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z")));
 
             has64BitArchive = sfx64BitArchiveInfo.isReadable();
         }
@@ -303,7 +303,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
 	connect(mUpdater, SIGNAL(success(Tools::Version,QDate,QString,QString,QString,int,QString)), this, SLOT(updateSuccess(Tools::Version,QDate,QString,QString,QString,int,QString)));
 #endif
 
-    setWindowTitle("Actiona[*]");//Set this to fix some warnings about the [*] placeholder
+	setWindowTitle(QStringLiteral("Actiona[*]"));//Set this to fix some warnings about the [*] placeholder
 
     QTimer::singleShot(0, this, SLOT(postInit()));
 }
@@ -331,10 +331,10 @@ void MainWindow::postInit()
 	if(mSplashScreen)
 		mSplashScreen->showMessage(tr("Loading actions..."));
 
-	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", mUsedLocale);
+	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + QStringLiteral("/actions/"), mUsedLocale);
 #ifndef Q_OS_WIN
 	if(mActionFactory->actionPackCount() == 0)
-        mActionFactory->loadActionPacks(QString("%1/%2/actiona/actions/").arg(ACT_PREFIX).arg(ACT_LIBDIR), mUsedLocale);
+		mActionFactory->loadActionPacks(QStringLiteral("%1/%2/actiona/actions/").arg(QLatin1String(ACT_PREFIX)).arg(QLatin1String(ACT_LIBDIR)), mUsedLocale);
 #endif
 
 	QSettings settings;
@@ -347,8 +347,8 @@ void MainWindow::postInit()
 		QScriptEngine engine;
         LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory, mCurrentFile);
 
-		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), "include"));
-		mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), "loadUI"));
+		mCompletionModel->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/class.png")), QStringLiteral("include")));
+		mCompletionModel->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/class.png")), QStringLiteral("loadUI")));
 		
 		QScriptValueIterator it(engine.globalObject());
 		while(it.hasNext())
@@ -358,7 +358,7 @@ void MainWindow::postInit()
 			if(!it.value().isQMetaObject())
 				continue;
 
-			mCompletionModel->appendRow(new QStandardItem(QIcon(":/icons/class.png"), it.name()));
+			mCompletionModel->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/class.png")), it.name()));
 		}
 	}
 
@@ -446,20 +446,20 @@ void MainWindow::postInit()
 		{
 			if(!loadFile(mStartScript))
 			{
-				if(mCommandOptions->count("execute"))
+				if(mCommandOptions->count(QStringLiteral("execute")))
 					QApplication::quit();
 			}
 		}
 		else
 		{
-            if(settings.value("gui/reopenLastScript", QVariant(false)).toBool())
+			if(settings.value(QStringLiteral("gui/reopenLastScript"), QVariant(false)).toBool())
 			{
-                QString lastFilename = settings.value("gui/lastScript", QString()).toString();
+				QString lastFilename = settings.value(QStringLiteral("gui/lastScript"), QString()).toString();
 
 				if(!lastFilename.isEmpty())
 				{
 					if(!loadFile(lastFilename, false))
-                        settings.setValue("gui/lastScript", QString());
+						settings.setValue(QStringLiteral("gui/lastScript"), QString());
 				}
 			}
 		}
@@ -468,35 +468,35 @@ void MainWindow::postInit()
 	if(mPackLoadErrors.count() > 0)
 	{
 		QString message = tr("<b>Unable to load %n action(s):</b>\n", "", mPackLoadErrors.count());
-		message += "<ul>";
+		message += QStringLiteral("<ul>");
 
 		for(const QString &error: mPackLoadErrors)
 		{
-			message += "<li>" + error + "</li>";
+			message += QStringLiteral("<li>") + error + QStringLiteral("</li>");
 		}
 
-		message += "</ul>";
+		message += QStringLiteral("</ul>");
 
 		QMessageBox::critical(this, tr("Error while loading actions"), message);
 	}
 
 #ifndef ACT_NO_UPDATER
-	if(!mCommandOptions->count("execute") && settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)) == ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)
+	if(!mCommandOptions->count(QStringLiteral("execute")) && settings.value(QStringLiteral("network/updatesCheck"), QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)) == ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)
 	{
 		if(QMessageBox::question(this,
 								 tr("Automatic updates"),
                                  tr("Do you want Actiona to check once per day if a new version is available ?\nYou can change this setting later in the settings dialog."),
 								 QMessageBox::Yes | QMessageBox::No,
 								 QMessageBox::Yes) == QMessageBox::Yes)
-			settings.setValue("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY));
+			settings.setValue(QStringLiteral("network/updatesCheck"), QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY));
 		else
-			settings.setValue("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER));
+			settings.setValue(QStringLiteral("network/updatesCheck"), QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER));
 	}
 
-	int checkFrequency = settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)).toInt();
-	if(!mCommandOptions->count("execute") && checkFrequency != ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)
+	int checkFrequency = settings.value(QStringLiteral("network/updatesCheck"), QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)).toInt();
+	if(!mCommandOptions->count(QStringLiteral("execute")) && checkFrequency != ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)
 	{
-		QDateTime lastCheck = settings.value("network/lastCheck", QDateTime()).toDateTime();
+		QDateTime lastCheck = settings.value(QStringLiteral("network/lastCheck"), QDateTime()).toDateTime();
 		bool check = false;
 		if(lastCheck == QDateTime())
 			check = true;
@@ -523,27 +523,27 @@ void MainWindow::postInit()
 
 		if(check)
 		{
-			settings.setValue("network/lastCheck", QDateTime::currentDateTime());
+			settings.setValue(QStringLiteral("network/lastCheck"), QDateTime::currentDateTime());
 
 			checkForUpdate(true);
 		}
 	}
 #endif
 
-	const QString &startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
+	const QString &startStopExecutionHotkey = settings.value(QStringLiteral("actions/stopExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+Q"))).toString();
 	if(!startStopExecutionHotkey.isEmpty())
 		ActionTools::GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
-	const QString &pauseExecutionHotkey = settings.value("actions/pauseExecutionHotkey", QKeySequence("Ctrl+Alt+W")).toString();
+	const QString &pauseExecutionHotkey = settings.value(QStringLiteral("actions/pauseExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+W"))).toString();
 	if(!pauseExecutionHotkey.isEmpty())
 		ActionTools::GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
 
-	if(mCommandOptions->count("execute"))
+	if(mCommandOptions->count(QStringLiteral("execute")))
 		execute(false);
     else if(Global::ACTIONA_VERSION < Tools::Version(1, 0, 0))
 	{
-		if(!settings.value("hasGotPreVersionMessage", false).toBool())
+		if(!settings.value(QStringLiteral("hasGotPreVersionMessage"), false).toBool())
 		{
-			settings.setValue("hasGotPreVersionMessage", true);
+			settings.setValue(QStringLiteral("hasGotPreVersionMessage"), true);
 
 			QMessageBox::information(this, tr("Beta test"),
                                      tr("Thank you for beta-testing this new version of Actiona !<br>"
@@ -577,7 +577,7 @@ void MainWindow::on_actionSave_copy_as_triggered()
 
 	QFileInfo fileInfo(fileName);
 	if(fileInfo.suffix().isEmpty())
-		fileName += ".ascr";
+		fileName += QStringLiteral(".ascr");
 
 	saveFile(fileName, true);
 }
@@ -672,7 +672,7 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionClear_triggered()
 {
 	QSettings settings;
-	settings.setValue("recentFileList", QStringList());
+	settings.setValue(QStringLiteral("recentFileList"), QStringList());
 
 	updateRecentFileActions();
 }
@@ -681,11 +681,11 @@ void MainWindow::on_actionExport_executable_triggered()
 {
 #ifdef Q_OS_WIN
 	QSettings settings;
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Choose the SFX script destination"), settings.value("sfxScript/destination").toString(), "Executable file (*.exe)");
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Choose the SFX script destination"), settings.value(QStringLiteral("sfxScript/destination")).toString(), tr("Executable file (*.exe)"));
 	if(fileName.isEmpty())
 		return;
 
-	settings.setValue("sfxScript/destination", fileName);
+	settings.setValue(QStringLiteral("sfxScript/destination"), fileName);
 
 	SFXScriptDialog sfxScriptDialog(this);
 
@@ -699,29 +699,29 @@ void MainWindow::on_actionExport_executable_triggered()
 					   && !sfxScriptDialog.showConsole()
 					   && !sfxScriptDialog.showExecutionWindow());
 
-	QString parameters("es");//Execute the current script & disable splash screen
+	QString parameters(QStringLiteral("es"));//Execute the current script & disable splash screen
 	if(sfxScriptDialog.disableTrayIcon())
-		parameters += "t";
+		parameters += QStringLiteral("t");
 	if(!sfxScriptDialog.showConsole())
-		parameters += "C";
+		parameters += QStringLiteral("C");
 	if(!sfxScriptDialog.showExecutionWindow())
-		parameters += "E";
+		parameters += QStringLiteral("E");
 	if(sfxScriptDialog.closeAfterExecution())
-		parameters += "x";
+		parameters += QStringLiteral("x");
 
-	const QString archivePath = QDir::temp().filePath("archive.7z");
-	const QString sfxPath = QDir(QApplication::applicationDirPath()).filePath("sfx/7zsd.sfx");
-	const QString scriptPath = QDir::temp().filePath("script.ascr");
+	const QString archivePath = QDir::temp().filePath(QStringLiteral("archive.7z"));
+	const QString sfxPath = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/7zsd.sfx"));
+	const QString scriptPath = QDir::temp().filePath(QStringLiteral("script.ascr"));
 	QString sourceArchive;
 
     if(sfxScriptDialog.requiresActiona())
-		sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx.7z");
+		sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx.7z"));
 	else
 	{
 		if(QSysInfo::WordSize == 32 || sfxScriptDialog.use32BitBinaries())
-			sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx32.7z");
+			sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx32.7z"));
 		else
-			sourceArchive = QDir(QApplication::applicationDirPath()).filePath("sfx/sfx64.7z");
+			sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z"));
 	}
 
 	QProgressDialog progressDialog(tr("Creating SFX script"), QString(), 0, 100, this);
@@ -760,15 +760,15 @@ void MainWindow::on_actionExport_executable_triggered()
 	//Write the config file
 	QString configFile;
 	QTextStream configFileStream(&configFile);
-	configFileStream << ";!@Install@!UTF-8!" << "\r\n";
-	configFileStream << "ExecuteFile=\"runner.exe\"" << "\r\n";
+	configFileStream << QStringLiteral(";!@Install@!UTF-8!") << QStringLiteral("\r\n");
+	configFileStream << QStringLiteral("ExecuteFile=\"runner.exe\"") << QStringLiteral("\r\n");
 	if(useActExec)
-		configFileStream << QString("ExecuteParameters=\"%1 open actexec \\\"script.ascr\\\"\"").arg(mUsedLocale) << "\r\n";
+		configFileStream << QStringLiteral("ExecuteParameters=\"%1 open actexec \\\"script.ascr\\\"\"").arg(mUsedLocale) << QStringLiteral("\r\n");
 	else
-        configFileStream << QString("ExecuteParameters=\"%1 open actiona \\\"-%2 script.ascr\\\"\"").arg(mUsedLocale).arg(parameters) << "\r\n";
+		configFileStream << QStringLiteral("ExecuteParameters=\"%1 open actiona \\\"-%2 script.ascr\\\"\"").arg(mUsedLocale).arg(parameters) << QStringLiteral("\r\n");
 
-	configFileStream << "GUIMode=\"2\"" << "\r\n";
-	configFileStream << ";!@InstallEnd@!";
+	configFileStream << QStringLiteral("GUIMode=\"2\"") << QStringLiteral("\r\n");
+	configFileStream << QStringLiteral(";!@InstallEnd@!");
 
 	Tools::SevenZipArchiveWrite archive(archivePath);
 
@@ -848,7 +848,7 @@ void MainWindow::on_actionSettings_triggered()
 
 		updateProxySettings();
 
-        int recentFileCount = settings.value("gui/maxRecentFiles", 5).toInt();
+		int recentFileCount = settings.value(QStringLiteral("gui/maxRecentFiles"), 5).toInt();
 		if(recentFileCount != mMaxRecentFiles)
 		{
 			mMaxRecentFiles = recentFileCount;
@@ -858,11 +858,11 @@ void MainWindow::on_actionSettings_triggered()
 		
 		ActionTools::GlobalShortcutManager::clear();
 
-		QString startStopExecutionHotkey = settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString();
+		QString startStopExecutionHotkey = settings.value(QStringLiteral("actions/stopExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+Q"))).toString();
 		if(!startStopExecutionHotkey.isEmpty())
 			ActionTools::GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
 
-		QString pauseExecutionHotkey = settings.value("actions/pauseExecutionHotkey", QKeySequence("Ctrl+Alt+W")).toString();
+		QString pauseExecutionHotkey = settings.value(QStringLiteral("actions/pauseExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+W"))).toString();
 		if(!pauseExecutionHotkey.isEmpty())
 			ActionTools::GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
 	}
@@ -1073,7 +1073,7 @@ void MainWindow::on_actionCreate_shortcut_triggered()
 		return;
 
 #ifdef Q_OS_WIN
-	filePath += ".lnk";
+	filePath += QStringLiteral(".lnk");
 #endif
 
 	QFile file(mCurrentFile);
@@ -1139,7 +1139,7 @@ void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::on_actionHelp_triggered()
 {
-    QDesktopServices::openUrl(QUrl(QString("http://wiki.actiona.tools/")));
+	QDesktopServices::openUrl(QUrl(QStringLiteral("http://wiki.actiona.tools/")));
 }
 
 void MainWindow::on_actionTake_screenshot_triggered()
@@ -1223,41 +1223,41 @@ void MainWindow::readSettings()
 {
 	QSettings settings;
 
-	restoreGeometry(settings.value("geometry").toByteArray());
-	restoreState(settings.value("windowState").toByteArray());
-    mMaxRecentFiles = settings.value("gui/maxRecentFiles", 5).toInt();
+	restoreGeometry(settings.value(QStringLiteral("geometry")).toByteArray());
+	restoreState(settings.value(QStringLiteral("windowState")).toByteArray());
+	mMaxRecentFiles = settings.value(QStringLiteral("gui/maxRecentFiles"), 5).toInt();
 	if(mSystemTrayIcon)
-        mSystemTrayIcon->setVisible(settings.value("gui/showTaskbarIcon", true).toBool());
+		mSystemTrayIcon->setVisible(settings.value(QStringLiteral("gui/showTaskbarIcon"), true).toBool());
 
-	QList<QVariant> customColors = settings.value("customColors").toList();
+	QList<QVariant> customColors = settings.value(QStringLiteral("customColors")).toList();
 	for(int colorIndex = 0; colorIndex < customColors.count(); ++colorIndex)
 		QColorDialog::setCustomColor(colorIndex, customColors.at(colorIndex).value<QRgb>());
 
-    ui->clearBeforeExecutionCheckBox->setChecked(settings.value("gui/clearConsoleBeforeExecution", true).toBool());
+	ui->clearBeforeExecutionCheckBox->setChecked(settings.value(QStringLiteral("gui/clearConsoleBeforeExecution"), true).toBool());
 }
 
 void MainWindow::writeSettings()
 {
 	QSettings settings;
 
-	settings.setValue("geometry", saveGeometry());
-	settings.setValue("windowState", saveState());
-    settings.setValue("gui/maxRecentFiles", mMaxRecentFiles);
+	settings.setValue(QStringLiteral("geometry"), saveGeometry());
+	settings.setValue(QStringLiteral("windowState"), saveState());
+	settings.setValue(QStringLiteral("gui/maxRecentFiles"), mMaxRecentFiles);
 	if(mSystemTrayIcon)
-        settings.setValue("gui/showTaskbarIcon", mSystemTrayIcon->isVisible());
+		settings.setValue(QStringLiteral("gui/showTaskbarIcon"), mSystemTrayIcon->isVisible());
 
 	QList<QVariant> customColors;
 	for(int colorIndex = 0; colorIndex < QColorDialog::customCount(); ++colorIndex)
 		customColors << QColorDialog::customColor(colorIndex);
-	settings.setValue("customColors", customColors);
+	settings.setValue(QStringLiteral("customColors"), customColors);
 
-    settings.setValue("gui/clearConsoleBeforeExecution", ui->clearBeforeExecutionCheckBox->isChecked());
+	settings.setValue(QStringLiteral("gui/clearConsoleBeforeExecution"), ui->clearBeforeExecutionCheckBox->isChecked());
 }
 
 void MainWindow::updateRecentFileActions()
 {
 	QSettings settings;
-	QStringList files = settings.value("recentFileList").toStringList();
+	QStringList files = settings.value(QStringLiteral("recentFileList")).toStringList();
 	files.removeAll(QString());
 
 	int numRecentFiles = qMin(files.size(), mMaxRecentFiles);
@@ -1282,7 +1282,7 @@ void MainWindow::updateProxySettings()
 	QSettings settings;
 	QNetworkProxy proxy;
 
-	int proxyMode = settings.value("network/proxyMode", ActionTools::Settings::PROXY_SYSTEM).toInt();
+	int proxyMode = settings.value(QStringLiteral("network/proxyMode"), ActionTools::Settings::PROXY_SYSTEM).toInt();
 	switch(proxyMode)
 	{
 	case ActionTools::Settings::PROXY_NONE:
@@ -1301,7 +1301,7 @@ void MainWindow::updateProxySettings()
 		break;
 	case ActionTools::Settings::PROXY_CUSTOM:
 		{
-			int type = settings.value("network/proxyType", ActionTools::Settings::PROXY_TYPE_HTTP).toInt();
+			int type = settings.value(QStringLiteral("network/proxyType"), ActionTools::Settings::PROXY_TYPE_HTTP).toInt();
 			QNetworkProxy proxy;
 
 			if(type == ActionTools::Settings::PROXY_TYPE_HTTP)
@@ -1309,10 +1309,10 @@ void MainWindow::updateProxySettings()
 			else
 				proxy.setType(QNetworkProxy::Socks5Proxy);
 
-			proxy.setHostName(settings.value("network/proxyHost", QString("0.0.0.0")).toString());
-			proxy.setPort(settings.value("network/proxyPort", 0).toInt());
-			proxy.setUser(settings.value("network/proxyUser", QString()).toString());
-			proxy.setPassword(settings.value("network/proxyPassword", QString()).toString());
+			proxy.setHostName(settings.value(QStringLiteral("network/proxyHost"), QStringLiteral("0.0.0.0")).toString());
+			proxy.setPort(settings.value(QStringLiteral("network/proxyPort"), 0).toInt());
+			proxy.setUser(settings.value(QStringLiteral("network/proxyUser"), QString()).toString());
+			proxy.setPassword(settings.value(QStringLiteral("network/proxyPassword"), QString()).toString());
 		}
 		break;
 	}
@@ -1337,9 +1337,9 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 				QString missingActions(tr("Script loaded, some actions are missing:<ul>"));
 
 				for(const QString &missingAction: mScript->missingActions())
-					missingActions += "<li>" + missingAction + "</li>";
+					missingActions += QStringLiteral("<li>") + missingAction + QStringLiteral("</li>");
 
-				missingActions += "</ul>";
+				missingActions += QStringLiteral("</ul>");
 
 				QMessageBox::warning(this, tr("Load script"), missingActions);
 			}
@@ -1437,13 +1437,13 @@ void MainWindow::checkForUpdate(bool silent)
 	mUpdaterProgressDialog->setWindowTitle(tr("Checking for updates"));
 	mSilentUpdate = silent;
     QString localeName = QLocale::system().name();
-    QStringList localeParts = localeName.split(QChar('_'));
+	QStringList localeParts = localeName.split(QLatin1Char('_'));
     QString languageName = localeName;
 
     if(localeParts.size() >= 2)
         languageName = localeParts[0];
 
-    mUpdater->checkForUpdates("actiona3", Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), languageName);
+	mUpdater->checkForUpdates(QStringLiteral("actiona3"), Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), languageName);
 }
 #endif
 
@@ -1539,19 +1539,19 @@ void MainWindow::execute(bool onlySelection)
 
 	QSettings settings;
 
-    if(settings.value("gui/addConsoleStartEndSeparators", QVariant(true)).toBool())
+	if(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool())
 		ui->consoleWidget->addStartSeparator();
 
-	bool showExecutionWindow = settings.value("actions/showExecutionWindow", QVariant(true)).toBool();
-	int executionWindowPosition = settings.value("actions/executionWindowPosition", QVariant(0)).toInt();
-	int executionWindowScreen = settings.value("actions/executionWindowScreen", QVariant(0)).toInt();
-	bool showConsoleWindow = settings.value("actions/showConsoleWindow", QVariant(true)).toBool();
-	int consoleWindowPosition = settings.value("actions/consoleWindowPosition", QVariant(1)).toInt();
-	int consoleWindowScreen = settings.value("actions/consoleWindowScreen", QVariant(0)).toInt();
+	bool showExecutionWindow = settings.value(QStringLiteral("actions/showExecutionWindow"), QVariant(true)).toBool();
+	int executionWindowPosition = settings.value(QStringLiteral("actions/executionWindowPosition"), QVariant(0)).toInt();
+	int executionWindowScreen = settings.value(QStringLiteral("actions/executionWindowScreen"), QVariant(0)).toInt();
+	bool showConsoleWindow = settings.value(QStringLiteral("actions/showConsoleWindow"), QVariant(true)).toBool();
+	int consoleWindowPosition = settings.value(QStringLiteral("actions/consoleWindowPosition"), QVariant(1)).toInt();
+	int consoleWindowScreen = settings.value(QStringLiteral("actions/consoleWindowScreen"), QVariant(0)).toInt();
 
-	if(mCommandOptions->count("noexecutionwindow"))
+	if(mCommandOptions->count(QStringLiteral("noexecutionwindow")))
 		showExecutionWindow = false;
-	if(mCommandOptions->count("noconsolewindow"))
+	if(mCommandOptions->count(QStringLiteral("noconsolewindow")))
 		showConsoleWindow = false;
 
 	{
@@ -1594,7 +1594,7 @@ void MainWindow::execute(bool onlySelection)
 	{
 		ui->consoleWidget->updateClearButton();
 
-        if(settings.value("gui/addConsoleStartEndSeparators", QVariant(true)).toBool())
+		if(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool())
 			ui->consoleWidget->addEndSeparator();
 	}
 }
@@ -1610,7 +1610,7 @@ void MainWindow::fillNewActionModel()
 
         for(int categoryIndex = 0; categoryIndex < ActionTools::CategoryCount; ++categoryIndex)
         {
-            QString categoryName = QApplication::translate("ActionDefinition::CategoryName", ActionTools::ActionDefinition::CategoryName[categoryIndex].toLatin1());
+			QString categoryName = QApplication::translate("ActionDefinition::CategoryName", ActionTools::ActionDefinition::CategoryName[categoryIndex].toLatin1().constData());
             QStandardItem *categoryItem = new QStandardItem(categoryName);
 
             categoryItem->setFont(boldFont);
@@ -1640,7 +1640,7 @@ void MainWindow::fillNewActionModel()
             {
                 actionItem->setFont(italicFont);
 
-                tooltip.append("\n");
+				tooltip.append(QStringLiteral("\n"));
                 tooltip.append(tr("Note: does not work under this operating system"));
             }
 
@@ -1726,10 +1726,10 @@ void MainWindow::openRecentFile()
 		if(!loadFile(action->data().toString()))
 		{
 			QSettings settings;
-			QStringList files = settings.value("recentFileList").toStringList();
+			QStringList files = settings.value(QStringLiteral("recentFileList")).toStringList();
 
 			files.removeAll(action->data().toString());
-			settings.setValue("recentFileList", files);
+			settings.setValue(QStringLiteral("recentFileList"), files);
 
 			updateRecentFileActions();
 		}
@@ -1778,12 +1778,12 @@ void MainWindow::scriptExecutionStopped()
 {
 	QSettings settings;
 
-    if(settings.value("gui/addConsoleStartEndSeparators", QVariant(true)).toBool())
+	if(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool())
 		ui->consoleWidget->addEndSeparator();
 
 	ui->consoleWidget->updateClearButton();
 
-	if(mCommandOptions->count("exitatend"))
+	if(mCommandOptions->count(QStringLiteral("exitatend")))
 		QApplication::quit();
 	else
 	{
@@ -1888,9 +1888,9 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 	changelogDialog.setVersion(version);
 	changelogDialog.setReleaseDate(releaseDate);
 
-	if(type == "major")
+	if(type == QLatin1String("major"))
 		changelogDialog.setType(tr("Major"));
-	else if(type == "release")
+	else if(type == QLatin1String("release"))
 		changelogDialog.setType(tr("Release"));
 	else
 		changelogDialog.setType(tr("Bugfix"));
@@ -1990,7 +1990,7 @@ void MainWindow::updateDownloadFinished()
 		return;
 	}
 
-	if(QFileInfo(mUpdateFile).size() != mUpdateFileSize || mHashCalculator.result().toHex() != mUpdateFileHash)
+	if(QFileInfo(mUpdateFile).size() != mUpdateFileSize || QLatin1String(mHashCalculator.result().toHex()) != mUpdateFileHash)
 		QMessageBox::warning(this, tr("Update download"), tr("The downloaded file is corrupted. Try again later."));
 	else
 		QTimer::singleShot(1, this, SLOT(postDownloadOperation()));
@@ -2031,7 +2031,7 @@ void MainWindow::postDownloadOperation()
 			QMessageBox::warning(this, tr("Update"), tr("Unable to execute the downloaded file."));
 	}
 	else
-		QDesktopServices::openUrl(QUrl("file:///" + QFileInfo(mUpdateFile.fileName()).dir().path(), QUrl::TolerantMode));
+		QDesktopServices::openUrl(QUrl(QStringLiteral("file:///") + QFileInfo(mUpdateFile.fileName()).dir().path(), QUrl::TolerantMode));
 }
 #endif
 
@@ -2152,7 +2152,7 @@ bool MainWindow::loadFile(const QString &fileName, bool verbose)
 		return false;
 	}
 
-	if(fileName.endsWith(".acod"))
+	if(fileName.endsWith(QStringLiteral(".acod")))
 	{
 		if(verbose)
             QMessageBox::warning(this, tr("Load script"), tr("Actiona currently has no builtin editor for Code files (.acod). Please use an external code editor."));
@@ -2164,7 +2164,7 @@ bool MainWindow::loadFile(const QString &fileName, bool verbose)
 	{
 		QSettings settings;
 
-        settings.setValue("gui/lastScript", fileName);
+		settings.setValue(QStringLiteral("gui/lastScript"), fileName);
 
 		statusBar()->showMessage(tr("File loaded"), 2000);
 
@@ -2195,7 +2195,7 @@ bool MainWindow::saveFile(const QString &fileName, bool copy)
 
 		QSettings settings;
 
-        settings.setValue("gui/lastScript", fileName);
+		settings.setValue(QStringLiteral("gui/lastScript"), fileName);
 	}
 
 	return result;
@@ -2213,13 +2213,13 @@ void MainWindow::setCurrentFile(const QString &fileName)
 	setWindowFilePath(shownName);
 
 	QSettings settings;
-	QStringList files = settings.value("recentFileList").toStringList();
+	QStringList files = settings.value(QStringLiteral("recentFileList")).toStringList();
 	files.removeAll(fileName);
 	files.prepend(fileName);
 	while(files.size() > mMaxRecentFiles)
 		files.removeLast();
 
-	settings.setValue("recentFileList", files);
+	settings.setValue(QStringLiteral("recentFileList"), files);
 
 	updateRecentFileActions();
 }
@@ -2269,7 +2269,7 @@ bool MainWindow::saveAs()
 
 	QFileInfo fileInfo(fileName);
 	if(fileInfo.suffix().isEmpty())
-		fileName += ".ascr";
+		fileName += QStringLiteral(".ascr");
 
 	return saveFile(fileName);
 }

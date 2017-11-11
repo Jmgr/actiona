@@ -108,7 +108,7 @@ namespace Code
 		QScriptValue onFilterSelected() const								{ return mOnFilterSelected; }
 		
 	public slots:
-		QString toString() const					{ return "FileDialog"; }
+		QString toString() const					{ return QStringLiteral("FileDialog"); }
 		QScriptValue setAcceptMode(AcceptMode acceptMode);
 		QScriptValue setFileMode(FileMode fileMode);
 		QScriptValue setViewMode(ViewMode viewMode);

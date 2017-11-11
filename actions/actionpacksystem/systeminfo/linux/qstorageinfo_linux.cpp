@@ -92,14 +92,14 @@ qlonglong QStorageInfo_CustomPrivate::availableDiskSpace(const QString &drive)
 {
 #ifdef __USE_LARGEFILE64
     struct statfs64 statistics;
-    if (statfs64(drive.toLatin1(), &statistics) == 0) {
+	if (statfs64(drive.toLatin1().constData(), &statistics) == 0) {
         qlonglong blockSize = statistics.f_bsize;
         qlonglong availBlocks = statistics.f_bavail;
         return availBlocks * blockSize;
     }
 #else
     struct statfs statistics;
-    if (statfs(drive.toLatin1(), &statistics) == 0) {
+	if (statfs(drive.toLatin1(), &statistics) == 0) {
         qlonglong blockSize = statistics.f_bsize;
         qlonglong availBlocks = statistics.f_bavail;
         return availBlocks * blockSize;
@@ -112,7 +112,7 @@ qlonglong QStorageInfo_CustomPrivate::totalDiskSpace(const QString &drive)
 {
 #ifdef __USE_LARGEFILE64
     struct statfs64 statistics;
-    if (statfs64(drive.toLatin1(), &statistics) == 0) {
+	if (statfs64(drive.toLatin1().constData(), &statistics) == 0) {
         qlonglong blockSize = statistics.f_bsize;
         qlonglong totalBlocks = statistics.f_blocks;
         return totalBlocks * blockSize;

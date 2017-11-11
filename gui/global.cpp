@@ -26,10 +26,10 @@ namespace Global
 {
 	QString currentOS()
 	{
-		QString wordSize = (QSysInfo::WordSize == 32) ? QString() : "64";
+		QString wordSize = (QSysInfo::WordSize == 32) ? QString() : QStringLiteral("64");
 
 #ifdef Q_OS_LINUX
-		return "linux" + wordSize;
+		return QStringLiteral("linux") + wordSize;
 #endif
 #ifdef Q_OS_WIN
 		QString windowsName;
@@ -38,44 +38,44 @@ namespace Global
 		{
 		case QSysInfo::WV_95:
 		case QSysInfo::WV_98:
-			windowsName = "98";
+			windowsName = QStringLiteral("98");
 			break;
 		case QSysInfo::WV_Me:
-			windowsName = "me";
+			windowsName = QStringLiteral("me");
 			break;
 		case QSysInfo::WV_NT:
 		case QSysInfo::WV_2000:
 		case QSysInfo::WV_XP:
 		case QSysInfo::WV_2003:
-			windowsName = "xp";
+			windowsName = QStringLiteral("xp");
 			break;
 		case QSysInfo::WV_VISTA:
-			windowsName = "vista";
+			windowsName = QStringLiteral("vista");
 			break;
 		case QSysInfo::WV_WINDOWS7:
-			windowsName = "seven";
+			windowsName = QStringLiteral("seven");
 			break;
                 default:
-                        windowsName = "unknown";
+						windowsName = QStringLiteral("unknown");
                         break;
 		}
 
-		return "windows" + windowsName + wordSize;
+		return QStringLiteral("windows") + windowsName + wordSize;
 #endif
 
-		return "unknown";
+		return QStringLiteral("unknown");
 	}
 
 	QString currentOSType()
 	{
 #ifdef Q_OS_LINUX
-		return "linux";
+		return QStringLiteral("linux");
 #endif
 #ifdef Q_OS_WIN
-		return "windows";
+		return QStringLiteral("windows");
 #endif
 
-		return "unknown";
+		return QStringLiteral("unknown");
 	}
 
 	int currentOSBits()

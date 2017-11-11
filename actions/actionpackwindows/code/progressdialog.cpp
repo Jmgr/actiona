@@ -36,20 +36,20 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "value")
+			if(it.name() == QLatin1String("value"))
 				progressDialog->mProgressDialog->setValue(it.value().toInt32());
-			else if(it.name() == "labelText")
+			else if(it.name() == QLatin1String("labelText"))
 				progressDialog->mProgressDialog->setLabelText(it.value().toString());
-			else if(it.name() == "minimum")
+			else if(it.name() == QLatin1String("minimum"))
 				progressDialog->mProgressDialog->setMinimum(it.value().toInt32());
-			else if(it.name() == "maximum")
+			else if(it.name() == QLatin1String("maximum"))
 				progressDialog->mProgressDialog->setMaximum(it.value().toInt32());
-			else if(it.name() == "range")
+			else if(it.name() == QLatin1String("range"))
 			{
-				progressDialog->mProgressDialog->setMinimum(it.value().property("minimum").toInt32());
-				progressDialog->mProgressDialog->setMaximum(it.value().property("maximum").toInt32());
+				progressDialog->mProgressDialog->setMinimum(it.value().property(QStringLiteral("minimum")).toInt32());
+				progressDialog->mProgressDialog->setMaximum(it.value().property(QStringLiteral("maximum")).toInt32());
 			}
-			else if(it.name() == "onCanceled")
+			else if(it.name() == QLatin1String("onCanceled"))
 				progressDialog->mOnCanceled = it.value();
 		}
 

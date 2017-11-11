@@ -37,8 +37,8 @@ namespace Actions
 		{
 			bool ok = true;
 		
-			QPoint position        = evaluatePoint(ok, "position");
-			QPoint positionOffset = evaluatePoint(ok, "positionOffset");
+			QPoint position        = evaluatePoint(ok, QStringLiteral("position"));
+			QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
 
 			if(!ok)
 				return;

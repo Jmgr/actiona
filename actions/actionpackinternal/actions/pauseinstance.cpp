@@ -23,13 +23,13 @@
 namespace Actions
 {
 	ActionTools::StringListPair PauseInstance::units = qMakePair(
-			QStringList() << "milliseconds" << "seconds" << "minutes" << "hours" << "days",
+			QStringList() << QStringLiteral("milliseconds") << QStringLiteral("seconds") << QStringLiteral("minutes") << QStringLiteral("hours") << QStringLiteral("days"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("PauseInstance::units", "Milliseconds")
-			<< QT_TRANSLATE_NOOP("PauseInstance::units", "Seconds")
-			<< QT_TRANSLATE_NOOP("PauseInstance::units", "Minutes")
-			<< QT_TRANSLATE_NOOP("PauseInstance::units", "Hours")
-			<< QT_TRANSLATE_NOOP("PauseInstance::units", "Days"));
+			<< QT_TRANSLATE_NOOP("PauseInstance::units", QStringLiteral("Milliseconds"))
+			<< QT_TRANSLATE_NOOP("PauseInstance::units", QStringLiteral("Seconds"))
+			<< QT_TRANSLATE_NOOP("PauseInstance::units", QStringLiteral("Minutes"))
+			<< QT_TRANSLATE_NOOP("PauseInstance::units", QStringLiteral("Hours"))
+			<< QT_TRANSLATE_NOOP("PauseInstance::units", QStringLiteral("Days")));
 }
 
 

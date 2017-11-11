@@ -226,7 +226,7 @@ namespace ActionTools
 	QList<int> CrossPlatform::runningProcesses()
 	{
 #ifdef Q_OS_LINUX
-		QDir procDir("/proc");
+		QDir procDir(QStringLiteral("/proc"));
 		QList<int> back;
 
 		if(!procDir.exists())

@@ -58,17 +58,17 @@ public:
 		addActionDefinition(new Actions::MultiDataInputDefinition(this));
 	}
 
-	QString id() const							{ return "windows"; }
+	QString id() const							{ return QStringLiteral("windows"); }
 	QString name() const						{ return tr("Actions dealing with windows"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
 
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
-		addCodeClass<Code::MessageBox>("MessageBox", scriptEngine);
-		addCodeClass<Code::InputDialog>("InputDialog", scriptEngine);
-		addCodeClass<Code::ProgressDialog>("ProgressDialog", scriptEngine);
-		addCodeClass<Code::ColorDialog>("ColorDialog", scriptEngine);
-		addCodeClass<Code::FileDialog>("FileDialog", scriptEngine);
+		addCodeClass<Code::MessageBox>(QStringLiteral("MessageBox"), scriptEngine);
+		addCodeClass<Code::InputDialog>(QStringLiteral("InputDialog"), scriptEngine);
+		addCodeClass<Code::ProgressDialog>(QStringLiteral("ProgressDialog"), scriptEngine);
+		addCodeClass<Code::ColorDialog>(QStringLiteral("ColorDialog"), scriptEngine);
+		addCodeClass<Code::FileDialog>(QStringLiteral("FileDialog"), scriptEngine);
 	}
 
 private:

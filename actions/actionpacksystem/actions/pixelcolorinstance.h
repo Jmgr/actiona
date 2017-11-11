@@ -55,16 +55,16 @@ namespace Actions
 		{
 			bool ok = true;
 
-			mPixelPosition = evaluatePoint(ok, "pixel", "position");
-			mPixelColorValue = evaluateColor(ok, "pixel", "color");
-			mComparison = evaluateListElement<Comparison>(ok, comparisons, "comparison");
-			mIfTrue = evaluateIfAction(ok, "ifTrue");
-			ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, "ifFalse");
-			mVariable = evaluateVariable(ok, "variable");
-			int redTolerance = evaluateInteger(ok, "redTolerance");
-			int greenTolerance = evaluateInteger(ok, "greenTolerance");
-			int blueTolerance = evaluateInteger(ok, "blueTolerance");
-            QPoint positionOffset = evaluatePoint(ok, "positionOffset");
+			mPixelPosition = evaluatePoint(ok, QStringLiteral("pixel"), QStringLiteral("position"));
+			mPixelColorValue = evaluateColor(ok, QStringLiteral("pixel"), QStringLiteral("color"));
+			mComparison = evaluateListElement<Comparison>(ok, comparisons, QStringLiteral("comparison"));
+			mIfTrue = evaluateIfAction(ok, QStringLiteral("ifTrue"));
+			ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, QStringLiteral("ifFalse"));
+			mVariable = evaluateVariable(ok, QStringLiteral("variable"));
+			int redTolerance = evaluateInteger(ok, QStringLiteral("redTolerance"));
+			int greenTolerance = evaluateInteger(ok, QStringLiteral("greenTolerance"));
+			int blueTolerance = evaluateInteger(ok, QStringLiteral("blueTolerance"));
+			QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
 
 			if(!ok)
 				return;
@@ -84,7 +84,7 @@ namespace Actions
 
 			if(testPixel())
 			{
-				setCurrentParameter("ifTrue", "line");
+				setCurrentParameter(QStringLiteral("ifTrue"), QStringLiteral("line"));
 
 				QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
 				if(!ok)
@@ -102,7 +102,7 @@ namespace Actions
 			}
 			else
 			{
-				setCurrentParameter("ifFalse", "line");
+				setCurrentParameter(QStringLiteral("ifFalse"), QStringLiteral("line"));
 
 				QString line = evaluateSubParameter(ok, ifFalse.actionParameter());
 				if(!ok)

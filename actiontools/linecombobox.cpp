@@ -34,15 +34,15 @@ namespace ActionTools
 		
 		if(labels.size() > 0)
 		{
-			addItem(QObject::tr("Labels"), "header");
+			addItem(tr("Labels"), QStringLiteral("header"));
 			addItems(labels);
 		}
 
 		if(lineCount > 0)
 		{
-			addItem(QObject::tr("Lines"), "header");
+			addItem(tr("Lines"), QStringLiteral("header"));
 			for(int i=0 ; i < lineCount ; ++i)
-				addItem(QString("%1").arg(i + 1, 3, 10, QChar('0')));
+				addItem(QStringLiteral("%1").arg(i + 1, 3, 10, QLatin1Char('0')));
 		}
 
 		if(labels.size() > 0)

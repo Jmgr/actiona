@@ -43,12 +43,12 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString file = evaluateString(ok, "file");
-		int volume = evaluateInteger(ok, "volume");
-		mBlocking = evaluateBoolean(ok, "blocking");
-		bool looping = evaluateBoolean(ok, "looping");
-		bool isUrl = evaluateBoolean(ok, "url");
-		int playbackRate = evaluateInteger(ok, "playbackRate");
+		QString file = evaluateString(ok, QStringLiteral("file"));
+		int volume = evaluateInteger(ok, QStringLiteral("volume"));
+		mBlocking = evaluateBoolean(ok, QStringLiteral("blocking"));
+		bool looping = evaluateBoolean(ok, QStringLiteral("looping"));
+		bool isUrl = evaluateBoolean(ok, QStringLiteral("url"));
+		int playbackRate = evaluateInteger(ok, QStringLiteral("playbackRate"));
 
 		if(!ok)
 			return;

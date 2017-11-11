@@ -41,14 +41,14 @@ namespace Actions
 		explicit ReadBinaryFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("File")), this);
+			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
 			file->setTooltip(tr("The file to read from"));
 			file->setMode(ActionTools::FileEdit::FileOpen);
 			file->setCaption(tr("Choose the file"));
 			file->setFilter(tr("All files (*.*)"));
 			addElement(file);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setTooltip(tr("The variable where to store the data"));
 			addElement(variable);
 
@@ -56,12 +56,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Read binary file"); }
-		QString id() const														{ return "ActionReadBinaryFile"; }
+		QString id() const														{ return QStringLiteral("ActionReadBinaryFile"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read a binary file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadBinaryFileInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/readbinary.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readbinary.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadBinaryFileDefinition)

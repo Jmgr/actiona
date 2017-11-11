@@ -35,15 +35,15 @@ namespace Code
 		{
 			it.next();
 			
-			if(it.name() == "onConnected")
+			if(it.name() == QLatin1String("onConnected"))
 				tcp->mOnConnected = it.value();
-			else if(it.name() == "onDisconnected")
+			else if(it.name() == QLatin1String("onDisconnected"))
 				tcp->mOnDisconnected = it.value();
-			else if(it.name() == "onReadyRead")
+			else if(it.name() == QLatin1String("onReadyRead"))
 				tcp->mOnReadyRead = it.value();
-			else if(it.name() == "onBytesWritten")
+			else if(it.name() == QLatin1String("onBytesWritten"))
 				tcp->mOnBytesWritten = it.value();
-			else if(it.name() == "onError")
+			else if(it.name() == QLatin1String("onError"))
 				tcp->mOnError = it.value();
 		}
 
@@ -91,7 +91,7 @@ namespace Code
 	QScriptValue Tcp::waitForConnected(int waitTime)
 	{
 		if(!mTcpSocket->waitForConnected(waitTime))
-			throwError("ConnectionError", tr("Cannot establish a connection to the host"));
+			throwError(QStringLiteral("ConnectionError"), tr("Cannot establish a connection to the host"));
 		
 		return thisObject();
 	}
@@ -99,7 +99,7 @@ namespace Code
 	QScriptValue Tcp::waitForBytesWritten(int waitTime)
 	{
 		if(!mTcpSocket->waitForBytesWritten(waitTime))
-			throwError("BytesWrittenError", tr("Waiting for bytes written failed"));
+			throwError(QStringLiteral("BytesWrittenError"), tr("Waiting for bytes written failed"));
 		
 		return thisObject();
 	}
@@ -107,7 +107,7 @@ namespace Code
 	QScriptValue Tcp::waitForReadyRead(int waitTime)
 	{
 		if(!mTcpSocket->waitForReadyRead(waitTime))
-			throwError("ReadyReadError", tr("Waiting for ready read failed"));
+			throwError(QStringLiteral("ReadyReadError"), tr("Waiting for ready read failed"));
 		
 		return thisObject();
 	}
@@ -115,7 +115,7 @@ namespace Code
 	QScriptValue Tcp::waitForDisconnected(int waitTime)
 	{
 		if(!mTcpSocket->waitForDisconnected(waitTime))
-			throwError("DisconnectionError", tr("Waiting for disconnection failed"));
+			throwError(QStringLiteral("DisconnectionError"), tr("Waiting for disconnection failed"));
 		
 		return thisObject();
 	}
@@ -126,12 +126,12 @@ namespace Code
 		if(RawData *rawData = qobject_cast<RawData*>(object))
 		{
 			if(mTcpSocket->write(rawData->byteArray()) == -1)
-				throwError("WriteError", tr("Write failed"));
+				throwError(QStringLiteral("WriteError"), tr("Write failed"));
 		}
 		else
 		{
 			if(mTcpSocket->write(data.toVariant().toByteArray()) == -1)
-				throwError("WriteError", tr("Write failed"));
+				throwError(QStringLiteral("WriteError"), tr("Write failed"));
 		}
 	
 		return thisObject();
@@ -140,7 +140,7 @@ namespace Code
 	QScriptValue Tcp::writeText(const QString &data, Encoding encoding)
 	{
 		if(mTcpSocket->write(toEncoding(data, encoding)) == -1)
-			throwError("WriteError", tr("Write failed"));
+			throwError(QStringLiteral("WriteError"), tr("Write failed"));
 		
 		return thisObject();
 	}

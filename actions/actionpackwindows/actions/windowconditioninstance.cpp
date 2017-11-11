@@ -27,10 +27,10 @@
 namespace Actions
 {
 	ActionTools::StringListPair WindowConditionInstance::conditions = qMakePair(
-			QStringList() << "exists" << "dontexists",
+			QStringList() << QStringLiteral("exists") << QStringLiteral("dontexists"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Exists")
-			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Don't exists"));
+			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", QStringLiteral("Exists"))
+			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", QStringLiteral("Don't exists")));
 
 	WindowConditionInstance::WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent), mCondition(Exists)
@@ -41,17 +41,17 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString title = evaluateString(ok, "title");
-		mCondition = evaluateListElement<Condition>(ok, conditions, "condition");
-		mIfTrue = evaluateIfAction(ok, "ifTrue");
-		ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, "ifFalse");
-		mPosition = evaluateVariable(ok, "position");
-		mSize = evaluateVariable(ok, "size");
-		mXCoordinate = evaluateVariable(ok, "xCoordinate");
-		mYCoordinate = evaluateVariable(ok, "yCoordinate");
-		mWidth = evaluateVariable(ok, "width");
-		mHeight = evaluateVariable(ok, "height");
-		mProcessId = evaluateVariable(ok, "processId");
+		QString title = evaluateString(ok, QStringLiteral("title"));
+		mCondition = evaluateListElement<Condition>(ok, conditions, QStringLiteral("condition"));
+		mIfTrue = evaluateIfAction(ok, QStringLiteral("ifTrue"));
+		ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, QStringLiteral("ifFalse"));
+		mPosition = evaluateVariable(ok, QStringLiteral("position"));
+		mSize = evaluateVariable(ok, QStringLiteral("size"));
+		mXCoordinate = evaluateVariable(ok, QStringLiteral("xCoordinate"));
+		mYCoordinate = evaluateVariable(ok, QStringLiteral("yCoordinate"));
+		mWidth = evaluateVariable(ok, QStringLiteral("width"));
+		mHeight = evaluateVariable(ok, QStringLiteral("height"));
+		mProcessId = evaluateVariable(ok, QStringLiteral("processId"));
 
 		if(!ok)
 			return;

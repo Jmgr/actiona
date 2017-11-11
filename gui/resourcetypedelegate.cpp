@@ -64,13 +64,13 @@ void ResourceTypeDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
         {
         case ActionTools::Resource::BinaryType:
         case ActionTools::Resource::TypeCount:
-            model->setData(index, QIcon(":/images/binary.png"), Qt::DecorationRole);
+			model->setData(index, QIcon(QStringLiteral(":/images/binary.png")), Qt::DecorationRole);
             break;
         case ActionTools::Resource::TextType:
-            model->setData(index, QIcon(":/images/text.png"), Qt::DecorationRole);
+			model->setData(index, QIcon(QStringLiteral(":/images/text.png")), Qt::DecorationRole);
             break;
         case ActionTools::Resource::ImageType:
-            model->setData(index, QIcon(":/images/image.png"), Qt::DecorationRole);
+			model->setData(index, QIcon(QStringLiteral(":/images/image.png")), Qt::DecorationRole);
             break;
         }
     }

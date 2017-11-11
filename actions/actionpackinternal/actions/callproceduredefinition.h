@@ -40,18 +40,18 @@ namespace Actions
 		explicit CallProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::ProcedureParameterDefinition *name = new ActionTools::ProcedureParameterDefinition(ActionTools::Name("name", tr("Name")), this);
+			ActionTools::ProcedureParameterDefinition *name = new ActionTools::ProcedureParameterDefinition(ActionTools::Name(QStringLiteral("name"), tr("Name")), this);
 			name->setTooltip(tr("The name of the procedure to call"));
 			addElement(name);
 		}
 
 		QString name() const													{ return QObject::tr("Call procedure"); }
-		QString id() const														{ return "ActionCallProcedure"; }
+		QString id() const														{ return QStringLiteral("ActionCallProcedure"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Calls a procedure"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CallProcedureInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Procedures; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/callprocedure.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/callprocedure.png")); }
 
 	private:
 		Q_DISABLE_COPY(CallProcedureDefinition)

@@ -28,9 +28,9 @@
 namespace Actions
 {
 	ActionTools::StringListPair WebDownloadInstance::destinations = qMakePair(
-			QStringList() << "variable" << "file",
-			QStringList() << QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "Variable")
-						  << QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "File"));
+			QStringList() << QStringLiteral("variable") << QStringLiteral("file"),
+			QStringList() << QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", QStringLiteral("Variable"))
+						  << QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", QStringLiteral("File")));
 
 	WebDownloadInstance::WebDownloadInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
@@ -51,10 +51,10 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString urlString = evaluateString(ok, "url");
-		mDestination = evaluateListElement<Destination>(ok, destinations, "destination");
-		mVariable = evaluateVariable(ok, "variable");
-		QString file = evaluateString(ok, "file");
+		QString urlString = evaluateString(ok, QStringLiteral("url"));
+		mDestination = evaluateListElement<Destination>(ok, destinations, QStringLiteral("destination"));
+		mVariable = evaluateVariable(ok, QStringLiteral("variable"));
+		QString file = evaluateString(ok, QStringLiteral("file"));
 
 
 		if(!ok)
@@ -62,11 +62,11 @@ namespace Actions
 
 		QUrl url(urlString);
 		if(url.scheme() == QString())
-			url = QUrl("http://" + urlString, QUrl::TolerantMode);
+			url = QUrl(QStringLiteral("http://") + urlString, QUrl::TolerantMode);
 
 		if(!url.isValid())
 		{
-			setCurrentParameter("url");
+			setCurrentParameter(QStringLiteral("url"));
 			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid URL"));
 			return;
 		}
@@ -76,7 +76,7 @@ namespace Actions
 			mFile.setFileName(file);
 			if(!mFile.open(QIODevice::WriteOnly))
 			{
-				setCurrentParameter("file");
+				setCurrentParameter(QStringLiteral("file"));
 				emit executionException(CannotOpenFileException, tr("Cannot write to file"));
 				return;
 			}
@@ -124,7 +124,7 @@ namespace Actions
 				if(mDestination == File)
 					mFile.remove();
 
-				setCurrentParameter("url");
+				setCurrentParameter(QStringLiteral("url"));
 
 				emit executionException(DownloadException, tr("Download error: %1").arg(mReply->errorString()));
 			}

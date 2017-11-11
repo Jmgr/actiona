@@ -42,21 +42,21 @@ namespace Actions
 		explicit ReadRegistryDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
-			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition(ActionTools::Name("key", tr("Key")), this);
+			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("key"), tr("Key")), this);
 			key->setTooltip(tr("The registry key to read from"));
 			key->setItems(ReadRegistryInstance::keys);
 			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 			addElement(key);
 
-			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition(ActionTools::Name("subKey", tr("Subkey")), this);
+			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("subKey"), tr("Subkey")), this);
 			subKey->setTooltip(tr("The registry subkey to read from"));
 			addElement(subKey);
 
-			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
+			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
 			value->setTooltip(tr("The value to read"));
 			addElement(value);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setTooltip(tr("The variable where to save the value read from the registry"));
 			addElement(variable);
 
@@ -66,12 +66,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Read registry"); }
-		QString id() const														{ return "ActionReadRegistry"; }
+		QString id() const														{ return QStringLiteral("ActionReadRegistry"); }
 		ActionTools::Flag flags() const											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read an entry from the registry"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadRegistryInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/readregistry.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readregistry.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadRegistryDefinition)

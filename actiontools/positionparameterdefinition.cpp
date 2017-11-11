@@ -53,14 +53,14 @@ namespace ActionTools
 
 	void PositionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
-        mPositionUnitComboBox->setCurrentIndex(actionInstance->subParameter(name().original(), "unit").value().toInt());
+		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("value")));
+		mPositionUnitComboBox->setCurrentIndex(actionInstance->subParameter(name().original(), QStringLiteral("unit")).value().toInt());
 	}
 
 	void PositionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", mPositionEdit->isCode(), mPositionEdit->text());
-        actionInstance->setSubParameter(name().original(), "unit", QString::number(mPositionUnitComboBox->currentIndex()));
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mPositionEdit->isCode(), mPositionEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("unit"), QString::number(mPositionUnitComboBox->currentIndex()));
     }
 
     void PositionParameterDefinition::positionChosen(QPointF position)

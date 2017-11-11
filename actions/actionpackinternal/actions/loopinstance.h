@@ -42,7 +42,7 @@ namespace Actions
 
 			bool ok = true;
 
-			QString line = evaluateString(ok, "line");
+			QString line = evaluateString(ok, QStringLiteral("line"));
 			int count;
 
 			if(!ok)
@@ -52,7 +52,7 @@ namespace Actions
 			{
 				mInitialized = true;
 
-				count = evaluateInteger(ok, "count");
+				count = evaluateInteger(ok, QStringLiteral("count"));
 
 				if(!ok)
 					return;

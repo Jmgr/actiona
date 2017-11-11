@@ -60,6 +60,6 @@ namespace ActionTools
 	
 	void ParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", defaultValue());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), defaultValue());
 	}
 }

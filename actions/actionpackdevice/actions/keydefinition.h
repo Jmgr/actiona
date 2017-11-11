@@ -49,11 +49,11 @@ namespace Actions
 			translateItems("KeyInstance::actions", KeyInstance::actions);
 			translateItems("KeyInstance::types", KeyInstance::types);
 
-			ActionTools::KeyParameterDefinition *key = new ActionTools::KeyParameterDefinition(ActionTools::Name("key", tr("Key")), this);
+			ActionTools::KeyParameterDefinition *key = new ActionTools::KeyParameterDefinition(ActionTools::Name(QStringLiteral("key"), tr("Key")), this);
 			key->setTooltip(tr("The key to simulate"));
 			addElement(key);
 			
-			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name("action", tr("Action")), this);
+			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("action"), tr("Action")), this);
 			action->setTooltip(tr("The action to simulate"));
 			action->setItems(KeyInstance::actions);
 			action->setDefaultValue(KeyInstance::actions.second.at(KeyInstance::PressReleaseAction));
@@ -63,24 +63,24 @@ namespace Actions
 			pressAndReleaseGroup->setMasterList(action);
 			pressAndReleaseGroup->setMasterValues(QStringList() << KeyInstance::actions.first.at(KeyInstance::PressReleaseAction));
 
-			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
+			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("amount"), tr("Amount")), this);
 			amount->setTooltip(tr("The amount of key presses to simulate"));
 			amount->setMinimum(1);
 			amount->setMaximum(std::numeric_limits<int>::max());
-            amount->setDefaultValue("1");
+			amount->setDefaultValue(QStringLiteral("1"));
 			pressAndReleaseGroup->addMember(amount);
 
 			addElement(pressAndReleaseGroup);
 
-			ActionTools::BooleanParameterDefinition *ctrl = new ActionTools::BooleanParameterDefinition(ActionTools::Name("ctrl", tr("Ctrl")), this);
+			ActionTools::BooleanParameterDefinition *ctrl = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("ctrl"), tr("Ctrl")), this);
 			ctrl->setTooltip(tr("Should the Ctrl key be pressed"));
 			addElement(ctrl);
 
-			ActionTools::BooleanParameterDefinition *alt = new ActionTools::BooleanParameterDefinition(ActionTools::Name("alt", tr("Alt")), this);
+			ActionTools::BooleanParameterDefinition *alt = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("alt"), tr("Alt")), this);
 			alt->setTooltip(tr("Should the Alt key be pressed"));
 			addElement(alt);
 
-			ActionTools::BooleanParameterDefinition *shift = new ActionTools::BooleanParameterDefinition(ActionTools::Name("shift", tr("Shift")), this);
+			ActionTools::BooleanParameterDefinition *shift = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("shift"), tr("Shift")), this);
 			shift->setTooltip(tr("Should the Shift key be pressed"));
 			addElement(shift);
 
@@ -90,22 +90,22 @@ namespace Actions
 			QString metaKeyName = tr("Meta");
 		#endif
 
-			ActionTools::BooleanParameterDefinition *meta = new ActionTools::BooleanParameterDefinition(ActionTools::Name("meta", metaKeyName), this);
+			ActionTools::BooleanParameterDefinition *meta = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("meta"), metaKeyName), this);
 			meta->setTooltip(tr("Should the %1 key be pressed").arg(metaKeyName));
 			addElement(meta);
 
-			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
+			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("type"), tr("Type")), this);
 			type->setTooltip(tr("The key type to use"));
 			type->setItems(KeyInstance::types);
 			type->setDefaultValue(KeyInstance::types.second.at(KeyInstance::Win32Type));
 			type->setOperatingSystems(ActionTools::WorksOnWindows);
 			addElement(type, 1);
 
-			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition(ActionTools::Name("pause", tr("Press/Release pause")), this);
+			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("pause"), tr("Press/Release pause")), this);
 			pause->setTooltip(tr("The pause duration between press and release"));
 			pause->setMinimum(0);
 			pause->setMaximum(std::numeric_limits<int>::max());
-            pause->setDefaultValue("10");
+			pause->setDefaultValue(QStringLiteral("10"));
 			pause->setSuffix(tr(" ms", "milliseconds"));
 			addElement(pause, 1);
 
@@ -114,12 +114,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Key"); }
-		QString id() const														{ return "ActionKey"; }
+		QString id() const														{ return QStringLiteral("ActionKey"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Emulates a key press"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new KeyInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/key.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/key.png")); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

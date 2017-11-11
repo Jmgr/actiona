@@ -48,8 +48,8 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString text = evaluateString(ok, "text");
-			Output output = evaluateListElement<Output>(ok, outputs, "output");
+			QString text = evaluateString(ok, QStringLiteral("text"));
+			Output output = evaluateListElement<Output>(ok, outputs, QStringLiteral("output"));
 
 			if(!ok)
 				return;

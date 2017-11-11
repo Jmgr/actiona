@@ -67,7 +67,7 @@ namespace ActionTools
 {
 	ChooseWindowPushButton::ChooseWindowPushButton(QWidget *parent)
 		: QPushButton(parent),
-		mCrossIcon(new QPixmap(":/images/cross.png")),
+		mCrossIcon(new QPixmap(QStringLiteral(":/images/cross.png"))),
 		mSearching(false),
 		mMainWindow(0)
 #ifdef Q_OS_LINUX

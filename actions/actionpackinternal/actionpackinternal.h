@@ -70,7 +70,7 @@ public:
 		addActionDefinition(new Actions::EndProcedureDefinition(this));
 	}
 
-	QString id() const								{ return "internal"; }
+	QString id() const								{ return QStringLiteral("internal"); }
 	QString name() const							{ return tr("Internal actions"); }
 	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
 

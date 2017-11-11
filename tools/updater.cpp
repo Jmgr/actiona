@@ -61,50 +61,50 @@ namespace Tools
 		QUrl url(mUrl);
         QUrlQuery urlQuery;
 
-        urlQuery.addQueryItem("request", "program");
-        urlQuery.addQueryItem("protocol", QString::number(Protocol));
+		urlQuery.addQueryItem(QStringLiteral("request"), QStringLiteral("program"));
+		urlQuery.addQueryItem(QStringLiteral("protocol"), QString::number(Protocol));
         switch(fileType)
         {
         case Source:
-            urlQuery.addQueryItem("type", "source");
+			urlQuery.addQueryItem(QStringLiteral("type"), QStringLiteral("source"));
             break;
         case Binary:
-            urlQuery.addQueryItem("type", "binary");
+			urlQuery.addQueryItem(QStringLiteral("type"), QStringLiteral("binary"));
             break;
         }
         switch(containerType)
         {
         case Installer:
-            urlQuery.addQueryItem("container", "installer");
+			urlQuery.addQueryItem(QStringLiteral("container"), QStringLiteral("installer"));
             break;
         case SevenZip:
-            urlQuery.addQueryItem("container", "7z");
+			urlQuery.addQueryItem(QStringLiteral("container"), QStringLiteral("7z"));
             break;
         case Zip:
-            urlQuery.addQueryItem("container", "zip");
+			urlQuery.addQueryItem(QStringLiteral("container"), QStringLiteral("zip"));
             break;
         case TarGz:
-            urlQuery.addQueryItem("container", "targz");
+			urlQuery.addQueryItem(QStringLiteral("container"), QStringLiteral("targz"));
             break;
         case TarBz2:
-            urlQuery.addQueryItem("container", "tarbz2");
+			urlQuery.addQueryItem(QStringLiteral("container"), QStringLiteral("tarbz2"));
             break;
         case Deb:
-            urlQuery.addQueryItem("container", "deb");
+			urlQuery.addQueryItem(QStringLiteral("container"), QStringLiteral("deb"));
             break;
         case Rpm:
-            urlQuery.addQueryItem("container", "rpm");
+			urlQuery.addQueryItem(QStringLiteral("container"), QStringLiteral("rpm"));
             break;
         }
-        urlQuery.addQueryItem("osName", operatingSystem);
-        urlQuery.addQueryItem("osBits", QString::number(operatingSystemBits));
-        urlQuery.addQueryItem("language", language);
-        urlQuery.addQueryItem("program", program);
+		urlQuery.addQueryItem(QStringLiteral("osName"), operatingSystem);
+		urlQuery.addQueryItem(QStringLiteral("osBits"), QString::number(operatingSystemBits));
+		urlQuery.addQueryItem(QStringLiteral("language"), language);
+		urlQuery.addQueryItem(QStringLiteral("program"), program);
 
         url.setQuery(urlQuery);
 
 		QNetworkRequest request(url);
-        request.setRawHeader("User-Agent", QString("%1 %2").arg(program).arg(programVersion.toString()).toLatin1());
+		request.setRawHeader(QByteArrayLiteral("User-Agent"), QStringLiteral("%1 %2").arg(program).arg(programVersion.toString()).toLatin1());
 		
 		mCurrentReply = mNetworkAccessManager->get(request);
 
@@ -175,33 +175,33 @@ namespace Tools
 			if(!stream.isStartElement())
 				continue;
 			
-			if(stream.name() == "error")
+			if(stream.name() == QLatin1String("error"))
 			{
-				emit error(stream.readElementText() + ".");
+				emit error(stream.readElementText() + QStringLiteral("."));
 				return;
 			}
-			else if(stream.name() == "noresult")
+			else if(stream.name() == QLatin1String("noresult"))
 			{
 				emit noResult();
 				return;
 			}
-			else if(stream.name() == "version")
+			else if(stream.name() == QLatin1String("version"))
 #if (QT_VERSION >= 0x050600)
                 version = QVersionNumber::fromString(stream.readElementText());
 #else
 				version.setFromString(stream.readElementText());
 #endif
-			else if(stream.name() == "releaseDate")
+			else if(stream.name() == QLatin1String("releaseDate"))
 				date = QDate::fromString(stream.readElementText(), Qt::ISODate);
-			else if(stream.name() == "type")
+			else if(stream.name() == QLatin1String("type"))
 				type = stream.readElementText();
-			else if(stream.name() == "changelog")
+			else if(stream.name() == QLatin1String("changelog"))
 				changelog = stream.readElementText();
-			else if(stream.name() == "filename")
+			else if(stream.name() == QLatin1String("filename"))
 				filename = stream.readElementText();
-			else if(stream.name() == "size")
+			else if(stream.name() == QLatin1String("size"))
 				size = stream.readElementText().toInt();
-			else if(stream.name() == "hash")
+			else if(stream.name() == QLatin1String("hash"))
 				hash = stream.readElementText();
 		}
 		

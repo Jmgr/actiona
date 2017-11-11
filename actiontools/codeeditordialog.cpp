@@ -44,7 +44,7 @@ namespace ActionTools
 		QSettings settings;
 
 		QAction *swapCodeAction = new QAction(this);
-		swapCodeAction->setShortcut(QKeySequence(settings.value("actions/switchTextCode", QKeySequence("Ctrl+Shift+C")).toString()));
+		swapCodeAction->setShortcut(QKeySequence(settings.value(QStringLiteral("actions/switchTextCode"), QKeySequence(QStringLiteral("Ctrl+Shift+C"))).toString()));
 		swapCodeAction->setShortcutContext(Qt::WindowShortcut);
 		addAction(swapCodeAction);
 
@@ -101,7 +101,7 @@ namespace ActionTools
 	void CodeEditorDialog::accept()
 	{
 		QSettings settings;
-		if(settings.value("actions/checkCodeSyntaxAutomatically", QVariant(true)).toBool() && !ui->editor->checkSyntax())
+		if(settings.value(QStringLiteral("actions/checkCodeSyntaxAutomatically"), QVariant(true)).toBool() && !ui->editor->checkSyntax())
 			showSyntaxCheckError();
 		else
 			QDialog::accept();
@@ -138,7 +138,7 @@ namespace ActionTools
                 variablesMenu->addAction(variable);
         }
 
-        variablesMenu->setIcon(QIcon(":/images/variable.png"));
+		variablesMenu->setIcon(QIcon(QStringLiteral(":/images/variable.png")));
 
         QMenu *menu = new QMenu;
 
@@ -173,7 +173,7 @@ namespace ActionTools
         if(isCode())
             ui->editor->insertPlainText(variable);
         else
-            ui->editor->insertPlainText("$" + variable);
+			ui->editor->insertPlainText(QStringLiteral("$") + variable);
     }
 
 	void CodeEditorDialog::showSyntaxCheckError()

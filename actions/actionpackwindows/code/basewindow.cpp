@@ -87,28 +87,28 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "title")
+			if(it.name() == QLatin1String("title"))
 				mWindow->setWindowTitle(it.value().toString());
-			else if(it.name() == "position")
+			else if(it.name() == QLatin1String("position"))
 			{
 				QObject *object = it.value().toQObject();
 				if(Point *codePoint = qobject_cast<Point*>(object))
 					mWindow->move(codePoint->point());
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
-			else if(it.name() == "opacity")
+			else if(it.name() == QLatin1String("opacity"))
 				mWindow->setWindowOpacity(it.value().toNumber());
-			else if(it.name() == "enabled")
+			else if(it.name() == QLatin1String("enabled"))
 				mWindow->setEnabled(it.value().toBool());
-			else if(it.name() == "visible")
+			else if(it.name() == QLatin1String("visible"))
 				mWindow->setVisible(it.value().toBool());
-			else if(it.name() == "windowIcon")
+			else if(it.name() == QLatin1String("windowIcon"))
 			{
 				if(Image *icon = qobject_cast<Image*>(it.value().toQObject()))
 					mWindow->setWindowIcon(QIcon(QPixmap::fromImage(icon->image())));
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 		}
 	}
@@ -173,7 +173,7 @@ namespace Code
 			mWindow->setWindowIcon(QIcon(QPixmap::fromImage(icon->image())));
 		else
 		{
-			throwError("SetWindowIcon", tr("Invalid image"));
+			throwError(QStringLiteral("SetWindowIcon"), tr("Invalid image"));
 			return thisObject();
 		}
 

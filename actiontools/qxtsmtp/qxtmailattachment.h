@@ -42,8 +42,8 @@ class ACTIONTOOLSSHARED_EXPORT QxtMailAttachment
 public:
     QxtMailAttachment();
     QxtMailAttachment(const QxtMailAttachment& other);
-    QxtMailAttachment(const QByteArray& content, const QString& contentType = QString("application/octet-stream"));
-    QxtMailAttachment(QIODevice* content, const QString& contentType = QString("application/octet-stream"));
+	QxtMailAttachment(const QByteArray& content, const QString& contentType = QStringLiteral("application/octet-stream"));
+	QxtMailAttachment(QIODevice* content, const QString& contentType = QStringLiteral("application/octet-stream"));
     QxtMailAttachment& operator=(const QxtMailAttachment& other);
     ~QxtMailAttachment();
     static QxtMailAttachment fromFile(const QString& filename);

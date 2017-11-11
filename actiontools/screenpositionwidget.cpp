@@ -31,9 +31,9 @@ namespace ActionTools
 {
 	QString ScreenPositionWidget::iconNames[3][3] =
 	{
-		{"lu",	"u",	"ru"},
-		{"l",	"c",	"r"},
-		{"ld",	"d",	"rd"}
+		{QStringLiteral("lu"),	QStringLiteral("u"),	QStringLiteral("ru")},
+		{QStringLiteral("l"),	QStringLiteral("c"),	QStringLiteral("r")},
+		{QStringLiteral("ld"),	QStringLiteral("d"),	QStringLiteral("rd")}
 	};
 
 	ScreenPositionWidget::ScreenPositionWidget(QWidget *parent)
@@ -57,7 +57,7 @@ namespace ActionTools
 				{
 					QRadioButton *radioButton = new QRadioButton(this);
 					radioButton->setIconSize(QSize(40, 40));
-					radioButton->setIcon(QIcon(QString(":/images/monitor_%1.png").arg(iconNames[row][column])));
+					radioButton->setIcon(QIcon(QStringLiteral(":/images/monitor_%1.png").arg(iconNames[row][column])));
 
 					mButtonGroup->addButton(radioButton, screen * 9 + i);
 					mRadioButtons.append(radioButton);

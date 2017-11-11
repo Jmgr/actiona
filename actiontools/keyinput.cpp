@@ -41,9 +41,7 @@
 namespace ActionTools
 {
 	const StringListPair KeyInput::mKeyNames = qMakePair(
-		QStringList() << "invalid" << "shiftLeft" << "shiftRight" << "controlLeft" << "controlRight" << "altLeft" << "altRight" << "metaLeft" << "metaRight" << "altGr"
-		<< "numpad0" << "numpad1" << "numpad2" << "numpad3" << "numpad4" << "numpad5" << "numpad6" << "numpad7" << "numpad8" << "numpad9"
-		<< "numpadMultiply" << "numpadAdd" << "numpadSeparator" << "numpadSubstract" << "numpadDecimal" << "numpadDivide",
+		QStringList() << QStringLiteral("invalid") << QStringLiteral("shiftLeft") << QStringLiteral("shiftRight") << QStringLiteral("controlLeft") << QStringLiteral("controlRight") << QStringLiteral("altLeft") << QStringLiteral("altRight") << QStringLiteral("metaLeft") << QStringLiteral("metaRight") << QStringLiteral("altGr") << QStringLiteral("numpad0") << QStringLiteral("numpad1") << QStringLiteral("numpad2") << QStringLiteral("numpad3") << QStringLiteral("numpad4") << QStringLiteral("numpad5") << QStringLiteral("numpad6") << QStringLiteral("numpad7") << QStringLiteral("numpad8") << QStringLiteral("numpad9") << QStringLiteral("numpadMultiply") << QStringLiteral("numpadAdd") << QStringLiteral("numpadSeparator") << QStringLiteral("numpadSubstract") << QStringLiteral("numpadDecimal") << QStringLiteral("numpadDivide"),
 		QStringList() << QString() << QObject::tr("Left Shift") << QObject::tr("Right Shift") << QObject::tr("Left Control") << QObject::tr("Right Control")
 		<< QObject::tr("Left Alt") << QObject::tr("Right Alt")
 #ifdef Q_OS_WIN

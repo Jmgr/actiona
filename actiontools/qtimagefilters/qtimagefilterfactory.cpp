@@ -392,7 +392,7 @@ QStringList QtImageFilterFactory::imageFilterList()
     }
 
     for (QMap<QByteArray, ImageFilterFactoryFunction>::iterator it = g_availableFilters.begin(); it != g_availableFilters.end(); ++it) {
-        ss.append(it.key());
+		ss.append(QLatin1String(it.key()));
     }
     return ss;
 }

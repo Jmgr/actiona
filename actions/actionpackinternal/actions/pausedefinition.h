@@ -45,14 +45,14 @@ namespace Actions
 		{
 			translateItems("PauseInstance::units", PauseInstance::units);
 
-			ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition(ActionTools::Name("duration", tr("Duration")), this);
+			ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("duration"), tr("Duration")), this);
 			duration->setTooltip(tr("The duration of the pause"));
 			duration->setMinimum(0);
 			duration->setMaximum(std::numeric_limits<int>::max());
-            duration->setDefaultValue("5");
+			duration->setDefaultValue(QStringLiteral("5"));
 			addElement(duration);
 
-			ActionTools::ListParameterDefinition *unit = new ActionTools::ListParameterDefinition(ActionTools::Name("unit", tr("Unit")), this);
+			ActionTools::ListParameterDefinition *unit = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("unit"), tr("Unit")), this);
 			unit->setTooltip(tr("The pause duration unit"));
 			unit->setItems(PauseInstance::units);
 			unit->setDefaultValue(PauseInstance::units.second.at(PauseInstance::Seconds));
@@ -60,12 +60,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Pause"); }
-		QString id() const														{ return "ActionPause"; }
+		QString id() const														{ return QStringLiteral("ActionPause"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Pauses the script execution"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new PauseInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/pause.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/pause.png")); }
 
 	private:
 		Q_DISABLE_COPY(PauseDefinition)

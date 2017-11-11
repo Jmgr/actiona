@@ -38,7 +38,7 @@ namespace Code
 				{
 					if(!QColor::isValidColor(context->argument(0).toString()))
 					{
-						throwError(context, engine, "ColorNameError", tr("Invalid color name"));
+						throwError(context, engine, QStringLiteral("ColorNameError"), tr("Invalid color name"));
 						color = new Color;
 					}
 					else
@@ -50,7 +50,7 @@ namespace Code
 					if(Color *codeColor = qobject_cast<Color*>(object))
 						color = new Color(*codeColor);
 					else
-						throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+						throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 				}
 			}
 			break;
@@ -61,7 +61,7 @@ namespace Code
 			color = new Color(QColor(context->argument(0).toInt32(), context->argument(1).toInt32(), context->argument(2).toInt32(), context->argument(3).toInt32()));
 			break;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			break;
 		}
 		
@@ -169,7 +169,7 @@ namespace Code
 
 	QString Color::toString() const
 	{
-        return QString("Color {red: %1, green: %2, blue: %3, alpha: %4}").arg(mColor.red()).arg(green()).arg(blue()).arg(alpha());
+		return QStringLiteral("Color {red: %1, green: %2, blue: %3, alpha: %4}").arg(mColor.red()).arg(green()).arg(blue()).arg(alpha());
 	}
 	
 	QScriptValue Color::setRed(int red)
@@ -225,7 +225,7 @@ namespace Code
 	{
 		if(!QColor::isValidColor(name))
 		{
-			throwError("ColorNameError", tr("Invalid color name"));
+			throwError(QStringLiteral("ColorNameError"), tr("Invalid color name"));
 			return thisObject();
 		}
 		

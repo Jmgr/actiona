@@ -68,7 +68,7 @@ namespace Code
 		QScriptValue value() const;
 		
 	public slots:
-		QString toString() const					{ return "InputDialog"; }
+		QString toString() const					{ return QStringLiteral("InputDialog"); }
 		QScriptValue setLabelText(const QString &labelText);
 		QScriptValue setOkButtonText(const QString &okButtonText);
 		QScriptValue setCancelButtonText(const QString &cancelButtonText);

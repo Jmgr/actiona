@@ -50,7 +50,7 @@ namespace Code
 			}
 			break;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			break;
 		}
 		
@@ -79,7 +79,7 @@ namespace Code
 			}
 			return -1;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return -1;
 		}
 	}
@@ -157,7 +157,7 @@ namespace Code
 
 	QString ProcessHandle::toString() const
 	{
-        return QString("ProcessHandle {id: %1}").arg(processId());
+		return QStringLiteral("ProcessHandle {id: %1}").arg(processId());
 	}
 	
 	int ProcessHandle::id() const
@@ -171,7 +171,7 @@ namespace Code
         HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
         if(!snapshot)
         {
-            throwError("CreateSnapshotError", tr("Unable to create a snapshot"));
+			throwError(QStringLiteral("CreateSnapshotError"), tr("Unable to create a snapshot"));
             return 0;
         }
 
@@ -183,7 +183,7 @@ namespace Code
         {
             CloseHandle(snapshot);
 
-            throwError("GetFirstProcessError", tr("Unable to get the first process"));
+			throwError(QStringLiteral("GetFirstProcessError"), tr("Unable to get the first process"));
             return 0;
         }
 
@@ -203,10 +203,10 @@ namespace Code
         return 0;
 #else
         QProcess process;
-        process.start(QString("ps h -p %1 -oppid").arg(id()), QIODevice::ReadOnly);
+		process.start(QStringLiteral("ps h -p %1 -oppid").arg(id()), QIODevice::ReadOnly);
         if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
         {
-            throwError("GetProcessError", tr("Failed to get the process parent id"));
+			throwError(QStringLiteral("GetProcessError"), tr("Failed to get the process parent id"));
             return 0;
         }
 
@@ -215,7 +215,7 @@ namespace Code
 
         if(!ok)
         {
-            throwError("GetProcessError", tr("Failed to get the process parent id"));
+			throwError(QStringLiteral("GetProcessError"), tr("Failed to get the process parent id"));
             return 0;
         }
 
@@ -239,14 +239,14 @@ namespace Code
 		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, id());
 		if(!process)
 		{
-			throwError("OpenProcessError", tr("Unable to open the process"));
+			throwError(QStringLiteral("OpenProcessError"), tr("Unable to open the process"));
 			return QString();
 		}
 
 		TCHAR buffer[256];
 		if(!GetModuleFileNameEx(process, NULL, buffer, 256))
 		{
-			throwError("GetModuleFilenameError", tr("Unable to retrieve the executable filename"));
+			throwError(QStringLiteral("GetModuleFilenameError"), tr("Unable to retrieve the executable filename"));
 			return QString();
 		}
 
@@ -255,14 +255,14 @@ namespace Code
 		return QString::fromWCharArray(buffer);
 #else
 		QProcess process;
-		process.start(QString("ps h -p %1 -ocommand").arg(id()), QIODevice::ReadOnly);
+		process.start(QStringLiteral("ps h -p %1 -ocommand").arg(id()), QIODevice::ReadOnly);
 		if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
 		{
-			throwError("GetProcessError", tr("Failed to get the process command"));
+			throwError(QStringLiteral("GetProcessError"), tr("Failed to get the process command"));
 			return QString();
 		}
 
-        return process.readAll().trimmed();
+		return QLatin1String(process.readAll().trimmed());
 #endif
 	}
 
@@ -272,7 +272,7 @@ namespace Code
 		HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, id());
 		if(!process)
 		{
-			throwError("OpenProcessError", tr("Unable to open the process"));
+			throwError(QStringLiteral("OpenProcessError"), tr("Unable to open the process"));
 			return Normal;
 		}
 
@@ -294,11 +294,11 @@ namespace Code
 		case REALTIME_PRIORITY_CLASS:
 			return Realtime;
 		default:
-			throwError("GetPriorityClassError", tr("Unable to retrieve the process priority"));
+			throwError(QStringLiteral("GetPriorityClassError"), tr("Unable to retrieve the process priority"));
 			return Normal;
 		}
 #else
-		throwError("OperatingSystemError", tr("This is not available under your operating system"));
+		throwError(QStringLiteral("OperatingSystemError"), tr("This is not available under your operating system"));
 		return Normal;
 #endif
 	}

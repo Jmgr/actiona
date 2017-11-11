@@ -57,7 +57,7 @@ namespace Code
 		int showModal();
 		
 	private slots:
-		QString toString() const					{ return "ColorDialog"; }
+		QString toString() const					{ return QStringLiteral("ColorDialog"); }
 		void finished(int result);
 		void colorSelected(const QColor &color);
 		void currentColorChanged(const QColor &color);

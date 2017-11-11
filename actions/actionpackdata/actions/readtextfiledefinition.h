@@ -46,15 +46,15 @@ namespace Actions
 		{
 			translateItems("ReadTextFileInstance::modes", ReadTextFileInstance::modes);
 
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("File")), this);
+			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
 			file->setTooltip(tr("The file you want to read"));
 			addElement(file);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setTooltip(tr("The variable where to save the text read from the file"));
 			addElement(variable);
 
-			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
+			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("mode"), tr("Mode")), this);
 			mode->setTooltip(tr("The file read mode"));
 			mode->setItems(ReadTextFileInstance::modes);
 			mode->setDefaultValue(ReadTextFileInstance::modes.second.at(ReadTextFileInstance::Full));
@@ -64,16 +64,16 @@ namespace Actions
 			selectionMode->setMasterList(mode);
 			selectionMode->setMasterValues(QStringList() << ReadTextFileInstance::modes.first.at(ReadTextFileInstance::Selection));
 
-			ActionTools::NumberParameterDefinition *firstline = new ActionTools::NumberParameterDefinition(ActionTools::Name("firstline", tr("First line")), this);
+			ActionTools::NumberParameterDefinition *firstline = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("firstline"), tr("First line")), this);
 			firstline->setTooltip(tr("The line where to start reading the file"));
 			firstline->setMinimum(1);
-            firstline->setDefaultValue("1");
+			firstline->setDefaultValue(QStringLiteral("1"));
 			selectionMode->addMember(firstline, 1);
 
-			ActionTools::NumberParameterDefinition *lastline = new ActionTools::NumberParameterDefinition(ActionTools::Name("lastline", tr("Last line")), this);
+			ActionTools::NumberParameterDefinition *lastline = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("lastline"), tr("Last line")), this);
 			lastline->setTooltip(tr("The line where to stop reading the file"));
 			lastline->setMinimum(1);
-            lastline->setDefaultValue("1");
+			lastline->setDefaultValue(QStringLiteral("1"));
 			selectionMode->addMember(lastline, 1);
 
 			addElement(selectionMode, 1);
@@ -82,12 +82,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Read text file"); }
-		QString id() const														{ return "ActionReadTextFile"; }
+		QString id() const														{ return QStringLiteral("ActionReadTextFile"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Read a plain text file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadTextFileInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/readtext.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readtext.png")); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:

@@ -26,15 +26,15 @@
 namespace Actions
 {
 	ActionTools::StringListPair WindowInstance::actions = qMakePair(
-			QStringList() << "close" << "killProcess" << "setForeground" << "minimize" << "maximize" << "move" << "resize",
+			QStringList() << QStringLiteral("close") << QStringLiteral("killProcess") << QStringLiteral("setForeground") << QStringLiteral("minimize") << QStringLiteral("maximize") << QStringLiteral("move") << QStringLiteral("resize"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Close")
-			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Kill process")
-			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Set foreground")
-			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Minimize")
-			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Maximize")
-			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Move")
-			<< QT_TRANSLATE_NOOP("WindowInstance::actions", "Resize"));
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", QStringLiteral("Close"))
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", QStringLiteral("Kill process"))
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", QStringLiteral("Set foreground"))
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", QStringLiteral("Minimize"))
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", QStringLiteral("Maximize"))
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", QStringLiteral("Move"))
+			<< QT_TRANSLATE_NOOP("WindowInstance::actions", QStringLiteral("Resize")));
 
 	WindowInstance::WindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent)
@@ -45,9 +45,9 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString title = evaluateString(ok, "title");
-		Action action = evaluateListElement<Action>(ok, actions, "action");
-		bool useBorders = evaluateBoolean(ok, "useBorders");
+		QString title = evaluateString(ok, QStringLiteral("title"));
+		Action action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"));
+		bool useBorders = evaluateBoolean(ok, QStringLiteral("useBorders"));
 
 		if(!ok)
 			return;
@@ -58,14 +58,14 @@ namespace Actions
 
 		if(action == Move)
 		{
-			movePosition = evaluatePoint(ok, "movePosition");
+			movePosition = evaluatePoint(ok, QStringLiteral("movePosition"));
 			if(!ok)
 				return;
 		}
 		else if(action == Resize)
 		{
-			resizeWidth = evaluateInteger(ok, "resizeWidth");
-			resizeHeight = evaluateInteger(ok, "resizeHeight");
+			resizeWidth = evaluateInteger(ok, QStringLiteral("resizeWidth"));
+			resizeHeight = evaluateInteger(ok, QStringLiteral("resizeHeight"));
 			if(!ok)
 				return;
 		}
@@ -74,7 +74,7 @@ namespace Actions
 
 		if(!foundWindow.isValid())
 		{
-			setCurrentParameter("title");
+			setCurrentParameter(QStringLiteral("title"));
 			emit executionException(CannotFindWindowException, tr("Cannot find any window matching \"%1\"").arg(title));
 			return;
 		}
@@ -108,7 +108,7 @@ namespace Actions
 
 		if(!result)
 		{
-			setCurrentParameter("action");
+			setCurrentParameter(QStringLiteral("action"));
 			emit executionException(ActionFailedException, tr("\"%1\" failed").arg(actions.second[action]));
 			return;
 		}

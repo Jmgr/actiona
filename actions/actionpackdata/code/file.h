@@ -61,7 +61,7 @@ namespace Code
         QFile *file()                                           { return &mFile; }
 	
 	public slots:
-        QString toString() const                                { return "File"; }
+		QString toString() const                                { return QStringLiteral("File"); }
         virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<File>(other); }
 		QScriptValue open(const QString &filename, OpenMode mode);
 		QScriptValue write(const QScriptValue &data);

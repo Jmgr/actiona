@@ -40,7 +40,7 @@ namespace Code
 		template<typename T>
 		static void addClassToScriptEngine(QScriptEngine *scriptEngine)
 		{
-			addClassToScriptEngine<T>(removeCodeNamespace(T::staticMetaObject.className()), scriptEngine);
+			addClassToScriptEngine<T>(removeCodeNamespace(QLatin1String(T::staticMetaObject.className())), scriptEngine);
 		}
 
 		static void addClassGlobalFunctionToScriptEngine(const QString &className, QScriptEngine::FunctionSignature function, const QString &functionName, QScriptEngine *scriptEngine);
@@ -48,7 +48,7 @@ namespace Code
 		template<typename T>
 		static void addClassGlobalFunctionToScriptEngine(QScriptEngine::FunctionSignature function, const QString &functionName, QScriptEngine *scriptEngine)
 		{
-			addClassGlobalFunctionToScriptEngine(removeCodeNamespace(T::staticMetaObject.className()), function, functionName, scriptEngine);
+			addClassGlobalFunctionToScriptEngine(removeCodeNamespace(QLatin1String(T::staticMetaObject.className())), function, functionName, scriptEngine);
 		}
 
 	private:

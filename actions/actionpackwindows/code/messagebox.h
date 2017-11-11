@@ -75,7 +75,7 @@ namespace Code
 		QScriptValue onClosed() const										{ return mOnClosed; }
 
 	public slots:
-		QString toString() const					{ return "MessageBox"; }
+		QString toString() const					{ return QStringLiteral("MessageBox"); }
 		QScriptValue setText(const QString &text);
 		QScriptValue setDetailedText(const QString &detailedText);
 		QScriptValue setInformativeText(const QString &informativeText);

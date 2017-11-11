@@ -40,7 +40,7 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString variable = evaluateVariable(ok, "variable");
+			QString variable = evaluateVariable(ok, QStringLiteral("variable"));
 
 			if(!ok)
 				return;

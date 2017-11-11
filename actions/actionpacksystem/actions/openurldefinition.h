@@ -40,7 +40,7 @@ namespace Actions
 		explicit OpenURLDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *url = new ActionTools::TextParameterDefinition(ActionTools::Name("url", tr("URL")), this);
+			ActionTools::TextParameterDefinition *url = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
 			url->setTooltip(tr("The url to open"));
 			addElement(url);
 
@@ -48,12 +48,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Open URL"); }
-		QString id() const														{ return "ActionOpenURL"; }
+		QString id() const														{ return QStringLiteral("ActionOpenURL"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Opens an URL"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new OpenURLInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/openurl.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/openurl.png")); }
 
 	private:
 		Q_DISABLE_COPY(OpenURLDefinition)

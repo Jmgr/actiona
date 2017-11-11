@@ -25,14 +25,14 @@
 
 FilterLineEdit::FilterLineEdit(QWidget *parent)
     : QLineEdit(parent),
-      mIcon(":/icons/look.png")
+	  mIcon(QStringLiteral(":/icons/look.png"))
 {
     Q_ASSERT(!mIcon.isNull());
 
     setPlaceholderText(tr("Filter"));
     setClearButtonEnabled(true);
-    setStyleSheet("padding-left: 18px;"
-                  "padding-right: 5px;");
+	setStyleSheet(QStringLiteral("padding-left: 18px;\n") +
+				  QStringLiteral("padding-right: 5px;"));
 }
 
 void FilterLineEdit::paintEvent(QPaintEvent *event)

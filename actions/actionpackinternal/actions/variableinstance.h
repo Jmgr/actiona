@@ -57,11 +57,11 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString variable = evaluateString(ok, "variable");
-			QString value = evaluateString(ok, "value");
-			QColor colorValue = evaluateColor(ok, "colorValue");
-			QPoint positionValue = evaluatePoint(ok, "positionValue");
-			Type type = evaluateListElement<Type>(ok, types, "type");
+			QString variable = evaluateString(ok, QStringLiteral("variable"));
+			QString value = evaluateString(ok, QStringLiteral("value"));
+			QColor colorValue = evaluateColor(ok, QStringLiteral("colorValue"));
+			QPoint positionValue = evaluatePoint(ok, QStringLiteral("positionValue"));
+			Type type = evaluateListElement<Type>(ok, types, QStringLiteral("type"));
 
 			if(!ok)
 				return;

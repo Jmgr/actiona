@@ -25,15 +25,15 @@
 namespace Global
 {
 #if (QT_VERSION >= 0x050600)
-    const Tools::Version	ACTIONA_VERSION =	QVersionNumber::fromString(VERSION_TO_STRING(ACT_VERSION));
-    const Tools::Version	SCRIPT_VERSION =	QVersionNumber::fromString(VERSION_TO_STRING(ACT_SCRIPT_VERSION));
+	const Tools::Version	ACTIONA_VERSION =	QVersionNumber::fromString(QLatin1String(VERSION_TO_STRING(ACT_VERSION)));
+	const Tools::Version	SCRIPT_VERSION =	QVersionNumber::fromString(QLatin1String(VERSION_TO_STRING(ACT_SCRIPT_VERSION)));
 #else
-    const Tools::Version	ACTIONA_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_VERSION));
-    const Tools::Version	SCRIPT_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_SCRIPT_VERSION));
+	const Tools::Version	ACTIONA_VERSION =	Tools::Version(QLatin1String(VERSION_TO_STRING(ACT_VERSION)));
+	const Tools::Version	SCRIPT_VERSION =	Tools::Version(QLatin1String(VERSION_TO_STRING(ACT_SCRIPT_VERSION)));
 #endif
-    const QString			UPDATE_URL =		"https://updates.actiona.tools/";
+	const QString			UPDATE_URL =		QStringLiteral("https://updates.actiona.tools/");
 	const int				UPDATE_TIMEOUT =	5000;
-    const QString			CONNECTIVITY_URL =	"https://actiona.tools/";
+	const QString			CONNECTIVITY_URL =	QStringLiteral("https://actiona.tools/");
 
 	QString currentOS();
 	QString currentOSType();

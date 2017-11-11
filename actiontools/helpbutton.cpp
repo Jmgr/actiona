@@ -29,7 +29,7 @@ namespace ActionTools
 		: QPushButton(parent)
 	{
 		setText(QString());
-		setIcon(QIcon(":/images/help.png"));
+		setIcon(QIcon(QStringLiteral(":/images/help.png")));
 		setIconSize(QSize(16, 16));
 		setMaximumWidth(24);
 		setMaximumHeight(24);
@@ -42,6 +42,6 @@ namespace ActionTools
 		if(mTopic.isEmpty())
 			return;
 
-        QDesktopServices::openUrl(QUrl(QString("http://wiki.actiona.tools/doku.php?id=%1").arg(mTopic)));
+		QDesktopServices::openUrl(QUrl(QStringLiteral("http://wiki.actiona.tools/doku.php?id=%1").arg(mTopic)));
 	}
 }

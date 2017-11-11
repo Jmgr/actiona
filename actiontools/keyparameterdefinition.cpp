@@ -44,14 +44,14 @@ namespace ActionTools
 
 	void KeyParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		const SubParameter &key = actionInstance->subParameter(name().original(), "key");
+		const SubParameter &key = actionInstance->subParameter(name().original(), QStringLiteral("key"));
 		if(key.isCode())
 			mKeyEdit->codeLineEdit()->setFromSubParameter(key);
 		else
 		{
 			KeyInput keyInput;
 			
-            keyInput.fromPortableText(key.value(), actionInstance->subParameter(name().original(), "isQtKey").value() == "true");
+			keyInput.fromPortableText(key.value(), actionInstance->subParameter(name().original(), QStringLiteral("isQtKey")).value() == QLatin1String("true"));
 			
 			mKeyEdit->setKeyInput(keyInput);
 		}
@@ -63,14 +63,14 @@ namespace ActionTools
 
 		if(mKeyEdit->isCode())
 		{
-			actionInstance->setSubParameter(originalName, "key", mKeyEdit->isCode(), mKeyEdit->codeLineEdit()->text());
-            actionInstance->setSubParameter(originalName, "isQtKey", QStringLiteral("false"));
+			actionInstance->setSubParameter(originalName, QStringLiteral("key"), mKeyEdit->isCode(), mKeyEdit->codeLineEdit()->text());
+			actionInstance->setSubParameter(originalName, QStringLiteral("isQtKey"), QStringLiteral("false"));
 		}
 		else
 		{
 			const KeyInput &keyInput = mKeyEdit->keyInput();
-			actionInstance->setSubParameter(originalName, "key", keyInput.toPortableText());
-            actionInstance->setSubParameter(originalName, "isQtKey", keyInput.isQtKey() ? QStringLiteral("true") : QStringLiteral("false"));
+			actionInstance->setSubParameter(originalName, QStringLiteral("key"), keyInput.toPortableText());
+			actionInstance->setSubParameter(originalName, QStringLiteral("isQtKey"), keyInput.isQtKey() ? QStringLiteral("true") : QStringLiteral("false"));
 		}
 	}
 	

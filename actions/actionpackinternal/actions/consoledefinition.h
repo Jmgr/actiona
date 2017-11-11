@@ -43,11 +43,11 @@ namespace Actions
 		{
 			translateItems("ConsoleInstance::outputs", ConsoleInstance::outputs);
 
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("text", tr("Text")), this);
+			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
 			text->setTooltip(tr("The text to write"));
 			addElement(text);
 
-			ActionTools::ListParameterDefinition *output = new ActionTools::ListParameterDefinition(ActionTools::Name("output", tr("Output")), this);
+			ActionTools::ListParameterDefinition *output = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("output"), tr("Output")), this);
 			output->setTooltip(tr("The console output"));
 			output->setItems(ConsoleInstance::outputs);
 			output->setDefaultValue(ConsoleInstance::outputs.second.at(ConsoleInstance::Information));
@@ -55,12 +55,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Console"); }
-		QString id() const														{ return "ActionConsole"; }
+		QString id() const														{ return QStringLiteral("ActionConsole"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write an entry in the console"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ConsoleInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/console.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/console.png")); }
 
 	private:
 		Q_DISABLE_COPY(ConsoleDefinition)

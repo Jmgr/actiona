@@ -34,7 +34,7 @@ namespace Code
 		Q_OBJECT
 
 	public:
-		static void throwError(QScriptContext *context, QScriptEngine *engine, const QString &errorType, const QString &message, const QString &parent = "Error");
+		static void throwError(QScriptContext *context, QScriptEngine *engine, const QString &errorType, const QString &message, const QString &parent = QStringLiteral("Error"));
 
     public slots:
         virtual QString toString() const = 0;
@@ -65,7 +65,7 @@ namespace Code
             return false;
         }
 
-		void throwError(const QString &errorType, const QString &message, const QString &parent = "Error") const;
+		void throwError(const QString &errorType, const QString &message, const QString &parent = QStringLiteral("Error")) const;
 
 		static QScriptValue constructor(CodeClass *object, QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(CodeClass *object, QScriptEngine *engine);

@@ -65,19 +65,19 @@ public:
 		addActionDefinition(new Actions::FindImageDefinition(this));
 	}
 
-	QString id() const							{ return "system"; }
+	QString id() const							{ return QStringLiteral("system"); }
 	QString name() const						{ return tr("Actions dealing with the operating system"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
 
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
-		addCodeClass<Code::System>("System", scriptEngine);
-		addCodeClass<Code::MediaPlaylist>("MediaPlaylist", scriptEngine);
-		addCodeClass<Code::Notify>("Notify", scriptEngine);
-		addCodeClass<Code::Process>("Process", scriptEngine);
-		addCodeStaticMethod(&Code::Process::list, "Process", "list", scriptEngine);
-		addCodeStaticMethod(&Code::Process::startDetached, "Process", "startDetached", scriptEngine);
-		addCodeStaticMethod(&Code::Process::thisProcess, "Process", "thisProcess", scriptEngine);
+		addCodeClass<Code::System>(QStringLiteral("System"), scriptEngine);
+		addCodeClass<Code::MediaPlaylist>(QStringLiteral("MediaPlaylist"), scriptEngine);
+		addCodeClass<Code::Notify>(QStringLiteral("Notify"), scriptEngine);
+		addCodeClass<Code::Process>(QStringLiteral("Process"), scriptEngine);
+		addCodeStaticMethod(&Code::Process::list, QStringLiteral("Process"), QStringLiteral("list"), scriptEngine);
+		addCodeStaticMethod(&Code::Process::startDetached, QStringLiteral("Process"), QStringLiteral("startDetached"), scriptEngine);
+		addCodeStaticMethod(&Code::Process::thisProcess, QStringLiteral("Process"), QStringLiteral("thisProcess"), scriptEngine);
 	}
 
 private:

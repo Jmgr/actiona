@@ -45,11 +45,11 @@ namespace Actions
 		{
             translateItems("ReadEnvironmentVariableInstance::modes", ReadEnvironmentVariableInstance::modes);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setTooltip(tr("The variable used to store the selected information from your system environment"));
 			addElement(variable);
 
-			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
+			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("mode"), tr("Mode")), this);
 			mode->setTooltip(tr("The environment read mode"));
 			mode->setItems(ReadEnvironmentVariableInstance::modes);
             mode->setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariableMode));
@@ -59,7 +59,7 @@ namespace Actions
 			selectionMode->setMasterList(mode);
             selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode));
 
-			ActionTools::EnvironmentVariableParameterDefinition *environmentVariableName = new ActionTools::EnvironmentVariableParameterDefinition(ActionTools::Name("environmentVariableName", tr("Environment Variable")), this);
+			ActionTools::EnvironmentVariableParameterDefinition *environmentVariableName = new ActionTools::EnvironmentVariableParameterDefinition(ActionTools::Name(QStringLiteral("environmentVariableName"), tr("Environment Variable")), this);
 			environmentVariableName->setTooltip(tr("The specific environment variable to read"));
 			selectionMode->addMember(environmentVariableName);
 
@@ -67,12 +67,12 @@ namespace Actions
 		}
 
         QString name() const													{ return QObject::tr("Read environment variable"); }
-		QString id() const														{ return "ActionReadEnvironmentVariable"; }
+		QString id() const														{ return QStringLiteral("ActionReadEnvironmentVariable"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
         QString description() const												{ return QObject::tr("Read a single or multiple environment variables"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadEnvironmentVariableInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/readenvironment.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readenvironment.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadEnvironmentVariableDefinition)

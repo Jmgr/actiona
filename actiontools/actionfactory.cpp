@@ -60,13 +60,13 @@ namespace ActionTools
 		QDir actionDirectory(directory);
 
 #ifdef Q_OS_WIN
-		QString actionMask = "ActionPack*.dll";
+		QString actionMask = QStringLiteral("ActionPack*.dll");
 #endif
 #ifdef Q_OS_MAC
-		QString actionMask = "libActionPack*.dylib";
+		QString actionMask = QStringLiteral("libActionPack*.dylib");
 #endif
 #ifdef Q_OS_LINUX
-		QString actionMask = "libActionPack*.so";
+		QString actionMask = QStringLiteral("libActionPack*.so");
 #endif
 
         for(const QString actionFilename: actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
@@ -157,7 +157,7 @@ namespace ActionTools
 			return;
 		}
 
-        Tools::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
+		Tools::installTranslator(QStringLiteral("actionpack%1").arg(actionPack->id()), locale);
 
 		actionPack->createDefinitions();
 
@@ -177,7 +177,7 @@ namespace ActionTools
 					emit actionPackLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
 									   .arg(shortFilename)
 									   .arg(definition->id())
-									   .arg(missingFeatures.join("<li>")));
+									   .arg(missingFeatures.join(QStringLiteral("<li>"))));
 					continue;
 				}
 			}

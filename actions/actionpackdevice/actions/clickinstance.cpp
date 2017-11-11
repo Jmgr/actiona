@@ -27,22 +27,22 @@
 namespace Actions
 {
 	ActionTools::StringListPair ClickInstance::buttons = qMakePair(
-			QStringList() << "left" << "middle" << "right",
-			QStringList() << QT_TRANSLATE_NOOP("ClickInstance::buttons", "Left") << QT_TRANSLATE_NOOP("ClickInstance::buttons", "Middle") << QT_TRANSLATE_NOOP("ClickInstance::buttons", "Right"));
+			QStringList() << QStringLiteral("left") << QStringLiteral("middle") << QStringLiteral("right"),
+			QStringList() << QT_TRANSLATE_NOOP("ClickInstance::buttons", QStringLiteral("Left")) << QT_TRANSLATE_NOOP("ClickInstance::buttons", QStringLiteral("Middle")) << QT_TRANSLATE_NOOP("ClickInstance::buttons", QStringLiteral("Right")));
 	ActionTools::StringListPair ClickInstance::actions = qMakePair(
-			QStringList() << "pressRelease" << "press" << "release",
-			QStringList() << QT_TRANSLATE_NOOP("ClickInstance::actions", "Click (press and release)") << QT_TRANSLATE_NOOP("ClickInstance::actions", "Press") << QT_TRANSLATE_NOOP("ClickInstance::actions", "Release"));
+			QStringList() << QStringLiteral("pressRelease") << QStringLiteral("press") << QStringLiteral("release"),
+			QStringList() << QT_TRANSLATE_NOOP("ClickInstance::actions", QStringLiteral("Click (press and release)")) << QT_TRANSLATE_NOOP("ClickInstance::actions", QStringLiteral("Press")) << QT_TRANSLATE_NOOP("ClickInstance::actions", QStringLiteral("Release")));
 	
 	void ClickInstance::startExecution()
 	{
 		bool ok = true;
         bool isPositionEmpty = false;
 	
-		Action action = evaluateListElement<Action>(ok, actions, "action", "value");
-		MouseDevice::Button button = evaluateListElement<MouseDevice::Button>(ok, buttons, "button", "value");
-        QPoint position = evaluatePoint(ok, "position", "value", &isPositionEmpty);
-		QPoint positionOffset = evaluatePoint(ok, "positionOffset");
-		int amount = evaluateInteger(ok, "amount");
+		Action action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"), QStringLiteral("value"));
+		MouseDevice::Button button = evaluateListElement<MouseDevice::Button>(ok, buttons, QStringLiteral("button"), QStringLiteral("value"));
+		QPoint position = evaluatePoint(ok, QStringLiteral("position"), QStringLiteral("value"), &isPositionEmpty);
+		QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
+		int amount = evaluateInteger(ok, QStringLiteral("amount"));
 	
 		if(!ok)
 			return;
@@ -52,7 +52,7 @@ namespace Actions
 	
 		if(amount <= 0)
 		{
-			setCurrentParameter("amount");
+			setCurrentParameter(QStringLiteral("amount"));
 			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid click amount"));
 			return;
 		}

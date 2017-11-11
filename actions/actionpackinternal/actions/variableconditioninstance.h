@@ -52,11 +52,11 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString variableName = evaluateVariable(ok, "variable");
-			Comparison comparison = evaluateListElement<Comparison>(ok, comparisons, "comparison");
-            QScriptValue value = evaluateValue(ok, "value");
-			ActionTools::IfActionValue ifEqual = evaluateIfAction(ok, "ifEqual");
-			ActionTools::IfActionValue ifDifferent = evaluateIfAction(ok, "ifDifferent");
+			QString variableName = evaluateVariable(ok, QStringLiteral("variable"));
+			Comparison comparison = evaluateListElement<Comparison>(ok, comparisons, QStringLiteral("comparison"));
+			QScriptValue value = evaluateValue(ok, QStringLiteral("value"));
+			ActionTools::IfActionValue ifEqual = evaluateIfAction(ok, QStringLiteral("ifEqual"));
+			ActionTools::IfActionValue ifDifferent = evaluateIfAction(ok, QStringLiteral("ifDifferent"));
 
 			if(!ok)
 				return;
@@ -65,7 +65,7 @@ namespace Actions
 
             if(!variableValue.isValid())
             {
-                setCurrentParameter("variable");
+				setCurrentParameter(QStringLiteral("variable"));
                 emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid variable"));
 
                 return;
@@ -97,7 +97,7 @@ namespace Actions
                 }
                 else if(variableValue.isArray())
                 {
-                    int arrayLength = variableValue.property("length").toInteger();
+					int arrayLength = variableValue.property(QStringLiteral("length")).toInteger();
 
                     result = false;
                     hasResult = true;

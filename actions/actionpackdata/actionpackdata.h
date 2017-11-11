@@ -83,26 +83,26 @@ public:
         addActionDefinition(new Actions::SendMailDefinition(this));
 	}
 
-	QString id() const								{ return "data"; }
+	QString id() const								{ return QStringLiteral("data"); }
 	QString name() const							{ return tr("Data related actions"); }
 	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
 	
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
-		addCodeClass<Code::File>("File", scriptEngine);
+		addCodeClass<Code::File>(QStringLiteral("File"), scriptEngine);
 		Code::File::registerClass(scriptEngine);
-		addCodeClass<Code::Clipboard>("Clipboard", scriptEngine);
-		addCodeClass<Code::Registry>("Registry", scriptEngine);
-		addCodeClass<Code::IniFile>("IniFile", scriptEngine);
-		addCodeClass<Code::Udp>("Udp", scriptEngine);
-		addCodeClass<Code::Tcp>("Tcp", scriptEngine);
-		addCodeClass<Code::Sql>("Sql", scriptEngine);
+		addCodeClass<Code::Clipboard>(QStringLiteral("Clipboard"), scriptEngine);
+		addCodeClass<Code::Registry>(QStringLiteral("Registry"), scriptEngine);
+		addCodeClass<Code::IniFile>(QStringLiteral("IniFile"), scriptEngine);
+		addCodeClass<Code::Udp>(QStringLiteral("Udp"), scriptEngine);
+		addCodeClass<Code::Tcp>(QStringLiteral("Tcp"), scriptEngine);
+		addCodeClass<Code::Sql>(QStringLiteral("Sql"), scriptEngine);
 		Code::Sql::registerClass(scriptEngine);
-		addCodeClass<Code::TcpServer>("TcpServer", scriptEngine);
-		addCodeClass<Code::Web>("Web", scriptEngine);
-        addCodeClass<Code::MailAttachment>("MailAttachment", scriptEngine);
-        addCodeClass<Code::MailMessage>("MailMessage", scriptEngine);
-        addCodeClass<Code::Mail>("Mail", scriptEngine);
+		addCodeClass<Code::TcpServer>(QStringLiteral("TcpServer"), scriptEngine);
+		addCodeClass<Code::Web>(QStringLiteral("Web"), scriptEngine);
+		addCodeClass<Code::MailAttachment>(QStringLiteral("MailAttachment"), scriptEngine);
+		addCodeClass<Code::MailMessage>(QStringLiteral("MailMessage"), scriptEngine);
+		addCodeClass<Code::Mail>(QStringLiteral("Mail"), scriptEngine);
 	}
 
 private:

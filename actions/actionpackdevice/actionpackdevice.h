@@ -57,14 +57,14 @@ public:
 		addActionDefinition(new Actions::CursorPathDefinition(this));
 	}
 
-	QString id() const							{ return "device"; }
+	QString id() const							{ return QStringLiteral("device"); }
 	QString name() const						{ return tr("Actions dealing with devices like the keyboard or the mouse"); }
 	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
 	
 	void codeInit(QScriptEngine *scriptEngine) const
 	{
-		addCodeClass<Code::Mouse>("Mouse", scriptEngine);
-		addCodeClass<Code::Keyboard>("Keyboard", scriptEngine);
+		addCodeClass<Code::Mouse>(QStringLiteral("Mouse"), scriptEngine);
+		addCodeClass<Code::Keyboard>(QStringLiteral("Keyboard"), scriptEngine);
 	}
 
 private:

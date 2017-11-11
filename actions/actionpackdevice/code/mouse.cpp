@@ -35,13 +35,13 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "onMotion")
+			if(it.name() == QLatin1String("onMotion"))
 				mouse->mOnMotion = it.value();
-			else if(it.name() == "onWheel")
+			else if(it.name() == QLatin1String("onWheel"))
 				mouse->mOnWheel = it.value();
-			else if(it.name() == "onButtonPressed")
+			else if(it.name() == QLatin1String("onButtonPressed"))
 				mouse->mOnButtonPressed = it.value();
-			else if(it.name() == "onButtonReleased")
+			else if(it.name() == QLatin1String("onButtonReleased"))
 				mouse->mOnButtonReleased = it.value();
 		}
 
@@ -77,7 +77,7 @@ namespace Code
 	QScriptValue Mouse::press(Button button)
 	{
 		if(!mMouseDevice.pressButton(static_cast<MouseDevice::Button>(button)))
-			throwError("PressButtonError", tr("Unable to press the button"));
+			throwError(QStringLiteral("PressButtonError"), tr("Unable to press the button"));
 		
 		return thisObject();
 	}
@@ -85,7 +85,7 @@ namespace Code
 	QScriptValue Mouse::release(Button button)
 	{
 		if(!mMouseDevice.releaseButton(static_cast<MouseDevice::Button>(button)))
-			throwError("ReleaseButtonError", tr("Unable to release the button"));
+			throwError(QStringLiteral("ReleaseButtonError"), tr("Unable to release the button"));
 		
 		return thisObject();
 	}
@@ -93,7 +93,7 @@ namespace Code
 	QScriptValue Mouse::click(Button button)
 	{
 		if(!mMouseDevice.buttonClick(static_cast<MouseDevice::Button>(button)))
-			throwError("ClickError", tr("Unable to emulate a button click"));
+			throwError(QStringLiteral("ClickError"), tr("Unable to emulate a button click"));
 		
 		return thisObject();
 	}
@@ -101,7 +101,7 @@ namespace Code
 	QScriptValue Mouse::wheel(int intensity) const
 	{
 		if(!mMouseDevice.wheel(intensity))
-			throwError("WheelError", tr("Unable to emulate the wheel"));
+			throwError(QStringLiteral("WheelError"), tr("Unable to emulate the wheel"));
 		
 		return thisObject();
 	}

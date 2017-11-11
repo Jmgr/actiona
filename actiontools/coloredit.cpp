@@ -32,7 +32,7 @@ namespace ActionTools
 		: QWidget(parent),
 		ui(new Ui::ColorEdit),
         mColorDialog(new QColorDialog(this)),
-        mValidator(new QRegExpValidator(QRegExp("^\\d\\d{0,2}:\\d\\d{0,2}:\\d\\d{0,2}$", Qt::CaseSensitive, QRegExp::RegExp2), this))
+		mValidator(new QRegExpValidator(QRegExp(QStringLiteral("^\\d\\d{0,2}:\\d\\d{0,2}:\\d\\d{0,2}$"), Qt::CaseSensitive, QRegExp::RegExp2), this))
 	{
 		ui->setupUi(this);
 
@@ -161,7 +161,7 @@ namespace ActionTools
 
 	void ColorEdit::onColorSelected()
 	{
-		ui->colorLineEdit->setText(QString("%1:%2:%3")
+		ui->colorLineEdit->setText(QStringLiteral("%1:%2:%3")
 			.arg(mColorDialog->currentColor().red())
 			.arg(mColorDialog->currentColor().green())
 			.arg(mColorDialog->currentColor().blue()));
@@ -169,7 +169,7 @@ namespace ActionTools
 
 	QColor ColorEdit::currentColor() const
 	{
-		QStringList values = ui->colorLineEdit->text().split(QChar(':'));
+		QStringList values = ui->colorLineEdit->text().split(QLatin1Char(':'));
 
 		if(values.size() != 3)
 			return QColor(0, 0, 0);

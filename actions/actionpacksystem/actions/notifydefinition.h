@@ -44,22 +44,22 @@ namespace Actions
 		explicit NotifyDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition(ActionTools::Name("title", tr("Title")), this);
+			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("title"), tr("Title")), this);
 			title->setTooltip(tr("The notification title"));
 			addElement(title);
 
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("text", tr("Text")), this);
+			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
 			text->setTooltip(tr("The notification text"));
 			addElement(text);
 
-			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name("timeout", tr("Timeout")), this);
+			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("timeout"), tr("Timeout")), this);
 			timeout->setTooltip(tr("The notification timeout"));
 			timeout->setMinimum(0);
 			timeout->setMaximum(std::numeric_limits<int>::max());
-            timeout->setDefaultValue("3000");
+			timeout->setDefaultValue(QStringLiteral("3000"));
 			addElement(timeout, 1);
 
-			ActionTools::FileParameterDefinition *icon = new ActionTools::FileParameterDefinition(ActionTools::Name("icon", tr("Icon")), this);
+			ActionTools::FileParameterDefinition *icon = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("icon"), tr("Icon")), this);
 			icon->setTooltip(tr("The notification icon"));
 			addElement(icon, 1);
 
@@ -67,12 +67,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Notify"); }
-		QString id() const														{ return "ActionNotify"; }
+		QString id() const														{ return QStringLiteral("ActionNotify"); }
 		ActionTools::Flag flags() const											{ return ActionTools::WorksOnGnuLinux | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Shows a message using the notify system"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new NotifyInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/notification.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/notification.png")); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:

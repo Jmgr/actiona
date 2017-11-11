@@ -84,7 +84,7 @@ QtLocalPeer::QtLocalPeer(QObject* parent, const QString &appId)
 #endif
         prefix = id.section(QLatin1Char('/'), -1);
     }
-    prefix.remove(QRegExp("[^a-zA-Z]"));
+	prefix.remove(QRegExp(QStringLiteral("[^a-zA-Z]")));
     prefix.truncate(6);
 
     QByteArray idc = id.toUtf8();
@@ -109,7 +109,7 @@ QtLocalPeer::QtLocalPeer(QObject* parent, const QString &appId)
     server = new QLocalServer(this);
     QString lockName = QDir(QDir::tempPath()).absolutePath()
                        + QLatin1Char('/') + socketName
-                       + QLatin1String("-lockfile");
+					   + QStringLiteral("-lockfile");
     lockFile.setFileName(lockName);
     lockFile.open(QIODevice::ReadWrite);
 }

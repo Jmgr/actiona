@@ -61,11 +61,11 @@ namespace ActionTools
 
 	void TextParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mLineEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
+		mLineEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("value")));
 	}
 
 	void TextParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", mLineEdit->isCode(), mLineEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mLineEdit->isCode(), mLineEdit->text());
 	}
 }

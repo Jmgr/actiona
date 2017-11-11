@@ -180,7 +180,7 @@ void FlagsComboBox::updateText()
             if(standardItemModel()->item(i)->checkState() == Qt::Checked)
             {
                 if(!text.isEmpty())
-                    text+= ", ";
+					text+= QStringLiteral(", ");
 
                 text += standardItemModel()->item(i)->text();
             }

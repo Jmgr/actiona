@@ -47,8 +47,8 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString filename = evaluateString(ok, "file");
-			mVariable = evaluateVariable(ok, "variable");
+			QString filename = evaluateString(ok, QStringLiteral("file"));
+			mVariable = evaluateVariable(ok, QStringLiteral("variable"));
 
 			if(!ok)
 				return;
@@ -57,13 +57,13 @@ namespace Actions
 
 			if(!DataCopyActionInstance::startCopy(&mFile, &mResult))
 			{
-				setCurrentParameter("file");
+				setCurrentParameter(QStringLiteral("file"));
 				emit executionException(UnableToReadFileException, tr("Unable to read the file \"%1\"").arg(filename));
 				return;
 			}
 
-			emit showProgressDialog("Reading file", 100);
-			emit updateProgressDialog("Reading in progress");
+			emit showProgressDialog(tr("Reading file"), 100);
+			emit updateProgressDialog(tr("Reading in progress"));
 		}
 
 	private slots:

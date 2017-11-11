@@ -38,14 +38,14 @@ namespace Code
 				if(Point *codePoint = qobject_cast<Point*>(object))
 					point = new Point(*codePoint);
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 			break;
 		case 2:
 			point = new Point(QPoint(context->argument(0).toInt32(), context->argument(1).toInt32()));
 			break;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			break;
 		}
 		
@@ -70,14 +70,14 @@ namespace Code
 				if(Point *point = qobject_cast<Point*>(object))
 					return point->point();
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 			return QPoint();
 		case 2:
 			return QPoint(context->argument(0).toInt32(),
 						 context->argument(1).toInt32());
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return QPoint();
 		}
 	}
@@ -165,7 +165,7 @@ namespace Code
 
 	QString Point::toString() const
 	{
-        return QString("Point {x: %1, y: %2}").arg(x()).arg(y());
+		return QStringLiteral("Point {x: %1, y: %2}").arg(x()).arg(y());
 	}
 
 	QScriptValue Point::setX(int x)

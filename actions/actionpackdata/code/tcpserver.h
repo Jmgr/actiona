@@ -45,7 +45,7 @@ namespace Code
 		QScriptValue onNewConnection() const								{ return mOnNewConnection; }
 		
 	public slots:
-        QString toString() const                                            { return "TcpServer"; }
+		QString toString() const                                            { return QStringLiteral("TcpServer"); }
         virtual bool equals(const QScriptValue &other) const                { return defaultEqualsImplementation<TcpServer>(other); }
 		QScriptValue listen(const QString &address = QString(), int port = 0);
 		QScriptValue waitForNewConnection(int waitTime = 30000);

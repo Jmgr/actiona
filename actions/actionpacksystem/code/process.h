@@ -116,7 +116,7 @@ namespace Code
 		QProcess *process() const														{ return mProcess; }
 
 	public slots:
-		QString toString() const														{ return "Process"; }
+		QString toString() const														{ return QStringLiteral("Process"); }
         virtual bool equals(const QScriptValue &other) const                            { return defaultEqualsImplementation<Process>(other); }
 		QScriptValue handle() const;
 		int id() const;

@@ -68,29 +68,29 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
 	if(!Executer::start(device, filename))
 		return false;
 	
-	QString code = device->readAll();
+	QString code = QString::fromUtf8(device->readAll());
 	device->close();
 	
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::ActionInit);
     LibExecuter::CodeInitializer::initialize(mScriptEngine, mScriptAgent, actionFactory(), filename);
 
-	Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeStdio>("Console", mScriptEngine);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::print, "print", mScriptEngine);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::println, "println", mScriptEngine);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printWarning, "printWarning", mScriptEngine);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printlnWarning, "printlnWarning", mScriptEngine);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printError, "printError", mScriptEngine);
-	Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::printlnError, "printlnError", mScriptEngine);
-    Code::CodeTools::addClassGlobalFunctionToScriptEngine("Console", &LibExecuter::CodeStdio::clear, "clear", mScriptEngine);
+	Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeStdio>(QStringLiteral("Console"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Console"), &LibExecuter::CodeStdio::print, QStringLiteral("print"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Console"), &LibExecuter::CodeStdio::println, QStringLiteral("println"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Console"), &LibExecuter::CodeStdio::printWarning, QStringLiteral("printWarning"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Console"), &LibExecuter::CodeStdio::printlnWarning, QStringLiteral("printlnWarning"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Console"), &LibExecuter::CodeStdio::printError, QStringLiteral("printError"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Console"), &LibExecuter::CodeStdio::printlnError, QStringLiteral("printlnError"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Console"), &LibExecuter::CodeStdio::clear, QStringLiteral("clear"), mScriptEngine);
 
-    Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeActiona>("Actiona", mScriptEngine);
+	Code::CodeTools::addClassToScriptEngine<LibExecuter::CodeActiona>(QStringLiteral("Actiona"), mScriptEngine);
     LibExecuter::CodeActiona::setActExec(true);
     LibExecuter::CodeActiona::setActionaVersion(Global::ACTIONA_VERSION);
     LibExecuter::CodeActiona::setScriptVersion(Global::SCRIPT_VERSION);
-    Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::version, "version", mScriptEngine);
-    Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::scriptVersion, "scriptVersion", mScriptEngine);
-    Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActExec, "isActExec", mScriptEngine);
-    Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActiona, "isActiona", mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &LibExecuter::CodeActiona::version, QStringLiteral("version"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &LibExecuter::CodeActiona::scriptVersion, QStringLiteral("scriptVersion"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &LibExecuter::CodeActiona::isActExec, QStringLiteral("isActExec"), mScriptEngine);
+	Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &LibExecuter::CodeActiona::isActiona, QStringLiteral("isActiona"), mScriptEngine);
 
     QString locale = Tools::locale();
 
@@ -98,7 +98,7 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
 	{
 		ActionTools::ActionPack *actionPack = actionFactory()->actionPack(actionPackIndex);
 
-        Tools::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
+		Tools::installTranslator(QStringLiteral("actionpack%1").arg(actionPack->id()), locale);
 	}
 
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::Parameters);
@@ -108,7 +108,7 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
 	{
 		QTextStream stream(stdout);
 		stream << QObject::tr("Uncaught exception: ") << result.toString() << "\n";
-		stream << tr("Backtrace: ") << mScriptEngine->uncaughtExceptionBacktrace().join("\n") << "\n";
+		stream << tr("Backtrace: ") << mScriptEngine->uncaughtExceptionBacktrace().join(QStringLiteral("\n")) << "\n";
 		stream.flush();
 	}
 	

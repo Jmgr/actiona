@@ -110,14 +110,14 @@ namespace Code
 		case Selection:
 			if(!QApplication::clipboard()->supportsSelection())
 			{
-				throwError(context, engine, "UnsupportedSelectionModeError", tr("Selection mode is not supported by your operating system"));
+				throwError(context, engine, QStringLiteral("UnsupportedSelectionModeError"), tr("Selection mode is not supported by your operating system"));
 				return;
 			}
 			break;
 		case FindBuffer:
 			if(!QApplication::clipboard()->supportsFindBuffer())
 			{
-				throwError(context, engine, "UnsupportedSelectionModeError", tr("Find buffer mode is not supported by your operating system"));
+				throwError(context, engine, QStringLiteral("UnsupportedSelectionModeError"), tr("Find buffer mode is not supported by your operating system"));
 				return;
 			}
 			break;

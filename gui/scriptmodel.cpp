@@ -315,7 +315,7 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 			emit scriptEdited();
 			return true;
 		case Qt::EditRole:
-			QString lineNumber(QString("%1").arg(index.row() + 1, 3, 10, QChar('0')));
+			QString lineNumber(QStringLiteral("%1").arg(index.row() + 1, 3, 10, QLatin1Char('0')));
 			QString labelString(value.toString());
 			QString finalValue;
 
@@ -418,7 +418,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 		stream << ActionTools::ActionInstanceBuffer(actionInstance->definition()->id(), *actionInstance);
 	}
 
-    mimeDataPtr->setData("application/actiona.action", encodedData);
+	mimeDataPtr->setData(QStringLiteral("application/actiona.action"), encodedData);
 	return mimeDataPtr;
 }
 
@@ -432,20 +432,20 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 	if(parent.isValid())
 		return false;
 
-    if(data->hasFormat("application/actiona.add.action"))
+	if(data->hasFormat(QStringLiteral("application/actiona.add.action")))
 	{
-        QByteArray encodedData = data->data("application/actiona.add.action");
+		QByteArray encodedData = data->data(QStringLiteral("application/actiona.add.action"));
 
 		if(row == -1)
 			row = rowCount(QModelIndex());
 
-		emit wantToAddAction(row, encodedData);
+		emit wantToAddAction(row, QLatin1String(encodedData));
 
 		return true;
 	}
-    else if(data->hasFormat("application/actiona.action"))
+	else if(data->hasFormat(QStringLiteral("application/actiona.action")))
 	{
-        QByteArray encodedData = data->data("application/actiona.action");
+		QByteArray encodedData = data->data(QStringLiteral("application/actiona.action"));
 		QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
 		if(row == -1)
@@ -497,10 +497,10 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 QStringList ScriptModel::mimeTypes() const
 {
 	return QStringList()
-            << "application/actiona.action"
-            << "application/actiona.add.action"
-			<< "text/uri-list"
-			<< "text/plain";
+			<< QStringLiteral("application/actiona.action")
+			<< QStringLiteral("application/actiona.add.action")
+			<< QStringLiteral("text/uri-list")
+			<< QStringLiteral("text/plain");
 }
 
 bool ScriptModel::insertRows(int row, int count, const QModelIndex &parent)

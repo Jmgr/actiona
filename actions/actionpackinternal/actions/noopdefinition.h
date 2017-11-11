@@ -42,12 +42,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("No-op"); }
-		QString id() const														{ return "ActionNoop"; }
+		QString id() const														{ return QStringLiteral("ActionNoop"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Does nothing"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new NoopInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/noop.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/noop.png")); }
 
 	private:
 		Q_DISABLE_COPY(NoopDefinition)

@@ -37,33 +37,33 @@ namespace Code
         {
             it.next();
 
-            if(it.name() == "username")
+			if(it.name() == QLatin1String("username"))
                 mail->setUsername(it.value().toString());
-            else if(it.name() == "password")
+			else if(it.name() == QLatin1String("password"))
                 mail->setPassword(it.value().toString());
-            else if(it.name() == "onConnected")
+			else if(it.name() == QLatin1String("onConnected"))
                 mail->mOnConnected = it.value();
-            else if(it.name() == "onConnectionFailed")
+			else if(it.name() == QLatin1String("onConnectionFailed"))
                 mail->mOnConnectionFailed = it.value();
-            else if(it.name() == "onEncrypted")
+			else if(it.name() == QLatin1String("onEncrypted"))
                 mail->mOnEncrypted = it.value();
-            else if(it.name() == "onEncryptionFailed")
+			else if(it.name() == QLatin1String("onEncryptionFailed"))
                 mail->mOnEncryptionFailed = it.value();
-            else if(it.name() == "onAuthenticated")
+			else if(it.name() == QLatin1String("onAuthenticated"))
                 mail->mOnAuthenticated = it.value();
-            else if(it.name() == "onAuthenticationFailed")
+			else if(it.name() == QLatin1String("onAuthenticationFailed"))
                 mail->mOnAuthenticationFailed = it.value();
-            else if(it.name() == "onSenderRejected")
+			else if(it.name() == QLatin1String("onSenderRejected"))
                 mail->mOnSenderRejected = it.value();
-            else if(it.name() == "onRecipientRejected")
+			else if(it.name() == QLatin1String("onRecipientRejected"))
                 mail->mOnRecipientRejected = it.value();
-            else if(it.name() == "onMailFailed")
+			else if(it.name() == QLatin1String("onMailFailed"))
                 mail->mOnMailFailed = it.value();
-            else if(it.name() == "onMailSent")
+			else if(it.name() == QLatin1String("onMailSent"))
                 mail->mOnMailSent = it.value();
-            else if(it.name() == "onFinished")
+			else if(it.name() == QLatin1String("onFinished"))
                 mail->mOnFinished = it.value();
-            else if(it.name() == "onDisconnected")
+			else if(it.name() == QLatin1String("onDisconnected"))
                 mail->mOnDisconnected = it.value();
         }
 
@@ -107,14 +107,14 @@ namespace Code
         {
             QxtMailMessage &message = mailMessage->message();
 
-            if(!message.hasExtraHeader("Date"))
-                message.setExtraHeader("Date", QDateTime::currentDateTime().toString(Qt::RFC2822Date));
+			if(!message.hasExtraHeader(QStringLiteral("Date")))
+				message.setExtraHeader(QStringLiteral("Date"), QDateTime::currentDateTime().toString(Qt::RFC2822Date));
 
             return mSmtp.send(message);
         }
         else
         {
-            throwError("ParameterTypeError", tr("Incorrect parameter type: not a MailMessage"));
+			throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type: not a MailMessage"));
             return -1;
         }
     }
@@ -123,7 +123,7 @@ namespace Code
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(connected()));
         if(!waiter.wait(waitTime))
-            throwError("ConnectionError", tr("Cannot establish a connection to the server"));
+			throwError(QStringLiteral("ConnectionError"), tr("Cannot establish a connection to the server"));
 
         return thisObject();
     }
@@ -132,7 +132,7 @@ namespace Code
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(encrypted()));
         if(!waiter.wait(waitTime))
-            throwError("EncryptionError", tr("Cannot encrypt the connection"));
+			throwError(QStringLiteral("EncryptionError"), tr("Cannot encrypt the connection"));
 
         return thisObject();
     }
@@ -141,7 +141,7 @@ namespace Code
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(authenticated()));
         if(!waiter.wait(waitTime))
-            throwError("AuthenticationError", tr("Cannot authenticate to the server"));
+			throwError(QStringLiteral("AuthenticationError"), tr("Cannot authenticate to the server"));
 
         return thisObject();
     }
@@ -150,7 +150,7 @@ namespace Code
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(finished()));
         if(!waiter.wait(waitTime))
-            throwError("WaitForFinishedError", tr("Wait for finished failed"));
+			throwError(QStringLiteral("WaitForFinishedError"), tr("Wait for finished failed"));
 
         return thisObject();
     }
@@ -159,7 +159,7 @@ namespace Code
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(disconnected()));
         if(!waiter.wait(waitTime))
-            throwError("WaitForDisconnectedError", tr("Wait for disconnected failed"));
+			throwError(QStringLiteral("WaitForDisconnectedError"), tr("Wait for disconnected failed"));
 
         return thisObject();
     }

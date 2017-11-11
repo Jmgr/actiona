@@ -191,25 +191,25 @@ namespace ActionTools
 		/** Parameter management **/
         QScriptValue evaluateValue(bool &ok,
                             const QString &parameterName,
-                            const QString &subParameterName = "value");
+							const QString &subParameterName = QStringLiteral("value"));
 		QString evaluateString(bool &ok,
 							const QString &parameterName,
-							const QString &subParameterName = "value");
+							const QString &subParameterName = QStringLiteral("value"));
         QImage evaluateImage(bool &ok,
                             const QString &parameterName,
-                            const QString &subParameterName = "value");
+							const QString &subParameterName = QStringLiteral("value"));
 		QString evaluateVariable(bool &ok,
 							const QString &parameterName,
-							const QString &subParameterName = "value");
+							const QString &subParameterName = QStringLiteral("value"));
 		int evaluateInteger(bool &ok,
 							 const QString &parameterName,
-							 const QString &subParameterName = "value");
+							 const QString &subParameterName = QStringLiteral("value"));
 		bool evaluateBoolean(bool &ok,
 							 const QString &parameterName,
-							 const QString &subParameterName = "value");
+							 const QString &subParameterName = QStringLiteral("value"));
 		double evaluateDouble(bool &ok,
 						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
 		IfActionValue evaluateIfAction(bool &ok,
 						   const QString &parameterName);
 		QString evaluateSubParameter(bool &ok,
@@ -219,7 +219,7 @@ namespace ActionTools
 		T evaluateListElement(bool &ok,
 								 const StringListPair &listElements,
 								 const QString &parameterName,
-								 const QString &subParameterName = "value")
+								 const QString &subParameterName = QStringLiteral("value"))
 		{
 			if(!ok)
 				return T();
@@ -279,24 +279,24 @@ namespace ActionTools
         QString evaluateEditableListElement(bool &ok,
                                  const StringListPair &listElements,
                                  const QString &parameterName,
-                                 const QString &subParameterName = "value");
+								 const QString &subParameterName = QStringLiteral("value"));
 
         QPoint evaluatePoint(bool &ok,
                            const QString &parameterName,
-                           const QString &subParameterName = "value",
+						   const QString &subParameterName = QStringLiteral("value"),
                              bool *empty = nullptr);
 		QStringList evaluateItemList(bool &ok,
 						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
 		QPolygon evaluatePolygon(bool &ok,
 						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
 		QColor evaluateColor(bool &ok,
 						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
         QDateTime evaluateDateTime(bool &ok,
                            const QString &parameterName,
-                           const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
 
         void validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum = std::numeric_limits<int>::max());
 
@@ -310,7 +310,7 @@ namespace ActionTools
 		void setVariable(const QString &name, const QScriptValue &value);
 		QScriptValue variable(const QString &name);
 
-		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
+		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = QStringLiteral("value"));
 
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);

@@ -40,14 +40,14 @@ namespace Actions
 		explicit CopyFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *source = new ActionTools::FileParameterDefinition(ActionTools::Name("source", tr("Source file")), this);
+			ActionTools::FileParameterDefinition *source = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("source"), tr("Source file")), this);
 			source->setTooltip(tr("The file to copy"));
 			source->setMode(ActionTools::FileEdit::FileOpen);
 			source->setCaption(tr("Choose the file"));
 			source->setFilter(tr("All files (*.*)"));
 			addElement(source);
 
-			ActionTools::FileParameterDefinition *destination = new ActionTools::FileParameterDefinition(ActionTools::Name("destination", tr("Destination")), this);
+			ActionTools::FileParameterDefinition *destination = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("destination"), tr("Destination")), this);
 			destination->setTooltip(tr("The destination file"));
 			destination->setMode(ActionTools::FileEdit::FileSave);
 			destination->setCaption(tr("Choose the destination file"));
@@ -59,12 +59,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Copy file"); }
-		QString id() const														{ return "ActionCopyFile"; }
+		QString id() const														{ return QStringLiteral("ActionCopyFile"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Copy a file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CopyFileInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/copyfile.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/copyfile.png")); }
 
 	private:
 		Q_DISABLE_COPY(CopyFileDefinition)

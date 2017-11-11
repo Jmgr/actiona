@@ -42,16 +42,16 @@ namespace ActionTools
 
 	void DateTimeParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mDateTimeEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
+		mDateTimeEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("value")));
 	}
 
 	void DateTimeParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", mDateTimeEdit->isCode(), mDateTimeEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mDateTimeEdit->isCode(), mDateTimeEdit->text());
 	}
 
     void DateTimeParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
     {
-        actionInstance->setSubParameter(name().original(), "value", QDateTime::currentDateTime().toString(QStringLiteral("dd/MM/yyyy hh:mm:ss")));
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), QDateTime::currentDateTime().toString(QStringLiteral("dd/MM/yyyy hh:mm:ss")));
     }
 }

@@ -40,13 +40,13 @@
 namespace Actions
 {
 	ActionTools::StringListPair MultiDataInputInstance::modes = qMakePair(
-			QStringList() << "comboBox" << "editableComboBox" << "list" << "checkbox" << "radioButton",
+			QStringList() << QStringLiteral("comboBox") << QStringLiteral("editableComboBox") << QStringLiteral("list") << QStringLiteral("checkbox") << QStringLiteral("radioButton"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "ComboBox")
-			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "Editable ComboBox")
-			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "List")
-			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "CheckBox")
-			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "RadioButton"));
+			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", QStringLiteral("ComboBox"))
+			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", QStringLiteral("Editable ComboBox"))
+			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", QStringLiteral("List"))
+			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", QStringLiteral("CheckBox"))
+			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", QStringLiteral("RadioButton")));
 
 	MultiDataInputInstance::MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
@@ -64,14 +64,14 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString question = evaluateString(ok, "question");
-		mMode = evaluateListElement<Mode>(ok, modes, "mode");
-		mItems = evaluateItemList(ok, "items");
-		QString defaultValue = evaluateString(ok, "defaultValue");
-		mVariable = evaluateVariable(ok, "variable");
-		QString windowTitle = evaluateString(ok, "windowTitle");
-        QImage windowIcon = evaluateImage(ok, "windowIcon");
-		mMaximumChoiceCount = evaluateInteger(ok, "maximumChoiceCount");
+		QString question = evaluateString(ok, QStringLiteral("question"));
+		mMode = evaluateListElement<Mode>(ok, modes, QStringLiteral("mode"));
+		mItems = evaluateItemList(ok, QStringLiteral("items"));
+		QString defaultValue = evaluateString(ok, QStringLiteral("defaultValue"));
+		mVariable = evaluateVariable(ok, QStringLiteral("variable"));
+		QString windowTitle = evaluateString(ok, QStringLiteral("windowTitle"));
+		QImage windowIcon = evaluateImage(ok, QStringLiteral("windowIcon"));
+		mMaximumChoiceCount = evaluateInteger(ok, QStringLiteral("maximumChoiceCount"));
 
 		if(!ok)
 			return;

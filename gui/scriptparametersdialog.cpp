@@ -117,7 +117,7 @@ void ScriptParametersDialog::postInit()
 		if(mCurrentLine != -1)
 		{
 			ActionTools::CodeLineEdit *valueLineEdit = qobject_cast<ActionTools::CodeLineEdit *>(widget);
-			if(valueLineEdit->text().contains('\n'))//Multiline : open the editor
+			if(valueLineEdit->text().contains(QLatin1Char('\n')))//Multiline : open the editor
 			{
 				if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(widget))
 					codeEditor->openEditor(mCurrentLine, mCurrentColumn);
@@ -166,7 +166,7 @@ void ScriptParametersDialog::accept()
 		if(nameLineEdit->text().isEmpty())
 			continue;
 
-		QRegExp nameRegExp("[a-z_][a-z0-9_]*", Qt::CaseInsensitive);
+		QRegExp nameRegExp(QStringLiteral("[a-z_][a-z0-9_]*"), Qt::CaseInsensitive);
 		if(!nameRegExp.exactMatch(nameLineEdit->text()))
 		{
 			QMessageBox::warning(this, tr("Script parameter error"), tr("Incorrect parameter name \"%1\".")

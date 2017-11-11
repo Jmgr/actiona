@@ -30,11 +30,11 @@
 namespace Actions
 {
 	ActionTools::StringListPair KeyInstance::actions = qMakePair(
-			QStringList() << "pressRelease" << "press" << "release",
-			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", "Press and release") << QT_TRANSLATE_NOOP("KeyInstance::actions", "Press") << QT_TRANSLATE_NOOP("KeyInstance::actions", "Release"));
+			QStringList() << QStringLiteral("pressRelease") << QStringLiteral("press") << QStringLiteral("release"),
+			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("Press and release")) << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("Press")) << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("Release")));
 	ActionTools::StringListPair KeyInstance::types = qMakePair(
-			QStringList() << "win32" << "directx",
-			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", "Win32") << QT_TRANSLATE_NOOP("KeyInstance::actions", "DirectX"));
+			QStringList() << QStringLiteral("win32") << QStringLiteral("directx"),
+			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("Win32")) << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("DirectX")));
 
 	KeyInstance::KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
@@ -51,15 +51,15 @@ namespace Actions
 	{
 		bool ok = true;
 
-		mKey = evaluateString(ok, "key", "key");
-		Action action = evaluateListElement<Action>(ok, actions, "action");
-		mAmount = evaluateInteger(ok, "amount");
-		mCtrl = evaluateBoolean(ok, "ctrl");
-		mAlt = evaluateBoolean(ok, "alt");
-		mShift = evaluateBoolean(ok, "shift");
-		mMeta = evaluateBoolean(ok, "meta");
-		Type type = evaluateListElement<Type>(ok, types, "type");
-		mPause  = evaluateInteger(ok, "pause");
+		mKey = evaluateString(ok, QStringLiteral("key"), QStringLiteral("key"));
+		Action action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"));
+		mAmount = evaluateInteger(ok, QStringLiteral("amount"));
+		mCtrl = evaluateBoolean(ok, QStringLiteral("ctrl"));
+		mAlt = evaluateBoolean(ok, QStringLiteral("alt"));
+		mShift = evaluateBoolean(ok, QStringLiteral("shift"));
+		mMeta = evaluateBoolean(ok, QStringLiteral("meta"));
+		Type type = evaluateListElement<Type>(ok, types, QStringLiteral("type"));
+		mPause  = evaluateInteger(ok, QStringLiteral("pause"));
 
 		if(mPause < 0)
 			mPause = 0;
@@ -72,7 +72,7 @@ namespace Actions
 
 		if(mAmount <= 0)
 		{
-			setCurrentParameter("amount");
+			setCurrentParameter(QStringLiteral("amount"));
 			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid key presses amount"));
 			return;
 		}
@@ -157,24 +157,24 @@ namespace Actions
 		if(press)
 		{
 			if(mCtrl)
-				mKeyboardDevice.pressKey("controlLeft");
+				mKeyboardDevice.pressKey(QStringLiteral("controlLeft"));
 			if(mAlt)
-				mKeyboardDevice.pressKey("altLeft");
+				mKeyboardDevice.pressKey(QStringLiteral("altLeft"));
 			if(mShift)
-				mKeyboardDevice.pressKey("shiftLeft");
+				mKeyboardDevice.pressKey(QStringLiteral("shiftLeft"));
 			if(mMeta)
-				mKeyboardDevice.pressKey("metaLeft");
+				mKeyboardDevice.pressKey(QStringLiteral("metaLeft"));
 		}
 		else
 		{
 			if(mCtrl)
-				mKeyboardDevice.releaseKey("controlLeft");
+				mKeyboardDevice.releaseKey(QStringLiteral("controlLeft"));
 			if(mAlt)
-				mKeyboardDevice.releaseKey("altLeft");
+				mKeyboardDevice.releaseKey(QStringLiteral("altLeft"));
 			if(mShift)
-				mKeyboardDevice.releaseKey("shiftLeft");
+				mKeyboardDevice.releaseKey(QStringLiteral("shiftLeft"));
 			if(mMeta)
-				mKeyboardDevice.releaseKey("metaLeft");
+				mKeyboardDevice.releaseKey(QStringLiteral("metaLeft"));
 		}
 	}
 }

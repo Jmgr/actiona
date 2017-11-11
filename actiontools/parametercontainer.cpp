@@ -48,13 +48,13 @@ namespace ActionTools
             {
             case ActionTools::Resource::BinaryType:
             case ActionTools::Resource::TypeCount:
-                back->addAction(QIcon(":/images/binary.png"), key);
+				back->addAction(QIcon(QStringLiteral(":/images/binary.png")), key);
                 break;
             case ActionTools::Resource::TextType:
-                back->addAction(QIcon(":/images/text.png"), key);
+				back->addAction(QIcon(QStringLiteral(":/images/text.png")), key);
                 break;
             case ActionTools::Resource::ImageType:
-                back->addAction(QIcon(":/images/image.png"), key);
+				back->addAction(QIcon(QStringLiteral(":/images/image.png")), key);
                 break;
             }
         }

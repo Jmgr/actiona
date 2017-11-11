@@ -120,7 +120,7 @@ namespace ActionTools
 	void ConsoleWidget::addStartSeparator()
 	{
 		mStartTime = QDateTime::currentDateTime();
-		QStandardItem *item = new QStandardItem(tr("Execution started at %1").arg(mStartTime.toString("dd/MM/yyyy hh:mm:ss:zzz")));
+		QStandardItem *item = new QStandardItem(tr("Execution started at %1").arg(mStartTime.toString(QStringLiteral("dd/MM/yyyy hh:mm:ss:zzz"))));
 		item->setTextAlignment(Qt::AlignCenter);
 		addSeparator(item);
 	}
@@ -147,13 +147,13 @@ namespace ActionTools
 			durationString += tr("%n minute(s) ", "", minutes);
 		if(seconds > 0)
 			durationString += tr("%n second(s) ", "", seconds);
-		int startMSec = mStartTime.toString("z").toInt();
-		int endMSec = currentDateTime.toString("z").toInt();
+		int startMSec = mStartTime.toString(QStringLiteral("z")).toInt();
+		int endMSec = currentDateTime.toString(QStringLiteral("z")).toInt();
 		int msec = (endMSec > startMSec) ? (endMSec - startMSec) : (1000 - (startMSec - endMSec));
 
 		durationString += tr("%n millisecond(s)", "", msec);
 
-		QStandardItem *item = new QStandardItem(tr("Execution ended at %1\n(%2)").arg(currentDateTime.toString("dd/MM/yyyy hh:mm:ss:zzz")).arg(durationString));
+		QStandardItem *item = new QStandardItem(tr("Execution ended at %1\n(%2)").arg(currentDateTime.toString(QStringLiteral("dd/MM/yyyy hh:mm:ss:zzz"))).arg(durationString));
 		item->setTextAlignment(Qt::AlignCenter);
 		addSeparator(item);
 	}
@@ -210,13 +210,13 @@ namespace ActionTools
 		switch(type)
 		{
 		case Information:
-			icon = QIcon(":/images/information.png");
+			icon = QIcon(QStringLiteral(":/images/information.png"));
 			break;
 		case Warning:
-			icon = QIcon(":/images/warning.png");
+			icon = QIcon(QStringLiteral(":/images/warning.png"));
 			break;
 		case Error:
-			icon = QIcon(":/images/error.png");
+			icon = QIcon(QStringLiteral(":/images/error.png"));
 			break;
         case Separator:
             Q_ASSERT(false && "Should use addSeparator instead");

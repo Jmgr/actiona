@@ -44,7 +44,7 @@ namespace Code
 		int value() const;
 		
 	public slots:
-		QString toString() const					{ return "ProgressDialog"; }
+		QString toString() const					{ return QStringLiteral("ProgressDialog"); }
 		QScriptValue setValue(int value);
 		QScriptValue setLabelText(const QString &labelText);
 		QScriptValue setMinimum(int minimum);

@@ -35,11 +35,11 @@ namespace Code
         {
             it.next();
 
-            if(it.name() == "sender")
+			if(it.name() == QLatin1String("sender"))
                 mailMessage->mMessage.setSender(it.value().toString());
-            else if(it.name() == "subject")
+			else if(it.name() == QLatin1String("subject"))
                 mailMessage->mMessage.setSubject(it.value().toString());
-            else if(it.name() == "body")
+			else if(it.name() == QLatin1String("body"))
                 mailMessage->mMessage.setBody(it.value().toString());
         }
 
@@ -61,8 +61,8 @@ namespace Code
         {
             QScriptValue attachmentObject = engine()->newObject();
 
-            attachmentObject.setProperty("filename", it.key());
-            attachmentObject.setProperty("attachment", MailAttachment::constructor(it.value(), engine()));
+			attachmentObject.setProperty(QStringLiteral("filename"), it.key());
+			attachmentObject.setProperty(QStringLiteral("attachment"), MailAttachment::constructor(it.value(), engine()));
 
             back.setProperty(index, attachmentObject);
 
@@ -82,7 +82,7 @@ namespace Code
         if(MailAttachment *mailAttachment = qobject_cast<MailAttachment*>(attachment.toQObject()))
             mMessage.addAttachment(filename, mailAttachment->attachment());
         else
-            throwError("ParameterTypeError", tr("Incorrect parameter type: not a MailAttachment"));
+			throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type: not a MailAttachment"));
 
         return thisObject();
     }

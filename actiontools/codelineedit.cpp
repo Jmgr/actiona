@@ -50,8 +50,8 @@ namespace ActionTools
 		mAllowTextCodeChange(true),
 		mShowEditorButton(true),
 		mEmbedded(false),
-        mSwitchTextCode(new QAction(QIcon(":/images/code.png"), tr("Set to text/code"), this)),
-        mOpenEditor(new QAction(QIcon(":/images/editor.png"), tr("Open editor"), this)),
+		mSwitchTextCode(new QAction(QIcon(QStringLiteral(":/images/code.png")), tr("Set to text/code"), this)),
+		mOpenEditor(new QAction(QIcon(QStringLiteral(":/images/editor.png")), tr("Open editor"), this)),
 		mRegExp(regexpValidation),
 		mCompletionModel(0),
         mCodeButton(new CodeLineEditButton(this)),
@@ -67,23 +67,23 @@ namespace ActionTools
 
 		QSettings settings;
 
-		mSwitchTextCode->setShortcut(QKeySequence(settings.value("actions/switchTextCode", QKeySequence("Ctrl+Shift+C")).toString()));
+		mSwitchTextCode->setShortcut(QKeySequence(settings.value(QStringLiteral("actions/switchTextCode"), QKeySequence(QStringLiteral("Ctrl+Shift+C"))).toString()));
 		mSwitchTextCode->setShortcutContext(Qt::WidgetShortcut);
-		mOpenEditor->setShortcut(QKeySequence(settings.value("actions/openEditorKey", QKeySequence("Ctrl+Shift+V")).toString()));
+		mOpenEditor->setShortcut(QKeySequence(settings.value(QStringLiteral("actions/openEditorKey"), QKeySequence(QStringLiteral("Ctrl+Shift+V"))).toString()));
 		mOpenEditor->setShortcutContext(Qt::WidgetShortcut);
 
 		addAction(mSwitchTextCode);
 		addAction(mOpenEditor);
 
-		mCodeButton->setIcon(QIcon(":/images/code.png"));
+		mCodeButton->setIcon(QIcon(QStringLiteral(":/images/code.png")));
 		mCodeButton->setMaximumWidth(14);
 		mCodeButton->setToolTip(tr("Click here to switch text/code"));
 		
-		mEditorButton->setIcon(QIcon(":/images/editor.png"));
+		mEditorButton->setIcon(QIcon(QStringLiteral(":/images/editor.png")));
 		mEditorButton->setMaximumWidth(18);
 		mEditorButton->setToolTip(tr("Click here to open the editor"));
 
-        mInsertButton->setIcon(QIcon(":/images/insert.png"));
+		mInsertButton->setIcon(QIcon(QStringLiteral(":/images/insert.png")));
         mInsertButton->setMaximumWidth(18);
         mInsertButton->setToolTip(tr("Click here to insert a variable or a resource"));
 		
@@ -137,7 +137,7 @@ namespace ActionTools
 
         w += mInsertButton->maximumWidth();
 		
-		setStyleSheet(QString("QLineEdit { padding-right: %1px; }").arg(w));
+		setStyleSheet(QStringLiteral("QLineEdit { padding-right: %1px; }").arg(w));
 
 		resizeButtons();
 		update();
@@ -207,7 +207,7 @@ namespace ActionTools
 
 	void CodeLineEdit::textChanged(const QString &text)
 	{
-		mMultiline = text.contains(QChar('\n'));
+		mMultiline = text.contains(QLatin1Char('\n'));
 		setReadOnly(mMultiline);
 	}
 
@@ -283,7 +283,7 @@ namespace ActionTools
         if(isCode())
             insert(variable);
         else
-            insert("$" + variable);
+			insert(QStringLiteral("$") + variable);
 
         if(currentCompleter)
         {
@@ -321,7 +321,7 @@ namespace ActionTools
             }
         }
 
-        variablesMenu->setIcon(QIcon(":/images/variable.png"));
+		variablesMenu->setIcon(QIcon(QStringLiteral(":/images/variable.png")));
 
         return variablesMenu;
     }
@@ -348,7 +348,7 @@ namespace ActionTools
             }
         }
 
-        resourceMenu->setIcon(QIcon(":/images/resource.png"));
+		resourceMenu->setIcon(QIcon(QStringLiteral(":/images/resource.png")));
 
         return resourceMenu;
     }

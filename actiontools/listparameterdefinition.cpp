@@ -42,8 +42,8 @@ namespace ActionTools
 		//The second element of the pair are the translated values
 		for(int i=0; i<items().first.size(); ++i)
 		{
-			if(items().first.at(i) == "[header]")
-				mComboBox->addItem(items().second.at(i), "header");
+			if(items().first.at(i) == QLatin1String("[header]"))
+				mComboBox->addItem(items().second.at(i), QStringLiteral("header"));
 			else
 				mComboBox->addItem(items().second.at(i));
 		}
@@ -55,7 +55,7 @@ namespace ActionTools
 
 	void ListParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		const SubParameter &subParameter = actionInstance->subParameter(name().original(), "value");
+		const SubParameter &subParameter = actionInstance->subParameter(name().original(), QStringLiteral("value"));
 
 		mComboBox->setCode(subParameter.isCode());
         mComboBox->setEditText(translatedNameFromOriginalName(subParameter.value()));
@@ -63,6 +63,6 @@ namespace ActionTools
 
 	void ListParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", mComboBox->isCode(), originalNameFromTranslatedName(mComboBox->currentText()));
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mComboBox->isCode(), originalNameFromTranslatedName(mComboBox->currentText()));
 	}
 }

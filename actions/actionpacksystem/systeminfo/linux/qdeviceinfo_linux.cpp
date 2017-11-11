@@ -407,9 +407,9 @@ QString QDeviceInfoPrivate::uniqueDeviceID()
             QCryptographicHash hash2(QCryptographicHash::Sha1);
             hash2.addData(macaddy.toLocal8Bit());
 
-            QString id = hash2.result().toHex();
+			QString id = QLatin1String(hash2.result().toHex());
 
-            id = id.insert(8,'-').insert(13,'-').insert(18,'-').insert(23,'-');
+			id = id.insert(8,QLatin1Char('-')).insert(13,QLatin1Char('-')).insert(18,QLatin1Char('-')).insert(23,QLatin1Char('-'));
             if (isUuid(id))
                 uniqueDeviceIDBuffer = id;
         }
@@ -421,7 +421,7 @@ QString QDeviceInfoPrivate::uniqueDeviceID()
         if (file.open(QIODevice::ReadOnly)) {
             QString id = QString::fromLocal8Bit(file.readAll().simplified().data());
             if (id.length() == 32) {
-                id = id.insert(8,'-').insert(13,'-').insert(18,'-').insert(23,'-');
+				id = id.insert(8,QLatin1Char('-')).insert(13,QLatin1Char('-')).insert(18,QLatin1Char('-')).insert(23,QLatin1Char('-'));
                 if (isUuid(id)) {
                     uniqueDeviceIDBuffer = id;
                 }
@@ -434,7 +434,7 @@ QString QDeviceInfoPrivate::uniqueDeviceID()
         if (file.open(QIODevice::ReadOnly)) {
             QString id = QString::fromLocal8Bit(file.readAll().simplified().data());
             if (id.length() == 32) {
-                id = id.insert(8,'-').insert(13,'-').insert(18,'-').insert(23,'-');
+				id = id.insert(8,QLatin1Char('-')).insert(13,QLatin1Char('-')).insert(18,QLatin1Char('-')).insert(23,QLatin1Char('-'));
                 if (isUuid(id)) {
                     uniqueDeviceIDBuffer = id;
                 }
@@ -448,7 +448,7 @@ QString QDeviceInfoPrivate::uniqueDeviceID()
         if (file.open(QIODevice::ReadOnly)) {
             QString id = QString::fromLocal8Bit(file.readAll().simplified().data());
             if (id.length() == 32) {
-                id = id.insert(8,'-').insert(13,'-').insert(18,'-').insert(23,'-');
+				id = id.insert(8,QLatin1Char('-')).insert(13,QLatin1Char('-')).insert(18,QLatin1Char('-')).insert(23,QLatin1Char('-'));
                 if (isUuid(id)) {
                     uniqueDeviceIDBuffer = id;
                 }

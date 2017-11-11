@@ -34,7 +34,7 @@ namespace ActionTools
 	
 	QStringList ScriptCompleter::splitPath(const QString &path) const
 	{
-		return path.split(".");
+		return path.split(QStringLiteral("."));
 	}
 	
 	QString ScriptCompleter::pathFromIndex(const QModelIndex &index) const
@@ -44,6 +44,6 @@ namespace ActionTools
 		for(QModelIndex i = index; i.isValid(); i = i.parent())
 			dataList.prepend(model()->data(i, completionRole()).toString());
    
-		return dataList.join(".");
+		return dataList.join(QStringLiteral("."));
 	}
 }

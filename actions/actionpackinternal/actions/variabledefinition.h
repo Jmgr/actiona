@@ -47,12 +47,12 @@ namespace Actions
 		{
 			translateItems("VariableInstance::types", VariableInstance::types);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setCategory(ActionTools::ElementDefinition::INPUT);
 			variable->setTooltip(tr("The variable name"));
 			addElement(variable);
 
-			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
+			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("type"), tr("Type")), this);
 			type->setTooltip(tr("The variable type"));
 			type->setItems(VariableInstance::types);
 			type->setDefaultValue(VariableInstance::types.second.at(VariableInstance::String));
@@ -66,7 +66,7 @@ namespace Actions
 											  << VariableInstance::types.first.at(VariableInstance::Float)
 											  );
 
-			ActionTools::TextParameterDefinition *simpleValue = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
+			ActionTools::TextParameterDefinition *simpleValue = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
 			simpleValue->setTooltip(tr("The variables new value"));
 			singleValueGroup->addMember(simpleValue);
 
@@ -78,7 +78,7 @@ namespace Actions
 											  << VariableInstance::types.first.at(VariableInstance::Color)
 											  );
 
-			ActionTools::ColorParameterDefinition *colorValue = new ActionTools::ColorParameterDefinition(ActionTools::Name("colorValue", tr("Color")), this);
+			ActionTools::ColorParameterDefinition *colorValue = new ActionTools::ColorParameterDefinition(ActionTools::Name(QStringLiteral("colorValue"), tr("Color")), this);
 			colorValue->setTooltip(tr("The variables new value"));
 			colorValueGroup->addMember(colorValue);
 
@@ -90,7 +90,7 @@ namespace Actions
 											  << VariableInstance::types.first.at(VariableInstance::Position)
 											  );
 
-			ActionTools::PositionParameterDefinition *positionValue = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionValue", tr("Position")), this);
+			ActionTools::PositionParameterDefinition *positionValue = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionValue"), tr("Position")), this);
 			positionValue->setTooltip(tr("The variables new value"));
 			positionValueGroup->addMember(positionValue);
 
@@ -100,12 +100,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Variable"); }
-		QString id() const														{ return "ActionVariable"; }
+		QString id() const														{ return QStringLiteral("ActionVariable"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Set the value of a variable"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new VariableInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/variable.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/variable.png")); }
 
 	private:
 		Q_DISABLE_COPY(VariableDefinition)

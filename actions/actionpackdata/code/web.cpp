@@ -44,13 +44,13 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "onFinished")
+			if(it.name() == QLatin1String("onFinished"))
 				web->mOnFinished = it.value();
-			else if(it.name() == "onDownloadProgress")
+			else if(it.name() == QLatin1String("onDownloadProgress"))
 				web->mOnDownloadProgress = it.value();
-			else if(it.name() == "onError")
+			else if(it.name() == QLatin1String("onError"))
 				web->mOnError = it.value();
-			else if(it.name() == "file")
+			else if(it.name() == QLatin1String("file"))
 				web->mFileValue = it.value();
 		}
 
@@ -89,7 +89,7 @@ namespace Code
 			{
 				if(!mFile->open(QIODevice::WriteOnly))
 				{
-					throwError("OpenFileError", tr("Unable to open the destination file"));
+					throwError(QStringLiteral("OpenFileError"), tr("Unable to open the destination file"));
 					return thisObject();
 				}
 
@@ -99,7 +99,7 @@ namespace Code
 
 		QUrl url(urlString);
 		if(url.scheme() == QString())
-			url = QUrl("http://" + urlString, QUrl::TolerantMode);
+			url = QUrl(QStringLiteral("http://") + urlString, QUrl::TolerantMode);
 
         QUrlQuery urlQuery;
 		QNetworkRequest request;
@@ -112,7 +112,7 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "rawHeaders")
+			if(it.name() == QLatin1String("rawHeaders"))
 			{
 				QScriptValueIterator headerIt(it.value());
 
@@ -123,11 +123,11 @@ namespace Code
 					request.setRawHeader(headerIt.name().toUtf8(), headerIt.value().toString().toUtf8());
 				}
 			}
-			else if(it.name() == "method")
+			else if(it.name() == QLatin1String("method"))
 			{
 				method = static_cast<Method>(it.value().toInt32());
 			}
-			else if(it.name() == "postData")
+			else if(it.name() == QLatin1String("postData"))
 			{
                 QScriptValueIterator postDataIt(it.value());
                 QUrlQuery postDataParameters;
@@ -141,7 +141,7 @@ namespace Code
 
                 postData = postDataParameters.toString(QUrl::FullyEncoded).toLatin1();
 			}
-			else if(it.name() == "query")
+			else if(it.name() == QLatin1String("query"))
 			{
 				QScriptValueIterator queryIt(it.value());
 
@@ -152,11 +152,11 @@ namespace Code
                     urlQuery.addQueryItem(queryIt.name(), queryIt.value().toString());
 				}
 			}
-			else if(it.name() == "user")
+			else if(it.name() == QLatin1String("user"))
 			{
 				mUser = it.value().toString();
 			}
-			else if(it.name() == "password")
+			else if(it.name() == QLatin1String("password"))
 			{
 				mPassword = it.value().toString();
 			}

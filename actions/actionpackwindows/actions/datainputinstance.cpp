@@ -32,18 +32,18 @@
 namespace Actions
 {
 	ActionTools::StringListPair DataInputInstance::dataTypes = qMakePair(
-		QStringList() << "text" << "integer" << "decimal",
+		QStringList() << QStringLiteral("text") << QStringLiteral("integer") << QStringLiteral("decimal"),
 		QStringList()
-		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Text")
-		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer")
-		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal"));
+		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", QStringLiteral("Text"))
+		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", QStringLiteral("Integer"))
+		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", QStringLiteral("Decimal")));
 
     ActionTools::StringListPair DataInputInstance::editorTypes = qMakePair(
-        QStringList() << "line" << "multiline" << "password",
+		QStringList() << QStringLiteral("line") << QStringLiteral("multiline") << QStringLiteral("password"),
         QStringList()
-        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line")
-        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Multiline")
-        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Password"));
+		<< QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", QStringLiteral("Line"))
+		<< QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", QStringLiteral("Multiline"))
+		<< QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", QStringLiteral("Password")));
 
 	DataInputInstance::DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
@@ -55,12 +55,12 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString question = evaluateString(ok, "question");
-		mDataType = evaluateListElement<DataType>(ok, dataTypes, "dataType");
-        EditorType editorType = evaluateListElement<EditorType>(ok, editorTypes, "editorType");
-		mVariable = evaluateVariable(ok, "variable");
-		QString windowTitle = evaluateString(ok, "windowTitle");
-        QImage windowIcon = evaluateImage(ok, "windowIcon");
+		QString question = evaluateString(ok, QStringLiteral("question"));
+		mDataType = evaluateListElement<DataType>(ok, dataTypes, QStringLiteral("dataType"));
+		EditorType editorType = evaluateListElement<EditorType>(ok, editorTypes, QStringLiteral("editorType"));
+		mVariable = evaluateVariable(ok, QStringLiteral("variable"));
+		QString windowTitle = evaluateString(ok, QStringLiteral("windowTitle"));
+		QImage windowIcon = evaluateImage(ok, QStringLiteral("windowIcon"));
 
 		if(!ok)
 			return;
@@ -74,17 +74,17 @@ namespace Actions
 		switch(mDataType)
 		{
 		case IntegerType:
-			integerDefaultValue = evaluateInteger(ok, "defaultValue");
+			integerDefaultValue = evaluateInteger(ok, QStringLiteral("defaultValue"));
 			if(!ok)
 				return;
 			break;
 		case DecimalType:
-			decimalDefaultValue = evaluateDouble(ok, "defaultValue");
+			decimalDefaultValue = evaluateDouble(ok, QStringLiteral("defaultValue"));
 			if(!ok)
 				return;
 			break;
 		default:
-			textDefaultValue = evaluateString(ok, "defaultValue");
+			textDefaultValue = evaluateString(ok, QStringLiteral("defaultValue"));
 			if(!ok)
 				return;
 			break;

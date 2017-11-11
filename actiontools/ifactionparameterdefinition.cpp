@@ -33,12 +33,12 @@ namespace ActionTools
 	bool IfActionParameterDefinition::translated = false;
 
 	StringListPair IfActionParameterDefinition::actions = qMakePair(
-		QStringList() << "do_nothing" << "goto" << "run_code" << "call_procedure",
+		QStringList() << QStringLiteral("do_nothing") << QStringLiteral("goto") << QStringLiteral("run_code") << QStringLiteral("call_procedure"),
 		QStringList()
-		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Do nothing")
-		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Goto line")
-		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code")
-		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Call procedure"));
+		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", QStringLiteral("Do nothing"))
+		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", QStringLiteral("Goto line"))
+		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", QStringLiteral("Run code"))
+		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", QStringLiteral("Call procedure")));
 
     IfActionParameterDefinition::IfActionParameterDefinition(const Name &name, QObject *parent)
         : ItemsParameterDefinition(name, parent),
@@ -53,7 +53,7 @@ namespace ActionTools
 			translated = true;
 
 			for(int index = 0; index < actions.second.size(); ++index)
-				actions.second[index] = QApplication::instance()->translate("IfActionParameterDefinition::actions", actions.second.at(index).toLatin1());
+				actions.second[index] = QApplication::instance()->translate("IfActionParameterDefinition::actions", actions.second.at(index).toLatin1().constData());
 		}
 	}
 
@@ -65,8 +65,8 @@ namespace ActionTools
 
 		if(mAllowWait)
 		{
-			mItems.first << "wait";
-			mItems.second << QObject::tr("Wait");
+			mItems.first << QStringLiteral("wait");
+			mItems.second << tr("Wait");
 		}
 
 		mActionEdit = new CodeComboBox(parent);
@@ -98,11 +98,11 @@ namespace ActionTools
 
 	void IfActionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		const SubParameter &actionSubParameter = actionInstance->subParameter(name().original(), "action");
+		const SubParameter &actionSubParameter = actionInstance->subParameter(name().original(), QStringLiteral("action"));
 		mActionEdit->setCode(actionSubParameter.isCode());
         mActionEdit->setEditText(translatedNameFromOriginalName(actionSubParameter.value()));
 
-		const SubParameter &lineSubParameter = actionInstance->subParameter(name().original(), "line");
+		const SubParameter &lineSubParameter = actionInstance->subParameter(name().original(), QStringLiteral("line"));
 		switch(findAppropriateEditor(mActionEdit->codeLineEdit()->text()))
 		{
 		case LineEditor:
@@ -128,22 +128,22 @@ namespace ActionTools
 
 	void IfActionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "action", mActionEdit->isCode(), originalNameFromTranslatedName(mActionEdit->currentText()));
+		actionInstance->setSubParameter(name().original(), QStringLiteral("action"), mActionEdit->isCode(), originalNameFromTranslatedName(mActionEdit->currentText()));
 
 		//Note: this should not be called "line" each time, but we need to keep this name for backward compatibility
 		switch(findAppropriateEditor(mActionEdit->codeLineEdit()->text()))
 		{
 		case LineEditor:
-			actionInstance->setSubParameter(name().original(), "line", mLineComboBox->isCode(), mLineComboBox->currentText());
+			actionInstance->setSubParameter(name().original(), QStringLiteral("line"), mLineComboBox->isCode(), mLineComboBox->currentText());
 			break;
 		case CodeEditor:
-			actionInstance->setSubParameter(name().original(), "line", true, mCodeLineEdit->text());
+			actionInstance->setSubParameter(name().original(), QStringLiteral("line"), true, mCodeLineEdit->text());
 			break;
 		case TextCodeEditor:
-			actionInstance->setSubParameter(name().original(), "line", mCodeLineEdit->isCode(), mCodeLineEdit->text());
+			actionInstance->setSubParameter(name().original(), QStringLiteral("line"), mCodeLineEdit->isCode(), mCodeLineEdit->text());
 			break;
 		case ProcedureEditor:
-			actionInstance->setSubParameter(name().original(), "line", mProcedureComboBox->isCode(), mProcedureComboBox->currentText());
+			actionInstance->setSubParameter(name().original(), QStringLiteral("line"), mProcedureComboBox->isCode(), mProcedureComboBox->currentText());
 			break;
 		case NoEditor:
 		default:
@@ -153,8 +153,8 @@ namespace ActionTools
 
 	void IfActionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "action", defaultAction(actions.second[DoNothing]));
-		actionInstance->setSubParameter(name().original(), "line", defaultLine());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("action"), defaultAction(actions.second[DoNothing]));
+		actionInstance->setSubParameter(name().original(), QStringLiteral("line"), defaultLine());
 	}
 	
     void IfActionParameterDefinition::actionUpdate(Script *script)

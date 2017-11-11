@@ -103,7 +103,7 @@ int main(int argc, char **argv)
         #error("You need Qt 5.2.0 or later to compile Actiona Executer");
 #endif
 
-    QtSingleApplication app("actiona-exec", argc, argv);
+	QtSingleApplication app(QStringLiteral("actiona-exec"), argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);
@@ -116,60 +116,60 @@ int main(int argc, char **argv)
 
     QxtCommandOptions preOptions;
 
-    preOptions.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
-    preOptions.alias("portable", "p");
+	preOptions.add(QStringLiteral("portable"), QObject::tr("starts in portable mode, storing the settings in the executable folder"));
+	preOptions.alias(QStringLiteral("portable"), QStringLiteral("p"));
     preOptions.parse(QCoreApplication::arguments());
 
-    if(preOptions.count("portable") > 0)
+	if(preOptions.count(QStringLiteral("portable")) > 0)
     {
-        QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QApplication::applicationDirPath() + "/userSettings");
-        QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope, QApplication::applicationDirPath() + "/systemSettings");
+		QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QApplication::applicationDirPath() + QStringLiteral("/userSettings"));
+		QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope, QApplication::applicationDirPath() + QStringLiteral("/systemSettings"));
         QSettings::setDefaultFormat(QSettings::IniFormat);
     }
 
     QString locale = Tools::locale();
 
     Tools::installQtTranslator(locale);
-    Tools::installTranslator("tools", locale);
-    Tools::installTranslator("actiontools", locale);
-    Tools::installTranslator("executer", locale);
-    Tools::installTranslator("actexecuter", locale);
+	Tools::installTranslator(QStringLiteral("tools"), locale);
+	Tools::installTranslator(QStringLiteral("actiontools"), locale);
+	Tools::installTranslator(QStringLiteral("executer"), locale);
+	Tools::installTranslator(QStringLiteral("actexecuter"), locale);
 
     const QStringList &arguments = QCoreApplication::arguments();
 
     QxtCommandOptions options;
     options.setFlagStyle(QxtCommandOptions::DoubleDash);
     options.setScreenWidth(0);
-    options.add("code", QObject::tr("switch to code mode, may not be used with -s"));
-    options.alias("code", "c");
-    options.add("script", QObject::tr("switch to script mode, may not be used with -c"));
-    options.alias("script", "s");
-    options.add("nocodeqt", QObject::tr("do not include the Qt library into the code"));
-    options.alias("nocodeqt", "Q");
-    options.add("portable", QObject::tr("starts in portable mode, storing the settings in the executable folder"));
-    options.alias("portable", "p");
-    options.add("proxy-mode", QObject::tr("sets the proxy mode, values are \"none\", \"system\" (default) or \"custom\""));
-    options.add("proxy-type", QObject::tr("sets the custom proxy type, values are \"http\" or \"socks\" (default)"));
-    options.add("proxy-host", QObject::tr("sets the custom proxy host"));
-    options.add("proxy-port", QObject::tr("sets the custom proxy port"));
-    options.add("proxy-user", QObject::tr("sets the custom proxy user"));
-    options.add("proxy-password", QObject::tr("sets the custom proxy password"));
+	options.add(QStringLiteral("code"), QObject::tr("switch to code mode, may not be used with -s"));
+	options.alias(QStringLiteral("code"), QStringLiteral("c"));
+	options.add(QStringLiteral("script"), QObject::tr("switch to script mode, may not be used with -c"));
+	options.alias(QStringLiteral("script"), QStringLiteral("s"));
+	options.add(QStringLiteral("nocodeqt"), QObject::tr("do not include the Qt library into the code"));
+	options.alias(QStringLiteral("nocodeqt"), QStringLiteral("Q"));
+	options.add(QStringLiteral("portable"), QObject::tr("starts in portable mode, storing the settings in the executable folder"));
+	options.alias(QStringLiteral("portable"), QStringLiteral("p"));
+	options.add(QStringLiteral("proxy-mode"), QObject::tr("sets the proxy mode, values are \"none\", \"system\" (default) or \"custom\""));
+	options.add(QStringLiteral("proxy-type"), QObject::tr("sets the custom proxy type, values are \"http\" or \"socks\" (default)"));
+	options.add(QStringLiteral("proxy-host"), QObject::tr("sets the custom proxy host"));
+	options.add(QStringLiteral("proxy-port"), QObject::tr("sets the custom proxy port"));
+	options.add(QStringLiteral("proxy-user"), QObject::tr("sets the custom proxy user"));
+	options.add(QStringLiteral("proxy-password"), QObject::tr("sets the custom proxy password"));
 #ifdef Q_OS_WIN
-    options.add("console", QObject::tr("create a console to see debug output"));
-    options.add("pause-at-end", QObject::tr("wait for user input at the end of the execution, used only with --console"));
+	options.add(QStringLiteral("console"), QObject::tr("create a console to see debug output"));
+	options.add(QStringLiteral("pause-at-end"), QObject::tr("wait for user input at the end of the execution, used only with --console"));
 #endif
-    options.add("version", QObject::tr("show the program version"));
-    options.alias("version", "v");
-    options.add("help", QObject::tr("show this help text"));
-    options.alias("help", "h");
+	options.add(QStringLiteral("version"), QObject::tr("show the program version"));
+	options.alias(QStringLiteral("version"), QStringLiteral("v"));
+	options.add(QStringLiteral("help"), QObject::tr("show this help text"));
+	options.alias(QStringLiteral("help"), QStringLiteral("h"));
     options.parse(arguments);
 
 #ifdef Q_OS_WIN
-    if(options.count("console"))
+	if(options.count(QStringLiteral("console")))
     {
         createConsole();
 
-        if(options.count("pause-at-end"))
+		if(options.count(QStringLiteral("pause-at-end")))
             qAddPostRoutine(pause);
     }
 #endif
@@ -185,14 +185,14 @@ int main(int argc, char **argv)
 	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaTypeStreamOperators<Tools::Version>("Version");
 
-	if(options.count("version"))
+	if(options.count(QStringLiteral("version")))
 	{
 		QTextStream stream(stdout);
         stream << "Actiona Executer version " << Global::ACTIONA_VERSION.toString() << ", script version " << Global::SCRIPT_VERSION.toString() << "\n";
 		stream.flush();
 		return 0;
 	}
-	if(options.count("help") || options.showUnrecognizedWarning() || options.positional().count() < 1 || (options.count("code") && options.count("script")))
+	if(options.count(QStringLiteral("help")) || options.showUnrecognizedWarning() || options.positional().count() < 1 || (options.count(QStringLiteral("code")) && options.count(QStringLiteral("script"))))
 	{
 		QTextStream stream(stdout);
 		stream << QObject::tr("usage: ") << QCoreApplication::arguments().at(0) << " " << QObject::tr("[parameters]") << " " << QObject::tr("filename") << "\n";
@@ -202,11 +202,11 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	app.addLibraryPath(QApplication::applicationDirPath() + "/actions");
-	app.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
+	app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/actions"));
+	app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/plugins"));
 
-	if(!options.count("nocodeqt"))
-		app.addLibraryPath(QApplication::applicationDirPath() + "/code");
+	if(!options.count(QStringLiteral("nocodeqt")))
+		app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/code"));
 
 #ifdef Q_OS_LINUX
 	{
@@ -219,13 +219,13 @@ int main(int argc, char **argv)
 
 	// Proxy settings
 	int proxyMode = ActionTools::Settings::PROXY_SYSTEM;
-	if(options.value("proxy-mode").toString() == "none")
+	if(options.value(QStringLiteral("proxy-mode")).toString() == QLatin1String("none"))
 		proxyMode = ActionTools::Settings::PROXY_NONE;
-	else if(options.value("proxy-mode").toString() == "custom")
+	else if(options.value(QStringLiteral("proxy-mode")).toString() == QLatin1String("custom"))
 		proxyMode = ActionTools::Settings::PROXY_CUSTOM;
-	else if(options.value("proxy-mode").toString() == "system")
+	else if(options.value(QStringLiteral("proxy-mode")).toString() == QLatin1String("system"))
 		proxyMode = ActionTools::Settings::PROXY_SYSTEM;
-	else if(!options.value("proxy-mode").toString().isEmpty())
+	else if(!options.value(QStringLiteral("proxy-mode")).toString().isEmpty())
 	{
 		QTextStream stream(stdout);
 		stream << QObject::tr("Unknown proxy mode, values are \"none\", \"system\" (default) or \"custom\"") << "\n";
@@ -254,11 +254,11 @@ int main(int argc, char **argv)
 	case ActionTools::Settings::PROXY_CUSTOM:
 		{
 			int type = ActionTools::Settings::PROXY_TYPE_SOCKS5;
-			if(options.value("proxy-type").toString() == "http")
+			if(options.value(QStringLiteral("proxy-type")).toString() == QLatin1String("http"))
 				type = ActionTools::Settings::PROXY_TYPE_HTTP;
-			else if(options.value("proxy-type").toString() == "socks")
+			else if(options.value(QStringLiteral("proxy-type")).toString() == QLatin1String("socks"))
 				type = ActionTools::Settings::PROXY_TYPE_SOCKS5;
-			else if(!options.value("proxy-type").toString().isEmpty())
+			else if(!options.value(QStringLiteral("proxy-type")).toString().isEmpty())
 			{
 				QTextStream stream(stdout);
 				stream << QObject::tr("Unknown proxy type, values are \"http\" or \"socks\" (default)") << "\n";
@@ -273,10 +273,10 @@ int main(int argc, char **argv)
 			else
 				proxy.setType(QNetworkProxy::Socks5Proxy);
 
-			proxy.setHostName(options.value("proxy-host").toString());
-			proxy.setPort(options.value("proxy-port").toInt());
-			proxy.setUser(options.value("proxy-user").toString());
-			proxy.setPassword(options.value("proxy-password").toString());
+			proxy.setHostName(options.value(QStringLiteral("proxy-host")).toString());
+			proxy.setPort(options.value(QStringLiteral("proxy-port")).toInt());
+			proxy.setUser(options.value(QStringLiteral("proxy-user")).toString());
+			proxy.setPassword(options.value(QStringLiteral("proxy-password")).toString());
 		}
 		break;
 	}
@@ -284,7 +284,7 @@ int main(int argc, char **argv)
 	QNetworkProxy::setApplicationProxy(proxy);
 
 	QUrl protocolUrl = QUrl::fromEncoded(arguments.at(1).toUtf8());
-    if(protocolUrl.isValid() && protocolUrl.scheme() != "actiona")
+	if(protocolUrl.isValid() && protocolUrl.scheme() != QLatin1String("actiona"))
 		protocolUrl = QUrl();
 
 	MainClass::ExecutionMode executionMode = MainClass::Unknown;
@@ -296,22 +296,22 @@ int main(int argc, char **argv)
         using QStringPair = QPair<QString, QString>;
         for(const QStringPair &queryItem: QUrlQuery(protocolUrl.query()).queryItems())
 		{
-			if(queryItem.first == "mode")
+			if(queryItem.first == QLatin1String("mode"))
 			{
 				mode = queryItem.second;
 				break;
 			}
 		}
 
-		if(mode == "code")
+		if(mode == QLatin1String("code"))
 			executionMode = MainClass::Code;
-		else if(mode == "script")
+		else if(mode == QLatin1String("script"))
 			executionMode = MainClass::Script;
 		else
 		{
-			if(protocolUrl.path().endsWith(".ascr"))
+			if(protocolUrl.path().endsWith(QStringLiteral(".ascr")))
 				executionMode = MainClass::Script;
-			else if(protocolUrl.path().endsWith(".acod"))
+			else if(protocolUrl.path().endsWith(QStringLiteral(".acod")))
 				executionMode = MainClass::Code;
 			else
 			{
@@ -329,15 +329,15 @@ int main(int argc, char **argv)
 	{
 		QString filename = options.positional().at(0);
 
-		if(options.count("code"))
+		if(options.count(QStringLiteral("code")))
 			executionMode = MainClass::Code;
-		else if(options.count("script"))
+		else if(options.count(QStringLiteral("script")))
 			executionMode = MainClass::Script;
 		else
 		{
-			if(filename.endsWith(".ascr"))
+			if(filename.endsWith(QStringLiteral(".ascr")))
 				executionMode = MainClass::Script;
-			else if(filename.endsWith(".acod"))
+			else if(filename.endsWith(QStringLiteral(".acod")))
 				executionMode = MainClass::Code;
 			else
 			{

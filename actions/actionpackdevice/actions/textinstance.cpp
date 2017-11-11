@@ -39,9 +39,9 @@ namespace Actions
 	{
 		bool ok = true;
 	
-		mText = evaluateString(ok, "text");
-		int pause  = evaluateInteger(ok, "pause");
-        mNoUnicodeCharacters = evaluateBoolean(ok, "noUnicodeCharacters");
+		mText = evaluateString(ok, QStringLiteral("text"));
+		int pause  = evaluateInteger(ok, QStringLiteral("pause"));
+		mNoUnicodeCharacters = evaluateBoolean(ok, QStringLiteral("noUnicodeCharacters"));
 
 		if(pause < 0)
 			pause = 0;

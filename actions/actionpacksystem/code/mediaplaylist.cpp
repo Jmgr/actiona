@@ -158,7 +158,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->addMedia(QUrl::fromLocalFile(path)))
 		{
-			throwError("AddMediaError", tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError(QStringLiteral("AddMediaError"), tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
 			return thisObject();
 		}
 		
@@ -169,7 +169,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->addMedia(QUrl(path)))
 		{
-			throwError("AddMediaError", tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError(QStringLiteral("AddMediaError"), tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
 			return thisObject();
 		}
 		
@@ -180,7 +180,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->insertMedia(position, QUrl::fromLocalFile(path)))
 		{
-			throwError("InsertMediaError", tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError(QStringLiteral("InsertMediaError"), tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
 			return thisObject();
 		}
 		
@@ -191,7 +191,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->insertMedia(position, QUrl(path)))
 		{
-			throwError("InsertMediaError", tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError(QStringLiteral("InsertMediaError"), tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
 			return thisObject();
 		}
 		
@@ -202,7 +202,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->clear())
 		{
-			throwError("ClearMediaError", tr("Clear failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError(QStringLiteral("ClearMediaError"), tr("Clear failed : %1").arg(mMediaPlaylist->errorString()));
 			return thisObject();
 		}
 		
@@ -248,7 +248,7 @@ namespace Code
 	{
 		if(!mMediaPlaylist->removeMedia(position))
 		{
-			throwError("RemoveMediaError", tr("Remove media failed : %1").arg(mMediaPlaylist->errorString()));
+			throwError(QStringLiteral("RemoveMediaError"), tr("Remove media failed : %1").arg(mMediaPlaylist->errorString()));
 			return thisObject();
 		}
 		

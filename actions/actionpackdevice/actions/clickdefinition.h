@@ -48,19 +48,19 @@ namespace Actions
 			translateItems("ClickInstance::buttons", ClickInstance::buttons);
 			translateItems("ClickInstance::actions", ClickInstance::actions);
 
-			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name("action", tr("Action")), this);
+			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("action"), tr("Action")), this);
 			action->setTooltip(tr("The action to simulate"));
 			action->setItems(ClickInstance::actions);
 			action->setDefaultValue(ClickInstance::actions.second.at(ClickInstance::ClickAction));
 			addElement(action);
 	
-			ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::Name("button", tr("Button")), this);
+			ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("button"), tr("Button")), this);
 			button->setTooltip(tr("The button to simulate"));
 			button->setItems(ClickInstance::buttons);
 			button->setDefaultValue(ClickInstance::buttons.second.at(MouseDevice::LeftButton));
 			addElement(button);
 	
-			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::Name("position", tr("Position")), this);
+			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("position"), tr("Position")), this);
 			position->setTooltip(tr("The screen position where to simulate a mouse click"));
 			addElement(position);
 	
@@ -68,16 +68,16 @@ namespace Actions
 			clickGroup->setMasterList(action);
 			clickGroup->setMasterValues(QStringList() << ClickInstance::actions.first.at(ClickInstance::ClickAction));
 	
-			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
+			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("amount"), tr("Amount")), this);
 			amount->setTooltip(tr("The amount of clicks to simulate"));
 			amount->setMinimum(1);
 			amount->setMaximum(std::numeric_limits<int>::max());
-            amount->setDefaultValue("1");
+			amount->setDefaultValue(QStringLiteral("1"));
 			clickGroup->addMember(amount);
 	
 			addElement(clickGroup);
 			
-			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
+			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionOffset"), tr("Offset")), this);
 			positionOffset->setTooltip(tr("The offset to apply to the click position"));
 			addElement(positionOffset, 1);
 
@@ -86,12 +86,12 @@ namespace Actions
 		}
 	
 		QString name() const													{ return QObject::tr("Click"); }
-		QString id() const														{ return "ActionClick"; }
+		QString id() const														{ return QStringLiteral("ActionClick"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Emulates a mouse click"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new ClickInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/click.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/click.png")); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 	

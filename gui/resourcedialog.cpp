@@ -216,13 +216,13 @@ void ResourceDialog::addResource(const QString &name, const QByteArray &data, Ac
     {
     case ActionTools::Resource::BinaryType:
     case ActionTools::Resource::TypeCount:
-        item->setIcon(QIcon(":/images/binary.png"));
+		item->setIcon(QIcon(QStringLiteral(":/images/binary.png")));
         break;
     case ActionTools::Resource::TextType:
-        item->setIcon(QIcon(":/images/text.png"));
+		item->setIcon(QIcon(QStringLiteral(":/images/text.png")));
         break;
     case ActionTools::Resource::ImageType:
-        item->setIcon(QIcon(":/images/image.png"));
+		item->setIcon(QIcon(QStringLiteral(":/images/image.png")));
         break;
     }
     ui->resourcesTableWidget->setItem(row, 1, item);

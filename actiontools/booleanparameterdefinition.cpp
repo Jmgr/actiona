@@ -41,12 +41,12 @@ namespace ActionTools
 
 	void BooleanParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mBooleanEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
+		mBooleanEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("value")));
 	}
 
 	void BooleanParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", mBooleanEdit->isCode(), mBooleanEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mBooleanEdit->isCode(), mBooleanEdit->text());
 	}
 }
 

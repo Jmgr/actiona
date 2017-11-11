@@ -49,11 +49,11 @@ namespace
         if(QDir::isAbsolutePath(filename))
             return filename;
 
-        QScriptValue executionObject = engine->globalObject().property("Execution");
+		QScriptValue executionObject = engine->globalObject().property(QStringLiteral("Execution"));
         if(executionObject.isNull())
             return filename;
 
-        QString scriptOrCodeFilename = executionObject.property("filename").toString();
+		QString scriptOrCodeFilename = executionObject.property(QStringLiteral("filename")).toString();
         if(scriptOrCodeFilename.isEmpty())
             return filename;
 
@@ -77,7 +77,7 @@ namespace LibExecuter
 		QFile file(filename);
 		if(!file.open(QIODevice::ReadOnly))
 		{
-			Code::CodeClass::throwError(context, engine, "LoadFileError", QObject::tr("Unable to load UI file %1").arg(filename));
+			Code::CodeClass::throwError(context, engine, QStringLiteral("LoadFileError"), QObject::tr("Unable to load UI file %1").arg(filename));
 			return context->thisObject();
 		}
 
@@ -90,11 +90,11 @@ namespace LibExecuter
         QFile file(filename);
         if(!file.open(QIODevice::ReadOnly))
         {
-            Code::CodeClass::throwError(context, engine, "IncludeFileError", QObject::tr("Unable to include file %1").arg(filename));
+			Code::CodeClass::throwError(context, engine, QStringLiteral("IncludeFileError"), QObject::tr("Unable to include file %1").arg(filename));
             return context->thisObject();
         }
 
-        QString fileContent = file.readAll();
+		QString fileContent = QString::fromUtf8(file.readAll());
         file.close();
 
         QScriptContext *parent = context->parentContext();
@@ -112,10 +112,10 @@ namespace LibExecuter
 		scriptEngine->setProcessEventsInterval(50);
 
 		QScriptValue loadUIFunc = scriptEngine->newFunction(&loadUIFunction);
-		scriptEngine->globalObject().setProperty("loadUI", loadUIFunc);
+		scriptEngine->globalObject().setProperty(QStringLiteral("loadUI"), loadUIFunc);
 
 		QScriptValue includeFunc = scriptEngine->newFunction(&includeFunction);
-		scriptEngine->globalObject().setProperty("include", includeFunc);
+		scriptEngine->globalObject().setProperty(QStringLiteral("include"), includeFunc);
 
 		Code::Window::registerClass(scriptEngine);
 		Code::RawData::registerClass(scriptEngine);
@@ -128,21 +128,21 @@ namespace LibExecuter
 		Code::ProcessHandle::registerClass(scriptEngine);
 
 		CodeExecution::setScriptAgent(scriptAgent);
-		Code::CodeTools::addClassToScriptEngine<CodeExecution>("Execution", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::pause, "pause", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::sleep, "sleep", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Execution", &CodeExecution::stop, "stop", scriptEngine);
+		Code::CodeTools::addClassToScriptEngine<CodeExecution>(QStringLiteral("Execution"), scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Execution"), &CodeExecution::pause, QStringLiteral("pause"), scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Execution"), &CodeExecution::sleep, QStringLiteral("sleep"), scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Execution"), &CodeExecution::stop, QStringLiteral("stop"), scriptEngine);
 
-        QScriptValue executionObject = scriptEngine->globalObject().property("Execution");
-        executionObject.setProperty("filename", filename, QScriptValue::ReadOnly);
+		QScriptValue executionObject = scriptEngine->globalObject().property(QStringLiteral("Execution"));
+		executionObject.setProperty(QStringLiteral("filename"), filename, QScriptValue::ReadOnly);
 
-		Code::CodeTools::addClassToScriptEngine<CodeStdio>("Stdio", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::print, "print", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::println, "println", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printWarning, "printWarning", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printlnWarning, "printlnWarning", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printError, "printError", scriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine("Stdio", &CodeStdio::printlnError, "printlnError", scriptEngine);
+		Code::CodeTools::addClassToScriptEngine<CodeStdio>(QStringLiteral("Stdio"), scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Stdio"), &CodeStdio::print, QStringLiteral("print"), scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Stdio"), &CodeStdio::println, QStringLiteral("println"), scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Stdio"), &CodeStdio::printWarning, QStringLiteral("printWarning"), scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Stdio"), &CodeStdio::printlnWarning, QStringLiteral("printlnWarning"), scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Stdio"), &CodeStdio::printError, QStringLiteral("printError"), scriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Stdio"), &CodeStdio::printlnError, QStringLiteral("printlnError"), scriptEngine);
 
 		int actionPackCount = actionFactory->actionPackCount();
 		for(int actionPackIndex = 0; actionPackIndex < actionPackCount; ++actionPackIndex)

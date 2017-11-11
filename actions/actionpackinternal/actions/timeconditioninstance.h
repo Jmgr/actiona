@@ -40,18 +40,18 @@ namespace Actions
 		{
 			bool ok = true;
 
-            mTestedDateTime = evaluateDateTime(ok, "date");
+			mTestedDateTime = evaluateDateTime(ok, QStringLiteral("date"));
 
             if(!mTestedDateTime.isValid())
             {
-                setCurrentParameter("date");
+				setCurrentParameter(QStringLiteral("date"));
                 emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid date"));
                 return;
             }
 
-			ActionTools::IfActionValue ifBefore = evaluateIfAction(ok, "ifBefore");
-			ActionTools::IfActionValue ifNow = evaluateIfAction(ok, "ifNow");
-			ActionTools::IfActionValue ifAfter = evaluateIfAction(ok, "ifAfter");
+			ActionTools::IfActionValue ifBefore = evaluateIfAction(ok, QStringLiteral("ifBefore"));
+			ActionTools::IfActionValue ifNow = evaluateIfAction(ok, QStringLiteral("ifNow"));
+			ActionTools::IfActionValue ifAfter = evaluateIfAction(ok, QStringLiteral("ifAfter"));
 
 			if(!ok)
 				return;

@@ -102,40 +102,40 @@ namespace ActionTools
 					++i;
 					state = Number;
 				}
-				else if (ch.isLetter() || ch == '_')
+				else if (ch.isLetter() || ch == QLatin1Char('_'))
 				{
 					++i;
 					state = Identifier;
 				}
-				else if (ch == '\'' || ch == '\"')
+				else if (ch == QLatin1Char('\'') || ch == QLatin1Char('\"'))
 				{
 					++i;
 					state = String;
 				}
-				else if (ch == '/' && next == '*')
+				else if (ch == QLatin1Char('/') && next == QLatin1Char('*'))
 				{
 					++i;
 					++i;
 					state = Comment;
 				}
-				else if (ch == '/' && next == '/')
+				else if (ch == QLatin1Char('/') && next == QLatin1Char('/'))
 				{
 					i = text.length();
 					setFormat(start, text.length(), mFormats[CommentFormat]);
 				}
-				else if (ch == '/' && next != '*')
+				else if (ch == QLatin1Char('/') && next != QLatin1Char('*'))
 				{
 					++i;
 					state = Regex;
 				}
 				else
 				{
-					if (!QString("(){}[]").contains(ch))
+					if (!QStringLiteral("(){}[]").contains(ch))
 						setFormat(start, 1, mFormats[OperatorFormat]);
-					if (ch =='{' || ch == '}')
+					if (ch == QLatin1Char('{') || ch == QLatin1Char('}'))
 					{
 						bracketPositions += i;
-						if (ch == '{')
+						if (ch == QLatin1Char('{'))
 							bracketLevel++;
 						else
 							bracketLevel--;
@@ -156,7 +156,7 @@ namespace ActionTools
 				break;
 
 			case Identifier:
-				if (ch.isSpace() || !(ch.isDigit() || ch.isLetter() || ch == '_'))
+				if (ch.isSpace() || !(ch.isDigit() || ch.isLetter() || ch == QLatin1Char('_')))
 				{
 					QString token = text.mid(start, i - start).trimmed();
 					if (mUsedKeywords.contains(token))
@@ -175,7 +175,7 @@ namespace ActionTools
 				if (ch == text.at(start))
 				{
 					QChar prev = (i > 0) ? text.at(i - 1) : QChar();
-					if (prev != '\\')
+					if (prev != QLatin1Char('\\'))
 					{
 						++i;
 						setFormat(start, i - start, mFormats[StringFormat]);
@@ -189,7 +189,7 @@ namespace ActionTools
 				break;
 
 			case Comment:
-				if (ch == '*' && next == '/')
+				if (ch == QLatin1Char('*') && next == QLatin1Char('/'))
 				{
 					++i;
 					++i;
@@ -201,10 +201,10 @@ namespace ActionTools
 				break;
 
 			case Regex:
-				if (ch == '/')
+				if (ch == QLatin1Char('/'))
 				{
 					QChar prev = (i > 0) ? text.at(i - 1) : QChar();
-					if (prev != '\\')
+					if (prev != QLatin1Char('\\'))
 					{
 						++i;
 						setFormat(start, i - start, mFormats[StringFormat]);

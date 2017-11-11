@@ -47,7 +47,7 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString urlString = evaluateString(ok, "url");
+			QString urlString = evaluateString(ok, QStringLiteral("url"));
 
 			if(!ok)
 				return;
@@ -60,7 +60,7 @@ namespace Actions
 			}
 
 			if(url.scheme() == QString())
-				url = QUrl("http://" + urlString, QUrl::TolerantMode);
+				url = QUrl(QStringLiteral("http://") + urlString, QUrl::TolerantMode);
 
 			if(!QDesktopServices::openUrl(url))
 			{

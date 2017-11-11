@@ -39,7 +39,7 @@ namespace LibExecuter
 
 	QScriptValue CodeStdio::println(QScriptContext *context, QScriptEngine *)
 	{
-		print(QString("%1\n").arg(context->argument(0).toString()));
+		print(QStringLiteral("%1\n").arg(context->argument(0).toString()));
 
 		return context->thisObject();
 	}

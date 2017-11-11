@@ -44,28 +44,28 @@ namespace Actions
 		{
             translateItems("CursorPathInstance::buttons", CursorPathInstance::buttons);
 
-			ActionTools::PointListParameterDefinition *path = new ActionTools::PointListParameterDefinition(ActionTools::Name("path", tr("Path")), this);
+			ActionTools::PointListParameterDefinition *path = new ActionTools::PointListParameterDefinition(ActionTools::Name(QStringLiteral("path"), tr("Path")), this);
 			path->setTooltip(tr("The path to follow"));
 			addElement(path);
 
-            ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::Name("button", tr("Button")), this);
+			ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("button"), tr("Button")), this);
             button->setTooltip(tr("The button to simulate"));
             button->setItems(CursorPathInstance::buttons);
             button->setDefaultValue(CursorPathInstance::buttons.second.at(CursorPathInstance::NoButton));
             addElement(button);
 
-			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
+			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionOffset"), tr("Offset")), this);
 			positionOffset->setTooltip(tr("The offset to apply to the path"));
 			addElement(positionOffset, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Cursor path"); }
-		QString id() const														{ return "ActionCursorPath"; }
+		QString id() const														{ return QStringLiteral("ActionCursorPath"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Move the mouse cursor on a path"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CursorPathInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/movecursor.png")); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

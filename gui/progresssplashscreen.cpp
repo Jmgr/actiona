@@ -109,10 +109,10 @@ void ProgressSplashScreen::init()
 
 	resize(width(), height() + progressBarHeight);
 
-	mProgressBar->setStyleSheet("QProgressBar { border: 1px solid black; text-align: center; padding: 1px; background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fff, stop: 0.4999 #eee, stop: 0.5 #ddd, stop: 1 #eee ); color: black; }\n"
-								"QProgressBar::chunk { background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #abf, stop: 0.4999 #79d, stop: 0.5 #78d, stop: 1 #56b ); border: 1px solid black; }");
+	mProgressBar->setStyleSheet(QStringLiteral("QProgressBar { border: 1px solid black; text-align: center; padding: 1px; background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fff, stop: 0.4999 #eee, stop: 0.5 #ddd, stop: 1 #eee ); color: black; }\n") +
+								QStringLiteral("QProgressBar::chunk { background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #abf, stop: 0.4999 #79d, stop: 0.5 #78d, stop: 1 #56b ); border: 1px solid black; }"));
 
-	mProgressBar->setFormat("");
+	mProgressBar->setFormat(QStringLiteral(""));
 	mProgressBar->setRange(0, 1);
 	mProgressBar->setValue(0);
 	mProgressBar->setAlignment(Qt::AlignCenter);

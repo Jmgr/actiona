@@ -37,11 +37,11 @@ namespace Code
 				if(RawData *codeRawData = qobject_cast<RawData*>(object))
 					rawData = new RawData(*codeRawData);
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 			break;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			break;
 		}
 		
@@ -131,7 +131,7 @@ namespace Code
 
 	QString RawData::toString() const
 	{
-        return QString("RawData {size: %1}").arg(size());
+		return QStringLiteral("RawData {size: %1}").arg(size());
 	}
 	
 	QScriptValue RawData::append(const QVariant &data)

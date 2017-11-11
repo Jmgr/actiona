@@ -55,9 +55,9 @@ namespace Actions
 		{
 			bool ok = true;
 
-			mPositionOffset = evaluatePoint(ok, "positionOffset");
-            mButton = evaluateListElement<Button>(ok, buttons, "button");
-			mPoints = evaluatePolygon(ok, "path");
+			mPositionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
+			mButton = evaluateListElement<Button>(ok, buttons, QStringLiteral("button"));
+			mPoints = evaluatePolygon(ok, QStringLiteral("path"));
 
 			if(!ok)
 				return;

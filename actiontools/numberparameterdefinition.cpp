@@ -53,7 +53,7 @@ namespace ActionTools
 
 	void NumberParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-        SubParameter subParameter = actionInstance->subParameter(name().original(), "value");
+		SubParameter subParameter = actionInstance->subParameter(name().original(), QStringLiteral("value"));
 
         mSpinBox->setFromSubParameter(subParameter);
 
@@ -68,6 +68,6 @@ namespace ActionTools
         if(!mSpecialValueText.isEmpty() && text == mSpecialValueText)
             text = QString::number(mSpinBox->value());
 
-        actionInstance->setSubParameter(name().original(), "value", mSpinBox->isCode(), text);
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mSpinBox->isCode(), text);
 	}
 }

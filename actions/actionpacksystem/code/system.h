@@ -86,7 +86,7 @@ namespace Code
 		~System();
 	
 	public slots:
-        QString toString() const                                { return "System"; }
+		QString toString() const                                { return QStringLiteral("System"); }
         virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<System>(other); }
 		QString storageLocationPath(StorageLocation location) const;
 		QString storageLocationName(StorageLocation location) const;

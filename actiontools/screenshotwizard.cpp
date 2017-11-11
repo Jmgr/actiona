@@ -31,7 +31,7 @@ namespace ActionTools
         mSaveTarget(ResourceSaveTarget)
     {
         setWindowTitle(tr("Screenshot wizard"));
-        setWindowIcon(QIcon(":/images/capture.png"));
+		setWindowIcon(QIcon(QStringLiteral(":/images/capture.png")));
 
         addPage(new ScreenshotWizardPage(this));
         addPage(new SaveScreenshotWizardPage(script, allowSaveToClipboard, this));

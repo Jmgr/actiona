@@ -28,94 +28,94 @@
 namespace ActionTools
 {
 	const QStringList usedKeywords = QStringList()
-									 << "break"
-									 << "for"
-									 << "throw"
-									 << "case"
-									 << "function"
-									 << "try"
-									 << "catch"
-									 << "if"
-									 << "typeof"
-									 << "continue"
-									 << "in"
-									 << "var"
-									 << "default"
-									 << "instanceof"
-									 << "void"
-									 << "delete"
-									 << "new"
-									 << "undefined"
-									 << "do"
-									 << "return"
-									 << "while"
-									 << "else"
-									 << "switch"
-									 << "with"
-									 << "finally"
-									 << "this";
+									 << QStringLiteral("break")
+									 << QStringLiteral("for")
+									 << QStringLiteral("throw")
+									 << QStringLiteral("case")
+									 << QStringLiteral("function")
+									 << QStringLiteral("try")
+									 << QStringLiteral("catch")
+									 << QStringLiteral("if")
+									 << QStringLiteral("typeof")
+									 << QStringLiteral("continue")
+									 << QStringLiteral("in")
+									 << QStringLiteral("var")
+									 << QStringLiteral("default")
+									 << QStringLiteral("instanceof")
+									 << QStringLiteral("void")
+									 << QStringLiteral("delete")
+									 << QStringLiteral("new")
+									 << QStringLiteral("undefined")
+									 << QStringLiteral("do")
+									 << QStringLiteral("return")
+									 << QStringLiteral("while")
+									 << QStringLiteral("else")
+									 << QStringLiteral("switch")
+									 << QStringLiteral("with")
+									 << QStringLiteral("finally")
+									 << QStringLiteral("this");
 	
 	const QStringList reservedKeywords = QStringList()
-									 << "abstract"
-									 << "final"
-									 << "protected"
-									 << "boolean"
-									 << "float"
-									 << "public"
-									 << "byte"
-									 << "goto"
-									 << "short"
-									 << "char"
-									 << "implements"
-									 << "static"
-									 << "class"
-									 << "import"
-									 << "super"
-									 << "const"
-									 << "int"
-									 << "synchronized"
-									 << "debugger"
-									 << "interface"
-									 << "throws"
-									 << "double"
-									 << "long"
-									 << "transient"
-									 << "enum"
-									 << "native"
-									 << "volatile"
-									 << "export"
-									 << "package"
-									 << "extends"
-									 << "private";
+									 << QStringLiteral("abstract")
+									 << QStringLiteral("final")
+									 << QStringLiteral("protected")
+									 << QStringLiteral("boolean")
+									 << QStringLiteral("float")
+									 << QStringLiteral("public")
+									 << QStringLiteral("byte")
+									 << QStringLiteral("goto")
+									 << QStringLiteral("short")
+									 << QStringLiteral("char")
+									 << QStringLiteral("implements")
+									 << QStringLiteral("static")
+									 << QStringLiteral("class")
+									 << QStringLiteral("import")
+									 << QStringLiteral("super")
+									 << QStringLiteral("const")
+									 << QStringLiteral("int")
+									 << QStringLiteral("synchronized")
+									 << QStringLiteral("debugger")
+									 << QStringLiteral("interface")
+									 << QStringLiteral("throws")
+									 << QStringLiteral("double")
+									 << QStringLiteral("long")
+									 << QStringLiteral("transient")
+									 << QStringLiteral("enum")
+									 << QStringLiteral("native")
+									 << QStringLiteral("volatile")
+									 << QStringLiteral("export")
+									 << QStringLiteral("package")
+									 << QStringLiteral("extends")
+									 << QStringLiteral("private");
 	
 	void addEcmaScriptObjectsKeywords(QStandardItemModel *model)
 	{
 		const QStringList globalKeywords = QStringList()
 										 //Constants
-										 << "NaN" << "Infinity" << "undefined"
+										 << QStringLiteral("NaN") << QStringLiteral("Infinity") << QStringLiteral("undefined")
 										 //Functions
-										 << "eval(x)" << "parseInt(string, radix)" << "parseInt(string)" << "parseFloat(string)" << "isNaN(number)" << "isFinite(number)"
-										 << "decodeURI(encodedURI)" << "decodeURIComponent(encodedURIComponent)" << "encodeURI(uri)" << "encodeURIComponent(uriComponent)";
+										 << QStringLiteral("eval(x)") << QStringLiteral("parseInt(string, radix)") << QStringLiteral("parseInt(string)") << QStringLiteral("parseFloat(string)") << QStringLiteral("isNaN(number)") << QStringLiteral("isFinite(number)")
+										 << QStringLiteral("decodeURI(encodedURI)") << QStringLiteral("decodeURIComponent(encodedURIComponent)") << QStringLiteral("encodeURI(uri)") << QStringLiteral("encodeURIComponent(uriComponent)");
 		
 		const QStringList mathKeywords = QStringList()
 										 //Constants
-										 << "E" << "LN10" << "LN2" << "LOG2E" << "LOG10E" << "PI" << "SQRT1_2" << "SQRT2"
+										 << QStringLiteral("E") << QStringLiteral("LN10") << QStringLiteral("LN2") << QStringLiteral("LOG2E") << QStringLiteral("LOG10E") << QStringLiteral("PI") << QStringLiteral("SQRT1_2") << QStringLiteral("SQRT2")
 										 //Functions
-										 << "abs(x)" << "acos(x)" << "asin(x)" << "atan(x)" << "atan2(x, y)" << "ceil(x)" << "cos(x)" << "exp(x)" << "floor(x)"
-										 << "log(x)" << "max(x, y, ...)" << "min(x, y, ...)" << "pow(x, y)" << "random()" << "round(x)" << "sin(x)" << "sqrt(x)"
-										 << "tan(x)";
+										 << QStringLiteral("abs(x)") << QStringLiteral("acos(x)") << QStringLiteral("asin(x)") << QStringLiteral("atan(x)") << QStringLiteral("atan2(x, y)") << QStringLiteral("ceil(x)") << QStringLiteral("cos(x)") << QStringLiteral("exp(x)") << QStringLiteral("floor(x)")
+										 << QStringLiteral("log(x)") << QStringLiteral("max(x, y, ...)") << QStringLiteral("min(x, y, ...)") << QStringLiteral("pow(x, y)") << QStringLiteral("random()") << QStringLiteral("round(x)") << QStringLiteral("sin(x)") << QStringLiteral("sqrt(x)")
+										 << QStringLiteral("tan(x)");
 
 		for(const QString &keyword: usedKeywords)
-			model->appendRow(new QStandardItem(QIcon(":/icons/keywords.png"), keyword));
+			model->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/keywords.png")), keyword));
 		for(const QString &keyword: reservedKeywords)
-			model->appendRow(new QStandardItem(QIcon(":/icons/no.png"), keyword));
+			model->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/no.png")), keyword));
 		
 		for(const QString &keyword: globalKeywords)
-			model->appendRow(new QStandardItem(QIcon(":/icons/native.png"), keyword));
+			model->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/native.png")), keyword));
 		
-		QStandardItem *mathItem = new QStandardItem(QIcon(":/icons/calc.png"), "Math");
+		QStandardItem *mathItem = new QStandardItem(QIcon(QStringLiteral(":/icons/calc.png")), QStringLiteral("Math"));
 		for(const QString &keyword: mathKeywords)
-			mathItem->appendRow(new QStandardItem(QIcon(":/icons/calc.png"), keyword));
+			mathItem->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/calc.png")), keyword));
 		model->appendRow(mathItem);
 	}
 }

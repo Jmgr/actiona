@@ -42,7 +42,7 @@ namespace Actions
 		explicit WheelDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::NumberParameterDefinition *intensity = new ActionTools::NumberParameterDefinition(ActionTools::Name("intensity", tr("Intensity")), this);
+			ActionTools::NumberParameterDefinition *intensity = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("intensity"), tr("Intensity")), this);
 			intensity->setTooltip(tr("Intensity of the movement, positive is up, negative is down"));
 			intensity->setMinimum(std::numeric_limits<int>::min());
 			intensity->setMaximum(std::numeric_limits<int>::max());
@@ -52,12 +52,12 @@ namespace Actions
 		}
 	
 		QString name() const													{ return QObject::tr("Wheel"); }
-		QString id() const														{ return "ActionWheel"; }
+		QString id() const														{ return QStringLiteral("ActionWheel"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Emulates the mouse wheel"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WheelInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/wheel.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/wheel.png")); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 	
 	private:

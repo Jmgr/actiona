@@ -61,7 +61,7 @@ namespace Code
         QxtMailMessage &message()                                                   { return mMessage; }
 
     public slots:
-        QString toString() const                                                    { return "MailMessage"; }
+		QString toString() const                                                    { return QStringLiteral("MailMessage"); }
         virtual bool equals(const QScriptValue &other) const                        { return defaultEqualsImplementation<MailMessage>(other); }
 
         QScriptValue setExtraHeader(const QString &name, const QString &value)      { mMessage.setExtraHeader(name, value); return thisObject(); }

@@ -74,7 +74,7 @@ namespace Code
 	QScriptValue System::openUrl(const QString &url) const
 	{
 		if(!QDesktopServices::openUrl(QUrl(url)))
-			throwError("OpenUrlError", tr("Cannot open the url"));
+			throwError(QStringLiteral("OpenUrlError"), tr("Cannot open the url"));
 
 		return thisObject();
 	}
@@ -124,7 +124,7 @@ namespace Code
 
 	QString System::variable(const QString &name) const
 	{
-        return QString::fromLatin1(std::getenv(name.toLatin1()));
+		return QString::fromLatin1(std::getenv(name.toLatin1().constData()));
 	}
 
 	uint System::timestamp() const
@@ -135,10 +135,10 @@ namespace Code
 	QString System::osName() const
 	{
 #ifdef Q_OS_LINUX
-		return "GNU/Linux";
+		return QStringLiteral("GNU/Linux");
 #endif
 #ifdef Q_OS_WIN
-		return "Windows";
+		return QStringLiteral("Windows");
 #endif
 	}
 
@@ -150,7 +150,7 @@ namespace Code
 	QString System::countryCode() const
 	{
         QString localeName = QLocale::system().name();
-        QStringList localeParts = localeName.split(QChar('_'));
+		QStringList localeParts = localeName.split(QLatin1Char('_'));
 
         if(localeParts.size() >= 2)
             return localeParts[1];
@@ -161,7 +161,7 @@ namespace Code
 	QString System::language() const
 	{
         QString localeName = QLocale::system().name();
-        QStringList localeParts = localeName.split(QChar('_'));
+		QStringList localeParts = localeName.split(QLatin1Char('_'));
 
         if(localeParts.size() >= 2)
             return localeParts[0];
@@ -256,7 +256,7 @@ namespace Code
 	QScriptValue System::logout(bool force) const
 	{
 		if(!mSystemSession->logout(force))
-			throwError("LogoutError", tr("Logout failed"));
+			throwError(QStringLiteral("LogoutError"), tr("Logout failed"));
 
 		return thisObject();
 	}
@@ -264,7 +264,7 @@ namespace Code
 	QScriptValue System::restart(bool force) const
 	{
 		if(!mSystemSession->restart(force))
-			throwError("RestartError", tr("Restart failed"));
+			throwError(QStringLiteral("RestartError"), tr("Restart failed"));
 
 		return thisObject();
 	}
@@ -272,7 +272,7 @@ namespace Code
 	QScriptValue System::shutdown(bool force) const
 	{
 		if(!mSystemSession->shutdown(force))
-			throwError("ShutdownError", tr("Shutdown failed"));
+			throwError(QStringLiteral("ShutdownError"), tr("Shutdown failed"));
 
 		return thisObject();
 	}
@@ -280,7 +280,7 @@ namespace Code
 	QScriptValue System::suspend(bool force) const
 	{
 		if(!mSystemSession->suspend(force))
-			throwError("SuspendError", tr("Suspend failed"));
+			throwError(QStringLiteral("SuspendError"), tr("Suspend failed"));
 
 		return thisObject();
 	}
@@ -288,7 +288,7 @@ namespace Code
 	QScriptValue System::hibernate(bool force) const
 	{
 		if(!mSystemSession->hibernate(force))
-			throwError("HibernateError", tr("Hibernate failed"));
+			throwError(QStringLiteral("HibernateError"), tr("Hibernate failed"));
 
 		return thisObject();
 	}
@@ -296,7 +296,7 @@ namespace Code
 	QScriptValue System::lockScreen() const
 	{
 		if(!mSystemSession->lockScreen())
-			throwError("LockScreenError", tr("Lock screen failed"));
+			throwError(QStringLiteral("LockScreenError"), tr("Lock screen failed"));
 
 		return thisObject();
 	}
@@ -304,7 +304,7 @@ namespace Code
 	QScriptValue System::startScreenSaver() const
 	{
 		if(!mSystemSession->startScreenSaver())
-			throwError("StartScreenSaverError", tr("Start screen saver failed"));
+			throwError(QStringLiteral("StartScreenSaverError"), tr("Start screen saver failed"));
 
 		return thisObject();
 	}

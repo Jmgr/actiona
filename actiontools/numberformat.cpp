@@ -35,7 +35,7 @@ namespace ActionTools
 
     QString NumberFormat::labelIndexString(int rowIndex)
     {
-        return QString("%1").arg(rowIndex + 1, 3, 10, QChar('0'));
+		return QStringLiteral("%1").arg(rowIndex + 1, 3, 10, QLatin1Char('0'));
     }
 
     QString NumberFormat::numberFormat(const QStringList &units, double value)
@@ -51,6 +51,6 @@ namespace ActionTools
             value /= 1000.0;
         }
 
-        return QString().setNum(value, 'f', 2) + QLatin1String(" ") + unit;
+		return QString().setNum(value, 'f', 2) + QStringLiteral(" ") + unit;
     }
 }

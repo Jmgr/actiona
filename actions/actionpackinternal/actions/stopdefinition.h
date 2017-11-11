@@ -42,12 +42,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Stop"); }
-		QString id() const														{ return "ActionStop"; }
+		QString id() const														{ return QStringLiteral("ActionStop"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Stop the script execution"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new StopInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/stop.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/stop.png")); }
 
 	private:
 		Q_DISABLE_COPY(StopDefinition)

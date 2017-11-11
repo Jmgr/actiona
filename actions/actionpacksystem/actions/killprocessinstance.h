@@ -48,7 +48,7 @@ namespace Actions
 		{
 			bool ok = true;
 
-			int processId = evaluateInteger(ok, "processId");
+			int processId = evaluateInteger(ok, QStringLiteral("processId"));
 
 			if(!ok)
 				return;

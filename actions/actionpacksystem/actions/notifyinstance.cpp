@@ -56,23 +56,23 @@ namespace Actions
 	#ifdef Q_OS_LINUX
 		bool ok = true;
 
-		QString title = evaluateString(ok, "title");
-		QString text = evaluateString(ok, "text");
-		int timeout = evaluateInteger(ok, "timeout");
-		QString icon = evaluateString(ok, "icon");
+		QString title = evaluateString(ok, QStringLiteral("title"));
+		QString text = evaluateString(ok, QStringLiteral("text"));
+		int timeout = evaluateInteger(ok, QStringLiteral("timeout"));
+		QString icon = evaluateString(ok, QStringLiteral("icon"));
 
 		if(!ok)
 			return;
 
 		if(!mNotification)
-			mNotification = notify_notification_new(title.toUtf8(), text.toUtf8(), icon.toUtf8()
+			mNotification = notify_notification_new(title.toUtf8().constData(), text.toUtf8().constData(), icon.toUtf8().constData()
 	#if NOTIFY_CHECK_VERSION (0, 7, 0)
 	);
 	#else
 	, 0);
 	#endif
 		else
-			notify_notification_update(mNotification, title.toUtf8(), text.toUtf8(), icon.toUtf8());
+			notify_notification_update(mNotification, title.toUtf8().constData(), text.toUtf8().constData(), icon.toUtf8().constData());
 
 		notify_notification_set_timeout(mNotification, timeout);
 

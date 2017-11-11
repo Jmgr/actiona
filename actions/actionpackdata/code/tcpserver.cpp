@@ -35,7 +35,7 @@ namespace Code
 		{
 			it.next();
 			
-			if(it.name() == "onNewConnection")
+			if(it.name() == QLatin1String("onNewConnection"))
 				tcpServer->mOnNewConnection = it.value();
 		}
 
@@ -56,7 +56,7 @@ namespace Code
 	QScriptValue TcpServer::listen(const QString &address, int port)
 	{
 		if(!mTcpServer.listen(QHostAddress(address), port))
-			throwError("ListenError", tr("Unable to start listening"));
+			throwError(QStringLiteral("ListenError"), tr("Unable to start listening"));
 		
 		return thisObject();
 	}
@@ -64,7 +64,7 @@ namespace Code
 	QScriptValue TcpServer::waitForNewConnection(int waitTime)
 	{
 		if(!mTcpServer.waitForNewConnection(waitTime))
-			throwError("WaitForNewConnectionError", tr("Waiting for new connection failed"));
+			throwError(QStringLiteral("WaitForNewConnectionError"), tr("Waiting for new connection failed"));
 		
 		return thisObject();
 	}
@@ -74,7 +74,7 @@ namespace Code
 		QTcpSocket *tcpSocket = mTcpServer.nextPendingConnection();
 		if(!tcpSocket)
 		{
-			throwError("NoPendingConnectionError", tr("There is no pending connection"));
+			throwError(QStringLiteral("NoPendingConnectionError"), tr("There is no pending connection"));
 			return engine()->undefinedValue();
 		}
 		

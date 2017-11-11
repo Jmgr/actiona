@@ -27,9 +27,9 @@ namespace ActionTools
 {
 	QString ActionException::ExceptionName[ExceptionCount] =
 	{
-        QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Invalid parameter"),
-		QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Code error"),
-		QT_TRANSLATE_NOOP("ActionException::ExceptionName", "Timeout")
+		QT_TRANSLATE_NOOP("ActionException::ExceptionName", QStringLiteral("Invalid parameter")),
+		QT_TRANSLATE_NOOP("ActionException::ExceptionName", QStringLiteral("Code error")),
+		QT_TRANSLATE_NOOP("ActionException::ExceptionName", QStringLiteral("Timeout"))
 	};
 	
 	ActionException::ExceptionAction ActionException::ExceptionDefaultAction[ExceptionCount] =
@@ -41,9 +41,9 @@ namespace ActionTools
 
 	QString ActionException::ExceptionActionName[ExceptionActionCount] =
 	{
-		QT_TRANSLATE_NOOP("ActionException::ExceptionActionName", "Stop execution"),
-		QT_TRANSLATE_NOOP("ActionException::ExceptionActionName", "Skip current action"),
-		QT_TRANSLATE_NOOP("ActionException::ExceptionActionName", "Goto a line")
+		QT_TRANSLATE_NOOP("ActionException::ExceptionActionName", QStringLiteral("Stop execution")),
+		QT_TRANSLATE_NOOP("ActionException::ExceptionActionName", QStringLiteral("Skip current action")),
+		QT_TRANSLATE_NOOP("ActionException::ExceptionActionName", QStringLiteral("Goto a line"))
 	};
 
 	QDataStream &operator >> (QDataStream &s, ActionException::Exception &exception)

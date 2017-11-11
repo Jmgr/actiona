@@ -40,9 +40,9 @@ QMimeData *NewActionModel::mimeData(const QModelIndexList &indexes) const
     if(indexes.count() != 1)
 		return 0;
 
-    data.append(indexes.at(0).data(ActionIdRole).toString());
+	data.append(indexes.at(0).data(ActionIdRole).toString().toUtf8());
 
-    mimeData->setData("application/actiona.add.action", data);
+	mimeData->setData(QStringLiteral("application/actiona.add.action"), data);
 
 	return mimeData;
 }

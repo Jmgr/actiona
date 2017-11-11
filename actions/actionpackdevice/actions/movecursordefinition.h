@@ -40,22 +40,22 @@ namespace Actions
 		explicit MoveCursorDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::Name("position", tr("Position")), this);
+			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("position"), tr("Position")), this);
 			position->setTooltip(tr("The position where to move the cursor"));
 			addElement(position);
 
-			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
+			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionOffset"), tr("Offset")), this);
 			positionOffset->setTooltip(tr("The offset to apply to the cursor movement"));
 			addElement(positionOffset, 1);
 		}
 	
 		QString name() const													{ return QObject::tr("Move cursor"); }
-		QString id() const														{ return "ActionMoveCursor"; }
+		QString id() const														{ return QStringLiteral("ActionMoveCursor"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Move the mouse cursor"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new MoveCursorInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/movecursor.png")); }
 		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 

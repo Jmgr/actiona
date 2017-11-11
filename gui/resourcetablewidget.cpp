@@ -39,7 +39,7 @@ QString ResourceTableWidget::checkResourceName(const QString &originalName) cons
     {
         for(int itemNumber = 1; ; ++itemNumber)
         {
-            resourceName = originalName + QString("_%1").arg(itemNumber);
+			resourceName = originalName + QStringLiteral("_%1").arg(itemNumber);
 
             if(!containsResource(resourceName))
                 break;

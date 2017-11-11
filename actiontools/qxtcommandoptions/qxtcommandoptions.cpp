@@ -144,22 +144,22 @@ static int isQtOption(const QString& param)
 {
     // Qt options all start with a single dash regardless of platform
     if (param.length() < 2) return 0;
-    if (param[0] != '-') return 0;
-    if (param[1] == '-') return 0;
+	if (param[0] != QLatin1Char('-')) return 0;
+	if (param[1] == QLatin1Char('-')) return 0;
 #ifdef Q_OS_MAC
     if (param.left(5) == "-psn_") return 1;
 #endif
     QString name = param.mid(1), value;
 
     // Separate the option and the value, if present
-    if (name.indexOf('=') != -1)
+	if (name.indexOf(QLatin1Char('=')) != -1)
     {
-        value = param.section('=', 1);
-        name = param.section('=', 0, 0);
+		value = param.section(QLatin1Char('='), 1);
+		name = param.section(QLatin1Char('='), 0, 0);
     }
     else
     {
-        value = "";
+		value = QStringLiteral("");
     }
 
     const char* option;
@@ -179,7 +179,7 @@ static int isQtOption(const QString& param)
         }
 
         // The return value indicates how many parameters to skip
-        if (name == option)
+		if (name == QLatin1String(option))
         {
             if (optionHasValue) return 2;
             return 1;
@@ -232,7 +232,7 @@ QxtCommandOption* QxtCommandOptionsPrivate::findOption(const QString& name)
     {
         if (options[i].canonicalName == name) return &options[i];
     }
-    qWarning() << QString("QxtCommandOptions: ") + tr("option \"%1\" not found").arg(name);
+	qWarning() << QStringLiteral("QxtCommandOptions: ") + tr("option \"%1\" not found").arg(name);
     return 0;
 }
 
@@ -246,7 +246,7 @@ const QxtCommandOption* QxtCommandOptionsPrivate::findOption(const QString& name
     {
         if (options[i].canonicalName == name) return &(options.at(i));
     }
-    qWarning() << QString("QxtCommandOptions: ") + tr("option \"%1\" not found").arg(name);
+	qWarning() << QStringLiteral("QxtCommandOptions: ") + tr("option \"%1\" not found").arg(name);
     return 0;
 }
 
@@ -381,7 +381,7 @@ void QxtCommandOptions::alias(const QString& from, const QString& to)
     option->names.append(to);
     qxt_d().lookup[to] = option;
     if (option->paramType & ValueOptional && qxt_d().flagStyle == DoubleDash && to.length() == 1)
-        qWarning() << QString("QxtCommandOptions: ") + tr("Short options cannot have optional parameters");
+		qWarning() << QStringLiteral("QxtCommandOptions: ") + tr("Short options cannot have optional parameters");
 }
 
 /*!
@@ -393,7 +393,7 @@ void QxtCommandOptions::alias(const QString& from, const QString& to)
 QStringList QxtCommandOptions::positional() const
 {
     if (!qxt_d().parsed)
-        qWarning() << QString("QxtCommandOptions: ") + tr("positional() called before parse()");
+		qWarning() << QStringLiteral("QxtCommandOptions: ") + tr("positional() called before parse()");
     return qxt_d().positional;
 }
 
@@ -407,7 +407,7 @@ QStringList QxtCommandOptions::positional() const
 QStringList QxtCommandOptions::unrecognized() const
 {
     if (!qxt_d().parsed)
-        qWarning() << QString("QxtCommandOptions: ") + tr("unrecognized() called before parse()");
+		qWarning() << QStringLiteral("QxtCommandOptions: ") + tr("unrecognized() called before parse()");
     return qxt_d().unrecognized + qxt_d().missingParams;
 }
 
@@ -420,7 +420,7 @@ QStringList QxtCommandOptions::unrecognized() const
 int QxtCommandOptions::count(const QString& name) const
 {
     if (!qxt_d().parsed)
-        qWarning() << QString("QxtCommandOptions: ") + tr("count() called before parse()");
+		qWarning() << QStringLiteral("QxtCommandOptions: ") + tr("count() called before parse()");
     const QxtCommandOption* option = qxt_d().findOption(name);
     if (!option) return 0; // findOption outputs the warning
     return option->values.count();
@@ -440,7 +440,7 @@ int QxtCommandOptions::count(const QString& name) const
 QVariant QxtCommandOptions::value(const QString& name) const
 {
     if (!qxt_d().parsed)
-        qWarning() << QString("QxtCommandOptions: ") + tr("value() called before parse()");
+		qWarning() << QStringLiteral("QxtCommandOptions: ") + tr("value() called before parse()");
     const QxtCommandOption* option = qxt_d().findOption(name);
     if (!option) return QVariant(); // findOption outputs the warning
     int ct = option->values.count();
@@ -455,7 +455,7 @@ QVariant QxtCommandOptions::value(const QString& name) const
 QMultiHash<QString, QVariant> QxtCommandOptions::parameters() const
 {
     if (!qxt_d().parsed)
-        qWarning() << QString("QxtCommandOptions: ") + tr("parameters() called before parse()");
+		qWarning() << QStringLiteral("QxtCommandOptions: ") + tr("parameters() called before parse()");
     QMultiHash<QString, QVariant> params;
     int ct;
     for(const QxtCommandOption& option: qxt_d().options)
@@ -492,7 +492,7 @@ void QxtCommandOptions::parse(int argc, char** argv)
 {
     QStringList args;
     for (int i = 0; i < argc; i++)
-        args << argv[i];
+		args << QLatin1String(argv[i]);
     parse(args);
 }
 
@@ -553,8 +553,8 @@ void QxtCommandOptionsPrivate::parse(const QStringList& params)
         param = params[pos];
         pos++;
 
-        if (!endFlags && ((flagStyle == QxtCommandOptions::Slash && param[0] == '/') ||
-                          (flagStyle != QxtCommandOptions::Slash && param[0] == '-')))
+		if (!endFlags && ((flagStyle == QxtCommandOptions::Slash && param[0] == QLatin1Char('/')) ||
+						  (flagStyle != QxtCommandOptions::Slash && param[0] == QLatin1Char('-'))))
         {
             // tagged argument
             if (param.length() == 1)
@@ -564,12 +564,12 @@ void QxtCommandOptionsPrivate::parse(const QStringList& params)
                 continue;
             }
 
-            if (flagStyle != QxtCommandOptions::Slash && param == "--")
+			if (flagStyle != QxtCommandOptions::Slash && param == QLatin1String("--"))
             {
                 // End of parameters flag
                 endFlags = true;
             }
-            else if (flagStyle == QxtCommandOptions::DoubleDash && param[1] != '-')
+			else if (flagStyle == QxtCommandOptions::DoubleDash && param[1] != QLatin1Char('-'))
             {
                 // Handle short-form options
                 int len = param.length();
@@ -577,7 +577,7 @@ void QxtCommandOptionsPrivate::parse(const QStringList& params)
                 for (int i = 1; i < len; i++)
                 {
                     QString ch(param[i]);
-                    if (ch == "-")
+					if (ch == QLatin1String("-"))
                     {
                         endFlags = true;
                     }
@@ -587,7 +587,7 @@ void QxtCommandOptionsPrivate::parse(const QStringList& params)
                         if (!option)
                         {
                             // single-letter flag has no known equivalent
-                            unrecognized.append(QString("-") + param[i]);
+							unrecognized.append(QStringLiteral("-") + param[i]);
                         }
                         else
                         {
@@ -604,7 +604,7 @@ void QxtCommandOptionsPrivate::parse(const QStringList& params)
                             }
                             else
                             {
-                                value = "";
+								value = QStringLiteral("");
                             }
                             setOption(option, value);
                         }
@@ -614,15 +614,15 @@ void QxtCommandOptionsPrivate::parse(const QStringList& params)
             else
             {
                 // Break apart a value
-                if (param.indexOf('=') != -1)
+				if (param.indexOf(QLatin1Char('=')) != -1)
                 {
-                    value = param.section('=', 1);
-                    param = param.section('=', 0, 0);
+					value = param.section(QLatin1Char('='), 1);
+					param = param.section(QLatin1Char('='), 0, 0);
                     hasEquals = true;
                 }
                 else
                 {
-                    value = "";
+					value = QStringLiteral("");
                     hasEquals = false;
                 }
 
@@ -655,8 +655,8 @@ void QxtCommandOptionsPrivate::parse(const QStringList& params)
                     {
                         if (pos < params.count())
                         {
-                            if (!((flagStyle == QxtCommandOptions::Slash && params.at(pos)[0] == '/') ||
-                                (flagStyle != QxtCommandOptions::Slash && params.at(pos)[0] == '-')))
+							if (!((flagStyle == QxtCommandOptions::Slash && params.at(pos)[0] == QLatin1Char('/')) ||
+								(flagStyle != QxtCommandOptions::Slash && params.at(pos)[0] == QLatin1Char('-'))))
                             {
                                 value = params[pos];
                                 pos++;
@@ -742,10 +742,10 @@ bool QxtCommandOptions::showUnrecognizedWarning(QTextStream& stream) const
     if (QCoreApplication::instance())
         name = QDir(QCoreApplication::applicationFilePath()).dirName();
     if (name.isEmpty())
-        name = "QxtCommandOptions";
+		name = QStringLiteral("QxtCommandOptions");
 
     if (qxt_d().unrecognized.count())
-        stream << name << ": " << tr("unrecognized parameters: ") << qxt_d().unrecognized.join(" ") << endl;
+		stream << name << ": " << tr("unrecognized parameters: ") << qxt_d().unrecognized.join(QStringLiteral(" ")) << endl;
 
     for(const QString& param: qxt_d().missingParams)
         stream << name << ": " << tr("%1 requires a parameter").arg(param) << endl;
@@ -814,24 +814,24 @@ void QxtCommandOptions::showUsage(bool showQtOptions, QTextStream& stream) const
 
         for(const QString& n: option.names)
         {
-            if (name.length()) name += ", ";
+			if (name.length()) name += QStringLiteral(", ");
             if (qxt_d().flagStyle == Slash)
-                name += '/';
+				name += QLatin1Char('/');
             else if (qxt_d().flagStyle == DoubleDash && n.length() > 1)
-                name += "--";
+				name += QStringLiteral("--");
             else
-                name += '-';
+				name += QLatin1Char('-');
             name += n;
             if (option.paramType & (ValueOptional | ValueRequired))
             {
                 if (option.paramType & ValueOptional)
-                    name += "[=x]";
+					name += QStringLiteral("[=x]");
                 else if (qxt_d().paramStyle == SpaceAndEquals)
-                    name += "[=]x";
+					name += QStringLiteral("[=]x");
                 else if (qxt_d().paramStyle == Equals)
-                    name += "=x";
+					name += QStringLiteral("=x");
                 else
-                    name += " x";
+					name += QStringLiteral(" x");
             }
         }
 
@@ -840,14 +840,14 @@ void QxtCommandOptions::showUsage(bool showQtOptions, QTextStream& stream) const
             maxNameLength = name.length();
         names.append(name);
         descs.append(option.desc);
-        name = "";
+		name = QStringLiteral("");
     }
 
     if (showQtOptions)
     {
         // Add a section header
         names.append(QString());
-        descs.append("Common Qt Options");
+		descs.append(QStringLiteral("Common Qt Options"));
 
         // Parse through qxt_qt_options
         const char* option;
@@ -868,10 +868,10 @@ void QxtCommandOptions::showUsage(bool showQtOptions, QTextStream& stream) const
             }
 
             // Concatenate on the option alias
-            if (!name.isEmpty()) name += ", ";
-            name += '-';
-            name += option;
-            if (optionHasValue) name += "[=]x";
+			if (!name.isEmpty()) name += QStringLiteral(", ");
+			name += QLatin1Char('-');
+			name += QLatin1String(option);
+			if (optionHasValue) name += QStringLiteral("[=]x");
 
             if (qxt_qt_options[i+1][0] != 0)
             {
@@ -879,14 +879,14 @@ void QxtCommandOptions::showUsage(bool showQtOptions, QTextStream& stream) const
                 if (name.length() > maxNameLength)
                     maxNameLength = name.length();
                 names.append(name);
-                descs.append(qxt_qt_options[i+1]);
-                name = "";
+				descs.append(QLatin1String(qxt_qt_options[i+1]));
+				name = QStringLiteral("");
             }
         }
     }
 
     int ct = names.count();
-    QString line, wrap(maxNameLength + 3, ' ');
+	QString line, wrap(maxNameLength + 3, QLatin1Char(' '));
     for (int i = 0; i < ct; i++)
     {
         if (names[i].isEmpty())
@@ -895,15 +895,15 @@ void QxtCommandOptions::showUsage(bool showQtOptions, QTextStream& stream) const
             stream << endl << descs[i] << ":" << endl;
             continue;
         }
-        line = ' ' + names[i] + QString(maxNameLength - names[i].length() + 2, ' ');
-        for(const QString& word: descs[i].split(' ', QString::SkipEmptyParts))
+		line = QLatin1Char(' ') + names[i] + QString(maxNameLength - names[i].length() + 2, QLatin1Char(' '));
+		for(const QString& word: descs[i].split(QLatin1Char(' '), QString::SkipEmptyParts))
         {
             if (qxt_d().screenWidth > 0 && line.length() + word.length() >= qxt_d().screenWidth)
             {
                 stream << line << endl;
                 line = wrap;
             }
-            line += word + ' ';
+			line += word + QLatin1Char(' ');
         }
         stream << line << endl;
     }

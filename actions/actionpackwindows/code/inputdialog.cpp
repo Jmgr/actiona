@@ -36,38 +36,38 @@ namespace Code
 		{
 			it.next();
 			
-			if(it.name() == "labelText")
+			if(it.name() == QLatin1String("labelText"))
 				inputDialog->mInputDialog->setLabelText(it.value().toString());
-			else if(it.name() == "okButtonText")
+			else if(it.name() == QLatin1String("okButtonText"))
 				inputDialog->mInputDialog->setOkButtonText(it.value().toString());
-			else if(it.name() == "cancelButtonText")
+			else if(it.name() == QLatin1String("cancelButtonText"))
 				inputDialog->mInputDialog->setCancelButtonText(it.value().toString());
-			else if(it.name() == "textEchoMode")
+			else if(it.name() == QLatin1String("textEchoMode"))
 				inputDialog->mInputDialog->setTextEchoMode(static_cast<QLineEdit::EchoMode>(it.value().toInt32()));
-			else if(it.name() == "floatDecimals")
+			else if(it.name() == QLatin1String("floatDecimals"))
 				inputDialog->mInputDialog->setDoubleDecimals(it.value().toInt32());
-			else if(it.name() == "integerStep")
+			else if(it.name() == QLatin1String("integerStep"))
 				inputDialog->mInputDialog->setIntStep(it.value().toInt32());
-			else if(it.name() == "minimum")
+			else if(it.name() == QLatin1String("minimum"))
 				inputDialog->mMinimum = it.value();
-			else if(it.name() == "maximum")
+			else if(it.name() == QLatin1String("maximum"))
 				inputDialog->mMaximum = it.value();
-			else if(it.name() == "range")
+			else if(it.name() == QLatin1String("range"))
 			{
-				inputDialog->mMinimum = it.value().property("minimum");
-				inputDialog->mMaximum = it.value().property("maximum");
+				inputDialog->mMinimum = it.value().property(QStringLiteral("minimum"));
+				inputDialog->mMaximum = it.value().property(QStringLiteral("maximum"));
 			}
-			else if(it.name() == "inputType")
+			else if(it.name() == QLatin1String("inputType"))
 				inputDialog->mInputType = static_cast<InputType>(it.value().toInt32());
-			else if(it.name() == "value")
+			else if(it.name() == QLatin1String("value"))
 				inputDialog->mValue = it.value();
-			else if(it.name() == "items")
+			else if(it.name() == QLatin1String("items"))
 				inputDialog->mItems = it.value();
-			else if(it.name() == "itemsEditable")
+			else if(it.name() == QLatin1String("itemsEditable"))
 				inputDialog->mInputDialog->setComboBoxEditable(it.value().toBool());
-			else if(it.name() == "onClosed")
+			else if(it.name() == QLatin1String("onClosed"))
 				inputDialog->mOnClosed = it.value();
-			else if(it.name() == "onValueChanged")
+			else if(it.name() == QLatin1String("onValueChanged"))
 				inputDialog->mOnValueChanged = it.value();
 		}
 

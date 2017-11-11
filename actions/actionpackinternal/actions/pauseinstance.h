@@ -54,8 +54,8 @@ namespace Actions
 		{
 			bool ok = true;
 
-			int duration = evaluateInteger(ok, "duration");
-			Unit unit = evaluateListElement<Unit>(ok, units, "unit");
+			int duration = evaluateInteger(ok, QStringLiteral("duration"));
+			Unit unit = evaluateListElement<Unit>(ok, units, QStringLiteral("unit"));
 
 			if(!ok)
 				return;

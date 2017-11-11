@@ -322,7 +322,7 @@ namespace ActionTools
             catch(const cv::Exception &e)
             {
                 mError = OpenCVException;
-                mErrorString = tr("OpenCV exception: %1").arg(e.what());
+				mErrorString = tr("OpenCV exception: %1").arg(QLatin1String(e.what()));
 
                 return MatchingPointList();
             }

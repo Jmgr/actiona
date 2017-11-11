@@ -24,22 +24,22 @@
 namespace Actions
 {
 	ActionTools::StringListPair SystemInstance::operations = qMakePair(
-			QStringList() << "logout" << "reboot" << "shutdown" << "suspend" << "hibernate" << "lockscreen" << "startscreensaver",
+			QStringList() << QStringLiteral("logout") << QStringLiteral("reboot") << QStringLiteral("shutdown") << QStringLiteral("suspend") << QStringLiteral("hibernate") << QStringLiteral("lockscreen") << QStringLiteral("startscreensaver"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Logout")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Reboot")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Shutdown")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Suspend")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Hibernate")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Lock screen")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Start screen saver"));
+			<< QT_TRANSLATE_NOOP("SystemInstance::operations", QStringLiteral("Logout"))
+			<< QT_TRANSLATE_NOOP("SystemInstance::operations", QStringLiteral("Reboot"))
+			<< QT_TRANSLATE_NOOP("SystemInstance::operations", QStringLiteral("Shutdown"))
+			<< QT_TRANSLATE_NOOP("SystemInstance::operations", QStringLiteral("Suspend"))
+			<< QT_TRANSLATE_NOOP("SystemInstance::operations", QStringLiteral("Hibernate"))
+			<< QT_TRANSLATE_NOOP("SystemInstance::operations", QStringLiteral("Lock screen"))
+			<< QT_TRANSLATE_NOOP("SystemInstance::operations", QStringLiteral("Start screen saver")));
 
 	void SystemInstance::startExecution()
 	{
 		bool ok = true;
 
-		Operation operation = evaluateListElement<Operation>(ok, operations, "operation");
-		bool force = evaluateBoolean(ok, "force");
+		Operation operation = evaluateListElement<Operation>(ok, operations, QStringLiteral("operation"));
+		bool force = evaluateBoolean(ok, QStringLiteral("force"));
 
 		if(!ok)
 			return;

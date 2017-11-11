@@ -52,7 +52,7 @@ namespace ActionTools
 			return flags;
 
 		QString value =	index.data(Qt::UserRole).toString();
-		if(value == "header")
+		if(value == QLatin1String("header"))
 		{
 			flags &= ~Qt::ItemIsSelectable;
 			flags &= ~Qt::ItemIsEnabled;

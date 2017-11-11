@@ -61,7 +61,7 @@ namespace Code
 		QScriptValue onError() const										{ return mOnError; }
 
 	public slots:
-        QString toString() const                                            { return "Web"; }
+		QString toString() const                                            { return QStringLiteral("Web"); }
         virtual bool equals(const QScriptValue &other) const                { return defaultEqualsImplementation<Web>(other); }
 		QScriptValue download(const QString &urlString, const QScriptValue &options = QScriptValue());
 		bool isDownloading() const;

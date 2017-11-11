@@ -55,7 +55,7 @@ namespace ActionTools
             switch(screenshotWizard.saveTarget())
             {
             case ScreenshotWizard::ResourceSaveTarget:
-                fileEdit()->setText("$" + screenshotWizard.resourceOrFilename());
+				fileEdit()->setText(QStringLiteral("$") + screenshotWizard.resourceOrFilename());
                 break;
             case ScreenshotWizard::FileSaveTarget:
                 fileEdit()->setText(screenshotWizard.resourceOrFilename());

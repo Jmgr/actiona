@@ -44,52 +44,52 @@ namespace Actions
 		explicit PlaySoundDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("Sound file/URL")), this);
+			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("Sound file/URL")), this);
 			file->setTooltip(tr("The sound file or URL to play"));
 			file->setMode(ActionTools::FileEdit::FileOpen);
 			file->setCaption(tr("Choose the sound file"));
 			file->setFilter(tr("All files (*.*)"));
 			addElement(file);
 
-			ActionTools::BooleanParameterDefinition *url = new ActionTools::BooleanParameterDefinition(ActionTools::Name("url", tr("URL")), this);
+			ActionTools::BooleanParameterDefinition *url = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
 			url->setTooltip(tr("Is the sound resource an URL"));
-            url->setDefaultValue("false");
+			url->setDefaultValue(QStringLiteral("false"));
 			addElement(url);
 
-			ActionTools::NumberParameterDefinition *volume = new ActionTools::NumberParameterDefinition(ActionTools::Name("volume", tr("Volume")), this);
+			ActionTools::NumberParameterDefinition *volume = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("volume"), tr("Volume")), this);
 			volume->setTooltip(tr("The volume to play at"));
 			volume->setMinimum(0);
 			volume->setMaximum(100);
 			volume->setSuffix(tr("%", "percent"));
-            volume->setDefaultValue("100");
+			volume->setDefaultValue(QStringLiteral("100"));
 			addElement(volume);
 
-			ActionTools::BooleanParameterDefinition *blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name("blocking", tr("Wait until played")), this);
+			ActionTools::BooleanParameterDefinition *blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("blocking"), tr("Wait until played")), this);
 			blocking->setTooltip(tr("Should the action end only when the sound has finished playing"));
-            blocking->setDefaultValue("true");
+			blocking->setDefaultValue(QStringLiteral("true"));
 			addElement(blocking);
 
-			ActionTools::BooleanParameterDefinition *loop = new ActionTools::BooleanParameterDefinition(ActionTools::Name("looping", tr("Looping")), this);
+			ActionTools::BooleanParameterDefinition *loop = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("looping"), tr("Looping")), this);
 			loop->setTooltip(tr("Should the sound loop"));
-            loop->setDefaultValue("false");
+			loop->setDefaultValue(QStringLiteral("false"));
 			addElement(loop, 1);
 
-			ActionTools::NumberParameterDefinition *playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name("playbackRate", tr("Playback rate")), this);
+			ActionTools::NumberParameterDefinition *playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("playbackRate"), tr("Playback rate")), this);
 			playbackrate->setTooltip(tr("The playback rate"));
 			playbackrate->setMinimum(std::numeric_limits<int>::min());
 			playbackrate->setMaximum(std::numeric_limits<int>::max());
 			playbackrate->setSuffix(tr("%", "percent"));
-            playbackrate->setDefaultValue("100");
+			playbackrate->setDefaultValue(QStringLiteral("100"));
 			addElement(playbackrate, 1);
 		}
 
 		QString name() const													{ return QObject::tr("Play sound"); }
-		QString id() const														{ return "ActionPlaySound"; }
+		QString id() const														{ return QStringLiteral("ActionPlaySound"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Plays a sound"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new PlaySoundInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/playsound.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/playsound.png")); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:

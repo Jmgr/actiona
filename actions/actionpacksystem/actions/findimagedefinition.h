@@ -53,7 +53,7 @@ namespace Actions
 			translateItems("FindImageInstance::sources", FindImageInstance::sources);
             translateItems("FindImageInstance::methods", FindImageInstance::methods);
 
-			ActionTools::ListParameterDefinition *source = new ActionTools::ListParameterDefinition(ActionTools::Name("source", tr("Source")), this);
+			ActionTools::ListParameterDefinition *source = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("source"), tr("Source")), this);
 			source->setTooltip(tr("The source of the image to search in"));
 			source->setItems(FindImageInstance::sources);
 			source->setDefaultValue(FindImageInstance::sources.second.at(FindImageInstance::ScreenshotSource));
@@ -63,11 +63,11 @@ namespace Actions
             windowGroup->setMasterList(source);
             windowGroup->setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::WindowSource));
 
-			ActionTools::WindowParameterDefinition *windowName = new ActionTools::WindowParameterDefinition(ActionTools::Name("windowName", tr("Window name")), this);
+			ActionTools::WindowParameterDefinition *windowName = new ActionTools::WindowParameterDefinition(ActionTools::Name(QStringLiteral("windowName"), tr("Window name")), this);
 			windowName->setTooltip(tr("The title of the window to search in, you can use wildcards like * (any number of characters) or ? (one character) here"));
             windowGroup->addMember(windowName);
 
-            ActionTools::BooleanParameterDefinition *relativePosition = new ActionTools::BooleanParameterDefinition(ActionTools::Name("windowRelativePosition", tr("Window relative position")), this);
+			ActionTools::BooleanParameterDefinition *relativePosition = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("windowRelativePosition"), tr("Window relative position")), this);
             relativePosition->setTooltip(tr("The position is relative to the window\nIf this parameter is set to false (not checked) then the position is absolute"));
             windowGroup->addMember(relativePosition);
 
@@ -77,7 +77,7 @@ namespace Actions
 			imageToSearchInGroup->setMasterList(source);
 			imageToSearchInGroup->setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::ImageSource));
 
-            ActionTools::ImageParameterDefinition *imageToSearchIn = new ActionTools::ImageParameterDefinition(ActionTools::Name("imageToSearchIn", tr("Image to search in")), this);
+			ActionTools::ImageParameterDefinition *imageToSearchIn = new ActionTools::ImageParameterDefinition(ActionTools::Name(QStringLiteral("imageToSearchIn"), tr("Image to search in")), this);
 			imageToSearchIn->setTooltip(tr("The image to search in"));
 			imageToSearchIn->setMode(ActionTools::FileEdit::FileOpen);
 			imageToSearchIn->setCaption(tr("Choose an image file"));
@@ -86,70 +86,70 @@ namespace Actions
 
 			addElement(imageToSearchInGroup);
 
-            ActionTools::ImageParameterDefinition *imageToFind = new ActionTools::ImageParameterDefinition(ActionTools::Name("imageToFind", tr("Image to find")), this);
+			ActionTools::ImageParameterDefinition *imageToFind = new ActionTools::ImageParameterDefinition(ActionTools::Name(QStringLiteral("imageToFind"), tr("Image to find")), this);
 			imageToFind->setTooltip(tr("The image to search for"));
 			imageToFind->setMode(ActionTools::FileEdit::FileOpen);
 			imageToFind->setCaption(tr("Choose an image file"));
 			imageToFind->setFilter(tr("Image files (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)\nAll files (*.*)"));
 			addElement(imageToFind);
 
-            ActionTools::IfActionParameterDefinition *ifFound = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifFound", tr("If found")), this);
+			ActionTools::IfActionParameterDefinition *ifFound = new ActionTools::IfActionParameterDefinition(ActionTools::Name(QStringLiteral("ifFound"), tr("If found")), this);
             ifFound->setTooltip(tr("What to do if the image is found"));
             ifFound->setAllowWait(true);
             addElement(ifFound);
 
-            ActionTools::IfActionParameterDefinition *ifNotFound = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifNotFound", tr("If not found")), this);
+			ActionTools::IfActionParameterDefinition *ifNotFound = new ActionTools::IfActionParameterDefinition(ActionTools::Name(QStringLiteral("ifNotFound"), tr("If not found")), this);
             ifNotFound->setTooltip(tr("What to do if the image is not found"));
             ifNotFound->setAllowWait(true);
             addElement(ifNotFound);
 
-			ActionTools::VariableParameterDefinition *position = new ActionTools::VariableParameterDefinition(ActionTools::Name("position", tr("Position")), this);
+			ActionTools::VariableParameterDefinition *position = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("position"), tr("Position")), this);
 			position->setTooltip(tr("The name of the variable where to store the coordinates of the center of the found image"));
 			addElement(position);
 
-            ActionTools::ListParameterDefinition *method = new ActionTools::ListParameterDefinition(ActionTools::Name("method", tr("Method")), this);
+			ActionTools::ListParameterDefinition *method = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("method"), tr("Method")), this);
             method->setTooltip(tr("The matching method to use"));
             method->setItems(FindImageInstance::methods);
             method->setDefaultValue(FindImageInstance::methods.second.at(FindImageInstance::CorrelationCoefficientMethod));
             addElement(method, 1);
 
-			ActionTools::NumberParameterDefinition *confidenceMinimum = new ActionTools::NumberParameterDefinition(ActionTools::Name("confidenceMinimum", tr("Confidence minimum")), this);
+			ActionTools::NumberParameterDefinition *confidenceMinimum = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("confidenceMinimum"), tr("Confidence minimum")), this);
 			confidenceMinimum->setTooltip(tr("The minimum confidence percentage required to select a possible matching image"));
 			confidenceMinimum->setMinimum(0);
 			confidenceMinimum->setMaximum(100);
-            confidenceMinimum->setDefaultValue("70");
+			confidenceMinimum->setDefaultValue(QStringLiteral("70"));
 			addElement(confidenceMinimum, 1);
 
-            ActionTools::NumberParameterDefinition *maximumMatches = new ActionTools::NumberParameterDefinition(ActionTools::Name("maximumMatches", tr("Maximum amount of images to find")), this);
+			ActionTools::NumberParameterDefinition *maximumMatches = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("maximumMatches"), tr("Maximum amount of images to find")), this);
             maximumMatches->setTooltip(tr("The maximum amount of images to find\nSetting this parameter higher will increase the search duration"));
 			maximumMatches->setMinimum(1);
 			maximumMatches->setMaximum(std::numeric_limits<int>::max());
-            maximumMatches->setDefaultValue("1");
+			maximumMatches->setDefaultValue(QStringLiteral("1"));
 			addElement(maximumMatches, 1);
 
-			ActionTools::NumberParameterDefinition *downPyramidCount = new ActionTools::NumberParameterDefinition(ActionTools::Name("downPyramidCount", tr("Downsampling")), this);
+			ActionTools::NumberParameterDefinition *downPyramidCount = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("downPyramidCount"), tr("Downsampling")), this);
 			downPyramidCount->setTooltip(tr("The downsampling value to use\nDownsampling is used to accelerate the search when using large images"));
 			downPyramidCount->setMinimum(1);
 			downPyramidCount->setMaximum(std::numeric_limits<int>::max());
-            downPyramidCount->setDefaultValue("1");
+			downPyramidCount->setDefaultValue(QStringLiteral("1"));
 			addElement(downPyramidCount, 1);
 
-			ActionTools::NumberParameterDefinition *searchExpansion = new ActionTools::NumberParameterDefinition(ActionTools::Name("searchExpansion", tr("Search expansion")), this);
+			ActionTools::NumberParameterDefinition *searchExpansion = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("searchExpansion"), tr("Search expansion")), this);
 			searchExpansion->setTooltip(tr("The number of pixels to shift when searching for another matching image"));
 			searchExpansion->setMinimum(1);
 			searchExpansion->setMaximum(std::numeric_limits<int>::max());
-            searchExpansion->setDefaultValue("15");
+			searchExpansion->setDefaultValue(QStringLiteral("15"));
 			addElement(searchExpansion, 1);
 
-            ActionTools::NumberParameterDefinition *searchDelay = new ActionTools::NumberParameterDefinition(ActionTools::Name("searchDelay", tr("Delay between two searches when waiting")), this);
+			ActionTools::NumberParameterDefinition *searchDelay = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("searchDelay"), tr("Delay between two searches when waiting")), this);
             searchDelay->setTooltip(tr("The delay between two searches"));
             searchDelay->setMinimum(0);
             searchDelay->setMaximum(std::numeric_limits<int>::max());
-            searchDelay->setDefaultValue("100");
+			searchDelay->setDefaultValue(QStringLiteral("100"));
             searchDelay->setSuffix(tr(" ms", "milliseconds"));
             addElement(searchDelay, 1);
 
-            ActionTools::VariableParameterDefinition *confidence = new ActionTools::VariableParameterDefinition(ActionTools::Name("confidence", tr("Confidence")), this);
+			ActionTools::VariableParameterDefinition *confidence = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("confidence"), tr("Confidence")), this);
             confidence->setTooltip(tr("The name of the variable where to store the confidence value found image"));
             addElement(confidence, 1);
 
@@ -157,13 +157,13 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Find image"); }
-		QString id() const														{ return "ActionFindImage"; }
+		QString id() const														{ return QStringLiteral("ActionFindImage"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Finds an image on the screen, on a window or on another image"); }
         Tools::Version version() const                                          { return Tools::Version(1, 1, 0); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new FindImageInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/findimage.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/findimage.png")); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
         void updateAction(ActionTools::ActionInstance *actionInstance, const Tools::Version &version) const;

@@ -41,18 +41,18 @@ namespace Actions
 		explicit WriteClipboardDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *input = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
+			ActionTools::TextParameterDefinition *input = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
 			input->setTooltip(tr("The new clipboard value"));
 			addElement(input);
 		}
 
 		QString name() const													{ return QObject::tr("Write clipboard"); }
-		QString id() const														{ return "ActionWriteClipboard"; }
+		QString id() const														{ return QStringLiteral("ActionWriteClipboard"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Set the clipboard contents"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteClipboardInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/writeclipboard.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/writeclipboard.png")); }
 
 	private:
 		Q_DISABLE_COPY(WriteClipboardDefinition)

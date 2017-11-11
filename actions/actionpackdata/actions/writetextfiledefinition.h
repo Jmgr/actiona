@@ -44,15 +44,15 @@ namespace Actions
 		{
 			translateItems("WriteTextFileInstance::modes", WriteTextFileInstance::modes);
 
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("File")), this);
+			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
 			file->setTooltip(tr("The file you want to write"));
 			addElement(file);
 
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("text", tr("Text")), this);
+			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
 			text->setTooltip(tr("The text to write to the file"));
 			addElement(text);
 
-			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
+			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("mode"), tr("Mode")), this);
 			mode->setTooltip(tr("The file write mode"));
 			mode->setItems(WriteTextFileInstance::modes);
 			mode->setDefaultValue(WriteTextFileInstance::modes.second.at(WriteTextFileInstance::Truncate));
@@ -62,12 +62,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Write text file"); }
-		QString id() const														{ return "ActionWriteTextFile"; }
+		QString id() const														{ return QStringLiteral("ActionWriteTextFile"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Write a plain text file"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteTextFileInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/writetext.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/writetext.png")); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:

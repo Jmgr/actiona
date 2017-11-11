@@ -187,8 +187,8 @@ namespace LibExecuter
 
 				executer->consoleWidget()->addUserLine(message,
 													   currentActionRuntimeId,
-                                                       context->engine()->globalObject().property("currentParameter").toString(),
-                                                       context->engine()->globalObject().property("currentSubParameter").toString(),
+													   context->engine()->globalObject().property(QStringLiteral("currentParameter")).toString(),
+													   context->engine()->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
 													   agent->currentLine(),
 													   agent->currentColumn(),
 													   context->backtrace(),
@@ -281,46 +281,46 @@ namespace LibExecuter
 		Tools::HighResolutionTimer timer("Executer::startExecution");
 	#endif
 
-        Code::CodeTools::addClassToScriptEngine<CodeActiona>("Actiona", mScriptEngine);
+		Code::CodeTools::addClassToScriptEngine<CodeActiona>(QStringLiteral("Actiona"), mScriptEngine);
         CodeActiona::setActExec(mIsActExec);
         CodeActiona::setActionaVersion(mActionaVersion);
         CodeActiona::setScriptVersion(mScriptVersion);
-        Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::version, "version", mScriptEngine);
-        Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::scriptVersion, "scriptVersion", mScriptEngine);
-        Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::isActExec, "isActExec", mScriptEngine);
-        Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &CodeActiona::isActiona, "isActiona", mScriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &CodeActiona::version, QStringLiteral("version"), mScriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &CodeActiona::scriptVersion, QStringLiteral("scriptVersion"), mScriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &CodeActiona::isActExec, QStringLiteral("isActExec"), mScriptEngine);
+		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &CodeActiona::isActiona, QStringLiteral("isActiona"), mScriptEngine);
 		
 		mScriptAgent->setContext(ScriptAgent::ActionInit);
         CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory, filename);
 		mScriptAgent->setContext(ScriptAgent::Parameters);
 		
         QScriptValue script = mScriptEngine->newObject();
-		mScriptEngine->globalObject().setProperty("Script", script, QScriptValue::ReadOnly);
-        script.setProperty("nextLine", 1);
-        script.setProperty("doNotResetPreviousActions", false);
-        script.setProperty("line", 1, QScriptValue::ReadOnly);
+		mScriptEngine->globalObject().setProperty(QStringLiteral("Script"), script, QScriptValue::ReadOnly);
+		script.setProperty(QStringLiteral("nextLine"), 1);
+		script.setProperty(QStringLiteral("doNotResetPreviousActions"), false);
+		script.setProperty(QStringLiteral("line"), 1, QScriptValue::ReadOnly);
         QScriptValue callProcedureFun = mScriptEngine->newFunction(callProcedureFunction);
         callProcedureFun.setData(mScriptEngine->newQObject(this));
-        script.setProperty("callProcedure", callProcedureFun);
+		script.setProperty(QStringLiteral("callProcedure"), callProcedureFun);
 
 		QScriptValue console = mScriptEngine->newObject();
-		mScriptEngine->globalObject().setProperty("Console", console, QScriptValue::ReadOnly);
+		mScriptEngine->globalObject().setProperty(QStringLiteral("Console"), console, QScriptValue::ReadOnly);
 
         QScriptValue function = mScriptEngine->newFunction(printFunction);
         function.setData(mScriptEngine->newQObject(this));
-        console.setProperty("print", function);
+		console.setProperty(QStringLiteral("print"), function);
 
         function = mScriptEngine->newFunction(printWarningFunction);
         function.setData(mScriptEngine->newQObject(this));
-        console.setProperty("printWarning", function);
+		console.setProperty(QStringLiteral("printWarning"), function);
 
         function = mScriptEngine->newFunction(printErrorFunction);
         function.setData(mScriptEngine->newQObject(this));
-        console.setProperty("printError", function);
+		console.setProperty(QStringLiteral("printError"), function);
 
         function = mScriptEngine->newFunction(clearConsoleFunction);
         function.setData(mScriptEngine->newQObject(this));
-        console.setProperty("clear", function);
+		console.setProperty(QStringLiteral("clear"), function);
 
 		mExecuteOnlySelection = onlySelection;
 		mCurrentActionIndex = 0;
@@ -346,7 +346,7 @@ namespace LibExecuter
                 value = Code::RawData::constructor(resource.data(), mScriptEngine);
                 break;
             case ActionTools::Resource::TextType:
-                value = QString::fromUtf8(resource.data(), resource.data().size());
+				value = QString::fromUtf8(resource.data());
                 break;
             case ActionTools::Resource::ImageType:
                 {
@@ -383,7 +383,7 @@ namespace LibExecuter
 			{
 				++mActiveActionsCount;
 
-				if(actionInstance->definition()->id() == "ActionBeginProcedure")
+				if(actionInstance->definition()->id() == QLatin1String("ActionBeginProcedure"))
 				{
 					if(lastBeginProcedure != -1)
 					{
@@ -394,7 +394,7 @@ namespace LibExecuter
 
 					lastBeginProcedure = actionIndex;
 
-					const ActionTools::SubParameter &nameParameter = actionInstance->subParameter("name", "value");
+					const ActionTools::SubParameter &nameParameter = actionInstance->subParameter(QStringLiteral("name"), QStringLiteral("value"));
                     const QString &procedureName = nameParameter.value();
 
 					if(procedureName.isEmpty())
@@ -413,7 +413,7 @@ namespace LibExecuter
 
 					mScript->addProcedure(procedureName, actionIndex);
 				}
-				else if(actionInstance->definition()->id() == "ActionEndProcedure")
+				else if(actionInstance->definition()->id() == QLatin1String("ActionEndProcedure"))
 				{
 					if(lastBeginProcedure == -1)
 					{
@@ -424,8 +424,8 @@ namespace LibExecuter
 
 					ActionTools::ActionInstance *beginProcedureActionInstance = mScript->actionAt(lastBeginProcedure);
 
-					actionInstance->setRuntimeParameter("procedureBeginLine", lastBeginProcedure);
-					beginProcedureActionInstance->setRuntimeParameter("procedureEndLine", actionIndex);
+					actionInstance->setRuntimeParameter(QStringLiteral("procedureBeginLine"), lastBeginProcedure);
+					beginProcedureActionInstance->setRuntimeParameter(QStringLiteral("procedureEndLine"), actionIndex);
 
 					lastBeginProcedure = -1;
 				}
@@ -449,7 +449,7 @@ namespace LibExecuter
 			mScriptAgent->setCurrentParameter(parameterIndex);
 
 			const ActionTools::ScriptParameter &scriptParameter = mScript->parameter(parameterIndex);
-			QRegExp nameRegExp("[a-z_][a-z0-9_]*", Qt::CaseInsensitive);
+			QRegExp nameRegExp(QStringLiteral("[a-z_][a-z0-9_]*"), Qt::CaseInsensitive);
 
 			if(!nameRegExp.exactMatch(scriptParameter.name()))
 			{
@@ -662,8 +662,8 @@ namespace LibExecuter
 				}
 				else
 				{
-					QScriptValue script = mScriptEngine->globalObject().property("Script");
-					script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(exceptionActionInstance.line())));
+					QScriptValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
+					script.setProperty(QStringLiteral("nextLine"), mScriptEngine->newVariant(QVariant(exceptionActionInstance.line())));
 					actionExecutionEnded();
 					shouldStopExecution = false;
 				}
@@ -686,8 +686,8 @@ namespace LibExecuter
 
 			mConsoleWidget->addActionLine(finalMessage + message,
 										currentActionRuntimeId,
-                                        mScriptEngine->globalObject().property("currentParameter").toString(),
-                                        mScriptEngine->globalObject().property("currentSubParameter").toString(),
+										mScriptEngine->globalObject().property(QStringLiteral("currentParameter")).toString(),
+										mScriptEngine->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
 										mScriptAgent->currentLine(),
 										mScriptAgent->currentColumn(),
 										exceptionType);
@@ -729,8 +729,8 @@ namespace LibExecuter
 	{
 		mExecutionEnded = false;
 
-		QScriptValue script = mScriptEngine->globalObject().property("Script");
-		QString nextLineString = script.property("nextLine").toString();
+		QScriptValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
+		QString nextLineString = script.property(QStringLiteral("nextLine")).toString();
 		int previousLine = mCurrentActionIndex;
 
 		bool ok;
@@ -769,11 +769,11 @@ namespace LibExecuter
 			}
 		}
 
-        bool doNotResetPreviousActions = script.property("doNotResetPreviousActions").toBool();
+		bool doNotResetPreviousActions = script.property(QStringLiteral("doNotResetPreviousActions")).toBool();
 
         if(doNotResetPreviousActions)
         {
-            script.setProperty("doNotResetPreviousActions", false);
+			script.setProperty(QStringLiteral("doNotResetPreviousActions"), false);
         }
         else if(mCurrentActionIndex >= 0)
         {
@@ -936,8 +936,8 @@ namespace LibExecuter
 
 		consoleWidget()->addUserLine(text,
 									   currentActionRuntimeId,
-                                       mScriptEngine->globalObject().property("currentParameter").toString(),
-                                       mScriptEngine->globalObject().property("currentSubParameter").toString(),
+									   mScriptEngine->globalObject().property(QStringLiteral("currentParameter")).toString(),
+									   mScriptEngine->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
 									   mScriptAgent->currentLine(),
 									   mScriptAgent->currentColumn(),
 									   mScriptEngine->currentContext()->backtrace(),
@@ -1024,9 +1024,9 @@ namespace LibExecuter
 		if(nextLine > mScript->actionCount())
 			nextLine = -1;
 
-		QScriptValue script = mScriptEngine->globalObject().property("Script");
-		script.setProperty("nextLine", mScriptEngine->newVariant(QVariant(nextLine)));
-        script.setProperty("line", mCurrentActionIndex + 1, QScriptValue::ReadOnly);
+		QScriptValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
+		script.setProperty(QStringLiteral("nextLine"), mScriptEngine->newVariant(QVariant(nextLine)));
+		script.setProperty(QStringLiteral("line"), mCurrentActionIndex + 1, QScriptValue::ReadOnly);
 
 		ActionTools::ActionInstance *actionInstance = currentActionInstance();
 

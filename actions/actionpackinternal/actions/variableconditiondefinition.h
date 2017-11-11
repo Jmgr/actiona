@@ -45,37 +45,37 @@ namespace Actions
 		{
 			translateItems("VariableConditionInstance::comparisons", VariableConditionInstance::comparisons);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
+			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setCategory(ActionTools::ElementDefinition::INPUT);
 			variable->setTooltip(tr("The variable to compare"));
 			addElement(variable);
 
-			ActionTools::ListParameterDefinition *comparison = new ActionTools::ListParameterDefinition(ActionTools::Name("comparison", tr("Comparison")), this);
+			ActionTools::ListParameterDefinition *comparison = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("comparison"), tr("Comparison")), this);
 			comparison->setTooltip(tr("The comparison"));
 			comparison->setItems(VariableConditionInstance::comparisons);
 			comparison->setDefaultValue(VariableConditionInstance::comparisons.second.at(VariableConditionInstance::Equal));
 			addElement(comparison);
 
-			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
+			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
 			value->setTooltip(tr("The value"));
 			addElement(value);
 
-            ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifEqual", tr("If true")), this);
+			ActionTools::IfActionParameterDefinition *ifEqual = new ActionTools::IfActionParameterDefinition(ActionTools::Name(QStringLiteral("ifEqual"), tr("If true")), this);
             ifEqual->setTooltip(tr("What to do if the comparison result is true"));
 			addElement(ifEqual);
 
-            ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifDifferent", tr("If false")), this);
+			ActionTools::IfActionParameterDefinition *ifDifferent = new ActionTools::IfActionParameterDefinition(ActionTools::Name(QStringLiteral("ifDifferent"), tr("If false")), this);
             ifDifferent->setTooltip(tr("What to do if the comparison result is false"));
 			addElement(ifDifferent);
 		}
 
 		QString name() const													{ return QObject::tr("Variable condition"); }
-		QString id() const														{ return "ActionVariableCondition"; }
+		QString id() const														{ return QStringLiteral("ActionVariableCondition"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Check the value of a variable and do some action"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new VariableConditionInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/variablecondition.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/variablecondition.png")); }
 
 	private:
 		Q_DISABLE_COPY(VariableConditionDefinition)

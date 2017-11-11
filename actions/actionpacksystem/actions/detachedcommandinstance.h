@@ -46,15 +46,15 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString command = evaluateString(ok, "command");
-			QString parameters = evaluateString(ok, "parameters");
-			QString workingDirectory = evaluateString(ok, "workingDirectory");
-			QString processId = evaluateVariable(ok, "processId");
+			QString command = evaluateString(ok, QStringLiteral("command"));
+			QString parameters = evaluateString(ok, QStringLiteral("parameters"));
+			QString workingDirectory = evaluateString(ok, QStringLiteral("workingDirectory"));
+			QString processId = evaluateVariable(ok, QStringLiteral("processId"));
 
 			if(!ok)
 				return;
 
-			QStringList parameterList = parameters.split(QChar(' '));
+			QStringList parameterList = parameters.split(QLatin1Char(' '));
 
 			qint64 processIdValue;
 			if(!QProcess::startDetached(command,

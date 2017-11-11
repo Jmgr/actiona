@@ -42,21 +42,21 @@ namespace Actions
 		explicit DetachedCommandDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *command = new ActionTools::FileParameterDefinition(ActionTools::Name("command", tr("Command")), this);
+			ActionTools::FileParameterDefinition *command = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("command"), tr("Command")), this);
 			command->setTooltip(tr("The command to execute"));
 			addElement(command);
 
-			ActionTools::TextParameterDefinition *parameters = new ActionTools::TextParameterDefinition(ActionTools::Name("parameters", tr("Parameters")), this);
+			ActionTools::TextParameterDefinition *parameters = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("parameters"), tr("Parameters")), this);
 			parameters->setTooltip(tr("The command's parameters"));
 			addElement(parameters);
 
-			ActionTools::FileParameterDefinition *workingDirectory = new ActionTools::FileParameterDefinition(ActionTools::Name("workingDirectory", tr("Working directory")), this);
+			ActionTools::FileParameterDefinition *workingDirectory = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("workingDirectory"), tr("Working directory")), this);
 			workingDirectory->setTooltip(tr("The command's working directory"));
 			workingDirectory->setCaption(tr("Command working directory"));
 			workingDirectory->setMode(ActionTools::FileEdit::DirectoryOpen);
 			addElement(workingDirectory);
 
-			ActionTools::VariableParameterDefinition *processId = new ActionTools::VariableParameterDefinition(ActionTools::Name("processId", tr("Process id")), this);
+			ActionTools::VariableParameterDefinition *processId = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("processId"), tr("Process id")), this);
 			processId->setTooltip(tr("The command's process id"));
 			addElement(processId, 1);
 
@@ -64,12 +64,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Detached command"); }
-		QString id() const														{ return "ActionDetachedCommand"; }
+		QString id() const														{ return QStringLiteral("ActionDetachedCommand"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Executes a detached command"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new DetachedCommandInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/command.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/command.png")); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:

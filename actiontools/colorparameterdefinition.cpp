@@ -42,11 +42,11 @@ namespace ActionTools
 
 	void ColorParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mColorEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
+		mColorEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("value")));
 	}
 
 	void ColorParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", mColorEdit->isCode(), mColorEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mColorEdit->isCode(), mColorEdit->text());
 	}
 }

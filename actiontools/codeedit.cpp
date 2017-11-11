@@ -59,7 +59,7 @@ namespace ActionTools
 		setTabStopWidth(30);
 
 		QFont font;
-		font.setFamily("Arial");
+		font.setFamily(QStringLiteral("Arial"));
 		font.setFixedPitch(true);
 		font.setPointSize(10);
 		setFont(font);
@@ -379,7 +379,7 @@ namespace ActionTools
 		int curpos = cursor.position();
 		QString text = cursor.block().text().left(curpos);
 	
-		QStringList wordList = text.split(QRegExp("[^\\w\\.]"));
+		QStringList wordList = text.split(QRegExp(QStringLiteral("[^\\w\\.]")));
 	
 		if (wordList.isEmpty())
 			return QString();
@@ -449,7 +449,7 @@ namespace ActionTools
 		if(!mCompleter || (ctrlOrShift && event->text().isEmpty()))
 			return;
 
-		static QString endOfWord("~!@#$%^&*()_+{}|:\"<>?,/;'[]\\-=");
+		static QString endOfWord(QStringLiteral("~!@#$%^&*()_+{}|:\"<>?,/;'[]\\-="));
 		bool hasModifier = (event->modifiers() != Qt::NoModifier) && !ctrlOrShift;
 		QString completionPrefix = textUnderCursor();
 

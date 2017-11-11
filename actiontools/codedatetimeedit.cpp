@@ -89,7 +89,7 @@ namespace ActionTools
 			setCalendarPopup(true);
 			setButtonSymbols(QAbstractSpinBox::UpDownArrows);
 			setDateTime(QDateTime::currentDateTime());
-			setDisplayFormat("dd/MM/yyyy hh:mm:ss");
+			setDisplayFormat(QStringLiteral("dd/MM/yyyy hh:mm:ss"));
 			codeLineEdit()->textChanged(codeLineEdit()->text());
 		}
 		else

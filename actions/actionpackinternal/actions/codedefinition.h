@@ -40,19 +40,19 @@ namespace Actions
 		explicit CodeDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *code = new ActionTools::TextParameterDefinition(ActionTools::Name("code", tr("Code")), this);
+			ActionTools::TextParameterDefinition *code = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("code"), tr("Code")), this);
 			code->setTooltip(tr("The code to evaluate"));
 			code->setTextCodeMode(ActionTools::TextParameterDefinition::CodeOnly);
 			addElement(code);
 		}
 
 		QString name() const													{ return QObject::tr("Code"); }
-		QString id() const														{ return "ActionCode"; }
+		QString id() const														{ return QStringLiteral("ActionCode"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Evaluates some code"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new CodeInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/code.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/code.png")); }
 
 	private:
 		Q_DISABLE_COPY(CodeDefinition)

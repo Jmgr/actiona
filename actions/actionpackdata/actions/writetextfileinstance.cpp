@@ -26,16 +26,16 @@
 namespace Actions
 {
 	ActionTools::StringListPair WriteTextFileInstance::modes = qMakePair(
-			QStringList() << "truncate" << "append",
-			QStringList() << QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Overwrite any content") << QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Append to the end"));
+			QStringList() << QStringLiteral("truncate") << QStringLiteral("append"),
+			QStringList() << QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", QStringLiteral("Overwrite any content")) << QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", QStringLiteral("Append to the end")));
 
 	void WriteTextFileInstance::startExecution()
 	{
 		bool ok = true;
 
-		QString filepath = evaluateString(ok, "file");
-		QString text = evaluateString(ok, "text");
-		Mode mode = evaluateListElement<Mode>(ok, modes, "mode");
+		QString filepath = evaluateString(ok, QStringLiteral("file"));
+		QString text = evaluateString(ok, QStringLiteral("text"));
+		Mode mode = evaluateListElement<Mode>(ok, modes, QStringLiteral("mode"));
 
 		if(!ok)
 			return;
@@ -43,7 +43,7 @@ namespace Actions
 		QFile file(filepath);
 		if(!file.open(QIODevice::WriteOnly | QIODevice::Text | (mode == Truncate ? QIODevice::Truncate : QIODevice::Append)))
 		{
-			setCurrentParameter("file");
+			setCurrentParameter(QStringLiteral("file"));
 			emit executionException(CannotWriteFileException, tr("Cannot open file"));
 			return;
 		}

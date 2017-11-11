@@ -42,7 +42,7 @@ namespace Code
 		~Notify();
 		
 	public slots:
-        QString toString() const                                { return "Notify"; }
+		QString toString() const                                { return QStringLiteral("Notify"); }
         virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Notify>(other); }
 		QScriptValue show();
 		

@@ -37,15 +37,15 @@ namespace Code
 		{
 			it.next();
 			
-			if(it.name() == "showAlphaChannel")
+			if(it.name() == QLatin1String("showAlphaChannel"))
 				colorDialog->mColorDialog->setOption(QColorDialog::ShowAlphaChannel, it.value().toBool());
-			else if(it.name() == "color")
+			else if(it.name() == QLatin1String("color"))
 				colorDialog->setColorPrivate(it.value(), context);
-			else if(it.name() == "onClosed")
+			else if(it.name() == QLatin1String("onClosed"))
 				colorDialog->mOnClosed = it.value();
-			else if(it.name() == "onColorSelected")
+			else if(it.name() == QLatin1String("onColorSelected"))
 				colorDialog->mOnColorSelected = it.value();
-			else if(it.name() == "onColorChanged")
+			else if(it.name() == QLatin1String("onColorChanged"))
 				colorDialog->mOnColorChanged = it.value();
 		}
 

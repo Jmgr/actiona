@@ -57,7 +57,7 @@ namespace ActionTools
 
         QMenu *resourceMenu = new QMenu(tr("Cannot insert resources here"), parentMenu);
         resourceMenu->setEnabled(false);
-        resourceMenu->setIcon(QIcon(":/images/resource.png"));
+		resourceMenu->setIcon(QIcon(QStringLiteral(":/images/resource.png")));
 
         return resourceMenu;
     }

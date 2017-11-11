@@ -39,7 +39,7 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString value = evaluateString(ok, "value");
+			QString value = evaluateString(ok, QStringLiteral("value"));
 
 			if(!ok)
 				return;

@@ -39,7 +39,7 @@ namespace Code
 		Keyboard();
 
 	public slots:
-        QString toString() const                                { return "Keyboard"; }
+		QString toString() const                                { return QStringLiteral("Keyboard"); }
         virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Keyboard>(other); }
 		QScriptValue pressKey(const QString &key);
 		QScriptValue releaseKey(const QString &key);

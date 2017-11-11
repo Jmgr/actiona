@@ -42,12 +42,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("End procedure"); }
-		QString id() const														{ return "ActionEndProcedure"; }
+		QString id() const														{ return QStringLiteral("ActionEndProcedure"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Ends a procedure"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new EndProcedureInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Procedures; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/endprocedure.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/endprocedure.png")); }
 
 	private:
 		Q_DISABLE_COPY(EndProcedureDefinition)

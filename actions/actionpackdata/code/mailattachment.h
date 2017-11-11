@@ -52,7 +52,7 @@ namespace Code
 
     public slots:
         QScriptValue clone() const;
-        QString toString() const                                                { return "MailAttachment"; }
+		QString toString() const                                                { return QStringLiteral("MailAttachment"); }
         virtual bool equals(const QScriptValue &other) const                    { return defaultEqualsImplementation<MailAttachment>(other); }
 
         QScriptValue setExtraHeader(const QString &name, const QString &value)  { mAttachment.setExtraHeader(name, value); return thisObject(); }

@@ -35,7 +35,7 @@ namespace Code
 	{
 		if(context->argumentCount() < 1)
 		{
-			throwError(context, engine, "NoDatabaseDriverError", tr("Please specify the database driver that should be used"));
+			throwError(context, engine, QStringLiteral("NoDatabaseDriverError"), tr("Please specify the database driver that should be used"));
 			return engine->undefinedValue();
 		}
 
@@ -76,7 +76,7 @@ namespace Code
 
 	void Sql::registerClass(QScriptEngine *scriptEngine)
 	{
-		CodeTools::addClassGlobalFunctionToScriptEngine<Sql>(&drivers, "drivers", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Sql>(&drivers, QStringLiteral("drivers"), scriptEngine);
 	}
 
 	Sql::Sql(Driver driver)
@@ -102,14 +102,14 @@ namespace Code
 
 		if(!QSqlDatabase::isDriverAvailable(mDriverName))
 		{
-			throwError("DatabaseDriverUnavailableError", tr("The requested database driver is not available"));
+			throwError(QStringLiteral("DatabaseDriverUnavailableError"), tr("The requested database driver is not available"));
 			return thisObject();
 		}
 
 		*mDatabase = QSqlDatabase::addDatabase(mDriverName, QUuid::createUuid().toString());
 		if(!mDatabase->isValid())
 		{
-			throwError("DatabaseDriverUnavailableError", tr("The requested database driver is not available"));
+			throwError(QStringLiteral("DatabaseDriverUnavailableError"), tr("The requested database driver is not available"));
 			return thisObject();
 		}
 
@@ -125,17 +125,17 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "hostName")
+			if(it.name() == QLatin1String("hostName"))
 				hostName = it.value().toString();
-			else if(it.name() == "port")
+			else if(it.name() == QLatin1String("port"))
 				port = it.value().toInteger();
-			else if(it.name() == "databaseName")
+			else if(it.name() == QLatin1String("databaseName"))
 				databaseName = it.value().toString();
-			else if(it.name() == "userName")
+			else if(it.name() == QLatin1String("userName"))
 				userName = it.value().toString();
-			else if(it.name() == "password")
+			else if(it.name() == QLatin1String("password"))
 				password = it.value().toString();
-			else if(it.name() == "options")
+			else if(it.name() == QLatin1String("options"))
 				options = it.value().toString();
 		}
 
@@ -146,7 +146,7 @@ namespace Code
 		mDatabase->setConnectOptions(options);
 		if(!mDatabase->open(userName, password))
 		{
-			throwError("ConnectionError", tr("Unable to establish a connection to the database"));
+			throwError(QStringLiteral("ConnectionError"), tr("Unable to establish a connection to the database"));
 			return thisObject();
 		}
 
@@ -159,7 +159,7 @@ namespace Code
 		mQuery.setForwardOnly(true);
 		if(!mQuery.prepare(queryString))
 		{
-			throwError("PrepareQueryError", tr("Failed to prepare the query"));
+			throwError(QStringLiteral("PrepareQueryError"), tr("Failed to prepare the query"));
 			return thisObject();
 		}
 
@@ -193,7 +193,7 @@ namespace Code
         if(!result)
 		{
 			QSqlError error = mQuery.lastError();
-			throwError("ExecuteQueryError", tr("Failed to execute the query : %1").arg(error.text()));
+			throwError(QStringLiteral("ExecuteQueryError"), tr("Failed to execute the query : %1").arg(error.text()));
 			return thisObject();
 		}
 
@@ -204,7 +204,7 @@ namespace Code
 	{
 		if(!mQuery.isSelect())
 		{
-			throwError("FetchError", tr("Cannot fetch the result of a non-select query"));
+			throwError(QStringLiteral("FetchError"), tr("Cannot fetch the result of a non-select query"));
 			return thisObject();
 		}
 
@@ -263,23 +263,23 @@ namespace Code
 		switch(driver)
 		{
 		case SQLite2:
-			return "QSQLITE2";
+			return QStringLiteral("QSQLITE2");
 		case SQLite:
-			return "QSQLITE";
+			return QStringLiteral("QSQLITE");
 		case PostgreSQL:
-			return "QPSQL";
+			return QStringLiteral("QPSQL");
 		case MySQL:
-			return "QMYSQL";
+			return QStringLiteral("QMYSQL");
 		case ODBC:
-			return "QODBC";
+			return QStringLiteral("QODBC");
 		case InterBase:
-			return "QIBASE";
+			return QStringLiteral("QIBASE");
 		case OCI:
-			return "QOCI";
+			return QStringLiteral("QOCI");
 		case TDS:
-			return "QTDS";
+			return QStringLiteral("QTDS");
 		case DB2:
-			return "QDB2";
+			return QStringLiteral("QDB2");
 		default:
 			return QString();
 		}

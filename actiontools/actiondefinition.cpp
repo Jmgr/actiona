@@ -60,20 +60,20 @@ namespace ActionTools
 	
 	QString ActionDefinition::CategoryName[CategoryCount] =
 	{
-		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Windows"),
-		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Device"),
-		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "System"),
-		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Internal"),
-		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Data"),
-		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Procedures")
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", QStringLiteral("Windows")),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", QStringLiteral("Device")),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", QStringLiteral("System")),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", QStringLiteral("Internal")),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", QStringLiteral("Data")),
+		QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", QStringLiteral("Procedures"))
 	};
 
-	QStringList ActionDefinition::StandardTabs = QStringList() << QT_TRANSLATE_NOOP("ActionTabs", "Standard") << QT_TRANSLATE_NOOP("ActionTabs", "Advanced");
+	QStringList ActionDefinition::StandardTabs = QStringList() << QT_TRANSLATE_NOOP("ActionTabs", QStringLiteral("Standard")) << QT_TRANSLATE_NOOP("ActionTabs", QStringLiteral("Advanced"));
 	
 	void ActionDefinition::translateItems(const char *context, StringListPair &items) const
 	{
 		for(int index = 0; index < items.second.size(); ++index)
-			items.second[index] = QApplication::instance()->translate(context, items.second.at(index).toLatin1());
+			items.second[index] = QApplication::instance()->translate(context, items.second.at(index).toLatin1().constData());
 	}
 
 	void ActionDefinition::addElement(ElementDefinition *element, int tab)

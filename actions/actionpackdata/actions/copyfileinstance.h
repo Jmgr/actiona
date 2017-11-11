@@ -46,8 +46,8 @@ namespace Actions
 		{
 			bool ok = true;
 
-			QString sourceFile = evaluateString(ok, "source");
-			QString destinationFile = evaluateString(ok, "destination");
+			QString sourceFile = evaluateString(ok, QStringLiteral("source"));
+			QString destinationFile = evaluateString(ok, QStringLiteral("destination"));
 
 			if(!ok)
 				return;
@@ -57,7 +57,7 @@ namespace Actions
 
 			if(!mSourceFile.open(QIODevice::ReadOnly))
 			{
-				setCurrentParameter("source");
+				setCurrentParameter(QStringLiteral("source"));
 				emit executionException(UnableToReadFileException, tr("Unable to read the source file \"%1\"").arg(sourceFile));
 				return;
 			}
@@ -65,15 +65,15 @@ namespace Actions
 			if(!mDestinationFile.open(QIODevice::WriteOnly))
 			{
 				mSourceFile.close();
-				setCurrentParameter("destination");
+				setCurrentParameter(QStringLiteral("destination"));
 				emit executionException(UnableToWriteFileException, tr("Unable to write to \"%1\"").arg(destinationFile));
 				return;
 			}
 
 			DataCopyActionInstance::startCopy(&mSourceFile, &mDestinationFile);
 
-			emit showProgressDialog("Copying file", 100);
-			emit updateProgressDialog("Copying in progress");
+			emit showProgressDialog(tr("Copying file"), 100);
+			emit updateProgressDialog(tr("Copying in progress"));
 		}
 
 	private:

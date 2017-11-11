@@ -64,7 +64,7 @@ namespace Code
 		QScriptValue onButtonReleased() const							{ return mOnButtonReleased; }
 
 	public slots:
-		QString toString() const										{ return "Mouse"; }
+		QString toString() const										{ return QStringLiteral("Mouse"); }
         virtual bool equals(const QScriptValue &other) const            { return defaultEqualsImplementation<Mouse>(other); }
 		QScriptValue position() const;
 		QScriptValue move() const;

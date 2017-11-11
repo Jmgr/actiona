@@ -77,9 +77,9 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 	//Init of texts & images
 	ui->actionIcon->setPixmap(actionDefinition->icon());
-	ui->actionName->setText("<h2>" + actionDefinition->name() + "</h2>");
-	ui->actionDescription->setText("<i>" + actionDefinition->description() + "</i>");
-	ui->helpPushButton->setTopic(QString("%1:actions:%2").arg(localeName.left(2)).arg(actionDefinition->id().toLower()));
+	ui->actionName->setText(QStringLiteral("<h2>") + actionDefinition->name() + QStringLiteral("</h2>"));
+	ui->actionDescription->setText(QStringLiteral("<i>") + actionDefinition->description() + QStringLiteral("</i>"));
+	ui->helpPushButton->setTopic(QStringLiteral("%1:actions:%2").arg(localeName.left(2)).arg(actionDefinition->id().toLower()));
 
 	bool worksUnderThisOS = actionDefinition->worksUnderThisOS();
 	ui->actionOSAvailability->setVisible(!worksUnderThisOS);
@@ -88,7 +88,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	//Init of tabs & group boxes
 	QStringList tabs = actionDefinition->tabs();
 	if(tabs.count() == 0)
-		tabs << QT_TRANSLATE_NOOP("ActionTabs", "Parameters");
+		tabs << QT_TRANSLATE_NOOP("ActionTabs", QStringLiteral("Parameters"));
 
 	int tabCount = tabs.count();
 
@@ -107,11 +107,11 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		QVBoxLayout *layout = new QVBoxLayout(widget);
 
 		QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), widget);
-		inputParametersGroupBox->setStyleSheet(QString("QGroupBox { background-color: #DDDDFF; }"));
+		inputParametersGroupBox->setStyleSheet(QStringLiteral("QGroupBox { background-color: #DDDDFF; }"));
 		inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][tabIndex]);
 		groupBoxes[InputParameters].append(inputParametersGroupBox);
 		QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), widget);
-		outputParametersGroupBox->setStyleSheet(QString("QGroupBox { background-color: #ffedce; }"));
+		outputParametersGroupBox->setStyleSheet(QStringLiteral("QGroupBox { background-color: #ffedce; }"));
 		outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][tabIndex]);
 		groupBoxes[OutputParameters].append(outputParametersGroupBox);
 
@@ -121,7 +121,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		widget->setLayout(layout);
 
 		mParameterTabWidgets.append(widget);
-        mTabWidget->addTab(widget, QApplication::translate("ActionTabs", tab.toUtf8()));
+		mTabWidget->addTab(widget, QApplication::translate("ActionTabs", tab.toUtf8().constData()));
 
 		++tabIndex;
 	}
@@ -131,7 +131,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	//Init of common parameters
 	QVBoxLayout *commonParametersLayout = new QVBoxLayout;
 	QGroupBox *inputCommonParametersGroupBox = new QGroupBox(tr("Input parameters"), mCommonTabWidget);
-	inputCommonParametersGroupBox->setStyleSheet(QString("QGroupBox { background-color: #DDDDFF; }"));
+	inputCommonParametersGroupBox->setStyleSheet(QStringLiteral("QGroupBox { background-color: #DDDDFF; }"));
 	QFormLayout *inputCommonParametersLayout = new QFormLayout;
 	
 	mPauseBeforeSpinBox->setToolTip(tr("Pause before executing the action"));
@@ -170,7 +170,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	{
 		QStringList exceptionActionsNames;
 		for(int i = 0; i < ActionTools::ActionException::ExceptionActionCount; ++i)
-			exceptionActionsNames << QApplication::translate("ActionException::ExceptionActionName", ActionTools::ActionException::ExceptionActionName[i].toLatin1());
+			exceptionActionsNames << QApplication::translate("ActionException::ExceptionActionName", ActionTools::ActionException::ExceptionActionName[i].toLatin1().constData());
 
 		QList<ActionTools::ActionException *> actionExceptions = actionDefinition->exceptions();
 
@@ -181,7 +181,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 			if(i < ActionTools::ActionException::ExceptionCount)
 			{
-				exceptionName = QApplication::translate("ActionException::ExceptionName", ActionTools::ActionException::ExceptionName[i].toLatin1());
+				exceptionName = QApplication::translate("ActionException::ExceptionName", ActionTools::ActionException::ExceptionName[i].toLatin1().constData());
 				exceptionId = i;
 			}
 			else
@@ -233,7 +233,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	{
 		informations = tr("By ");
 		if(!email.isEmpty())
-			informations += QString("<a href=\"mailto:%1\">%2</a>").arg(email).arg(author);
+			informations += QStringLiteral("<a href=\"mailto:%1\">%2</a>").arg(email).arg(author);
 		else
 			informations += author;
 	}
@@ -241,12 +241,12 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	if(!website.isEmpty())
 	{
 		if(!author.isEmpty())
-			informations += " - ";
-		informations += QString("<a href=\"http://%1\">%1</a>").arg(website);
+			informations += QStringLiteral(" - ");
+		informations += QStringLiteral("<a href=\"http://%1\">%1</a>").arg(website);
 	}
 
 	if(!informations.isEmpty())
-		informations += "<br/>";
+		informations += QStringLiteral("<br/>");
 
 	informations += tr("Version %1").arg(version.toString());
 
@@ -260,7 +260,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	case ActionTools::Stable:	statusString = tr("Stable"); break;
 	}
 
-	informations += QString(" (%1)").arg(statusString);
+	informations += QStringLiteral(" (%1)").arg(statusString);
 
 	ui->actionInfo->setText(informations);
 	
@@ -459,7 +459,7 @@ void ActionDialog::postInit()
 				if(!mCurrentSubField.isEmpty())
 				{
                     QString value = mActionInstance->subParameter(mCurrentField, mCurrentSubField).value();
-					if(value.contains('\n'))//Multiline : open the editor
+					if(value.contains(QLatin1Char('\n')))//Multiline : open the editor
 					{
 						if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(editorWidget))
 							codeEditor->openEditor(mCurrentLine, mCurrentColumn);

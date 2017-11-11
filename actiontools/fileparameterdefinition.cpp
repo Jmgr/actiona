@@ -47,11 +47,11 @@ namespace ActionTools
 
 	void FileParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mFileEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
+		mFileEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("value")));
 	}
 
 	void FileParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", mFileEdit->isCode(), mFileEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mFileEdit->isCode(), mFileEdit->text());
 	}
 }

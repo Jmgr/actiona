@@ -43,11 +43,11 @@ namespace Actions
 		explicit LoopDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition(ActionTools::Name("line", tr("Line")), this);
+			ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition(ActionTools::Name(QStringLiteral("line"), tr("Line")), this);
 			line->setTooltip(tr("The line (or label) to go to"));
 			addElement(line);
 
-			ActionTools::NumberParameterDefinition *count = new ActionTools::NumberParameterDefinition(ActionTools::Name("count", tr("Count")), this);
+			ActionTools::NumberParameterDefinition *count = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("count"), tr("Count")), this);
 			count->setTooltip(tr("The amount of times (evaluated the first time)"));
 			count->setMinimum(0);
 			count->setMaximum(std::numeric_limits<int>::max());
@@ -55,12 +55,12 @@ namespace Actions
 		}
 
 		QString name() const													{ return QObject::tr("Loop"); }
-		QString id() const														{ return "ActionLoop"; }
+		QString id() const														{ return QStringLiteral("ActionLoop"); }
 		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const												{ return QObject::tr("Go to a script line a specific number of times"); }
 		ActionTools::ActionInstance *newActionInstance() const					{ return new LoopInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/loop.png"); }
+		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/loop.png")); }
 
 	private:
 		Q_DISABLE_COPY(LoopDefinition)

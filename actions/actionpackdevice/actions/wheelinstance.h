@@ -42,7 +42,7 @@ namespace Actions
 		{
 			bool ok = true;
 		
-			int intensity = evaluateInteger(ok, "intensity");
+			int intensity = evaluateInteger(ok, QStringLiteral("intensity"));
 		
 			if(!ok)
 				return;

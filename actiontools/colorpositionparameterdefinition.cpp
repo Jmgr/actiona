@@ -52,23 +52,23 @@ namespace ActionTools
 
 	void ColorPositionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "position"));
-		mColorEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "color"));
+		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("position")));
+		mColorEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("color")));
 	}
 
 	void ColorPositionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "position", mPositionEdit->isCode(), mPositionEdit->text());
-		actionInstance->setSubParameter(name().original(), "color", mColorEdit->isCode(), mColorEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("position"), mPositionEdit->isCode(), mPositionEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("color"), mColorEdit->isCode(), mColorEdit->text());
 	}
 
 	void ColorPositionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
         auto position = defaultPosition();
 
-        actionInstance->setSubParameter(name().original(), "position", QString("%1:%2").arg(position.x()).arg(position.y()));
+		actionInstance->setSubParameter(name().original(), QStringLiteral("position"), QStringLiteral("%1:%2").arg(position.x()).arg(position.y()));
 
         QColor localDefaultColor = defaultColor();
-        actionInstance->setSubParameter(name().original(), "color", QString("%1:%2:%3").arg(localDefaultColor.red()).arg(localDefaultColor.green()).arg(localDefaultColor.blue()));
+		actionInstance->setSubParameter(name().original(), QStringLiteral("color"), QStringLiteral("%1:%2:%3").arg(localDefaultColor.red()).arg(localDefaultColor.green()).arg(localDefaultColor.blue()));
 	}
 }
