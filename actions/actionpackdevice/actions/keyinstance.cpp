@@ -31,10 +31,10 @@ namespace Actions
 {
 	ActionTools::StringListPair KeyInstance::actions = qMakePair(
 			QStringList() << QStringLiteral("pressRelease") << QStringLiteral("press") << QStringLiteral("release"),
-			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("Press and release")) << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("Press")) << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("Release")));
+			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "Press and release")) << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "Press")) << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "Release")));
 	ActionTools::StringListPair KeyInstance::types = qMakePair(
 			QStringList() << QStringLiteral("win32") << QStringLiteral("directx"),
-			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("Win32")) << QT_TRANSLATE_NOOP("KeyInstance::actions", QStringLiteral("DirectX")));
+			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "Win32")) << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "DirectX")));
 
 	KeyInstance::KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

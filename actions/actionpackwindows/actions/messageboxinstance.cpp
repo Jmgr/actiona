@@ -32,24 +32,24 @@ namespace Actions
 	ActionTools::StringListPair MessageBoxInstance::icons = qMakePair(
 			QStringList() << QStringLiteral("none") << QStringLiteral("information") << QStringLiteral("question") << QStringLiteral("warning") << QStringLiteral("error"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", QStringLiteral("None"))
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", QStringLiteral("Information"))
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", QStringLiteral("Question"))
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", QStringLiteral("Warning"))
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", QStringLiteral("Error")));
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "None"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Information"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Question"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Warning"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Error")));
 
 	ActionTools::StringListPair MessageBoxInstance::buttons = qMakePair(
 			QStringList() << QStringLiteral("ok") << QStringLiteral("yesno"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", QStringLiteral("Ok"))
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", QStringLiteral("Yes-No")));
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Ok"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Yes-No")));
 
 	ActionTools::StringListPair MessageBoxInstance::textmodes = qMakePair(
 			QStringList() << QStringLiteral("automatic") << QStringLiteral("html") << QStringLiteral("text"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", QStringLiteral("Automatic"))
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", QStringLiteral("HTML"))
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", QStringLiteral("Plain text")));
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Automatic"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "HTML"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Plain text")));
 
 	MessageBoxInstance::MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

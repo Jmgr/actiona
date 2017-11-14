@@ -34,16 +34,16 @@ namespace Actions
 	ActionTools::StringListPair DataInputInstance::dataTypes = qMakePair(
 		QStringList() << QStringLiteral("text") << QStringLiteral("integer") << QStringLiteral("decimal"),
 		QStringList()
-		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", QStringLiteral("Text"))
-		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", QStringLiteral("Integer"))
-		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", QStringLiteral("Decimal")));
+		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Text"))
+		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer"))
+		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal")));
 
     ActionTools::StringListPair DataInputInstance::editorTypes = qMakePair(
 		QStringList() << QStringLiteral("line") << QStringLiteral("multiline") << QStringLiteral("password"),
         QStringList()
-		<< QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", QStringLiteral("Line"))
-		<< QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", QStringLiteral("Multiline"))
-		<< QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", QStringLiteral("Password")));
+		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line"))
+		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Multiline"))
+		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Password")));
 
 	DataInputInstance::DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

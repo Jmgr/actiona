@@ -35,10 +35,10 @@ namespace ActionTools
 	StringListPair IfActionParameterDefinition::actions = qMakePair(
 		QStringList() << QStringLiteral("do_nothing") << QStringLiteral("goto") << QStringLiteral("run_code") << QStringLiteral("call_procedure"),
 		QStringList()
-		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", QStringLiteral("Do nothing"))
-		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", QStringLiteral("Goto line"))
-		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", QStringLiteral("Run code"))
-		<< QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", QStringLiteral("Call procedure")));
+		<< QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to next action"))
+		<< QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to line"))
+		<< QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code"))
+		<< QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Call procedure")));
 
     IfActionParameterDefinition::IfActionParameterDefinition(const Name &name, QObject *parent)
         : ItemsParameterDefinition(name, parent),
@@ -53,7 +53,7 @@ namespace ActionTools
 			translated = true;
 
 			for(int index = 0; index < actions.second.size(); ++index)
-				actions.second[index] = QApplication::instance()->translate("IfActionParameterDefinition::actions", actions.second.at(index).toLatin1().constData());
+				actions.second[index] = QCoreApplication::translate("IfActionParameterDefinition::actions", actions.second.at(index).toUtf8().constData());
 		}
 	}
 

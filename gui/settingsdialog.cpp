@@ -75,7 +75,8 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
     ui->languageComboBox->clear();
 
     int languageIndex = 0;
-    for(const QString &language: Tools::languagesName.second)
+	auto languagesName = Tools::languagesName();
+	for(const QString &language: languagesName.second)
     {
         ui->languageComboBox->addItem(language, languageIndex);
 
@@ -83,7 +84,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
     }
 
 	//GENERAL
-	ui->languageComboBox->setCurrentIndex(Tools::languageNameToIndex(settings.value(QStringLiteral("gui/locale"), Tools::languagesName.first.first()).toString()));
+	ui->languageComboBox->setCurrentIndex(Tools::languageNameToIndex(settings.value(QStringLiteral("gui/locale"), languagesName.first.first()).toString()));
 	ui->showLoadingWindow->setChecked(settings.value(QStringLiteral("gui/showLoadingWindow"), QVariant(true)).toBool());
 	ui->showTaskbarIcon->setChecked(settings.value(QStringLiteral("gui/showTaskbarIcon"), QVariant(true)).toBool());
 	ui->showWindowAfterExecution->setChecked(settings.value(QStringLiteral("gui/showWindowAfterExecution"), QVariant(true)).toBool());
@@ -260,7 +261,7 @@ void SettingsDialog::accept()
 	settings.setValue(QStringLiteral("gui/settingsTab"), ui->settingsTab->currentIndex());
 
 	//GENERAL
-	settings.setValue(QStringLiteral("gui/locale"), Tools::languagesName.first[ui->languageComboBox->currentIndex()]);
+	settings.setValue(QStringLiteral("gui/locale"), Tools::languagesName().first[ui->languageComboBox->currentIndex()]);
 	settings.setValue(QStringLiteral("gui/showLoadingWindow"), ui->showLoadingWindow->isChecked());
 	settings.setValue(QStringLiteral("gui/showTaskbarIcon"), ui->showTaskbarIcon->isChecked());
 	settings.setValue(QStringLiteral("gui/showWindowAfterExecution"), ui->showWindowAfterExecution->isChecked());

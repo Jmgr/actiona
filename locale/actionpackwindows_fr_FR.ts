@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackWindows</name>
     <message>
-        <location filename="../actions/actionpackwindows/actionpackwindows.h" line="65"/>
+        <location filename="../actions/actionpackwindows/actionpackwindows.h" line="62"/>
         <source>Actions dealing with windows</source>
         <translation>Actions en rapport avec les fenêtres</translation>
     </message>
@@ -12,83 +12,83 @@
 <context>
     <name>Actions::DataInputDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="50"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="49"/>
         <source>Question</source>
         <translatorcomment>Question</translatorcomment>
         <translation>Question</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="51"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="50"/>
         <source>The question to ask</source>
         <translation>La question à poser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="54"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="53"/>
         <source>Data type</source>
         <translation>Type de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="55"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="54"/>
         <source>The data type</source>
         <translation>Le type de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="60"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="59"/>
         <source>Editor type</source>
         <translation>Type d&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="61"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="60"/>
         <source>The editor type</source>
         <translation>Le type de l&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="66"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="65"/>
         <source>Default value</source>
         <translation>Valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="67"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="66"/>
         <source>The default value</source>
         <translation>La valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="70"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="69"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="71"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="70"/>
         <source>The variable where to save the entered input</source>
         <translation>La variable où sauvegarder l&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="74"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="73"/>
         <source>Window title</source>
         <translation>Titre de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="74"/>
         <source>The title of the window</source>
         <translation>Le titre de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="78"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="77"/>
         <source>Window icon</source>
         <translation>Icône de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="79"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="78"/>
         <source>The window icon to use</source>
         <translation>L&apos;icône de fenêtre à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="81"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="80"/>
         <source>Select the icon to use</source>
         <translation>Sélectionnez l&apos;icône à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="82"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="81"/>
         <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
         <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
     </message>
@@ -96,84 +96,84 @@
 <context>
     <name>Actions::MessageBoxDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="52"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="51"/>
         <source>Message</source>
         <translation>Message</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="53"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="52"/>
         <source>The text to show</source>
         <translation>Le texte à afficher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="56"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="55"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="57"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="56"/>
         <source>The title to show</source>
         <translation>Le titre à afficher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="60"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="59"/>
         <source>Icon</source>
         <translation>Icône</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="61"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="60"/>
         <source>The icon to use</source>
         <translation>L&apos;icône à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="66"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="65"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="67"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="66"/>
         <source>The message box type</source>
         <translation>Le type de la boîte de dialogue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="72"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="71"/>
         <source>Custom icon</source>
         <translation>Icône personnalisée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="73"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="72"/>
         <source>The custom icon to use</source>
         <translation>L&apos;icône personnalisée à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="75"/>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="82"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="74"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="81"/>
         <source>Select the icon to use</source>
         <translation>Sélectionnez l&apos;icône à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="76"/>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="83"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="82"/>
         <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
         <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="79"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="78"/>
         <source>Window icon</source>
         <translation>Icône de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="80"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="79"/>
         <source>The window icon to use</source>
         <translation>L&apos;icône de fenêtre à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="86"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="85"/>
         <source>Text mode</source>
         <translation>Mode de texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="87"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="86"/>
         <source>The message box text mode</source>
         <translation>Le mode de texte de la boîte de dialogue</translation>
     </message>
@@ -182,22 +182,22 @@
         <translation type="obsolete">Action Oui-Non</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="96"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="95"/>
         <source>If yes</source>
         <translation>Si oui</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="97"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="96"/>
         <source>What to do if the yes button is pressed</source>
         <translation>Ce qui doit être fait si le bouton Oui est pressé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="100"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="99"/>
         <source>If no</source>
         <translation>Si non</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="101"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="100"/>
         <source>What to do if the no button is pressed</source>
         <translation>Ce qui doit être fait si le bouton Non est pressé</translation>
     </message>
@@ -205,92 +205,92 @@
 <context>
     <name>Actions::MultiDataInputDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="52"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="51"/>
         <source>Question</source>
         <translation>Question</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="53"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="52"/>
         <source>The question to ask</source>
         <translation>La question à poser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="56"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="55"/>
         <source>Mode</source>
         <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="57"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="56"/>
         <source>The input mode</source>
         <translation>Le mode d&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="62"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="61"/>
         <source>Items</source>
         <translation>Éléments</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="63"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="62"/>
         <source>The item list</source>
         <translation>La liste d&apos;éléments</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="66"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="65"/>
         <source>Default value</source>
         <translation>Valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="67"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="66"/>
         <source>The default value</source>
         <translation>La valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="70"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="69"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="71"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="70"/>
         <source>The variable where to save the entered input</source>
         <translation>La variable où sauvegarder le ou les éléments choisis</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="74"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="73"/>
         <source>Window title</source>
         <translation>Titre de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="75"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="74"/>
         <source>The title of the window</source>
         <translation>Le titre de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="78"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="77"/>
         <source>Window icon</source>
         <translation>Icône de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="79"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="78"/>
         <source>The window icon to use</source>
         <translation>L&apos;icône de fenêtre à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="81"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="80"/>
         <source>Select the icon to use</source>
         <translation>Sélectionnez l&apos;icône à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="82"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="81"/>
         <source>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</source>
         <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="91"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="90"/>
         <source>Maximum choice count</source>
         <translation>Nombre maximum de choix</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="92"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="91"/>
         <source>The maximum number of choices that can be made</source>
         <translation>Le nombre maximum d&apos;éléments à sélectionner</translation>
     </message>
@@ -325,117 +325,117 @@
 <context>
     <name>Actions::WindowConditionDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="49"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="48"/>
         <source>Window title</source>
         <translation>Titre de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="50"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="49"/>
         <source>The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here</source>
         <translation>Le titre de la fenêtre à trouver, vous pouvez utiliser des wildcards comme * (tout caractère) ou ? (un seul caractère) ici</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="53"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="52"/>
         <source>Condition</source>
         <translation>Condition</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="54"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="53"/>
         <source>The condition to wait for</source>
         <translation>La condition à attendre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="59"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="58"/>
         <source>If true</source>
         <translation>Si vrai</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="60"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="59"/>
         <source>What to do if the condition is met</source>
         <translation>Ce qui doit être fait si la condition est vérifiée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="63"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="62"/>
         <source>If false</source>
         <translation>Si faux</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="64"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="63"/>
         <source>What to do if the condition is not met</source>
         <translation>Ce qui doit être fait si la condition n&apos;est pas vérifiée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="68"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="67"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="69"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="68"/>
         <source>The position of the found window</source>
         <translation>La position de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="72"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="71"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="73"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="72"/>
         <source>The size of the found window</source>
         <translation>La taille de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="76"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="75"/>
         <source>X-coordinate</source>
         <translation>Abscisse</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="77"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="76"/>
         <source>The x-coordinate of the found window</source>
         <translation>L&apos;abscisse de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="80"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="79"/>
         <source>Y-coordinate</source>
         <translation>Ordonnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="81"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="80"/>
         <source>The y-coordinate of the found window</source>
         <translation>L&apos;ordonnée de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="84"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="83"/>
         <source>Width</source>
         <translation>Largeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="85"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="84"/>
         <source>The width of the found window</source>
         <translation>La largeur de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="88"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="87"/>
         <source>Height</source>
         <translation>Hauteur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="89"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="88"/>
         <source>The height of the found window</source>
         <translation>La hauteur de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="92"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="91"/>
         <source>Process id</source>
         <translation>Identifiant de processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="93"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="92"/>
         <source>The process id of the found window</source>
         <translation>L&apos;identifiant de processus de la fenêtre trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="104"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="103"/>
         <source>Deprecated</source>
         <translation>Obsolète</translation>
     </message>
@@ -443,17 +443,17 @@
 <context>
     <name>Actions::WindowDefinition</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="53"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="52"/>
         <source>Window title</source>
         <translation>Titre de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="54"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="53"/>
         <source>The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here</source>
         <translation>Le titre de la fenêtre à trouver, vous pouvez utiliser des wildcards comme * (tout caractère) ou ? (un seul caractère) ici</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="57"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="56"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>
@@ -466,7 +466,7 @@
         <translation type="obsolete">Déplacer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="67"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="66"/>
         <source>Move position</source>
         <translation>Position du déplacement</translation>
     </message>
@@ -479,42 +479,42 @@
         <translation type="obsolete">Redimensionner</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="58"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="57"/>
         <source>The action to perform</source>
         <translation>L&apos;action à effectuer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="68"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="67"/>
         <source>The position where to move the window</source>
         <translation>La position où déplacer la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="77"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="76"/>
         <source>Resize width</source>
         <translation>Nouvelle largeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="78"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="77"/>
         <source>The new width of the window</source>
         <translation>La nouvelle largeur de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="83"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="82"/>
         <source>Resize height</source>
         <translation>Nouvelle hauteur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="84"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="83"/>
         <source>The new height of the window</source>
         <translation>La nouvelle hauteur de la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="89"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="88"/>
         <source>Use borders</source>
         <translation>Utiliser les bords</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="90"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="89"/>
         <source>Should the border size be taken into account when resizing the window</source>
         <translation>Les bords doivent-ils être pris en compte lors du redimensionnement de la fenêtre</translation>
     </message>
@@ -529,12 +529,12 @@ Windows OS only, under Linux resizing is done without borders</source>
 Windows seulement, sous Linux les bordures sont ignorées</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="96"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="95"/>
         <source>Cannot find window</source>
         <translation>Impossible de trouver la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="97"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="96"/>
         <source>Action failed</source>
         <translation>Action impossible</translation>
     </message>
@@ -710,12 +710,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="107"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="106"/>
         <source>Message Box</source>
         <translation>Boîte de dialogue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="110"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxdefinition.h" line="109"/>
         <source>Shows a message box</source>
         <translation>Affiche une boîte de dialogue</translation>
     </message>
@@ -728,22 +728,22 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
         <translation type="obsolete">Demande à l&apos;utilisateur d&apos;entrer du texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="97"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="96"/>
         <source>Window condition</source>
         <translation>Condition de fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="100"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditiondefinition.h" line="99"/>
         <source>Checks for the state of a window</source>
         <translation>Vérifie l&apos;état d&apos;une fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="100"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="99"/>
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="103"/>
+        <location filename="../actions/actionpackwindows/actions/windowdefinition.h" line="102"/>
         <source>Do some action on a window</source>
         <translation>Effectue une action sur une fenêtre</translation>
     </message>
@@ -812,22 +812,22 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
         <translation type="obsolete">Redimensionner</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="86"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="85"/>
         <source>Data input</source>
         <translation>Entrée de donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="89"/>
+        <location filename="../actions/actionpackwindows/actions/datainputdefinition.h" line="88"/>
         <source>Ask the user to enter some data</source>
         <translation>Demande à l&apos;utilisateur d&apos;entrer une donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="100"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="99"/>
         <source>Multi data input</source>
         <translation>Liste de sélection</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="103"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="102"/>
         <source>Ask the user to choose from a list</source>
         <translation>Demande à l&apos;utilisateur de faire un choix parmi une liste</translation>
     </message>

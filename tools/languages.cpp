@@ -29,11 +29,25 @@
 
 namespace Tools
 {
-    const QPair<QStringList, QStringList> languagesName = qMakePair(
-				QStringList()   << QStringLiteral("") << QStringLiteral("en_US") << QStringLiteral("fr_FR"),
-				QStringList()   << QT_TRANSLATE_NOOP("languagesName", QStringLiteral("System language (if available)"))
-								<< QT_TRANSLATE_NOOP("languagesName", QStringLiteral("English (US)"))
-				<< QT_TRANSLATE_NOOP("languagesName", QStringLiteral("French (France)")));
+	QPair<QStringList, QStringList> languagesName()
+	{
+		static QPair<QStringList, QStringList> languagesName = qMakePair(
+					QStringList()   << QStringLiteral("") << QStringLiteral("en_US") << QStringLiteral("fr_FR"),
+					QStringList()   << QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "System language (if available)"))
+									<< QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "English (US)"))
+					<< QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "French (France)")));
+		static bool translatedLanguagesName{false};
+
+		if(!translatedLanguagesName)
+		{
+			translatedLanguagesName = true;
+
+			for(int index = 0; index < languagesName.second.size(); ++index)
+				languagesName.second[index] = QCoreApplication::translate("languagesName", languagesName.second.at(index).toUtf8().constData());
+		}
+
+		return languagesName;
+	}
 
     QString locale()
     {
@@ -98,7 +112,7 @@ namespace Tools
     {
         int index = 0;
 
-        for(const QString &language: languagesName.first)
+		for(const QString &language: languagesName().first)
         {
             if(language == languageName)
                 return index;
@@ -106,6 +120,6 @@ namespace Tools
             ++index;
         }
 
-        return 0;
-    }
+		return 0;
+	}
 }
