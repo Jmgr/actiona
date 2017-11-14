@@ -25,8 +25,11 @@
 
 class FilterLineEdit : public QLineEdit
 {
+	Q_OBJECT
+
 public:
     FilterLineEdit(QWidget *parent = 0);
+	~FilterLineEdit();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
