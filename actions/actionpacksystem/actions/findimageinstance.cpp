@@ -32,15 +32,15 @@ namespace Actions
 	ActionTools::StringListPair FindImageInstance::sources = qMakePair(
 			QStringList() << QStringLiteral("screenshot") << QStringLiteral("window") << QStringLiteral("image"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", QStringLiteral("Screenshot"))
-			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", QStringLiteral("Window"))
-			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", QStringLiteral("Image")));
+			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Screenshot"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Window"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Image")));
     ActionTools::StringListPair FindImageInstance::methods = qMakePair(
 			QStringList() << QStringLiteral("correlationcoefficient") << QStringLiteral("crosscorrelation") << QStringLiteral("squareddifference"),
             QStringList()
-			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", QStringLiteral("Correlation Coefficient"))
-			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", QStringLiteral("Cross Correlation"))
-			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", QStringLiteral("Squared Difference")));
+			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Correlation Coefficient"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Cross Correlation"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Squared Difference")));
 
 	FindImageInstance::FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

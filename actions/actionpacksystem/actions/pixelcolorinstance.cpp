@@ -25,8 +25,8 @@ namespace Actions
 	ActionTools::StringListPair PixelColorInstance::comparisons = qMakePair(
 			QStringList() << QStringLiteral("equal") << QStringLiteral("darker") << QStringLiteral("lighter"),
 			QStringList()
-			<< QT_TRANSLATE_NOOP("PixelColorInstance::comparisons", QStringLiteral("Equal"))
-			<< QT_TRANSLATE_NOOP("PixelColorInstance::comparisons", QStringLiteral("Darker"))
-			<< QT_TRANSLATE_NOOP("PixelColorInstance::comparisons", QStringLiteral("Lighter")));
+			<< QStringLiteral(QT_TRANSLATE_NOOP("PixelColorInstance::comparisons", "Equal"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("PixelColorInstance::comparisons", "Darker"))
+			<< QStringLiteral(QT_TRANSLATE_NOOP("PixelColorInstance::comparisons", "Lighter")));
 }
 

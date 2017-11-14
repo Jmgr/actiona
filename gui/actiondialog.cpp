@@ -88,7 +88,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	//Init of tabs & group boxes
 	QStringList tabs = actionDefinition->tabs();
 	if(tabs.count() == 0)
-		tabs << QT_TRANSLATE_NOOP("ActionTabs", QStringLiteral("Parameters"));
+		tabs << QStringLiteral(QT_TRANSLATE_NOOP("ActionTabs", "Parameters"));
 
 	int tabCount = tabs.count();
 

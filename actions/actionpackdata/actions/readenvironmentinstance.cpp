@@ -30,7 +30,7 @@ namespace Actions
 {
 	ActionTools::StringListPair ReadEnvironmentVariableInstance::modes = qMakePair(
 			QStringList() << QStringLiteral("allVariables") << QStringLiteral("oneVariable"),
-			QStringList() << QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", QStringLiteral("Read all")) << QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", QStringLiteral("Read one")));
+			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", "Read all")) << QStringLiteral(QT_TRANSLATE_NOOP("ReadEnvironmentVariableInstance::modes", "Read one")));
 
 	void ReadEnvironmentVariableInstance::startExecution()
 	{
