@@ -27,8 +27,7 @@
 
 namespace Tools
 {
-    extern TOOLSSHARED_EXPORT const QPair<QStringList, QStringList> languagesName;
-
+	QPair<QStringList, QStringList> TOOLSSHARED_EXPORT languagesName();
     QString TOOLSSHARED_EXPORT locale();
     void TOOLSSHARED_EXPORT installQtTranslator(const QString &locale);
     void TOOLSSHARED_EXPORT installTranslator(const QString &componentName, const QString &locale);
