@@ -52,72 +52,72 @@
 <context>
     <name>LibExecuter::Executer</name>
     <message>
-        <location filename="../executer/executer.cpp" line="353"/>
+        <location filename="../executer/executer.cpp" line="371"/>
         <source>Invalid image resource</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="386"/>
+        <location filename="../executer/executer.cpp" line="404"/>
         <source>Invalid Begin procedure action, you have to end the previous procedure before starting another one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="398"/>
+        <location filename="../executer/executer.cpp" line="416"/>
         <source>A procedure name cannot be empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="405"/>
+        <location filename="../executer/executer.cpp" line="423"/>
         <source>A procedure with the name &quot;%1&quot; has already been declared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="416"/>
+        <location filename="../executer/executer.cpp" line="434"/>
         <source>Invalid End procedure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="438"/>
+        <location filename="../executer/executer.cpp" line="456"/>
         <source>Begin procedure action without end procedure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="452"/>
+        <location filename="../executer/executer.cpp" line="470"/>
         <source>Incorrect parameter name: &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="467"/>
+        <location filename="../executer/executer.cpp" line="485"/>
         <source>Error while evaluating parameter &quot;%1&quot;, error message: &quot;%2&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="624"/>
+        <location filename="../executer/executer.cpp" line="633"/>
         <source>Action design error: Invalid exception emitted (%1, line %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="653"/>
+        <location filename="../executer/executer.cpp" line="662"/>
         <source>Invalid exception line: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="676"/>
+        <location filename="../executer/executer.cpp" line="685"/>
         <source>Script line %1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="741"/>
+        <location filename="../executer/executer.cpp" line="750"/>
         <source>Unable to find the label named &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="755"/>
+        <location filename="../executer/executer.cpp" line="764"/>
         <source>Incorrect Script.nextLine value: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executer/executer.cpp" line="758"/>
+        <location filename="../executer/executer.cpp" line="767"/>
         <source>The action at line %1 is invalid</source>
         <translation type="unfinished"></translation>
     </message>

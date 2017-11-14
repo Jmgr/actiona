@@ -86,22 +86,22 @@
 <context>
     <name>ActionTools::ActionFactory</name>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="145"/>
+        <location filename="../actiontools/actionfactory.cpp" line="149"/>
         <source>%1: &quot;%2&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="152"/>
+        <location filename="../actiontools/actionfactory.cpp" line="156"/>
         <source>%1: invalid definition version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="164"/>
+        <location filename="../actiontools/actionfactory.cpp" line="168"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; already loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actionfactory.cpp" line="173"/>
+        <location filename="../actiontools/actionfactory.cpp" line="177"/>
         <source>%1: &lt;b&gt;%2&lt;/b&gt; cannot be loaded:&lt;ul&gt;&lt;li&gt;%3&lt;/ul&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -139,40 +139,40 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="513"/>
-        <location filename="../actiontools/actioninstance.cpp" line="521"/>
+        <location filename="../actiontools/actioninstance.cpp" line="522"/>
+        <location filename="../actiontools/actioninstance.cpp" line="530"/>
         <source>&quot;%1&quot; is not a valid position.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="618"/>
-        <location filename="../actiontools/actioninstance.cpp" line="626"/>
+        <location filename="../actiontools/actioninstance.cpp" line="627"/>
+        <location filename="../actiontools/actioninstance.cpp" line="635"/>
         <source>&quot;%1&quot; is not a valid color.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="675"/>
+        <location filename="../actiontools/actioninstance.cpp" line="684"/>
         <source>Invalid %1 value : %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="837"/>
+        <location filename="../actiontools/actioninstance.cpp" line="838"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="870"/>
+        <location filename="../actiontools/actioninstance.cpp" line="871"/>
         <source>Invalid parameter. Unable to evaluate string</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../actiontools/actioninstance.cpp" line="455"/>
-        <location filename="../actiontools/actioninstance.h" line="259"/>
+        <location filename="../actiontools/actioninstance.h" line="258"/>
         <source>Please choose a value for this field.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="272"/>
+        <location filename="../actiontools/actioninstance.h" line="271"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -180,19 +180,17 @@
 <context>
     <name>ActionTools::ChoosePositionPushButton</name>
     <message>
-        <location filename="../actiontools/choosepositionpushbutton.cpp" line="80"/>
+        <location filename="../actiontools/choosepositionpushbutton.cpp" line="69"/>
         <source>Target a position by clicking this button, moving the cursor to the desired position and releasing the mouse button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/choosepositionpushbutton.cpp" line="173"/>
-        <location filename="../actiontools/choosepositionpushbutton.cpp" line="180"/>
+        <location filename="../actiontools/choosepositionpushbutton.cpp" line="146"/>
         <source>Choose a window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/choosepositionpushbutton.cpp" line="173"/>
-        <location filename="../actiontools/choosepositionpushbutton.cpp" line="180"/>
+        <location filename="../actiontools/choosepositionpushbutton.cpp" line="146"/>
         <source>Unable to grab the pointer.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -200,19 +198,17 @@
 <context>
     <name>ActionTools::ChooseWindowPushButton</name>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="103"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="92"/>
         <source>Target a window by clicking this button, moving the cursor to the wanted window and releasing the mouse button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="301"/>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="308"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="275"/>
         <source>Choose a window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="301"/>
-        <location filename="../actiontools/choosewindowpushbutton.cpp" line="308"/>
+        <location filename="../actiontools/choosewindowpushbutton.cpp" line="275"/>
         <source>Unable to grab the pointer.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -292,44 +288,44 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="270"/>
+        <location filename="../actiontools/codelineedit.cpp" line="268"/>
         <source>Insert variable/resource</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="270"/>
+        <location filename="../actiontools/codelineedit.cpp" line="268"/>
         <source>Inserting a variable or a resource will replace the current parameter value.
 Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="308"/>
-        <location filename="../actiontools/codelineedit.cpp" line="337"/>
+        <location filename="../actiontools/codelineedit.cpp" line="306"/>
+        <location filename="../actiontools/codelineedit.cpp" line="335"/>
         <source>Cannot insert in a multiline parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="317"/>
+        <location filename="../actiontools/codelineedit.cpp" line="315"/>
         <source>Insert variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="321"/>
+        <location filename="../actiontools/codelineedit.cpp" line="319"/>
         <source>No variables to insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="345"/>
+        <location filename="../actiontools/codelineedit.cpp" line="343"/>
         <source>Insert resource</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="348"/>
+        <location filename="../actiontools/codelineedit.cpp" line="346"/>
         <source>No resources to insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="462"/>
+        <location filename="../actiontools/codelineedit.cpp" line="460"/>
         <source>Multiline, double-click to edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -350,12 +346,12 @@ Are you sure?</source>
 <context>
     <name>ActionTools::ConsoleWidget</name>
     <message>
-        <location filename="../actiontools/consolewidget.cpp" line="129"/>
+        <location filename="../actiontools/consolewidget.cpp" line="123"/>
         <source>Execution started at %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="141"/>
+        <location filename="../actiontools/consolewidget.cpp" line="135"/>
         <source>%n day(s) </source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -363,7 +359,7 @@ Are you sure?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="151"/>
+        <location filename="../actiontools/consolewidget.cpp" line="145"/>
         <source>%n hour(s) </source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -371,7 +367,7 @@ Are you sure?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="153"/>
+        <location filename="../actiontools/consolewidget.cpp" line="147"/>
         <source>%n minute(s) </source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -379,7 +375,7 @@ Are you sure?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="155"/>
+        <location filename="../actiontools/consolewidget.cpp" line="149"/>
         <source>%n second(s) </source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -387,7 +383,7 @@ Are you sure?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../actiontools/consolewidget.cpp" line="160"/>
+        <location filename="../actiontools/consolewidget.cpp" line="154"/>
         <source>%n millisecond(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -395,42 +391,63 @@ Are you sure?</source>
         </translation>
     </message>
     <message>
-        <location filename="../actiontools/consolewidget.cpp" line="162"/>
+        <location filename="../actiontools/consolewidget.cpp" line="156"/>
         <source>Execution ended at %1
 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/consolewidget.cpp" line="236"/>
+        <location filename="../actiontools/consolewidget.cpp" line="230"/>
         <source>
 Double-click to show</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
+    <name>ActionTools::IfActionParameterDefinition</name>
+    <message>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="69"/>
+        <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActionTools::LineComboBox</name>
+    <message>
+        <location filename="../actiontools/linecombobox.cpp" line="37"/>
+        <source>Labels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../actiontools/linecombobox.cpp" line="43"/>
+        <source>Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ActionTools::OpenCVAlgorithms</name>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="58"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="54"/>
         <source>FindSubImage is already running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="130"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="126"/>
         <source>Source images must be larger than target image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="138"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="134"/>
         <source>Source images and target image must have same depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="146"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="142"/>
         <source>Source images and target image must have same number of channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/opencvalgorithms.cpp" line="329"/>
+        <location filename="../actiontools/opencvalgorithms.cpp" line="325"/>
         <source>OpenCV exception: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -503,72 +520,72 @@ Double-click to show</source>
 <context>
     <name>ActionTools::Script</name>
     <message>
-        <location filename="../actiontools/script.cpp" line="200"/>
+        <location filename="../actiontools/script.cpp" line="204"/>
         <source>Writing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="208"/>
+        <location filename="../actiontools/script.cpp" line="212"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="210"/>
+        <location filename="../actiontools/script.cpp" line="214"/>
         <source>GNU/Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="213"/>
+        <location filename="../actiontools/script.cpp" line="217"/>
         <source>Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="216"/>
+        <location filename="../actiontools/script.cpp" line="220"/>
         <source>Mac</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="247"/>
+        <location filename="../actiontools/script.cpp" line="251"/>
         <source>Writing parameters...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="267"/>
+        <location filename="../actiontools/script.cpp" line="271"/>
         <source>Writing resources...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="288"/>
+        <location filename="../actiontools/script.cpp" line="292"/>
         <source>Writing actions...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="363"/>
+        <location filename="../actiontools/script.cpp" line="367"/>
         <source>Reading schema...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="369"/>
+        <location filename="../actiontools/script.cpp" line="373"/>
         <source>Listing file content...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="441"/>
+        <location filename="../actiontools/script.cpp" line="445"/>
         <source>Reading content...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="496"/>
+        <location filename="../actiontools/script.cpp" line="509"/>
         <source>Reading parameters...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="516"/>
+        <location filename="../actiontools/script.cpp" line="529"/>
         <source>Reading resources...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="565"/>
+        <location filename="../actiontools/script.cpp" line="578"/>
         <source>Reading actions...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -576,16 +593,14 @@ Double-click to show</source>
 <context>
     <name>ActionTools::TargetWindow</name>
     <message>
-        <location filename="../actiontools/targetwindow.cpp" line="178"/>
-        <location filename="../actiontools/targetwindow.cpp" line="185"/>
-        <location filename="../actiontools/targetwindow.cpp" line="194"/>
+        <location filename="../actiontools/targetwindow.cpp" line="162"/>
+        <location filename="../actiontools/targetwindow.cpp" line="170"/>
         <source>Choose a screen rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/targetwindow.cpp" line="178"/>
-        <location filename="../actiontools/targetwindow.cpp" line="185"/>
-        <location filename="../actiontools/targetwindow.cpp" line="194"/>
+        <location filename="../actiontools/targetwindow.cpp" line="162"/>
+        <location filename="../actiontools/targetwindow.cpp" line="170"/>
         <source>Unable to grab the pointer.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -636,72 +651,72 @@ Double-click to show</source>
 <context>
     <name>Code::Image</name>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="68"/>
-        <location filename="../actiontools/code/image.cpp" line="294"/>
+        <location filename="../actiontools/code/image.cpp" line="65"/>
+        <location filename="../actiontools/code/image.cpp" line="285"/>
         <source>Unable to load image from file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="71"/>
-        <location filename="../actiontools/code/image.cpp" line="501"/>
-        <location filename="../actiontools/code/image.cpp" line="557"/>
-        <location filename="../actiontools/code/image.cpp" line="593"/>
-        <location filename="../actiontools/code/image.cpp" line="630"/>
+        <location filename="../actiontools/code/image.cpp" line="68"/>
+        <location filename="../actiontools/code/image.cpp" line="492"/>
+        <location filename="../actiontools/code/image.cpp" line="548"/>
+        <location filename="../actiontools/code/image.cpp" line="584"/>
+        <location filename="../actiontools/code/image.cpp" line="621"/>
         <source>Incorrect parameter type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="75"/>
-        <location filename="../actiontools/code/image.cpp" line="122"/>
+        <location filename="../actiontools/code/image.cpp" line="72"/>
+        <location filename="../actiontools/code/image.cpp" line="115"/>
         <source>Incorrect parameter count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="101"/>
+        <location filename="../actiontools/code/image.cpp" line="98"/>
         <source>Invalid window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="131"/>
+        <location filename="../actiontools/code/image.cpp" line="124"/>
         <source>Invalid screen index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="266"/>
+        <location filename="../actiontools/code/image.cpp" line="257"/>
         <source>Unable to set the image data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="283"/>
+        <location filename="../actiontools/code/image.cpp" line="274"/>
         <source>Unable to get the image data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="305"/>
+        <location filename="../actiontools/code/image.cpp" line="296"/>
         <source>Unable to save image to file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="317"/>
+        <location filename="../actiontools/code/image.cpp" line="308"/>
         <source>Unable to apply filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="354"/>
+        <location filename="../actiontools/code/image.cpp" line="345"/>
         <source>Cannot set filter option %1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="484"/>
-        <location filename="../actiontools/code/image.cpp" line="527"/>
-        <location filename="../actiontools/code/image.cpp" line="583"/>
-        <location filename="../actiontools/code/image.cpp" line="620"/>
+        <location filename="../actiontools/code/image.cpp" line="475"/>
+        <location filename="../actiontools/code/image.cpp" line="518"/>
+        <location filename="../actiontools/code/image.cpp" line="574"/>
+        <location filename="../actiontools/code/image.cpp" line="611"/>
         <source>Error while searching for a sub-image: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="568"/>
-        <location filename="../actiontools/code/image.cpp" line="604"/>
+        <location filename="../actiontools/code/image.cpp" line="559"/>
+        <location filename="../actiontools/code/image.cpp" line="595"/>
         <source>Parameter &quot;callback&quot; is not a function</source>
         <translation type="unfinished"></translation>
     </message>
@@ -948,12 +963,12 @@ Double-click to show</source>
     <name>IfActionParameterDefinition::actions</name>
     <message>
         <location filename="../actiontools/ifactionparameterdefinition.cpp" line="38"/>
-        <source>Do nothing</source>
+        <source>Go to next action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../actiontools/ifactionparameterdefinition.cpp" line="39"/>
-        <source>Goto line</source>
+        <source>Go to line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1049,163 +1064,148 @@ Double-click to show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.h" line="52"/>
+        <location filename="../actiontools/actiondefinition.h" line="51"/>
         <source>No description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.h" line="57"/>
+        <location filename="../actiontools/actiondefinition.h" line="56"/>
         <source>The Actiona Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="69"/>
-        <source>Wait</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/keyinput.cpp" line="47"/>
+        <location filename="../actiontools/keyinput.cpp" line="45"/>
         <source>Left Shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="47"/>
+        <location filename="../actiontools/keyinput.cpp" line="45"/>
         <source>Right Shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="47"/>
+        <location filename="../actiontools/keyinput.cpp" line="45"/>
         <source>Left Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="47"/>
+        <location filename="../actiontools/keyinput.cpp" line="45"/>
         <source>Right Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="48"/>
+        <location filename="../actiontools/keyinput.cpp" line="46"/>
         <source>Left Alt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="48"/>
+        <location filename="../actiontools/keyinput.cpp" line="46"/>
         <source>Right Alt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="50"/>
+        <location filename="../actiontools/keyinput.cpp" line="48"/>
         <source>Left Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="50"/>
+        <location filename="../actiontools/keyinput.cpp" line="48"/>
         <source>Right Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="52"/>
+        <location filename="../actiontools/keyinput.cpp" line="50"/>
         <source>Left Meta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="52"/>
+        <location filename="../actiontools/keyinput.cpp" line="50"/>
         <source>Right Meta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="52"/>
         <source>Alt Gr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="52"/>
         <source>Numpad 0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="52"/>
         <source>Numpad 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="52"/>
         <source>Numpad 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="52"/>
         <source>Numpad 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="52"/>
         <source>Numpad 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="53"/>
         <source>Numpad 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="53"/>
         <source>Numpad 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="53"/>
         <source>Numpad 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="53"/>
         <source>Numpad 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="55"/>
+        <location filename="../actiontools/keyinput.cpp" line="53"/>
         <source>Numpad 9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad *</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad +</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad Separator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad -</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad .</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="56"/>
+        <location filename="../actiontools/keyinput.cpp" line="54"/>
         <source>Numpad /</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/linecombobox.cpp" line="37"/>
-        <source>Labels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/linecombobox.cpp" line="43"/>
-        <source>Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">

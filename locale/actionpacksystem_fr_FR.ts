@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackSystem</name>
     <message>
-        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="72"/>
+        <location filename="../actions/actionpacksystem/actionpacksystem.h" line="69"/>
         <source>Actions dealing with the operating system</source>
         <translation>Actions en rapport avec le système d&apos;exploitation</translation>
     </message>
@@ -12,92 +12,92 @@
 <context>
     <name>Actions::CommandDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="46"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="45"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="47"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="46"/>
         <source>The command to execute</source>
         <translation>La commande à exécuter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="50"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="49"/>
         <source>Parameters</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="51"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="50"/>
         <source>The command&apos;s parameters</source>
         <translation>Les paramètres de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="53"/>
         <source>Working directory</source>
         <translation>Dossier de travail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="54"/>
         <source>The command&apos;s working directory</source>
         <translation>Le dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="56"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="55"/>
         <source>Command working directory</source>
         <translation>Dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="60"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="59"/>
         <source>Exit code</source>
         <translation>Code de sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="61"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="60"/>
         <source>The command&apos;s exit code</source>
         <translation>Le code de sortie de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="64"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="63"/>
         <source>Process id</source>
         <translation>Identifiant de processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="65"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="64"/>
         <source>The command&apos;s process id</source>
         <translation>L&apos;identifiant de processus de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="68"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="67"/>
         <source>Output</source>
         <translation>Sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="69"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="68"/>
         <source>The command&apos;s output</source>
         <translation>La sortie de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="72"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="71"/>
         <source>Error output</source>
         <translation>Sortie d&apos;erreur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="73"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="72"/>
         <source>The command&apos;s error output</source>
         <translation>La sortie d&apos;erreur de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="76"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="75"/>
         <source>Exit status</source>
         <translation>Statut de sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="77"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="76"/>
         <source>The command&apos;s exit status</source>
         <translation>Le statut de sortie de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="80"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="79"/>
         <source>Failed to start the command</source>
         <translation>Impossible d&apos;exécuter la commande</translation>
     </message>
@@ -105,7 +105,7 @@
 <context>
     <name>Actions::CommandInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commandinstance.h" line="114"/>
+        <location filename="../actions/actionpacksystem/actions/commandinstance.h" line="113"/>
         <source>Failed to start the command. %1</source>
         <translation>Impossible d&apos;exécuter la commande. %1</translation>
     </message>
@@ -113,52 +113,52 @@
 <context>
     <name>Actions::DetachedCommandDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="46"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="45"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="47"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="46"/>
         <source>The command to execute</source>
         <translation>La commande à exécuter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="50"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="49"/>
         <source>Parameters</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="51"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="50"/>
         <source>The command&apos;s parameters</source>
         <translation>Les paramètres de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="53"/>
         <source>Working directory</source>
         <translation>Dossier de travail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="54"/>
         <source>The command&apos;s working directory</source>
         <translation>Le dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="56"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="55"/>
         <source>Command working directory</source>
         <translation>Dossier de travail de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="60"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="59"/>
         <source>Process id</source>
         <translation>Identifiant de processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="61"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="60"/>
         <source>The command&apos;s process id</source>
         <translation>L&apos;identifiant de processus de la commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="64"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="63"/>
         <source>Unable to execute the detached command</source>
         <translation>Impossible d&apos;exécuter la commande détachée</translation>
     </message>
@@ -166,7 +166,7 @@
 <context>
     <name>Actions::DetachedCommandInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommandinstance.h" line="66"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommandinstance.h" line="65"/>
         <source>Unable to start the detached command</source>
         <translation>Impossible d&apos;exécuter la commande détachée</translation>
     </message>
@@ -174,142 +174,142 @@
 <context>
     <name>Actions::FindImageDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="57"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="56"/>
         <source>Source</source>
         <translation>Source</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="58"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="57"/>
         <source>The source of the image to search in</source>
         <translation>La source de l&apos;image où chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="67"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="66"/>
         <source>Window name</source>
         <translation>Titre de fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="68"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="67"/>
         <source>The title of the window to search in, you can use wildcards like * (any number of characters) or ? (one character) here</source>
         <translation>Le titre de la fenêtre où chercher, vous pouvez utiliser des wildcards ici comme * (n&apos;importe quel nombre de caractères) ou ? (un caractère)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="81"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="80"/>
         <source>Image to search in</source>
         <translation>Image où chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="82"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="81"/>
         <source>The image to search in</source>
         <translation>L&apos;image où chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="84"/>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="93"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="83"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="92"/>
         <source>Choose an image file</source>
         <translation>Choisissez un fichier image</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="85"/>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="94"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="84"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="93"/>
         <source>Image files (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)
 All files (*.*)</source>
         <translation>Images (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)
 Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="90"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="89"/>
         <source>Image to find</source>
         <translation>Image à chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="91"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="90"/>
         <source>The image to search for</source>
         <translation>l&apos;image à chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="97"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="96"/>
         <source>If found</source>
         <translation>Si trouvé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="98"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="97"/>
         <source>What to do if the image is found</source>
         <translation>Ce qui doit être fait si l&apos;image a été trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="102"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="101"/>
         <source>If not found</source>
         <translation>Si non trouvé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="103"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="102"/>
         <source>What to do if the image is not found</source>
         <translation>Ce qui doit être fait si l&apos;image n&apos;a pas été trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="107"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="106"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="108"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="107"/>
         <source>The name of the variable where to store the coordinates of the center of the found image</source>
         <translation>Le nom de la variable où stocker les coordonnées du centre de l&apos;image trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="124"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="123"/>
         <source>Maximum amount of images to find</source>
         <translation>Nombre maximum d&apos;images à chercher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="125"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="124"/>
         <source>The maximum amount of images to find
 Setting this parameter higher will increase the search duration</source>
         <translation>Le nombre maximum d&apos;images à chercher
 Choisir une valeur élevée pour ce paramètre va augmenter la durée de la recherche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="131"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="130"/>
         <source>Downsampling</source>
         <translation>Sous-échantillonnage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="132"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="131"/>
         <source>The downsampling value to use
 Downsampling is used to accelerate the search when using large images</source>
         <translation>La valeur de sous-échantillonnage à utiliser
 Le sous-échantillonnage sert à accélérer la recherche lors d&apos;une recherche sur de grandes images</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="71"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="70"/>
         <source>Window relative position</source>
         <translation>Position relative à la fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="72"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="71"/>
         <source>The position is relative to the window
 If this parameter is set to false (not checked) then the position is absolute</source>
         <translation>La position est-elle relative à la fenêtre
 Si ce paramètre est faux (non coché) alors la position est absolue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="111"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="110"/>
         <source>Method</source>
         <translation>Méthode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="112"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="111"/>
         <source>The matching method to use</source>
         <translation>La méthode de recherche à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="117"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="116"/>
         <source>Confidence minimum</source>
         <translation>Confiance minimale</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="118"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="117"/>
         <source>The minimum confidence percentage required to select a possible matching image</source>
         <translation>Le pourcentage minimum de confiance nécessaire pour sélectionner un résultat possible</translation>
     </message>
@@ -336,43 +336,43 @@ Une pyramide est une subdivision de l&apos;image utilisée pour accélérer la r
 Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&apos;image source</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="138"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="137"/>
         <source>Search expansion</source>
         <translation>Expansion de la recherche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="139"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="138"/>
         <source>The number of pixels to shift when searching for another matching image</source>
         <translation>Le décalage en pixels à effectuer lors de la recherche d&apos;une autre solution possible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="145"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="144"/>
         <source>Delay between two searches when waiting</source>
         <translation>Délai entre deux recherches lors d&apos;une attente</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="146"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="145"/>
         <source>The delay between two searches</source>
         <translation>Le délai entre deux recherches lors d&apos;une attente</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="150"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="149"/>
         <source> ms</source>
         <comment>milliseconds</comment>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="153"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="152"/>
         <source>Confidence</source>
         <translation>Confiance</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="154"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="153"/>
         <source>The name of the variable where to store the confidence value found image</source>
         <translation>Le nom de la variable où stocker la confiance en l&apos;image trouvée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="157"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="156"/>
         <source>Error while searching</source>
         <translation>Erreur lors de la recherche</translation>
     </message>
@@ -451,32 +451,32 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Actions::KillProcessDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="50"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="49"/>
         <source>Process id</source>
         <translation>Identifiant de processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="51"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="50"/>
         <source>The process id of the process to kill</source>
         <translation>L&apos;identifiant de processus du processus à fermer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="53"/>
         <source>Kill mode</source>
         <translation>Mode de fermeture</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="54"/>
         <source>The kill mode</source>
         <translation>Le mode de fermeture</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="60"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="59"/>
         <source>Timeout</source>
         <translation>Délai</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="61"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="60"/>
         <source>The timeout before doing a forceful kill</source>
         <translation>Délai avant de fermer de façon brutale</translation>
     </message>
@@ -484,47 +484,47 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Actions::NotifyDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="48"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="47"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="49"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="48"/>
         <source>The notification title</source>
         <translation>Titre de la notification</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="52"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="51"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="53"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="52"/>
         <source>The notification text</source>
         <translation>Texte de la notification</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="56"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="55"/>
         <source>Timeout</source>
         <translation>Délai</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="57"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="56"/>
         <source>The notification timeout</source>
         <translation>Délai de la notification</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="63"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="62"/>
         <source>Icon</source>
         <translation>Icône</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="64"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="63"/>
         <source>The notification icon</source>
         <translation>L&apos;icône de la notification</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="67"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="66"/>
         <source>Show notification failure</source>
         <translation>Erreur lors de l&apos;affichage de la notification</translation>
     </message>
@@ -548,17 +548,17 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Le schéma de l&apos;URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="44"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="43"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="45"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="44"/>
         <source>The url to open</source>
         <translation>L&apos;URL à ouvrir</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="48"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="47"/>
         <source>Failed to open URL</source>
         <translation>Impossible d&apos;ouvrir l&apos;URL</translation>
     </message>
@@ -566,8 +566,8 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Actions::OpenURLInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="59"/>
-        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="68"/>
+        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="58"/>
+        <location filename="../actions/actionpacksystem/actions/openurlinstance.h" line="67"/>
         <source>Failed to open URL</source>
         <translation>Impossible d&apos;ouvrir l&apos;URL</translation>
     </message>
@@ -575,92 +575,92 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Actions::PixelColorDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="51"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="50"/>
         <source>Pixel</source>
         <translation>Pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="52"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="51"/>
         <source>The pixel position and color to check</source>
         <translation>La position et la couleur du pixel à vérifier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="54"/>
         <source>Comparison</source>
         <translation>Comparaison</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="56"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="55"/>
         <source>The comparison</source>
         <translation>La comparaison</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="61"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="60"/>
         <source>If true</source>
         <translation>Si vrai</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="62"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="61"/>
         <source>What to to if the pixel comparison is true</source>
         <translation>Ce qui doit être fait si la comparaison de pixel est vraie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="65"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="64"/>
         <source>If false</source>
         <translation>Si faux</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="66"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="65"/>
         <source>What to to if the pixel comparison is false</source>
         <translation>Ce qui doit être fait si la comparaison de pixel est fausse</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="70"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="69"/>
         <source>Pixel color variable</source>
         <translation>Variable de la couleur de pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="71"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="70"/>
         <source>Variable name where to store the pixel color</source>
         <translation>Nom de la variable où stocker la couleur du pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="74"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="73"/>
         <source>Red tolerance</source>
         <translation>Tolérance du rouge</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="75"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="74"/>
         <source>The tolerance percentage for the red color component</source>
         <translation>Le pourcentage de tolérance pour le composant rouge</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="81"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="80"/>
         <source>Green tolerance</source>
         <translation>Tolérance du vert</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="82"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="81"/>
         <source>The tolerance percentage for the green color component</source>
         <translation>Le pourcentage de tolérance pour le composant vert</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="88"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="87"/>
         <source>Blue tolerance</source>
         <translation>Tolérance du bleu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="89"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="88"/>
         <source>The tolerance percentage for the blue color component</source>
         <translation>Le pourcentage de tolérance pour le composant bleu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="95"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="94"/>
         <source>Offset</source>
         <translation>Décalage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="96"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="95"/>
         <source>The offset to apply to the pixel position</source>
         <translation>Le décalage à appliquer à la position du pixel</translation>
     </message>
@@ -672,69 +672,69 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Fichier/Url</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="48"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="47"/>
         <source>Sound file/URL</source>
         <translation>Fichier son/URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="49"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="48"/>
         <source>The sound file or URL to play</source>
         <translation>Le fichier son ou l&apos;URL à jouer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="51"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="50"/>
         <source>Choose the sound file</source>
         <translation>Choisissez le fichier son</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="52"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="51"/>
         <source>All files (*.*)</source>
         <translation>Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="55"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="54"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="56"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="55"/>
         <source>Is the sound resource an URL</source>
         <translation>La ressource est-elle une URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="60"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="59"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="61"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="60"/>
         <source>The volume to play at</source>
         <translation>Le volume à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="64"/>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="82"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="63"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="81"/>
         <source>%</source>
         <comment>percent</comment>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="68"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="67"/>
         <source>Wait until played</source>
         <translation>Attendre fin de lecture</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="69"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="68"/>
         <source>Should the action end only when the sound has finished playing</source>
         <translation>Attendre la fin de la lecture avant de terminer l&apos;action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="73"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="72"/>
         <source>Looping</source>
         <translation>Jouer en boucle</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="74"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="73"/>
         <source>Should the sound loop</source>
         <translation>Jouer en son en boucle</translation>
     </message>
@@ -747,12 +747,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Le son est distant</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="78"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="77"/>
         <source>Playback rate</source>
         <translation>Vitesse de lecture</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="79"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="78"/>
         <source>The playback rate</source>
         <translation>La vitesse de lecture</translation>
     </message>
@@ -773,12 +773,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Actions::SystemDefinition</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="49"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="48"/>
         <source>Operation</source>
         <translation>Opération</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="50"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="49"/>
         <source>The operation to execute</source>
         <translation>L&apos;opération à exécuter</translation>
     </message>
@@ -787,12 +787,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="64"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="63"/>
         <source>Force</source>
         <translation>Forcer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="65"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="64"/>
         <source>Should the operation be forced</source>
         <translation>L&apos;opération doit-elle être forcée</translation>
     </message>
@@ -809,7 +809,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Pas assez de droits</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="71"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="70"/>
         <source>Not available</source>
         <translation>Non disponible</translation>
     </message>
@@ -982,42 +982,42 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Code::System</name>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="103"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="77"/>
         <source>Cannot open the url</source>
         <translation>Impossible d&apos;ouvrir l&apos;url</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="337"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="259"/>
         <source>Logout failed</source>
         <translation>Échec de la déconnexion</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="345"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="267"/>
         <source>Restart failed</source>
         <translation>Échec du redémarrage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="353"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="275"/>
         <source>Shutdown failed</source>
         <translation>Échec de l&apos;extinction</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="361"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="283"/>
         <source>Suspend failed</source>
         <translation>Échec de la mise en veille</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="369"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="291"/>
         <source>Hibernate failed</source>
         <translation>Échec de la mise en hibernation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="377"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="299"/>
         <source>Lock screen failed</source>
         <translation>Échec du verrouillage de l&apos;écran</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/code/system.cpp" line="385"/>
+        <location filename="../actions/actionpacksystem/code/system.cpp" line="307"/>
         <source>Start screen saver failed</source>
         <translation>Échec du démarrage de l&apos;écran de veille</translation>
     </message>
@@ -1094,42 +1094,42 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="83"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="82"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="86"/>
+        <location filename="../actions/actionpacksystem/actions/commanddefinition.h" line="85"/>
         <source>Executes a command</source>
         <translation>Exécute une commande</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="68"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="67"/>
         <source>Kill process</source>
         <translation>Fermer processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="71"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessdefinition.h" line="70"/>
         <source>Kills a process</source>
         <translation>Ferme un processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="70"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="69"/>
         <source>Notify</source>
         <translation>Notification</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="73"/>
+        <location filename="../actions/actionpacksystem/actions/notifydefinition.h" line="72"/>
         <source>Shows a message using the notify system</source>
         <translation>Affiche un message via le système de notifications</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="100"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="99"/>
         <source>Pixel color</source>
         <translation>Couleur de pixel</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="103"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolordefinition.h" line="102"/>
         <source>Check a pixel color on the screen</source>
         <translation>Vérifie la couleur d&apos;un pixel sur l&apos;écran</translation>
     </message>
@@ -1158,12 +1158,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Plus clair</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="74"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="73"/>
         <source>System</source>
         <translation>Système</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="77"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="76"/>
         <source>Restart, stop the computer or logout the current user</source>
         <translation>Redémarre, arrête l&apos;ordinateur ou déconnecte l&apos;utilisateur courant</translation>
     </message>
@@ -1192,42 +1192,42 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Forcer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="51"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="50"/>
         <source>Open URL</source>
         <translation>Ouvrir URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/openurldefinition.h" line="53"/>
         <source>Opens an URL</source>
         <translation>Ouvre une URL</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="67"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="66"/>
         <source>Detached command</source>
         <translation>Commande détachée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="70"/>
+        <location filename="../actions/actionpacksystem/actions/detachedcommanddefinition.h" line="69"/>
         <source>Executes a detached command</source>
         <translation>Exécute une commande détachée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="87"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="86"/>
         <source>Play sound</source>
         <translation>Lire son</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="90"/>
+        <location filename="../actions/actionpacksystem/actions/playsounddefinition.h" line="89"/>
         <source>Plays a sound</source>
         <translation>Lit un son</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="160"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="159"/>
         <source>Find image</source>
         <translation>Trouver image</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="163"/>
+        <location filename="../actions/actionpacksystem/actions/findimagedefinition.h" line="162"/>
         <source>Finds an image on the screen, on a window or on another image</source>
         <translation>Trouve une image sur l&apos;écran, dans une fenêtre ou dans une autre image</translation>
     </message>
