@@ -60,6 +60,8 @@ namespace Actions
 		void canceled();
 
 	private:
+		void endExecution();
+
 		QInputDialog *mInputDialog;
 		QString mVariable;
 		DataType mDataType;

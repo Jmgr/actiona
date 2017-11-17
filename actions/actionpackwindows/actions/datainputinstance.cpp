@@ -167,35 +167,35 @@ namespace Actions
 	{
         setVariable(mVariable, value);
 
-		mInputDialog->disconnect();
-		mInputDialog->close();
-
-		emit executionEnded();
+		endExecution();
 	}
 
 	void DataInputInstance::dataEntered(double value)
 	{
         setVariable(mVariable, value);
 
-		mInputDialog->disconnect();
-		mInputDialog->close();
-
-		emit executionEnded();
+		endExecution();
 	}
 
 	void DataInputInstance::dataEntered(const QString &value)
 	{
         setVariable(mVariable, value);
 
-		mInputDialog->disconnect();
-		mInputDialog->close();
-
-		emit executionEnded();
+		endExecution();
 	}
 
 	void DataInputInstance::canceled()
 	{
 		//TODO: add an exception to trigger when canceled
-		dataEntered(QString());
+
+		endExecution();
+	}
+
+	void DataInputInstance::endExecution()
+	{
+		mInputDialog->disconnect();
+		mInputDialog->close();
+
+		emit executionEnded();
 	}
 }
