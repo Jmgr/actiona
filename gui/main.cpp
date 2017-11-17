@@ -70,8 +70,8 @@ static void cleanup()
 
 int main(int argc, char **argv)
 {
-#if (QT_VERSION < 0x050200)
-        #error("You need Qt 5.2.0 or later to compile Actiona");
+#if (QT_VERSION < 0x050400)
+		#error("You need Qt 5.4.0 or later to compile Actiona");
 #endif
 
 #ifdef ACT_PROFILE
