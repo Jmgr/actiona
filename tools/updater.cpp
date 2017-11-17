@@ -27,6 +27,7 @@
 #include <QDate>
 #include <QTimer>
 #include <QUrlQuery>
+#include <QSysInfo>
 
 namespace Tools
 {
@@ -97,6 +98,8 @@ namespace Tools
             break;
         }
 		urlQuery.addQueryItem(QStringLiteral("osName"), operatingSystem);
+		urlQuery.addQueryItem(QStringLiteral("osVariant"), QSysInfo::productType());
+		urlQuery.addQueryItem(QStringLiteral("osVersion"), QSysInfo::productVersion());
 		urlQuery.addQueryItem(QStringLiteral("osBits"), QString::number(operatingSystemBits));
 		urlQuery.addQueryItem(QStringLiteral("language"), language);
 		urlQuery.addQueryItem(QStringLiteral("program"), program);

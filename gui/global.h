@@ -35,7 +35,6 @@ namespace Global
 	const int				UPDATE_TIMEOUT =	5000;
 	const QString			CONNECTIVITY_URL =	QStringLiteral("https://actiona.tools/");
 
-	QString currentOS();
 	QString currentOSType();
 	int currentOSBits();
 }
