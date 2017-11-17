@@ -25,6 +25,7 @@
 #include "listparameterdefinition.h"
 #include "numberparameterdefinition.h"
 #include "positionparameterdefinition.h"
+#include "booleanparameterdefinition.h"
 #include "groupdefinition.h"
 
 #include <limits>
@@ -63,6 +64,10 @@ namespace Actions
 			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("position"), tr("Position")), this);
 			position->setTooltip(tr("The screen position where to simulate a mouse click"));
 			addElement(position);
+
+			ActionTools::BooleanParameterDefinition *restoreCursorPosition = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("restoreCursorPosition"), tr("Restore cursor position")), this);
+			restoreCursorPosition->setTooltip(tr("Restore the cursor position after the action is finished"));
+			addElement(restoreCursorPosition);
 	
 			ActionTools::GroupDefinition *clickGroup = new ActionTools::GroupDefinition(this);
 			clickGroup->setMasterList(action);

@@ -43,6 +43,7 @@ namespace Actions
 		QPoint position = evaluatePoint(ok, QStringLiteral("position"), QStringLiteral("value"), &isPositionEmpty);
 		QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
 		int amount = evaluateInteger(ok, QStringLiteral("amount"));
+		bool restoreCursorPosition = evaluateBoolean(ok, QStringLiteral("restoreCursorPosition"));
 	
 		if(!ok)
 			return;
@@ -56,6 +57,8 @@ namespace Actions
 			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid click amount"));
 			return;
 		}
+
+		QPoint previousPosition = mMouseDevice.cursorPosition();
 		
         if(!isPositionEmpty)
         {
@@ -81,6 +84,11 @@ namespace Actions
 					return;
 				}
 			}
+		}
+
+		if(!isPositionEmpty && restoreCursorPosition)
+		{
+			mMouseDevice.setCursorPosition(previousPosition);
 		}
 	
 		QTimer::singleShot(1, this, SIGNAL(executionEnded()));
