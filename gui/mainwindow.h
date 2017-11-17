@@ -57,7 +57,7 @@ class QFile;
 class QProgressDialog;
 class QUndoGroup;
 class QStandardItemModel;
-class QxtCommandOptions;
+class QCommandLineParser;
 class QNetworkAccessManager;
 class ActionDialog;
 class QModelIndex;
@@ -75,7 +75,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale);
+	MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale);
 	~MainWindow();
 
 signals:
@@ -234,7 +234,7 @@ private:
 	QPoint mPreviousWindowPosition;
 	QStandardItemModel *mCompletionModel;
 	QString mStartScript;
-	QxtCommandOptions *mCommandOptions;
+	QCommandLineParser &mCommandLineParser;
 	int mAddActionRow;
 	QString mAddAction;
 	QAction *mStopExecutionAction;

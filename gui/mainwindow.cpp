@@ -40,7 +40,6 @@
 #include "keywords.h"
 #include "modeltest.h"
 #include "globalshortcut/globalshortcutmanager.h"
-#include "qxtcommandoptions/qxtcommandoptions.h"
 #ifndef ACT_NO_UPDATER
 #include "changelogdialog.h"
 #include "updater.h"
@@ -84,6 +83,7 @@
 #include <QListWidget>
 #include <QScriptValueIterator>
 #include <QStandardPaths>
+#include <QCommandLineParser>
 
 #ifdef Q_OS_LINUX
 #include <QProcessEnvironment>
@@ -92,21 +92,21 @@
 
 #include <algorithm>
 
-MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
+MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
 	: QMainWindow(0),
 	ui(new Ui::MainWindow),
 	mScriptModified(false),
 	mActionFactory(new ActionTools::ActionFactory(this)),
 	mScript(new ActionTools::Script(mActionFactory, this)),
 	mScriptModel(new ScriptModel(mScript, mActionFactory, this)),
-	mSystemTrayIcon(commandOptions->count(QStringLiteral("notrayicon")) ? 0 : new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/logo.png")), this)),
+	mSystemTrayIcon(commandLineParser.isSet(QStringLiteral("notrayicon")) ? 0 : new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/logo.png")), this)),
 	mSplashScreen(splashScreen),
 	mWasNewActionDockShown(false),
 	mWasConsoleDockShown(false),
 	mUndoGroup(new QUndoGroup(this)),
 	mCompletionModel(new QStandardItemModel(this)),
 	mStartScript(startScript),
-	mCommandOptions(commandOptions),
+	mCommandLineParser(commandLineParser),
 	mAddActionRow(0),
 	mStopExecutionAction(new QAction(tr("S&top execution"), this)),
     mUsedLocale(usedLocale),
@@ -446,7 +446,7 @@ void MainWindow::postInit()
 		{
 			if(!loadFile(mStartScript))
 			{
-				if(mCommandOptions->count(QStringLiteral("execute")))
+				if(mCommandLineParser.isSet(QStringLiteral("execute")))
 					QApplication::quit();
 			}
 		}
@@ -481,7 +481,7 @@ void MainWindow::postInit()
 	}
 
 #ifndef ACT_NO_UPDATER
-	if(!mCommandOptions->count(QStringLiteral("execute")) && settings.value(QStringLiteral("network/updatesCheck"), QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)) == ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)
+	if(!mCommandLineParser.isSet(QStringLiteral("execute")) && settings.value(QStringLiteral("network/updatesCheck"), QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)) == ActionTools::Settings::CHECK_FOR_UPDATES_UNKNOWN)
 	{
 		if(QMessageBox::question(this,
 								 tr("Automatic updates"),
@@ -494,7 +494,7 @@ void MainWindow::postInit()
 	}
 
 	int checkFrequency = settings.value(QStringLiteral("network/updatesCheck"), QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)).toInt();
-	if(!mCommandOptions->count(QStringLiteral("execute")) && checkFrequency != ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)
+	if(!mCommandLineParser.isSet(QStringLiteral("execute")) && checkFrequency != ActionTools::Settings::CHECK_FOR_UPDATES_NEVER)
 	{
 		QDateTime lastCheck = settings.value(QStringLiteral("network/lastCheck"), QDateTime()).toDateTime();
 		bool check = false;
@@ -537,7 +537,7 @@ void MainWindow::postInit()
 	if(!pauseExecutionHotkey.isEmpty())
 		ActionTools::GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
 
-	if(mCommandOptions->count(QStringLiteral("execute")))
+	if(mCommandLineParser.isSet(QStringLiteral("execute")))
 		execute(false);
     else if(Global::ACTIONA_VERSION < Tools::Version(1, 0, 0))
 	{
@@ -1310,7 +1310,7 @@ void MainWindow::updateProxySettings()
 				proxy.setType(QNetworkProxy::Socks5Proxy);
 
 			proxy.setHostName(settings.value(QStringLiteral("network/proxyHost"), QStringLiteral("0.0.0.0")).toString());
-			proxy.setPort(settings.value(QStringLiteral("network/proxyPort"), 0).toInt());
+			proxy.setPort(settings.value(QStringLiteral("network/proxyPort"), 0).value<quint16>());
 			proxy.setUser(settings.value(QStringLiteral("network/proxyUser"), QString()).toString());
 			proxy.setPassword(settings.value(QStringLiteral("network/proxyPassword"), QString()).toString());
 		}
@@ -1549,9 +1549,9 @@ void MainWindow::execute(bool onlySelection)
 	int consoleWindowPosition = settings.value(QStringLiteral("actions/consoleWindowPosition"), QVariant(1)).toInt();
 	int consoleWindowScreen = settings.value(QStringLiteral("actions/consoleWindowScreen"), QVariant(0)).toInt();
 
-	if(mCommandOptions->count(QStringLiteral("noexecutionwindow")))
+	if(mCommandLineParser.isSet(QStringLiteral("noexecutionwindow")))
 		showExecutionWindow = false;
-	if(mCommandOptions->count(QStringLiteral("noconsolewindow")))
+	if(mCommandLineParser.isSet(QStringLiteral("noconsolewindow")))
 		showConsoleWindow = false;
 
 	{
@@ -1783,7 +1783,7 @@ void MainWindow::scriptExecutionStopped()
 
 	ui->consoleWidget->updateClearButton();
 
-	if(mCommandOptions->count(QStringLiteral("exitatend")))
+	if(mCommandLineParser.isSet(QStringLiteral("exitatend")))
 		QApplication::quit();
 	else
 	{
@@ -1949,8 +1949,8 @@ void MainWindow::updateCanceled()
 
 void MainWindow::updateDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-	mUpdaterProgressDialog->setValue(bytesReceived);
-	mUpdaterProgressDialog->setMaximum(bytesTotal);
+	mUpdaterProgressDialog->setValue(static_cast<int>(bytesReceived));
+	mUpdaterProgressDialog->setMaximum(static_cast<int>(bytesTotal));
 }
 
 void MainWindow::updateDownloadFinished()
