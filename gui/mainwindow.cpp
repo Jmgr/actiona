@@ -596,13 +596,12 @@ void MainWindow::on_actionNew_triggered()
 {
 	if(maybeSave())
 	{
-		mScript->removeAll();
+		mScriptModel->reset();
 		mScript->removeAllParameters();
         mScript->clearResources();
         mScript->setPauseBefore(0);
         mScript->setPauseAfter(0);
 		setCurrentFile(QString());
-		mScriptModel->update();
 
 		actionCountChanged();
 	}
@@ -632,8 +631,7 @@ void MainWindow::on_actionDelete_all_actions_triggered()
 		return;
 
 	scriptWasModified(true);
-	mScript->removeAll();
-	mScriptModel->update();
+	mScriptModel->reset();
 
 	actionSelectionChanged();
 	actionCountChanged();
@@ -1401,13 +1399,18 @@ ActionTools::Script::ReadResult MainWindow::readScript(QIODevice *device)
 
     QApplication::processEvents();
 
-    ActionTools::Script::ReadResult result = mScript->read(device, Global::SCRIPT_VERSION);
-    if(result == ActionTools::Script::ReadSuccess)
-    {
-        mScriptModel->update();
+	std::function<void()> resetCallback = [this]()
+	{
+		mScriptModel->reset();
+	};
+	std::function<void(QList<ActionTools::ActionInstance *>)> addActionCallback = [this](QList<ActionTools::ActionInstance *> instances)
+	{
+		mScriptModel->appendActions(instances);
+	};
 
+	ActionTools::Script::ReadResult result = mScript->read(device, Global::SCRIPT_VERSION, &resetCallback, &addActionCallback);
+    if(result == ActionTools::Script::ReadSuccess)
         scriptEdited();
-    }
 
     mScriptProgressDialog->close();
 

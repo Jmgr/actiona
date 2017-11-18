@@ -357,7 +357,7 @@ namespace ActionTools
 		return true;
 	}
 
-    Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion)
+	Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion, std::function<void()> *resetCallback, std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback)
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Script::read");
@@ -431,8 +431,11 @@ namespace ActionTools
             }
         }
 
-		qDeleteAll(mActionInstances);
-		mActionInstances.clear();
+		if(resetCallback)
+			(*resetCallback)();
+		else
+			removeAll();
+
 		mParameters.clear();
         mResources.clear();
 
@@ -445,6 +448,7 @@ namespace ActionTools
         emit scriptProcessing(0, 0, tr("Reading content..."));
 
         QHash<ActionDefinition *, Tools::Version> updatableActionDefinitions;
+		QList<ActionInstance *> newActions;
 
 		QXmlStreamReader stream(device);
 		while(!stream.atEnd() && !stream.hasError())
@@ -632,10 +636,15 @@ namespace ActionTools
 					actionInstance->setPauseAfter(pauseAfter);
 					actionInstance->setTimeout(timeout);
 
-					appendAction(actionInstance);
+					newActions.append(actionInstance);
 				}
 			}
 		}
+
+		if(addActionsCallback)
+			(*addActionsCallback)(newActions);
+		else
+			mActionInstances.append(newActions);
 
         for(ActionDefinition *actionDefinition: updatableActionDefinitions.keys())
         {
