@@ -154,6 +154,22 @@ int ScriptModel::columnCount(const QModelIndex &parent) const
 	return parent.isValid() ? 0 : ColumnsCount;
 }
 
+void ScriptModel::reset()
+{
+	beginResetModel();
+	mScript->removeAll();
+	endResetModel();
+}
+
+void ScriptModel::appendAction(ActionTools::ActionInstance *instance)
+{
+	int rowIndex = mScript->actionCount();
+
+	beginInsertRows({}, rowIndex, rowIndex);
+	mScript->appendAction(instance);
+	endInsertRows();
+}
+
 QVariant ScriptModel::data(const QModelIndex &index, int role) const
 {
 	if(!index.isValid())

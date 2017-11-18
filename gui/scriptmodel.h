@@ -74,13 +74,15 @@ public:
 
 	ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory *actionFactory, QObject *parent = 0);
 
-	void update()														{ emit layoutChanged(); }
 	void setSelectionModel(QItemSelectionModel *selectionModel)			{ mSelectionModel = selectionModel; }
     void setProxyModel(ScriptProxyModel *proxyModel)                    { mProxyModel = proxyModel; }
 	QUndoStack *undoStack() const										{ return mUndoStack; }
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	int columnCount(const QModelIndex &parent = QModelIndex()) const;
+
+	void reset();
+	void appendAction(ActionTools::ActionInstance *instance);
 
 public slots:
 	void setActionsEnabled(bool enabled);

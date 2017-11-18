@@ -357,7 +357,7 @@ namespace ActionTools
 		return true;
 	}
 
-    Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion)
+	Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion, std::function<void()> *resetCallback, std::function<void(ActionInstance *)> *addActionCallback)
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Script::read");
@@ -431,8 +431,11 @@ namespace ActionTools
             }
         }
 
-		qDeleteAll(mActionInstances);
-		mActionInstances.clear();
+		if(resetCallback)
+			(*resetCallback)();
+		else
+			removeAll();
+
 		mParameters.clear();
         mResources.clear();
 
@@ -632,7 +635,10 @@ namespace ActionTools
 					actionInstance->setPauseAfter(pauseAfter);
 					actionInstance->setTimeout(timeout);
 
-					appendAction(actionInstance);
+					if(addActionCallback)
+						(*addActionCallback)(actionInstance);
+					else
+						appendAction(actionInstance);
 				}
 			}
 		}
