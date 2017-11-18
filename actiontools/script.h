@@ -77,6 +77,7 @@ namespace ActionTools
 
 		bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion);
 		ReadResult read(QIODevice *device, const Tools::Version &scriptVersion, std::function<void()> *resetCallback = nullptr, std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback = nullptr);
+
         bool validateContent(const QString &content, const Tools::Version &scriptVersion);
         const QString &statusMessage() const                                            { return mStatusMessage; }
         int line() const                                                                { return mLine; }
