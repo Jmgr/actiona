@@ -39,6 +39,7 @@
 #include <QCursor>
 #include <QSet>
 #include <QMessageBox>
+#include <QStyleOptionFrame>
 
 namespace ActionTools
 {
@@ -437,7 +438,7 @@ namespace ActionTools
 
 			if(mMultiline)
 			{
-				QStyleOptionFrameV3 panel;
+                QStyleOptionFrame panel;
 				panel.initFrom(this);
 				
 				if(!mEmbedded)
