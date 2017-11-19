@@ -50,7 +50,7 @@ namespace ActionTools
 
 		connect(swapCodeAction, SIGNAL(triggered()), this, SLOT(swapCode()));
 		connect(ui->editor, SIGNAL(acceptDialog()), this, SLOT(accept()));
-        if(mResourcesMenu)//TMP
+        if(mResourcesMenu)
             connect(mResourcesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
 	}
 
