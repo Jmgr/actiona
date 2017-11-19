@@ -32,8 +32,7 @@ LIBS += -L.. \
     -lactiontools \
     -lexecuter
 win32:RC_FILE = actexecuter.rc
-TRANSLATIONS = ../locale/actexecuter_fr_FR.ts \
-                ../locale/actexecuter_de_DE.ts
+TRANSLATIONS = ../locale/actexecuter_fr_FR.ts
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
 
@@ -46,8 +45,7 @@ unix {
 	target.path = $${PREFIX}/bin
 
         locales.path = $${PREFIX}/share/actiona/locale
-        locales.files = ../locale/actexecuter_fr_FR.qm \
-                        ../locale/actexecuter_de_DE.qm
+        locales.files = ../locale/actexecuter_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
 	manfile.path = $${PREFIX}/share/man/man1

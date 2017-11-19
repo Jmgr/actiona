@@ -101,10 +101,8 @@ LIBS += -L.. \
 	-lexecuter
 RESOURCES += gui.qrc
 win32:RC_FILE = gui.rc
-TRANSLATIONS = ../locale/gui_fr_FR.ts \
-                ../locale/gui_de_DE.ts
+TRANSLATIONS = ../locale/gui_fr_FR.ts
 win32:system(lrelease ../locale/qt_fr_FR.ts) #For Windows we need to copy the qt translation files
-win32:system(lrelease ../locale/qt_de_DE.ts)
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
 
@@ -117,8 +115,7 @@ unix {
 	target.path = $${PREFIX}/bin
 
         locales.path = $${PREFIX}/share/actiona/locale
-        locales.files = ../locale/gui_fr_FR.qm \
-                        ../locale/gui_de_DE.qm
+        locales.files = ../locale/gui_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
 	icon.path = $${PREFIX}/share/pixmaps

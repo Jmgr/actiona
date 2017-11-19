@@ -16,16 +16,14 @@ unix:!mac:PKGCONFIG += libnotify
 win32:DEFINES += _CRT_SECURE_NO_WARNINGS
 win32:LIBS += -lPowrProf
 
-TRANSLATIONS = ../../locale/actionpacksystem_fr_FR.ts \
-                ../../locale/actionpacksystem_de_DE.ts
+TRANSLATIONS = ../../locale/actionpacksystem_fr_FR.ts
 
 SOURCES += \
     systemsession.cpp
 
 unix {
         locales.path = $${PREFIX}/share/actiona/locale
-        locales.files = ../../locale/actionpacksystem_fr_FR.qm \
-                        ../../locale/actionpacksystem_de_DE.qm
+        locales.files = ../../locale/actionpacksystem_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
 	INSTALLS += locales

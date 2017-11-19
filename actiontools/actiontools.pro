@@ -120,8 +120,7 @@ win32:LIBS += -luser32 \
 	-l$${OPENCV_LIB_IMGPROC}
 unix:LIBS += -lXtst \
 	-lX11
-TRANSLATIONS = ../locale/actiontools_fr_FR.ts \
-                ../locale/actiontools_de_DE.ts
+TRANSLATIONS = ../locale/actiontools_fr_FR.ts
 RESOURCES += actiontools.qrc
 INCLUDEPATH += . \
 	../tools
@@ -133,8 +132,7 @@ unix {
         target.path = $${PREFIX}/$${LIBDIR}/actiona
 
         locales.path = $${PREFIX}/share/actiona/locale
-        locales.files = ../locale/actiontools_fr_FR.qm \
-                        ../locale/actiontools_de_DE.qm
+        locales.files = ../locale/actiontools_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
 	INSTALLS += target locales

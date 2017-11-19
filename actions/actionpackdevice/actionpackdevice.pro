@@ -11,15 +11,13 @@ HEADERS += actionpackdevice.h \
 RESOURCES += actionpackdevice.qrc
 unix:LIBS += -lXtst
 win32:LIBS += -luser32
-TRANSLATIONS = ../../locale/actionpackdevice_fr_FR.ts \
-                ../../locale/actionpackdevice_de_DE.ts
+TRANSLATIONS = ../../locale/actionpackdevice_fr_FR.ts
 SOURCES += mousedevice.cpp \
     keyboarddevice.cpp
 
 unix {
         locales.path = $${PREFIX}/share/actiona/locale
-        locales.files = ../../locale/actionpackdevice_fr_FR.qm \
-                        ../../locale/actionpackdevice_de_DE.qm
+        locales.files = ../../locale/actionpackdevice_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
 	INSTALLS += locales
