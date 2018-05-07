@@ -28,7 +28,7 @@ namespace ActionTools
 	{
 		ParameterDefinition::buildEditors(script, parent);
 
-		mComboBox = new LineComboBox(script->labels(), script->actionCount(), parent);
+        mComboBox = new LineComboBox(script->labels(), parent);
 
 		addEditor(mComboBox);
 
@@ -39,6 +39,6 @@ namespace ActionTools
 	{
 		ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mComboBox);
 		
-		lineComboBox->setup(script->labels(), script->actionCount());
+        lineComboBox->setup(script->labels());
 	}
 }

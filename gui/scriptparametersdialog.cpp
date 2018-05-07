@@ -336,7 +336,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 		break;
 	case ActionTools::ScriptParameter::Line:
 		{
-			ActionTools::LineComboBox *valueWidget = new ActionTools::LineComboBox(mScript->labels(), mScript->actionCount(), this);
+            ActionTools::LineComboBox *valueWidget = new ActionTools::LineComboBox(mScript->labels(), this);
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
             valueWidget->setParameterContainer(this);

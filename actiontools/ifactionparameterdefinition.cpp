@@ -75,7 +75,7 @@ namespace ActionTools
 
 		addEditor(mActionEdit);
 
-		mLineComboBox = new LineComboBox(script->labels(), script->actionCount(), parent);
+        mLineComboBox = new LineComboBox(script->labels(), parent);
 		mLineComboBox->setVisible(false);
 
 		addEditor(mLineComboBox);
@@ -159,7 +159,7 @@ namespace ActionTools
 	
     void IfActionParameterDefinition::actionUpdate(Script *script)
 	{
-		mLineComboBox->setup(script->labels(), script->actionCount());
+        mLineComboBox->setup(script->labels());
 		mProcedureComboBox->clear();
 		mProcedureComboBox->addItems(script->procedureNames());
 	}

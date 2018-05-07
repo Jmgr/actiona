@@ -31,9 +31,9 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-        LineComboBox(const QStringList &labels, int lineCount, QWidget *parent = 0);
+        LineComboBox(const QStringList &labels, QWidget *parent = 0);
 		
-		void setup(const QStringList &labels, int lineCount);
+        void setup(const QStringList &labels);
 
 	private:
 		Q_DISABLE_COPY(LineComboBox)
