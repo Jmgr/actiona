@@ -98,6 +98,7 @@ void ProgressSplashScreen::opacityCloseUpdate()
 	{
 		mOpacityTimer->stop();
 		close();
+        deleteLater();
 	}
 }
 
