@@ -225,8 +225,6 @@ namespace ActionTools
 
 		if (state == Comment)
 			setFormat(start, text.length(), mFormats[CommentFormat]);
-		else
-			state = Start;
 	}
 
 	void CodeHighlighter::addCodeObject(const QString &name)

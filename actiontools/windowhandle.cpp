@@ -131,7 +131,7 @@ namespace ActionTools
 		{
 			wchar_t *titleName = new wchar_t[titleLength + 1];
 
-            titleLength = GetWindowText(reinterpret_cast<HWND>(mValue), titleName, titleLength + 1);
+            GetWindowText(reinterpret_cast<HWND>(mValue), titleName, titleLength + 1);
 			title = QString::fromWCharArray(titleName);
 
 			delete[] titleName;

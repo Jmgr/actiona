@@ -179,7 +179,8 @@ QVariant WMIHelper::getWMIData(const QString &wmiNamespace, const QString &class
         wbemCLassObject->Release();
     }
 
-    wbemEnumerator->Release();
+    if(wbemEnumerator)
+        wbemEnumerator->Release();
     wbemLocator->Release();
     wbemServices->Release();
     return returnVariant;

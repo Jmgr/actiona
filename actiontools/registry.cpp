@@ -66,8 +66,8 @@ namespace ActionTools
 		case REG_LINK:
 		case REG_MULTI_SZ:
 			{
-				wchar_t *buffer = new wchar_t[size];
-				if(RegQueryValueEx(hKey, wideValue.c_str(), 0, 0, reinterpret_cast<LPBYTE>(buffer), &size) != ERROR_SUCCESS)
+                std::vector<wchar_t> buffer(size);
+                if(RegQueryValueEx(hKey, wideValue.c_str(), 0, 0, reinterpret_cast<LPBYTE>(buffer.data()), &size) != ERROR_SUCCESS)
 				{
 					RegCloseKey(hKey);
 					return ReadCannotFindValue;
@@ -75,7 +75,7 @@ namespace ActionTools
 
 				if(type == REG_MULTI_SZ)
 				{
-					QStringList stringList = QString::fromWCharArray(buffer, size / 2).split(QChar(L'\0'), QString::SkipEmptyParts);
+                    QStringList stringList = QString::fromWCharArray(buffer.data(), size / 2).split(QChar(L'\0'), QString::SkipEmptyParts);
 
 					if(stringList.last().isEmpty())
 						stringList.removeLast();
@@ -83,22 +83,19 @@ namespace ActionTools
 					result = stringList;
 				}
 				else
-					result = QString::fromWCharArray(buffer, size / 2);
-
-				delete [] buffer;
+                    result = QString::fromWCharArray(buffer.data(), size / 2);
 			}
 			break;
 		case REG_BINARY:
 			{
-				char *buffer = new char[size];
-				if(RegQueryValueEx(hKey, wideValue.c_str(), 0, 0, reinterpret_cast<LPBYTE>(buffer), &size) != ERROR_SUCCESS)
+                std::vector<char> buffer(size);
+                if(RegQueryValueEx(hKey, wideValue.c_str(), 0, 0, reinterpret_cast<LPBYTE>(buffer.data()), &size) != ERROR_SUCCESS)
 				{
 					RegCloseKey(hKey);
 					return ReadCannotFindValue;
 				}
 
-				result = QByteArray::fromRawData(buffer, size);
-				delete [] buffer;
+                result = QByteArray::fromRawData(buffer.data(), size);
 			}
 			break;
 		case REG_QWORD:

@@ -34,14 +34,14 @@ Qt::DropActions NewActionTreeWidget::supportedDropActions() const
 
 QMimeData *NewActionTreeWidget::mimeData(const QList<QTreeWidgetItem *> items) const
 {
-	QMimeData *mimeData = new QMimeData();
-	QByteArray data;
-
 	if(items.count() != 1)
 		return 0;
 
+    QByteArray data;
+
 	data.append(items.at(0)->data(0, ActionIdRole).toString());
 
+    QMimeData *mimeData = new QMimeData();
     mimeData->setData("application/actiona.add.action", data);
 
 	return mimeData;
