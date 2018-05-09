@@ -33,6 +33,7 @@ namespace Global
 
 	QString currentOSType();
 	int currentOSBits();
+    int applicationBits();
 }
 
 #endif // GLOBAL_H

@@ -1440,9 +1440,23 @@ void MainWindow::checkForUpdate(bool silent)
     if(localeParts.size() >= 2)
         languageName = localeParts[0];
 
-    mUpdater->checkForUpdates("actiona3", Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), languageName);
+    mUpdater->checkForUpdates("actiona3",
+                              Global::ACTIONA_VERSION,
+                              Global::applicationBits(),
+                              Tools::Updater::Binary,
+                              Tools::Updater::Installer,
+                              Global::currentOSType(),
+                              Global::currentOSBits(),
+                              languageName);
 #else
-    mUpdater->checkForUpdates("actiona3", Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), QSystemInfo().currentLanguage());
+    mUpdater->checkForUpdates("actiona3",
+                              Global::ACTIONA_VERSION,
+                              Global::applicationBits(),
+                              Tools::Updater::Binary,
+                              Tools::Updater::Installer,
+                              Global::currentOSType(),
+                              Global::currentOSBits(),
+                              QSystemInfo().currentLanguage());
 #endif
 }
 #endif

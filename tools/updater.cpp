@@ -54,6 +54,7 @@ namespace Tools
 	
 	void Updater::checkForUpdates(const QString &program,
 							const Version &programVersion,
+                            int programBits,
 							FileType fileType,
 							ContainerType containerType,
 							const QString &operatingSystem,
@@ -108,6 +109,7 @@ namespace Tools
         urlQuery.addQueryItem("osBits", QString::number(operatingSystemBits));
         urlQuery.addQueryItem("language", language);
         urlQuery.addQueryItem("program", program);
+        urlQuery.addQueryItem("programBits", QString::number(programBits));
 
         url.setQuery(urlQuery);
 #else

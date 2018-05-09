@@ -59,13 +59,14 @@ namespace Tools
 		Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent = 0);
 		~Updater();
 		
-		void checkForUpdates(const QString &program,
-							 const Version &programVersion,
-							 FileType fileType,
-							 ContainerType containerType,
-							 const QString &operatingSystem,
-							 int operatingSystemBits,
-							 const QString &language);
+        void checkForUpdates(const QString &program,
+                             const Version &programVersion,
+                             int programBits,
+                             FileType fileType,
+                             ContainerType containerType,
+                             const QString &operatingSystem,
+                             int operatingSystemBits,
+                             const QString &language);
 		void cancel();
 	
 	signals:

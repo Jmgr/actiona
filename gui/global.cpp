@@ -36,8 +36,16 @@ namespace Global
 		return "unknown";
 	}
 
-	int currentOSBits()
-	{
-		return QSysInfo::WordSize;
-	}
+    int currentOSBits()
+    {
+        if(QSysInfo::currentCpuArchitecture().contains("64"))
+            return 64;
+
+        return 32;
+    }
+
+    int applicationBits()
+    {
+        return QSysInfo::WordSize;
+    }
 }
