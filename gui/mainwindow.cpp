@@ -140,7 +140,7 @@ MainWindow::MainWindow(QxtCommandOptions *commandOptions, ProgressSplashScreen *
     connect(ui->x11NotDetectedLabel, &QLabel::linkActivated, [](const QString &link)
     {
         if(link == "x11notdetected")
-            QDesktopServices::openUrl(QUrl(QString("https://wiki.actiona.tools/doku.php?id=%1:x11notdetected").arg(Tools::locale().mid(0, 2))));
+            QDesktopServices::openUrl(QUrl(QString("https://wiki.actiona.tools/doku.php?id=%1:x11notdetected").arg(Tools::Languages::locale().mid(0, 2))));
     });
 
     ui->x11NotDetectedLabel->setVisible(!x11Session);
