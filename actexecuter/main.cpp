@@ -102,8 +102,8 @@ static void createConsole()
 
 int main(int argc, char **argv)
 {
-#if (QT_VERSION < 0x050200)
-        #error("You need Qt 5.2.0 or later to compile Actiona Executer");
+#if (QT_VERSION < 0x050400)
+        #error("You need Qt 5.4.0 or later to compile Actiona Executer");
 #endif
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
