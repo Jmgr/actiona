@@ -31,6 +31,8 @@
 #include <QUrlQuery>
 #endif
 
+#include <QSysInfo>
+
 namespace Tools
 {
 	Updater::Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent)
@@ -101,6 +103,8 @@ namespace Tools
             break;
         }
         urlQuery.addQueryItem("osName", operatingSystem);
+        urlQuery.addQueryItem("osVariant", QSysInfo::productType());
+        urlQuery.addQueryItem("osVersion", QSysInfo::productVersion());
         urlQuery.addQueryItem("osBits", QString::number(operatingSystemBits));
         urlQuery.addQueryItem("language", language);
         urlQuery.addQueryItem("program", program);
@@ -148,8 +152,15 @@ namespace Tools
         url.addQueryItem("program", program);
 #endif
 
+        QString buildName = ACT_BUILD_NAME;
+
+        if(buildName.isEmpty())
+            buildName.clear();
+        else
+            buildName = "-" ACT_BUILD_NAME;
+
 		QNetworkRequest request(url);
-        request.setRawHeader("User-Agent", QString("%1 %2").arg(program).arg(programVersion.toString()).toLatin1());
+        request.setRawHeader("User-Agent", QString("%1 %2%3").arg(program).arg(programVersion.toString()).arg(buildName).toLatin1());
 		
 		mCurrentReply = mNetworkAccessManager->get(request);
 

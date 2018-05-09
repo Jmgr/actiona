@@ -24,48 +24,6 @@
 
 namespace Global
 {
-	QString currentOS()
-	{
-		QString wordSize = (QSysInfo::WordSize == 32) ? QString() : "64";
-
-#ifdef Q_OS_LINUX
-		return "linux" + wordSize;
-#endif
-#ifdef Q_OS_WIN
-		QString windowsName;
-
-		switch(QSysInfo::windowsVersion())
-		{
-		case QSysInfo::WV_95:
-		case QSysInfo::WV_98:
-			windowsName = "98";
-			break;
-		case QSysInfo::WV_Me:
-			windowsName = "me";
-			break;
-		case QSysInfo::WV_NT:
-		case QSysInfo::WV_2000:
-		case QSysInfo::WV_XP:
-		case QSysInfo::WV_2003:
-			windowsName = "xp";
-			break;
-		case QSysInfo::WV_VISTA:
-			windowsName = "vista";
-			break;
-		case QSysInfo::WV_WINDOWS7:
-			windowsName = "seven";
-			break;
-                default:
-                        windowsName = "unknown";
-                        break;
-		}
-
-		return "windows" + windowsName + wordSize;
-#endif
-
-		return "unknown";
-	}
-
 	QString currentOSType()
 	{
 #ifdef Q_OS_LINUX
