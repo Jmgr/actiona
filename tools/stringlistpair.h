@@ -25,11 +25,11 @@
 #include <QStringList>
 #include <QMetaType>
 
-namespace ActionTools
+namespace Tools
 {
     using StringListPair = QPair<QStringList, QStringList>;
 }
 
-Q_DECLARE_METATYPE(ActionTools::StringListPair)
+Q_DECLARE_METATYPE(Tools::StringListPair)
 
 #endif // STRINGLISTPAIR_H

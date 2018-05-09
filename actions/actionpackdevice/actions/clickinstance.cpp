@@ -26,10 +26,10 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair ClickInstance::buttons = qMakePair(
+    Tools::StringListPair ClickInstance::buttons = qMakePair(
 			QStringList() << "left" << "middle" << "right",
 			QStringList() << QT_TRANSLATE_NOOP("ClickInstance::buttons", "Left") << QT_TRANSLATE_NOOP("ClickInstance::buttons", "Middle") << QT_TRANSLATE_NOOP("ClickInstance::buttons", "Right"));
-	ActionTools::StringListPair ClickInstance::actions = qMakePair(
+    Tools::StringListPair ClickInstance::actions = qMakePair(
 			QStringList() << "pressRelease" << "press" << "release",
 			QStringList() << QT_TRANSLATE_NOOP("ClickInstance::actions", "Click (press and release)") << QT_TRANSLATE_NOOP("ClickInstance::actions", "Press") << QT_TRANSLATE_NOOP("ClickInstance::actions", "Release"));
 	

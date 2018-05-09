@@ -22,7 +22,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair VariableInstance::types = qMakePair(
+    Tools::StringListPair VariableInstance::types = qMakePair(
                 QStringList() << "string" << "integer" << "float" << "color" << "position" << "size",
 				QStringList()
 				<< QT_TRANSLATE_NOOP("VariableInstance::types", "String")

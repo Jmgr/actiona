@@ -45,7 +45,7 @@ namespace ActionTools
             Wait
         };
 
-        static StringListPair actions;
+        static Tools::StringListPair actions;
 
         IfActionParameterDefinition(const Name &name, QObject *parent);
 

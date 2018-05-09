@@ -41,7 +41,7 @@ namespace Actions
 		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
-		static ActionTools::StringListPair modes;
+        static Tools::StringListPair modes;
 
 		void startExecution();
 

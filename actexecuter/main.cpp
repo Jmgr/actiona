@@ -138,13 +138,17 @@ int main(int argc, char **argv)
         QSettings::setDefaultFormat(QSettings::IniFormat);
     }
 
-    QString locale = Tools::locale();
+    QString locale = Tools::Languages::locale();
 
-    Tools::installQtTranslator(locale);
-    Tools::installTranslator("tools", locale);
-    Tools::installTranslator("actiontools", locale);
-    Tools::installTranslator("executer", locale);
-    Tools::installTranslator("actexecuter", locale);
+    Tools::Languages::installTranslator("qtbase", locale);
+    Tools::Languages::installTranslator("qtlocation", locale);
+    Tools::Languages::installTranslator("qtmultimedia", locale);
+    Tools::Languages::installTranslator("qtscript", locale);
+    Tools::Languages::installTranslator("qtxmlpatterns", locale);
+    Tools::Languages::installTranslator("tools", locale);
+    Tools::Languages::installTranslator("actiontools", locale);
+    Tools::Languages::installTranslator("executer", locale);
+    Tools::Languages::installTranslator("actexecuter", locale);
 
     const QStringList &arguments = QCoreApplication::arguments();
 

@@ -161,7 +161,7 @@ namespace Actions
 			emit executionEnded();
 		}
 
-		static ActionTools::StringListPair comparisons;
+        static Tools::StringListPair comparisons;
 
 	private:
 		Q_DISABLE_COPY(VariableConditionInstance)

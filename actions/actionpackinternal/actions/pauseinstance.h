@@ -49,7 +49,7 @@ namespace Actions
 			connect(&mCheckTimer, SIGNAL(timeout()), this, SLOT(checkTime()));
 		}
 
-		static ActionTools::StringListPair units;
+        static Tools::StringListPair units;
 
 		void startExecution()
 		{

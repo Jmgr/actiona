@@ -22,7 +22,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair PixelColorInstance::comparisons = qMakePair(
+    Tools::StringListPair PixelColorInstance::comparisons = qMakePair(
 			QStringList() << "equal" << "darker" << "lighter",
 			QStringList()
 			<< QT_TRANSLATE_NOOP("PixelColorInstance::comparisons", "Equal")

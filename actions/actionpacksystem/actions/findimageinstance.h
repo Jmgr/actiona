@@ -65,8 +65,8 @@ namespace Actions
 		FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 		~FindImageInstance();
 
-		static ActionTools::StringListPair sources;
-        static ActionTools::StringListPair methods;
+        static Tools::StringListPair sources;
+        static Tools::StringListPair methods;
 
 		void startExecution();
         void stopExecution();

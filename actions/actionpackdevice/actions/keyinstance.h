@@ -53,8 +53,8 @@ namespace Actions
 
 		KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 		
-		static ActionTools::StringListPair actions;
-		static ActionTools::StringListPair types;
+        static Tools::StringListPair actions;
+        static Tools::StringListPair types;
 
 		void startExecution();
 		void stopExecution();

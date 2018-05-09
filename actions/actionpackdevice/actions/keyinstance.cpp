@@ -29,10 +29,10 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair KeyInstance::actions = qMakePair(
+    Tools::StringListPair KeyInstance::actions = qMakePair(
 			QStringList() << "pressRelease" << "press" << "release",
 			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", "Press and release") << QT_TRANSLATE_NOOP("KeyInstance::actions", "Press") << QT_TRANSLATE_NOOP("KeyInstance::actions", "Release"));
-	ActionTools::StringListPair KeyInstance::types = qMakePair(
+    Tools::StringListPair KeyInstance::types = qMakePair(
 			QStringList() << "win32" << "directx",
 			QStringList() << QT_TRANSLATE_NOOP("KeyInstance::actions", "Win32") << QT_TRANSLATE_NOOP("KeyInstance::actions", "DirectX"));
 

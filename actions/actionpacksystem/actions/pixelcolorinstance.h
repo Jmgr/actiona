@@ -53,7 +53,7 @@ namespace Actions
 		PixelColorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent), mComparison(Equal) {}
 
-		static ActionTools::StringListPair comparisons;
+        static Tools::StringListPair comparisons;
 
 		void startExecution()
 		{

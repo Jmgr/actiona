@@ -423,7 +423,7 @@ namespace ActionTools
 		return result;
     }
 
-    QString ActionInstance::evaluateEditableListElement(bool &ok, const StringListPair &listElements, const QString &parameterName, const QString &subParameterName)
+    QString ActionInstance::evaluateEditableListElement(bool &ok, const Tools::StringListPair &listElements, const QString &parameterName, const QString &subParameterName)
     {
         if(!ok)
             return QString();

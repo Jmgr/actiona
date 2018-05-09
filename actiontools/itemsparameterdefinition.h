@@ -34,15 +34,15 @@ namespace ActionTools
         ItemsParameterDefinition(const Name &name, QObject *parent)
             : ParameterDefinition(name, parent)													{}
 
-		const StringListPair &items() const														{ return mItems; }
+        const Tools::StringListPair &items() const                                              { return mItems; }
 
-		void setItems(const StringListPair &items)												{ mItems = items; }
+        void setItems(const Tools::StringListPair &items)										{ mItems = items; }
 
 		QString originalNameFromTranslatedName(const QString &translation) const;
 		QString translatedNameFromOriginalName(const QString &originalName) const;
 
 	protected:
-		StringListPair mItems;
+        Tools::StringListPair mItems;
 	};
 }
 

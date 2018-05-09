@@ -49,7 +49,7 @@ namespace Actions
 
 		MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
-		static ActionTools::StringListPair modes;
+        static Tools::StringListPair modes;
 
 		void startExecution();
 		void stopExecution();

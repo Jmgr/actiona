@@ -153,7 +153,7 @@ namespace ActionTools
 			return;
 		}
 
-        Tools::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
+        Tools::Languages::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
 
 		actionPack->createDefinitions();
 

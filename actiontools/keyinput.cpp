@@ -40,7 +40,7 @@
 
 namespace ActionTools
 {
-	const StringListPair KeyInput::mKeyNames = qMakePair(
+    const Tools::StringListPair KeyInput::mKeyNames = qMakePair(
 		QStringList() << "invalid" << "shiftLeft" << "shiftRight" << "controlLeft" << "controlRight" << "altLeft" << "altRight" << "metaLeft" << "metaRight" << "altGr"
 		<< "numpad0" << "numpad1" << "numpad2" << "numpad3" << "numpad4" << "numpad5" << "numpad6" << "numpad7" << "numpad8" << "numpad9"
 		<< "numpadMultiply" << "numpadAdd" << "numpadSeparator" << "numpadSubstract" << "numpadDecimal" << "numpadDivide",

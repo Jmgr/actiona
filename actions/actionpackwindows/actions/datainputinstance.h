@@ -48,8 +48,8 @@ namespace Actions
 
 		DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
-		static ActionTools::StringListPair dataTypes;
-        static ActionTools::StringListPair editorTypes;
+        static Tools::StringListPair dataTypes;
+        static Tools::StringListPair editorTypes;
 
 		void startExecution();
 		void stopExecution();

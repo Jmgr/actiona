@@ -51,8 +51,8 @@ namespace Actions
 		SystemInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent) {}
 
-		static ActionTools::StringListPair operations;
-		static ActionTools::StringListPair modes;
+        static Tools::StringListPair operations;
+        static Tools::StringListPair modes;
 
 		void startExecution();
 

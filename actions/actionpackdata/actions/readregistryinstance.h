@@ -42,7 +42,7 @@ namespace Actions
 		ReadRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
-		static ActionTools::StringListPair keys;
+        static Tools::StringListPair keys;
 
 		void startExecution();
 

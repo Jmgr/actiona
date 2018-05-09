@@ -22,18 +22,24 @@
 #define LANGUAGES_H
 
 #include "tools_global.h"
-
-#include <QPair>
-#include <QStringList>
+#include "stringlistpair.h"
 
 namespace Tools
 {
-    extern TOOLSSHARED_EXPORT const QPair<QStringList, QStringList> languagesName;
+    class TOOLSSHARED_EXPORT Languages
+    {
+    public:
+        static QString locale();
+        static void installTranslator(const QString &componentName, const QString &locale);
+        static StringListPair languagesName();
+        static int languageNameToIndex(const QString &languageName);
 
-    QString TOOLSSHARED_EXPORT locale();
-    void TOOLSSHARED_EXPORT installQtTranslator(const QString &locale);
-    void TOOLSSHARED_EXPORT installTranslator(const QString &componentName, const QString &locale);
-    int TOOLSSHARED_EXPORT languageNameToIndex(const QString &languageName);
+    private:
+        Languages() = delete;
+
+        static StringListPair m_languagesName;
+        static bool m_areLanguagesNameTranslated;
+    };
 }
 
 #endif // LANGUAGES_H

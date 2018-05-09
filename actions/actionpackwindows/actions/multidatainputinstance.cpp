@@ -39,7 +39,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair MultiDataInputInstance::modes = qMakePair(
+    Tools::StringListPair MultiDataInputInstance::modes = qMakePair(
 			QStringList() << "comboBox" << "editableComboBox" << "list" << "checkbox" << "radioButton",
 			QStringList()
 			<< QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "ComboBox")

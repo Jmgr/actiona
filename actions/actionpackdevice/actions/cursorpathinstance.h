@@ -50,7 +50,7 @@ namespace Actions
 			connect(&mMoveTimer, SIGNAL(timeout()), this, SLOT(moveToNextPosition()));
 		}
 
-        static ActionTools::StringListPair buttons;
+        static Tools::StringListPair buttons;
 
 		void startExecution()
 		{

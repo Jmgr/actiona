@@ -77,7 +77,7 @@ namespace ActionTools
 		static QStringList StandardTabs;
 
 	protected:
-		void translateItems(const char *context, StringListPair &items) const;
+        void translateItems(const char *context, Tools::StringListPair &items) const;
 		void addElement(ElementDefinition *element, int tab = 0);
 		void addException(int id, const QString &name);
 		bool requirementCheckXTest(QStringList &missingRequirements) const;

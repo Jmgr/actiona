@@ -29,13 +29,13 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair FindImageInstance::sources = qMakePair(
+    Tools::StringListPair FindImageInstance::sources = qMakePair(
 			QStringList() << "screenshot" << "window" << "image",
 			QStringList()
 			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", "Screenshot")
 			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", "Window")
 			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", "Image"));
-    ActionTools::StringListPair FindImageInstance::methods = qMakePair(
+    Tools::StringListPair FindImageInstance::methods = qMakePair(
             QStringList() << "correlationcoefficient" << "crosscorrelation" << "squareddifference",
             QStringList()
             << QT_TRANSLATE_NOOP("FindImageInstance::sources", "Correlation Coefficient")

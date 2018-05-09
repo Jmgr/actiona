@@ -25,7 +25,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair WriteTextFileInstance::modes = qMakePair(
+    Tools::StringListPair WriteTextFileInstance::modes = qMakePair(
 			QStringList() << "truncate" << "append",
 			QStringList() << QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Overwrite any content") << QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Append to the end"));
 

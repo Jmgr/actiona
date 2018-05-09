@@ -79,7 +79,7 @@ namespace ActionTools
 		static unsigned long nativeKey(int key)		{ return mNativeKey[key]; }
 
 	private:
-		static const StringListPair mKeyNames;
+        static const Tools::StringListPair mKeyNames;
 		static bool mInitDone;
 		static unsigned long mNativeKey[KeyCount];
 

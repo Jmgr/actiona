@@ -22,7 +22,7 @@
 
 namespace Actions
 {
-    ActionTools::StringListPair CursorPathInstance::buttons = qMakePair(
+    Tools::StringListPair CursorPathInstance::buttons = qMakePair(
             QStringList() << "none" << "left" << "middle" << "right",
             QStringList() << QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "None") << QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Left") << QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Middle") << QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Right"));
 }

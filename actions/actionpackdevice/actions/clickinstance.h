@@ -47,8 +47,8 @@ namespace Actions
 		ClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
-		static ActionTools::StringListPair buttons;
-		static ActionTools::StringListPair actions;
+        static Tools::StringListPair buttons;
+        static Tools::StringListPair actions;
 	
 		void startExecution();
 		void stopLongTermExecution();

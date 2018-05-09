@@ -53,7 +53,7 @@ namespace Actions
         SendMailInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
         ~SendMailInstance();
 
-        static ActionTools::StringListPair attachmentContentTypes;
+        static Tools::StringListPair attachmentContentTypes;
 
 		void startExecution();
 		void stopExecution();

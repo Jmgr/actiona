@@ -218,7 +218,7 @@ namespace ActionTools
 
 		template<typename T>
 		T evaluateListElement(bool &ok,
-								 const StringListPair &listElements,
+                                 const Tools::StringListPair &listElements,
 								 const QString &parameterName,
 								 const QString &subParameterName = "value")
 		{
@@ -278,7 +278,7 @@ namespace ActionTools
 		}
 
         QString evaluateEditableListElement(bool &ok,
-                                 const StringListPair &listElements,
+                                 const Tools::StringListPair &listElements,
                                  const QString &parameterName,
                                  const QString &subParameterName = "value");
 

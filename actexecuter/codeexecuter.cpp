@@ -92,13 +92,13 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
     Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActExec, "isActExec", mScriptEngine);
     Code::CodeTools::addClassGlobalFunctionToScriptEngine("Actiona", &LibExecuter::CodeActiona::isActiona, "isActiona", mScriptEngine);
 
-    QString locale = Tools::locale();
+    QString locale = Tools::Languages::locale();
 
 	for(int actionPackIndex = 0; actionPackIndex < actionFactory()->actionPackCount(); ++actionPackIndex)
 	{
 		ActionTools::ActionPack *actionPack = actionFactory()->actionPack(actionPackIndex);
 
-        Tools::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
+        Tools::Languages::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
 	}
 
 	mScriptAgent->setContext(LibExecuter::ScriptAgent::Parameters);

@@ -29,13 +29,14 @@
 
 namespace Tools
 {
-    const QPair<QStringList, QStringList> languagesName = qMakePair(
+    QPair<QStringList, QStringList> Languages::m_languagesName = qMakePair(
                 QStringList()   << "" << "en_US" << "fr_FR",
                 QStringList()   << QT_TRANSLATE_NOOP("languagesName", "System language (if available)")
                                 << QT_TRANSLATE_NOOP("languagesName", "English (US)")
                 << QT_TRANSLATE_NOOP("languagesName", "French (France)"));
+    bool Languages::m_areLanguagesNameTranslated = false;
 
-    QString locale()
+    QString Languages::locale()
     {
         QSettings settings;
         QString locale = settings.value("gui/locale").toString();
@@ -59,23 +60,7 @@ namespace Tools
         return locale;
     }
 
-    void installQtTranslator(const QString &locale)
-    {
-        QTranslator *translator = new QTranslator(QCoreApplication::instance());
-
-    #ifdef Q_OS_WIN
-        translator->load(QString("%1/locale/qt_%2").arg(QCoreApplication::applicationDirPath()).arg(locale));
-    #else
-        translator->load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    #endif
-
-        if(!translator->isEmpty())
-            QCoreApplication::installTranslator(translator);
-        else
-            delete translator;
-    }
-
-    void installTranslator(const QString &componentName, const QString &locale)
+    void Languages::installTranslator(const QString &componentName, const QString &locale)
     {
         QTranslator *translator = new QTranslator(QCoreApplication::instance());
         if(!translator->load(QString("%1/locale/%2_%3").arg(QCoreApplication::applicationDirPath()).arg(componentName).arg(locale)))
@@ -94,11 +79,24 @@ namespace Tools
             delete translator;
     }
 
-    int languageNameToIndex(const QString &languageName)
+    StringListPair Languages::languagesName()
+    {
+        if(!m_areLanguagesNameTranslated)
+        {
+            m_areLanguagesNameTranslated = true;
+
+            for(int index = 0; index < m_languagesName.second.size(); ++index)
+                m_languagesName.second[index] = QCoreApplication::translate("languagesName", m_languagesName.second.at(index).toLatin1());
+        }
+
+        return m_languagesName;
+    }
+
+    int Languages::languageNameToIndex(const QString &languageName)
     {
         int index = 0;
 
-        for(const QString &language: languagesName.first)
+        for(const QString &language: m_languagesName.first)
         {
             if(language == languageName)
                 return index;

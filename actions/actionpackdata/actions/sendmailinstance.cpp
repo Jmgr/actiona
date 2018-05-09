@@ -36,7 +36,7 @@
 
 namespace Actions
 {
-    ActionTools::StringListPair SendMailInstance::attachmentContentTypes = qMakePair(
+    Tools::StringListPair SendMailInstance::attachmentContentTypes = qMakePair(
             QStringList() << "autoDetect" << "application/octet-stream" << "text/plain" << "image/jpeg" << "image/png",
             QStringList() << QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Auto detect")
                           << QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Binary")

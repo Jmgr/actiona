@@ -53,7 +53,7 @@ namespace Actions
 		WebDownloadInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 		~WebDownloadInstance();
 
-		static ActionTools::StringListPair destinations;
+        static Tools::StringListPair destinations;
 
 		void startExecution();
 		void stopExecution();

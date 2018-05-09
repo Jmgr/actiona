@@ -28,7 +28,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair ReadRegistryInstance::keys = qMakePair(
+    Tools::StringListPair ReadRegistryInstance::keys = qMakePair(
 			QStringList() << "classesRoot" << "currentConfig" << "currentUser" << "users" << "localMachine",
 			QStringList() << "Classes root" << "Current config" << "Current user" << "Users" << "Local machine");
 	//Note : This is not translated, because this is not translated either in Regedit

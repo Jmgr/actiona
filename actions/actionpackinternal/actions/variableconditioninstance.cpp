@@ -22,7 +22,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair VariableConditionInstance::comparisons = qMakePair(
+    Tools::StringListPair VariableConditionInstance::comparisons = qMakePair(
 			QStringList() << "equal" << "different" << "inferior" << "superior" << "inferiorEqual" << "superiorEqual" << "contains",
 			QStringList()
 			<< QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Equal (=)")

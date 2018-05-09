@@ -22,7 +22,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair PauseInstance::units = qMakePair(
+    Tools::StringListPair PauseInstance::units = qMakePair(
 			QStringList() << "milliseconds" << "seconds" << "minutes" << "hours" << "days",
 			QStringList()
 			<< QT_TRANSLATE_NOOP("PauseInstance::units", "Milliseconds")

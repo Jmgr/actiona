@@ -65,9 +65,9 @@ namespace Actions
 
 		MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
-		static ActionTools::StringListPair icons;
-		static ActionTools::StringListPair buttons;
-		static ActionTools::StringListPair textmodes;
+        static Tools::StringListPair icons;
+        static Tools::StringListPair buttons;
+        static Tools::StringListPair textmodes;
 
 		void startExecution();
 		void stopExecution();

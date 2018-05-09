@@ -81,7 +81,6 @@ HEADERS += actiontools_global.h \
     keyinput.h \
     actioninstancebuffer.h \
     settings.h \
-    stringlistpair.h \
     scriptcompleter.h \
     keywords.h \
     messagehandler.h \

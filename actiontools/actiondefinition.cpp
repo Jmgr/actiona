@@ -70,7 +70,7 @@ namespace ActionTools
 
 	QStringList ActionDefinition::StandardTabs = QStringList() << QT_TRANSLATE_NOOP("ActionTabs", "Standard") << QT_TRANSLATE_NOOP("ActionTabs", "Advanced");
 	
-	void ActionDefinition::translateItems(const char *context, StringListPair &items) const
+    void ActionDefinition::translateItems(const char *context, Tools::StringListPair &items) const
 	{
 		for(int index = 0; index < items.second.size(); ++index)
 			items.second[index] = QApplication::instance()->translate(context, items.second.at(index).toLatin1());
