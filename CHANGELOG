@@ -1,3 +1,13 @@
+3.9.4 (11/05/18)
+Global:
+- Fixed a slowdown occurring when editing an action within a big script
+- Fixed non-translated buttons
+- Fixed various memory leaks
+- Windows: now using Qt 5.6 to build official binaries => removed Webkit web browser, but reduced installer and SFX size
+
+Installer/Packages:
+- Windows installer: fixed missing .dll files used by SQL drivers (like MySQL)
+
 3.9.3 (28/10/17)
 Global:
 - Windows: fixed compatibility with Windows 10
