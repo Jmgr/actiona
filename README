@@ -1,4 +1,4 @@
-** Actiona **
+# Actiona
 
 Actiona is an application that allows you to execute many actions on your
 computer such as emulating mouse clicks, key presses, showing message boxes,
