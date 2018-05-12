@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair WriteTextFileInstance::modes = qMakePair(
+    Tools::StringListPair WriteTextFileInstance::modes = qMakePair(
 			QStringList() << QStringLiteral("truncate") << QStringLiteral("append"),
 			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Overwrite any content")) << QStringLiteral(QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Append to the end")));
 

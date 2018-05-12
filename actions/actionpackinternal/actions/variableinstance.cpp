@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair VariableInstance::types = qMakePair(
+    Tools::StringListPair VariableInstance::types = qMakePair(
 				QStringList() << QStringLiteral("string") << QStringLiteral("integer") << QStringLiteral("float") << QStringLiteral("color") << QStringLiteral("position") << QStringLiteral("size"),
 				QStringList()
 				<< QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "String"))

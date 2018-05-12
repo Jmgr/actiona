@@ -26,7 +26,7 @@
 #include <QStyledItemDelegate>
 #include <QWheelEvent>
 
-constexpr bool isPowerOfTwo(unsigned int number)
+inline bool isPowerOfTwo(unsigned int number)
 {
     return (!(number & (number - 1)) && number);
 }

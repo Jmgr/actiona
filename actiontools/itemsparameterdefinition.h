@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,15 +33,15 @@ namespace ActionTools
         ItemsParameterDefinition(const Name &name, QObject *parent)
             : ParameterDefinition(name, parent)													{}
 
-		const StringListPair &items() const														{ return mItems; }
+        const Tools::StringListPair &items() const                                              { return mItems; }
 
-		void setItems(const StringListPair &items)												{ mItems = items; }
+        void setItems(const Tools::StringListPair &items)										{ mItems = items; }
 
 		QString originalNameFromTranslatedName(const QString &translation) const;
 		QString translatedNameFromOriginalName(const QString &originalName) const;
 
 	protected:
-		StringListPair mItems;
+        Tools::StringListPair mItems;
 	};
 }
 

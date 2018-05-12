@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair ReadTextFileInstance::modes = qMakePair(
+    Tools::StringListPair ReadTextFileInstance::modes = qMakePair(
 			QStringList() << QStringLiteral("full") << QStringLiteral("selection"),
 			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("ReadTextFileInstance::modes", "Read the entire file")) << QStringLiteral(QT_TRANSLATE_NOOP("ReadTextFileInstance::modes", "Read only a selection")));
 

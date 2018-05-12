@@ -1,6 +1,6 @@
 /*
 	Actiona
-    Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,14 +31,14 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair DataInputInstance::dataTypes = qMakePair(
+    Tools::StringListPair DataInputInstance::dataTypes = qMakePair(
 		QStringList() << QStringLiteral("text") << QStringLiteral("integer") << QStringLiteral("decimal"),
 		QStringList()
 		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Text"))
 		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer"))
 		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal")));
 
-    ActionTools::StringListPair DataInputInstance::editorTypes = qMakePair(
+    Tools::StringListPair DataInputInstance::editorTypes = qMakePair(
 		QStringList() << QStringLiteral("line") << QStringLiteral("multiline") << QStringLiteral("password"),
         QStringList()
 		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line"))

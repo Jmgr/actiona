@@ -1,6 +1,6 @@
 /*
     Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@
 #include <QUrlQuery>
 #include <QSysInfo>
 
+#include <QSysInfo>
+
 namespace Tools
 {
 	Updater::Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent)
@@ -50,6 +52,7 @@ namespace Tools
 	
 	void Updater::checkForUpdates(const QString &program,
 							const Version &programVersion,
+                            int programBits,
 							FileType fileType,
 							ContainerType containerType,
 							const QString &operatingSystem,
@@ -97,17 +100,27 @@ namespace Tools
 			urlQuery.addQueryItem(QStringLiteral("container"), QStringLiteral("rpm"));
             break;
         }
-		urlQuery.addQueryItem(QStringLiteral("osName"), operatingSystem);
-		urlQuery.addQueryItem(QStringLiteral("osVariant"), QSysInfo::productType());
-		urlQuery.addQueryItem(QStringLiteral("osVersion"), QSysInfo::productVersion());
-		urlQuery.addQueryItem(QStringLiteral("osBits"), QString::number(operatingSystemBits));
-		urlQuery.addQueryItem(QStringLiteral("language"), language);
-		urlQuery.addQueryItem(QStringLiteral("program"), program);
+        urlQuery.addQueryItem(QStringLiteral("osName"), operatingSystem);
+        urlQuery.addQueryItem(QStringLiteral("osVariant"), QSysInfo::productType());
+        urlQuery.addQueryItem(QStringLiteral("osVersion"), QSysInfo::productVersion());
+        urlQuery.addQueryItem(QStringLiteral("osBits"), QString::number(operatingSystemBits));
+        urlQuery.addQueryItem(QStringLiteral("language"), language);
+        urlQuery.addQueryItem(QStringLiteral("program"), program);
+        urlQuery.addQueryItem(QStringLiteral("programBits"), QString::number(programBits));
 
         url.setQuery(urlQuery);
 
+        QString buildName = QStringLiteral(ACT_BUILD_NAME);
+
+        if(buildName.isEmpty())
+            buildName.clear();
+        else
+        {
+            buildName = QStringLiteral("-") + QStringLiteral(ACT_BUILD_NAME);
+        }
+
 		QNetworkRequest request(url);
-		request.setRawHeader(QByteArrayLiteral("User-Agent"), QStringLiteral("%1 %2").arg(program).arg(programVersion.toString()).toLatin1());
+        request.setRawHeader("User-Agent", QStringLiteral("%1 %2%3").arg(program).arg(programVersion.toString()).arg(buildName).toLatin1());
 		
 		mCurrentReply = mNetworkAccessManager->get(request);
 

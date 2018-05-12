@@ -1,6 +1,6 @@
 /*
     Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -151,8 +151,8 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 
     connect(ui->x11NotDetectedLabel, &QLabel::linkActivated, [](const QString &link)
     {
-		if(link == QLatin1String("x11notdetected"))
-			QDesktopServices::openUrl(QUrl(QStringLiteral("https://wiki.actiona.tools/doku.php?id=%1:x11notdetected").arg(Tools::locale().mid(0, 2))));
+        if(link == QLatin1String("x11notdetected"))
+            QDesktopServices::openUrl(QUrl(QStringLiteral("https://wiki.actiona.tools/doku.php?id=%1:x11notdetected").arg(Tools::Languages::locale().mid(0, 2))));
     });
 
     ui->x11NotDetectedLabel->setVisible(!x11Session);
@@ -1446,7 +1446,25 @@ void MainWindow::checkForUpdate(bool silent)
     if(localeParts.size() >= 2)
         languageName = localeParts[0];
 
-	mUpdater->checkForUpdates(QStringLiteral("actiona3"), Global::ACTIONA_VERSION, Tools::Updater::Binary, Tools::Updater::Installer, Global::currentOSType(), Global::currentOSBits(), languageName);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    mUpdater->checkForUpdates(QStringLiteral("actiona3"),
+                              Global::ACTIONA_VERSION,
+                              Global::applicationBits(),
+                              Tools::Updater::Binary,
+                              Tools::Updater::Installer,
+                              Global::currentOSType(),
+                              Global::currentOSBits(),
+                              languageName);
+#else
+    mUpdater->checkForUpdates(QStringLiteral("actiona3"),
+                              Global::ACTIONA_VERSION,
+                              Global::applicationBits(),
+                              Tools::Updater::Binary,
+                              Tools::Updater::Installer,
+                              Global::currentOSType(),
+                              Global::currentOSBits(),
+                              QSystemInfo().currentLanguage());
+#endif
 }
 #endif
 

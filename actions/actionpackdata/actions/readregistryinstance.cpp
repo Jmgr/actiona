@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair ReadRegistryInstance::keys = qMakePair(
+    Tools::StringListPair ReadRegistryInstance::keys = qMakePair(
 			QStringList() << QStringLiteral("classesRoot") << QStringLiteral("currentConfig") << QStringLiteral("currentUser") << QStringLiteral("users") << QStringLiteral("localMachine"),
 			QStringList() << QStringLiteral("Classes root") << QStringLiteral("Current config") << QStringLiteral("Current user") << QStringLiteral("Users") << QStringLiteral("Local machine"));
 	//Note : This is not translated, because this is not translated either in Regedit

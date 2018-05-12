@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair MessageBoxInstance::icons = qMakePair(
+    Tools::StringListPair MessageBoxInstance::icons = qMakePair(
 			QStringList() << QStringLiteral("none") << QStringLiteral("information") << QStringLiteral("question") << QStringLiteral("warning") << QStringLiteral("error"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "None"))
@@ -38,13 +38,13 @@ namespace Actions
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Warning"))
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Error")));
 
-	ActionTools::StringListPair MessageBoxInstance::buttons = qMakePair(
+    Tools::StringListPair MessageBoxInstance::buttons = qMakePair(
 			QStringList() << QStringLiteral("ok") << QStringLiteral("yesno"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Ok"))
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Yes-No")));
 
-	ActionTools::StringListPair MessageBoxInstance::textmodes = qMakePair(
+    Tools::StringListPair MessageBoxInstance::textmodes = qMakePair(
 			QStringList() << QStringLiteral("automatic") << QStringLiteral("html") << QStringLiteral("text"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Automatic"))

@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@
 
 namespace ActionTools
 {
-	const StringListPair KeyInput::mKeyNames = qMakePair(
+    const Tools::StringListPair KeyInput::mKeyNames = qMakePair(
 		QStringList() << QStringLiteral("invalid") << QStringLiteral("shiftLeft") << QStringLiteral("shiftRight") << QStringLiteral("controlLeft") << QStringLiteral("controlRight") << QStringLiteral("altLeft") << QStringLiteral("altRight") << QStringLiteral("metaLeft") << QStringLiteral("metaRight") << QStringLiteral("altGr") << QStringLiteral("numpad0") << QStringLiteral("numpad1") << QStringLiteral("numpad2") << QStringLiteral("numpad3") << QStringLiteral("numpad4") << QStringLiteral("numpad5") << QStringLiteral("numpad6") << QStringLiteral("numpad7") << QStringLiteral("numpad8") << QStringLiteral("numpad9") << QStringLiteral("numpadMultiply") << QStringLiteral("numpadAdd") << QStringLiteral("numpadSeparator") << QStringLiteral("numpadSubstract") << QStringLiteral("numpadDecimal") << QStringLiteral("numpadDivide"),
 		QStringList() << QString() << QObject::tr("Left Shift") << QObject::tr("Right Shift") << QObject::tr("Left Control") << QObject::tr("Right Control")
 		<< QObject::tr("Left Alt") << QObject::tr("Right Alt")

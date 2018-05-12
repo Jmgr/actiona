@@ -1,6 +1,6 @@
 /*
     Actiona
-    Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
     Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ static void cleanup()
 int main(int argc, char **argv)
 {
 #if (QT_VERSION < 0x050400)
-		#error("You need Qt 5.4.0 or later to compile Actiona");
+        #error("You need Qt 5.4.0 or later to compile Actiona");
 #endif
 
 #ifdef ACT_PROFILE
@@ -115,13 +115,17 @@ int main(int argc, char **argv)
 		QSettings::setDefaultFormat(QSettings::IniFormat);
 	}
 
-    QString locale = Tools::locale();
+    QString locale = Tools::Languages::locale();
 
-    Tools::installQtTranslator(locale);
-	Tools::installTranslator(QStringLiteral("tools"), locale);
-	Tools::installTranslator(QStringLiteral("actiontools"), locale);
-	Tools::installTranslator(QStringLiteral("executer"), locale);
-	Tools::installTranslator(QStringLiteral("gui"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("qtbase"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("qtlocation"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("qtmultimedia"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("qtscript"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("qtxmlpatterns"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("tools"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("actiontools"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("executer"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("gui"), locale);
 
 	optionsParser.addOptions(
 	{

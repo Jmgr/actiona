@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,9 +30,9 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-        LineComboBox(const QStringList &labels, int lineCount, QWidget *parent = 0);
+        LineComboBox(const QStringList &labels, QWidget *parent = 0);
 		
-		void setup(const QStringList &labels, int lineCount);
+        void setup(const QStringList &labels);
 
 	private:
 		Q_DISABLE_COPY(LineComboBox)

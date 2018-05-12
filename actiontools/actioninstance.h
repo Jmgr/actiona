@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -217,7 +217,7 @@ namespace ActionTools
 
 		template<typename T>
 		T evaluateListElement(bool &ok,
-								 const StringListPair &listElements,
+                                 const Tools::StringListPair &listElements,
 								 const QString &parameterName,
 								 const QString &subParameterName = QStringLiteral("value"))
 		{
@@ -277,7 +277,7 @@ namespace ActionTools
 		}
 
         QString evaluateEditableListElement(bool &ok,
-                                 const StringListPair &listElements,
+                                 const Tools::StringListPair &listElements,
                                  const QString &parameterName,
 								 const QString &subParameterName = QStringLiteral("value"));
 

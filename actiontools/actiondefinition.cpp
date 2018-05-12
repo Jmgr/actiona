@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ namespace ActionTools
 
 	QStringList ActionDefinition::StandardTabs = QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("ActionTabs", "Standard")) << QStringLiteral(QT_TRANSLATE_NOOP("ActionTabs", "Advanced"));
 	
-	void ActionDefinition::translateItems(const char *context, StringListPair &items) const
+    void ActionDefinition::translateItems(const char *context, Tools::StringListPair &items) const
 	{
 		for(int index = 0; index < items.second.size(); ++index)
 			items.second[index] = QApplication::instance()->translate(context, items.second.at(index).toLatin1().constData());

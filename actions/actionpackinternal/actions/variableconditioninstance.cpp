@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair VariableConditionInstance::comparisons = qMakePair(
+    Tools::StringListPair VariableConditionInstance::comparisons = qMakePair(
 			QStringList() << QStringLiteral("equal") << QStringLiteral("different") << QStringLiteral("inferior") << QStringLiteral("superior") << QStringLiteral("inferiorEqual") << QStringLiteral("superiorEqual") << QStringLiteral("contains"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Equal (=)"))

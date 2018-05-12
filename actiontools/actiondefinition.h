@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ namespace ActionTools
 		static QStringList StandardTabs;
 
 	protected:
-		void translateItems(const char *context, StringListPair &items) const;
+        void translateItems(const char *context, Tools::StringListPair &items) const;
 		void addElement(ElementDefinition *element, int tab = 0);
 		void addException(int id, const QString &name);
 		bool requirementCheckXTest(QStringList &missingRequirements) const;

@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,13 +29,13 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair FindImageInstance::sources = qMakePair(
+    Tools::StringListPair FindImageInstance::sources = qMakePair(
 			QStringList() << QStringLiteral("screenshot") << QStringLiteral("window") << QStringLiteral("image"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Screenshot"))
 			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Window"))
 			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Image")));
-    ActionTools::StringListPair FindImageInstance::methods = qMakePair(
+    Tools::StringListPair FindImageInstance::methods = qMakePair(
 			QStringList() << QStringLiteral("correlationcoefficient") << QStringLiteral("crosscorrelation") << QStringLiteral("squareddifference"),
             QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Correlation Coefficient"))

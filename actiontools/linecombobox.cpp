@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,13 +22,13 @@
 
 namespace ActionTools
 {
-    LineComboBox::LineComboBox(const QStringList &labels, int lineCount, QWidget *parent)
+    LineComboBox::LineComboBox(const QStringList &labels, QWidget *parent)
         : CodeComboBox(parent)
 	{
-		setup(labels, lineCount);
+        setup(labels);
 	}
 	
-	void LineComboBox::setup(const QStringList &labels, int lineCount)
+    void LineComboBox::setup(const QStringList &labels)
 	{
 		clear();
 		
@@ -38,16 +38,7 @@ namespace ActionTools
 			addItems(labels);
 		}
 
-		if(lineCount > 0)
-		{
-			addItem(tr("Lines"), QStringLiteral("header"));
-			for(int i=0 ; i < lineCount ; ++i)
-				addItem(QStringLiteral("%1").arg(i + 1, 3, 10, QLatin1Char('0')));
-		}
-
-		if(labels.size() > 0)
-			setCurrentIndex(1);
-		else if(lineCount > 0)
+        if(labels.size() > 0)
 			setCurrentIndex(1);
 	}
 }

@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ namespace Actions
 
 		WindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
 
-		static ActionTools::StringListPair actions;
+        static Tools::StringListPair actions;
 
 		void startExecution();
 

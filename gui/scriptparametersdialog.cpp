@@ -1,6 +1,6 @@
 /*
 	Actiona
-    Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -336,7 +336,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 		break;
 	case ActionTools::ScriptParameter::Line:
 		{
-			ActionTools::LineComboBox *valueWidget = new ActionTools::LineComboBox(mScript->labels(), mScript->actionCount(), this);
+            ActionTools::LineComboBox *valueWidget = new ActionTools::LineComboBox(mScript->labels(), this);
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
             valueWidget->setParameterContainer(this);

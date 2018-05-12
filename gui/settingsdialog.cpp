@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -75,8 +75,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
     ui->languageComboBox->clear();
 
     int languageIndex = 0;
-	auto languagesName = Tools::languagesName();
-	for(const QString &language: languagesName.second)
+    for(const QString &language: Tools::Languages::languagesName().second)
     {
         ui->languageComboBox->addItem(language, languageIndex);
 
@@ -84,13 +83,13 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
     }
 
 	//GENERAL
-	ui->languageComboBox->setCurrentIndex(Tools::languageNameToIndex(settings.value(QStringLiteral("gui/locale"), languagesName.first.first()).toString()));
-	ui->showLoadingWindow->setChecked(settings.value(QStringLiteral("gui/showLoadingWindow"), QVariant(true)).toBool());
-	ui->showTaskbarIcon->setChecked(settings.value(QStringLiteral("gui/showTaskbarIcon"), QVariant(true)).toBool());
-	ui->showWindowAfterExecution->setChecked(settings.value(QStringLiteral("gui/showWindowAfterExecution"), QVariant(true)).toBool());
-	ui->addStartEndSeparators->setChecked(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool());
-	ui->reopenLastScript->setChecked(settings.value(QStringLiteral("gui/reopenLastScript"), QVariant(false)).toBool());
-	ui->maxRecentFiles->setValue(settings.value(QStringLiteral("gui/maxRecentFiles"), QVariant(5)).toInt());
+    ui->languageComboBox->setCurrentIndex(Tools::Languages::languageNameToIndex(settings.value(QStringLiteral("gui/locale"), Tools::Languages::languagesName().first.first()).toString()));
+    ui->showLoadingWindow->setChecked(settings.value(QStringLiteral("gui/showLoadingWindow"), QVariant(true)).toBool());
+    ui->showTaskbarIcon->setChecked(settings.value(QStringLiteral("gui/showTaskbarIcon"), QVariant(true)).toBool());
+    ui->showWindowAfterExecution->setChecked(settings.value(QStringLiteral("gui/showWindowAfterExecution"), QVariant(true)).toBool());
+    ui->addStartEndSeparators->setChecked(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool());
+    ui->reopenLastScript->setChecked(settings.value(QStringLiteral("gui/reopenLastScript"), QVariant(false)).toBool());
+    ui->maxRecentFiles->setValue(settings.value(QStringLiteral("gui/maxRecentFiles"), QVariant(5)).toInt());
 
 	//ACTIONS
 	ui->executionWindowGroup->setChecked(settings.value(QStringLiteral("actions/showExecutionWindow"), QVariant(true)).toBool());
@@ -261,7 +260,7 @@ void SettingsDialog::accept()
 	settings.setValue(QStringLiteral("gui/settingsTab"), ui->settingsTab->currentIndex());
 
 	//GENERAL
-	settings.setValue(QStringLiteral("gui/locale"), Tools::languagesName().first[ui->languageComboBox->currentIndex()]);
+    settings.setValue(QStringLiteral("gui/locale"), Tools::Languages::languagesName().first[ui->languageComboBox->currentIndex()]);
 	settings.setValue(QStringLiteral("gui/showLoadingWindow"), ui->showLoadingWindow->isChecked());
 	settings.setValue(QStringLiteral("gui/showTaskbarIcon"), ui->showTaskbarIcon->isChecked());
 	settings.setValue(QStringLiteral("gui/showWindowAfterExecution"), ui->showWindowAfterExecution->isChecked());

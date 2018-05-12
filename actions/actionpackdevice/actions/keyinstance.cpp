@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,10 +29,10 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair KeyInstance::actions = qMakePair(
+    Tools::StringListPair KeyInstance::actions = qMakePair(
 			QStringList() << QStringLiteral("pressRelease") << QStringLiteral("press") << QStringLiteral("release"),
 			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "Press and release")) << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "Press")) << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "Release")));
-	ActionTools::StringListPair KeyInstance::types = qMakePair(
+    Tools::StringListPair KeyInstance::types = qMakePair(
 			QStringList() << QStringLiteral("win32") << QStringLiteral("directx"),
 			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "Win32")) << QStringLiteral(QT_TRANSLATE_NOOP("KeyInstance::actions", "DirectX")));
 

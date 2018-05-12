@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ namespace ActionTools
 {
 	bool IfActionParameterDefinition::translated = false;
 
-	StringListPair IfActionParameterDefinition::actions = qMakePair(
+    Tools::StringListPair IfActionParameterDefinition::actions = qMakePair(
 		QStringList() << QStringLiteral("do_nothing") << QStringLiteral("goto") << QStringLiteral("run_code") << QStringLiteral("call_procedure"),
 		QStringList()
 		<< QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to next action"))
@@ -75,7 +75,7 @@ namespace ActionTools
 
 		addEditor(mActionEdit);
 
-		mLineComboBox = new LineComboBox(script->labels(), script->actionCount(), parent);
+        mLineComboBox = new LineComboBox(script->labels(), parent);
 		mLineComboBox->setVisible(false);
 
 		addEditor(mLineComboBox);
@@ -159,7 +159,7 @@ namespace ActionTools
 	
     void IfActionParameterDefinition::actionUpdate(Script *script)
 	{
-		mLineComboBox->setup(script->labels(), script->actionCount());
+        mLineComboBox->setup(script->labels());
 		mProcedureComboBox->clear();
 		mProcedureComboBox->addItems(script->procedureNames());
 	}

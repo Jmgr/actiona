@@ -12,7 +12,8 @@ win32:SOURCES += sevenziparchivewrite.cpp
 HEADERS += version.h \
     tools_global.h \
     highresolutiontimer.h \
-    languages.h
+    languages.h \
+    stringlistpair.h
 win32:HEADERS += sevenziparchivewrite.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += updater.cpp

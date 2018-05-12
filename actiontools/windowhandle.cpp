@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -131,7 +131,7 @@ namespace ActionTools
 		{
 			wchar_t *titleName = new wchar_t[titleLength + 1];
 
-            titleLength = GetWindowText(reinterpret_cast<HWND>(mValue), titleName, titleLength + 1);
+            GetWindowText(reinterpret_cast<HWND>(mValue), titleName, titleLength + 1);
 			title = QString::fromWCharArray(titleName);
 
 			delete[] titleName;

@@ -405,7 +405,7 @@ void QBatteryInfoPrivate::getBatteryStatus()
                                                         Q_EMIT chargerTypeChanged(chargerType);
                                                     }
 
-                                                    QBatteryInfo::ChargingState chargingState;
+                                                    QBatteryInfo::ChargingState chargingState{QBatteryInfo::UnknownChargingState};
                                                     if (batteryStatus.PowerState & BATTERY_CHARGING)
                                                         chargingState = QBatteryInfo::Charging;
                                                     if (batteryStatus.PowerState & BATTERY_DISCHARGING)

@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 namespace Actions
 {
-	ActionTools::StringListPair WebDownloadInstance::destinations = qMakePair(
+    Tools::StringListPair WebDownloadInstance::destinations = qMakePair(
 			QStringList() << QStringLiteral("variable") << QStringLiteral("file"),
 			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "Variable"))
 						  << QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "File")));

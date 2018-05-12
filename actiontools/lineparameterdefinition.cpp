@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+	Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ namespace ActionTools
 	{
 		ParameterDefinition::buildEditors(script, parent);
 
-		mComboBox = new LineComboBox(script->labels(), script->actionCount(), parent);
+        mComboBox = new LineComboBox(script->labels(), parent);
 
 		addEditor(mComboBox);
 
@@ -39,6 +39,6 @@ namespace ActionTools
 	{
 		ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mComboBox);
 		
-		lineComboBox->setup(script->labels(), script->actionCount());
+        lineComboBox->setup(script->labels());
 	}
 }
