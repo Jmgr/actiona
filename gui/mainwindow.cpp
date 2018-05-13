@@ -297,6 +297,12 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
 	connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
     connect(mScript, SIGNAL(scriptProcessing(int,int,QString)), this, SLOT(scriptProcessing(int,int,QString)));
+    connect(ui->heatmapCheckBox, &QCheckBox::toggled, [this](bool checked)
+    {
+        mScriptModel->setHeatmapMode(checked);
+
+        ui->scriptView->viewport()->update();
+    });
 #ifndef ACT_NO_UPDATER
 	connect(mUpdater, SIGNAL(error(QString)), this, SLOT(updateError(QString)));
 	connect(mUpdater, SIGNAL(noResult()), this, SLOT(updateNoResult()));
@@ -863,6 +869,12 @@ void MainWindow::on_actionSettings_triggered()
 		QString pauseExecutionHotkey = settings.value(QStringLiteral("actions/pauseExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+W"))).toString();
 		if(!pauseExecutionHotkey.isEmpty())
 			ActionTools::GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
+
+        mScriptModel->setHeatmapColors
+        ({
+            settings.value(QStringLiteral("heatmap/minColor")).value<QColor>(),
+            settings.value(QStringLiteral("heatmap/maxColor")).value<QColor>()
+        });
 	}
 }
 
@@ -1232,6 +1244,12 @@ void MainWindow::readSettings()
 		QColorDialog::setCustomColor(colorIndex, customColors.at(colorIndex).value<QRgb>());
 
 	ui->clearBeforeExecutionCheckBox->setChecked(settings.value(QStringLiteral("gui/clearConsoleBeforeExecution"), true).toBool());
+
+    mScriptModel->setHeatmapColors
+    ({
+        settings.value(QStringLiteral("heatmap/minColor"), QColor{Qt::yellow}).value<QColor>(),
+        settings.value(QStringLiteral("heatmap/maxColor"), QColor{Qt::red}).value<QColor>()
+    });
 }
 
 void MainWindow::writeSettings()
@@ -1250,6 +1268,9 @@ void MainWindow::writeSettings()
 	settings.setValue(QStringLiteral("customColors"), customColors);
 
 	settings.setValue(QStringLiteral("gui/clearConsoleBeforeExecution"), ui->clearBeforeExecutionCheckBox->isChecked());
+
+    settings.setValue(QStringLiteral("heatmap/minColor"), mScriptModel->heatmapColors().first);
+    settings.setValue(QStringLiteral("heatmap/maxColor"), mScriptModel->heatmapColors().second);
 }
 
 void MainWindow::updateRecentFileActions()
@@ -1797,6 +1818,8 @@ void MainWindow::pauseOrResumeExecution()
 
 void MainWindow::scriptExecutionStopped()
 {
+    ui->heatmapCheckBox->setEnabled(true);
+
 	QSettings settings;
 
 	if(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool())
@@ -2347,6 +2370,7 @@ void MainWindow::actionCountChanged()
 	ui->actionDisable_all_actions->setEnabled(hasActions);
 	ui->actionInverse_selection->setEnabled(hasActions);
 	ui->actionJump_to_line->setEnabled(hasActions);
+    ui->heatmapCheckBox->setEnabled(hasActions && mScript->hasBeenExecuted());
 }
 
 void MainWindow::enabledActionsCountChanged(bool hasEnabledActions)

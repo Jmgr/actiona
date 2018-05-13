@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>767</width>
-    <height>441</height>
+    <width>1809</width>
+    <height>1146</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -91,7 +91,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,10,0">
+     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,10,0,0">
       <property name="spacing">
        <number>8</number>
       </property>
@@ -148,6 +148,16 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QCheckBox" name="heatmapCheckBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Heatmap</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>
@@ -157,8 +167,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>767</width>
-     <height>22</height>
+     <width>1809</width>
+     <height>31</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

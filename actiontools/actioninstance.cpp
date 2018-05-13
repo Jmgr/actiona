@@ -48,7 +48,7 @@ namespace ActionTools
 				exceptionActionInstances == other.exceptionActionInstances &&
 				pauseBefore == other.pauseBefore &&
 				pauseAfter == other.pauseAfter &&
-				timeout == other.timeout);
+                timeout == other.timeout);
 	}
 
 

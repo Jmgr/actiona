@@ -45,11 +45,9 @@ namespace ActionTools
 	using ParametersData = QMap<QString, Parameter>;
 	using ExceptionActionInstancesHash = QMap<ActionException::Exception, ActionException::ExceptionActionInstance>;
 
-	class ActionInstanceData : public QSharedData
-	{
-	public:
-		ActionInstanceData() : definition(0), enabled(true), selected(false), pauseBefore(0), pauseAfter(0), timeout(0), script(0), scriptEngine(0), scriptLine(0)
-			{}
+    struct ActionInstanceData : public QSharedData
+    {
+        ActionInstanceData() = default;
 		ActionInstanceData(const ActionInstanceData &other)
 			: QSharedData(other),
 			parametersData(other.parametersData),
@@ -66,26 +64,28 @@ namespace ActionTools
 			script(other.script),
 			scriptEngine(other.scriptEngine),
 			scriptLine(other.scriptLine),
-			runtimeParameters(other.runtimeParameters)
+            runtimeParameters(other.runtimeParameters),
+            executionCounter(other.executionCounter)
 			{}
 
 		bool operator==(const ActionInstanceData &other) const;
 		
 		ParametersData parametersData;
-		const ActionDefinition *definition;
-		QString comment;
+        const ActionDefinition *definition{nullptr};
+        QString comment;
 		QString label;
 		QColor color;
-		bool enabled;
-		bool selected;
+        bool enabled{true};
+        bool selected{false};
 		ExceptionActionInstancesHash exceptionActionInstances;
-		int pauseBefore;
-		int pauseAfter;
-		int timeout;
-		Script *script;
-		QScriptEngine *scriptEngine;
-		int scriptLine;
+        int pauseBefore{0};
+        int pauseAfter{0};
+        int timeout{0};
+        Script *script{nullptr};
+        QScriptEngine *scriptEngine{nullptr};
+        int scriptLine{0};
 		QVariantHash runtimeParameters;
+        int executionCounter{0};
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
@@ -156,11 +156,16 @@ namespace ActionTools
 		virtual void pauseExecution()										{}//This is called when the action should pause its execution
 		virtual void resumeExecution()										{}//This is called when the action should resume its execution
 
+        void doStartExecution()                                             { ++d->executionCounter; startExecution(); }
+
+        int executionCounter() const                                        { return d->executionCounter; }
+
 		void setupExecution(QScriptEngine *scriptEngine, Script *script, int scriptLine)
 		{
 			d->scriptEngine = scriptEngine;
 			d->script = script;
 			d->scriptLine = scriptLine;
+            d->executionCounter = 0;
 		}
 
 		void copyActionDataFrom(const ActionInstance &other);

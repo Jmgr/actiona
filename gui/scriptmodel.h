@@ -72,11 +72,13 @@ public:
 		ColumnsCount
 	};
 
-	ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory *actionFactory, QObject *parent = 0);
+    ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory *actionFactory, QObject *parent = nullptr);
 
 	void setSelectionModel(QItemSelectionModel *selectionModel)			{ mSelectionModel = selectionModel; }
     void setProxyModel(ScriptProxyModel *proxyModel)                    { mProxyModel = proxyModel; }
 	QUndoStack *undoStack() const										{ return mUndoStack; }
+    void setHeatmapColors(const QPair<QColor, QColor> &heatmapColors);
+    QPair<QColor, QColor> heatmapColors() const                         { return mHeatmapColors; }
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -93,6 +95,7 @@ public slots:
 	void moveActions(MoveDirection moveDirection, const QList<int> &rows);
 	void copyActions(const QList<int> &rows);
 	void pasteActions(int row);
+    void setHeatmapMode(bool enable);
 
 signals:
 	void scriptEdited();
@@ -116,12 +119,15 @@ private:
 	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
 	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 	bool moveRow(int row, int destination);
+    QColor computeHeatmapColor(const ActionTools::ActionInstance &actionInstance) const;
 
 	ActionTools::Script *mScript;
 	ActionTools::ActionFactory *mActionFactory;
-	QItemSelectionModel *mSelectionModel;
-    ScriptProxyModel *mProxyModel;
+    QItemSelectionModel *mSelectionModel{};
+    ScriptProxyModel *mProxyModel{};
 	QUndoStack *mUndoStack;
+    bool mHeatmapMode{};
+    QPair<QColor, QColor> mHeatmapColors{QColor{Qt::yellow}, QColor{Qt::red}};
 
 	Q_DISABLE_COPY(ScriptModel)
 };

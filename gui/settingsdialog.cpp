@@ -109,6 +109,8 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->openEditorKey->setKeySequence(
 		QKeySequence(settings.value(QStringLiteral("actions/openEditorKey"), QKeySequence(QStringLiteral("Ctrl+Shift+V"))).toString()));
 	ui->checkCodeSyntaxAutomatically->setChecked(settings.value(QStringLiteral("actions/checkCodeSyntaxAutomatically"), QVariant(true)).toBool());
+    ui->heatmapMinColorPushButton->setColor(settings.value(QStringLiteral("heatmap/minColor")).value<QColor>());
+    ui->heatmapMaxColorPushButton->setColor(settings.value(QStringLiteral("heatmap/maxColor")).value<QColor>());
 
 	//NETWORK
 #ifdef ACT_NO_UPDATER
@@ -279,7 +281,9 @@ void SettingsDialog::accept()
 	settings.setValue(QStringLiteral("actions/pauseExecutionHotkey"), QVariant::fromValue(ui->pauseExecutionHotkey->keySequence()));
 	settings.setValue(QStringLiteral("actions/switchTextCode"), QVariant::fromValue(ui->switchTextCode->keySequence()));
 	settings.setValue(QStringLiteral("actions/openEditorKey"), QVariant::fromValue(ui->openEditorKey->keySequence()));
-	settings.setValue(QStringLiteral("actions/checkCodeSyntaxAutomatically"), ui->checkCodeSyntaxAutomatically->isChecked());
+    settings.setValue(QStringLiteral("actions/checkCodeSyntaxAutomatically"), ui->checkCodeSyntaxAutomatically->isChecked());
+    settings.setValue(QStringLiteral("heatmap/minColor"), ui->heatmapMinColorPushButton->color());
+    settings.setValue(QStringLiteral("heatmap/maxColor"), ui->heatmapMaxColorPushButton->color());
 
 	//NETWORK
 #ifndef ACT_NO_UPDATER

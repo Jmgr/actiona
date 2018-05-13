@@ -42,9 +42,7 @@ ScriptModel::ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory
 	: QAbstractTableModel(parent),
 	mScript(script),
 	mActionFactory(actionFactory),
-    mSelectionModel(nullptr),
-    mProxyModel(nullptr),
-	mUndoStack(new QUndoStack(this))
+    mUndoStack(new QUndoStack(this))
 {
 }
 
@@ -141,7 +139,24 @@ void ScriptModel::pasteActions(int row)
 	const QClipboard *clipboard = QApplication::clipboard();
 	const QMimeData *mimeData = clipboard->mimeData();
 
-	dropMimeData(mimeData, Qt::CopyAction, row, 0, QModelIndex());
+    dropMimeData(mimeData, Qt::CopyAction, row, 0, QModelIndex());
+}
+
+void ScriptModel::setHeatmapMode(bool enable)
+{
+    mHeatmapMode = enable;
+
+    emit dataChanged(index(0, 0), index(rowCount(), ColumnsCount - 1), {Qt::ToolTipRole, Qt::BackgroundColorRole, Qt::ForegroundRole});
+}
+
+void ScriptModel::setHeatmapColors(const QPair<QColor, QColor> &heatmapColors)
+{
+    bool changed = (mHeatmapColors != heatmapColors);
+
+    mHeatmapColors = heatmapColors;
+
+    if(mHeatmapMode && changed)
+        emit dataChanged(index(0, 0), index(rowCount(), ColumnsCount - 1), {Qt::ToolTipRole, Qt::BackgroundColorRole});
 }
 
 int ScriptModel::rowCount(const QModelIndex &parent) const
@@ -174,11 +189,11 @@ void ScriptModel::appendActions(QList<ActionTools::ActionInstance *> instances)
 QVariant ScriptModel::data(const QModelIndex &index, int role) const
 {
 	if(!index.isValid())
-		return QVariant();
+        return {};
 
 	ActionTools::ActionInstance *actionInstance = mScript->actionAt(index.row());
 	if(!actionInstance)
-		return QVariant();
+        return {};
 
 	switch(role)
 	{
@@ -188,12 +203,16 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 		return actionInstance->definition()->id();
 	case Qt::BackgroundRole:
 		{
-			const QColor &color = actionInstance->color();
+            if(mHeatmapMode && mScript->hasBeenExecuted())
+                return QBrush{computeHeatmapColor(*actionInstance)};
+            else
+            {
+                const QColor &color = actionInstance->color();
 
-			if(color.isValid())
-				return QBrush(color);
-
-			return QBrush();
+                if(color.isValid())
+                    return QBrush{color};
+            }
+            break;
 		}
 	case Qt::FontRole:
 		{
@@ -206,73 +225,91 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 				return font;
 			}
 
-			return QFont();
+            return {};
 		}
 	case Qt::ForegroundRole:
 		{
-			const QColor &color = actionInstance->color();
-			if(color.isValid())
-			{
-				if(color.lightness() < 128)
-					return QBrush(Qt::white);
-				else
-					return QBrush(Qt::black);
-			}
-			else
-			{
-				const QPalette &palette = QApplication::palette();
+            auto color = (mHeatmapMode && mScript->hasBeenExecuted()) ? computeHeatmapColor(*actionInstance) : actionInstance->color();
 
-				if(!actionInstance->isEnabled())
-					return QBrush(palette.color(QPalette::Disabled, QPalette::WindowText));
+            if(color.isValid())
+            {
+                if(color.lightness() < 128)
+                    return QBrush{Qt::white};
+                else
+                    return QBrush{Qt::black};
+            }
+            else
+            {
+                const QPalette &palette = QApplication::palette();
 
-				return QBrush();
-			}
+                if(!actionInstance->isEnabled())
+                    return QBrush{palette.color(QPalette::Disabled, QPalette::WindowText)};
+
+                return {};
+            }
 		}
+    case Qt::CheckStateRole:
+        switch(index.column())
+        {
+            case ColumnLabel:
+                return QVariant(actionInstance->isEnabled() ? Qt::Checked : Qt::Unchecked);
+        }
+        break;
+    case Qt::DisplayRole:
+        switch(index.column())
+        {
+            case ColumnLabel:
+                {
+                    QString labelString = actionInstance->label();
+                    if(!labelString.isNull() && !labelString.isEmpty())
+                        return labelString;
+
+                    return ActionTools::NumberFormat::labelIndexString(index.row());
+                }
+            case ColumnActionName:
+                return actionInstance->definition()->name();
+            case ColumnComment:
+                return actionInstance->comment();
+        }
+        break;
+    case Qt::EditRole:
+        switch(index.column())
+        {
+            case ColumnLabel:
+                return actionInstance->label();
+            case ColumnComment:
+                return actionInstance->comment();
+        }
+        break;
+    case Qt::ToolTipRole:
+        if(mHeatmapMode)
+            return tr("Action executed %n time(s)", "", actionInstance->executionCounter());
+        else
+        {
+            switch(index.column())
+            {
+                case ColumnActionName:
+                    return tr("Double-clic to edit the action");
+            }
+        }
+        break;
+    case Qt::DecorationRole:
+        switch(index.column())
+        {
+            case ColumnActionName:
+                return QIcon(actionInstance->definition()->icon());
+        }
+        break;
+    case Qt::TextAlignmentRole:
+        switch(index.column())
+        {
+            case ColumnActionName:
+                return Qt::AlignCenter;
+        }
+        break;
 	}
 
-	switch(index.column())
-	{
-	case ColumnLabel:
-		switch(role)
-		{
-			case Qt::CheckStateRole:
-				return QVariant(actionInstance->isEnabled() ? Qt::Checked : Qt::Unchecked);
-			case Qt::DisplayRole:
-			{
-				QString labelString = actionInstance->label();
-				if(!labelString.isNull() && !labelString.isEmpty())
-					return labelString;
-
-                return ActionTools::NumberFormat::labelIndexString(index.row());
-			}
-			case Qt::EditRole:
-				return actionInstance->label();
-		}
-		break;
-	case ColumnActionName:
-		switch(role)
-		{
-			case Qt::ToolTipRole:
-				return tr("Double-clic to edit the action");
-			case Qt::DisplayRole:
-				return actionInstance->definition()->name();
-			case Qt::DecorationRole:
-				return QIcon(actionInstance->definition()->icon());
-			case Qt::TextAlignmentRole:
-				return Qt::AlignCenter;
-		}
-		break;
-	case ColumnComment:
-		switch(role)
-		{
-			case Qt::DisplayRole:
-			case Qt::EditRole:
-				return actionInstance->comment();
-		}
-		break;
-	}
-
-	return QVariant();
+    return {};
 }
 
 QVariant ScriptModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -405,7 +442,7 @@ Qt::DropActions ScriptModel::supportedDropActions() const
 QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 {
 	if(indexes.isEmpty())
-		return 0;
+        return nullptr;
 
 	QMimeData *mimeDataPtr = new QMimeData();
 	QByteArray encodedData;
@@ -525,7 +562,7 @@ bool ScriptModel::insertRows(int row, int count, const QModelIndex &parent)
 	beginInsertRows(parent, row, row + count - 1);
 	for(int i = 0; i < count; ++i)
 	{
-		mScript->insertAction(row, 0);
+        mScript->insertAction(row, nullptr);
 	}
 	endInsertRows();
 
@@ -556,6 +593,23 @@ bool ScriptModel::moveRow(int row, int destination)
 	mScript->moveAction(row, destination);
 	endMoveRows();
 
-	return true;
+    return true;
+}
+
+QColor ScriptModel::computeHeatmapColor(const ActionTools::ActionInstance &actionInstance) const
+{
+    const auto minColor = mHeatmapColors.first.toHsv();
+    const auto maxColor = mHeatmapColors.second.toHsv();
+    auto minMaxExecutionCounter = mScript->minMaxExecutionCounter();
+
+    qreal ratio = (actionInstance.executionCounter() - minMaxExecutionCounter.first) / static_cast<qreal>(minMaxExecutionCounter.second - minMaxExecutionCounter.first);
+
+    auto color = QColor::fromHsvF(
+                minColor.hsvHueF() * (1 - ratio) + maxColor.hsvHueF() * ratio,
+                minColor.hsvSaturationF() * (1 - ratio) + maxColor.hsvSaturationF() * ratio,
+                minColor.valueF() * (1 - ratio) + maxColor.valueF() * ratio)
+                .toRgb();
+
+    return color;
 }
 

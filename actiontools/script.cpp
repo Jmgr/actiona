@@ -841,6 +841,24 @@ namespace ActionTools
         return back;
     }
 
+    void Script::executionStopped()
+    {
+        for(auto actionInstance: mActionInstances)
+            actionInstance->stopLongTermExecution();
+
+        mMinMaxExecutionCounter = {std::numeric_limits<int>::max(), std::numeric_limits<int>::min()};
+
+        for(auto actionInstance: mActionInstances)
+        {
+            auto counter = actionInstance->executionCounter();
+
+            if(counter < mMinMaxExecutionCounter.first)
+                mMinMaxExecutionCounter.first = counter;
+            if(counter > mMinMaxExecutionCounter.second)
+                mMinMaxExecutionCounter.second = counter;
+        }
+    }
+
     void Script::parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ElementDefinition *elementDefinition) const
     {
         const Parameter &parameter = actionInstance->parameter(elementDefinition->name().original());

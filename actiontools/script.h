@@ -113,10 +113,15 @@ namespace ActionTools
         void clearResources()                                                           { mResources.clear(); }
 		const QMap<QString, Resource> &resources() const								{ return mResources; }
 
+        QPair<int, int> minMaxExecutionCounter() const                                  { return mMinMaxExecutionCounter; }
+        bool hasBeenExecuted() const                                                    { return mMinMaxExecutionCounter.first > 0; }
+
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
 		QStringList labels() const;
         QSet<QString> findVariables(ActionInstance *actionInstance = 0, ActionInstance *excludedActionInstance = 0) const;
+
+        void executionStopped();
 
     signals:
         void scriptProcessing(int progress, int total, const QString &description);
@@ -142,6 +147,7 @@ namespace ActionTools
 		QMap<QString, int> mProcedures;
 		QStack<int> mCallStack;
 		QMap<QString, Resource> mResources;
+        QPair<int, int> mMinMaxExecutionCounter;
 
 		Q_DISABLE_COPY(Script)
 	};

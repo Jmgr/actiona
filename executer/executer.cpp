@@ -572,8 +572,7 @@ namespace LibExecuter
 				currentActionInstance()->stopExecution();
 		}
 
-		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
-			mScript->actionAt(actionIndex)->stopLongTermExecution();
+        mScript->executionStopped();
 
 		mScriptEngineDebugger.detach();
 		
@@ -805,7 +804,7 @@ namespace LibExecuter
 
 		emit actionStarted(mCurrentActionIndex, mActiveActionsCount);
 
-		currentActionInstance()->startExecution();
+        currentActionInstance()->doStartExecution();
 	}
 
 	void Executer::updateTimerProgress()

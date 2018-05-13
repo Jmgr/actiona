@@ -40,7 +40,8 @@ SOURCES += main.cpp \
     scriptproxymodel.cpp \
     filterlineedit.cpp \
     scripttreeview.cpp \
-    flagscombobox.cpp
+    flagscombobox.cpp \
+    colorpickerpushbutton.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -68,7 +69,8 @@ HEADERS += mainwindow.h \
     filterlineedit.h \
     scripttreeview.h \
     flagscombobox.h \
-    actionfilteringflags.h
+    actionfilteringflags.h \
+    colorpickerpushbutton.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += changelogdialog.cpp
 	HEADERS += changelogdialog.h
