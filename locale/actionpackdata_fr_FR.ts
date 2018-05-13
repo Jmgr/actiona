@@ -1387,25 +1387,25 @@ Doit contenir un entête par ligne</translation>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="164"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="176"/>
         <location filename="../actions/actionpackdata/code/registry.cpp" line="194"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="223"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="238"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="216"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="230"/>
         <source>Cannot find the value to read</source>
         <translation>Impossible de trouver la valeur à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="247"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="239"/>
         <source>Invalid value type</source>
         <translation>Type de valeur incorrect</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="267"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="309"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="259"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="299"/>
         <source>Unable to query informations about this key</source>
         <translation>Impossible de récupérer des informations à propos de cette clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="343"/>
-        <location filename="../actions/actionpackdata/code/registry.cpp" line="448"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="331"/>
+        <location filename="../actions/actionpackdata/code/registry.cpp" line="436"/>
         <source>Unable to delete the key</source>
         <translation>Impossible de supprimer la clef</translation>
     </message>

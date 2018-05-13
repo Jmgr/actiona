@@ -213,12 +213,12 @@
         <translation>Valeur %1 incorrecte : %2</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="838"/>
+        <location filename="../actiontools/actioninstance.cpp" line="846"/>
         <source>Undefined variable &quot;%1&quot;</source>
         <translation>La variable &quot;%1&quot; est inconnue</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.cpp" line="871"/>
+        <location filename="../actiontools/actioninstance.cpp" line="879"/>
         <source>Invalid parameter. Unable to evaluate string</source>
         <translation>Paramètre incorrect. Impossible d&apos;évaluer la chaîne de caractères</translation>
     </message>
@@ -240,12 +240,12 @@
     </message>
     <message>
         <location filename="../actiontools/actioninstance.cpp" line="455"/>
-        <location filename="../actiontools/actioninstance.h" line="258"/>
+        <location filename="../actiontools/actioninstance.h" line="263"/>
         <source>Please choose a value for this field.</source>
         <translation>Merci de choisir une valeur pour ce champ.</translation>
     </message>
     <message>
-        <location filename="../actiontools/actioninstance.h" line="271"/>
+        <location filename="../actiontools/actioninstance.h" line="276"/>
         <source>&quot;%1&quot; is an invalid value.</source>
         <translation>&quot;%1&quot; est une valeur incorrecte.</translation>
     </message>
@@ -371,60 +371,60 @@
 <context>
     <name>ActionTools::CodeLineEdit</name>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="53"/>
+        <location filename="../actiontools/codelineedit.cpp" line="54"/>
         <source>Set to text/code</source>
         <translation>Changer en texte/code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="54"/>
+        <location filename="../actiontools/codelineedit.cpp" line="55"/>
         <source>Open editor</source>
         <translation>Ouvrir éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="80"/>
+        <location filename="../actiontools/codelineedit.cpp" line="81"/>
         <source>Click here to switch text/code</source>
         <translation>Cliquez ici pour passer en mode texte/code</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="84"/>
+        <location filename="../actiontools/codelineedit.cpp" line="85"/>
         <source>Click here to open the editor</source>
         <translation>Cliquez ici pour ouvrir l&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="88"/>
+        <location filename="../actiontools/codelineedit.cpp" line="89"/>
         <source>Click here to insert a variable or a resource</source>
         <translation>Cliquez ici pour insérer une variable ou une ressource</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="268"/>
+        <location filename="../actiontools/codelineedit.cpp" line="269"/>
         <source>Insert variable/resource</source>
         <translation>Insérer une variable/ressource</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="268"/>
+        <location filename="../actiontools/codelineedit.cpp" line="269"/>
         <source>Inserting a variable or a resource will replace the current parameter value.
 Are you sure?</source>
         <translation>Insérer une variable ou une ressource va remplacer la valeur actuelle du paramètre.
 Êtes-vous sûr ?</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="306"/>
-        <location filename="../actiontools/codelineedit.cpp" line="335"/>
+        <location filename="../actiontools/codelineedit.cpp" line="307"/>
+        <location filename="../actiontools/codelineedit.cpp" line="336"/>
         <source>Cannot insert in a multiline parameter</source>
         <translation>Impossible d&apos;insérer dans un paramètre multiligne</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="343"/>
+        <location filename="../actiontools/codelineedit.cpp" line="344"/>
         <source>Insert resource</source>
         <translation>Insérer une ressource</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="346"/>
+        <location filename="../actiontools/codelineedit.cpp" line="347"/>
         <source>No resources to insert</source>
         <translation>Aucune ressource à insérer</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="460"/>
+        <location filename="../actiontools/codelineedit.cpp" line="461"/>
         <source>Multiline, double-click to edit</source>
         <translation>Multiligne, double-cliquez pour éditer</translation>
     </message>
@@ -433,12 +433,12 @@ Are you sure?</source>
         <translation type="obsolete">Cliquez ici pour insérer une variable</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="315"/>
+        <location filename="../actiontools/codelineedit.cpp" line="316"/>
         <source>Insert variable</source>
         <translation>Insérer une variable</translation>
     </message>
     <message>
-        <location filename="../actiontools/codelineedit.cpp" line="319"/>
+        <location filename="../actiontools/codelineedit.cpp" line="320"/>
         <source>No variables to insert</source>
         <translation>Pas de variables à insérer</translation>
     </message>
@@ -538,9 +538,8 @@ Double-cliquez pour afficher</translation>
         <translation>Étiquettes</translation>
     </message>
     <message>
-        <location filename="../actiontools/linecombobox.cpp" line="43"/>
         <source>Lines</source>
-        <translation>Lignes</translation>
+        <translation type="vanished">Lignes</translation>
     </message>
 </context>
 <context>
@@ -701,22 +700,22 @@ Double-cliquez pour afficher</translation>
         <translation>Création de la liste de contenu du fichier...</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="445"/>
+        <location filename="../actiontools/script.cpp" line="448"/>
         <source>Reading content...</source>
         <translation>Lecture du contenu...</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="509"/>
+        <location filename="../actiontools/script.cpp" line="513"/>
         <source>Reading parameters...</source>
         <translation>Lecture des paramètres...</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="529"/>
+        <location filename="../actiontools/script.cpp" line="533"/>
         <source>Reading resources...</source>
         <translation>Lecture des ressources...</translation>
     </message>
     <message>
-        <location filename="../actiontools/script.cpp" line="578"/>
+        <location filename="../actiontools/script.cpp" line="582"/>
         <source>Reading actions...</source>
         <translation>Lecture des actions...</translation>
     </message>
@@ -1552,170 +1551,6 @@ Double-cliquez pour afficher</translation>
         <location filename="../actiontools/numberformat.cpp" line="33"/>
         <source>TB</source>
         <translation>To</translation>
-    </message>
-</context>
-<context>
-    <name>QxtCommandOptions</name>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="101"/>
-        <source>sets the application GUI style</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="102"/>
-        <source>sets the application stylesheet</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="103"/>
-        <source>restores the application from an earlier session</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="104"/>
-        <source>displays debugging information about widgets</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="105"/>
-        <source>use right-to-left layout</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="107"/>
-        <source>never grab the mouse or keyboard</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="110"/>
-        <source>grab the mouse/keyboard even in a debugger</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="111"/>
-        <source>run in synchronous mode for debugging</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="114"/>
-        <source>use Direct3D by default</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="117"/>
-        <source>sets the X11 display</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="118"/>
-        <source>sets the geometry of the first window</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="120"/>
-        <source>sets the default font</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="122"/>
-        <source>sets the default background color</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="124"/>
-        <source>sets the default foreground color</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="126"/>
-        <source>sets the default button color</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="127"/>
-        <source>sets the application name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="128"/>
-        <source>sets the application title</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="129"/>
-        <source>sets the X11 visual type</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="130"/>
-        <source>limit the number of colors on an 8-bit display</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="131"/>
-        <source>use a private color map</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="132"/>
-        <source>sets the input method server</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="133"/>
-        <source>disable the X Input Method</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="134"/>
-        <source>sets the style used by the input method</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="235"/>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="249"/>
-        <source>option &quot;%1&quot; not found</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="384"/>
-        <source>Short options cannot have optional parameters</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="396"/>
-        <source>positional() called before parse()</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="410"/>
-        <source>unrecognized() called before parse()</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="423"/>
-        <source>count() called before parse()</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="443"/>
-        <source>value() called before parse()</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="458"/>
-        <source>parameters() called before parse()</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="748"/>
-        <source>unrecognized parameters: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../actiontools/qxtcommandoptions/qxtcommandoptions.cpp" line="751"/>
-        <source>%1 requires a parameter</source>
-        <translation></translation>
     </message>
 </context>
 <context>

@@ -12,37 +12,47 @@
 <context>
     <name>Actions::ClickDefinition</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="51"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="52"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="53"/>
         <source>The action to simulate</source>
         <translation>L&apos;action à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="58"/>
         <source>Button</source>
         <translation>Bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="58"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="59"/>
         <source>The button to simulate</source>
         <translation>Le bouton à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="63"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="64"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="64"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="65"/>
         <source>The screen position where to simulate a mouse click</source>
         <translation>La position à l&apos;écran où simuler le clic de souris</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="81"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="68"/>
+        <source>Restore cursor position</source>
+        <translation>Restaurer la position du curseur</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="69"/>
+        <source>Restore the cursor position after the action is finished</source>
+        <translation>Restaure la position du curseur après la fin de l&apos;action</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="86"/>
         <source>The offset to apply to the click position</source>
         <translation>Le décalage à appliquer à la position du clic</translation>
     </message>
@@ -51,17 +61,17 @@
         <translation type="obsolete">Action de clic</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="71"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="76"/>
         <source>Amount</source>
         <translation>Quantité</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="72"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="77"/>
         <source>The amount of clicks to simulate</source>
         <translation>La quantité de clics à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="80"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
         <source>Offset</source>
         <translation>Décalage</translation>
     </message>
@@ -70,12 +80,12 @@
         <translation type="obsolete">Le décalage à appliquer à la position du clic</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="84"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="89"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="90"/>
         <source>Invalid action</source>
         <translation>Action incorrecte</translation>
     </message>
@@ -83,13 +93,13 @@
 <context>
     <name>Actions::ClickInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="56"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="57"/>
         <source>Invalid click amount</source>
         <translation>Quantité de clics incorrecte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="72"/>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="80"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="75"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="83"/>
         <source>Unable to emulate click: button event failed</source>
         <translation>Impossible de simuler un clic : l&apos;évènement de bouton n&apos;a pas pu être envoyé</translation>
     </message>
@@ -493,12 +503,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="88"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="93"/>
         <source>Click</source>
         <translation>Clic</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="91"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="96"/>
         <source>Emulates a mouse click</source>
         <translation>Simule un clic de souris</translation>
     </message>
