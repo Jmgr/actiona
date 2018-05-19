@@ -51,7 +51,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 		buildName = QStringLiteral(" - ") + QStringLiteral(ACT_BUILD_NAME);
 
     QString message = tr("<img src=':/icons/logo.png'><h2>Actiona %1%2</h2>").arg(Global::ACTIONA_VERSION.toString()).arg(buildName);
-	message += QStringLiteral(" 2005-2017 Jonathan \"Jmgr\" Mercier-Ganady <a href='mailto:jmgr@jmgr.info'>jmgr@jmgr.info</a><br/><br/>");
+    message += QStringLiteral(" Jonathan \"Jmgr\" Mercier-Ganady <a href='mailto:jmgr@jmgr.info'>jmgr@jmgr.info</a><br/><br/>");
     message += tr("<i>Emulates clics, key presses and other actions</i><br/><br/>Using Qt %1 (runtime %2) under %3 (%4 bit)")
 			   .arg(QLatin1String(QT_VERSION_STR))
 			   .arg(QLatin1String(qVersion()))
