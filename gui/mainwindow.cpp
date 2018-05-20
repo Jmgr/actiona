@@ -1819,7 +1819,6 @@ void MainWindow::pauseOrResumeExecution()
 void MainWindow::scriptExecutionStopped()
 {
     ui->heatmapModeComboBox->setEnabled(true);
-    ui->heatmapModeComboBox->setToolTip({});
 
 	QSettings settings;
 
@@ -2372,8 +2371,6 @@ void MainWindow::actionCountChanged()
 	ui->actionInverse_selection->setEnabled(hasActions);
 	ui->actionJump_to_line->setEnabled(hasActions);
     ui->heatmapModeComboBox->setEnabled(hasActions && mScript->hasBeenExecuted());
-    if(ui->heatmapModeComboBox->isEnabled())
-            ui->heatmapModeComboBox->setToolTip(tr("Run the script at least once to enable heatmap mode"));
 }
 
 void MainWindow::enabledActionsCountChanged(bool hasEnabledActions)
