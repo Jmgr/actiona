@@ -108,6 +108,6 @@ namespace Actions
 
 		file.close();
 
-		emit executionEnded();
+		executionEnded();
 	}
 }

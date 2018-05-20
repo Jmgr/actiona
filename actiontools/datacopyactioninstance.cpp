@@ -87,6 +87,6 @@ namespace ActionTools
 	{
 		clean();
 	
-		emit executionEnded();
+		executionEnded();
 	}
 }

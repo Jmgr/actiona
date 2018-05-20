@@ -297,9 +297,9 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
 	connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
     connect(mScript, SIGNAL(scriptProcessing(int,int,QString)), this, SLOT(scriptProcessing(int,int,QString)));
-    connect(ui->heatmapCheckBox, &QCheckBox::toggled, [this](bool checked)
+    connect(ui->heatmapModeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](int index)
     {
-        mScriptModel->setHeatmapMode(checked);
+        mScriptModel->setHeatmapMode(static_cast<HeatmapMode>(index));
 
         ui->scriptView->viewport()->update();
     });
@@ -1818,7 +1818,8 @@ void MainWindow::pauseOrResumeExecution()
 
 void MainWindow::scriptExecutionStopped()
 {
-    ui->heatmapCheckBox->setEnabled(true);
+    ui->heatmapModeComboBox->setEnabled(true);
+    ui->heatmapModeComboBox->setToolTip({});
 
 	QSettings settings;
 
@@ -2370,7 +2371,9 @@ void MainWindow::actionCountChanged()
 	ui->actionDisable_all_actions->setEnabled(hasActions);
 	ui->actionInverse_selection->setEnabled(hasActions);
 	ui->actionJump_to_line->setEnabled(hasActions);
-    ui->heatmapCheckBox->setEnabled(hasActions && mScript->hasBeenExecuted());
+    ui->heatmapModeComboBox->setEnabled(hasActions && mScript->hasBeenExecuted());
+    if(ui->heatmapModeComboBox->isEnabled())
+            ui->heatmapModeComboBox->setToolTip(tr("Run the script at least once to enable heatmap mode"));
 }
 
 void MainWindow::enabledActionsCountChanged(bool hasEnabledActions)

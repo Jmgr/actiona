@@ -39,7 +39,7 @@ namespace Actions
 		{
 			QApplication::quit();
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

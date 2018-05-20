@@ -142,20 +142,20 @@ void ScriptModel::pasteActions(int row)
     dropMimeData(mimeData, Qt::CopyAction, row, 0, QModelIndex());
 }
 
-void ScriptModel::setHeatmapMode(bool enable)
+void ScriptModel::setHeatmapMode(HeatmapMode heatmapMode)
 {
-    mHeatmapMode = enable;
+    mHeatmapMode = heatmapMode;
 
     emit dataChanged(index(0, 0), index(rowCount(), ColumnsCount - 1), {Qt::ToolTipRole, Qt::BackgroundColorRole, Qt::ForegroundRole});
 }
 
-void ScriptModel::setHeatmapColors(const QPair<QColor, QColor> &heatmapColors)
+void ScriptModel::setHeatmapColors(const std::pair<QColor, QColor> &heatmapColors)
 {
     bool changed = (mHeatmapColors != heatmapColors);
 
     mHeatmapColors = heatmapColors;
 
-    if(mHeatmapMode && changed)
+    if(mHeatmapMode != HeatmapMode::None && changed)
         emit dataChanged(index(0, 0), index(rowCount(), ColumnsCount - 1), {Qt::ToolTipRole, Qt::BackgroundColorRole});
 }
 
@@ -203,7 +203,7 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 		return actionInstance->definition()->id();
 	case Qt::BackgroundRole:
 		{
-            if(mHeatmapMode && mScript->hasBeenExecuted())
+            if(mHeatmapMode != HeatmapMode::None && mScript->hasBeenExecuted())
                 return QBrush{computeHeatmapColor(*actionInstance)};
             else
             {
@@ -229,7 +229,7 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 		}
 	case Qt::ForegroundRole:
 		{
-            auto color = (mHeatmapMode && mScript->hasBeenExecuted()) ? computeHeatmapColor(*actionInstance) : actionInstance->color();
+            auto color = (mHeatmapMode != HeatmapMode::None && mScript->hasBeenExecuted()) ? computeHeatmapColor(*actionInstance) : actionInstance->color();
 
             if(color.isValid())
             {
@@ -282,15 +282,20 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
         }
         break;
     case Qt::ToolTipRole:
-        if(mHeatmapMode)
+        switch(mHeatmapMode)
+        {
+        case HeatmapMode::ExecutionCount:
             return tr("Action executed %n time(s)", "", actionInstance->executionCounter());
-        else
+        case HeatmapMode::ExecutionDuration:
+            return tr("Action executed %1 seconds").arg(actionInstance->executionCounter() / 1000.0);
+        case HeatmapMode::None:
         {
             switch(index.column())
             {
                 case ColumnActionName:
                     return tr("Double-clic to edit the action");
             }
+        }
         }
         break;
     case Qt::DecorationRole:
@@ -600,9 +605,29 @@ QColor ScriptModel::computeHeatmapColor(const ActionTools::ActionInstance &actio
 {
     const auto minColor = mHeatmapColors.first.toHsv();
     const auto maxColor = mHeatmapColors.second.toHsv();
-    auto minMaxExecutionCounter = mScript->minMaxExecutionCounter();
+    qreal ratio = 0;
 
-    qreal ratio = (actionInstance.executionCounter() - minMaxExecutionCounter.first) / static_cast<qreal>(minMaxExecutionCounter.second - minMaxExecutionCounter.first);
+    switch(mHeatmapMode)
+    {
+    case HeatmapMode::ExecutionCount:
+    {
+        auto minMaxExecutionCounter = mScript->minMaxExecutionCounter();
+
+        ratio = (minMaxExecutionCounter.second - minMaxExecutionCounter.first == 0) ? 0 : (actionInstance.executionCounter() - minMaxExecutionCounter.first) / static_cast<qreal>(minMaxExecutionCounter.second - minMaxExecutionCounter.first);
+
+        break;
+    }
+    case HeatmapMode::ExecutionDuration:
+    {
+        auto minMaxExecutionDuration = mScript->minMaxExecutionDuration();
+
+        ratio = (minMaxExecutionDuration.second - minMaxExecutionDuration.first == 0) ? 0 : (actionInstance.executionDuration() - minMaxExecutionDuration.first) / static_cast<qreal>(minMaxExecutionDuration.second - minMaxExecutionDuration.first);
+
+        break;
+    }
+    case HeatmapMode::None:
+        break;
+    }
 
     auto color = QColor::fromHsvF(
                 minColor.hsvHueF() * (1 - ratio) + maxColor.hsvHueF() * ratio,

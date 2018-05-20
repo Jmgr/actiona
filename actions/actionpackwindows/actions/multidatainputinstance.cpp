@@ -224,14 +224,14 @@ namespace Actions
 
 		closeDialog();
 
-		emit executionEnded();
+		executionEnded();
 	}
 
 	void MultiDataInputInstance::rejected()
 	{
 		closeDialog();
 
-		emit executionEnded();
+		executionEnded();
 	}
 
 	void MultiDataInputInstance::listItemSelectionChanged()

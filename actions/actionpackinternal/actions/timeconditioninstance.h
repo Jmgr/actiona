@@ -100,7 +100,7 @@ namespace Actions
 					return;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 		void stopExecution()
@@ -114,7 +114,7 @@ namespace Actions
 			if(mTestedDateTime <= QDateTime::currentDateTime())
 			{
 				mTimer.stop();
-				emit executionEnded();
+				executionEnded();
 			}
 		}
 

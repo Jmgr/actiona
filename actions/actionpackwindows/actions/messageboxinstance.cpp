@@ -192,7 +192,7 @@ namespace Actions
 
 		closeAndDelete();
 
-		emit executionEnded();
+		executionEnded();
 	}
 
 	void MessageBoxInstance::closeAndDelete()

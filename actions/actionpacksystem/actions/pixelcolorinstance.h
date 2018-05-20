@@ -98,7 +98,7 @@ namespace Actions
 						return;
 				}
 
-				emit executionEnded();
+				executionEnded();
 			}
 			else
 			{
@@ -112,14 +112,14 @@ namespace Actions
 				{
 					setNextLine(line);
 
-					emit executionEnded();
+					executionEnded();
 				}
 				else if(ifFalse.action() == ActionTools::IfActionValue::CALLPROCEDURE)
 				{
 					if(!callProcedure(line))
 						return;
 
-					emit executionEnded();
+					executionEnded();
 				}
 				else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 				{
@@ -128,7 +128,7 @@ namespace Actions
 					mTimer.start();
 				}
 				else
-					emit executionEnded();
+					executionEnded();
 			}
 		}
 
@@ -157,7 +157,7 @@ namespace Actions
 				}
 
 				mTimer.stop();
-				emit executionEnded();
+				executionEnded();
 			}
 		}
 

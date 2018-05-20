@@ -53,7 +53,7 @@ namespace Actions
 				return;
 			}
 	
-			emit executionEnded();
+			executionEnded();
 		}
 
 		void stopLongTermExecution()

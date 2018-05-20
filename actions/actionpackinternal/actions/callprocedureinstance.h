@@ -46,7 +46,7 @@ namespace Actions
 			if(!callProcedure(name))
 				return;
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

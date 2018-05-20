@@ -569,7 +569,7 @@ namespace LibExecuter
 		{
 			currentActionInstance()->disconnect();
 			if(!mExecutionEnded)
-				currentActionInstance()->stopExecution();
+                currentActionInstance()->doStopExecution();
 		}
 
         mScript->executionStopped();
@@ -828,7 +828,7 @@ namespace LibExecuter
 			{
 				mExecutionTimer.stop();
 				actionInstance->disconnect();
-				actionInstance->stopExecution();
+                actionInstance->doStopExecution();
 	
 				executionException(ActionTools::ActionException::TimeoutException, QString());
 			}
@@ -977,9 +977,9 @@ namespace LibExecuter
 			if(currentAction)
 			{
 				if(mExecutionPaused)
-					currentAction->pauseExecution();
+                    currentAction->doPauseExecution();
 				else
-					currentAction->resumeExecution();
+                    currentAction->doResumeExecution();
 			}
 		}
 
@@ -1036,7 +1036,7 @@ namespace LibExecuter
 		mExecutionWindow->setCurrentActionName(actionInstance->definition()->name());
 		mExecutionWindow->setCurrentActionColor(actionInstance->color());
 
-		connect(actionInstance, SIGNAL(executionEnded()), this, SLOT(actionExecutionEnded()));
+        connect(actionInstance, SIGNAL(executionEndedSignal()), this, SLOT(actionExecutionEnded()));
 		connect(actionInstance, SIGNAL(executionException(int,QString)), this, SLOT(executionException(int,QString)));
 		connect(actionInstance, SIGNAL(disableAction(bool)), this, SLOT(disableAction(bool)));
 		connect(actionInstance, SIGNAL(showProgressDialog(QString,int)), this, SLOT(showProgressDialog(QString,int)));

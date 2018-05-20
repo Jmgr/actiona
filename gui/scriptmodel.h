@@ -20,11 +20,14 @@
 
 #pragma once
 
+#include "scriptmodelundocommands.h"
+#include "heatmapmode.h"
+
 #include <QAbstractTableModel>
 #include <QItemSelectionModel>
 #include <QColor>
 
-#include "scriptmodelundocommands.h"
+#include <utility>
 
 namespace ActionTools
 {
@@ -77,8 +80,8 @@ public:
 	void setSelectionModel(QItemSelectionModel *selectionModel)			{ mSelectionModel = selectionModel; }
     void setProxyModel(ScriptProxyModel *proxyModel)                    { mProxyModel = proxyModel; }
 	QUndoStack *undoStack() const										{ return mUndoStack; }
-    void setHeatmapColors(const QPair<QColor, QColor> &heatmapColors);
-    QPair<QColor, QColor> heatmapColors() const                         { return mHeatmapColors; }
+    void setHeatmapColors(const std::pair<QColor, QColor> &heatmapColors);
+    std::pair<QColor, QColor> heatmapColors() const                     { return mHeatmapColors; }
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -95,7 +98,7 @@ public slots:
 	void moveActions(MoveDirection moveDirection, const QList<int> &rows);
 	void copyActions(const QList<int> &rows);
 	void pasteActions(int row);
-    void setHeatmapMode(bool enable);
+    void setHeatmapMode(HeatmapMode heatmapMode);
 
 signals:
 	void scriptEdited();
@@ -126,8 +129,8 @@ private:
     QItemSelectionModel *mSelectionModel{};
     ScriptProxyModel *mProxyModel{};
 	QUndoStack *mUndoStack;
-    bool mHeatmapMode{};
-    QPair<QColor, QColor> mHeatmapColors{QColor{Qt::yellow}, QColor{Qt::red}};
+    HeatmapMode mHeatmapMode{HeatmapMode::None};
+    std::pair<QColor, QColor> mHeatmapColors{QColor{Qt::yellow}, QColor{Qt::red}};
 
 	Q_DISABLE_COPY(ScriptModel)
 };

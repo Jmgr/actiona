@@ -199,21 +199,21 @@ namespace Actions
             {
                 setNextLine(line);
 
-                emit executionEnded();
+                executionEnded();
             }
             else if(mIfNotFound.action() == ActionTools::IfActionValue::CALLPROCEDURE)
             {
                 if(!callProcedure(line))
                     return;
 
-                emit executionEnded();
+                executionEnded();
             }
             else if(mIfNotFound.action() == ActionTools::IfActionValue::WAIT)
             {
                 mWaitTimer.start(mSearchDelay);
             }
             else
-                emit executionEnded();
+                executionEnded();
 
             return;
         }
@@ -260,21 +260,21 @@ namespace Actions
         {
             setNextLine(line);
 
-            emit executionEnded();
+            executionEnded();
         }
         else if(mIfFound.action() == ActionTools::IfActionValue::CALLPROCEDURE)
         {
             if(!callProcedure(line))
                 return;
 
-            emit executionEnded();
+            executionEnded();
         }
         else if(mIfFound.action() == ActionTools::IfActionValue::WAIT)
         {
             mWaitTimer.start(mSearchDelay);
         }
         else
-            emit executionEnded();
+            executionEnded();
     }
 }
 

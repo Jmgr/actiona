@@ -44,7 +44,7 @@ namespace Actions
 				return;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

@@ -34,7 +34,7 @@ namespace Actions
 
 		void startExecution()
 		{
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

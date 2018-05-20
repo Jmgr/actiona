@@ -70,7 +70,8 @@ HEADERS += mainwindow.h \
     scripttreeview.h \
     flagscombobox.h \
     actionfilteringflags.h \
-    colorpickerpushbutton.h
+    colorpickerpushbutton.h \
+    heatmapmode.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += changelogdialog.cpp
 	HEADERS += changelogdialog.h

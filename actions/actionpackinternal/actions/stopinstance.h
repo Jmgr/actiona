@@ -40,7 +40,7 @@ namespace Actions
 			LibExecuter::ScriptAgent *scriptAgent = dynamic_cast<LibExecuter::ScriptAgent *>(scriptEngine()->agent());
 			scriptAgent->stopExecution();
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

@@ -37,7 +37,7 @@ namespace Actions
 		{
 			setNextLine(runtimeParameter(QStringLiteral("procedureEndLine")).toInt() + 2);//Lines start at 1
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

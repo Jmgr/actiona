@@ -69,6 +69,6 @@ namespace Actions
 			setArrayKeyValue(variable, environmentHashVariableValue);
 
 
-		emit executionEnded();
+		executionEnded();
 	}
 }

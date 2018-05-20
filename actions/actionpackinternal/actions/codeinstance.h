@@ -41,7 +41,7 @@ namespace Actions
 			if(!ok)
 				return;
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

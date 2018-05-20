@@ -67,6 +67,6 @@ namespace Actions
 		}
 	#endif
 
-		emit executionEnded();
+		executionEnded();
 	}
 }

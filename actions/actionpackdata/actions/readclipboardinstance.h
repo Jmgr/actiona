@@ -49,7 +49,7 @@ namespace Actions
 
             setVariable(variable, clipboard->text());
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

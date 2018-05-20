@@ -111,13 +111,13 @@ namespace Actions
 			if(mDestination == Variable)
                 setVariable(mVariable, QString::fromUtf8(mReply->readAll()));
 
-			emit executionEnded();
+            executionEnded();
 			break;
 		case QNetworkReply::OperationCanceledError:
 			if(mDestination == File)
 				mFile.remove();
 
-			emit executionEnded();
+            executionEnded();
 			break;
 		default:
 			{

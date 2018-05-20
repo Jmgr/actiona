@@ -56,7 +56,7 @@ namespace Actions
 			if(processId != 0)
 				ActionTools::CrossPlatform::killProcess(processId, ActionTools::CrossPlatform::GracefulThenForceful, 100);
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

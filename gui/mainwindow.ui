@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1809</width>
-    <height>1146</height>
+    <width>1743</width>
+    <height>1139</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -149,13 +149,22 @@
        </spacer>
       </item>
       <item>
-       <widget class="QCheckBox" name="heatmapCheckBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Heatmap</string>
-        </property>
+       <widget class="QComboBox" name="heatmapModeComboBox">
+        <item>
+         <property name="text">
+          <string>No heatmap</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Execution count heatmap</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Execution duration heatmap</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
@@ -167,7 +176,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1809</width>
+     <width>1743</width>
      <height>31</height>
     </rect>
    </property>

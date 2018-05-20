@@ -46,7 +46,7 @@ namespace Actions
 			position += positionOffset;
 			mMouseDevice.setCursorPosition(position);
 		
-			emit executionEnded();
+			executionEnded();
 		}
 
 		void stopLongTermExecution()

@@ -91,7 +91,10 @@ namespace Actions
 			mMouseDevice.setCursorPosition(previousPosition);
 		}
 	
-		QTimer::singleShot(1, this, SIGNAL(executionEnded()));
+        QTimer::singleShot(1, this, [this]
+        {
+            executionEnded();
+        });
 	}
 
 	void ClickInstance::stopLongTermExecution()

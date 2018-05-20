@@ -60,7 +60,10 @@ namespace Actions
 				return;
 			}
 
-			QTimer::singleShot(1, this, SIGNAL(executionEnded()));
+            QTimer::singleShot(1, this, [this]
+            {
+                executionEnded();
+            });
 		}
 		else
 		{
@@ -94,7 +97,10 @@ namespace Actions
 		{
 			mTimer->stop();
 
-			QTimer::singleShot(1, this, SIGNAL(executionEnded()));
+            QTimer::singleShot(1, this, [this]
+            {
+                executionEnded();
+            });
 
 			return;
 		}

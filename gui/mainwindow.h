@@ -22,6 +22,7 @@
 
 #include "script.h"
 #include "executer.h"
+#include "heatmapmode.h"
 
 #include <QMainWindow>
 #ifndef ACT_NO_UPDATER
@@ -244,6 +245,7 @@ private:
     NewActionProxyModel *mNewActionProxyModel;
     ScriptProxyModel *mScriptProxyModel;
     NewActionModel *mNewActionModel;
+    HeatmapMode mHeatmapMode;
 #ifndef ACT_NO_UPDATER
 	QNetworkAccessManager *mNetworkAccessManager;
 	QNetworkReply *mUpdateDownloadNetworkReply;

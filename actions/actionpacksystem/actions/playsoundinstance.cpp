@@ -81,7 +81,7 @@ namespace Actions
 		}
 
 		if(!mBlocking)
-			emit executionEnded();
+			executionEnded();
 	}
 
 	void PlaySoundInstance::pauseExecution()
@@ -107,6 +107,6 @@ namespace Actions
 	void PlaySoundInstance::stateChanged(QMediaPlayer::State state)
 	{
 		if(state == QMediaPlayer::StoppedState)
-			emit executionEnded();
+			executionEnded();
 	}
 }

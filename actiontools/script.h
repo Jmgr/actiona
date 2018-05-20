@@ -31,6 +31,7 @@
 #include <QStack>
 
 #include <functional>
+#include <utility>
 
 class QIODevice;
 
@@ -113,7 +114,8 @@ namespace ActionTools
         void clearResources()                                                           { mResources.clear(); }
 		const QMap<QString, Resource> &resources() const								{ return mResources; }
 
-        QPair<int, int> minMaxExecutionCounter() const                                  { return mMinMaxExecutionCounter; }
+        std::pair<int, int> minMaxExecutionCounter() const                                  { return mMinMaxExecutionCounter; }
+        std::pair<qint64, qint64> minMaxExecutionDuration() const                           { return mMinMaxExecutionDuration; }
         bool hasBeenExecuted() const                                                    { return mMinMaxExecutionCounter.first > 0; }
 
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
@@ -147,7 +149,8 @@ namespace ActionTools
 		QMap<QString, int> mProcedures;
 		QStack<int> mCallStack;
 		QMap<QString, Resource> mResources;
-        QPair<int, int> mMinMaxExecutionCounter;
+        std::pair<int, int> mMinMaxExecutionCounter;
+        std::pair<qint64, qint64> mMinMaxExecutionDuration;
 
 		Q_DISABLE_COPY(Script)
 	};

@@ -157,7 +157,7 @@ namespace Actions
 					return;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
         static Tools::StringListPair comparisons;

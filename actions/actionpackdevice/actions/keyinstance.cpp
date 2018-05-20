@@ -110,7 +110,7 @@ namespace Actions
 		}
 
 		if(action != PressReleaseAction)
-			emit executionEnded();
+			executionEnded();
 	}
 
 	void KeyInstance::stopExecution()
@@ -132,7 +132,7 @@ namespace Actions
 		if (mAmount > 0)
 			emit sendPressKey();
 		else
-			emit executionEnded();
+			executionEnded();
 	}
 
 	void KeyInstance::sendPressKey()

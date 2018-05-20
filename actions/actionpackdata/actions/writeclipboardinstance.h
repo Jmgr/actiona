@@ -47,7 +47,7 @@ namespace Actions
 			QClipboard *clipboard = QApplication::clipboard();
 			clipboard->setText(value);
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

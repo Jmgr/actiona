@@ -57,7 +57,7 @@ namespace Actions
 			if(!write(filename, section, parameter, value))
 				return;
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

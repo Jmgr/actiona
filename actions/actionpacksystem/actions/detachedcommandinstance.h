@@ -68,7 +68,7 @@ namespace Actions
 
             setVariable(processId, QString::number(processIdValue));
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

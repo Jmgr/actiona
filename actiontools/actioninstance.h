@@ -31,6 +31,7 @@
 #include <QColor>
 #include <QScriptValue>
 #include <QVariant>
+#include <QElapsedTimer>
 
 class QScriptEngine;
 class QDataStream;
@@ -65,7 +66,9 @@ namespace ActionTools
 			scriptEngine(other.scriptEngine),
 			scriptLine(other.scriptLine),
             runtimeParameters(other.runtimeParameters),
-            executionCounter(other.executionCounter)
+            executionCounter(other.executionCounter),
+            executionTimer(other.executionTimer),
+            executionDuration(other.executionDuration)
 			{}
 
 		bool operator==(const ActionInstanceData &other) const;
@@ -86,6 +89,8 @@ namespace ActionTools
         int scriptLine{0};
 		QVariantHash runtimeParameters;
         int executionCounter{0};
+        QElapsedTimer executionTimer;
+        qint64 executionDuration{};
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
@@ -156,9 +161,13 @@ namespace ActionTools
 		virtual void pauseExecution()										{}//This is called when the action should pause its execution
 		virtual void resumeExecution()										{}//This is called when the action should resume its execution
 
-        void doStartExecution()                                             { ++d->executionCounter; startExecution(); }
+        void doStartExecution();
+        void doStopExecution();
+        void doPauseExecution();
+        void doResumeExecution();
 
         int executionCounter() const                                        { return d->executionCounter; }
+        qint64 executionDuration() const                                    { return d->executionDuration; }
 
 		void setupExecution(QScriptEngine *scriptEngine, Script *script, int scriptLine)
 		{
@@ -166,6 +175,7 @@ namespace ActionTools
 			d->script = script;
 			d->scriptLine = scriptLine;
             d->executionCounter = 0;
+            d->executionDuration = 0;
 		}
 
 		void copyActionDataFrom(const ActionInstance &other);
@@ -182,7 +192,7 @@ namespace ActionTools
 		void updateProgressDialog(int value);
 		void hideProgressDialog();
 		void executionException(int exception, const QString &message);
-		void executionEnded();
+        void executionEndedSignal();
 		void disableAction(bool disable = true);
 		void consolePrint(const QString &text);
 		void consolePrintWarning(const QString &text);
@@ -316,6 +326,9 @@ namespace ActionTools
 		QScriptValue variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = QStringLiteral("value"));
+
+        /// Should be called when an action has finished running
+        void executionEnded();
 
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);

@@ -107,7 +107,7 @@ namespace Actions
 				break;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

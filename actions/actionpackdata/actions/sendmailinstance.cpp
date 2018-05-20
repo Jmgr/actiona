@@ -78,7 +78,7 @@ namespace Actions
 
         if(serverName.isEmpty() || sender.isEmpty() || receivers.isEmpty())
         {
-            emit executionEnded();
+            executionEnded();
 
             return;
         }
@@ -356,7 +356,7 @@ namespace Actions
 
         cleanup();
 
-        emit executionEnded();
+        executionEnded();
     }
 
     void SendMailInstance::disconnected()
@@ -368,7 +368,7 @@ namespace Actions
     {
         cleanup();
 
-        emit executionEnded();
+        executionEnded();
     }
 
     void SendMailInstance::cleanup()

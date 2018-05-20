@@ -103,7 +103,7 @@ namespace Actions
 			{
                 releaseButton();
 
-				emit executionEnded();
+				executionEnded();
 				mMoveTimer.stop();
 			}
 			else

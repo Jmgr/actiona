@@ -43,7 +43,7 @@ namespace Actions
 
 			setNextLine(line);
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:

@@ -196,6 +196,6 @@ namespace Actions
 		mInputDialog->disconnect();
 		mInputDialog->close();
 
-		emit executionEnded();
+		executionEnded();
 	}
 }

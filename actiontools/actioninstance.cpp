@@ -106,11 +106,39 @@ namespace ActionTools
         return true;
     }
 
-	void ActionInstance::copyActionDataFrom(const ActionInstance &other)
-	{
-		setComment(other.comment());
-		setLabel(other.label());
-		setParametersData(other.parametersData());
+    void ActionInstance::doStartExecution()
+    {
+        ++d->executionCounter;
+
+        d->executionTimer.start();
+
+        startExecution();
+    }
+
+    void ActionInstance::doStopExecution()
+    {
+        stopExecution();
+    }
+
+    void ActionInstance::doPauseExecution()
+    {
+        pauseExecution();
+
+        d->executionDuration += d->executionTimer.elapsed();
+    }
+
+    void ActionInstance::doResumeExecution()
+    {
+        d->executionTimer.start();
+
+        resumeExecution();
+    }
+
+    void ActionInstance::copyActionDataFrom(const ActionInstance &other)
+    {
+        setComment(other.comment());
+        setLabel(other.label());
+        setParametersData(other.parametersData());
 		setColor(other.color());
 		setEnabled(other.isEnabled());
 		setSelected(other.isSelected());
@@ -751,8 +779,15 @@ namespace ActionTools
 	void ActionInstance::setCurrentParameter(const QString &parameterName, const QString &subParameterName)
 	{
 		d->scriptEngine->globalObject().setProperty(QStringLiteral("currentParameter"), parameterName, QScriptValue::ReadOnly);
-		d->scriptEngine->globalObject().setProperty(QStringLiteral("currentSubParameter"), subParameterName, QScriptValue::ReadOnly);
-	}
+        d->scriptEngine->globalObject().setProperty(QStringLiteral("currentSubParameter"), subParameterName, QScriptValue::ReadOnly);
+    }
+
+    void ActionInstance::executionEnded()
+    {
+        emit executionEndedSignal();
+
+        d->executionDuration += d->executionTimer.elapsed();
+    }
 
 	SubParameter ActionInstance::retreiveSubParameter(const QString &parameterName, const QString &subParameterName)
 	{

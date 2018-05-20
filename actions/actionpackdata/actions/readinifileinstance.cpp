@@ -102,6 +102,6 @@ namespace Actions
             }
         }
 
-		emit executionEnded();
+		executionEnded();
 	}
 }

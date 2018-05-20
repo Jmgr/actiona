@@ -106,7 +106,7 @@ namespace Actions
 			{
 				mCheckTimer.stop();
 
-				emit executionEnded();
+				executionEnded();
 			}
 		}
 

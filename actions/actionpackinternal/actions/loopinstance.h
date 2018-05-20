@@ -36,7 +36,7 @@ namespace Actions
 		{
 			if(mInitialized && mCounter == 0)
 			{
-				emit executionEnded();
+				executionEnded();
 				return;
 			}
 
@@ -59,7 +59,7 @@ namespace Actions
 
 				if(count <= 0)
 				{
-					emit executionEnded();
+					executionEnded();
 					return;
 				}
 
@@ -70,7 +70,7 @@ namespace Actions
 
 			--mCounter;
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 		void reset()
