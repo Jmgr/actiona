@@ -22,7 +22,7 @@
 
 namespace Actions
 {
-    Tools::StringListPair ConsoleInstance::outputs = qMakePair(
+    Tools::StringListPair ConsoleInstance::outputs = std::make_pair(
 			QStringList() << QStringLiteral("information") << QStringLiteral("warning") << QStringLiteral("error"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("ConsoleInstance::outputs", "Information"))

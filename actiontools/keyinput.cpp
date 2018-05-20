@@ -40,7 +40,7 @@
 
 namespace ActionTools
 {
-    const Tools::StringListPair KeyInput::mKeyNames = qMakePair(
+    const Tools::StringListPair KeyInput::mKeyNames = std::make_pair(
 		QStringList() << QStringLiteral("invalid") << QStringLiteral("shiftLeft") << QStringLiteral("shiftRight") << QStringLiteral("controlLeft") << QStringLiteral("controlRight") << QStringLiteral("altLeft") << QStringLiteral("altRight") << QStringLiteral("metaLeft") << QStringLiteral("metaRight") << QStringLiteral("altGr") << QStringLiteral("numpad0") << QStringLiteral("numpad1") << QStringLiteral("numpad2") << QStringLiteral("numpad3") << QStringLiteral("numpad4") << QStringLiteral("numpad5") << QStringLiteral("numpad6") << QStringLiteral("numpad7") << QStringLiteral("numpad8") << QStringLiteral("numpad9") << QStringLiteral("numpadMultiply") << QStringLiteral("numpadAdd") << QStringLiteral("numpadSeparator") << QStringLiteral("numpadSubstract") << QStringLiteral("numpadDecimal") << QStringLiteral("numpadDivide"),
 		QStringList() << QString() << QObject::tr("Left Shift") << QObject::tr("Right Shift") << QObject::tr("Left Control") << QObject::tr("Right Control")
 		<< QObject::tr("Left Alt") << QObject::tr("Right Alt")

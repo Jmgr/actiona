@@ -286,9 +286,8 @@ int main(int argc, char **argv)
 
 	if(protocolUrl.isValid())
 	{
-		QString mode;
-        using QStringPair = QPair<QString, QString>;
-        for(const QStringPair &queryItem: QUrlQuery(protocolUrl.query()).queryItems())
+        QString mode;
+        for(const auto &queryItem: QUrlQuery(protocolUrl.query()).queryItems())
 		{
 			if(queryItem.first == QLatin1String("mode"))
 			{

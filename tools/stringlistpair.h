@@ -20,13 +20,14 @@
 
 #pragma once
 
-#include <QPair>
 #include <QStringList>
 #include <QMetaType>
 
+#include <utility>
+
 namespace Tools
 {
-    using StringListPair = QPair<QStringList, QStringList>;
+    using StringListPair = std::pair<QStringList, QStringList>;
 }
 
 Q_DECLARE_METATYPE(Tools::StringListPair)

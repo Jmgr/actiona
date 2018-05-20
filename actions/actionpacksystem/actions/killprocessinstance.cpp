@@ -22,7 +22,7 @@
 
 namespace Actions
 {
-    Tools::StringListPair KillProcessInstance::killModes = qMakePair(
+    Tools::StringListPair KillProcessInstance::killModes = std::make_pair(
 			QStringList() << QStringLiteral("graceful") << QStringLiteral("forceful") << QStringLiteral("gracefulThenForceful"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("KillProcessInstance::killModes", "Graceful"))

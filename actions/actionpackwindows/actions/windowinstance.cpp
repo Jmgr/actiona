@@ -25,7 +25,7 @@
 
 namespace Actions
 {
-    Tools::StringListPair WindowInstance::actions = qMakePair(
+    Tools::StringListPair WindowInstance::actions = std::make_pair(
 			QStringList() << QStringLiteral("close") << QStringLiteral("killProcess") << QStringLiteral("setForeground") << QStringLiteral("minimize") << QStringLiteral("maximize") << QStringLiteral("move") << QStringLiteral("resize"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Close"))

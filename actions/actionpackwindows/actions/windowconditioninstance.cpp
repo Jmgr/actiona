@@ -26,7 +26,7 @@
 
 namespace Actions
 {
-    Tools::StringListPair WindowConditionInstance::conditions = qMakePair(
+    Tools::StringListPair WindowConditionInstance::conditions = std::make_pair(
 			QStringList() << QStringLiteral("exists") << QStringLiteral("dontexists"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Exists"))

@@ -23,7 +23,7 @@
 
 namespace Actions
 {
-    Tools::StringListPair SystemInstance::operations = qMakePair(
+    Tools::StringListPair SystemInstance::operations = std::make_pair(
 			QStringList() << QStringLiteral("logout") << QStringLiteral("reboot") << QStringLiteral("shutdown") << QStringLiteral("suspend") << QStringLiteral("hibernate") << QStringLiteral("lockscreen") << QStringLiteral("startscreensaver"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Logout"))

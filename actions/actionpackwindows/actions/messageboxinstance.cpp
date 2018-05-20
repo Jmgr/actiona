@@ -29,7 +29,7 @@
 
 namespace Actions
 {
-    Tools::StringListPair MessageBoxInstance::icons = qMakePair(
+    Tools::StringListPair MessageBoxInstance::icons = std::make_pair(
 			QStringList() << QStringLiteral("none") << QStringLiteral("information") << QStringLiteral("question") << QStringLiteral("warning") << QStringLiteral("error"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "None"))
@@ -38,13 +38,13 @@ namespace Actions
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Warning"))
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Error")));
 
-    Tools::StringListPair MessageBoxInstance::buttons = qMakePair(
+    Tools::StringListPair MessageBoxInstance::buttons = std::make_pair(
 			QStringList() << QStringLiteral("ok") << QStringLiteral("yesno"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Ok"))
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Yes-No")));
 
-    Tools::StringListPair MessageBoxInstance::textmodes = qMakePair(
+    Tools::StringListPair MessageBoxInstance::textmodes = std::make_pair(
 			QStringList() << QStringLiteral("automatic") << QStringLiteral("html") << QStringLiteral("text"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Automatic"))

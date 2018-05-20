@@ -43,25 +43,25 @@ namespace ActionTools
         return QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
     }
 
-    QList< QPair<QPixmap, QRect> > ScreenShooter::captureScreens()
+    QList<std::pair<QPixmap, QRect>> ScreenShooter::captureScreens()
     {
         QDesktopWidget *desktop = QApplication::desktop();
-        QList< QPair<QPixmap, QRect> > result;
+        QList<std::pair<QPixmap, QRect>> result;
 
         for(int screenIndex = 0; screenIndex < desktop->screenCount(); ++screenIndex)
         {
             const QRect &screenGeometry = desktop->screenGeometry(screenIndex);
 
-            result.append(qMakePair(QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height()), screenGeometry));
+            result.append(std::make_pair(QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height()), screenGeometry));
         }
 
         return result;
     }
 
-    QList<QPair<QPixmap, QRect> > ScreenShooter::captureWindows(const QList<WindowHandle> &windows)
+    QList<std::pair<QPixmap, QRect>> ScreenShooter::captureWindows(const QList<WindowHandle> &windows)
     {
         QDesktopWidget *desktop = QApplication::desktop();
-        QList< QPair<QPixmap, QRect> > result;
+        QList<std::pair<QPixmap, QRect>> result;
 
         for(const WindowHandle &window: windows)
         {
@@ -70,7 +70,7 @@ namespace ActionTools
 
             const QRect &windowGeometry = window.rect();
 
-            result.append(qMakePair(QGuiApplication::primaryScreen()->grabWindow(desktop->winId(), windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height()), windowGeometry));
+            result.append(std::make_pair(QGuiApplication::primaryScreen()->grabWindow(desktop->winId(), windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height()), windowGeometry));
         }
 
         return result;
@@ -88,12 +88,11 @@ namespace ActionTools
 
     QPixmap ScreenShooter::captureAllScreens()
     {
-        const QList< QPair<QPixmap, QRect> > &screens = captureScreens();
+        const auto &screens = captureScreens();
         QRect resultRect;
         QPoint minimalTopLeft(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 
-        using PixmapRectPair = QPair<QPixmap, QRect>;
-        for(const PixmapRectPair &screen: screens)
+        for(const auto &screen: screens)
         {
             const QRect &screenRect = screen.second;
 
@@ -111,7 +110,7 @@ namespace ActionTools
         {
             QPainter painter(&result);
 
-            for(const PixmapRectPair &screen: screens)
+            for(const auto &screen: screens)
             {
                 const QRect &screenRect = screen.second;
 

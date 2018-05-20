@@ -27,7 +27,7 @@
 
 namespace Actions
 {
-    Tools::StringListPair WebDownloadInstance::destinations = qMakePair(
+    Tools::StringListPair WebDownloadInstance::destinations = std::make_pair(
 			QStringList() << QStringLiteral("variable") << QStringLiteral("file"),
 			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "Variable"))
 						  << QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "File")));

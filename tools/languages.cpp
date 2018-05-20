@@ -27,9 +27,11 @@
 #include <QLibraryInfo>
 #include <QDir>
 
+#include <utility>
+
 namespace Tools
 {
-    QPair<QStringList, QStringList> Languages::m_languagesName = qMakePair(
+    StringListPair Languages::m_languagesName = std::make_pair(
                 QStringList()   << QStringLiteral("") << QStringLiteral("en_US") << QStringLiteral("fr_FR"),
                 QStringList()   << QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "System language (if available)"))
                                 << QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "English (US)"))

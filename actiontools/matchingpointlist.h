@@ -20,7 +20,6 @@
 
 #pragma once
 
-#include <QPair>
 #include <QPoint>
 #include <QList>
 

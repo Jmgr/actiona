@@ -31,14 +31,14 @@
 
 namespace Actions
 {
-    Tools::StringListPair DataInputInstance::dataTypes = qMakePair(
+    Tools::StringListPair DataInputInstance::dataTypes = std::make_pair(
 		QStringList() << QStringLiteral("text") << QStringLiteral("integer") << QStringLiteral("decimal"),
 		QStringList()
 		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Text"))
 		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer"))
 		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal")));
 
-    Tools::StringListPair DataInputInstance::editorTypes = qMakePair(
+    Tools::StringListPair DataInputInstance::editorTypes = std::make_pair(
 		QStringList() << QStringLiteral("line") << QStringLiteral("multiline") << QStringLiteral("password"),
         QStringList()
 		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line"))

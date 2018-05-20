@@ -32,7 +32,7 @@ namespace ActionTools
 {
 	bool IfActionParameterDefinition::translated = false;
 
-    Tools::StringListPair IfActionParameterDefinition::actions = qMakePair(
+    Tools::StringListPair IfActionParameterDefinition::actions = std::make_pair(
 		QStringList() << QStringLiteral("do_nothing") << QStringLiteral("goto") << QStringLiteral("run_code") << QStringLiteral("call_procedure"),
 		QStringList()
 		<< QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to next action"))

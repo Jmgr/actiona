@@ -29,13 +29,13 @@
 
 namespace Actions
 {
-    Tools::StringListPair FindImageInstance::sources = qMakePair(
+    Tools::StringListPair FindImageInstance::sources = std::make_pair(
 			QStringList() << QStringLiteral("screenshot") << QStringLiteral("window") << QStringLiteral("image"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Screenshot"))
 			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Window"))
 			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Image")));
-    Tools::StringListPair FindImageInstance::methods = qMakePair(
+    Tools::StringListPair FindImageInstance::methods = std::make_pair(
 			QStringList() << QStringLiteral("correlationcoefficient") << QStringLiteral("crosscorrelation") << QStringLiteral("squareddifference"),
             QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Correlation Coefficient"))
@@ -157,7 +157,7 @@ namespace Actions
                     return;
                 }
 
-                mImagesToSearchIn.append(qMakePair(QPixmap::fromImage(imageToSearchIn), imageToSearchIn.rect()));
+                mImagesToSearchIn.append(std::make_pair(QPixmap::fromImage(imageToSearchIn), imageToSearchIn.rect()));
             }
             break;
         }
@@ -165,8 +165,7 @@ namespace Actions
         QList<QImage> sourceImages;
         sourceImages.reserve(mImagesToSearchIn.size());
 
-        using PixmapRectPair = QPair<QPixmap, QRect>;
-        for(const PixmapRectPair &imageToSearchIn: mImagesToSearchIn)
+        for(const auto &imageToSearchIn: mImagesToSearchIn)
             sourceImages.append(imageToSearchIn.first.toImage());
 
         if(!mOpenCVAlgorithms->findSubImageAsync(sourceImages,

@@ -28,6 +28,7 @@
 #include <QTimer>
 
 #include <limits>
+#include <utility>
 
 namespace ActionTools
 {
@@ -81,7 +82,7 @@ namespace Actions
         Method mMethod;
 		bool mWindowRelativePosition;
         int mConfidenceMinimum;
-        QList< QPair<QPixmap, QRect> > mImagesToSearchIn;
+        QList<std::pair<QPixmap, QRect>> mImagesToSearchIn;
         QList<ActionTools::WindowHandle> mWindows;
         Source mSource;
         ActionTools::IfActionValue mIfFound;
