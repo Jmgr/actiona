@@ -122,7 +122,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 	mHashCalculator(QCryptographicHash::Md5)
 #endif
 #ifdef Q_OS_WIN
-	,mTaskbarList(0)
+    ,mTaskbarProgress(new QWinTaskbarProgress(this))
 #endif
 {
 #ifdef ACT_PROFILE
@@ -174,13 +174,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 
 	ui->consoleWidget->setup();
 
-#ifdef Q_OS_WIN
-	HRESULT result = CoCreateInstance(CLSID_TaskbarList, 0, CLSCTX_INPROC_SERVER, IID_ITaskbarList3, reinterpret_cast<LPVOID*>(&mTaskbarList));
-	if(SUCCEEDED(result))
-		mTaskbarList->HrInit();
-#endif
-
-	setTaskbarStatus(Normal);
+    enableTaskbarProgress(true);
 
 	if(mSplashScreen)
 	{
@@ -316,11 +310,6 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 
 MainWindow::~MainWindow()
 {
-#ifdef Q_OS_WIN
-	if(mTaskbarList)
-		mTaskbarList->Release();
-#endif
-
 	delete ui;
 }
 
@@ -404,7 +393,7 @@ void MainWindow::postInit()
 		mSplashScreen->setMaximum(1);
 	}
 
-	setTaskbarStatus(NoProgress);
+    enableTaskbarProgress(false);
 
 	{
 #ifdef ACT_PROFILE
@@ -1390,25 +1379,20 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 void MainWindow::setTaskbarProgress(int value, int max)
 {
 #ifdef Q_OS_WIN
-	if(!mTaskbarList)
-		return;
-
-    mTaskbarList->SetProgressValue(reinterpret_cast<HWND>(winId()), value, max);
+    mTaskbarProgress->setRange(0, max);
+    mTaskbarProgress->setValue(value);
 #else
 	Q_UNUSED(value)
 	Q_UNUSED(max)
 #endif
 }
 
-void MainWindow::setTaskbarStatus(TaskbarStatus status)
+void MainWindow::enableTaskbarProgress(bool enable)
 {
 #ifdef Q_OS_WIN
-	if(!mTaskbarList)
-		return;
-
-    mTaskbarList->SetProgressState(reinterpret_cast<HWND>(winId()), static_cast<TBPFLAG>(status));
+    mTaskbarProgress->setVisible(enable);
 #else
-	Q_UNUSED(status)
+    Q_UNUSED(enable)
 #endif
 }
 

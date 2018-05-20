@@ -66,7 +66,7 @@ class NewActionProxyModel;
 class ScriptProxyModel;
 
 #ifdef Q_OS_WIN
-#include <Shobjidl.h>
+class QWinTaskbarProgress;
 #endif
 
 #include <QNetworkReply>
@@ -172,15 +172,6 @@ private slots:
 #endif
 
 private:
-	enum TaskbarStatus
-	{
-		NoProgress =		0 << 0,
-		Indeterminate =		1 << 0,
-		Normal =			1 << 1,
-		Error =				1 << 2,
-		Paused =			1 << 3
-	};
-
 	void logItemClicked(int itemRow, bool doubleClick);
 	void updateUndoRedoStatus();
 	void execute(bool onlySelection);
@@ -209,7 +200,7 @@ private:
 	void updateProxySettings();
 	bool checkReadResult(ActionTools::Script::ReadResult result);
 	void setTaskbarProgress(int value, int max);
-	void setTaskbarStatus(TaskbarStatus status);
+    void enableTaskbarProgress(bool enable);
     ActionTools::Script::ReadResult readScript(QIODevice *device);
     bool writeScript(QIODevice *device);
 #ifndef ACT_NO_UPDATER
@@ -259,7 +250,7 @@ private:
 	QCryptographicHash mHashCalculator;
 #endif
 #ifdef Q_OS_WIN
-	ITaskbarList3 *mTaskbarList;
+    QWinTaskbarProgress* mTaskbarProgress;
 #endif
 
 	Q_DISABLE_COPY(MainWindow)

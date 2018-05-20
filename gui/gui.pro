@@ -6,6 +6,7 @@ QT += xml \
         scripttools \
         widgets
 unix:QT += x11extras
+win32:QT += winextras
 CONFIG += mobility
 contains(DEFINES, ACT_PROFILE) {
 CONFIG += console
