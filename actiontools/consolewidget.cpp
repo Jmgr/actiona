@@ -133,7 +133,7 @@ namespace ActionTools
 		QString durationString;
 		if(days > 0)
 			durationString += tr("%n day(s) ", "", days);
-		mStartTime.addDays(-days);
+        mStartTime = mStartTime.addDays(-days);
 
 		int seconds = mStartTime.secsTo(currentDateTime);
 		int hours = seconds / 3600;
