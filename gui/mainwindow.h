@@ -66,6 +66,7 @@ class NewActionProxyModel;
 class ScriptProxyModel;
 
 #ifdef Q_OS_WIN
+class QWinTaskbarButton;
 class QWinTaskbarProgress;
 #endif
 
@@ -171,6 +172,9 @@ private slots:
 	void postDownloadOperation();
 #endif
 
+protected:
+    void showEvent(QShowEvent *event) override;
+
 private:
 	void logItemClicked(int itemRow, bool doubleClick);
 	void updateUndoRedoStatus();
@@ -250,6 +254,7 @@ private:
 	QCryptographicHash mHashCalculator;
 #endif
 #ifdef Q_OS_WIN
+    QWinTaskbarButton *mTaskbarButton;
     QWinTaskbarProgress* mTaskbarProgress;
 #endif
 

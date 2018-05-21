@@ -90,6 +90,11 @@
 #include <QX11Info>
 #endif
 
+#ifdef Q_OS_WIN
+#include <QWinTaskbarButton>
+#include <QWinTaskbarProgress>
+#endif
+
 #include <algorithm>
 
 MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
@@ -121,12 +126,17 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 	mUpdaterProgressDialog(new QProgressDialog(this)),
 	mHashCalculator(QCryptographicHash::Md5)
 #endif
-#ifdef Q_OS_WIN
-    ,mTaskbarProgress(new QWinTaskbarProgress(this))
-#endif
 {
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("MainWindow constructor");
+#endif
+
+#ifdef Q_OS_WIN
+    if(QSysInfo::windowsVersion() > QSysInfo::WV_VISTA)
+    {
+        mTaskbarButton = new QWinTaskbarButton(this);
+        mTaskbarProgress = mTaskbarButton->progress();
+    }
 #endif
 
     setEnabled(false);
@@ -291,7 +301,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
 	connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
     connect(mScript, SIGNAL(scriptProcessing(int,int,QString)), this, SLOT(scriptProcessing(int,int,QString)));
-    connect(ui->heatmapModeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](int index)
+    connect(ui->heatmapModeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int index)
     {
         mScriptModel->setHeatmapMode(static_cast<HeatmapMode>(index));
 
@@ -1379,8 +1389,11 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 void MainWindow::setTaskbarProgress(int value, int max)
 {
 #ifdef Q_OS_WIN
-    mTaskbarProgress->setRange(0, max);
-    mTaskbarProgress->setValue(value);
+    if(QSysInfo::windowsVersion() > QSysInfo::WV_VISTA)
+    {
+        mTaskbarProgress->setRange(0, max);
+        mTaskbarProgress->setValue(value);
+    }
 #else
 	Q_UNUSED(value)
 	Q_UNUSED(max)
@@ -1390,7 +1403,10 @@ void MainWindow::setTaskbarProgress(int value, int max)
 void MainWindow::enableTaskbarProgress(bool enable)
 {
 #ifdef Q_OS_WIN
-    mTaskbarProgress->setVisible(enable);
+    if(QSysInfo::windowsVersion() > QSysInfo::WV_VISTA)
+    {
+        mTaskbarProgress->setVisible(enable);
+    }
 #else
     Q_UNUSED(enable)
 #endif
@@ -1472,6 +1488,19 @@ void MainWindow::checkForUpdate(bool silent)
 #endif
 }
 #endif
+
+
+void MainWindow::showEvent(QShowEvent *event)
+{
+#ifdef Q_OS_WIN
+    if(QSysInfo::windowsVersion() > QSysInfo::WV_VISTA)
+    {
+        mTaskbarButton->setWindow(windowHandle());
+    }
+#endif
+
+    event->accept();
+}
 
 void MainWindow::logItemClicked(int itemRow, bool doubleClick)
 {
@@ -2059,7 +2088,7 @@ void MainWindow::postDownloadOperation()
 			QMessageBox::warning(this, tr("Update"), tr("Unable to execute the downloaded file."));
 	}
 	else
-		QDesktopServices::openUrl(QUrl(QStringLiteral("file:///") + QFileInfo(mUpdateFile.fileName()).dir().path(), QUrl::TolerantMode));
+        QDesktopServices::openUrl(QUrl(QStringLiteral("file:///") + QFileInfo(mUpdateFile.fileName()).dir().path(), QUrl::TolerantMode));
 }
 #endif
 

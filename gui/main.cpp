@@ -61,10 +61,6 @@
 
 static void cleanup()
 {
-#ifdef Q_OS_WIN
-	CoUninitialize();
-#endif
-
 	ActionTools::GlobalShortcutManager::clear();
 
 #ifdef Q_OS_LINUX
@@ -80,10 +76,6 @@ int main(int argc, char **argv)
 
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("Application run");
-#endif
-
-#ifdef Q_OS_WIN
-	CoInitializeEx(0, COINIT_APARTMENTTHREADED | COINIT_SPEED_OVER_MEMORY);
 #endif
 
 	QtSingleApplication app(QStringLiteral("actiona-gui"), argc, argv);
