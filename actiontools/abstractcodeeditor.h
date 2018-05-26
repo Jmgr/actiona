@@ -24,6 +24,7 @@
 #include "actiontools_global.h"
 
 #include <QPainter>
+#include <QSet>
 
 class QAbstractItemModel;
 
