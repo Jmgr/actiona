@@ -23,6 +23,7 @@
 
 #include <QColorDialog>
 #include <QDesktopWidget>
+#include <QRegExpValidator>
 #include <QApplication>
 #include <QScreen>
 
