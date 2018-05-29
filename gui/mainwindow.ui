@@ -325,7 +325,7 @@
      <normaloff>:/icons/new_action.png</normaloff>:/icons/new_action.png</iconset>
    </property>
    <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
     <string>New action</string>
@@ -413,7 +413,7 @@
   </widget>
   <widget class="QDockWidget" name="consoleDockWidget">
    <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
     <string>Console</string>
