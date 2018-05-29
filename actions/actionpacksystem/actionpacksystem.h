@@ -31,6 +31,10 @@
 #include "actions/playsounddefinition.h"
 #include "actions/findimagedefinition.h"
 
+#if (QT_VERSION >= 0x050900)
+#include "actions/texttospeechdefinition.h"
+#endif
+
 #include "code/system.h"
 #include "code/mediaplaylist.h"
 #include "code/notify.h"
@@ -63,6 +67,9 @@ public:
 		addActionDefinition(new Actions::DetachedCommandDefinition(this));
 		addActionDefinition(new Actions::PlaySoundDefinition(this));
 		addActionDefinition(new Actions::FindImageDefinition(this));
+#if (QT_VERSION >= 0x050900)
+        addActionDefinition(new Actions::TextToSpeechDefinition(this));
+#endif
 	}
 
 	QString id() const							{ return QStringLiteral("system"); }
