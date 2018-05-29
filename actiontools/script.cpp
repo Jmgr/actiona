@@ -847,7 +847,7 @@ namespace ActionTools
             actionInstance->stopLongTermExecution();
 
         mMinMaxExecutionCounter = {std::numeric_limits<int>::max(), std::numeric_limits<int>::min()};
-        mMinMaxExecutionDuration = {std::numeric_limits<qint64>::max(), std::numeric_limits<qint64>::min()};
+        mExecutionDuration = 0;
 
         for(auto actionInstance: mActionInstances)
         {
@@ -858,12 +858,7 @@ namespace ActionTools
             if(counter > mMinMaxExecutionCounter.second)
                 mMinMaxExecutionCounter.second = counter;
 
-            auto duration = actionInstance->executionDuration();
-
-            if(duration < mMinMaxExecutionDuration.first)
-                mMinMaxExecutionDuration.first = duration;
-            if(duration > mMinMaxExecutionDuration.second)
-                mMinMaxExecutionDuration.second = duration;
+            mExecutionDuration += actionInstance->executionDuration();
         }
     }
 

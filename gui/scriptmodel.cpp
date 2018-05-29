@@ -269,7 +269,15 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
             case ColumnActionName:
                 return actionInstance->definition()->name();
             case ColumnComment:
-                return actionInstance->comment();
+                switch(mHeatmapMode)
+                {
+                case HeatmapMode::ExecutionCount:
+                    return tr("%n time(s)", "Execution count", actionInstance->executionCounter());
+                case HeatmapMode::ExecutionDuration:
+                    return tr("%1 seconds").arg(actionInstance->executionCounter() / 1000.0);
+                case HeatmapMode::None:
+                    return actionInstance->comment();
+                }
         }
         break;
     case Qt::EditRole:
@@ -282,20 +290,10 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
         }
         break;
     case Qt::ToolTipRole:
-        switch(mHeatmapMode)
+        switch(index.column())
         {
-        case HeatmapMode::ExecutionCount:
-            return tr("Action executed %n time(s)", "", actionInstance->executionCounter());
-        case HeatmapMode::ExecutionDuration:
-            return tr("Action executed %1 seconds").arg(actionInstance->executionCounter() / 1000.0);
-        case HeatmapMode::None:
-        {
-            switch(index.column())
-            {
-                case ColumnActionName:
-                    return tr("Double-clic to edit the action");
-            }
-        }
+            case ColumnActionName:
+                return tr("Double-clic to edit the action");
         }
         break;
     case Qt::DecorationRole:
@@ -329,7 +327,15 @@ QVariant ScriptModel::headerData(int section, Qt::Orientation orientation, int r
 	case ColumnActionName:
 		return tr("Action");
 	case ColumnComment:
-		return tr("Comment");
+        switch(mHeatmapMode)
+        {
+        case HeatmapMode::ExecutionCount:
+            return tr("Execution count");
+        case HeatmapMode::ExecutionDuration:
+            return tr("Execution duration");
+        case HeatmapMode::None:
+            return tr("Comment");
+        }
 	default:
 		return QVariant();
 	}
@@ -418,9 +424,11 @@ Qt::ItemFlags ScriptModel::flags(const QModelIndex &index) const
 	switch(index.column())
 	{
 	case ColumnLabel:
-		back |= Qt::ItemIsUserCheckable;
+        back |= Qt::ItemIsUserCheckable | Qt::ItemIsEditable;
+        break;
 	case ColumnComment:
-		back |= Qt::ItemIsEditable;
+        if(mHeatmapMode == HeatmapMode::None)
+            back |= Qt::ItemIsEditable;
 		break;
 	case ColumnActionName:
 		break;
@@ -619,22 +627,23 @@ QColor ScriptModel::computeHeatmapColor(const ActionTools::ActionInstance &actio
     }
     case HeatmapMode::ExecutionDuration:
     {
-        auto minMaxExecutionDuration = mScript->minMaxExecutionDuration();
+        auto executionDuration = mScript->executionDuration();
 
-        ratio = (minMaxExecutionDuration.second - minMaxExecutionDuration.first == 0) ? 0 : (actionInstance.executionDuration() - minMaxExecutionDuration.first) / static_cast<qreal>(minMaxExecutionDuration.second - minMaxExecutionDuration.first);
+        ratio = (executionDuration == 0) ? 0 : actionInstance.executionDuration() / static_cast<qreal>(executionDuration);
+
+        qWarning() << actionInstance.label() << actionInstance.executionDuration() << ratio;
 
         break;
     }
     case HeatmapMode::None:
+        Q_ASSERT(false && "computeHeatmapColor called but no heatmap mode set");
         break;
     }
 
-    auto color = QColor::fromHsvF(
+    return QColor::fromHsvF(
                 minColor.hsvHueF() * (1 - ratio) + maxColor.hsvHueF() * ratio,
                 minColor.hsvSaturationF() * (1 - ratio) + maxColor.hsvSaturationF() * ratio,
                 minColor.valueF() * (1 - ratio) + maxColor.valueF() * ratio)
                 .toRgb();
-
-    return color;
 }
 

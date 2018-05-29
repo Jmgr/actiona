@@ -306,6 +306,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
         mScriptModel->setHeatmapMode(static_cast<HeatmapMode>(index));
 
         ui->scriptView->viewport()->update();
+        ui->scriptView->header()->viewport()->update();
     });
 #ifndef ACT_NO_UPDATER
 	connect(mUpdater, SIGNAL(error(QString)), this, SLOT(updateError(QString)));

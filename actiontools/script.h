@@ -114,8 +114,8 @@ namespace ActionTools
         void clearResources()                                                           { mResources.clear(); }
 		const QMap<QString, Resource> &resources() const								{ return mResources; }
 
-        std::pair<int, int> minMaxExecutionCounter() const                                  { return mMinMaxExecutionCounter; }
-        std::pair<qint64, qint64> minMaxExecutionDuration() const                           { return mMinMaxExecutionDuration; }
+        std::pair<int, int> minMaxExecutionCounter() const                              { return mMinMaxExecutionCounter; }
+        qint64 executionDuration() const                                                { return mExecutionDuration; }
         bool hasBeenExecuted() const                                                    { return mMinMaxExecutionCounter.first > 0; }
 
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
@@ -150,7 +150,7 @@ namespace ActionTools
 		QStack<int> mCallStack;
 		QMap<QString, Resource> mResources;
         std::pair<int, int> mMinMaxExecutionCounter;
-        std::pair<qint64, qint64> mMinMaxExecutionDuration;
+        qint64 mExecutionDuration;
 
 		Q_DISABLE_COPY(Script)
 	};
