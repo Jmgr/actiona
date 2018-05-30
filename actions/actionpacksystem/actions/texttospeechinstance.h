@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005-2017 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -57,28 +57,26 @@ namespace Actions
 		{
 			bool ok = true;
 
-            QString text = evaluateString(ok, "text");
+            QString text = evaluateString(ok, QStringLiteral("text"));
+            int volume = evaluateInteger(ok, QStringLiteral("volume"));
+            QString language = evaluateString(ok, QStringLiteral("language"));
+            int playbackRate = evaluateInteger(ok, QStringLiteral("playbackRate"));
+            int pitch = evaluateInteger(ok, QStringLiteral("pitch"));
 
 			if(!ok)
 				return;
 
-            for(auto engine: QTextToSpeech::availableEngines())
-            {
-                qDebug() << engine;
-            }
-
-            for(auto voice: mTextToSpeech->availableVoices())
-            {
-                qDebug() << voice.ageName(voice.age()) << voice.genderName(voice.gender()) << voice.name();
-            }
-
-            for(auto locale: mTextToSpeech->availableLocales())
-            {
-                qDebug() << locale;
-            }
-
             connect(mTextToSpeech, SIGNAL(stateChanged(QTextToSpeech::State)), this, SLOT(stateChanged(QTextToSpeech::State)));
 
+            QLocale locale{language};
+
+            if(language.isEmpty() || locale == QLocale::c())
+                locale = QLocale::system();
+
+            mTextToSpeech->setVolume(volume != -1 ? volume / 100. : 1.);
+            mTextToSpeech->setRate((playbackRate - 100) / 100.);
+            mTextToSpeech->setPitch((pitch - 100) / 100.);
+            mTextToSpeech->setLocale(locale);
             mTextToSpeech->say(text);
 
             /*

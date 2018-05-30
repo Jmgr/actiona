@@ -31,7 +31,7 @@
 #include "actions/playsounddefinition.h"
 #include "actions/findimagedefinition.h"
 
-#if (QT_VERSION >= 0x050900)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include "actions/texttospeechdefinition.h"
 #endif
 
@@ -67,7 +67,7 @@ public:
 		addActionDefinition(new Actions::DetachedCommandDefinition(this));
 		addActionDefinition(new Actions::PlaySoundDefinition(this));
 		addActionDefinition(new Actions::FindImageDefinition(this));
-#if (QT_VERSION >= 0x050900)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
         addActionDefinition(new Actions::TextToSpeechDefinition(this));
 #endif
 	}

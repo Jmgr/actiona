@@ -4,7 +4,7 @@ DEFINES += QT_USE_FAST_CONCATENATION \
         QT_NO_CAST_FROM_ASCII \
         QT_NO_CAST_FROM_BYTEARRAY
 
-ACTIONA_VERSION	= 3.9.4
+ACTIONA_VERSION	= 3.10.0
 SCRIPT_VERSION = 1.1.0
 
 if(!isEmpty(VERSION_OVERRIDE)) {
@@ -43,4 +43,11 @@ win32 {
 
 !contains(QMAKE_HOST.arch, x86_64):{
     *-msvc*::QMAKE_CXXFLAGS_RELEASE += -arch:SSE2
+}
+
+defineTest(isQtVersionGreaterOrEqualThan510) {
+    greaterThan(QT_MAJOR_VERSION, 5): return(true)
+    equals(QT_MAJOR_VERSION, 5):greaterThan(QT_MINOR_VERSION, 10)|equals(QT_MINOR_VERSION, 10): return(true)
+
+    return(false)
 }

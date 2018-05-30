@@ -3,7 +3,7 @@ include(actions/actions.pri)
 include(code/code.pri)
 TARGET = ActionPackSystem
 QT += script network widgets multimedia multimediawidgets network
-greaterThan(QT_MINOR_VERSION, 8) {
+isQtVersionGreaterOrEqualThan510() {
 QT += texttospeech
 }
 OTHER_FILES += system.json

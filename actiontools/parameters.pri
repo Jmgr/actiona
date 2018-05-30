@@ -20,7 +20,8 @@ SOURCES += parameterdefinition.cpp \
 	booleanparameterdefinition.cpp \
 	multitextparameterdefinition.cpp \
 	procedureparameterdefinition.cpp \
-    imageparameterdefinition.cpp
+    imageparameterdefinition.cpp \
+    $$PWD/localeparameterdefinition.cpp
 HEADERS += parameterdefinition.h \
     elementdefinition.h \
     groupdefinition.h \
@@ -43,4 +44,5 @@ HEADERS += parameterdefinition.h \
 	booleanparameterdefinition.h \
 	multitextparameterdefinition.h \
 	procedureparameterdefinition.h \
-    imageparameterdefinition.h
+    imageparameterdefinition.h \
+    $$PWD/localeparameterdefinition.h

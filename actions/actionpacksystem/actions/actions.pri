@@ -24,7 +24,7 @@ SOURCES += actions/killprocessinstance.cpp \
 	actions/findimageinstance.cpp \
     actions/findimagedefinition.cpp
 
-greaterThan(QT_MINOR_VERSION, 8) {
+isQtVersionGreaterOrEqualThan510() {
 HEADERS += actions/texttospeechdefinition.h \
         actions/texttospeechinstance.h
 }
