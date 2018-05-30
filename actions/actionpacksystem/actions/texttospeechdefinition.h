@@ -93,7 +93,7 @@ namespace Actions
         QString description() const												{ return QObject::tr("Reads some text using text to speech"); }
         ActionTools::ActionInstance *newActionInstance() const					{ return new TextToSpeechInstance(this); }
 		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-        QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/command.png")); }
+        QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/texttospeech.png")); }
 		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
 
 	private:
