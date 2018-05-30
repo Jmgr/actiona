@@ -74,12 +74,21 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 
     ui->languageComboBox->clear();
 
-    int languageIndex = 0;
-    for(const QString &language: Tools::Languages::languagesName().second)
+    auto languages = Tools::Languages::languagesName();
+    for(int languageIndex = 0; languageIndex < languages.first.size(); ++languageIndex)
     {
-        ui->languageComboBox->addItem(language, languageIndex);
+        const QString languageName = languages.first[languageIndex];
+        const QString translatedLanguageName = languages.second[languageIndex];
 
-        ++languageIndex;
+        if(languageName.isEmpty())
+            ui->languageComboBox->addItem(translatedLanguageName, languageIndex);
+        else
+        {
+            QString countryName = languageName.split(QLatin1Char('_')).at(1).toLower();
+            QIcon icon{QStringLiteral(":/images/flags/%1.png").arg(countryName)};
+
+            ui->languageComboBox->addItem(icon, translatedLanguageName, languageIndex);
+        }
     }
 
 	//GENERAL
