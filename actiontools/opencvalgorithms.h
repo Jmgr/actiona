@@ -75,13 +75,10 @@
 #include <QFutureWatcher>
 #include <QMetaType>
 
-namespace cv
-{
-	class Mat;
-}
-
 namespace ActionTools
 {
+    struct OpenCVAlgorithmsPrivate;
+
 	class ACTIONTOOLSSHARED_EXPORT OpenCVAlgorithms : public QObject
 	{
 		Q_OBJECT
@@ -105,6 +102,7 @@ namespace ActionTools
         };
 
 		explicit OpenCVAlgorithms(QObject *parent = 0);
+        virtual ~OpenCVAlgorithms();
 
         bool findSubImageAsync(const QList<QImage> &sources,
 						  const QImage &target,
@@ -123,8 +121,8 @@ namespace ActionTools
                           AlgorithmMethod method = CorrelationCoefficientMethod);
         void cancelSearch();
 
-		AlgorithmError error() const { return mError; }
-		const QString &errorString() const { return mErrorString; }
+        AlgorithmError error() const;
+        const QString &errorString() const;
 
 	signals:
 		void finished(const ActionTools::MatchingPointList &matchingPointList);
@@ -132,49 +130,8 @@ namespace ActionTools
 	private slots:
 		void finished();
 
-	private:
-        bool checkInputImages(const QList<cv::Mat> &sources, const cv::Mat &target);
-
-		/*=============================================================================
-		  FastMatchTemplate
-		  Performs a fast match template
-		  Returns: true on success, false on failure
-		  Parameters:
-			source - source image (where we are searching)
-			target - target image (what we are searching for)
-			foundPointsList - contains a list of the points where the target was found
-			confidencesList - contains a list of the confidence value (0-100) for each
-							  found target
-			matchPercentage - the minimum required match score to consider the target
-							  found
-			numMaxima - the maximum number of search locations to try before exiting
-						(i.e. when image is down-sampled and searched, we collect the
-						best numMaxima locations - those with the highest confidence -
-						and search the original image at these locations)
-			numDownPyrs - the number of times to down-sample the image (only increase
-						  this number if your images are really large)
-			searchExpansion - The original source image is searched at the top locations
-							  with +/- searchExpansion pixels in both the x and y
-							  directions
-		*/
-        MatchingPointList fastMatchTemplate(const QList<cv::Mat> &sources,
-                                            const cv::Mat &target,
-                                            int matchPercentage,
-                                            int maximumMatches,
-                                            int downPyrs,
-                                            int searchExpansion,
-                                            AlgorithmMethod method);
-
-        static QVector<QPoint> multipleMinMaxLoc(const cv::Mat &image, int maximumMatches, AlgorithmMethod method);
-
-        static QImage toQImage(const cv::Mat &image);
-        static cv::Mat toCVMat(const QImage &image);
-        static int toOpenCVMethod(AlgorithmMethod method);
-
-		AlgorithmError mError;
-		QString mErrorString;
-		QFuture<MatchingPointList> mFuture;
-		QFutureWatcher<MatchingPointList> mFutureWatcher;
+    private:
+        std::unique_ptr<OpenCVAlgorithmsPrivate> mPrivate;
 	};
 }
 

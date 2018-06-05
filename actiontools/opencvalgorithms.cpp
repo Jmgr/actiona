@@ -20,9 +20,8 @@
 
 #include <QtGlobal>
 
-#include <opencv2/opencv.hpp>
-
 #include "opencvalgorithms.h"
+#include "opencvalgorithms_private.h"
 
 #include <boost/bind.hpp>
 
@@ -32,10 +31,14 @@ namespace ActionTools
 {
 	OpenCVAlgorithms::OpenCVAlgorithms(QObject *parent)
 		: QObject(parent),
-		  mError(NoError)
+          mPrivate(std::make_unique<OpenCVAlgorithmsPrivate>())
 	{
-		qRegisterMetaType<MatchingPointList>("MatchingPointList");
-	}
+        qRegisterMetaType<MatchingPointList>("MatchingPointList");
+    }
+
+    OpenCVAlgorithms::~OpenCVAlgorithms()
+    {
+    }
 
     bool OpenCVAlgorithms::findSubImageAsync(const QList<QImage> &sources,
                       const QImage &target,
@@ -45,32 +48,32 @@ namespace ActionTools
                       int searchExpansion,
                       AlgorithmMethod method)
 	{
-		mError = NoError;
-		mErrorString.clear();
+        mPrivate->mError = NoError;
+        mPrivate->mErrorString.clear();
 
-		if(mFuture.isRunning())
+        if(mPrivate->mFuture.isRunning())
 		{
-			mError = AlreadyRunningError;
-			mErrorString = tr("FindSubImage is already running");
+            mPrivate->mError = AlreadyRunningError;
+            mPrivate->mErrorString = tr("FindSubImage is already running");
 
 			return false;
 		}
 
-        QList<cv::Mat> sourcesMat;
+        QList<Mat> sourcesMat;
         sourcesMat.reserve(sources.size());
 
         for(const QImage &source: sources)
-            sourcesMat.append(toCVMat(source));
+            sourcesMat.append(mPrivate->toCVMat(source));
 
-        cv::Mat targetMat = toCVMat(target);
+        auto targetMat = mPrivate->toCVMat(target);
 
-        if(!checkInputImages(sourcesMat, targetMat))
+        if(!mPrivate->checkInputImages(sourcesMat, targetMat))
 			return false;
 
-        connect(&mFutureWatcher, SIGNAL(finished()), this, SLOT(finished()));
+        connect(&mPrivate->mFutureWatcher, SIGNAL(finished()), this, SLOT(finished()));
 
-        mFuture = QtConcurrent::run(boost::bind(&OpenCVAlgorithms::fastMatchTemplate, this, sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion, method));
-		mFutureWatcher.setFuture(mFuture);
+        mPrivate->mFuture = QtConcurrent::run(boost::bind(&OpenCVAlgorithmsPrivate::fastMatchTemplate, mPrivate.get(), sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion, method));
+        mPrivate->mFutureWatcher.setFuture(mPrivate->mFuture);
 
 		return true;
 	}
@@ -84,62 +87,72 @@ namespace ActionTools
                       int searchExpansion,
                       AlgorithmMethod method)
 	{
-		mError = NoError;
-		mErrorString.clear();
+        mPrivate->mError = NoError;
+        mPrivate->mErrorString.clear();
 
-        QList<cv::Mat> sourcesMat;
+        QList<Mat> sourcesMat;
         sourcesMat.reserve(sources.size());
 
         for(const QImage &source: sources)
-            sourcesMat.append(toCVMat(source));
+            sourcesMat.append(mPrivate->toCVMat(source));
 
-        cv::Mat targetMat = toCVMat(target);
+        auto targetMat = mPrivate->toCVMat(target);
 
-        if(!checkInputImages(sourcesMat, targetMat))
+        if(!mPrivate->checkInputImages(sourcesMat, targetMat))
 			return false;
 
-        matchingPoints = OpenCVAlgorithms::fastMatchTemplate(sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion, method);
+        matchingPoints = mPrivate->fastMatchTemplate(sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion, method);
 
         return true;
     }
 
     void OpenCVAlgorithms::cancelSearch()
     {
-        mFutureWatcher.cancel();
-        mFutureWatcher.disconnect();
+        mPrivate->mFutureWatcher.cancel();
+        mPrivate->mFutureWatcher.disconnect();
     }
 
-	void OpenCVAlgorithms::finished()
-	{
-		emit finished(mFutureWatcher.result());
-	}
+    OpenCVAlgorithms::AlgorithmError OpenCVAlgorithms::error() const
+    {
+        return mPrivate->mError;
+    }
 
-    bool OpenCVAlgorithms::checkInputImages(const QList<cv::Mat> &sources, const cv::Mat &target)
+    const QString &OpenCVAlgorithms::errorString() const
+    {
+        return mPrivate->mErrorString;
+    }
+
+    void OpenCVAlgorithms::finished()
+    {
+        emit finished(mPrivate->mFutureWatcher.result());
+    }
+
+    bool OpenCVAlgorithmsPrivate::checkInputImages(const QList<Mat> &sources, const Mat &target)
 	{
-        for(const cv::Mat &source: sources)
+        for(const auto &source: sources)
         {
             // make sure that the template image is smaller than the source
             if(target.size().width > source.size().width ||
                target.size().height > source.size().height)
             {
-                mError = SourceImageSmallerThanTargerImageError;
-                mErrorString = tr("Source images must be larger than target image");
+                mError = OpenCVAlgorithms::SourceImageSmallerThanTargerImageError;
+                mErrorString = QObject::tr("Source images must be larger than target image");
 
                 return false;
             }
 
             if(source.depth() != target.depth())
             {
-                mError = NotSameDepthError;
-                mErrorString = tr("Source images and target image must have same depth");
+                mError = OpenCVAlgorithms::NotSameDepthError;
+                mErrorString = QObject::tr("Source images and target image must have same depth");
 
                 return false;
             }
 
             if(source.channels() != target.channels())
             {
-                mError = NotSameChannelCountError;
-                mErrorString = tr("Source images and target image must have same number of channels");
+                mError = OpenCVAlgorithms::NotSameChannelCountError;
+                mErrorString = QObject::tr("Source images and target image must have same number of channels");
 
                 return false;
             }
@@ -148,24 +161,24 @@ namespace ActionTools
 		return true;
 	}
 
-    MatchingPointList OpenCVAlgorithms::fastMatchTemplate(const QList<cv::Mat> &sources,
-                                                                            const cv::Mat &target,
+    MatchingPointList OpenCVAlgorithmsPrivate::fastMatchTemplate(const QList<Mat> &sources,
+                                                                            const Mat &target,
 																			int matchPercentage,
 																			int maximumMatches,
 																			int downPyrs,
                                                                             int searchExpansion,
-                                                                            AlgorithmMethod method)
+                                                                            OpenCVAlgorithms::AlgorithmMethod method)
 	{
         MatchingPointList matchingPointList;
         int sourceIndex = 0;
 
-        for(const cv::Mat &source: sources)
+        for(const auto &source: sources)
         {
             try
             {
                 // create copies of the images to modify
-                cv::Mat copyOfSource = source.clone();
-                cv::Mat copyOfTarget = target.clone();
+                auto copyOfSource = source.clone();
+                auto copyOfTarget = target.clone();
 
                 cv::Size sourceSize = source.size();
                 cv::Size targetSize = target.size();
@@ -177,7 +190,7 @@ namespace ActionTools
                     sourceSize.width  = (sourceSize.width  + 1) / 2;
                     sourceSize.height = (sourceSize.height + 1) / 2;
 
-                    cv::Mat smallSource(sourceSize, source.type());
+                    Mat smallSource(sourceSize, source.type());
                     cv::pyrDown(copyOfSource, smallSource);
 
                     // prepare for next loop, if any
@@ -187,7 +200,7 @@ namespace ActionTools
                     targetSize.width  = (targetSize.width  + 1) / 2;
                     targetSize.height = (targetSize.height + 1) / 2;
 
-                    cv::Mat smallTarget(targetSize, target.type());
+                    Mat smallTarget(targetSize, target.type());
                     pyrDown(copyOfTarget, smallTarget);
 
                     // prepare for next loop, if any
@@ -202,7 +215,7 @@ namespace ActionTools
                 resultSize.width = smallSourceSize.width - smallTargetSize.width + 1;
                 resultSize.height = smallSourceSize.height - smallTargetSize.height + 1;
 
-                cv::Mat result(resultSize, CV_32FC1);
+                Mat result(resultSize, CV_32FC1);
                 cv::matchTemplate(copyOfSource, copyOfTarget, result, toOpenCVMethod(method));
 
                 // find the top match locations
@@ -276,13 +289,13 @@ namespace ActionTools
                         searchRoi.height -= numPixelsOver;
                     }
 
-                    cv::Mat searchImage(source, searchRoi);
+                    Mat searchImage(source, searchRoi);
 
                     // perform the search on the large images
                     resultSize.width = searchRoi.width - target.size().width + 1;
                     resultSize.height = searchRoi.height - target.size().height + 1;
 
-                    result = cv::Mat(resultSize, CV_32FC1);
+                    result = Mat(resultSize, CV_32FC1);
                     cv::matchTemplate(searchImage, target, result, toOpenCVMethod(method));
 
                     // find the best match location
@@ -293,8 +306,8 @@ namespace ActionTools
 
                     cv::minMaxLoc(result, &minValue, &maxValue, &minLoc, &maxLoc);
 
-                    double &value = (method == SquaredDifferenceMethod) ? minValue : maxValue;
-                    cv::Point &loc = (method == SquaredDifferenceMethod) ? minLoc : maxLoc;
+                    double &value = (method == OpenCVAlgorithms::SquaredDifferenceMethod) ? minValue : maxValue;
+                    cv::Point &loc = (method == OpenCVAlgorithms::SquaredDifferenceMethod) ? minLoc : maxLoc;
 
                     value *= 100.0;
 
@@ -302,7 +315,7 @@ namespace ActionTools
                     loc.x += searchRoi.x + target.size().width / 2;
                     loc.y += searchRoi.y + target.size().height / 2;
 
-                    if(method == SquaredDifferenceMethod)
+                    if(method == OpenCVAlgorithms::SquaredDifferenceMethod)
                         value = 100.0f - value;
 
                     if(value >= matchPercentage)
@@ -321,8 +334,8 @@ namespace ActionTools
             }
             catch(const cv::Exception &e)
             {
-                mError = OpenCVException;
-				mErrorString = tr("OpenCV exception: %1").arg(QLatin1String(e.what()));
+                mError = OpenCVAlgorithms::OpenCVException;
+                mErrorString = QObject::tr("OpenCV exception: %1").arg(QLatin1String(e.what()));
 
                 return MatchingPointList();
             }
@@ -333,18 +346,24 @@ namespace ActionTools
 		return matchingPointList;
 	}
 
-    QVector<QPoint> OpenCVAlgorithms::multipleMinMaxLoc(const cv::Mat &image, int maximumMatches, AlgorithmMethod method)
+    QVector<QPoint> OpenCVAlgorithmsPrivate::multipleMinMaxLoc(const Mat &image, int maximumMatches, OpenCVAlgorithms::AlgorithmMethod method)
 	{
 		QVector<QPoint> locations(maximumMatches);
-        QVector<float> matches(maximumMatches, (method == SquaredDifferenceMethod) ? std::numeric_limits<float>::max() : -std::numeric_limits<float>::max());
+        QVector<float> matches(maximumMatches, (method == OpenCVAlgorithms::SquaredDifferenceMethod) ? std::numeric_limits<float>::max() : -std::numeric_limits<float>::max());
 		cv::Size size = image.size();
+
+#if CV_MAJOR_VERSION == 2
+        const Mat &matImage = image;
+#elif CV_MAJOR_VERSION == 3
+        cv::Mat matImage = image.getMat(cv::ACCESS_READ);
+#endif
 
 		// extract the raw data for analysis
 		for(int y = 0; y < size.height; ++y)
 		{
 			for(int x = 0; x < size.width; ++x)
 			{
-				float data = image.at<float>(y, x);
+                float data = matImage.at<float>(y, x);
 
 				// insert the data value into the array if it is greater than any of the
 				//  other array values, and bump the other values below it, down
@@ -352,8 +371,8 @@ namespace ActionTools
 				{
 					// require at least 50% confidence on the sub-sampled image
 					// in order to make this as fast as possible
-                    if((method == SquaredDifferenceMethod && data < 0.5f && data < matches.at(j)) ||
-                       (method != SquaredDifferenceMethod && data > 0.5f && data > matches.at(j)))
+                    if((method == OpenCVAlgorithms::SquaredDifferenceMethod && data < 0.5f && data < matches.at(j)) ||
+                       (method != OpenCVAlgorithms::SquaredDifferenceMethod && data > 0.5f && data > matches.at(j)))
 					{
 						// move the maxima down
 						for(int k = maximumMatches - 1; k > j; --k)
@@ -375,12 +394,18 @@ namespace ActionTools
 		return locations;
 	}
 
-    QImage OpenCVAlgorithms::toQImage(const cv::Mat &image)
+    QImage OpenCVAlgorithmsPrivate::toQImage(const Mat &image)
 	{
-		return QImage(image.data, image.size().width, image.size().height, image.step, QImage::Format_RGB888).rgbSwapped();
+#if CV_MAJOR_VERSION == 2
+        const cv::Mat &matImage = image;
+#elif CV_MAJOR_VERSION == 3
+        cv::Mat matImage = image.getMat(cv::ACCESS_READ);
+#endif
+
+        return QImage(matImage.data, image.size().width, image.size().height, image.step, QImage::Format_RGB888).rgbSwapped();
 	}
 
-    cv::Mat OpenCVAlgorithms::toCVMat(const QImage &image)
+    Mat OpenCVAlgorithmsPrivate::toCVMat(const QImage &image)
     {
         cv::Mat mat(image.height(), image.width(), CV_8UC4, const_cast<uchar *>(image.bits()), image.bytesPerLine());
         cv::Mat back(mat.rows, mat.cols, CV_8UC3);
@@ -388,10 +413,14 @@ namespace ActionTools
 
         cv::mixChannels(&mat, 1, &back, 1, from_to, 3);
 
-        return back;
+#if CV_MAJOR_VERSION == 2
+                return back;
+#elif CV_MAJOR_VERSION == 3
+                return back.getUMat(cv::ACCESS_RW);
+#endif
     }
 
-    int OpenCVAlgorithms::toOpenCVMethod(OpenCVAlgorithms::AlgorithmMethod method)
+    int OpenCVAlgorithmsPrivate::toOpenCVMethod(OpenCVAlgorithms::AlgorithmMethod method)
     {
         switch(method)
         {

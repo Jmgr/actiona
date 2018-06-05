@@ -109,7 +109,8 @@ HEADERS += actiontools_global.h \
     resourcenamedialog.h \
     screenshotwizard.h \
     screenshotwizardpage.h \
-    savescreenshotwizardpage.h
+    savescreenshotwizardpage.h \
+    opencvalgorithms_private.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \
