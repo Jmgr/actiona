@@ -75,6 +75,8 @@
 #include <QFutureWatcher>
 #include <QMetaType>
 
+#include <memory>
+
 namespace ActionTools
 {
     struct OpenCVAlgorithmsPrivate;

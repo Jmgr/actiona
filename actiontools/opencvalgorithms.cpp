@@ -23,15 +23,13 @@
 #include "opencvalgorithms.h"
 #include "opencvalgorithms_private.h"
 
-#include <boost/bind.hpp>
-
 #include <QtConcurrent/QtConcurrentRun>
 
 namespace ActionTools
 {
 	OpenCVAlgorithms::OpenCVAlgorithms(QObject *parent)
 		: QObject(parent),
-          mPrivate(std::make_unique<OpenCVAlgorithmsPrivate>())
+          mPrivate(new OpenCVAlgorithmsPrivate()) // This should be replaced with make_unique once we add a c++14 requirement
 	{
         qRegisterMetaType<MatchingPointList>("MatchingPointList");
     }
@@ -72,7 +70,7 @@ namespace ActionTools
 
         connect(&mPrivate->mFutureWatcher, SIGNAL(finished()), this, SLOT(finished()));
 
-        mPrivate->mFuture = QtConcurrent::run(boost::bind(&OpenCVAlgorithmsPrivate::fastMatchTemplate, mPrivate.get(), sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion, method));
+        mPrivate->mFuture = QtConcurrent::run(std::bind(&OpenCVAlgorithmsPrivate::fastMatchTemplate, mPrivate.get(), sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion, method));
         mPrivate->mFutureWatcher.setFuture(mPrivate->mFuture);
 
 		return true;
