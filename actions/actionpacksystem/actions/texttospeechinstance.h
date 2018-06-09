@@ -25,8 +25,6 @@
 
 #include <QTextToSpeech>
 
-#include <QDebug>//TMP
-
 namespace Actions
 {
     class TextToSpeechInstance : public ActionTools::ActionInstance
@@ -34,23 +32,14 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-        /*
-		enum Exceptions
-		{
-			FailedToStartException = ActionTools::ActionException::UserException
-		};
-        */
-
         TextToSpeechInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
             : ActionTools::ActionInstance(definition, parent),
-              mTextToSpeech(new QTextToSpeech)
+              mTextToSpeech(new QTextToSpeech(this))
 		{
 		}
 
         virtual ~TextToSpeechInstance()
         {
-            //HACK: deleting this here seems to crash the application
-            mTextToSpeech->deleteLater();
         }
 
 		void startExecution()
@@ -60,13 +49,12 @@ namespace Actions
             QString text = evaluateString(ok, QStringLiteral("text"));
             int volume = evaluateInteger(ok, QStringLiteral("volume"));
             QString language = evaluateString(ok, QStringLiteral("language"));
+            bool blocking = evaluateBoolean(ok, QStringLiteral("blocking"));
             int playbackRate = evaluateInteger(ok, QStringLiteral("playbackRate"));
             int pitch = evaluateInteger(ok, QStringLiteral("pitch"));
 
 			if(!ok)
 				return;
-
-            connect(mTextToSpeech, SIGNAL(stateChanged(QTextToSpeech::State)), this, SLOT(stateChanged(QTextToSpeech::State)));
 
             QLocale locale{language};
 
@@ -79,18 +67,16 @@ namespace Actions
             mTextToSpeech->setLocale(locale);
             mTextToSpeech->say(text);
 
-            /*
-			mProcess->setWorkingDirectory(workingDirectory);
-
-			connect(mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
-			connect(mProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
-
-			QStringList parameterList = parameters.split(QChar(' '));
-			mProcess->start(command, parameters.isEmpty() ? QStringList() : parameterList);
-			setVariable(mOutputVariable, QString());
-			setVariable(mErrorOutputVariable, QString());
-            */
+            if(blocking)
+                connect(mTextToSpeech, SIGNAL(stateChanged(QTextToSpeech::State)), this, SLOT(stateChanged(QTextToSpeech::State)));
+            else
+                executionEnded();
 		}
+
+        void stopLongTermExecution()
+        {
+            mTextToSpeech->stop();
+        }
 
 		void stopExecution()
         {

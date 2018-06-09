@@ -77,14 +77,12 @@ namespace Actions
             addElement(playbackrate, 1);
 
             ActionTools::NumberParameterDefinition *pitch = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("pitch"), tr("Pitch")), this);
-            pitch->setTooltip(tr("The pitch"));
+            pitch->setTooltip(tr("The sound frequency of the voice"));
             pitch->setMinimum(0);
             pitch->setMaximum(200);
             pitch->setSuffix(tr("%", "percent"));
             pitch->setDefaultValue(QStringLiteral("100"));
             addElement(pitch, 1);
-
-            //addException(CommandInstance::FailedToStartException, tr("Failed to start the command"));
 		}
 
         QString name() const													{ return QObject::tr("Text to speech"); }
