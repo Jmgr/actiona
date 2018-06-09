@@ -115,7 +115,6 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 	mAddActionRow(0),
 	mStopExecutionAction(new QAction(tr("S&top execution"), this)),
     mUsedLocale(usedLocale),
-    mScriptProgressDialog(new QProgressDialog(this)),
     mNewActionProxyModel(new NewActionProxyModel(this)),
     mScriptProxyModel(new ScriptProxyModel(mScript, this)),
     mNewActionModel(new NewActionModel(this))
@@ -171,12 +170,6 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
     ui->x11NotDetectedLabel->setVisible(false);
     ui->x11NotDetectedIconLabel->setVisible(false);
 #endif
-
-    mScriptProgressDialog->close();
-    mScriptProgressDialog->setWindowModality(Qt::ApplicationModal);
-    mScriptProgressDialog->setCancelButton(0);
-    mScriptProgressDialog->setAutoClose(false);
-    mScriptProgressDialog->setMinimumDuration(0);
 
 #ifndef ACT_NO_UPDATER
     mUpdaterProgressDialog->close();
@@ -299,8 +292,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 	connect(ui->consoleWidget, SIGNAL(itemDoubleClicked(int)), this, SLOT(logItemDoubleClicked(int)));
 	connect(ui->consoleWidget, SIGNAL(itemClicked(int)), this, SLOT(logItemClicked(int)));
 	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
-	connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
-    connect(mScript, SIGNAL(scriptProcessing(int,int,QString)), this, SLOT(scriptProcessing(int,int,QString)));
+    connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
     connect(ui->heatmapModeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int index)
     {
         mScriptModel->setHeatmapMode(static_cast<HeatmapMode>(index));
@@ -1415,39 +1407,66 @@ void MainWindow::enableTaskbarProgress(bool enable)
 
 ActionTools::Script::ReadResult MainWindow::readScript(QIODevice *device)
 {
-    mScriptProgressDialog->setLabelText(tr("Loading script..."));
-    mScriptProgressDialog->setWindowTitle(tr("Loading script"));
-    mScriptProgressDialog->open();
+    auto progressDialog = createStandardProgressDialog();
+    progressDialog->setLabelText(tr("Loading script..."));
+    progressDialog->setWindowTitle(tr("Loading script"));
+    progressDialog->open();
 
     QApplication::processEvents();
 
-	std::function<void()> resetCallback = [this]()
+    std::function<void(int, int, QString)> progressCallback = [&progressDialog](int progress, int total, const QString &description)
+    {
+        progressDialog->setLabelText(description);
+        progressDialog->setRange(0, total);
+        progressDialog->setValue(progress);
+    };
+    std::function<void()> resetCallback = [this]()
 	{
 		mScriptModel->reset();
 	};
-	std::function<void(QList<ActionTools::ActionInstance *>)> addActionCallback = [this](QList<ActionTools::ActionInstance *> instances)
+    std::function<void(QList<ActionTools::ActionInstance *>)> addActionCallback = [this](QList<ActionTools::ActionInstance *> instances)
 	{
 		mScriptModel->appendActions(instances);
 	};
 
-	ActionTools::Script::ReadResult result = mScript->read(device, Global::SCRIPT_VERSION, &resetCallback, &addActionCallback);
+    ActionTools::Script::ReadResult result = mScript->read(device, Global::SCRIPT_VERSION, &progressCallback, &resetCallback, &addActionCallback);
     if(result == ActionTools::Script::ReadSuccess)
         scriptEdited();
 
-    mScriptProgressDialog->close();
+    progressDialog->close();
 
     return result;
 }
 
 bool MainWindow::writeScript(QIODevice *device)
 {
-    mScriptProgressDialog->setLabelText(tr("Saving script..."));
-    mScriptProgressDialog->setWindowTitle(tr("Saving script"));
-    mScriptProgressDialog->open();
+    auto progressDialog = createStandardProgressDialog();
+    progressDialog->setLabelText(tr("Saving script..."));
+    progressDialog->setWindowTitle(tr("Saving script"));
+    progressDialog->open();
 
-    bool result = mScript->write(device, Global::ACTIONA_VERSION, Global::SCRIPT_VERSION);
+    std::function<void(int, int, QString)> progressCallback = [&progressDialog](int progress, int total, const QString &description)
+    {
+        progressDialog->setLabelText(description);
+        progressDialog->setRange(0, total);
+        progressDialog->setValue(progress);
+    };
 
-    mScriptProgressDialog->close();
+    bool result = mScript->write(device, Global::ACTIONA_VERSION, Global::SCRIPT_VERSION, &progressCallback);
+
+    progressDialog->close();
+
+    return result;
+}
+
+std::unique_ptr<QProgressDialog> MainWindow::createStandardProgressDialog()
+{
+    auto result = std::unique_ptr<QProgressDialog>(new QProgressDialog(this));
+
+    result->setWindowModality(Qt::ApplicationModal);
+    result->setCancelButton(nullptr);
+    result->setAutoClose(false);
+    result->setMinimumDuration(0);
 
     return result;
 }
@@ -1883,13 +1902,6 @@ void MainWindow::otherInstanceMessage(const QString &message)
 			emit needToShow();
 		}
     }
-}
-
-void MainWindow::scriptProcessing(int progress, int total, const QString &description)
-{
-    mScriptProgressDialog->setLabelText(description);
-    mScriptProgressDialog->setRange(0, total);
-    mScriptProgressDialog->setValue(progress);
 }
 
 #ifndef ACT_NO_UPDATER

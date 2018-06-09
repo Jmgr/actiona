@@ -196,12 +196,15 @@ namespace ActionTools
 		return result;
 	}
 
-	bool Script::write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion)
+    bool Script::write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion, std::function<void(int, int, QString)> *progressCallback)
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Script::write");
 #endif
-        emit scriptProcessing(0, 0, tr("Writing..."));
+        if(progressCallback)
+        {
+            progressCallback->operator()(0, 0, tr("Writing..."));
+        }
 
 		QXmlStreamWriter stream(device);
 		stream.setAutoFormatting(true);
@@ -248,7 +251,10 @@ namespace ActionTools
         int parameterIndex = 0;
         for(const ScriptParameter &parameter: mParameters)
 		{
-            emit scriptProcessing(parameterIndex, mParameters.size() - 1, tr("Writing parameters..."));
+            if(progressCallback)
+            {
+                progressCallback->operator()(parameterIndex, mParameters.size() - 1, tr("Writing parameters..."));
+            }
 
 			stream.writeStartElement(QStringLiteral("parameter"));
 			stream.writeAttribute(QStringLiteral("name"), parameter.name());
@@ -268,7 +274,10 @@ namespace ActionTools
         int resourceIndex = 0;
         while(resourceIt != mResources.constEnd())
         {
-            emit scriptProcessing(resourceIndex , mResources.size() - 1, tr("Writing resources..."));
+            if(progressCallback)
+            {
+                progressCallback->operator()(resourceIndex , mResources.size() - 1, tr("Writing resources..."));
+            }
 
 			stream.writeStartElement(QStringLiteral("resource"));
 			stream.writeAttribute(QStringLiteral("id"), resourceIt.key());
@@ -289,7 +298,10 @@ namespace ActionTools
         int actionIndex = 0;
         for(ActionInstance *actionInstance: mActionInstances)
 		{
-            emit scriptProcessing(actionIndex, mActionInstances.size() - 1, tr("Writing actions..."));
+            if(progressCallback)
+            {
+                progressCallback->operator()(actionIndex, mActionInstances.size() - 1, tr("Writing actions..."));
+            }
 
 			stream.writeStartElement(QStringLiteral("action"));
 			stream.writeAttribute(QStringLiteral("name"), actionInstance->definition()->id());
@@ -357,20 +369,31 @@ namespace ActionTools
 		return true;
 	}
 
-	Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion, std::function<void()> *resetCallback, std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback)
+    Script::ReadResult Script::read(
+            QIODevice *device,
+            const Tools::Version &scriptVersion,
+            std::function<void(int, int, QString)> *progressCallback,
+            std::function<void()> *resetCallback,
+            std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback)
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Script::read");
 #endif
 		mMissingActions.clear();
 
-        emit scriptProcessing(0, 0, tr("Reading schema..."));
+        if(progressCallback)
+        {
+            progressCallback->operator()(0, 0, tr("Reading schema..."));
+        }
 
         ReadResult result = validateSchema(device, scriptVersion);
         if(result != ReadSuccess)
             return result;
 
-        emit scriptProcessing(0, 0, tr("Listing file content..."));
+        if(progressCallback)
+        {
+            progressCallback->operator()(0, 0, tr("Listing file content..."));
+        }
 
         //List the script content
         device->reset();
@@ -445,7 +468,10 @@ namespace ActionTools
 		Tools::HighResolutionTimer timer2("Reading content");
 #endif
 
-        emit scriptProcessing(0, 0, tr("Reading content..."));
+        if(progressCallback)
+        {
+            progressCallback->operator()(0, 0, tr("Reading content..."));
+        }
 
         QHash<ActionDefinition *, Tools::Version> updatableActionDefinitions;
 		QList<ActionInstance *> newActions;
@@ -510,7 +536,10 @@ namespace ActionTools
 					if(!stream.isStartElement())
 						continue;
 
-                    emit scriptProcessing(mParameters.size(), parameterCount - 1, tr("Reading parameters..."));
+                    if(progressCallback)
+                    {
+                        progressCallback->operator()(mParameters.size(), parameterCount - 1, tr("Reading parameters..."));
+                    }
 
 					const QXmlStreamAttributes &attributes = stream.attributes();
 					ScriptParameter scriptParameter(	attributes.value(QStringLiteral("name")).toString(),
@@ -530,7 +559,10 @@ namespace ActionTools
                     if(!stream.isStartElement())
                         continue;
 
-                    emit scriptProcessing(mResources.size(), resourceCount - 1, tr("Reading resources..."));
+                    if(progressCallback)
+                    {
+                        progressCallback->operator()(mResources.size(), resourceCount - 1, tr("Reading resources..."));
+                    }
 
                     const QXmlStreamAttributes &attributes = stream.attributes();
 					QString id = attributes.value(QStringLiteral("id")).toString();
@@ -579,7 +611,10 @@ namespace ActionTools
 						if(!stream.isStartElement())
 							continue;
 
-                        emit scriptProcessing(mActionInstances.size(), actionCount - 1, tr("Reading actions..."));
+                        if(progressCallback)
+                        {
+                            progressCallback->operator()(mActionInstances.size(), actionCount - 1, tr("Reading actions..."));
+                        }
 
 						if(stream.name() == QLatin1String("exception"))
 						{

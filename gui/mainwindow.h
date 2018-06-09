@@ -30,6 +30,8 @@
 #include <QFile>
 #endif
 
+#include <memory>
+
 namespace Ui
 {
 	class MainWindow;
@@ -153,7 +155,6 @@ private slots:
 	void logItemDoubleClicked(int itemRow);
 	void logItemClicked(int itemRow);
     void otherInstanceMessage(const QString &message);
-    void scriptProcessing(int progress, int total, const QString &description);
 #ifndef ACT_NO_UPDATER
 	void updateError(const QString &message);
 	void updateNoResult();
@@ -207,6 +208,7 @@ private:
     void enableTaskbarProgress(bool enable);
     ActionTools::Script::ReadResult readScript(QIODevice *device);
     bool writeScript(QIODevice *device);
+    std::unique_ptr<QProgressDialog> createStandardProgressDialog();
 #ifndef ACT_NO_UPDATER
 	void checkForUpdate(bool silent);
 #endif
@@ -235,8 +237,7 @@ private:
 	QString mAddAction;
 	QAction *mStopExecutionAction;
 	QList<ActionDialog *> mActionDialogs;
-	QString mUsedLocale;
-    QProgressDialog *mScriptProgressDialog;
+    QString mUsedLocale;
     NewActionProxyModel *mNewActionProxyModel;
     ScriptProxyModel *mScriptProxyModel;
     NewActionModel *mNewActionModel;

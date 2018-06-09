@@ -76,8 +76,12 @@ namespace ActionTools
 
 		QSet<int> usedActions() const;
 
-		bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion);
-		ReadResult read(QIODevice *device, const Tools::Version &scriptVersion, std::function<void()> *resetCallback = nullptr, std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback = nullptr);
+        bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion, std::function<void(int, int, QString)> *progressCallback = nullptr);
+        ReadResult read(QIODevice *device,
+                        const Tools::Version &scriptVersion,
+                        std::function<void(int, int, QString)> *progressCallback = nullptr,
+                        std::function<void()> *resetCallback = nullptr,
+                        std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback = nullptr);
 
         bool validateContent(const QString &content, const Tools::Version &scriptVersion);
         const QString &statusMessage() const                                            { return mStatusMessage; }
@@ -124,9 +128,6 @@ namespace ActionTools
         QSet<QString> findVariables(ActionInstance *actionInstance = 0, ActionInstance *excludedActionInstance = 0) const;
 
         void executionStopped();
-
-    signals:
-        void scriptProcessing(int progress, int total, const QString &description);
 
 	private:
         Script::ReadResult validateSchema(QIODevice *device, const Tools::Version &scriptVersion, bool tryOlderVersions = true);
