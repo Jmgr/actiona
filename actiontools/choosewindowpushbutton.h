@@ -35,7 +35,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ChooseWindowPushButton(QWidget *parent = 0);
+		explicit ChooseWindowPushButton(QWidget *parent = nullptr);
 		~ChooseWindowPushButton();
 
 	signals:

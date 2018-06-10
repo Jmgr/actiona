@@ -39,7 +39,7 @@ namespace ActionTools
         Q_OBJECT
 
     public:
-        SaveScreenshotWizardPage(ActionTools::Script *script, bool allowSaveToClipboard, QWidget *parent = 0);
+        SaveScreenshotWizardPage(ActionTools::Script *script, bool allowSaveToClipboard, QWidget *parent = nullptr);
         ~SaveScreenshotWizardPage();
 
     protected:

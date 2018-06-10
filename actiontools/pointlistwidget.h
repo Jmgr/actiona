@@ -37,7 +37,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit PointListWidget(QWidget *parent = 0);
+		explicit PointListWidget(QWidget *parent = nullptr);
 		~PointListWidget();
 
 		QPolygon points() const;

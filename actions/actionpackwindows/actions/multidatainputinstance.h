@@ -46,7 +46,7 @@ namespace Actions
 			RadioButtonMode
 		};
 
-		MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 
         static Tools::StringListPair modes;
 

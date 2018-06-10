@@ -36,7 +36,7 @@ class CodeExecuter : public Executer
     Q_OBJECT
 	
 public:
-    explicit CodeExecuter(QObject *parent = 0);
+    explicit CodeExecuter(QObject *parent = nullptr);
 	
 	bool start(QIODevice *device, const QString &filename);
 	

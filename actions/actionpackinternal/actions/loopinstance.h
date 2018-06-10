@@ -29,7 +29,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		LoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		LoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent), mInitialized(false), mCounter(0)		{}
 
 		void startExecution()

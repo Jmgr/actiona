@@ -26,8 +26,8 @@ namespace ActionTools
 {
     ImageParameterDefinition::ImageParameterDefinition(const Name &name, QObject *parent)
       : FileParameterDefinition(name, parent),
-        mScript(0),
-        mParent(0)
+        mScript(nullptr),
+        mParent(nullptr)
     {
     }
 

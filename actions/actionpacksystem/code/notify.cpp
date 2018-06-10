@@ -59,7 +59,7 @@ namespace Code
 	
 	Notify::Notify()
 		: CodeClass(),
-		mNotification(0),
+		mNotification(nullptr),
 		mTimeout(5000)
 	{
 	}
@@ -69,7 +69,7 @@ namespace Code
 #ifdef Q_OS_LINUX
 		if(mNotification)
 		{
-			notify_notification_close(mNotification, 0);
+			notify_notification_close(mNotification, nullptr);
 			g_object_unref(mNotification);
 		}
 #endif
@@ -106,7 +106,7 @@ namespace Code
 
 		notify_notification_set_timeout(mNotification, mTimeout);
 
-		if(!notify_notification_show(mNotification, 0))
+		if(!notify_notification_show(mNotification, nullptr))
 			throwError(QStringLiteral("NotificationError"), tr("Unable to show the notification"));
 #endif
 		return thisObject();

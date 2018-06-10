@@ -54,7 +54,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	: QDialog(parent),
       ParameterContainer(script),
 	  ui(new Ui::ActionDialog),
-	  mActionInstance(0),
+	  mActionInstance(nullptr),
 	  mScript(script),
 	  mCurrentLine(-1),
 	  mCurrentColumn(-1),
@@ -322,7 +322,7 @@ QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
     std::sort(variableList.begin(), variableList.end());
 
     if(variableList.isEmpty())
-        return 0;
+        return nullptr;
 
     QMenu *back = new QMenu(parent);
 
@@ -392,7 +392,7 @@ void ActionDialog::postInit()
 #ifdef ACT_PROFILE
 	Tools::HighResolutionTimer timer("ActionDialog postInit");
 #endif
-    mOtherActionsVariables = mScript->findVariables(0, mActionInstance);//Find in all actions except this one
+    mOtherActionsVariables = mScript->findVariables(nullptr, mActionInstance);//Find in all actions except this one
 
 	for(ActionTools::ParameterDefinition *parameter: mParameters)
 	{

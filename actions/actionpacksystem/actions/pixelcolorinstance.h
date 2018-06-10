@@ -46,7 +46,7 @@ namespace Actions
 			Lighter
 		};
 
-		PixelColorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		PixelColorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent), mComparison(Equal) {}
 
         static Tools::StringListPair comparisons;

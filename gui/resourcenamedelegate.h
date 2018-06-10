@@ -29,7 +29,7 @@ class ResourceNameDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit ResourceNameDelegate(ResourceTableWidget *resourceTableWidget, QObject *parent = 0);
+    explicit ResourceNameDelegate(ResourceTableWidget *resourceTableWidget, QObject *parent = nullptr);
     
     virtual QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     virtual void setEditorData(QWidget *editor, const QModelIndex &index) const;

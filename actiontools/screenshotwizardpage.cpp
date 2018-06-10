@@ -33,7 +33,7 @@ namespace ActionTools
     ScreenshotWizardPage::ScreenshotWizardPage(QWidget *parent)
       : QWizardPage(parent),
         ui(new Ui::ScreenshotWizardPage),
-        mTargetWindow(0),
+        mTargetWindow(nullptr),
         mDisableEscape(false)
     {
         ui->setupUi(this);
@@ -108,7 +108,7 @@ namespace ActionTools
     {
         mDisableEscape = false;
         mTargetWindow->deleteLater();
-        mTargetWindow = 0;
+        mTargetWindow = nullptr;
 
         if(rect != QRect())
         {

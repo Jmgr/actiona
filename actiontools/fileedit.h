@@ -48,7 +48,7 @@ namespace ActionTools
 			DirectorySave
 		};
 
-		explicit FileEdit(QWidget *parent = 0);
+		explicit FileEdit(QWidget *parent = nullptr);
 		~FileEdit();
 
 		void setText(const QString &text);

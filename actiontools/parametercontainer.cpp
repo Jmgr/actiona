@@ -37,7 +37,7 @@ namespace ActionTools
     QMenu *ParameterContainer::createResourcesMenu(QWidget *parent) const
     {
         if(mScript->resources().isEmpty())
-            return 0;
+            return nullptr;
 
         QMenu *back = new QMenu(parent);
 

@@ -38,7 +38,7 @@ namespace Actions
 			FailedToOpenURL = ActionTools::ActionException::UserException
 		};
 
-		OpenURLInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		OpenURLInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)
 		{
 		}

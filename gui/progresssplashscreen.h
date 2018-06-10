@@ -30,8 +30,8 @@ class ProgressSplashScreen : public QSplashScreen
 	Q_OBJECT
 
 public:
-	ProgressSplashScreen(const QPixmap &pixmap = QPixmap(), Qt::WindowFlags f=0);
-	ProgressSplashScreen(QWidget *parent, const QPixmap &pixmap = QPixmap(), Qt::WindowFlags f=0);
+	ProgressSplashScreen(const QPixmap &pixmap = QPixmap(), Qt::WindowFlags f=nullptr);
+	ProgressSplashScreen(QWidget *parent, const QPixmap &pixmap = QPixmap(), Qt::WindowFlags f=nullptr);
 
 	void setMaximum(int maximum);
 	void setMinimum(int minimum);

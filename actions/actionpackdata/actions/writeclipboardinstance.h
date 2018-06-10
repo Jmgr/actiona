@@ -32,7 +32,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		WriteClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		WriteClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)											{}
 
 		void startExecution()

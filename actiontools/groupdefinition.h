@@ -37,7 +37,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		GroupDefinition(QObject *parent = 0);
+		GroupDefinition(QObject *parent = nullptr);
 
 		void addMember(ParameterDefinition *parameter, int tab = 0)		{ parameter->setTab(tab); mMembers.append(parameter); }
 		QList<ParameterDefinition *> members() const					{ return mMembers; }

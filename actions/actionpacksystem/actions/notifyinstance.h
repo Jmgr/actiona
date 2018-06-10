@@ -37,7 +37,7 @@ namespace Actions
 			UnableToShowNotificationException = ActionTools::ActionException::UserException
 		};
 
-		NotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		NotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 		~NotifyInstance();
 
 		void startExecution();

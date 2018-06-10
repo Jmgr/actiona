@@ -41,7 +41,7 @@ class ResourceDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit ResourceDialog(ActionTools::Script *script, QWidget *parent = 0);
+    explicit ResourceDialog(ActionTools::Script *script, QWidget *parent = nullptr);
     ~ResourceDialog();
 
     void setCurrentResource(const QString &resource);

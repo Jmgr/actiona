@@ -66,7 +66,7 @@ public:
         RamDrive
     };
 
-    QStorageInfo_Custom(QObject *parent = 0);
+    QStorageInfo_Custom(QObject *parent = nullptr);
     virtual ~QStorageInfo_Custom();
 
     QStringList allLogicalDrives();

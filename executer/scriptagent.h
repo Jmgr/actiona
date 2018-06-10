@@ -48,7 +48,7 @@ namespace LibExecuter
 			mContext(Unknown),
 			mPaused(false),
 			mContinueExecution(true),
-			mDebuggerAgent(0),
+			mDebuggerAgent(nullptr),
 			mEngineLevel(0)
 																			{}
 	

@@ -31,7 +31,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-        ItemListModel(QObject *parent = 0);
+        ItemListModel(QObject *parent = nullptr);
 
 		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 	};

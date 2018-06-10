@@ -39,7 +39,7 @@ namespace Actions
 			UnableToWriteFileException = ActionTools::ActionException::UserException
 		};
 
-		WriteIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		WriteIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)											{}
 
 		void startExecution()

@@ -56,7 +56,7 @@ class Q_SYSTEMINFO_EXPORT QScreenSaver : public QObject
     Q_PROPERTY(bool screenSaverEnabled READ screenSaverEnabled WRITE setScreenSaverEnabled)
 
 public:
-    QScreenSaver(QObject *parent = 0);
+    QScreenSaver(QObject *parent = nullptr);
     virtual ~QScreenSaver();
 
     bool screenSaverEnabled() const;

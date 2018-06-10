@@ -36,7 +36,7 @@ namespace ActionTools
 		Q_OBJECT
 		
 	public:
-		DataCopyActionInstance(const ActionDefinition *definition = 0, QObject *parent = 0);
+		DataCopyActionInstance(const ActionDefinition *definition = nullptr, QObject *parent = nullptr);
 		DataCopyActionInstance(const ActionInstance &other) : ActionInstance(other)			{}
 		virtual ~DataCopyActionInstance()													{}
 		

@@ -98,7 +98,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ActionInstance(const ActionDefinition *definition = 0, QObject *parent = 0);
+		ActionInstance(const ActionDefinition *definition = nullptr, QObject *parent = nullptr);
 		ActionInstance(const ActionInstance &other);
 
 		virtual ~ActionInstance()											{}

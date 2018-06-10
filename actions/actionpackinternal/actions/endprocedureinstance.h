@@ -30,7 +30,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		EndProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		EndProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
 		void startExecution()

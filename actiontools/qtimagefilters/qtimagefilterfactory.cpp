@@ -376,7 +376,7 @@ QtImageFilter *QtImageFilterFactory::createImageFilter(const QString &name)
     }
 
     ImageFilterFactoryFunction fnFactory = g_availableFilters.value(name.toLatin1());
-    return fnFactory ? fnFactory() : 0;
+    return fnFactory ? fnFactory() : nullptr;
 }
 
 /*!

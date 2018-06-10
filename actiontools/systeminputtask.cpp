@@ -203,7 +203,7 @@ namespace ActionTools
 			return CallNextHookEx(gKeyboardHook, nCode, wParam, lParam);
 		}
 #endif
-		Task *Task::mInstance = 0;
+		Task *Task::mInstance = nullptr;
 
 		Task::Task(QObject *parent)
 			: QObject(parent),
@@ -213,7 +213,7 @@ namespace ActionTools
 			, mProcessRepliesTimer(new QTimer(this))
 #endif
 		{
-			Q_ASSERT(mInstance == 0);
+			Q_ASSERT(mInstance == nullptr);
 
 			mInstance = this;
 
@@ -270,7 +270,7 @@ namespace ActionTools
 				return;
 			}
 
-			XRecordEnableContextAsync(QX11Info::display(), gXRecordContext, &xRecordCallback, 0);
+			XRecordEnableContextAsync(QX11Info::display(), gXRecordContext, &xRecordCallback, nullptr);
 
 			mProcessRepliesTimer->setSingleShot(false);
 			mProcessRepliesTimer->start(0);

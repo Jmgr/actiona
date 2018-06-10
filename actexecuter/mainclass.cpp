@@ -30,8 +30,8 @@
 #include <QTimer>
 
 MainClass::MainClass()
-	: QObject(0),
-	mExecuter(0),
+	: QObject(nullptr),
+	mExecuter(nullptr),
 	mNetworkAccessManager(new QNetworkAccessManager(this))
 {
 }
@@ -79,5 +79,5 @@ void MainClass::downloadFinished()
 
 	mNetworkReply->close();
 	mNetworkReply->deleteLater();
-	mNetworkReply = 0;
+	mNetworkReply = nullptr;
 }

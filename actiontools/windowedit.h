@@ -41,7 +41,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit WindowEdit(QWidget *parent = 0);
+		explicit WindowEdit(QWidget *parent = nullptr);
 		~WindowEdit();
 
 		void setText(const QString &text);

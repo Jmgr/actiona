@@ -45,7 +45,7 @@ namespace Actions
 			Contains
 		};
 
-		VariableConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		VariableConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
 		void startExecution()

@@ -48,7 +48,7 @@ namespace Actions
 			ConversionFailedException = ActionTools::ActionException::UserException
 		};
 
-		VariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		VariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
         static Tools::StringListPair types;

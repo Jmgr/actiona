@@ -37,7 +37,7 @@ namespace Actions
 			FailedToSendInputException = ActionTools::ActionException::UserException
 		};
 	
-		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 	
 		void startExecution();
 		void stopExecution();

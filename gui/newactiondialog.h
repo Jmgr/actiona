@@ -44,7 +44,7 @@ class NewActionDialog : public QDialog
 public:
     NewActionDialog(ActionTools::ActionFactory *actionFactory,
                     NewActionModel *newActionModel,
-                    QWidget *parent = 0);
+                    QWidget *parent = nullptr);
 	~NewActionDialog();
 
 	QString selectedAction() const							{ return mSelectedAction; }

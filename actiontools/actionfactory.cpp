@@ -86,13 +86,13 @@ namespace ActionTools
 				return actionDefinition;
 		}
 
-		return 0;
+		return nullptr;
 	}
 
 	ActionDefinition *ActionFactory::actionDefinition(int index) const
 	{
 		if(index < 0 || index >= mActionDefinitions.count())
-			return 0;
+			return nullptr;
 
 		return mActionDefinitions.at(index);
 	}
@@ -100,7 +100,7 @@ namespace ActionTools
 	ActionPack *ActionFactory::actionPack(int index) const
 	{
 		if(index < 0 || index >= mActionPacks.count())
-			return 0;
+			return nullptr;
 
 		return mActionPacks.at(index);
 	}
@@ -110,7 +110,7 @@ namespace ActionTools
 		ActionDefinition *definition = actionDefinition(actionDefinitionId);
 
 		if(!definition)
-			return 0;
+			return nullptr;
 
 		return definition->newActionInstance();
 	}

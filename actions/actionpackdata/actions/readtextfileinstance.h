@@ -41,7 +41,7 @@ namespace Actions
 			CannotOpenFileException = ActionTools::ActionException::UserException
 		};
 
-		ReadTextFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadTextFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
         static Tools::StringListPair modes;

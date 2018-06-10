@@ -29,7 +29,7 @@ namespace ActionTools
 {
     ListParameterDefinition::ListParameterDefinition(const Name &name, QObject *parent)
         : ItemsParameterDefinition(name, parent),
-		mComboBox(0)
+		mComboBox(nullptr)
 	{
 	}
 

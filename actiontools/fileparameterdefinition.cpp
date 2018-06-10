@@ -27,7 +27,7 @@ namespace ActionTools
 {
     FileParameterDefinition::FileParameterDefinition(const Name &name, QObject *parent)
         : ParameterDefinition(name, parent),
-		mFileEdit(0)
+		mFileEdit(nullptr)
 	{
 	}
 

@@ -28,7 +28,7 @@ namespace ActionTools
 {
     WindowParameterDefinition::WindowParameterDefinition(const Name &name, QObject *parent)
         : ParameterDefinition(name, parent),
-		mWindowEdit(0)
+		mWindowEdit(nullptr)
 	{
 	}
 

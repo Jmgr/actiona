@@ -41,7 +41,7 @@ namespace Actions
             UnableToFindSectionException
 		};
 
-		ReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)											{}
 
         static Tools::StringListPair modes;

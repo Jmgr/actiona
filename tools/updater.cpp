@@ -37,7 +37,7 @@ namespace Tools
 		: QObject(parent),
 		  mUrl(url),
 		  mNetworkAccessManager(networkAccessManager),
-		  mCurrentReply(0),
+		  mCurrentReply(nullptr),
 		  mTimeoutTimer(new QTimer(this))
 	{
         connect(mTimeoutTimer, &QTimer::timeout, this, &Updater::timeout);
@@ -148,7 +148,7 @@ namespace Tools
 
 		QNetworkReply *reply = mCurrentReply;
 
-		mCurrentReply = 0;
+		mCurrentReply = nullptr;
 		
 		if(reply->error() != QNetworkReply::NoError)
 		{

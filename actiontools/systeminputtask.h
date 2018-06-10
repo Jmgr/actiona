@@ -40,7 +40,7 @@ namespace ActionTools
 			Q_OBJECT
 
 		public:
-			explicit Task(QObject *parent = 0);
+			explicit Task(QObject *parent = nullptr);
 			~Task();
 
 			static Task *instance()													{ return mInstance; }

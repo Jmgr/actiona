@@ -32,7 +32,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		PlaySoundInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		PlaySoundInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 		~PlaySoundInstance();
 
 		void startExecution();

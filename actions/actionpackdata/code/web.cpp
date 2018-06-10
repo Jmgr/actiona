@@ -60,8 +60,8 @@ namespace Code
 	Web::Web()
 		: CodeClass(),
 		  mNetworkAccessManager(new QNetworkAccessManager(this)),
-          mNetworkReply(0),
-          mFile(0),
+          mNetworkReply(nullptr),
+          mFile(nullptr),
 		  mCloseFile(false),
 		  mIsDownloading(false)
 	{
@@ -230,7 +230,7 @@ namespace Code
 				mFile->deleteLater();
 			}
 
-			mFile = 0;
+			mFile = nullptr;
 		}
 		else
 			mData = mNetworkReply->readAll();
@@ -239,7 +239,7 @@ namespace Code
 			mOnFinished.call(thisObject());
 
 		mNetworkReply->deleteLater();
-		mNetworkReply = 0;
+		mNetworkReply = nullptr;
 
 		mIsDownloading = false;
 	}

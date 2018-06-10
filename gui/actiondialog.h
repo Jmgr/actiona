@@ -52,7 +52,7 @@ class ActionDialog : public QDialog, public ActionTools::ParameterContainer
 	Q_OBJECT
 
 public:
-	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent = 0);
+	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent = nullptr);
 	~ActionDialog();
 
     virtual QMenu *createVariablesMenu(QWidget *parent) const;

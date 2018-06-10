@@ -31,7 +31,7 @@ namespace Code
 {
 	QScriptValue Window::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Window *window = 0;
+		Window *window = nullptr;
 		
 		switch(context->argumentCount())
 		{
@@ -92,7 +92,7 @@ namespace Code
 		bool titleCaseSensitive = true;
 		bool classNameCaseSensitive = true;
 		int processId = -1;
-		ProcessHandle *processHandle = 0;
+		ProcessHandle *processHandle = nullptr;
 
 		while(it.hasNext())
 		{

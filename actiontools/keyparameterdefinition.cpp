@@ -29,7 +29,7 @@ namespace ActionTools
 {
     KeyParameterDefinition::KeyParameterDefinition(const Name &name, QObject *parent)
         : ParameterDefinition(name, parent),
-		mKeyEdit(0)
+		mKeyEdit(nullptr)
 	{
 	}
 

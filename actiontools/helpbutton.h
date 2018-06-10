@@ -31,7 +31,7 @@ namespace ActionTools
 		Q_OBJECT
 		
 	public:
-		explicit HelpButton(QWidget *parent = 0);
+		explicit HelpButton(QWidget *parent = nullptr);
 		
 		void setTopic(const QString &topic)						{ mTopic = topic; }
 		

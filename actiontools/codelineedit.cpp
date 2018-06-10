@@ -45,7 +45,7 @@ namespace ActionTools
 {
     CodeLineEdit::CodeLineEdit(QWidget *parent, const QRegExp &regexpValidation)
         : QLineEdit(parent),
-        mParameterContainer(0),
+        mParameterContainer(nullptr),
 		mCode(false),
 		mMultiline(false),
 		mAllowTextCodeChange(true),
@@ -54,7 +54,7 @@ namespace ActionTools
 		mSwitchTextCode(new QAction(QIcon(QStringLiteral(":/images/code.png")), tr("Set to text/code"), this)),
 		mOpenEditor(new QAction(QIcon(QStringLiteral(":/images/editor.png")), tr("Open editor"), this)),
 		mRegExp(regexpValidation),
-		mCompletionModel(0),
+		mCompletionModel(nullptr),
         mCodeButton(new CodeLineEditButton(this)),
         mEditorButton(new CodeLineEditButton(this)),
         mInsertButton(new CodeLineEditButton(this))
@@ -107,14 +107,14 @@ namespace ActionTools
 		if(code && mCompletionModel)
 			setCompleter(new ScriptCompleter(mCompletionModel, this));
 		else
-			setCompleter(0);
+			setCompleter(nullptr);
 
 		if(mRegExp != QRegExp())
 		{
 			if(code)
 			{
 				delete validator();
-				setValidator(0);
+				setValidator(nullptr);
 			}
 			else
 				setValidator(new QRegExpValidator(mRegExp, this));
@@ -217,7 +217,7 @@ namespace ActionTools
 		if(!mShowEditorButton)
 			return;
 		
-        CodeEditorDialog codeEditorDialog(mCompletionModel, createVariablesMenu(0, true), createResourcesMenu(0, true), this);
+        CodeEditorDialog codeEditorDialog(mCompletionModel, createVariablesMenu(nullptr, true), createResourcesMenu(nullptr, true), this);
 
         codeEditorDialog.setWindowFlags(codeEditorDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 
@@ -277,8 +277,8 @@ namespace ActionTools
         QCompleter *currentCompleter = completer();
         if(currentCompleter)
         {
-            currentCompleter->setParent(0);
-            setCompleter(0);
+            currentCompleter->setParent(nullptr);
+            setCompleter(nullptr);
         }
 
         if(isCode())
@@ -300,7 +300,7 @@ namespace ActionTools
 
     QMenu *CodeLineEdit::createVariablesMenu(QMenu *parentMenu, bool ignoreMultiline)
     {
-        QMenu *variablesMenu = 0;
+        QMenu *variablesMenu = nullptr;
 
         if(!ignoreMultiline && isMultiline())
         {
@@ -329,7 +329,7 @@ namespace ActionTools
 
     QMenu *CodeLineEdit::createResourcesMenu(QMenu *parentMenu, bool ignoreMultiline)
     {
-        QMenu *resourceMenu = 0;
+        QMenu *resourceMenu = nullptr;
 
         if(!ignoreMultiline && isMultiline())
         {

@@ -147,7 +147,7 @@ namespace ActionTools
 		if(code)
 		{
 			QString oldText = ui->colorLineEdit->text();
-            ui->colorLineEdit->setValidator(0);
+            ui->colorLineEdit->setValidator(nullptr);
 			ui->colorLineEdit->setText(oldText);
 			ui->colorLineEdit->setPalette(palette());
 		}

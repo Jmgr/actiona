@@ -38,7 +38,7 @@ namespace ActionTools
 	{
 		Q_OBJECT
 	public:
-        CodeEditorDialog(QAbstractItemModel *completionModel, QMenu *variablesMenu, QMenu *resourcesMenu, QWidget *parent = 0);
+        CodeEditorDialog(QAbstractItemModel *completionModel, QMenu *variablesMenu, QMenu *resourcesMenu, QWidget *parent = nullptr);
 		~CodeEditorDialog();
 
 		void setText(const QString &text);

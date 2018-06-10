@@ -207,7 +207,7 @@ namespace ActionTools
 
 	const char *KeySymHelper::keyModifiers[] =
 	{
-		NULL, "Mode_switch", "ISO_Level3_Shift"
+		nullptr, "Mode_switch", "ISO_Level3_Shift"
 	};
 
 	const quint16 KeySymHelper::mWCharToKeySym[] =

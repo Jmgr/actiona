@@ -35,7 +35,7 @@ namespace Actions
 	WebDownloadInstance::WebDownloadInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
 		  mNetworkAccessManager(new QNetworkAccessManager(this)),
-		  mReply(0),
+		  mReply(nullptr),
 		  mDestination(Variable),
 		  mProgressDialog(new QProgressDialog)
 	{
@@ -134,7 +134,7 @@ namespace Actions
 		mProgressDialog->close();
 
 		mReply->deleteLater();
-		mReply = 0;
+		mReply = nullptr;
 	}
 
 	void WebDownloadInstance::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)

@@ -30,7 +30,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		BeginProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		BeginProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
 		void startExecution()

@@ -25,7 +25,7 @@ namespace Code
 {
 	QScriptValue Color::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Color *color = 0;
+		Color *color = nullptr;
 		
 		switch(context->argumentCount())
 		{

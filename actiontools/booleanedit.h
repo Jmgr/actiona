@@ -39,7 +39,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit BooleanEdit(QWidget *parent = 0);
+		explicit BooleanEdit(QWidget *parent = nullptr);
 		~BooleanEdit();
 
 		void setText(bool isCode, const QString &text);

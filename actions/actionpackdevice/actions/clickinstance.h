@@ -43,7 +43,7 @@ namespace Actions
 			InvalidActionException
 		};
 	
-		ClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
         static Tools::StringListPair buttons;

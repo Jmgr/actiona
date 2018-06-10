@@ -42,7 +42,7 @@ namespace Actions
 			Days
 		};
 
-		PauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		PauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)
 		{
             connect(&mCheckTimer, &QTimer::timeout, this, &PauseInstance::checkTime);

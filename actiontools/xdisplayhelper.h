@@ -32,7 +32,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT XDisplayHelper
 	{
 	public:
-		XDisplayHelper()			{ mDisplay = XOpenDisplay(NULL); }
+		XDisplayHelper()			{ mDisplay = XOpenDisplay(nullptr); }
 		~XDisplayHelper()			{ if(mDisplay) XCloseDisplay(mDisplay); }
 
 		Display *display() const	{ return mDisplay; }

@@ -59,7 +59,7 @@ public:
         TransactionFailed
     };
 
-    QxtSmtp(QObject* parent = 0);
+    QxtSmtp(QObject* parent = nullptr);
 
     QByteArray username() const;
     void setUsername(const QByteArray& name);

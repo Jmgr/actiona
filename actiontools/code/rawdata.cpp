@@ -24,7 +24,7 @@ namespace Code
 {
 	QScriptValue RawData::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		RawData *rawData = 0;
+		RawData *rawData = nullptr;
 		
 		switch(context->argumentCount())
 		{

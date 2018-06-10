@@ -29,7 +29,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		CodeInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		CodeInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
 		void startExecution()

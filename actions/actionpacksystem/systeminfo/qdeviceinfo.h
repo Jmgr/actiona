@@ -109,7 +109,7 @@ public:
         Firmware
     };
 
-    QDeviceInfo(QObject *parent = 0);
+    QDeviceInfo(QObject *parent = nullptr);
     virtual ~QDeviceInfo();
 
     QDeviceInfo::LockTypeFlags activatedLocks() const;

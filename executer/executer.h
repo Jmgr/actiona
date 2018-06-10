@@ -51,7 +51,7 @@ namespace LibExecuter
 		Q_OBJECT
 
 	public:
-		Executer(QObject *parent = 0);
+		Executer(QObject *parent = nullptr);
 		~Executer();
 		
 		void setup(ActionTools::Script *script,

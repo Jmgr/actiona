@@ -31,7 +31,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit KeyEdit(QWidget *parent = 0);
+		explicit KeyEdit(QWidget *parent = nullptr);
 
 		const KeyInput &keyInput() const							{ return mKeyInput; }
 		void setKeyInput(const KeyInput &keyInput);

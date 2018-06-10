@@ -27,7 +27,7 @@ class DeleteActionPushButton : public QPushButton
 	Q_OBJECT
 
 public:
-	explicit DeleteActionPushButton(QWidget *parent = 0);
+	explicit DeleteActionPushButton(QWidget *parent = nullptr);
 
 signals:
 	void actionsDropped(QList<int> rows);

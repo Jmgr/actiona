@@ -44,7 +44,7 @@ class ScriptParametersDialog : public QDialog, public ActionTools::ParameterCont
 	Q_OBJECT
 
 public:
-    ScriptParametersDialog(ActionTools::Script *script, QWidget *parent = 0);
+    ScriptParametersDialog(ActionTools::Script *script, QWidget *parent = nullptr);
 	~ScriptParametersDialog();
 
 	void setCurrentParameter(int parameter)						{ mCurrentParameter = parameter; }

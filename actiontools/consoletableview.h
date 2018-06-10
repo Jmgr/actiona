@@ -31,7 +31,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ConsoleTableView(QWidget *parent = 0);
+		explicit ConsoleTableView(QWidget *parent = nullptr);
 
 	private:
 		void keyReleaseEvent(QKeyEvent *event);

@@ -32,7 +32,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		ExitInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ExitInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
 		void startExecution()

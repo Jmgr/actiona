@@ -27,7 +27,7 @@ class ResourceTypeDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit ResourceTypeDelegate(QObject *parent = 0);
+    explicit ResourceTypeDelegate(QObject *parent = nullptr);
     
     virtual QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     virtual void setEditorData(QWidget *editor, const QModelIndex &index) const;

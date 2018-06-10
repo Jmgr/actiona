@@ -40,7 +40,7 @@ namespace ActionTools
 	{
 		Q_OBJECT
 	public:
-		explicit ChoosePositionPushButton(QWidget *parent = 0);
+		explicit ChoosePositionPushButton(QWidget *parent = nullptr);
 		~ChoosePositionPushButton();
 
 	signals:

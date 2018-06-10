@@ -72,10 +72,10 @@ namespace ActionTools
             ResourceRole
 		};
 
-		explicit ConsoleWidget(QWidget *parent = 0);
+		explicit ConsoleWidget(QWidget *parent = nullptr);
 		~ConsoleWidget();
 		
-		void setup(QStandardItemModel *model = 0);
+		void setup(QStandardItemModel *model = nullptr);
 
 		void addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type);
         void addResourceLine(const QString &message, const QString &resourceKey, Type type);

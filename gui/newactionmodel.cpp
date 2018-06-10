@@ -38,7 +38,7 @@ QMimeData *NewActionModel::mimeData(const QModelIndexList &indexes) const
 	QByteArray data;
 
     if(indexes.count() != 1)
-		return 0;
+		return nullptr;
 
 	data.append(indexes.at(0).data(ActionIdRole).toString().toUtf8());
 

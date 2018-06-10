@@ -43,7 +43,7 @@ public:
 		Write
 	};
 
-	ScriptContentDialog(Type type, ActionTools::Script *script, QWidget *parent = 0);
+	ScriptContentDialog(Type type, ActionTools::Script *script, QWidget *parent = nullptr);
     ~ScriptContentDialog();
 	
 	void accept();

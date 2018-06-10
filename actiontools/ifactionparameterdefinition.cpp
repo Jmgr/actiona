@@ -42,10 +42,10 @@ namespace ActionTools
 
     IfActionParameterDefinition::IfActionParameterDefinition(const Name &name, QObject *parent)
         : ItemsParameterDefinition(name, parent),
-		  mActionEdit(0),
-		  mLineComboBox(0),
-		  mCodeLineEdit(0),
-		  mProcedureComboBox(0),
+		  mActionEdit(nullptr),
+		  mLineComboBox(nullptr),
+		  mCodeLineEdit(nullptr),
+		  mProcedureComboBox(nullptr),
 		  mAllowWait(false)
 	{
 		if(!translated)

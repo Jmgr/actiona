@@ -42,7 +42,7 @@
 #    include <QSslSocket>
 #endif
 
-QxtSmtpPrivate::QxtSmtpPrivate() : QObject(0)
+QxtSmtpPrivate::QxtSmtpPrivate() : QObject(nullptr)
 {
     // empty ctor
 }

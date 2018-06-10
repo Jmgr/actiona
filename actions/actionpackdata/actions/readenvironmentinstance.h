@@ -37,7 +37,7 @@ namespace Actions
             oneVariableMode
 		};
 
-		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
         static Tools::StringListPair modes;

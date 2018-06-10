@@ -27,7 +27,7 @@ class SettingsKeyEdit : public QLineEdit
 	Q_OBJECT
 
 public:
-	explicit SettingsKeyEdit(QWidget *parent = 0);
+	explicit SettingsKeyEdit(QWidget *parent = nullptr);
 
 	QKeySequence	keySequence() const								{return mKeySequence;}
 	void			setKeySequence(QKeySequence keySequence);

@@ -38,7 +38,7 @@ namespace ActionTools
         Q_OBJECT
 
     public:
-        ResourceNameDialog(ActionTools::Script *script, QWidget *parent = 0);
+        ResourceNameDialog(ActionTools::Script *script, QWidget *parent = nullptr);
         ~ResourceNameDialog();
 
         QString resourceName() const;

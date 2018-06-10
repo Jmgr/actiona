@@ -31,7 +31,7 @@ namespace ActionTools
         Q_OBJECT
 
     public:
-        explicit CodeLineEditButton(QWidget *parent = 0);
+        explicit CodeLineEditButton(QWidget *parent = nullptr);
     };
 }
 

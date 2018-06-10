@@ -41,7 +41,7 @@ namespace Actions
 			DontExists
 		};
 
-		WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 
         static Tools::StringListPair conditions;
 

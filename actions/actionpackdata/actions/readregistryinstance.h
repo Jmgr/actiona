@@ -38,7 +38,7 @@ namespace Actions
 			InvalidValueType
 		};
 
-		ReadRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
         static Tools::StringListPair keys;

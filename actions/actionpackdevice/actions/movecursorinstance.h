@@ -30,7 +30,7 @@ namespace Actions
 		Q_OBJECT
 	
 	public:
-		MoveCursorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		MoveCursorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
 		void startExecution()

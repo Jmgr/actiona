@@ -37,14 +37,14 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit CodeComboBoxDelegate(QObject *parent = 0) : QStyledItemDelegate(parent)		{}
+		explicit CodeComboBoxDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent)		{}
 		void paint(QPainter * painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	};
 
 	class CodeComboBoxModel : public QStandardItemModel
 	{
 	public:
-		explicit CodeComboBoxModel(QObject *parent = 0) : QStandardItemModel(parent)	{}
+		explicit CodeComboBoxModel(QObject *parent = nullptr) : QStandardItemModel(parent)	{}
 		Qt::ItemFlags flags(const QModelIndex &index) const;
 	};
 
@@ -54,7 +54,7 @@ namespace ActionTools
 		Q_PROPERTY(bool code READ isCode WRITE setCode)
 
 	public:
-        explicit CodeComboBox(QWidget * parent = 0);
+        explicit CodeComboBox(QWidget * parent = nullptr);
 
 		CodeLineEdit *codeLineEdit() const;
 

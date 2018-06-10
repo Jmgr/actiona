@@ -53,7 +53,7 @@ namespace Actions
 
 	MessageBoxInstance::MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
-		mMessageBox(0)
+		mMessageBox(nullptr)
 	{
 	}
 
@@ -71,7 +71,7 @@ namespace Actions
 		mIfYes = evaluateIfAction(ok, QStringLiteral("ifYes"));
 		mIfNo = evaluateIfAction(ok, QStringLiteral("ifNo"));
 
-		mMessageBox = 0;
+		mMessageBox = nullptr;
 
 		if(!ok)
 			return;
@@ -200,7 +200,7 @@ namespace Actions
 		if(mMessageBox)
 		{
 			mMessageBox->close();
-			mMessageBox = 0;
+			mMessageBox = nullptr;
 		}
 	}
 }

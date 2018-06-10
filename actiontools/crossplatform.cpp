@@ -124,7 +124,7 @@ namespace ActionTools
 						timespec req;
 						req.tv_sec = 0;
 						req.tv_nsec = 10000; //10 msec
-						nanosleep(&req, 0);
+						nanosleep(&req, nullptr);
 
 						return (processStatus(id) == Stopped);
 					}
@@ -132,7 +132,7 @@ namespace ActionTools
 					timespec req;
 					req.tv_sec = 0;
 					req.tv_nsec = 100000; //100 msec
-					nanosleep(&req, 0);
+					nanosleep(&req, nullptr);
 				}
 			}
 		}

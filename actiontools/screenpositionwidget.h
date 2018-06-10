@@ -35,7 +35,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ScreenPositionWidget(QWidget *parent = 0);
+		explicit ScreenPositionWidget(QWidget *parent = nullptr);
 
 		void setPosition(int screen, int position);
 

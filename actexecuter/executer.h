@@ -34,7 +34,7 @@ class Executer : public QObject
     Q_OBJECT
 	
 public:
-    explicit Executer(QObject *parent = 0);
+    explicit Executer(QObject *parent = nullptr);
 	virtual ~Executer();
 	
 	virtual bool start(QIODevice *device, const QString &filename);

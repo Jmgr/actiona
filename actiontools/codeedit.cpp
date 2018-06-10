@@ -71,7 +71,7 @@ namespace ActionTools
 	{
 		mCode = code;
 
-		mHighlighter->setDocument(code ? document() : 0);
+		mHighlighter->setDocument(code ? document() : nullptr);
 	}
 
 	int CodeEdit::lineNumberAreaWidth() const

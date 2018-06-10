@@ -39,7 +39,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-        ParameterDefinition(const Name &name, QObject *parent = 0);
+        ParameterDefinition(const Name &name, QObject *parent = nullptr);
         virtual ~ParameterDefinition()                                                  {}
 
 		virtual void buildEditors(Script *script, QWidget *parent);

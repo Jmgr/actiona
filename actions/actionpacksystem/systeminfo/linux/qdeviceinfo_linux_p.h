@@ -73,7 +73,7 @@ class QDeviceInfoPrivate : public QObject
     Q_OBJECT
 
 public:
-    QDeviceInfoPrivate(QDeviceInfo *parent = 0);
+    QDeviceInfoPrivate(QDeviceInfo *parent = nullptr);
 
     bool hasFeature(QDeviceInfo::Feature feature);
     int imeiCount();

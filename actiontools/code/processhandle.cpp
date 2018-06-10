@@ -33,7 +33,7 @@ namespace Code
 {
 	QScriptValue ProcessHandle::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		ProcessHandle *process = 0;
+		ProcessHandle *process = nullptr;
 		
 		switch(context->argumentCount())
 		{

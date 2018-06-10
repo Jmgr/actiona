@@ -32,7 +32,7 @@ class SFXScriptDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit SFXScriptDialog(QWidget *parent = 0);
+	explicit SFXScriptDialog(QWidget *parent = nullptr);
 	~SFXScriptDialog();
 
 	bool disableTrayIcon() const;

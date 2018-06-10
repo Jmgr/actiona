@@ -43,7 +43,7 @@ namespace Code
 {
 	QScriptValue Image::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Image *image = 0;
+		Image *image = nullptr;
 		
 		switch(context->argumentCount())
 		{

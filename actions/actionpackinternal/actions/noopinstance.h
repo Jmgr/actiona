@@ -29,7 +29,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		NoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		NoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
 		void startExecution()

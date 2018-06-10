@@ -27,7 +27,7 @@ class ResourceTableWidget : public QTableWidget
     Q_OBJECT
 
 public:
-    explicit ResourceTableWidget(QWidget *parent = 0);
+    explicit ResourceTableWidget(QWidget *parent = nullptr);
 
     QString checkResourceName(const QString &originalName) const;
     bool containsResource(const QString &name) const;

@@ -31,7 +31,7 @@ namespace ActionTools
         Q_OBJECT
 
     public:
-        explicit ScreenshotPushButton(QWidget *parent = 0);
+        explicit ScreenshotPushButton(QWidget *parent = nullptr);
 
     private:
         Q_DISABLE_COPY(ScreenshotPushButton)

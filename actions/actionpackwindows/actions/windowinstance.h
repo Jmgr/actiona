@@ -47,7 +47,7 @@ namespace Actions
 			ActionFailedException
 		};
 
-		WindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		WindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 
         static Tools::StringListPair actions;
 

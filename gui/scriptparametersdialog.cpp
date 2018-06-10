@@ -97,7 +97,7 @@ QMenu *ScriptParametersDialog::createVariablesMenu(QWidget *parent) const
     std::sort(variableList.begin(), variableList.end());
 
     if(variableList.isEmpty())
-        return 0;
+        return nullptr;
 
     QMenu *back = new QMenu(parent);
 

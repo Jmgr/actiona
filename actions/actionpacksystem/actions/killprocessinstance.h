@@ -39,7 +39,7 @@ namespace Actions
 			GracefulThenForceful = ActionTools::CrossPlatform::GracefulThenForceful
 		};
 
-		KillProcessInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		KillProcessInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
         static Tools::StringListPair killModes;

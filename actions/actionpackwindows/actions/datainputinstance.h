@@ -45,7 +45,7 @@ namespace Actions
             PasswordEditorType
         };
 
-		DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 
         static Tools::StringListPair dataTypes;
         static Tools::StringListPair editorTypes;

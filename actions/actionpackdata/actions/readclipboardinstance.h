@@ -33,7 +33,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		ReadClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
 		void startExecution()

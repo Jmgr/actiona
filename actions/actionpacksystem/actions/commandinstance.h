@@ -41,7 +41,7 @@ namespace Actions
 			FailedToStartException = ActionTools::ActionException::UserException
 		};
 
-		CommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		CommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent), mProcess(new QProcess(this))
 		{
             connect(mProcess, &QProcess::readyReadStandardOutput, this, &CommandInstance::readyReadStandardOutput);

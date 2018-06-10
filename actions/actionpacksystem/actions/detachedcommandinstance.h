@@ -37,7 +37,7 @@ namespace Actions
 			DetachedCommandFailedException = ActionTools::ActionException::UserException
 		};
 
-		DetachedCommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		DetachedCommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)
 		{
 		}

@@ -42,7 +42,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit PositionEdit(QWidget *parent = 0);
+		explicit PositionEdit(QWidget *parent = nullptr);
 		~PositionEdit();
 
 		void setText(const QString &text);

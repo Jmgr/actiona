@@ -39,7 +39,7 @@ class SettingsDialog : public QDialog
 	Q_OBJECT
 
 public:
-	SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent = 0);
+	SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent = nullptr);
 	~SettingsDialog();
 
 private slots:

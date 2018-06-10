@@ -253,7 +253,7 @@ namespace ActionTools
 		}
 	};
 	
-	X11KeyTriggerManager* X11KeyTriggerManager::instance_ = NULL;
+	X11KeyTriggerManager* X11KeyTriggerManager::instance_ = nullptr;
 	
 	class GlobalShortcutManager::KeyTrigger::Impl : public X11KeyTrigger
 	{
@@ -436,6 +436,6 @@ namespace ActionTools
 	GlobalShortcutManager::KeyTrigger::~KeyTrigger()
 	{
 		delete d;
-		d = 0;
+		d = nullptr;
 	}
 }

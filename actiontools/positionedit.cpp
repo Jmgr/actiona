@@ -107,7 +107,7 @@ namespace ActionTools
 		if(code)
 		{
 			QString oldText = ui->position->text();
-            ui->position->setValidator(0);
+            ui->position->setValidator(nullptr);
 			ui->position->setText(oldText);
 		}
         else

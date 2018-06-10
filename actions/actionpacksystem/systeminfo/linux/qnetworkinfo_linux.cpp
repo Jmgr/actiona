@@ -83,7 +83,7 @@ QNetworkInfoPrivate::QNetworkInfoPrivate(QNetworkInfo *parent)
     , watchNetworkSignalStrength(false)
     , watchNetworkStatus(false)
     , watchNetworkName(false)
-    , timer(0)
+    , timer(nullptr)
 #if !defined(QT_NO_OFONO)
     , ofonoWrapper(0)
 #endif

@@ -31,7 +31,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit SwitchTextModePushButton(QWidget *parent = 0);
+		explicit SwitchTextModePushButton(QWidget *parent = nullptr);
 
 	private:
 		Q_DISABLE_COPY(SwitchTextModePushButton)

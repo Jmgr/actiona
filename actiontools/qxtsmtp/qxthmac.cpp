@@ -59,7 +59,7 @@ class QxtHmacPrivate : public QxtPrivate<QxtHmac>
 {
 public:
     QXT_DECLARE_PUBLIC(QxtHmac)
-    QxtHmacPrivate() : ohash(0), ihash(0) {}
+    QxtHmacPrivate() : ohash(nullptr), ihash(nullptr) {}
     ~QxtHmacPrivate()
     {
         // deleting NULL is safe, so no tests are needed here

@@ -49,7 +49,7 @@ namespace Actions
             ErrorWhileSendingEMailException
 		};
 
-        SendMailInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+        SendMailInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
         ~SendMailInstance();
 
         static Tools::StringListPair attachmentContentTypes;

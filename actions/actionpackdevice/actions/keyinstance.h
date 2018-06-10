@@ -50,7 +50,7 @@ namespace Actions
 			InvalidActionException
 		};
 
-		KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 		
         static Tools::StringListPair actions;
         static Tools::StringListPair types;

@@ -98,13 +98,13 @@
 #include <algorithm>
 
 MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
-	: QMainWindow(0),
+	: QMainWindow(nullptr),
 	ui(new Ui::MainWindow),
 	mScriptModified(false),
 	mActionFactory(new ActionTools::ActionFactory(this)),
 	mScript(new ActionTools::Script(mActionFactory, this)),
 	mScriptModel(new ScriptModel(mScript, mActionFactory, this)),
-	mSystemTrayIcon(commandLineParser.isSet(QStringLiteral("notrayicon")) ? 0 : new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/logo.png")), this)),
+	mSystemTrayIcon(commandLineParser.isSet(QStringLiteral("notrayicon")) ? nullptr : new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/logo.png")), this)),
 	mSplashScreen(splashScreen),
 	mWasNewActionDockShown(false),
 	mWasConsoleDockShown(false),
@@ -120,7 +120,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
     mNewActionModel(new NewActionModel(this))
 #ifndef ACT_NO_UPDATER
 	,mNetworkAccessManager(new QNetworkAccessManager(this)),
-	mUpdateDownloadNetworkReply(0),
+	mUpdateDownloadNetworkReply(nullptr),
 	mUpdater(new Tools::Updater(mNetworkAccessManager, Global::UPDATE_URL, Global::UPDATE_TIMEOUT, this)),
 	mUpdaterProgressDialog(new QProgressDialog(this)),
 	mHashCalculator(QCryptographicHash::Md5)
@@ -344,7 +344,7 @@ void MainWindow::postInit()
 #endif
 
 		QScriptEngine engine;
-        LibExecuter::CodeInitializer::initialize(&engine, 0, mActionFactory, mCurrentFile);
+        LibExecuter::CodeInitializer::initialize(&engine, nullptr, mActionFactory, mCurrentFile);
 
 		mCompletionModel->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/class.png")), QStringLiteral("include")));
 		mCompletionModel->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/class.png")), QStringLiteral("loadUI")));
@@ -426,7 +426,7 @@ void MainWindow::postInit()
 	if(mSplashScreen)
 	{
 		mSplashScreen->fadeOut();
-		mSplashScreen = 0;
+		mSplashScreen = nullptr;
 	}
 
 #ifdef Q_OS_LINUX
@@ -2043,7 +2043,7 @@ void MainWindow::updateDownloadFinished()
 		}
 
 		mUpdateDownloadNetworkReply->deleteLater();
-		mUpdateDownloadNetworkReply = 0;
+		mUpdateDownloadNetworkReply = nullptr;
 
 		if(!errorMessage.isEmpty())
 			QMessageBox::warning(this, tr("Update download"), tr("An error occured while downloading the file.\nError message: %1").arg(errorMessage));
@@ -2056,7 +2056,7 @@ void MainWindow::updateDownloadFinished()
 		QTimer::singleShot(1, this, SLOT(postDownloadOperation()));
 
 	mUpdateDownloadNetworkReply->deleteLater();
-	mUpdateDownloadNetworkReply = 0;
+	mUpdateDownloadNetworkReply = nullptr;
 }
 
 void MainWindow::updateDownloadDataAvailable()
@@ -2074,7 +2074,7 @@ void MainWindow::updateDownloadCanceled()
 	mUpdateDownloadNetworkReply->disconnect();
 	mUpdateDownloadNetworkReply->abort();
 	mUpdateDownloadNetworkReply->deleteLater();
-	mUpdateDownloadNetworkReply = 0;
+	mUpdateDownloadNetworkReply = nullptr;
 
 	mUpdateFile.close();
 	mUpdateFile.remove();

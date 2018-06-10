@@ -32,7 +32,7 @@ public:
 		ActionIdRole = Qt::UserRole
 	};
 
-    explicit NewActionModel(QObject *parent = 0);
+    explicit NewActionModel(QObject *parent = nullptr);
 
 protected:
 	Qt::DropActions supportedDropActions() const;

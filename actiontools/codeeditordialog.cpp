@@ -123,7 +123,7 @@ namespace ActionTools
         QStringList variableList = variables.toList();
         std::sort(variableList.begin(), variableList.end());
 
-        QMenu *variablesMenu = 0;
+        QMenu *variablesMenu = nullptr;
 
         if(variableList.isEmpty())
         {

@@ -43,7 +43,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ItemListWidget(QWidget *parent = 0);
+		explicit ItemListWidget(QWidget *parent = nullptr);
 		~ItemListWidget();
 
 		void setItems(const QStringList &items);

@@ -43,7 +43,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ColorEdit(QWidget *parent = 0);
+		explicit ColorEdit(QWidget *parent = nullptr);
 		~ColorEdit();
 
 		void setText(const QString &text);

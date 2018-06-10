@@ -49,7 +49,7 @@ struct QxtMailAttachmentPrivate : public QSharedData
 
     QxtMailAttachmentPrivate()
     {
-        content = 0;
+        content = nullptr;
         deleteContent = false;
 		contentType = QStringLiteral("text/plain");
     }
@@ -59,7 +59,7 @@ struct QxtMailAttachmentPrivate : public QSharedData
         if (deleteContent && content)
             content->deleteLater();
         deleteContent = false;
-        content = 0;
+        content = nullptr;
     }
 };
 
@@ -199,7 +199,7 @@ QByteArray QxtMailAttachment::mimeData()
     {
         rv += c->read(57).toBase64() + "\r\n";
     }
-    setContent((QIODevice*)0);
+    setContent((QIODevice*)nullptr);
     return rv;
 }
 

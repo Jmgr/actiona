@@ -27,7 +27,7 @@ class NewActionProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 
 public:
-    NewActionProxyModel(QObject *parent = 0);
+    NewActionProxyModel(QObject *parent = nullptr);
 
     void setFilterString(const QString &filterString);
 

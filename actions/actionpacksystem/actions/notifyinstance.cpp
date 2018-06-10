@@ -36,7 +36,7 @@ namespace Actions
 {
 	NotifyInstance::NotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
-		mNotification(0)
+		mNotification(nullptr)
 	{
 	}
 
@@ -45,7 +45,7 @@ namespace Actions
 	#ifdef Q_OS_LINUX
 		if(mNotification)
 		{
-			notify_notification_close(mNotification, 0);
+			notify_notification_close(mNotification, nullptr);
 			g_object_unref(mNotification);
 		}
 	#endif
@@ -76,7 +76,7 @@ namespace Actions
 
 		notify_notification_set_timeout(mNotification, timeout);
 
-		if(!notify_notification_show(mNotification, 0))
+		if(!notify_notification_show(mNotification, nullptr))
 		{
 			emit executionException(UnableToShowNotificationException, tr("Unable to show the notification"));
 			return;

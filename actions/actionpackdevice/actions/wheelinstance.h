@@ -35,7 +35,7 @@ namespace Actions
 			FailedToSendInputException = ActionTools::ActionException::UserException
 		};	
 		
-		WheelInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		WheelInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
 		void startExecution()

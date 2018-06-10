@@ -31,7 +31,7 @@ namespace ActionTools
         Q_OBJECT
 
     public:
-        explicit ImageLabel(QWidget *parent = 0);
+        explicit ImageLabel(QWidget *parent = nullptr);
         const QPixmap *pixmap() const { return &mPixmap; }
 
     public slots:

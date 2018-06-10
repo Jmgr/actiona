@@ -39,7 +39,7 @@ namespace ActionTools
         Q_OBJECT
 
     public:
-        explicit ScreenshotWizardPage(QWidget *parent = 0);
+        explicit ScreenshotWizardPage(QWidget *parent = nullptr);
         ~ScreenshotWizardPage();
 
     protected:

@@ -54,8 +54,8 @@ namespace LibExecuter
 		: QObject(parent),
 		mExecutionWindow(new ExecutionWindow()),
 		mConsoleWidget(new ActionTools::ConsoleWidget()),
-		mScriptEngine(0),
-		mScriptAgent(0),
+		mScriptEngine(nullptr),
+		mScriptAgent(nullptr),
 		mHasExecuted(false),
         mPauseInterrupt(false),
         mShowDebuggerOnCodeError(true)
@@ -117,7 +117,7 @@ namespace LibExecuter
 		mExecutionStarted = false;
 		mExecutionEnded = false;
 		mExecuteOnlySelection = false;
-		mProgressDialog = 0;
+		mProgressDialog = nullptr;
 		mActiveActionsCount = 0;
 		mExecutionPaused = false;
         mActionaVersion = actionaVersion;
@@ -149,7 +149,7 @@ namespace LibExecuter
     ActionTools::ActionInstance *Executer::currentActionInstance() const
     {
         if(mCurrentActionIndex < 0 || mCurrentActionIndex >= mScript->actionCount())
-            return 0;
+            return nullptr;
 
         return mScript->actionAt(mCurrentActionIndex);
     }
@@ -579,16 +579,16 @@ namespace LibExecuter
         if(mScriptAgent)
         {
             mScriptAgent->deleteLater();
-            mScriptAgent = 0;
+            mScriptAgent = nullptr;
         }
         if(mScriptEngine)
         {
             mScriptEngine->deleteLater();
-            mScriptEngine = 0;
+            mScriptEngine = nullptr;
         }
 
 		delete mProgressDialog;
-		mProgressDialog = 0;
+		mProgressDialog = nullptr;
 		mDebuggerWindow->hide();
 		mExecutionWindow->hide();
 		mConsoleWidget->hide();
@@ -851,7 +851,7 @@ namespace LibExecuter
 	void Executer::showProgressDialog(const QString &title, int maximum)
 	{
 		if(!mProgressDialog)
-			mProgressDialog = new QProgressDialog(0, Qt::WindowStaysOnTopHint);
+			mProgressDialog = new QProgressDialog(nullptr, Qt::WindowStaysOnTopHint);
 
         connect(mProgressDialog, &QProgressDialog::canceled, this, &Executer::stopExecution);
 
@@ -875,7 +875,7 @@ namespace LibExecuter
 	void Executer::hideProgressDialog()
 	{
 		delete mProgressDialog;
-		mProgressDialog = 0;
+		mProgressDialog = nullptr;
 	}
 
 	void Executer::executionPaused()

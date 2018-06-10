@@ -57,7 +57,7 @@ namespace ActionTools
 
         static const QRegExp CodeVariableDeclarationRegExp;
 
-		Script(ActionFactory *actionFactory, QObject *parent = 0);
+		Script(ActionFactory *actionFactory, QObject *parent = nullptr);
 		~Script();
 
         void appendAction(ActionInstance *actionInstance)                               { mActionInstances.append(actionInstance); }
@@ -125,7 +125,7 @@ namespace ActionTools
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
 		QStringList labels() const;
-        QSet<QString> findVariables(ActionInstance *actionInstance = 0, ActionInstance *excludedActionInstance = 0) const;
+        QSet<QString> findVariables(ActionInstance *actionInstance = nullptr, ActionInstance *excludedActionInstance = nullptr) const;
 
         void executionStopped();
 

@@ -47,7 +47,7 @@ namespace Actions
 
 	DataInputInstance::DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
-		mInputDialog(0)
+		mInputDialog(nullptr)
 	{
 	}
 
@@ -69,7 +69,7 @@ namespace Actions
 		double decimalDefaultValue = 0.0;
 		int integerDefaultValue = 0;
 
-		mInputDialog = 0;
+		mInputDialog = nullptr;
 
 		switch(mDataType)
 		{
@@ -159,7 +159,7 @@ namespace Actions
 		if(mInputDialog)
 		{
 			mInputDialog->close();
-			mInputDialog = 0;
+			mInputDialog = nullptr;
 		}
 	}
 

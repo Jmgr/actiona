@@ -40,7 +40,7 @@ namespace ActionTools
             ClipboardSaveTarget
         };
 
-        ScreenshotWizard(ActionTools::Script *script, bool allowSaveToClipboard, QWidget *parent = 0);
+        ScreenshotWizard(ActionTools::Script *script, bool allowSaveToClipboard, QWidget *parent = nullptr);
         ~ScreenshotWizard();
 
         QString resourceOrFilename() const { return mResourceOrFilename; }

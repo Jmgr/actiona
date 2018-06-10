@@ -37,7 +37,7 @@ namespace Actions
 			UnableToWriteFileException
 		};
 
-		CopyFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		CopyFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::DataCopyActionInstance(definition, parent)
 		{
 		}

@@ -32,7 +32,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-        TextToSpeechInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+        TextToSpeechInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
             : ActionTools::ActionInstance(definition, parent),
               mTextToSpeech(new QTextToSpeech(this))
 		{

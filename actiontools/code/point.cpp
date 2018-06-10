@@ -25,7 +25,7 @@ namespace Code
 {
 	QScriptValue Point::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Point *point = 0;
+		Point *point = nullptr;
 		
 		switch(context->argumentCount())
 		{

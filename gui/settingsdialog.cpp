@@ -46,7 +46,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	mExecutionWindowButtonGroup(new QButtonGroup(this)),
 	mConsoleWindowButtonGroup(new QButtonGroup(this)),
 	mNetworkAccessManager(new QNetworkAccessManager(this)),
-	mNetworkReply(0),
+	mNetworkReply(nullptr),
 	mTimeoutTimer(new QTimer(this)),
 	mSystemTrayIcon(systemTrayIcon),
 	mPreviousASCRAssociation(false),
@@ -255,7 +255,7 @@ void SettingsDialog::proxyTestFinished()
 	}
 
 	mNetworkReply->deleteLater();
-	mNetworkReply = 0;
+	mNetworkReply = nullptr;
 	setEnabled(true);
 }
 

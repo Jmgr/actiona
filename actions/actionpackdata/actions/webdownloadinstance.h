@@ -49,7 +49,7 @@ namespace Actions
 			DownloadException
 		};
 
-		WebDownloadInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		WebDownloadInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 		~WebDownloadInstance();
 
         static Tools::StringListPair destinations;

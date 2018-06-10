@@ -31,7 +31,7 @@ namespace Code
 {
 	BaseWindow::BaseWindow()
 		: CodeClass(),
-		mWindow(0)
+		mWindow(nullptr)
 	{
 	}
 

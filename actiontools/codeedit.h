@@ -38,7 +38,7 @@ namespace ActionTools
 		friend class LineNumberArea;
 
 	public:
-		explicit CodeEdit(QWidget *parent = 0);
+		explicit CodeEdit(QWidget *parent = nullptr);
 
 		void setCode(bool code);
 		bool isCode() const							{ return mCode; }

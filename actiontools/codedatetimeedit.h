@@ -35,7 +35,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit CodeDateTimeEdit(QWidget *parent = 0);
+		explicit CodeDateTimeEdit(QWidget *parent = nullptr);
 
 		CodeLineEdit *codeLineEdit() const;
 		bool isCode() const;

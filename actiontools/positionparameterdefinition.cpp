@@ -30,8 +30,8 @@ namespace ActionTools
 {
     PositionParameterDefinition::PositionParameterDefinition(const Name &name, QObject *parent)
         : ParameterDefinition(name, parent),
-        mPositionEdit(0),
-        mPositionUnitComboBox(0)
+        mPositionEdit(nullptr),
+        mPositionUnitComboBox(nullptr)
 	{
 	}
 

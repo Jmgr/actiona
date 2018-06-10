@@ -42,7 +42,7 @@ public:
 		DownloadOnly
 	};
 
-	explicit ChangelogDialog(QWidget *parent = 0);
+	explicit ChangelogDialog(QWidget *parent = nullptr);
 	~ChangelogDialog();
 
 	void setVersion(const Tools::Version &version);

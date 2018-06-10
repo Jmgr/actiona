@@ -53,7 +53,7 @@ namespace ActionTools
 			FormatCount
 		};
 
-		CodeHighlighter(QTextDocument *parent = 0);
+		CodeHighlighter(QTextDocument *parent = nullptr);
 		void addCodeObject(const QString &name);
 
 	protected:

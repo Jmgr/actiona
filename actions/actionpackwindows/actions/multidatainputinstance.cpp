@@ -50,13 +50,13 @@ namespace Actions
 
 	MultiDataInputInstance::MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
-		  mDialog(0),
+		  mDialog(nullptr),
 		  mMode(ComboBoxMode),
 		  mMinimumChoiceCount(1),
 		  mMaximumChoiceCount(1),
-		  mComboBox(0),
-		  mListWidget(0),
-		  mButtonGroup(0)
+		  mComboBox(nullptr),
+		  mListWidget(nullptr),
+		  mButtonGroup(nullptr)
 	{
 	}
 
@@ -309,7 +309,7 @@ namespace Actions
 		if(mDialog)
 		{
 			mDialog->close();
-			mDialog = 0;
+			mDialog = nullptr;
 		}
 	}
 }

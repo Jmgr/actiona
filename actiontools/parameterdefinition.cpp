@@ -30,7 +30,7 @@ namespace ActionTools
 		  mOperatingSystems(WorksOnGnuLinux |
 							WorksOnWindows |
 							WorksOnMac),
-		  mParentWidget(0)
+		  mParentWidget(nullptr)
 	{
 	}
 

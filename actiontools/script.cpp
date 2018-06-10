@@ -63,7 +63,7 @@ namespace ActionTools
 	{
 		ActionInstance *actionInstance = mActionFactory->newActionInstance(actionDefinitionId);
 		if(!actionInstance)
-			return 0;
+			return nullptr;
 
 		appendAction(actionInstance);
 
@@ -73,7 +73,7 @@ namespace ActionTools
 	ActionInstance *Script::actionAt(int line) const
 	{
 		if(line < 0 || line >= mActionInstances.size())
-			return 0;
+			return nullptr;
 
 		return mActionInstances.at(line);
 	}

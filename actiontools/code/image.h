@@ -125,7 +125,7 @@ namespace Code
 		void findSubImageAsyncFinished(const ActionTools::MatchingPointList &matchingPointList);
 
 	private:
-        void findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, AlgorithmMethod *method, int *maximumMatches = 0) const;
+        void findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, AlgorithmMethod *method, int *maximumMatches = nullptr) const;
 
 		enum FilterOption
 		{

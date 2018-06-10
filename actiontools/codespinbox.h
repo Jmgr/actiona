@@ -35,7 +35,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit CodeSpinBox(QWidget *parent = 0);
+		explicit CodeSpinBox(QWidget *parent = nullptr);
 
 		CodeLineEdit *codeLineEdit() const;
 		bool isCode() const;

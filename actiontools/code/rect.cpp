@@ -27,7 +27,7 @@ namespace Code
 {
 	QScriptValue Rect::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Rect *rect = 0;
+		Rect *rect = nullptr;
 		
 		switch(context->argumentCount())
 		{

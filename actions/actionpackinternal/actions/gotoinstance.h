@@ -29,7 +29,7 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		GotoInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		GotoInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
 		void startExecution()

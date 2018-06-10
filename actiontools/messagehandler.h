@@ -27,7 +27,7 @@ namespace ActionTools
 	class MessageHandler : public QAbstractMessageHandler
 	{
 	public:
-		MessageHandler() : QAbstractMessageHandler(0)				{}
+		MessageHandler() : QAbstractMessageHandler(nullptr)				{}
 		
 		QString statusMessage() const								{ return mDescription; }
 		int line() const											{ return mSourceLocation.line(); }

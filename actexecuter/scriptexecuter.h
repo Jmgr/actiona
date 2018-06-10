@@ -37,7 +37,7 @@ class ScriptExecuter : public Executer
     Q_OBJECT
 	
 public:
-    explicit ScriptExecuter(QObject *parent = 0);
+    explicit ScriptExecuter(QObject *parent = nullptr);
 	
 	bool start(QIODevice *device, const QString &filename);
 

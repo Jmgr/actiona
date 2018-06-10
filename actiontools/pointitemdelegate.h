@@ -27,7 +27,7 @@ class PointItemDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit PointItemDelegate(QObject *parent = 0);
+    explicit PointItemDelegate(QObject *parent = nullptr);
 
 	QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	void setEditorData(QWidget *editor, const QModelIndex &index) const;

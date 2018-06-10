@@ -69,7 +69,7 @@ namespace ActionTools
 		: QPushButton(parent),
 		mCrossIcon(new QPixmap(QStringLiteral(":/images/cross.png"))),
 		mSearching(false),
-		mMainWindow(0)
+		mMainWindow(nullptr)
 #ifdef Q_OS_LINUX
         ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
 #endif

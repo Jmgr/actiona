@@ -28,7 +28,7 @@ namespace ActionTools
 	ConsoleWidget::ConsoleWidget(QWidget *parent)
 		: QWidget(parent),
 		ui(new Ui::ConsoleWidget),
-		mModel(0)
+		mModel(nullptr)
 	{
 		ui->setupUi(this);
 
@@ -245,7 +245,7 @@ namespace ActionTools
 
 	void ConsoleWidget::addSeparator(QStandardItem *item)
 	{
-		item->setFlags(0);
+		item->setFlags(nullptr);
 		item->setBackground(QBrush(Qt::lightGray));
                 item->setForeground(QBrush(Qt::white));
 

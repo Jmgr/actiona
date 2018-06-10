@@ -28,7 +28,7 @@ class FilterLineEdit : public QLineEdit
 	Q_OBJECT
 
 public:
-    FilterLineEdit(QWidget *parent = 0);
+    FilterLineEdit(QWidget *parent = nullptr);
 	~FilterLineEdit();
 
 protected:

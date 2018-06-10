@@ -65,7 +65,7 @@ namespace Tools
 #ifdef Q_OS_WIN
 		QueryPerformanceCounter(&mTimeStart);
 #else
-		gettimeofday(&mTimeStart, 0);
+		gettimeofday(&mTimeStart, nullptr);
 #endif
 	}
 
@@ -75,7 +75,7 @@ namespace Tools
 #ifdef Q_OS_WIN
 		QueryPerformanceCounter(&mTimeStop);
 #else
-		gettimeofday(&mTimeStop, 0);
+		gettimeofday(&mTimeStop, nullptr);
 #endif
 	}
 

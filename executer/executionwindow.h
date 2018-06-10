@@ -34,7 +34,7 @@ namespace LibExecuter
 		Q_OBJECT
 	
 	public:
-		ExecutionWindow(QWidget *parent = 0);
+		ExecutionWindow(QWidget *parent = nullptr);
 		~ExecutionWindow();
 
 		void setCurrentActionName(const QString &actionName);

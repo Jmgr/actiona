@@ -371,7 +371,7 @@ QMetaMethod proxyToSourceSignal(const QMetaMethod &proxySignal, QObject *sourceO
     if (!proxySignal.isValid())
         return proxySignal;
     Q_ASSERT(proxySignal.methodType() == QMetaMethod::Signal);
-    Q_ASSERT(sourceObject != 0);
+    Q_ASSERT(sourceObject != nullptr);
     const QMetaObject *sourceMeta = sourceObject->metaObject();
 	int sourceIndex = sourceMeta->indexOfSignal(proxySignal.methodSignature().constData());
     Q_ASSERT(sourceIndex != -1);

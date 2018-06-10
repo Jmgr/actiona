@@ -41,7 +41,7 @@ namespace Actions
             RightButton
         };
 
-		CursorPathInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		CursorPathInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent),
             mCurrentPoint(0),
             mButton(NoButton)

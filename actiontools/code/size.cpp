@@ -25,7 +25,7 @@ namespace Code
 {
 	QScriptValue Size::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Size *size = 0;
+		Size *size = nullptr;
 		
 		switch(context->argumentCount())
 		{

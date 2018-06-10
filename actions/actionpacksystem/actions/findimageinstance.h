@@ -62,7 +62,7 @@ namespace Actions
             CannotFindTheImageException
 		};
 
-		FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 		~FindImageInstance();
 
         static Tools::StringListPair sources;

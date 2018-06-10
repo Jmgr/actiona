@@ -40,7 +40,7 @@
 namespace ActionTools
 {
     TargetWindow::TargetWindow()
-        : QWidget(0, Qt::Widget
+        : QWidget(nullptr, Qt::Widget
                   | Qt::Window
                   | Qt::FramelessWindowHint
                   | Qt::WindowStaysOnTopHint

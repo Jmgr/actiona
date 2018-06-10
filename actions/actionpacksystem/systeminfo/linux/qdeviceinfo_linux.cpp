@@ -87,7 +87,7 @@ QDeviceInfoPrivate::QDeviceInfoPrivate(QDeviceInfo *parent)
     , watchThermalState(false)
     , imeiBuffer(QStringList())
     , uniqueDeviceIDBuffer(QString())
-    , timer(0)
+    , timer(nullptr)
     , boardNameString(QString())
     , osName(QString())
 #if !defined(QT_NO_OFONO)
@@ -232,7 +232,7 @@ QDeviceInfo::LockTypeFlags QDeviceInfoPrivate::enabledLocks()
 {
     QDeviceInfo::LockTypeFlags enabledLocks = QDeviceInfo::NoLock;
 
-    QScreenSaverPrivate screenSaver(0);
+    QScreenSaverPrivate screenSaver(nullptr);
     if (screenSaver.screenSaverEnabled())
         enabledLocks = QDeviceInfo::TouchOrKeyboardLock;
 
@@ -647,7 +647,7 @@ extern QMetaMethod proxyToSourceSignal(const QMetaMethod &, QObject *);
 
 void QDeviceInfoPrivate::connectNotify(const QMetaMethod &signal)
 {
-    if (timer == 0) {
+    if (timer == nullptr) {
         timer = new QTimer(this);
         timer->setInterval(2000);
         connect(timer, SIGNAL(timeout()), this, SLOT(onTimeout()));

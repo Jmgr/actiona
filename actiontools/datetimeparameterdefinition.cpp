@@ -27,7 +27,7 @@ namespace ActionTools
 {
     DateTimeParameterDefinition::DateTimeParameterDefinition(const Name &name, QObject *parent)
         : ParameterDefinition(name, parent),
-		mDateTimeEdit(0)
+		mDateTimeEdit(nullptr)
 	{
 	}
 

@@ -191,7 +191,7 @@ int main(int argc, char **argv)
 	}
 #endif
 
-	ProgressSplashScreen *splash = 0;
+	ProgressSplashScreen *splash = nullptr;
 	if(!optionsParser.isSet(QStringLiteral("nosplash")) && !optionsParser.isSet(QStringLiteral("execute")))
 	{
 		splash = new ProgressSplashScreen(QPixmap(QStringLiteral(":/images/start.png")), Qt::WindowStaysOnTopHint);

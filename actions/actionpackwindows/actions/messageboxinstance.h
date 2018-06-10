@@ -62,7 +62,7 @@ namespace Actions
 			PlainTextMode
 		};
 
-		MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 
         static Tools::StringListPair icons;
         static Tools::StringListPair buttons;

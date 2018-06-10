@@ -32,7 +32,7 @@ class ScriptSettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-	ScriptSettingsDialog(QWidget *parent = 0);
+	ScriptSettingsDialog(QWidget *parent = nullptr);
     ~ScriptSettingsDialog();
 
 	void setPauseBefore(int pauseBefore);

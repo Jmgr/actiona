@@ -38,7 +38,7 @@ namespace Actions
 			UnableToReadFileException = ActionTools::ActionException::UserException
 		};
 
-		ReadBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::DataCopyActionInstance(definition, parent)
 		{
 		}

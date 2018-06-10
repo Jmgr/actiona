@@ -55,7 +55,7 @@ namespace Tools
 			Rpm
 		};
 		
-		Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent = 0);
+		Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent = nullptr);
 		~Updater();
 		
         void checkForUpdates(const QString &program,

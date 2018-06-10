@@ -32,7 +32,7 @@ namespace ActionTools
 class ScriptProxyModel : public QSortFilterProxyModel
 {
 public:
-    ScriptProxyModel(ActionTools::Script *script, QObject *parent = 0);
+    ScriptProxyModel(ActionTools::Script *script, QObject *parent = nullptr);
 
     void setFilterString(const QString &filterString);
     void setFilteringFlags(ActionFilteringFlags filteringFlags);

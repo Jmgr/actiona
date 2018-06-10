@@ -37,7 +37,7 @@ namespace Actions
 			UnableToWriteFileException = ActionTools::ActionException::UserException
 		};
 
-		WriteBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		WriteBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::DataCopyActionInstance(definition, parent)
 		{
 		}

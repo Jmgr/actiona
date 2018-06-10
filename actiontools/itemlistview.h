@@ -30,7 +30,7 @@ namespace ActionTools
 	{
 		Q_OBJECT
 	public:
-		explicit ItemListView(QWidget *parent = 0);
+		explicit ItemListView(QWidget *parent = nullptr);
 
 	protected:
 		virtual void keyPressEvent(QKeyEvent *event);

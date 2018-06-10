@@ -103,7 +103,7 @@ namespace ActionTools
             SquaredDifferenceMethod
         };
 
-		explicit OpenCVAlgorithms(QObject *parent = 0);
+		explicit OpenCVAlgorithms(QObject *parent = nullptr);
         virtual ~OpenCVAlgorithms();
 
         bool findSubImageAsync(const QList<QImage> &sources,

@@ -27,7 +27,7 @@ class ScriptTreeView : public QTreeView
 	Q_OBJECT
 
 public:
-    explicit ScriptTreeView(QWidget *parent = 0);
+    explicit ScriptTreeView(QWidget *parent = nullptr);
 
 protected:
 	void startDrag(Qt::DropActions supportedActions);

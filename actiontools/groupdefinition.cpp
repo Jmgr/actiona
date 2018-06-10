@@ -30,8 +30,8 @@ namespace ActionTools
 {
 	GroupDefinition::GroupDefinition(QObject *parent)
         : ElementDefinition(Name(), parent),
-		mMasterList(0),
-		mMasterCodeComboBox(0)
+		mMasterList(nullptr),
+		mMasterCodeComboBox(nullptr)
 	{
 	}
 
