@@ -279,11 +279,11 @@ void ScriptParametersDialog::addParameter(const QString &name, const QString &va
 	typeComboBox->addItems(QStringList() << tr("Text") << tr("Number") << tr("Window title") << tr("File") << tr("Line"));
 	typeComboBox->setCurrentIndex(parameterType);
 	typeComboBox->installEventFilter(this);
-	connect(typeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(parameterTypeChanged(int)));
+    connect(typeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ScriptParametersDialog::parameterTypeChanged);
 	ui->parameterTable->setCellWidget(rowCount, 2, typeComboBox);
 
 	QPushButton *removeParameterPushButton = new QPushButton(tr("Remove"), this);
-	connect(removeParameterPushButton, SIGNAL(clicked()), this, SLOT(removeParameter()));
+    connect(removeParameterPushButton, &QPushButton::clicked, this, &ScriptParametersDialog::removeParameter);
 
 	ui->parameterTable->setCellWidget(rowCount, 3, removeParameterPushButton);
 }

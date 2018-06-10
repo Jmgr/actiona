@@ -68,7 +68,7 @@ namespace Actions
             mTextToSpeech->say(text);
 
             if(blocking)
-                connect(mTextToSpeech, SIGNAL(stateChanged(QTextToSpeech::State)), this, SLOT(stateChanged(QTextToSpeech::State)));
+                connect(mTextToSpeech, &QTextToSpeech::stateChanged, this, &TextToSpeechInstance::stateChanged);
             else
                 executionEnded();
 		}

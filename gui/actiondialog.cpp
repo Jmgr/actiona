@@ -200,7 +200,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 			actionComboBox->addItems(exceptionActionsNames);
 			actionComboBox->setProperty("row", i);
 
-			connect(actionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(currentExceptionActionChanged(int)));
+			connect(actionComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ActionDialog::currentExceptionActionChanged);
 
 			mExceptionsLayout->addWidget(actionComboBox, i, 1, Qt::AlignCenter);
 

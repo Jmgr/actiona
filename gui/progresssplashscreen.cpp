@@ -82,7 +82,7 @@ void ProgressSplashScreen::drawContents(QPainter *painter)
 	mProgressBar->update();
 }
 
-void ProgressSplashScreen::messageChanged(const QString &message)
+void ProgressSplashScreen::onMessageChanged(const QString &message)
 {
 	mProgressBar->setFormat(message);
 }
@@ -104,7 +104,7 @@ void ProgressSplashScreen::opacityCloseUpdate()
 
 void ProgressSplashScreen::init()
 {
-	connect(this, SIGNAL(messageChanged(QString)), this, SLOT(messageChanged(QString)));
+    connect(this, &ProgressSplashScreen::messageChanged, this, &ProgressSplashScreen::onMessageChanged);
 
 	int progressBarHeight = static_cast<int>(mProgressBar->height() * 0.7f);
 
@@ -120,5 +120,5 @@ void ProgressSplashScreen::init()
 	mProgressBar->setGeometry(0, height() - progressBarHeight, width(), progressBarHeight);
 
 	mOpacityTimer->setSingleShot(false);
-	connect(mOpacityTimer, SIGNAL(timeout()), this, SLOT(opacityCloseUpdate()));
+    connect(mOpacityTimer, &QTimer::timeout, this, &ProgressSplashScreen::opacityCloseUpdate);
 }

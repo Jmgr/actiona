@@ -61,9 +61,9 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->associateACODCheckBox->setVisible(false);
 #endif
 
-	connect(ui->noProxyRadioButton, SIGNAL(clicked()), this, SLOT(disableCustomProxy()));
-	connect(ui->systemProxyRadioButton, SIGNAL(clicked()), this, SLOT(disableCustomProxy()));
-	connect(ui->customProxyRadioButton, SIGNAL(clicked()), this, SLOT(enableCustomProxy()));
+    connect(ui->noProxyRadioButton, &QRadioButton::clicked, this, &SettingsDialog::disableCustomProxy);
+    connect(ui->systemProxyRadioButton, &QRadioButton::clicked, this, &SettingsDialog::disableCustomProxy);
+    connect(ui->customProxyRadioButton, &QRadioButton::clicked, this, &SettingsDialog::enableCustomProxy);
 
 	QSettings settings;
 
@@ -160,11 +160,11 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->associateACODCheckBox->setChecked(mPreviousACODAssociation);
 #endif
 
-    connect(ui->languageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged()));
-	connect(mTimeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+    connect(ui->languageComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SettingsDialog::languageChanged);
+    connect(mTimeoutTimer, &QTimer::timeout, this, &SettingsDialog::onTimeout);
 
 	if(systemTrayIcon)
-		connect(ui->showTaskbarIcon, SIGNAL(clicked(bool)), systemTrayIcon, SLOT(setVisible(bool)));
+        connect(ui->showTaskbarIcon, &QCheckBox::clicked, systemTrayIcon, &QSystemTrayIcon::setVisible);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -226,7 +226,8 @@ void SettingsDialog::on_testConnectivity_clicked()
 
 	QNetworkProxy::setApplicationProxy(proxy);
 	mNetworkReply = mNetworkAccessManager->get(QNetworkRequest(QUrl(Global::CONNECTIVITY_URL)));
-	connect(mNetworkReply, SIGNAL(finished()), this, SLOT(proxyTestFinished()));
+
+    connect(mNetworkReply, &QNetworkReply::finished, this, &SettingsDialog::proxyTestFinished);
 
 	setEnabled(false);
 

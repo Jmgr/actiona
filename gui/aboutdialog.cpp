@@ -78,7 +78,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	mComboBoxes.append(ui->act2Art);
 
 	QTimer *timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
+	connect(timer, &QTimer::timeout, this, &AboutDialog::animate);
 	timer->start(1500);
 }
 

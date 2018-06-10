@@ -99,7 +99,7 @@ namespace Actions
 			}
 			else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 			{
-				connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkWindow()));
+                connect(&mTimer, &QTimer::timeout, this, &WindowConditionInstance::checkWindow);
 				mTimer.setInterval(100);
 				mTimer.start();
 			}

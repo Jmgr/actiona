@@ -40,9 +40,9 @@ namespace ActionTools
 		delete ui->list->itemDelegate();
 		ui->list->setItemDelegate(new PointItemDelegate(this));
 
-        connect(ui->addPositionPushButton, SIGNAL(positionChosen(QPointF)), this, SLOT(positionChosen(QPointF)));
-        connect(ui->capturePathPushButton, SIGNAL(positionChosen(QPointF)), this, SLOT(stopCapture()));
-		connect(&mCaptureTimer, SIGNAL(timeout()), this, SLOT(capture()));
+        connect(ui->addPositionPushButton, &ActionTools::ChoosePositionPushButton::positionChosen, this, &PointListWidget::positionChosen);
+        connect(ui->capturePathPushButton, &ActionTools::ChoosePositionPushButton::positionChosen, this, &PointListWidget::stopCapture);
+        connect(&mCaptureTimer, &QTimer::timeout, this, &PointListWidget::capture);
 	}
 
 	PointListWidget::~PointListWidget()

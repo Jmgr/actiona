@@ -52,10 +52,10 @@ namespace Code
 		: CodeClass(),
 		mUdpSocket(new QUdpSocket(this))
 	{
-		QObject::connect(mUdpSocket, SIGNAL(connected()), this, SLOT(connected()));
-		QObject::connect(mUdpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-		QObject::connect(mUdpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-		QObject::connect(mUdpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+        QObject::connect(mUdpSocket, &QUdpSocket::connected, this, &Udp::connected);
+        QObject::connect(mUdpSocket, &QUdpSocket::disconnected, this, &Udp::disconnected);
+        QObject::connect(mUdpSocket, &QUdpSocket::readyRead, this, &Udp::readyRead);
+        QObject::connect(mUdpSocket, static_cast<void (QUdpSocket::*)(QAbstractSocket::SocketError)>(&QUdpSocket::error), this, &Udp::error);
 	}
 	
 	Udp::~Udp()

@@ -74,7 +74,7 @@ namespace ActionTools
 		setEditable(true);
 		setInsertPolicy(QComboBox::NoInsert);
 
-		connect(codeLineEdit, SIGNAL(codeChanged(bool)), this, SIGNAL(codeChanged(bool)));
+        connect(codeLineEdit, &CodeLineEdit::codeChanged, this, &CodeComboBox::codeChanged);
 
 		addActions(codeLineEdit->actions());
 		

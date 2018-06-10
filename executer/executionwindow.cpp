@@ -34,9 +34,9 @@ namespace LibExecuter
 		setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 		ui->debugPushButton->setEnabled(false);
 	
-		connect(ui->cancelPushButton, SIGNAL(clicked()), this, SIGNAL(canceled()));
-		connect(ui->pausePushButton, SIGNAL(clicked()), this, SIGNAL(paused()));
-		connect(ui->debugPushButton, SIGNAL(clicked()), this, SIGNAL(debug()));
+        connect(ui->cancelPushButton, &QPushButton::clicked, this, &ExecutionWindow::canceled);
+        connect(ui->pausePushButton, &QPushButton::clicked, this, &ExecutionWindow::paused);
+        connect(ui->debugPushButton, &QPushButton::clicked, this, &ExecutionWindow::debug);
 	}
 	
 	ExecutionWindow::~ExecutionWindow()

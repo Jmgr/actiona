@@ -151,7 +151,7 @@ namespace Actions
 			mInputDialog->open(this, SLOT(dataEntered(const QString &)));
 			break;
 		}
-		connect(mInputDialog, SIGNAL(rejected()), this, SLOT(canceled()));
+        connect(mInputDialog, &QInputDialog::rejected, this, &DataInputInstance::canceled);
 	}
 
 	void DataInputInstance::stopExecution()

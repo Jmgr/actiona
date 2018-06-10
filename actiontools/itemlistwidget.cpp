@@ -35,7 +35,7 @@ namespace ActionTools
 		ui->itemsListView->setModel(mModel);
 		delete oldModel;
 
-		connect(ui->itemsListView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(selectionChanged(QItemSelection,QItemSelection)));
+        connect(ui->itemsListView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ItemListWidget::selectionChanged);
 
 		selectionChanged(QItemSelection(), QItemSelection());
 	}

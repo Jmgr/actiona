@@ -46,7 +46,7 @@ namespace Actions
             mCurrentPoint(0),
             mButton(NoButton)
 		{
-			connect(&mMoveTimer, SIGNAL(timeout()), this, SLOT(moveToNextPosition()));
+            connect(&mMoveTimer, &QTimer::timeout, this, &CursorPathInstance::moveToNextPosition);
 		}
 
         static Tools::StringListPair buttons;

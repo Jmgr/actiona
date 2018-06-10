@@ -67,7 +67,7 @@ namespace ActionTools
 
 	public slots:
 		void reverseCode();
-		void textChanged(const QString &text);
+        void onTextChanged(const QString &text);
 		void openEditor(int line = -1, int column = -1);
 
 	signals:

@@ -39,7 +39,7 @@ namespace ActionTools
 	{
 		disconnect();
 
-		connect(masterList, SIGNAL(editorBuilt()), this, SLOT(masterEditorBuilt()));
+        connect(masterList, &ListParameterDefinition::editorBuilt, this, &GroupDefinition::masterEditorBuilt);
 
 		mMasterList = masterList;
 	}
@@ -60,8 +60,8 @@ namespace ActionTools
 	{
 		mMasterCodeComboBox = mMasterList->codeComboBox();
 
-		connect(mMasterCodeComboBox, SIGNAL(editTextChanged(QString)), this, SLOT(masterTextChanged(QString)));
-		connect(mMasterCodeComboBox, SIGNAL(codeChanged(bool)), this, SLOT(masterCodeChanged(bool)));
+        connect(mMasterCodeComboBox, &CodeComboBox::editTextChanged, this, &GroupDefinition::masterTextChanged);
+        connect(mMasterCodeComboBox, &CodeComboBox::codeChanged, this, &GroupDefinition::masterCodeChanged);
 	}
 
 	void GroupDefinition::masterTextChanged(const QString &text)

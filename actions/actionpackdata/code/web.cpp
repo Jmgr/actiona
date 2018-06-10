@@ -60,12 +60,12 @@ namespace Code
 	Web::Web()
 		: CodeClass(),
 		  mNetworkAccessManager(new QNetworkAccessManager(this)),
-		  mNetworkReply(0),
-		  mFile(0),
+          mNetworkReply(0),
+          mFile(0),
 		  mCloseFile(false),
 		  mIsDownloading(false)
 	{
-		QObject::connect(mNetworkAccessManager, SIGNAL(authenticationRequired(QNetworkReply *, QAuthenticator *)), this, SLOT(authenticationRequired(QNetworkReply *, QAuthenticator *)));
+        QObject::connect(mNetworkAccessManager, &QNetworkAccessManager::authenticationRequired, this, &Web::authenticationRequired);
 	}
 
 	Web::~Web()
@@ -177,10 +177,10 @@ namespace Code
 			break;
 		}
 
-		QObject::connect(mNetworkReply, SIGNAL(finished()), this, SLOT(finished()));
-		QObject::connect(mNetworkReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-		QObject::connect(mNetworkReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(error()));
-		QObject::connect(mNetworkReply, SIGNAL(readyRead()), this, SLOT(readyRead()));
+        QObject::connect(mNetworkReply, &QNetworkReply::finished, this, &Web::finished);
+        QObject::connect(mNetworkReply, &QNetworkReply::downloadProgress, this, &Web::downloadProgress);
+        QObject::connect(mNetworkReply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Web::error);
+        QObject::connect(mNetworkReply, &QNetworkReply::readyRead, this, &Web::readyRead);
 
 		mIsDownloading = true;
 

@@ -43,7 +43,7 @@ protected:
 	void drawContents(QPainter *painter);
 
 private slots:
-	void messageChanged(const QString &message);
+    void onMessageChanged(const QString &message);
 	void opacityCloseUpdate();
 
 private:

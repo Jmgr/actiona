@@ -44,7 +44,7 @@ namespace Actions
 		  mMeta(false),
 		  mTimer(new QTimer(this))
 	{
-		connect(mTimer, SIGNAL(timeout()), this, SLOT(sendRelease()));
+        connect(mTimer, &QTimer::timeout, this, &KeyInstance::sendRelease);
 	}
 
 	void KeyInstance::startExecution()

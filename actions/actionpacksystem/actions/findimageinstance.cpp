@@ -53,8 +53,9 @@ namespace Actions
           mDownPyramidCount(0),
           mSearchExpansion(0)
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(searchFinished(ActionTools::MatchingPointList)));
-        connect(&mWaitTimer, SIGNAL(timeout()), this, SLOT(startSearching()));
+        connect(mOpenCVAlgorithms, static_cast<void (ActionTools::OpenCVAlgorithms::*)(const ActionTools::MatchingPointList &)>(&ActionTools::OpenCVAlgorithms::finished),
+                this, &FindImageInstance::searchFinished);
+        connect(&mWaitTimer, &QTimer::timeout, this, &FindImageInstance::startSearching);
 
         mWaitTimer.setSingleShot(true);
 	}

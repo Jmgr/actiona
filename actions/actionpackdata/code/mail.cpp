@@ -73,18 +73,18 @@ namespace Code
     Mail::Mail()
         : CodeClass()
     {
-        connect(&mSmtp, SIGNAL(connected()), this, SLOT(connected()));
-        connect(&mSmtp, SIGNAL(connectionFailed(QByteArray)), this, SLOT(connectionFailed(QByteArray)));
-        connect(&mSmtp, SIGNAL(encrypted()), this, SLOT(encrypted()));
-        connect(&mSmtp, SIGNAL(encryptionFailed(QByteArray)), this, SLOT(encryptionFailed(QByteArray)));
-        connect(&mSmtp, SIGNAL(authenticated()), this, SLOT(authenticated()));
-        connect(&mSmtp, SIGNAL(authenticationFailed(QByteArray)), this, SLOT(authenticationFailed(QByteArray)));
-        connect(&mSmtp, SIGNAL(senderRejected(int,QString,QByteArray)), this, SLOT(senderRejected(int,QString,QByteArray)));
-        connect(&mSmtp, SIGNAL(recipientRejected(int,QString,QByteArray)), this, SLOT(recipientRejected(int,QString,QByteArray)));
-        connect(&mSmtp, SIGNAL(mailFailed(int,int,QByteArray)), this, SLOT(mailFailed(int,int,QByteArray)));
-        connect(&mSmtp, SIGNAL(mailSent(int)), this, SLOT(mailSent(int)));
-        connect(&mSmtp, SIGNAL(finished()), this, SLOT(finished()));
-        connect(&mSmtp, SIGNAL(disconnected()), this, SLOT(disconnected()));
+        connect(&mSmtp, &QxtSmtp::connected, this, &Mail::connected);
+        connect(&mSmtp, static_cast<void (QxtSmtp::*)(const QByteArray &)>(&QxtSmtp::connectionFailed), this, &Mail::connectionFailed);
+        connect(&mSmtp, &QxtSmtp::encrypted, this, &Mail::encrypted);
+        connect(&mSmtp, static_cast<void (QxtSmtp::*)(const QByteArray &)>(&QxtSmtp::encryptionFailed), this, &Mail::encryptionFailed);
+        connect(&mSmtp, &QxtSmtp::authenticated, this, &Mail::authenticated);
+        connect(&mSmtp, static_cast<void (QxtSmtp::*)(const QByteArray &)>(&QxtSmtp::authenticationFailed), this, &Mail::authenticationFailed);
+        connect(&mSmtp, static_cast<void (QxtSmtp::*)(int, const QString &, const QByteArray &)>(&QxtSmtp::senderRejected), this, &Mail::senderRejected);
+        connect(&mSmtp, static_cast<void (QxtSmtp::*)(int, const QString &, const QByteArray &)>(&QxtSmtp::recipientRejected), this, &Mail::recipientRejected);
+        connect(&mSmtp, static_cast<void (QxtSmtp::*)(int, int, const QByteArray &)>(&QxtSmtp::mailFailed), this, &Mail::mailFailed);
+        connect(&mSmtp, static_cast<void (QxtSmtp::*)(int)>(&QxtSmtp::mailSent), this, &Mail::mailSent);
+        connect(&mSmtp, &QxtSmtp::finished, this, &Mail::finished);
+        connect(&mSmtp, &QxtSmtp::disconnected, this, &Mail::disconnected);
     }
 
     QScriptValue Mail::connectToServer(const QString &serverName, int port)

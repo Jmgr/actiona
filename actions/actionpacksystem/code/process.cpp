@@ -131,12 +131,12 @@ namespace Code
 		: CodeClass(),
 		mProcess(new QProcess(this))
 	{
-		connect(mProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(error(QProcess::ProcessError)));
-		connect(mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(finished(int,QProcess::ExitStatus)));
-		connect(mProcess, SIGNAL(readyReadStandardError()), SLOT(readyReadStandardError()));
-		connect(mProcess, SIGNAL(readyReadStandardOutput()), SLOT(readyReadStandardOutput()));
-		connect(mProcess, SIGNAL(started()), SLOT(started()));
-        connect(mProcess, SIGNAL(stateChanged(QProcess::ProcessState)), SLOT(stateChanged(QProcess::ProcessState)));
+        connect(mProcess, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, static_cast<void (Process::*)(QProcess::ProcessError)>(&Process::onError));
+        connect(mProcess, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &Process::finished);
+        connect(mProcess, &QProcess::readyReadStandardError, this, &Process::readyReadStandardError);
+        connect(mProcess, &QProcess::readyReadStandardOutput, this, &Process::readyReadStandardOutput);
+        connect(mProcess, &QProcess::started, this, &Process::started);
+        connect(mProcess, &QProcess::stateChanged, this, &Process::stateChanged);
     }
 
 	QScriptValue Process::handle() const
@@ -410,7 +410,7 @@ namespace Code
 		return thisObject();
 	}
 
-	void Process::error(QProcess::ProcessError processError)
+    void Process::onError(QProcess::ProcessError processError)
 	{
 		if(mOnError.isValid())
 			mOnError.call(thisObject(), QScriptValueList() << static_cast<ProcessError>(processError));

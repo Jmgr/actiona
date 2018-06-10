@@ -59,22 +59,22 @@ namespace Code
 		: CodeClass(),
 		mTcpSocket(new QTcpSocket(this))
 	{
-		QObject::connect(mTcpSocket, SIGNAL(connected()), this, SLOT(connected()));
-		QObject::connect(mTcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-		QObject::connect(mTcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-		QObject::connect(mTcpSocket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
-		QObject::connect(mTcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+        QObject::connect(mTcpSocket, &QTcpSocket::connected, this, &Tcp::connected);
+        QObject::connect(mTcpSocket, &QTcpSocket::disconnected, this, &Tcp::disconnected);
+        QObject::connect(mTcpSocket, &QTcpSocket::readyRead, this, &Tcp::readyRead);
+        QObject::connect(mTcpSocket, &QTcpSocket::bytesWritten, this, &Tcp::bytesWritten);
+        QObject::connect(mTcpSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Tcp::error);
 	}
 	
 	Tcp::Tcp(QTcpSocket *tcpSocket)
 		: CodeClass(),
 		mTcpSocket(tcpSocket)
 	{
-		QObject::connect(mTcpSocket, SIGNAL(connected()), this, SLOT(connected()));
-		QObject::connect(mTcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-		QObject::connect(mTcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-		QObject::connect(mTcpSocket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
-		QObject::connect(mTcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+        QObject::connect(mTcpSocket, &QTcpSocket::connected, this, &Tcp::connected);
+        QObject::connect(mTcpSocket, &QTcpSocket::disconnected, this, &Tcp::disconnected);
+        QObject::connect(mTcpSocket, &QTcpSocket::readyRead, this, &Tcp::readyRead);
+        QObject::connect(mTcpSocket, &QTcpSocket::bytesWritten, this, &Tcp::bytesWritten);
+        QObject::connect(mTcpSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Tcp::error);
 	}
 	
 	Tcp::~Tcp()

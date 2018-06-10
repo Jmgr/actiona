@@ -33,8 +33,8 @@ ScriptExecuter::ScriptExecuter(QObject *parent) :
 	mScript(new ActionTools::Script(actionFactory(), this)),
 	mExecuter(new LibExecuter::Executer(this))
 {
-	connect(mExecuter, SIGNAL(executionStopped()), this, SLOT(executionStopped()));
-	connect(mExecuter, SIGNAL(scriptError(int,QString,QString)), this, SLOT(scriptError(int,QString,QString)));
+    connect(mExecuter, &LibExecuter::Executer::executionStopped, this, &ScriptExecuter::executionStopped);
+    connect(mExecuter, &LibExecuter::Executer::scriptError, this, &ScriptExecuter::scriptError);
 }
 
 bool ScriptExecuter::start(QIODevice *device, const QString &filename)

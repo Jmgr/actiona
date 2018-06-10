@@ -40,7 +40,7 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mPositionEdit = new PositionEdit(parent);
-        connect(mPositionEdit, SIGNAL(positionChosen(QPointF)), this, SLOT(positionChosen(QPointF)));
+        connect(mPositionEdit, &PositionEdit::positionChosen, this, &PositionParameterDefinition::positionChosen);
 
 		addEditor(mPositionEdit);
 

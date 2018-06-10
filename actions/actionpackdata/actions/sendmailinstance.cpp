@@ -123,17 +123,17 @@ namespace Actions
 
         mSmtp = new QxtSmtp(this);
 
-        connect(mSmtp, SIGNAL(connectionFailed(QByteArray)), this, SLOT(connectionFailed(QByteArray)));
-        connect(mSmtp, SIGNAL(encryptionFailed(QByteArray)), this, SLOT(encryptionFailed(QByteArray)));
-        connect(mSmtp, SIGNAL(authenticationFailed(QByteArray)), this, SLOT(authenticationFailed(QByteArray)));
-        connect(mSmtp, SIGNAL(authenticated()), this, SLOT(authenticated()));
-        connect(mSmtp, SIGNAL(senderRejected(int,QString,QByteArray)), this, SLOT(senderRejected(int,QString,QByteArray)));
-        connect(mSmtp, SIGNAL(recipientRejected(int,QString,QByteArray)), this, SLOT(recipientRejected(int,QString,QByteArray)));
-        connect(mSmtp, SIGNAL(mailFailed(int,int,QByteArray)), this, SLOT(mailFailed(int,int,QByteArray)));
-        connect(mSmtp, SIGNAL(mailSent(int)), this, SLOT(mailSent(int)));
-        connect(mSmtp, SIGNAL(disconnected()), this, SLOT(disconnected()));
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(const QByteArray &)>(&QxtSmtp::connectionFailed), this, &SendMailInstance::connectionFailed);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(const QByteArray &)>(&QxtSmtp::encryptionFailed), this, &SendMailInstance::encryptionFailed);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(const QByteArray &)>(&QxtSmtp::authenticationFailed), this, &SendMailInstance::authenticationFailed);
+        connect(mSmtp, &QxtSmtp::authenticated, this, &SendMailInstance::authenticated);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(int, const QString &, const QByteArray &)>(&QxtSmtp::senderRejected), this, &SendMailInstance::senderRejected);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(int, const QString &, const QByteArray &)>(&QxtSmtp::recipientRejected), this, &SendMailInstance::recipientRejected);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(int, int, const QByteArray &)>(&QxtSmtp::mailFailed), this, &SendMailInstance::mailFailed);
+        connect(mSmtp, &QxtSmtp::mailSent, this, &SendMailInstance::mailSent);
+        connect(mSmtp, &QxtSmtp::disconnected, this, &SendMailInstance::disconnected);
 
-        connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(canceled()));
+        connect(mProgressDialog, &QProgressDialog::canceled, this, &SendMailInstance::canceled);
 
         mSmtp->setUsername(userName.toUtf8());
         mSmtp->setPassword(password.toUtf8());

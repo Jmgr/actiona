@@ -60,9 +60,9 @@ namespace Code
 
 		setWidget(mColorDialog);
 		
-		connect(mColorDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));
-		connect(mColorDialog, SIGNAL(colorSelected(QColor)), this, SLOT(colorSelected(QColor)));
-		connect(mColorDialog, SIGNAL(currentColorChanged(QColor)), this, SLOT(currentColorChanged(QColor)));
+        connect(mColorDialog, &QColorDialog::finished, this, &ColorDialog::finished);
+        connect(mColorDialog, &QColorDialog::colorSelected, this, &ColorDialog::colorSelected);
+        connect(mColorDialog, &QColorDialog::currentColorChanged, this, &ColorDialog::currentColorChanged);
 	}
 	
 	ColorDialog::~ColorDialog()

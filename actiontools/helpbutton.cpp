@@ -34,10 +34,10 @@ namespace ActionTools
 		setMaximumWidth(24);
 		setMaximumHeight(24);
 		
-		connect(this, SIGNAL(clicked()), this, SLOT(clicked()));
+        connect(this, &HelpButton::clicked, this, &HelpButton::onClicked);
 	}
 	
-	void HelpButton::clicked()
+    void HelpButton::onClicked()
 	{
 		if(mTopic.isEmpty())
 			return;

@@ -35,7 +35,7 @@ namespace ActionTools
 		codeLineEdit->setEmbedded(true);
 		setLineEdit(codeLineEdit);
 
-		connect(codeLineEdit, SIGNAL(codeChanged(bool)), this, SLOT(codeChanged(bool)));
+        connect(codeLineEdit, &CodeLineEdit::codeChanged, this, &CodeSpinBox::onCodeChanged);
 
 		addActions(codeLineEdit->actions());
 	}
@@ -97,7 +97,7 @@ namespace ActionTools
 		return value;
 	}
 
-	void CodeSpinBox::codeChanged(bool code)
+    void CodeSpinBox::onCodeChanged(bool code)
 	{
 		if(!code)
 		{

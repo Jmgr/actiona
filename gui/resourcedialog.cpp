@@ -42,9 +42,9 @@ ResourceDialog::ResourceDialog(ActionTools::Script *script, QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->resourcesTableWidget, SIGNAL(filesDropped(QStringList)), this, SLOT(insertFiles(QStringList)));
-    connect(ui->resourcesTableWidget, SIGNAL(removeSelection()), this, SLOT(removeSelection()));
-    connect(ui->resourcesTableWidget, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
+    connect(ui->resourcesTableWidget, &ResourceTableWidget::filesDropped, this, &ResourceDialog::insertFiles);
+    connect(ui->resourcesTableWidget, &ResourceTableWidget::removeSelection, this, &ResourceDialog::removeSelection);
+    connect(ui->resourcesTableWidget, &ResourceTableWidget::itemSelectionChanged, this, &ResourceDialog::selectionChanged);
 
     ui->resourcesTableWidget->setItemDelegateForColumn(0, new ResourceNameDelegate(ui->resourcesTableWidget, this));
     ui->resourcesTableWidget->setItemDelegateForColumn(1, new ResourceTypeDelegate(this));

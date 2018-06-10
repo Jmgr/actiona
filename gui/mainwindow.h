@@ -85,6 +85,9 @@ public:
 signals:
 	void needToShow();
 
+public slots:
+    void otherInstanceMessage(const QString &message);
+
 private slots:
 	void postInit();
 	void on_actionSave_triggered();
@@ -154,7 +157,6 @@ private slots:
 	void postExecution();
 	void logItemDoubleClicked(int itemRow);
 	void logItemClicked(int itemRow);
-    void otherInstanceMessage(const QString &message);
 #ifndef ACT_NO_UPDATER
 	void updateError(const QString &message);
 	void updateNoResult();

@@ -218,11 +218,11 @@ int main(int argc, char **argv)
 
 	MainWindow mainWindow(optionsParser, splash, startScript, locale);
 
-	QObject::connect(&app, SIGNAL(messageReceived(const QString &)), &mainWindow, SLOT(otherInstanceMessage(const QString &)));
+	QObject::connect(&app, &QtSingleApplication::messageReceived, &mainWindow, &MainWindow::otherInstanceMessage);
 
 	app.setActivationWindow(&mainWindow);
 
-	QObject::connect(&mainWindow, SIGNAL(needToShow()), &app, SLOT(activateWindow()));
+	QObject::connect(&mainWindow, &MainWindow::needToShow, &app, &QtSingleApplication::activateWindow);
 
 	if(!optionsParser.isSet(QStringLiteral("execute")))
 		mainWindow.show();

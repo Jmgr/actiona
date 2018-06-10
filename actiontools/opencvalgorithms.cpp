@@ -68,7 +68,7 @@ namespace ActionTools
         if(!mPrivate->checkInputImages(sourcesMat, targetMat))
 			return false;
 
-        connect(&mPrivate->mFutureWatcher, SIGNAL(finished()), this, SLOT(finished()));
+        connect(&mPrivate->mFutureWatcher, &QFutureWatcher<MatchingPointList>::finished, this, &OpenCVAlgorithms::onFinished);
 
         mPrivate->mFuture = QtConcurrent::run(std::bind(&OpenCVAlgorithmsPrivate::fastMatchTemplate, mPrivate.get(), sourcesMat, targetMat, matchPercentage, maximumMatches, downPyrs, searchExpansion, method));
         mPrivate->mFutureWatcher.setFuture(mPrivate->mFuture);
@@ -120,7 +120,7 @@ namespace ActionTools
         return mPrivate->mErrorString;
     }
 
-    void OpenCVAlgorithms::finished()
+    void OpenCVAlgorithms::onFinished()
     {
         emit finished(mPrivate->mFutureWatcher.result());
     }

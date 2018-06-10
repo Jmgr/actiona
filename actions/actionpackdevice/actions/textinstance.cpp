@@ -30,7 +30,7 @@ namespace Actions
           mCurrentCharacter(0),
           mNoUnicodeCharacters(false)
 	{
-		connect(mTimer, SIGNAL(timeout()), this, SLOT(pressNextKey()));
+        connect(mTimer, &QTimer::timeout, this, &TextInstance::pressNextKey);
 
 		mTimer->setSingleShot(false);
 	}

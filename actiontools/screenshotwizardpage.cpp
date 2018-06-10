@@ -38,7 +38,7 @@ namespace ActionTools
     {
         ui->setupUi(this);
 
-        connect(ui->captureWindowPushButton, SIGNAL(searchEnded(ActionTools::WindowHandle)), this, SLOT(onWindowSearchEnded(ActionTools::WindowHandle)));
+        connect(ui->captureWindowPushButton, &ActionTools::ChooseWindowPushButton::searchEnded, this, &ScreenshotWizardPage::onWindowSearchEnded);
 
         QDesktopWidget *desktopWidget = QApplication::desktop();
 
@@ -89,7 +89,7 @@ namespace ActionTools
         if(mTargetWindow)
             delete mTargetWindow;
         mTargetWindow = new ActionTools::TargetWindow;
-        connect(mTargetWindow, SIGNAL(rectangleSelected(QRect)), this, SLOT(onRectangleSelected(QRect)));
+        connect(mTargetWindow, &ActionTools::TargetWindow::rectangleSelected, this, &ScreenshotWizardPage::onRectangleSelected);
         mTargetWindow->show();
 
         emit completeChanged();

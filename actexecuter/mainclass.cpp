@@ -53,7 +53,7 @@ bool MainClass::start(ExecutionMode executionMode, const QUrl &url)
 	mUrl.setScheme(QStringLiteral("http"));
 
 	mNetworkReply = mNetworkAccessManager->get(QNetworkRequest(mUrl));
-	connect(mNetworkReply, SIGNAL(finished()), this, SLOT(downloadFinished()));
+    connect(mNetworkReply, &QNetworkReply::finished, this, &MainClass::downloadFinished);
 
 	return true;
 }

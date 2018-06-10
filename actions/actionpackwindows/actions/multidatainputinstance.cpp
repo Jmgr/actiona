@@ -131,7 +131,7 @@ namespace Actions
 				layout->addWidget(mListWidget);
 
 				if(mMaximumChoiceCount > 1)
-					connect(mListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(listItemSelectionChanged()));
+                    connect(mListWidget, &QListWidget::itemSelectionChanged, this, &MultiDataInputInstance::listItemSelectionChanged);
 			}
 			break;
 		case CheckboxMode:
@@ -148,10 +148,10 @@ namespace Actions
 		QDialogButtonBox *dialogButtonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, mDialog);
 		layout->addWidget(dialogButtonBox);
 
-		connect(dialogButtonBox, SIGNAL(accepted()), mDialog, SLOT(accept()));
-		connect(dialogButtonBox, SIGNAL(rejected()), mDialog, SLOT(reject()));
-		connect(mDialog, SIGNAL(accepted()), this, SLOT(accepted()));
-		connect(mDialog, SIGNAL(rejected()), this, SLOT(rejected()));
+        connect(dialogButtonBox, &QDialogButtonBox::accepted, mDialog, &QDialog::accept);
+        connect(dialogButtonBox, &QDialogButtonBox::rejected, mDialog, &QDialog::reject);
+        connect(mDialog, &QDialog::accepted, this, &MultiDataInputInstance::accepted);
+        connect(mDialog, &QDialog::rejected, this, &MultiDataInputInstance::rejected);
 
         for(QLabel *label: mDialog->findChildren<QLabel*>())
             label->setOpenExternalLinks(true);
@@ -267,7 +267,7 @@ namespace Actions
 		mButtonGroup->setExclusive(exclusive);
 
 		if(!exclusive && mMaximumChoiceCount > 1)
-			connect(mButtonGroup, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(checkboxChecked(QAbstractButton*)));
+            connect(mButtonGroup, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), this, &MultiDataInputInstance::checkboxChecked);
 
 		int itemCount = mItems.size();
 		QGridLayout *gridLayout = new QGridLayout;

@@ -50,7 +50,8 @@ namespace ActionTools
 		ui->console->setModel(mModel);
 		delete oldModel;
 		
-		connect(mModel, SIGNAL(rowsInserted(QModelIndex,int,int)), ui->console, SLOT(scrollToBottom()));
+        // Note: this connection is still string based because it uses a private signal
+        connect(mModel, SIGNAL(rowsInserted(QModelIndex,int,int)), ui->console, SLOT(scrollToBottom()));
 	}
 
 	void ConsoleWidget::addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type)

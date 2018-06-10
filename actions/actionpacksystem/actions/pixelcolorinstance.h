@@ -123,7 +123,7 @@ namespace Actions
 				}
 				else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 				{
-					connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkPixel()));
+                    connect(&mTimer, &QTimer::timeout, this, &PixelColorInstance::checkPixel);
 					mTimer.setInterval(100);
 					mTimer.start();
 				}

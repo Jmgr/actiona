@@ -45,7 +45,7 @@ namespace Actions
 		PauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent)
 		{
-			connect(&mCheckTimer, SIGNAL(timeout()), this, SLOT(checkTime()));
+            connect(&mCheckTimer, &QTimer::timeout, this, &PauseInstance::checkTime);
 		}
 
         static Tools::StringListPair units;

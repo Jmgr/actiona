@@ -51,7 +51,7 @@ namespace ActionTools
 		QString text();
 
 	private slots:
-		void codeChanged(bool code);
+        void onCodeChanged(bool code);
 
 	private:
 		QValidator::State validate(QString &text, int &pos) const;

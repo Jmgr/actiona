@@ -50,9 +50,9 @@ namespace ActionTools
 		mCompleter->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
 		mCompleter->setWrapAround(false);
 
-		connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
-		connect(this, SIGNAL(updateRequest(const QRect &, int)), this, SLOT(updateLineNumberArea(const QRect &, int)));
-		connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
+        connect(this, &CodeEdit::blockCountChanged, this, &CodeEdit::updateLineNumberAreaWidth);
+        connect(this, &CodeEdit::updateRequest, this, &CodeEdit::updateLineNumberArea);
+        connect(this, &CodeEdit::cursorPositionChanged, this, &CodeEdit::highlightCurrentLine);
 
 		updateLineNumberAreaWidth(0);
 		highlightCurrentLine();
@@ -64,7 +64,7 @@ namespace ActionTools
 		font.setPointSize(10);
 		setFont(font);
 
-		connect(mCompleter, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
+        connect(mCompleter, static_cast<void (ScriptCompleter::*)(const QString &)>(&ScriptCompleter::activated), this, &CodeEdit::insertCompletion);
 	}
 
 	void CodeEdit::setCode(bool code)

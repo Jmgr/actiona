@@ -32,7 +32,7 @@ namespace Actions
 	{
 		mMediaPlayer->setPlaylist(mMediaPlaylist);
 
-		connect(mMediaPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(stateChanged(QMediaPlayer::State)));
+        connect(mMediaPlayer, &QMediaPlayer::stateChanged, this, &PlaySoundInstance::stateChanged);
 	}
 
 	PlaySoundInstance::~PlaySoundInstance()

@@ -32,7 +32,7 @@ Executer::Executer(QObject *parent) :
 	mActionFactory(new ActionTools::ActionFactory(this)),
 	mActionLoadingFailed(false)
 {
-	connect(mActionFactory, SIGNAL(actionPackLoadError(QString)), this, SLOT(actionPackLoadError(QString)));
+    connect(mActionFactory, &ActionTools::ActionFactory::actionPackLoadError, this, &Executer::actionPackLoadError);
 }
 
 Executer::~Executer()

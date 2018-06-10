@@ -66,7 +66,7 @@ namespace Code
 
 		setWidget(mMessageBox);
 
-		connect(mMessageBox, SIGNAL(finished(int)), this, SLOT(finished(int)));
+        connect(mMessageBox, &QMessageBox::finished, this, &MessageBox::finished);
 	}
 
 	MessageBox::~MessageBox()

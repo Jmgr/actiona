@@ -40,7 +40,7 @@ namespace Tools
 		  mCurrentReply(0),
 		  mTimeoutTimer(new QTimer(this))
 	{
-		connect(mTimeoutTimer, SIGNAL(timeout()), this, SLOT(timeout()));
+        connect(mTimeoutTimer, &QTimer::timeout, this, &Updater::timeout);
 
 		mTimeoutTimer->setSingleShot(true);
 		mTimeoutTimer->setInterval(timeout);
@@ -124,8 +124,8 @@ namespace Tools
 		
 		mCurrentReply = mNetworkAccessManager->get(request);
 
-		connect(mCurrentReply, SIGNAL(finished()), this, SLOT(replyFinished()));
-		connect(mCurrentReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress()));
+        connect(mCurrentReply, &QNetworkReply::finished, this, &Updater::replyFinished);
+        connect(mCurrentReply, &QNetworkReply::downloadProgress, this, &Updater::downloadProgress);
 
 		mTimeoutTimer->start();
 	}

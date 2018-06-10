@@ -70,7 +70,7 @@ namespace Actions
 			{
 				if(ifAfter.action() == ActionTools::IfActionValue::WAIT)
 				{
-					connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkDateTime()));
+                    connect(&mTimer, &QTimer::timeout, this, &TimeConditionInstance::checkDateTime);
 					mTimer.setInterval(1000);
 					mTimer.start();
 

@@ -272,27 +272,28 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 		QAction *newAction = new QAction(this);
 		mRecentFileActs.append(newAction);
 		newAction->setVisible(false);
-		connect(newAction, SIGNAL(triggered()), this, SLOT(openRecentFile()));
+        connect(newAction, &QAction::triggered, this, &MainWindow::openRecentFile);
+
 
 		ui->menuRecent_scripts->addAction(newAction);
 	}
 	updateRecentFileActions();
 
-	connect(ui->deleteDropTarget, SIGNAL(actionsDropped(QList<int>)), mScriptModel, SLOT(removeActions(QList<int>)));
-	connect(ui->scriptView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editAction(QModelIndex)));
-	connect(mScriptModel, SIGNAL(wantToAddAction(int, QString)), this, SLOT(wantToAddAction(int, QString)));
-	connect(mScriptModel, SIGNAL(scriptFileDropped(QString)), this, SLOT(scriptFileDropped(QString)));
-	connect(mScriptModel, SIGNAL(scriptContentDropped(QString)), this, SLOT(scriptContentDropped(QString)));
-	connect(ui->scriptView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(actionSelectionChanged()));
-	connect(mScriptModel, SIGNAL(scriptEdited()), this, SLOT(scriptEdited()));
-    connect(ui->newActionTreeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(newActionDoubleClicked(QModelIndex)));
-	if(mSystemTrayIcon)
-		connect(mSystemTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(systemTrayIconActivated(QSystemTrayIcon::ActivationReason)));
-	connect(mActionFactory, SIGNAL(actionPackLoadError(QString)), this, SLOT(packLoadError(QString)));
-	connect(ui->consoleWidget, SIGNAL(itemDoubleClicked(int)), this, SLOT(logItemDoubleClicked(int)));
-	connect(ui->consoleWidget, SIGNAL(itemClicked(int)), this, SLOT(logItemClicked(int)));
-	connect(mStopExecutionAction, SIGNAL(triggered()), this, SLOT(stopExecution()));
-    connect(&mExecuter, SIGNAL(executionStopped()), this, SLOT(scriptExecutionStopped()));
+    connect(ui->deleteDropTarget, &DeleteActionPushButton::actionsDropped, mScriptModel, &ScriptModel::removeActions);
+    connect(ui->scriptView, &ScriptTreeView::doubleClicked, this, static_cast<void (MainWindow::*)(const QModelIndex &)>(&MainWindow::editAction));
+    connect(mScriptModel, &ScriptModel::wantToAddAction, this, static_cast<void (MainWindow::*)(int, const QString &)>(&MainWindow::wantToAddAction));
+    connect(mScriptModel, &ScriptModel::scriptFileDropped, this, &MainWindow::scriptFileDropped);
+    connect(mScriptModel, &ScriptModel::scriptContentDropped, this, &MainWindow::scriptContentDropped);
+    connect(ui->scriptView->selectionModel(), &QItemSelectionModel::selectionChanged, this, static_cast<void (MainWindow::*)()>(&MainWindow::actionSelectionChanged));
+    connect(mScriptModel, &ScriptModel::scriptEdited, this, &MainWindow::scriptEdited);
+    connect(ui->newActionTreeView, &QTreeView::doubleClicked, this, &MainWindow::newActionDoubleClicked);
+    if(mSystemTrayIcon)
+        connect(mSystemTrayIcon, &QSystemTrayIcon::activated, this, &MainWindow::systemTrayIconActivated);
+    connect(mActionFactory, &ActionTools::ActionFactory::actionPackLoadError, this, &MainWindow::packLoadError);
+    connect(ui->consoleWidget, &ActionTools::ConsoleWidget::itemDoubleClicked, this, &MainWindow::logItemDoubleClicked);
+    connect(ui->consoleWidget, &ActionTools::ConsoleWidget::itemClicked, this, static_cast<void (MainWindow::*)(int)>(&MainWindow::logItemClicked));
+    connect(mStopExecutionAction, &QAction::triggered, this, &MainWindow::stopExecution);
+    connect(&mExecuter, &LibExecuter::Executer::executionStopped, this, &MainWindow::scriptExecutionStopped);
     connect(ui->heatmapModeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int index)
     {
         mScriptModel->setHeatmapMode(static_cast<HeatmapMode>(index));
@@ -301,9 +302,9 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
         ui->scriptView->header()->viewport()->update();
     });
 #ifndef ACT_NO_UPDATER
-	connect(mUpdater, SIGNAL(error(QString)), this, SLOT(updateError(QString)));
-	connect(mUpdater, SIGNAL(noResult()), this, SLOT(updateNoResult()));
-	connect(mUpdater, SIGNAL(success(Tools::Version,QDate,QString,QString,QString,int,QString)), this, SLOT(updateSuccess(Tools::Version,QDate,QString,QString,QString,int,QString)));
+    connect(mUpdater, &Tools::Updater::error, this, &MainWindow::updateError);
+    connect(mUpdater, &Tools::Updater::noResult, this, &MainWindow::updateNoResult);
+    connect(mUpdater, &Tools::Updater::success, this, &MainWindow::updateSuccess);
 #endif
 
 	setWindowTitle(QStringLiteral("Actiona[*]"));//Set this to fix some warnings about the [*] placeholder
@@ -1992,9 +1993,9 @@ void MainWindow::updateSuccess(const Tools::Version &version,
 
 	mUpdateDownloadNetworkReply = mNetworkAccessManager->get(QNetworkRequest(filename));
 
-	connect(mUpdateDownloadNetworkReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(updateDownloadProgress(qint64,qint64)));
-	connect(mUpdateDownloadNetworkReply, SIGNAL(finished()), this, SLOT(updateDownloadFinished()));
-	connect(mUpdateDownloadNetworkReply, SIGNAL(readyRead()), this, SLOT(updateDownloadDataAvailable()));
+    connect(mUpdateDownloadNetworkReply, &QNetworkReply::downloadProgress, this, &MainWindow::updateDownloadProgress);
+    connect(mUpdateDownloadNetworkReply, &QNetworkReply::finished, this, &MainWindow::updateDownloadFinished);
+    connect(mUpdateDownloadNetworkReply, &QNetworkReply::readyRead, this, &MainWindow::updateDownloadDataAvailable);
 
 	mUpdaterProgressDialog->setLabelText(tr("Downloading file..."));
 	mUpdaterProgressDialog->setWindowTitle(tr("Update download"));

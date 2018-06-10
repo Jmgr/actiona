@@ -44,8 +44,8 @@ namespace Actions
 		CommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
 			: ActionTools::ActionInstance(definition, parent), mProcess(new QProcess(this))
 		{
-			connect(mProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(readyReadStandardOutput()));
-			connect(mProcess, SIGNAL(readyReadStandardError()), this, SLOT(readyReadStandardError()));
+            connect(mProcess, &QProcess::readyReadStandardOutput, this, &CommandInstance::readyReadStandardOutput);
+            connect(mProcess, &QProcess::readyReadStandardError, this, &CommandInstance::readyReadStandardError);
 		}
 
 		void startExecution()
@@ -66,8 +66,8 @@ namespace Actions
 
 			mProcess->setWorkingDirectory(workingDirectory);
 
-			connect(mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
-			connect(mProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
+            connect(mProcess, static_cast<void (QProcess::*)(int,QProcess::ExitStatus)>(&QProcess::finished), this, &CommandInstance::processFinished);
+            connect(mProcess, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &CommandInstance::processError);
 
 			QStringList parameterList = parameters.split(QLatin1Char(' '));
 			mProcess->start(command, parameters.isEmpty() ? QStringList() : parameterList);

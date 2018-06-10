@@ -60,14 +60,14 @@ namespace LibExecuter
         mPauseInterrupt(false),
         mShowDebuggerOnCodeError(true)
 	{
-		connect(mExecutionWindow, SIGNAL(canceled()), this, SLOT(stopExecution()));
-		connect(mExecutionWindow, SIGNAL(paused()), this, SLOT(pauseExecution()));
-		connect(mExecutionWindow, SIGNAL(debug()), this, SLOT(debugExecution()));
-		connect(&mExecutionTimer, SIGNAL(timeout()), this, SLOT(updateTimerProgress()));
-		connect(&mScriptEngineDebugger, SIGNAL(evaluationSuspended()), mExecutionWindow, SLOT(onEvaluationPaused()));
-		connect(&mScriptEngineDebugger, SIGNAL(evaluationResumed()), mExecutionWindow, SLOT(onEvaluationResumed()));
-		connect(&mScriptEngineDebugger, SIGNAL(evaluationSuspended()), this, SLOT(executionPaused()));
-		connect(&mScriptEngineDebugger, SIGNAL(evaluationResumed()), this, SLOT(executionResumed()));
+        connect(mExecutionWindow, &ExecutionWindow::canceled, this, &Executer::stopExecution);
+        connect(mExecutionWindow, &ExecutionWindow::paused, this, &Executer::pauseExecution);
+        connect(mExecutionWindow, &ExecutionWindow::debug, this, &Executer::debugExecution);
+        connect(&mExecutionTimer, &QTimer::timeout, this, &Executer::updateTimerProgress);
+        connect(&mScriptEngineDebugger, &QScriptEngineDebugger::evaluationSuspended, mExecutionWindow, &ExecutionWindow::onEvaluationPaused);
+        connect(&mScriptEngineDebugger, &QScriptEngineDebugger::evaluationResumed, mExecutionWindow, &ExecutionWindow::onEvaluationResumed);
+        connect(&mScriptEngineDebugger, &QScriptEngineDebugger::evaluationSuspended, this, &Executer::executionPaused);
+        connect(&mScriptEngineDebugger, &QScriptEngineDebugger::evaluationResumed, this, &Executer::executionResumed);
 
 		mScriptEngineDebugger.setAutoShowStandardWindow(false);
 
@@ -131,9 +131,9 @@ namespace LibExecuter
 
 		mScriptAgent = new ScriptAgent(mScriptEngine);
 
-		connect(mScriptAgent, SIGNAL(executionStopped()), this, SLOT(stopExecution()));
-		connect(mScriptAgent, SIGNAL(evaluationStarted()), mExecutionWindow, SLOT(enableDebug()));
-		connect(mScriptAgent, SIGNAL(evaluationStopped()), mExecutionWindow, SLOT(disableDebug()));
+        connect(mScriptAgent, &ScriptAgent::executionStopped, this, &Executer::stopExecution);
+        connect(mScriptAgent, &ScriptAgent::evaluationStarted, mExecutionWindow, &ExecutionWindow::enableDebug);
+        connect(mScriptAgent, &ScriptAgent::evaluationStopped, mExecutionWindow, &ExecutionWindow::disableDebug);
 
 		QScriptEngineAgent *debuggerAgent = mScriptEngine->agent();
 		mScriptEngine->setAgent(mScriptAgent);
@@ -853,7 +853,7 @@ namespace LibExecuter
 		if(!mProgressDialog)
 			mProgressDialog = new QProgressDialog(0, Qt::WindowStaysOnTopHint);
 
-		connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(stopExecution()));
+        connect(mProgressDialog, &QProgressDialog::canceled, this, &Executer::stopExecution);
 
 		mProgressDialog->setWindowTitle(title);
 		mProgressDialog->setMaximum(maximum);
@@ -1036,16 +1036,18 @@ namespace LibExecuter
 		mExecutionWindow->setCurrentActionName(actionInstance->definition()->name());
 		mExecutionWindow->setCurrentActionColor(actionInstance->color());
 
-        connect(actionInstance, SIGNAL(executionEndedSignal()), this, SLOT(actionExecutionEnded()));
-		connect(actionInstance, SIGNAL(executionException(int,QString)), this, SLOT(executionException(int,QString)));
-		connect(actionInstance, SIGNAL(disableAction(bool)), this, SLOT(disableAction(bool)));
-		connect(actionInstance, SIGNAL(showProgressDialog(QString,int)), this, SLOT(showProgressDialog(QString,int)));
-		connect(actionInstance, SIGNAL(updateProgressDialog(int)), this, SLOT(updateProgressDialog(int)));
-		connect(actionInstance, SIGNAL(updateProgressDialog(QString)), this, SLOT(updateProgressDialog(QString)));
-		connect(actionInstance, SIGNAL(hideProgressDialog()), this, SLOT(hideProgressDialog()));
-		connect(actionInstance, SIGNAL(consolePrint(QString)), this, SLOT(consolePrint(QString)));
-		connect(actionInstance, SIGNAL(consolePrintWarning(QString)), this, SLOT(consolePrintWarning(QString)));
-		connect(actionInstance, SIGNAL(consolePrintError(QString)), this, SLOT(consolePrintError(QString)));
+        connect(actionInstance, &ActionTools::ActionInstance::executionEndedSignal, this, &Executer::actionExecutionEnded);
+		connect(actionInstance, &ActionTools::ActionInstance::executionException, this, &Executer::executionException);
+		connect(actionInstance, &ActionTools::ActionInstance::disableAction, this, &Executer::disableAction);
+		connect(actionInstance, &ActionTools::ActionInstance::showProgressDialog, this, &Executer::showProgressDialog);
+        connect(actionInstance, static_cast<void (ActionTools::ActionInstance::*)(int)>(&ActionTools::ActionInstance::updateProgressDialog),
+                this, static_cast<void (Executer::*)(int)>(&Executer::updateProgressDialog));
+        connect(actionInstance, static_cast<void (ActionTools::ActionInstance::*)(const QString &)>(&ActionTools::ActionInstance::updateProgressDialog),
+                this, static_cast<void (Executer::*)(const QString &)>(&Executer::updateProgressDialog));
+		connect(actionInstance, &ActionTools::ActionInstance::hideProgressDialog, this, &Executer::hideProgressDialog);
+        connect(actionInstance, &ActionTools::ActionInstance::consolePrint, this, static_cast<void (Executer::*)(const QString &)>(&Executer::consolePrint));
+		connect(actionInstance, &ActionTools::ActionInstance::consolePrintWarning, this, &Executer::consolePrintWarning);
+		connect(actionInstance, &ActionTools::ActionInstance::consolePrintError, this, &Executer::consolePrintError);
 		
 		mExecutionStatus = PrePause;
 

@@ -153,7 +153,7 @@ namespace Code
 		QScriptValue terminate();
 
 	private slots:
-		void error(QProcess::ProcessError processError);
+        void onError(QProcess::ProcessError processError);
 		void finished(int exitCode, QProcess::ExitStatus exitStatus);
 		void readyReadStandardError();
 		void readyReadStandardOutput();

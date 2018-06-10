@@ -36,7 +36,7 @@ namespace ActionTools
 		void setTopic(const QString &topic)						{ mTopic = topic; }
 		
 	private slots:
-		void clicked();
+        void onClicked();
 		
 	private:
 		QString mTopic;

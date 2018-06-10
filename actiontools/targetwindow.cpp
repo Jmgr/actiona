@@ -61,7 +61,7 @@ namespace ActionTools
         setMinimumSize(1, 1);
         setCursor(Qt::CrossCursor);
 
-        connect(&mUpdateTimer, SIGNAL(timeout()), this, SLOT(update()));
+        connect(&mUpdateTimer, &QTimer::timeout, this, &TargetWindow::update);
     }
 
     TargetWindow::~TargetWindow()

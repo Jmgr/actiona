@@ -130,7 +130,7 @@ namespace ActionTools
 		void finished(const ActionTools::MatchingPointList &matchingPointList);
 
 	private slots:
-		void finished();
+        void onFinished();
 
     private:
         std::unique_ptr<OpenCVAlgorithmsPrivate> mPrivate;

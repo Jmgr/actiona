@@ -45,7 +45,7 @@ namespace Code
 	TcpServer::TcpServer()
 		: CodeClass()
 	{
-		connect(&mTcpServer, SIGNAL(newConnection()), this, SLOT(newConnection()));
+        connect(&mTcpServer, &QTcpServer::newConnection, this, &TcpServer::newConnection);
 	}
 	
 	TcpServer::~TcpServer()

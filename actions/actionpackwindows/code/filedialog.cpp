@@ -103,12 +103,12 @@ namespace Code
 
 		setWidget(mFileDialog);
 		
-		connect(mFileDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));
-		connect(mFileDialog, SIGNAL(currentChanged(QString)), this, SLOT(currentChanged(QString)));
-		connect(mFileDialog, SIGNAL(directoryEntered(QString)), this, SLOT(directoryEntered(QString)));
-		connect(mFileDialog, SIGNAL(fileSelected(QString)), this, SLOT(fileSelected(QString)));
-		connect(mFileDialog, SIGNAL(filesSelected(QStringList)), this, SLOT(filesSelected(QStringList)));
-		connect(mFileDialog, SIGNAL(filterSelected(QString)), this, SLOT(filterSelected(QString)));
+        connect(mFileDialog, &QFileDialog::finished, this, &FileDialog::finished);
+        connect(mFileDialog, &QFileDialog::currentChanged, this, &FileDialog::currentChanged);
+        connect(mFileDialog, &QFileDialog::directoryEntered, this, &FileDialog::directoryEntered);
+        connect(mFileDialog, &QFileDialog::fileSelected, this, &FileDialog::fileSelected);
+        connect(mFileDialog, &QFileDialog::filesSelected, this, &FileDialog::filesSelected);
+        connect(mFileDialog, &QFileDialog::filterSelected, this, &FileDialog::filterSelected);
 	}
 	
 	FileDialog::~FileDialog()

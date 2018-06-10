@@ -48,10 +48,10 @@ namespace ActionTools
 		swapCodeAction->setShortcutContext(Qt::WindowShortcut);
 		addAction(swapCodeAction);
 
-		connect(swapCodeAction, SIGNAL(triggered()), this, SLOT(swapCode()));
-		connect(ui->editor, SIGNAL(acceptDialog()), this, SLOT(accept()));
+        connect(swapCodeAction, &QAction::triggered, this, &CodeEditorDialog::swapCode);
+        connect(ui->editor, &ActionTools::CodeEdit::acceptDialog, this, &CodeEditorDialog::accept);
         if(mResourcesMenu)
-            connect(mResourcesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+            connect(mResourcesMenu, &QMenu::triggered, this, static_cast<void (CodeEditorDialog::*)(QAction *action)>(&CodeEditorDialog::insertVariable));
 	}
 
 	CodeEditorDialog::~CodeEditorDialog()
@@ -133,7 +133,7 @@ namespace ActionTools
         else
         {
             variablesMenu = new QMenu(tr("Insert variable"));
-            connect(variablesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+            connect(variablesMenu, &QMenu::triggered, this, static_cast<void (CodeEditorDialog::*)(QAction *action)>(&CodeEditorDialog::insertVariable));
             for(const QString &variable: variableList)
                 variablesMenu->addAction(variable);
         }

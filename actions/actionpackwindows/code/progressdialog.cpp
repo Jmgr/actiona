@@ -64,7 +64,7 @@ namespace Code
 
 		setWidget(mProgressDialog);
 
-		connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(canceled()));
+        connect(mProgressDialog, &QProgressDialog::canceled, this, &ProgressDialog::canceled);
 	}
 	
 	ProgressDialog::~ProgressDialog()

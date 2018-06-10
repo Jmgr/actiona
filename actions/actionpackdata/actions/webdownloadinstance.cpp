@@ -39,7 +39,7 @@ namespace Actions
 		  mDestination(Variable),
 		  mProgressDialog(new QProgressDialog)
 	{
-		connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(canceled()));
+        connect(mProgressDialog, &QProgressDialog::canceled, this, &WebDownloadInstance::canceled);
 	}
 
 	WebDownloadInstance::~WebDownloadInstance()
@@ -84,9 +84,9 @@ namespace Actions
 
 		mReply = mNetworkAccessManager->get(QNetworkRequest(url));
 
-		connect(mReply, SIGNAL(finished()), this, SLOT(finished()));
-		connect(mReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-		connect(mReply, SIGNAL(readyRead()), this, SLOT(readyRead()));
+        connect(mReply, &QNetworkReply::finished, this, &WebDownloadInstance::finished);
+        connect(mReply, &QNetworkReply::downloadProgress, this, &WebDownloadInstance::downloadProgress);
+        connect(mReply, &QNetworkReply::readyRead, this, &WebDownloadInstance::readyRead);
 
 		mProgressDialog->setModal(false);
 		mProgressDialog->setWindowTitle(tr("Downloading"));

@@ -59,12 +59,12 @@ namespace ActionTools
         mEditorButton(new CodeLineEditButton(this)),
         mInsertButton(new CodeLineEditButton(this))
 	{
-		connect(this, SIGNAL(textChanged(const QString &)), this, SLOT(textChanged(const QString &)));
-		connect(mSwitchTextCode, SIGNAL(triggered()), this, SLOT(reverseCode()));
-		connect(mOpenEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
-		connect(mCodeButton, SIGNAL(clicked()), this, SLOT(reverseCode()));
-		connect(mEditorButton, SIGNAL(clicked()), this, SLOT(openEditor()));
-        connect(mInsertButton, SIGNAL(clicked()), this, SLOT(showVariableMenuAsPopup()));
+        connect(this, &CodeLineEdit::textChanged, this, &CodeLineEdit::onTextChanged);
+        connect(mSwitchTextCode, &QAction::triggered, this, &CodeLineEdit::reverseCode);
+        connect(mOpenEditor, &QAction::triggered, [this](){ openEditor(); });
+        connect(mCodeButton, &CodeLineEditButton::clicked, this, &CodeLineEdit::reverseCode);
+        connect(mEditorButton, &CodeLineEditButton::clicked, [this](){ openEditor(); });
+        connect(mInsertButton, &CodeLineEditButton::clicked, this, &CodeLineEdit::showVariableMenuAsPopup);
 
 		QSettings settings;
 
@@ -206,7 +206,7 @@ namespace ActionTools
 		setCode(!isCode());
 	}
 
-	void CodeLineEdit::textChanged(const QString &text)
+    void CodeLineEdit::onTextChanged(const QString &text)
 	{
 		mMultiline = text.contains(QLatin1Char('\n'));
 		setReadOnly(mMultiline);
@@ -403,11 +403,11 @@ namespace ActionTools
     void CodeLineEdit::addVariablesAndResourcesMenus(QMenu *menu)
     {
         QMenu *variablesMenu = createVariablesMenu(menu);
-        connect(variablesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+        connect(variablesMenu, &QMenu::triggered, this, static_cast<void (CodeLineEdit::*)(QAction *action)>(&CodeLineEdit::insertVariable));
         menu->addMenu(variablesMenu);
 
         QMenu *resourcesMenu = createResourcesMenu(menu);
-        connect(resourcesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+        connect(resourcesMenu, &QMenu::triggered, this, static_cast<void (CodeLineEdit::*)(QAction *action)>(&CodeLineEdit::insertVariable));
         menu->addMenu(resourcesMenu);
     }
 

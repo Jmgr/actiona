@@ -83,10 +83,10 @@ namespace Code
 
 		setWidget(mInputDialog);
 		
-		connect(mInputDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));
-		connect(mInputDialog, SIGNAL(doubleValueChanged(double)), this, SLOT(doubleValueChanged(double)));
-		connect(mInputDialog, SIGNAL(intValueChanged(int)), this, SLOT(intValueChanged(int)));
-		connect(mInputDialog, SIGNAL(textValueChanged(const QString &)), this, SLOT(textValueChanged(const QString &)));
+        connect(mInputDialog, &QInputDialog::finished, this, &InputDialog::finished);
+        connect(mInputDialog, &QInputDialog::doubleValueChanged, this, &InputDialog::doubleValueChanged);
+        connect(mInputDialog, &QInputDialog::intValueChanged, this, &InputDialog::intValueChanged);
+        connect(mInputDialog, &QInputDialog::textValueChanged, this, &InputDialog::textValueChanged);
 	}
 	
 	InputDialog::~InputDialog()

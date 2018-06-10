@@ -41,7 +41,7 @@ namespace Code
 		mMediaPlayer->setVideoOutput(mVideoWidget);
 		mVideoWidget->setVisible(false);
 		
-		connect(mMediaPlayer, SIGNAL(videoAvailableChanged(bool)), this, SLOT(videoAvailableChanged(bool)));
+        connect(mMediaPlayer, &QMediaPlayer::videoAvailableChanged, this, &MediaPlaylist::videoAvailableChanged);
 	}
 	
 	MediaPlaylist::~MediaPlaylist()

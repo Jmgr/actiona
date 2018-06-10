@@ -92,8 +92,8 @@ namespace ActionTools
 
 		addEditor(mProcedureComboBox);
 
-		connect(mActionEdit->codeLineEdit(), SIGNAL(textChanged(const QString &)), this, SLOT(textChanged(const QString &)));
-		connect(mActionEdit->codeLineEdit(), SIGNAL(codeChanged(bool)), this, SLOT(codeChanged(bool)));
+        connect(mActionEdit->codeLineEdit(), &CodeLineEdit::textChanged, this, &IfActionParameterDefinition::textChanged);
+        connect(mActionEdit->codeLineEdit(), &CodeLineEdit::codeChanged, this, &IfActionParameterDefinition::codeChanged);
 	}
 
 	void IfActionParameterDefinition::load(const ActionInstance *actionInstance)

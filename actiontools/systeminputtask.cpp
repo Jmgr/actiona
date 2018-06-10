@@ -224,7 +224,7 @@ namespace ActionTools
 #endif
 
 #ifdef Q_OS_LINUX
-			connect(mProcessRepliesTimer, SIGNAL(timeout()), this, SLOT(processReplies()));
+            connect(mProcessRepliesTimer, &QTimer::timeout, this, &Task::processReplies);
 
 			start();
 #endif

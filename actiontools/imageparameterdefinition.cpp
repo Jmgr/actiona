@@ -39,7 +39,7 @@ namespace ActionTools
         mParent = parent;
 
         ScreenshotPushButton *screenshotPushButton = new ScreenshotPushButton(parent);
-        connect(screenshotPushButton, SIGNAL(clicked()), this, SLOT(onCaptureClicked()));
+        connect(screenshotPushButton, &ScreenshotPushButton::clicked, this, &ImageParameterDefinition::onCaptureClicked);
 
         addEditor(screenshotPushButton);
     }

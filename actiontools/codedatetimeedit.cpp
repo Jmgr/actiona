@@ -36,7 +36,7 @@ namespace ActionTools
 
 		setCalendarPopup(true);
 
-		connect(codeLineEdit, SIGNAL(codeChanged(bool)), this, SLOT(codeChanged(bool)));
+        connect(codeLineEdit, &CodeLineEdit::codeChanged, this, &CodeDateTimeEdit::codeChanged);
 
 		addActions(codeLineEdit->actions());
 	}

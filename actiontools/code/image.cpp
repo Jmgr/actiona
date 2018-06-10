@@ -166,7 +166,7 @@ namespace Code
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mFindSubImageSearchForOne(false)
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+        connect(mOpenCVAlgorithms, &ActionTools::OpenCVAlgorithms::finished, this, &Image::findSubImageAsyncFinished);
 	}
 	
 	Image::Image(const Image &other)
@@ -175,7 +175,7 @@ namespace Code
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mFindSubImageSearchForOne(false)
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+        connect(mOpenCVAlgorithms, &ActionTools::OpenCVAlgorithms::finished, this, &Image::findSubImageAsyncFinished);
 	}
 	
 	Image::Image(const QImage &image)
@@ -184,7 +184,7 @@ namespace Code
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mFindSubImageSearchForOne(false)
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+        connect(mOpenCVAlgorithms, &ActionTools::OpenCVAlgorithms::finished, this, &Image::findSubImageAsyncFinished);
 	}
 
 	Image::Image(const QString &filename)
@@ -193,7 +193,7 @@ namespace Code
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mFindSubImageSearchForOne(false)
 	{
-        connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+        connect(mOpenCVAlgorithms, &ActionTools::OpenCVAlgorithms::finished, this, &Image::findSubImageAsyncFinished);
     }
 
 	Image &Image::operator=(Image other)

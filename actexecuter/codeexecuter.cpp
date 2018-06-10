@@ -47,9 +47,9 @@ CodeExecuter::CodeExecuter(QObject *parent) :
 	mScriptEngineDebugger(new QScriptEngineDebugger(this)),
 	mDebuggerWindow(mScriptEngineDebugger->standardWindow())
 {
-	connect(mScriptEngineDebugger, SIGNAL(evaluationResumed()), this, SLOT(onEvaluationResumed()));
-	connect(mScriptEngineDebugger, SIGNAL(evaluationSuspended()), this, SLOT(onEvaluationPaused()));
-	connect(mScriptAgent, SIGNAL(executionStopped()), this, SLOT(stopExecution()));
+    connect(mScriptEngineDebugger, &QScriptEngineDebugger::evaluationResumed, this, &CodeExecuter::onEvaluationResumed);
+    connect(mScriptEngineDebugger, &QScriptEngineDebugger::evaluationSuspended, this, &CodeExecuter::onEvaluationPaused);
+    connect(mScriptAgent, &LibExecuter::ScriptAgent::executionStopped, this, &CodeExecuter::stopExecution);
 
     for(QString extension: mScriptEngine->availableExtensions())
 		mScriptEngine->importExtension(extension);
