@@ -61,11 +61,11 @@
 #include <libudev.h>
 #endif // QT_NO_UDEV
 
-#include <math.h>
-#include <sys/ioctl.h>
-#include <sys/types.h>
-#include <sys/socket.h>
+#include <cmath>
 #include <linux/wireless.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 QT_BEGIN_NAMESPACE

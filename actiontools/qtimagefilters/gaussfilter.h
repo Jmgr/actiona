@@ -47,8 +47,8 @@
 #ifndef GAUSSBLURFILTER_H
 #define GAUSSBLURFILTER_H
 
-#include <math.h>
 #include "convolutionfilter.h"
+#include <cmath>
 
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795

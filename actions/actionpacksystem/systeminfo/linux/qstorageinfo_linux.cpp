@@ -46,17 +46,16 @@
 #include <QtCore/qmetaobject.h>
 #include <QtCore/qsocketnotifier.h>
 
-#include <errno.h>
-#include <mntent.h>
+#include <cerrno>
 #include <fcntl.h>
 #include <linux/fs.h>
+#include <mntent.h>
+#include <paths.h>
 #include <sys/inotify.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <sys/statfs.h>
 #include <unistd.h>
-#include <paths.h>
-#include <mntent.h>
 
 #if !defined(QT_NO_UDEV)
 #include "qudevwrapper_p.h"

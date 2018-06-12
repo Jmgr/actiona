@@ -27,12 +27,12 @@
 #include <QDir>
 
 #ifdef Q_OS_LINUX
+#include <QX11Info>
 #include <X11/Xlib.h>
-#include <signal.h>
+#include <cerrno>
+#include <csignal>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <errno.h>
-#include <QX11Info>
 #endif
 
 #ifdef Q_OS_WIN
