@@ -27,7 +27,7 @@ namespace Code
 {
     QScriptValue MailMessage::constructor(QScriptContext *context, QScriptEngine *engine)
     {
-        MailMessage *mailMessage = new MailMessage;
+        auto *mailMessage = new MailMessage;
 
         QScriptValueIterator it(context->argument(0));
 
@@ -79,7 +79,7 @@ namespace Code
 
     QScriptValue MailMessage::addAttachment(const QString &filename, const QScriptValue &attachment)
     {
-        if(MailAttachment *mailAttachment = qobject_cast<MailAttachment*>(attachment.toQObject()))
+        if(auto *mailAttachment = qobject_cast<MailAttachment*>(attachment.toQObject()))
             mMessage.addAttachment(filename, mailAttachment->attachment());
         else
 			throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type: not a MailAttachment"));

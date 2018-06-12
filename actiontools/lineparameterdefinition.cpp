@@ -37,7 +37,7 @@ namespace ActionTools
 	
     void LineParameterDefinition::actionUpdate(Script *script)
 	{
-		ActionTools::LineComboBox *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mComboBox);
+		auto *lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mComboBox);
 		
         lineComboBox->setup(script->labels());
 	}

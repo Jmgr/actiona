@@ -30,7 +30,7 @@ namespace Code
 {
 	QScriptValue Clipboard::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Clipboard *clipboard = new Clipboard;
+		auto *clipboard = new Clipboard;
 
 		if(context->argumentCount() > 0)
 		{
@@ -84,7 +84,7 @@ namespace Code
 		QClipboard *clipboard = QApplication::clipboard();
 
 		QObject *object = data.toQObject();
-		if(Code::Image *image = qobject_cast<Code::Image*>(object))
+		if(auto *image = qobject_cast<Code::Image*>(object))
 			clipboard->setImage(image->image(), mMode);
 		else
 			clipboard->setImage(data.toVariant().value<QImage>(), mMode);

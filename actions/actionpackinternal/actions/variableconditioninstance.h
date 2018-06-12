@@ -53,7 +53,7 @@ namespace Actions
 			bool ok = true;
 
 			QString variableName = evaluateVariable(ok, QStringLiteral("variable"));
-			Comparison comparison = evaluateListElement<Comparison>(ok, comparisons, QStringLiteral("comparison"));
+			auto comparison = evaluateListElement<Comparison>(ok, comparisons, QStringLiteral("comparison"));
 			QScriptValue value = evaluateValue(ok, QStringLiteral("value"));
 			ActionTools::IfActionValue ifEqual = evaluateIfAction(ok, QStringLiteral("ifEqual"));
 			ActionTools::IfActionValue ifDifferent = evaluateIfAction(ok, QStringLiteral("ifDifferent"));
@@ -80,8 +80,8 @@ namespace Actions
                 {
                     QObject *variableObject = variableValue.toQObject();
 
-                    Code::Rect *rectObject = qobject_cast<Code::Rect*>(variableObject);
-                    Code::Point *pointObject = qobject_cast<Code::Point*>(value.toQObject());
+                    auto *rectObject = qobject_cast<Code::Rect*>(variableObject);
+                    auto *pointObject = qobject_cast<Code::Point*>(value.toQObject());
                     if(rectObject && pointObject)
                     {
                         result = rectObject->rect().contains(pointObject->point());

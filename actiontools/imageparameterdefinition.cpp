@@ -38,7 +38,7 @@ namespace ActionTools
         mScript = script;// Is this really safe?
         mParent = parent;
 
-        ScreenshotPushButton *screenshotPushButton = new ScreenshotPushButton(parent);
+        auto *screenshotPushButton = new ScreenshotPushButton(parent);
         connect(screenshotPushButton, &ScreenshotPushButton::clicked, this, &ImageParameterDefinition::onCaptureClicked);
 
         addEditor(screenshotPushButton);

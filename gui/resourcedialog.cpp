@@ -203,7 +203,7 @@ void ResourceDialog::addResource(const QString &name, const QByteArray &data, Ac
     int row = ui->resourcesTableWidget->rowCount();
     ui->resourcesTableWidget->insertRow(row);
 
-    QTableWidgetItem *item = new QTableWidgetItem(name);
+    auto *item = new QTableWidgetItem(name);
     item->setData(Qt::UserRole, data);
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable);
     ui->resourcesTableWidget->setItem(row, 0, item);

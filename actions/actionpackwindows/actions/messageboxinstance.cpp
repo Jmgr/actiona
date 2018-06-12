@@ -64,8 +64,8 @@ namespace Actions
 		QString message = evaluateString(ok, QStringLiteral("message"));
 		QString title = evaluateString(ok, QStringLiteral("title"));
 		Icon icon = evaluateListElement<Icon>(ok, icons, QStringLiteral("icon"));
-		TextMode textMode = evaluateListElement<TextMode>(ok, textmodes, QStringLiteral("textMode"));
-		Buttons button = evaluateListElement<Buttons>(ok, buttons, QStringLiteral("type"));
+		auto textMode = evaluateListElement<TextMode>(ok, textmodes, QStringLiteral("textMode"));
+		auto button = evaluateListElement<Buttons>(ok, buttons, QStringLiteral("type"));
 		QImage customIcon = evaluateImage(ok, QStringLiteral("customIcon"));
 		QImage windowIcon = evaluateImage(ok, QStringLiteral("windowIcon"));
 		mIfYes = evaluateIfAction(ok, QStringLiteral("ifYes"));

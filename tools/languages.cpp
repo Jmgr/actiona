@@ -64,7 +64,7 @@ namespace Tools
 
     void Languages::installTranslator(const QString &componentName, const QString &locale)
     {
-        QTranslator *translator = new QTranslator(QCoreApplication::instance());
+        auto *translator = new QTranslator(QCoreApplication::instance());
 		if(!translator->load(QStringLiteral("%1/locale/%2_%3").arg(QCoreApplication::applicationDirPath()).arg(componentName).arg(locale)))
         {
 			if(!translator->load(QStringLiteral("%1/locale/%2_%3").arg(QDir::currentPath()).arg(componentName).arg(locale)))

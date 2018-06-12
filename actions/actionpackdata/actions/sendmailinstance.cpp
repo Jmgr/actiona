@@ -181,9 +181,9 @@ namespace Actions
 
             if(QObject *scriptObject = attachmentData.toQObject())
             {
-                if(Code::RawData *codeRawData = qobject_cast<Code::RawData*>(scriptObject))
+                if(auto *codeRawData = qobject_cast<Code::RawData*>(scriptObject))
                     attachmentDataByteArray = codeRawData->byteArray();
-                else if(Code::Image *codeImage = qobject_cast<Code::Image*>(scriptObject))
+                else if(auto *codeImage = qobject_cast<Code::Image*>(scriptObject))
                 {
                     QImage image = codeImage->image();
                     QString format;

@@ -55,7 +55,7 @@ namespace Code
 				const QScriptValue &argument = context->argument(0);
 
 				QObject *object = argument.toQObject();
-				if(Image *codeImage = qobject_cast<Image*>(object))
+				if(auto *codeImage = qobject_cast<Image*>(object))
 					image = new Image(*codeImage);
 				else if(argument.isString())
 				{
@@ -90,7 +90,7 @@ namespace Code
 		{
             WId windowId;
 
-			if(Window *window = qobject_cast<Window *>(context->argument(0).toQObject()))
+			if(auto *window = qobject_cast<Window *>(context->argument(0).toQObject()))
 				windowId = window->windowHandle().value();
 			else
 			{
@@ -236,7 +236,7 @@ namespace Code
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(Image *otherImage = qobject_cast<Image*>(object))
+		if(auto *otherImage = qobject_cast<Image*>(object))
 			return (otherImage == this || otherImage->mImage == mImage);
 			
 		return false;
@@ -250,7 +250,7 @@ namespace Code
 	QScriptValue Image::setData(const QScriptValue &data)
 	{
 		QObject *object = data.toQObject();
-		if(RawData *codeRawData = qobject_cast<RawData*>(object))
+		if(auto *codeRawData = qobject_cast<RawData*>(object))
 		{
 			if(!mImage.loadFromData(codeRawData->byteArray()))
 			{
@@ -318,7 +318,7 @@ namespace Code
 			if(optionIndex == -1)
 				continue;
 			
-			QtImageFilter::FilterOption option = static_cast<QtImageFilter::FilterOption>(optionIndex + 1);
+			auto option = static_cast<QtImageFilter::FilterOption>(optionIndex + 1);
 			QVariant value;
 
 			switch(option)
@@ -362,7 +362,7 @@ namespace Code
 		if(context()->argumentCount() == 3)
 		{
 			QObject *object = color.toQObject();
-			if(Color *codeColor = qobject_cast<Color*>(object))
+			if(auto *codeColor = qobject_cast<Color*>(object))
 				mImage.setPixel(x, y, codeColor->color().rgb());
 			else
 				mImage.setPixel(x, y, QColor(color.toString()).rgb());
@@ -459,7 +459,7 @@ namespace Code
 
 	QScriptValue Image::findSubImage(const QScriptValue &otherImage, const QScriptValue &options) const
 	{
-		if(Image *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
+		if(auto *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
 		{
 			ActionTools::MatchingPointList matchingPointList;
 
@@ -501,7 +501,7 @@ namespace Code
 
 	QScriptValue Image::findSubImages(const QScriptValue &otherImage, const QScriptValue &options) const
 	{
-		if(Image *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
+		if(auto *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
 		{
 			ActionTools::MatchingPointList matchingPointList;
 
@@ -560,7 +560,7 @@ namespace Code
 			return thisObject();
 		}
 
-		if(Image *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
+		if(auto *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
 		{
 			int confidenceMinimum;
 			int downPyramidCount;
@@ -596,7 +596,7 @@ namespace Code
 			return thisObject();
 		}
 
-		if(Image *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
+		if(auto *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
 		{
 			int confidenceMinimum;
 			int downPyramidCount;

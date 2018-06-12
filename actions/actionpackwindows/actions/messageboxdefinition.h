@@ -88,7 +88,7 @@ namespace Actions
 			textMode->setDefaultValue(MessageBoxInstance::textmodes.second.at(MessageBoxInstance::AutoTextMode));
 			addElement(textMode, 1);
 
-			ActionTools::GroupDefinition *yesNoGroup = new ActionTools::GroupDefinition(this);
+			auto *yesNoGroup = new ActionTools::GroupDefinition(this);
 			yesNoGroup->setMasterList(type);
 			yesNoGroup->setMasterValues(QStringList() << MessageBoxInstance::buttons.first.at(MessageBoxInstance::YesNoButtons));
 

@@ -52,7 +52,7 @@ namespace Actions
 		bool ok = true;
 
 		mKey = evaluateString(ok, QStringLiteral("key"), QStringLiteral("key"));
-		Action action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"));
+		auto action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"));
 		mAmount = evaluateInteger(ok, QStringLiteral("amount"));
 		mCtrl = evaluateBoolean(ok, QStringLiteral("ctrl"));
 		mAlt = evaluateBoolean(ok, QStringLiteral("alt"));

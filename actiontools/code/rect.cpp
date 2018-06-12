@@ -304,7 +304,7 @@ namespace Code
 		case 1:
 			{
 				QObject *object = point.toQObject();
-				if(Point *codePoint = qobject_cast<Point*>(object))
+				if(auto *codePoint = qobject_cast<Point*>(object))
 					return mRect.contains(codePoint->point());
 				else if(Rect *codeRect = qobject_cast<Rect*>(object))
 					return (codeRect == this || mRect.contains(codeRect->mRect));

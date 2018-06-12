@@ -221,7 +221,7 @@ namespace ActionTools
     {
         if(eventType == "xcb_generic_event_t")
         {
-            xcb_generic_event_t* event = static_cast<xcb_generic_event_t *>(message);
+            auto* event = static_cast<xcb_generic_event_t *>(message);
 
             switch(event->response_type)
             {
@@ -239,7 +239,7 @@ namespace ActionTools
                 return true;
             case XCB_KEY_PRESS:
             {
-                xcb_key_press_event_t *keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
+                auto *keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
                 if(keyPressEvent->detail == 0x09)//Escape
                 {
                     close();

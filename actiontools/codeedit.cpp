@@ -113,7 +113,7 @@ namespace ActionTools
 		{
 			mCompletionModelSet = true;
 			
-			QStandardItemModel *standardItemCompletionModel = qobject_cast<QStandardItemModel *>(completionModel);
+			auto *standardItemCompletionModel = qobject_cast<QStandardItemModel *>(completionModel);
 			if(!standardItemCompletionModel)
 				return;
 			
@@ -483,7 +483,7 @@ namespace ActionTools
 		//Block the backtab key from changing the focus, since we use it to unindent
 		if (event->type() == QEvent::KeyPress)
 		{
-			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+			auto *keyEvent = static_cast<QKeyEvent *>(event);
 			if (keyEvent->key() == Qt::Key_Backtab)
 			{
 				keyPressEvent(keyEvent);

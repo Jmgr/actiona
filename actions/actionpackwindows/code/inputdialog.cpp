@@ -27,7 +27,7 @@ namespace Code
 {
 	QScriptValue InputDialog::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		InputDialog *inputDialog = new InputDialog;
+		auto *inputDialog = new InputDialog;
 		inputDialog->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));

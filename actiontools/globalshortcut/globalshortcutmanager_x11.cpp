@@ -79,7 +79,7 @@ namespace ActionTools
 		bool eventFilter(QObject* o, QEvent* e)
 		{
 			if(e->type() == QEvent::KeyPress) {
-				QKeyEvent* k = static_cast<QKeyEvent*>(e);
+				auto* k = static_cast<QKeyEvent*>(e);
 				int qkey = k->key();
 				if (k->modifiers() & Qt::ShiftModifier)
 					qkey |= Qt::SHIFT;

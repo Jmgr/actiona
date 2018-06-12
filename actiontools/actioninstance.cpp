@@ -259,7 +259,7 @@ namespace ActionTools
         if(subParameter.isCode())
         {
             QScriptValue evaluationResult = evaluateCode(ok, subParameter);
-            if(Code::Image *codeImage = qobject_cast<Code::Image*>(evaluationResult.toQObject()))
+            if(auto *codeImage = qobject_cast<Code::Image*>(evaluationResult.toQObject()))
                 return codeImage->image();
 
             if(!evaluationResult.isString())
@@ -517,7 +517,7 @@ namespace ActionTools
         if(subParameter.isCode())
         {
             QScriptValue evaluationResult = evaluateCode(ok, subParameter);
-            if(Code::Point *codePoint = qobject_cast<Code::Point*>(evaluationResult.toQObject()))
+            if(auto *codePoint = qobject_cast<Code::Point*>(evaluationResult.toQObject()))
             {
                 QPointF point = QPointF(codePoint->point().x(), codePoint->point().y());
 
@@ -633,7 +633,7 @@ namespace ActionTools
 		if(subParameter.isCode())
 		{
 			QScriptValue evaluationResult = evaluateCode(ok, subParameter);
-			if(Code::Color *codeColor = qobject_cast<Code::Color*>(evaluationResult.toQObject()))
+			if(auto *codeColor = qobject_cast<Code::Color*>(evaluationResult.toQObject()))
 				return codeColor->color();
 
 			result = evaluationResult.toString();

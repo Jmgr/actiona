@@ -28,7 +28,7 @@ namespace Code
 {
 	QScriptValue ColorDialog::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		ColorDialog *colorDialog = new ColorDialog;
+		auto *colorDialog = new ColorDialog;
 		colorDialog->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
@@ -124,7 +124,7 @@ namespace Code
 		if(context->argumentCount() == 1)
 		{
 			QObject *object = color.toQObject();
-			if(Color *codeColor = qobject_cast<Color*>(object))
+			if(auto *codeColor = qobject_cast<Color*>(object))
 				mColorDialog->setCurrentColor(codeColor->color());
 			else
 				mColorDialog->setCurrentColor(QColor(color.toString()));

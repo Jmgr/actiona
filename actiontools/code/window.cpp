@@ -41,7 +41,7 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Window *codeWindow = qobject_cast<Window*>(object))
+				if(auto *codeWindow = qobject_cast<Window*>(object))
 					window = new Window(*codeWindow);
 				else
 					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
@@ -70,7 +70,7 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Window *window = qobject_cast<Window*>(object))
+				if(auto *window = qobject_cast<Window*>(object))
 					return window->windowHandle();
 				else
 					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
@@ -114,7 +114,7 @@ namespace Code
 				processId = it.value().toInt32();
 			else if(it.name() == QLatin1String("process"))
 			{
-				if(ProcessHandle *processHandleParameter = qobject_cast<ProcessHandle *>(it.value().toQObject()))
+				if(auto *processHandleParameter = qobject_cast<ProcessHandle *>(it.value().toQObject()))
 					processHandle = processHandleParameter;
 				else
 					throwError(context, engine, QStringLiteral("ProcessHandleError"), tr("Invalid process handle"));
@@ -246,7 +246,7 @@ namespace Code
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(Window *otherWindow = qobject_cast<Window*>(object))
+		if(auto *otherWindow = qobject_cast<Window*>(object))
 			return (otherWindow == this || otherWindow->mWindowHandle == mWindowHandle);
 			
 		return false;

@@ -159,7 +159,7 @@ namespace LibExecuter
 		QApplication::processEvents();//Call this to prevent UI freeze when calling print often
 
 		QScriptValue calleeData = context->callee().data();
-		Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
+		auto *executer = qobject_cast<Executer *>(calleeData.toQObject());
 		QString message;
 		ScriptAgent *agent = executer->scriptAgent();
 
@@ -247,7 +247,7 @@ namespace LibExecuter
         QApplication::processEvents();//Call this to prevent UI freeze when calling clear often
 
         QScriptValue calleeData = context->callee().data();
-        Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
+        auto *executer = qobject_cast<Executer *>(calleeData.toQObject());
 
         executer->consoleWidget()->clearExceptSeparators();
 
@@ -263,7 +263,7 @@ namespace LibExecuter
             return engine->undefinedValue();
 
         QScriptValue calleeData = context->callee().data();
-        Executer *executer = qobject_cast<Executer *>(calleeData.toQObject());
+        auto *executer = qobject_cast<Executer *>(calleeData.toQObject());
         ActionTools::ActionInstance *currentActionInstance = executer->currentActionInstance();
 
         if(currentActionInstance)

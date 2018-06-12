@@ -35,7 +35,7 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Point *codePoint = qobject_cast<Point*>(object))
+				if(auto *codePoint = qobject_cast<Point*>(object))
 					point = new Point(*codePoint);
 				else
 					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
@@ -67,7 +67,7 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Point *point = qobject_cast<Point*>(object))
+				if(auto *point = qobject_cast<Point*>(object))
 					return point->point();
 				else
 					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
@@ -157,7 +157,7 @@ namespace Code
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(Point *otherPoint = qobject_cast<Point*>(object))
+		if(auto *otherPoint = qobject_cast<Point*>(object))
 			return (otherPoint == this || otherPoint->mPoint == mPoint);
 			
 		return false;

@@ -78,7 +78,7 @@ namespace Code
 
 		if(mFileValue.isValid())
 		{
-			if(Code::File *file = qobject_cast<Code::File*>(mFileValue.toQObject()))
+			if(auto *file = qobject_cast<Code::File*>(mFileValue.toQObject()))
 				mFile = file->file();
 			else
 				mFile = new QFile(mFileValue.toString(), this);

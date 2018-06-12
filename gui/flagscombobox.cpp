@@ -97,7 +97,7 @@ void FlagsComboBox::addFlag(const QString &label, unsigned int flag, bool checke
 {
     Q_ASSERT(isPowerOfTwo(flag));
 
-    QStandardItem* item = new QStandardItem(label);
+    auto* item = new QStandardItem(label);
     item->setCheckState(checked ? Qt::Checked : Qt::Unchecked);
     item->setData(flag);
     item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);

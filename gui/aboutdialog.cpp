@@ -77,7 +77,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	mComboBoxes.append(ui->act2Donators);
 	mComboBoxes.append(ui->act2Art);
 
-	QTimer *timer = new QTimer(this);
+	auto *timer = new QTimer(this);
 	connect(timer, &QTimer::timeout, this, &AboutDialog::animate);
 	timer->start(1500);
 }

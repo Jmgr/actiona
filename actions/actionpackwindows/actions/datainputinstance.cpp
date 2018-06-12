@@ -57,7 +57,7 @@ namespace Actions
 
 		QString question = evaluateString(ok, QStringLiteral("question"));
 		mDataType = evaluateListElement<DataType>(ok, dataTypes, QStringLiteral("dataType"));
-		EditorType editorType = evaluateListElement<EditorType>(ok, editorTypes, QStringLiteral("editorType"));
+		auto editorType = evaluateListElement<EditorType>(ok, editorTypes, QStringLiteral("editorType"));
 		mVariable = evaluateVariable(ok, QStringLiteral("variable"));
 		QString windowTitle = evaluateString(ok, QStringLiteral("windowTitle"));
 		QImage windowIcon = evaluateImage(ok, QStringLiteral("windowIcon"));

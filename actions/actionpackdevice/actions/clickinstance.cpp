@@ -38,8 +38,8 @@ namespace Actions
 		bool ok = true;
         bool isPositionEmpty = false;
 	
-		Action action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"), QStringLiteral("value"));
-		MouseDevice::Button button = evaluateListElement<MouseDevice::Button>(ok, buttons, QStringLiteral("button"), QStringLiteral("value"));
+		auto action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"), QStringLiteral("value"));
+		auto button = evaluateListElement<MouseDevice::Button>(ok, buttons, QStringLiteral("button"), QStringLiteral("value"));
 		QPoint position = evaluatePoint(ok, QStringLiteral("position"), QStringLiteral("value"), &isPositionEmpty);
 		QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
 		int amount = evaluateInteger(ok, QStringLiteral("amount"));

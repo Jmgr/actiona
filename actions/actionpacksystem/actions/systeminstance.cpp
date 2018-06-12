@@ -38,7 +38,7 @@ namespace Actions
 	{
 		bool ok = true;
 
-		Operation operation = evaluateListElement<Operation>(ok, operations, QStringLiteral("operation"));
+		auto operation = evaluateListElement<Operation>(ok, operations, QStringLiteral("operation"));
 		bool force = evaluateBoolean(ok, QStringLiteral("force"));
 
 		if(!ok)

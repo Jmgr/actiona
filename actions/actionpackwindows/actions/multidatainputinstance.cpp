@@ -83,7 +83,7 @@ namespace Actions
 
         mDialog->setWindowFlags(mDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
 
-		QVBoxLayout *layout = new QVBoxLayout(mDialog);
+		auto *layout = new QVBoxLayout(mDialog);
 
 		mDialog->setLayout(layout);
 		mDialog->setWindowTitle(windowTitle);
@@ -270,7 +270,7 @@ namespace Actions
             connect(mButtonGroup, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), this, &MultiDataInputInstance::checkboxChecked);
 
 		int itemCount = mItems.size();
-		QGridLayout *gridLayout = new QGridLayout;
+		auto *gridLayout = new QGridLayout;
 
 		for(int i = 0, row = 0, col = 0; i < itemCount; ++i)
 		{

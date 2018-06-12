@@ -28,7 +28,7 @@ namespace Code
 {
 	QScriptValue IniFile::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		IniFile *iniFile = new IniFile;
+		auto *iniFile = new IniFile;
 
 		QScriptValueIterator it(context->argument(0));
 

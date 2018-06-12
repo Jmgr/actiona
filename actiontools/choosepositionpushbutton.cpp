@@ -58,7 +58,7 @@ namespace ActionTools
 #ifdef Q_OS_LINUX
         for(QWidget *widget: QApplication::topLevelWidgets())
 		{
-			if(QMainWindow *mainWindow = qobject_cast<QMainWindow*>(widget))
+			if(auto *mainWindow = qobject_cast<QMainWindow*>(widget))
 			{
 				mMainWindow = mainWindow;
 				break;
@@ -165,7 +165,7 @@ namespace ActionTools
     {
         if(eventType == "xcb_generic_event_t")
         {
-            xcb_generic_event_t* event = static_cast<xcb_generic_event_t *>(message);
+            auto* event = static_cast<xcb_generic_event_t *>(message);
 
             switch(event->response_type)
             {

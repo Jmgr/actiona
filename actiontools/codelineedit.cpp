@@ -356,7 +356,7 @@ namespace ActionTools
 
     void CodeLineEdit::showVariableMenuAsPopup()
     {
-        QMenu *menu = new QMenu;
+        auto *menu = new QMenu;
 
         addVariablesAndResourcesMenus(menu);
 

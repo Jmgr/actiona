@@ -27,7 +27,7 @@ namespace Code
 {
 	QScriptValue TcpServer::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		TcpServer *tcpServer = new TcpServer;
+		auto *tcpServer = new TcpServer;
 
 		QScriptValueIterator it(context->argument(0));
 

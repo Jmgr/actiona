@@ -28,7 +28,7 @@ namespace Code
 {
 	QScriptValue MessageBox::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-        MessageBox *messageBox = new MessageBox;
+        auto *messageBox = new MessageBox;
 		messageBox->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
@@ -119,7 +119,7 @@ namespace Code
 		}
 
 		QObject *object = image.toQObject();
-		if(Image *otherImage = qobject_cast<Image*>(object))
+		if(auto *otherImage = qobject_cast<Image*>(object))
 		{
 			mMessageBox->setIconPixmap(QPixmap::fromImage(otherImage->image()));
 		}

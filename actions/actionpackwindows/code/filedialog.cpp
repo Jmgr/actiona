@@ -28,7 +28,7 @@ namespace Code
 {
 	QScriptValue FileDialog::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		FileDialog *fileDialog = new FileDialog;
+		auto *fileDialog = new FileDialog;
 		fileDialog->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));

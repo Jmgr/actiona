@@ -46,7 +46,7 @@ namespace Actions
 		bool ok = true;
 
 		QString title = evaluateString(ok, QStringLiteral("title"));
-		Action action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"));
+		auto action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"));
 		bool useBorders = evaluateBoolean(ok, QStringLiteral("useBorders"));
 
 		if(!ok)

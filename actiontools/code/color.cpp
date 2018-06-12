@@ -47,7 +47,7 @@ namespace Code
 				else
 				{
 					QObject *object = context->argument(0).toQObject();
-					if(Color *codeColor = qobject_cast<Color*>(object))
+					if(auto *codeColor = qobject_cast<Color*>(object))
 						color = new Color(*codeColor);
 					else
 						throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
@@ -161,7 +161,7 @@ namespace Code
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(Color *otherColor = qobject_cast<Color*>(object))
+		if(auto *otherColor = qobject_cast<Color*>(object))
 			return (otherColor == this || otherColor->mColor == mColor);
 			
 		return false;

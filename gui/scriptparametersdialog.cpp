@@ -81,7 +81,7 @@ QMenu *ScriptParametersDialog::createVariablesMenu(QWidget *parent) const
     for(int row = 0; row < rowCount; ++row)
     {
         QWidget *nameWidget = ui->parameterTable->cellWidget(row, 0);
-        QLineEdit *nameLineEdit = qobject_cast<QLineEdit *>(nameWidget);
+        auto *nameLineEdit = qobject_cast<QLineEdit *>(nameWidget);
         QWidget *valueWidget = ui->parameterTable->cellWidget(row, 1);
         if(!nameLineEdit || !valueWidget)
             continue;
@@ -89,7 +89,7 @@ QMenu *ScriptParametersDialog::createVariablesMenu(QWidget *parent) const
         if(!nameLineEdit->text().isEmpty())
             variableSet.insert(nameLineEdit->text());
 
-        if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(valueWidget))
+        if(auto *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(valueWidget))
             variableSet.unite(codeEditor->findVariables());
     }
 
@@ -99,7 +99,7 @@ QMenu *ScriptParametersDialog::createVariablesMenu(QWidget *parent) const
     if(variableList.isEmpty())
         return nullptr;
 
-    QMenu *back = new QMenu(parent);
+    auto *back = new QMenu(parent);
 
     for(const QString &variable: variableList)
         back->addAction(variable);
@@ -116,10 +116,10 @@ void ScriptParametersDialog::postInit()
 
 		if(mCurrentLine != -1)
 		{
-			ActionTools::CodeLineEdit *valueLineEdit = qobject_cast<ActionTools::CodeLineEdit *>(widget);
+			auto *valueLineEdit = qobject_cast<ActionTools::CodeLineEdit *>(widget);
 			if(valueLineEdit->text().contains(QLatin1Char('\n')))//Multiline : open the editor
 			{
-				if(ActionTools::AbstractCodeEditor *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(widget))
+				if(auto *codeEditor = dynamic_cast<ActionTools::AbstractCodeEditor *>(widget))
 					codeEditor->openEditor(mCurrentLine, mCurrentColumn);
 			}
 		}
@@ -128,7 +128,7 @@ void ScriptParametersDialog::postInit()
 
 void ScriptParametersDialog::removeParameter()
 {
-	QPushButton *removeParameterPushButton = qobject_cast<QPushButton *>(sender());
+	auto *removeParameterPushButton = qobject_cast<QPushButton *>(sender());
 	if(!removeParameterPushButton)
 		return;
 
@@ -157,7 +157,7 @@ void ScriptParametersDialog::accept()
 		if(!widget)
 			continue;
 
-		QLineEdit *nameLineEdit = qobject_cast<QLineEdit *>(widget);
+		auto *nameLineEdit = qobject_cast<QLineEdit *>(widget);
 
 		widget = ui->parameterTable->cellWidget(row, 1);
 		if(!widget)
@@ -183,7 +183,7 @@ void ScriptParametersDialog::accept()
 		{
 		case ActionTools::ScriptParameter::Text:
 			{
-				ActionTools::CodeLineEdit *valueWidget = qobject_cast<ActionTools::CodeLineEdit *>(widget);
+				auto *valueWidget = qobject_cast<ActionTools::CodeLineEdit *>(widget);
 
 				isCode = valueWidget->isCode();
 				value = valueWidget->text();
@@ -191,7 +191,7 @@ void ScriptParametersDialog::accept()
 			break;
 		case ActionTools::ScriptParameter::Number:
 			{
-				ActionTools::CodeSpinBox *valueWidget = qobject_cast<ActionTools::CodeSpinBox *>(widget);
+				auto *valueWidget = qobject_cast<ActionTools::CodeSpinBox *>(widget);
 
 				isCode = valueWidget->isCode();
 				value = valueWidget->text();
@@ -199,7 +199,7 @@ void ScriptParametersDialog::accept()
 			break;
 		case ActionTools::ScriptParameter::Window:
 			{
-				ActionTools::WindowEdit *valueWidget = qobject_cast<ActionTools::WindowEdit *>(widget);
+				auto *valueWidget = qobject_cast<ActionTools::WindowEdit *>(widget);
 
 				isCode = valueWidget->isCode();
 				value = valueWidget->text();
@@ -207,7 +207,7 @@ void ScriptParametersDialog::accept()
 			break;
 		case ActionTools::ScriptParameter::File:
 			{
-				ActionTools::FileEdit *valueWidget = qobject_cast<ActionTools::FileEdit *>(widget);
+				auto *valueWidget = qobject_cast<ActionTools::FileEdit *>(widget);
 
 				isCode = valueWidget->isCode();
 				value = valueWidget->text();
@@ -215,7 +215,7 @@ void ScriptParametersDialog::accept()
 			break;
 		case ActionTools::ScriptParameter::Line:
 			{
-				ActionTools::LineComboBox *valueWidget = qobject_cast<ActionTools::LineComboBox *>(widget);
+				auto *valueWidget = qobject_cast<ActionTools::LineComboBox *>(widget);
 
 				isCode = valueWidget->isCode();
 				value = valueWidget->codeLineEdit()->text();
@@ -267,7 +267,7 @@ void ScriptParametersDialog::addParameter(const QString &name, const QString &va
 
 	ui->parameterTable->insertRow(rowCount);
 
-	QLineEdit *nameLineEdit = new QLineEdit(this);
+	auto *nameLineEdit = new QLineEdit(this);
 	nameLineEdit->setText(name);
 
 	ui->parameterTable->setCellWidget(rowCount, 0, nameLineEdit);
@@ -275,7 +275,7 @@ void ScriptParametersDialog::addParameter(const QString &name, const QString &va
 	mParameterTypes.append(parameterType);
 	setupValueParameter(rowCount, parameterType, value, code);
 
-	QComboBox *typeComboBox = new QComboBox(this);
+	auto *typeComboBox = new QComboBox(this);
 	typeComboBox->addItems(QStringList() << tr("Text") << tr("Number") << tr("Window title") << tr("File") << tr("Line"));
 	typeComboBox->setCurrentIndex(parameterType);
 	typeComboBox->installEventFilter(this);
@@ -304,7 +304,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 		break;
 	case ActionTools::ScriptParameter::Number:
 		{
-			ActionTools::CodeSpinBox *valueWidget = new ActionTools::CodeSpinBox(this);
+			auto *valueWidget = new ActionTools::CodeSpinBox(this);
 			valueWidget->setRange(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
@@ -315,7 +315,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 		break;
 	case ActionTools::ScriptParameter::Window:
 		{
-			ActionTools::WindowEdit *valueWidget = new ActionTools::WindowEdit(this);
+			auto *valueWidget = new ActionTools::WindowEdit(this);
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
             valueWidget->setParameterContainer(this);
@@ -326,7 +326,7 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 		break;
 	case ActionTools::ScriptParameter::File:
 		{
-			ActionTools::FileEdit *valueWidget = new ActionTools::FileEdit(this);
+			auto *valueWidget = new ActionTools::FileEdit(this);
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
             valueWidget->setParameterContainer(this);

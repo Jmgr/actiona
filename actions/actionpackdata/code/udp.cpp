@@ -88,7 +88,7 @@ namespace Code
 	QScriptValue Udp::write(const QScriptValue &data)
 	{
 		QObject *object = data.toQObject();
-		if(RawData *rawData = qobject_cast<RawData*>(object))
+		if(auto *rawData = qobject_cast<RawData*>(object))
 		{
 			if(mUdpSocket->write(rawData->byteArray()) == -1)
 				throwError(QStringLiteral("WriteError"), tr("Write failed"));

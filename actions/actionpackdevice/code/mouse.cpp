@@ -27,7 +27,7 @@ namespace Code
 {
 	QScriptValue Mouse::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Mouse *mouse = new Mouse;
+		auto *mouse = new Mouse;
 
 		QScriptValueIterator it(context->argument(0));
 
