@@ -516,7 +516,7 @@ void QxtSmtpPrivate::sendNext()
         return;
     }
     const QxtMailMessage& msg = pending.first().second;
-    rcptNumber = rcptAck = mailAck = 0;
+    rcptNumber = rcptAck = mailAck = false;
     recipients = msg.recipients(QxtMailMessage::To) +
                  msg.recipients(QxtMailMessage::Cc) +
                  msg.recipients(QxtMailMessage::Bcc);

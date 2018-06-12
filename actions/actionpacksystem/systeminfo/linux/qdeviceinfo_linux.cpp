@@ -93,8 +93,8 @@ QDeviceInfoPrivate::QDeviceInfoPrivate(QDeviceInfo *parent)
 #if !defined(QT_NO_OFONO)
         , ofonoWrapper(0)
 #endif // QT_NO_OFONO
-    ,connectedBtPower(0)
-    ,btPowered(0)
+    ,connectedBtPower(false)
+    ,btPowered(false)
 {
 }
 
