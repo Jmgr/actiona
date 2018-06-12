@@ -468,7 +468,7 @@ namespace LibExecuter
 				QScriptValue result = mScriptEngine->evaluate(scriptParameter.value());
 				if(result.isError())
 				{
-					mConsoleWidget->addScriptParameterLine(tr("Error while evaluating parameter \"%1\", error message: \"%2\"")
+					mConsoleWidget->addScriptParameterLine(tr(R"(Error while evaluating parameter "%1", error message: "%2")")
 														   .arg(scriptParameter.name())
 														   .arg(result.toString()),
 														   parameterIndex,

@@ -162,7 +162,7 @@ void QxtMailMessage::setExtraHeaders(const QHash<QString, QString>& a)
 {
     QHash<QString, QString>& headers = qxt_d->extraHeaders;
     headers.clear();
-    foreach(const QString& key, a.keys())
+    for(const QString& key: a.keys())
     {
         headers[key.toLower()] = a[key];
     }
@@ -214,7 +214,7 @@ QByteArray qxt_fold_mime_header(const QString& key, const QString& value, QTextC
 	if (!value.contains(QStringLiteral("=?")) && latin1->canEncode(value))
     {
         bool firstWord = true;
-        foreach(const QByteArray& word, value.toLatin1().split(' '))
+        for(const QByteArray& word: value.toLatin1().split(' '))
         {
             if (line.size() > 78)
             {
@@ -361,7 +361,7 @@ QByteArray QxtMailMessage::rfc2822() const
         }
     }
 
-    foreach(const QString& r, qxt_d->extraHeaders.keys())
+    for(const QString& r: qxt_d->extraHeaders.keys())
     {
 		if ((r.toLower() == QLatin1String("content-type") || r.toLower() == QLatin1String("content-transfer-encoding")) && attach.count())
         {
@@ -524,7 +524,7 @@ QByteArray QxtMailMessage::rfc2822() const
 
     if (attach.count())
     {
-        foreach(const QString& filename, attach.keys())
+        for(const QString& filename: attach.keys())
         {
             rv += "--" + qxt_d->boundary + "\r\n";
 			rv += qxt_fold_mime_header(QStringLiteral("Content-Disposition"), QDir(filename).dirName(), latin1, "attachment; filename=");

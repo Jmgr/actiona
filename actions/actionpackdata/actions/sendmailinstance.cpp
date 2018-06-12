@@ -161,7 +161,7 @@ namespace Actions
             if(extraHeaderParts.size() != 2)
             {
 				setCurrentParameter(QStringLiteral("extraHeaders"));
-                emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Failed to parse an extra header: \"%1\" has to be in the form \"name: value\"").arg(extraHeader));
+                emit executionException(ActionTools::ActionException::InvalidParameterException, tr(R"(Failed to parse an extra header: "%1" has to be in the form "name: value")").arg(extraHeader));
                 return;
             }
 

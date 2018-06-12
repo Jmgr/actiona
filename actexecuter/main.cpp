@@ -152,8 +152,8 @@ int main(int argc, char **argv)
 		{{QStringLiteral("c"), QStringLiteral("code")}, QObject::tr("Switch to code mode, may not be used with -s.")},
 		{{QStringLiteral("s"), QStringLiteral("script")}, QObject::tr("Switch to script mode, may not be used with -c.")},
 		{{QStringLiteral("Q"), QStringLiteral("nocodeqt")}, QObject::tr("Do not include the Qt library into the code.")},
-		{{QStringLiteral("proxy-mode")}, QObject::tr("Sets the proxy mode, values are \"none\", \"system\" (default) or \"custom\".")},
-		{{QStringLiteral("proxy-type")}, QObject::tr("Sets the custom proxy type, values are \"http\" or \"socks\" (default).")},
+		{{QStringLiteral("proxy-mode")}, QObject::tr(R"(Sets the proxy mode, values are "none", "system" (default) or "custom".)")},
+		{{QStringLiteral("proxy-type")}, QObject::tr(R"(Sets the custom proxy type, values are "http" or "socks" (default).)")},
 		{{QStringLiteral("proxy-host")}, QObject::tr("Sets the custom proxy host.")},
 		{{QStringLiteral("proxy-port")}, QObject::tr("Sets the custom proxy port.")},
 		{{QStringLiteral("proxy-user")}, QObject::tr("Sets the custom proxy user.")},
@@ -220,7 +220,7 @@ int main(int argc, char **argv)
 	else if(!optionsParser.value(QStringLiteral("proxy-mode")).isEmpty())
 	{
 		QTextStream stream(stdout);
-		stream << QObject::tr("Unknown proxy mode, values are \"none\", \"system\" (default) or \"custom\"") << "\n";
+		stream << QObject::tr(R"(Unknown proxy mode, values are "none", "system" (default) or "custom")") << "\n";
 		stream.flush();
 
 		optionsParser.showHelp(-1);
@@ -254,7 +254,7 @@ int main(int argc, char **argv)
 			else if(!optionsParser.value(QStringLiteral("proxy-type")).isEmpty())
 			{
 				QTextStream stream(stdout);
-				stream << QObject::tr("Unknown proxy type, values are \"http\" or \"socks\" (default)") << "\n";
+				stream << QObject::tr(R"(Unknown proxy type, values are "http" or "socks" (default))") << "\n";
 				stream.flush();
 
 				optionsParser.showHelp(-1);
