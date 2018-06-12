@@ -82,8 +82,8 @@ namespace ActionTools
 		static bool mInitDone;
 		static unsigned long mNativeKey[KeyCount];
 
-		bool mIsQtKey;
-		int mKey;
+		bool mIsQtKey{false};
+		int mKey{InvalidKey};
 	};
 }
 

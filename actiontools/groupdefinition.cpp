@@ -29,9 +29,8 @@
 namespace ActionTools
 {
 	GroupDefinition::GroupDefinition(QObject *parent)
-        : ElementDefinition(Name(), parent),
-		mMasterList(nullptr),
-		mMasterCodeComboBox(nullptr)
+        : ElementDefinition(Name(), parent)
+		
 	{
 	}
 

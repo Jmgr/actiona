@@ -47,11 +47,11 @@ namespace Code
 		QScriptValue show();
 		
 	private:
-		_NotifyNotification *mNotification;
+		_NotifyNotification *mNotification{nullptr};
 		QString mTitle;
 		QString mText;
 		QString mIcon;
-		int mTimeout;
+		int mTimeout{5000};
 	};
 }
 

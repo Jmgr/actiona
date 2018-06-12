@@ -163,8 +163,8 @@ namespace Code
 	
 	Image::Image()
 		: CodeClass(),
-		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
-		  mFindSubImageSearchForOne(false)
+		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this))
+		  
 	{
         connect(mOpenCVAlgorithms, &ActionTools::OpenCVAlgorithms::finished, this, &Image::findSubImageAsyncFinished);
 	}

@@ -45,9 +45,7 @@ namespace ActionTools
 {
 	ChoosePositionPushButton::ChoosePositionPushButton(QWidget *parent)
 	: QPushButton(parent),
-	mCrossIcon(new QPixmap(QStringLiteral(":/images/cross.png"))),
-	mSearching(false),
-	mMainWindow(nullptr)
+    mCrossIcon(new QPixmap(QStringLiteral(":/images/cross.png")))
 #ifdef Q_OS_LINUX
     ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
 #endif

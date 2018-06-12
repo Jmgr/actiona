@@ -73,9 +73,9 @@ namespace ActionTools
 		ScriptCompleter *mCompleter;
 		CodeHighlighter *mHighlighter;
 		QWidget *mLineNumberArea;
-		bool mCode;
+		bool mCode{true};
 		QString mLastSyntaxError;
-		bool mCompletionModelSet;
+		bool mCompletionModelSet{false};
 
 		Q_DISABLE_COPY(CodeEdit)
 	};

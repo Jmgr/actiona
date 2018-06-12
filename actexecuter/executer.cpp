@@ -29,8 +29,8 @@
 
 Executer::Executer(QObject *parent) :
 	QObject(parent),
-	mActionFactory(new ActionTools::ActionFactory(this)),
-	mActionLoadingFailed(false)
+	mActionFactory(new ActionTools::ActionFactory(this))
+	
 {
     connect(mActionFactory, &ActionTools::ActionFactory::actionPackLoadError, this, &Executer::actionPackLoadError);
 }

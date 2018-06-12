@@ -41,7 +41,7 @@ namespace ActionTools
 
 		Receiver::Receiver()
 			: QObject(),
-			  mCaptureCount(0),
+			  
 			  mTask(new Task)
 		{
 			qRegisterMetaType<ActionTools::SystemInput::Button>("ActionTools::SystemInput::Button");

@@ -68,8 +68,8 @@ namespace ActionTools
 
 		QPixmap *mCrossIcon;
 		WindowHandle mLastFoundWindow;
-		bool mSearching;
-		QMainWindow *mMainWindow;
+		bool mSearching{false};
+		QMainWindow *mMainWindow{nullptr};
 #ifdef Q_OS_LINUX
         QList<QWidget*> mShownWindows;
         unsigned long mCrossCursor;

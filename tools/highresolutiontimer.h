@@ -48,7 +48,7 @@ namespace Tools
 		double elapsedSeconds();
 	private:
 		static int mLevel;
-		bool mRunning;
+		bool mRunning{false};
 		QString mTaskName;
 		QTextStream mTextStream;
 #ifdef Q_OS_WIN

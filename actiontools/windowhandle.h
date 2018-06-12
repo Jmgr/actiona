@@ -30,7 +30,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT WindowHandle
 	{
 	public:
-		WindowHandle() : mValue(0)								{}
+		WindowHandle()  								{}
 		WindowHandle(WId handle) : mValue(handle)				{}
 
 		bool isValid() const									{ return (mValue != 0); }
@@ -63,7 +63,7 @@ namespace ActionTools
 		static QList<WindowHandle> findWindows(const QRegExp &regExp);
 
 	private:
-		WId mValue;
+		WId mValue{0};
 	};
 }
 

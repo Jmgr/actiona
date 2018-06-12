@@ -30,7 +30,7 @@
 ProgressSplashScreen::ProgressSplashScreen(const QPixmap &pixmap, Qt::WindowFlags f)
 	: QSplashScreen(pixmap, f),
 	mProgressBar(new QProgressBar(this)),
-	mOpacity(1.0f),
+	
 	mOpacityTimer(new QTimer(this))
 {
 	init();

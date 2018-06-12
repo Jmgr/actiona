@@ -59,11 +59,8 @@ namespace Code
 
 	Web::Web()
 		: CodeClass(),
-		  mNetworkAccessManager(new QNetworkAccessManager(this)),
-          mNetworkReply(nullptr),
-          mFile(nullptr),
-		  mCloseFile(false),
-		  mIsDownloading(false)
+		  mNetworkAccessManager(new QNetworkAccessManager(this))
+		  
 	{
         QObject::connect(mNetworkAccessManager, &QNetworkAccessManager::authenticationRequired, this, &Web::authenticationRequired);
 	}

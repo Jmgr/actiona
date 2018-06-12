@@ -31,14 +31,14 @@ namespace ActionTools
     class ResourceData : public QSharedData
     {
     public:
-        ResourceData() : type(0)                {}
+        ResourceData()                 {}
         ResourceData(const ResourceData &other) :
             QSharedData(other),
             data(other.data),
             type(other.type)					{}
 
         QByteArray data;
-        int type;
+        int type{0};
     };
 
     class ACTIONTOOLSSHARED_EXPORT Resource

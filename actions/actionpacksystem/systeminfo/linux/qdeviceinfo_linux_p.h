@@ -111,7 +111,7 @@ private:
     Q_DECLARE_PUBLIC(QDeviceInfo)
 #endif
 
-    bool watchThermalState;
+    bool watchThermalState{false};
     QDeviceInfo::ThermalState currentThermalState;
     QString manufacturerBuffer;
     QString modelBuffer;
@@ -119,7 +119,7 @@ private:
     QString productNameBuffer;
     QString uniqueDeviceIDBuffer;
     QString versionBuffer[2];
-    QTimer *timer;
+    QTimer *timer{nullptr};
     QString boardNameString;
     QString osName;
 
@@ -131,8 +131,8 @@ private:
     QString findInRelease(const QString &searchTerm, const QString &file = QString());
     bool isUuid(const QString &id);
 
-    bool connectedBtPower;
-    bool btPowered;
+    bool connectedBtPower{false};
+    bool btPowered{false};
 };
 
 QT_END_NAMESPACE

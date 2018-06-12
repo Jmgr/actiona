@@ -31,7 +31,7 @@
 
 MainClass::MainClass()
 	: QObject(nullptr),
-	mExecuter(nullptr),
+	
 	mNetworkAccessManager(new QNetworkAccessManager(this))
 {
 }

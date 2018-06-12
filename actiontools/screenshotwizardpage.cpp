@@ -32,9 +32,8 @@ namespace ActionTools
 {
     ScreenshotWizardPage::ScreenshotWizardPage(QWidget *parent)
       : QWizardPage(parent),
-        ui(new Ui::ScreenshotWizardPage),
-        mTargetWindow(nullptr),
-        mDisableEscape(false)
+        ui(new Ui::ScreenshotWizardPage)
+        
     {
         ui->setupUi(this);
 

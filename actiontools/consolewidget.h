@@ -106,7 +106,7 @@ namespace ActionTools
 		void addSeparator(QStandardItem *item);
 
 		Ui::ConsoleWidget *ui;
-		QStandardItemModel *mModel;
+		QStandardItemModel *mModel{nullptr};
 		QDateTime mStartTime;
 
 		Q_DISABLE_COPY(ConsoleWidget)

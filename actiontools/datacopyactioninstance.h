@@ -57,7 +57,7 @@ namespace ActionTools
 		DeviceCopyThread *mDeviceCopyThread;
 		QIODevice *mInput;
 		QIODevice *mOutput;
-		qint64 mTotalSize;
+		qint64 mTotalSize{0};
 	};
 }
 

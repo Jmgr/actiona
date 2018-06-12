@@ -58,8 +58,8 @@ namespace ActionTools
 	unsigned long KeyInput::mNativeKey[] = {0};
 
 	KeyInput::KeyInput()
-		: mIsQtKey(false),
-		mKey(InvalidKey)
+		
+		
 	{
 		init();
 	}

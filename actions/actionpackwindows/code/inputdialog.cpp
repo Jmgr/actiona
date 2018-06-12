@@ -76,7 +76,7 @@ namespace Code
 
 	InputDialog::InputDialog()
 		: BaseWindow(),
-		mInputType(Text),
+		
 		mInputDialog(new QInputDialog)
 	{
         mInputDialog->setWindowFlags(mInputDialog->windowFlags() | Qt::WindowContextHelpButtonHint);

@@ -66,8 +66,8 @@ private:
     bool Punch(const QImage &img, QImage *outputImage, const QRect &clipRect = QRect() ) const;
 
 private:
-    double      m_Radius;
+    double      m_Radius{10.0};
     QPointF     m_Center;
-    double      m_Force;
+    double      m_Force{0.5};
 };
 #endif  /* PUNCHFILTER_H */

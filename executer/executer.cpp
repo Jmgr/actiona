@@ -53,12 +53,8 @@ namespace LibExecuter
 	Executer::Executer(QObject *parent)
 		: QObject(parent),
 		mExecutionWindow(new ExecutionWindow()),
-		mConsoleWidget(new ActionTools::ConsoleWidget()),
-		mScriptEngine(nullptr),
-		mScriptAgent(nullptr),
-		mHasExecuted(false),
-        mPauseInterrupt(false),
-        mShowDebuggerOnCodeError(true)
+		mConsoleWidget(new ActionTools::ConsoleWidget())
+        
 	{
         connect(mExecutionWindow, &ExecutionWindow::canceled, this, &Executer::stopExecution);
         connect(mExecutionWindow, &ExecutionWindow::paused, this, &Executer::pauseExecution);

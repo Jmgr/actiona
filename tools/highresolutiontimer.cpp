@@ -25,7 +25,7 @@ namespace Tools
 	int HighResolutionTimer::mLevel = 0;
 
 	HighResolutionTimer::HighResolutionTimer(const QString &taskName)
-		: mRunning(false),
+		: 
 		mTaskName(taskName),
 		mTextStream(stdout, QIODevice::WriteOnly)
 	{

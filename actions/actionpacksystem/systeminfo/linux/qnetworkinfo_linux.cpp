@@ -78,12 +78,6 @@ Q_GLOBAL_STATIC_WITH_ARGS(const QStringList, ETHERNET_MASK, (QStringList() << QL
 QNetworkInfoPrivate::QNetworkInfoPrivate(QNetworkInfo *parent)
     : QObject(parent)
     , q_ptr(parent)
-    , watchCurrentNetworkMode(false)
-    , watchNetworkInterfaceCount(false)
-    , watchNetworkSignalStrength(false)
-    , watchNetworkStatus(false)
-    , watchNetworkName(false)
-    , timer(nullptr)
 #if !defined(QT_NO_OFONO)
     , ofonoWrapper(0)
 #endif

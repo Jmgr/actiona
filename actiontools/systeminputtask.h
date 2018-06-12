@@ -71,7 +71,7 @@ namespace ActionTools
 			static Task *mInstance;
 
 			QThread *mThread;
-			bool mStarted;
+			bool mStarted{false};
 #ifdef Q_OS_LINUX
 			QTimer *mProcessRepliesTimer;
 #endif

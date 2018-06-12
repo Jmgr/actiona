@@ -58,6 +58,6 @@ private slots:
 
 private:
 	Ui::ChangelogDialog *ui;
-	ChangelogAction mChangelogAction;
+	ChangelogAction mChangelogAction{None};
 };
 

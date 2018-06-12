@@ -26,8 +26,8 @@
 namespace ActionTools
 {
 	DataCopyActionInstance::DataCopyActionInstance(const ActionDefinition *definition, QObject *parent)
-		: ActionInstance(definition, parent),
-		mTotalSize(0)
+		: ActionInstance(definition, parent)
+		
 	{
         connect(&mProgressTimer, &QTimer::timeout, this, &DataCopyActionInstance::updateProgress);
 		

@@ -39,9 +39,8 @@ namespace ActionTools
 		: QPlainTextEdit(parent),
 		mCompleter(new ScriptCompleter(this)),
 		mHighlighter(new CodeHighlighter(document())),
-		mLineNumberArea(new LineNumberArea(this)),
-		mCode(true),
-		mCompletionModelSet(false)
+		mLineNumberArea(new LineNumberArea(this))
+		
 	{
 		mCompleter->setWidget(this);
 		mCompleter->setCompletionMode(QCompleter::PopupCompletion);

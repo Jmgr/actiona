@@ -84,17 +84,16 @@ QDeviceInfoPrivate::QDeviceInfoPrivate(QDeviceInfo *parent)
 #if !defined(QT_SIMULATOR)
     , q_ptr(parent)
 #endif // QT_SIMULATOR
-    , watchThermalState(false)
-    , imeiBuffer(QStringList())
+    , 
+     imeiBuffer(QStringList())
     , uniqueDeviceIDBuffer(QString())
-    , timer(nullptr)
-    , boardNameString(QString())
+    , 
+     boardNameString(QString())
     , osName(QString())
 #if !defined(QT_NO_OFONO)
         , ofonoWrapper(0)
 #endif // QT_NO_OFONO
-    ,connectedBtPower(false)
-    ,btPowered(false)
+    
 {
 }
 

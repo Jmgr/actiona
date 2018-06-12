@@ -58,7 +58,7 @@ namespace Code
         int keyCount() const;
 	
 	private:
-        Encoding mEncoding;
+        Encoding mEncoding{Native};
         boost::property_tree::ptree mCurrentSection;
         boost::property_tree::ptree mTree;
         QByteArray mCurrentSectionName;

@@ -63,7 +63,7 @@ static const std::unordered_set<int> extendedKeys =
 #include <array>
 
 KeyboardDevice::KeyboardDevice()
-	: mType(Win32)
+	 
 {
 }
 

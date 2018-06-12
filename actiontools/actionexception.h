@@ -52,7 +52,7 @@ namespace ActionTools
 		{
 		public:
 			ExceptionActionInstance()
-				: mAction(StopExecutionExceptionAction)	{}
+				 	{}
 			ExceptionActionInstance(ExceptionAction action, const QString &line)
 				: mAction(action), mLine(line)			{}
 
@@ -68,7 +68,7 @@ namespace ActionTools
 			}
 
 		private:
-			ExceptionAction mAction;
+			ExceptionAction mAction{StopExecutionExceptionAction};
 			QString mLine;
 		};
 

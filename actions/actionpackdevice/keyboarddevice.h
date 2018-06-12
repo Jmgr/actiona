@@ -57,6 +57,6 @@ private:
 	int stringToNativeKey(const QString &key) const;
 	
 	QSet<int> mPressedKeys;
-	Type mType;
+	Type mType{Win32};
 };
 

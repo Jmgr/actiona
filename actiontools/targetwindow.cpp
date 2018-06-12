@@ -49,11 +49,9 @@ namespace ActionTools
                   | Qt::NoDropShadowWindowHint
                   | Qt::BypassWindowManagerHint
                   ),
-          mMousePressed(false)
+          
 #ifdef Q_OS_LINUX
-          , mGrabbingPointer(false)
-          , mGrabbingKeyboard(false)
-          , mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
+           mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
 #endif
     {
         setWindowModality(Qt::ApplicationModal);

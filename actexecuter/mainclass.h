@@ -52,7 +52,7 @@ private slots:
 	void downloadFinished();
 
 private:
-	Executer *mExecuter;
+	Executer *mExecuter{nullptr};
 	QNetworkAccessManager *mNetworkAccessManager;
 	QNetworkReply *mNetworkReply;
 	ExecutionMode mExecutionMode;

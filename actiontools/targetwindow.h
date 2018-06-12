@@ -66,11 +66,11 @@ namespace ActionTools
 
         QTimer mUpdateTimer;
         QPoint mMouseClickPosition;
-        bool mMousePressed;
+        bool mMousePressed{false};
         QRect mResult;
 #ifdef Q_OS_LINUX
-        bool mGrabbingPointer;
-        bool mGrabbingKeyboard;
+        bool mGrabbingPointer{false};
+        bool mGrabbingKeyboard{false};
         unsigned long mCrossCursor;
 #endif
     };

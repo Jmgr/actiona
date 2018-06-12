@@ -61,7 +61,7 @@ namespace ActionTools
 
 			static QSharedPointer<Receiver> mInstance;
 
-			int mCaptureCount;
+			int mCaptureCount{0};
 			ListenerSet mListeners;
 			Task *mTask;
 

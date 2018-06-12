@@ -31,7 +31,7 @@ namespace ActionTools
 	class ScriptParameterData : public QSharedData
 	{
 	public:
-		ScriptParameterData() : code(false), type(0)	{}
+		ScriptParameterData()  	{}
 		ScriptParameterData(const ScriptParameterData &other) :
 			QSharedData(other),
 			name(other.name),
@@ -41,8 +41,8 @@ namespace ActionTools
 
 		QString name;
 		QString value;
-		bool code;
-		int type;
+		bool code{false};
+		int type{0};
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ScriptParameter

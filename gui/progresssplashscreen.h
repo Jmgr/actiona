@@ -50,7 +50,7 @@ private:
 	void init();
 
 	QProgressBar *mProgressBar;
-	float mOpacity;
+	float mOpacity{1.0f};
 	QTimer *mOpacityTimer;
 };
 

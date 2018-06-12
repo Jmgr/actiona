@@ -208,9 +208,8 @@ namespace ActionTools
 		Task::Task(QObject *parent)
 			: QObject(parent),
 			  mThread(new QThread(this))
-			, mStarted(false)
 #ifdef Q_OS_LINUX
-			, mProcessRepliesTimer(new QTimer(this))
+            ,mProcessRepliesTimer(new QTimer(this))
 #endif
 		{
 			Q_ASSERT(mInstance == nullptr);

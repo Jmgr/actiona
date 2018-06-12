@@ -59,15 +59,15 @@ class QxtHmacPrivate : public QxtPrivate<QxtHmac>
 {
 public:
     QXT_DECLARE_PUBLIC(QxtHmac)
-    QxtHmacPrivate() : ohash(nullptr), ihash(nullptr) {}
+    QxtHmacPrivate()  {}
     ~QxtHmacPrivate()
     {
         // deleting NULL is safe, so no tests are needed here
         delete ohash;
         delete ihash;
     }
-    QCryptographicHash* ohash;
-    QCryptographicHash* ihash;
+    QCryptographicHash* ohash{nullptr};
+    QCryptographicHash* ihash{nullptr};
     QByteArray opad, ipad, result;
     QCryptographicHash::Algorithm algorithm;
 };

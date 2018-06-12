@@ -58,9 +58,9 @@ namespace ActionTools
 		void enableMembers(bool enable);
 
 		QList<ParameterDefinition *> mMembers;
-		ListParameterDefinition *mMasterList;
+		ListParameterDefinition *mMasterList{nullptr};
 		QStringList mMasterValues;
-		CodeComboBox *mMasterCodeComboBox;
+		CodeComboBox *mMasterCodeComboBox{nullptr};
 
 		Q_DISABLE_COPY(GroupDefinition)
 	};

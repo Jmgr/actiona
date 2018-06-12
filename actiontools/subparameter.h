@@ -30,11 +30,11 @@ namespace ActionTools
 	class SubParameterData : public QSharedData
 	{
 	public:
-		SubParameterData() : code(false)								{}
+		SubParameterData()  								{}
 		SubParameterData(const SubParameterData &other)
 			: QSharedData(other), code(other.code), value(other.value)	{}
 
-		bool code;
+		bool code{false};
         QString value;
 	};
 

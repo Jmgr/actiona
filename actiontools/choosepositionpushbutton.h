@@ -59,9 +59,9 @@ namespace ActionTools
 		void stopMouseCapture();
 
 		QPixmap *mCrossIcon;
-		bool mSearching;
+		bool mSearching{false};
 		QPoint mResult;
-		QMainWindow *mMainWindow;
+		QMainWindow *mMainWindow{nullptr};
 #ifdef Q_OS_LINUX
         QList<QWidget*> mShownWindows;
         unsigned long mCrossCursor;

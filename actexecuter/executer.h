@@ -47,6 +47,6 @@ private slots:
 
 private:
 	ActionTools::ActionFactory *mActionFactory;
-	bool mActionLoadingFailed;
+	bool mActionLoadingFailed{false};
 };
 

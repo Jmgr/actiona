@@ -59,7 +59,7 @@ namespace Code
 		void setupConstructorParameters(QScriptContext *context, QScriptEngine *engine, const QScriptValue &parameters);
 
 	private:
-		QWidget *mWindow;
+		QWidget *mWindow{nullptr};
 	};
 }
 

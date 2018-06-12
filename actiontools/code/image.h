@@ -144,7 +144,7 @@ namespace Code
 		QImage mImage;
 		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
 		QScriptValue mFindSubImageAsyncFunction;
-		bool mFindSubImageSearchForOne;
+		bool mFindSubImageSearchForOne{false};
 	};
 }
 

@@ -79,15 +79,15 @@ namespace Code
 
 	private:
 		QNetworkAccessManager *mNetworkAccessManager;
-		QNetworkReply *mNetworkReply;
+		QNetworkReply *mNetworkReply{nullptr};
 		QScriptValue mOnFinished;
 		QScriptValue mOnDownloadProgress;
 		QScriptValue mOnError;
 		QScriptValue mFileValue;
-		QFile *mFile;
-		bool mCloseFile;
+		QFile *mFile{nullptr};
+		bool mCloseFile{false};
 		QByteArray mData;
-		bool mIsDownloading;
+		bool mIsDownloading{false};
 		QString mUser;
 		QString mPassword;
 	};

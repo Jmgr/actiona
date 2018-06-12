@@ -27,8 +27,8 @@ namespace ActionTools
 {
 	ConsoleWidget::ConsoleWidget(QWidget *parent)
 		: QWidget(parent),
-		ui(new Ui::ConsoleWidget),
-		mModel(nullptr)
+		ui(new Ui::ConsoleWidget)
+		
 	{
 		ui->setupUi(this);
 

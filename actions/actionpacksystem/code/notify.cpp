@@ -58,9 +58,8 @@ namespace Code
 	}
 	
 	Notify::Notify()
-		: CodeClass(),
-		mNotification(nullptr),
-		mTimeout(5000)
+		: CodeClass()
+		
 	{
 	}
 	

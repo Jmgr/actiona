@@ -94,7 +94,7 @@ namespace Code
 	private:
 		void setup();
 
-		InputType mInputType;
+		InputType mInputType{Text};
 		QScriptValue mValue;
 		QScriptValue mItems;
 		QScriptValue mMinimum;

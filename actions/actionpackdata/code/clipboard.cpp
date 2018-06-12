@@ -42,8 +42,8 @@ namespace Code
 	}
 	
 	Clipboard::Clipboard()
-		: CodeClass(),
-		mMode(QClipboard::Clipboard)
+		: CodeClass()
+		
 	{
 	}
 

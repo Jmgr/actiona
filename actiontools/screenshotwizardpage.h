@@ -57,8 +57,8 @@ namespace ActionTools
         QPixmap capturePixmap() const;
 
         Ui::ScreenshotWizardPage *ui;
-        ActionTools::TargetWindow *mTargetWindow;
-        bool mDisableEscape;
+        ActionTools::TargetWindow *mTargetWindow{nullptr};
+        bool mDisableEscape{false};
     };
 }
 

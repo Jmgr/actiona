@@ -68,7 +68,7 @@ namespace Code
 	private:
 		void setModePrivate(QScriptContext *context, QScriptEngine *engine, Mode mode);
 	
-		QClipboard::Mode mMode;
+		QClipboard::Mode mMode{QClipboard::Clipboard};
 	};
 }
 

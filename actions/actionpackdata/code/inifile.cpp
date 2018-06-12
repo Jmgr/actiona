@@ -44,8 +44,8 @@ namespace Code
 	}
 	
 	IniFile::IniFile()
-		: CodeClass(),
-		mEncoding(Native)
+		: CodeClass()
+		
     {
     }
 

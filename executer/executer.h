@@ -146,26 +146,26 @@ namespace LibExecuter
 		int mCurrentActionIndex;
 		bool mExecutionStarted;
 		bool mExecutionEnded;
-		QScriptEngine *mScriptEngine;
+		QScriptEngine *mScriptEngine{nullptr};
 		QScriptEngineDebugger mScriptEngineDebugger;
 		QMainWindow *mDebuggerWindow;
 		bool mExecuteOnlySelection;
-		ScriptAgent *mScriptAgent;
+		ScriptAgent *mScriptAgent{nullptr};
 		QList<bool> mActionEnabled;
 		QTimer mExecutionTimer;
 		QElapsedTimer mExecutionTime;
 		QProgressDialog *mProgressDialog;
 		int mActiveActionsCount;
 		bool mExecutionPaused;
-		bool mHasExecuted;
+		bool mHasExecuted{false};
 		static ExecutionStatus mExecutionStatus;
-		bool mPauseInterrupt;
+		bool mPauseInterrupt{false};
 		int mPauseBefore;
 		int mPauseAfter;
         Tools::Version mActionaVersion;
 		Tools::Version mScriptVersion;
 		bool mIsActExec;
-        bool mShowDebuggerOnCodeError;
+        bool mShowDebuggerOnCodeError{true};
 
 		Q_DISABLE_COPY(Executer)
 	};

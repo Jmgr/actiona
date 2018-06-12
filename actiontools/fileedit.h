@@ -77,7 +77,7 @@ namespace ActionTools
 
 	private:
 		Ui::FileEdit *ui;
-		Mode mMode;
+		Mode mMode{FileOpen};
 		QString mCaption;
 		QString mFilter;
 		QString mDirectory;

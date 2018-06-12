@@ -23,8 +23,8 @@
 
 ChangelogDialog::ChangelogDialog(QWidget *parent)
 	: QDialog(parent),
-	ui(new Ui::ChangelogDialog),
-	mChangelogAction(None)
+	ui(new Ui::ChangelogDialog)
+	
 {
 	ui->setupUi(this);
 }
