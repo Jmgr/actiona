@@ -51,7 +51,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QByteArray>
 
-QtImageFilter *createGaussianBlurFilter(void)
+QtImageFilter *createGaussianBlurFilter()
 {
     return reinterpret_cast<QtImageFilter*>(new GaussBlurFilter());
 }
