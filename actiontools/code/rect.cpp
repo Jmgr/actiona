@@ -77,7 +77,7 @@ namespace Code
 				else
 					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
-			return QRect();
+			return {};
 		case 4:
 			return QRect(context->argument(0).toInt32(),
 						 context->argument(1).toInt32(),

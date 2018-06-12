@@ -75,7 +75,7 @@ namespace Code
 				else
 					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
-			return ActionTools::WindowHandle();
+			return {};
 		default:
 			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return ActionTools::WindowHandle();

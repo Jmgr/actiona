@@ -156,6 +156,6 @@ namespace Actions
 			return foundWindow;
 		}
 
-		return ActionTools::WindowHandle();
+		return {};
 	}
 }

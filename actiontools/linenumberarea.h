@@ -37,7 +37,7 @@ namespace ActionTools
 
 		QSize sizeHint() const
 		{
-			return QSize(codeEditor->lineNumberAreaWidth(), 0);
+			return {codeEditor->lineNumberAreaWidth(), 0};
 		}
 
 	protected:

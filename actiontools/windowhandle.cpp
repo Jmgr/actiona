@@ -161,7 +161,7 @@ namespace ActionTools
 		XWindowAttributes windowAttributes;
 
 		if(!XGetWindowAttributes(QX11Info::display(), mValue, &windowAttributes))
-			return QRect();
+			return {};
 
 		Window unused;
 		int positionX, positionY;
@@ -494,7 +494,7 @@ namespace ActionTools
 				return windowHandle;
 		}
 
-		return WindowHandle();
+		return {};
 	}
 
 	WindowHandle WindowHandle::findWindow(const QRegExp &regExp)
@@ -508,7 +508,7 @@ namespace ActionTools
 				return windowHandle;
 		}
 
-		return WindowHandle();
+		return {};
 	}
 
 	QList<WindowHandle> WindowHandle::findWindows(const QString &title)

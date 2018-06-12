@@ -562,7 +562,7 @@ namespace ActionTools
 
         computePercentPosition(point, unitSubParameter);
 
-        return QPoint(point.x(), point.y());
+        return {static_cast<int>(point.x()), static_cast<int>(point.y())};
 	}
 
 	QStringList ActionInstance::evaluateItemList(bool &ok, const QString &parameterName, const QString &subParameterName)
@@ -625,7 +625,7 @@ namespace ActionTools
 					   const QString &subParameterName)
 	{
 		if(!ok)
-			return QColor();
+			return {};
 
 		const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
 		QString result;

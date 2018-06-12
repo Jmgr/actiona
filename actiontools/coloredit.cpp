@@ -186,6 +186,6 @@ namespace ActionTools
 		if(r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 			return QColor(0, 0, 0);
 
-		return QColor(r, g , b);
+		return {r, g , b};
 	}
 }
