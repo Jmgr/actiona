@@ -242,9 +242,9 @@ namespace ActionTools
                     {
                         bool thisTargetFound = false;
 
-                        for(int currPoint = 0; currPoint < matchingPointList.size(); currPoint++)
+                        for(auto matchingPoint: matchingPointList)
                         {
-                            const QPoint &foundPoint = matchingPointList.at(currPoint).position;
+                            const QPoint &foundPoint = matchingPoint.position;
                             if(std::abs(searchPoint.x() - foundPoint.x()) <= searchExpansion * 2 &&
                                std::abs(searchPoint.y() - foundPoint.y()) <= searchExpansion * 2)
                             {

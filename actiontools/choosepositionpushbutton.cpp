@@ -202,11 +202,9 @@ namespace ActionTools
 
         QCoreApplication::instance()->removeNativeEventFilter(this);
 
-        for(int windowIndex = 0; windowIndex < mShownWindows.size(); ++windowIndex)
+        for(auto shownWindow: mShownWindows)
         {
-            QWidget *window = mShownWindows[windowIndex];
-
-            XMapWindow(QX11Info::display(), window->winId());
+            XMapWindow(QX11Info::display(), shownWindow->winId());
         }
 
         if(mMainWindow)

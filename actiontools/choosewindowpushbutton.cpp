@@ -300,11 +300,9 @@ namespace ActionTools
 		XUngrabPointer(QX11Info::display(), CurrentTime);
         XFlush(QX11Info::display());
 
-        for(int windowIndex = 0; windowIndex < mShownWindows.size(); ++windowIndex)
+        for(auto shownWindow: mShownWindows)
         {
-            QWidget *window = mShownWindows[windowIndex];
-
-            XMapWindow(QX11Info::display(), window->winId());
+            XMapWindow(QX11Info::display(), shownWindow->winId());
         }
 
 		if(mMainWindow)

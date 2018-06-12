@@ -94,10 +94,10 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 	QVector<QGroupBox *> groupBoxes[2];
 
-	for(int parameterType = 0; parameterType < 2; ++parameterType)
+    for(auto &parameterLayout: mParameterLayouts)
 	{
 		for(int i = 0; i < tabCount; ++i)
-			mParameterLayouts[parameterType].append(new QFormLayout);
+            parameterLayout.append(new QFormLayout);
 	}
 
 	int tabIndex = 0;
@@ -169,8 +169,8 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	if(!elements.empty())
 	{
 		QStringList exceptionActionsNames;
-		for(int i = 0; i < ActionTools::ActionException::ExceptionActionCount; ++i)
-			exceptionActionsNames << QApplication::translate("ActionException::ExceptionActionName", ActionTools::ActionException::ExceptionActionName[i].toLatin1().constData());
+        for(const auto &exceptionActionName: ActionTools::ActionException::ExceptionActionName)
+            exceptionActionsNames << QApplication::translate("ActionException::ExceptionActionName", exceptionActionName.toLatin1().constData());
 
 		QList<ActionTools::ActionException *> actionExceptions = actionDefinition->exceptions();
 
