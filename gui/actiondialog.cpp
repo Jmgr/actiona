@@ -50,7 +50,7 @@
 #include <limits>
 #include <algorithm>
 
-ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent)
+ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, const ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent)
 	: QDialog(parent),
       ParameterContainer(script),
 	  ui(new Ui::ActionDialog),

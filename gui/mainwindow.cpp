@@ -361,6 +361,7 @@ void MainWindow::postInit()
 		}
 	}
 
+    if(settings.value(QStringLiteral("gui/preloadActionDialogs"), false).toBool())
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("action dialogs creation");
@@ -380,11 +381,7 @@ void MainWindow::postInit()
 
 			setTaskbarProgress(actionDefinitionIndex, mActionFactory->actionDefinitionCount() - 1);
 
-            ActionDialog *newActionDialog = new ActionDialog(mCompletionModel, mScript, actionDefinition, mUsedLocale, this);
-
-            newActionDialog->setWindowFlags(newActionDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
-
-            mActionDialogs.append(newActionDialog);
+            getOrCreateActionDialog(actionDefinition);
 
             QApplication::processEvents();
 		}
@@ -1472,6 +1469,24 @@ std::unique_ptr<QProgressDialog> MainWindow::createStandardProgressDialog()
     return result;
 }
 
+ActionDialog *MainWindow::getOrCreateActionDialog(const ActionTools::ActionDefinition *actionDefinition)
+{
+    int actionIndex = actionDefinition->index();
+
+    if(mActionDialogs.contains(actionIndex))
+        return mActionDialogs.value(actionIndex);
+    else
+    {
+        ActionDialog *newActionDialog = new ActionDialog(mCompletionModel, mScript, actionDefinition, mUsedLocale, this);
+
+        newActionDialog->setWindowFlags(newActionDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+
+        mActionDialogs.insert(actionIndex, newActionDialog);
+
+        return newActionDialog;
+    }
+}
+
 #ifndef ACT_NO_UPDATER
 void MainWindow::checkForUpdate(bool silent)
 {
@@ -2097,8 +2112,7 @@ void MainWindow::postDownloadOperation()
 
 ActionDialog *MainWindow::actionDialog(ActionTools::ActionInstance *actionInstance)
 {
-    ActionDialog *actionDialogPointer = mActionDialogs.at(actionInstance->definition()->index());
-
+    ActionDialog *actionDialogPointer = getOrCreateActionDialog(actionInstance->definition());
     QSize sizeDifference = size() / 2 - actionDialogPointer->size() / 2;
     actionDialogPointer->move(pos().x() + sizeDifference.width(), pos().y() + sizeDifference.height());
 

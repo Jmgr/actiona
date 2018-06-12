@@ -41,6 +41,7 @@ namespace ActionTools
 {
 	class ActionFactory;
 	class ActionInstance;
+    class ActionDefinition;
 }
 
 namespace Tools
@@ -211,6 +212,7 @@ private:
     ActionTools::Script::ReadResult readScript(QIODevice *device);
     bool writeScript(QIODevice *device);
     std::unique_ptr<QProgressDialog> createStandardProgressDialog();
+    ActionDialog *getOrCreateActionDialog(const ActionTools::ActionDefinition *actionDefinition);
 #ifndef ACT_NO_UPDATER
 	void checkForUpdate(bool silent);
 #endif
@@ -238,7 +240,7 @@ private:
 	int mAddActionRow;
 	QString mAddAction;
 	QAction *mStopExecutionAction;
-	QList<ActionDialog *> mActionDialogs;
+    QMap<int, ActionDialog *> mActionDialogs;
     QString mUsedLocale;
     NewActionProxyModel *mNewActionProxyModel;
     ScriptProxyModel *mScriptProxyModel;

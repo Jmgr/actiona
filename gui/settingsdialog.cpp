@@ -94,6 +94,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	//GENERAL
     ui->languageComboBox->setCurrentIndex(Tools::Languages::languageNameToIndex(settings.value(QStringLiteral("gui/locale"), Tools::Languages::languagesName().first.first()).toString()));
     ui->showLoadingWindow->setChecked(settings.value(QStringLiteral("gui/showLoadingWindow"), QVariant(true)).toBool());
+    ui->preloadActionDialogsCheckBox->setChecked(settings.value(QStringLiteral("gui/preloadActionDialogs"), QVariant(false)).toBool());
     ui->showTaskbarIcon->setChecked(settings.value(QStringLiteral("gui/showTaskbarIcon"), QVariant(true)).toBool());
     ui->showWindowAfterExecution->setChecked(settings.value(QStringLiteral("gui/showWindowAfterExecution"), QVariant(true)).toBool());
     ui->addStartEndSeparators->setChecked(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool());
@@ -274,6 +275,7 @@ void SettingsDialog::accept()
 	//GENERAL
     settings.setValue(QStringLiteral("gui/locale"), Tools::Languages::languagesName().first[ui->languageComboBox->currentIndex()]);
 	settings.setValue(QStringLiteral("gui/showLoadingWindow"), ui->showLoadingWindow->isChecked());
+    settings.setValue(QStringLiteral("gui/preloadActionDialogs"), ui->preloadActionDialogsCheckBox->isChecked());
 	settings.setValue(QStringLiteral("gui/showTaskbarIcon"), ui->showTaskbarIcon->isChecked());
 	settings.setValue(QStringLiteral("gui/showWindowAfterExecution"), ui->showWindowAfterExecution->isChecked());
 	settings.setValue(QStringLiteral("gui/addConsoleStartEndSeparators"), ui->addStartEndSeparators->isChecked());
