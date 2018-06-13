@@ -35,7 +35,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT ActionPack
 	{
 	public:
-		ActionPack()												{}
+		ActionPack()												= default;
 		virtual ~ActionPack();
 
 		virtual void createDefinitions() = 0;

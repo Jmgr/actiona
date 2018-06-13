@@ -33,7 +33,7 @@ namespace ActionTools
 
 	public:
         ListParameterDefinition(const Name &name, QObject *parent);
-		virtual ~ListParameterDefinition()	{}
+		virtual ~ListParameterDefinition()	= default;
 
 		virtual void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

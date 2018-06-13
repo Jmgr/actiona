@@ -47,8 +47,7 @@ namespace Tools
 	}
 	
 	Updater::~Updater()
-	{
-	}
+	= default;
 	
 	void Updater::checkForUpdates(const QString &program,
 							const Version &programVersion,

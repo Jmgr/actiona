@@ -52,7 +52,7 @@ namespace ActionTools
 		{
 		public:
 			ExceptionActionInstance()
-				 	{}
+				 	= default;
 			ExceptionActionInstance(ExceptionAction action, const QString &line)
 				: mAction(action), mLine(line)			{}
 

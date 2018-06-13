@@ -95,7 +95,7 @@ public:
 
     virtual QString description() const;
 
-    virtual ~QtImageFilter() {}
+    virtual ~QtImageFilter() = default;
 };
 
 class QT_QTIMAGEFILTERS_EXPORT QtImageFilterFactory {

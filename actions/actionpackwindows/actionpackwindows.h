@@ -47,7 +47,7 @@ class ActionPackWindows : public QObject, public ActionTools::ActionPack
     Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "windows.json")
 
 public:
-	ActionPackWindows()							{}
+	ActionPackWindows()							= default;
 
 	void createDefinitions()
 	{

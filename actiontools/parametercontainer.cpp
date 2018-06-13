@@ -31,8 +31,7 @@ namespace ActionTools
     }
 
     ParameterContainer::~ParameterContainer()
-    {
-    }
+    = default;
 
     QMenu *ParameterContainer::createResourcesMenu(QWidget *parent) const
     {

@@ -66,8 +66,7 @@ namespace Code
 	}
 
 	Web::~Web()
-    {
-    }
+    = default;
 
 	QScriptValue Web::download(const QString &urlString, const QScriptValue &options)
 	{

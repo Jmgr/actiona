@@ -34,7 +34,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT AbstractCodeEditor
 	{
 	public:
-		virtual ~AbstractCodeEditor()			{}
+		virtual ~AbstractCodeEditor()			= default;
 
 		virtual void openEditor(int line = -1, int column = -1) = 0;
 		virtual void setCompletionModel(QAbstractItemModel *completionModel) = 0;

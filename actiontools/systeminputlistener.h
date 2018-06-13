@@ -37,8 +37,8 @@ namespace ActionTools
 			virtual void mouseButtonReleased(Button button) { Q_UNUSED(button); }
 
 		protected:
-			Listener() {}
-			~Listener() {}
+			Listener() = default;
+			~Listener() = default;
 		};
 	}
 }

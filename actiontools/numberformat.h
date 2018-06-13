@@ -35,7 +35,7 @@ namespace ActionTools
     private:
         static QString numberFormat(const QStringList &units, double value);
 
-        NumberFormat() {}
+        NumberFormat() = default;
     };
 }
 

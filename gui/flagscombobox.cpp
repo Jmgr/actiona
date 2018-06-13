@@ -64,8 +64,7 @@ FlagsComboBox::FlagsComboBox(QWidget *parent):
 }
 
 FlagsComboBox::~FlagsComboBox()
-{
-}
+= default;
 
 void FlagsComboBox::setAllCheckedText(const QString &text)
 {

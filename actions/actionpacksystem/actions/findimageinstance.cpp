@@ -61,8 +61,7 @@ namespace Actions
 	}
 
 	FindImageInstance::~FindImageInstance()
-	{
-	}
+	= default;
 
 	void FindImageInstance::startExecution()
 	{

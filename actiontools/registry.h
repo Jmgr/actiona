@@ -63,7 +63,7 @@ namespace ActionTools
 #endif
 
 	private:
-		Registry();
+		Registry() = delete;
 
 #ifdef Q_OS_WIN
 		static HKEY enumToKey(Key key);

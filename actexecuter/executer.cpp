@@ -36,8 +36,7 @@ Executer::Executer(QObject *parent) :
 }
 
 Executer::~Executer()
-{
-}
+= default;
 
 bool Executer::start(QIODevice *device, const QString &filename)
 {

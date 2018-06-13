@@ -42,7 +42,7 @@
 
 struct QxtMailMessagePrivate : public QSharedData
 {
-    QxtMailMessagePrivate() {}
+    QxtMailMessagePrivate() = default;
     QxtMailMessagePrivate(const QxtMailMessagePrivate& other)
             : QSharedData(other), rcptTo(other.rcptTo), rcptCc(other.rcptCc), rcptBcc(other.rcptBcc),
             subject(other.subject), body(other.body), sender(other.sender),
@@ -77,10 +77,7 @@ QxtMailMessage::~QxtMailMessage()
 }
 
 QxtMailMessage& QxtMailMessage::operator=(const QxtMailMessage & other)
-{
-    qxt_d = other.qxt_d;
-    return *this;
-}
+= default;
 
 QString QxtMailMessage::sender() const
 {

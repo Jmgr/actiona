@@ -78,8 +78,7 @@ namespace Code
 	}
 	
 	Tcp::~Tcp()
-    {
-    }
+    = default;
 	
 	QScriptValue Tcp::connect(const QString &hostname, quint16 port, OpenMode openMode)
 	{

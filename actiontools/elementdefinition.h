@@ -42,7 +42,7 @@ namespace ActionTools
 		};
 
         ElementDefinition(const Name &name, QObject *parent);
-        virtual ~ElementDefinition()                                {}
+        virtual ~ElementDefinition()                                = default;
 
         const Name &name() const                                    { return mName; }
         const QString &tooltip() const                              { return mTooltip; }

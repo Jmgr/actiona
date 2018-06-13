@@ -30,7 +30,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT WindowHandle
 	{
 	public:
-		WindowHandle()  								{}
+		WindowHandle()  								= default;
 		WindowHandle(WId handle) : mValue(handle)				{}
 
 		bool isValid() const									{ return (mValue != 0); }

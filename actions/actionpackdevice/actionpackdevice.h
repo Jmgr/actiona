@@ -45,7 +45,7 @@ class ActionPackDevice : public QObject, public ActionTools::ActionPack
     Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "device.json")
 
 public:
-	ActionPackDevice()							{}
+	ActionPackDevice()							= default;
 
 	void createDefinitions()
 	{

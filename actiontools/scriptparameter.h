@@ -31,13 +31,9 @@ namespace ActionTools
 	class ScriptParameterData : public QSharedData
 	{
 	public:
-		ScriptParameterData()  	{}
-		ScriptParameterData(const ScriptParameterData &other) :
-			QSharedData(other),
-			name(other.name),
-			value(other.value),
-			code(other.code),
-			type(other.type)							{}
+		ScriptParameterData()  	= default;
+		ScriptParameterData(const ScriptParameterData &other) 
+										= default;
 
 		QString name;
 		QString value;
@@ -66,7 +62,7 @@ namespace ActionTools
 			setType(type);
 		}
 		ScriptParameter(const ScriptParameter &other)
-			: d(other.d)								{}
+			 								= default;
 
 		void setName(const QString &name)				{ d->name = name; }
 		void setValue(const QString &value)				{ d->value = value; }

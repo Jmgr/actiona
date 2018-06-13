@@ -94,8 +94,7 @@ namespace ActionTools
     }
 
     CodeLineEdit::~CodeLineEdit()
-    {
-    }
+    = default;
 	
 	void CodeLineEdit::setCode(bool code)
 	{

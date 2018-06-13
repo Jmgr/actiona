@@ -174,8 +174,7 @@ QBatteryInfo::QBatteryInfo(int batteryIndex, QObject *parent)
     Destroys the object
 */
 QBatteryInfo::~QBatteryInfo()
-{
-}
+= default;
 
 /*!
     \property QBatteryInfo::batteryCount

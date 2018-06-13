@@ -30,18 +30,16 @@ namespace ActionTools
 	{
 	public:
 		Name()
-		{
-		}
+		= default;
 		Name(const QString &original, const QString &translated)
 			: mOriginal(original),
 			  mTranslated(translated)
 		{
 		}
 		Name(const Name &other)
-			: mOriginal(other.mOriginal),
-			  mTranslated(other.mTranslated)
-		{
-		}
+			
+			  
+		= default;
 
 		void setOriginal(const QString &original) { mOriginal = original; }
 		void setTranslated(const QString &translated) { mTranslated = translated; }

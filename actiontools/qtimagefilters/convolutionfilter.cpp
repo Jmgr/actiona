@@ -253,9 +253,7 @@ QString ConvolutionFilter::getBorderPolicy() const
 }
 
 ConvolutionFilter::~ConvolutionFilter()
-{
-
-}
+= default;
 
 QImage ConvolutionFilter::convolve(const QImage &img, const QRect& clipRect) const
 {

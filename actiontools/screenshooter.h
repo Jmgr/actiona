@@ -42,7 +42,7 @@ namespace ActionTools
         static QPixmap captureRect(const QRect &rect);
 
     private:
-        ScreenShooter();
+        ScreenShooter() = delete;
     };
 }
 

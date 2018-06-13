@@ -36,8 +36,7 @@ FilterLineEdit::FilterLineEdit(QWidget *parent)
 }
 
 FilterLineEdit::~FilterLineEdit()
-{
-}
+= default;
 
 void FilterLineEdit::paintEvent(QPaintEvent *event)
 {

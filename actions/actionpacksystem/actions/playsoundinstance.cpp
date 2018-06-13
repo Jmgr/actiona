@@ -36,8 +36,7 @@ namespace Actions
 	}
 
 	PlaySoundInstance::~PlaySoundInstance()
-	{
-	}
+	= default;
 
 	void PlaySoundInstance::startExecution()
 	{

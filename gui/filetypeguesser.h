@@ -31,6 +31,6 @@ public:
     static ActionTools::Resource::Type guessFiletype(const QByteArray &data, const QString &filename);
 
 private:
-    FiletypeGuesser() {}
+    FiletypeGuesser() = default;
 };
 

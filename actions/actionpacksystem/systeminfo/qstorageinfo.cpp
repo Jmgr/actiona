@@ -107,8 +107,7 @@ QStorageInfo_Custom::QStorageInfo_Custom(QObject *parent)
     Destroys the object
 */
 QStorageInfo_Custom::~QStorageInfo_Custom()
-{
-}
+= default;
 
 /*!
     \property QStorageInfo_Custom::allLogicalDrives

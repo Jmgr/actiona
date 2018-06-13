@@ -40,7 +40,7 @@ namespace ActionTools
 
 	public:
         ParameterDefinition(const Name &name, QObject *parent = nullptr);
-        virtual ~ParameterDefinition()                                                  {}
+        virtual ~ParameterDefinition()                                                  = default;
 
 		virtual void buildEditors(Script *script, QWidget *parent);
 		virtual void load(const ActionInstance *actionInstance) = 0;

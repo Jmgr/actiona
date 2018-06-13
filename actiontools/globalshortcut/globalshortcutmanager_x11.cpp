@@ -43,7 +43,7 @@ namespace ActionTools
 	class X11KeyTrigger
 	{
 	public:
-		virtual ~X11KeyTrigger() {}
+		virtual ~X11KeyTrigger() = default;
 		virtual void activate() = 0;
 		virtual bool isAccepted(int qkey) const = 0;
 	};

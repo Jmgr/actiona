@@ -63,7 +63,7 @@ class ActionPackData : public QObject, public ActionTools::ActionPack
     Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "data.json")
 
 public:
-	ActionPackData()								{}
+	ActionPackData()								= default;
 
 	void createDefinitions()
 	{

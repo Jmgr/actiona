@@ -64,8 +64,7 @@ static const std::unordered_set<int> extendedKeys =
 
 KeyboardDevice::KeyboardDevice()
 	 
-{
-}
+= default;
 
 KeyboardDevice::~KeyboardDevice()
 {

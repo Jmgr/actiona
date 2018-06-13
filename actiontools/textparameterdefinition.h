@@ -40,7 +40,7 @@ namespace ActionTools
 		};
 
         TextParameterDefinition(const Name &name, QObject *parent);
-		virtual ~TextParameterDefinition()			{}
+		virtual ~TextParameterDefinition()			= default;
 
 		virtual void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

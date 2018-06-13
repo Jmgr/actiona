@@ -33,7 +33,7 @@ namespace ActionTools
 
 	public:
         MultiTextParameterDefinition(const Name &namez, QObject *parent);
-		virtual ~MultiTextParameterDefinition()			{}
+		virtual ~MultiTextParameterDefinition()			= default;
 
 		virtual void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

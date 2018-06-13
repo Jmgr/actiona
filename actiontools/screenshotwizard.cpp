@@ -38,6 +38,5 @@ namespace ActionTools
     }
 
     ScreenshotWizard::~ScreenshotWizard()
-    {
-    }
+    = default;
 }

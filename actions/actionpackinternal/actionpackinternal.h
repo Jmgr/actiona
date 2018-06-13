@@ -50,7 +50,7 @@ class ActionPackInternal : public QObject, public ActionTools::ActionPack
     Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "internal.json")
 
 public:
-	ActionPackInternal()							{}
+	ActionPackInternal()							= default;
 
 	void createDefinitions()
 	{

@@ -50,26 +50,9 @@ namespace ActionTools
     {
         ActionInstanceData() = default;
 		ActionInstanceData(const ActionInstanceData &other)
-			: QSharedData(other),
-			parametersData(other.parametersData),
-			definition(other.definition),
-			comment(other.comment),
-			label(other.label),
-			color(other.color),
-			enabled(other.enabled),
-			selected(other.selected),
-			exceptionActionInstances(other.exceptionActionInstances),
-			pauseBefore(other.pauseBefore),
-			pauseAfter(other.pauseAfter),
-			timeout(other.timeout),
-			script(other.script),
-			scriptEngine(other.scriptEngine),
-			scriptLine(other.scriptLine),
-            runtimeParameters(other.runtimeParameters),
-            executionCounter(other.executionCounter),
-            executionTimer(other.executionTimer),
-            executionDuration(other.executionDuration)
-			{}
+			
+            
+			= default;
 
 		bool operator==(const ActionInstanceData &other) const;
 		
@@ -101,7 +84,7 @@ namespace ActionTools
 		ActionInstance(const ActionDefinition *definition = nullptr, QObject *parent = nullptr);
 		ActionInstance(const ActionInstance &other);
 
-		virtual ~ActionInstance()											{}
+		virtual ~ActionInstance()											= default;
 		
 		bool operator==(const ActionInstance &other) const					{ return ((*d) == (*other.d)); }
 		bool operator!=(const ActionInstance &other) const					{ return !((*d) == (*other.d)); }

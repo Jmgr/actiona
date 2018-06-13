@@ -88,10 +88,7 @@ QxtMailAttachment::QxtMailAttachment(QIODevice* content, const QString& contentT
 }
 
 QxtMailAttachment& QxtMailAttachment::operator=(const QxtMailAttachment & other)
-{
-    qxt_d = other.qxt_d;
-    return *this;
-}
+= default;
 
 QxtMailAttachment::~QxtMailAttachment()
 {

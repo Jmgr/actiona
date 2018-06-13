@@ -30,7 +30,7 @@ namespace ActionTools
 	class ActionInstanceBufferData : public QSharedData
 	{
 	public:
-		ActionInstanceBufferData()									{}
+		ActionInstanceBufferData()									= default;
 		ActionInstanceBufferData(const ActionInstanceBufferData &other)
 			: QSharedData(other),
 			actionInstanceId(other.actionInstanceId)
@@ -62,7 +62,7 @@ namespace ActionTools
 			d = new ActionInstanceBufferData();
 		}
 		ActionInstanceBuffer(const ActionInstanceBuffer &other)
-			: d(other.d)									{}
+			 									= default;
 
 		void setActionInstanceId(const QString &actionInstanceId)	{ d->actionInstanceId = actionInstanceId; }
 		void setAction(const ActionInstance &action)				{ d->action.copyActionDataFrom(action); }

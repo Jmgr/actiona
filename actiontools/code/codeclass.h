@@ -50,7 +50,7 @@ namespace Code
 		};
 
 		explicit CodeClass();
-        virtual ~CodeClass() {}
+        virtual ~CodeClass() = default;
 
         template<class T>
         bool defaultEqualsImplementation(const QScriptValue &other) const

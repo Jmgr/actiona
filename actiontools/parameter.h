@@ -32,9 +32,9 @@ namespace ActionTools
 	class ParameterData : public QSharedData
 	{
 	public:
-		ParameterData()																{}
+		ParameterData()																= default;
 		ParameterData(const ParameterData &other)
-			: QSharedData(other), subParameters(other.subParameters)				{}
+			 				= default;
 
 		SubParameterHash subParameters;
 	};
@@ -43,7 +43,7 @@ namespace ActionTools
 	{
 	public:
 		Parameter()																	{ d = new ParameterData(); }
-		Parameter(const Parameter &other) : d(other.d)								{}
+		Parameter(const Parameter &other)  								= default;
 
 		const SubParameterHash &subParameters() const								{ return d->subParameters; }
 		SubParameterHash &subParameters()											{ return d->subParameters; }

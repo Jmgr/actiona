@@ -59,8 +59,7 @@ namespace Code
 	}
 	
 	Udp::~Udp()
-    {
-    }
+    = default;
 	
 	QScriptValue Udp::connect(const QString &hostname, quint16 port, OpenMode openMode)
 	{

@@ -39,8 +39,7 @@ namespace Actions
 		}
 
         virtual ~TextToSpeechInstance()
-        {
-        }
+        = default;
 
 		void startExecution()
 		{

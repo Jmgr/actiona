@@ -38,7 +38,7 @@ namespace ActionTools
 	public:
 		DataCopyActionInstance(const ActionDefinition *definition = nullptr, QObject *parent = nullptr);
 		DataCopyActionInstance(const ActionInstance &other) : ActionInstance(other)			{}
-		virtual ~DataCopyActionInstance()													{}
+		virtual ~DataCopyActionInstance()													= default;
 		
 		virtual void stopExecution();
 		
