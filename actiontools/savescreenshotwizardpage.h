@@ -40,10 +40,10 @@ namespace ActionTools
 
     public:
         SaveScreenshotWizardPage(ActionTools::Script *script, bool allowSaveToClipboard, QWidget *parent = nullptr);
-        ~SaveScreenshotWizardPage();
+        ~SaveScreenshotWizardPage() override;
 
     protected:
-        bool isComplete() const;
+        bool isComplete() const override;
 
     private slots:
         void on_saveToFileCommandLinkButton_clicked();

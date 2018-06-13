@@ -104,7 +104,7 @@ namespace ActionTools
         };
 
 		explicit OpenCVAlgorithms(QObject *parent = nullptr);
-        virtual ~OpenCVAlgorithms();
+        ~OpenCVAlgorithms() override ;
 
         bool findSubImageAsync(const QList<QImage> &sources,
 						  const QImage &target,

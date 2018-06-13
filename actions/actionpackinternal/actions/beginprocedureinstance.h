@@ -33,7 +33,7 @@ namespace Actions
 		BeginProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			setNextLine(runtimeParameter(QStringLiteral("procedureEndLine")).toInt() + 2);//Lines start at 1
 

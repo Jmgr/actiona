@@ -68,8 +68,8 @@ namespace Actions
         static Tools::StringListPair buttons;
         static Tools::StringListPair textmodes;
 
-		void startExecution();
-		void stopExecution();
+		void startExecution() override;
+		void stopExecution() override;
 
 	private:
 		QMessageBox::Icon messageBoxIcon(Icon icon) const;

@@ -117,14 +117,14 @@ namespace Actions
             addException(SendMailInstance::ErrorWhileSendingEMailException, tr("Error while sending e-mail"));
 		}
 
-        QString name() const													{ return QObject::tr("Send e-mail"); }
-		QString id() const														{ return QStringLiteral("ActionSendMail"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-        QString description() const												{ return QObject::tr("Sends an e-mail"); }
-        ActionTools::ActionInstance *newActionInstance() const					{ return new SendMailInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/sendmail.png")); }
-        QStringList tabs() const												{ return QStringList() << ActionDefinition::StandardTabs.at(0) << tr("Attachment") << ActionDefinition::StandardTabs.at(1); }
+        QString name() const override													{ return QObject::tr("Send e-mail"); }
+		QString id() const override														{ return QStringLiteral("ActionSendMail"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+        QString description() const override												{ return QObject::tr("Sends an e-mail"); }
+        ActionTools::ActionInstance *newActionInstance() const override					{ return new SendMailInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/sendmail.png")); }
+        QStringList tabs() const override												{ return QStringList() << ActionDefinition::StandardTabs.at(0) << tr("Attachment") << ActionDefinition::StandardTabs.at(1); }
 
 	private:
         Q_DISABLE_COPY(SendMailDefinition)

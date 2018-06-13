@@ -39,7 +39,7 @@ namespace ActionTools
 		Q_OBJECT
 	public:
         CodeEditorDialog(QAbstractItemModel *completionModel, QMenu *variablesMenu, QMenu *resourcesMenu, QWidget *parent = nullptr);
-		~CodeEditorDialog();
+		~CodeEditorDialog() override ;
 
 		void setText(const QString &text);
 		void setCode(bool code);
@@ -51,7 +51,7 @@ namespace ActionTools
 		bool isCode() const;
 
 	public slots:
-		void accept();
+		void accept() override ;
 
 	private slots:
 		void on_codePushButton_toggled(bool checked);

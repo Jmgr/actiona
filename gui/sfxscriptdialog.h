@@ -33,7 +33,7 @@ class SFXScriptDialog : public QDialog
 
 public:
 	explicit SFXScriptDialog(QWidget *parent = nullptr);
-	~SFXScriptDialog();
+	~SFXScriptDialog() override;
 
 	bool disableTrayIcon() const;
 	bool showConsole() const;
@@ -43,7 +43,7 @@ public:
     bool requiresActiona() const;
 
 public slots:
-	void accept();
+	void accept() override;
 
 private slots:
     void on_requiresActiona_clicked();

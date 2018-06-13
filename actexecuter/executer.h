@@ -35,7 +35,7 @@ class Executer : public QObject
 	
 public:
     explicit Executer(QObject *parent = nullptr);
-	virtual ~Executer();
+	~Executer() override;
 	
 	virtual bool start(QIODevice *device, const QString &filename);
 	

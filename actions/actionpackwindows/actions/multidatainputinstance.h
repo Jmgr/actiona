@@ -50,8 +50,8 @@ namespace Actions
 
         static Tools::StringListPair modes;
 
-		void startExecution();
-		void stopExecution();
+		void startExecution() override;
+		void stopExecution() override;
 
 	private slots:
 		void accepted();

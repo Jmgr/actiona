@@ -29,7 +29,7 @@ class FilterLineEdit : public QLineEdit
 
 public:
     FilterLineEdit(QWidget *parent = nullptr);
-	~FilterLineEdit();
+	~FilterLineEdit() override;
 
 protected:
     void paintEvent(QPaintEvent *event) override;

@@ -33,8 +33,8 @@ signals:
 	void actionsDropped(QList<int> rows);
 
 private:
-	void dragEnterEvent(QDragEnterEvent *event);
-	void dropEvent(QDropEvent *event);
+	void dragEnterEvent(QDragEnterEvent *event) override;
+	void dropEvent(QDropEvent *event) override;
 
 	Q_DISABLE_COPY(DeleteActionPushButton)
 };

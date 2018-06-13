@@ -56,7 +56,7 @@ class ActionPackSystem : public QObject, public ActionTools::ActionPack
 public:
     ActionPackSystem()                           = default;
 
-	void createDefinitions()
+	void createDefinitions() override
 	{
 		addActionDefinition(new Actions::CommandDefinition(this));
 		addActionDefinition(new Actions::KillProcessDefinition(this));
@@ -72,11 +72,11 @@ public:
 #endif
 	}
 
-	QString id() const							{ return QStringLiteral("system"); }
-	QString name() const						{ return tr("Actions dealing with the operating system"); }
-	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
+	QString id() const override							{ return QStringLiteral("system"); }
+	QString name() const override						{ return tr("Actions dealing with the operating system"); }
+	Tools::Version version() const override				{ return Tools::Version(0, 0, 1); }
 
-	void codeInit(QScriptEngine *scriptEngine) const
+	void codeInit(QScriptEngine *scriptEngine) const override
 	{
 		addCodeClass<Code::System>(QStringLiteral("System"), scriptEngine);
 		addCodeClass<Code::MediaPlaylist>(QStringLiteral("MediaPlaylist"), scriptEngine);

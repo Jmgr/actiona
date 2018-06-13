@@ -43,10 +43,10 @@ namespace ActionTools
 
 		void setFromSubParameter(const SubParameter &subParameter);
 
-		void openEditor(int line = -1, int column = -1);
-		void setCompletionModel(QAbstractItemModel *completionModel);
-        void setParameterContainer(const ParameterContainer *parameterContainer);
-        QSet<QString> findVariables() const;
+		void openEditor(int line = -1, int column = -1) override;
+		void setCompletionModel(QAbstractItemModel *completionModel) override;
+        void setParameterContainer(const ParameterContainer *parameterContainer) override;
+        QSet<QString> findVariables() const override;
 
 		QString text();
 
@@ -54,9 +54,9 @@ namespace ActionTools
         void onCodeChanged(bool code);
 
 	private:
-		QValidator::State validate(QString &text, int &pos) const;
-		QString textFromValue(int value) const;
-		void contextMenuEvent(QContextMenuEvent *event);
+		QValidator::State validate(QString &text, int &pos) const override;
+		QString textFromValue(int value) const override;
+		void contextMenuEvent(QContextMenuEvent *event) override;
 		
 		QString mPrefix;
 		QString mSuffix;

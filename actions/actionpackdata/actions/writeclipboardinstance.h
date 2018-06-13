@@ -35,7 +35,7 @@ namespace Actions
 		WriteClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)											{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 

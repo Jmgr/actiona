@@ -110,7 +110,7 @@ public:
 
     QBatteryInfo(QObject *parent = nullptr);
     QBatteryInfo(int batteryIndex, QObject *parent = nullptr);
-    virtual ~QBatteryInfo();
+    ~QBatteryInfo() override;
 
     int batteryCount() const;
     int batteryIndex() const;
@@ -147,8 +147,8 @@ Q_SIGNALS:
     void temperatureChanged(float temperature);
 
 protected:
-    void connectNotify(const QMetaMethod &signal);
-    void disconnectNotify(const QMetaMethod &signal);
+    void connectNotify(const QMetaMethod &signal) override;
+    void disconnectNotify(const QMetaMethod &signal) override;
 
 private:
     Q_DISABLE_COPY(QBatteryInfo)

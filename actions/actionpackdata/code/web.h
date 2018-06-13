@@ -50,7 +50,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 		Web();
-		~Web();
+		~Web() override;
 
 		void setOnFinished(const QScriptValue &onFinished)					{ mOnFinished = onFinished; }
 		void setOnDownloadProgress(const QScriptValue &onDownloadProgress)	{ mOnDownloadProgress = onDownloadProgress; }
@@ -61,8 +61,8 @@ namespace Code
 		QScriptValue onError() const										{ return mOnError; }
 
 	public slots:
-		QString toString() const                                            { return QStringLiteral("Web"); }
-        virtual bool equals(const QScriptValue &other) const                { return defaultEqualsImplementation<Web>(other); }
+		QString toString() const override                                            { return QStringLiteral("Web"); }
+        bool equals(const QScriptValue &other) const override                { return defaultEqualsImplementation<Web>(other); }
 		QScriptValue download(const QString &urlString, const QScriptValue &options = QScriptValue());
 		bool isDownloading() const;
 		QScriptValue toImage() const;

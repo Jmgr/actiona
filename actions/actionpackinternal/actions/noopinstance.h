@@ -32,7 +32,7 @@ namespace Actions
 		NoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			executionEnded();
 		}

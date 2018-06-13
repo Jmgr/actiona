@@ -38,11 +38,11 @@ namespace ActionTools
 	public:
         ColorPositionParameterDefinition(const Name &name, QObject *parent);
 
-		void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
-		void setDefaultValues(ActionInstance *actionInstance);
-		Qt::Orientation editorsOrientation() const								{ return Qt::Vertical; }
+		void buildEditors(Script *script, QWidget *parent) override;
+		void load(const ActionInstance *actionInstance) override;
+		void save(ActionInstance *actionInstance) override;
+		void setDefaultValues(ActionInstance *actionInstance) override;
+		Qt::Orientation editorsOrientation() const override								{ return Qt::Vertical; }
 		
 		void setDefaultPosition(const QPoint &position)							{ mDefaultPosition = position; }
 		QPoint defaultPosition() const											{ return mDefaultPosition; }
@@ -51,8 +51,8 @@ namespace ActionTools
 		QColor defaultColor() const												{ return mDefaultColor; }
 		
 	private:
-        QString defaultValue(QString defaultValue = {}) const                   { Q_UNUSED(defaultValue); return {}; }
-        void setDefaultValue(const QString &defaultValue)						{ Q_UNUSED(defaultValue); }
+        QString defaultValue(QString defaultValue = {}) const override                   { Q_UNUSED(defaultValue); return {}; }
+        void setDefaultValue(const QString &defaultValue) override						{ Q_UNUSED(defaultValue); }
 		
 		PositionEdit *mPositionEdit;
 		ColorEdit *mColorEdit;

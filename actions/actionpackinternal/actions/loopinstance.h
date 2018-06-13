@@ -32,7 +32,7 @@ namespace Actions
 		LoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent), mInitialized(false), mCounter(0)		{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			if(mInitialized && mCounter == 0)
 			{
@@ -73,7 +73,7 @@ namespace Actions
 			executionEnded();
 		}
 
-		void reset()
+		void reset() override
 		{
 			mInitialized = false;
 			mCounter = 0;

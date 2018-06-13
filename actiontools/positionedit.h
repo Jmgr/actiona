@@ -43,7 +43,7 @@ namespace ActionTools
 
 	public:
 		explicit PositionEdit(QWidget *parent = nullptr);
-		~PositionEdit();
+		~PositionEdit() override;
 
 		void setText(const QString &text);
 		QString text() const;
@@ -51,10 +51,10 @@ namespace ActionTools
 		bool isCode() const;
 		void setCode(bool code);
 		void setFromSubParameter(const SubParameter &subParameter);
-		void openEditor(int line = -1, int column = -1);
-		void setCompletionModel(QAbstractItemModel *completionModel);
-        void setParameterContainer(const ParameterContainer *parameterContainer);
-        QSet<QString> findVariables() const;
+		void openEditor(int line = -1, int column = -1) override;
+		void setCompletionModel(QAbstractItemModel *completionModel) override;
+        void setParameterContainer(const ParameterContainer *parameterContainer) override;
+        QSet<QString> findVariables() const override;
 
 	signals:
         void positionChosen(QPointF position);

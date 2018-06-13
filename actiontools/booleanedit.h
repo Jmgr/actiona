@@ -40,17 +40,17 @@ namespace ActionTools
 
 	public:
 		explicit BooleanEdit(QWidget *parent = nullptr);
-		~BooleanEdit();
+		~BooleanEdit() override;
 
 		void setText(bool isCode, const QString &text);
 		QString text() const;
 		bool isCode() const;
 		void setCode(bool code);
 		void setFromSubParameter(const SubParameter &subParameter);
-		void openEditor(int line, int column);
-		void setCompletionModel(QAbstractItemModel *completionModel);
-        void setParameterContainer(const ParameterContainer *parameterContainer);
-        QSet<QString> findVariables() const;
+		void openEditor(int line, int column) override;
+		void setCompletionModel(QAbstractItemModel *completionModel) override;
+        void setParameterContainer(const ParameterContainer *parameterContainer) override;
+        QSet<QString> findVariables() const override;
 
 	private slots:
 		void on_switchTextModePushButton_clicked();

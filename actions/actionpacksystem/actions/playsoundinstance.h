@@ -33,13 +33,13 @@ namespace Actions
 
 	public:
 		PlaySoundInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-		~PlaySoundInstance();
+		~PlaySoundInstance() override;
 
-		void startExecution();
-		void pauseExecution();
-		void resumeExecution();
-		void stopExecution();
-		void stopLongTermExecution();
+		void startExecution() override;
+		void pauseExecution() override;
+		void resumeExecution() override;
+		void stopExecution() override;
+		void stopLongTermExecution() override;
 
 	private slots:
 		void stateChanged(QMediaPlayer::State state);

@@ -33,7 +33,7 @@ class FlagsComboBox : public QComboBox
 
 public:
     FlagsComboBox(QWidget *parent = nullptr);
-    virtual ~FlagsComboBox();
+    ~FlagsComboBox() override;
 
     void setAllCheckedText(const QString &text);
     void setNoneCheckedText(const QString &text);

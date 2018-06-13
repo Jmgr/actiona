@@ -38,7 +38,7 @@ class CodeExecuter : public Executer
 public:
     explicit CodeExecuter(QObject *parent = nullptr);
 	
-	bool start(QIODevice *device, const QString &filename);
+	bool start(QIODevice *device, const QString &filename) override;
 	
 private slots:
 	void onEvaluationResumed();

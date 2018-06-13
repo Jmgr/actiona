@@ -34,7 +34,7 @@ class AboutDialog : public QDialog
 	Q_OBJECT
 public:
 	explicit AboutDialog(QWidget *parent = nullptr);
-	~AboutDialog();
+	~AboutDialog() override;
 
 private slots:
 	void animate();

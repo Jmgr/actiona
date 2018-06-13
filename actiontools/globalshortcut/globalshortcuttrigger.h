@@ -49,7 +49,7 @@ namespace ActionTools
 		/**
 		 * Unregisters the key.
 		 */
-		~KeyTrigger();
+		~KeyTrigger() override;
 	
 		friend class GlobalShortcutManager;
 	

@@ -56,7 +56,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 		MediaPlaylist();
-		~MediaPlaylist();
+		~MediaPlaylist() override;
 
 		qreal playbackRate() const;
 		qreal volume() const;
@@ -65,8 +65,8 @@ namespace Code
 		PlaybackMode playbackMode() const;
 
 	public slots:
-		QString toString() const                                { return QStringLiteral("MediaPlaylist"); }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<MediaPlaylist>(other); }
+		QString toString() const override                                { return QStringLiteral("MediaPlaylist"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<MediaPlaylist>(other); }
 		//Player
 		QScriptValue setPlaybackRate(qreal rate);
 		QScriptValue setVolume(qreal volume);

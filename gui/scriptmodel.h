@@ -83,8 +83,8 @@ public:
     void setHeatmapColors(const std::pair<QColor, QColor> &heatmapColors);
     std::pair<QColor, QColor> heatmapColors() const                     { return mHeatmapColors; }
 
-	int rowCount(const QModelIndex &parent = QModelIndex()) const;
-	int columnCount(const QModelIndex &parent = QModelIndex()) const;
+	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 	void reset();
 	void appendActions(QList<ActionTools::ActionInstance *> instances);
@@ -110,17 +110,17 @@ protected:
 	void emitDataChanged(const QModelIndex &index)						{ emit dataChanged(index, index); }
 
 private:
-	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-	Qt::ItemFlags flags(const QModelIndex &index) const;
-	QMap<int, QVariant> itemData(const QModelIndex &index) const;
-	Qt::DropActions supportedDropActions() const;
-	QMimeData* mimeData(const QModelIndexList &indexes) const;
-	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
-	QStringList mimeTypes() const;
-	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
-	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+	Qt::ItemFlags flags(const QModelIndex &index) const override;
+	QMap<int, QVariant> itemData(const QModelIndex &index) const override;
+	Qt::DropActions supportedDropActions() const override;
+	QMimeData* mimeData(const QModelIndexList &indexes) const override;
+	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
+	QStringList mimeTypes() const override;
+	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 	bool moveRow(int row, int destination);
     QColor computeHeatmapColor(const ActionTools::ActionInstance &actionInstance) const;
 

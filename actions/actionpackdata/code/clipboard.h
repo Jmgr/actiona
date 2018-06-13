@@ -58,8 +58,8 @@ namespace Code
 		QScriptValue image() const;
 	
 	public slots:
-		QString toString() const                                { return QStringLiteral("Clipboard"); }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Clipboard>(other); }
+		QString toString() const override                                { return QStringLiteral("Clipboard"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Clipboard>(other); }
 		QScriptValue setMode(Mode mode);
 		QScriptValue setText(const QString &value) const;
 		QScriptValue setImage(const QScriptValue &data) const;

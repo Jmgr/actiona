@@ -113,15 +113,15 @@ namespace Actions
 			addException(KeyInstance::InvalidActionException, tr("Invalid action"));
 		}
 
-		QString name() const													{ return QObject::tr("Key"); }
-		QString id() const														{ return QStringLiteral("ActionKey"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Emulates a key press"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new KeyInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/key.png")); }
-		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Key"); }
+		QString id() const override														{ return QStringLiteral("ActionKey"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Emulates a key press"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new KeyInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/key.png")); }
+		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(KeyDefinition)

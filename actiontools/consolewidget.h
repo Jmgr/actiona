@@ -73,7 +73,7 @@ namespace ActionTools
 		};
 
 		explicit ConsoleWidget(QWidget *parent = nullptr);
-		~ConsoleWidget();
+		~ConsoleWidget() override ;
 		
 		void setup(QStandardItemModel *model = nullptr);
 

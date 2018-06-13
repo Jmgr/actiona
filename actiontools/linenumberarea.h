@@ -35,13 +35,13 @@ namespace ActionTools
 			codeEditor = editor;
 		}
 
-		QSize sizeHint() const
+		QSize sizeHint() const override
 		{
 			return {codeEditor->lineNumberAreaWidth(), 0};
 		}
 
 	protected:
-		void paintEvent(QPaintEvent *event)
+		void paintEvent(QPaintEvent *event) override
 		{
 			codeEditor->lineNumberAreaPaintEvent(event);
 		}

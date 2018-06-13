@@ -48,7 +48,7 @@ namespace Actions
             connect(mProcess, &QProcess::readyReadStandardError, this, &CommandInstance::readyReadStandardError);
 		}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
@@ -85,7 +85,7 @@ namespace Actions
 	#endif
 		}
 
-		void stopExecution()
+		void stopExecution() override
 		{
 			terminate();
 		}

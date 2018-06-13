@@ -34,14 +34,14 @@ namespace ActionTools
 	public:
         KeyParameterDefinition(const Name &name, QObject *parent);
 
-		void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
-		void setDefaultValues(ActionInstance *actionInstance);
+		void buildEditors(Script *script, QWidget *parent) override;
+		void load(const ActionInstance *actionInstance) override;
+		void save(ActionInstance *actionInstance) override;
+		void setDefaultValues(ActionInstance *actionInstance) override;
 		
 	private:
-        QString defaultValue(QString defaultValue = {}) const                   { Q_UNUSED(defaultValue); return {}; }
-        void setDefaultValue(const QString &defaultValue)						{ Q_UNUSED(defaultValue); }
+        QString defaultValue(QString defaultValue = {}) const override                   { Q_UNUSED(defaultValue); return {}; }
+        void setDefaultValue(const QString &defaultValue) override						{ Q_UNUSED(defaultValue); }
 		
 		KeyEdit *mKeyEdit;
 

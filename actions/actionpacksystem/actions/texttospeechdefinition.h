@@ -85,14 +85,14 @@ namespace Actions
             addElement(pitch, 1);
 		}
 
-        QString name() const													{ return QObject::tr("Text to speech"); }
-        QString id() const														{ return QStringLiteral("ActionTextToSpeech"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-        QString description() const												{ return QObject::tr("Reads some text using text to speech"); }
-        ActionTools::ActionInstance *newActionInstance() const					{ return new TextToSpeechInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-        QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/texttospeech.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+        QString name() const override													{ return QObject::tr("Text to speech"); }
+        QString id() const override														{ return QStringLiteral("ActionTextToSpeech"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+        QString description() const override												{ return QObject::tr("Reads some text using text to speech"); }
+        ActionTools::ActionInstance *newActionInstance() const override					{ return new TextToSpeechInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+        QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/texttospeech.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
         Q_DISABLE_COPY(TextToSpeechDefinition)

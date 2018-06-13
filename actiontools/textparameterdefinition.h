@@ -40,11 +40,11 @@ namespace ActionTools
 		};
 
         TextParameterDefinition(const Name &name, QObject *parent);
-        virtual ~TextParameterDefinition()                                      = default;
+        ~TextParameterDefinition() override = default;
 
-		virtual void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
+        void buildEditors(Script *script, QWidget *parent) override;
+        void load(const ActionInstance *actionInstance) override;
+        void save(ActionInstance *actionInstance) override;
 
 		void setTextCodeMode(TextCodeMode textCodeMode)							{ mTextCodeMode = textCodeMode; }
 		

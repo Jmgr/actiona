@@ -32,7 +32,7 @@ namespace ActionTools
     public:
         ImageParameterDefinition(const Name &name, QObject *parent);
 
-        void buildEditors(Script *script, QWidget *parent);
+        void buildEditors(Script *script, QWidget *parent) override;
 
     private slots:
         void onCaptureClicked();

@@ -58,7 +58,7 @@ namespace ActionTools
         static const QRegExp CodeVariableDeclarationRegExp;
 
 		Script(ActionFactory *actionFactory, QObject *parent = nullptr);
-		~Script();
+		~Script() override;
 
         void appendAction(ActionInstance *actionInstance)                               { mActionInstances.append(actionInstance); }
 		ActionInstance *appendAction(const QString &actionDefinitionId);

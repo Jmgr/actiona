@@ -40,8 +40,8 @@ namespace Code
 		IniFile();
 	
 	public slots:
-		QString toString() const                                { return QStringLiteral("IniFile"); }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<IniFile>(other); }
+		QString toString() const override                                { return QStringLiteral("IniFile"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<IniFile>(other); }
 		QScriptValue load(const QString &filename);
 		QScriptValue save(const QString &filename = QString());
 		QScriptValue clear();

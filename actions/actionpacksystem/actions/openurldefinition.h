@@ -47,13 +47,13 @@ namespace Actions
 			addException(OpenURLInstance::FailedToOpenURL, tr("Failed to open URL"));
 		}
 
-		QString name() const													{ return QObject::tr("Open URL"); }
-		QString id() const														{ return QStringLiteral("ActionOpenURL"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Opens an URL"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new OpenURLInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/openurl.png")); }
+		QString name() const override													{ return QObject::tr("Open URL"); }
+		QString id() const override														{ return QStringLiteral("ActionOpenURL"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Opens an URL"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new OpenURLInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/openurl.png")); }
 
 	private:
 		Q_DISABLE_COPY(OpenURLDefinition)

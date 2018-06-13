@@ -46,13 +46,13 @@ namespace Actions
 			addElement(name);
 		}
 
-		QString name() const													{ return QObject::tr("Begin procedure"); }
-		QString id() const														{ return QStringLiteral("ActionBeginProcedure"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Declares a new procedure"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new BeginProcedureInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Procedures; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/beginprocedure.png")); }
+		QString name() const override													{ return QObject::tr("Begin procedure"); }
+		QString id() const override														{ return QStringLiteral("ActionBeginProcedure"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Declares a new procedure"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new BeginProcedureInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Procedures; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/beginprocedure.png")); }
 
 	private:
 		Q_DISABLE_COPY(BeginProcedureDefinition)

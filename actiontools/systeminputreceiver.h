@@ -42,7 +42,7 @@ namespace ActionTools
 		public:
 			static Receiver &instance();
 
-			~Receiver();
+			~Receiver() override;
 
 		private slots:
 			void mouseMotion(int x, int y);

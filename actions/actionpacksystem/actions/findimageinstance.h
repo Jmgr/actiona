@@ -63,13 +63,13 @@ namespace Actions
 		};
 
 		FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-		~FindImageInstance();
+		~FindImageInstance() override;
 
         static Tools::StringListPair sources;
         static Tools::StringListPair methods;
 
-		void startExecution();
-        void stopExecution();
+		void startExecution() override;
+        void stopExecution() override;
 
 	private slots:
         void startSearching();

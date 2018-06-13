@@ -39,12 +39,12 @@ namespace ActionTools
 
     public:
         ResourceNameDialog(ActionTools::Script *script, QWidget *parent = nullptr);
-        ~ResourceNameDialog();
+        ~ResourceNameDialog() override;
 
         QString resourceName() const;
 
     public slots:
-        virtual void accept();
+        void accept() override;
 
     private slots:
         void onTextChanged(const QString &text);

@@ -49,8 +49,8 @@ namespace Actions
         static Tools::StringListPair buttons;
         static Tools::StringListPair actions;
 	
-		void startExecution();
-		void stopLongTermExecution();
+		void startExecution() override;
+		void stopLongTermExecution() override;
 	
 	private:
 		MouseDevice mMouseDevice;

@@ -40,7 +40,7 @@ public:
 	void fadeOut();
 
 protected:
-	void drawContents(QPainter *painter);
+	void drawContents(QPainter *painter) override;
 
 private slots:
     void onMessageChanged(const QString &message);

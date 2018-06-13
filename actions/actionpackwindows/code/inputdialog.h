@@ -57,7 +57,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 		InputDialog();
-		~InputDialog();
+		~InputDialog() override;
 		
 		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
 		void setOnValueChanged(const QScriptValue &onValueChanged)			{ mOnValueChanged = onValueChanged; }
@@ -68,7 +68,7 @@ namespace Code
 		QScriptValue value() const;
 		
 	public slots:
-		QString toString() const					{ return QStringLiteral("InputDialog"); }
+		QString toString() const override					{ return QStringLiteral("InputDialog"); }
 		QScriptValue setLabelText(const QString &labelText);
 		QScriptValue setOkButtonText(const QString &okButtonText);
 		QScriptValue setCancelButtonText(const QString &cancelButtonText);

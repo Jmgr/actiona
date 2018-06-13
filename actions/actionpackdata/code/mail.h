@@ -102,8 +102,8 @@ namespace Code
         void setStartTlsDisabled(bool disable)                                      { mSmtp.setStartTlsDisabled(disable); }
 
     public slots:
-		QString toString() const                                                    { return QStringLiteral("Mail"); }
-        virtual bool equals(const QScriptValue &other) const                        { return defaultEqualsImplementation<Mail>(other); }
+		QString toString() const override                                                    { return QStringLiteral("Mail"); }
+        bool equals(const QScriptValue &other) const override                        { return defaultEqualsImplementation<Mail>(other); }
 
         QScriptValue connectToServer(const QString &serverName, int port = 25);
         QScriptValue connectToSecureServer(const QString &serverName, int port = 465);

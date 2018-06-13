@@ -53,7 +53,7 @@ namespace Actions
 
         static Tools::StringListPair types;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 

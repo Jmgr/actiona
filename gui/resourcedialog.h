@@ -42,12 +42,12 @@ class ResourceDialog : public QDialog
     
 public:
     explicit ResourceDialog(ActionTools::Script *script, QWidget *parent = nullptr);
-    ~ResourceDialog();
+    ~ResourceDialog() override;
 
     void setCurrentResource(const QString &resource);
 
 public slots:
-    virtual void accept();
+    void accept() override;
 
 private slots:
     void insertFiles(const QStringList &filenames);

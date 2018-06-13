@@ -44,7 +44,7 @@ namespace ActionTools
 
 	public:
 		explicit ItemListWidget(QWidget *parent = nullptr);
-		~ItemListWidget();
+		~ItemListWidget() override;
 
 		void setItems(const QStringList &items);
 		void appendItems(const QStringList &items);

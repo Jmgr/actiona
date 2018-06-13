@@ -81,13 +81,13 @@ namespace Actions
 			addException(ReadIniFileInstance::UnableToFindSectionException, tr("Unable to find section"));
 		}
 
-		QString name() const													{ return QObject::tr("Read INI file"); }
-		QString id() const														{ return QStringLiteral("ActionReadIniFile"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read one or all the entries in an INI file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadIniFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readini.png")); }
+		QString name() const override													{ return QObject::tr("Read INI file"); }
+		QString id() const override														{ return QStringLiteral("ActionReadIniFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Read one or all the entries in an INI file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadIniFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readini.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadIniFileDefinition)

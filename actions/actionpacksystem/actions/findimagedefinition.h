@@ -156,17 +156,17 @@ namespace Actions
 			addException(FindImageInstance::ErrorWhileSearchingException, tr("Error while searching"));
 		}
 
-		QString name() const													{ return QObject::tr("Find image"); }
-		QString id() const														{ return QStringLiteral("ActionFindImage"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Finds an image on the screen, on a window or on another image"); }
-        Tools::Version version() const                                          { return Tools::Version(1, 1, 0); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new FindImageInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/findimage.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Find image"); }
+		QString id() const override														{ return QStringLiteral("ActionFindImage"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Finds an image on the screen, on a window or on another image"); }
+        Tools::Version version() const override                                          { return Tools::Version(1, 1, 0); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new FindImageInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/findimage.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
-        void updateAction(ActionTools::ActionInstance *actionInstance, const Tools::Version &version) const;
+        void updateAction(ActionTools::ActionInstance *actionInstance, const Tools::Version &version) const override;
 
 	private:
         Q_DISABLE_COPY(FindImageDefinition)

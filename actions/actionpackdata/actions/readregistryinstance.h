@@ -43,7 +43,7 @@ namespace Actions
 
         static Tools::StringListPair keys;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		Q_DISABLE_COPY(ReadRegistryInstance)

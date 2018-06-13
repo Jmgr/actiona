@@ -38,14 +38,14 @@ namespace ActionTools
 
 	public:
 		explicit CodeComboBoxDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent)		{}
-		void paint(QPainter * painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+        void paint(QPainter * painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	};
 
 	class CodeComboBoxModel : public QStandardItemModel
 	{
 	public:
 		explicit CodeComboBoxModel(QObject *parent = nullptr) : QStandardItemModel(parent)	{}
-		Qt::ItemFlags flags(const QModelIndex &index) const;
+        Qt::ItemFlags flags(const QModelIndex &index) const override;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT CodeComboBox : public QComboBox, public AbstractCodeEditor
@@ -61,10 +61,10 @@ namespace ActionTools
 		bool isCode() const;
 		void setCode(bool code);
 
-		void openEditor(int line = -1, int column = -1);
-		void setCompletionModel(QAbstractItemModel *completionModel);
-        void setParameterContainer(const ParameterContainer *parameterContainer);
-        QSet<QString> findVariables() const;
+        void openEditor(int line = -1, int column = -1) override;
+        void setCompletionModel(QAbstractItemModel *completionModel) override;
+        void setParameterContainer(const ParameterContainer *parameterContainer) override;
+        QSet<QString> findVariables() const override;
 
 	signals:
 		void codeChanged(bool code);

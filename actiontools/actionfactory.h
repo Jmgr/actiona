@@ -37,7 +37,7 @@ namespace ActionTools
 
 	public:
 		explicit ActionFactory(QObject *parent = nullptr);
-		~ActionFactory();
+		~ActionFactory() override ;
 
 		void loadActionPacks(const QString &directory, const QString &locale);
 		ActionDefinition *actionDefinition(const QString &actionId) const;

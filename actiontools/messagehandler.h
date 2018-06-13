@@ -34,7 +34,7 @@ namespace ActionTools
 		int column() const											{ return mSourceLocation.column(); }
 		
 	protected:
-		void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation);
+		void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation) override;
 		
 	private:
 		QtMsgType mMessageType;

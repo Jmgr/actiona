@@ -39,7 +39,7 @@ class ScriptExecuter : public Executer
 public:
     explicit ScriptExecuter(QObject *parent = nullptr);
 	
-	bool start(QIODevice *device, const QString &filename);
+	bool start(QIODevice *device, const QString &filename) override;
 
 public slots:
 	void executionStopped();

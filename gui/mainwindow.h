@@ -81,7 +81,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 public:
 	MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale);
-	~MainWindow();
+	~MainWindow() override;
 
 signals:
 	void needToShow();
@@ -193,7 +193,7 @@ private:
 	bool loadFile(const QString &fileName, bool verbose = true);
 	bool saveFile(const QString &fileName, bool copy = false);
 	void setCurrentFile(const QString &fileName);
-	void closeEvent(QCloseEvent *event);
+	void closeEvent(QCloseEvent *event) override;
 	bool maybeSave();
 	bool save();
 	bool saveAs();

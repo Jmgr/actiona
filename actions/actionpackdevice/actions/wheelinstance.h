@@ -38,7 +38,7 @@ namespace Actions
 		WheelInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 		
@@ -56,7 +56,7 @@ namespace Actions
 			executionEnded();
 		}
 
-		void stopLongTermExecution()
+		void stopLongTermExecution() override
 		{
 			mMouseDevice.reset();
 		}

@@ -34,7 +34,7 @@ namespace ActionTools
 		explicit ConsoleTableView(QWidget *parent = nullptr);
 
 	private:
-		void keyReleaseEvent(QKeyEvent *event);
+		void keyReleaseEvent(QKeyEvent *event) override;
 	};
 }
 

@@ -51,14 +51,14 @@ namespace Actions
 			addException(WheelInstance::FailedToSendInputException, tr("Send input failure"));
 		}
 	
-		QString name() const													{ return QObject::tr("Wheel"); }
-		QString id() const														{ return QStringLiteral("ActionWheel"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Emulates the mouse wheel"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WheelInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/wheel.png")); }
-		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
+		QString name() const override													{ return QObject::tr("Wheel"); }
+		QString id() const override														{ return QStringLiteral("ActionWheel"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Emulates the mouse wheel"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WheelInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/wheel.png")); }
+		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
 	
 	private:
 		Q_DISABLE_COPY(WheelDefinition)

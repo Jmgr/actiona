@@ -51,7 +51,7 @@ namespace Actions
 
         static Tools::StringListPair buttons;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
@@ -84,14 +84,14 @@ namespace Actions
             }
 		}
 
-		void stopExecution()
+		void stopExecution() override
 		{
             releaseButton();
 
 			mMoveTimer.stop();
 		}
 
-		void stopLongTermExecution()
+		void stopLongTermExecution() override
 		{
 			mMouseDevice.reset();
 		}

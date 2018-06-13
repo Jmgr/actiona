@@ -59,13 +59,13 @@ namespace Actions
 			addElement(unit);
 		}
 
-		QString name() const													{ return QObject::tr("Pause"); }
-		QString id() const														{ return QStringLiteral("ActionPause"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Pauses the script execution"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new PauseInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/pause.png")); }
+		QString name() const override													{ return QObject::tr("Pause"); }
+		QString id() const override														{ return QStringLiteral("ActionPause"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Pauses the script execution"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new PauseInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/pause.png")); }
 
 	private:
 		Q_DISABLE_COPY(PauseDefinition)

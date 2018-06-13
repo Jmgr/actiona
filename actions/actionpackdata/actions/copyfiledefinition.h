@@ -58,13 +58,13 @@ namespace Actions
 			addException(CopyFileInstance::UnableToWriteFileException, tr("Unable to write destination file"));
 		}
 
-		QString name() const													{ return QObject::tr("Copy file"); }
-		QString id() const														{ return QStringLiteral("ActionCopyFile"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Copy a file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new CopyFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/copyfile.png")); }
+		QString name() const override													{ return QObject::tr("Copy file"); }
+		QString id() const override														{ return QStringLiteral("ActionCopyFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Copy a file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new CopyFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/copyfile.png")); }
 
 	private:
 		Q_DISABLE_COPY(CopyFileDefinition)

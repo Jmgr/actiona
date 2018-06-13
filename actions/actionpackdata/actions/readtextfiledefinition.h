@@ -81,14 +81,14 @@ namespace Actions
 			addException(ReadTextFileInstance::CannotOpenFileException, tr("Cannot read file"));
 		}
 
-		QString name() const													{ return QObject::tr("Read text file"); }
-		QString id() const														{ return QStringLiteral("ActionReadTextFile"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read a plain text file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadTextFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readtext.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Read text file"); }
+		QString id() const override														{ return QStringLiteral("ActionReadTextFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Read a plain text file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadTextFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readtext.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(ReadTextFileDefinition)

@@ -57,8 +57,8 @@ namespace Code
 
 	public slots:
 		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const;
-		QString toString() const;
+		bool equals(const QScriptValue &other) const override;
+		QString toString() const override;
 		int id() const;
         int parentId() const;
 		bool kill(KillMode killMode = GracefulThenForceful, int timeout = 3000) const;

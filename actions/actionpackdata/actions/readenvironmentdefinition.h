@@ -66,13 +66,13 @@ namespace Actions
 			addElement(selectionMode);
 		}
 
-        QString name() const													{ return QObject::tr("Read environment variable"); }
-		QString id() const														{ return QStringLiteral("ActionReadEnvironmentVariable"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-        QString description() const												{ return QObject::tr("Read a single or multiple environment variables"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadEnvironmentVariableInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readenvironment.png")); }
+        QString name() const override													{ return QObject::tr("Read environment variable"); }
+		QString id() const override														{ return QStringLiteral("ActionReadEnvironmentVariable"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+        QString description() const override												{ return QObject::tr("Read a single or multiple environment variables"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadEnvironmentVariableInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readenvironment.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadEnvironmentVariableDefinition)

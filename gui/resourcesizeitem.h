@@ -30,7 +30,7 @@ public:
     {
     }
 
-    bool operator<(const QTableWidgetItem &other) const
+    bool operator<(const QTableWidgetItem &other) const override
     {
         return data(Qt::UserRole).toInt() < other.data(Qt::UserRole).toInt();
     }

@@ -43,7 +43,7 @@ namespace Actions
 		{
 		}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
@@ -67,7 +67,7 @@ namespace Actions
 		}
 
 	private slots:
-		void done()
+		void done() override
 		{
             setVariable(mVariable, Code::RawData::constructor(mResult.buffer(), scriptEngine()));
 
@@ -75,7 +75,7 @@ namespace Actions
 		}
 
 	private:
-		void clean()
+		void clean() override
 		{
 			DataCopyActionInstance::clean();
 

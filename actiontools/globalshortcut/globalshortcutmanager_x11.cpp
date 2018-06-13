@@ -76,7 +76,7 @@ namespace ActionTools
 	
 	protected:
 		// reimplemented
-		bool eventFilter(QObject* o, QEvent* e)
+		bool eventFilter(QObject* o, QEvent* e) override
 		{
 			if(e->type() == QEvent::KeyPress) {
 				auto* k = static_cast<QKeyEvent*>(e);
@@ -317,7 +317,7 @@ namespace ActionTools
 		/**
 		 * Destructor unregisters the hotkey.
 		 */
-		~Impl()
+		~Impl() override
 		{
 			X11KeyTriggerManager::instance()->removeTrigger(this);
 	
@@ -325,12 +325,12 @@ namespace ActionTools
 				XUngrabKey(QX11Info::display(), key.code, key.mod, QX11Info::appRootWindow());
 		}
 	
-		void activate()
+		void activate() override
 		{
 			emit trigger_->triggered();
 		}
 	
-		bool isAccepted(int qkey) const
+		bool isAccepted(int qkey) const override
 		{
 			return qkey_ == qkey;
 		}

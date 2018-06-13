@@ -96,14 +96,14 @@ namespace Actions
             addElement(positionOffset, 1);
 		}
 
-		QString name() const													{ return QObject::tr("Pixel color"); }
-		QString id() const														{ return QStringLiteral("ActionPixelColor"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Check a pixel color on the screen"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new PixelColorInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/pixelcolor.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Pixel color"); }
+		QString id() const override														{ return QStringLiteral("ActionPixelColor"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Check a pixel color on the screen"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new PixelColorInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/pixelcolor.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(PixelColorDefinition)

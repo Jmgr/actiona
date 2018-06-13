@@ -39,7 +39,7 @@ namespace ActionTools
         Q_OBJECT
     public:
         TargetWindow();
-        virtual ~TargetWindow();
+        ~TargetWindow() override;
 
     signals:
         void rectangleSelected(const QRect &rect);
@@ -50,16 +50,16 @@ namespace ActionTools
         virtual void mousePressEvent(QMouseEvent *event);
         virtual void mouseReleaseEvent(QMouseEvent *event);
 #endif
-        virtual void paintEvent(QPaintEvent *event);
-        virtual void showEvent(QShowEvent *event);
-        virtual void hideEvent(QHideEvent *event);
+        void paintEvent(QPaintEvent *event) override;
+        void showEvent(QShowEvent *event) override;
+        void hideEvent(QHideEvent *event) override;
 
     private slots:
         void update();
 
     private:
 #ifdef Q_OS_LINUX
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
         void ungrab();
 #endif
         void mouseButtonReleased();

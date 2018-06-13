@@ -60,7 +60,7 @@ class QxtHmacPrivate : public QxtPrivate<QxtHmac>
 public:
     QXT_DECLARE_PUBLIC(QxtHmac)
     QxtHmacPrivate() = default;
-    ~QxtHmacPrivate()
+    ~QxtHmacPrivate() override
     {
         // deleting NULL is safe, so no tests are needed here
         delete ohash;

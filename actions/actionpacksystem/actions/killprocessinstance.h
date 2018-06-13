@@ -44,7 +44,7 @@ namespace Actions
 
         static Tools::StringListPair killModes;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 

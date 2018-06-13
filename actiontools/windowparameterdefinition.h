@@ -34,10 +34,10 @@ namespace ActionTools
 	public:
         WindowParameterDefinition(const Name &name, QObject *parent);
 
-		void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
-        void actionUpdate(Script *script);
+		void buildEditors(Script *script, QWidget *parent) override;
+		void load(const ActionInstance *actionInstance) override;
+		void save(ActionInstance *actionInstance) override;
+        void actionUpdate(Script *script) override;
 
 	private:
 		WindowEdit *mWindowEdit;

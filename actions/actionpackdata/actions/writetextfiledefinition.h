@@ -61,14 +61,14 @@ namespace Actions
 			addException(WriteTextFileInstance::CannotWriteFileException, tr("Cannot write file"));
 		}
 
-		QString name() const													{ return QObject::tr("Write text file"); }
-		QString id() const														{ return QStringLiteral("ActionWriteTextFile"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Write a plain text file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteTextFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/writetext.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Write text file"); }
+		QString id() const override														{ return QStringLiteral("ActionWriteTextFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Write a plain text file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteTextFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/writetext.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(WriteTextFileDefinition)

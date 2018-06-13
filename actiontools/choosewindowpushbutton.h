@@ -36,15 +36,15 @@ namespace ActionTools
 
 	public:
 		explicit ChooseWindowPushButton(QWidget *parent = nullptr);
-		~ChooseWindowPushButton();
+        ~ChooseWindowPushButton() override;
 
 	signals:
         void foundValidWindow(const ActionTools::WindowHandle &handle);
         void searchEnded(const ActionTools::WindowHandle &handle);
 
 	private:
-		void paintEvent(QPaintEvent *event);
-		void mousePressEvent(QMouseEvent *event);
+        void paintEvent(QPaintEvent *event) override;
+        void mousePressEvent(QMouseEvent *event) override;
 #ifdef Q_OS_WIN
 		void mouseReleaseEvent(QMouseEvent *event);
 
@@ -64,7 +64,7 @@ namespace ActionTools
 		WId windowAtPointer() const;
 #endif
 
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
 
 		QPixmap *mCrossIcon;
 		WindowHandle mLastFoundWindow;

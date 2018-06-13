@@ -43,7 +43,7 @@ public:
 	};
 
 	explicit ChangelogDialog(QWidget *parent = nullptr);
-	~ChangelogDialog();
+	~ChangelogDialog() override;
 
 	void setVersion(const Tools::Version &version);
 	void setReleaseDate(const QDate &releaseDate);

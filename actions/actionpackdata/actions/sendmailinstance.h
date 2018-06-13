@@ -50,12 +50,12 @@ namespace Actions
 		};
 
         SendMailInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-        ~SendMailInstance();
+        ~SendMailInstance() override;
 
         static Tools::StringListPair attachmentContentTypes;
 
-		void startExecution();
-		void stopExecution();
+		void startExecution() override;
+		void stopExecution() override;
 
 	private slots:
         void connectionFailed(const QByteArray &msg);

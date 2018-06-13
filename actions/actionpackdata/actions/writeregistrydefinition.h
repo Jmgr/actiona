@@ -64,13 +64,13 @@ namespace Actions
 			addException(WriteRegistryInstance::CannotWriteValueException, tr("Cannot write value"));
 		}
 
-		QString name() const													{ return QObject::tr("Write registry"); }
-		QString id() const														{ return QStringLiteral("ActionWriteRegistry"); }
-		ActionTools::Flag flags() const											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Writes an entry to the registry"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteRegistryInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/writeregistry.png")); }
+		QString name() const override													{ return QObject::tr("Write registry"); }
+		QString id() const override														{ return QStringLiteral("ActionWriteRegistry"); }
+		ActionTools::Flag flags() const override											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Writes an entry to the registry"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteRegistryInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/writeregistry.png")); }
 
 	private:
 		Q_DISABLE_COPY(WriteRegistryDefinition)

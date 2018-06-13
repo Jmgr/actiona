@@ -73,7 +73,7 @@ class QBatteryInfoPrivate : public QObject
 public:
     QBatteryInfoPrivate(QBatteryInfo *parent);
     QBatteryInfoPrivate(int batteryIndex, QBatteryInfo *parent);
-    ~QBatteryInfoPrivate();
+    ~QBatteryInfoPrivate() override;
 
     int batteryCount();
     int batteryIndex() const;
@@ -121,8 +121,8 @@ Q_SIGNALS:
     void temperatureChanged(float temperature);
 
 protected:
-    void connectNotify(const QMetaMethod &signal);
-    void disconnectNotify(const QMetaMethod &signal);
+    void connectNotify(const QMetaMethod &signal) override;
+    void disconnectNotify(const QMetaMethod &signal) override;
 
 private Q_SLOTS:
 #if !defined(QT_NO_UDEV)

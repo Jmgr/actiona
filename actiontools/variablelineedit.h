@@ -31,11 +31,11 @@ namespace ActionTools
     public:
         explicit VariableLineEdit(QWidget *parent);
 
-        QSet<QString> findVariables() const;
+        QSet<QString> findVariables() const override;
 
     protected:
-        virtual void insertVariable(const QString &variable);
-        virtual QMenu *createResourcesMenu(QMenu *parentMenu, bool ignoreMultiline = false);
+        void insertVariable(const QString &variable) override;
+        QMenu *createResourcesMenu(QMenu *parentMenu, bool ignoreMultiline = false) override;
     };
 }
 

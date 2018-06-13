@@ -66,14 +66,14 @@ namespace Actions
 			addException(NotifyInstance::UnableToShowNotificationException, tr("Show notification failure"));
 		}
 
-		QString name() const													{ return QObject::tr("Notify"); }
-		QString id() const														{ return QStringLiteral("ActionNotify"); }
-		ActionTools::Flag flags() const											{ return ActionTools::WorksOnGnuLinux | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Shows a message using the notify system"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new NotifyInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/notification.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Notify"); }
+		QString id() const override														{ return QStringLiteral("ActionNotify"); }
+		ActionTools::Flag flags() const override											{ return ActionTools::WorksOnGnuLinux | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Shows a message using the notify system"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new NotifyInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/notification.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(NotifyDefinition)

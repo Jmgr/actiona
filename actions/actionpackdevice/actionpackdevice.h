@@ -47,7 +47,7 @@ class ActionPackDevice : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackDevice()							= default;
 
-	void createDefinitions()
+	void createDefinitions() override
 	{
 		addActionDefinition(new Actions::TextDefinition(this));
 		addActionDefinition(new Actions::ClickDefinition(this));
@@ -57,11 +57,11 @@ public:
 		addActionDefinition(new Actions::CursorPathDefinition(this));
 	}
 
-	QString id() const							{ return QStringLiteral("device"); }
-	QString name() const						{ return tr("Actions dealing with devices like the keyboard or the mouse"); }
-	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
+	QString id() const override							{ return QStringLiteral("device"); }
+	QString name() const override						{ return tr("Actions dealing with devices like the keyboard or the mouse"); }
+	Tools::Version version() const override				{ return Tools::Version(0, 0, 1); }
 	
-	void codeInit(QScriptEngine *scriptEngine) const
+	void codeInit(QScriptEngine *scriptEngine) const override
 	{
 		addCodeClass<Code::Mouse>(QStringLiteral("Mouse"), scriptEngine);
 		addCodeClass<Code::Keyboard>(QStringLiteral("Keyboard"), scriptEngine);

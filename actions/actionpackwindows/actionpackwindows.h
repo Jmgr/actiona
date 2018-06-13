@@ -49,7 +49,7 @@ class ActionPackWindows : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackWindows()							= default;
 
-	void createDefinitions()
+	void createDefinitions() override
 	{
 		addActionDefinition(new Actions::MessageBoxDefinition(this));
 		addActionDefinition(new Actions::DataInputDefinition(this));
@@ -58,11 +58,11 @@ public:
 		addActionDefinition(new Actions::MultiDataInputDefinition(this));
 	}
 
-	QString id() const							{ return QStringLiteral("windows"); }
-	QString name() const						{ return tr("Actions dealing with windows"); }
-	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
+	QString id() const override							{ return QStringLiteral("windows"); }
+	QString name() const override						{ return tr("Actions dealing with windows"); }
+	Tools::Version version() const override				{ return Tools::Version(0, 0, 1); }
 
-	void codeInit(QScriptEngine *scriptEngine) const
+	void codeInit(QScriptEngine *scriptEngine) const override
 	{
 		addCodeClass<Code::MessageBox>(QStringLiteral("MessageBox"), scriptEngine);
 		addCodeClass<Code::InputDialog>(QStringLiteral("InputDialog"), scriptEngine);

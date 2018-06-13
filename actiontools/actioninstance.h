@@ -81,7 +81,7 @@ namespace ActionTools
 		ActionInstance(const ActionDefinition *definition = nullptr, QObject *parent = nullptr);
 		ActionInstance(const ActionInstance &other);
 
-		virtual ~ActionInstance()											= default;
+		~ActionInstance()											override = default;
 		
 		bool operator==(const ActionInstance &other) const					{ return ((*d) == (*other.d)); }
 		bool operator!=(const ActionInstance &other) const					{ return !((*d) == (*other.d)); }

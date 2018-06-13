@@ -44,7 +44,7 @@ namespace Actions
 
         static Tools::StringListPair outputs;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 

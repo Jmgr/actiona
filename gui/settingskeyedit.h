@@ -33,7 +33,7 @@ public:
 	void			setKeySequence(QKeySequence keySequence);
 
 protected:
-	void keyPressEvent(QKeyEvent *event);
+	void keyPressEvent(QKeyEvent *event) override;
 
 private:
 	QKeySequence mKeySequence;

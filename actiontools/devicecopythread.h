@@ -38,7 +38,7 @@ namespace ActionTools
 		qint64 copiedData() const;
 		
 	protected:
-		void run();
+		void run() override;
 		
 	private:
 		QIODevice *mInput;

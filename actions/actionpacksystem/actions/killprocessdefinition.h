@@ -64,14 +64,14 @@ namespace Actions
 			addElement(timeout, 1);
 		}
 
-		QString name() const													{ return QObject::tr("Kill process"); }
-		QString id() const														{ return QStringLiteral("ActionKillProcess"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Kills a process"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new KillProcessInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/closeprocess.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Kill process"); }
+		QString id() const override														{ return QStringLiteral("ActionKillProcess"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Kills a process"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new KillProcessInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/closeprocess.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(KillProcessDefinition)

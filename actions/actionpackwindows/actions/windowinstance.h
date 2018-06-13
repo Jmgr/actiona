@@ -51,7 +51,7 @@ namespace Actions
 
         static Tools::StringListPair actions;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		Q_DISABLE_COPY(WindowInstance)

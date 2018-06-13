@@ -30,11 +30,11 @@ public:
     explicit ScriptTreeView(QWidget *parent = nullptr);
 
 protected:
-	void startDrag(Qt::DropActions supportedActions);
-	void dragMoveEvent(QDragMoveEvent *event);
-	void dragLeaveEvent(QDragLeaveEvent* event);
-	void dropEvent(QDropEvent* event);
-	void paintEvent(QPaintEvent* event);
+	void startDrag(Qt::DropActions supportedActions) override;
+	void dragMoveEvent(QDragMoveEvent *event) override;
+	void dragLeaveEvent(QDragLeaveEvent* event) override;
+	void dropEvent(QDropEvent* event) override;
+	void paintEvent(QPaintEvent* event) override;
 
 private:
 	QRect mDropIndicator;

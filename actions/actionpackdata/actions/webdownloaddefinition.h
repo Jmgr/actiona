@@ -89,14 +89,14 @@ namespace Actions
 			addException(WebDownloadInstance::DownloadException, tr("Download error"));
 		}
 
-		QString name() const													{ return QObject::tr("Web download"); }
-		QString id() const														{ return QStringLiteral("ActionWebDownload"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Downloads data from the Web"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WebDownloadInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/webdownload.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Web download"); }
+		QString id() const override														{ return QStringLiteral("ActionWebDownload"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Downloads data from the Web"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WebDownloadInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/webdownload.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(WebDownloadDefinition)

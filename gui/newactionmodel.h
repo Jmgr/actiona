@@ -35,8 +35,8 @@ public:
     explicit NewActionModel(QObject *parent = nullptr);
 
 protected:
-	Qt::DropActions supportedDropActions() const;
-    QMimeData *mimeData(const QModelIndexList &indexes) const;
+	Qt::DropActions supportedDropActions() const override;
+    QMimeData *mimeData(const QModelIndexList &indexes) const override;
 
 private:
     Q_DISABLE_COPY(NewActionModel)

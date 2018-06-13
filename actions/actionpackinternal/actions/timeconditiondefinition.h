@@ -59,13 +59,13 @@ namespace Actions
 			addElement(ifAfter);
 		}
 
-		QString name() const													{ return QObject::tr("Time condition"); }
-		QString id() const														{ return QStringLiteral("ActionTimeCondition"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Check the current date time and do some action"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new TimeConditionInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/timecondition.png")); }
+		QString name() const override													{ return QObject::tr("Time condition"); }
+		QString id() const override														{ return QStringLiteral("ActionTimeCondition"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Check the current date time and do some action"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new TimeConditionInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/timecondition.png")); }
 
 	private:
 		Q_DISABLE_COPY(TimeConditionDefinition)

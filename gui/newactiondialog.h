@@ -45,10 +45,10 @@ public:
     NewActionDialog(ActionTools::ActionFactory *actionFactory,
                     NewActionModel *newActionModel,
                     QWidget *parent = nullptr);
-	~NewActionDialog();
+	~NewActionDialog() override;
 
 	QString selectedAction() const							{ return mSelectedAction; }
-	int exec();
+	int exec() override;
 
 private slots:
     void on_newActionTreeView_doubleClicked(const QModelIndex &index);
@@ -56,7 +56,7 @@ private slots:
     void onCurrentChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
-	void accept();
+	void accept() override;
 
 	Ui::NewActionDialog *ui;
 	QString mSelectedAction;

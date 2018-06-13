@@ -46,13 +46,13 @@ namespace Actions
 			addElement(output);
 		}
 
-		QString name() const													{ return QObject::tr("Read clipboard"); }
-		QString id() const														{ return QStringLiteral("ActionReadClipboard"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read the clipboard contents"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadClipboardInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readclipboard.png")); }
+		QString name() const override													{ return QObject::tr("Read clipboard"); }
+		QString id() const override														{ return QStringLiteral("ActionReadClipboard"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Read the clipboard contents"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadClipboardInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readclipboard.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadClipboardDefinition)

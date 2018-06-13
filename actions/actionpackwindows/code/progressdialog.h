@@ -36,7 +36,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);		
 		
 		ProgressDialog();
-		~ProgressDialog();
+		~ProgressDialog() override;
 		
 		void setOnCanceled(const QScriptValue &onCanceled)					{ mOnCanceled = onCanceled; }
 		
@@ -44,7 +44,7 @@ namespace Code
 		int value() const;
 		
 	public slots:
-		QString toString() const					{ return QStringLiteral("ProgressDialog"); }
+		QString toString() const override					{ return QStringLiteral("ProgressDialog"); }
 		QScriptValue setValue(int value);
 		QScriptValue setLabelText(const QString &labelText);
 		QScriptValue setMinimum(int minimum);

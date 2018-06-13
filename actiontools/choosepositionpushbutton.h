@@ -41,20 +41,20 @@ namespace ActionTools
 		Q_OBJECT
 	public:
 		explicit ChoosePositionPushButton(QWidget *parent = nullptr);
-		~ChoosePositionPushButton();
+		~ChoosePositionPushButton() override;
 
 	signals:
 		void chooseStarted();
         void positionChosen(QPointF position);
 		
 	private:
-		void paintEvent(QPaintEvent *event);
-		void mousePressEvent(QMouseEvent *event);
+		void paintEvent(QPaintEvent *event) override;
+		void mousePressEvent(QMouseEvent *event) override;
 #ifdef Q_OS_WIN
 		void mouseReleaseEvent(QMouseEvent *event);
 #endif
 #ifdef Q_OS_LINUX
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
 #endif
 		void stopMouseCapture();
 

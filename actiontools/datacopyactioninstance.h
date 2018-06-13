@@ -38,9 +38,9 @@ namespace ActionTools
 	public:
 		DataCopyActionInstance(const ActionDefinition *definition = nullptr, QObject *parent = nullptr);
 		DataCopyActionInstance(const ActionInstance &other) : ActionInstance(other)			{}
-		virtual ~DataCopyActionInstance()													= default;
+		~DataCopyActionInstance()													override = default;
 		
-		virtual void stopExecution();
+		void stopExecution() override ;
 		
 	protected:
 		bool startCopy(QIODevice *input, QIODevice *output);

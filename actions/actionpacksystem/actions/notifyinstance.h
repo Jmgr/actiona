@@ -38,9 +38,9 @@ namespace Actions
 		};
 
 		NotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-		~NotifyInstance();
+		~NotifyInstance() override;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		_NotifyNotification *mNotification;

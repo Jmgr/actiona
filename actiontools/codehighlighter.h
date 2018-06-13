@@ -57,7 +57,7 @@ namespace ActionTools
 		void addCodeObject(const QString &name);
 
 	protected:
-		void highlightBlock(const QString &text);
+		void highlightBlock(const QString &text) override;
 
 	private:
 		QSet<QString> mUsedKeywords;

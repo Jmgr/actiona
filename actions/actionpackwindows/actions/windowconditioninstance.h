@@ -45,8 +45,8 @@ namespace Actions
 
         static Tools::StringListPair conditions;
 
-		void stopExecution();
-		void startExecution();
+		void stopExecution() override;
+		void startExecution() override;
 
 	private slots:
 		void checkWindow();

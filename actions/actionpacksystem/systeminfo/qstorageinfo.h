@@ -67,7 +67,7 @@ public:
     };
 
     QStorageInfo_Custom(QObject *parent = nullptr);
-    virtual ~QStorageInfo_Custom();
+    ~QStorageInfo_Custom() override;
 
     QStringList allLogicalDrives();
 
@@ -80,8 +80,8 @@ Q_SIGNALS:
     void logicalDriveChanged(const QString &drive, bool added);
 
 protected:
-    void connectNotify(const QMetaMethod &signal);
-    void disconnectNotify(const QMetaMethod &signal);
+    void connectNotify(const QMetaMethod &signal) override;
+    void disconnectNotify(const QMetaMethod &signal) override;
 
 private:
     Q_DISABLE_COPY(QStorageInfo_Custom)

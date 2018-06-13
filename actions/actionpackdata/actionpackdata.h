@@ -65,7 +65,7 @@ class ActionPackData : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackData()								= default;
 
-	void createDefinitions()
+	void createDefinitions() override
 	{
 		addActionDefinition(new Actions::WriteTextFileDefinition(this));
 		addActionDefinition(new Actions::ReadTextFileDefinition(this));
@@ -83,11 +83,11 @@ public:
         addActionDefinition(new Actions::SendMailDefinition(this));
 	}
 
-	QString id() const								{ return QStringLiteral("data"); }
-	QString name() const							{ return tr("Data related actions"); }
-	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
+	QString id() const override								{ return QStringLiteral("data"); }
+	QString name() const override							{ return tr("Data related actions"); }
+	Tools::Version version() const override					{ return Tools::Version(0, 0, 1); }
 	
-	void codeInit(QScriptEngine *scriptEngine) const
+	void codeInit(QScriptEngine *scriptEngine) const override
 	{
 		addCodeClass<Code::File>(QStringLiteral("File"), scriptEngine);
 		Code::File::registerClass(scriptEngine);

@@ -48,8 +48,8 @@ namespace Code
 		static void registerClass(QScriptEngine *scriptEngine);
 
     public slots:
-		virtual QString toString() const                        { return QStringLiteral("Algorithms"); }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Algorithms>(other); }
+		QString toString() const override                        { return QStringLiteral("Algorithms"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Algorithms>(other); }
 
 	private:
 		static int randomInteger(int min, int max);

@@ -90,15 +90,15 @@ namespace Actions
 			addException(ClickInstance::InvalidActionException, tr("Invalid action"));
 		}
 	
-		QString name() const													{ return QObject::tr("Click"); }
-		QString id() const														{ return QStringLiteral("ActionClick"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Emulates a mouse click"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ClickInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/click.png")); }
-		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Click"); }
+		QString id() const override														{ return QStringLiteral("ActionClick"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Emulates a mouse click"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ClickInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/click.png")); }
+		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 	
 	private:
 		Q_DISABLE_COPY(ClickDefinition)

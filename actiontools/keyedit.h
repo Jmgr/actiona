@@ -40,7 +40,7 @@ namespace ActionTools
 		void currentIndexChanged(const QString &text);
 
 	private:
-		bool eventFilter(QObject *object, QEvent *event);
+		bool eventFilter(QObject *object, QEvent *event) override;
 
 		KeyInput mKeyInput;
 

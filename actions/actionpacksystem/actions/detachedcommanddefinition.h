@@ -63,14 +63,14 @@ namespace Actions
 			addException(DetachedCommandInstance::DetachedCommandFailedException, tr("Unable to execute the detached command"));
 		}
 
-		QString name() const													{ return QObject::tr("Detached command"); }
-		QString id() const														{ return QStringLiteral("ActionDetachedCommand"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Executes a detached command"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new DetachedCommandInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/command.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Detached command"); }
+		QString id() const override														{ return QStringLiteral("ActionDetachedCommand"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Executes a detached command"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new DetachedCommandInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/command.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(DetachedCommandDefinition)

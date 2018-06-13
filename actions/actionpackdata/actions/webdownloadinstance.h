@@ -50,12 +50,12 @@ namespace Actions
 		};
 
 		WebDownloadInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-		~WebDownloadInstance();
+		~WebDownloadInstance() override;
 
         static Tools::StringListPair destinations;
 
-		void startExecution();
-		void stopExecution();
+		void startExecution() override;
+		void stopExecution() override;
 
 	private slots:
 		void finished();

@@ -62,13 +62,13 @@ namespace ActionTools
 	private:
 		void indentOrUnindent(bool doIndent);
 		void lineNumberAreaPaintEvent(QPaintEvent *event);
-		void resizeEvent(QResizeEvent *event);
+		void resizeEvent(QResizeEvent *event) override;
 		QString textUnderCursor() const;
-		void focusInEvent(QFocusEvent *event);
+		void focusInEvent(QFocusEvent *event) override;
 		void autoComplete();
-		void keyPressEvent(QKeyEvent *event);
-		void keyReleaseEvent(QKeyEvent *event);
-		bool event(QEvent *event);
+		void keyPressEvent(QKeyEvent *event) override;
+		void keyReleaseEvent(QKeyEvent *event) override;
+		bool event(QEvent *event) override;
 
 		ScriptCompleter *mCompleter;
 		CodeHighlighter *mHighlighter;

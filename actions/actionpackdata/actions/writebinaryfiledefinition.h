@@ -55,13 +55,13 @@ namespace Actions
 			addException(WriteBinaryFileInstance::UnableToWriteFileException, tr("Unable to write to the file"));
 		}
 
-		QString name() const													{ return QObject::tr("Write binary file"); }
-		QString id() const														{ return QStringLiteral("ActionWriteBinaryFile"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Write to a binary file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteBinaryFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/writebinary.png")); }
+		QString name() const override													{ return QObject::tr("Write binary file"); }
+		QString id() const override														{ return QStringLiteral("ActionWriteBinaryFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Write to a binary file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteBinaryFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/writebinary.png")); }
 
 	private:
 		Q_DISABLE_COPY(WriteBinaryFileDefinition)

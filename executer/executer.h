@@ -52,7 +52,7 @@ namespace LibExecuter
 
 	public:
 		Executer(QObject *parent = nullptr);
-		~Executer();
+		~Executer() override ;
 		
 		void setup(ActionTools::Script *script,
 				   ActionTools::ActionFactory *actionFactory,

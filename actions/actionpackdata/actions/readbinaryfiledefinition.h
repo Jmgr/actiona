@@ -55,13 +55,13 @@ namespace Actions
 			addException(ReadBinaryFileInstance::UnableToReadFileException, tr("Unable to read file"));
 		}
 
-		QString name() const													{ return QObject::tr("Read binary file"); }
-		QString id() const														{ return QStringLiteral("ActionReadBinaryFile"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read a binary file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadBinaryFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readbinary.png")); }
+		QString name() const override													{ return QObject::tr("Read binary file"); }
+		QString id() const override														{ return QStringLiteral("ActionReadBinaryFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Read a binary file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadBinaryFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readbinary.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadBinaryFileDefinition)

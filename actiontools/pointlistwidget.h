@@ -38,7 +38,7 @@ namespace ActionTools
 
 	public:
 		explicit PointListWidget(QWidget *parent = nullptr);
-		~PointListWidget();
+		~PointListWidget() override;
 
 		QPolygon points() const;
 		void setPoints(const QPolygon &points);

@@ -42,7 +42,7 @@ namespace Actions
 		{
 		}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
@@ -68,7 +68,7 @@ namespace Actions
 		}
 
 	private:
-		void clean()
+		void clean() override
 		{
 			DataCopyActionInstance::clean();
 

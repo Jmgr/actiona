@@ -46,13 +46,13 @@ namespace Actions
 			addElement(code);
 		}
 
-		QString name() const													{ return QObject::tr("Code"); }
-		QString id() const														{ return QStringLiteral("ActionCode"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Evaluates some code"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new CodeInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/code.png")); }
+		QString name() const override													{ return QObject::tr("Code"); }
+		QString id() const override														{ return QStringLiteral("ActionCode"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Evaluates some code"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new CodeInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/code.png")); }
 
 	private:
 		Q_DISABLE_COPY(CodeDefinition)

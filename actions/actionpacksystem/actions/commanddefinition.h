@@ -79,14 +79,14 @@ namespace Actions
 			addException(CommandInstance::FailedToStartException, tr("Failed to start the command"));
 		}
 
-		QString name() const													{ return QObject::tr("Command"); }
-		QString id() const														{ return QStringLiteral("ActionCommand"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Executes a command"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new CommandInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/command.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Command"); }
+		QString id() const override														{ return QStringLiteral("ActionCommand"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Executes a command"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new CommandInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/command.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(CommandDefinition)

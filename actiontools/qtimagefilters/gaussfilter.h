@@ -65,9 +65,9 @@ class GaussBlurFilter : public ConvolutionFilter
         ////
         // INHERITED FROM ConvolutionFilter
         ////
-        QVariant option(int option) const;
+        QVariant option(int option) const override;
 
-        bool setOption(int option, const QVariant &value)
+        bool setOption(int option, const QVariant &value) override
         {
             bool ok = true;
             switch (option) {
@@ -85,16 +85,16 @@ class GaussBlurFilter : public ConvolutionFilter
             return ok;
         }
 
-        bool supportsOption(int option) const
+        bool supportsOption(int option) const override
         {
             if (option == QtImageFilter::Radius) return true;
             return ConvolutionFilter::supportsOption(option);
         }
 
-	QImage apply(const QImage &image, const QRect& clipRect ) const;
+	QImage apply(const QImage &image, const QRect& clipRect ) const override;
         
-	QString name() const { return QLatin1String("GaussBlur"); }
-        QString description() const { return QObject::tr("A gaussian blur filter", "GaussBlurFilter"); }
+	QString name() const override { return QLatin1String("GaussBlur"); }
+        QString description() const override { return QObject::tr("A gaussian blur filter", "GaussBlurFilter"); }
 
     private:
         qreal m_radius;

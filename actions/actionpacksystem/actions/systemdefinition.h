@@ -70,13 +70,13 @@ namespace Actions
 			addException(SystemInstance::NotAvailable, tr("Not available"));
 		}
 
-		QString name() const													{ return QObject::tr("System"); }
-		QString id() const														{ return QStringLiteral("ActionSystem"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Restart, stop the computer or logout the current user"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new SystemInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/system.png")); }
+		QString name() const override													{ return QObject::tr("System"); }
+		QString id() const override														{ return QStringLiteral("ActionSystem"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Restart, stop the computer or logout the current user"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new SystemInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/system.png")); }
 
 	private:
 		Q_DISABLE_COPY(SystemDefinition)

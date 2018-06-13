@@ -54,13 +54,13 @@ namespace Actions
 			addElement(output);
 		}
 
-		QString name() const													{ return QObject::tr("Console"); }
-		QString id() const														{ return QStringLiteral("ActionConsole"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Write an entry in the console"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ConsoleInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/console.png")); }
+		QString name() const override													{ return QObject::tr("Console"); }
+		QString id() const override														{ return QStringLiteral("ActionConsole"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Write an entry in the console"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ConsoleInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/console.png")); }
 
 	private:
 		Q_DISABLE_COPY(ConsoleDefinition)

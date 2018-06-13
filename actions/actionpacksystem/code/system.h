@@ -83,11 +83,11 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	
 		System();
-		~System();
+		~System() override;
 	
 	public slots:
-		QString toString() const                                { return QStringLiteral("System"); }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<System>(other); }
+		QString toString() const override                                { return QStringLiteral("System"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<System>(other); }
 		QString storageLocationPath(StorageLocation location) const;
 		QString storageLocationName(StorageLocation location) const;
 		QScriptValue openUrl(const QString &url) const;

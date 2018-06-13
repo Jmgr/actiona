@@ -65,13 +65,13 @@ namespace Actions
 			addException(ReadRegistryInstance::InvalidValueType, tr("Invalid value type"));
 		}
 
-		QString name() const													{ return QObject::tr("Read registry"); }
-		QString id() const														{ return QStringLiteral("ActionReadRegistry"); }
-		ActionTools::Flag flags() const											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read an entry from the registry"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadRegistryInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/readregistry.png")); }
+		QString name() const override													{ return QObject::tr("Read registry"); }
+		QString id() const override														{ return QStringLiteral("ActionReadRegistry"); }
+		ActionTools::Flag flags() const override											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Read an entry from the registry"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadRegistryInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readregistry.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadRegistryDefinition)

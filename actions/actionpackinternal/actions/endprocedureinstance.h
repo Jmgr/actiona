@@ -33,7 +33,7 @@ namespace Actions
 		EndProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			if(script()->hasProcedureCall())
                 setNextLine(script()->popProcedureCall() + 2, true);//Lines start at 1

@@ -40,11 +40,11 @@ namespace ActionTools
 
     public:
         explicit ScreenshotWizardPage(QWidget *parent = nullptr);
-        ~ScreenshotWizardPage();
+        ~ScreenshotWizardPage() override;
 
     protected:
-        virtual bool isComplete() const;
-        virtual void keyPressEvent(QKeyEvent *event);
+        bool isComplete() const override;
+        void keyPressEvent(QKeyEvent *event) override;
 
     private slots:
         void on_captureWholeScreenPushButton_clicked();

@@ -36,8 +36,8 @@ namespace ActionTools
 		ScriptCompleter(QAbstractItemModel *model, QObject *parent = nullptr);
 		
 	protected:
-		QStringList splitPath(const QString &path) const;
-		QString pathFromIndex(const QModelIndex &index) const;
+		QStringList splitPath(const QString &path) const override;
+		QString pathFromIndex(const QModelIndex &index) const override;
 	};
 }
 

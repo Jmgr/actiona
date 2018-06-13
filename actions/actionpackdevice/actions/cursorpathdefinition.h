@@ -59,15 +59,15 @@ namespace Actions
 			addElement(positionOffset, 1);
 		}
 
-		QString name() const													{ return QObject::tr("Cursor path"); }
-		QString id() const														{ return QStringLiteral("ActionCursorPath"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Move the mouse cursor on a path"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new CursorPathInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/movecursor.png")); }
-		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Cursor path"); }
+		QString id() const override														{ return QStringLiteral("ActionCursorPath"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Move the mouse cursor on a path"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new CursorPathInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/movecursor.png")); }
+		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(CursorPathDefinition)

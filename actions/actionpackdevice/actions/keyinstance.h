@@ -55,9 +55,9 @@ namespace Actions
         static Tools::StringListPair actions;
         static Tools::StringListPair types;
 
-		void startExecution();
-		void stopExecution();
-		void stopLongTermExecution();
+		void startExecution() override;
+		void stopExecution() override;
+		void stopLongTermExecution() override;
 
 	private slots:
 		void sendRelease();

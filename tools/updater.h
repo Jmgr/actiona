@@ -56,7 +56,7 @@ namespace Tools
 		};
 		
 		Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent = nullptr);
-		~Updater();
+		~Updater() override ;
 		
         void checkForUpdates(const QString &program,
                              const Version &programVersion,

@@ -41,7 +41,7 @@ namespace ActionTools
 
 		public:
 			explicit Task(QObject *parent = nullptr);
-			~Task();
+            ~Task() override;
 
 			static Task *instance()													{ return mInstance; }
 

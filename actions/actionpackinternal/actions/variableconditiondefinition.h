@@ -69,13 +69,13 @@ namespace Actions
 			addElement(ifDifferent);
 		}
 
-		QString name() const													{ return QObject::tr("Variable condition"); }
-		QString id() const														{ return QStringLiteral("ActionVariableCondition"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Check the value of a variable and do some action"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new VariableConditionInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/variablecondition.png")); }
+		QString name() const override													{ return QObject::tr("Variable condition"); }
+		QString id() const override														{ return QStringLiteral("ActionVariableCondition"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Check the value of a variable and do some action"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new VariableConditionInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/variablecondition.png")); }
 
 	private:
 		Q_DISABLE_COPY(VariableConditionDefinition)

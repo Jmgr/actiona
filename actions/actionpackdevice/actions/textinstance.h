@@ -39,9 +39,9 @@ namespace Actions
 	
 		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 	
-		void startExecution();
-		void stopExecution();
-		void stopLongTermExecution();
+		void startExecution() override;
+		void stopExecution() override;
+		void stopLongTermExecution() override;
 
 	private slots:
 		void pressNextKey();

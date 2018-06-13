@@ -99,13 +99,13 @@ namespace Actions
 			addException(VariableInstance::ConversionFailedException, tr("Conversion failed"));
 		}
 
-		QString name() const													{ return QObject::tr("Variable"); }
-		QString id() const														{ return QStringLiteral("ActionVariable"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Set the value of a variable"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new VariableInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/actions/icons/variable.png")); }
+		QString name() const override													{ return QObject::tr("Variable"); }
+		QString id() const override														{ return QStringLiteral("ActionVariable"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Set the value of a variable"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new VariableInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/variable.png")); }
 
 	private:
 		Q_DISABLE_COPY(VariableDefinition)

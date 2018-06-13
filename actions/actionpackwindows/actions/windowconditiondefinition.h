@@ -93,14 +93,14 @@ namespace Actions
 			addElement(processId, 1);
 		}
 
-		QString name() const													{ return QObject::tr("Window condition"); }
-		QString id() const														{ return QStringLiteral("ActionWindowCondition"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Checks for the state of a window"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WindowConditionInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/windowcondition.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs + QStringList() << tr("Deprecated"); }
+		QString name() const override													{ return QObject::tr("Window condition"); }
+		QString id() const override														{ return QStringLiteral("ActionWindowCondition"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Checks for the state of a window"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WindowConditionInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/windowcondition.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs + QStringList() << tr("Deprecated"); }
 
 	private:
 		Q_DISABLE_COPY(WindowConditionDefinition)

@@ -38,7 +38,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
 		ColorDialog();
-		~ColorDialog();
+		~ColorDialog() override;
 		
 		void setOnClosed(const QScriptValue &onClosed)					{ mOnClosed = onClosed; }
 		void setOnColorSelected(const QScriptValue &onColorSelected)	{ mOnColorSelected = onColorSelected; }
@@ -57,7 +57,7 @@ namespace Code
 		int showModal();
 		
 	private slots:
-		QString toString() const					{ return QStringLiteral("ColorDialog"); }
+		QString toString() const override					{ return QStringLiteral("ColorDialog"); }
 		void finished(int result);
 		void colorSelected(const QColor &color);
 		void currentColorChanged(const QColor &color);

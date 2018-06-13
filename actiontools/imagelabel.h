@@ -38,7 +38,7 @@ namespace ActionTools
         void setPixmap(const QPixmap &pixmap);
 
     protected:
-        virtual void paintEvent(QPaintEvent *event);
+        void paintEvent(QPaintEvent *event) override;
 
     private:
         QPixmap mPixmap;

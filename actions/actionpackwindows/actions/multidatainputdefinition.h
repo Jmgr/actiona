@@ -96,14 +96,14 @@ namespace Actions
 			addElement(choiceGroup, 1);
 		}
 
-		QString name() const													{ return QObject::tr("Multi data input"); }
-		QString id() const														{ return QStringLiteral("ActionMultiDataInput"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Ask the user to choose from a list"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new MultiDataInputInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/datainput.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Multi data input"); }
+		QString id() const override														{ return QStringLiteral("ActionMultiDataInput"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Ask the user to choose from a list"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new MultiDataInputInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/datainput.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(MultiDataInputDefinition)

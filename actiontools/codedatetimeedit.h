@@ -43,18 +43,18 @@ namespace ActionTools
 
 		void setFromSubParameter(const SubParameter &subParameter);
 
-		void openEditor(int line = -1, int column = -1);
-		void setCompletionModel(QAbstractItemModel *completionModel);
-        void setParameterContainer(const ParameterContainer *parameterContainer);
-         QSet<QString> findVariables() const;
+		void openEditor(int line = -1, int column = -1) override;
+		void setCompletionModel(QAbstractItemModel *completionModel) override;
+        void setParameterContainer(const ParameterContainer *parameterContainer) override;
+         QSet<QString> findVariables() const override;
 
 	private slots:
 		void codeChanged(bool code);
 
 	private:
-		QValidator::State validate(QString &text, int &pos) const;
-		QString textFromDateTime(const QDateTime &dateTime) const;
-		void contextMenuEvent(QContextMenuEvent *event);
+		QValidator::State validate(QString &text, int &pos) const override;
+		QString textFromDateTime(const QDateTime &dateTime) const override;
+		void contextMenuEvent(QContextMenuEvent *event) override;
 
 		Q_DISABLE_COPY(CodeDateTimeEdit)
 	};

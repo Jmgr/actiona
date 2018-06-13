@@ -33,11 +33,11 @@ namespace ActionTools
 
 	public:
         LocaleParameterDefinition(const Name &name, QObject *parent);
-        virtual ~LocaleParameterDefinition() = default;
+        ~LocaleParameterDefinition() override = default;
 
-		virtual void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
+        void buildEditors(Script *script, QWidget *parent) override;
+        void load(const ActionInstance *actionInstance) override;
+        void save(ActionInstance *actionInstance) override;
 
         void setLocales(const QVector<QLocale> &locales)                        { mLocales = locales; }
 

@@ -51,7 +51,7 @@ namespace Actions
 
         static Tools::StringListPair comparisons;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
@@ -132,7 +132,7 @@ namespace Actions
 			}
 		}
 
-		void stopExecution()
+		void stopExecution() override
 		{
 			mTimer.stop();
 		}

@@ -56,13 +56,13 @@ namespace Code
 
 		static void registerClass(QScriptEngine *scriptEngine);
 	
-        ~File()                                                 { mFile.close(); }
+        ~File() override                                                 { mFile.close(); }
 
         QFile *file()                                           { return &mFile; }
 	
 	public slots:
-		QString toString() const                                { return QStringLiteral("File"); }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<File>(other); }
+		QString toString() const override                                { return QStringLiteral("File"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<File>(other); }
 		QScriptValue open(const QString &filename, OpenMode mode);
 		QScriptValue write(const QScriptValue &data);
 		QScriptValue writeText(const QString &value, Encoding encoding = Native);

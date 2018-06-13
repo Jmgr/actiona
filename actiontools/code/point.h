@@ -60,8 +60,8 @@ namespace Code
 		
 	public slots:
 		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const;
-		QString toString() const;
+		bool equals(const QScriptValue &other) const override;
+		QString toString() const override;
 		QScriptValue setX(int x);
 		QScriptValue setY(int y);
 		

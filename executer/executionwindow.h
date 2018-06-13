@@ -35,7 +35,7 @@ namespace LibExecuter
 	
 	public:
 		ExecutionWindow(QWidget *parent = nullptr);
-		~ExecutionWindow();
+		~ExecutionWindow() override;
 
 		void setCurrentActionName(const QString &actionName);
 		void setCurrentActionColor(const QColor &actionColor);

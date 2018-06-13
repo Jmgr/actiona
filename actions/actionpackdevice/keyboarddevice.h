@@ -41,7 +41,7 @@ public:
 	};
 	
 	KeyboardDevice();
-	~KeyboardDevice();
+    ~KeyboardDevice() override;
 
 	void reset();
 	

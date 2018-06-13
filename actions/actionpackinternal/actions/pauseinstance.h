@@ -50,7 +50,7 @@ namespace Actions
 
         static Tools::StringListPair units;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
@@ -94,7 +94,7 @@ namespace Actions
 			}
 		}
 
-		void stopExecution()
+		void stopExecution() override
 		{
 			mCheckTimer.stop();
 		}

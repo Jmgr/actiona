@@ -95,12 +95,12 @@ namespace Code
 		
 		const QImage &image() const;
 
-        virtual int additionalMemoryCost() const { return mImage.byteCount(); }
+        int additionalMemoryCost() const override { return mImage.byteCount(); }
 	
 	public slots:
 		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const;
-		QString toString() const;
+		bool equals(const QScriptValue &other) const override ;
+		QString toString() const override ;
 		QScriptValue setData(const QScriptValue &data);
 		QScriptValue data(const QString &format = QStringLiteral("BMP")) const;
 		QScriptValue loadFromFile(const QString &filename);

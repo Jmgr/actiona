@@ -40,12 +40,12 @@ namespace ActionTools
 
 	public:
         ParameterDefinition(const Name &name, QObject *parent = nullptr);
-        virtual ~ParameterDefinition()                                                  = default;
+        ~ParameterDefinition()                                                  override = default;
 
 		virtual void buildEditors(Script *script, QWidget *parent);
 		virtual void load(const ActionInstance *actionInstance) = 0;
 		virtual void save(ActionInstance *actionInstance) = 0;
-		virtual void setDefaultValues(ActionInstance *actionInstance);
+        void setDefaultValues(ActionInstance *actionInstance) override;
         virtual Qt::Orientation editorsOrientation() const                              { return Qt::Horizontal; }
 
         const QList<QWidget *> &editors() const                                         { return mEditors; }

@@ -33,7 +33,7 @@ class ScriptSettingsDialog : public QDialog
 
 public:
 	ScriptSettingsDialog(QWidget *parent = nullptr);
-    ~ScriptSettingsDialog();
+    ~ScriptSettingsDialog() override;
 
 	void setPauseBefore(int pauseBefore);
 	void setPauseAfter(int pauseAfter);

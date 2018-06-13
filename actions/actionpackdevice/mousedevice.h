@@ -39,7 +39,7 @@ public:
 	};
 
 	MouseDevice();
-	~MouseDevice();
+    ~MouseDevice() override;
 
 	void reset();
 

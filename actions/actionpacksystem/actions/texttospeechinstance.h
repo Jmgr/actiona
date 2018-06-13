@@ -38,9 +38,9 @@ namespace Actions
 		{
 		}
 
-        virtual ~TextToSpeechInstance() = default;
+        ~TextToSpeechInstance() override = default;
 
-		void startExecution()
+        void startExecution() override
 		{
 			bool ok = true;
 
@@ -71,22 +71,22 @@ namespace Actions
                 executionEnded();
 		}
 
-        void stopLongTermExecution()
+        void stopLongTermExecution() override
         {
             mTextToSpeech->stop();
         }
 
-		void stopExecution()
+        void stopExecution() override
         {
             mTextToSpeech->stop();
 		}
 
-        void pauseExecution()
+        void pauseExecution() override
         {
             mTextToSpeech->pause();
         }
 
-        void resumeExecution()
+        void resumeExecution() override
         {
             mTextToSpeech->resume();
         }

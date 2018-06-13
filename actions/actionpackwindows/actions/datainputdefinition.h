@@ -82,14 +82,14 @@ namespace Actions
 			addElement(windowIcon, 1);
 		}
 
-		QString name() const													{ return QObject::tr("Data input"); }
-		QString id() const														{ return QStringLiteral("ActionDataInput"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Ask the user to enter some data"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new DataInputInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/datainput.png")); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Data input"); }
+		QString id() const override														{ return QStringLiteral("ActionDataInput"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Ask the user to enter some data"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new DataInputInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/datainput.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(DataInputDefinition)

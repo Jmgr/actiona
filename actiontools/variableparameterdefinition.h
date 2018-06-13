@@ -36,7 +36,7 @@ namespace ActionTools
 			setCategory(OUTPUT);
 		}
 
-        void buildEditors(Script *script, QWidget *parent);
+        void buildEditors(Script *script, QWidget *parent) override;
 	};
 }
 

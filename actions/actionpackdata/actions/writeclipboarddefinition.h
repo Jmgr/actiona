@@ -46,13 +46,13 @@ namespace Actions
 			addElement(input);
 		}
 
-		QString name() const													{ return QObject::tr("Write clipboard"); }
-		QString id() const														{ return QStringLiteral("ActionWriteClipboard"); }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Set the clipboard contents"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteClipboardInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(QStringLiteral(":/icons/writeclipboard.png")); }
+		QString name() const override													{ return QObject::tr("Write clipboard"); }
+		QString id() const override														{ return QStringLiteral("ActionWriteClipboard"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Set the clipboard contents"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteClipboardInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/writeclipboard.png")); }
 
 	private:
 		Q_DISABLE_COPY(WriteClipboardDefinition)

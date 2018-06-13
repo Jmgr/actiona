@@ -52,7 +52,7 @@ class ActionPackInternal : public QObject, public ActionTools::ActionPack
 public:
 	ActionPackInternal()							= default;
 
-	void createDefinitions()
+	void createDefinitions() override
 	{
 		addActionDefinition(new Actions::PauseDefinition(this));
 		addActionDefinition(new Actions::CodeDefinition(this));
@@ -70,9 +70,9 @@ public:
 		addActionDefinition(new Actions::EndProcedureDefinition(this));
 	}
 
-	QString id() const								{ return QStringLiteral("internal"); }
-	QString name() const							{ return tr("Internal actions"); }
-	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
+	QString id() const override								{ return QStringLiteral("internal"); }
+	QString name() const override							{ return tr("Internal actions"); }
+	Tools::Version version() const override					{ return Tools::Version(0, 0, 1); }
 
 private:
 	Q_DISABLE_COPY(ActionPackInternal)

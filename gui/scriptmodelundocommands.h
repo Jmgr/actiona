@@ -33,8 +33,8 @@ class ChangeEnabledCommand : public QUndoCommand
 {
 public:
     ChangeEnabledCommand(const QList<int> &rows, bool enabled, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	ScriptModel *mModel;
@@ -48,8 +48,8 @@ class ChangeColorCommand : public QUndoCommand
 {
 public:
     ChangeColorCommand(const QList<int> &rows, const QColor &color, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	ScriptModel *mModel;
@@ -63,8 +63,8 @@ class ChangeCommentCommand : public QUndoCommand
 {
 public:
     ChangeCommentCommand(const QString &value, int row, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	ScriptModel *mModel;
@@ -78,8 +78,8 @@ class ChangeLabelCommand : public QUndoCommand
 {
 public:
     ChangeLabelCommand(const QString &value, int row, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	ScriptModel *mModel;
@@ -93,8 +93,8 @@ class ChangeDataCommand : public QUndoCommand
 {
 public:
     ChangeDataCommand(const QModelIndex &index, const ActionTools::ParametersData &value, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	ScriptModel *mModel;
@@ -107,8 +107,8 @@ class CopyActionCommand : public QUndoCommand
 {
 public:
     CopyActionCommand(int row, const QList<ActionTools::ActionInstanceBuffer> &actionInstanceBuffers, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	int mRow;
@@ -121,8 +121,8 @@ class InsertNewActionCommand : public QUndoCommand
 {
 public:
     InsertNewActionCommand(int row, const ActionTools::ActionInstanceBuffer &actionInstanceBuffer, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	int mRow;
@@ -135,8 +135,8 @@ class RemoveActionCommand : public QUndoCommand
 {
 public:
     RemoveActionCommand(const QList<int> &rows, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	QList<int> mRows;
@@ -149,8 +149,8 @@ class MoveActionCommand : public QUndoCommand
 {
 public:
     MoveActionCommand(int row, const QList<int> &previousRows, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	int mRow;
@@ -165,8 +165,8 @@ class MoveActionOneRowCommand : public QUndoCommand
 {
 public:
     MoveActionOneRowCommand(const QList<int> &rows, bool moveUp, ScriptModel *model, ScriptProxyModel *proxyModel);
-	void redo();
-	void undo();
+	void redo() override;
+	void undo() override;
 
 private:
 	void moveAllActions(int direction);

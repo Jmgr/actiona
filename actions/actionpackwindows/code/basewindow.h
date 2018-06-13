@@ -44,7 +44,7 @@ namespace Code
 		QScriptValue setVisible(bool visible);
 		QScriptValue setWindowIcon(const QScriptValue &windowIcon);
 		QScriptValue close();
-        virtual bool equals(const QScriptValue &other) const;
+        bool equals(const QScriptValue &other) const override;
 
 	protected:
 		BaseWindow();

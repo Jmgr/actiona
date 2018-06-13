@@ -39,11 +39,11 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
 		Notify();
-		~Notify();
+		~Notify() override;
 		
 	public slots:
-		QString toString() const                                { return QStringLiteral("Notify"); }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Notify>(other); }
+		QString toString() const override                                { return QStringLiteral("Notify"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Notify>(other); }
 		QScriptValue show();
 		
 	private:
