@@ -60,8 +60,7 @@ namespace Actions
         mWaitTimer.setSingleShot(true);
 	}
 
-	FindImageInstance::~FindImageInstance()
-	= default;
+    FindImageInstance::~FindImageInstance() = default;
 
 	void FindImageInstance::startExecution()
 	{

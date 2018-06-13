@@ -63,8 +63,7 @@ FlagsComboBox::FlagsComboBox(QWidget *parent):
     });
 }
 
-FlagsComboBox::~FlagsComboBox()
-= default;
+FlagsComboBox::~FlagsComboBox() = default;
 
 void FlagsComboBox::setAllCheckedText(const QString &text)
 {

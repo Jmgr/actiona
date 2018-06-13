@@ -33,9 +33,9 @@ namespace Tools
         static StringListPair languagesName();
         static int languageNameToIndex(const QString &languageName);
 
-    private:
         Languages() = delete;
 
+    private:
         static StringListPair m_languagesName;
         static bool m_areLanguagesNameTranslated;
     };

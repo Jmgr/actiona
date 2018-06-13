@@ -77,8 +77,7 @@ namespace Code
         QObject::connect(mTcpSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Tcp::error);
 	}
 	
-	Tcp::~Tcp()
-    = default;
+    Tcp::~Tcp() = default;
 	
 	QScriptValue Tcp::connect(const QString &hostname, quint16 port, OpenMode openMode)
 	{

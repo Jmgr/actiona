@@ -62,9 +62,9 @@ namespace ActionTools
 		static WriteResult write(const QVariant &data, Key key, const QString &subkey, const QString &value = QString());
 #endif
 
-	private:
 		Registry() = delete;
 
+    private:
 #ifdef Q_OS_WIN
 		static HKEY enumToKey(Key key);
 #endif

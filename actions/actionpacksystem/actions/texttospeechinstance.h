@@ -38,8 +38,7 @@ namespace Actions
 		{
 		}
 
-        virtual ~TextToSpeechInstance()
-        = default;
+        virtual ~TextToSpeechInstance() = default;
 
 		void startExecution()
 		{

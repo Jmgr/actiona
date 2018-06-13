@@ -35,8 +35,7 @@ namespace Actions
         connect(mMediaPlayer, &QMediaPlayer::stateChanged, this, &PlaySoundInstance::stateChanged);
 	}
 
-	PlaySoundInstance::~PlaySoundInstance()
-	= default;
+    PlaySoundInstance::~PlaySoundInstance() = default;
 
 	void PlaySoundInstance::startExecution()
 	{

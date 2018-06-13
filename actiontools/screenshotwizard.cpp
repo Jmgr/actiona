@@ -37,6 +37,5 @@ namespace ActionTools
         addPage(new SaveScreenshotWizardPage(script, allowSaveToClipboard, this));
     }
 
-    ScreenshotWizard::~ScreenshotWizard()
-    = default;
+    ScreenshotWizard::~ScreenshotWizard() = default;
 }

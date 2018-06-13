@@ -46,8 +46,7 @@ namespace Tools
 		mTimeoutTimer->setInterval(timeout);
 	}
 	
-	Updater::~Updater()
-	= default;
+    Updater::~Updater() = default;
 	
 	void Updater::checkForUpdates(const QString &program,
 							const Version &programVersion,

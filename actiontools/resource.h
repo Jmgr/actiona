@@ -31,9 +31,8 @@ namespace ActionTools
     class ResourceData : public QSharedData
     {
     public:
-        ResourceData()                 = default;
-        ResourceData(const ResourceData &other) 
-            					= default;
+        ResourceData() = default;
+        ResourceData(const ResourceData &other) = default;
 
         QByteArray data;
         int type{0};
@@ -61,8 +60,7 @@ namespace ActionTools
             setData(data);
             setType(type);
         }
-        Resource(const Resource &other)
-             						= default;
+        Resource(const Resource &other)         = default;
 
         const QByteArray &data() const          { return d->data; }
         Type type() const                       { return static_cast<Type>(d->type); }

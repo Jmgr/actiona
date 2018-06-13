@@ -35,8 +35,7 @@ FilterLineEdit::FilterLineEdit(QWidget *parent)
 				  QStringLiteral("padding-right: 5px;"));
 }
 
-FilterLineEdit::~FilterLineEdit()
-= default;
+FilterLineEdit::~FilterLineEdit() = default;
 
 void FilterLineEdit::paintEvent(QPaintEvent *event)
 {

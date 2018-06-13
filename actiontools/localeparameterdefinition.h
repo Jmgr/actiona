@@ -33,7 +33,7 @@ namespace ActionTools
 
 	public:
         LocaleParameterDefinition(const Name &name, QObject *parent);
-        virtual ~LocaleParameterDefinition()	= default;
+        virtual ~LocaleParameterDefinition() = default;
 
 		virtual void buildEditors(Script *script, QWidget *parent);
 		void load(const ActionInstance *actionInstance);

@@ -58,8 +58,7 @@ namespace Code
         QObject::connect(mUdpSocket, static_cast<void (QUdpSocket::*)(QAbstractSocket::SocketError)>(&QUdpSocket::error), this, &Udp::error);
 	}
 	
-	Udp::~Udp()
-    = default;
+    Udp::~Udp() = default;
 	
 	QScriptValue Udp::connect(const QString &hostname, quint16 port, OpenMode openMode)
 	{

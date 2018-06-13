@@ -35,8 +35,7 @@ Executer::Executer(QObject *parent) :
     connect(mActionFactory, &ActionTools::ActionFactory::actionPackLoadError, this, &Executer::actionPackLoadError);
 }
 
-Executer::~Executer()
-= default;
+Executer::~Executer() = default;
 
 bool Executer::start(QIODevice *device, const QString &filename)
 {

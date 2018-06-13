@@ -51,8 +51,7 @@ namespace ActionTools
 		class ExceptionActionInstance
 		{
 		public:
-			ExceptionActionInstance()
-				 	= default;
+            ExceptionActionInstance()                   = default;
 			ExceptionActionInstance(ExceptionAction action, const QString &line)
 				: mAction(action), mLine(line)			{}
 

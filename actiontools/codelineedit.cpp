@@ -93,8 +93,7 @@ namespace ActionTools
         setEmbedded(false);
     }
 
-    CodeLineEdit::~CodeLineEdit()
-    = default;
+    CodeLineEdit::~CodeLineEdit() = default;
 	
 	void CodeLineEdit::setCode(bool code)
 	{

@@ -65,8 +65,7 @@ namespace Code
         QObject::connect(mNetworkAccessManager, &QNetworkAccessManager::authenticationRequired, this, &Web::authenticationRequired);
 	}
 
-	Web::~Web()
-    = default;
+    Web::~Web() = default;
 
 	QScriptValue Web::download(const QString &urlString, const QScriptValue &options)
 	{

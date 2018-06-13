@@ -76,8 +76,7 @@ QxtMailMessage::~QxtMailMessage()
     // trivial destructor
 }
 
-QxtMailMessage& QxtMailMessage::operator=(const QxtMailMessage & other)
-= default;
+QxtMailMessage& QxtMailMessage::operator=(const QxtMailMessage & other) = default;
 
 QString QxtMailMessage::sender() const
 {

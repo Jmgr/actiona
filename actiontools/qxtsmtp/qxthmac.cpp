@@ -59,7 +59,7 @@ class QxtHmacPrivate : public QxtPrivate<QxtHmac>
 {
 public:
     QXT_DECLARE_PUBLIC(QxtHmac)
-    QxtHmacPrivate()  = default;
+    QxtHmacPrivate() = default;
     ~QxtHmacPrivate()
     {
         // deleting NULL is safe, so no tests are needed here

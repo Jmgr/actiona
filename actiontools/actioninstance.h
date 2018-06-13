@@ -49,10 +49,7 @@ namespace ActionTools
     struct ActionInstanceData : public QSharedData
     {
         ActionInstanceData() = default;
-		ActionInstanceData(const ActionInstanceData &other)
-			
-            
-			= default;
+        ActionInstanceData(const ActionInstanceData &other) = default;
 
 		bool operator==(const ActionInstanceData &other) const;
 		

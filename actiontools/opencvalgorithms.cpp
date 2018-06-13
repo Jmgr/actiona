@@ -34,8 +34,7 @@ namespace ActionTools
         qRegisterMetaType<MatchingPointList>("MatchingPointList");
     }
 
-    OpenCVAlgorithms::~OpenCVAlgorithms()
-    = default;
+    OpenCVAlgorithms::~OpenCVAlgorithms() = default;
 
     bool OpenCVAlgorithms::findSubImageAsync(const QList<QImage> &sources,
                       const QImage &target,

@@ -32,8 +32,7 @@ namespace ActionTools
 	{
 	public:
 		ScriptParameterData()  	= default;
-		ScriptParameterData(const ScriptParameterData &other) 
-										= default;
+		ScriptParameterData(const ScriptParameterData &other) = default;
 
 		QString name;
 		QString value;
@@ -61,8 +60,7 @@ namespace ActionTools
 			setCode(code);
 			setType(type);
 		}
-		ScriptParameter(const ScriptParameter &other)
-			 								= default;
+        ScriptParameter(const ScriptParameter &other)   = default;
 
 		void setName(const QString &name)				{ d->name = name; }
 		void setValue(const QString &value)				{ d->value = value; }

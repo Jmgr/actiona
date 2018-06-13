@@ -53,8 +53,7 @@ namespace Code
 	{
 	}
 
-	Mouse::~Mouse()
-	= default;
+    Mouse::~Mouse() = default;
 
 	QScriptValue Mouse::position() const
 	{

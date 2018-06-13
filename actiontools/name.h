@@ -29,17 +29,13 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT Name
 	{
 	public:
-		Name()
-		= default;
+        Name() = default;
 		Name(const QString &original, const QString &translated)
 			: mOriginal(original),
 			  mTranslated(translated)
 		{
 		}
-		Name(const Name &other)
-			
-			  
-		= default;
+        Name(const Name &other) = default;
 
 		void setOriginal(const QString &original) { mOriginal = original; }
 		void setTranslated(const QString &translated) { mTranslated = translated; }

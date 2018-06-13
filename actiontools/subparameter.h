@@ -30,9 +30,8 @@ namespace ActionTools
 	class SubParameterData : public QSharedData
 	{
 	public:
-		SubParameterData()  								= default;
-		SubParameterData(const SubParameterData &other)
-			 	= default;
+        SubParameterData()                                              = default;
+        SubParameterData(const SubParameterData &other)                 = default;
 
 		bool code{false};
         QString value;
@@ -47,7 +46,7 @@ namespace ActionTools
 			setCode(code);
 			setValue(value);
 		}
-		SubParameter(const SubParameter &other)  			= default;
+        SubParameter(const SubParameter &other)                         = default;
 
 		bool isCode() const												{ return d->code; }
         QString value() const											{ return d->value; }
