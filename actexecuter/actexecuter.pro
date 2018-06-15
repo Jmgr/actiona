@@ -31,10 +31,17 @@ LIBS += -L.. \
     -ltools \
     -lactiontools \
     -lexecuter
-win32:RC_FILE = actexecuter.rc
 TRANSLATIONS = ../locale/actexecuter_fr_FR.ts
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
+
+win32 {
+QMAKE_TARGET_COMPANY = "https://actiona.tools"
+QMAKE_TARGET_DESCRIPTION = "Actiona: Cross-Platform Automation Tool"
+QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2005 Jonathan Mercier-Ganady"
+QMAKE_TARGET_PRODUCT = "Actiona"
+RC_ICONS = "../gui/icons/actiona.ico"
+}
 
 win32 {
     CONFIG += embed_manifest_exe

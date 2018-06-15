@@ -104,11 +104,18 @@ LIBS += -L.. \
 	-lactiontools \
 	-lexecuter
 RESOURCES += gui.qrc
-win32:RC_FILE = gui.rc
 TRANSLATIONS = ../locale/gui_fr_FR.ts
 win32:system(lrelease ../locale/qt_fr_FR.ts) #For Windows we need to copy the qt translation files
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
+
+win32 {
+QMAKE_TARGET_COMPANY = "https://actiona.tools"
+QMAKE_TARGET_DESCRIPTION = "Actiona: Cross-Platform Automation Tool"
+QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2005 Jonathan Mercier-Ganady"
+QMAKE_TARGET_PRODUCT = "Actiona"
+RC_ICONS = "icons/actiona.ico"
+}
 
 win32 {
     CONFIG += embed_manifest_exe
