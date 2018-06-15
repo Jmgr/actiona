@@ -78,7 +78,7 @@ static int kernelmatrix[ 25 ] =
      0, 0, 0, 0, 0,
      0, 0, 0, 0, 2 };
     auto *filter = new ConvolutionFilter();
-    filter->setName(QLatin1String("Hightlight"));
+    filter->setName(QLatin1String("Highlight"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 5, 5), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 1, 0);
     return reinterpret_cast<QtImageFilter*>(filter);
 }
