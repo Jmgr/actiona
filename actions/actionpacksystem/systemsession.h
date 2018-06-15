@@ -36,7 +36,8 @@ public:
 		FreedesktopUPower = 1<<5,
 		FreedesktopDeviceKit = 1<<6,
 		KdeScreenSaver = 1<<7,
-		KdeKSMServer = 1<<8
+        KdeKSMServer = 1<<8,
+        FreedesktopLogind = 1<<9
 	};
 #endif
 

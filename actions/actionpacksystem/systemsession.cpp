@@ -39,8 +39,8 @@ int SystemSession::mCapabilities = 0;
 SystemSession::SystemSession()
 {
 #ifdef Q_OS_LINUX
-		if(!mCapabilities)
-			checkOperatingSystemCapabilities();
+    if(!mCapabilities)
+        checkOperatingSystemCapabilities();
 #endif
 }
 
@@ -91,6 +91,14 @@ bool SystemSession::restart(bool force) const
 		if(reply.type() != QDBusMessage::ErrorMessage)
 			return true;
 	}
+    if(mCapabilities & FreedesktopLogind)
+    {
+        QDBusInterface dbusInterface(QStringLiteral("org.freedesktop.login1"), QStringLiteral("/org/freedesktop/login1"), QStringLiteral("org.freedesktop.login1.Manager"), QDBusConnection::systemBus());
+        QDBusMessage reply = dbusInterface.call(QStringLiteral("Reboot"), !force);
+
+        if(reply.type() != QDBusMessage::ErrorMessage)
+            return true;
+    }
 	if(mCapabilities & FreedesktopConsoleKit)
 	{
 		QDBusInterface dbusInterface(QStringLiteral("org.freedesktop.ConsoleKit"), QStringLiteral("/org/freedesktop/ConsoleKit/Manager"), QStringLiteral("org.freedesktop.ConsoleKit.Manager"), QDBusConnection::systemBus());
@@ -134,6 +142,14 @@ bool SystemSession::shutdown(bool force) const
 		if(reply.type() != QDBusMessage::ErrorMessage)
 			return true;
 	}
+    if(mCapabilities & FreedesktopLogind)
+    {
+        QDBusInterface dbusInterface(QStringLiteral("org.freedesktop.login1"), QStringLiteral("/org/freedesktop/login1"), QStringLiteral("org.freedesktop.login1.Manager"), QDBusConnection::systemBus());
+        QDBusMessage reply = dbusInterface.call(QStringLiteral("PowerOff"), !force);
+
+        if(reply.type() != QDBusMessage::ErrorMessage)
+            return true;
+    }
 	if(mCapabilities & FreedesktopConsoleKit)
 	{
 		QDBusInterface dbusInterface(QStringLiteral("org.freedesktop.ConsoleKit"), QStringLiteral("/org/freedesktop/ConsoleKit/Manager"), QStringLiteral("org.freedesktop.ConsoleKit.Manager"), QDBusConnection::systemBus());
@@ -345,5 +361,9 @@ void SystemSession::checkOperatingSystemCapabilities()
 								  QStringLiteral("/KSMServer"),
 								  QStringLiteral("org.kde.KSMServerInterface"),
 								  QStringLiteral("canShutdown"), false) ? KdeKSMServer : 0;
+    mCapabilities |= checkForDBusInterface(QStringLiteral("org.freedesktop.login1"),
+                                  QStringLiteral("/org/freedesktop/login1"),
+                                  QStringLiteral("org.freedesktop.login1.Manager"),
+                                  QStringLiteral("CanPowerOff"), true) ? FreedesktopLogind : 0;
 }
 #endif
