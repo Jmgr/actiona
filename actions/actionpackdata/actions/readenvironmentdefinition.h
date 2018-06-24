@@ -45,11 +45,11 @@ namespace Actions
 		{
             translateItems("ReadEnvironmentVariableInstance::modes", ReadEnvironmentVariableInstance::modes);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setTooltip(tr("The variable used to store the selected information from your system environment"));
 			addElement(variable);
 
-			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("mode"), tr("Mode")), this);
+			auto mode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("mode"), tr("Mode")), this);
 			mode->setTooltip(tr("The environment read mode"));
 			mode->setItems(ReadEnvironmentVariableInstance::modes);
             mode->setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariableMode));
@@ -59,7 +59,7 @@ namespace Actions
 			selectionMode->setMasterList(mode);
             selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode));
 
-			ActionTools::EnvironmentVariableParameterDefinition *environmentVariableName = new ActionTools::EnvironmentVariableParameterDefinition(ActionTools::Name(QStringLiteral("environmentVariableName"), tr("Environment Variable")), this);
+			auto environmentVariableName = new ActionTools::EnvironmentVariableParameterDefinition(ActionTools::Name(QStringLiteral("environmentVariableName"), tr("Environment Variable")), this);
 			environmentVariableName->setTooltip(tr("The specific environment variable to read"));
 			selectionMode->addMember(environmentVariableName);
 

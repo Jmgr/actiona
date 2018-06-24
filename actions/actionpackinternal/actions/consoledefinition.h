@@ -43,11 +43,11 @@ namespace Actions
 		{
 			translateItems("ConsoleInstance::outputs", ConsoleInstance::outputs);
 
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
+			auto text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
 			text->setTooltip(tr("The text to write"));
 			addElement(text);
 
-			ActionTools::ListParameterDefinition *output = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("output"), tr("Output")), this);
+			auto output = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("output"), tr("Output")), this);
 			output->setTooltip(tr("The console output"));
 			output->setItems(ConsoleInstance::outputs);
 			output->setDefaultValue(ConsoleInstance::outputs.second.at(ConsoleInstance::Information));

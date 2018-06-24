@@ -40,7 +40,7 @@ namespace Actions
 		explicit CallProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::ProcedureParameterDefinition *name = new ActionTools::ProcedureParameterDefinition(ActionTools::Name(QStringLiteral("name"), tr("Name")), this);
+			auto name = new ActionTools::ProcedureParameterDefinition(ActionTools::Name(QStringLiteral("name"), tr("Name")), this);
 			name->setTooltip(tr("The name of the procedure to call"));
 			addElement(name);
 		}

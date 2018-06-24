@@ -40,7 +40,7 @@ namespace Actions
 		explicit OpenURLDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *url = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
+			auto url = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
 			url->setTooltip(tr("The url to open"));
 			addElement(url);
 

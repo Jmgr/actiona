@@ -44,17 +44,17 @@ namespace Actions
 		{
             translateItems("CursorPathInstance::buttons", CursorPathInstance::buttons);
 
-			ActionTools::PointListParameterDefinition *path = new ActionTools::PointListParameterDefinition(ActionTools::Name(QStringLiteral("path"), tr("Path")), this);
+			auto path = new ActionTools::PointListParameterDefinition(ActionTools::Name(QStringLiteral("path"), tr("Path")), this);
 			path->setTooltip(tr("The path to follow"));
 			addElement(path);
 
-			ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("button"), tr("Button")), this);
+			auto button = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("button"), tr("Button")), this);
             button->setTooltip(tr("The button to simulate"));
             button->setItems(CursorPathInstance::buttons);
             button->setDefaultValue(CursorPathInstance::buttons.second.at(CursorPathInstance::NoButton));
             addElement(button);
 
-			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionOffset"), tr("Offset")), this);
+			auto positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionOffset"), tr("Offset")), this);
 			positionOffset->setTooltip(tr("The offset to apply to the path"));
 			addElement(positionOffset, 1);
 		}

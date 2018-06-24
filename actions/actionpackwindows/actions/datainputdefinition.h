@@ -46,35 +46,35 @@ namespace Actions
 			translateItems("DataInputInstance::dataTypes", DataInputInstance::dataTypes);
             translateItems("DataInputInstance::editorTypes", DataInputInstance::editorTypes);
 
-			ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("question"), tr("Question")), this);
+			auto question = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("question"), tr("Question")), this);
 			question->setTooltip(tr("The question to ask"));
 			addElement(question);
 
-			ActionTools::ListParameterDefinition *dataType = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("dataType"), tr("Data type")), this);
+			auto dataType = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("dataType"), tr("Data type")), this);
 			dataType->setTooltip(tr("The data type"));
 			dataType->setItems(DataInputInstance::dataTypes);
 			dataType->setDefaultValue(DataInputInstance::dataTypes.second.at(DataInputInstance::TextType));
 			addElement(dataType);
 
-			ActionTools::ListParameterDefinition *editorType = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("editorType"), tr("Editor type")), this);
+			auto editorType = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("editorType"), tr("Editor type")), this);
             editorType->setTooltip(tr("The editor type"));
             editorType->setItems(DataInputInstance::editorTypes);
             editorType->setDefaultValue(DataInputInstance::editorTypes.second.at(DataInputInstance::LineEditorType));
             addElement(editorType);
 
-			ActionTools::TextParameterDefinition *defaultValue = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("defaultValue"), tr("Default value")), this);
+			auto defaultValue = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("defaultValue"), tr("Default value")), this);
 			defaultValue->setTooltip(tr("The default value"));
 			addElement(defaultValue);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setTooltip(tr("The variable where to save the entered input"));
 			addElement(variable);
 
-			ActionTools::TextParameterDefinition *windowTitle = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("windowTitle"), tr("Window title")), this);
+			auto windowTitle = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("windowTitle"), tr("Window title")), this);
 			windowTitle->setTooltip(tr("The title of the window"));
 			addElement(windowTitle, 1);
 
-			ActionTools::ImageParameterDefinition *windowIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name(QStringLiteral("windowIcon"), tr("Window icon")), this);
+			auto windowIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name(QStringLiteral("windowIcon"), tr("Window icon")), this);
 			windowIcon->setTooltip(tr("The window icon to use"));
 			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
 			windowIcon->setCaption(tr("Select the icon to use"));

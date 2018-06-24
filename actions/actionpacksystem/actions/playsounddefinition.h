@@ -44,19 +44,19 @@ namespace Actions
 		explicit PlaySoundDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("Sound file/URL")), this);
+			auto file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("Sound file/URL")), this);
 			file->setTooltip(tr("The sound file or URL to play"));
 			file->setMode(ActionTools::FileEdit::FileOpen);
 			file->setCaption(tr("Choose the sound file"));
 			file->setFilter(tr("All files (*.*)"));
 			addElement(file);
 
-			ActionTools::BooleanParameterDefinition *url = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
+			auto url = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
 			url->setTooltip(tr("Is the sound resource an URL"));
 			url->setDefaultValue(QStringLiteral("false"));
 			addElement(url);
 
-			ActionTools::NumberParameterDefinition *volume = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("volume"), tr("Volume")), this);
+			auto volume = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("volume"), tr("Volume")), this);
 			volume->setTooltip(tr("The volume to play at"));
 			volume->setMinimum(0);
 			volume->setMaximum(100);
@@ -64,17 +64,17 @@ namespace Actions
 			volume->setDefaultValue(QStringLiteral("100"));
 			addElement(volume);
 
-			ActionTools::BooleanParameterDefinition *blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("blocking"), tr("Wait until played")), this);
+			auto blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("blocking"), tr("Wait until played")), this);
 			blocking->setTooltip(tr("Should the action end only when the sound has finished playing"));
 			blocking->setDefaultValue(QStringLiteral("true"));
 			addElement(blocking);
 
-			ActionTools::BooleanParameterDefinition *loop = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("looping"), tr("Looping")), this);
+			auto loop = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("looping"), tr("Looping")), this);
 			loop->setTooltip(tr("Should the sound loop"));
 			loop->setDefaultValue(QStringLiteral("false"));
 			addElement(loop, 1);
 
-			ActionTools::NumberParameterDefinition *playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("playbackRate"), tr("Playback rate")), this);
+			auto playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("playbackRate"), tr("Playback rate")), this);
 			playbackrate->setTooltip(tr("The playback rate"));
 			playbackrate->setMinimum(std::numeric_limits<int>::min());
 			playbackrate->setMaximum(std::numeric_limits<int>::max());

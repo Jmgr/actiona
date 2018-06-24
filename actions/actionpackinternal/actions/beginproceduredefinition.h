@@ -40,7 +40,7 @@ namespace Actions
 		explicit BeginProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *name = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("name"), tr("Name")), this);
+			auto name = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("name"), tr("Name")), this);
 			name->setTooltip(tr("The name of the procedure"));
 			name->setTextCodeMode(ActionTools::TextParameterDefinition::TextOnly);
 			addElement(name);

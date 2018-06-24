@@ -47,12 +47,12 @@ namespace Actions
 		{
 			translateItems("VariableInstance::types", VariableInstance::types);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setCategory(ActionTools::ElementDefinition::INPUT);
 			variable->setTooltip(tr("The variable name"));
 			addElement(variable);
 
-			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("type"), tr("Type")), this);
+			auto type = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("type"), tr("Type")), this);
 			type->setTooltip(tr("The variable type"));
 			type->setItems(VariableInstance::types);
 			type->setDefaultValue(VariableInstance::types.second.at(VariableInstance::String));
@@ -66,7 +66,7 @@ namespace Actions
 											  << VariableInstance::types.first.at(VariableInstance::Float)
 											  );
 
-			ActionTools::TextParameterDefinition *simpleValue = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
+			auto simpleValue = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
 			simpleValue->setTooltip(tr("The variables new value"));
 			singleValueGroup->addMember(simpleValue);
 
@@ -78,7 +78,7 @@ namespace Actions
 											  << VariableInstance::types.first.at(VariableInstance::Color)
 											  );
 
-			ActionTools::ColorParameterDefinition *colorValue = new ActionTools::ColorParameterDefinition(ActionTools::Name(QStringLiteral("colorValue"), tr("Color")), this);
+			auto colorValue = new ActionTools::ColorParameterDefinition(ActionTools::Name(QStringLiteral("colorValue"), tr("Color")), this);
 			colorValue->setTooltip(tr("The variables new value"));
 			colorValueGroup->addMember(colorValue);
 
@@ -90,7 +90,7 @@ namespace Actions
 											  << VariableInstance::types.first.at(VariableInstance::Position)
 											  );
 
-			ActionTools::PositionParameterDefinition *positionValue = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionValue"), tr("Position")), this);
+			auto positionValue = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionValue"), tr("Position")), this);
 			positionValue->setTooltip(tr("The variables new value"));
 			positionValueGroup->addMember(positionValue);
 

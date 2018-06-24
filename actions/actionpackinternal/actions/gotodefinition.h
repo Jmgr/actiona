@@ -40,7 +40,7 @@ namespace Actions
 		explicit GotoDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition(ActionTools::Name(QStringLiteral("line"), tr("Line")), this);
+			auto line = new ActionTools::LineParameterDefinition(ActionTools::Name(QStringLiteral("line"), tr("Line")), this);
 			line->setTooltip(tr("The line (or label) to go to"));
 			addElement(line);
 		}

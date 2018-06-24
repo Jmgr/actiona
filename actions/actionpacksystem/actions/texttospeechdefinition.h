@@ -45,11 +45,11 @@ namespace Actions
         explicit TextToSpeechDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-            ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
+            auto text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
             text->setTooltip(tr("The text to say"));
             addElement(text);
 
-            ActionTools::NumberParameterDefinition *volume = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("volume"), tr("Volume")), this);
+            auto volume = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("volume"), tr("Volume")), this);
             volume->setTooltip(tr("The speech volume"));
             volume->setMinimum(-1);
             volume->setMaximum(100);
@@ -58,17 +58,17 @@ namespace Actions
             volume->setSpecialValueText(tr("Default volume"));
             addElement(volume);
 
-            ActionTools::LocaleParameterDefinition *language = new ActionTools::LocaleParameterDefinition(ActionTools::Name(QStringLiteral("language"), tr("Language")), this);
+            auto language = new ActionTools::LocaleParameterDefinition(ActionTools::Name(QStringLiteral("language"), tr("Language")), this);
             language->setTooltip(tr("The language to use"));
             language->setLocales(QTextToSpeech{}.availableLocales());
             addElement(language);
 
-            ActionTools::BooleanParameterDefinition *blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("blocking"), tr("Wait until speech finished")), this);
+            auto blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("blocking"), tr("Wait until speech finished")), this);
             blocking->setTooltip(tr("Should the action end only when the speech is finished"));
             blocking->setDefaultValue(QStringLiteral("true"));
             addElement(blocking);
 
-            ActionTools::NumberParameterDefinition *playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("playbackRate"), tr("Playback rate")), this);
+            auto playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("playbackRate"), tr("Playback rate")), this);
             playbackrate->setTooltip(tr("The playback rate"));
             playbackrate->setMinimum(0);
             playbackrate->setMaximum(200);
@@ -76,7 +76,7 @@ namespace Actions
             playbackrate->setDefaultValue(QStringLiteral("100"));
             addElement(playbackrate, 1);
 
-            ActionTools::NumberParameterDefinition *pitch = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("pitch"), tr("Pitch")), this);
+            auto pitch = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("pitch"), tr("Pitch")), this);
             pitch->setTooltip(tr("The sound frequency of the voice"));
             pitch->setMinimum(0);
             pitch->setMaximum(200);

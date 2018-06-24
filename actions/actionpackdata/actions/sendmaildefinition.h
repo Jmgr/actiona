@@ -46,7 +46,7 @@ namespace Actions
 		{
             translateItems("SendMailInstance::attachmentContentTypes", SendMailInstance::attachmentContentTypes);
 
-			ActionTools::TextParameterDefinition *serverName = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("serverName"), tr("Server name")), this);
+			auto serverName = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("serverName"), tr("Server name")), this);
             serverName->setTooltip(tr("The name or IP of the SMTP server to use\nExample: mail.example.com"));
             addElement(serverName);
 
@@ -55,53 +55,53 @@ namespace Actions
 			secureConnection->setDefaultValue(QStringLiteral("true"));
             addElement(secureConnection);
 
-			ActionTools::TextParameterDefinition *userName = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("userName"), tr("User name")), this);
+			auto userName = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("userName"), tr("User name")), this);
             userName->setTooltip(tr("The user (or login) name to use\nMany SMTP servers use the e-mail address as user name"));
             addElement(userName);
 
-			ActionTools::TextParameterDefinition *password = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("password"), tr("Password")), this);
+			auto password = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("password"), tr("Password")), this);
             password->setTooltip(tr("The password to use"));
             addElement(password);
 
-			ActionTools::TextParameterDefinition *sender = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("sender"), tr("Sender")), this);
+			auto sender = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("sender"), tr("Sender")), this);
             sender->setTooltip(tr("The sender's e-mail address"));
             addElement(sender);
 
-			ActionTools::TextParameterDefinition *receivers = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("receivers"), tr("Receivers")), this);
+			auto receivers = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("receivers"), tr("Receivers")), this);
             receivers->setTooltip(tr("The receiver's e-mail address\nCan contain multiple receivers separated with a comma"));
             addElement(receivers);
 
-			ActionTools::TextParameterDefinition *subject = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("subject"), tr("Subject")), this);
+			auto subject = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("subject"), tr("Subject")), this);
             subject->setTooltip(tr("The e-mail's subject"));
             addElement(subject);
 
-			ActionTools::TextParameterDefinition *body = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("body"), tr("Body")), this);
+			auto body = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("body"), tr("Body")), this);
             body->setTooltip(tr("The e-mail's body"));
             addElement(body);
 
-			ActionTools::TextParameterDefinition *attachmentName = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("attachmentName"), tr("Attachment name")), this);
+			auto attachmentName = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("attachmentName"), tr("Attachment name")), this);
             attachmentName->setTooltip(tr("The attachment name, an empty name means that there is no attachment"));
             addElement(attachmentName, 1);
 
-			ActionTools::TextParameterDefinition *attachmentData = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("attachmentData"), tr("Attachment data")), this);
+			auto attachmentData = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("attachmentData"), tr("Attachment data")), this);
             attachmentData->setTooltip(tr("The data to attach to the e-mail"));
             addElement(attachmentData, 1);
 
-			ActionTools::ListParameterDefinition *attachmentContentType = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("attachmentContentType"), tr("Attachment content type")), this);
+			auto attachmentContentType = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("attachmentContentType"), tr("Attachment content type")), this);
             attachmentContentType->setTooltip(tr("The MIME content type of the attachment\nIf left empty, Actiona will try to deduce it from the data type"));
             attachmentContentType->setItems(SendMailInstance::attachmentContentTypes);
             attachmentContentType->setDefaultValue(SendMailInstance::attachmentContentTypes.second.at(SendMailInstance::AutoDetectAttachmentContentType));
             addElement(attachmentContentType, 1);
 
-			ActionTools::TextParameterDefinition *carbonCopy = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("carbonCopy"), tr("Carbon copy (Cc)")), this);
+			auto carbonCopy = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("carbonCopy"), tr("Carbon copy (Cc)")), this);
             carbonCopy->setTooltip(tr("The carbon copy receiver's e-mail address\nCan contain multiple receivers separated with a comma"));
             addElement(carbonCopy, 2);
 
-			ActionTools::TextParameterDefinition *blindCarbonCopy = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("blindCarbonCopy"), tr("Blind carbon copy (Bcc)")), this);
+			auto blindCarbonCopy = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("blindCarbonCopy"), tr("Blind carbon copy (Bcc)")), this);
             blindCarbonCopy->setTooltip(tr("The blind carbon copy receiver's e-mail address\nCan contain multiple receivers separated with a comma"));
             addElement(blindCarbonCopy, 2);
 
-			ActionTools::NumberParameterDefinition *serverPort = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("serverPort"), tr("Server port")), this);
+			auto serverPort = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("serverPort"), tr("Server port")), this);
             serverPort->setTooltip(tr("The server port"));
             serverPort->setMinimum(0);
             serverPort->setMaximum(65535);
@@ -109,7 +109,7 @@ namespace Actions
             serverPort->setSpecialValueText(tr("Default port"));
             addElement(serverPort, 2);
 
-			ActionTools::TextParameterDefinition *extraHeaders = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("extraHeaders"), tr("Extra headers")), this);
+			auto extraHeaders = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("extraHeaders"), tr("Extra headers")), this);
             extraHeaders->setTooltip(tr("Extra headers to add to the e-mail\nShould contain one header per line"));
             addElement(extraHeaders, 2);
 

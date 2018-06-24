@@ -42,21 +42,21 @@ namespace Actions
 		explicit WriteRegistryDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
-			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("key"), tr("Key")), this);
+			auto key = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("key"), tr("Key")), this);
 			key->setTooltip(tr("The registry key to write to"));
 			key->setItems(ReadRegistryInstance::keys);
 			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 			addElement(key);
 
-			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("subKey"), tr("Subkey")), this);
+			auto subKey = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("subKey"), tr("Subkey")), this);
 			subKey->setTooltip(tr("The registry subkey to write to"));
 			addElement(subKey);
 
-			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
+			auto value = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
 			value->setTooltip(tr("The value to write to"));
 			addElement(value);
 
-			ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("data"), tr("Data")), this);
+			auto data = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("data"), tr("Data")), this);
 			data->setTooltip(tr("The data to write"));
 			addElement(data);
 

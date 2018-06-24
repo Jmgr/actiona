@@ -44,22 +44,22 @@ namespace Actions
 		explicit NotifyDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("title"), tr("Title")), this);
+			auto title = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("title"), tr("Title")), this);
 			title->setTooltip(tr("The notification title"));
 			addElement(title);
 
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
+			auto text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
 			text->setTooltip(tr("The notification text"));
 			addElement(text);
 
-			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("timeout"), tr("Timeout")), this);
+			auto timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("timeout"), tr("Timeout")), this);
 			timeout->setTooltip(tr("The notification timeout"));
 			timeout->setMinimum(0);
 			timeout->setMaximum(std::numeric_limits<int>::max());
 			timeout->setDefaultValue(QStringLiteral("3000"));
 			addElement(timeout, 1);
 
-			ActionTools::FileParameterDefinition *icon = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("icon"), tr("Icon")), this);
+			auto icon = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("icon"), tr("Icon")), this);
 			icon->setTooltip(tr("The notification icon"));
 			addElement(icon, 1);
 

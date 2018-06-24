@@ -45,14 +45,14 @@ namespace Actions
 		{
 			translateItems("PauseInstance::units", PauseInstance::units);
 
-			ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("duration"), tr("Duration")), this);
+			auto duration = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("duration"), tr("Duration")), this);
 			duration->setTooltip(tr("The duration of the pause"));
 			duration->setMinimum(0);
 			duration->setMaximum(std::numeric_limits<int>::max());
 			duration->setDefaultValue(QStringLiteral("5"));
 			addElement(duration);
 
-			ActionTools::ListParameterDefinition *unit = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("unit"), tr("Unit")), this);
+			auto unit = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("unit"), tr("Unit")), this);
 			unit->setTooltip(tr("The pause duration unit"));
 			unit->setItems(PauseInstance::units);
 			unit->setDefaultValue(PauseInstance::units.second.at(PauseInstance::Seconds));

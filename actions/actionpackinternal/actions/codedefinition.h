@@ -40,7 +40,7 @@ namespace Actions
 		explicit CodeDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *code = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("code"), tr("Code")), this);
+			auto code = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("code"), tr("Code")), this);
 			code->setTooltip(tr("The code to evaluate"));
 			code->setTextCodeMode(ActionTools::TextParameterDefinition::CodeOnly);
 			addElement(code);

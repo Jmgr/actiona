@@ -49,23 +49,23 @@ namespace Actions
 			translateItems("ClickInstance::buttons", ClickInstance::buttons);
 			translateItems("ClickInstance::actions", ClickInstance::actions);
 
-			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("action"), tr("Action")), this);
+            auto action = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("action"), tr("Action")), this);
 			action->setTooltip(tr("The action to simulate"));
 			action->setItems(ClickInstance::actions);
 			action->setDefaultValue(ClickInstance::actions.second.at(ClickInstance::ClickAction));
 			addElement(action);
 	
-			ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("button"), tr("Button")), this);
+            auto button = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("button"), tr("Button")), this);
 			button->setTooltip(tr("The button to simulate"));
 			button->setItems(ClickInstance::buttons);
 			button->setDefaultValue(ClickInstance::buttons.second.at(MouseDevice::LeftButton));
 			addElement(button);
-	
-			ActionTools::PositionParameterDefinition *position = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("position"), tr("Position")), this);
+
+            auto position = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("position"), tr("Position")), this);
 			position->setTooltip(tr("The screen position where to simulate a mouse click"));
 			addElement(position);
 
-			ActionTools::BooleanParameterDefinition *restoreCursorPosition = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("restoreCursorPosition"), tr("Restore cursor position")), this);
+            auto restoreCursorPosition = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("restoreCursorPosition"), tr("Restore cursor position")), this);
 			restoreCursorPosition->setTooltip(tr("Restore the cursor position after the action is finished"));
 			addElement(restoreCursorPosition);
 	
@@ -73,7 +73,7 @@ namespace Actions
 			clickGroup->setMasterList(action);
 			clickGroup->setMasterValues(QStringList() << ClickInstance::actions.first.at(ClickInstance::ClickAction));
 	
-			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("amount"), tr("Amount")), this);
+            auto amount = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("amount"), tr("Amount")), this);
 			amount->setTooltip(tr("The amount of clicks to simulate"));
 			amount->setMinimum(1);
 			amount->setMaximum(std::numeric_limits<int>::max());
@@ -82,7 +82,7 @@ namespace Actions
 	
 			addElement(clickGroup);
 			
-			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionOffset"), tr("Offset")), this);
+            auto positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionOffset"), tr("Offset")), this);
 			positionOffset->setTooltip(tr("The offset to apply to the click position"));
 			addElement(positionOffset, 1);
 

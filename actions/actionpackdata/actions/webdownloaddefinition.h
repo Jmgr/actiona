@@ -47,11 +47,11 @@ namespace Actions
 		{
 			translateItems("WebDownloadInstance::destinations", WebDownloadInstance::destinations);
 
-			ActionTools::TextParameterDefinition *url = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
+			auto url = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
 			url->setTooltip(tr("The URL of the data to download"));
 			addElement(url);
 
-			ActionTools::ListParameterDefinition *destination = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("destination"), tr("Destination")), this);
+			auto destination = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("destination"), tr("Destination")), this);
 			destination->setTooltip(tr("The destination where to write the downloaded data"));
 			destination->setItems(WebDownloadInstance::destinations);
 			destination->setDefaultValue(WebDownloadInstance::destinations.second.at(WebDownloadInstance::Variable));
@@ -61,7 +61,7 @@ namespace Actions
 			variableMode->setMasterList(destination);
 			variableMode->setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::Variable));
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
 			variable->setTooltip(tr("The variable where to write the downloaded data"));
 			variableMode->addMember(variable);
 
@@ -71,7 +71,7 @@ namespace Actions
 			fileMode->setMasterList(destination);
 			fileMode->setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::File));
 
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
+			auto file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
 			file->setTooltip(tr("The file where to write the downloaded data"));
 			file->setMode(ActionTools::FileEdit::FileSave);
 			file->setCaption(tr("Choose the destination file"));
@@ -80,7 +80,7 @@ namespace Actions
 
 			addElement(fileMode);
 
-			ActionTools::BooleanParameterDefinition *showProgress = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("showProgress"), tr("Show progress")), this);
+			auto showProgress = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("showProgress"), tr("Show progress")), this);
 			showProgress->setTooltip(tr("Should the download progress be shown"));
 			showProgress->setDefaultValue(QStringLiteral("true"));
 			addElement(showProgress, 1);
