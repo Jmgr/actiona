@@ -103,7 +103,7 @@ namespace Code
 
     int Mail::send(const QScriptValue &mail)
     {
-        if(auto *mailMessage = qobject_cast<MailMessage*>(mail.toQObject()))
+        if(auto mailMessage = qobject_cast<MailMessage*>(mail.toQObject()))
         {
             QxtMailMessage &message = mailMessage->message();
 

@@ -33,7 +33,7 @@ QWidget* ResourceTypeDelegate::createEditor(QWidget *parent, const QStyleOptionV
     Q_UNUSED(option)
     Q_UNUSED(index)
 
-    auto *comboBox = new QComboBox(parent);
+    auto comboBox = new QComboBox(parent);
     comboBox->setEditable(false);
 
     for(int i = 0; i < ActionTools::Resource::TypeCount; ++i)
@@ -47,7 +47,7 @@ QWidget* ResourceTypeDelegate::createEditor(QWidget *parent, const QStyleOptionV
 
 void ResourceTypeDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-    if(auto *comboBox = qobject_cast<QComboBox *>(editor))
+    if(auto comboBox = qobject_cast<QComboBox *>(editor))
         comboBox->setCurrentIndex(index.data(Qt::UserRole).toInt());
     else
         QStyledItemDelegate::setEditorData(editor, index);
@@ -55,7 +55,7 @@ void ResourceTypeDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 
 void ResourceTypeDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    if(auto *comboBox = qobject_cast<QComboBox *>(editor))
+    if(auto comboBox = qobject_cast<QComboBox *>(editor))
     {
         model->setData(index, comboBox->currentIndex(), Qt::UserRole);
         model->setData(index, ActionTools::Resource::typeNames[comboBox->currentIndex()], Qt::DisplayRole);

@@ -37,7 +37,7 @@ namespace ActionTools
         if(mScript->resources().isEmpty())
             return nullptr;
 
-        auto *back = new QMenu(parent);
+        auto back = new QMenu(parent);
 
         for(const QString &key: mScript->resources().keys())
         {

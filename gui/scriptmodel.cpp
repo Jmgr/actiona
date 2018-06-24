@@ -457,7 +457,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 	if(indexes.isEmpty())
         return nullptr;
 
-	auto *mimeDataPtr = new QMimeData();
+	auto mimeDataPtr = new QMimeData();
 	QByteArray encodedData;
 	QDataStream stream(&encodedData, QIODevice::WriteOnly);
 

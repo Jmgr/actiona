@@ -80,8 +80,8 @@ namespace Actions
                 {
                     QObject *variableObject = variableValue.toQObject();
 
-                    auto *rectObject = qobject_cast<Code::Rect*>(variableObject);
-                    auto *pointObject = qobject_cast<Code::Point*>(value.toQObject());
+                    auto rectObject = qobject_cast<Code::Rect*>(variableObject);
+                    auto pointObject = qobject_cast<Code::Point*>(value.toQObject());
                     if(rectObject && pointObject)
                     {
                         result = rectObject->rect().contains(pointObject->point());

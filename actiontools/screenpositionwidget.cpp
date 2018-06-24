@@ -40,13 +40,13 @@ namespace ActionTools
 		: QWidget(parent),
 		mButtonGroup(new QButtonGroup(this))
 	{
-		auto *mainLayout = new QHBoxLayout();
+		auto mainLayout = new QHBoxLayout();
 
 		int screenCount = QApplication::desktop()->numScreens();
 		for(int screen=0;screen<screenCount;++screen)
 		{
 			QGroupBox *screenPositionGroupBox = new QGroupBox(tr("Screen %1").arg(screen+1));
-			auto *gridLayout = new QGridLayout();
+			auto gridLayout = new QGridLayout();
 			gridLayout->setMargin(0);
 			gridLayout->setSpacing(0);
 
@@ -55,7 +55,7 @@ namespace ActionTools
 			{
 				for(int row=0;row<3;++row,++i)
 				{
-					auto *radioButton = new QRadioButton(this);
+					auto radioButton = new QRadioButton(this);
 					radioButton->setIconSize(QSize(40, 40));
 					radioButton->setIcon(QIcon(QStringLiteral(":/images/monitor_%1.png").arg(iconNames[row][column])));
 

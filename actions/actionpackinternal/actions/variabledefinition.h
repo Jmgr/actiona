@@ -58,7 +58,7 @@ namespace Actions
 			type->setDefaultValue(VariableInstance::types.second.at(VariableInstance::String));
 			addElement(type);
 
-			auto *singleValueGroup = new ActionTools::GroupDefinition(this);
+			auto singleValueGroup = new ActionTools::GroupDefinition(this);
 			singleValueGroup->setMasterList(type);
 			singleValueGroup->setMasterValues(QStringList()
 											  << VariableInstance::types.first.at(VariableInstance::String)
@@ -72,7 +72,7 @@ namespace Actions
 
 			addElement(singleValueGroup);
 
-			auto *colorValueGroup = new ActionTools::GroupDefinition(this);
+			auto colorValueGroup = new ActionTools::GroupDefinition(this);
 			colorValueGroup->setMasterList(type);
 			colorValueGroup->setMasterValues(QStringList()
 											  << VariableInstance::types.first.at(VariableInstance::Color)
@@ -84,7 +84,7 @@ namespace Actions
 
 			addElement(colorValueGroup);
 
-			auto *positionValueGroup = new ActionTools::GroupDefinition(this);
+			auto positionValueGroup = new ActionTools::GroupDefinition(this);
 			positionValueGroup->setMasterList(type);
 			positionValueGroup->setMasterValues(QStringList()
 											  << VariableInstance::types.first.at(VariableInstance::Position)

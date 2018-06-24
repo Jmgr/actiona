@@ -965,7 +965,7 @@ namespace ActionTools
 
         for(const ElementDefinition *elementDefinition: actionDefinition->elements())
         {
-            if(const auto *groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
+            if(const auto groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
             {
                 for(const ParameterDefinition *parameterDefinition: groupDefinition->members())
                     parametersFromDefinition(result, actionInstance, parameterDefinition);

@@ -43,7 +43,7 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(auto *codeProcess = qobject_cast<ProcessHandle*>(object))
+				if(auto codeProcess = qobject_cast<ProcessHandle*>(object))
 					process = new ProcessHandle(*codeProcess);
 				else
 					process = new ProcessHandle(context->argument(0).toInt32());
@@ -72,7 +72,7 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(auto *process = qobject_cast<ProcessHandle*>(object))
+				if(auto process = qobject_cast<ProcessHandle*>(object))
 					return process->processId();
 				else
 					return context->argument(0).toInt32();
@@ -149,7 +149,7 @@ namespace Code
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(auto *otherProcess = qobject_cast<ProcessHandle*>(object))
+		if(auto otherProcess = qobject_cast<ProcessHandle*>(object))
 			return (otherProcess == this || otherProcess->mProcessId == mProcessId);
 			
 		return false;

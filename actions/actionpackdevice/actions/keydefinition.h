@@ -59,7 +59,7 @@ namespace Actions
 			action->setDefaultValue(KeyInstance::actions.second.at(KeyInstance::PressReleaseAction));
 			addElement(action);
 
-			auto *pressAndReleaseGroup = new ActionTools::GroupDefinition(this);
+			auto pressAndReleaseGroup = new ActionTools::GroupDefinition(this);
 			pressAndReleaseGroup->setMasterList(action);
 			pressAndReleaseGroup->setMasterValues(QStringList() << KeyInstance::actions.first.at(KeyInstance::PressReleaseAction));
 

@@ -69,7 +69,7 @@ namespace Actions
 			restoreCursorPosition->setTooltip(tr("Restore the cursor position after the action is finished"));
 			addElement(restoreCursorPosition);
 	
-			auto *clickGroup = new ActionTools::GroupDefinition(this);
+            auto clickGroup = new ActionTools::GroupDefinition(this);
 			clickGroup->setMasterList(action);
 			clickGroup->setMasterValues(QStringList() << ClickInstance::actions.first.at(ClickInstance::ClickAction));
 	

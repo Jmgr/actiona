@@ -34,7 +34,7 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(auto *codeRawData = qobject_cast<RawData*>(object))
+				if(auto codeRawData = qobject_cast<RawData*>(object))
 					rawData = new RawData(*codeRawData);
 				else
 					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
@@ -123,7 +123,7 @@ namespace Code
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(auto *otherRawData = qobject_cast<RawData*>(object))
+		if(auto otherRawData = qobject_cast<RawData*>(object))
 			return (otherRawData == this || otherRawData->mByteArray == mByteArray);
 			
 		return false;

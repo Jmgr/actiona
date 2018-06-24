@@ -37,7 +37,7 @@ namespace Code
 {
 	QScriptValue Process::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		auto *process = new Process;
+		auto process = new Process;
 
 		QScriptValueIterator it(context->argument(0));
 
@@ -245,7 +245,7 @@ namespace Code
 	QScriptValue Process::write(const QScriptValue &data)
 	{
 		QObject *object = data.toQObject();
-		if(auto *rawData = qobject_cast<RawData*>(object))
+		if(auto rawData = qobject_cast<RawData*>(object))
 		{
 			if(mProcess->write(rawData->byteArray()) == -1)
 				throwError(QStringLiteral("WriteError"), tr("Write failed"));
@@ -345,7 +345,7 @@ namespace Code
 
 	QScriptValue Process::setStandardOutputProcess(const QScriptValue &processValue)
 	{
-		auto *otherProcess = qobject_cast<Process *>(processValue.toQObject());
+		auto otherProcess = qobject_cast<Process *>(processValue.toQObject());
 		if(!otherProcess)
 		{
 			throwError(QStringLiteral("InvalidProcessError"), tr("Invalid process"));

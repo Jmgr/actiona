@@ -53,7 +53,7 @@ void ScriptTreeView::startDrag(Qt::DropActions supportedActions)
 		return;
 
 	QRect rect;
-	auto *drag = new QDrag(this);
+	auto drag = new QDrag(this);
 	drag->setMimeData(data);
 
 	Qt::DropAction finalDefaultDropAction = Qt::IgnoreAction;

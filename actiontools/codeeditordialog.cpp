@@ -43,7 +43,7 @@ namespace ActionTools
 
 		QSettings settings;
 
-		auto *swapCodeAction = new QAction(this);
+		auto swapCodeAction = new QAction(this);
 		swapCodeAction->setShortcut(QKeySequence(settings.value(QStringLiteral("actions/switchTextCode"), QKeySequence(QStringLiteral("Ctrl+Shift+C"))).toString()));
 		swapCodeAction->setShortcutContext(Qt::WindowShortcut);
 		addAction(swapCodeAction);
@@ -140,7 +140,7 @@ namespace ActionTools
 
 		variablesMenu->setIcon(QIcon(QStringLiteral(":/images/variable.png")));
 
-        auto *menu = new QMenu;
+        auto menu = new QMenu;
 
         menu->addMenu(variablesMenu);
         menu->addMenu(mResourcesMenu);

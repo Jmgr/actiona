@@ -37,7 +37,7 @@ namespace Actions
 
 		void startExecution() override
 		{
-			auto *scriptAgent = dynamic_cast<LibExecuter::ScriptAgent *>(scriptEngine()->agent());
+			auto scriptAgent = dynamic_cast<LibExecuter::ScriptAgent *>(scriptEngine()->agent());
 			scriptAgent->stopExecution();
 
 			executionEnded();

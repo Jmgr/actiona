@@ -139,7 +139,7 @@ QImage GaussBlurFilter::apply(const QImage &image, const QRect& clipRect ) const
         QtConvolutionKernelMatrix integerMatrixLeft = convertMatrixBasetype<int,double>(matLeft);
         QtConvolutionKernelMatrix integerMatrixRight = convertMatrixBasetype<int,double>(matRight);
         
-        auto *localThis = const_cast<GaussBlurFilter*>(this);
+        auto localThis = const_cast<GaussBlurFilter*>(this);
         localThis->addKernel(integerMatrixLeft, m_channels, m_borderPolicy);
         localThis->addKernel(integerMatrixRight, m_channels, m_borderPolicy);
     }

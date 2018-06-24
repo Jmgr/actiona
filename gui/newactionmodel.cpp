@@ -34,7 +34,7 @@ Qt::DropActions NewActionModel::supportedDropActions() const
 
 QMimeData *NewActionModel::mimeData(const QModelIndexList &indexes) const
 {
-	auto *mimeData = new QMimeData();
+	auto mimeData = new QMimeData();
 	QByteArray data;
 
     if(indexes.count() != 1)

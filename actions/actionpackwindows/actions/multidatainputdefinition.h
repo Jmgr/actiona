@@ -81,7 +81,7 @@ namespace Actions
 			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 			addElement(windowIcon, 1);
 
-			auto *choiceGroup = new ActionTools::GroupDefinition(this);
+			auto choiceGroup = new ActionTools::GroupDefinition(this);
 			choiceGroup->setMasterList(mode);
 			choiceGroup->setMasterValues(QStringList()
 										 << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::ListMode)

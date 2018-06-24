@@ -63,7 +63,7 @@ namespace Actions
             mode->setDefaultValue(ReadIniFileInstance::modes.second.at(ReadIniFileInstance::SingleParameter));
             addElement(mode);
 
-			auto *selectionMode = new ActionTools::GroupDefinition(this);
+			auto selectionMode = new ActionTools::GroupDefinition(this);
 			selectionMode->setMasterList(mode);
             selectionMode->setMasterValues(QStringList() << ReadIniFileInstance::modes.first.at(ReadIniFileInstance::SingleParameter));
 

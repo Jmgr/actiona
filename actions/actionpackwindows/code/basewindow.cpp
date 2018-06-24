@@ -92,7 +92,7 @@ namespace Code
 			else if(it.name() == QLatin1String("position"))
 			{
 				QObject *object = it.value().toQObject();
-				if(auto *codePoint = qobject_cast<Point*>(object))
+				if(auto codePoint = qobject_cast<Point*>(object))
 					mWindow->move(codePoint->point());
 				else
 					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
@@ -105,7 +105,7 @@ namespace Code
 				mWindow->setVisible(it.value().toBool());
 			else if(it.name() == QLatin1String("windowIcon"))
 			{
-				if(auto *icon = qobject_cast<Image*>(it.value().toQObject()))
+				if(auto icon = qobject_cast<Image*>(it.value().toQObject()))
 					mWindow->setWindowIcon(QIcon(QPixmap::fromImage(icon->image())));
 				else
 					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
@@ -169,7 +169,7 @@ namespace Code
 			return thisObject();
 		}
 
-		if(auto *icon = qobject_cast<Image*>(windowIcon.toQObject()))
+		if(auto icon = qobject_cast<Image*>(windowIcon.toQObject()))
 			mWindow->setWindowIcon(QIcon(QPixmap::fromImage(icon->image())));
 		else
 		{
@@ -195,7 +195,7 @@ namespace Code
             return false;
 
         QObject *object = other.toQObject();
-        if(auto *otherBaseWindow = qobject_cast<BaseWindow*>(object))
+        if(auto otherBaseWindow = qobject_cast<BaseWindow*>(object))
             return (otherBaseWindow == this || otherBaseWindow->mWindow == mWindow);
 
         return false;

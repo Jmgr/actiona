@@ -59,7 +59,7 @@ namespace Actions
 			source->setDefaultValue(FindImageInstance::sources.second.at(FindImageInstance::ScreenshotSource));
 			addElement(source);
 
-            auto *windowGroup = new ActionTools::GroupDefinition(this);
+            auto windowGroup = new ActionTools::GroupDefinition(this);
             windowGroup->setMasterList(source);
             windowGroup->setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::WindowSource));
 
@@ -73,7 +73,7 @@ namespace Actions
 
             addElement(windowGroup);
 
-			auto *imageToSearchInGroup = new ActionTools::GroupDefinition(this);
+			auto imageToSearchInGroup = new ActionTools::GroupDefinition(this);
 			imageToSearchInGroup->setMasterList(source);
 			imageToSearchInGroup->setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::ImageSource));
 

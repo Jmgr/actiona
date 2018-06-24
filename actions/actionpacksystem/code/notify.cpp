@@ -36,7 +36,7 @@ namespace Code
 {
 	QScriptValue Notify::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		auto *notify = new Notify;
+		auto notify = new Notify;
 
 		QScriptValueIterator it(context->argument(0));
 

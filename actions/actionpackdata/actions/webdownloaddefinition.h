@@ -57,7 +57,7 @@ namespace Actions
 			destination->setDefaultValue(WebDownloadInstance::destinations.second.at(WebDownloadInstance::Variable));
 			addElement(destination);
 
-			auto *variableMode = new ActionTools::GroupDefinition(this);
+			auto variableMode = new ActionTools::GroupDefinition(this);
 			variableMode->setMasterList(destination);
 			variableMode->setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::Variable));
 
@@ -67,7 +67,7 @@ namespace Actions
 
 			addElement(variableMode);
 
-			auto *fileMode = new ActionTools::GroupDefinition(this);
+			auto fileMode = new ActionTools::GroupDefinition(this);
 			fileMode->setMasterList(destination);
 			fileMode->setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::File));
 

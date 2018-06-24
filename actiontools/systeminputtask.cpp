@@ -54,7 +54,7 @@ namespace ActionTools
 			case XRecordFromServer:
 			case XRecordFromClient:
 				{
-					auto *recordData = reinterpret_cast<xEvent *>(safeData.data()->data);
+					auto recordData = reinterpret_cast<xEvent *>(safeData.data()->data);
 
 					switch(recordData->u.u.type)
 					{

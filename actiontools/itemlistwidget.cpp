@@ -78,7 +78,7 @@ namespace ActionTools
 
 	void ItemListWidget::on_addPushButton_clicked()
 	{
-		auto *newItem = new QStandardItem();
+		auto newItem = new QStandardItem();
 		mModel->appendRow(newItem);
 
 		ui->itemsListView->edit(newItem->index());

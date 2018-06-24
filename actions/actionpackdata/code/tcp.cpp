@@ -121,7 +121,7 @@ namespace Code
 	QScriptValue Tcp::write(const QScriptValue &data)
 	{
 		QObject *object = data.toQObject();
-		if(auto *rawData = qobject_cast<RawData*>(object))
+		if(auto rawData = qobject_cast<RawData*>(object))
 		{
 			if(mTcpSocket->write(rawData->byteArray()) == -1)
 				throwError(QStringLiteral("WriteError"), tr("Write failed"));

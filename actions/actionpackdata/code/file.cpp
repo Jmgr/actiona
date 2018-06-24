@@ -124,7 +124,7 @@ namespace Code
 	QScriptValue File::write(const QScriptValue &data)
 	{
 		QObject *object = data.toQObject();
-		if(auto *rawData = qobject_cast<RawData*>(object))
+		if(auto rawData = qobject_cast<RawData*>(object))
 		{
 			if(mFile.write(rawData->byteArray()) == -1)
 				throwError(QStringLiteral("WriteFailedError"), tr("Write failed"));

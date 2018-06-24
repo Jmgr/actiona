@@ -200,7 +200,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 
 	if(mSystemTrayIcon)
 	{
-		auto *trayMenu = new QMenu(this);
+		auto trayMenu = new QMenu(this);
 		trayMenu->addAction(ui->actionExecute);
 		trayMenu->addAction(ui->actionExecute_selection);
 		trayMenu->addSeparator();
@@ -269,7 +269,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 
 	for(int i=0; i<mMaxRecentFiles; ++i)
 	{
-		auto *newAction = new QAction(this);
+		auto newAction = new QAction(this);
 		mRecentFileActs.append(newAction);
 		newAction->setVisible(false);
         connect(newAction, &QAction::triggered, this, &MainWindow::openRecentFile);
@@ -1475,7 +1475,7 @@ ActionDialog *MainWindow::getOrCreateActionDialog(const ActionTools::ActionDefin
         return mActionDialogs.value(actionIndex);
     else
     {
-        auto *newActionDialog = new ActionDialog(mCompletionModel, mScript, actionDefinition, mUsedLocale, this);
+        auto newActionDialog = new ActionDialog(mCompletionModel, mScript, actionDefinition, mUsedLocale, this);
 
         newActionDialog->setWindowFlags(newActionDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
 
@@ -1527,7 +1527,7 @@ void MainWindow::showEvent(QShowEvent *event)
 
 void MainWindow::logItemClicked(int itemRow, bool doubleClick)
 {
-	auto *model = qobject_cast<QStandardItemModel *>(ui->consoleWidget->model());
+	auto model = qobject_cast<QStandardItemModel *>(ui->consoleWidget->model());
 	if(!model)
 		return;
 
@@ -1689,7 +1689,7 @@ void MainWindow::fillNewActionModel()
         for(int categoryIndex = 0; categoryIndex < ActionTools::CategoryCount; ++categoryIndex)
         {
 			QString categoryName = QApplication::translate("ActionDefinition::CategoryName", ActionTools::ActionDefinition::CategoryName[categoryIndex].toLatin1().constData());
-            auto *categoryItem = new QStandardItem(categoryName);
+            auto categoryItem = new QStandardItem(categoryName);
 
             categoryItem->setFont(boldFont);
 
@@ -1797,7 +1797,7 @@ void MainWindow::addAction()
 
 void MainWindow::openRecentFile()
 {
-	auto *action = qobject_cast<QAction *>(sender());
+	auto action = qobject_cast<QAction *>(sender());
 
 	if(action && maybeSave())
 	{

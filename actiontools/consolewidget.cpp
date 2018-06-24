@@ -56,7 +56,7 @@ namespace ActionTools
 
 	void ConsoleWidget::addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type)
 	{
-		auto *item = new QStandardItem();
+		auto item = new QStandardItem();
 
 		item->setData(parameter, ParameterRole);
 		item->setData(line, LineRole);
@@ -67,7 +67,7 @@ namespace ActionTools
 
     void ConsoleWidget::addResourceLine(const QString &message, const QString &resourceKey, ConsoleWidget::Type type)
     {
-        auto *item = new QStandardItem();
+        auto item = new QStandardItem();
 
         item->setData(resourceKey, ResourceRole);
 
@@ -76,7 +76,7 @@ namespace ActionTools
 
 	void ConsoleWidget::addActionLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type)
 	{
-		auto *item = new QStandardItem();
+		auto item = new QStandardItem();
 
 		item->setData(actionRuntimeId, ActionRole);
 		item->setData(field, FieldRole);
@@ -89,7 +89,7 @@ namespace ActionTools
 
 	void ConsoleWidget::addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, const QStringList &backtrace, Type type)
 	{
-		auto *item = new QStandardItem();
+		auto item = new QStandardItem();
 
 		item->setData(actionRuntimeId, ActionRole);
 		item->setData(field, FieldRole);
@@ -103,7 +103,7 @@ namespace ActionTools
 	
 	void ConsoleWidget::addExceptionLine(const QString &message, qint64 actionRuntimeId, int exception, Type type)
 	{
-		auto *item = new QStandardItem();
+		auto item = new QStandardItem();
 		
 		item->setData(actionRuntimeId, ActionRole);
 		item->setData(exception, ExceptionRole);
@@ -113,7 +113,7 @@ namespace ActionTools
 	
 	void ConsoleWidget::addDesignErrorLine(const QString &message, Type type)
 	{
-		auto *item = new QStandardItem();
+		auto item = new QStandardItem();
 
 		addLine(message, item, DesignError, type);
 	}

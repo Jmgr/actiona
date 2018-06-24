@@ -236,7 +236,7 @@ namespace ActionTools
                 return true;
             case XCB_KEY_PRESS:
             {
-                auto *keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
+                auto keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
                 if(keyPressEvent->detail == 0x09)//Escape
                 {
                     close();

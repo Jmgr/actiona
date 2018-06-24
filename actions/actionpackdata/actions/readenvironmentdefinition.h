@@ -55,7 +55,7 @@ namespace Actions
             mode->setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariableMode));
 			addElement(mode);
 
-			auto *selectionMode = new ActionTools::GroupDefinition(this);
+			auto selectionMode = new ActionTools::GroupDefinition(this);
 			selectionMode->setMasterList(mode);
             selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode));
 

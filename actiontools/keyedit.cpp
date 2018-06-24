@@ -58,7 +58,7 @@ namespace ActionTools
 
 		if(event->type() == QEvent::KeyPress)
 		{
-			auto *keyEvent = static_cast<QKeyEvent *>(event);
+            auto keyEvent = static_cast<QKeyEvent *>(event);
 
 			if(!mKeyInput.fromEvent(keyEvent))
 				return true;

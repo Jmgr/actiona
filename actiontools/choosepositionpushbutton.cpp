@@ -56,7 +56,7 @@ namespace ActionTools
 #ifdef Q_OS_LINUX
         for(QWidget *widget: QApplication::topLevelWidgets())
 		{
-			if(auto *mainWindow = qobject_cast<QMainWindow*>(widget))
+			if(auto mainWindow = qobject_cast<QMainWindow*>(widget))
 			{
 				mMainWindow = mainWindow;
 				break;
