@@ -34,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WheelDefinition : public QObject, public ActionTools::ActionDefinition
+	class WheelDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 	
@@ -42,12 +42,11 @@ namespace Actions
 		explicit WheelDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto intensity = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("intensity"), tr("Intensity")), this);
+			auto intensity = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("intensity"), tr("Intensity")});
 			intensity->setTooltip(tr("Intensity of the movement, positive is up, negative is down"));
 			intensity->setMinimum(std::numeric_limits<int>::min());
 			intensity->setMaximum(std::numeric_limits<int>::max());
-			addElement(intensity);
-			
+
 			addException(WheelInstance::FailedToSendInputException, tr("Send input failure"));
 		}
 	

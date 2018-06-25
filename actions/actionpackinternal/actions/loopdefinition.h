@@ -35,7 +35,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class LoopDefinition : public QObject, public ActionTools::ActionDefinition
+	class LoopDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -43,15 +43,13 @@ namespace Actions
 		explicit LoopDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto line = new ActionTools::LineParameterDefinition(ActionTools::Name(QStringLiteral("line"), tr("Line")), this);
+			auto line = addElement<ActionTools::LineParameterDefinition>({QStringLiteral("line"), tr("Line")});
 			line->setTooltip(tr("The line (or label) to go to"));
-			addElement(line);
 
-			auto count = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("count"), tr("Count")), this);
+			auto count = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("count"), tr("Count")});
             count->setTooltip(tr("The number of times (evaluated the first time)"));
 			count->setMinimum(0);
 			count->setMaximum(std::numeric_limits<int>::max());
-			addElement(count);
 		}
 
 		QString name() const override													{ return QObject::tr("Loop"); }

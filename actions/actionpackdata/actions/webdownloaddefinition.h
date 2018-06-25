@@ -37,7 +37,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WebDownloadDefinition : public QObject, public ActionTools::ActionDefinition
+	class WebDownloadDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -47,43 +47,34 @@ namespace Actions
 		{
 			translateItems("WebDownloadInstance::destinations", WebDownloadInstance::destinations);
 
-			auto url = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
+			auto url = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("url"), tr("URL")});
 			url->setTooltip(tr("The URL of the data to download"));
-			addElement(url);
 
-			auto destination = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("destination"), tr("Destination")), this);
+			auto destination = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("destination"), tr("Destination")});
 			destination->setTooltip(tr("The destination where to write the downloaded data"));
 			destination->setItems(WebDownloadInstance::destinations);
 			destination->setDefaultValue(WebDownloadInstance::destinations.second.at(WebDownloadInstance::Variable));
-			addElement(destination);
 
-			auto variableMode = new ActionTools::GroupDefinition(this);
+            auto variableMode = addGroup();
 			variableMode->setMasterList(destination);
 			variableMode->setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::Variable));
 
-			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+            auto variable = variableMode->addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
 			variable->setTooltip(tr("The variable where to write the downloaded data"));
-			variableMode->addMember(variable);
 
-			addElement(variableMode);
-
-			auto fileMode = new ActionTools::GroupDefinition(this);
+            auto fileMode = addGroup();
 			fileMode->setMasterList(destination);
 			fileMode->setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::File));
 
-			auto file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
+            auto file = fileMode->addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
 			file->setTooltip(tr("The file where to write the downloaded data"));
 			file->setMode(ActionTools::FileEdit::FileSave);
 			file->setCaption(tr("Choose the destination file"));
 			file->setFilter(tr("All files (*.*)"));
-			fileMode->addMember(file);
 
-			addElement(fileMode);
-
-			auto showProgress = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("showProgress"), tr("Show progress")), this);
+            auto showProgress = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("showProgress"), tr("Show progress")}, 1);
 			showProgress->setTooltip(tr("Should the download progress be shown"));
 			showProgress->setDefaultValue(QStringLiteral("true"));
-			addElement(showProgress, 1);
 
 			addException(WebDownloadInstance::CannotOpenFileException, tr("Cannot write to file"));
 			addException(WebDownloadInstance::DownloadException, tr("Download error"));

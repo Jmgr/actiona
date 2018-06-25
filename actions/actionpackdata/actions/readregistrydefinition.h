@@ -34,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ReadRegistryDefinition : public QObject, public ActionTools::ActionDefinition
+    class ReadRegistryDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 
@@ -42,23 +42,19 @@ namespace Actions
 		explicit ReadRegistryDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
-			auto key = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("key"), tr("Key")), this);
+            auto key = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("key"), tr("Key")});
 			key->setTooltip(tr("The registry key to read from"));
 			key->setItems(ReadRegistryInstance::keys);
 			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
-			addElement(key);
 
-			auto subKey = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("subKey"), tr("Subkey")), this);
+            auto subKey = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("subKey"), tr("Subkey")});
 			subKey->setTooltip(tr("The registry subkey to read from"));
-			addElement(subKey);
 
-			auto value = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
+            auto value = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
 			value->setTooltip(tr("The value to read"));
-			addElement(value);
 
-			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+            auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
 			variable->setTooltip(tr("The variable where to save the value read from the registry"));
-			addElement(variable);
 
 			addException(ReadRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
 			addException(ReadRegistryInstance::CannotFindValueException, tr("Cannot find value"));

@@ -33,7 +33,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ConsoleDefinition : public QObject, public ActionTools::ActionDefinition
+	class ConsoleDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -43,15 +43,13 @@ namespace Actions
 		{
 			translateItems("ConsoleInstance::outputs", ConsoleInstance::outputs);
 
-			auto text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
+			auto text = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
 			text->setTooltip(tr("The text to write"));
-			addElement(text);
 
-			auto output = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("output"), tr("Output")), this);
+			auto output = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("output"), tr("Output")});
 			output->setTooltip(tr("The console output"));
 			output->setItems(ConsoleInstance::outputs);
 			output->setDefaultValue(ConsoleInstance::outputs.second.at(ConsoleInstance::Information));
-			addElement(output);
 		}
 
 		QString name() const override													{ return QObject::tr("Console"); }

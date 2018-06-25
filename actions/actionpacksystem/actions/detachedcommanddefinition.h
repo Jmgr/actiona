@@ -34,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class DetachedCommandDefinition : public QObject, public ActionTools::ActionDefinition
+	class DetachedCommandDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -42,23 +42,19 @@ namespace Actions
 		explicit DetachedCommandDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto command = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("command"), tr("Command")), this);
+			auto command = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("command"), tr("Command")});
 			command->setTooltip(tr("The command to execute"));
-			addElement(command);
 
-			auto parameters = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("parameters"), tr("Parameters")), this);
+			auto parameters = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("parameters"), tr("Parameters")});
 			parameters->setTooltip(tr("The command's parameters"));
-			addElement(parameters);
 
-			auto workingDirectory = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("workingDirectory"), tr("Working directory")), this);
+			auto workingDirectory = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("workingDirectory"), tr("Working directory")});
 			workingDirectory->setTooltip(tr("The command's working directory"));
 			workingDirectory->setCaption(tr("Command working directory"));
 			workingDirectory->setMode(ActionTools::FileEdit::DirectoryOpen);
-			addElement(workingDirectory);
 
-			auto processId = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("processId"), tr("Process id")), this);
+            auto processId = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("processId"), tr("Process id")}, 1);
 			processId->setTooltip(tr("The command's process id"));
-			addElement(processId, 1);
 
 			addException(DetachedCommandInstance::DetachedCommandFailedException, tr("Unable to execute the detached command"));
 		}

@@ -36,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class MessageBoxDefinition : public QObject, public ActionTools::ActionDefinition
+	class MessageBoxDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -48,59 +48,48 @@ namespace Actions
 			translateItems("MessageBoxInstance::buttons", MessageBoxInstance::buttons);
 			translateItems("MessageBoxInstance::textmodes", MessageBoxInstance::textmodes);
 
-			auto text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("message"), tr("Message")), this);
+			auto text = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("message"), tr("Message")});
 			text->setTooltip(tr("The text to show"));
-			addElement(text);
 
-			auto title = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("title"), tr("Title")), this);
+			auto title = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("title"), tr("Title")});
 			title->setTooltip(tr("The title to show"));
-			addElement(title);
 
-			auto icon = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("icon"), tr("Icon")), this);
+			auto icon = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("icon"), tr("Icon")});
 			icon->setTooltip(tr("The icon to use"));
 			icon->setItems(MessageBoxInstance::icons);
 			icon->setDefaultValue(MessageBoxInstance::icons.second.at(MessageBoxInstance::None));
-			addElement(icon);
 
-			auto type = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("type"), tr("Type")), this);
+            auto type = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("type"), tr("Type")}, 1);
 			type->setTooltip(tr("The message box type"));
 			type->setItems(MessageBoxInstance::buttons);
 			type->setDefaultValue(MessageBoxInstance::buttons.second.at(MessageBoxInstance::OkButton));
-			addElement(type, 1);
 
-			auto customIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name(QStringLiteral("customIcon"), tr("Custom icon")), this);
+            auto customIcon = addElement<ActionTools::ImageParameterDefinition>({QStringLiteral("customIcon"), tr("Custom icon")}, 1);
 			customIcon->setTooltip(tr("The custom icon to use"));
 			customIcon->setMode(ActionTools::FileEdit::FileOpen);
 			customIcon->setCaption(tr("Select the icon to use"));
 			customIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
-			addElement(customIcon, 1);
 
-			auto windowIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name(QStringLiteral("windowIcon"), tr("Window icon")), this);
+            auto windowIcon = addElement<ActionTools::ImageParameterDefinition>({QStringLiteral("windowIcon"), tr("Window icon")}, 1);
 			windowIcon->setTooltip(tr("The window icon to use"));
 			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
 			windowIcon->setCaption(tr("Select the icon to use"));
 			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
-			addElement(windowIcon, 1);
 
-			auto textMode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("textMode"), tr("Text mode")), this);
+            auto textMode = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("textMode"), tr("Text mode")}, 1);
 			textMode->setTooltip(tr("The message box text mode"));
 			textMode->setItems(MessageBoxInstance::textmodes);
 			textMode->setDefaultValue(MessageBoxInstance::textmodes.second.at(MessageBoxInstance::AutoTextMode));
-			addElement(textMode, 1);
 
-			auto yesNoGroup = new ActionTools::GroupDefinition(this);
+            auto yesNoGroup = addGroup(1);
 			yesNoGroup->setMasterList(type);
 			yesNoGroup->setMasterValues(QStringList() << MessageBoxInstance::buttons.first.at(MessageBoxInstance::YesNoButtons));
 
-			auto ifYes = new ActionTools::IfActionParameterDefinition(ActionTools::Name(QStringLiteral("ifYes"), tr("If yes")), this);
+            auto ifYes = yesNoGroup->addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifYes"), tr("If yes")});
 			ifYes->setTooltip(tr("What to do if the yes button is pressed"));
-			yesNoGroup->addMember(ifYes);
 
-			auto ifNo = new ActionTools::IfActionParameterDefinition(ActionTools::Name(QStringLiteral("ifNo"), tr("If no")), this);
+            auto ifNo = yesNoGroup->addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifNo"), tr("If no")});
 			ifNo->setTooltip(tr("What to do if the no button is pressed"));
-			yesNoGroup->addMember(ifNo);
-
-			addElement(yesNoGroup, 1);
 		}
 
 		QString name() const override													{ return QObject::tr("Message Box"); }

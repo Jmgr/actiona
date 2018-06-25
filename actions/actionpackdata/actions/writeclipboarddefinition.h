@@ -33,7 +33,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WriteClipboardDefinition : public QObject, public ActionTools::ActionDefinition
+	class WriteClipboardDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -41,9 +41,8 @@ namespace Actions
 		explicit WriteClipboardDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto input = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
+			auto input = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
 			input->setTooltip(tr("The new clipboard value"));
-			addElement(input);
 		}
 
 		QString name() const override													{ return QObject::tr("Write clipboard"); }

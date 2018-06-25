@@ -35,7 +35,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class SystemDefinition : public QObject, public ActionTools::ActionDefinition
+	class SystemDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -45,13 +45,12 @@ namespace Actions
 		{
 			translateItems("SystemInstance::operations", SystemInstance::operations);
 
-			auto operation = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("operation"), tr("Operation")), this);
+			auto operation = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("operation"), tr("Operation")});
 			operation->setTooltip(tr("The operation to execute"));
 			operation->setItems(SystemInstance::operations);
 			operation->setDefaultValue(SystemInstance::operations.second.at(SystemInstance::Logout));
-			addElement(operation);
 
-			auto operationMode = new ActionTools::GroupDefinition(this);
+            auto operationMode = addGroup();
 			operationMode->setMasterList(operation);
 			operationMode->setMasterValues(QStringList()
 										   << SystemInstance::operations.first.at(SystemInstance::Shutdown)
@@ -60,12 +59,9 @@ namespace Actions
 										   << SystemInstance::operations.first.at(SystemInstance::Suspend)
 										   << SystemInstance::operations.first.at(SystemInstance::Hibernate));
 
-			auto force = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("force"), tr("Force")), this);
+            auto force = operationMode->addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("force"), tr("Force")});
 			force->setTooltip(tr("Should the operation be forced"));
 			force->setDefaultValue(QStringLiteral("false"));
-			operationMode->addMember(force);
-
-			addElement(operationMode);
 
 			addException(SystemInstance::NotAvailable, tr("Not available"));
 		}

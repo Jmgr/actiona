@@ -35,7 +35,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class PauseDefinition : public QObject, public ActionTools::ActionDefinition
+	class PauseDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -45,18 +45,16 @@ namespace Actions
 		{
 			translateItems("PauseInstance::units", PauseInstance::units);
 
-			auto duration = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("duration"), tr("Duration")), this);
+			auto duration = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("duration"), tr("Duration")});
 			duration->setTooltip(tr("The duration of the pause"));
 			duration->setMinimum(0);
 			duration->setMaximum(std::numeric_limits<int>::max());
 			duration->setDefaultValue(QStringLiteral("5"));
-			addElement(duration);
 
-			auto unit = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("unit"), tr("Unit")), this);
+			auto unit = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("unit"), tr("Unit")});
 			unit->setTooltip(tr("The pause duration unit"));
 			unit->setItems(PauseInstance::units);
 			unit->setDefaultValue(PauseInstance::units.second.at(PauseInstance::Seconds));
-			addElement(unit);
 		}
 
 		QString name() const override													{ return QObject::tr("Pause"); }

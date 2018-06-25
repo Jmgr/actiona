@@ -36,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class TextDefinition : public QObject, public ActionTools::ActionDefinition
+	class TextDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 	
@@ -44,23 +44,20 @@ namespace Actions
 		explicit TextDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
+			auto text = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
 			text->setTooltip(tr("The text to write"));
-			addElement(text);
 
-			auto pause = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("pause"), tr("Pause between characters")), this);
+            auto pause = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("pause"), tr("Pause between characters")}, 1);
 			pause->setTooltip(tr("The pause duration between each character"));
 			pause->setMinimum(0);
 			pause->setMaximum(std::numeric_limits<int>::max());
 			pause->setDefaultValue(QStringLiteral("0"));
 			pause->setSuffix(tr(" ms", "milliseconds"));
-			addElement(pause, 1);
 
-			auto noUnicodeCharacters = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("noUnicodeCharacters"), tr("Do not send Unicode characters")), this);
+            auto noUnicodeCharacters = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("noUnicodeCharacters"), tr("Do not send Unicode characters")}, 1);
             noUnicodeCharacters->setTooltip(tr("Prevent using Unicode characters. Enables a limited set of characters on some programs."));
 			noUnicodeCharacters->setDefaultValue(QStringLiteral("false"));
             noUnicodeCharacters->setOperatingSystems(ActionTools::WorksOnWindows);
-            addElement(noUnicodeCharacters, 1);
 
 			addException(TextInstance::FailedToSendInputException, tr("Send input failure"));
 		}

@@ -31,7 +31,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ExitDefinition : public QObject, public ActionTools::ActionDefinition
+	class ExitDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 

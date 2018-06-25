@@ -33,7 +33,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WriteBinaryFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class WriteBinaryFileDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -41,16 +41,14 @@ namespace Actions
 		explicit WriteBinaryFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
+			auto file = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
 			file->setTooltip(tr("The file to write to"));
 			file->setMode(ActionTools::FileEdit::FileSave);
 			file->setCaption(tr("Choose the file"));
 			file->setFilter(tr("All files (*.*)"));
-			addElement(file);
 
-			auto data = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("data"), tr("Data")), this);
+			auto data = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("data"), tr("Data")});
 			data->setTooltip(tr("The data to write to the file"));
-			addElement(data);
 
 			addException(WriteBinaryFileInstance::UnableToWriteFileException, tr("Unable to write to the file"));
 		}

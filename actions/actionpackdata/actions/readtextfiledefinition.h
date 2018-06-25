@@ -36,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ReadTextFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class ReadTextFileDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 
@@ -46,37 +46,30 @@ namespace Actions
 		{
 			translateItems("ReadTextFileInstance::modes", ReadTextFileInstance::modes);
 
-			auto file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
+			auto file = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
 			file->setTooltip(tr("The file you want to read"));
-			addElement(file);
 
-			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+			auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
 			variable->setTooltip(tr("The variable where to save the text read from the file"));
-			addElement(variable);
 
-			auto mode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("mode"), tr("Mode")), this);
+            auto mode = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")}, 1);
 			mode->setTooltip(tr("The file read mode"));
 			mode->setItems(ReadTextFileInstance::modes);
 			mode->setDefaultValue(ReadTextFileInstance::modes.second.at(ReadTextFileInstance::Full));
-			addElement(mode, 1);
 
-			auto selectionMode = new ActionTools::GroupDefinition(this);
+            auto selectionMode = addGroup(1);
 			selectionMode->setMasterList(mode);
 			selectionMode->setMasterValues(QStringList() << ReadTextFileInstance::modes.first.at(ReadTextFileInstance::Selection));
 
-			auto firstline = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("firstline"), tr("First line")), this);
+            auto firstline = selectionMode->addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("firstline"), tr("First line")}, 1);
 			firstline->setTooltip(tr("The line where to start reading the file"));
 			firstline->setMinimum(1);
 			firstline->setDefaultValue(QStringLiteral("1"));
-			selectionMode->addMember(firstline, 1);
 
-			auto lastline = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("lastline"), tr("Last line")), this);
+            auto lastline = selectionMode->addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("lastline"), tr("Last line")}, 1);
 			lastline->setTooltip(tr("The line where to stop reading the file"));
 			lastline->setMinimum(1);
 			lastline->setDefaultValue(QStringLiteral("1"));
-			selectionMode->addMember(lastline, 1);
-
-			addElement(selectionMode, 1);
 
 			addException(ReadTextFileInstance::CannotOpenFileException, tr("Cannot read file"));
 		}

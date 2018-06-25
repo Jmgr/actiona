@@ -31,7 +31,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class StopDefinition : public QObject, public ActionTools::ActionDefinition
+	class StopDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 

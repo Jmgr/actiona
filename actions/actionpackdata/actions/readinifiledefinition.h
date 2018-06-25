@@ -36,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ReadIniFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class ReadIniFileDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 
@@ -46,36 +46,29 @@ namespace Actions
 		{
 			translateItems("ReadIniFileInstance::modes", ReadIniFileInstance::modes);
 
-			auto file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
+			auto file = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
 			file->setTooltip(tr("The file to read from"));
 			file->setMode(ActionTools::FileEdit::FileOpen);
 			file->setCaption(tr("Choose the INI file"));
 			file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
-			addElement(file);
 
-			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+			auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
 			variable->setTooltip(tr("The variable where to store the data"));
-			addElement(variable);
 
-			auto mode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("mode"), tr("Mode")), this);
+			auto mode = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")});
 			mode->setTooltip(tr("The INI file read mode"));
             mode->setItems(ReadIniFileInstance::modes);
             mode->setDefaultValue(ReadIniFileInstance::modes.second.at(ReadIniFileInstance::SingleParameter));
-            addElement(mode);
 
-			auto selectionMode = new ActionTools::GroupDefinition(this);
+            auto selectionMode = addGroup();
 			selectionMode->setMasterList(mode);
             selectionMode->setMasterValues(QStringList() << ReadIniFileInstance::modes.first.at(ReadIniFileInstance::SingleParameter));
 
-			auto section = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("section"), tr("Section")), this);
+            auto section = selectionMode->addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("section"), tr("Section")});
             section->setTooltip(tr("The parameter section"));
-            selectionMode->addMember(section);
 
-			auto parameter = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("parameter"), tr("Parameter")), this);
+            auto parameter = selectionMode->addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("parameter"), tr("Parameter")});
 			parameter->setTooltip(tr("The parameter name"));
-            selectionMode->addMember(parameter);
-
-            addElement(selectionMode);
 
 			addException(ReadIniFileInstance::UnableToReadFileException, tr("Unable to read file"));
 			addException(ReadIniFileInstance::UnableToFindSectionException, tr("Unable to find section"));

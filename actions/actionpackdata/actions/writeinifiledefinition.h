@@ -33,7 +33,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WriteIniFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class WriteIniFileDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -41,24 +41,20 @@ namespace Actions
 		explicit WriteIniFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
+			auto file = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
 			file->setTooltip(tr("The file to create or edit"));
 			file->setMode(ActionTools::FileEdit::FileSave);
 			file->setCaption(tr("Choose the INI file"));
 			file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
-			addElement(file);
 
-			auto section = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("section"), tr("Section")), this);
+			auto section = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("section"), tr("Section")});
 			section->setTooltip(tr("The section name of the parameter"));
-			addElement(section);
 
-			auto parameter = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("parameter"), tr("Parameter")), this);
+			auto parameter = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("parameter"), tr("Parameter")});
 			parameter->setTooltip(tr("The parameter name"));
-			addElement(parameter);
 
-			auto value = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
+			auto value = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
 			value->setTooltip(tr("The new value"));
-			addElement(value);
 
 			addException(WriteIniFileInstance::UnableToWriteFileException, tr("Unable to write file"));
 		}

@@ -39,7 +39,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WindowDefinition : public QObject, public ActionTools::ActionDefinition
+	class WindowDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -49,48 +49,38 @@ namespace Actions
 		{
 			translateItems("WindowInstance::actions", WindowInstance::actions);
 
-			auto title = new ActionTools::WindowParameterDefinition(ActionTools::Name(QStringLiteral("title"), tr("Window title")), this);
+			auto title = addElement<ActionTools::WindowParameterDefinition>({QStringLiteral("title"), tr("Window title")});
 			title->setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
-			addElement(title);
 
-			auto action = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("action"), tr("Action")), this);
+			auto action = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("action"), tr("Action")});
 			action->setTooltip(tr("The action to perform"));
 			action->setItems(WindowInstance::actions);
 			action->setDefaultValue(WindowInstance::actions.second.at(WindowInstance::Close));
-			addElement(action);
 
-			auto moveGroup = new ActionTools::GroupDefinition(this);
+            auto moveGroup = addGroup();
 			moveGroup->setMasterList(action);
 			moveGroup->setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Move));
 
-			auto movePosition = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("movePosition"), tr("Move position")), this);
+            auto movePosition = moveGroup->addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("movePosition"), tr("Move position")});
             movePosition->setTooltip(tr("The position where to move the window"));
-			moveGroup->addMember(movePosition);
 
-			addElement(moveGroup);
-
-			auto resizeGroup = new ActionTools::GroupDefinition(this);
+            auto resizeGroup = addGroup();
 			resizeGroup->setMasterList(action);
 			resizeGroup->setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Resize));
 
-			auto resizeWidth = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("resizeWidth"), tr("Resize width")), this);
+            auto resizeWidth = resizeGroup->addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("resizeWidth"), tr("Resize width")});
 			resizeWidth->setTooltip(tr("The new width of the window"));
 			resizeWidth->setMinimum(0);
 			resizeWidth->setMaximum(std::numeric_limits<int>::max());
-			resizeGroup->addMember(resizeWidth);
 
-			auto resizeHeight = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("resizeHeight"), tr("Resize height")), this);
+            auto resizeHeight = resizeGroup->addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("resizeHeight"), tr("Resize height")});
 			resizeHeight->setTooltip(tr("The new height of the window"));
 			resizeHeight->setMinimum(0);
 			resizeHeight->setMaximum(std::numeric_limits<int>::max());
-			resizeGroup->addMember(resizeHeight);
 
-			auto useBorders = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("useBorders"), tr("Use borders")), this);
+            auto useBorders = resizeGroup->addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("useBorders"), tr("Use borders")});
 			useBorders->setTooltip(tr("Should the border size be taken into account when resizing the window"));
 			useBorders->setDefaultValue(QStringLiteral("true"));
-			resizeGroup->addMember(useBorders);
-
-			addElement(resizeGroup);
 
 			addException(WindowInstance::CannotFindWindowException, tr("Cannot find window"));
 			addException(WindowInstance::ActionFailedException, tr("Action failed"));

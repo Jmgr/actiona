@@ -37,7 +37,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class VariableDefinition : public QObject, public ActionTools::ActionDefinition
+	class VariableDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -47,18 +47,16 @@ namespace Actions
 		{
 			translateItems("VariableInstance::types", VariableInstance::types);
 
-			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+			auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
 			variable->setCategory(ActionTools::ElementDefinition::INPUT);
 			variable->setTooltip(tr("The variable name"));
-			addElement(variable);
 
-			auto type = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("type"), tr("Type")), this);
+			auto type = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("type"), tr("Type")});
 			type->setTooltip(tr("The variable type"));
 			type->setItems(VariableInstance::types);
 			type->setDefaultValue(VariableInstance::types.second.at(VariableInstance::String));
-			addElement(type);
 
-			auto singleValueGroup = new ActionTools::GroupDefinition(this);
+            auto singleValueGroup = addGroup();
 			singleValueGroup->setMasterList(type);
 			singleValueGroup->setMasterValues(QStringList()
 											  << VariableInstance::types.first.at(VariableInstance::String)
@@ -66,35 +64,26 @@ namespace Actions
 											  << VariableInstance::types.first.at(VariableInstance::Float)
 											  );
 
-			auto simpleValue = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
+            auto simpleValue = singleValueGroup->addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
 			simpleValue->setTooltip(tr("The variables new value"));
-			singleValueGroup->addMember(simpleValue);
 
-			addElement(singleValueGroup);
-
-			auto colorValueGroup = new ActionTools::GroupDefinition(this);
+            auto colorValueGroup = addGroup();
 			colorValueGroup->setMasterList(type);
 			colorValueGroup->setMasterValues(QStringList()
 											  << VariableInstance::types.first.at(VariableInstance::Color)
 											  );
 
-			auto colorValue = new ActionTools::ColorParameterDefinition(ActionTools::Name(QStringLiteral("colorValue"), tr("Color")), this);
+            auto colorValue = colorValueGroup->addParameter<ActionTools::ColorParameterDefinition>({QStringLiteral("colorValue"), tr("Color")});
 			colorValue->setTooltip(tr("The variables new value"));
-			colorValueGroup->addMember(colorValue);
 
-			addElement(colorValueGroup);
-
-			auto positionValueGroup = new ActionTools::GroupDefinition(this);
+            auto positionValueGroup = addGroup();
 			positionValueGroup->setMasterList(type);
 			positionValueGroup->setMasterValues(QStringList()
 											  << VariableInstance::types.first.at(VariableInstance::Position)
 											  );
 
-			auto positionValue = new ActionTools::PositionParameterDefinition(ActionTools::Name(QStringLiteral("positionValue"), tr("Position")), this);
+            auto positionValue = positionValueGroup->addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("positionValue"), tr("Position")});
 			positionValue->setTooltip(tr("The variables new value"));
-			positionValueGroup->addMember(positionValue);
-
-			addElement(positionValueGroup);
 
 			addException(VariableInstance::ConversionFailedException, tr("Conversion failed"));
 		}

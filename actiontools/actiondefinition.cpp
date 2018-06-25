@@ -22,6 +22,7 @@
 #include "actioninstance.h"
 #include "actionexception.h"
 #include "elementdefinition.h"
+#include "groupdefinition.h"
 
 #include <QScriptEngine>
 #include <QScriptValue>
@@ -73,21 +74,13 @@ namespace ActionTools
     void ActionDefinition::translateItems(const char *context, Tools::StringListPair &items) const
 	{
 		for(int index = 0; index < items.second.size(); ++index)
-			items.second[index] = QApplication::instance()->translate(context, items.second.at(index).toLatin1().constData());
-	}
+            items.second[index] = QApplication::instance()->translate(context, items.second.at(index).toLatin1().constData());
+    }
 
-	void ActionDefinition::addElement(ElementDefinition *element, int tab)
-	{
-		if(tab > 0 && tabs().count() > 0)
-		{
-			if(tab < tabs().count())
-				element->setTab(tab);
-			else
-				qWarning("Trying to add an element with an incorrect tab number");
-		}
-
-		mElements.append(element);
-	}
+    GroupDefinition *ActionDefinition::addGroup(int tab)
+    {
+        return static_cast<GroupDefinition *>(addElement(new GroupDefinition(this), tab));
+    }
 
 	void ActionDefinition::addException(int id, const QString &name)
 	{
@@ -112,5 +105,20 @@ namespace ActionTools
 
 		return true;
 #endif
-	}
+    }
+
+    ElementDefinition *ActionDefinition::addElement(ElementDefinition *element, int tab)
+    {
+        if(tab > 0 && tabs().count() > 0)
+        {
+            if(tab < tabs().count())
+                element->setTab(tab);
+            else
+                qWarning("Trying to add an element with an incorrect tab number");
+        }
+
+        mElements.append(element);
+
+        return element;
+    }
 }

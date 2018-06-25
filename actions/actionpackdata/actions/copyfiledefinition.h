@@ -32,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class CopyFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class CopyFileDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -40,19 +40,17 @@ namespace Actions
 		explicit CopyFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto source = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("source"), tr("Source file")), this);
+			auto source = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("source"), tr("Source file")});
 			source->setTooltip(tr("The file to copy"));
 			source->setMode(ActionTools::FileEdit::FileOpen);
 			source->setCaption(tr("Choose the file"));
 			source->setFilter(tr("All files (*.*)"));
-			addElement(source);
 
-			auto destination = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("destination"), tr("Destination")), this);
+			auto destination = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("destination"), tr("Destination")});
 			destination->setTooltip(tr("The destination file"));
 			destination->setMode(ActionTools::FileEdit::FileSave);
 			destination->setCaption(tr("Choose the destination file"));
 			destination->setFilter(tr("All files (*.*)"));
-			addElement(destination);
 
 			addException(CopyFileInstance::UnableToReadFileException, tr("Unable to read source file"));
 			addException(CopyFileInstance::UnableToWriteFileException, tr("Unable to write destination file"));

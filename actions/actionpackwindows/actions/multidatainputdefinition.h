@@ -38,7 +38,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class MultiDataInputDefinition : public QObject, public ActionTools::ActionDefinition
+	class MultiDataInputDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -48,52 +48,42 @@ namespace Actions
 		{
 			translateItems("MultiDataInputInstance::modes", MultiDataInputInstance::modes);
 
-			auto question = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("question"), tr("Question")), this);
+			auto question = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("question"), tr("Question")});
 			question->setTooltip(tr("The question to ask"));
-			addElement(question);
 
-			auto mode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("mode"), tr("Mode")), this);
+			auto mode = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")});
 			mode->setTooltip(tr("The input mode"));
 			mode->setItems(MultiDataInputInstance::modes);
 			mode->setDefaultValue(MultiDataInputInstance::modes.second.at(MultiDataInputInstance::ComboBoxMode));
-			addElement(mode);
 
-			auto items = new ActionTools::MultiTextParameterDefinition(ActionTools::Name(QStringLiteral("items"), tr("Items")), this);
+			auto items = addElement<ActionTools::MultiTextParameterDefinition>({QStringLiteral("items"), tr("Items")});
 			items->setTooltip(tr("The item list"));
-			addElement(items);
 
-			auto defaultValue = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("defaultValue"), tr("Default value")), this);
+			auto defaultValue = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("defaultValue"), tr("Default value")});
 			defaultValue->setTooltip(tr("The default value"));
-			addElement(defaultValue);
 
-			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+			auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
 			variable->setTooltip(tr("The variable where to save the entered input"));
-			addElement(variable);
 
-			auto windowTitle = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("windowTitle"), tr("Window title")), this);
+            auto windowTitle = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("windowTitle"), tr("Window title")}, 1);
 			windowTitle->setTooltip(tr("The title of the window"));
-			addElement(windowTitle, 1);
 
-			auto windowIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name(QStringLiteral("windowIcon"), tr("Window icon")), this);
+            auto windowIcon = addElement<ActionTools::ImageParameterDefinition>({QStringLiteral("windowIcon"), tr("Window icon")}, 1);
 			windowIcon->setTooltip(tr("The window icon to use"));
 			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
 			windowIcon->setCaption(tr("Select the icon to use"));
 			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
-			addElement(windowIcon, 1);
 
-			auto choiceGroup = new ActionTools::GroupDefinition(this);
+            auto choiceGroup = addGroup(1);
 			choiceGroup->setMasterList(mode);
 			choiceGroup->setMasterValues(QStringList()
 										 << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::ListMode)
 										 << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::CheckboxMode));
 
-			auto maximumChoiceCount = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("maximumChoiceCount"), tr("Maximum choice count")), this);
+            auto maximumChoiceCount = choiceGroup->addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("maximumChoiceCount"), tr("Maximum choice count")});
 			maximumChoiceCount->setTooltip(tr("The maximum number of choices that can be made"));
 			maximumChoiceCount->setMinimum(0);
 			maximumChoiceCount->setDefaultValue(QStringLiteral("1"));
-			choiceGroup->addMember(maximumChoiceCount);
-
-			addElement(choiceGroup, 1);
 		}
 
 		QString name() const override													{ return QObject::tr("Multi data input"); }

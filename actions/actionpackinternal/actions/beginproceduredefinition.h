@@ -32,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class BeginProcedureDefinition : public QObject, public ActionTools::ActionDefinition
+	class BeginProcedureDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -40,10 +40,9 @@ namespace Actions
 		explicit BeginProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto name = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("name"), tr("Name")), this);
+			auto name = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("name"), tr("Name")});
 			name->setTooltip(tr("The name of the procedure"));
 			name->setTextCodeMode(ActionTools::TextParameterDefinition::TextOnly);
-			addElement(name);
 		}
 
 		QString name() const override													{ return QObject::tr("Begin procedure"); }

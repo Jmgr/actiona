@@ -31,7 +31,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class EndProcedureDefinition : public QObject, public ActionTools::ActionDefinition
+	class EndProcedureDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 

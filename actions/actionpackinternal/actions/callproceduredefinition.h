@@ -32,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class CallProcedureDefinition : public QObject, public ActionTools::ActionDefinition
+	class CallProcedureDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -40,9 +40,8 @@ namespace Actions
 		explicit CallProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto name = new ActionTools::ProcedureParameterDefinition(ActionTools::Name(QStringLiteral("name"), tr("Name")), this);
+			auto name = addElement<ActionTools::ProcedureParameterDefinition>({QStringLiteral("name"), tr("Name")});
 			name->setTooltip(tr("The name of the procedure to call"));
-			addElement(name);
 		}
 
 		QString name() const override													{ return QObject::tr("Call procedure"); }

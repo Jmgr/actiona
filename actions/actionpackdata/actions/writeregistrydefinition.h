@@ -34,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WriteRegistryDefinition : public QObject, public ActionTools::ActionDefinition
+	class WriteRegistryDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 
@@ -42,23 +42,19 @@ namespace Actions
 		explicit WriteRegistryDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
-			auto key = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("key"), tr("Key")), this);
+			auto key = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("key"), tr("Key")});
 			key->setTooltip(tr("The registry key to write to"));
 			key->setItems(ReadRegistryInstance::keys);
 			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
-			addElement(key);
 
-			auto subKey = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("subKey"), tr("Subkey")), this);
+			auto subKey = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("subKey"), tr("Subkey")});
 			subKey->setTooltip(tr("The registry subkey to write to"));
-			addElement(subKey);
 
-			auto value = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
+			auto value = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
 			value->setTooltip(tr("The value to write to"));
-			addElement(value);
 
-			auto data = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("data"), tr("Data")), this);
+			auto data = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("data"), tr("Data")});
 			data->setTooltip(tr("The data to write"));
-			addElement(data);
 
 			addException(WriteRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
 			addException(WriteRegistryInstance::CannotWriteValueException, tr("Cannot write value"));

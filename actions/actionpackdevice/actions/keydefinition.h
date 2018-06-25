@@ -38,7 +38,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class KeyDefinition : public QObject, public ActionTools::ActionDefinition
+	class KeyDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 	
@@ -49,40 +49,32 @@ namespace Actions
 			translateItems("KeyInstance::actions", KeyInstance::actions);
 			translateItems("KeyInstance::types", KeyInstance::types);
 
-			auto key = new ActionTools::KeyParameterDefinition(ActionTools::Name(QStringLiteral("key"), tr("Key")), this);
+			auto key = addElement<ActionTools::KeyParameterDefinition>({QStringLiteral("key"), tr("Key")});
 			key->setTooltip(tr("The key to simulate"));
-			addElement(key);
-			
-			auto action = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("action"), tr("Action")), this);
+
+			auto action = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("action"), tr("Action")});
 			action->setTooltip(tr("The action to simulate"));
 			action->setItems(KeyInstance::actions);
 			action->setDefaultValue(KeyInstance::actions.second.at(KeyInstance::PressReleaseAction));
-			addElement(action);
 
-			auto pressAndReleaseGroup = new ActionTools::GroupDefinition(this);
+            auto pressAndReleaseGroup = addGroup();
 			pressAndReleaseGroup->setMasterList(action);
 			pressAndReleaseGroup->setMasterValues(QStringList() << KeyInstance::actions.first.at(KeyInstance::PressReleaseAction));
 
-			auto amount = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("amount"), tr("Amount")), this);
+            auto amount = pressAndReleaseGroup->addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("amount"), tr("Amount")});
 			amount->setTooltip(tr("The amount of key presses to simulate"));
 			amount->setMinimum(1);
 			amount->setMaximum(std::numeric_limits<int>::max());
 			amount->setDefaultValue(QStringLiteral("1"));
-			pressAndReleaseGroup->addMember(amount);
 
-			addElement(pressAndReleaseGroup);
-
-			auto ctrl = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("ctrl"), tr("Ctrl")), this);
+			auto ctrl = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("ctrl"), tr("Ctrl")});
 			ctrl->setTooltip(tr("Should the Ctrl key be pressed"));
-			addElement(ctrl);
 
-			auto alt = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("alt"), tr("Alt")), this);
+			auto alt = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("alt"), tr("Alt")});
 			alt->setTooltip(tr("Should the Alt key be pressed"));
-			addElement(alt);
 
-			auto shift = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("shift"), tr("Shift")), this);
+			auto shift = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("shift"), tr("Shift")});
 			shift->setTooltip(tr("Should the Shift key be pressed"));
-			addElement(shift);
 
 		#ifdef Q_OS_WIN
 			QString metaKeyName = tr("Windows");
@@ -90,24 +82,21 @@ namespace Actions
 			QString metaKeyName = tr("Meta");
 		#endif
 
-			auto meta = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("meta"), metaKeyName), this);
+            auto meta = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("meta"), metaKeyName});
 			meta->setTooltip(tr("Should the %1 key be pressed").arg(metaKeyName));
-			addElement(meta);
 
-			auto type = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("type"), tr("Type")), this);
+            auto type = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("type"), tr("Type")}, 1);
 			type->setTooltip(tr("The key type to use"));
 			type->setItems(KeyInstance::types);
 			type->setDefaultValue(KeyInstance::types.second.at(KeyInstance::Win32Type));
 			type->setOperatingSystems(ActionTools::WorksOnWindows);
-			addElement(type, 1);
 
-			auto pause = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("pause"), tr("Press/Release pause")), this);
+            auto pause = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("pause"), tr("Press/Release pause")}, 1);
 			pause->setTooltip(tr("The pause duration between press and release"));
 			pause->setMinimum(0);
 			pause->setMaximum(std::numeric_limits<int>::max());
 			pause->setDefaultValue(QStringLiteral("10"));
 			pause->setSuffix(tr(" ms", "milliseconds"));
-			addElement(pause, 1);
 
 			addException(KeyInstance::FailedToSendInputException, tr("Send input failure"));
 			addException(KeyInstance::InvalidActionException, tr("Invalid action"));

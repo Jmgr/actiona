@@ -31,7 +31,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class NoopDefinition : public QObject, public ActionTools::ActionDefinition
+	class NoopDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 

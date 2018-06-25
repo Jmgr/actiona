@@ -33,7 +33,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ReadBinaryFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class ReadBinaryFileDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -41,16 +41,14 @@ namespace Actions
 		explicit ReadBinaryFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
+            auto file = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
 			file->setTooltip(tr("The file to read from"));
 			file->setMode(ActionTools::FileEdit::FileOpen);
 			file->setCaption(tr("Choose the file"));
 			file->setFilter(tr("All files (*.*)"));
-			addElement(file);
 
-			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+            auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
 			variable->setTooltip(tr("The variable where to store the data"));
-			addElement(variable);
 
 			addException(ReadBinaryFileInstance::UnableToReadFileException, tr("Unable to read file"));
 		}

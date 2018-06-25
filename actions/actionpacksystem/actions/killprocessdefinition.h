@@ -36,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class KillProcessDefinition : public QObject, public ActionTools::ActionDefinition
+	class KillProcessDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -46,22 +46,19 @@ namespace Actions
 		{
 			translateItems("KillProcessInstance::killModes", KillProcessInstance::killModes);
 
-			auto processId = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("processId"), tr("Process id")), this);
+			auto processId = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("processId"), tr("Process id")});
 			processId->setTooltip(tr("The process id of the process to kill"));
-			addElement(processId);
 
-			auto killMode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("killMode"), tr("Kill mode")), this);
+            auto killMode = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("killMode"), tr("Kill mode")}, 1);
 			killMode->setTooltip(tr("The kill mode"));
 			killMode->setItems(KillProcessInstance::killModes);
 			killMode->setDefaultValue(KillProcessInstance::killModes.second.at(KillProcessInstance::GracefulThenForceful));
-			addElement(killMode, 1);
 
-			auto timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("timeout"), tr("Timeout")), this);
+            auto timeout = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("timeout"), tr("Timeout")}, 1);
 			timeout->setTooltip(tr("The timeout before doing a forceful kill"));
 			timeout->setMinimum(0);
 			timeout->setMaximum(std::numeric_limits<int>::max());
 			timeout->setDefaultValue(QStringLiteral("1000"));
-			addElement(timeout, 1);
 		}
 
 		QString name() const override													{ return QObject::tr("Kill process"); }

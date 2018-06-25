@@ -32,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class OpenURLDefinition : public QObject, public ActionTools::ActionDefinition
+	class OpenURLDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -40,9 +40,8 @@ namespace Actions
 		explicit OpenURLDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto url = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
+			auto url = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("url"), tr("URL")});
 			url->setTooltip(tr("The url to open"));
-			addElement(url);
 
 			addException(OpenURLInstance::FailedToOpenURL, tr("Failed to open URL"));
 		}

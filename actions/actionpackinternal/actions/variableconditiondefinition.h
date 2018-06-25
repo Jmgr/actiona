@@ -35,7 +35,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class VariableConditionDefinition : public QObject, public ActionTools::ActionDefinition
+	class VariableConditionDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -45,28 +45,23 @@ namespace Actions
 		{
 			translateItems("VariableConditionInstance::comparisons", VariableConditionInstance::comparisons);
 
-			auto variable = new ActionTools::VariableParameterDefinition(ActionTools::Name(QStringLiteral("variable"), tr("Variable")), this);
+			auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
 			variable->setCategory(ActionTools::ElementDefinition::INPUT);
 			variable->setTooltip(tr("The variable to compare"));
-			addElement(variable);
 
-			auto comparison = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("comparison"), tr("Comparison")), this);
+			auto comparison = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("comparison"), tr("Comparison")});
 			comparison->setTooltip(tr("The comparison"));
 			comparison->setItems(VariableConditionInstance::comparisons);
 			comparison->setDefaultValue(VariableConditionInstance::comparisons.second.at(VariableConditionInstance::Equal));
-			addElement(comparison);
 
-			auto value = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("value"), tr("Value")), this);
+			auto value = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
 			value->setTooltip(tr("The value"));
-			addElement(value);
 
-			auto ifEqual = new ActionTools::IfActionParameterDefinition(ActionTools::Name(QStringLiteral("ifEqual"), tr("If true")), this);
+			auto ifEqual = addElement<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifEqual"), tr("If true")});
             ifEqual->setTooltip(tr("What to do if the comparison result is true"));
-			addElement(ifEqual);
 
-			auto ifDifferent = new ActionTools::IfActionParameterDefinition(ActionTools::Name(QStringLiteral("ifDifferent"), tr("If false")), this);
+			auto ifDifferent = addElement<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifDifferent"), tr("If false")});
             ifDifferent->setTooltip(tr("What to do if the comparison result is false"));
-			addElement(ifDifferent);
 		}
 
 		QString name() const override													{ return QObject::tr("Variable condition"); }

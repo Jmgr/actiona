@@ -32,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class CodeDefinition : public QObject, public ActionTools::ActionDefinition
+	class CodeDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -40,10 +40,9 @@ namespace Actions
 		explicit CodeDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto code = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("code"), tr("Code")), this);
+			auto code = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("code"), tr("Code")});
 			code->setTooltip(tr("The code to evaluate"));
 			code->setTextCodeMode(ActionTools::TextParameterDefinition::CodeOnly);
-			addElement(code);
 		}
 
 		QString name() const override													{ return QObject::tr("Code"); }

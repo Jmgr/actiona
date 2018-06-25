@@ -34,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WriteTextFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class WriteTextFileDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 
@@ -44,19 +44,16 @@ namespace Actions
 		{
 			translateItems("WriteTextFileInstance::modes", WriteTextFileInstance::modes);
 
-			auto file = new ActionTools::FileParameterDefinition(ActionTools::Name(QStringLiteral("file"), tr("File")), this);
+			auto file = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
 			file->setTooltip(tr("The file you want to write"));
-			addElement(file);
 
-			auto text = new ActionTools::TextParameterDefinition(ActionTools::Name(QStringLiteral("text"), tr("Text")), this);
+			auto text = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
 			text->setTooltip(tr("The text to write to the file"));
-			addElement(text);
 
-			auto mode = new ActionTools::ListParameterDefinition(ActionTools::Name(QStringLiteral("mode"), tr("Mode")), this);
+            auto mode = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")}, 1);
 			mode->setTooltip(tr("The file write mode"));
 			mode->setItems(WriteTextFileInstance::modes);
 			mode->setDefaultValue(WriteTextFileInstance::modes.second.at(WriteTextFileInstance::Truncate));
-			addElement(mode, 1);
 
 			addException(WriteTextFileInstance::CannotWriteFileException, tr("Cannot write file"));
 		}

@@ -36,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class PlaySoundDefinition : public QObject, public ActionTools::ActionDefinition
+	class PlaySoundDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -49,38 +49,32 @@ namespace Actions
 			file->setMode(ActionTools::FileEdit::FileOpen);
 			file->setCaption(tr("Choose the sound file"));
 			file->setFilter(tr("All files (*.*)"));
-			addElement(file);
 
-			auto url = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("url"), tr("URL")), this);
+			auto url = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("url"), tr("URL")});
 			url->setTooltip(tr("Is the sound resource an URL"));
 			url->setDefaultValue(QStringLiteral("false"));
-			addElement(url);
 
-			auto volume = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("volume"), tr("Volume")), this);
+			auto volume = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("volume"), tr("Volume")});
 			volume->setTooltip(tr("The volume to play at"));
 			volume->setMinimum(0);
 			volume->setMaximum(100);
 			volume->setSuffix(tr("%", "percent"));
 			volume->setDefaultValue(QStringLiteral("100"));
-			addElement(volume);
 
-			auto blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("blocking"), tr("Wait until played")), this);
+			auto blocking = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("blocking"), tr("Wait until played")});
 			blocking->setTooltip(tr("Should the action end only when the sound has finished playing"));
 			blocking->setDefaultValue(QStringLiteral("true"));
-			addElement(blocking);
 
-			auto loop = new ActionTools::BooleanParameterDefinition(ActionTools::Name(QStringLiteral("looping"), tr("Looping")), this);
+            auto loop = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("looping"), tr("Looping")}, 1);
 			loop->setTooltip(tr("Should the sound loop"));
 			loop->setDefaultValue(QStringLiteral("false"));
-			addElement(loop, 1);
 
-			auto playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name(QStringLiteral("playbackRate"), tr("Playback rate")), this);
+            auto playbackrate = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("playbackRate"), tr("Playback rate")}, 1);
 			playbackrate->setTooltip(tr("The playback rate"));
 			playbackrate->setMinimum(std::numeric_limits<int>::min());
 			playbackrate->setMaximum(std::numeric_limits<int>::max());
 			playbackrate->setSuffix(tr("%", "percent"));
 			playbackrate->setDefaultValue(QStringLiteral("100"));
-			addElement(playbackrate, 1);
 		}
 
 		QString name() const override													{ return QObject::tr("Play sound"); }

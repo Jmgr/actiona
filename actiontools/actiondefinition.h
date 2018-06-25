@@ -38,9 +38,13 @@ namespace ActionTools
 	class ActionInstance;
 	class ElementDefinition;
 	class ActionException;
+    class Name;
+    class GroupDefinition;
 
-	class ACTIONTOOLSSHARED_EXPORT ActionDefinition
+    class ACTIONTOOLSSHARED_EXPORT ActionDefinition : public QObject
 	{
+        Q_OBJECT
+
 	public:
 		explicit ActionDefinition(ActionPack *pack) : mPack(pack), mIndex(-1)	{}
 		virtual ~ActionDefinition();
@@ -77,11 +81,18 @@ namespace ActionTools
 
 	protected:
         void translateItems(const char *context, Tools::StringListPair &items) const;
-		void addElement(ElementDefinition *element, int tab = 0);
+        template<class ElementDefinitionT>
+        ElementDefinitionT *addElement(const Name &name, int tab = 0)
+        {
+            return static_cast<ElementDefinitionT *>(addElement(new ElementDefinitionT(name, this), tab));
+        }
+        GroupDefinition *addGroup(int tab = 0);
 		void addException(int id, const QString &name);
 		bool requirementCheckXTest(QStringList &missingRequirements) const;
 
 	private:
+        ElementDefinition *addElement(ElementDefinition *element, int tab);
+
 		ActionPack *mPack;
 		QList<ElementDefinition *> mElements;
 		QList<ActionException *> mExceptions;
