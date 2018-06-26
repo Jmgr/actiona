@@ -47,44 +47,44 @@ namespace Actions
 		{
 			translateItems("PixelColorInstance::comparisons", PixelColorInstance::comparisons);
 
-			auto pixel = addElement<ActionTools::ColorPositionParameterDefinition>({QStringLiteral("pixel"), tr("Pixel")});
-			pixel->setTooltip(tr("The pixel position and color to check"));
+            auto &pixel = addParameter<ActionTools::ColorPositionParameterDefinition>({QStringLiteral("pixel"), tr("Pixel")});
+            pixel.setTooltip(tr("The pixel position and color to check"));
 
-			auto comparison = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("comparison"), tr("Comparison")});
-			comparison->setTooltip(tr("The comparison"));
-			comparison->setItems(PixelColorInstance::comparisons);
-			comparison->setDefaultValue(PixelColorInstance::comparisons.second.at(PixelColorInstance::Equal));
+            auto &comparison = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("comparison"), tr("Comparison")});
+            comparison.setTooltip(tr("The comparison"));
+            comparison.setItems(PixelColorInstance::comparisons);
+            comparison.setDefaultValue(PixelColorInstance::comparisons.second.at(PixelColorInstance::Equal));
 
-			auto ifTrue = addElement<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifTrue"), tr("If true")});
-			ifTrue->setTooltip(tr("What to to if the pixel comparison is true"));
+            auto &ifTrue = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifTrue"), tr("If true")});
+            ifTrue.setTooltip(tr("What to to if the pixel comparison is true"));
 
-			auto ifFalse = addElement<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifFalse"), tr("If false")});
-			ifFalse->setTooltip(tr("What to to if the pixel comparison is false"));
-			ifFalse->setAllowWait(true);
+            auto &ifFalse = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifFalse"), tr("If false")});
+            ifFalse.setTooltip(tr("What to to if the pixel comparison is false"));
+            ifFalse.setAllowWait(true);
 
-            auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Pixel color variable")}, 1);
-			variable->setTooltip(tr("Variable name where to store the pixel color"));
+            auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Pixel color variable")}, 1);
+            variable.setTooltip(tr("Variable name where to store the pixel color"));
 
-            auto redTolerance = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("redTolerance"), tr("Red tolerance")}, 1);
-			redTolerance->setTooltip(tr("The tolerance percentage for the red color component"));
-			redTolerance->setMinimum(0);
-			redTolerance->setMaximum(100);
-			redTolerance->setDefaultValue(QStringLiteral("0"));
+            auto &redTolerance = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("redTolerance"), tr("Red tolerance")}, 1);
+            redTolerance.setTooltip(tr("The tolerance percentage for the red color component"));
+            redTolerance.setMinimum(0);
+            redTolerance.setMaximum(100);
+            redTolerance.setDefaultValue(QStringLiteral("0"));
 
-            auto greenTolerance = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("greenTolerance"), tr("Green tolerance")}, 1);
-			greenTolerance->setTooltip(tr("The tolerance percentage for the green color component"));
-			greenTolerance->setMinimum(0);
-			greenTolerance->setMaximum(100);
-			greenTolerance->setDefaultValue(QStringLiteral("0"));
+            auto &greenTolerance = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("greenTolerance"), tr("Green tolerance")}, 1);
+            greenTolerance.setTooltip(tr("The tolerance percentage for the green color component"));
+            greenTolerance.setMinimum(0);
+            greenTolerance.setMaximum(100);
+            greenTolerance.setDefaultValue(QStringLiteral("0"));
 
-            auto blueTolerance = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("blueTolerance"), tr("Blue tolerance")}, 1);
-			blueTolerance->setTooltip(tr("The tolerance percentage for the blue color component"));
-			blueTolerance->setMinimum(0);
-			blueTolerance->setMaximum(100);
-			blueTolerance->setDefaultValue(QStringLiteral("0"));
+            auto &blueTolerance = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("blueTolerance"), tr("Blue tolerance")}, 1);
+            blueTolerance.setTooltip(tr("The tolerance percentage for the blue color component"));
+            blueTolerance.setMinimum(0);
+            blueTolerance.setMaximum(100);
+            blueTolerance.setDefaultValue(QStringLiteral("0"));
 
-            auto positionOffset = addElement<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
-            positionOffset->setTooltip(tr("The offset to apply to the pixel position"));
+            auto &positionOffset = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
+            positionOffset.setTooltip(tr("The offset to apply to the pixel position"));
 		}
 
 		QString name() const override													{ return QObject::tr("Pixel color"); }

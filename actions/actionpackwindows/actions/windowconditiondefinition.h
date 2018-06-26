@@ -45,41 +45,41 @@ namespace Actions
 		{
 			translateItems("WindowConditionInstance::conditions", WindowConditionInstance::conditions);
 
-            auto title = addElement<ActionTools::WindowParameterDefinition>({QStringLiteral("title"), tr("Window title")});
-			title->setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
+            auto &title = addParameter<ActionTools::WindowParameterDefinition>({QStringLiteral("title"), tr("Window title")});
+            title.setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
 
-            auto condition = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("condition"), tr("Condition")});
-			condition->setTooltip(tr("The condition to wait for"));
-			condition->setItems(WindowConditionInstance::conditions);
-			condition->setDefaultValue(WindowConditionInstance::conditions.second.at(WindowConditionInstance::Exists));
+            auto &condition = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("condition"), tr("Condition")});
+            condition.setTooltip(tr("The condition to wait for"));
+            condition.setItems(WindowConditionInstance::conditions);
+            condition.setDefaultValue(WindowConditionInstance::conditions.second.at(WindowConditionInstance::Exists));
 
-            auto ifTrue = addElement<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifTrue"), tr("If true")});
-			ifTrue->setTooltip(tr("What to do if the condition is met"));
+            auto &ifTrue = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifTrue"), tr("If true")});
+            ifTrue.setTooltip(tr("What to do if the condition is met"));
 
-            auto ifFalse = addElement<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifFalse"), tr("If false")});
-			ifFalse->setTooltip(tr("What to do if the condition is not met"));
-			ifFalse->setAllowWait(true);
+            auto &ifFalse = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifFalse"), tr("If false")});
+            ifFalse.setTooltip(tr("What to do if the condition is not met"));
+            ifFalse.setAllowWait(true);
 
-            auto position = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("position"), tr("Position")}, 1);
-			position->setTooltip(tr("The position of the found window"));
+            auto &position = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("position"), tr("Position")}, 1);
+            position.setTooltip(tr("The position of the found window"));
 
-            auto size = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("size"), tr("Size")}, 1);
-			size->setTooltip(tr("The size of the found window"));
+            auto &size = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("size"), tr("Size")}, 1);
+            size.setTooltip(tr("The size of the found window"));
 
-            auto xCoordinate = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("xCoordinate"), tr("X-coordinate")}, 2);
-			xCoordinate->setTooltip(tr("The x-coordinate of the found window"));
+            auto &xCoordinate = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("xCoordinate"), tr("X-coordinate")}, 2);
+            xCoordinate.setTooltip(tr("The x-coordinate of the found window"));
 
-            auto yCoordinate = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("yCoordinate"), tr("Y-coordinate")}, 2);
-			yCoordinate->setTooltip(tr("The y-coordinate of the found window"));
+            auto &yCoordinate = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("yCoordinate"), tr("Y-coordinate")}, 2);
+            yCoordinate.setTooltip(tr("The y-coordinate of the found window"));
 
-            auto width = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("width"), tr("Width")}, 2);
-			width->setTooltip(tr("The width of the found window"));
+            auto &width = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("width"), tr("Width")}, 2);
+            width.setTooltip(tr("The width of the found window"));
 
-            auto height = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("height"), tr("Height")}, 2);
-			height->setTooltip(tr("The height of the found window"));
+            auto &height = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("height"), tr("Height")}, 2);
+            height.setTooltip(tr("The height of the found window"));
 
-            auto processId = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("processId"), tr("Process id")}, 1);
-			processId->setTooltip(tr("The process id of the found window"));
+            auto &processId = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("processId"), tr("Process id")}, 1);
+            processId.setTooltip(tr("The process id of the found window"));
 		}
 
 		QString name() const override													{ return QObject::tr("Window condition"); }

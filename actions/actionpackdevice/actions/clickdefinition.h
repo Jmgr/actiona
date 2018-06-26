@@ -49,34 +49,34 @@ namespace Actions
 			translateItems("ClickInstance::buttons", ClickInstance::buttons);
 			translateItems("ClickInstance::actions", ClickInstance::actions);
 
-            auto action = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("action"), tr("Action")});
-			action->setTooltip(tr("The action to simulate"));
-			action->setItems(ClickInstance::actions);
-			action->setDefaultValue(ClickInstance::actions.second.at(ClickInstance::ClickAction));
+            auto &action = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("action"), tr("Action")});
+            action.setTooltip(tr("The action to simulate"));
+            action.setItems(ClickInstance::actions);
+            action.setDefaultValue(ClickInstance::actions.second.at(ClickInstance::ClickAction));
 
-            auto button = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("button"), tr("Button")});
-			button->setTooltip(tr("The button to simulate"));
-			button->setItems(ClickInstance::buttons);
-			button->setDefaultValue(ClickInstance::buttons.second.at(MouseDevice::LeftButton));
+            auto &button = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("button"), tr("Button")});
+            button.setTooltip(tr("The button to simulate"));
+            button.setItems(ClickInstance::buttons);
+            button.setDefaultValue(ClickInstance::buttons.second.at(MouseDevice::LeftButton));
 
-            auto position = addElement<ActionTools::PositionParameterDefinition>({QStringLiteral("position"), tr("Position")});
-			position->setTooltip(tr("The screen position where to simulate a mouse click"));
+            auto &position = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("position"), tr("Position")});
+            position.setTooltip(tr("The screen position where to simulate a mouse click"));
 
-            auto restoreCursorPosition = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("restoreCursorPosition"), tr("Restore cursor position")});
-			restoreCursorPosition->setTooltip(tr("Restore the cursor position after the action is finished"));
+            auto &restoreCursorPosition = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("restoreCursorPosition"), tr("Restore cursor position")});
+            restoreCursorPosition.setTooltip(tr("Restore the cursor position after the action is finished"));
 
-            auto clickGroup = addGroup();
-			clickGroup->setMasterList(action);
-			clickGroup->setMasterValues(QStringList() << ClickInstance::actions.first.at(ClickInstance::ClickAction));
+            auto &clickGroup = addGroup();
+            clickGroup.setMasterList(action);
+            clickGroup.setMasterValues(QStringList() << ClickInstance::actions.first.at(ClickInstance::ClickAction));
 	
-            auto amount = clickGroup->addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("amount"), tr("Amount")});
-			amount->setTooltip(tr("The amount of clicks to simulate"));
-			amount->setMinimum(1);
-			amount->setMaximum(std::numeric_limits<int>::max());
-			amount->setDefaultValue(QStringLiteral("1"));
+            auto &amount = clickGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("amount"), tr("Amount")});
+            amount.setTooltip(tr("The amount of clicks to simulate"));
+            amount.setMinimum(1);
+            amount.setMaximum(std::numeric_limits<int>::max());
+            amount.setDefaultValue(QStringLiteral("1"));
 			
-            auto positionOffset = addElement<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
-			positionOffset->setTooltip(tr("The offset to apply to the click position"));
+            auto &positionOffset = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
+            positionOffset.setTooltip(tr("The offset to apply to the click position"));
 
 			addException(ClickInstance::FailedToSendInputException, tr("Send input failure"));
 			addException(ClickInstance::InvalidActionException, tr("Invalid action"));

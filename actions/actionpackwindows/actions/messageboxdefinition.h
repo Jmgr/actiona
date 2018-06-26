@@ -48,48 +48,48 @@ namespace Actions
 			translateItems("MessageBoxInstance::buttons", MessageBoxInstance::buttons);
 			translateItems("MessageBoxInstance::textmodes", MessageBoxInstance::textmodes);
 
-			auto text = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("message"), tr("Message")});
-			text->setTooltip(tr("The text to show"));
+            auto &text = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("message"), tr("Message")});
+            text.setTooltip(tr("The text to show"));
 
-			auto title = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("title"), tr("Title")});
-			title->setTooltip(tr("The title to show"));
+            auto &title = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("title"), tr("Title")});
+            title.setTooltip(tr("The title to show"));
 
-			auto icon = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("icon"), tr("Icon")});
-			icon->setTooltip(tr("The icon to use"));
-			icon->setItems(MessageBoxInstance::icons);
-			icon->setDefaultValue(MessageBoxInstance::icons.second.at(MessageBoxInstance::None));
+            auto &icon = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("icon"), tr("Icon")});
+            icon.setTooltip(tr("The icon to use"));
+            icon.setItems(MessageBoxInstance::icons);
+            icon.setDefaultValue(MessageBoxInstance::icons.second.at(MessageBoxInstance::None));
 
-            auto type = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("type"), tr("Type")}, 1);
-			type->setTooltip(tr("The message box type"));
-			type->setItems(MessageBoxInstance::buttons);
-			type->setDefaultValue(MessageBoxInstance::buttons.second.at(MessageBoxInstance::OkButton));
+            auto &type = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("type"), tr("Type")}, 1);
+            type.setTooltip(tr("The message box type"));
+            type.setItems(MessageBoxInstance::buttons);
+            type.setDefaultValue(MessageBoxInstance::buttons.second.at(MessageBoxInstance::OkButton));
 
-            auto customIcon = addElement<ActionTools::ImageParameterDefinition>({QStringLiteral("customIcon"), tr("Custom icon")}, 1);
-			customIcon->setTooltip(tr("The custom icon to use"));
-			customIcon->setMode(ActionTools::FileEdit::FileOpen);
-			customIcon->setCaption(tr("Select the icon to use"));
-			customIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
+            auto &customIcon = addParameter<ActionTools::ImageParameterDefinition>({QStringLiteral("customIcon"), tr("Custom icon")}, 1);
+            customIcon.setTooltip(tr("The custom icon to use"));
+            customIcon.setMode(ActionTools::FileEdit::FileOpen);
+            customIcon.setCaption(tr("Select the icon to use"));
+            customIcon.setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 
-            auto windowIcon = addElement<ActionTools::ImageParameterDefinition>({QStringLiteral("windowIcon"), tr("Window icon")}, 1);
-			windowIcon->setTooltip(tr("The window icon to use"));
-			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
-			windowIcon->setCaption(tr("Select the icon to use"));
-			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
+            auto &windowIcon = addParameter<ActionTools::ImageParameterDefinition>({QStringLiteral("windowIcon"), tr("Window icon")}, 1);
+            windowIcon.setTooltip(tr("The window icon to use"));
+            windowIcon.setMode(ActionTools::FileEdit::FileOpen);
+            windowIcon.setCaption(tr("Select the icon to use"));
+            windowIcon.setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 
-            auto textMode = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("textMode"), tr("Text mode")}, 1);
-			textMode->setTooltip(tr("The message box text mode"));
-			textMode->setItems(MessageBoxInstance::textmodes);
-			textMode->setDefaultValue(MessageBoxInstance::textmodes.second.at(MessageBoxInstance::AutoTextMode));
+            auto &textMode = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("textMode"), tr("Text mode")}, 1);
+            textMode.setTooltip(tr("The message box text mode"));
+            textMode.setItems(MessageBoxInstance::textmodes);
+            textMode.setDefaultValue(MessageBoxInstance::textmodes.second.at(MessageBoxInstance::AutoTextMode));
 
-            auto yesNoGroup = addGroup(1);
-			yesNoGroup->setMasterList(type);
-			yesNoGroup->setMasterValues(QStringList() << MessageBoxInstance::buttons.first.at(MessageBoxInstance::YesNoButtons));
+            auto &yesNoGroup = addGroup(1);
+            yesNoGroup.setMasterList(type);
+            yesNoGroup.setMasterValues(QStringList() << MessageBoxInstance::buttons.first.at(MessageBoxInstance::YesNoButtons));
 
-            auto ifYes = yesNoGroup->addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifYes"), tr("If yes")});
-			ifYes->setTooltip(tr("What to do if the yes button is pressed"));
+            auto &ifYes = yesNoGroup.addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifYes"), tr("If yes")});
+            ifYes.setTooltip(tr("What to do if the yes button is pressed"));
 
-            auto ifNo = yesNoGroup->addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifNo"), tr("If no")});
-			ifNo->setTooltip(tr("What to do if the no button is pressed"));
+            auto &ifNo = yesNoGroup.addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifNo"), tr("If no")});
+            ifNo.setTooltip(tr("What to do if the no button is pressed"));
 		}
 
 		QString name() const override													{ return QObject::tr("Message Box"); }

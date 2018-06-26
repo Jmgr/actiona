@@ -40,9 +40,9 @@ namespace Actions
 		explicit BeginProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto name = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("name"), tr("Name")});
-			name->setTooltip(tr("The name of the procedure"));
-			name->setTextCodeMode(ActionTools::TextParameterDefinition::TextOnly);
+			auto &name = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("name"), tr("Name")});
+            name.setTooltip(tr("The name of the procedure"));
+            name.setTextCodeMode(ActionTools::TextParameterDefinition::TextOnly);
 		}
 
 		QString name() const override													{ return QObject::tr("Begin procedure"); }

@@ -40,8 +40,8 @@ namespace Actions
 		explicit OpenURLDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto url = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("url"), tr("URL")});
-			url->setTooltip(tr("The url to open"));
+            auto &url = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("url"), tr("URL")});
+            url.setTooltip(tr("The url to open"));
 
 			addException(OpenURLInstance::FailedToOpenURL, tr("Failed to open URL"));
 		}

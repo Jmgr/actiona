@@ -37,9 +37,10 @@ namespace ActionTools
 	class ActionPack;
 	class ActionInstance;
 	class ElementDefinition;
+    class ParameterDefinition;
+    class GroupDefinition;
 	class ActionException;
     class Name;
-    class GroupDefinition;
 
     class ACTIONTOOLSSHARED_EXPORT ActionDefinition : public QObject
 	{
@@ -81,12 +82,14 @@ namespace ActionTools
 
 	protected:
         void translateItems(const char *context, Tools::StringListPair &items) const;
-        template<class ElementDefinitionT>
-        ElementDefinitionT *addElement(const Name &name, int tab = 0)
+        template<class ParameterDefinitionT>
+        ParameterDefinitionT &addParameter(const Name &name, int tab = 0)
         {
-            return static_cast<ElementDefinitionT *>(addElement(new ElementDefinitionT(name, this), tab));
+            static_assert(std::is_convertible<ParameterDefinitionT*, ParameterDefinition*>::value, "ParameterDefinitionT must inherit ParameterDefinition");
+
+            return *static_cast<ParameterDefinitionT *>(addElement(new ParameterDefinitionT(name, this), tab));
         }
-        GroupDefinition *addGroup(int tab = 0);
+        GroupDefinition &addGroup(int tab = 0);
 		void addException(int id, const QString &name);
 		bool requirementCheckXTest(QStringList &missingRequirements) const;
 

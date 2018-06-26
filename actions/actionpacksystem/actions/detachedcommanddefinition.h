@@ -42,19 +42,19 @@ namespace Actions
 		explicit DetachedCommandDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto command = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("command"), tr("Command")});
-			command->setTooltip(tr("The command to execute"));
+            auto &command = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("command"), tr("Command")});
+            command.setTooltip(tr("The command to execute"));
 
-			auto parameters = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("parameters"), tr("Parameters")});
-			parameters->setTooltip(tr("The command's parameters"));
+            auto &parameters = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("parameters"), tr("Parameters")});
+            parameters.setTooltip(tr("The command's parameters"));
 
-			auto workingDirectory = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("workingDirectory"), tr("Working directory")});
-			workingDirectory->setTooltip(tr("The command's working directory"));
-			workingDirectory->setCaption(tr("Command working directory"));
-			workingDirectory->setMode(ActionTools::FileEdit::DirectoryOpen);
+            auto &workingDirectory = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("workingDirectory"), tr("Working directory")});
+            workingDirectory.setTooltip(tr("The command's working directory"));
+            workingDirectory.setCaption(tr("Command working directory"));
+            workingDirectory.setMode(ActionTools::FileEdit::DirectoryOpen);
 
-            auto processId = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("processId"), tr("Process id")}, 1);
-			processId->setTooltip(tr("The command's process id"));
+            auto &processId = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("processId"), tr("Process id")}, 1);
+            processId.setTooltip(tr("The command's process id"));
 
 			addException(DetachedCommandInstance::DetachedCommandFailedException, tr("Unable to execute the detached command"));
 		}

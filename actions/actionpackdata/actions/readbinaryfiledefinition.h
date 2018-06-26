@@ -41,14 +41,14 @@ namespace Actions
 		explicit ReadBinaryFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-            auto file = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
-			file->setTooltip(tr("The file to read from"));
-			file->setMode(ActionTools::FileEdit::FileOpen);
-			file->setCaption(tr("Choose the file"));
-			file->setFilter(tr("All files (*.*)"));
+            auto &file = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
+            file.setTooltip(tr("The file to read from"));
+            file.setMode(ActionTools::FileEdit::FileOpen);
+            file.setCaption(tr("Choose the file"));
+            file.setFilter(tr("All files (*.*)"));
 
-            auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
-			variable->setTooltip(tr("The variable where to store the data"));
+            auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable where to store the data"));
 
 			addException(ReadBinaryFileInstance::UnableToReadFileException, tr("Unable to read file"));
 		}

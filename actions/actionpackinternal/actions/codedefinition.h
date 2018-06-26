@@ -40,9 +40,9 @@ namespace Actions
 		explicit CodeDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto code = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("code"), tr("Code")});
-			code->setTooltip(tr("The code to evaluate"));
-			code->setTextCodeMode(ActionTools::TextParameterDefinition::CodeOnly);
+            auto &code = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("code"), tr("Code")});
+            code.setTooltip(tr("The code to evaluate"));
+            code.setTextCodeMode(ActionTools::TextParameterDefinition::CodeOnly);
 		}
 
 		QString name() const override													{ return QObject::tr("Code"); }

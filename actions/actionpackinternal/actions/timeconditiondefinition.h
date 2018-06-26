@@ -41,18 +41,18 @@ namespace Actions
 		explicit TimeConditionDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-            auto date = addElement<ActionTools::DateTimeParameterDefinition>({QStringLiteral("date"), tr("Date")});
-			date->setTooltip(tr("The date to compare"));
+            auto &date = addParameter<ActionTools::DateTimeParameterDefinition>({QStringLiteral("date"), tr("Date")});
+            date.setTooltip(tr("The date to compare"));
 
-            auto ifBefore = addElement<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifBefore"), tr("If in the past")});
-			ifBefore->setTooltip(tr("What to do if the date is in the past"));
+            auto &ifBefore = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifBefore"), tr("If in the past")});
+            ifBefore.setTooltip(tr("What to do if the date is in the past"));
 
-            auto ifNow = addElement<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifNow"), tr("If now")});
-			ifNow->setTooltip(tr("What to do if the date is the current date"));
+            auto &ifNow = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifNow"), tr("If now")});
+            ifNow.setTooltip(tr("What to do if the date is the current date"));
 
-            auto ifAfter = addElement<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifAfter"), tr("If in the future")});
-			ifAfter->setTooltip(tr("What to do if the date is in the future"));
-			ifAfter->setAllowWait(true);
+            auto &ifAfter = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifAfter"), tr("If in the future")});
+            ifAfter.setTooltip(tr("What to do if the date is in the future"));
+            ifAfter.setAllowWait(true);
 		}
 
 		QString name() const override													{ return QObject::tr("Time condition"); }

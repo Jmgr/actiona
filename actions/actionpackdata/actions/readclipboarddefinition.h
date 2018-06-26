@@ -41,8 +41,8 @@ namespace Actions
 		explicit ReadClipboardDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-            auto output = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
-			output->setTooltip(tr("The variable where to save the current clipboard value"));
+            auto &output = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            output.setTooltip(tr("The variable where to save the current clipboard value"));
 		}
 
 		QString name() const override													{ return QObject::tr("Read clipboard"); }

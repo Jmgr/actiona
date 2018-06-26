@@ -41,14 +41,14 @@ namespace Actions
 		explicit WriteBinaryFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto file = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
-			file->setTooltip(tr("The file to write to"));
-			file->setMode(ActionTools::FileEdit::FileSave);
-			file->setCaption(tr("Choose the file"));
-			file->setFilter(tr("All files (*.*)"));
+			auto &file = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
+            file.setTooltip(tr("The file to write to"));
+            file.setMode(ActionTools::FileEdit::FileSave);
+            file.setCaption(tr("Choose the file"));
+            file.setFilter(tr("All files (*.*)"));
 
-			auto data = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("data"), tr("Data")});
-			data->setTooltip(tr("The data to write to the file"));
+			auto &data = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("data"), tr("Data")});
+            data.setTooltip(tr("The data to write to the file"));
 
 			addException(WriteBinaryFileInstance::UnableToWriteFileException, tr("Unable to write to the file"));
 		}

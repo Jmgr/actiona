@@ -45,23 +45,23 @@ namespace Actions
 		{
 			translateItems("SystemInstance::operations", SystemInstance::operations);
 
-			auto operation = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("operation"), tr("Operation")});
-			operation->setTooltip(tr("The operation to execute"));
-			operation->setItems(SystemInstance::operations);
-			operation->setDefaultValue(SystemInstance::operations.second.at(SystemInstance::Logout));
+            auto &operation = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("operation"), tr("Operation")});
+            operation.setTooltip(tr("The operation to execute"));
+            operation.setItems(SystemInstance::operations);
+            operation.setDefaultValue(SystemInstance::operations.second.at(SystemInstance::Logout));
 
-            auto operationMode = addGroup();
-			operationMode->setMasterList(operation);
-			operationMode->setMasterValues(QStringList()
+            auto &operationMode = addGroup();
+            operationMode.setMasterList(operation);
+            operationMode.setMasterValues(QStringList()
 										   << SystemInstance::operations.first.at(SystemInstance::Shutdown)
 										   << SystemInstance::operations.first.at(SystemInstance::Restart)
 										   << SystemInstance::operations.first.at(SystemInstance::Logout)
 										   << SystemInstance::operations.first.at(SystemInstance::Suspend)
 										   << SystemInstance::operations.first.at(SystemInstance::Hibernate));
 
-            auto force = operationMode->addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("force"), tr("Force")});
-			force->setTooltip(tr("Should the operation be forced"));
-			force->setDefaultValue(QStringLiteral("false"));
+            auto &force = operationMode.addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("force"), tr("Force")});
+            force.setTooltip(tr("Should the operation be forced"));
+            force.setDefaultValue(QStringLiteral("false"));
 
 			addException(SystemInstance::NotAvailable, tr("Not available"));
 		}

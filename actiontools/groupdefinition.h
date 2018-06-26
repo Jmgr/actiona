@@ -40,14 +40,14 @@ namespace ActionTools
 		GroupDefinition(QObject *parent = nullptr);
 
         template<class ParameterDefinitionT>
-        ParameterDefinitionT *addParameter(const Name &name, int tab = 0)
+        ParameterDefinitionT &addParameter(const Name &name, int tab = 0)
         {
-            return static_cast<ParameterDefinitionT *>(addParameter(new ParameterDefinitionT(name, this), tab));
+            return *static_cast<ParameterDefinitionT *>(addParameter(new ParameterDefinitionT(name, this), tab));
         }
 
         QList<ParameterDefinition *> members() const                                    { return mMembers; }
 
-		void setMasterList(ListParameterDefinition *masterList);
+        void setMasterList(ListParameterDefinition &masterList);
         void setMasterValues(const QStringList &masterValues)                           { mMasterValues = masterValues; }
 
 		void init();

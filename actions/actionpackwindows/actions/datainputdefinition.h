@@ -46,33 +46,33 @@ namespace Actions
 			translateItems("DataInputInstance::dataTypes", DataInputInstance::dataTypes);
             translateItems("DataInputInstance::editorTypes", DataInputInstance::editorTypes);
 
-			auto question = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("question"), tr("Question")});
-			question->setTooltip(tr("The question to ask"));
+            auto &question = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("question"), tr("Question")});
+            question.setTooltip(tr("The question to ask"));
 
-			auto dataType = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("dataType"), tr("Data type")});
-			dataType->setTooltip(tr("The data type"));
-			dataType->setItems(DataInputInstance::dataTypes);
-			dataType->setDefaultValue(DataInputInstance::dataTypes.second.at(DataInputInstance::TextType));
+            auto &dataType = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("dataType"), tr("Data type")});
+            dataType.setTooltip(tr("The data type"));
+            dataType.setItems(DataInputInstance::dataTypes);
+            dataType.setDefaultValue(DataInputInstance::dataTypes.second.at(DataInputInstance::TextType));
 
-			auto editorType = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("editorType"), tr("Editor type")});
-            editorType->setTooltip(tr("The editor type"));
-            editorType->setItems(DataInputInstance::editorTypes);
-            editorType->setDefaultValue(DataInputInstance::editorTypes.second.at(DataInputInstance::LineEditorType));
+            auto &editorType = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("editorType"), tr("Editor type")});
+            editorType.setTooltip(tr("The editor type"));
+            editorType.setItems(DataInputInstance::editorTypes);
+            editorType.setDefaultValue(DataInputInstance::editorTypes.second.at(DataInputInstance::LineEditorType));
 
-			auto defaultValue = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("defaultValue"), tr("Default value")});
-			defaultValue->setTooltip(tr("The default value"));
+            auto &defaultValue = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("defaultValue"), tr("Default value")});
+            defaultValue.setTooltip(tr("The default value"));
 
-			auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
-			variable->setTooltip(tr("The variable where to save the entered input"));
+            auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable where to save the entered input"));
 
-            auto windowTitle = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("windowTitle"), tr("Window title")}, 1);
-			windowTitle->setTooltip(tr("The title of the window"));
+            auto &windowTitle = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("windowTitle"), tr("Window title")}, 1);
+            windowTitle.setTooltip(tr("The title of the window"));
 
-            auto windowIcon = addElement<ActionTools::ImageParameterDefinition>({QStringLiteral("windowIcon"), tr("Window icon")}, 1);
-			windowIcon->setTooltip(tr("The window icon to use"));
-			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
-			windowIcon->setCaption(tr("Select the icon to use"));
-			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
+            auto &windowIcon = addParameter<ActionTools::ImageParameterDefinition>({QStringLiteral("windowIcon"), tr("Window icon")}, 1);
+            windowIcon.setTooltip(tr("The window icon to use"));
+            windowIcon.setMode(ActionTools::FileEdit::FileOpen);
+            windowIcon.setCaption(tr("Select the icon to use"));
+            windowIcon.setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 		}
 
 		QString name() const override													{ return QObject::tr("Data input"); }

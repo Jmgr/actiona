@@ -41,8 +41,8 @@ namespace Actions
 		explicit WriteClipboardDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto input = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
-			input->setTooltip(tr("The new clipboard value"));
+			auto &input = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
+            input.setTooltip(tr("The new clipboard value"));
 		}
 
 		QString name() const override													{ return QObject::tr("Write clipboard"); }

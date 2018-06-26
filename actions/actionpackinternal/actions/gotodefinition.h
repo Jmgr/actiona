@@ -40,8 +40,8 @@ namespace Actions
 		explicit GotoDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto line = addElement<ActionTools::LineParameterDefinition>({QStringLiteral("line"), tr("Line")});
-			line->setTooltip(tr("The line (or label) to go to"));
+            auto &line = addParameter<ActionTools::LineParameterDefinition>({QStringLiteral("line"), tr("Line")});
+            line.setTooltip(tr("The line (or label) to go to"));
 		}
 
 		QString name() const override													{ return QObject::tr("Goto"); }

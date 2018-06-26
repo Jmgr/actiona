@@ -42,19 +42,19 @@ namespace Actions
 		explicit ReadRegistryDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
-            auto key = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("key"), tr("Key")});
-			key->setTooltip(tr("The registry key to read from"));
-			key->setItems(ReadRegistryInstance::keys);
-			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
+            auto &key = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("key"), tr("Key")});
+            key.setTooltip(tr("The registry key to read from"));
+            key.setItems(ReadRegistryInstance::keys);
+            key.setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 
-            auto subKey = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("subKey"), tr("Subkey")});
-			subKey->setTooltip(tr("The registry subkey to read from"));
+            auto &subKey = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("subKey"), tr("Subkey")});
+            subKey.setTooltip(tr("The registry subkey to read from"));
 
-            auto value = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
-			value->setTooltip(tr("The value to read"));
+            auto &value = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
+            value.setTooltip(tr("The value to read"));
 
-            auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
-			variable->setTooltip(tr("The variable where to save the value read from the registry"));
+            auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable where to save the value read from the registry"));
 
 			addException(ReadRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
 			addException(ReadRegistryInstance::CannotFindValueException, tr("Cannot find value"));

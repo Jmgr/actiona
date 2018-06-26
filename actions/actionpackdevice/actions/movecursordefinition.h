@@ -40,11 +40,11 @@ namespace Actions
 		explicit MoveCursorDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto position = addElement<ActionTools::PositionParameterDefinition>({QStringLiteral("position"), tr("Position")});
-			position->setTooltip(tr("The position where to move the cursor"));
+			auto &position = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("position"), tr("Position")});
+            position.setTooltip(tr("The position where to move the cursor"));
 
-            auto positionOffset = addElement<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
-			positionOffset->setTooltip(tr("The offset to apply to the cursor movement"));
+            auto &positionOffset = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
+            positionOffset.setTooltip(tr("The offset to apply to the cursor movement"));
 		}
 	
 		QString name() const override													{ return QObject::tr("Move cursor"); }

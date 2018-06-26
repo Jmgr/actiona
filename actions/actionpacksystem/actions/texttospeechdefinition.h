@@ -45,38 +45,38 @@ namespace Actions
         explicit TextToSpeechDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-            auto text = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
-            text->setTooltip(tr("The text to say"));
+            auto &text = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
+            text.setTooltip(tr("The text to say"));
 
-            auto volume = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("volume"), tr("Volume")});
-            volume->setTooltip(tr("The speech volume"));
-            volume->setMinimum(-1);
-            volume->setMaximum(100);
-            volume->setSuffix(tr("%", "percent"));
-            volume->setDefaultValue(QStringLiteral("-1"));
-            volume->setSpecialValueText(tr("Default volume"));
+            auto &volume = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("volume"), tr("Volume")});
+            volume.setTooltip(tr("The speech volume"));
+            volume.setMinimum(-1);
+            volume.setMaximum(100);
+            volume.setSuffix(tr("%", "percent"));
+            volume.setDefaultValue(QStringLiteral("-1"));
+            volume.setSpecialValueText(tr("Default volume"));
 
-            auto language = addElement<ActionTools::LocaleParameterDefinition>({QStringLiteral("language"), tr("Language")});
-            language->setTooltip(tr("The language to use"));
-            language->setLocales(QTextToSpeech{}.availableLocales());
+            auto &language = addParameter<ActionTools::LocaleParameterDefinition>({QStringLiteral("language"), tr("Language")});
+            language.setTooltip(tr("The language to use"));
+            language.setLocales(QTextToSpeech{}.availableLocales());
 
-            auto blocking = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("blocking"), tr("Wait until speech finished")});
-            blocking->setTooltip(tr("Should the action end only when the speech is finished"));
-            blocking->setDefaultValue(QStringLiteral("true"));
+            auto &blocking = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("blocking"), tr("Wait until speech finished")});
+            blocking.setTooltip(tr("Should the action end only when the speech is finished"));
+            blocking.setDefaultValue(QStringLiteral("true"));
 
-            auto playbackrate = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("playbackRate"), tr("Playback rate")}, 1);
-            playbackrate->setTooltip(tr("The playback rate"));
-            playbackrate->setMinimum(0);
-            playbackrate->setMaximum(200);
-            playbackrate->setSuffix(tr("%", "percent"));
-            playbackrate->setDefaultValue(QStringLiteral("100"));
+            auto &playbackrate = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("playbackRate"), tr("Playback rate")}, 1);
+            playbackrate.setTooltip(tr("The playback rate"));
+            playbackrate.setMinimum(0);
+            playbackrate.setMaximum(200);
+            playbackrate.setSuffix(tr("%", "percent"));
+            playbackrate.setDefaultValue(QStringLiteral("100"));
 
-            auto pitch = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("pitch"), tr("Pitch")}, 1);
-            pitch->setTooltip(tr("The sound frequency of the voice"));
-            pitch->setMinimum(0);
-            pitch->setMaximum(200);
-            pitch->setSuffix(tr("%", "percent"));
-            pitch->setDefaultValue(QStringLiteral("100"));
+            auto &pitch = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("pitch"), tr("Pitch")}, 1);
+            pitch.setTooltip(tr("The sound frequency of the voice"));
+            pitch.setMinimum(0);
+            pitch.setMaximum(200);
+            pitch.setSuffix(tr("%", "percent"));
+            pitch.setDefaultValue(QStringLiteral("100"));
 		}
 
         QString name() const override													{ return QObject::tr("Text to speech"); }

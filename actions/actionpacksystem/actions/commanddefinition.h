@@ -42,31 +42,31 @@ namespace Actions
 		explicit CommandDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto command = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("command"), tr("Command")});
-			command->setTooltip(tr("The command to execute"));
+            auto &command = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("command"), tr("Command")});
+            command.setTooltip(tr("The command to execute"));
 
-			auto parameters = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("parameters"), tr("Parameters")});
-			parameters->setTooltip(tr("The command's parameters"));
+            auto &parameters = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("parameters"), tr("Parameters")});
+            parameters.setTooltip(tr("The command's parameters"));
 
-			auto workingDirectory = addElement<ActionTools::FileParameterDefinition>({QStringLiteral("workingDirectory"), tr("Working directory")});
-			workingDirectory->setTooltip(tr("The command's working directory"));
-			workingDirectory->setCaption(tr("Command working directory"));
-			workingDirectory->setMode(ActionTools::FileEdit::DirectoryOpen);
+            auto &workingDirectory = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("workingDirectory"), tr("Working directory")});
+            workingDirectory.setTooltip(tr("The command's working directory"));
+            workingDirectory.setCaption(tr("Command working directory"));
+            workingDirectory.setMode(ActionTools::FileEdit::DirectoryOpen);
 
-            auto exitCode = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("exitCode"), tr("Exit code")}, 1);
-			exitCode->setTooltip(tr("The command's exit code"));
+            auto &exitCode = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("exitCode"), tr("Exit code")}, 1);
+            exitCode.setTooltip(tr("The command's exit code"));
 
-            auto processId = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("processId"), tr("Process id")}, 1);
-			processId->setTooltip(tr("The command's process id"));
+            auto &processId = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("processId"), tr("Process id")}, 1);
+            processId.setTooltip(tr("The command's process id"));
 
-			auto output = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("output"), tr("Output")});
-			output->setTooltip(tr("The command's output"));
+            auto &output = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("output"), tr("Output")});
+            output.setTooltip(tr("The command's output"));
 
-            auto errorOutput = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("errorOutput"), tr("Error output")}, 1);
-			errorOutput->setTooltip(tr("The command's error output"));
+            auto &errorOutput = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("errorOutput"), tr("Error output")}, 1);
+            errorOutput.setTooltip(tr("The command's error output"));
 
-            auto exitStatus = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("exitStatus"), tr("Exit status")}, 1);
-			exitStatus->setTooltip(tr("The command's exit status"));
+            auto &exitStatus = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("exitStatus"), tr("Exit status")}, 1);
+            exitStatus.setTooltip(tr("The command's exit status"));
 
 			addException(CommandInstance::FailedToStartException, tr("Failed to start the command"));
 		}

@@ -43,13 +43,13 @@ namespace Actions
 		{
 			translateItems("ConsoleInstance::outputs", ConsoleInstance::outputs);
 
-			auto text = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
-			text->setTooltip(tr("The text to write"));
+            auto &text = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
+            text.setTooltip(tr("The text to write"));
 
-			auto output = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("output"), tr("Output")});
-			output->setTooltip(tr("The console output"));
-			output->setItems(ConsoleInstance::outputs);
-			output->setDefaultValue(ConsoleInstance::outputs.second.at(ConsoleInstance::Information));
+            auto &output = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("output"), tr("Output")});
+            output.setTooltip(tr("The console output"));
+            output.setItems(ConsoleInstance::outputs);
+            output.setDefaultValue(ConsoleInstance::outputs.second.at(ConsoleInstance::Information));
 		}
 
 		QString name() const override													{ return QObject::tr("Console"); }

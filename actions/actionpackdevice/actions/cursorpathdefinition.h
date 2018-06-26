@@ -44,16 +44,16 @@ namespace Actions
 		{
             translateItems("CursorPathInstance::buttons", CursorPathInstance::buttons);
 
-			auto path = addElement<ActionTools::PointListParameterDefinition>({QStringLiteral("path"), tr("Path")});
-			path->setTooltip(tr("The path to follow"));
+			auto &path = addParameter<ActionTools::PointListParameterDefinition>({QStringLiteral("path"), tr("Path")});
+            path.setTooltip(tr("The path to follow"));
 
-			auto button = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("button"), tr("Button")});
-            button->setTooltip(tr("The button to simulate"));
-            button->setItems(CursorPathInstance::buttons);
-            button->setDefaultValue(CursorPathInstance::buttons.second.at(CursorPathInstance::NoButton));
+			auto &button = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("button"), tr("Button")});
+            button.setTooltip(tr("The button to simulate"));
+            button.setItems(CursorPathInstance::buttons);
+            button.setDefaultValue(CursorPathInstance::buttons.second.at(CursorPathInstance::NoButton));
 
-            auto positionOffset = addElement<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
-			positionOffset->setTooltip(tr("The offset to apply to the path"));
+            auto &positionOffset = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
+            positionOffset.setTooltip(tr("The offset to apply to the path"));
 		}
 
 		QString name() const override													{ return QObject::tr("Cursor path"); }

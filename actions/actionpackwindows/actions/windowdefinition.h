@@ -49,38 +49,38 @@ namespace Actions
 		{
 			translateItems("WindowInstance::actions", WindowInstance::actions);
 
-			auto title = addElement<ActionTools::WindowParameterDefinition>({QStringLiteral("title"), tr("Window title")});
-			title->setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
+            auto &title = addParameter<ActionTools::WindowParameterDefinition>({QStringLiteral("title"), tr("Window title")});
+            title.setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
 
-			auto action = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("action"), tr("Action")});
-			action->setTooltip(tr("The action to perform"));
-			action->setItems(WindowInstance::actions);
-			action->setDefaultValue(WindowInstance::actions.second.at(WindowInstance::Close));
+            auto &action = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("action"), tr("Action")});
+            action.setTooltip(tr("The action to perform"));
+            action.setItems(WindowInstance::actions);
+            action.setDefaultValue(WindowInstance::actions.second.at(WindowInstance::Close));
 
-            auto moveGroup = addGroup();
-			moveGroup->setMasterList(action);
-			moveGroup->setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Move));
+            auto &moveGroup = addGroup();
+            moveGroup.setMasterList(action);
+            moveGroup.setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Move));
 
-            auto movePosition = moveGroup->addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("movePosition"), tr("Move position")});
-            movePosition->setTooltip(tr("The position where to move the window"));
+            auto &movePosition = moveGroup.addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("movePosition"), tr("Move position")});
+            movePosition.setTooltip(tr("The position where to move the window"));
 
-            auto resizeGroup = addGroup();
-			resizeGroup->setMasterList(action);
-			resizeGroup->setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Resize));
+            auto &resizeGroup = addGroup();
+            resizeGroup.setMasterList(action);
+            resizeGroup.setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Resize));
 
-            auto resizeWidth = resizeGroup->addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("resizeWidth"), tr("Resize width")});
-			resizeWidth->setTooltip(tr("The new width of the window"));
-			resizeWidth->setMinimum(0);
-			resizeWidth->setMaximum(std::numeric_limits<int>::max());
+            auto &resizeWidth = resizeGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("resizeWidth"), tr("Resize width")});
+            resizeWidth.setTooltip(tr("The new width of the window"));
+            resizeWidth.setMinimum(0);
+            resizeWidth.setMaximum(std::numeric_limits<int>::max());
 
-            auto resizeHeight = resizeGroup->addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("resizeHeight"), tr("Resize height")});
-			resizeHeight->setTooltip(tr("The new height of the window"));
-			resizeHeight->setMinimum(0);
-			resizeHeight->setMaximum(std::numeric_limits<int>::max());
+            auto &resizeHeight = resizeGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("resizeHeight"), tr("Resize height")});
+            resizeHeight.setTooltip(tr("The new height of the window"));
+            resizeHeight.setMinimum(0);
+            resizeHeight.setMaximum(std::numeric_limits<int>::max());
 
-            auto useBorders = resizeGroup->addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("useBorders"), tr("Use borders")});
-			useBorders->setTooltip(tr("Should the border size be taken into account when resizing the window"));
-			useBorders->setDefaultValue(QStringLiteral("true"));
+            auto &useBorders = resizeGroup.addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("useBorders"), tr("Use borders")});
+            useBorders.setTooltip(tr("Should the border size be taken into account when resizing the window"));
+            useBorders.setDefaultValue(QStringLiteral("true"));
 
 			addException(WindowInstance::CannotFindWindowException, tr("Cannot find window"));
 			addException(WindowInstance::ActionFailedException, tr("Action failed"));

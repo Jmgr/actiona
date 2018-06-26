@@ -45,20 +45,20 @@ namespace Actions
 		{
             translateItems("ReadEnvironmentVariableInstance::modes", ReadEnvironmentVariableInstance::modes);
 
-			auto variable = addElement<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
-			variable->setTooltip(tr("The variable used to store the selected information from your system environment"));
+			auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable used to store the selected information from your system environment"));
 
-			auto mode = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")});
-			mode->setTooltip(tr("The environment read mode"));
-			mode->setItems(ReadEnvironmentVariableInstance::modes);
-            mode->setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariableMode));
+			auto &mode = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")});
+            mode.setTooltip(tr("The environment read mode"));
+            mode.setItems(ReadEnvironmentVariableInstance::modes);
+            mode.setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariableMode));
 
-            auto selectionMode = addGroup();
-			selectionMode->setMasterList(mode);
-            selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode));
+            auto &selectionMode = addGroup();
+            selectionMode.setMasterList(mode);
+            selectionMode.setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode));
 
-            auto environmentVariableName = selectionMode->addParameter<ActionTools::EnvironmentVariableParameterDefinition>({QStringLiteral("environmentVariableName"), tr("Environment Variable")});
-			environmentVariableName->setTooltip(tr("The specific environment variable to read"));
+            auto &environmentVariableName = selectionMode.addParameter<ActionTools::EnvironmentVariableParameterDefinition>({QStringLiteral("environmentVariableName"), tr("Environment Variable")});
+            environmentVariableName.setTooltip(tr("The specific environment variable to read"));
 		}
 
         QString name() const override													{ return QObject::tr("Read environment variable"); }

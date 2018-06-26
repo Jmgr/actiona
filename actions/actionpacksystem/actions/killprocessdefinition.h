@@ -46,19 +46,19 @@ namespace Actions
 		{
 			translateItems("KillProcessInstance::killModes", KillProcessInstance::killModes);
 
-			auto processId = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("processId"), tr("Process id")});
-			processId->setTooltip(tr("The process id of the process to kill"));
+            auto &processId = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("processId"), tr("Process id")});
+            processId.setTooltip(tr("The process id of the process to kill"));
 
-            auto killMode = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("killMode"), tr("Kill mode")}, 1);
-			killMode->setTooltip(tr("The kill mode"));
-			killMode->setItems(KillProcessInstance::killModes);
-			killMode->setDefaultValue(KillProcessInstance::killModes.second.at(KillProcessInstance::GracefulThenForceful));
+            auto &killMode = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("killMode"), tr("Kill mode")}, 1);
+            killMode.setTooltip(tr("The kill mode"));
+            killMode.setItems(KillProcessInstance::killModes);
+            killMode.setDefaultValue(KillProcessInstance::killModes.second.at(KillProcessInstance::GracefulThenForceful));
 
-            auto timeout = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("timeout"), tr("Timeout")}, 1);
-			timeout->setTooltip(tr("The timeout before doing a forceful kill"));
-			timeout->setMinimum(0);
-			timeout->setMaximum(std::numeric_limits<int>::max());
-			timeout->setDefaultValue(QStringLiteral("1000"));
+            auto &timeout = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("timeout"), tr("Timeout")}, 1);
+            timeout.setTooltip(tr("The timeout before doing a forceful kill"));
+            timeout.setMinimum(0);
+            timeout.setMaximum(std::numeric_limits<int>::max());
+            timeout.setDefaultValue(QStringLiteral("1000"));
 		}
 
 		QString name() const override													{ return QObject::tr("Kill process"); }

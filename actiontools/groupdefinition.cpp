@@ -34,13 +34,13 @@ namespace ActionTools
 	{
 	}
 
-	void GroupDefinition::setMasterList(ListParameterDefinition *masterList)
+    void GroupDefinition::setMasterList(ListParameterDefinition &masterList)
 	{
 		disconnect();
 
-        connect(masterList, &ListParameterDefinition::editorBuilt, this, &GroupDefinition::masterEditorBuilt);
+        connect(&masterList, &ListParameterDefinition::editorBuilt, this, &GroupDefinition::masterEditorBuilt);
 
-		mMasterList = masterList;
+        mMasterList = &masterList;
 	}
 
 	void GroupDefinition::init()

@@ -42,10 +42,10 @@ namespace Actions
 		explicit WheelDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto intensity = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("intensity"), tr("Intensity")});
-			intensity->setTooltip(tr("Intensity of the movement, positive is up, negative is down"));
-			intensity->setMinimum(std::numeric_limits<int>::min());
-			intensity->setMaximum(std::numeric_limits<int>::max());
+			auto &intensity = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("intensity"), tr("Intensity")});
+            intensity.setTooltip(tr("Intensity of the movement, positive is up, negative is down"));
+            intensity.setMinimum(std::numeric_limits<int>::min());
+            intensity.setMaximum(std::numeric_limits<int>::max());
 
 			addException(WheelInstance::FailedToSendInputException, tr("Send input failure"));
 		}

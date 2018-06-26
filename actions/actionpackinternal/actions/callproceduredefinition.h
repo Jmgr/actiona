@@ -40,8 +40,8 @@ namespace Actions
 		explicit CallProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto name = addElement<ActionTools::ProcedureParameterDefinition>({QStringLiteral("name"), tr("Name")});
-			name->setTooltip(tr("The name of the procedure to call"));
+			auto &name = addParameter<ActionTools::ProcedureParameterDefinition>({QStringLiteral("name"), tr("Name")});
+            name.setTooltip(tr("The name of the procedure to call"));
 		}
 
 		QString name() const override													{ return QObject::tr("Call procedure"); }

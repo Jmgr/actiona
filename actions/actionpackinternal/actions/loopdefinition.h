@@ -43,13 +43,13 @@ namespace Actions
 		explicit LoopDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto line = addElement<ActionTools::LineParameterDefinition>({QStringLiteral("line"), tr("Line")});
-			line->setTooltip(tr("The line (or label) to go to"));
+            auto &line = addParameter<ActionTools::LineParameterDefinition>({QStringLiteral("line"), tr("Line")});
+            line.setTooltip(tr("The line (or label) to go to"));
 
-			auto count = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("count"), tr("Count")});
-            count->setTooltip(tr("The number of times (evaluated the first time)"));
-			count->setMinimum(0);
-			count->setMaximum(std::numeric_limits<int>::max());
+            auto &count = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("count"), tr("Count")});
+            count.setTooltip(tr("The number of times (evaluated the first time)"));
+            count.setMinimum(0);
+            count.setMaximum(std::numeric_limits<int>::max());
 		}
 
 		QString name() const override													{ return QObject::tr("Loop"); }

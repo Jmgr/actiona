@@ -77,9 +77,9 @@ namespace ActionTools
             items.second[index] = QApplication::instance()->translate(context, items.second.at(index).toLatin1().constData());
     }
 
-    GroupDefinition *ActionDefinition::addGroup(int tab)
+    GroupDefinition &ActionDefinition::addGroup(int tab)
     {
-        return static_cast<GroupDefinition *>(addElement(new GroupDefinition(this), tab));
+        return *static_cast<GroupDefinition *>(addElement(new GroupDefinition(this), tab));
     }
 
 	void ActionDefinition::addException(int id, const QString &name)

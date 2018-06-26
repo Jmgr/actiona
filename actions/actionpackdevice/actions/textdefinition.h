@@ -44,20 +44,20 @@ namespace Actions
 		explicit TextDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			auto text = addElement<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
-			text->setTooltip(tr("The text to write"));
+			auto &text = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
+            text.setTooltip(tr("The text to write"));
 
-            auto pause = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("pause"), tr("Pause between characters")}, 1);
-			pause->setTooltip(tr("The pause duration between each character"));
-			pause->setMinimum(0);
-			pause->setMaximum(std::numeric_limits<int>::max());
-			pause->setDefaultValue(QStringLiteral("0"));
-			pause->setSuffix(tr(" ms", "milliseconds"));
+            auto &pause = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("pause"), tr("Pause between characters")}, 1);
+            pause.setTooltip(tr("The pause duration between each character"));
+            pause.setMinimum(0);
+            pause.setMaximum(std::numeric_limits<int>::max());
+            pause.setDefaultValue(QStringLiteral("0"));
+            pause.setSuffix(tr(" ms", "milliseconds"));
 
-            auto noUnicodeCharacters = addElement<ActionTools::BooleanParameterDefinition>({QStringLiteral("noUnicodeCharacters"), tr("Do not send Unicode characters")}, 1);
-            noUnicodeCharacters->setTooltip(tr("Prevent using Unicode characters. Enables a limited set of characters on some programs."));
-			noUnicodeCharacters->setDefaultValue(QStringLiteral("false"));
-            noUnicodeCharacters->setOperatingSystems(ActionTools::WorksOnWindows);
+            auto &noUnicodeCharacters = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("noUnicodeCharacters"), tr("Do not send Unicode characters")}, 1);
+            noUnicodeCharacters.setTooltip(tr("Prevent using Unicode characters. Enables a limited set of characters on some programs."));
+            noUnicodeCharacters.setDefaultValue(QStringLiteral("false"));
+            noUnicodeCharacters.setOperatingSystems(ActionTools::WorksOnWindows);
 
 			addException(TextInstance::FailedToSendInputException, tr("Send input failure"));
 		}

@@ -45,16 +45,16 @@ namespace Actions
 		{
 			translateItems("PauseInstance::units", PauseInstance::units);
 
-			auto duration = addElement<ActionTools::NumberParameterDefinition>({QStringLiteral("duration"), tr("Duration")});
-			duration->setTooltip(tr("The duration of the pause"));
-			duration->setMinimum(0);
-			duration->setMaximum(std::numeric_limits<int>::max());
-			duration->setDefaultValue(QStringLiteral("5"));
+            auto &duration = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("duration"), tr("Duration")});
+            duration.setTooltip(tr("The duration of the pause"));
+            duration.setMinimum(0);
+            duration.setMaximum(std::numeric_limits<int>::max());
+            duration.setDefaultValue(QStringLiteral("5"));
 
-			auto unit = addElement<ActionTools::ListParameterDefinition>({QStringLiteral("unit"), tr("Unit")});
-			unit->setTooltip(tr("The pause duration unit"));
-			unit->setItems(PauseInstance::units);
-			unit->setDefaultValue(PauseInstance::units.second.at(PauseInstance::Seconds));
+            auto &unit = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("unit"), tr("Unit")});
+            unit.setTooltip(tr("The pause duration unit"));
+            unit.setItems(PauseInstance::units);
+            unit.setDefaultValue(PauseInstance::units.second.at(PauseInstance::Seconds));
 		}
 
 		QString name() const override													{ return QObject::tr("Pause"); }
