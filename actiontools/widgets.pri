@@ -30,7 +30,8 @@ SOURCES += codelineedit.cpp \
 	itemlistmodel.cpp \
     codelineeditbutton.cpp \
     variablelineedit.cpp \
-    screenshotpushbutton.cpp
+    screenshotpushbutton.cpp \
+    $$PWD/keyboardkeyedit.cpp
 HEADERS += codelineedit.h \
     codecombobox.h \
     codespinbox.h \
@@ -56,4 +57,5 @@ HEADERS += codelineedit.h \
 	itemlistmodel.h \
     codelineeditbutton.h \
     variablelineedit.h \
-    screenshotpushbutton.h
+    screenshotpushbutton.h \
+    $$PWD/keyboardkeyedit.h

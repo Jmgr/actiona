@@ -27,6 +27,7 @@
 #include "actions/keydefinition.h"
 #include "actions/movecursordefinition.h"
 #include "actions/cursorpathdefinition.h"
+#include "actions/keyboardkeyconditiondefinition.h"
 
 #include "code/mouse.h"
 #include "code/keyboard.h"
@@ -55,6 +56,7 @@ public:
 		addActionDefinition(new Actions::KeyDefinition(this));
 		addActionDefinition(new Actions::MoveCursorDefinition(this));
 		addActionDefinition(new Actions::CursorPathDefinition(this));
+        addActionDefinition(new Actions::KeyboardKeyConditionDefinition(this));
 	}
 
 	QString id() const override							{ return QStringLiteral("device"); }
