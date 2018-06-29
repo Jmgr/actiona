@@ -30,7 +30,7 @@ namespace Actions
 			QStringList() << QStringLiteral("exists") << QStringLiteral("dontexists"),
 			QStringList()
 			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Exists"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Don't exists")));
+            << QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Do not exist")));
 
 	WindowConditionInstance::WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent), mCondition(Exists)
