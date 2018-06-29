@@ -46,29 +46,26 @@ namespace ActionTools
 
     void KeyboardKeyParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		const SubParameter &key = actionInstance->subParameter(name().original(), QStringLiteral("key"));
+        const SubParameter &key = actionInstance->subParameter(name().original(), QStringLiteral("value"));
+
 		if(key.isCode())
             mKeyboardKeyEdit->setFromSubParameter(key);
 		else
 		{
             auto jsonDocument = QJsonDocument::fromJson(key.value().toUtf8());
+            QList<KeyboardKey> keys;
 
-            for(auto key: jsonDocument.array())
+            for(auto jsonElement: jsonDocument.array())
             {
-                ActionTools::KeyboardKey::load([&key](const QString &keyName) -> QString
+                auto jsonObject = jsonElement.toObject();
+
+                keys.append(ActionTools::KeyboardKey::load([&jsonObject](const QString &keyName) -> QString
                 {
-                    return key;//TODO
-                });
+                    return jsonObject.value(keyName).toString();
+                }));
             }
 
-            //TODO
-            /*
-			KeyInput keyInput;
-			
-			keyInput.fromPortableText(key.value(), actionInstance->subParameter(name().original(), QStringLiteral("isQtKey")).value() == QLatin1String("true"));
-			
-            mKeyboardKeyEdit->setKeyInput(keyInput);
-            */
+            mKeyboardKeyEdit->setKeys(keys);
 		}
 	}
 
@@ -77,23 +74,25 @@ namespace ActionTools
 		const QString &originalName = name().original();
 
         if(mKeyboardKeyEdit->isCode())
-        {
-            actionInstance->setSubParameter(originalName, QStringLiteral("keys"), true, mKeyboardKeyEdit->text());
-        }
+            actionInstance->setSubParameter(originalName, QStringLiteral("value"), true, mKeyboardKeyEdit->text());
         else
         {
             QJsonArray jsonPressedKeyArray;
 
-            for(auto pressedKey: mKeyboardKeyEdit->pressedKeys())
+            for(auto pressedKey: mKeyboardKeyEdit->keys())
             {
-                pressedKey.save([&jsonPressedKeyArray](const QString &key, const QString &value)
+                QJsonObject keyObject;
+
+                pressedKey.save([&keyObject](const QString &key, const QString &value)
                 {
-                    jsonPressedKeyArray.append(QJsonObject{{key, value}});
+                    keyObject[key] = value;
                 });
+
+                jsonPressedKeyArray.append(keyObject);
             }
 
             QJsonDocument document{jsonPressedKeyArray};
-            actionInstance->setSubParameter(originalName, QStringLiteral("keys"), false, QString::fromUtf8(document.toJson()));
+            actionInstance->setSubParameter(originalName, QStringLiteral("value"), false, QString::fromUtf8(document.toJson()));
         }
 	}
 	

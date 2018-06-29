@@ -25,6 +25,7 @@
 #include "keyboardkey.hpp"
 
 #include <QList>
+#include <QSet>
 
 namespace ActionTools
 {
@@ -35,14 +36,20 @@ namespace ActionTools
     public:
         explicit KeyboardKeyEdit(QWidget *parent = nullptr);
 
-        const QList<KeyboardKey> &pressedKeys() const { return m_keys; }
+        const QList<KeyboardKey> &keys() const { return m_keys; }
+        void setKeys(const QList<KeyboardKey> &keys);
 
     protected:
         void keyPressEvent(QKeyEvent *event) override;
         void keyReleaseEvent(QKeyEvent *event) override;
 
+    private slots:
+        void onCodeChanged(bool code);
+
     private:
-        QList<KeyboardKey> m_pressedKeys;
+        void updateKeyText();
+
+        QSet<KeyboardKey> m_pressedKeys;
         QList<KeyboardKey> m_keys;
 
         Q_DISABLE_COPY(KeyboardKeyEdit)

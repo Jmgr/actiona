@@ -20,13 +20,20 @@
 
 #include "keyboardkeyedit.h"
 
-#include <QDebug>
-
 namespace ActionTools
 {
     KeyboardKeyEdit::KeyboardKeyEdit(QWidget *parent):
         CodeLineEdit(parent)
     {
+        connect(this, &CodeLineEdit::codeChanged, this, &KeyboardKeyEdit::onCodeChanged);
+    }
+
+    void KeyboardKeyEdit::setKeys(const QList<KeyboardKey> &keys)
+    {
+        m_keys = keys;
+        m_pressedKeys.clear();
+
+        updateKeyText();
     }
 
     void KeyboardKeyEdit::keyPressEvent(QKeyEvent *event)
@@ -47,21 +54,13 @@ namespace ActionTools
             return;
         }
 
-        m_pressedKeys.push_back(key);
+        if(m_pressedKeys.isEmpty())
+            m_keys.clear();
 
-        QString keys;
+        m_pressedKeys.insert(key);
+        m_keys = m_pressedKeys.toList();
 
-        for(auto pressedKey: m_pressedKeys)
-        {
-            if(!keys.isEmpty())
-                keys += QStringLiteral(" + ");
-
-            keys += pressedKey.name();
-        }
-
-        m_keys = m_pressedKeys;
-
-        setText(keys);
+        updateKeyText();
 
         event->accept();
     }
@@ -75,8 +74,33 @@ namespace ActionTools
             return;
         }
 
-        m_pressedKeys.removeOne(KeyboardKey{event});
+        m_pressedKeys.remove(KeyboardKey{event});
 
         event->accept();
+    }
+
+    void KeyboardKeyEdit::onCodeChanged(bool code)
+    {
+        Q_UNUSED(code)
+
+        m_keys.clear();
+        m_pressedKeys.clear();
+
+        updateKeyText();
+    }
+
+    void KeyboardKeyEdit::updateKeyText()
+    {
+        QString keys;
+
+        for(auto pressedKey: m_keys)
+        {
+            if(!keys.isEmpty())
+                keys += QStringLiteral(" + ");
+
+            keys += pressedKey.name();
+        }
+
+        setText(keys);
     }
 }
