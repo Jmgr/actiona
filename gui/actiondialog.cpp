@@ -76,7 +76,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
     ui->buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
 
 	//Init of texts & images
-	ui->actionIcon->setPixmap(actionDefinition->icon());
+    ui->actionIcon->setPixmap(actionDefinition->cachedIcon());
 	ui->actionName->setText(QStringLiteral("<h2>") + actionDefinition->name() + QStringLiteral("</h2>"));
 	ui->actionDescription->setText(QStringLiteral("<i>") + actionDefinition->description() + QStringLiteral("</i>"));
 	ui->helpPushButton->setTopic(QStringLiteral("%1:actions:%2").arg(localeName.left(2)).arg(actionDefinition->id().toLower()));

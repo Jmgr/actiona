@@ -300,7 +300,7 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
         switch(index.column())
         {
             case ColumnActionName:
-                return QIcon(actionInstance->definition()->icon());
+                return actionInstance->definition()->cachedIcon();
         }
         break;
     case Qt::TextAlignmentRole:

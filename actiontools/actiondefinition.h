@@ -29,6 +29,7 @@
 #include <QPixmap>
 #include <QList>
 #include <QDebug>
+#include <QPixmapCache>
 
 class QScriptEngine;
 
@@ -62,6 +63,7 @@ namespace ActionTools
         virtual QString website() const                                                                 { return QString(); }
         virtual QString email() const                                                                   { return QString(); }
         virtual QPixmap icon() const                                                                    { return QPixmap(); }
+        QPixmap cachedIcon() const;
         virtual QStringList tabs() const                                                                { return QStringList(); }
 
         virtual void updateAction(ActionInstance *actionInstance, const Tools::Version &version) const  { Q_UNUSED(actionInstance) Q_UNUSED(version) }
@@ -100,6 +102,7 @@ namespace ActionTools
 		QList<ElementDefinition *> mElements;
 		QList<ActionException *> mExceptions;
 		int mIndex;
+        mutable QPixmap mIcon;
 
 		Q_DISABLE_COPY(ActionDefinition)
 	};
