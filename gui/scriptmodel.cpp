@@ -351,7 +351,6 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 		mScript->setAction(index.row(), mActionFactory->newActionInstance(value.toString()));
 
 		emit dataChanged(index, index);
-		emit scriptEdited();
 
 		return true;
 	}
@@ -365,7 +364,6 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 		actionInstance->copyActionDataFrom(value.value<ActionTools::ActionInstance>());
 
 		emit dataChanged(index, index);
-		emit scriptEdited();
 
 		return true;
 	}

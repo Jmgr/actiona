@@ -242,6 +242,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 #endif
 
 	ui->scriptView->setIconSize(QSize(16, 16));
+    ui->scriptView->header()->setResizeContentsPrecision(0);
 
     {
         QItemSelectionModel *oldModel = ui->newActionTreeView->selectionModel();
