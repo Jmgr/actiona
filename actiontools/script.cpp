@@ -28,6 +28,7 @@
 #include "messagehandler.h"
 #include "variableparameterdefinition.h"
 #include "groupdefinition.h"
+#include "scriptlinemodel.h"
 
 #ifdef ACT_PROFILE
 #include "highresolutiontimer.h"
@@ -47,21 +48,25 @@ namespace ActionTools
 	Script::Script(ActionFactory *actionFactory, QObject *parent)
 		: QObject(parent),
 		mActionFactory(actionFactory),
-		mLine(-1),
-		mColumn(-1),
-		mPauseBefore(0),
-		mPauseAfter(0)
+        mLineModel{new ScriptLineModel(*this, this)}
 	{
 	}
 
 	Script::~Script()
 	{
 		qDeleteAll(mActionInstances);
-	}
+    }
 
-	ActionInstance *Script::appendAction(const QString &actionDefinitionId)
-	{
-		ActionInstance *actionInstance = mActionFactory->newActionInstance(actionDefinitionId);
+    void Script::appendAction(ActionInstance *actionInstance)
+    {
+        mActionInstances.append(actionInstance);
+
+        mRebuildLabelList = true;
+    }
+
+    ActionInstance *Script::appendAction(const QString &actionDefinitionId)
+    {
+        ActionInstance *actionInstance = mActionFactory->newActionInstance(actionDefinitionId);
 		if(!actionInstance)
 			return nullptr;
 
@@ -81,6 +86,8 @@ namespace ActionTools
 	void Script::insertAction(int line, ActionInstance *actionInstance)
 	{
 		mActionInstances.insert(line, actionInstance);
+
+        mRebuildLabelList = true;
 	}
 
 	void Script::setAction(int line, ActionInstance *actionInstance)
@@ -91,6 +98,8 @@ namespace ActionTools
 		delete mActionInstances.at(line);
 
 		mActionInstances[line] = actionInstance;
+
+        mRebuildLabelList = true;
 	}
 
 	void Script::removeActions(int line, int count)
@@ -100,6 +109,8 @@ namespace ActionTools
 
 		for(int r = line; r <= line + count - 1; ++r)
 			removeAction(r);
+
+        mRebuildLabelList = true;
 	}
 
 	void Script::removeAction(int line)
@@ -108,6 +119,8 @@ namespace ActionTools
 			return;
 
 		delete mActionInstances.takeAt(line);
+
+        mRebuildLabelList = true;
 	}
 
 	void Script::removeAction(ActionInstance *actionInstance)
@@ -124,6 +137,7 @@ namespace ActionTools
 	{
 		qDeleteAll(mActionInstances);
 		mActionInstances.clear();
+        mRebuildLabelList = true;
 	}
 
 	void Script::moveAction(int startLine, int endLine)
@@ -759,15 +773,21 @@ namespace ActionTools
 
 	QStringList Script::labels() const
 	{
-		QStringList back;
+        if(!mRebuildLabelList)
+            return mLabels;
+        //TODO: cache this
+
+        mLabels.clear();
 
         for(const ActionInstance *actionInstance: mActionInstances)
 		{
 			if(!actionInstance->label().isEmpty())
-				back << actionInstance->label();
+                mLabels << actionInstance->label();
 		}
 
-        return back;
+        mRebuildLabelList = false;
+
+        return mLabels;
     }
 
     Script::ReadResult Script::validateSchema(QIODevice *device, const Tools::Version &scriptVersion, bool tryOlderVersions)
@@ -895,6 +915,11 @@ namespace ActionTools
 
             mExecutionDuration += actionInstance->executionDuration();
         }
+    }
+
+    void Script::updateLineModel()
+    {
+        mLineModel->update();
     }
 
     void Script::parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ElementDefinition *elementDefinition) const

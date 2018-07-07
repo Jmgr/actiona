@@ -21,6 +21,7 @@
 #include "lineparameterdefinition.h"
 #include "linecombobox.h"
 #include "script.h"
+#include "scriptlinemodel.h"
 
 namespace ActionTools
 {
@@ -28,7 +29,9 @@ namespace ActionTools
 	{
 		ParameterDefinition::buildEditors(script, parent);
 
-        mComboBox = new LineComboBox(script->labels(), parent);
+        script->updateLineModel();
+
+        mComboBox = new LineComboBox(*script, parent);
 
 		addEditor(mComboBox);
 
@@ -37,8 +40,6 @@ namespace ActionTools
 	
     void LineParameterDefinition::actionUpdate(Script *script)
 	{
-		auto lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mComboBox);
-		
-        lineComboBox->setup(script->labels());
+        script->updateLineModel();
 	}
 }

@@ -204,7 +204,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 			mExceptionsLayout->addWidget(actionComboBox, i, 1, Qt::AlignCenter);
 
-            ActionTools::LineComboBox *actionLineComboBox = new ActionTools::LineComboBox(mScript->labels(), this);
+            ActionTools::LineComboBox *actionLineComboBox = new ActionTools::LineComboBox(*mScript, this);
 			actionLineComboBox->codeLineEdit()->setAllowTextCodeChange(false);
 			actionLineComboBox->codeLineEdit()->setShowEditorButton(false);
 
@@ -400,15 +400,10 @@ void ActionDialog::postInit()
 		parameter->load(mActionInstance);
 	}
 
+    mScript->updateLineModel();
+
 	if(!mParameters.empty())
 	{
-		for(int i = 0; i < mExceptionsLayout->rowCount(); ++i)
-		{
-			auto lineComboBox = qobject_cast<ActionTools::LineComboBox *>(mExceptionsLayout->itemAtPosition(i, 2)->widget());
-
-            lineComboBox->setup(mScript->labels());
-		}
-
 		const ActionTools::ExceptionActionInstancesHash exceptionActionInstances = mActionInstance->exceptionActionInstances();
 		QList<ActionTools::ActionException *> actionExceptions = mActionInstance->definition()->exceptions();
 

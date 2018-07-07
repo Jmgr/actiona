@@ -292,8 +292,12 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch(index.column())
         {
+            case ColumnLabel:
+                return tr("Double-clic to set the label name");
             case ColumnActionName:
                 return tr("Double-clic to edit the action");
+            case ColumnComment:
+                return tr("Double-clic to write a comment for this action");
         }
         break;
     case Qt::DecorationRole:

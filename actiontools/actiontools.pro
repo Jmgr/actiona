@@ -60,7 +60,8 @@ SOURCES += actionfactory.cpp \
     screenshotwizard.cpp \
     screenshotwizardpage.cpp \
     savescreenshotwizardpage.cpp \
-    parametercontainer.cpp
+    parametercontainer.cpp \
+    scriptlinemodel.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -110,7 +111,8 @@ HEADERS += actiontools_global.h \
     screenshotwizard.h \
     screenshotwizardpage.h \
     savescreenshotwizardpage.h \
-    opencvalgorithms_private.h
+    opencvalgorithms_private.h \
+    scriptlinemodel.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \

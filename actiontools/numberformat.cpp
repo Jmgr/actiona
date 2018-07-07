@@ -28,7 +28,7 @@ namespace ActionTools
     QString NumberFormat::sizeString(quint64 size)
     {
         if(size < 1000)
-            return QObject::tr("%n byte(s)", "", size);
+            return QObject::tr("%n byte(s)", "", static_cast<int>(size));
 
         return numberFormat(QStringList() << QObject::tr("KB") << QObject::tr("MB") << QObject::tr("GB") << QObject::tr("TB"), static_cast<double>(size));
     }
