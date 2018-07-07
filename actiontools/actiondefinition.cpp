@@ -39,8 +39,18 @@ namespace ActionTools
 {
 	ActionDefinition::~ActionDefinition()
 	{
-		qDeleteAll(mExceptions);
-	}
+        qDeleteAll(mExceptions);
+    }
+
+    QPixmap ActionDefinition::cachedIcon() const
+    {
+        if(!mIcon.isNull())
+            return mIcon;
+
+        mIcon = icon();
+
+        return mIcon;
+    }
 
 	bool ActionDefinition::worksUnderThisOS() const
 	{

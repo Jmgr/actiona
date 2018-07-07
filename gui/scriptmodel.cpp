@@ -292,15 +292,19 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch(index.column())
         {
+            case ColumnLabel:
+                return tr("Double-clic to set the label name");
             case ColumnActionName:
                 return tr("Double-clic to edit the action");
+            case ColumnComment:
+                return tr("Double-clic to write a comment for this action");
         }
         break;
     case Qt::DecorationRole:
         switch(index.column())
         {
             case ColumnActionName:
-                return QIcon(actionInstance->definition()->icon());
+                return actionInstance->definition()->cachedIcon();
         }
         break;
     case Qt::TextAlignmentRole:
@@ -351,7 +355,6 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 		mScript->setAction(index.row(), mActionFactory->newActionInstance(value.toString()));
 
 		emit dataChanged(index, index);
-		emit scriptEdited();
 
 		return true;
 	}
@@ -365,7 +368,6 @@ bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int r
 		actionInstance->copyActionDataFrom(value.value<ActionTools::ActionInstance>());
 
 		emit dataChanged(index, index);
-		emit scriptEdited();
 
 		return true;
 	}

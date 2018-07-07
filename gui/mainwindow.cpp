@@ -242,6 +242,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 #endif
 
 	ui->scriptView->setIconSize(QSize(16, 16));
+    ui->scriptView->header()->setResizeContentsPrecision(0);
 
     {
         QItemSelectionModel *oldModel = ui->newActionTreeView->selectionModel();
@@ -1712,7 +1713,7 @@ void MainWindow::fillNewActionModel()
             ActionTools::ActionDefinition *actionDefinition = mActionFactory->actionDefinition(i);
             QStandardItem *categoryItem = mNewActionModel->item(actionDefinition->category(), 0);
             QString tooltip = actionDefinition->description();
-            QStandardItem *actionItem = new QStandardItem(actionDefinition->icon(), actionDefinition->name());
+            QStandardItem *actionItem = new QStandardItem(actionDefinition->cachedIcon(), actionDefinition->name());
 
             if(!actionDefinition->worksUnderThisOS())
             {

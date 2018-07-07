@@ -195,6 +195,8 @@ void ChangeLabelCommand::redo()
 
 	actionInstance->setLabel(mNew);
     mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(mRow, 0)));
+
+    mModel->mScript->invalidateLabelList();
 }
 
 void ChangeLabelCommand::undo()
@@ -205,6 +207,8 @@ void ChangeLabelCommand::undo()
 
 	actionInstance->setLabel(mOld);
     mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(mRow, 0)));
+
+    mModel->mScript->invalidateLabelList();
 }
 
 //ChangeDataCommand

@@ -64,6 +64,7 @@ namespace ActionTools
     CodeComboBox::CodeComboBox(QWidget *parent) :
 		QComboBox(parent)
 	{
+        delete model();
 		setModel(new CodeComboBoxModel(this));
 		setItemDelegate(new CodeComboBoxDelegate(this));
 

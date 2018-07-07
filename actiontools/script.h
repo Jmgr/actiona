@@ -40,6 +40,7 @@ namespace ActionTools
 	class ActionInstance;
 	class ActionFactory;
     class ElementDefinition;
+    class ScriptLineModel;
 
 	class ACTIONTOOLSSHARED_EXPORT Script : public QObject
 	{
@@ -60,7 +61,7 @@ namespace ActionTools
 		Script(ActionFactory *actionFactory, QObject *parent = nullptr);
 		~Script() override;
 
-        void appendAction(ActionInstance *actionInstance)                               { mActionInstances.append(actionInstance); }
+        void appendAction(ActionInstance *actionInstance);
 		ActionInstance *appendAction(const QString &actionDefinitionId);
 		ActionInstance *actionAt(int line) const;
 		void insertAction(int line, ActionInstance *actionInstance);
@@ -73,8 +74,9 @@ namespace ActionTools
         int actionCount() const                                                         { return mActionInstances.count(); }
 		int labelLine(const QString &label) const;
 		bool hasEnabledActions() const;
-
 		QSet<int> usedActions() const;
+
+        void invalidateLabelList()                                                      { mRebuildLabelList = true; }
 
         bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion, std::function<void(int, int, QString)> *progressCallback = nullptr);
         ReadResult read(QIODevice *device,
@@ -129,6 +131,9 @@ namespace ActionTools
 
         void executionStopped();
 
+        ScriptLineModel *lineModel() const                                              { return mLineModel; }
+        void updateLineModel();
+
 	private:
         Script::ReadResult validateSchema(QIODevice *device, const Tools::Version &scriptVersion, bool tryOlderVersions = true);
         void parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ActionTools::ElementDefinition *elementDefinition) const;
@@ -138,20 +143,23 @@ namespace ActionTools
 		QList<ActionInstance *> mActionInstances;
 		ActionFactory *mActionFactory;
 		QString mStatusMessage;
-		int mLine;
-		int mColumn;
+        int mLine{-1};
+        int mColumn{-1};
 		QString mProgramName;
 		Tools::Version mProgramVersion;
 		Tools::Version mScriptVersion;
 		QString mOs;
 		QStringList mMissingActions;
-		int mPauseBefore;
-		int mPauseAfter;
+        int mPauseBefore{0};
+        int mPauseAfter{0};
 		QMap<QString, int> mProcedures;
 		QStack<int> mCallStack;
 		QMap<QString, Resource> mResources;
         std::pair<int, int> mMinMaxExecutionCounter;
         qint64 mExecutionDuration;
+        ScriptLineModel *mLineModel;
+        mutable QStringList mLabels;
+        mutable bool mRebuildLabelList{};
 
 		Q_DISABLE_COPY(Script)
 	};

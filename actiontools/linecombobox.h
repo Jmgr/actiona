@@ -25,16 +25,18 @@
 
 namespace ActionTools
 {
+    class Script;
+
 	class ACTIONTOOLSSHARED_EXPORT LineComboBox : public CodeComboBox
 	{
 		Q_OBJECT
 
 	public:
-        LineComboBox(const QStringList &labels, QWidget *parent = nullptr);
-		
-        void setup(const QStringList &labels);
+        LineComboBox(Script &script, QWidget *parent = nullptr);
 
 	private:
+        Script &mScript;
+
 		Q_DISABLE_COPY(LineComboBox)
 	};
 }

@@ -60,6 +60,7 @@ SOURCES += actionfactory.cpp \
     screenshotwizardpage.cpp \
     savescreenshotwizardpage.cpp \
     parametercontainer.cpp \
+    scriptlinemodel.cpp \
     keyboardkey.cpp \
     messagehandler.cpp
 HEADERS += actiontools_global.h \
@@ -111,6 +112,7 @@ HEADERS += actiontools_global.h \
     screenshotwizardpage.h \
     savescreenshotwizardpage.h \
     opencvalgorithms_private.h \
+    scriptlinemodel.h \
     keyboardkey.hpp \
     swappairs.hpp \
     messagehandler.h
