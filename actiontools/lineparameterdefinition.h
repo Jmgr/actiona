@@ -20,21 +20,28 @@
 
 #pragma once
 
-#include "listparameterdefinition.h"
+#include "parameterdefinition.h"
 #include "actiontools_global.h"
 
 namespace ActionTools
 {
-	class ACTIONTOOLSSHARED_EXPORT LineParameterDefinition : public ListParameterDefinition
+    class LineComboBox;
+
+    class ACTIONTOOLSSHARED_EXPORT LineParameterDefinition : public ParameterDefinition
 	{
 		Q_OBJECT
 
 	public:
         LineParameterDefinition(const Name &name, QObject *parent)
-            : ListParameterDefinition(name, parent)						{}
+            : ParameterDefinition(name, parent)						{}
 
-		void buildEditors(Script *script, QWidget *parent) override;
+        void buildEditors(Script *script, QWidget *parent) override;
+        void load(const ActionInstance *actionInstance) override;
+        void save(ActionInstance *actionInstance) override;
         void actionUpdate(Script *script) override;
+
+    private:
+        LineComboBox *mLineComboBox;
 	};
 }
 

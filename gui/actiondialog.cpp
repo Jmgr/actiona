@@ -429,7 +429,7 @@ void ActionDialog::postInit()
             lineComboBox->setParameterContainer(this);
 
 			exceptionActionComboBox->setCurrentIndex(exceptionActionInstance.action());
-			lineComboBox->codeLineEdit()->setText(exceptionActionInstance.line());
+            lineComboBox->setValue(lineComboBox->isCode(), exceptionActionInstance.line());
 			lineComboBox->setEnabled(exceptionActionInstance.action() == ActionTools::ActionException::GotoLineExceptionAction);
 		}
 	}

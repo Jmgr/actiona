@@ -21,7 +21,8 @@ SOURCES += parameterdefinition.cpp \
 	multitextparameterdefinition.cpp \
 	procedureparameterdefinition.cpp \
     imageparameterdefinition.cpp \
-    $$PWD/localeparameterdefinition.cpp
+    $$PWD/localeparameterdefinition.cpp \
+    $$PWD/keyboardkeyparameterdefinition.cpp
 HEADERS += parameterdefinition.h \
     elementdefinition.h \
     groupdefinition.h \
@@ -45,4 +46,5 @@ HEADERS += parameterdefinition.h \
 	multitextparameterdefinition.h \
 	procedureparameterdefinition.h \
     imageparameterdefinition.h \
-    $$PWD/localeparameterdefinition.h
+    $$PWD/localeparameterdefinition.h \
+    $$PWD/keyboardkeyparameterdefinition.h

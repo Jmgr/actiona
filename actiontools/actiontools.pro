@@ -36,7 +36,6 @@ SOURCES += actionfactory.cpp \
     actioninstancebuffer.cpp \
     scriptcompleter.cpp \
     keywords.cpp \
-    messagehandler.cpp \
     actionexception.cpp \
     helpbutton.cpp \
 	keysymhelper.cpp \
@@ -61,7 +60,9 @@ SOURCES += actionfactory.cpp \
     screenshotwizardpage.cpp \
     savescreenshotwizardpage.cpp \
     parametercontainer.cpp \
-    scriptlinemodel.cpp
+    scriptlinemodel.cpp \
+    keyboardkey.cpp \
+    messagehandler.cpp
 HEADERS += actiontools_global.h \
     actionpack.h \
     actionfactory.h \
@@ -81,7 +82,6 @@ HEADERS += actiontools_global.h \
     settings.h \
     scriptcompleter.h \
     keywords.h \
-    messagehandler.h \
     actionexception.h \
     helpbutton.h \
     xdisplayhelper.h \
@@ -112,7 +112,14 @@ HEADERS += actiontools_global.h \
     screenshotwizardpage.h \
     savescreenshotwizardpage.h \
     opencvalgorithms_private.h \
-    scriptlinemodel.h
+    scriptlinemodel.h \
+    keyboardkey.hpp \
+    swappairs.hpp \
+    messagehandler.h
+win32:SOURCES += keyboardkey_windows.cpp
+unix:SOURCES += keysym2ucs.cpp \
+    keyboardkey_xkb.cpp
+unix:HEADERS += keysym2ucs.h
 win32:LIBS += -luser32 \
     -ladvapi32 \
     -lgdi32 \

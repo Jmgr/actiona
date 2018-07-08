@@ -9,8 +9,11 @@ HEADERS += actions/wheeldefinition.h \
 	actions/clickdefinition.h \
     actions/clickinstance.h \
     actions/cursorpathdefinition.h \
-    actions/cursorpathinstance.h
+    actions/cursorpathinstance.h \
+    $$PWD/keyboardkeyconditiondefinition.h \
+    $$PWD/keyboardkeyconditioninstance.h
 SOURCES += actions/textinstance.cpp \
     actions/keyinstance.cpp \
 	actions/clickinstance.cpp \
-    actions/cursorpathinstance.cpp
+    actions/cursorpathinstance.cpp \
+    $$PWD/keyboardkeyconditioninstance.cpp

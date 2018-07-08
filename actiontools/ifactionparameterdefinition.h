@@ -91,6 +91,7 @@ namespace ActionTools
 		bool mAllowWait;
 		QString mDefaultAction;
 		QString mDefaultLine;
+        Script *mScript;
 
 		Q_DISABLE_COPY(IfActionParameterDefinition)
 	};

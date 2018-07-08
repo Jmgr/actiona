@@ -1,7 +1,6 @@
 include(../common.pri)
 unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIBDIR}/actiona
-QT += xml \
-    network \
+QT += network \
     script \
     scripttools \
     widgets

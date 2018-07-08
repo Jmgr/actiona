@@ -5,5 +5,6 @@
         <file>icons/text.png</file>
         <file>icons/wheel.png</file>
         <file>icons/movecursor.png</file>
+        <file>icons/keycondition.png</file>
     </qresource>
 </RCC>

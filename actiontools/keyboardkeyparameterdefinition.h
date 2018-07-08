@@ -20,27 +20,32 @@
 
 #pragma once
 
+#include "parameterdefinition.h"
 #include "actiontools_global.h"
-#include "codecombobox.h"
 
 namespace ActionTools
 {
-    class Script;
+    class KeyboardKeyEdit;
 
-	class ACTIONTOOLSSHARED_EXPORT LineComboBox : public CodeComboBox
+    class ACTIONTOOLSSHARED_EXPORT KeyboardKeyParameterDefinition : public ParameterDefinition
 	{
 		Q_OBJECT
 
 	public:
-        LineComboBox(Script &script, QWidget *parent = nullptr);
+        KeyboardKeyParameterDefinition(const Name &name, QObject *parent);
 
-        void setFromSubParameter(const SubParameter &subParameter);
-        void setValue(bool code, const QString &lineOrLabel);
-
+		void buildEditors(Script *script, QWidget *parent) override;
+		void load(const ActionInstance *actionInstance) override;
+		void save(ActionInstance *actionInstance) override;
+		void setDefaultValues(ActionInstance *actionInstance) override;
+		
 	private:
-        Script &mScript;
+        QString defaultValue(QString defaultValue = {}) const override                   { Q_UNUSED(defaultValue); return {}; }
+        void setDefaultValue(const QString &defaultValue) override						{ Q_UNUSED(defaultValue); }
+		
+        KeyboardKeyEdit *mKeyboardKeyEdit;
 
-		Q_DISABLE_COPY(LineComboBox)
+        Q_DISABLE_COPY(KeyboardKeyParameterDefinition)
 	};
 }
 

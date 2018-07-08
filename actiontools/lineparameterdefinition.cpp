@@ -21,7 +21,9 @@
 #include "lineparameterdefinition.h"
 #include "linecombobox.h"
 #include "script.h"
-#include "scriptlinemodel.h"
+#include "actioninstance.h"
+
+#include <QDebug>
 
 namespace ActionTools
 {
@@ -31,13 +33,21 @@ namespace ActionTools
 
         script->updateLineModel();
 
-        mComboBox = new LineComboBox(*script, parent);
+        mLineComboBox = new LineComboBox(*script, parent);
 
-		addEditor(mComboBox);
+        addEditor(mLineComboBox);
+    }
 
-		emit editorBuilt();
-	}
-	
+    void LineParameterDefinition::load(const ActionInstance *actionInstance)
+    {
+        mLineComboBox->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("value")));
+    }
+
+    void LineParameterDefinition::save(ActionInstance *actionInstance)
+    {
+        actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mLineComboBox->isCode(), mLineComboBox->currentText());
+    }
+
     void LineParameterDefinition::actionUpdate(Script *script)
 	{
         script->updateLineModel();
