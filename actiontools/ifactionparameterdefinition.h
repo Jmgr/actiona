@@ -53,7 +53,7 @@ namespace ActionTools
 		void save(ActionInstance *actionInstance) override;
 		void setDefaultValues(ActionInstance *actionInstance) override;
 
-		void setAllowWait(bool allowWait)										{ mAllowWait = allowWait; }
+        void setAllowWait(bool allowWait);
 		
 		void setDefaultAction(const QString &action)							{ mDefaultAction = action; }
 		QString defaultAction(const QString &defaultValue = QString()) const	{ return (mDefaultAction.isEmpty()) ? defaultValue : mDefaultAction; }

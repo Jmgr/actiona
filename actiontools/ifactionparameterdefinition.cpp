@@ -155,10 +155,18 @@ namespace ActionTools
 	{
 		actionInstance->setSubParameter(name().original(), QStringLiteral("action"), defaultAction(actions.second[DoNothing]));
 		actionInstance->setSubParameter(name().original(), QStringLiteral("line"), defaultLine());
-	}
-	
+    }
+
+    void IfActionParameterDefinition::setAllowWait(bool allowWait)
+    {
+        mAllowWait = allowWait;
+
+        if(allowWait)
+            setDefaultAction(QStringLiteral("wait"));
+    }
+
     void IfActionParameterDefinition::actionUpdate(Script *script)
-	{
+    {
         script->updateLineModel();
 		mProcedureComboBox->clear();
 		mProcedureComboBox->addItems(script->procedureNames());
