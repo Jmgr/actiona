@@ -20,6 +20,8 @@
 
 #pragma once
 
+#include "actiontools_global.h"
+
 #include <QString>
 #include <QHash>
 
@@ -29,7 +31,7 @@ class QKeyEvent;
 
 namespace ActionTools
 {
-    class KeyboardKey final
+    class ACTIONTOOLSSHARED_EXPORT KeyboardKey final
     {
     public:
         enum class KeyType
