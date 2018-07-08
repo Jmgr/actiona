@@ -65,12 +65,12 @@
         <translation>Le texte à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="50"/>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="49"/>
         <source>Output</source>
         <translation>Sortie</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="51"/>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="50"/>
         <source>The console output</source>
         <translation>Le type de sortie</translation>
     </message>
@@ -109,14 +109,18 @@
         <translation>La ligne (ou l&apos;étiquette) où aller</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="50"/>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="49"/>
         <source>Count</source>
         <translation>Nombre de fois</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="51"/>
-        <source>The amount of times (evaluated the first time)</source>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="50"/>
+        <source>The number of times (evaluated the first time)</source>
         <translation>Le nombre de fois (évalué la première fois)</translation>
+    </message>
+    <message>
+        <source>The amount of times (evaluated the first time)</source>
+        <translation type="vanished">Le nombre de fois (évalué la première fois)</translation>
     </message>
 </context>
 <context>
@@ -132,12 +136,12 @@
         <translation>La durée de la pause</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="55"/>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="54"/>
         <source>Unit</source>
         <translation>Unité</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="56"/>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="55"/>
         <source>The pause duration unit</source>
         <translation>L&apos;unité de durée de pause</translation>
     </message>
@@ -172,27 +176,27 @@
         <translation type="vanished">Si avant</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="48"/>
+        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="47"/>
         <source>If in the past</source>
         <translation>Si dans le passé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="49"/>
+        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="48"/>
         <source>What to do if the date is in the past</source>
         <translation>Ce qui doit être fait si la date appartient au passé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="52"/>
+        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="50"/>
         <source>If now</source>
         <translation>Si maintenant</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="53"/>
+        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="51"/>
         <source>What to do if the date is the current date</source>
         <translation>Ce qui doit être fait si la date est la date actuelle</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="56"/>
+        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="53"/>
         <source>If in the future</source>
         <translation>Si dans le futur</translation>
     </message>
@@ -201,7 +205,7 @@
         <translation type="vanished">Si après</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="57"/>
+        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="54"/>
         <source>What to do if the date is in the future</source>
         <translation>Ce qui doit être fait si la date appartient au futur</translation>
     </message>
@@ -227,42 +231,42 @@
         <translation>La variable à comparer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="53"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="52"/>
         <source>Comparison</source>
         <translation>Comparaison</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="54"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="53"/>
         <source>The comparison</source>
         <translation>La comparaison</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="59"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="57"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="60"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="58"/>
         <source>The value</source>
         <translation>La valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="63"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="60"/>
         <source>If true</source>
         <translation>Si vrai</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="64"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="61"/>
         <source>What to do if the comparison result is true</source>
         <translation>Ce qui doit être fait si le résultat de la comparaison est vrai</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="67"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="63"/>
         <source>If false</source>
         <translation>Si faux</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="68"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="64"/>
         <source>What to do if the comparison result is false</source>
         <translation>Ce qui doit être fait si le résultat de la comparaison est faux</translation>
     </message>
@@ -308,7 +312,7 @@
         <translation>Le nom de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="69"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="67"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
@@ -317,34 +321,34 @@
         <translation type="obsolete">La nouvelle valeur de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="55"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="54"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="56"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="55"/>
         <source>The variable type</source>
         <translation>Le type de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="70"/>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="82"/>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="94"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="68"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="77"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="86"/>
         <source>The variables new value</source>
         <translation>La nouvelle valeur de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="81"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="76"/>
         <source>Color</source>
         <translation>Couleur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="93"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="85"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="99"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="88"/>
         <source>Conversion failed</source>
         <translation>Echec de convertion</translation>
     </message>
@@ -411,12 +415,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/codedefinition.h" line="49"/>
+        <location filename="../actions/actionpackinternal/actions/codedefinition.h" line="48"/>
         <source>Code</source>
         <translation>Code</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/codedefinition.h" line="52"/>
+        <location filename="../actions/actionpackinternal/actions/codedefinition.h" line="51"/>
         <source>Evaluates some code</source>
         <translation>Évalue du code</translation>
     </message>
@@ -429,22 +433,22 @@
         <translation type="obsolete">Quitte Actionaz</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/gotodefinition.h" line="48"/>
+        <location filename="../actions/actionpackinternal/actions/gotodefinition.h" line="47"/>
         <source>Goto</source>
         <translation>Aller à</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/gotodefinition.h" line="51"/>
+        <location filename="../actions/actionpackinternal/actions/gotodefinition.h" line="50"/>
         <source>Go to a script line</source>
         <translation>Va à une ligne du script</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="57"/>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="55"/>
         <source>Loop</source>
         <translation>Boucle</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="60"/>
+        <location filename="../actions/actionpackinternal/actions/loopdefinition.h" line="58"/>
         <source>Go to a script line a specific number of times</source>
         <translation>Va à une ligne du script un certain nombre de fois</translation>
     </message>
@@ -459,12 +463,12 @@
         <translation>Ne fait rien</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="62"/>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="60"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="65"/>
+        <location filename="../actions/actionpackinternal/actions/pausedefinition.h" line="63"/>
         <source>Pauses the script execution</source>
         <translation>Met en pause l&apos;exécution du script</translation>
     </message>
@@ -479,32 +483,32 @@
         <translation>Stoppe l&apos;exécution du script</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="62"/>
+        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="58"/>
         <source>Time condition</source>
         <translation>Condition temporelle</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="65"/>
+        <location filename="../actions/actionpackinternal/actions/timeconditiondefinition.h" line="61"/>
         <source>Check the current date time and do some action</source>
         <translation>Vérifie la date actuelle et effectue une action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="72"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="67"/>
         <source>Variable condition</source>
         <translation>Condition de variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="75"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditiondefinition.h" line="70"/>
         <source>Check the value of a variable and do some action</source>
         <translation>Vérifie la valeur d&apos;une variable et effectue une action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="102"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="91"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="105"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="94"/>
         <source>Set the value of a variable</source>
         <translation>Change la valeur d&apos;une variable</translation>
     </message>
@@ -537,12 +541,12 @@
         <translation type="obsolete">Contient</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="57"/>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="55"/>
         <source>Console</source>
         <translation>Console</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="60"/>
+        <location filename="../actions/actionpackinternal/actions/consoledefinition.h" line="58"/>
         <source>Write an entry in the console</source>
         <translation>Écrit une entrée dans la console</translation>
     </message>
@@ -557,22 +561,22 @@
         <translation type="obsolete">Quitte Actionaz</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="49"/>
+        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="48"/>
         <source>Begin procedure</source>
         <translation>Début de procédure</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="52"/>
+        <location filename="../actions/actionpackinternal/actions/beginproceduredefinition.h" line="51"/>
         <source>Declares a new procedure</source>
         <translation>Déclare une nouvelle procédure</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/callproceduredefinition.h" line="48"/>
+        <location filename="../actions/actionpackinternal/actions/callproceduredefinition.h" line="47"/>
         <source>Call procedure</source>
         <translation>Appel de procédure</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/callproceduredefinition.h" line="51"/>
+        <location filename="../actions/actionpackinternal/actions/callproceduredefinition.h" line="50"/>
         <source>Calls a procedure</source>
         <translation>Appelle une procédure</translation>
     </message>
