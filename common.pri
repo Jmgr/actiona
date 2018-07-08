@@ -31,7 +31,7 @@ unix {
 }
 
 win32 {
-	DEFINES += WIN32_LEAN_AND_MEAN NOMINMAX
+        DEFINES += WIN32_LEAN_AND_MEAN NOMINMAX VC_EXTRALEAN
 }
 
 *clang*|*-g++*::QMAKE_CXXFLAGS += -std=c++11

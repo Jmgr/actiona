@@ -24,9 +24,6 @@
 #include <map>
 #include <array>
 
-#define VC_EXTRALEAN
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
 #include <Windows.h>
 
 namespace ActionTools
@@ -34,6 +31,7 @@ namespace ActionTools
     using StandardKey = KeyboardKey::StandardKey;
 
     static std::map<ushort, unsigned int> unicodeCharToVirtualKey;
+    static std::map<unsigned int, ushort> virtualKeyToUnicodeChar;
 
     static const std::map<StandardKey, unsigned int> standardKeyToVirtualKey =
     {
@@ -230,10 +228,14 @@ namespace ActionTools
 
             unicodeCharToVirtualKey.emplace(QChar{buff[0]}.unicode(), virtualKey);
         }
+
+        virtualKeyToUnicodeChar = swapPairs(unicodeCharToVirtualKey);
     }
 
     KeyboardKey KeyboardKey::fromNativeKey(unsigned int virtualKey, unsigned int scanCode, const QString &text)
     {
+        Q_UNUSED(text)
+
         switch(virtualKey)
         {
         case VK_SHIFT:
@@ -252,7 +254,7 @@ namespace ActionTools
         if(virtualKey == VK_RMENU || virtualKey == VK_LCONTROL)
         {
             if(isKeyPressed(VK_RMENU) && isKeyPressed(VK_LCONTROL))
-                return StandardKey::AltGr;
+                return {};
         }
 
         {
@@ -261,11 +263,10 @@ namespace ActionTools
                 return it->second;
         }
 
-        if(text.size() == 1)
         {
-            auto it = unicodeCharToVirtualKey.find(text.front().unicode());
-            if(it != unicodeCharToVirtualKey.cend())
-                return KeyboardKey{text.front()};
+            auto it = virtualKeyToUnicodeChar.find(virtualKey);
+            if(it != virtualKeyToUnicodeChar.cend())
+                return KeyboardKey{QChar{it->second}};
         }
 
         return KeyboardKey{virtualKey};
