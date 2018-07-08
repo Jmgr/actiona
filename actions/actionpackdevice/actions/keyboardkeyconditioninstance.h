@@ -22,10 +22,12 @@
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
-#include "windowhandle.h"
 #include "ifactionvalue.h"
+#include "keyboardkey.hpp"
 
-#include <QTimer>
+#include <QList>
+
+class QTimer;
 
 namespace Actions
 {
@@ -37,8 +39,8 @@ namespace Actions
 	public:
 		enum Condition
 		{
-			Exists,
-			DontExists
+            Pressed,
+            NotPressed
 		};
 
         KeyboardKeyConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
@@ -48,24 +50,15 @@ namespace Actions
 		void stopExecution() override;
 		void startExecution() override;
 
-	private slots:
-		void checkWindow();
 
 	private:
-		ActionTools::WindowHandle findWindow();
+        bool areKeysPressed() const;
 
 		QRegExp mTitleRegExp;
 		ActionTools::IfActionValue mIfTrue;
 		Condition mCondition;
-		QString mPosition;
-		QString mSize;
-		QString mXCoordinate;
-		QString mYCoordinate;
-		QString mWidth;
-		QString mHeight;
-		QString mProcessId;
-		QTimer mTimer;
-		ActionTools::WindowHandle mTestedWindowHandle;
+        QTimer *mTimer;
+        QList<ActionTools::KeyboardKey> mKeyList;
 
         Q_DISABLE_COPY(KeyboardKeyConditionInstance)
 	};

@@ -42,6 +42,7 @@ namespace ActionTools
     protected:
         void keyPressEvent(QKeyEvent *event) override;
         void keyReleaseEvent(QKeyEvent *event) override;
+        QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
 
     private slots:
         void onCodeChanged(bool code);

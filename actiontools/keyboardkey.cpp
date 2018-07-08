@@ -21,6 +21,9 @@
 #include "keyboardkey.hpp"
 
 #include <QCoreApplication>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 #include <QKeyEvent>
 
 namespace ActionTools
@@ -77,9 +80,6 @@ namespace ActionTools
         initialize();
 
         *this = fromNativeKey(keyEvent->nativeVirtualKey(), keyEvent->nativeScanCode(), keyEvent->text().toLower());
-
-        //if(isValid())
-        //    qWarning() << isPressed();
     }
 
     bool KeyboardKey::isValid() const
@@ -236,5 +236,50 @@ namespace ActionTools
             return {};
 
         return {keyType, keyValueCallback(QStringLiteral("value")).toUInt()};
+    }
+
+    QList<KeyboardKey> KeyboardKey::loadKeyListFromJson(const QString &json)
+    {
+        auto jsonDocument = QJsonDocument::fromJson(json.toUtf8());
+        if(jsonDocument.isNull())
+            return {};
+
+        QList<KeyboardKey> keys;
+
+        for(auto jsonElement: jsonDocument.array())
+        {
+            auto jsonObject = jsonElement.toObject();
+            auto key = ActionTools::KeyboardKey::load([&jsonObject](const QString &keyName) -> QString
+            {
+                return jsonObject.value(keyName).toString();
+            });
+
+            if(!key.isValid())
+                return {};
+
+            keys.append(key);
+        }
+
+        return keys;
+    }
+
+    QString KeyboardKey::saveKeyListToJson(const QList<KeyboardKey> &keyList)
+    {
+        QJsonArray jsonPressedKeyArray;
+
+        for(auto pressedKey: keyList)
+        {
+            QJsonObject keyObject;
+
+            pressedKey.save([&keyObject](const QString &key, const QString &value)
+            {
+                keyObject[key] = value;
+            });
+
+            jsonPressedKeyArray.append(keyObject);
+        }
+
+        QJsonDocument document{jsonPressedKeyArray};
+        return QString::fromUtf8(document.toJson());
     }
 }

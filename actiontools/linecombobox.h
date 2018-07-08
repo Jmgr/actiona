@@ -34,6 +34,9 @@ namespace ActionTools
 	public:
         LineComboBox(Script &script, QWidget *parent = nullptr);
 
+        void setFromSubParameter(const SubParameter &subParameter);
+        void setValue(bool code, const QString &lineOrLabel);
+
 	private:
         Script &mScript;
 

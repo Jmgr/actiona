@@ -255,33 +255,6 @@ namespace ActionTools
                 return StandardKey::AltGr;
         }
 
-        /*
-        if(scanCode & KF_EXTENDED) // Extended key
-        {
-            switch(virtualKey)
-            {
-            case VK_RETURN: return StandardKey::NumpadEnter;
-            }
-        }
-        else
-        {
-            switch(virtualKey)
-            {
-            case VK_LEFT:   return StandardKey::NumpadLeftArrow;
-            case VK_UP:     return StandardKey::NumpadUpArrow;
-            case VK_RIGHT:  return StandardKey::NumpadRightArrow;
-            case VK_DOWN:   return StandardKey::NumpadDownArrow;
-            case VK_PRIOR:  return StandardKey::NumpadPrior;
-            case VK_NEXT:   return StandardKey::NumpadNext;
-            case VK_END:    return StandardKey::NumpadEnd;
-            case VK_HOME:   return StandardKey::NumpadHome;
-            case VK_INSERT: return StandardKey::NumpadInsert;
-            case VK_DELETE: return StandardKey::NumpadDelete;
-            case VK_CLEAR:  return StandardKey::NumpadClear;
-            }
-        }
-        */
-
         {
             auto it = virtualKeyToStandardKey.find(virtualKey);
             if(it != virtualKeyToStandardKey.cend())

@@ -169,6 +169,9 @@ namespace ActionTools
         void save(std::function<void(const QString &, const QString &)> keyValueCallback) const;
         static KeyboardKey load(std::function<QString(const QString &)> keyValueCallback);
 
+        static QList<KeyboardKey> loadKeyListFromJson(const QString &json);
+        static QString saveKeyListToJson(const QList<KeyboardKey> &keyList);
+
         static QList<KeyboardKey> findPressedKeys();
 
     private:

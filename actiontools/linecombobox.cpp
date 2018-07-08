@@ -30,5 +30,26 @@ namespace ActionTools
 	{
         delete model();
         setModel(mScript.lineModel());
-	}
+    }
+
+    void LineComboBox::setFromSubParameter(const SubParameter &subParameter)
+    {
+        setValue(subParameter.isCode(), subParameter.value());
+    }
+
+    void LineComboBox::setValue(bool code, const QString &lineOrLabel)
+    {
+        setCode(code);
+
+        if(isCode())
+            setEditText(lineOrLabel);
+        else
+        {
+            auto line = findText(lineOrLabel);
+            if(line != -1)
+                setCurrentIndex(line);
+            else
+                setEditText(lineOrLabel);
+        }
+    }
 }

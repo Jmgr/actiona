@@ -264,20 +264,24 @@ namespace ActionTools
     KeyboardKey KeyboardKey::fromNativeKey(unsigned int virtualKey, unsigned int scanCode, const QString &text)
     {
         Q_UNUSED(scanCode)
+        Q_UNUSED(text)
 
         // Transform the virtual key (KeySym) into a key code and then back again to remove the effect of any modifier
         auto keyCode = XKeysymToKeycode(QX11Info::display(), virtualKey);
         virtualKey = XkbKeycodeToKeysym(QX11Info::display(), keyCode, 0, 0);
 
-        auto it = keySymToStandardKey.find(virtualKey);
-        if(it != keySymToStandardKey.cend())
-            return it->second;
-
-        if(text.size() == 1)
         {
-            auto it = unicodeCharToKeySym.find(text.front().unicode());
+            auto it = keySymToStandardKey.find(virtualKey);
+            if(it != keySymToStandardKey.cend())
+                return it->second;
+        }
+
+        QChar character = static_cast<uint>(keysym2ucs(virtualKey));
+
+        {
+            auto it = unicodeCharToKeySym.find(character.unicode());
             if(it != unicodeCharToKeySym.cend())
-                return KeyboardKey{text.front()};
+                return KeyboardKey{character};
         }
 
         return KeyboardKey{virtualKey};

@@ -23,10 +23,6 @@
 #include "actioninstance.h"
 #include "codelineedit.h"
 
-#include <QJsonArray>
-#include <QJsonObject>
-#include <QJsonDocument>
-
 namespace ActionTools
 {
     KeyboardKeyParameterDefinition::KeyboardKeyParameterDefinition(const Name &name, QObject *parent)
@@ -51,22 +47,7 @@ namespace ActionTools
 		if(key.isCode())
             mKeyboardKeyEdit->setFromSubParameter(key);
 		else
-		{
-            auto jsonDocument = QJsonDocument::fromJson(key.value().toUtf8());
-            QList<KeyboardKey> keys;
-
-            for(auto jsonElement: jsonDocument.array())
-            {
-                auto jsonObject = jsonElement.toObject();
-
-                keys.append(ActionTools::KeyboardKey::load([&jsonObject](const QString &keyName) -> QString
-                {
-                    return jsonObject.value(keyName).toString();
-                }));
-            }
-
-            mKeyboardKeyEdit->setKeys(keys);
-		}
+            mKeyboardKeyEdit->setKeys(KeyboardKey::loadKeyListFromJson(key.value()));
 	}
 
     void KeyboardKeyParameterDefinition::save(ActionInstance *actionInstance)
@@ -76,24 +57,7 @@ namespace ActionTools
         if(mKeyboardKeyEdit->isCode())
             actionInstance->setSubParameter(originalName, QStringLiteral("value"), true, mKeyboardKeyEdit->text());
         else
-        {
-            QJsonArray jsonPressedKeyArray;
-
-            for(auto pressedKey: mKeyboardKeyEdit->keys())
-            {
-                QJsonObject keyObject;
-
-                pressedKey.save([&keyObject](const QString &key, const QString &value)
-                {
-                    keyObject[key] = value;
-                });
-
-                jsonPressedKeyArray.append(keyObject);
-            }
-
-            QJsonDocument document{jsonPressedKeyArray};
-            actionInstance->setSubParameter(originalName, QStringLiteral("value"), false, QString::fromUtf8(document.toJson()));
-        }
+            actionInstance->setSubParameter(originalName, QStringLiteral("value"), false, KeyboardKey::saveKeyListToJson(mKeyboardKeyEdit->keys()));
 	}
 	
     void KeyboardKeyParameterDefinition::setDefaultValues(ActionInstance *actionInstance)

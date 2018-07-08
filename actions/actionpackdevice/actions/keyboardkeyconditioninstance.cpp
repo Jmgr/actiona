@@ -23,17 +23,20 @@
 #include "code/size.h"
 
 #include <QRegExp>
+#include <QTimer>
 
 namespace Actions
 {
     Tools::StringListPair KeyboardKeyConditionInstance::conditions = std::make_pair(
-			QStringList() << QStringLiteral("exists") << QStringLiteral("dontexists"),
+            QStringList() << QStringLiteral("pressed") << QStringLiteral("notpressed"),
 			QStringList()
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Exists"))
-            << QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Do not exist")));
+            << QStringLiteral(QT_TRANSLATE_NOOP("KeyboardKeyConditionInstance::conditions", "Is pressed"))
+            << QStringLiteral(QT_TRANSLATE_NOOP("KeyboardKeyConditionInstance::conditions", "Is not pressed")));
 
     KeyboardKeyConditionInstance::KeyboardKeyConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
-		: ActionTools::ActionInstance(definition, parent), mCondition(Exists)
+        : ActionTools::ActionInstance(definition, parent),
+          mCondition(Pressed),
+          mTimer(new QTimer(this))
 	{
 	}
 
@@ -41,121 +44,110 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString title = evaluateString(ok, QStringLiteral("title"));
+        QString keysString = evaluateString(ok, QStringLiteral("keys"));
+        mKeyList = ActionTools::KeyboardKey::loadKeyListFromJson(keysString);
+        if(mKeyList.isEmpty())
+        {
+            setCurrentParameter(QStringLiteral("keys"));
+            emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid key combination"));
+
+            return;
+        }
+
 		mCondition = evaluateListElement<Condition>(ok, conditions, QStringLiteral("condition"));
 		mIfTrue = evaluateIfAction(ok, QStringLiteral("ifTrue"));
 		ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, QStringLiteral("ifFalse"));
-		mPosition = evaluateVariable(ok, QStringLiteral("position"));
-		mSize = evaluateVariable(ok, QStringLiteral("size"));
-		mXCoordinate = evaluateVariable(ok, QStringLiteral("xCoordinate"));
-		mYCoordinate = evaluateVariable(ok, QStringLiteral("yCoordinate"));
-		mWidth = evaluateVariable(ok, QStringLiteral("width"));
-		mHeight = evaluateVariable(ok, QStringLiteral("height"));
-		mProcessId = evaluateVariable(ok, QStringLiteral("processId"));
 
 		if(!ok)
 			return;
 
-		mTitleRegExp = QRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix);
+        auto pressed = areKeysPressed();
+        if((pressed && mCondition == Pressed) ||
+           (!pressed && mCondition == NotPressed))
+        {
+            QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
 
-		ActionTools::WindowHandle foundWindow = findWindow();
-		if((foundWindow.isValid() && mCondition == Exists) ||
-		   (!foundWindow.isValid() && mCondition == DontExists))
-		{
-			QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
+            if(!ok)
+                return;
 
-			if(!ok)
-				return;
+            if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
+                setNextLine(line);
+            else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+            {
+                if(!callProcedure(line))
+                    return;
+            }
 
-			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
-				setNextLine(line);
-			else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
-			{
-				if(!callProcedure(line))
-					return;
-			}
+            executionEnded();
+        }
+        else
+        {
+            QString line = evaluateSubParameter(ok, ifFalse.actionParameter());
 
-			executionEnded();
-		}
-		else
-		{
-			QString line = evaluateSubParameter(ok, ifFalse.actionParameter());
+            if(!ok)
+                return;
 
-			if(!ok)
-				return;
+            if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
+            {
+                setNextLine(line);
 
-			if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
-			{
-				setNextLine(line);
+                executionEnded();
+            }
+            else if(ifFalse.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+            {
+                if(!callProcedure(line))
+                    return;
 
-				executionEnded();
-			}
-			else if(ifFalse.action() == ActionTools::IfActionValue::CALLPROCEDURE)
-			{
-				if(!callProcedure(line))
-					return;
+                executionEnded();
+            }
+            else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
+            {
+                connect(mTimer, &QTimer::timeout, [this]()
+                {
+                    auto pressed = areKeysPressed();
+                    if((pressed && mCondition == Pressed) ||
+                       (!pressed && mCondition == NotPressed))
+                    {
+                        bool ok = true;
 
-				executionEnded();
-			}
-			else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
-			{
-                connect(&mTimer, &QTimer::timeout, this, &KeyboardKeyConditionInstance::checkWindow);
-				mTimer.setInterval(100);
-				mTimer.start();
-			}
-			else
-				executionEnded();
-		}
-	}
+                        QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
+                        if(!ok)
+                            return;
+
+                        if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
+                            setNextLine(line);
+                        else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
+                        {
+                            if(!callProcedure(line))
+                                return;
+                        }
+
+                        mTimer->stop();
+                        executionEnded();
+                    }
+                });
+                mTimer->setInterval(100);
+                mTimer->start();
+            }
+            else
+                executionEnded();
+        }
+    }
+
+    bool KeyboardKeyConditionInstance::areKeysPressed() const
+    {
+        for(const auto &key: mKeyList)
+        {
+            if(!key.isPressed())
+                return false;
+        }
+
+        return true;
+    }
 
     void KeyboardKeyConditionInstance::stopExecution()
 	{
-		mTimer.stop();
-	}
-
-    void KeyboardKeyConditionInstance::checkWindow()
-	{
-		ActionTools::WindowHandle foundWindow = findWindow();
-		if((foundWindow.isValid() && mCondition == Exists) ||
-		   (!foundWindow.isValid() && mCondition == DontExists))
-		{
-			bool ok = true;
-
-			QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
-			if(!ok)
-				return;
-
-			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
-				setNextLine(line);
-			else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
-			{
-				if(!callProcedure(line))
-					return;
-			}
-
-			mTimer.stop();
-			executionEnded();
-		}
-	}
-
-    ActionTools::WindowHandle KeyboardKeyConditionInstance::findWindow()
-	{
-		ActionTools::WindowHandle foundWindow = ActionTools::WindowHandle::findWindow(mTitleRegExp);
-		if(foundWindow.isValid())
-		{
-			QRect windowRect = foundWindow.rect();
-
-            setVariable(mPosition, Code::Point::constructor(windowRect.topLeft(), scriptEngine()));
-            setVariable(mSize, Code::Size::constructor(windowRect.size(), scriptEngine()));
-            setVariable(mXCoordinate, windowRect.x());
-            setVariable(mYCoordinate, windowRect.y());
-            setVariable(mWidth, windowRect.width());
-            setVariable(mHeight, windowRect.height());
-            setVariable(mProcessId, foundWindow.processId());
-
-			return foundWindow;
-		}
-
-		return {};
+        mTimer->stop();
+        mTimer->disconnect();
 	}
 }

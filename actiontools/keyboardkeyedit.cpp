@@ -26,6 +26,8 @@ namespace ActionTools
         CodeLineEdit(parent)
     {
         connect(this, &CodeLineEdit::codeChanged, this, &KeyboardKeyEdit::onCodeChanged);
+
+        setAttribute(Qt::WA_InputMethodEnabled, isCode());
     }
 
     void KeyboardKeyEdit::setKeys(const QList<KeyboardKey> &keys)
@@ -79,9 +81,19 @@ namespace ActionTools
         event->accept();
     }
 
+    QVariant KeyboardKeyEdit::inputMethodQuery(Qt::InputMethodQuery query) const
+    {
+        Q_UNUSED(query)
+
+        // We override this function to skip any dead key
+        return {};
+    }
+
     void KeyboardKeyEdit::onCodeChanged(bool code)
     {
         Q_UNUSED(code)
+
+        setAttribute(Qt::WA_InputMethodEnabled, code);
 
         m_keys.clear();
         m_pressedKeys.clear();
