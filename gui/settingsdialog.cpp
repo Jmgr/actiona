@@ -119,8 +119,8 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->openEditorKey->setKeySequence(
 		QKeySequence(settings.value(QStringLiteral("actions/openEditorKey"), QKeySequence(QStringLiteral("Ctrl+Shift+V"))).toString()));
 	ui->checkCodeSyntaxAutomatically->setChecked(settings.value(QStringLiteral("actions/checkCodeSyntaxAutomatically"), QVariant(true)).toBool());
-    ui->heatmapMinColorPushButton->setColor(settings.value(QStringLiteral("heatmap/minColor")).value<QColor>());
-    ui->heatmapMaxColorPushButton->setColor(settings.value(QStringLiteral("heatmap/maxColor")).value<QColor>());
+    ui->heatmapMinColorPushButton->setColor(settings.value(QStringLiteral("heatmap/minColor"), QColor{Qt::yellow}).value<QColor>());
+    ui->heatmapMaxColorPushButton->setColor(settings.value(QStringLiteral("heatmap/maxColor"), QColor{Qt::red}).value<QColor>());
 
 	//NETWORK
 #ifdef ACT_NO_UPDATER
