@@ -34,9 +34,6 @@ namespace ActionTools
 
 		if(!(index.model()->flags(index) & Qt::ItemIsEnabled))
 		{
-			QFont fontBold;
-			fontBold.setBold(true);
-			painter->setFont(fontBold);
 			painter->fillRect(option.rect, option.palette.brush(QPalette::Inactive, QPalette::Highlight));
 			painter->drawText(option.rect, Qt::AlignLeft | Qt::TextSingleLine, valueString);
 		}
