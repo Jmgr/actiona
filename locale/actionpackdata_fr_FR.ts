@@ -28,32 +28,32 @@
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="47"/>
-        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="54"/>
+        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="53"/>
         <source>All files (*.*)</source>
         <translation>Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="50"/>
+        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="49"/>
         <source>Destination</source>
         <translation>Destination</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="51"/>
+        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="50"/>
         <source>The destination file</source>
         <translation>Le fichier de destination</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="53"/>
+        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="52"/>
         <source>Choose the destination file</source>
         <translation>Choisissez le fichier de destination</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="57"/>
+        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="55"/>
         <source>Unable to read source file</source>
         <translation>Impossible de lire le fichier source</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="58"/>
+        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="56"/>
         <source>Unable to write destination file</source>
         <translation>Impossible d&apos;écrire le fichier de destination</translation>
     </message>
@@ -104,17 +104,17 @@
         <translation>Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="51"/>
+        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="50"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="51"/>
         <source>The variable where to store the data</source>
         <translation>La variable où stocker les données</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="55"/>
+        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="53"/>
         <source>Unable to read file</source>
         <translation>Impossible de lire le fichier</translation>
     </message>
@@ -163,22 +163,22 @@
         <translation>La variable utilisée pour stocker l&apos;information sélectionnée à partir de votre environnement système</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="51"/>
         <source>Mode</source>
         <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="53"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="52"/>
         <source>The environment read mode</source>
         <translation>Le mode de lecture de l&apos;environnement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="62"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="60"/>
         <source>Environment Variable</source>
         <translation>Variable d&apos;environnement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="63"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="61"/>
         <source>The specific environment variable to read</source>
         <translation>La variable d&apos;environnement à lire</translation>
     </message>
@@ -214,17 +214,17 @@
         <translation>Fichiers INI (*.ini);;Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="60"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="58"/>
         <source>Mode</source>
         <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="59"/>
         <source>The INI file read mode</source>
         <translation>Le mode de lecture du fichier INI</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="70"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="67"/>
         <source>Section</source>
         <translation>Section</translation>
     </message>
@@ -233,37 +233,37 @@
         <translation type="obsolete">Le nom de section du paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="74"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="70"/>
         <source>Parameter</source>
         <translation>Paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="75"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="71"/>
         <source>The parameter name</source>
         <translation>Le nom du paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="56"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="55"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="57"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="56"/>
         <source>The variable where to store the data</source>
         <translation>La variable où stocker les données</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="71"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="68"/>
         <source>The parameter section</source>
         <translation>La section du paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="80"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="73"/>
         <source>Unable to read file</source>
         <translation>Impossible de lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="81"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="74"/>
         <source>Unable to find section</source>
         <translation>Impossible de trouver la section</translation>
     </message>
@@ -300,47 +300,47 @@
         <translation>La clef de registre à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="51"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="50"/>
         <source>Subkey</source>
         <translation>Sous-clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="51"/>
         <source>The registry subkey to read from</source>
         <translation>La sous-clef du registre à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="55"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="53"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="56"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="54"/>
         <source>The value to read</source>
         <translation>La valeur à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="59"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="56"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="60"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="57"/>
         <source>The variable where to save the value read from the registry</source>
         <translation>La variable où enregistrer la valeur lue à partir du registre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="63"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="59"/>
         <source>Cannot find subKey</source>
         <translation>Impossible de trouver la sous-clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="64"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="60"/>
         <source>Cannot find value</source>
         <translation>Impossible de trouver la valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="65"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="61"/>
         <source>Invalid value type</source>
         <translation>Type de valeur incorrect</translation>
     </message>
@@ -376,22 +376,22 @@
         <translation>Le fichier à lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="53"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="52"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="54"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="53"/>
         <source>The variable where to save the text read from the file</source>
         <translation>La variable où enregistrer le texte lu à partir du fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="57"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="55"/>
         <source>Mode</source>
         <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="58"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="56"/>
         <source>The file read mode</source>
         <translation>Le mode de lecture du fichier</translation>
     </message>
@@ -400,27 +400,27 @@
         <translation type="obsolete">Mode de sélection</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="67"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="64"/>
         <source>First line</source>
         <translation>Première ligne</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="68"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="65"/>
         <source>The line where to start reading the file</source>
         <translation>Line à partir de laquelle lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="73"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="69"/>
         <source>Last line</source>
         <translation>Dernière ligne</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="74"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="70"/>
         <source>The line where to stop reading the file</source>
         <translation>La ligne où arrêter de lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="81"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="74"/>
         <source>Cannot read file</source>
         <translation>Impossible de lire le fichier</translation>
     </message>
@@ -463,174 +463,174 @@ Example: mail.example.com</source>
 Exemple : mail.example.com</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="53"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="52"/>
         <source>Secure connection</source>
         <translation>Connexion sécurisée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="54"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="53"/>
         <source>Secure (encrypted) connection to the server</source>
         <translation>Utiliser une connexion sécurisée (chiffrée) vers le serveur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="58"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="56"/>
         <source>User name</source>
         <translation>Nom d&apos;utilisateur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="59"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="57"/>
         <source>The user (or login) name to use
 Many SMTP servers use the e-mail address as user name</source>
         <translation>Le nom d&apos;utilisateur (ou nom de login) à utiliser
 De nombreux serveurs SMTP utilisent l&apos;adresse e-mail comme nom d&apos;utilisateur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="62"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="59"/>
         <source>Password</source>
         <translation>Mot de passe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="63"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="60"/>
         <source>The password to use</source>
         <translation>Le mot de passe à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="66"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="62"/>
         <source>Sender</source>
         <translation>Expéditeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="67"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="63"/>
         <source>The sender&apos;s e-mail address</source>
         <translation>L&apos;adresse e-mail de l&apos;expéditeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="70"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="65"/>
         <source>Receivers</source>
         <translation>Destinataires</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="71"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="66"/>
         <source>The receiver&apos;s e-mail address
 Can contain multiple receivers separated with a comma</source>
         <translation>L&apos;adresse e-mail du destinataire
 Peut contenir plusieurs destinataires séparés par une virgule</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="74"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="68"/>
         <source>Subject</source>
         <translation>Sujet</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="75"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="69"/>
         <source>The e-mail&apos;s subject</source>
         <translation>Le sujet de l&apos;e-mail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="78"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="71"/>
         <source>Body</source>
         <translation>Contenu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="79"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="72"/>
         <source>The e-mail&apos;s body</source>
         <translation>Le contenu de l&apos;e-mail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="82"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="74"/>
         <source>Attachment name</source>
         <translation>Nom de la pièce jointe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="83"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="75"/>
         <source>The attachment name, an empty name means that there is no attachment</source>
         <translation>Le nom de la pièce jointe, pas de pièce jointe si vide</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="86"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="77"/>
         <source>Attachment data</source>
         <translation>Données de la pièce jointe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="87"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="78"/>
         <source>The data to attach to the e-mail</source>
         <translation>Les données de la pièce jointe à attacher à l&apos;e-mail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="90"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="80"/>
         <source>Attachment content type</source>
         <translation>Type de contenu de la pièce jointe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="91"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="81"/>
         <source>The MIME content type of the attachment
 If left empty, Actiona will try to deduce it from the data type</source>
         <translation>Le type de contenu MIME de la pièce jointe
 Si laissé vide, Actiona va tenter de le déduire à partir du type de données</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="96"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="85"/>
         <source>Carbon copy (Cc)</source>
         <translation>Copie à</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="97"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="86"/>
         <source>The carbon copy receiver&apos;s e-mail address
 Can contain multiple receivers separated with a comma</source>
         <translation>L&apos;adresse e-mail du destinataire en copie
 Peut contenir plusieurs destinataires séparés par une virgule</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="100"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="88"/>
         <source>Blind carbon copy (Bcc)</source>
         <translation>Copie cachée à</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="101"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="89"/>
         <source>The blind carbon copy receiver&apos;s e-mail address
 Can contain multiple receivers separated with a comma</source>
         <translation>L&apos;adresse e-mail du destinataire en copie cachée
 Peut contenir plusieurs destinataires séparés par une virgule</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="104"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="91"/>
         <source>Server port</source>
         <translation>Port du serveur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="105"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="92"/>
         <source>The server port</source>
         <translation>Le port du serveur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="109"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="96"/>
         <source>Default port</source>
         <translation>Port par défaut</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="112"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="98"/>
         <source>Extra headers</source>
         <translation>Entêtes supplémentaires</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="113"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="99"/>
         <source>Extra headers to add to the e-mail
 Should contain one header per line</source>
         <translation>Entêtes supplémentaires à ajouter à l&apos;e-mail
 Doit contenir un entête par ligne</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="116"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="101"/>
         <source>Connection error</source>
         <translation>Erreur de connexion</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="117"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="102"/>
         <source>Error while sending e-mail</source>
         <translation>Erreur lors de l&apos;envoi de l&apos;e-mail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="127"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="112"/>
         <source>Attachment</source>
         <translation>Pièce jointe</translation>
     </message>
@@ -648,9 +648,8 @@ Doit contenir un entête par ligne</translation>
         <translation>port du serveur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="164"/>
         <source>Failed to parse an extra header: &quot;%1&quot; has to be in the form &quot;name: value&quot;</source>
-        <translation>Impossible d&apos;analyser l&apos;entête supplémentaire : &quot;%1&quot; doit être sous la forme &quot;nom: valeur&quot;</translation>
+        <translation type="vanished">Impossible d&apos;analyser l&apos;entête supplémentaire : &quot;%1&quot; doit être sous la forme &quot;nom: valeur&quot;</translation>
     </message>
     <message>
         <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="176"/>
@@ -786,62 +785,62 @@ Doit contenir un entête par ligne</translation>
         <translation>L&apos;URL des données à télécharger</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="54"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="53"/>
         <source>Destination</source>
         <translation>Destination</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="55"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="54"/>
         <source>The destination where to write the downloaded data</source>
         <translation>La destination des données téléchargées</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="64"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="62"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="65"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="63"/>
         <source>The variable where to write the downloaded data</source>
         <translation>La variable où stocker les données téléchargées</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="74"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="69"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="75"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="70"/>
         <source>The file where to write the downloaded data</source>
         <translation>Le fichier où stocker les données téléchargées</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="77"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="72"/>
         <source>Choose the destination file</source>
         <translation>Choisissez le fichier de destination</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="78"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="73"/>
         <source>All files (*.*)</source>
         <translation>Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="83"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="75"/>
         <source>Show progress</source>
         <translation>Afficher la progression</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="84"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="76"/>
         <source>Should the download progress be shown</source>
         <translation>Affiche ou non la progression du téléchargement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="88"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="79"/>
         <source>Cannot write to file</source>
         <translation>Impossible d&apos;écrire vers le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="89"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="80"/>
         <source>Download error</source>
         <translation>Erreur de téléchargement</translation>
     </message>
@@ -897,17 +896,17 @@ Doit contenir un entête par ligne</translation>
         <translation>Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="51"/>
+        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="50"/>
         <source>Data</source>
         <translation>Données</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="51"/>
         <source>The data to write to the file</source>
         <translation>Les données à écrire dans le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="55"/>
+        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="53"/>
         <source>Unable to write to the file</source>
         <translation>Impossible d&apos;écrire vers le fichier</translation>
     </message>
@@ -966,37 +965,37 @@ Doit contenir un entête par ligne</translation>
         <translation>Fichiers INI (*.ini);;Tous les fichiers (*.*)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="51"/>
+        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="50"/>
         <source>Section</source>
         <translation>Section</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="51"/>
         <source>The section name of the parameter</source>
         <translation>Le nom de la section du paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="55"/>
+        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="53"/>
         <source>Parameter</source>
         <translation>Paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="56"/>
+        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="54"/>
         <source>The parameter name</source>
         <translation>Le nom du paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="59"/>
+        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="56"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="60"/>
+        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="57"/>
         <source>The new value</source>
         <translation>La nouvelle valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="63"/>
+        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="59"/>
         <source>Unable to write file</source>
         <translation>Impossible d&apos;écrire vers le fichier</translation>
     </message>
@@ -1031,42 +1030,42 @@ Doit contenir un entête par ligne</translation>
         <translation>La clef de registre à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="51"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="50"/>
         <source>Subkey</source>
         <translation>Sous-clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="51"/>
         <source>The registry subkey to write to</source>
         <translation>La sous-clef de registre à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="55"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="53"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="56"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="54"/>
         <source>The value to write to</source>
         <translation>La valeur où écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="59"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="56"/>
         <source>Data</source>
         <translation>Données</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="60"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="57"/>
         <source>The data to write</source>
         <translation>Les données à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="63"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="59"/>
         <source>Cannot find subKey</source>
         <translation>Impossible de trouver la sous-clef</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="64"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="60"/>
         <source>Cannot write value</source>
         <translation>Impossible d&apos;écrire la valeur</translation>
     </message>
@@ -1097,27 +1096,27 @@ Doit contenir un entête par ligne</translation>
         <translation>Le fichier à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="51"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="50"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="51"/>
         <source>The text to write to the file</source>
         <translation>Le texte à écrire vers le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="55"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="53"/>
         <source>Mode</source>
         <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="56"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="54"/>
         <source>The file write mode</source>
         <translation>Le mode d&apos;écriture du fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="58"/>
         <source>Cannot write file</source>
         <translation>Impossible d&apos;écrire le fichier</translation>
     </message>
@@ -1447,29 +1446,29 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>Code::Tcp</name>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="94"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="92"/>
         <source>Cannot establish a connection to the host</source>
         <translation>Impossible d&apos;établir une connexion vers l&apos;hôte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="102"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="100"/>
         <source>Waiting for bytes written failed</source>
         <translation>Attente d&apos;écriture échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="110"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="108"/>
         <source>Waiting for ready read failed</source>
         <translation>Attente de lecture échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="118"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="116"/>
         <source>Waiting for disconnection failed</source>
         <translation>Attente de déconnexion échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="129"/>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="134"/>
-        <location filename="../actions/actionpackdata/code/tcp.cpp" line="143"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="127"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="132"/>
+        <location filename="../actions/actionpackdata/code/tcp.cpp" line="141"/>
         <source>Write failed</source>
         <translation>Écriture échouée</translation>
     </message>
@@ -1499,19 +1498,19 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>Code::Udp</name>
     <message>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="75"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="73"/>
         <source>Cannot establish a connection to the host</source>
         <translation>Impossible d&apos;établir une connexion vers l&apos;hôte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="83"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="81"/>
         <source>Waiting for ready read failed</source>
         <translation>Attente de lecture échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="94"/>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="99"/>
-        <location filename="../actions/actionpackdata/code/udp.cpp" line="108"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="92"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="97"/>
+        <location filename="../actions/actionpackdata/code/udp.cpp" line="106"/>
         <source>Write failed</source>
         <translation>Écriture échouée</translation>
     </message>
@@ -1519,7 +1518,7 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>Code::Web</name>
     <message>
-        <location filename="../actions/actionpackdata/code/web.cpp" line="92"/>
+        <location filename="../actions/actionpackdata/code/web.cpp" line="87"/>
         <source>Unable to open the destination file</source>
         <translation>Impossible d&apos;écrire le fichier de destination</translation>
     </message>
@@ -1527,42 +1526,42 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="59"/>
         <source>Copy file</source>
         <translation>Copier fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="64"/>
+        <location filename="../actions/actionpackdata/actions/copyfiledefinition.h" line="62"/>
         <source>Copy a file</source>
         <translation>Copie un fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="58"/>
+        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="56"/>
         <source>Read binary file</source>
         <translation>Lire fichier binaire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/readbinaryfiledefinition.h" line="59"/>
         <source>Read a binary file</source>
         <translation>Lire un fichier binaire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readclipboarddefinition.h" line="49"/>
+        <location filename="../actions/actionpackdata/actions/readclipboarddefinition.h" line="48"/>
         <source>Read clipboard</source>
         <translation>Lire presse-papier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readclipboarddefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/readclipboarddefinition.h" line="51"/>
         <source>Read the clipboard contents</source>
         <translation>Lit le contenu du presse-papier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="84"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="77"/>
         <source>Read INI file</source>
         <translation>Lire fichier INI</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="87"/>
+        <location filename="../actions/actionpackdata/actions/readinifiledefinition.h" line="80"/>
         <source>Read one or all the entries in an INI file</source>
         <translation>Lire une ou plusieurs entrées d&apos;un fichier INI</translation>
     </message>
@@ -1571,22 +1570,22 @@ Doit contenir un entête par ligne</translation>
         <translation type="obsolete">Lire une entrée dans un fichier INI</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="68"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="64"/>
         <source>Read registry</source>
         <translation>Lire registre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="71"/>
+        <location filename="../actions/actionpackdata/actions/readregistrydefinition.h" line="67"/>
         <source>Read an entry from the registry</source>
         <translation>Lire une entrée de la base registre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="84"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="77"/>
         <source>Read text file</source>
         <translation>Lire fichier texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="87"/>
+        <location filename="../actions/actionpackdata/actions/readtextfiledefinition.h" line="80"/>
         <source>Read a plain text file</source>
         <translation>Lire un fichier texte</translation>
     </message>
@@ -1599,52 +1598,52 @@ Doit contenir un entête par ligne</translation>
         <translation type="obsolete">Lire une sélection</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="58"/>
+        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="56"/>
         <source>Write binary file</source>
         <translation>Écrire fichier binaire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="61"/>
+        <location filename="../actions/actionpackdata/actions/writebinaryfiledefinition.h" line="59"/>
         <source>Write to a binary file</source>
         <translation>Écrire vers un fichier binaire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="49"/>
+        <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="48"/>
         <source>Write clipboard</source>
         <translation>Écrire presse-papier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="52"/>
+        <location filename="../actions/actionpackdata/actions/writeclipboarddefinition.h" line="51"/>
         <source>Set the clipboard contents</source>
         <translation>Change le contenu du presse-papier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="66"/>
+        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="62"/>
         <source>Write INI file</source>
         <translation>Écrire fichier INI</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="69"/>
+        <location filename="../actions/actionpackdata/actions/writeinifiledefinition.h" line="65"/>
         <source>Write an entry in an INI file</source>
         <translation>Écrire une entrée dans un fichier INI</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="67"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="63"/>
         <source>Write registry</source>
         <translation>Écrire registre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="70"/>
+        <location filename="../actions/actionpackdata/actions/writeregistrydefinition.h" line="66"/>
         <source>Writes an entry to the registry</source>
         <translation>Écrire une entrée dans la base de registres</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="64"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="61"/>
         <source>Write text file</source>
         <translation>Écrire fichier texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="67"/>
+        <location filename="../actions/actionpackdata/actions/writetextfiledefinition.h" line="64"/>
         <source>Write a plain text file</source>
         <translation>Écrire vers un fichier texte</translation>
     </message>
@@ -1657,32 +1656,32 @@ Doit contenir un entête par ligne</translation>
         <translation type="obsolete">Ajouter à la fin</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="92"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="83"/>
         <source>Web download</source>
         <translation>Téléchargement Web</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="95"/>
+        <location filename="../actions/actionpackdata/actions/webdownloaddefinition.h" line="86"/>
         <source>Downloads data from the Web</source>
         <translation>Télécharge des données à partir du Web</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="69"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="64"/>
         <source>Read environment variable</source>
         <translation>Lire variable d&apos;environnement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="72"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentdefinition.h" line="67"/>
         <source>Read a single or multiple environment variables</source>
         <translation>Lit une ou plusieurs variables d&apos;environnement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="120"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="105"/>
         <source>Send e-mail</source>
         <translation>Envoi d&apos;e-mail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="123"/>
+        <location filename="../actions/actionpackdata/actions/sendmaildefinition.h" line="108"/>
         <source>Sends an e-mail</source>
         <translation>Envoie un e-mail</translation>
     </message>

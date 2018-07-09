@@ -4,7 +4,7 @@
 <context>
     <name>ActionPackDevice</name>
     <message>
-        <location filename="../actions/actionpackdevice/actionpackdevice.h" line="61"/>
+        <location filename="../actions/actionpackdevice/actionpackdevice.h" line="63"/>
         <source>Actions dealing with devices like the keyboard or the mouse</source>
         <translation>Actions en rapport avec les périphériques comme la souris ou le clavier</translation>
     </message>
@@ -22,37 +22,37 @@
         <translation>L&apos;action à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="58"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="57"/>
         <source>Button</source>
         <translation>Bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="59"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="58"/>
         <source>The button to simulate</source>
         <translation>Le bouton à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="64"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="62"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="65"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="63"/>
         <source>The screen position where to simulate a mouse click</source>
         <translation>La position à l&apos;écran où simuler le clic de souris</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="68"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="65"/>
         <source>Restore cursor position</source>
         <translation>Restaurer la position du curseur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="69"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="66"/>
         <source>Restore the cursor position after the action is finished</source>
         <translation>Restaure la position du curseur après la fin de l&apos;action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="86"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="79"/>
         <source>The offset to apply to the click position</source>
         <translation>Le décalage à appliquer à la position du clic</translation>
     </message>
@@ -61,17 +61,17 @@
         <translation type="obsolete">Action de clic</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="76"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="72"/>
         <source>Amount</source>
         <translation>Quantité</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="77"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="73"/>
         <source>The amount of clicks to simulate</source>
         <translation>La quantité de clics à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="78"/>
         <source>Offset</source>
         <translation>Décalage</translation>
     </message>
@@ -80,12 +80,12 @@
         <translation type="obsolete">Le décalage à appliquer à la position du clic</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="89"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="81"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="90"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="82"/>
         <source>Invalid action</source>
         <translation>Action incorrecte</translation>
     </message>
@@ -117,22 +117,22 @@
         <translation>Le trajet à effectuer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="51"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="50"/>
         <source>Button</source>
         <translation>Bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="51"/>
         <source>The button to simulate</source>
         <translation>Le bouton à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="55"/>
         <source>Offset</source>
         <translation>Décalage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="58"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="56"/>
         <source>The offset to apply to the path</source>
         <translation>Le décalage à appliquer aux points du chemin</translation>
     </message>
@@ -150,103 +150,103 @@
         <translation>La touche à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="56"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="55"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="56"/>
         <source>The action to simulate</source>
         <translation>L&apos;action à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="66"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="64"/>
         <source>Amount</source>
         <translation>Quantité</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="67"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="65"/>
         <source>The amount of key presses to simulate</source>
         <translation>La quantité de pressions de touches à simuler</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="75"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="70"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="76"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="71"/>
         <source>Should the Ctrl key be pressed</source>
         <translation>La touche Ctrl doit-elle être pressée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="79"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="73"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="80"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="74"/>
         <source>Should the Alt key be pressed</source>
         <translation>La touche Alt doit-elle être pressée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="83"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="76"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="84"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="77"/>
         <source>Should the Shift key be pressed</source>
         <translation>La touche Shift doit-elle être pressée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="88"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="80"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="90"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="82"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="94"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="86"/>
         <source>Should the %1 key be pressed</source>
         <translation>La touche %1 doit-elle être pressée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="97"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="88"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="98"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="89"/>
         <source>The key type to use</source>
         <translation>Le type de touche à utiliser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="104"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="94"/>
         <source>Press/Release pause</source>
         <translation>Pause pression/relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="105"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="95"/>
         <source>The pause duration between press and release</source>
         <translation>La durée de la pause entre pression et relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="109"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="99"/>
         <source> ms</source>
         <comment>milliseconds</comment>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="112"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="101"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="113"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="102"/>
         <source>Invalid action</source>
         <translation>Action incorrecte</translation>
     </message>
@@ -266,6 +266,57 @@
     </message>
 </context>
 <context>
+    <name>Actions::KeyboardKeyConditionDefinition</name>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="47"/>
+        <source>Keys</source>
+        <translation>Touches</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="48"/>
+        <source>The keys to check</source>
+        <translation>Les touches à vérifier</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="50"/>
+        <source>Condition</source>
+        <translation>Condition</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="51"/>
+        <source>The condition to wait for</source>
+        <translation>La condition à attendre</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="55"/>
+        <source>If true</source>
+        <translation>Si vrai</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="56"/>
+        <source>What to do if the condition is met</source>
+        <translation>L&apos;action à effectuer lorsque la condition est remplie</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="58"/>
+        <source>If false</source>
+        <translation>Si faux</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="59"/>
+        <source>What to do if the condition is not met</source>
+        <translation>L&apos;action à effectuer lorsque la condition n&apos;est pas remplie</translation>
+    </message>
+</context>
+<context>
+    <name>Actions::KeyboardKeyConditionInstance</name>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditioninstance.cpp" line="52"/>
+        <source>Invalid key combination</source>
+        <translation>Combinaison de touches incorrecte</translation>
+    </message>
+</context>
+<context>
     <name>Actions::MoveCursorDefinition</name>
     <message>
         <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="43"/>
@@ -278,12 +329,12 @@
         <translation>La position où déplacer le curseur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="47"/>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="46"/>
         <source>Offset</source>
         <translation>Décalage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="48"/>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="47"/>
         <source>The offset to apply to the cursor movement</source>
         <translation>Le décalage à appliquer au mouvement du pointeur de la souris</translation>
     </message>
@@ -301,33 +352,33 @@
         <translation>Le texte à écrire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="51"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="50"/>
         <source>Pause between characters</source>
         <translation>Pause entre chaque caractère</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="51"/>
         <source>The pause duration between each character</source>
         <translation>La durée de la pause entre chaque caractère</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="56"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="55"/>
         <source> ms</source>
         <comment>milliseconds</comment>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="59"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="57"/>
         <source>Do not send Unicode characters</source>
         <translation>Ne pas envoyer de caractères Unicode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="60"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="58"/>
         <source>Prevent using Unicode characters. Enables a limited set of characters on some programs.</source>
         <translation>Empêche l&apos;utilisation de caractères Unicode. Permet d&apos;utiliser un nombre limité de caractères sur certains programmes.</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="65"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="62"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
@@ -336,7 +387,7 @@
     <name>Actions::TextInstance</name>
     <message>
         <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="59"/>
-        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="88"/>
+        <location filename="../actions/actionpackdevice/actions/textinstance.cpp" line="91"/>
         <source>Unable to write the text</source>
         <translation>Impossible d&apos;écrire le texte</translation>
     </message>
@@ -354,7 +405,7 @@
         <translation>Intensité du mouvement, vers le haut si positif, vers le bas si négatif</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="51"/>
+        <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="50"/>
         <source>Send input failure</source>
         <translation>Échec de la simulation</translation>
     </message>
@@ -429,22 +480,22 @@
 <context>
     <name>Code::Mouse</name>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="80"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="78"/>
         <source>Unable to press the button</source>
         <translation>Impossible d&apos;appuyer sur le bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="88"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="86"/>
         <source>Unable to release the button</source>
         <translation>Impossible de relâcher le bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="96"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="94"/>
         <source>Unable to emulate a button click</source>
         <translation>Impossible de simuler un clic de bouton</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="104"/>
+        <location filename="../actions/actionpackdevice/code/mouse.cpp" line="102"/>
         <source>Unable to emulate the wheel</source>
         <translation>Impossible de simuler la molette</translation>
     </message>
@@ -501,34 +552,47 @@
     </message>
 </context>
 <context>
+    <name>KeyboardKeyConditionInstance::conditions</name>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditioninstance.cpp" line="33"/>
+        <source>Is pressed</source>
+        <translation>Est pressée</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditioninstance.cpp" line="34"/>
+        <source>Is not pressed</source>
+        <translation>N&apos;est pas pressée</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="93"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="85"/>
         <source>Click</source>
         <translation>Clic</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="96"/>
+        <location filename="../actions/actionpackdevice/actions/clickdefinition.h" line="88"/>
         <source>Emulates a mouse click</source>
         <translation>Simule un clic de souris</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="116"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="105"/>
         <source>Key</source>
         <translation>Touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="119"/>
+        <location filename="../actions/actionpackdevice/actions/keydefinition.h" line="108"/>
         <source>Emulates a key press</source>
         <translation>Simule la pression d&apos;une touche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="50"/>
         <source>Move cursor</source>
         <translation>Déplacement du curseur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="55"/>
+        <location filename="../actions/actionpackdevice/actions/movecursordefinition.h" line="53"/>
         <source>Move the mouse cursor</source>
         <translation>Déplace le curseur de souris</translation>
     </message>
@@ -537,22 +601,22 @@
         <translation type="obsolete">Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="68"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="65"/>
         <source>Write text</source>
         <translation>Écriture de texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="71"/>
+        <location filename="../actions/actionpackdevice/actions/textdefinition.h" line="68"/>
         <source>Write some text</source>
         <translation>Écrit du texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="54"/>
+        <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="53"/>
         <source>Wheel</source>
         <translation>Molette</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/wheeldefinition.h" line="56"/>
         <source>Emulates the mouse wheel</source>
         <translation>Simule un mouvement de molette</translation>
     </message>
@@ -585,14 +649,24 @@
         <translation type="obsolete">Pression et relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="62"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="59"/>
         <source>Cursor path</source>
         <translation>Trajet du curseur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="65"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathdefinition.h" line="62"/>
         <source>Move the mouse cursor on a path</source>
         <translation>Déplace le curseur de la souris sur un trajet</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="63"/>
+        <source>Key condition</source>
+        <translation>Condition de touche</translation>
+    </message>
+    <message>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditiondefinition.h" line="66"/>
+        <source>Checks for the state of a key combination</source>
+        <translation>Vérifie si une combinaison de touches est pressée</translation>
     </message>
 </context>
 </TS>

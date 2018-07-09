@@ -122,14 +122,12 @@
         <translation>Ne pas inclure la bibliothèque Qt dans le code.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="155"/>
         <source>Sets the proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;.</source>
-        <translation>Change le mode de proxy, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;.</translation>
+        <translation type="vanished">Change le mode de proxy, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="156"/>
         <source>Sets the custom proxy type, values are &quot;http&quot; or &quot;socks&quot; (default).</source>
-        <translation>Change de type de proxy, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut).</translation>
+        <translation type="vanished">Change de type de proxy, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut).</translation>
     </message>
     <message>
         <location filename="../actexecuter/main.cpp" line="157"/>
@@ -167,22 +165,20 @@
         <translation>Le chemin vers un fichier script/code à exécuter.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="223"/>
         <source>Unknown proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;</source>
-        <translation>Mode de proxy inconnu, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;</translation>
+        <translation type="vanished">Mode de proxy inconnu, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="257"/>
         <source>Unknown proxy type, values are &quot;http&quot; or &quot;socks&quot; (default)</source>
-        <translation>Type de proxy inconnu, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
+        <translation type="vanished">Type de proxy inconnu, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="313"/>
+        <location filename="../actexecuter/main.cpp" line="312"/>
         <source>Unknown execution mode, please specify mode=script or mode=code</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier mode=script ou mode=code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="340"/>
+        <location filename="../actexecuter/main.cpp" line="339"/>
         <source>Unknown execution mode, please specify -s (script) or -c (code)</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier -s (script) ou -c (code)</translation>
     </message>
@@ -191,7 +187,7 @@
         <translation type="obsolete">Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="351"/>
+        <location filename="../actexecuter/main.cpp" line="350"/>
         <source>Unable to read input file</source>
         <translation>Impossible de lire le fichier d&apos;entrée</translation>
     </message>
