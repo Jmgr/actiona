@@ -297,7 +297,10 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
             case ColumnActionName:
                 return tr("Double-clic to edit the action");
             case ColumnComment:
-                return tr("Double-clic to write a comment for this action");
+                if(mHeatmapMode == HeatmapMode::None)
+                    return tr("Double-clic to write a comment for this action");
+
+                return {};
         }
         break;
     case Qt::DecorationRole:
@@ -632,8 +635,6 @@ QColor ScriptModel::computeHeatmapColor(const ActionTools::ActionInstance &actio
         auto executionDuration = mScript->executionDuration();
 
         ratio = (executionDuration == 0) ? 0 : actionInstance.executionDuration() / static_cast<qreal>(executionDuration);
-
-        qWarning() << actionInstance.label() << actionInstance.executionDuration() << ratio;
 
         break;
     }
