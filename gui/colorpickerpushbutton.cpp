@@ -38,5 +38,5 @@ void ColorPickerPushButton::setColor(const QColor &color)
 {
     mColor = color;
 
-    setStyleSheet(QStringLiteral("background-color: %1").arg(color.name()));
+    setStyleSheet(QStringLiteral("QPushButton#%1 { background-color: %2 }").arg(objectName()).arg(color.name()));
 }
