@@ -83,7 +83,7 @@ namespace Actions
 
             auto &yesNoGroup = addGroup(1);
             yesNoGroup.setMasterList(type);
-            yesNoGroup.setMasterValues(QStringList() << MessageBoxInstance::buttons.first.at(MessageBoxInstance::YesNoButtons));
+            yesNoGroup.setMasterValues({MessageBoxInstance::buttons.first.at(MessageBoxInstance::YesNoButtons)});
 
             auto &ifYes = yesNoGroup.addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifYes"), tr("If yes")});
             ifYes.setTooltip(tr("What to do if the yes button is pressed"));

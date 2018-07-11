@@ -22,8 +22,10 @@
 
 namespace ActionTools
 {
-    QStringList Resource::typeNames = QStringList()
-			<< QStringLiteral(QT_TRANSLATE_NOOP("Resource::typeNames", "Binary"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("Resource::typeNames", "Text"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("Resource::typeNames", "Image"));
+    QStringList Resource::typeNames =
+    {
+        QStringLiteral(QT_TRANSLATE_NOOP("Resource::typeNames", "Binary")),
+        QStringLiteral(QT_TRANSLATE_NOOP("Resource::typeNames", "Text")),
+        QStringLiteral(QT_TRANSLATE_NOOP("Resource::typeNames", "Image"))
+    };
 }

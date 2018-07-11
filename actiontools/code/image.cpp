@@ -156,10 +156,17 @@ namespace Code
 		QStringLiteral("Punch")
 	};
 	
-	const QStringList Image::filterOptionsNames = QStringList() << QStringLiteral("filterChannels") << QStringLiteral("filterBorderPolicy")
-																<< QStringLiteral("convolutionDivisor") << QStringLiteral("convolutionBias")
-																<< QStringLiteral("") << QStringLiteral("radius") << QStringLiteral("force")
-																<< QStringLiteral("center");
+    const QStringList Image::filterOptionsNames =
+    {
+        QStringLiteral("filterChannels"),
+        QStringLiteral("filterBorderPolicy"),
+        QStringLiteral("convolutionDivisor"),
+        QStringLiteral("convolutionBias"),
+        QStringLiteral(""),
+        QStringLiteral("radius"),
+        QStringLiteral("force"),
+        QStringLiteral("center")
+    };
 	
 	Image::Image()
 		: CodeClass(),

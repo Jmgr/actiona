@@ -30,7 +30,7 @@ namespace ActionTools
         if(size < 1000)
             return QObject::tr("%n byte(s)", "", static_cast<int>(size));
 
-        return numberFormat(QStringList() << QObject::tr("KB") << QObject::tr("MB") << QObject::tr("GB") << QObject::tr("TB"), static_cast<double>(size));
+        return numberFormat({QObject::tr("KB"), QObject::tr("MB"), QObject::tr("GB"), QObject::tr("TB")}, static_cast<double>(size));
     }
 
     QString NumberFormat::labelIndexString(int rowIndex)

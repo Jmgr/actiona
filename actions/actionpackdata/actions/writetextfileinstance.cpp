@@ -25,9 +25,16 @@
 
 namespace Actions
 {
-    Tools::StringListPair WriteTextFileInstance::modes = std::make_pair(
-			QStringList() << QStringLiteral("truncate") << QStringLiteral("append"),
-			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Overwrite any content")) << QStringLiteral(QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Append to the end")));
+    Tools::StringListPair WriteTextFileInstance::modes =
+    {
+        {
+            QStringLiteral("truncate"), QStringLiteral("append")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Overwrite any content")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WriteTextFileInstance::modes", "Append to the end"))
+        }
+    };
 
 	void WriteTextFileInstance::startExecution()
 	{

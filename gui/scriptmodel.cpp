@@ -568,11 +568,13 @@ bool ScriptModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 
 QStringList ScriptModel::mimeTypes() const
 {
-	return QStringList()
-			<< QStringLiteral("application/actiona.action")
-			<< QStringLiteral("application/actiona.add.action")
-			<< QStringLiteral("text/uri-list")
-			<< QStringLiteral("text/plain");
+    return
+    {
+        QStringLiteral("application/actiona.action"),
+        QStringLiteral("application/actiona.add.action"),
+        QStringLiteral("text/uri-list"),
+        QStringLiteral("text/plain")
+    };
 }
 
 bool ScriptModel::insertRows(int row, int count, const QModelIndex &parent)

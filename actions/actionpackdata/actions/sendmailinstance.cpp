@@ -36,13 +36,23 @@
 
 namespace Actions
 {
-    Tools::StringListPair SendMailInstance::attachmentContentTypes = std::make_pair(
-			QStringList() << QStringLiteral("autoDetect") << QStringLiteral("application/octet-stream") << QStringLiteral("text/plain") << QStringLiteral("image/jpeg") << QStringLiteral("image/png"),
-			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Auto detect"))
-						  << QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Binary"))
-						  << QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Text"))
-						  << QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Jpg image"))
-						  << QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Png image")));
+    Tools::StringListPair SendMailInstance::attachmentContentTypes =
+    {
+        {
+            QStringLiteral("autoDetect"),
+            QStringLiteral("application/octet-stream"),
+            QStringLiteral("text/plain"),
+            QStringLiteral("image/jpeg"),
+            QStringLiteral("image/png")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Auto detect")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Binary")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Text")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Jpg image")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Png image"))
+        }
+    };
 
     SendMailInstance::SendMailInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

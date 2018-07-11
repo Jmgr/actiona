@@ -39,14 +39,23 @@
 
 namespace Actions
 {
-    Tools::StringListPair MultiDataInputInstance::modes = std::make_pair(
-			QStringList() << QStringLiteral("comboBox") << QStringLiteral("editableComboBox") << QStringLiteral("list") << QStringLiteral("checkbox") << QStringLiteral("radioButton"),
-			QStringList()
-			<< QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "ComboBox"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "Editable ComboBox"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "List"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "CheckBox"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "RadioButton")));
+    Tools::StringListPair MultiDataInputInstance::modes =
+    {
+        {
+            QStringLiteral("comboBox"),
+            QStringLiteral("editableComboBox"),
+            QStringLiteral("list"),
+            QStringLiteral("checkbox"),
+            QStringLiteral("radioButton")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "ComboBox")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "Editable ComboBox")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "List")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "CheckBox")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MultiDataInputInstance::modes", "RadioButton"))
+        }
+    };
 
 	MultiDataInputInstance::MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

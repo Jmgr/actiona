@@ -25,16 +25,27 @@
 
 namespace Actions
 {
-    Tools::StringListPair WindowInstance::actions = std::make_pair(
-			QStringList() << QStringLiteral("close") << QStringLiteral("killProcess") << QStringLiteral("setForeground") << QStringLiteral("minimize") << QStringLiteral("maximize") << QStringLiteral("move") << QStringLiteral("resize"),
-			QStringList()
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Close"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Kill process"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Set foreground"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Minimize"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Maximize"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Move"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Resize")));
+    Tools::StringListPair WindowInstance::actions =
+    {
+        {
+            QStringLiteral("close"),
+            QStringLiteral("killProcess"),
+            QStringLiteral("setForeground"),
+            QStringLiteral("minimize"),
+            QStringLiteral("maximize"),
+            QStringLiteral("move"),
+            QStringLiteral("resize")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Close")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Kill process")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Set foreground")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Minimize")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Maximize")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Move")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowInstance::actions", "Resize"))
+        }
+    };
 
 	WindowInstance::WindowInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent)

@@ -32,13 +32,21 @@ namespace ActionTools
 {
     bool IfActionParameterDefinition::translated = false;
 
-    Tools::StringListPair IfActionParameterDefinition::actions = std::make_pair(
-        QStringList() << QStringLiteral("do_nothing") << QStringLiteral("goto") << QStringLiteral("run_code") << QStringLiteral("call_procedure"),
-        QStringList()
-        << QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to next action"))
-        << QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to line"))
-        << QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code"))
-        << QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Call procedure")));
+    Tools::StringListPair IfActionParameterDefinition::actions =
+    {
+        {
+            QStringLiteral("do_nothing"),
+            QStringLiteral("goto"),
+            QStringLiteral("run_code"),
+            QStringLiteral("call_procedure")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to next action")),
+            QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to line")),
+            QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code")),
+            QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Call procedure"))
+        }
+    };
 
     IfActionParameterDefinition::IfActionParameterDefinition(const Name &name, QObject *parent)
         : ItemsParameterDefinition(name, parent),

@@ -60,7 +60,7 @@ namespace Actions
 
             auto &windowGroup = addGroup();
             windowGroup.setMasterList(source);
-            windowGroup.setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::WindowSource));
+            windowGroup.setMasterValues({FindImageInstance::sources.first.at(FindImageInstance::WindowSource)});
 
             auto &windowName = windowGroup.addParameter<ActionTools::WindowParameterDefinition>({QStringLiteral("windowName"), tr("Window name")});
             windowName.setTooltip(tr("The title of the window to search in, you can use wildcards like * (any number of characters) or ? (one character) here"));
@@ -70,7 +70,7 @@ namespace Actions
 
             auto &imageToSearchInGroup = addGroup();
             imageToSearchInGroup.setMasterList(source);
-            imageToSearchInGroup.setMasterValues(QStringList() << FindImageInstance::sources.first.at(FindImageInstance::ImageSource));
+            imageToSearchInGroup.setMasterValues({FindImageInstance::sources.first.at(FindImageInstance::ImageSource)});
 
             auto &imageToSearchIn = imageToSearchInGroup.addParameter<ActionTools::ImageParameterDefinition>({QStringLiteral("imageToSearchIn"), tr("Image to search in")});
             imageToSearchIn.setTooltip(tr("The image to search in"));

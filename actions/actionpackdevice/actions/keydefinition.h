@@ -59,7 +59,7 @@ namespace Actions
 
             auto &pressAndReleaseGroup = addGroup();
             pressAndReleaseGroup.setMasterList(action);
-            pressAndReleaseGroup.setMasterValues(QStringList() << KeyInstance::actions.first.at(KeyInstance::PressReleaseAction));
+            pressAndReleaseGroup.setMasterValues({KeyInstance::actions.first.at(KeyInstance::PressReleaseAction)});
 
             auto &amount = pressAndReleaseGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("amount"), tr("Amount")});
             amount.setTooltip(tr("The amount of key presses to simulate"));

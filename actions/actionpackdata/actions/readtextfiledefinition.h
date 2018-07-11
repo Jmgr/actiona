@@ -59,7 +59,7 @@ namespace Actions
 
             auto &selectionMode = addGroup(1);
             selectionMode.setMasterList(mode);
-            selectionMode.setMasterValues(QStringList() << ReadTextFileInstance::modes.first.at(ReadTextFileInstance::Selection));
+            selectionMode.setMasterValues({ReadTextFileInstance::modes.first.at(ReadTextFileInstance::Selection)});
 
             auto &firstline = selectionMode.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("firstline"), tr("First line")}, 1);
             firstline.setTooltip(tr("The line where to start reading the file"));

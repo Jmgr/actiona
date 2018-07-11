@@ -27,10 +27,17 @@
 
 namespace Actions
 {
-    Tools::StringListPair WebDownloadInstance::destinations = std::make_pair(
-			QStringList() << QStringLiteral("variable") << QStringLiteral("file"),
-			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "Variable"))
-						  << QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "File")));
+    Tools::StringListPair WebDownloadInstance::destinations =
+    {
+        {
+            QStringLiteral("variable"),
+            QStringLiteral("file")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "Variable")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "File"))
+        }
+    };
 
 	WebDownloadInstance::WebDownloadInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

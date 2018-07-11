@@ -62,7 +62,7 @@ namespace Actions
 
             auto &selectionMode = addGroup();
             selectionMode.setMasterList(mode);
-            selectionMode.setMasterValues(QStringList() << ReadIniFileInstance::modes.first.at(ReadIniFileInstance::SingleParameter));
+            selectionMode.setMasterValues({ReadIniFileInstance::modes.first.at(ReadIniFileInstance::SingleParameter)});
 
             auto &section = selectionMode.addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("section"), tr("Section")});
             section.setTooltip(tr("The parameter section"));

@@ -22,13 +22,23 @@
 
 namespace Actions
 {
-    Tools::StringListPair VariableInstance::types = std::make_pair(
-				QStringList() << QStringLiteral("string") << QStringLiteral("integer") << QStringLiteral("float") << QStringLiteral("color") << QStringLiteral("position") << QStringLiteral("size"),
-				QStringList()
-				<< QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "String"))
-				<< QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Integer"))
-				<< QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Float"))
-				<< QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Color"))
-				<< QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Position"))
-				<< QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Size")));
+    Tools::StringListPair VariableInstance::types =
+    {
+        {
+            QStringLiteral("string"),
+            QStringLiteral("integer"),
+            QStringLiteral("float"),
+            QStringLiteral("color"),
+            QStringLiteral("position"),
+            QStringLiteral("size")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "String")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Integer")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Float")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Color")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Position")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableInstance::types", "Size"))
+        }
+    };
 }

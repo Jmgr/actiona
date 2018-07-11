@@ -58,29 +58,21 @@ namespace Actions
 
             auto &singleValueGroup = addGroup();
             singleValueGroup.setMasterList(type);
-            singleValueGroup.setMasterValues(QStringList()
-											  << VariableInstance::types.first.at(VariableInstance::String)
-											  << VariableInstance::types.first.at(VariableInstance::Integer)
-											  << VariableInstance::types.first.at(VariableInstance::Float)
-											  );
+            singleValueGroup.setMasterValues({VariableInstance::types.first.at(VariableInstance::String), VariableInstance::types.first.at(VariableInstance::Integer), VariableInstance::types.first.at(VariableInstance::Float)});
 
             auto &simpleValue = singleValueGroup.addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
             simpleValue.setTooltip(tr("The variables new value"));
 
             auto &colorValueGroup = addGroup();
             colorValueGroup.setMasterList(type);
-            colorValueGroup.setMasterValues(QStringList()
-											  << VariableInstance::types.first.at(VariableInstance::Color)
-											  );
+            colorValueGroup.setMasterValues({VariableInstance::types.first.at(VariableInstance::Color)});
 
             auto &colorValue = colorValueGroup.addParameter<ActionTools::ColorParameterDefinition>({QStringLiteral("colorValue"), tr("Color")});
             colorValue.setTooltip(tr("The variables new value"));
 
             auto &positionValueGroup = addGroup();
             positionValueGroup.setMasterList(type);
-            positionValueGroup.setMasterValues(QStringList()
-											  << VariableInstance::types.first.at(VariableInstance::Position)
-											  );
+            positionValueGroup.setMasterValues({VariableInstance::types.first.at(VariableInstance::Position)});
 
             auto &positionValue = positionValueGroup.addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("positionValue"), tr("Position")});
             positionValue.setTooltip(tr("The variables new value"));

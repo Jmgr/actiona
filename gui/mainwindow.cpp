@@ -667,7 +667,7 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionClear_triggered()
 {
 	QSettings settings;
-	settings.setValue(QStringLiteral("recentFileList"), QStringList());
+    settings.setValue(QStringLiteral("recentFileList"), QStringList{});
 
 	updateRecentFileActions();
 }

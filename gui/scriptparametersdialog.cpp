@@ -276,7 +276,7 @@ void ScriptParametersDialog::addParameter(const QString &name, const QString &va
 	setupValueParameter(rowCount, parameterType, value, code);
 
 	auto typeComboBox = new QComboBox(this);
-	typeComboBox->addItems(QStringList() << tr("Text") << tr("Number") << tr("Window title") << tr("File") << tr("Line"));
+    typeComboBox->addItems({tr("Text"), tr("Number"), tr("Window title"), tr("File"), tr("Line")});
 	typeComboBox->setCurrentIndex(parameterType);
 	typeComboBox->installEventFilter(this);
     connect(typeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ScriptParametersDialog::parameterTypeChanged);

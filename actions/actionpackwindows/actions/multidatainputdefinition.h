@@ -76,9 +76,7 @@ namespace Actions
 
             auto &choiceGroup = addGroup(1);
             choiceGroup.setMasterList(mode);
-            choiceGroup.setMasterValues(QStringList()
-										 << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::ListMode)
-										 << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::CheckboxMode));
+            choiceGroup.setMasterValues({MultiDataInputInstance::modes.first.at(MultiDataInputInstance::ListMode), MultiDataInputInstance::modes.first.at(MultiDataInputInstance::CheckboxMode)});
 
             auto &maximumChoiceCount = choiceGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("maximumChoiceCount"), tr("Maximum choice count")});
             maximumChoiceCount.setTooltip(tr("The maximum number of choices that can be made"));

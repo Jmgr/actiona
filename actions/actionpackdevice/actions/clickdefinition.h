@@ -67,7 +67,7 @@ namespace Actions
 
             auto &clickGroup = addGroup();
             clickGroup.setMasterList(action);
-            clickGroup.setMasterValues(QStringList() << ClickInstance::actions.first.at(ClickInstance::ClickAction));
+            clickGroup.setMasterValues({ClickInstance::actions.first.at(ClickInstance::ClickAction)});
 	
             auto &amount = clickGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("amount"), tr("Amount")});
             amount.setTooltip(tr("The amount of clicks to simulate"));

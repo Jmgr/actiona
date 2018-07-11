@@ -22,14 +22,25 @@
 
 namespace Actions
 {
-    Tools::StringListPair VariableConditionInstance::comparisons = std::make_pair(
-			QStringList() << QStringLiteral("equal") << QStringLiteral("different") << QStringLiteral("inferior") << QStringLiteral("superior") << QStringLiteral("inferiorEqual") << QStringLiteral("superiorEqual") << QStringLiteral("contains"),
-			QStringList()
-			<< QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Equal (=)"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Different (!=)"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Inferior (<)"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Superior (>)"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Inferior or equal (<=)"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Superior or equal (>=)"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Contains")));
+    Tools::StringListPair VariableConditionInstance::comparisons =
+    {
+        {
+            QStringLiteral("equal"),
+            QStringLiteral("different"),
+            QStringLiteral("inferior"),
+            QStringLiteral("superior"),
+            QStringLiteral("inferiorEqual"),
+            QStringLiteral("superiorEqual"),
+            QStringLiteral("contains")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Equal (=)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Different (!=)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Inferior (<)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Superior (>)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Inferior or equal (<=)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Superior or equal (>=)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("VariableConditionInstance::comparisons", "Contains"))
+        }
+    };
 }

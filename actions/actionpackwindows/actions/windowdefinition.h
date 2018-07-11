@@ -59,14 +59,14 @@ namespace Actions
 
             auto &moveGroup = addGroup();
             moveGroup.setMasterList(action);
-            moveGroup.setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Move));
+            moveGroup.setMasterValues({WindowInstance::actions.first.at(WindowInstance::Move)});
 
             auto &movePosition = moveGroup.addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("movePosition"), tr("Move position")});
             movePosition.setTooltip(tr("The position where to move the window"));
 
             auto &resizeGroup = addGroup();
             resizeGroup.setMasterList(action);
-            resizeGroup.setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Resize));
+            resizeGroup.setMasterValues({WindowInstance::actions.first.at(WindowInstance::Resize)});
 
             auto &resizeWidth = resizeGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("resizeWidth"), tr("Resize width")});
             resizeWidth.setTooltip(tr("The new width of the window"));

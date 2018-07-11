@@ -55,7 +55,7 @@ namespace Actions
 
             auto &selectionMode = addGroup();
             selectionMode.setMasterList(mode);
-            selectionMode.setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode));
+            selectionMode.setMasterValues({ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode)});
 
             auto &environmentVariableName = selectionMode.addParameter<ActionTools::EnvironmentVariableParameterDefinition>({QStringLiteral("environmentVariableName"), tr("Environment Variable")});
             environmentVariableName.setTooltip(tr("The specific environment variable to read"));

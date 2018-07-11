@@ -27,83 +27,123 @@
 
 namespace ActionTools
 {
-	const QStringList usedKeywords = QStringList()
-									 << QStringLiteral("break")
-									 << QStringLiteral("for")
-									 << QStringLiteral("throw")
-									 << QStringLiteral("case")
-									 << QStringLiteral("function")
-									 << QStringLiteral("try")
-									 << QStringLiteral("catch")
-									 << QStringLiteral("if")
-									 << QStringLiteral("typeof")
-									 << QStringLiteral("continue")
-									 << QStringLiteral("in")
-									 << QStringLiteral("var")
-									 << QStringLiteral("default")
-									 << QStringLiteral("instanceof")
-									 << QStringLiteral("void")
-									 << QStringLiteral("delete")
-									 << QStringLiteral("new")
-									 << QStringLiteral("undefined")
-									 << QStringLiteral("do")
-									 << QStringLiteral("return")
-									 << QStringLiteral("while")
-									 << QStringLiteral("else")
-									 << QStringLiteral("switch")
-									 << QStringLiteral("with")
-									 << QStringLiteral("finally")
-									 << QStringLiteral("this");
+    const QStringList usedKeywords =
+    {
+        QStringLiteral("break"),
+        QStringLiteral("for"),
+        QStringLiteral("throw"),
+        QStringLiteral("case"),
+        QStringLiteral("function"),
+        QStringLiteral("try"),
+        QStringLiteral("catch"),
+        QStringLiteral("if"),
+        QStringLiteral("typeof"),
+        QStringLiteral("continue"),
+        QStringLiteral("in"),
+        QStringLiteral("var"),
+        QStringLiteral("default"),
+        QStringLiteral("instanceof"),
+        QStringLiteral("void"),
+        QStringLiteral("delete"),
+        QStringLiteral("new"),
+        QStringLiteral("undefined"),
+        QStringLiteral("do"),
+        QStringLiteral("return"),
+        QStringLiteral("while"),
+        QStringLiteral("else"),
+        QStringLiteral("switch"),
+        QStringLiteral("with"),
+        QStringLiteral("finally"),
+        QStringLiteral("this")
+    };
 	
-	const QStringList reservedKeywords = QStringList()
-									 << QStringLiteral("abstract")
-									 << QStringLiteral("final")
-									 << QStringLiteral("protected")
-									 << QStringLiteral("boolean")
-									 << QStringLiteral("float")
-									 << QStringLiteral("public")
-									 << QStringLiteral("byte")
-									 << QStringLiteral("goto")
-									 << QStringLiteral("short")
-									 << QStringLiteral("char")
-									 << QStringLiteral("implements")
-									 << QStringLiteral("static")
-									 << QStringLiteral("class")
-									 << QStringLiteral("import")
-									 << QStringLiteral("super")
-									 << QStringLiteral("const")
-									 << QStringLiteral("int")
-									 << QStringLiteral("synchronized")
-									 << QStringLiteral("debugger")
-									 << QStringLiteral("interface")
-									 << QStringLiteral("throws")
-									 << QStringLiteral("double")
-									 << QStringLiteral("long")
-									 << QStringLiteral("transient")
-									 << QStringLiteral("enum")
-									 << QStringLiteral("native")
-									 << QStringLiteral("volatile")
-									 << QStringLiteral("export")
-									 << QStringLiteral("package")
-									 << QStringLiteral("extends")
-									 << QStringLiteral("private");
+    const QStringList reservedKeywords =
+    {
+        QStringLiteral("abstract"),
+        QStringLiteral("final"),
+        QStringLiteral("protected"),
+        QStringLiteral("boolean"),
+        QStringLiteral("float"),
+        QStringLiteral("public"),
+        QStringLiteral("byte"),
+        QStringLiteral("goto"),
+        QStringLiteral("short"),
+        QStringLiteral("char"),
+        QStringLiteral("implements"),
+        QStringLiteral("static"),
+        QStringLiteral("class"),
+        QStringLiteral("import"),
+        QStringLiteral("super"),
+        QStringLiteral("const"),
+        QStringLiteral("int"),
+        QStringLiteral("synchronized"),
+        QStringLiteral("debugger"),
+        QStringLiteral("interface"),
+        QStringLiteral("throws"),
+        QStringLiteral("double"),
+        QStringLiteral("long"),
+        QStringLiteral("transient"),
+        QStringLiteral("enum"),
+        QStringLiteral("native"),
+        QStringLiteral("volatile"),
+        QStringLiteral("export"),
+        QStringLiteral("package"),
+        QStringLiteral("extends"),
+        QStringLiteral("private")
+    };
 	
 	void addEcmaScriptObjectsKeywords(QStandardItemModel *model)
 	{
-		const QStringList globalKeywords = QStringList()
-										 //Constants
-										 << QStringLiteral("NaN") << QStringLiteral("Infinity") << QStringLiteral("undefined")
-										 //Functions
-										 << QStringLiteral("eval(x)") << QStringLiteral("parseInt(string, radix)") << QStringLiteral("parseInt(string)") << QStringLiteral("parseFloat(string)") << QStringLiteral("isNaN(number)") << QStringLiteral("isFinite(number)")
-										 << QStringLiteral("decodeURI(encodedURI)") << QStringLiteral("decodeURIComponent(encodedURIComponent)") << QStringLiteral("encodeURI(uri)") << QStringLiteral("encodeURIComponent(uriComponent)");
+        const QStringList globalKeywords =
+        {
+            //Constants
+            QStringLiteral("NaN"),
+            QStringLiteral("Infinity"),
+            QStringLiteral("undefined"),
+            //Functions
+            QStringLiteral("eval(x)"),
+            QStringLiteral("parseInt(string, radix)"),
+            QStringLiteral("parseInt(string)"),
+            QStringLiteral("parseFloat(string)"),
+            QStringLiteral("isNaN(number)"),
+            QStringLiteral("isFinite(number)"),
+            QStringLiteral("decodeURI(encodedURI)"),
+            QStringLiteral("decodeURIComponent(encodedURIComponent)"),
+            QStringLiteral("encodeURI(uri)"),
+            QStringLiteral("encodeURIComponent(uriComponent)")
+        };
 		
-		const QStringList mathKeywords = QStringList()
-										 //Constants
-										 << QStringLiteral("E") << QStringLiteral("LN10") << QStringLiteral("LN2") << QStringLiteral("LOG2E") << QStringLiteral("LOG10E") << QStringLiteral("PI") << QStringLiteral("SQRT1_2") << QStringLiteral("SQRT2")
-										 //Functions
-										 << QStringLiteral("abs(x)") << QStringLiteral("acos(x)") << QStringLiteral("asin(x)") << QStringLiteral("atan(x)") << QStringLiteral("atan2(x, y)") << QStringLiteral("ceil(x)") << QStringLiteral("cos(x)") << QStringLiteral("exp(x)") << QStringLiteral("floor(x)")
-										 << QStringLiteral("log(x)") << QStringLiteral("max(x, y, ...)") << QStringLiteral("min(x, y, ...)") << QStringLiteral("pow(x, y)") << QStringLiteral("random()") << QStringLiteral("round(x)") << QStringLiteral("sin(x)") << QStringLiteral("sqrt(x)")
-										 << QStringLiteral("tan(x)");
+        const QStringList mathKeywords =
+        {
+            //Constants
+            QStringLiteral("E"),
+            QStringLiteral("LN10"),
+            QStringLiteral("LN2"),
+            QStringLiteral("LOG2E"),
+            QStringLiteral("LOG10E"),
+            QStringLiteral("PI"),
+            QStringLiteral("SQRT1_2"),
+            QStringLiteral("SQRT2"),
+            //Functions
+            QStringLiteral("abs(x)"),
+            QStringLiteral("acos(x)"),
+            QStringLiteral("asin(x)"),
+            QStringLiteral("atan(x)"),
+            QStringLiteral("atan2(x, y)"),
+            QStringLiteral("ceil(x)"),
+            QStringLiteral("cos(x)"),
+            QStringLiteral("exp(x)"),
+            QStringLiteral("floor(x)"),
+            QStringLiteral("log(x)"),
+            QStringLiteral("max(x, y, ...)"),
+            QStringLiteral("min(x, y, ...)"),
+            QStringLiteral("pow(x, y)"),
+            QStringLiteral("random()"),
+            QStringLiteral("round(x)"),
+            QStringLiteral("sin(x)"),
+            QStringLiteral("sqrt(x)"),
+            QStringLiteral("tan(x)")
+        };
 
 		for(const QString &keyword: usedKeywords)
 			model->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/keywords.png")), keyword));

@@ -79,7 +79,11 @@ namespace ActionTools
 		QStringLiteral(QT_TRANSLATE_NOOP("ActionDefinition::CategoryName", "Procedures"))
 	};
 
-	QStringList ActionDefinition::StandardTabs = QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("ActionTabs", "Standard")) << QStringLiteral(QT_TRANSLATE_NOOP("ActionTabs", "Advanced"));
+    QStringList ActionDefinition::StandardTabs =
+    {
+        QStringLiteral(QT_TRANSLATE_NOOP("ActionTabs", "Standard")),
+        QStringLiteral(QT_TRANSLATE_NOOP("ActionTabs", "Advanced"))
+    };
 	
     void ActionDefinition::translateItems(const char *context, Tools::StringListPair &items) const
 	{

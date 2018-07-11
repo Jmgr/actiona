@@ -29,18 +29,32 @@
 
 namespace Actions
 {
-    Tools::StringListPair FindImageInstance::sources = std::make_pair(
-			QStringList() << QStringLiteral("screenshot") << QStringLiteral("window") << QStringLiteral("image"),
-			QStringList()
-			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Screenshot"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Window"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Image")));
-    Tools::StringListPair FindImageInstance::methods = std::make_pair(
-			QStringList() << QStringLiteral("correlationcoefficient") << QStringLiteral("crosscorrelation") << QStringLiteral("squareddifference"),
-            QStringList()
-			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Correlation Coefficient"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Cross Correlation"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Squared Difference")));
+    Tools::StringListPair FindImageInstance::sources =
+    {
+        {
+            QStringLiteral("screenshot"),
+            QStringLiteral("window"),
+            QStringLiteral("image")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Screenshot")),
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Window")),
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Image"))
+        }
+    };
+    Tools::StringListPair FindImageInstance::methods =
+    {
+        {
+            QStringLiteral("correlationcoefficient"),
+            QStringLiteral("crosscorrelation"),
+            QStringLiteral("squareddifference")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Correlation Coefficient")),
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Cross Correlation")),
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Squared Difference"))
+        }
+    };
 
 	FindImageInstance::FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

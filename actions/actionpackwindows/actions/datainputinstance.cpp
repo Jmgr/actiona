@@ -31,19 +31,33 @@
 
 namespace Actions
 {
-    Tools::StringListPair DataInputInstance::dataTypes = std::make_pair(
-		QStringList() << QStringLiteral("text") << QStringLiteral("integer") << QStringLiteral("decimal"),
-		QStringList()
-		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Text"))
-		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer"))
-		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal")));
+    Tools::StringListPair DataInputInstance::dataTypes =
+    {
+        {
+            QStringLiteral("text"),
+            QStringLiteral("integer"),
+            QStringLiteral("decimal")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Text")),
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer")),
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal"))
+        }
+    };
 
-    Tools::StringListPair DataInputInstance::editorTypes = std::make_pair(
-		QStringList() << QStringLiteral("line") << QStringLiteral("multiline") << QStringLiteral("password"),
-        QStringList()
-		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line"))
-		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Multiline"))
-		<< QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Password")));
+    Tools::StringListPair DataInputInstance::editorTypes =
+    {
+        {
+            QStringLiteral("line"),
+            QStringLiteral("multiline"),
+            QStringLiteral("password")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line")),
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Multiline")),
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Password"))
+        }
+    };
 
 	DataInputInstance::DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),

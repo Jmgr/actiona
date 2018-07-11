@@ -104,12 +104,12 @@ namespace Actions
 
         QString name() const override													{ return QObject::tr("Send e-mail"); }
 		QString id() const override														{ return QStringLiteral("ActionSendMail"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
-        QString description() const override												{ return QObject::tr("Sends an e-mail"); }
+        ActionTools::Flag flags() const override										{ return ActionDefinition::flags() | ActionTools::Official; }
+        QString description() const override											{ return QObject::tr("Sends an e-mail"); }
         ActionTools::ActionInstance *newActionInstance() const override					{ return new SendMailInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
 		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/sendmail.png")); }
-        QStringList tabs() const override												{ return QStringList() << ActionDefinition::StandardTabs.at(0) << tr("Attachment") << ActionDefinition::StandardTabs.at(1); }
+        QStringList tabs() const override												{ return {ActionDefinition::StandardTabs.at(0), tr("Attachment"), ActionDefinition::StandardTabs.at(1)}; }
 
 	private:
         Q_DISABLE_COPY(SendMailDefinition)

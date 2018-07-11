@@ -22,8 +22,20 @@
 
 namespace Actions
 {
-    Tools::StringListPair CursorPathInstance::buttons = std::make_pair(
-			QStringList() << QStringLiteral("none") << QStringLiteral("left") << QStringLiteral("middle") << QStringLiteral("right"),
-			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "None")) << QStringLiteral(QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Left")) << QStringLiteral(QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Middle")) << QStringLiteral(QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Right")));
+    Tools::StringListPair CursorPathInstance::buttons =
+    {
+        {
+            QStringLiteral("none"),
+            QStringLiteral("left"),
+            QStringLiteral("middle"),
+            QStringLiteral("right")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "None")),
+            QStringLiteral(QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Left")),
+            QStringLiteral(QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Middle")),
+            QStringLiteral(QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Right"))
+        }
+    };
 }
 

@@ -23,16 +23,27 @@
 
 namespace Actions
 {
-    Tools::StringListPair SystemInstance::operations = std::make_pair(
-			QStringList() << QStringLiteral("logout") << QStringLiteral("reboot") << QStringLiteral("shutdown") << QStringLiteral("suspend") << QStringLiteral("hibernate") << QStringLiteral("lockscreen") << QStringLiteral("startscreensaver"),
-			QStringList()
-			<< QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Logout"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Reboot"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Shutdown"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Suspend"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Hibernate"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Lock screen"))
-			<< QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Start screen saver")));
+    Tools::StringListPair SystemInstance::operations =
+    {
+        {
+            QStringLiteral("logout"),
+            QStringLiteral("reboot"),
+            QStringLiteral("shutdown"),
+            QStringLiteral("suspend"),
+            QStringLiteral("hibernate"),
+            QStringLiteral("lockscreen"),
+            QStringLiteral("startscreensaver")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Logout")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Reboot")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Shutdown")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Suspend")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Hibernate")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Lock screen")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Start screen saver"))
+        }
+    };
 
 	void SystemInstance::startExecution()
 	{

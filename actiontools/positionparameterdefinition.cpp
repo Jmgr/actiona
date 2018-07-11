@@ -46,7 +46,7 @@ namespace ActionTools
 
         mPositionUnitComboBox = new QComboBox(parent);
 
-        mPositionUnitComboBox->addItems(QStringList() << tr("pixels") << tr("percents"));
+        mPositionUnitComboBox->addItems({tr("pixels"), tr("percents")});
 
         addEditor(mPositionUnitComboBox);
 	}

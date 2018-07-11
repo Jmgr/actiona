@@ -27,11 +27,17 @@
 
 namespace Actions
 {
-    Tools::StringListPair KeyboardKeyConditionInstance::conditions = std::make_pair(
-            QStringList() << QStringLiteral("pressed") << QStringLiteral("notpressed"),
-			QStringList()
-            << QStringLiteral(QT_TRANSLATE_NOOP("KeyboardKeyConditionInstance::conditions", "Is pressed"))
-            << QStringLiteral(QT_TRANSLATE_NOOP("KeyboardKeyConditionInstance::conditions", "Is not pressed")));
+    Tools::StringListPair KeyboardKeyConditionInstance::conditions =
+    {
+        {
+            QStringLiteral("pressed"),
+            QStringLiteral("notpressed")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("KeyboardKeyConditionInstance::conditions", "Is pressed")),
+            QStringLiteral(QT_TRANSLATE_NOOP("KeyboardKeyConditionInstance::conditions", "Is not pressed"))
+        }
+    };
 
     KeyboardKeyConditionInstance::KeyboardKeyConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
         : ActionTools::ActionInstance(definition, parent),

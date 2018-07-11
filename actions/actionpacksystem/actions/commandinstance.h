@@ -70,7 +70,7 @@ namespace Actions
             connect(mProcess, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &CommandInstance::processError);
 
 			QStringList parameterList = parameters.split(QLatin1Char(' '));
-			mProcess->start(command, parameters.isEmpty() ? QStringList() : parameterList);
+            mProcess->start(command, parameters.isEmpty() ? QStringList{} : parameterList);
 			setVariable(mOutputVariable, QString());
 			setVariable(mErrorOutputVariable, QString());
 

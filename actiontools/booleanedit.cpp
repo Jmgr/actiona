@@ -31,7 +31,7 @@ namespace ActionTools
 	{
 		ui->setupUi(this);
 
-		ui->comboBox->addItems(QStringList() << QStringLiteral("\"true\"") << QStringLiteral("\"false\""));
+        ui->comboBox->addItems({QStringLiteral("\"true\""), QStringLiteral("\"false\"")});
 		ui->comboBox->setVisible(false);
 		ui->comboBox->setCode(true);
 		ui->comboBox->codeLineEdit()->setAllowTextCodeChange(false);

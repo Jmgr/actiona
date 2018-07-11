@@ -58,7 +58,7 @@ namespace Actions
 
 			qint64 processIdValue;
 			if(!QProcess::startDetached(command,
-										parameters.isEmpty() ? QStringList() : parameterList,
+                                        parameters.isEmpty() ? QStringList{} : parameterList,
 										workingDirectory,
 										&processIdValue))
 			{

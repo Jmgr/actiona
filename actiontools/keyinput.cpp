@@ -40,26 +40,75 @@
 
 namespace ActionTools
 {
-    const Tools::StringListPair KeyInput::mKeyNames = std::make_pair(
-		QStringList() << QStringLiteral("invalid") << QStringLiteral("shiftLeft") << QStringLiteral("shiftRight") << QStringLiteral("controlLeft") << QStringLiteral("controlRight") << QStringLiteral("altLeft") << QStringLiteral("altRight") << QStringLiteral("metaLeft") << QStringLiteral("metaRight") << QStringLiteral("altGr") << QStringLiteral("numpad0") << QStringLiteral("numpad1") << QStringLiteral("numpad2") << QStringLiteral("numpad3") << QStringLiteral("numpad4") << QStringLiteral("numpad5") << QStringLiteral("numpad6") << QStringLiteral("numpad7") << QStringLiteral("numpad8") << QStringLiteral("numpad9") << QStringLiteral("numpadMultiply") << QStringLiteral("numpadAdd") << QStringLiteral("numpadSeparator") << QStringLiteral("numpadSubstract") << QStringLiteral("numpadDecimal") << QStringLiteral("numpadDivide"),
-		QStringList() << QString() << QObject::tr("Left Shift") << QObject::tr("Right Shift") << QObject::tr("Left Control") << QObject::tr("Right Control")
-		<< QObject::tr("Left Alt") << QObject::tr("Right Alt")
-#ifdef Q_OS_WIN
-		<< QObject::tr("Left Windows") << QObject::tr("Right Windows")
-#else
-		<< QObject::tr("Left Meta") << QObject::tr("Right Meta")
-#endif
-		<< QObject::tr("Alt Gr") << QObject::tr("Numpad 0") << QObject::tr("Numpad 1") << QObject::tr("Numpad 2") << QObject::tr("Numpad 3") << QObject::tr("Numpad 4")
-		<< QObject::tr("Numpad 5") << QObject::tr("Numpad 6") << QObject::tr("Numpad 7") << QObject::tr("Numpad 8") << QObject::tr("Numpad 9")
-		<< QObject::tr("Numpad *") << QObject::tr("Numpad +") << QObject::tr("Numpad Separator") << QObject::tr("Numpad -") << QObject::tr("Numpad .") << QObject::tr("Numpad /")
-	);
+    const Tools::StringListPair KeyInput::mKeyNames =
+    {
+        {
+            QStringLiteral("invalid"),
+            QStringLiteral("shiftLeft"),
+            QStringLiteral("shiftRight"),
+            QStringLiteral("controlLeft"),
+            QStringLiteral("controlRight"),
+            QStringLiteral("altLeft"),
+            QStringLiteral("altRight"),
+            QStringLiteral("metaLeft"),
+            QStringLiteral("metaRight"),
+            QStringLiteral("altGr"),
+            QStringLiteral("numpad0"),
+            QStringLiteral("numpad1"),
+            QStringLiteral("numpad2"),
+            QStringLiteral("numpad3"),
+            QStringLiteral("numpad4"),
+            QStringLiteral("numpad5"),
+            QStringLiteral("numpad6"),
+            QStringLiteral("numpad7"),
+            QStringLiteral("numpad8"),
+            QStringLiteral("numpad9"),
+            QStringLiteral("numpadMultiply"),
+            QStringLiteral("numpadAdd"),
+            QStringLiteral("numpadSeparator"),
+            QStringLiteral("numpadSubstract"),
+            QStringLiteral("numpadDecimal"),
+            QStringLiteral("numpadDivide")
+        },
+        {
+            {},
+            QObject::tr("Left Shift"),
+            QObject::tr("Right Shift"),
+            QObject::tr("Left Control"),
+            QObject::tr("Right Control"),
+            QObject::tr("Left Alt"),
+            QObject::tr("Right Alt"),
+            #ifdef Q_OS_WIN
+            QObject::tr("Left Windows"),
+            QObject::tr("Right Windows"),
+            #else
+            QObject::tr("Left Meta"),
+            QObject::tr("Right Meta"),
+            #endif
+            QObject::tr("Alt Gr"),
+            QObject::tr("Numpad 0"),
+            QObject::tr("Numpad 1"),
+            QObject::tr("Numpad 2"),
+            QObject::tr("Numpad 3"),
+            QObject::tr("Numpad 4"),
+            QObject::tr("Numpad 5"),
+            QObject::tr("Numpad 6"),
+            QObject::tr("Numpad 7"),
+            QObject::tr("Numpad 8"),
+            QObject::tr("Numpad 9"),
+            QObject::tr("Numpad *"),
+            QObject::tr("Numpad +"),
+            QObject::tr("Numpad Separator"),
+            QObject::tr("Numpad -"),
+            QObject::tr("Numpad ."),
+            QObject::tr("Numpad /")
+        }
+    };
 
 	bool KeyInput::mInitDone = false;
 	unsigned long KeyInput::mNativeKey[] = {0};
 
 	KeyInput::KeyInput()
-		
-		
 	{
 		init();
 	}

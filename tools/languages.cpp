@@ -31,11 +31,20 @@
 
 namespace Tools
 {
-    StringListPair Languages::m_languagesName = std::make_pair(
-                QStringList()   << QStringLiteral("") << QStringLiteral("en_US") << QStringLiteral("fr_FR"),
-                QStringList()   << QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "System language (if available)"))
-                                << QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "English (US)"))
-                << QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "French (France)")));
+    StringListPair Languages::m_languagesName =
+    {
+        {
+            QStringLiteral(""),
+            QStringLiteral("en_US"),
+            QStringLiteral("fr_FR")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "System language (if available)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "English (US)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "French (France)"))
+        }
+    };
+
     bool Languages::m_areLanguagesNameTranslated = false;
 
     QString Languages::locale()

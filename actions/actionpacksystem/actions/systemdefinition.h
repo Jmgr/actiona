@@ -52,12 +52,9 @@ namespace Actions
 
             auto &operationMode = addGroup();
             operationMode.setMasterList(operation);
-            operationMode.setMasterValues(QStringList()
-										   << SystemInstance::operations.first.at(SystemInstance::Shutdown)
-										   << SystemInstance::operations.first.at(SystemInstance::Restart)
-										   << SystemInstance::operations.first.at(SystemInstance::Logout)
-										   << SystemInstance::operations.first.at(SystemInstance::Suspend)
-										   << SystemInstance::operations.first.at(SystemInstance::Hibernate));
+            operationMode.setMasterValues({SystemInstance::operations.first.at(SystemInstance::Shutdown), SystemInstance::operations.first.at(SystemInstance::Restart),
+                                           SystemInstance::operations.first.at(SystemInstance::Logout), SystemInstance::operations.first.at(SystemInstance::Suspend),
+                                           SystemInstance::operations.first.at(SystemInstance::Hibernate)});
 
             auto &force = operationMode.addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("force"), tr("Force")});
             force.setTooltip(tr("Should the operation be forced"));

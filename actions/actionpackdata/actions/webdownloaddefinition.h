@@ -57,14 +57,14 @@ namespace Actions
 
             auto &variableMode = addGroup();
             variableMode.setMasterList(destination);
-            variableMode.setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::Variable));
+            variableMode.setMasterValues({WebDownloadInstance::destinations.first.at(WebDownloadInstance::Variable)});
 
             auto &variable = variableMode.addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
             variable.setTooltip(tr("The variable where to write the downloaded data"));
 
             auto &fileMode = addGroup();
             fileMode.setMasterList(destination);
-            fileMode.setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::File));
+            fileMode.setMasterValues({WebDownloadInstance::destinations.first.at(WebDownloadInstance::File)});
 
             auto &file = fileMode.addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
             file.setTooltip(tr("The file where to write the downloaded data"));

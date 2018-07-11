@@ -59,12 +59,12 @@ namespace ActionTools
 		virtual ActionInstance *newActionInstance() const = 0;
         virtual ActionStatus status() const                                                             { return Stable; }
 		virtual ActionCategory category() const = 0;
-        virtual QString author() const                                                                  { return (flags() & Official) ? QObject::tr("The Actiona Team") : QString(); }
-        virtual QString website() const                                                                 { return QString(); }
-        virtual QString email() const                                                                   { return QString(); }
-        virtual QPixmap icon() const                                                                    { return QPixmap(); }
+        virtual QString author() const                                                                  { return (flags() & Official) ? QObject::tr("The Actiona Team") : QString{}; }
+        virtual QString website() const                                                                 { return {}; }
+        virtual QString email() const                                                                   { return {}; }
+        virtual QPixmap icon() const                                                                    { return {}; }
         QPixmap cachedIcon() const;
-        virtual QStringList tabs() const                                                                { return QStringList(); }
+        virtual QStringList tabs() const                                                                { return {}; }
 
         virtual void updateAction(ActionInstance *actionInstance, const Tools::Version &version) const  { Q_UNUSED(actionInstance) Q_UNUSED(version) }
 

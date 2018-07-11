@@ -26,11 +26,17 @@
 
 namespace Actions
 {
-    Tools::StringListPair WindowConditionInstance::conditions = std::make_pair(
-			QStringList() << QStringLiteral("exists") << QStringLiteral("dontexists"),
-			QStringList()
-			<< QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Exists"))
-            << QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Do not exist")));
+    Tools::StringListPair WindowConditionInstance::conditions =
+    {
+        {
+            QStringLiteral("exists"),
+            QStringLiteral("dontexists")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Exists")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Do not exist"))
+        }
+    };
 
 	WindowConditionInstance::WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent), mCondition(Exists)

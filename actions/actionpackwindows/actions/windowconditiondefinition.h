@@ -89,7 +89,7 @@ namespace Actions
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new WindowConditionInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }
 		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/windowcondition.png")); }
-		QStringList tabs() const override												{ return ActionDefinition::StandardTabs + QStringList() << tr("Deprecated"); }
+        QStringList tabs() const override												{ return ActionDefinition::StandardTabs + QStringList{} << tr("Deprecated"); }
 
 	private:
 		Q_DISABLE_COPY(WindowConditionDefinition)

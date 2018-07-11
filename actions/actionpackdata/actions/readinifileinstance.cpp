@@ -26,9 +26,17 @@
 
 namespace Actions
 {
-    Tools::StringListPair ReadIniFileInstance::modes = std::make_pair(
-			QStringList() << QStringLiteral("singleParameter") << QStringLiteral("wholeFile"),
-			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read a single parameter")) << QStringLiteral(QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read the entire file")));
+    Tools::StringListPair ReadIniFileInstance::modes =
+    {
+        {
+            QStringLiteral("singleParameter"),
+            QStringLiteral("wholeFile")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read a single parameter")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read the entire file"))
+        }
+    };
 
 	void ReadIniFileInstance::startExecution()
 	{

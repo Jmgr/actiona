@@ -26,12 +26,32 @@
 
 namespace Actions
 {
-    Tools::StringListPair ClickInstance::buttons = std::make_pair(
-			QStringList() << QStringLiteral("left") << QStringLiteral("middle") << QStringLiteral("right"),
-			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::buttons", "Left")) << QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::buttons", "Middle")) << QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::buttons", "Right")));
-    Tools::StringListPair ClickInstance::actions = std::make_pair(
-			QStringList() << QStringLiteral("pressRelease") << QStringLiteral("press") << QStringLiteral("release"),
-			QStringList() << QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Click (press and release)")) << QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Press")) << QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Release")));
+    Tools::StringListPair ClickInstance::buttons =
+    {
+        {
+            QStringLiteral("left"),
+            QStringLiteral("middle"),
+            QStringLiteral("right")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::buttons", "Left")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::buttons", "Middle")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::buttons", "Right"))
+        }
+    };
+    Tools::StringListPair ClickInstance::actions =
+    {
+        {
+            QStringLiteral("pressRelease"),
+            QStringLiteral("press"),
+            QStringLiteral("release")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Click (press and release)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Press")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Release"))
+        }
+    };
 	
 	void ClickInstance::startExecution()
 	{
