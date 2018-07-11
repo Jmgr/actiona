@@ -31,10 +31,18 @@ namespace Actions
     Tools::StringListPair ReadRegistryInstance::keys =
     {
         {
-            QStringLiteral("classesRoot"), QStringLiteral("currentConfig"), QStringLiteral("currentUser"), QStringLiteral("users"), QStringLiteral("localMachine")
+            QStringLiteral("classesRoot"),
+            QStringLiteral("currentConfig"),
+            QStringLiteral("currentUser"),
+            QStringLiteral("users"),
+            QStringLiteral("localMachine")
         },
         {
-            QStringLiteral("Classes root"), QStringLiteral("Current config"), QStringLiteral("Current user"), QStringLiteral("Users"), QStringLiteral("Local machine")
+            QStringLiteral("Classes root"),
+            QStringLiteral("Current config"),
+            QStringLiteral("Current user"),
+            QStringLiteral("Users"),
+            QStringLiteral("Local machine")
         }
     };
 	//Note : This is not translated, because this is not translated either in Regedit
