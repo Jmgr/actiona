@@ -201,6 +201,7 @@ namespace Actions
 	void DataInputInstance::canceled()
 	{
 		//TODO: add an exception to trigger when canceled
+        setVariable(mVariable, QString{});
 
 		endExecution();
 	}
