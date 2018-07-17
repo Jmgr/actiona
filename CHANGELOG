@@ -1,3 +1,19 @@
+3.10.0 (17/07/18)
+Global:
+- Added a keyboard key condition action that allows checking or waiting for a particular key combination to be pressed
+- Added a text to speech action that uses the operating system's voice synthesis capabilities
+- Click action: added an option to reset the cursor position to its former position after the action has finished executing
+- DataInput action: the output variable now contains an empty string if the user cancels the data input dialog
+
+Interface:
+- Added filters allowing to find an action within the script or within the list of available actions
+- Added an action heat map that allows viewing the execution count and time spent per action (available after the first script execution)
+- Improved program loading times
+- Fixed missing script line numbers (regression from previous version)
+- Fixed a slowdown when copy and pasting multiple actions within a big script
+- Fixed a possible bug on the console when running a script for longer than a day
+- Fixed a few minor bugs
+
 3.9.4 (11/05/18)
 Global:
 - Fixed a slowdown occurring when editing an action within a big script
