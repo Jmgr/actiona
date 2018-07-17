@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CALLPROCEDUREDEFINITION_H
-#define CALLPROCEDUREDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "callprocedureinstance.h"
@@ -33,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class CallProcedureDefinition : public QObject, public ActionTools::ActionDefinition
+	class CallProcedureDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -41,22 +40,20 @@ namespace Actions
 		explicit CallProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::ProcedureParameterDefinition *name = new ActionTools::ProcedureParameterDefinition(ActionTools::Name("name", tr("Name")), this);
-			name->setTooltip(tr("The name of the procedure to call"));
-			addElement(name);
+			auto &name = addParameter<ActionTools::ProcedureParameterDefinition>({QStringLiteral("name"), tr("Name")});
+            name.setTooltip(tr("The name of the procedure to call"));
 		}
 
-		QString name() const													{ return QObject::tr("Call procedure"); }
-		QString id() const														{ return "ActionCallProcedure"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Calls a procedure"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new CallProcedureInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Procedures; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/callprocedure.png"); }
+		QString name() const override													{ return QObject::tr("Call procedure"); }
+		QString id() const override														{ return QStringLiteral("ActionCallProcedure"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Calls a procedure"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new CallProcedureInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Procedures; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/callprocedure.png")); }
 
 	private:
 		Q_DISABLE_COPY(CallProcedureDefinition)
 	};
 }
 
-#endif // CALLPROCEDUREDEFINITION_H

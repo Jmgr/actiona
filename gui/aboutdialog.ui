@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
-    <height>456</height>
+    <width>805</width>
+    <height>656</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -602,6 +602,19 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>act3Prog</tabstop>
+  <tabstop>act3Art</tabstop>
+  <tabstop>act3Donators</tabstop>
+  <tabstop>act3Ideas</tabstop>
+  <tabstop>act3Pack</tabstop>
+  <tabstop>act3Documentation</tabstop>
+  <tabstop>act2Prog</tabstop>
+  <tabstop>act2Art</tabstop>
+  <tabstop>act2Donators</tabstop>
+  <tabstop>act2Ideas</tabstop>
+ </tabstops>
  <resources>
   <include location="gui.qrc"/>
  </resources>
@@ -613,8 +626,8 @@ p, li { white-space: pre-wrap; }
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>304</x>
-     <y>359</y>
+     <x>442</x>
+     <y>641</y>
     </hint>
     <hint type="destinationlabel">
      <x>309</x>

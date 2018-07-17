@@ -1,12 +1,9 @@
 include(../common.pri)
 unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIBDIR}/actiona
-QT += xml \
-    network \
+QT += network \
     script \
-    scripttools
-equals(QT_MAJOR_VERSION, 5) {
-QT += widgets
-}
+    scripttools \
+    widgets
 TARGET = actexec
 VERSION = $$ACTIONA_VERSION
 DESTDIR = ..
@@ -33,11 +30,17 @@ LIBS += -L.. \
     -ltools \
     -lactiontools \
     -lexecuter
-win32:RC_FILE = actexecuter.rc
-TRANSLATIONS = ../locale/actexecuter_fr_FR.ts \
-                ../locale/actexecuter_de_DE.ts
+TRANSLATIONS = ../locale/actexecuter_fr_FR.ts
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
+
+win32 {
+QMAKE_TARGET_COMPANY = "https://actiona.tools"
+QMAKE_TARGET_DESCRIPTION = "Actiona: Cross-Platform Automation Tool"
+QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2005 Jonathan Mercier-Ganady"
+QMAKE_TARGET_PRODUCT = "Actiona"
+RC_ICONS = "../gui/icons/actiona.ico"
+}
 
 win32 {
     CONFIG += embed_manifest_exe
@@ -48,8 +51,7 @@ unix {
 	target.path = $${PREFIX}/bin
 
         locales.path = $${PREFIX}/share/actiona/locale
-        locales.files = ../locale/actexecuter_fr_FR.qm \
-                        ../locale/actexecuter_de_DE.qm
+        locales.files = ../locale/actexecuter_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
 	manfile.path = $${PREFIX}/share/man/man1

@@ -36,7 +36,7 @@ namespace Code
 {
 	QScriptValue Notify::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Notify *notify = new Notify;
+		auto notify = new Notify;
 
 		QScriptValueIterator it(context->argument(0));
 
@@ -44,13 +44,13 @@ namespace Code
 		{
 			it.next();
 			
-			if(it.name() == "title")
+			if(it.name() == QLatin1String("title"))
 				notify->mTitle = it.value().toString();
-			else if(it.name() == "text")
+			else if(it.name() == QLatin1String("text"))
 				notify->mText = it.value().toString();
-			else if(it.name() == "icon")
+			else if(it.name() == QLatin1String("icon"))
 				notify->mIcon = it.value().toString();
-			else if(it.name() == "timeout")
+			else if(it.name() == QLatin1String("timeout"))
 				notify->mTimeout = it.value().toInt32();
 		}
 
@@ -58,9 +58,8 @@ namespace Code
 	}
 	
 	Notify::Notify()
-		: CodeClass(),
-		mNotification(0),
-		mTimeout(5000)
+		: CodeClass()
+		
 	{
 	}
 	
@@ -69,7 +68,7 @@ namespace Code
 #ifdef Q_OS_LINUX
 		if(mNotification)
 		{
-			notify_notification_close(mNotification, 0);
+			notify_notification_close(mNotification, nullptr);
 			g_object_unref(mNotification);
 		}
 #endif
@@ -84,30 +83,30 @@ namespace Code
 		{
 			it.next();
 			
-			if(it.name() == "title")
+			if(it.name() == QLatin1String("title"))
 				mTitle = it.value().toString();
-			else if(it.name() == "text")
+			else if(it.name() == QLatin1String("text"))
 				mText = it.value().toString();
-			else if(it.name() == "icon")
+			else if(it.name() == QLatin1String("icon"))
 				mIcon = it.value().toString();
-			else if(it.name() == "timeout")
+			else if(it.name() == QLatin1String("timeout"))
 				mTimeout = it.value().toInt32();
 		}
 		
 		if(!mNotification)
-			mNotification = notify_notification_new(mTitle.toUtf8(), mText.toUtf8(), mIcon.toUtf8()
+			mNotification = notify_notification_new(mTitle.toUtf8().constData(), mText.toUtf8().constData(), mIcon.toUtf8().constData()
 		#if NOTIFY_CHECK_VERSION (0, 7, 0)
 		);
 		#else
 		, 0);
 		#endif
 		else
-			notify_notification_update(mNotification, mTitle.toUtf8(), mText.toUtf8(), mIcon.toUtf8());
+			notify_notification_update(mNotification, mTitle.toUtf8().constData(), mText.toUtf8().constData(), mIcon.toUtf8().constData());
 
 		notify_notification_set_timeout(mNotification, mTimeout);
 
-		if(!notify_notification_show(mNotification, 0))
-			throwError("NotificationError", tr("Unable to show the notification"));
+		if(!notify_notification_show(mNotification, nullptr))
+			throwError(QStringLiteral("NotificationError"), tr("Unable to show the notification"));
 #endif
 		return thisObject();
 	}

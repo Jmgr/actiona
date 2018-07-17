@@ -46,17 +46,16 @@
 #include <QtCore/qmetaobject.h>
 #include <QtCore/qsocketnotifier.h>
 
-#include <errno.h>
-#include <mntent.h>
+#include <cerrno>
 #include <fcntl.h>
 #include <linux/fs.h>
+#include <mntent.h>
+#include <paths.h>
 #include <sys/inotify.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <sys/statfs.h>
 #include <unistd.h>
-#include <paths.h>
-#include <mntent.h>
 
 #if !defined(QT_NO_UDEV)
 #include "qudevwrapper_p.h"
@@ -75,7 +74,7 @@ QStorageInfo_CustomPrivate::QStorageInfo_CustomPrivate(QStorageInfo_Custom *pare
     , q_ptr(parent)
     , inotifyWatcher(-1)
     , inotifyFileDescriptor(-1)
-    , notifier(0)
+    , notifier(nullptr)
 #if !defined(QT_NO_UDEV)
     , udevWrapper(0)
     , needsUDevWatcher(-1)
@@ -92,14 +91,14 @@ qlonglong QStorageInfo_CustomPrivate::availableDiskSpace(const QString &drive)
 {
 #ifdef __USE_LARGEFILE64
     struct statfs64 statistics;
-    if (statfs64(drive.toLatin1(), &statistics) == 0) {
+	if (statfs64(drive.toLatin1().constData(), &statistics) == 0) {
         qlonglong blockSize = statistics.f_bsize;
         qlonglong availBlocks = statistics.f_bavail;
         return availBlocks * blockSize;
     }
 #else
     struct statfs statistics;
-    if (statfs(drive.toLatin1(), &statistics) == 0) {
+	if (statfs(drive.toLatin1(), &statistics) == 0) {
         qlonglong blockSize = statistics.f_bsize;
         qlonglong availBlocks = statistics.f_bavail;
         return availBlocks * blockSize;
@@ -112,7 +111,7 @@ qlonglong QStorageInfo_CustomPrivate::totalDiskSpace(const QString &drive)
 {
 #ifdef __USE_LARGEFILE64
     struct statfs64 statistics;
-    if (statfs64(drive.toLatin1(), &statistics) == 0) {
+	if (statfs64(drive.toLatin1().constData(), &statistics) == 0) {
         qlonglong blockSize = statistics.f_bsize;
         qlonglong totalBlocks = statistics.f_blocks;
         return totalBlocks * blockSize;
@@ -136,7 +135,7 @@ QString QStorageInfo_CustomPrivate::uriForDrive(const QString &drive)
         struct mntent entry;
         char buffer[512];
         QString uri;
-        while ((getmntent_r(fsDescription, &entry, buffer, sizeof(buffer))) != NULL) {
+        while ((getmntent_r(fsDescription, &entry, buffer, sizeof(buffer))) != nullptr) {
             if (drive != QString::fromLatin1(entry.mnt_dir))
                 continue;
             int idx = fileinfolist.indexOf(QString::fromLatin1(entry.mnt_fsname));
@@ -200,7 +199,7 @@ QStorageInfo_Custom::DriveType QStorageInfo_CustomPrivate::driveType(const QStri
     FILE *fsDescription = setmntent(_PATH_MOUNTED, "r");
     struct mntent entry;
     char buffer[512];
-    while ((getmntent_r(fsDescription, &entry, buffer, sizeof(buffer))) != NULL) {
+    while ((getmntent_r(fsDescription, &entry, buffer, sizeof(buffer))) != nullptr) {
         if (drive != QString::fromLatin1(entry.mnt_dir))
             continue;
 
@@ -333,7 +332,7 @@ void QStorageInfo_CustomPrivate::cleanupWatcher()
 
     if (notifier) {
         delete notifier;
-        notifier = 0;
+        notifier = nullptr;
     }
 
     if (inotifyWatcher != -1) {
@@ -375,7 +374,7 @@ void QStorageInfo_CustomPrivate::setupWatcher()
         return;
     }
 
-    if (notifier == 0) {
+    if (notifier == nullptr) {
         notifier = new QSocketNotifier(inotifyFileDescriptor, QSocketNotifier::Read);
         connect(notifier, SIGNAL(activated(int)), this, SLOT(onInotifyActivated()));
     }
@@ -388,7 +387,7 @@ void QStorageInfo_CustomPrivate::updateLogicalDrives()
     char buffer[512];
 
     logicalDrives.clear();
-    while (getmntent_r(fsDescription, &entry, buffer, sizeof(buffer)) != NULL)
+    while (getmntent_r(fsDescription, &entry, buffer, sizeof(buffer)) != nullptr)
         logicalDrives << QString::fromLatin1(entry.mnt_dir);
     endmntent(fsDescription);
 }

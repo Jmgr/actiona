@@ -30,16 +30,14 @@ namespace ActionTools
     {
     }
 
-    ParameterContainer::~ParameterContainer()
-    {
-    }
+    ParameterContainer::~ParameterContainer() = default;
 
     QMenu *ParameterContainer::createResourcesMenu(QWidget *parent) const
     {
         if(mScript->resources().isEmpty())
-            return 0;
+            return nullptr;
 
-        QMenu *back = new QMenu(parent);
+        auto back = new QMenu(parent);
 
         for(const QString &key: mScript->resources().keys())
         {
@@ -48,13 +46,13 @@ namespace ActionTools
             {
             case ActionTools::Resource::BinaryType:
             case ActionTools::Resource::TypeCount:
-                back->addAction(QIcon(":/images/binary.png"), key);
+				back->addAction(QIcon(QStringLiteral(":/images/binary.png")), key);
                 break;
             case ActionTools::Resource::TextType:
-                back->addAction(QIcon(":/images/text.png"), key);
+				back->addAction(QIcon(QStringLiteral(":/images/text.png")), key);
                 break;
             case ActionTools::Resource::ImageType:
-                back->addAction(QIcon(":/images/image.png"), key);
+				back->addAction(QIcon(QStringLiteral(":/images/image.png")), key);
                 break;
             }
         }

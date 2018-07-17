@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READINIFILEINSTANCE_H
-#define READINIFILEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -42,16 +41,15 @@ namespace Actions
             UnableToFindSectionException
 		};
 
-		ReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)											{}
 
         static Tools::StringListPair modes;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		Q_DISABLE_COPY(ReadIniFileInstance)
 	};
 }
 
-#endif // READINIFILEINSTANCE_H

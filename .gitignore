@@ -11,3 +11,7 @@ generated
 *.so*
 *.log*
 *.cache*
+Makefile
+.qmake.stash
+actexec
+actiona

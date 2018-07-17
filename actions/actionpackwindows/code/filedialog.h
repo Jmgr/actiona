@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef FILEDIALOG_H
-#define FILEDIALOG_H
+#pragma once
 
 #include "basewindow.h"
 
@@ -92,7 +91,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
 		FileDialog();
-		~FileDialog();
+		~FileDialog() override;
 		
 		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
 		void setOnCurrentChanged(const QScriptValue &onCurrentChanged)		{ mOnCurrentChanged = onCurrentChanged; }
@@ -109,7 +108,7 @@ namespace Code
 		QScriptValue onFilterSelected() const								{ return mOnFilterSelected; }
 		
 	public slots:
-		QString toString() const					{ return "FileDialog"; }
+		QString toString() const override					{ return QStringLiteral("FileDialog"); }
 		QScriptValue setAcceptMode(AcceptMode acceptMode);
 		QScriptValue setFileMode(FileMode fileMode);
 		QScriptValue setViewMode(ViewMode viewMode);
@@ -153,4 +152,3 @@ namespace Code
 	};
 }
 
-#endif // FILEDIALOG_H

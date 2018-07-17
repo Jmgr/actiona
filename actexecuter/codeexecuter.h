@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEEXECUTER_H
-#define CODEEXECUTER_H
+#pragma once
 
 #include "executer.h"
 
@@ -37,9 +36,9 @@ class CodeExecuter : public Executer
     Q_OBJECT
 	
 public:
-    explicit CodeExecuter(QObject *parent = 0);
+    explicit CodeExecuter(QObject *parent = nullptr);
 	
-	bool start(QIODevice *device, const QString &filename);
+	bool start(QIODevice *device, const QString &filename) override;
 	
 private slots:
 	void onEvaluationResumed();
@@ -53,4 +52,3 @@ private:
 	QMainWindow *mDebuggerWindow;
 };
 
-#endif // CODEEXECUTER_H

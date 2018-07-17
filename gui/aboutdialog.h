@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -34,8 +33,8 @@ class AboutDialog : public QDialog
 {
 	Q_OBJECT
 public:
-	explicit AboutDialog(QWidget *parent = 0);
-	~AboutDialog();
+	explicit AboutDialog(QWidget *parent = nullptr);
+	~AboutDialog() override;
 
 private slots:
 	void animate();
@@ -47,4 +46,3 @@ private:
 	Q_DISABLE_COPY(AboutDialog)
 };
 
-#endif // ABOUTDIALOG_H

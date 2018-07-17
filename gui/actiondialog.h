@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONDIALOG_H
-#define ACTIONDIALOG_H
+#pragma once
 
 #include "parametercontainer.h"
 
@@ -53,14 +52,14 @@ class ActionDialog : public QDialog, public ActionTools::ParameterContainer
 	Q_OBJECT
 
 public:
-	ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent = 0);
-	~ActionDialog();
+    ActionDialog(QAbstractItemModel *completionModel, ActionTools::Script *script, const ActionTools::ActionDefinition *actionDefinition, const QString &localeName, QWidget *parent = nullptr);
+	~ActionDialog() override;
 
-    virtual QMenu *createVariablesMenu(QWidget *parent) const;
+    QMenu *createVariablesMenu(QWidget *parent) const override;
 
     using QDialog::exec;
 public slots:
-	void accept();
+	void accept() override;
 	int exec(ActionTools::ActionInstance *actionInstance, const QString &field, const QString &subField, int currentLine, int currentColumn);
 	int exec(ActionTools::ActionInstance *actionInstance, int exception);
 	
@@ -101,4 +100,3 @@ private:
 	Q_DISABLE_COPY(ActionDialog)
 };
 
-#endif // ACTIONDIALOG_H

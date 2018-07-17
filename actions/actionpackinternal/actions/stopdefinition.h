@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef STOPDEFINITION_H
-#define STOPDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "stopinstance.h"
@@ -32,7 +31,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class StopDefinition : public QObject, public ActionTools::ActionDefinition
+	class StopDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -42,17 +41,16 @@ namespace Actions
 		{
 		}
 
-		QString name() const													{ return QObject::tr("Stop"); }
-		QString id() const														{ return "ActionStop"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Stop the script execution"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new StopInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/stop.png"); }
+		QString name() const override													{ return QObject::tr("Stop"); }
+		QString id() const override														{ return QStringLiteral("ActionStop"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Stop the script execution"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new StopInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/stop.png")); }
 
 	private:
 		Q_DISABLE_COPY(StopDefinition)
 	};
 }
 
-#endif // STOPDEFINITION_H

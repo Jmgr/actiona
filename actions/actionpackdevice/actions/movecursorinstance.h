@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MOVECURSORINSTANCE_H
-#define MOVECURSORINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../mousedevice.h"
@@ -31,15 +30,15 @@ namespace Actions
 		Q_OBJECT
 	
 	public:
-		MoveCursorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		MoveCursorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 		
-			QPoint position        = evaluatePoint(ok, "position");
-			QPoint positionOffset = evaluatePoint(ok, "positionOffset");
+			QPoint position        = evaluatePoint(ok, QStringLiteral("position"));
+			QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
 
 			if(!ok)
 				return;
@@ -47,10 +46,10 @@ namespace Actions
 			position += positionOffset;
 			mMouseDevice.setCursorPosition(position);
 		
-			emit executionEnded();
+			executionEnded();
 		}
 
-		void stopLongTermExecution()
+		void stopLongTermExecution() override
 		{
 			mMouseDevice.reset();
 		}
@@ -62,4 +61,3 @@ namespace Actions
 	};
 }
 
-#endif // MOVECURSORINSTANCE_H

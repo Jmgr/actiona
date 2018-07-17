@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ITEMLISTMODEL_H
-#define ITEMLISTMODEL_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -32,10 +31,9 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-        ItemListModel(QObject *parent = 0);
+        ItemListModel(QObject *parent = nullptr);
 
-		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
+		Qt::ItemFlags flags(const QModelIndex &index) const override;
 	};
 }
 
-#endif // ITEMLISTMODEL_H

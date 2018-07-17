@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LINENUMBERAREA_H
-#define LINENUMBERAREA_H
+#pragma once
 
 #include <QWidget>
 
@@ -36,13 +35,13 @@ namespace ActionTools
 			codeEditor = editor;
 		}
 
-		QSize sizeHint() const
+		QSize sizeHint() const override
 		{
-			return QSize(codeEditor->lineNumberAreaWidth(), 0);
+			return {codeEditor->lineNumberAreaWidth(), 0};
 		}
 
 	protected:
-		void paintEvent(QPaintEvent *event)
+		void paintEvent(QPaintEvent *event) override
 		{
 			codeEditor->lineNumberAreaPaintEvent(event);
 		}
@@ -54,4 +53,3 @@ namespace ActionTools
 	};
 }
 
-#endif // LINENUMBERAREA_H

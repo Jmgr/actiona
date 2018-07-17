@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MEDIAPLAYLIST_H
-#define MEDIAPLAYLIST_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -57,7 +56,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 		MediaPlaylist();
-		~MediaPlaylist();
+		~MediaPlaylist() override;
 
 		qreal playbackRate() const;
 		qreal volume() const;
@@ -66,8 +65,8 @@ namespace Code
 		PlaybackMode playbackMode() const;
 
 	public slots:
-        QString toString() const                                { return "MediaPlaylist"; }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<MediaPlaylist>(other); }
+		QString toString() const override                                { return QStringLiteral("MediaPlaylist"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<MediaPlaylist>(other); }
 		//Player
 		QScriptValue setPlaybackRate(qreal rate);
 		QScriptValue setVolume(qreal volume);
@@ -110,4 +109,3 @@ namespace Code
 	};
 }
 
-#endif // MEDIAPLAYLIST_H

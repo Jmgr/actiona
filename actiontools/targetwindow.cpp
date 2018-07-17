@@ -29,13 +29,8 @@
 #ifdef Q_OS_LINUX
 #include <QX11Info>
 #include <X11/Xlib.h>
-#endif
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-#ifdef Q_OS_LINUX
 #include <X11/cursorfont.h>
 #include <xcb/xcb.h>
-#endif
 #endif
 
 #ifdef Q_OS_WIN
@@ -45,24 +40,17 @@
 namespace ActionTools
 {
     TargetWindow::TargetWindow()
-        : QWidget(0, Qt::Widget
+        : QWidget(nullptr, Qt::Widget
                   | Qt::Window
                   | Qt::FramelessWindowHint
                   | Qt::WindowStaysOnTopHint
                   | Qt::X11BypassWindowManagerHint
                   | Qt::Tool
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
                   | Qt::NoDropShadowWindowHint
                   | Qt::BypassWindowManagerHint
-#endif
-                  ),
-          mMousePressed(false)
+                  )
 #ifdef Q_OS_LINUX
-          , mGrabbingPointer(false)
-          , mGrabbingKeyboard(false)
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-          , mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
-#endif
+           ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
 #endif
     {
         setWindowModality(Qt::ApplicationModal);
@@ -70,7 +58,7 @@ namespace ActionTools
         setMinimumSize(1, 1);
         setCursor(Qt::CrossCursor);
 
-        connect(&mUpdateTimer, SIGNAL(timeout()), this, SLOT(update()));
+        connect(&mUpdateTimer, &QTimer::timeout, this, &TargetWindow::update);
     }
 
     TargetWindow::~TargetWindow()
@@ -79,9 +67,7 @@ namespace ActionTools
         if(mGrabbingPointer || mGrabbingKeyboard)
             ungrab();
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         XFreeCursor(QX11Info::display(), mCrossCursor);
-#endif
 #endif
     }
 
@@ -142,7 +128,7 @@ namespace ActionTools
         font.setPointSize(18);
         painter.setFont(font);
 
-        painter.drawText(rect(), Qt::AlignCenter, QString::number(width()) + " x " + QString::number(height()));
+        painter.drawText(rect(), Qt::AlignCenter, QString::number(width()) + QStringLiteral(" x ") + QString::number(height()));
 #endif
     }
 
@@ -165,27 +151,14 @@ namespace ActionTools
 #ifdef Q_OS_LINUX
         QCursor newCursor(Qt::CrossCursor);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QCoreApplication::instance()->installNativeEventFilter(this);
-#else
-        nativeEventFilteringApp->installNativeEventFilter(this);
-#endif
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
                         None, mCrossCursor, CurrentTime) != GrabSuccess)
         {
             QMessageBox::warning(this, tr("Choose a screen rectangle"), tr("Unable to grab the pointer."));
             event->ignore();
         }
-#else
-        if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
-                        None, newCursor.handle(), CurrentTime) != GrabSuccess)
-        {
-            QMessageBox::warning(this, tr("Choose a screen rectangle"), tr("Unable to grab the pointer."));
-            event->ignore();
-        }
-#endif
 
         mGrabbingPointer = true;
 
@@ -241,12 +214,11 @@ namespace ActionTools
     }
 
 #ifdef Q_OS_LINUX
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     bool TargetWindow::nativeEventFilter(const QByteArray &eventType, void *message, long *)
     {
         if(eventType == "xcb_generic_event_t")
         {
-            xcb_generic_event_t* event = static_cast<xcb_generic_event_t *>(message);
+            auto* event = static_cast<xcb_generic_event_t *>(message);
 
             switch(event->response_type)
             {
@@ -264,7 +236,7 @@ namespace ActionTools
                 return true;
             case XCB_KEY_PRESS:
             {
-                xcb_key_press_event_t *keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
+                auto keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
                 if(keyPressEvent->detail == 0x09)//Escape
                 {
                     close();
@@ -281,37 +253,6 @@ namespace ActionTools
 
         return false;
     }
-#else
-    bool TargetWindow::x11EventFilter(XEvent *event)
-    {
-        switch(event->type)
-        {
-        case ButtonPress:
-            mMouseClickPosition = QCursor::pos();
-            mMousePressed = true;
-
-            return true;
-        case ButtonRelease:
-            mMousePressed = false;
-
-            mouseButtonReleased();
-            close();
-
-            return true;
-        case KeyPress:
-            if(event->xkey.keycode == 0x09)//Escape
-            {
-                close();
-
-                return false;
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-#endif
 #endif
 
 #ifdef Q_OS_LINUX
@@ -326,11 +267,8 @@ namespace ActionTools
         if(mGrabbingKeyboard || mGrabbingPointer)
             XFlush(QX11Info::display());
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QCoreApplication::instance()->removeNativeEventFilter(this);
-#else
-        nativeEventFilteringApp->removeNativeEventFilter(this);
-#endif
+
         mGrabbingPointer = false;
         mGrabbingKeyboard = false;
     }

@@ -34,7 +34,7 @@ QWidget *PointItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
 	Q_UNUSED(option)
 	Q_UNUSED(index)
 
-	QSpinBox *spinBox = new QSpinBox(parent);
+	auto spinBox = new QSpinBox(parent);
 	spinBox->setMinimum(0);
 	spinBox->setMaximum(std::numeric_limits<int>::max());
 	return spinBox;
@@ -42,12 +42,12 @@ QWidget *PointItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
 
 void PointItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-	QSpinBox *spinBox = qobject_cast<QSpinBox *>(editor);
+	auto spinBox = qobject_cast<QSpinBox *>(editor);
 	spinBox->setValue(index.data().toInt());
 }
 
 void PointItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	QSpinBox *spinBox = qobject_cast<QSpinBox *>(editor);
+	auto spinBox = qobject_cast<QSpinBox *>(editor);
 	model->setData(index, spinBox->value());
 }

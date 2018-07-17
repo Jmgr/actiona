@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINPUTRECEIVER_H
-#define SYSTEMINPUTRECEIVER_H
+#pragma once
 
 #include "systeminput.h"
 #include "actiontools_global.h"
@@ -43,7 +42,7 @@ namespace ActionTools
 		public:
 			static Receiver &instance();
 
-			~Receiver();
+			~Receiver() override;
 
 		private slots:
 			void mouseMotion(int x, int y);
@@ -62,7 +61,7 @@ namespace ActionTools
 
 			static QSharedPointer<Receiver> mInstance;
 
-			int mCaptureCount;
+			int mCaptureCount{0};
 			ListenerSet mListeners;
 			Task *mTask;
 
@@ -71,4 +70,3 @@ namespace ActionTools
 	}
 }
 
-#endif // SYSTEMINPUTRECEIVER_H

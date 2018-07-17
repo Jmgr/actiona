@@ -43,18 +43,18 @@ AboutDialog::AboutDialog(QWidget *parent)
 	QString os = tr("Mac");
 #endif
 
-    QString buildName = ACT_BUILD_NAME;
+	QString buildName = QStringLiteral(ACT_BUILD_NAME);
 
     if(buildName.isEmpty())
         buildName.clear();
     else
-        buildName = " - " ACT_BUILD_NAME;
+		buildName = QStringLiteral(" - ") + QStringLiteral(ACT_BUILD_NAME);
 
     QString message = tr("<img src=':/icons/logo.png'><h2>Actiona %1%2</h2>").arg(Global::ACTIONA_VERSION.toString()).arg(buildName);
-    message += " 2005-2017 Jonathan \"Jmgr\" Mercier-Ganady <a href='mailto:jmgr@jmgr.info'>jmgr@jmgr.info</a><br/><br/>";
+    message += QStringLiteral(" Jonathan \"Jmgr\" Mercier-Ganady <a href='mailto:jmgr@jmgr.info'>jmgr@jmgr.info</a><br/><br/>");
     message += tr("<i>Emulates clics, key presses and other actions</i><br/><br/>Using Qt %1 (runtime %2) under %3 (%4 bit)")
-			   .arg(QT_VERSION_STR)
-			   .arg(qVersion())
+			   .arg(QLatin1String(QT_VERSION_STR))
+			   .arg(QLatin1String(qVersion()))
 			   .arg(os)
                .arg(QSysInfo::WordSize);
 #ifdef ACT_ENABLE_BUILD_DATE
@@ -62,7 +62,7 @@ AboutDialog::AboutDialog(QWidget *parent)
             .arg(__DATE__)
             .arg(__TIME__);
 #endif
-    message += "</center><br/>";
+	message += QStringLiteral("</center><br/>");
 
 	ui->titleLabel->setText(message);
 
@@ -77,8 +77,8 @@ AboutDialog::AboutDialog(QWidget *parent)
 	mComboBoxes.append(ui->act2Donators);
 	mComboBoxes.append(ui->act2Art);
 
-	QTimer *timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
+	auto timer = new QTimer(this);
+	connect(timer, &QTimer::timeout, this, &AboutDialog::animate);
 	timer->start(1500);
 }
 

@@ -28,7 +28,7 @@ namespace Code
 {
 	QScriptValue FileDialog::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		FileDialog *fileDialog = new FileDialog;
+		auto fileDialog = new FileDialog;
 		fileDialog->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
@@ -37,39 +37,39 @@ namespace Code
 		{
 			it.next();
 			
-			if(it.name() == "acceptMode")
+			if(it.name() == QLatin1String("acceptMode"))
 				fileDialog->mFileDialog->setAcceptMode(static_cast<QFileDialog::AcceptMode>(it.value().toInt32()));
-			else if(it.name() == "fileMode")
+			else if(it.name() == QLatin1String("fileMode"))
 				fileDialog->mFileDialog->setFileMode(static_cast<QFileDialog::FileMode>(it.value().toInt32()));
-			else if(it.name() == "viewMode")
+			else if(it.name() == QLatin1String("viewMode"))
 				fileDialog->mFileDialog->setViewMode(static_cast<QFileDialog::ViewMode>(it.value().toInt32()));
-			else if(it.name() == "selectedFile")
+			else if(it.name() == QLatin1String("selectedFile"))
 				fileDialog->mFileDialog->selectFile(it.value().toString());
-			else if(it.name() == "selectedNameFilter")
+			else if(it.name() == QLatin1String("selectedNameFilter"))
 				fileDialog->mFileDialog->selectNameFilter(it.value().toString());
-			else if(it.name() == "defaultSuffix")
+			else if(it.name() == QLatin1String("defaultSuffix"))
 				fileDialog->mFileDialog->setDefaultSuffix(it.value().toString());
-			else if(it.name() == "directory")
+			else if(it.name() == QLatin1String("directory"))
 				fileDialog->mFileDialog->setDirectory(it.value().toString());
-			else if(it.name() == "filter")
+			else if(it.name() == QLatin1String("filter"))
 				fileDialog->mFileDialog->setFilter(static_cast<QDir::Filter>(it.value().toInt32()));
-			else if(it.name() == "nameFilter")
+			else if(it.name() == QLatin1String("nameFilter"))
 				fileDialog->mFileDialog->setNameFilter(it.value().toString());
-			else if(it.name() == "nameFilters")
+			else if(it.name() == QLatin1String("nameFilters"))
 				fileDialog->mFileDialog->setNameFilters(arrayParameterToStringList(it.value()));
-			else if(it.name() == "showDirectoriesOnly")
+			else if(it.name() == QLatin1String("showDirectoriesOnly"))
 				fileDialog->mFileDialog->setOption(QFileDialog::ShowDirsOnly, it.value().toBool());
-			else if(it.name() == "dontResolveSymlinks")
+			else if(it.name() == QLatin1String("dontResolveSymlinks"))
 				fileDialog->mFileDialog->setOption(QFileDialog::DontResolveSymlinks, it.value().toBool());
-			else if(it.name() == "dontConfirmOverwrite")
+			else if(it.name() == QLatin1String("dontConfirmOverwrite"))
 				fileDialog->mFileDialog->setOption(QFileDialog::DontConfirmOverwrite, it.value().toBool());
-			else if(it.name() == "dontUseNativeDialog")
+			else if(it.name() == QLatin1String("dontUseNativeDialog"))
 				fileDialog->mFileDialog->setOption(QFileDialog::DontUseNativeDialog, it.value().toBool());
-			else if(it.name() == "readOnly")
+			else if(it.name() == QLatin1String("readOnly"))
 				fileDialog->mFileDialog->setOption(QFileDialog::ReadOnly, it.value().toBool());
-			else if(it.name() == "hideNameFilterDetails")
+			else if(it.name() == QLatin1String("hideNameFilterDetails"))
 				fileDialog->mFileDialog->setOption(QFileDialog::HideNameFilterDetails, it.value().toBool());
-			else if(it.name() == "sidebarUrls")
+			else if(it.name() == QLatin1String("sidebarUrls"))
 			{
 				QList<QUrl> urls;
 				
@@ -78,17 +78,17 @@ namespace Code
 					
 				fileDialog->mFileDialog->setSidebarUrls(urls);
 			}
-			else if(it.name() == "onClosed")
+			else if(it.name() == QLatin1String("onClosed"))
 				fileDialog->mOnClosed = it.value();
-			else if(it.name() == "onCurrentChanged")
+			else if(it.name() == QLatin1String("onCurrentChanged"))
 				fileDialog->mOnCurrentChanged = it.value();
-			else if(it.name() == "onDirectoryEntered")
+			else if(it.name() == QLatin1String("onDirectoryEntered"))
 				fileDialog->mOnDirectoryEntered = it.value();
-			else if(it.name() == "onFileSelected")
+			else if(it.name() == QLatin1String("onFileSelected"))
 				fileDialog->mOnFileSelected = it.value();
-			else if(it.name() == "onFilesSelected")
+			else if(it.name() == QLatin1String("onFilesSelected"))
 				fileDialog->mOnFilesSelected = it.value();
-			else if(it.name() == "onFilterSelected")
+			else if(it.name() == QLatin1String("onFilterSelected"))
 				fileDialog->mOnFilterSelected = it.value();
 		}
 
@@ -103,12 +103,12 @@ namespace Code
 
 		setWidget(mFileDialog);
 		
-		connect(mFileDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));
-		connect(mFileDialog, SIGNAL(currentChanged(QString)), this, SLOT(currentChanged(QString)));
-		connect(mFileDialog, SIGNAL(directoryEntered(QString)), this, SLOT(directoryEntered(QString)));
-		connect(mFileDialog, SIGNAL(fileSelected(QString)), this, SLOT(fileSelected(QString)));
-		connect(mFileDialog, SIGNAL(filesSelected(QStringList)), this, SLOT(filesSelected(QStringList)));
-		connect(mFileDialog, SIGNAL(filterSelected(QString)), this, SLOT(filterSelected(QString)));
+        connect(mFileDialog, &QFileDialog::finished, this, &FileDialog::finished);
+        connect(mFileDialog, &QFileDialog::currentChanged, this, &FileDialog::currentChanged);
+        connect(mFileDialog, &QFileDialog::directoryEntered, this, &FileDialog::directoryEntered);
+        connect(mFileDialog, &QFileDialog::fileSelected, this, &FileDialog::fileSelected);
+        connect(mFileDialog, &QFileDialog::filesSelected, this, &FileDialog::filesSelected);
+        connect(mFileDialog, &QFileDialog::filterSelected, this, &FileDialog::filterSelected);
 	}
 	
 	FileDialog::~FileDialog()

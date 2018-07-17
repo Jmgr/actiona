@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef HIGHRESOLUTIONTIMER_H
-#define HIGHRESOLUTIONTIMER_H
+#pragma once
 
 #include "tools_global.h"
 
@@ -49,7 +48,7 @@ namespace Tools
 		double elapsedSeconds();
 	private:
 		static int mLevel;
-		bool mRunning;
+		bool mRunning{false};
 		QString mTaskName;
 		QTextStream mTextStream;
 #ifdef Q_OS_WIN
@@ -63,4 +62,3 @@ namespace Tools
 	};
 }
 
-#endif // HIGHRESOLUTIONTIMER_H

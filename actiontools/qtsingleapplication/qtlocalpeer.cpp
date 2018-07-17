@@ -58,7 +58,7 @@ typedef BOOL(WINAPI*PProcessIdToSessionId)(DWORD,DWORD*);
 static PProcessIdToSessionId pProcessIdToSessionId = 0;
 #endif
 #if defined(Q_OS_UNIX)
-#include <time.h>
+#include <ctime>
 #include <unistd.h>
 #endif
 
@@ -84,7 +84,7 @@ QtLocalPeer::QtLocalPeer(QObject* parent, const QString &appId)
 #endif
         prefix = id.section(QLatin1Char('/'), -1);
     }
-    prefix.remove(QRegExp("[^a-zA-Z]"));
+	prefix.remove(QRegExp(QStringLiteral("[^a-zA-Z]")));
     prefix.truncate(6);
 
     QByteArray idc = id.toUtf8();
@@ -94,7 +94,7 @@ QtLocalPeer::QtLocalPeer(QObject* parent, const QString &appId)
 
 #if defined(Q_OS_WIN)
     if (!pProcessIdToSessionId) {
-        QLibrary lib("kernel32");
+        QLibrary lib(QStringLiteral("kernel32"));
         pProcessIdToSessionId = (PProcessIdToSessionId)lib.resolve("ProcessIdToSessionId");
     }
     if (pProcessIdToSessionId) {
@@ -109,7 +109,7 @@ QtLocalPeer::QtLocalPeer(QObject* parent, const QString &appId)
     server = new QLocalServer(this);
     QString lockName = QDir(QDir::tempPath()).absolutePath()
                        + QLatin1Char('/') + socketName
-                       + QLatin1String("-lockfile");
+					   + QStringLiteral("-lockfile");
     lockFile.setFileName(lockName);
     lockFile.open(QIODevice::ReadWrite);
 }
@@ -157,7 +157,7 @@ bool QtLocalPeer::sendMessage(const QString &message, int timeout)
         Sleep(DWORD(ms));
 #else
         struct timespec ts = { ms / 1000, (ms % 1000) * 1000 * 1000 };
-        nanosleep(&ts, NULL);
+        nanosleep(&ts, nullptr);
 #endif
     }
     if (!connOk)

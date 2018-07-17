@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LOOPINSTANCE_H
-#define LOOPINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -30,20 +29,20 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		LoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		LoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent), mInitialized(false), mCounter(0)		{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			if(mInitialized && mCounter == 0)
 			{
-				emit executionEnded();
+				executionEnded();
 				return;
 			}
 
 			bool ok = true;
 
-			QString line = evaluateString(ok, "line");
+			QString line = evaluateString(ok, QStringLiteral("line"));
 			int count;
 
 			if(!ok)
@@ -53,14 +52,14 @@ namespace Actions
 			{
 				mInitialized = true;
 
-				count = evaluateInteger(ok, "count");
+				count = evaluateInteger(ok, QStringLiteral("count"));
 
 				if(!ok)
 					return;
 
 				if(count <= 0)
 				{
-					emit executionEnded();
+					executionEnded();
 					return;
 				}
 
@@ -71,10 +70,10 @@ namespace Actions
 
 			--mCounter;
 
-			emit executionEnded();
+			executionEnded();
 		}
 
-		void reset()
+		void reset() override
 		{
 			mInitialized = false;
 			mCounter = 0;
@@ -88,4 +87,3 @@ namespace Actions
 	};
 }
 
-#endif // LOOPINSTANCE_H

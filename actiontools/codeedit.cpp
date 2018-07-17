@@ -39,9 +39,8 @@ namespace ActionTools
 		: QPlainTextEdit(parent),
 		mCompleter(new ScriptCompleter(this)),
 		mHighlighter(new CodeHighlighter(document())),
-		mLineNumberArea(new LineNumberArea(this)),
-		mCode(true),
-		mCompletionModelSet(false)
+		mLineNumberArea(new LineNumberArea(this))
+		
 	{
 		mCompleter->setWidget(this);
 		mCompleter->setCompletionMode(QCompleter::PopupCompletion);
@@ -50,28 +49,28 @@ namespace ActionTools
 		mCompleter->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
 		mCompleter->setWrapAround(false);
 
-		connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
-		connect(this, SIGNAL(updateRequest(const QRect &, int)), this, SLOT(updateLineNumberArea(const QRect &, int)));
-		connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
+        connect(this, &CodeEdit::blockCountChanged, this, &CodeEdit::updateLineNumberAreaWidth);
+        connect(this, &CodeEdit::updateRequest, this, &CodeEdit::updateLineNumberArea);
+        connect(this, &CodeEdit::cursorPositionChanged, this, &CodeEdit::highlightCurrentLine);
 
 		updateLineNumberAreaWidth(0);
 		highlightCurrentLine();
 		setTabStopWidth(30);
 
 		QFont font;
-		font.setFamily("Arial");
+		font.setFamily(QStringLiteral("Arial"));
 		font.setFixedPitch(true);
 		font.setPointSize(10);
 		setFont(font);
 
-		connect(mCompleter, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
+        connect(mCompleter, static_cast<void (ScriptCompleter::*)(const QString &)>(&ScriptCompleter::activated), this, &CodeEdit::insertCompletion);
 	}
 
 	void CodeEdit::setCode(bool code)
 	{
 		mCode = code;
 
-		mHighlighter->setDocument(code ? document() : 0);
+		mHighlighter->setDocument(code ? document() : nullptr);
 	}
 
 	int CodeEdit::lineNumberAreaWidth() const
@@ -113,7 +112,7 @@ namespace ActionTools
 		{
 			mCompletionModelSet = true;
 			
-			QStandardItemModel *standardItemCompletionModel = qobject_cast<QStandardItemModel *>(completionModel);
+			auto standardItemCompletionModel = qobject_cast<QStandardItemModel *>(completionModel);
 			if(!standardItemCompletionModel)
 				return;
 			
@@ -379,7 +378,7 @@ namespace ActionTools
 		int curpos = cursor.position();
 		QString text = cursor.block().text().left(curpos);
 	
-		QStringList wordList = text.split(QRegExp("[^\\w\\.]"));
+		QStringList wordList = text.split(QRegExp(QStringLiteral("[^\\w\\.]")));
 	
 		if (wordList.isEmpty())
 			return QString();
@@ -449,7 +448,7 @@ namespace ActionTools
 		if(!mCompleter || (ctrlOrShift && event->text().isEmpty()))
 			return;
 
-		static QString endOfWord("~!@#$%^&*()_+{}|:\"<>?,/;'[]\\-=");
+		static QString endOfWord(QStringLiteral("~!@#$%^&*()_+{}|:\"<>?,/;'[]\\-="));
 		bool hasModifier = (event->modifiers() != Qt::NoModifier) && !ctrlOrShift;
 		QString completionPrefix = textUnderCursor();
 
@@ -483,7 +482,7 @@ namespace ActionTools
 		//Block the backtab key from changing the focus, since we use it to unindent
 		if (event->type() == QEvent::KeyPress)
 		{
-			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+			auto keyEvent = static_cast<QKeyEvent *>(event);
 			if (keyEvent->key() == Qt::Key_Backtab)
 			{
 				keyPressEvent(keyEvent);

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DETACHEDCOMMANDDEFINITION_H
-#define DETACHEDCOMMANDDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "detachedcommandinstance.h"
@@ -35,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class DetachedCommandDefinition : public QObject, public ActionTools::ActionDefinition
+	class DetachedCommandDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -43,39 +42,34 @@ namespace Actions
 		explicit DetachedCommandDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *command = new ActionTools::FileParameterDefinition(ActionTools::Name("command", tr("Command")), this);
-			command->setTooltip(tr("The command to execute"));
-			addElement(command);
+            auto &command = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("command"), tr("Command")});
+            command.setTooltip(tr("The command to execute"));
 
-			ActionTools::TextParameterDefinition *parameters = new ActionTools::TextParameterDefinition(ActionTools::Name("parameters", tr("Parameters")), this);
-			parameters->setTooltip(tr("The command's parameters"));
-			addElement(parameters);
+            auto &parameters = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("parameters"), tr("Parameters")});
+            parameters.setTooltip(tr("The command's parameters"));
 
-			ActionTools::FileParameterDefinition *workingDirectory = new ActionTools::FileParameterDefinition(ActionTools::Name("workingDirectory", tr("Working directory")), this);
-			workingDirectory->setTooltip(tr("The command's working directory"));
-			workingDirectory->setCaption(tr("Command working directory"));
-			workingDirectory->setMode(ActionTools::FileEdit::DirectoryOpen);
-			addElement(workingDirectory);
+            auto &workingDirectory = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("workingDirectory"), tr("Working directory")});
+            workingDirectory.setTooltip(tr("The command's working directory"));
+            workingDirectory.setCaption(tr("Command working directory"));
+            workingDirectory.setMode(ActionTools::FileEdit::DirectoryOpen);
 
-			ActionTools::VariableParameterDefinition *processId = new ActionTools::VariableParameterDefinition(ActionTools::Name("processId", tr("Process id")), this);
-			processId->setTooltip(tr("The command's process id"));
-			addElement(processId, 1);
+            auto &processId = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("processId"), tr("Process id")}, 1);
+            processId.setTooltip(tr("The command's process id"));
 
 			addException(DetachedCommandInstance::DetachedCommandFailedException, tr("Unable to execute the detached command"));
 		}
 
-		QString name() const													{ return QObject::tr("Detached command"); }
-		QString id() const														{ return "ActionDetachedCommand"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Executes a detached command"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new DetachedCommandInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/command.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Detached command"); }
+		QString id() const override														{ return QStringLiteral("ActionDetachedCommand"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Executes a detached command"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new DetachedCommandInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/command.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(DetachedCommandDefinition)
 	};
 }
 
-#endif // DETACHEDCOMMANDDEFINITION_H

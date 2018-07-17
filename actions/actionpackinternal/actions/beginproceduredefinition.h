@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef BEGINPROCEDUREDEFINITION_H
-#define BEGINPROCEDUREDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "beginprocedureinstance.h"
@@ -33,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class BeginProcedureDefinition : public QObject, public ActionTools::ActionDefinition
+	class BeginProcedureDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -41,23 +40,21 @@ namespace Actions
 		explicit BeginProcedureDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *name = new ActionTools::TextParameterDefinition(ActionTools::Name("name", tr("Name")), this);
-			name->setTooltip(tr("The name of the procedure"));
-			name->setTextCodeMode(ActionTools::TextParameterDefinition::TextOnly);
-			addElement(name);
+			auto &name = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("name"), tr("Name")});
+            name.setTooltip(tr("The name of the procedure"));
+            name.setTextCodeMode(ActionTools::TextParameterDefinition::TextOnly);
 		}
 
-		QString name() const													{ return QObject::tr("Begin procedure"); }
-		QString id() const														{ return "ActionBeginProcedure"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Declares a new procedure"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new BeginProcedureInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Procedures; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/beginprocedure.png"); }
+		QString name() const override													{ return QObject::tr("Begin procedure"); }
+		QString id() const override														{ return QStringLiteral("ActionBeginProcedure"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Declares a new procedure"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new BeginProcedureInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Procedures; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/beginprocedure.png")); }
 
 	private:
 		Q_DISABLE_COPY(BeginProcedureDefinition)
 	};
 }
 
-#endif // BEGINPROCEDUREDEFINITION_H

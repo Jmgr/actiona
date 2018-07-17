@@ -8,5 +8,6 @@
         <file>icons/openurl.png</file>
         <file>icons/playsound.png</file>
         <file>icons/findimage.png</file>
+        <file>icons/texttospeech.png</file>
     </qresource>
 </RCC>

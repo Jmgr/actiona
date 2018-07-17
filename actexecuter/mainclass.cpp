@@ -30,8 +30,8 @@
 #include <QTimer>
 
 MainClass::MainClass()
-	: QObject(0),
-	mExecuter(0),
+	: QObject(nullptr),
+	
 	mNetworkAccessManager(new QNetworkAccessManager(this))
 {
 }
@@ -50,10 +50,10 @@ bool MainClass::start(ExecutionMode executionMode, const QUrl &url)
 {
 	mExecutionMode = executionMode;
 	mUrl = url;
-	mUrl.setScheme("http");
+	mUrl.setScheme(QStringLiteral("http"));
 
 	mNetworkReply = mNetworkAccessManager->get(QNetworkRequest(mUrl));
-	connect(mNetworkReply, SIGNAL(finished()), this, SLOT(downloadFinished()));
+    connect(mNetworkReply, &QNetworkReply::finished, this, &MainClass::downloadFinished);
 
 	return true;
 }
@@ -79,5 +79,5 @@ void MainClass::downloadFinished()
 
 	mNetworkReply->close();
 	mNetworkReply->deleteLater();
-	mNetworkReply = 0;
+	mNetworkReply = nullptr;
 }

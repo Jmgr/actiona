@@ -26,14 +26,15 @@
 
 #include <QFile>
 #include <QApplication>
+#include <QTextStream>
 
 ScriptExecuter::ScriptExecuter(QObject *parent) :
     Executer(parent),
 	mScript(new ActionTools::Script(actionFactory(), this)),
 	mExecuter(new LibExecuter::Executer(this))
 {
-	connect(mExecuter, SIGNAL(executionStopped()), this, SLOT(executionStopped()));
-	connect(mExecuter, SIGNAL(scriptError(int,QString,QString)), this, SLOT(scriptError(int,QString,QString)));
+    connect(mExecuter, &LibExecuter::Executer::executionStopped, this, &ScriptExecuter::executionStopped);
+    connect(mExecuter, &LibExecuter::Executer::scriptError, this, &ScriptExecuter::scriptError);
 }
 
 bool ScriptExecuter::start(QIODevice *device, const QString &filename)
@@ -71,7 +72,7 @@ bool ScriptExecuter::start(QIODevice *device, const QString &filename)
 	
 	device->close();
 	
-    mExecuter->setup(mScript, actionFactory(), false, 0, 0, false, 0, 0, mScript->pauseBefore(), mScript->pauseAfter(), Global::ACTIONA_VERSION, Global::SCRIPT_VERSION, true, 0);
+    mExecuter->setup(mScript, actionFactory(), false, 0, 0, false, 0, 0, mScript->pauseBefore(), mScript->pauseAfter(), Global::ACTIONA_VERSION, Global::SCRIPT_VERSION, true, nullptr);
     if(!mExecuter->startExecution(false, filename))
 	{
 		QTextStream stream(stdout);

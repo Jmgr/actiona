@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KILLPROCESSDEFINITION_H
-#define KILLPROCESSDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "killprocessinstance.h"
@@ -37,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class KillProcessDefinition : public QObject, public ActionTools::ActionDefinition
+	class KillProcessDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -47,36 +46,32 @@ namespace Actions
 		{
 			translateItems("KillProcessInstance::killModes", KillProcessInstance::killModes);
 
-			ActionTools::TextParameterDefinition *processId = new ActionTools::TextParameterDefinition(ActionTools::Name("processId", tr("Process id")), this);
-			processId->setTooltip(tr("The process id of the process to kill"));
-			addElement(processId);
+            auto &processId = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("processId"), tr("Process id")});
+            processId.setTooltip(tr("The process id of the process to kill"));
 
-			ActionTools::ListParameterDefinition *killMode = new ActionTools::ListParameterDefinition(ActionTools::Name("killMode", tr("Kill mode")), this);
-			killMode->setTooltip(tr("The kill mode"));
-			killMode->setItems(KillProcessInstance::killModes);
-			killMode->setDefaultValue(KillProcessInstance::killModes.second.at(KillProcessInstance::GracefulThenForceful));
-			addElement(killMode, 1);
+            auto &killMode = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("killMode"), tr("Kill mode")}, 1);
+            killMode.setTooltip(tr("The kill mode"));
+            killMode.setItems(KillProcessInstance::killModes);
+            killMode.setDefaultValue(KillProcessInstance::killModes.second.at(KillProcessInstance::GracefulThenForceful));
 
-			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name("timeout", tr("Timeout")), this);
-			timeout->setTooltip(tr("The timeout before doing a forceful kill"));
-			timeout->setMinimum(0);
-			timeout->setMaximum(std::numeric_limits<int>::max());
-			timeout->setDefaultValue(1000);
-			addElement(timeout, 1);
+            auto &timeout = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("timeout"), tr("Timeout")}, 1);
+            timeout.setTooltip(tr("The timeout before doing a forceful kill"));
+            timeout.setMinimum(0);
+            timeout.setMaximum(std::numeric_limits<int>::max());
+            timeout.setDefaultValue(QStringLiteral("1000"));
 		}
 
-		QString name() const													{ return QObject::tr("Kill process"); }
-		QString id() const														{ return "ActionKillProcess"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Kills a process"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new KillProcessInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/closeprocess.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Kill process"); }
+		QString id() const override														{ return QStringLiteral("ActionKillProcess"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Kills a process"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new KillProcessInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/closeprocess.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(KillProcessDefinition)
 	};
 }
 
-#endif // KILLPROCESSDEFINITION_H

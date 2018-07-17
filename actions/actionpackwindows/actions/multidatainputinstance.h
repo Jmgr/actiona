@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MULTIDATAINPUTINSTANCE_H
-#define MULTIDATAINPUTINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -47,12 +46,12 @@ namespace Actions
 			RadioButtonMode
 		};
 
-		MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 
         static Tools::StringListPair modes;
 
-		void startExecution();
-		void stopExecution();
+		void startExecution() override;
+		void stopExecution() override;
 
 	private slots:
 		void accepted();
@@ -80,4 +79,3 @@ namespace Actions
 	};
 }
 
-#endif // MULTIDATAINPUTINSTANCE_H

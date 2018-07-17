@@ -55,19 +55,19 @@ public:
     ////
     // INHERITED FROM QtImageFilter
     ////
-    QVariant option(int filteroption) const;
-    bool setOption(int option, const QVariant &value);
-    bool supportsOption(int option) const;
-    QImage apply(const QImage &img, const QRect& clipRect = QRect() ) const;
-    QString name() const { return QLatin1String("Punch"); }
-    QString description() const { return QObject::tr("A parametrized circular pinch/punch filter", "PunchFilter"); }
+    QVariant option(int filteroption) const override;
+    bool setOption(int option, const QVariant &value) override;
+    bool supportsOption(int option) const override;
+    QImage apply(const QImage &img, const QRect& clipRect = QRect() ) const override;
+    QString name() const override { return QLatin1String("Punch"); }
+    QString description() const override { return QObject::tr("A parametrized circular pinch/punch filter", "PunchFilter"); }
 
 private:
     bool Punch(const QImage &img, QImage *outputImage, const QRect &clipRect = QRect() ) const;
 
 private:
-    double      m_Radius;
+    double      m_Radius{10.0};
     QPointF     m_Center;
-    double      m_Force;
+    double      m_Force{0.5};
 };
 #endif  /* PUNCHFILTER_H */

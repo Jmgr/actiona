@@ -25,7 +25,7 @@ namespace ActionTools
 	SwitchTextModePushButton::SwitchTextModePushButton(QWidget *parent)
 		: QPushButton(parent)
 	{
-		setIcon(QIcon(":/images/code.png"));
+		setIcon(QIcon(QStringLiteral(":/images/code.png")));
 		setCheckable(true);
 	}
 }

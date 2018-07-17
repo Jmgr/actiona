@@ -28,7 +28,7 @@ namespace Code
 {
 	QScriptValue MessageBox::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-        MessageBox *messageBox = new MessageBox;
+        auto messageBox = new MessageBox;
 		messageBox->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
@@ -37,21 +37,21 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "text")
+			if(it.name() == QLatin1String("text"))
 				messageBox->mMessageBox->setText(it.value().toString());
-			else if(it.name() == "detailedText")
+			else if(it.name() == QLatin1String("detailedText"))
 				messageBox->mMessageBox->setDetailedText(it.value().toString());
-			else if(it.name() == "informativeText")
+			else if(it.name() == QLatin1String("informativeText"))
 				messageBox->mMessageBox->setInformativeText(it.value().toString());
-			else if(it.name() == "buttons")
+			else if(it.name() == QLatin1String("buttons"))
 				messageBox->mMessageBox->setStandardButtons(static_cast<QMessageBox::StandardButton>(it.value().toInt32()));
-			else if(it.name() == "icon")
+			else if(it.name() == QLatin1String("icon"))
 				messageBox->mMessageBox->setIcon(static_cast<QMessageBox::Icon>(it.value().toInt32()));
-			else if(it.name() == "defaultButton")
+			else if(it.name() == QLatin1String("defaultButton"))
 				messageBox->mMessageBox->setDefaultButton(static_cast<QMessageBox::StandardButton>(it.value().toInt32()));
-			else if(it.name() == "escapeButton")
+			else if(it.name() == QLatin1String("escapeButton"))
 				messageBox->mMessageBox->setEscapeButton(static_cast<QMessageBox::StandardButton>(it.value().toInt32()));
-			else if(it.name() == "onClosed")
+			else if(it.name() == QLatin1String("onClosed"))
 				messageBox->mOnClosed = it.value();
 		}
 
@@ -66,7 +66,7 @@ namespace Code
 
 		setWidget(mMessageBox);
 
-		connect(mMessageBox, SIGNAL(finished(int)), this, SLOT(finished(int)));
+        connect(mMessageBox, &QMessageBox::finished, this, &MessageBox::finished);
 	}
 
 	MessageBox::~MessageBox()
@@ -119,13 +119,13 @@ namespace Code
 		}
 
 		QObject *object = image.toQObject();
-		if(Image *otherImage = qobject_cast<Image*>(object))
+		if(auto otherImage = qobject_cast<Image*>(object))
 		{
 			mMessageBox->setIconPixmap(QPixmap::fromImage(otherImage->image()));
 		}
 		else
 		{
-			throwError("SetIconPixmapError", tr("Invalid image"));
+			throwError(QStringLiteral("SetIconPixmapError"), tr("Invalid image"));
 			return thisObject();
 		}
 
@@ -151,7 +151,7 @@ namespace Code
 		QPushButton *addedButton = mMessageBox->addButton(static_cast<QMessageBox::StandardButton>(button));
 		if(!addedButton)
 		{
-			throwError("AddCustomButtonError", tr("Add custom button failed"));
+			throwError(QStringLiteral("AddCustomButtonError"), tr("Add custom button failed"));
 			return thisObject();
 		}
 

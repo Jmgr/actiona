@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PARAMETER_H
-#define PARAMETER_H
+#pragma once
 
 #include "subparameter.h"
 #include "actiontools_global.h"
@@ -28,14 +27,13 @@
 
 namespace ActionTools
 {
-    using SubParameterHash = QHash<QString, SubParameter>;
+	using SubParameterHash = QMap<QString, SubParameter>;
 
 	class ParameterData : public QSharedData
 	{
 	public:
-		ParameterData()																{}
-		ParameterData(const ParameterData &other)
-			: QSharedData(other), subParameters(other.subParameters)				{}
+		ParameterData()																= default;
+        ParameterData(const ParameterData &other)                                   = default;
 
 		SubParameterHash subParameters;
 	};
@@ -44,12 +42,12 @@ namespace ActionTools
 	{
 	public:
 		Parameter()																	{ d = new ParameterData(); }
-		Parameter(const Parameter &other) : d(other.d)								{}
+        Parameter(const Parameter &other)                                           = default;
 
 		const SubParameterHash &subParameters() const								{ return d->subParameters; }
 		SubParameterHash &subParameters()											{ return d->subParameters; }
 		void setSubParameter(const QString &name, const SubParameter &subParameter)	{ d->subParameters.insert(name, subParameter); }
-		void setSubParameter(const QString &name, bool code, const QVariant &value)	{ setSubParameter(name, SubParameter(code, value)); }
+        void setSubParameter(const QString &name, bool code, const QString &value)	{ setSubParameter(name, SubParameter(code, value)); }
 		void setSubParameters(const SubParameterHash &subParameters)				{ d->subParameters = subParameters; }
 		SubParameter subParameter(const QString &name) const						{ return d->subParameters.value(name); }
 
@@ -60,11 +58,10 @@ namespace ActionTools
 		QSharedDataPointer<ParameterData> d;
 	};
 
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const Parameter &parameter);
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, Parameter &parameter);
+    ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const Parameter &parameter);
+    ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, Parameter &parameter);
 	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const Parameter &parameter);
 }
 
 Q_DECLARE_METATYPE(ActionTools::Parameter)
 
-#endif // PARAMETER_H

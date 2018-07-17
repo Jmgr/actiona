@@ -29,18 +29,32 @@
 
 namespace Actions
 {
-    Tools::StringListPair FindImageInstance::sources = qMakePair(
-			QStringList() << "screenshot" << "window" << "image",
-			QStringList()
-			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", "Screenshot")
-			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", "Window")
-			<< QT_TRANSLATE_NOOP("FindImageInstance::sources", "Image"));
-    Tools::StringListPair FindImageInstance::methods = qMakePair(
-            QStringList() << "correlationcoefficient" << "crosscorrelation" << "squareddifference",
-            QStringList()
-            << QT_TRANSLATE_NOOP("FindImageInstance::sources", "Correlation Coefficient")
-            << QT_TRANSLATE_NOOP("FindImageInstance::sources", "Cross Correlation")
-            << QT_TRANSLATE_NOOP("FindImageInstance::sources", "Squared Difference"));
+    Tools::StringListPair FindImageInstance::sources =
+    {
+        {
+            QStringLiteral("screenshot"),
+            QStringLiteral("window"),
+            QStringLiteral("image")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Screenshot")),
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Window")),
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Image"))
+        }
+    };
+    Tools::StringListPair FindImageInstance::methods =
+    {
+        {
+            QStringLiteral("correlationcoefficient"),
+            QStringLiteral("crosscorrelation"),
+            QStringLiteral("squareddifference")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Correlation Coefficient")),
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Cross Correlation")),
+            QStringLiteral(QT_TRANSLATE_NOOP("FindImageInstance::sources", "Squared Difference"))
+        }
+    };
 
 	FindImageInstance::FindImageInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
@@ -53,41 +67,40 @@ namespace Actions
           mDownPyramidCount(0),
           mSearchExpansion(0)
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(searchFinished(ActionTools::MatchingPointList)));
-        connect(&mWaitTimer, SIGNAL(timeout()), this, SLOT(startSearching()));
+        connect(mOpenCVAlgorithms, static_cast<void (ActionTools::OpenCVAlgorithms::*)(const ActionTools::MatchingPointList &)>(&ActionTools::OpenCVAlgorithms::finished),
+                this, &FindImageInstance::searchFinished);
+        connect(&mWaitTimer, &QTimer::timeout, this, &FindImageInstance::startSearching);
 
         mWaitTimer.setSingleShot(true);
 	}
 
-	FindImageInstance::~FindImageInstance()
-	{
-	}
+    FindImageInstance::~FindImageInstance() = default;
 
 	void FindImageInstance::startExecution()
 	{
 		bool ok = true;
 
-		mSource = evaluateListElement<Source>(ok, sources, "source");
-        mImageToFind = evaluateImage(ok, "imageToFind");
-        mIfFound = evaluateIfAction(ok, "ifFound");
-        mIfNotFound = evaluateIfAction(ok, "ifNotFound");
-		mPositionVariableName = evaluateVariable(ok, "position");
-        mMethod = evaluateListElement<Method>(ok, methods, "method");
-		mWindowRelativePosition = evaluateBoolean(ok, "windowRelativePosition");
-        mConfidenceMinimum = evaluateInteger(ok, "confidenceMinimum");
-		mMaximumMatches = evaluateInteger(ok, "maximumMatches");
-        mDownPyramidCount = evaluateInteger(ok, "downPyramidCount");
-        mSearchExpansion = evaluateInteger(ok, "searchExpansion");
-        mConfidenceVariableName = evaluateVariable(ok, "confidence");
-        mSearchDelay = evaluateInteger(ok, "searchDelay");
+		mSource = evaluateListElement<Source>(ok, sources, QStringLiteral("source"));
+		mImageToFind = evaluateImage(ok, QStringLiteral("imageToFind"));
+		mIfFound = evaluateIfAction(ok, QStringLiteral("ifFound"));
+		mIfNotFound = evaluateIfAction(ok, QStringLiteral("ifNotFound"));
+		mPositionVariableName = evaluateVariable(ok, QStringLiteral("position"));
+		mMethod = evaluateListElement<Method>(ok, methods, QStringLiteral("method"));
+		mWindowRelativePosition = evaluateBoolean(ok, QStringLiteral("windowRelativePosition"));
+		mConfidenceMinimum = evaluateInteger(ok, QStringLiteral("confidenceMinimum"));
+		mMaximumMatches = evaluateInteger(ok, QStringLiteral("maximumMatches"));
+		mDownPyramidCount = evaluateInteger(ok, QStringLiteral("downPyramidCount"));
+		mSearchExpansion = evaluateInteger(ok, QStringLiteral("searchExpansion"));
+		mConfidenceVariableName = evaluateVariable(ok, QStringLiteral("confidence"));
+		mSearchDelay = evaluateInteger(ok, QStringLiteral("searchDelay"));
 
 		if(!ok)
 			return;
 
-        validateParameterRange(ok, mConfidenceMinimum, "confidenceMinimum", tr("minimum confidence"), 0, 100);
-		validateParameterRange(ok, mMaximumMatches, "maximumMatches", tr("maximum matches"), 1);
-		validateParameterRange(ok, mDownPyramidCount, "downPyramidCount", tr("downsampling"), 1);
-        validateParameterRange(ok, mSearchExpansion, "searchExpansion", tr("search expansion"), 1);
+		validateParameterRange(ok, mConfidenceMinimum, QStringLiteral("confidenceMinimum"), tr("minimum confidence"), 0, 100);
+		validateParameterRange(ok, mMaximumMatches, QStringLiteral("maximumMatches"), tr("maximum matches"), 1);
+		validateParameterRange(ok, mDownPyramidCount, QStringLiteral("downPyramidCount"), tr("downsampling"), 1);
+		validateParameterRange(ok, mSearchExpansion, QStringLiteral("searchExpansion"), tr("search expansion"), 1);
 
 		if(!ok)
 			return;
@@ -124,7 +137,7 @@ namespace Actions
             {
                 bool ok = true;
 
-                QString windowName = evaluateString(ok, "windowName");
+				QString windowName = evaluateString(ok, QStringLiteral("windowName"));
 
                 if(!ok)
                     return;
@@ -145,7 +158,7 @@ namespace Actions
             {
                 bool ok = true;
 
-                QImage imageToSearchIn = evaluateImage(ok, "imageToSearchIn");
+				QImage imageToSearchIn = evaluateImage(ok, QStringLiteral("imageToSearchIn"));
 
                 if(!ok)
                     return;
@@ -157,7 +170,7 @@ namespace Actions
                     return;
                 }
 
-                mImagesToSearchIn.append(qMakePair(QPixmap::fromImage(imageToSearchIn), imageToSearchIn.rect()));
+                mImagesToSearchIn.append(std::make_pair(QPixmap::fromImage(imageToSearchIn), imageToSearchIn.rect()));
             }
             break;
         }
@@ -165,8 +178,7 @@ namespace Actions
         QList<QImage> sourceImages;
         sourceImages.reserve(mImagesToSearchIn.size());
 
-        using PixmapRectPair = QPair<QPixmap, QRect>;
-        for(const PixmapRectPair &imageToSearchIn: mImagesToSearchIn)
+        for(const auto &imageToSearchIn: mImagesToSearchIn)
             sourceImages.append(imageToSearchIn.first.toImage());
 
         if(!mOpenCVAlgorithms->findSubImageAsync(sourceImages,
@@ -189,7 +201,7 @@ namespace Actions
 
         if(matchingPointList.empty())
         {
-            setCurrentParameter("ifNotFound", "line");
+			setCurrentParameter(QStringLiteral("ifNotFound"), QStringLiteral("line"));
 
             QString line = evaluateSubParameter(ok, mIfNotFound.actionParameter());
             if(!ok)
@@ -199,21 +211,21 @@ namespace Actions
             {
                 setNextLine(line);
 
-                emit executionEnded();
+                executionEnded();
             }
             else if(mIfNotFound.action() == ActionTools::IfActionValue::CALLPROCEDURE)
             {
                 if(!callProcedure(line))
                     return;
 
-                emit executionEnded();
+                executionEnded();
             }
             else if(mIfNotFound.action() == ActionTools::IfActionValue::WAIT)
             {
                 mWaitTimer.start(mSearchDelay);
             }
             else
-                emit executionEnded();
+                executionEnded();
 
             return;
         }
@@ -250,7 +262,7 @@ namespace Actions
             setVariable(mConfidenceVariableName, arrayConfidenceResult);
 		}
 
-        setCurrentParameter("ifFound", "line");
+		setCurrentParameter(QStringLiteral("ifFound"), QStringLiteral("line"));
 
         QString line = evaluateSubParameter(ok, mIfFound.actionParameter());
         if(!ok)
@@ -260,21 +272,21 @@ namespace Actions
         {
             setNextLine(line);
 
-            emit executionEnded();
+            executionEnded();
         }
         else if(mIfFound.action() == ActionTools::IfActionValue::CALLPROCEDURE)
         {
             if(!callProcedure(line))
                 return;
 
-            emit executionEnded();
+            executionEnded();
         }
         else if(mIfFound.action() == ActionTools::IfActionValue::WAIT)
         {
             mWaitTimer.start(mSearchDelay);
         }
         else
-            emit executionEnded();
+            executionEnded();
     }
 }
 

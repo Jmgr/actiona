@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef INIFILE_H
-#define INIFILE_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -41,8 +40,8 @@ namespace Code
 		IniFile();
 	
 	public slots:
-        QString toString() const                                { return "IniFile"; }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<IniFile>(other); }
+		QString toString() const override                                { return QStringLiteral("IniFile"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<IniFile>(other); }
 		QScriptValue load(const QString &filename);
 		QScriptValue save(const QString &filename = QString());
 		QScriptValue clear();
@@ -59,7 +58,7 @@ namespace Code
         int keyCount() const;
 	
 	private:
-        Encoding mEncoding;
+        Encoding mEncoding{Native};
         boost::property_tree::ptree mCurrentSection;
         boost::property_tree::ptree mTree;
         QByteArray mCurrentSectionName;
@@ -67,4 +66,3 @@ namespace Code
 	};
 }
 
-#endif // INIFILE_H

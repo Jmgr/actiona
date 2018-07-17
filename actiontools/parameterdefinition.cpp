@@ -30,7 +30,7 @@ namespace ActionTools
 		  mOperatingSystems(WorksOnGnuLinux |
 							WorksOnWindows |
 							WorksOnMac),
-		  mParentWidget(0)
+		  mParentWidget(nullptr)
 	{
 	}
 
@@ -43,9 +43,9 @@ namespace ActionTools
 		mEditors.clear();
 	}
 
-	QVariant ParameterDefinition::defaultValue(QVariant defaultValue) const
+    QString ParameterDefinition::defaultValue(QString defaultValue) const
 	{
-		if(!mDefaultValue.isValid())
+        if(mDefaultValue.isEmpty())
 			return defaultValue;
 			
 		return mDefaultValue;
@@ -60,6 +60,6 @@ namespace ActionTools
 	
 	void ParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", defaultValue());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), defaultValue());
 	}
 }

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef INPUTDIALOG_H
-#define INPUTDIALOG_H
+#pragma once
 
 #include "basewindow.h"
 
@@ -58,7 +57,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 		InputDialog();
-		~InputDialog();
+		~InputDialog() override;
 		
 		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
 		void setOnValueChanged(const QScriptValue &onValueChanged)			{ mOnValueChanged = onValueChanged; }
@@ -69,7 +68,7 @@ namespace Code
 		QScriptValue value() const;
 		
 	public slots:
-		QString toString() const					{ return "InputDialog"; }
+		QString toString() const override					{ return QStringLiteral("InputDialog"); }
 		QScriptValue setLabelText(const QString &labelText);
 		QScriptValue setOkButtonText(const QString &okButtonText);
 		QScriptValue setCancelButtonText(const QString &cancelButtonText);
@@ -95,7 +94,7 @@ namespace Code
 	private:
 		void setup();
 
-		InputType mInputType;
+		InputType mInputType{Text};
 		QScriptValue mValue;
 		QScriptValue mItems;
 		QScriptValue mMinimum;
@@ -106,4 +105,3 @@ namespace Code
 	};
 }
 
-#endif // INPUTDIALOG_H

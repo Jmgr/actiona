@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PAUSEDEFINITION_H
-#define PAUSEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "numberparameterdefinition.h"
@@ -36,7 +35,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class PauseDefinition : public QObject, public ActionTools::ActionDefinition
+	class PauseDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -46,31 +45,28 @@ namespace Actions
 		{
 			translateItems("PauseInstance::units", PauseInstance::units);
 
-			ActionTools::NumberParameterDefinition *duration = new ActionTools::NumberParameterDefinition(ActionTools::Name("duration", tr("Duration")), this);
-			duration->setTooltip(tr("The duration of the pause"));
-			duration->setMinimum(0);
-			duration->setMaximum(std::numeric_limits<int>::max());
-			duration->setDefaultValue(5);
-			addElement(duration);
+            auto &duration = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("duration"), tr("Duration")});
+            duration.setTooltip(tr("The duration of the pause"));
+            duration.setMinimum(0);
+            duration.setMaximum(std::numeric_limits<int>::max());
+            duration.setDefaultValue(QStringLiteral("5"));
 
-			ActionTools::ListParameterDefinition *unit = new ActionTools::ListParameterDefinition(ActionTools::Name("unit", tr("Unit")), this);
-			unit->setTooltip(tr("The pause duration unit"));
-			unit->setItems(PauseInstance::units);
-			unit->setDefaultValue(PauseInstance::units.second.at(PauseInstance::Seconds));
-			addElement(unit);
+            auto &unit = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("unit"), tr("Unit")});
+            unit.setTooltip(tr("The pause duration unit"));
+            unit.setItems(PauseInstance::units);
+            unit.setDefaultValue(PauseInstance::units.second.at(PauseInstance::Seconds));
 		}
 
-		QString name() const													{ return QObject::tr("Pause"); }
-		QString id() const														{ return "ActionPause"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Pauses the script execution"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new PauseInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/pause.png"); }
+		QString name() const override													{ return QObject::tr("Pause"); }
+		QString id() const override														{ return QStringLiteral("ActionPause"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Pauses the script execution"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new PauseInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/pause.png")); }
 
 	private:
 		Q_DISABLE_COPY(PauseDefinition)
 	};
 }
 
-#endif // PAUSEDEFINITION_H

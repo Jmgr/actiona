@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SQL_H
-#define SQL_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -65,11 +64,11 @@ namespace Code
 		static void registerClass(QScriptEngine *scriptEngine);
 		
 		Sql(Driver driver);
-		~Sql();
+		~Sql() override;
 		
 	public slots:
-        QString toString() const                                { return "Sql"; }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Sql>(other); }
+		QString toString() const override                                { return QStringLiteral("Sql"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Sql>(other); }
 		QScriptValue connect(const QScriptValue &parameters) const;
 		QScriptValue prepare(const QString &queryString, const QScriptValue &parameters);
 		QScriptValue execute(const QString &queryString = QString());
@@ -85,4 +84,3 @@ namespace Code
 	};
 }
 
-#endif // SQL_H

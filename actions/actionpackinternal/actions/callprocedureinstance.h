@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CALLPROCEDUREINSTANCE_H
-#define CALLPROCEDUREINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "actiondefinition.h"
@@ -32,14 +31,14 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		CallProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		CallProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString name = evaluateString(ok, "name");
+			QString name = evaluateString(ok, QStringLiteral("name"));
 
 			if(!ok)
 				return;
@@ -47,7 +46,7 @@ namespace Actions
 			if(!callProcedure(name))
 				return;
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -55,4 +54,3 @@ namespace Actions
 	};
 }
 
-#endif // CALLPROCEDUREINSTANCE_H

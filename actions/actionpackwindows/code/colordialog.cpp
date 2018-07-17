@@ -28,7 +28,7 @@ namespace Code
 {
 	QScriptValue ColorDialog::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		ColorDialog *colorDialog = new ColorDialog;
+		auto colorDialog = new ColorDialog;
 		colorDialog->setupConstructorParameters(context, engine, context->argument(0));
 
 		QScriptValueIterator it(context->argument(0));
@@ -37,15 +37,15 @@ namespace Code
 		{
 			it.next();
 			
-			if(it.name() == "showAlphaChannel")
+			if(it.name() == QLatin1String("showAlphaChannel"))
 				colorDialog->mColorDialog->setOption(QColorDialog::ShowAlphaChannel, it.value().toBool());
-			else if(it.name() == "color")
+			else if(it.name() == QLatin1String("color"))
 				colorDialog->setColorPrivate(it.value(), context);
-			else if(it.name() == "onClosed")
+			else if(it.name() == QLatin1String("onClosed"))
 				colorDialog->mOnClosed = it.value();
-			else if(it.name() == "onColorSelected")
+			else if(it.name() == QLatin1String("onColorSelected"))
 				colorDialog->mOnColorSelected = it.value();
-			else if(it.name() == "onColorChanged")
+			else if(it.name() == QLatin1String("onColorChanged"))
 				colorDialog->mOnColorChanged = it.value();
 		}
 
@@ -60,9 +60,9 @@ namespace Code
 
 		setWidget(mColorDialog);
 		
-		connect(mColorDialog, SIGNAL(finished(int)), this, SLOT(finished(int)));
-		connect(mColorDialog, SIGNAL(colorSelected(QColor)), this, SLOT(colorSelected(QColor)));
-		connect(mColorDialog, SIGNAL(currentColorChanged(QColor)), this, SLOT(currentColorChanged(QColor)));
+        connect(mColorDialog, &QColorDialog::finished, this, &ColorDialog::finished);
+        connect(mColorDialog, &QColorDialog::colorSelected, this, &ColorDialog::colorSelected);
+        connect(mColorDialog, &QColorDialog::currentColorChanged, this, &ColorDialog::currentColorChanged);
 	}
 	
 	ColorDialog::~ColorDialog()
@@ -124,7 +124,7 @@ namespace Code
 		if(context->argumentCount() == 1)
 		{
 			QObject *object = color.toQObject();
-			if(Color *codeColor = qobject_cast<Color*>(object))
+			if(auto codeColor = qobject_cast<Color*>(object))
 				mColorDialog->setCurrentColor(codeColor->color());
 			else
 				mColorDialog->setCurrentColor(QColor(color.toString()));

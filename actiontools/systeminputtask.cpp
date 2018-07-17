@@ -54,7 +54,7 @@ namespace ActionTools
 			case XRecordFromServer:
 			case XRecordFromClient:
 				{
-					xEvent *recordData = reinterpret_cast<xEvent *>(safeData.data()->data);
+					auto recordData = reinterpret_cast<xEvent *>(safeData.data()->data);
 
 					switch(recordData->u.u.type)
 					{
@@ -203,17 +203,16 @@ namespace ActionTools
 			return CallNextHookEx(gKeyboardHook, nCode, wParam, lParam);
 		}
 #endif
-		Task *Task::mInstance = 0;
+		Task *Task::mInstance = nullptr;
 
 		Task::Task(QObject *parent)
 			: QObject(parent),
 			  mThread(new QThread(this))
-			, mStarted(false)
 #ifdef Q_OS_LINUX
-			, mProcessRepliesTimer(new QTimer(this))
+            ,mProcessRepliesTimer(new QTimer(this))
 #endif
 		{
-			Q_ASSERT(mInstance == 0);
+			Q_ASSERT(mInstance == nullptr);
 
 			mInstance = this;
 
@@ -224,7 +223,7 @@ namespace ActionTools
 #endif
 
 #ifdef Q_OS_LINUX
-			connect(mProcessRepliesTimer, SIGNAL(timeout()), this, SLOT(processReplies()));
+            connect(mProcessRepliesTimer, &QTimer::timeout, this, &Task::processReplies);
 
 			start();
 #endif
@@ -270,7 +269,7 @@ namespace ActionTools
 				return;
 			}
 
-			XRecordEnableContextAsync(QX11Info::display(), gXRecordContext, &xRecordCallback, 0);
+			XRecordEnableContextAsync(QX11Info::display(), gXRecordContext, &xRecordCallback, nullptr);
 
 			mProcessRepliesTimer->setSingleShot(false);
 			mProcessRepliesTimer->start(0);

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CURSORPATHDEFINITION_H
-#define CURSORPATHDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "cursorpathinstance.h"
@@ -35,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class CursorPathDefinition : public QObject, public ActionTools::ActionDefinition
+	class CursorPathDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -45,34 +44,30 @@ namespace Actions
 		{
             translateItems("CursorPathInstance::buttons", CursorPathInstance::buttons);
 
-			ActionTools::PointListParameterDefinition *path = new ActionTools::PointListParameterDefinition(ActionTools::Name("path", tr("Path")), this);
-			path->setTooltip(tr("The path to follow"));
-			addElement(path);
+			auto &path = addParameter<ActionTools::PointListParameterDefinition>({QStringLiteral("path"), tr("Path")});
+            path.setTooltip(tr("The path to follow"));
 
-            ActionTools::ListParameterDefinition *button = new ActionTools::ListParameterDefinition(ActionTools::Name("button", tr("Button")), this);
-            button->setTooltip(tr("The button to simulate"));
-            button->setItems(CursorPathInstance::buttons);
-            button->setDefaultValue(CursorPathInstance::buttons.second.at(CursorPathInstance::NoButton));
-            addElement(button);
+			auto &button = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("button"), tr("Button")});
+            button.setTooltip(tr("The button to simulate"));
+            button.setItems(CursorPathInstance::buttons);
+            button.setDefaultValue(CursorPathInstance::buttons.second.at(CursorPathInstance::NoButton));
 
-			ActionTools::PositionParameterDefinition *positionOffset = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionOffset", tr("Offset")), this);
-			positionOffset->setTooltip(tr("The offset to apply to the path"));
-			addElement(positionOffset, 1);
+            auto &positionOffset = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
+            positionOffset.setTooltip(tr("The offset to apply to the path"));
 		}
 
-		QString name() const													{ return QObject::tr("Cursor path"); }
-		QString id() const														{ return "ActionCursorPath"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Move the mouse cursor on a path"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new CursorPathInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/movecursor.png"); }
-		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Cursor path"); }
+		QString id() const override														{ return QStringLiteral("ActionCursorPath"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Move the mouse cursor on a path"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new CursorPathInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/movecursor.png")); }
+		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(CursorPathDefinition)
 	};
 }
 
-#endif // CURSORPATHDEFINITION_H

@@ -27,8 +27,9 @@
 
 #include <QByteArray>
 
-#define QXT_MUST_QP(x) (x < char(32) || x > char(126) || x == '=' || x == '?')
+inline bool QXT_MUST_QP(const char x) { return (x < 32 || x > 126 || x == '=' || x == '?'); }
+inline bool QXT_MUST_QP(const QChar x) { return (x < 32 || x > 126 || x == QLatin1Char('=') || x == QLatin1Char('?')); }
 QByteArray qxt_fold_mime_header(const QString& key, const QString& value, QTextCodec* latin1,
-                                const QByteArray& prefix = QByteArray());
+								const QByteArray& prefix = QByteArray());
 
 #endif // QXTMAIL_P_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TCP_H
-#define TCP_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -53,7 +52,7 @@ namespace Code
 		
 		Tcp();
 		Tcp(QTcpSocket *tcpSocket);
-		~Tcp();
+		~Tcp() override;
 		
 		void setOnConnected(const QScriptValue &onConnected)			{ mOnConnected = onConnected; }
 		void setOnDisconnected(const QScriptValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
@@ -68,8 +67,8 @@ namespace Code
 		QScriptValue onError() const									{ return mOnError; }
 		
 	public slots:
-		QString toString() const										{ return "Tcp"; }
-        virtual bool equals(const QScriptValue &other) const            { return defaultEqualsImplementation<Tcp>(other); }
+		QString toString() const override										{ return QStringLiteral("Tcp"); }
+        bool equals(const QScriptValue &other) const override            { return defaultEqualsImplementation<Tcp>(other); }
 		QScriptValue connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
 		QScriptValue waitForConnected(int waitTime = 30000);
 		QScriptValue waitForBytesWritten(int waitTime = 30000);
@@ -98,4 +97,3 @@ namespace Code
 	};
 }
 
-#endif // TCP_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODELINEEDIT_H
-#define CODELINEEDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -43,7 +42,7 @@ namespace ActionTools
 
 	public:
         CodeLineEdit(QWidget *parent, const QRegExp &regexpValidation = QRegExp());
-        virtual ~CodeLineEdit();
+        ~CodeLineEdit() override ;
 
 		bool isMultiline() const										{ return mMultiline; }
 		bool isCode() const												{ return mCode; }
@@ -62,21 +61,21 @@ namespace ActionTools
 
 		void addShortcuts(QMenu *menu);
 		
-		void setCompletionModel(QAbstractItemModel *completionModel);
-        void setParameterContainer(const ParameterContainer *parameterContainer);
-        QSet<QString> findVariables() const;
+        void setCompletionModel(QAbstractItemModel *completionModel) override;
+        void setParameterContainer(const ParameterContainer *parameterContainer) override;
+        QSet<QString> findVariables() const override;
 
 	public slots:
 		void reverseCode();
-		void textChanged(const QString &text);
-		void openEditor(int line = -1, int column = -1);
+        void onTextChanged(const QString &text);
+        void openEditor(int line = -1, int column = -1) override;
 
 	signals:
 		void codeChanged(bool code);
 
 	protected:
-		void contextMenuEvent(QContextMenuEvent *event);
-		void resizeEvent(QResizeEvent *event);
+        void contextMenuEvent(QContextMenuEvent *event) override;
+        void resizeEvent(QResizeEvent *event) override;
         virtual void insertVariable(const QString &variable);
 
     private slots:
@@ -91,11 +90,11 @@ namespace ActionTools
 		void resizeButtons();
         void addVariablesAndResourcesMenus(QMenu *menu);
 		
-		void mouseMoveEvent(QMouseEvent *event);
+        void mouseMoveEvent(QMouseEvent *event) override;
 		void multilineCheck(const QString &text);
 
-		void mouseDoubleClickEvent(QMouseEvent *event);
-		void paintEvent(QPaintEvent *event);
+        void mouseDoubleClickEvent(QMouseEvent *event) override;
+        void paintEvent(QPaintEvent *event) override;
 
         const ActionTools::ParameterContainer *mParameterContainer;
 		bool mCode;
@@ -115,4 +114,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CODELINEEDIT_H

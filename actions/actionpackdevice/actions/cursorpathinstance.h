@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CURSORPATHINSTANCE_H
-#define CURSORPATHINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../mousedevice.h"
@@ -42,23 +41,23 @@ namespace Actions
             RightButton
         };
 
-		CursorPathInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		CursorPathInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent),
             mCurrentPoint(0),
             mButton(NoButton)
 		{
-			connect(&mMoveTimer, SIGNAL(timeout()), this, SLOT(moveToNextPosition()));
+            connect(&mMoveTimer, &QTimer::timeout, this, &CursorPathInstance::moveToNextPosition);
 		}
 
         static Tools::StringListPair buttons;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			mPositionOffset = evaluatePoint(ok, "positionOffset");
-            mButton = evaluateListElement<Button>(ok, buttons, "button");
-			mPoints = evaluatePolygon(ok, "path");
+			mPositionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
+			mButton = evaluateListElement<Button>(ok, buttons, QStringLiteral("button"));
+			mPoints = evaluatePolygon(ok, QStringLiteral("path"));
 
 			if(!ok)
 				return;
@@ -85,14 +84,14 @@ namespace Actions
             }
 		}
 
-		void stopExecution()
+		void stopExecution() override
 		{
             releaseButton();
 
 			mMoveTimer.stop();
 		}
 
-		void stopLongTermExecution()
+		void stopLongTermExecution() override
 		{
 			mMouseDevice.reset();
 		}
@@ -104,7 +103,7 @@ namespace Actions
 			{
                 releaseButton();
 
-				emit executionEnded();
+				executionEnded();
 				mMoveTimer.stop();
 			}
 			else
@@ -144,4 +143,3 @@ namespace Actions
 	};
 }
 
-#endif // CURSORPATHINSTANCE_H

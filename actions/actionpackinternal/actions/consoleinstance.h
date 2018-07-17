@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CONSOLEINSTANCE_H
-#define CONSOLEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -40,17 +39,17 @@ namespace Actions
 			Error
 		};
 
-		ConsoleInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ConsoleInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
         static Tools::StringListPair outputs;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString text = evaluateString(ok, "text");
-			Output output = evaluateListElement<Output>(ok, outputs, "output");
+			QString text = evaluateString(ok, QStringLiteral("text"));
+			auto output = evaluateListElement<Output>(ok, outputs, QStringLiteral("output"));
 
 			if(!ok)
 				return;
@@ -68,7 +67,7 @@ namespace Actions
 				break;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -76,4 +75,3 @@ namespace Actions
 	};
 }
 
-#endif // CONSOLEINSTANCE_H

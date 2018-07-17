@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITECLIPBOARDDEFINITION_H
-#define WRITECLIPBOARDDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "writeclipboardinstance.h"
@@ -34,7 +33,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WriteClipboardDefinition : public QObject, public ActionTools::ActionDefinition
+	class WriteClipboardDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -42,22 +41,20 @@ namespace Actions
 		explicit WriteClipboardDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *input = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
-			input->setTooltip(tr("The new clipboard value"));
-			addElement(input);
+			auto &input = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
+            input.setTooltip(tr("The new clipboard value"));
 		}
 
-		QString name() const													{ return QObject::tr("Write clipboard"); }
-		QString id() const														{ return "ActionWriteClipboard"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Set the clipboard contents"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteClipboardInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/writeclipboard.png"); }
+		QString name() const override													{ return QObject::tr("Write clipboard"); }
+		QString id() const override														{ return QStringLiteral("ActionWriteClipboard"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Set the clipboard contents"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteClipboardInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/writeclipboard.png")); }
 
 	private:
 		Q_DISABLE_COPY(WriteClipboardDefinition)
 	};
 }
 
-#endif // WRITECLIPBOARDDEFINITION_H

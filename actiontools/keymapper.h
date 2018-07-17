@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYMAPPER_H
-#define KEYMAPPER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -37,4 +36,3 @@ namespace ActionTools
 	};
 }
 
-#endif // KEYMAPPER_H

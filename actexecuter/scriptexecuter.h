@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTEXECUTER_H
-#define SCRIPTEXECUTER_H
+#pragma once
 
 #include "executer.h"
 
@@ -38,9 +37,9 @@ class ScriptExecuter : public Executer
     Q_OBJECT
 	
 public:
-    explicit ScriptExecuter(QObject *parent = 0);
+    explicit ScriptExecuter(QObject *parent = nullptr);
 	
-	bool start(QIODevice *device, const QString &filename);
+	bool start(QIODevice *device, const QString &filename) override;
 
 public slots:
 	void executionStopped();
@@ -51,4 +50,3 @@ private:
 	LibExecuter::Executer *mExecuter;
 };
 
-#endif // SCRIPTEXECUTER_H

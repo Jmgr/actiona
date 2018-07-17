@@ -23,23 +23,34 @@
 
 namespace Actions
 {
-    Tools::StringListPair SystemInstance::operations = qMakePair(
-			QStringList() << "logout" << "reboot" << "shutdown" << "suspend" << "hibernate" << "lockscreen" << "startscreensaver",
-			QStringList()
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Logout")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Reboot")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Shutdown")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Suspend")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Hibernate")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Lock screen")
-			<< QT_TRANSLATE_NOOP("SystemInstance::operations", "Start screen saver"));
+    Tools::StringListPair SystemInstance::operations =
+    {
+        {
+            QStringLiteral("logout"),
+            QStringLiteral("reboot"),
+            QStringLiteral("shutdown"),
+            QStringLiteral("suspend"),
+            QStringLiteral("hibernate"),
+            QStringLiteral("lockscreen"),
+            QStringLiteral("startscreensaver")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Logout")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Reboot")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Shutdown")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Suspend")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Hibernate")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Lock screen")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SystemInstance::operations", "Start screen saver"))
+        }
+    };
 
 	void SystemInstance::startExecution()
 	{
 		bool ok = true;
 
-		Operation operation = evaluateListElement<Operation>(ok, operations, "operation");
-		bool force = evaluateBoolean(ok, "force");
+		auto operation = evaluateListElement<Operation>(ok, operations, QStringLiteral("operation"));
+		bool force = evaluateBoolean(ok, QStringLiteral("force"));
 
 		if(!ok)
 			return;
@@ -99,7 +110,7 @@ namespace Actions
 			break;
 		}
 
-		emit executionEnded();
+		executionEnded();
 	}
 }
 

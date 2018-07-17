@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOOPDEFINITION_H
-#define NOOPDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "noopinstance.h"
@@ -32,7 +31,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class NoopDefinition : public QObject, public ActionTools::ActionDefinition
+	class NoopDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -42,17 +41,16 @@ namespace Actions
 		{
 		}
 
-		QString name() const													{ return QObject::tr("No-op"); }
-		QString id() const														{ return "ActionNoop"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Does nothing"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new NoopInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/noop.png"); }
+		QString name() const override													{ return QObject::tr("No-op"); }
+		QString id() const override														{ return QStringLiteral("ActionNoop"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Does nothing"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new NoopInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/noop.png")); }
 
 	private:
 		Q_DISABLE_COPY(NoopDefinition)
 	};
 }
 
-#endif // NOOPDEFINITION_H

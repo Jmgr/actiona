@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONEXCEPTION_H
-#define ACTIONEXCEPTION_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -52,8 +51,7 @@ namespace ActionTools
 		class ExceptionActionInstance
 		{
 		public:
-			ExceptionActionInstance()
-				: mAction(StopExecutionExceptionAction)	{}
+            ExceptionActionInstance()                   = default;
 			ExceptionActionInstance(ExceptionAction action, const QString &line)
 				: mAction(action), mLine(line)			{}
 
@@ -69,7 +67,7 @@ namespace ActionTools
 			}
 
 		private:
-			ExceptionAction mAction;
+			ExceptionAction mAction{StopExecutionExceptionAction};
 			QString mLine;
 		};
 
@@ -97,4 +95,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::ActionException::Exception)
 
-#endif // ACTIONEXCEPTION_H

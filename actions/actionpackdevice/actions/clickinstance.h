@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CLICKINSTANCE_H
-#define CLICKINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../mousedevice.h"
@@ -44,14 +43,14 @@ namespace Actions
 			InvalidActionException
 		};
 	
-		ClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
         static Tools::StringListPair buttons;
         static Tools::StringListPair actions;
 	
-		void startExecution();
-		void stopLongTermExecution();
+		void startExecution() override;
+		void stopLongTermExecution() override;
 	
 	private:
 		MouseDevice mMouseDevice;
@@ -60,4 +59,3 @@ namespace Actions
 	};
 }
 
-#endif // CLICKINSTANCE_H

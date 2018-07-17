@@ -28,7 +28,7 @@ namespace Code
 {
 	QScriptValue IniFile::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		IniFile *iniFile = new IniFile;
+		auto iniFile = new IniFile;
 
 		QScriptValueIterator it(context->argument(0));
 
@@ -36,7 +36,7 @@ namespace Code
 		{
 			it.next();
 			
-            if(it.name() == "encoding")
+			if(it.name() == QLatin1String("encoding"))
 				iniFile->mEncoding = static_cast<Encoding>(it.value().toInt32());
 		}
 
@@ -44,8 +44,8 @@ namespace Code
 	}
 	
 	IniFile::IniFile()
-		: CodeClass(),
-		mEncoding(Native)
+		: CodeClass()
+		
     {
     }
 
@@ -55,9 +55,9 @@ namespace Code
         {
             boost::property_tree::ini_parser::read_ini(toEncoding(filename, mEncoding).constData(), mTree);
         }
-        catch(const std::runtime_error &e)
+        catch(const std::runtime_error &)
         {
-            throwError("LoadFileError", tr("Cannot load the file"));
+			throwError(QStringLiteral("LoadFileError"), tr("Cannot load the file"));
             return thisObject();
         }
 
@@ -74,9 +74,9 @@ namespace Code
         {
             boost::property_tree::ini_parser::write_ini(filenameByteArray.constData(), mTree);
         }
-        catch(const std::runtime_error &e)
+        catch(const std::runtime_error &)
         {
-            throwError("SaveFileError", tr("Cannot save the file"));
+			throwError(QStringLiteral("SaveFileError"), tr("Cannot save the file"));
             return thisObject();
         }
 
@@ -98,7 +98,7 @@ namespace Code
         {
             if(!create)
             {
-                throwError("FindSectionError", tr("Cannot find the section named \"%1\"").arg(sectionName));
+				throwError(QStringLiteral("FindSectionError"), tr("Cannot find the section named \"%1\"").arg(sectionName));
                 return thisObject();
             }
 
@@ -123,7 +123,7 @@ namespace Code
 	{
         if(sectionIndex < 0 || sectionIndex >= static_cast<int>(mTree.size()))
 		{
-			throwError("FindSectionError", tr("Invalid section index"));
+			throwError(QStringLiteral("FindSectionError"), tr("Invalid section index"));
 			return QString();
 		}
 
@@ -140,7 +140,7 @@ namespace Code
 
         if(!mTree.erase(sectionNameByteArray.constData()))
 		{
-			throwError("FindSectionError", tr("Cannot delete section named \"%1\"").arg(sectionName));
+			throwError(QStringLiteral("FindSectionError"), tr("Cannot delete section named \"%1\"").arg(sectionName));
 			return thisObject();
 		}
 		
@@ -163,7 +163,7 @@ namespace Code
 	{
         if(keyIndex < 0 || keyIndex >= static_cast<int>(mCurrentSection.size()))
 		{
-            throwError("KeyError", tr("Invalid key index"));
+			throwError(QStringLiteral("KeyError"), tr("Invalid key index"));
 			return QString();
 		}
 
@@ -178,7 +178,7 @@ namespace Code
 	{
         if(!keyExists(keyName))
         {
-            throwError("KeyError", tr("Cannot find any key named \"%1\"").arg(keyName));
+			throwError(QStringLiteral("KeyError"), tr("Cannot find any key named \"%1\"").arg(keyName));
             return QString();
         }
 
@@ -200,7 +200,7 @@ namespace Code
 
         if(!mCurrentSection.erase(keyNameByteArray.constData()))
         {
-            throwError("KeyError", tr("Cannot delete key named \"%1\"").arg(keyName));
+			throwError(QStringLiteral("KeyError"), tr("Cannot delete key named \"%1\"").arg(keyName));
             return thisObject();
         }
 

@@ -31,23 +31,37 @@
 
 namespace Actions
 {
-    Tools::StringListPair DataInputInstance::dataTypes = qMakePair(
-		QStringList() << "text" << "integer" << "decimal",
-		QStringList()
-		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Text")
-		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer")
-		<< QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal"));
+    Tools::StringListPair DataInputInstance::dataTypes =
+    {
+        {
+            QStringLiteral("text"),
+            QStringLiteral("integer"),
+            QStringLiteral("decimal")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Text")),
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Integer")),
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::dataTypes", "Decimal"))
+        }
+    };
 
-    Tools::StringListPair DataInputInstance::editorTypes = qMakePair(
-        QStringList() << "line" << "multiline" << "password",
-        QStringList()
-        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line")
-        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Multiline")
-        << QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Password"));
+    Tools::StringListPair DataInputInstance::editorTypes =
+    {
+        {
+            QStringLiteral("line"),
+            QStringLiteral("multiline"),
+            QStringLiteral("password")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Line")),
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Multiline")),
+            QStringLiteral(QT_TRANSLATE_NOOP("DataInputInstance::editorTypes", "Password"))
+        }
+    };
 
 	DataInputInstance::DataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
-		mInputDialog(0)
+		mInputDialog(nullptr)
 	{
 	}
 
@@ -55,12 +69,12 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString question = evaluateString(ok, "question");
-		mDataType = evaluateListElement<DataType>(ok, dataTypes, "dataType");
-        EditorType editorType = evaluateListElement<EditorType>(ok, editorTypes, "editorType");
-		mVariable = evaluateVariable(ok, "variable");
-		QString windowTitle = evaluateString(ok, "windowTitle");
-        QImage windowIcon = evaluateImage(ok, "windowIcon");
+		QString question = evaluateString(ok, QStringLiteral("question"));
+		mDataType = evaluateListElement<DataType>(ok, dataTypes, QStringLiteral("dataType"));
+		auto editorType = evaluateListElement<EditorType>(ok, editorTypes, QStringLiteral("editorType"));
+		mVariable = evaluateVariable(ok, QStringLiteral("variable"));
+		QString windowTitle = evaluateString(ok, QStringLiteral("windowTitle"));
+		QImage windowIcon = evaluateImage(ok, QStringLiteral("windowIcon"));
 
 		if(!ok)
 			return;
@@ -69,22 +83,22 @@ namespace Actions
 		double decimalDefaultValue = 0.0;
 		int integerDefaultValue = 0;
 
-		mInputDialog = 0;
+		mInputDialog = nullptr;
 
 		switch(mDataType)
 		{
 		case IntegerType:
-			integerDefaultValue = evaluateInteger(ok, "defaultValue");
+			integerDefaultValue = evaluateInteger(ok, QStringLiteral("defaultValue"));
 			if(!ok)
 				return;
 			break;
 		case DecimalType:
-			decimalDefaultValue = evaluateDouble(ok, "defaultValue");
+			decimalDefaultValue = evaluateDouble(ok, QStringLiteral("defaultValue"));
 			if(!ok)
 				return;
 			break;
 		default:
-			textDefaultValue = evaluateString(ok, "defaultValue");
+			textDefaultValue = evaluateString(ok, QStringLiteral("defaultValue"));
 			if(!ok)
 				return;
 			break;
@@ -151,7 +165,7 @@ namespace Actions
 			mInputDialog->open(this, SLOT(dataEntered(const QString &)));
 			break;
 		}
-		connect(mInputDialog, SIGNAL(rejected()), this, SLOT(canceled()));
+        connect(mInputDialog, &QInputDialog::rejected, this, &DataInputInstance::canceled);
 	}
 
 	void DataInputInstance::stopExecution()
@@ -159,7 +173,7 @@ namespace Actions
 		if(mInputDialog)
 		{
 			mInputDialog->close();
-			mInputDialog = 0;
+			mInputDialog = nullptr;
 		}
 	}
 
@@ -167,35 +181,36 @@ namespace Actions
 	{
         setVariable(mVariable, value);
 
-		mInputDialog->disconnect();
-		mInputDialog->close();
-
-		emit executionEnded();
+		endExecution();
 	}
 
 	void DataInputInstance::dataEntered(double value)
 	{
         setVariable(mVariable, value);
 
-		mInputDialog->disconnect();
-		mInputDialog->close();
-
-		emit executionEnded();
+		endExecution();
 	}
 
 	void DataInputInstance::dataEntered(const QString &value)
 	{
         setVariable(mVariable, value);
 
-		mInputDialog->disconnect();
-		mInputDialog->close();
-
-		emit executionEnded();
+		endExecution();
 	}
 
 	void DataInputInstance::canceled()
 	{
 		//TODO: add an exception to trigger when canceled
-		dataEntered(QString());
+        setVariable(mVariable, QString{});
+
+		endExecution();
+	}
+
+	void DataInputInstance::endExecution()
+	{
+		mInputDialog->disconnect();
+		mInputDialog->close();
+
+		executionEnded();
 	}
 }

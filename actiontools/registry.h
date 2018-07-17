@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef AT_REGISTRY_H
-#define AT_REGISTRY_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -63,13 +62,12 @@ namespace ActionTools
 		static WriteResult write(const QVariant &data, Key key, const QString &subkey, const QString &value = QString());
 #endif
 
-	private:
-		Registry();
+		Registry() = delete;
 
+    private:
 #ifdef Q_OS_WIN
 		static HKEY enumToKey(Key key);
 #endif
 	};
 }
 
-#endif // AT_REGISTRY_H

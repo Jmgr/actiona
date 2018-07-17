@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCEDIALOG_H
-#define RESOURCEDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -42,13 +41,13 @@ class ResourceDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit ResourceDialog(ActionTools::Script *script, QWidget *parent = 0);
-    ~ResourceDialog();
+    explicit ResourceDialog(ActionTools::Script *script, QWidget *parent = nullptr);
+    ~ResourceDialog() override;
 
     void setCurrentResource(const QString &resource);
 
 public slots:
-    virtual void accept();
+    void accept() override;
 
 private slots:
     void insertFiles(const QStringList &filenames);
@@ -67,4 +66,3 @@ private:
     ActionTools::Script *mScript;
 };
 
-#endif // RESOURCEDIALOG_H

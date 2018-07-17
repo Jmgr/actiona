@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READREGISTRYDEFINITION_H
-#define READREGISTRYDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readregistryinstance.h"
@@ -35,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ReadRegistryDefinition : public QObject, public ActionTools::ActionDefinition
+    class ReadRegistryDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 
@@ -43,40 +42,35 @@ namespace Actions
 		explicit ReadRegistryDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
-			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition(ActionTools::Name("key", tr("Key")), this);
-			key->setTooltip(tr("The registry key to read from"));
-			key->setItems(ReadRegistryInstance::keys);
-			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
-			addElement(key);
+            auto &key = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("key"), tr("Key")});
+            key.setTooltip(tr("The registry key to read from"));
+            key.setItems(ReadRegistryInstance::keys);
+            key.setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 
-			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition(ActionTools::Name("subKey", tr("Subkey")), this);
-			subKey->setTooltip(tr("The registry subkey to read from"));
-			addElement(subKey);
+            auto &subKey = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("subKey"), tr("Subkey")});
+            subKey.setTooltip(tr("The registry subkey to read from"));
 
-			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
-			value->setTooltip(tr("The value to read"));
-			addElement(value);
+            auto &value = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
+            value.setTooltip(tr("The value to read"));
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			variable->setTooltip(tr("The variable where to save the value read from the registry"));
-			addElement(variable);
+            auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable where to save the value read from the registry"));
 
 			addException(ReadRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
 			addException(ReadRegistryInstance::CannotFindValueException, tr("Cannot find value"));
 			addException(ReadRegistryInstance::InvalidValueType, tr("Invalid value type"));
 		}
 
-		QString name() const													{ return QObject::tr("Read registry"); }
-		QString id() const														{ return "ActionReadRegistry"; }
-		ActionTools::Flag flags() const											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read an entry from the registry"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadRegistryInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/readregistry.png"); }
+		QString name() const override													{ return QObject::tr("Read registry"); }
+		QString id() const override														{ return QStringLiteral("ActionReadRegistry"); }
+		ActionTools::Flag flags() const override											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Read an entry from the registry"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadRegistryInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readregistry.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadRegistryDefinition)
 	};
 }
 
-#endif // READREGISTRYDEFINITION_H

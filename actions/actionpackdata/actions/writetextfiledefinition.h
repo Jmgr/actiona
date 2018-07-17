@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITETEXTFILEDEFINITION_H
-#define WRITETEXTFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "writetextfileinstance.h"
@@ -35,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WriteTextFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class WriteTextFileDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 
@@ -45,35 +44,31 @@ namespace Actions
 		{
 			translateItems("WriteTextFileInstance::modes", WriteTextFileInstance::modes);
 
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("File")), this);
-			file->setTooltip(tr("The file you want to write"));
-			addElement(file);
+			auto &file = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
+            file.setTooltip(tr("The file you want to write"));
 
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("text", tr("Text")), this);
-			text->setTooltip(tr("The text to write to the file"));
-			addElement(text);
+			auto &text = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
+            text.setTooltip(tr("The text to write to the file"));
 
-			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
-			mode->setTooltip(tr("The file write mode"));
-			mode->setItems(WriteTextFileInstance::modes);
-			mode->setDefaultValue(WriteTextFileInstance::modes.second.at(WriteTextFileInstance::Truncate));
-			addElement(mode, 1);
+            auto &mode = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")}, 1);
+            mode.setTooltip(tr("The file write mode"));
+            mode.setItems(WriteTextFileInstance::modes);
+            mode.setDefaultValue(WriteTextFileInstance::modes.second.at(WriteTextFileInstance::Truncate));
 
 			addException(WriteTextFileInstance::CannotWriteFileException, tr("Cannot write file"));
 		}
 
-		QString name() const													{ return QObject::tr("Write text file"); }
-		QString id() const														{ return "ActionWriteTextFile"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Write a plain text file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteTextFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/writetext.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Write text file"); }
+		QString id() const override														{ return QStringLiteral("ActionWriteTextFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Write a plain text file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteTextFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/writetext.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(WriteTextFileDefinition)
 	};
 }
 
-#endif // WRITETEXTFILEDEFINITION_H

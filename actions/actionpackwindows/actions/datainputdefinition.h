@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DATAINPUTDEFINITION_H
-#define DATAINPUTDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "datainputinstance.h"
@@ -36,7 +35,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class DataInputDefinition : public QObject, public ActionTools::ActionDefinition
+	class DataInputDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -47,54 +46,46 @@ namespace Actions
 			translateItems("DataInputInstance::dataTypes", DataInputInstance::dataTypes);
             translateItems("DataInputInstance::editorTypes", DataInputInstance::editorTypes);
 
-			ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition(ActionTools::Name("question", tr("Question")), this);
-			question->setTooltip(tr("The question to ask"));
-			addElement(question);
+            auto &question = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("question"), tr("Question")});
+            question.setTooltip(tr("The question to ask"));
 
-			ActionTools::ListParameterDefinition *dataType = new ActionTools::ListParameterDefinition(ActionTools::Name("dataType", tr("Data type")), this);
-			dataType->setTooltip(tr("The data type"));
-			dataType->setItems(DataInputInstance::dataTypes);
-			dataType->setDefaultValue(DataInputInstance::dataTypes.second.at(DataInputInstance::TextType));
-			addElement(dataType);
+            auto &dataType = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("dataType"), tr("Data type")});
+            dataType.setTooltip(tr("The data type"));
+            dataType.setItems(DataInputInstance::dataTypes);
+            dataType.setDefaultValue(DataInputInstance::dataTypes.second.at(DataInputInstance::TextType));
 
-            ActionTools::ListParameterDefinition *editorType = new ActionTools::ListParameterDefinition(ActionTools::Name("editorType", tr("Editor type")), this);
-            editorType->setTooltip(tr("The editor type"));
-            editorType->setItems(DataInputInstance::editorTypes);
-            editorType->setDefaultValue(DataInputInstance::editorTypes.second.at(DataInputInstance::LineEditorType));
-            addElement(editorType);
+            auto &editorType = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("editorType"), tr("Editor type")});
+            editorType.setTooltip(tr("The editor type"));
+            editorType.setItems(DataInputInstance::editorTypes);
+            editorType.setDefaultValue(DataInputInstance::editorTypes.second.at(DataInputInstance::LineEditorType));
 
-			ActionTools::TextParameterDefinition *defaultValue = new ActionTools::TextParameterDefinition(ActionTools::Name("defaultValue", tr("Default value")), this);
-			defaultValue->setTooltip(tr("The default value"));
-			addElement(defaultValue);
+            auto &defaultValue = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("defaultValue"), tr("Default value")});
+            defaultValue.setTooltip(tr("The default value"));
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			variable->setTooltip(tr("The variable where to save the entered input"));
-			addElement(variable);
+            auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable where to save the entered input"));
 
-			ActionTools::TextParameterDefinition *windowTitle = new ActionTools::TextParameterDefinition(ActionTools::Name("windowTitle", tr("Window title")), this);
-			windowTitle->setTooltip(tr("The title of the window"));
-			addElement(windowTitle, 1);
+            auto &windowTitle = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("windowTitle"), tr("Window title")}, 1);
+            windowTitle.setTooltip(tr("The title of the window"));
 
-            ActionTools::ImageParameterDefinition *windowIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
-			windowIcon->setTooltip(tr("The window icon to use"));
-			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
-			windowIcon->setCaption(tr("Select the icon to use"));
-			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
-			addElement(windowIcon, 1);
+            auto &windowIcon = addParameter<ActionTools::ImageParameterDefinition>({QStringLiteral("windowIcon"), tr("Window icon")}, 1);
+            windowIcon.setTooltip(tr("The window icon to use"));
+            windowIcon.setMode(ActionTools::FileEdit::FileOpen);
+            windowIcon.setCaption(tr("Select the icon to use"));
+            windowIcon.setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 		}
 
-		QString name() const													{ return QObject::tr("Data input"); }
-		QString id() const														{ return "ActionDataInput"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Ask the user to enter some data"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new DataInputInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
-		QPixmap icon() const													{ return QPixmap(":/icons/datainput.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Data input"); }
+		QString id() const override														{ return QStringLiteral("ActionDataInput"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Ask the user to enter some data"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new DataInputInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/datainput.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(DataInputDefinition)
 	};
 }
 
-#endif // DATAINPUTDEFINITION_H

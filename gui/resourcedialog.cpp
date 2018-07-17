@@ -42,17 +42,17 @@ ResourceDialog::ResourceDialog(ActionTools::Script *script, QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->resourcesTableWidget, SIGNAL(filesDropped(QStringList)), this, SLOT(insertFiles(QStringList)));
-    connect(ui->resourcesTableWidget, SIGNAL(removeSelection()), this, SLOT(removeSelection()));
-    connect(ui->resourcesTableWidget, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
+    connect(ui->resourcesTableWidget, &ResourceTableWidget::filesDropped, this, &ResourceDialog::insertFiles);
+    connect(ui->resourcesTableWidget, &ResourceTableWidget::removeSelection, this, &ResourceDialog::removeSelection);
+    connect(ui->resourcesTableWidget, &ResourceTableWidget::itemSelectionChanged, this, &ResourceDialog::selectionChanged);
 
     ui->resourcesTableWidget->setItemDelegateForColumn(0, new ResourceNameDelegate(ui->resourcesTableWidget, this));
     ui->resourcesTableWidget->setItemDelegateForColumn(1, new ResourceTypeDelegate(this));
     ui->removeSelectedPushButton->setEnabled(false);
     ui->resourcesTableWidget->setSortingEnabled(false);
 
-    QHash<QString, ActionTools::Resource> resources = script->resources();
-    QHash<QString, ActionTools::Resource>::const_iterator resourceIt = resources.constBegin();
+	QMap<QString, ActionTools::Resource> resources = script->resources();
+	QMap<QString, ActionTools::Resource>::const_iterator resourceIt = resources.constBegin();
     while(resourceIt != resources.constEnd())
     {
         addResource(resourceIt.key(), resourceIt.value().data(), resourceIt.value().type());
@@ -203,7 +203,7 @@ void ResourceDialog::addResource(const QString &name, const QByteArray &data, Ac
     int row = ui->resourcesTableWidget->rowCount();
     ui->resourcesTableWidget->insertRow(row);
 
-    QTableWidgetItem *item = new QTableWidgetItem(name);
+    auto item = new QTableWidgetItem(name);
     item->setData(Qt::UserRole, data);
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable);
     ui->resourcesTableWidget->setItem(row, 0, item);
@@ -216,13 +216,13 @@ void ResourceDialog::addResource(const QString &name, const QByteArray &data, Ac
     {
     case ActionTools::Resource::BinaryType:
     case ActionTools::Resource::TypeCount:
-        item->setIcon(QIcon(":/images/binary.png"));
+		item->setIcon(QIcon(QStringLiteral(":/images/binary.png")));
         break;
     case ActionTools::Resource::TextType:
-        item->setIcon(QIcon(":/images/text.png"));
+		item->setIcon(QIcon(QStringLiteral(":/images/text.png")));
         break;
     case ActionTools::Resource::ImageType:
-        item->setIcon(QIcon(":/images/image.png"));
+		item->setIcon(QIcon(QStringLiteral(":/images/image.png")));
         break;
     }
     ui->resourcesTableWidget->setItem(row, 1, item);

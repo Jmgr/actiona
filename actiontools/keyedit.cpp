@@ -32,7 +32,7 @@ namespace ActionTools
 	{
 		installEventFilter(this);
 
-		connect(this, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentIndexChanged(QString)));
+        connect(this, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &KeyEdit::currentIndexChanged);
 
 		QKeySequence keySequence(Qt::Key_Print);
 		addItem(keySequence.toString(QKeySequence::NativeText));
@@ -58,7 +58,7 @@ namespace ActionTools
 
 		if(event->type() == QEvent::KeyPress)
 		{
-			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            auto keyEvent = static_cast<QKeyEvent *>(event);
 
 			if(!mKeyInput.fromEvent(keyEvent))
 				return true;

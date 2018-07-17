@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACK_H
-#define ACTIONPACK_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "version.h"
@@ -36,7 +35,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT ActionPack
 	{
 	public:
-		ActionPack()												{}
+		ActionPack()												= default;
 		virtual ~ActionPack();
 
 		virtual void createDefinitions() = 0;
@@ -77,4 +76,3 @@ namespace ActionTools
 Q_DECLARE_INTERFACE(ActionTools::ActionPack,
                     "tools.actiona.ActionPack/1.0")
 
-#endif // ACTIONPACK_H

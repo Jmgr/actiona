@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SFXSCRIPTDIALOG_H
-#define SFXSCRIPTDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -33,8 +32,8 @@ class SFXScriptDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit SFXScriptDialog(QWidget *parent = 0);
-	~SFXScriptDialog();
+	explicit SFXScriptDialog(QWidget *parent = nullptr);
+	~SFXScriptDialog() override;
 
 	bool disableTrayIcon() const;
 	bool showConsole() const;
@@ -44,7 +43,7 @@ public:
     bool requiresActiona() const;
 
 public slots:
-	void accept();
+	void accept() override;
 
 private slots:
     void on_requiresActiona_clicked();
@@ -53,4 +52,3 @@ private:
 	Ui::SFXScriptDialog *ui;
 };
 
-#endif // SFXSCRIPTDIALOG_H

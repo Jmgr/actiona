@@ -2,8 +2,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PROCESSHANDLE_H
-#define PROCESSHANDLE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "crossplatform.h"
@@ -58,8 +57,8 @@ namespace Code
 
 	public slots:
 		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const;
-		QString toString() const;
+		bool equals(const QScriptValue &other) const override;
+		QString toString() const override;
 		int id() const;
         int parentId() const;
 		bool kill(KillMode killMode = GracefulThenForceful, int timeout = 3000) const;
@@ -72,4 +71,3 @@ namespace Code
 	};
 }
 
-#endif // PROCESSHANDLE_H

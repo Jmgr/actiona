@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCETYPEDELEGATE_H
-#define RESOURCETYPEDELEGATE_H
+#pragma once
 
 #include <QStyledItemDelegate>
 
@@ -28,11 +27,10 @@ class ResourceTypeDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit ResourceTypeDelegate(QObject *parent = 0);
+    explicit ResourceTypeDelegate(QObject *parent = nullptr);
     
-    virtual QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    virtual void setEditorData(QWidget *editor, const QModelIndex &index) const;
-    virtual void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
 };
 
-#endif // RESOURCETYPEDELEGATE_H

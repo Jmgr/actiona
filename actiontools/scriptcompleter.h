@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTCOMPLETER_H
-#define SCRIPTCOMPLETER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -33,13 +32,12 @@ namespace ActionTools
 		Q_OBJECT
 		
 	public:
-		explicit ScriptCompleter(QObject *parent = 0);
-		ScriptCompleter(QAbstractItemModel *model, QObject *parent = 0);
+		explicit ScriptCompleter(QObject *parent = nullptr);
+		ScriptCompleter(QAbstractItemModel *model, QObject *parent = nullptr);
 		
 	protected:
-		QStringList splitPath(const QString &path) const;
-		QString pathFromIndex(const QModelIndex &index) const;
+		QStringList splitPath(const QString &path) const override;
+		QString pathFromIndex(const QModelIndex &index) const override;
 	};
 }
 
-#endif // SCRIPTCOMPLETER_H

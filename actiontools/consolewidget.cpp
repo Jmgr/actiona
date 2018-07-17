@@ -27,19 +27,13 @@ namespace ActionTools
 {
 	ConsoleWidget::ConsoleWidget(QWidget *parent)
 		: QWidget(parent),
-		ui(new Ui::ConsoleWidget),
-		mModel(0)
+		ui(new Ui::ConsoleWidget)
+		
 	{
 		ui->setupUi(this);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         ui->console->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
         ui->console->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-#else
-        ui->console->verticalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-        ui->console->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-#endif
-
 		ui->clearPushButton->setEnabled(false);
 	}
 
@@ -56,12 +50,13 @@ namespace ActionTools
 		ui->console->setModel(mModel);
 		delete oldModel;
 		
-		connect(mModel, SIGNAL(rowsInserted(QModelIndex,int,int)), ui->console, SLOT(scrollToBottom()));
+        // Note: this connection is still string based because it uses a private signal
+        connect(mModel, SIGNAL(rowsInserted(QModelIndex,int,int)), ui->console, SLOT(scrollToBottom()));
 	}
 
 	void ConsoleWidget::addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type)
 	{
-		QStandardItem *item = new QStandardItem();
+		auto item = new QStandardItem();
 
 		item->setData(parameter, ParameterRole);
 		item->setData(line, LineRole);
@@ -72,7 +67,7 @@ namespace ActionTools
 
     void ConsoleWidget::addResourceLine(const QString &message, const QString &resourceKey, ConsoleWidget::Type type)
     {
-        QStandardItem *item = new QStandardItem();
+        auto item = new QStandardItem();
 
         item->setData(resourceKey, ResourceRole);
 
@@ -81,7 +76,7 @@ namespace ActionTools
 
 	void ConsoleWidget::addActionLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type)
 	{
-		QStandardItem *item = new QStandardItem();
+		auto item = new QStandardItem();
 
 		item->setData(actionRuntimeId, ActionRole);
 		item->setData(field, FieldRole);
@@ -94,7 +89,7 @@ namespace ActionTools
 
 	void ConsoleWidget::addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, const QStringList &backtrace, Type type)
 	{
-		QStandardItem *item = new QStandardItem();
+		auto item = new QStandardItem();
 
 		item->setData(actionRuntimeId, ActionRole);
 		item->setData(field, FieldRole);
@@ -108,7 +103,7 @@ namespace ActionTools
 	
 	void ConsoleWidget::addExceptionLine(const QString &message, qint64 actionRuntimeId, int exception, Type type)
 	{
-		QStandardItem *item = new QStandardItem();
+		auto item = new QStandardItem();
 		
 		item->setData(actionRuntimeId, ActionRole);
 		item->setData(exception, ExceptionRole);
@@ -118,7 +113,7 @@ namespace ActionTools
 	
 	void ConsoleWidget::addDesignErrorLine(const QString &message, Type type)
 	{
-		QStandardItem *item = new QStandardItem();
+		auto item = new QStandardItem();
 
 		addLine(message, item, DesignError, type);
 	}
@@ -126,7 +121,7 @@ namespace ActionTools
 	void ConsoleWidget::addStartSeparator()
 	{
 		mStartTime = QDateTime::currentDateTime();
-		QStandardItem *item = new QStandardItem(tr("Execution started at %1").arg(mStartTime.toString("dd/MM/yyyy hh:mm:ss:zzz")));
+		QStandardItem *item = new QStandardItem(tr("Execution started at %1").arg(mStartTime.toString(QStringLiteral("dd/MM/yyyy hh:mm:ss:zzz"))));
 		item->setTextAlignment(Qt::AlignCenter);
 		addSeparator(item);
 	}
@@ -139,7 +134,7 @@ namespace ActionTools
 		QString durationString;
 		if(days > 0)
 			durationString += tr("%n day(s) ", "", days);
-		mStartTime.addDays(-days);
+        mStartTime = mStartTime.addDays(-days);
 
 		int seconds = mStartTime.secsTo(currentDateTime);
 		int hours = seconds / 3600;
@@ -153,13 +148,13 @@ namespace ActionTools
 			durationString += tr("%n minute(s) ", "", minutes);
 		if(seconds > 0)
 			durationString += tr("%n second(s) ", "", seconds);
-		int startMSec = mStartTime.toString("z").toInt();
-		int endMSec = currentDateTime.toString("z").toInt();
+		int startMSec = mStartTime.toString(QStringLiteral("z")).toInt();
+		int endMSec = currentDateTime.toString(QStringLiteral("z")).toInt();
 		int msec = (endMSec > startMSec) ? (endMSec - startMSec) : (1000 - (startMSec - endMSec));
 
 		durationString += tr("%n millisecond(s)", "", msec);
 
-		QStandardItem *item = new QStandardItem(tr("Execution ended at %1\n(%2)").arg(currentDateTime.toString("dd/MM/yyyy hh:mm:ss:zzz")).arg(durationString));
+		QStandardItem *item = new QStandardItem(tr("Execution ended at %1\n(%2)").arg(currentDateTime.toString(QStringLiteral("dd/MM/yyyy hh:mm:ss:zzz"))).arg(durationString));
 		item->setTextAlignment(Qt::AlignCenter);
 		addSeparator(item);
 	}
@@ -216,13 +211,13 @@ namespace ActionTools
 		switch(type)
 		{
 		case Information:
-			icon = QIcon(":/images/information.png");
+			icon = QIcon(QStringLiteral(":/images/information.png"));
 			break;
 		case Warning:
-			icon = QIcon(":/images/warning.png");
+			icon = QIcon(QStringLiteral(":/images/warning.png"));
 			break;
 		case Error:
-			icon = QIcon(":/images/error.png");
+			icon = QIcon(QStringLiteral(":/images/error.png"));
 			break;
         case Separator:
             Q_ASSERT(false && "Should use addSeparator instead");
@@ -250,7 +245,7 @@ namespace ActionTools
 
 	void ConsoleWidget::addSeparator(QStandardItem *item)
 	{
-		item->setFlags(0);
+		item->setFlags(nullptr);
 		item->setBackground(QBrush(Qt::lightGray));
                 item->setForeground(QBrush(Qt::white));
 

@@ -31,7 +31,7 @@ namespace ActionTools
 	{
 		ui->setupUi(this);
 
-		ui->comboBox->addItems(QStringList() << "\"true\"" << "\"false\"");
+        ui->comboBox->addItems({QStringLiteral("\"true\""), QStringLiteral("\"false\"")});
 		ui->comboBox->setVisible(false);
 		ui->comboBox->setCode(true);
 		ui->comboBox->codeLineEdit()->setAllowTextCodeChange(false);
@@ -51,7 +51,7 @@ namespace ActionTools
 			ui->comboBox->lineEdit()->setText(text);
 		else
 		{
-			if(text == "true" || text == "yes" || text == "1")
+			if(text == QLatin1String("true") || text == QLatin1String("yes") || text == QLatin1String("1"))
 				ui->checkBox->setChecked(true);
 			else
 				ui->checkBox->setChecked(false);
@@ -63,7 +63,7 @@ namespace ActionTools
 		if(isCode())
 			return ui->comboBox->lineEdit()->text();
 		else
-			return (ui->checkBox->isChecked() ? "true" : "false");
+			return (ui->checkBox->isChecked() ? QStringLiteral("true") : QStringLiteral("false"));
 	}
 
 	bool BooleanEdit::isCode() const
@@ -78,7 +78,7 @@ namespace ActionTools
 
 	void BooleanEdit::setFromSubParameter(const SubParameter &subParameter)
 	{
-		setText(subParameter.isCode(), subParameter.value().toString());
+        setText(subParameter.isCode(), subParameter.value());
 
 		on_switchTextModePushButton_clicked();
 	}

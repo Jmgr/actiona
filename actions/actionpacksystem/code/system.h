@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEM_H
-#define SYSTEM_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -28,22 +27,9 @@
 #include <QScriptEngine>
 #include <QStringList>
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-#include <qmobilityglobal.h>
-
-QTM_BEGIN_NAMESPACE
-class QSystemInfo;
-class QSystemStorageInfo;
-class QSystemDisplayInfo;
-class QSystemDeviceInfo;
-QTM_END_NAMESPACE
-#endif
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 class QDeviceInfo;
 class QBatteryInfo;
 class QStorageInfo_Custom;
-#endif
 
 class SystemSession;
 
@@ -63,10 +49,8 @@ namespace Code
 			InternalDrive,
 			RemovableDrive,
 			RemoteDrive,
-			CdromDrive
-#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
-            , RamDrive
-#endif
+            CdromDrive,
+            RamDrive
 		};
 		enum PowerState
 		{
@@ -75,7 +59,6 @@ namespace Code
 			WallPower,
 			WallPowerChargingBattery
 		};
-#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
         enum StorageLocation
         {
             Desktop,
@@ -96,31 +79,15 @@ namespace Code
             GenericCache,
             GenericConfig
         };
-#else
-        enum StorageLocation
-        {
-            Desktop,
-            Documents,
-            Fonts,
-            Applications,
-            Music,
-            Movies,
-            Pictures,
-            Temp,
-            Home,
-            Data,
-            Cache
-        };
-#endif
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	
 		System();
-		~System();
+		~System() override;
 	
 	public slots:
-        QString toString() const                                { return "System"; }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<System>(other); }
+		QString toString() const override                                { return QStringLiteral("System"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<System>(other); }
 		QString storageLocationPath(StorageLocation location) const;
 		QString storageLocationName(StorageLocation location) const;
 		QScriptValue openUrl(const QString &url) const;
@@ -158,17 +125,9 @@ namespace Code
 		
 	private:
 		SystemSession *mSystemSession;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QDeviceInfo *mDeviceInfo;
         QBatteryInfo *mBatteryInfo;
         QStorageInfo_Custom *mStorageInfo;
-#else
-		QTM_PREPEND_NAMESPACE(QSystemInfo) *mSystemInfo;
-		QTM_PREPEND_NAMESPACE(QSystemStorageInfo) *mSystemStorageInfo;
-		QTM_PREPEND_NAMESPACE(QSystemDisplayInfo) *mSystemDisplayInfo;
-		QTM_PREPEND_NAMESPACE(QSystemDeviceInfo) *mSystemDeviceInfo;
-#endif
 	};
 }
 
-#endif // SYSTEM_H

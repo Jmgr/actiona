@@ -34,8 +34,8 @@
 
 MouseDevice::MouseDevice()
 {
-	for(int i = 0; i < ButtonCount; ++i)
-		mPressedButtons[i] = false;
+    for(bool &pressedButton: mPressedButtons)
+        pressedButton = false;
 }
 
 MouseDevice::~MouseDevice()

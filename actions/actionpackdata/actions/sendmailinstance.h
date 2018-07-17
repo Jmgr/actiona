@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SENDMAILINSTANCE_H
-#define SENDMAILINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -50,13 +49,13 @@ namespace Actions
             ErrorWhileSendingEMailException
 		};
 
-        SendMailInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
-        ~SendMailInstance();
+        SendMailInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
+        ~SendMailInstance() override;
 
         static Tools::StringListPair attachmentContentTypes;
 
-		void startExecution();
-		void stopExecution();
+		void startExecution() override;
+		void stopExecution() override;
 
 	private slots:
         void connectionFailed(const QByteArray &msg);
@@ -80,4 +79,3 @@ namespace Actions
 	};
 }
 
-#endif // SENDMAILINSTANCE_H

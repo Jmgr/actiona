@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef VARIABLEINSTANCE_H
-#define VARIABLEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -49,20 +48,20 @@ namespace Actions
 			ConversionFailedException = ActionTools::ActionException::UserException
 		};
 
-		VariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		VariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
         static Tools::StringListPair types;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString variable = evaluateString(ok, "variable");
-			QString value = evaluateString(ok, "value");
-			QColor colorValue = evaluateColor(ok, "colorValue");
-			QPoint positionValue = evaluatePoint(ok, "positionValue");
-			Type type = evaluateListElement<Type>(ok, types, "type");
+			QString variable = evaluateString(ok, QStringLiteral("variable"));
+			QString value = evaluateString(ok, QStringLiteral("value"));
+			QColor colorValue = evaluateColor(ok, QStringLiteral("colorValue"));
+			QPoint positionValue = evaluatePoint(ok, QStringLiteral("positionValue"));
+			Type type = evaluateListElement<Type>(ok, types, QStringLiteral("type"));
 
 			if(!ok)
 				return;
@@ -108,7 +107,7 @@ namespace Actions
 				break;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -116,4 +115,3 @@ namespace Actions
 	};
 }
 
-#endif // VARIABLEINSTANCE_H

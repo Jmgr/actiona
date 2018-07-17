@@ -53,8 +53,8 @@ QMAKE_EXTRA_TARGETS += locale_release
 SUBDIRS += tools \
 	actiontools \
 	executer \
+        gui \
 	actexecuter \
-	gui \
 	actions/actionpackinternal \
 	actions/actionpackwindows \
 	actions/actionpackdevice \

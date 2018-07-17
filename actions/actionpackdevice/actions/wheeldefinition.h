@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WHEELDEFINITION_H
-#define WHEELDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "wheelinstance.h"
@@ -35,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WheelDefinition : public QObject, public ActionTools::ActionDefinition
+	class WheelDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 	
@@ -43,27 +42,25 @@ namespace Actions
 		explicit WheelDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::NumberParameterDefinition *intensity = new ActionTools::NumberParameterDefinition(ActionTools::Name("intensity", tr("Intensity")), this);
-			intensity->setTooltip(tr("Intensity of the movement, positive is up, negative is down"));
-			intensity->setMinimum(std::numeric_limits<int>::min());
-			intensity->setMaximum(std::numeric_limits<int>::max());
-			addElement(intensity);
-			
+			auto &intensity = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("intensity"), tr("Intensity")});
+            intensity.setTooltip(tr("Intensity of the movement, positive is up, negative is down"));
+            intensity.setMinimum(std::numeric_limits<int>::min());
+            intensity.setMaximum(std::numeric_limits<int>::max());
+
 			addException(WheelInstance::FailedToSendInputException, tr("Send input failure"));
 		}
 	
-		QString name() const													{ return QObject::tr("Wheel"); }
-		QString id() const														{ return "ActionWheel"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Emulates the mouse wheel"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WheelInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/wheel.png"); }
-		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
+		QString name() const override													{ return QObject::tr("Wheel"); }
+		QString id() const override														{ return QStringLiteral("ActionWheel"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Emulates the mouse wheel"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WheelInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/wheel.png")); }
+		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
 	
 	private:
 		Q_DISABLE_COPY(WheelDefinition)
 	};
 }
 
-#endif // WHEELDEFINITION_H

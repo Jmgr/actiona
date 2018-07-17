@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef OPENURLINSTANCE_H
-#define OPENURLINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -39,16 +38,16 @@ namespace Actions
 			FailedToOpenURL = ActionTools::ActionException::UserException
 		};
 
-		OpenURLInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		OpenURLInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)
 		{
 		}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString urlString = evaluateString(ok, "url");
+			QString urlString = evaluateString(ok, QStringLiteral("url"));
 
 			if(!ok)
 				return;
@@ -61,7 +60,7 @@ namespace Actions
 			}
 
 			if(url.scheme() == QString())
-				url = QUrl("http://" + urlString, QUrl::TolerantMode);
+				url = QUrl(QStringLiteral("http://") + urlString, QUrl::TolerantMode);
 
 			if(!QDesktopServices::openUrl(url))
 			{
@@ -69,7 +68,7 @@ namespace Actions
 				return;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -77,4 +76,3 @@ namespace Actions
 	};
 }
 
-#endif // OPENURLINSTANCE_H

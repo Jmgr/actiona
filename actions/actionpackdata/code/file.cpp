@@ -53,7 +53,7 @@ namespace Code
 	{
 		if(context->argumentCount() != 1)
 		{
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return false;
 		}
 
@@ -88,7 +88,7 @@ namespace Code
 
 		if(context->argumentCount() < 1)
 		{
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return false;
 		}
 
@@ -104,11 +104,11 @@ namespace Code
 
 	void File::registerClass(QScriptEngine *scriptEngine)
 	{
-		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&copy, "copy", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&move, "move", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&rename, "rename", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&remove, "remove", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&exists, "exists", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&copy, QStringLiteral("copy"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&move, QStringLiteral("move"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&rename, QStringLiteral("rename"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&remove, QStringLiteral("remove"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<File>(&exists, QStringLiteral("exists"), scriptEngine);
 	}
 
 	QScriptValue File::open(const QString &filename, OpenMode mode)
@@ -116,7 +116,7 @@ namespace Code
 		mFile.setFileName(filename);
 	
 		if(!mFile.open(static_cast<QIODevice::OpenMode>(mode)))
-			throwError("CannotOpenFileError", tr("Unable to open file"));
+			throwError(QStringLiteral("CannotOpenFileError"), tr("Unable to open file"));
 	
 		return thisObject();
 	}
@@ -124,15 +124,15 @@ namespace Code
 	QScriptValue File::write(const QScriptValue &data)
 	{
 		QObject *object = data.toQObject();
-		if(RawData *rawData = qobject_cast<RawData*>(object))
+		if(auto rawData = qobject_cast<RawData*>(object))
 		{
 			if(mFile.write(rawData->byteArray()) == -1)
-				throwError("WriteFailedError", tr("Write failed"));
+				throwError(QStringLiteral("WriteFailedError"), tr("Write failed"));
 		}
 		else
 		{
 			if(mFile.write(data.toVariant().toByteArray()) == -1)
-				throwError("WriteFailedError", tr("Write failed"));
+				throwError(QStringLiteral("WriteFailedError"), tr("Write failed"));
 		}
 	
 		return thisObject();
@@ -141,7 +141,7 @@ namespace Code
 	QScriptValue File::writeText(const QString &value, Encoding encoding)
 	{
 		if(mFile.write(toEncoding(value, encoding)) == -1)
-			throwError("WriteFailedError", tr("Write failed"));
+			throwError(QStringLiteral("WriteFailedError"), tr("Write failed"));
 	
 		return thisObject();
 	}
@@ -211,7 +211,7 @@ namespace Code
 	{
 		if(context->argumentCount() < 2)
 		{
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return false;
 		}
 
@@ -235,15 +235,15 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "noErrorDialog")
+			if(it.name() == QLatin1String("noErrorDialog"))
 				noErrorDialog = it.value().toBool();
-			else if(it.name() == "noConfirmDialog")
+			else if(it.name() == QLatin1String("noConfirmDialog"))
 				noConfirmDialog = it.value().toBool();
-			else if(it.name() == "noProgressDialog")
+			else if(it.name() == QLatin1String("noProgressDialog"))
 				noProgressDialog = it.value().toBool();
-			else if(it.name() == "allowUndo")
+			else if(it.name() == QLatin1String("allowUndo"))
 				allowUndo = it.value().toBool();
-			else if(it.name() == "createDestinationDirectory")
+			else if(it.name() == QLatin1String("createDestinationDirectory"))
 				createDestinationDirectory = it.value().toBool();
 		}
 
@@ -264,37 +264,37 @@ namespace Code
 		QString sourceCopy(source);
 		QString destinationCopy(destination);
 
-		sourceCopy.replace(" ", "\\ ");
-		destinationCopy.replace(" ", "\\ ");
+		sourceCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
+		destinationCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
 
 		if(!destinationDir.exists())
 		{
 			if(createDestinationDirectory)
 			{
-				if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destinationCopy) + "\""))
+				if(QProcess::execute(QStringLiteral("sh -c \"mkdir -p ") + QString::fromLocal8Bit(QFile::encodeName(destinationCopy)) + QStringLiteral("\"")))
 				{
-					throwError(context, engine, "DirectoryCreationError", tr("Unable to create destination directory"));
+					throwError(context, engine, QStringLiteral("DirectoryCreationError"), tr("Unable to create destination directory"));
 					return context->thisObject();
 				}
 			}
 			else
 			{
-				throwError(context, engine, "DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
+				throwError(context, engine, QStringLiteral("DirectoryDoesntExistError"), tr("Destination directory doesn't exist"));
 				return context->thisObject();
 			}
 		}
 
-		QString command = "sh -c \"cp -fr";
+		QString command = QStringLiteral("sh -c \"cp -fr");
 
-		command += " ";
-		command += QFile::encodeName(sourceCopy);
-		command += " ";
-		command += QFile::encodeName(destinationCopy);
-		command += "\"";
+		command += QStringLiteral(" ");
+		command += QString::fromLocal8Bit(QFile::encodeName(sourceCopy));
+		command += QStringLiteral(" ");
+		command += QString::fromLocal8Bit(QFile::encodeName(destinationCopy));
+		command += QStringLiteral("\"");
 
 		if(QProcess::execute(command))
 		{
-			throwError(context, engine, "CopyError", tr("Copy failed"));
+			throwError(context, engine, QStringLiteral("CopyError"), tr("Copy failed"));
 			return context->thisObject();
 		}
 #endif
@@ -332,13 +332,13 @@ namespace Code
 		int result = SHFileOperation(&shFileOpStruct);
 		if(result != 0)
 		{
-			throwError(context, engine, "CopyError", tr("Copy failed: %1").arg(getErrorString(result)));
+			throwError(context, engine, QStringLiteral("CopyError"), tr("Copy failed: %1").arg(getErrorString(result)));
 			return context->thisObject();
 		}
 
 		if(shFileOpStruct.fAnyOperationsAborted)
 		{
-			throwError(context, engine, "CopyAbortedError", tr("Copy failed: aborted"));
+			throwError(context, engine, QStringLiteral("CopyAbortedError"), tr("Copy failed: aborted"));
 			return context->thisObject();
 		}
 #endif
@@ -360,37 +360,37 @@ namespace Code
 		QString sourceCopy(source);
 		QString destinationCopy(destination);
 
-		sourceCopy.replace(" ", "\\ ");
-		destinationCopy.replace(" ", "\\ ");
+		sourceCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
+		destinationCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
 
 		if(!destinationDir.exists())
 		{
 			if(createDestinationDirectory)
 			{
-				if(QProcess::execute("sh -c \"mkdir -p " + QFile::encodeName(destinationCopy) + "\""))
+				if(QProcess::execute(QStringLiteral("sh -c \"mkdir -p ") + QString::fromLocal8Bit(QFile::encodeName(destinationCopy)) + QStringLiteral("\"")))
 				{
-					throwError(context, engine, "DirectoryCreationError", tr("Unable to create destination directory"));
+					throwError(context, engine, QStringLiteral("DirectoryCreationError"), tr("Unable to create destination directory"));
 					return context->thisObject();
 				}
 			}
 			else
 			{
-				throwError(context, engine, "DirectoryDoesntExistError", tr("Destination directory doesn't exist"));
+				throwError(context, engine, QStringLiteral("DirectoryDoesntExistError"), tr("Destination directory doesn't exist"));
 				return context->thisObject();
 			}
 		}
 
-		QString command = "sh -c \"mv -f";
+		QString command = QStringLiteral("sh -c \"mv -f");
 
-		command += " ";
-		command += QFile::encodeName(sourceCopy);
-		command += " ";
-		command += QFile::encodeName(destinationCopy);
-		command += "\"";
+		command += QStringLiteral(" ");
+		command += QString::fromLocal8Bit(QFile::encodeName(sourceCopy));
+		command += QStringLiteral(" ");
+		command += QString::fromLocal8Bit(QFile::encodeName(destinationCopy));
+		command += QStringLiteral("\"");
 
 		if(QProcess::execute(command))
 		{
-			throwError(context, engine, "MoveRenameError", tr("Move/rename failed"));
+			throwError(context, engine, QStringLiteral("MoveRenameError"), tr("Move/rename failed"));
 			return context->thisObject();
 		}
 #endif
@@ -428,13 +428,13 @@ namespace Code
 		int result = SHFileOperation(&shFileOpStruct);
 		if(result != 0)
 		{
-			throwError(context, engine, "MoveError", tr("Move failed: %1").arg(getErrorString(result)));
+			throwError(context, engine, QStringLiteral("MoveError"), tr("Move failed: %1").arg(getErrorString(result)));
 			return context->thisObject();
 		}
 
 		if(shFileOpStruct.fAnyOperationsAborted)
 		{
-			throwError(context, engine, "MoveAbortedError", tr("Move failed: aborted"));
+			throwError(context, engine, QStringLiteral("MoveAbortedError"), tr("Move failed: aborted"));
 			return context->thisObject();
 		}
 #endif
@@ -483,13 +483,13 @@ namespace Code
 		int result = SHFileOperation(&shFileOpStruct);
 		if(result != 0)
 		{
-			throwError(context, engine, "RenameError", tr("Rename failed: %1").arg(getErrorString(result)));
+			throwError(context, engine, QStringLiteral("RenameError"), tr("Rename failed: %1").arg(getErrorString(result)));
 			return context->thisObject();
 		}
 
 		if(shFileOpStruct.fAnyOperationsAborted)
 		{
-			throwError(context, engine, "RenameAbortedError", tr("Rename failed: aborted"));
+			throwError(context, engine, QStringLiteral("RenameAbortedError"), tr("Rename failed: aborted"));
 			return context->thisObject();
 		}
 #endif
@@ -506,17 +506,17 @@ namespace Code
 		Q_UNUSED(allowUndo)
 
 		QString filenameCopy(filename);
-		filenameCopy.replace(" ", "\\ ");
+		filenameCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
 
-		QString command = "sh -c \"rm -fr";
+		QString command = QStringLiteral("sh -c \"rm -fr");
 
-		command += " ";
-		command += QFile::encodeName(filenameCopy);
-		command += "\"";
+		command += QStringLiteral(" ");
+		command += QString::fromLocal8Bit(QFile::encodeName(filenameCopy));
+		command += QStringLiteral("\"");
 
 		if(QProcess::execute(command))
 		{
-			throwError(context, engine, "RemoveError", tr("Remove failed"));
+			throwError(context, engine, QStringLiteral("RemoveError"), tr("Remove failed"));
 			return context->thisObject();
 		}
 #endif
@@ -548,13 +548,13 @@ namespace Code
 		int result = SHFileOperation(&shFileOpStruct);
 		if(result != 0)
 		{
-			throwError(context, engine, "RemoveError", tr("Remove failed: %1").arg(getErrorString(result)));
+			throwError(context, engine, QStringLiteral("RemoveError"), tr("Remove failed: %1").arg(getErrorString(result)));
 			return context->thisObject();
 		}
 
 		if(shFileOpStruct.fAnyOperationsAborted)
 		{
-			throwError(context, engine, "RemoveAbortedError", tr("Remove failed: aborted"));
+			throwError(context, engine, QStringLiteral("RemoveAbortedError"), tr("Remove failed: aborted"));
 			return context->thisObject();
 		}
 #endif

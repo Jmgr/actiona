@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PLAYSOUNDINSTANCE_H
-#define PLAYSOUNDINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -33,14 +32,14 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		PlaySoundInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
-		~PlaySoundInstance();
+		PlaySoundInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
+		~PlaySoundInstance() override;
 
-		void startExecution();
-		void pauseExecution();
-		void resumeExecution();
-		void stopExecution();
-		void stopLongTermExecution();
+		void startExecution() override;
+		void pauseExecution() override;
+		void resumeExecution() override;
+		void stopExecution() override;
+		void stopLongTermExecution() override;
 
 	private slots:
 		void stateChanged(QMediaPlayer::State state);
@@ -54,4 +53,3 @@ namespace Actions
 	};
 }
 
-#endif // PLAYSOUNDINSTANCE_H

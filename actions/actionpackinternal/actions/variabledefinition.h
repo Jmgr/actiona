@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef VARIABLEDEFINITION_H
-#define VARIABLEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "variableinstance.h"
@@ -38,7 +37,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class VariableDefinition : public QObject, public ActionTools::ActionDefinition
+	class VariableDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -48,69 +47,49 @@ namespace Actions
 		{
 			translateItems("VariableInstance::types", VariableInstance::types);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			variable->setCategory(ActionTools::ElementDefinition::INPUT);
-			variable->setTooltip(tr("The variable name"));
-			addElement(variable);
+            auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setCategory(ActionTools::ElementDefinition::INPUT);
+            variable.setTooltip(tr("The variable name"));
 
-			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
-			type->setTooltip(tr("The variable type"));
-			type->setItems(VariableInstance::types);
-			type->setDefaultValue(VariableInstance::types.second.at(VariableInstance::String));
-			addElement(type);
+            auto &type = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("type"), tr("Type")});
+            type.setTooltip(tr("The variable type"));
+            type.setItems(VariableInstance::types);
+            type.setDefaultValue(VariableInstance::types.second.at(VariableInstance::String));
 
-			ActionTools::GroupDefinition *singleValueGroup = new ActionTools::GroupDefinition(this);
-			singleValueGroup->setMasterList(type);
-			singleValueGroup->setMasterValues(QStringList()
-											  << VariableInstance::types.first.at(VariableInstance::String)
-											  << VariableInstance::types.first.at(VariableInstance::Integer)
-											  << VariableInstance::types.first.at(VariableInstance::Float)
-											  );
+            auto &singleValueGroup = addGroup();
+            singleValueGroup.setMasterList(type);
+            singleValueGroup.setMasterValues({VariableInstance::types.first.at(VariableInstance::String), VariableInstance::types.first.at(VariableInstance::Integer), VariableInstance::types.first.at(VariableInstance::Float)});
 
-			ActionTools::TextParameterDefinition *simpleValue = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
-			simpleValue->setTooltip(tr("The variables new value"));
-			singleValueGroup->addMember(simpleValue);
+            auto &simpleValue = singleValueGroup.addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
+            simpleValue.setTooltip(tr("The variables new value"));
 
-			addElement(singleValueGroup);
+            auto &colorValueGroup = addGroup();
+            colorValueGroup.setMasterList(type);
+            colorValueGroup.setMasterValues({VariableInstance::types.first.at(VariableInstance::Color)});
 
-			ActionTools::GroupDefinition *colorValueGroup = new ActionTools::GroupDefinition(this);
-			colorValueGroup->setMasterList(type);
-			colorValueGroup->setMasterValues(QStringList()
-											  << VariableInstance::types.first.at(VariableInstance::Color)
-											  );
+            auto &colorValue = colorValueGroup.addParameter<ActionTools::ColorParameterDefinition>({QStringLiteral("colorValue"), tr("Color")});
+            colorValue.setTooltip(tr("The variables new value"));
 
-			ActionTools::ColorParameterDefinition *colorValue = new ActionTools::ColorParameterDefinition(ActionTools::Name("colorValue", tr("Color")), this);
-			colorValue->setTooltip(tr("The variables new value"));
-			colorValueGroup->addMember(colorValue);
+            auto &positionValueGroup = addGroup();
+            positionValueGroup.setMasterList(type);
+            positionValueGroup.setMasterValues({VariableInstance::types.first.at(VariableInstance::Position)});
 
-			addElement(colorValueGroup);
-
-			ActionTools::GroupDefinition *positionValueGroup = new ActionTools::GroupDefinition(this);
-			positionValueGroup->setMasterList(type);
-			positionValueGroup->setMasterValues(QStringList()
-											  << VariableInstance::types.first.at(VariableInstance::Position)
-											  );
-
-			ActionTools::PositionParameterDefinition *positionValue = new ActionTools::PositionParameterDefinition(ActionTools::Name("positionValue", tr("Position")), this);
-			positionValue->setTooltip(tr("The variables new value"));
-			positionValueGroup->addMember(positionValue);
-
-			addElement(positionValueGroup);
+            auto &positionValue = positionValueGroup.addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("positionValue"), tr("Position")});
+            positionValue.setTooltip(tr("The variables new value"));
 
 			addException(VariableInstance::ConversionFailedException, tr("Conversion failed"));
 		}
 
-		QString name() const													{ return QObject::tr("Variable"); }
-		QString id() const														{ return "ActionVariable"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Set the value of a variable"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new VariableInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/variable.png"); }
+		QString name() const override													{ return QObject::tr("Variable"); }
+		QString id() const override														{ return QStringLiteral("ActionVariable"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Set the value of a variable"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new VariableInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/variable.png")); }
 
 	private:
 		Q_DISABLE_COPY(VariableDefinition)
 	};
 }
 
-#endif // VARIABLEDEFINITION_H

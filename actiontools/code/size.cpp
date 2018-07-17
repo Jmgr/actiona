@@ -25,7 +25,7 @@ namespace Code
 {
 	QScriptValue Size::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Size *size = 0;
+		Size *size = nullptr;
 		
 		switch(context->argumentCount())
 		{
@@ -38,14 +38,14 @@ namespace Code
 				if(Size *codeSize = qobject_cast<Size*>(object))
 					size = new Size(*codeSize);
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 			break;
 		case 2:
 			size = new Size(QSize(context->argument(0).toInt32(), context->argument(1).toInt32()));
 			break;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			break;
 		}
 		
@@ -70,14 +70,14 @@ namespace Code
 				if(Size *size = qobject_cast<Size*>(object))
 					return size->size();
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
-			return QSize();
+			return {};
 		case 2:
 			return QSize(context->argument(0).toInt32(),
 						 context->argument(1).toInt32());
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return QSize();
 		}
 	}
@@ -165,7 +165,7 @@ namespace Code
 
 	QString Size::toString() const
 	{
-        return QString("Size {width: %1, height: %2}").arg(width()).arg(height());
+		return QStringLiteral("Size {width: %1, height: %2}").arg(width()).arg(height());
 	}
 
 	QScriptValue Size::setWidth(int width)

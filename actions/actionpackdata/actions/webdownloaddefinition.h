@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WEBDOWNLOADDEFINITION_H
-#define WEBDOWNLOADDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "webdownloadinstance.h"
@@ -38,7 +37,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WebDownloadDefinition : public QObject, public ActionTools::ActionDefinition
+	class WebDownloadDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -48,60 +47,50 @@ namespace Actions
 		{
 			translateItems("WebDownloadInstance::destinations", WebDownloadInstance::destinations);
 
-			ActionTools::TextParameterDefinition *url = new ActionTools::TextParameterDefinition(ActionTools::Name("url", tr("URL")), this);
-			url->setTooltip(tr("The URL of the data to download"));
-			addElement(url);
+			auto &url = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("url"), tr("URL")});
+            url.setTooltip(tr("The URL of the data to download"));
 
-			ActionTools::ListParameterDefinition *destination = new ActionTools::ListParameterDefinition(ActionTools::Name("destination", tr("Destination")), this);
-			destination->setTooltip(tr("The destination where to write the downloaded data"));
-			destination->setItems(WebDownloadInstance::destinations);
-			destination->setDefaultValue(WebDownloadInstance::destinations.second.at(WebDownloadInstance::Variable));
-			addElement(destination);
+			auto &destination = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("destination"), tr("Destination")});
+            destination.setTooltip(tr("The destination where to write the downloaded data"));
+            destination.setItems(WebDownloadInstance::destinations);
+            destination.setDefaultValue(WebDownloadInstance::destinations.second.at(WebDownloadInstance::Variable));
 
-			ActionTools::GroupDefinition *variableMode = new ActionTools::GroupDefinition(this);
-			variableMode->setMasterList(destination);
-			variableMode->setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::Variable));
+            auto &variableMode = addGroup();
+            variableMode.setMasterList(destination);
+            variableMode.setMasterValues({WebDownloadInstance::destinations.first.at(WebDownloadInstance::Variable)});
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			variable->setTooltip(tr("The variable where to write the downloaded data"));
-			variableMode->addMember(variable);
+            auto &variable = variableMode.addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable where to write the downloaded data"));
 
-			addElement(variableMode);
+            auto &fileMode = addGroup();
+            fileMode.setMasterList(destination);
+            fileMode.setMasterValues({WebDownloadInstance::destinations.first.at(WebDownloadInstance::File)});
 
-			ActionTools::GroupDefinition *fileMode = new ActionTools::GroupDefinition(this);
-			fileMode->setMasterList(destination);
-			fileMode->setMasterValues(QStringList() << WebDownloadInstance::destinations.first.at(WebDownloadInstance::File));
+            auto &file = fileMode.addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
+            file.setTooltip(tr("The file where to write the downloaded data"));
+            file.setMode(ActionTools::FileEdit::FileSave);
+            file.setCaption(tr("Choose the destination file"));
+            file.setFilter(tr("All files (*.*)"));
 
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("File")), this);
-			file->setTooltip(tr("The file where to write the downloaded data"));
-			file->setMode(ActionTools::FileEdit::FileSave);
-			file->setCaption(tr("Choose the destination file"));
-			file->setFilter(tr("All files (*.*)"));
-			fileMode->addMember(file);
-
-			addElement(fileMode);
-
-			ActionTools::BooleanParameterDefinition *showProgress = new ActionTools::BooleanParameterDefinition(ActionTools::Name("showProgress", tr("Show progress")), this);
-			showProgress->setTooltip(tr("Should the download progress be shown"));
-			showProgress->setDefaultValue(true);
-			addElement(showProgress, 1);
+            auto &showProgress = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("showProgress"), tr("Show progress")}, 1);
+            showProgress.setTooltip(tr("Should the download progress be shown"));
+            showProgress.setDefaultValue(QStringLiteral("true"));
 
 			addException(WebDownloadInstance::CannotOpenFileException, tr("Cannot write to file"));
 			addException(WebDownloadInstance::DownloadException, tr("Download error"));
 		}
 
-		QString name() const													{ return QObject::tr("Web download"); }
-		QString id() const														{ return "ActionWebDownload"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Downloads data from the Web"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WebDownloadInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/webdownload.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Web download"); }
+		QString id() const override														{ return QStringLiteral("ActionWebDownload"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Downloads data from the Web"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WebDownloadInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/webdownload.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(WebDownloadDefinition)
 	};
 }
 
-#endif // WEBDOWNLOADDEFINITION_H

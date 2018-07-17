@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINSTANCE_H
-#define SYSTEMINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -48,17 +47,16 @@ namespace Actions
 			NotAvailable = ActionTools::ActionException::UserException
 		};
 
-		SystemInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		SystemInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent) {}
 
         static Tools::StringListPair operations;
         static Tools::StringListPair modes;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		Q_DISABLE_COPY(SystemInstance)
 	};
 }
 
-#endif // SYSTEMINSTANCE_H

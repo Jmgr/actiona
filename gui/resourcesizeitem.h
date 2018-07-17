@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCESIZEITEM_H
-#define RESOURCESIZEITEM_H
+#pragma once
 
 #include <QTableWidgetItem>
 
@@ -31,10 +30,9 @@ public:
     {
     }
 
-    bool operator<(const QTableWidgetItem &other) const
+    bool operator<(const QTableWidgetItem &other) const override
     {
         return data(Qt::UserRole).toInt() < other.data(Qt::UserRole).toInt();
     }
 };
 
-#endif // RESOURCESIZEITEM_H

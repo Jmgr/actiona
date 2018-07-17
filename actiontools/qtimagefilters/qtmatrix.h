@@ -66,11 +66,11 @@ public:
     {
         m_rows = 0;
         m_cols = 0;
-        m_data = 0;
+        m_data = nullptr;
     }
     QtMatrix(const T *elements, int rows, int columns)
     {
-        m_data = 0;
+        m_data = nullptr;
         set(elements, rows, columns);
     }
 
@@ -81,7 +81,7 @@ public:
 
     QtMatrix(const QtMatrix &other)
     {
-        m_data = 0;
+        m_data = nullptr;
         set(other);
     }
 

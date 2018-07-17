@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>767</width>
-    <height>441</height>
+    <width>1743</width>
+    <height>1139</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0,0">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -38,7 +38,20 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="ScriptTableView" name="scriptView">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="FilterLineEdit" name="scriptFilterLineEdit"/>
+      </item>
+      <item>
+       <widget class="FlagsComboBox" name="scriptFilterCriteriaFlagsComboBox"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="ScriptTreeView" name="scriptView">
       <property name="contextMenuPolicy">
        <enum>Qt::CustomContextMenu</enum>
       </property>
@@ -63,37 +76,28 @@
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::ExtendedSelection</enum>
+      </property>
       <property name="selectionBehavior">
        <enum>QAbstractItemView::SelectRows</enum>
       </property>
-      <property name="showGrid">
+      <property name="rootIsDecorated">
+       <bool>true</bool>
+      </property>
+      <property name="uniformRowHeights">
+       <bool>true</bool>
+      </property>
+      <property name="itemsExpandable">
        <bool>false</bool>
       </property>
-      <attribute name="horizontalHeaderHighlightSections">
+      <property name="sortingEnabled">
        <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderStretchLastSection">
-       <bool>true</bool>
-      </attribute>
-      <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderDefaultSectionSize">
-       <number>20</number>
-      </attribute>
-      <attribute name="verticalHeaderHighlightSections">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderMinimumSectionSize">
-       <number>0</number>
-      </attribute>
+      </property>
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,10,0">
+     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,10,0,0">
       <property name="spacing">
        <number>8</number>
       </property>
@@ -150,6 +154,25 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QComboBox" name="heatmapModeComboBox">
+        <item>
+         <property name="text">
+          <string>No heatmap</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Execution count heatmap</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Execution duration heatmap</string>
+         </property>
+        </item>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>
@@ -159,8 +182,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>767</width>
-     <height>20</height>
+     <width>1743</width>
+     <height>31</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -308,7 +331,7 @@
      <normaloff>:/icons/new_action.png</normaloff>:/icons/new_action.png</iconset>
    </property>
    <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
     <string>New action</string>
@@ -334,7 +357,10 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="NewActionTreeWidget" name="newActionTreeWidget">
+      <widget class="FilterLineEdit" name="actionsfilterLineEdit"/>
+     </item>
+     <item>
+      <widget class="QTreeView" name="newActionTreeView">
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -353,17 +379,9 @@
        <property name="animated">
         <bool>true</bool>
        </property>
-       <property name="columnCount">
-        <number>1</number>
-       </property>
        <attribute name="headerVisible">
         <bool>false</bool>
        </attribute>
-       <column>
-        <property name="text">
-         <string/>
-        </property>
-       </column>
       </widget>
      </item>
     </layout>
@@ -401,7 +419,7 @@
   </widget>
   <widget class="QDockWidget" name="consoleDockWidget">
    <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
     <string>Console</string>
@@ -937,25 +955,30 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>NewActionTreeWidget</class>
-   <extends>QTreeWidget</extends>
-   <header>newactiontreewidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>DeleteActionPushButton</class>
    <extends>QPushButton</extends>
    <header>deleteactionpushbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ScriptTableView</class>
-   <extends>QTableView</extends>
-   <header>scripttableview.h</header>
   </customwidget>
   <customwidget>
    <class>ActionTools::ConsoleWidget</class>
    <extends>QWidget</extends>
    <header>consolewidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FilterLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>filterlineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ScriptTreeView</class>
+   <extends>QTreeView</extends>
+   <header>scripttreeview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FlagsComboBox</class>
+   <extends>QComboBox</extends>
+   <header>flagscombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

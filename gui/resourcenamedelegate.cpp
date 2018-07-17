@@ -37,7 +37,7 @@ QWidget* ResourceNameDelegate::createEditor(QWidget *parent, const QStyleOptionV
     Q_UNUSED(option)
     Q_UNUSED(index)
 
-    QLineEdit *lineEdit = new QLineEdit(parent);
+    auto lineEdit = new QLineEdit(parent);
 
     lineEdit->setValidator(new QRegExpValidator(ActionTools::ActionInstance::NameRegExp, lineEdit));
 
@@ -46,7 +46,7 @@ QWidget* ResourceNameDelegate::createEditor(QWidget *parent, const QStyleOptionV
 
 void ResourceNameDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-    if(QLineEdit *lineEdit = qobject_cast<QLineEdit *>(editor))
+    if(auto lineEdit = qobject_cast<QLineEdit *>(editor))
         lineEdit->setText(index.data().toString());
     else
         QStyledItemDelegate::setEditorData(editor, index);
@@ -54,7 +54,7 @@ void ResourceNameDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 
 void ResourceNameDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    if(QLineEdit *lineEdit = qobject_cast<QLineEdit *>(editor))
+    if(auto lineEdit = qobject_cast<QLineEdit *>(editor))
     {
         QString name = lineEdit->text();
 

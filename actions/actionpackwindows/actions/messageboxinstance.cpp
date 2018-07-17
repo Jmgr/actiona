@@ -29,31 +29,53 @@
 
 namespace Actions
 {
-    Tools::StringListPair MessageBoxInstance::icons = qMakePair(
-			QStringList() << "none" << "information" << "question" << "warning" << "error",
-			QStringList()
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "None")
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Information")
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Question")
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Warning")
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Error"));
+    Tools::StringListPair MessageBoxInstance::icons =
+    {
+        {
+            QStringLiteral("none"),
+            QStringLiteral("information"),
+            QStringLiteral("question"),
+            QStringLiteral("warning"),
+            QStringLiteral("error")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "None")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Information")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Question")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Warning")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::icons", "Error"))
+        }
+    };
 
-    Tools::StringListPair MessageBoxInstance::buttons = qMakePair(
-			QStringList() << "ok" << "yesno",
-			QStringList()
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Ok")
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Yes-No"));
+    Tools::StringListPair MessageBoxInstance::buttons =
+    {
+        {
+            QStringLiteral("ok"),
+            QStringLiteral("yesno")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Ok")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::buttons", "Yes-No"))
+        }
+    };
 
-    Tools::StringListPair MessageBoxInstance::textmodes = qMakePair(
-			QStringList() << "automatic" << "html" << "text",
-			QStringList()
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Automatic")
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "HTML")
-			<< QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Plain text"));
+    Tools::StringListPair MessageBoxInstance::textmodes =
+    {
+        {
+            QStringLiteral("automatic"),
+            QStringLiteral("html"),
+            QStringLiteral("text")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Automatic")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "HTML")),
+            QStringLiteral(QT_TRANSLATE_NOOP("MessageBoxInstance::textmodes", "Plain text"))
+        }
+    };
 
 	MessageBoxInstance::MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
-		mMessageBox(0)
+		mMessageBox(nullptr)
 	{
 	}
 
@@ -61,17 +83,17 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString message = evaluateString(ok, "message");
-		QString title = evaluateString(ok, "title");
-		Icon icon = evaluateListElement<Icon>(ok, icons, "icon");
-		TextMode textMode = evaluateListElement<TextMode>(ok, textmodes, "textMode");
-		Buttons button = evaluateListElement<Buttons>(ok, buttons, "type");
-        QImage customIcon = evaluateImage(ok, "customIcon");
-        QImage windowIcon = evaluateImage(ok, "windowIcon");
-		mIfYes = evaluateIfAction(ok, "ifYes");
-		mIfNo = evaluateIfAction(ok, "ifNo");
+		QString message = evaluateString(ok, QStringLiteral("message"));
+		QString title = evaluateString(ok, QStringLiteral("title"));
+		Icon icon = evaluateListElement<Icon>(ok, icons, QStringLiteral("icon"));
+		auto textMode = evaluateListElement<TextMode>(ok, textmodes, QStringLiteral("textMode"));
+		auto button = evaluateListElement<Buttons>(ok, buttons, QStringLiteral("type"));
+		QImage customIcon = evaluateImage(ok, QStringLiteral("customIcon"));
+		QImage windowIcon = evaluateImage(ok, QStringLiteral("windowIcon"));
+		mIfYes = evaluateIfAction(ok, QStringLiteral("ifYes"));
+		mIfNo = evaluateIfAction(ok, QStringLiteral("ifNo"));
 
-		mMessageBox = 0;
+		mMessageBox = nullptr;
 
 		if(!ok)
 			return;
@@ -192,7 +214,7 @@ namespace Actions
 
 		closeAndDelete();
 
-		emit executionEnded();
+		executionEnded();
 	}
 
 	void MessageBoxInstance::closeAndDelete()
@@ -200,7 +222,7 @@ namespace Actions
 		if(mMessageBox)
 		{
 			mMessageBox->close();
-			mMessageBox = 0;
+			mMessageBox = nullptr;
 		}
 	}
 }

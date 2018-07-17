@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACKDATA_H
-#define ACTIONPACKDATA_H
+#pragma once
 
 #include "actionpack.h"
 #include "actions/writetextfiledefinition.h"
@@ -61,14 +60,12 @@ class ActionPackData : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 	Q_INTERFACES(ActionTools::ActionPack)
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "data.json")
-#endif
 
 public:
-	ActionPackData()								{}
+	ActionPackData()								= default;
 
-	void createDefinitions()
+	void createDefinitions() override
 	{
 		addActionDefinition(new Actions::WriteTextFileDefinition(this));
 		addActionDefinition(new Actions::ReadTextFileDefinition(this));
@@ -86,34 +83,29 @@ public:
         addActionDefinition(new Actions::SendMailDefinition(this));
 	}
 
-	QString id() const								{ return "data"; }
-	QString name() const							{ return tr("Data related actions"); }
-	Tools::Version version() const					{ return Tools::Version(0, 0, 1); }
+	QString id() const override								{ return QStringLiteral("data"); }
+	QString name() const override							{ return tr("Data related actions"); }
+	Tools::Version version() const override					{ return Tools::Version(0, 0, 1); }
 	
-	void codeInit(QScriptEngine *scriptEngine) const
+	void codeInit(QScriptEngine *scriptEngine) const override
 	{
-		addCodeClass<Code::File>("File", scriptEngine);
+		addCodeClass<Code::File>(QStringLiteral("File"), scriptEngine);
 		Code::File::registerClass(scriptEngine);
-		addCodeClass<Code::Clipboard>("Clipboard", scriptEngine);
-		addCodeClass<Code::Registry>("Registry", scriptEngine);
-		addCodeClass<Code::IniFile>("IniFile", scriptEngine);
-		addCodeClass<Code::Udp>("Udp", scriptEngine);
-		addCodeClass<Code::Tcp>("Tcp", scriptEngine);
-		addCodeClass<Code::Sql>("Sql", scriptEngine);
+		addCodeClass<Code::Clipboard>(QStringLiteral("Clipboard"), scriptEngine);
+		addCodeClass<Code::Registry>(QStringLiteral("Registry"), scriptEngine);
+		addCodeClass<Code::IniFile>(QStringLiteral("IniFile"), scriptEngine);
+		addCodeClass<Code::Udp>(QStringLiteral("Udp"), scriptEngine);
+		addCodeClass<Code::Tcp>(QStringLiteral("Tcp"), scriptEngine);
+		addCodeClass<Code::Sql>(QStringLiteral("Sql"), scriptEngine);
 		Code::Sql::registerClass(scriptEngine);
-		addCodeClass<Code::TcpServer>("TcpServer", scriptEngine);
-		addCodeClass<Code::Web>("Web", scriptEngine);
-        addCodeClass<Code::MailAttachment>("MailAttachment", scriptEngine);
-        addCodeClass<Code::MailMessage>("MailMessage", scriptEngine);
-        addCodeClass<Code::Mail>("Mail", scriptEngine);
+		addCodeClass<Code::TcpServer>(QStringLiteral("TcpServer"), scriptEngine);
+		addCodeClass<Code::Web>(QStringLiteral("Web"), scriptEngine);
+		addCodeClass<Code::MailAttachment>(QStringLiteral("MailAttachment"), scriptEngine);
+		addCodeClass<Code::MailMessage>(QStringLiteral("MailMessage"), scriptEngine);
+		addCodeClass<Code::Mail>(QStringLiteral("Mail"), scriptEngine);
 	}
 
 private:
 	Q_DISABLE_COPY(ActionPackData)
 };
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-Q_EXPORT_PLUGIN2(ActionPackData, ActionPackData)
-#endif
-
-#endif // ACTIONPACKDATA_H

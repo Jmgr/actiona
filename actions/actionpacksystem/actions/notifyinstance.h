@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOTIFYINSTANCE_H
-#define NOTIFYINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -38,10 +37,10 @@ namespace Actions
 			UnableToShowNotificationException = ActionTools::ActionException::UserException
 		};
 
-		NotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
-		~NotifyInstance();
+		NotifyInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
+		~NotifyInstance() override;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		_NotifyNotification *mNotification;
@@ -50,4 +49,3 @@ namespace Actions
 	};
 }
 
-#endif // NOTIFYINSTANCE_H

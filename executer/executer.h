@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LIB_EXECUTER_H
-#define LIB_EXECUTER_H
+#pragma once
 
 #include "executer_global.h"
 #include "consolewidget.h"
@@ -52,8 +51,8 @@ namespace LibExecuter
 		Q_OBJECT
 
 	public:
-		Executer(QObject *parent = 0);
-		~Executer();
+		Executer(QObject *parent = nullptr);
+		~Executer() override ;
 		
 		void setup(ActionTools::Script *script,
 				   ActionTools::ActionFactory *actionFactory,
@@ -147,29 +146,28 @@ namespace LibExecuter
 		int mCurrentActionIndex;
 		bool mExecutionStarted;
 		bool mExecutionEnded;
-		QScriptEngine *mScriptEngine;
+		QScriptEngine *mScriptEngine{nullptr};
 		QScriptEngineDebugger mScriptEngineDebugger;
 		QMainWindow *mDebuggerWindow;
 		bool mExecuteOnlySelection;
-		ScriptAgent *mScriptAgent;
+		ScriptAgent *mScriptAgent{nullptr};
 		QList<bool> mActionEnabled;
 		QTimer mExecutionTimer;
 		QElapsedTimer mExecutionTime;
 		QProgressDialog *mProgressDialog;
 		int mActiveActionsCount;
 		bool mExecutionPaused;
-		bool mHasExecuted;
+		bool mHasExecuted{false};
 		static ExecutionStatus mExecutionStatus;
-		bool mPauseInterrupt;
+		bool mPauseInterrupt{false};
 		int mPauseBefore;
 		int mPauseAfter;
         Tools::Version mActionaVersion;
 		Tools::Version mScriptVersion;
 		bool mIsActExec;
-        bool mShowDebuggerOnCodeError;
+        bool mShowDebuggerOnCodeError{true};
 
 		Q_DISABLE_COPY(Executer)
 	};
 }
 
-#endif // LIB_EXECUTER_H

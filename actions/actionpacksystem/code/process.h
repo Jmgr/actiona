@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PROCESS_H
-#define PROCESS_H
+#pragma once
 
 #include <QObject>
 #include <QScriptValue>
@@ -117,8 +116,8 @@ namespace Code
 		QProcess *process() const														{ return mProcess; }
 
 	public slots:
-		QString toString() const														{ return "Process"; }
-        virtual bool equals(const QScriptValue &other) const                            { return defaultEqualsImplementation<Process>(other); }
+		QString toString() const override														{ return QStringLiteral("Process"); }
+        bool equals(const QScriptValue &other) const override                            { return defaultEqualsImplementation<Process>(other); }
 		QScriptValue handle() const;
 		int id() const;
 		QScriptValue start();
@@ -154,7 +153,7 @@ namespace Code
 		QScriptValue terminate();
 
 	private slots:
-		void error(QProcess::ProcessError processError);
+        void onError(QProcess::ProcessError processError);
 		void finished(int exitCode, QProcess::ExitStatus exitStatus);
 		void readyReadStandardError();
 		void readyReadStandardOutput();
@@ -172,4 +171,3 @@ namespace Code
 	};
 }
 
-#endif // PROCESS_H

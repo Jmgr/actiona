@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef VARIABLECONDITIONINSTANCE_H
-#define VARIABLECONDITIONINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "ifactionvalue.h"
@@ -46,18 +45,18 @@ namespace Actions
 			Contains
 		};
 
-		VariableConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		VariableConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString variableName = evaluateVariable(ok, "variable");
-			Comparison comparison = evaluateListElement<Comparison>(ok, comparisons, "comparison");
-            QScriptValue value = evaluateValue(ok, "value");
-			ActionTools::IfActionValue ifEqual = evaluateIfAction(ok, "ifEqual");
-			ActionTools::IfActionValue ifDifferent = evaluateIfAction(ok, "ifDifferent");
+			QString variableName = evaluateVariable(ok, QStringLiteral("variable"));
+			auto comparison = evaluateListElement<Comparison>(ok, comparisons, QStringLiteral("comparison"));
+			QScriptValue value = evaluateValue(ok, QStringLiteral("value"));
+			ActionTools::IfActionValue ifEqual = evaluateIfAction(ok, QStringLiteral("ifEqual"));
+			ActionTools::IfActionValue ifDifferent = evaluateIfAction(ok, QStringLiteral("ifDifferent"));
 
 			if(!ok)
 				return;
@@ -66,7 +65,7 @@ namespace Actions
 
             if(!variableValue.isValid())
             {
-                setCurrentParameter("variable");
+				setCurrentParameter(QStringLiteral("variable"));
                 emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid variable"));
 
                 return;
@@ -81,8 +80,8 @@ namespace Actions
                 {
                     QObject *variableObject = variableValue.toQObject();
 
-                    Code::Rect *rectObject = qobject_cast<Code::Rect*>(variableObject);
-                    Code::Point *pointObject = qobject_cast<Code::Point*>(value.toQObject());
+                    auto rectObject = qobject_cast<Code::Rect*>(variableObject);
+                    auto pointObject = qobject_cast<Code::Point*>(value.toQObject());
                     if(rectObject && pointObject)
                     {
                         result = rectObject->rect().contains(pointObject->point());
@@ -98,7 +97,7 @@ namespace Actions
                 }
                 else if(variableValue.isArray())
                 {
-                    int arrayLength = variableValue.property("length").toInteger();
+					int arrayLength = variableValue.property(QStringLiteral("length")).toInteger();
 
                     result = false;
                     hasResult = true;
@@ -158,7 +157,7 @@ namespace Actions
 					return;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
         static Tools::StringListPair comparisons;
@@ -168,4 +167,3 @@ namespace Actions
 	};
 }
 
-#endif // VARIABLECONDITIONINSTANCE_H

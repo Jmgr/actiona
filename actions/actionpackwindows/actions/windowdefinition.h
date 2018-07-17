@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWDEFINITION_H
-#define WINDOWDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "windowinstance.h"
@@ -40,7 +39,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WindowDefinition : public QObject, public ActionTools::ActionDefinition
+	class WindowDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -50,64 +49,53 @@ namespace Actions
 		{
 			translateItems("WindowInstance::actions", WindowInstance::actions);
 
-			ActionTools::WindowParameterDefinition *title = new ActionTools::WindowParameterDefinition(ActionTools::Name("title", tr("Window title")), this);
-			title->setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
-			addElement(title);
+            auto &title = addParameter<ActionTools::WindowParameterDefinition>({QStringLiteral("title"), tr("Window title")});
+            title.setTooltip(tr("The title of the window to find, you can use wildcards like * (any number of characters) or ? (one character) here"));
 
-			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name("action", tr("Action")), this);
-			action->setTooltip(tr("The action to perform"));
-			action->setItems(WindowInstance::actions);
-			action->setDefaultValue(WindowInstance::actions.second.at(WindowInstance::Close));
-			addElement(action);
+            auto &action = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("action"), tr("Action")});
+            action.setTooltip(tr("The action to perform"));
+            action.setItems(WindowInstance::actions);
+            action.setDefaultValue(WindowInstance::actions.second.at(WindowInstance::Close));
 
-			ActionTools::GroupDefinition *moveGroup = new ActionTools::GroupDefinition(this);
-			moveGroup->setMasterList(action);
-			moveGroup->setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Move));
+            auto &moveGroup = addGroup();
+            moveGroup.setMasterList(action);
+            moveGroup.setMasterValues({WindowInstance::actions.first.at(WindowInstance::Move)});
 
-			ActionTools::PositionParameterDefinition *movePosition = new ActionTools::PositionParameterDefinition(ActionTools::Name("movePosition", tr("Move position")), this);
-            movePosition->setTooltip(tr("The position where to move the window"));
-			moveGroup->addMember(movePosition);
+            auto &movePosition = moveGroup.addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("movePosition"), tr("Move position")});
+            movePosition.setTooltip(tr("The position where to move the window"));
 
-			addElement(moveGroup);
+            auto &resizeGroup = addGroup();
+            resizeGroup.setMasterList(action);
+            resizeGroup.setMasterValues({WindowInstance::actions.first.at(WindowInstance::Resize)});
 
-			ActionTools::GroupDefinition *resizeGroup = new ActionTools::GroupDefinition(this);
-			resizeGroup->setMasterList(action);
-			resizeGroup->setMasterValues(QStringList() << WindowInstance::actions.first.at(WindowInstance::Resize));
+            auto &resizeWidth = resizeGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("resizeWidth"), tr("Resize width")});
+            resizeWidth.setTooltip(tr("The new width of the window"));
+            resizeWidth.setMinimum(0);
+            resizeWidth.setMaximum(std::numeric_limits<int>::max());
 
-			ActionTools::NumberParameterDefinition *resizeWidth = new ActionTools::NumberParameterDefinition(ActionTools::Name("resizeWidth", tr("Resize width")), this);
-			resizeWidth->setTooltip(tr("The new width of the window"));
-			resizeWidth->setMinimum(0);
-			resizeWidth->setMaximum(std::numeric_limits<int>::max());
-			resizeGroup->addMember(resizeWidth);
+            auto &resizeHeight = resizeGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("resizeHeight"), tr("Resize height")});
+            resizeHeight.setTooltip(tr("The new height of the window"));
+            resizeHeight.setMinimum(0);
+            resizeHeight.setMaximum(std::numeric_limits<int>::max());
 
-			ActionTools::NumberParameterDefinition *resizeHeight = new ActionTools::NumberParameterDefinition(ActionTools::Name("resizeHeight", tr("Resize height")), this);
-			resizeHeight->setTooltip(tr("The new height of the window"));
-			resizeHeight->setMinimum(0);
-			resizeHeight->setMaximum(std::numeric_limits<int>::max());
-			resizeGroup->addMember(resizeHeight);
-
-			ActionTools::BooleanParameterDefinition *useBorders = new ActionTools::BooleanParameterDefinition(ActionTools::Name("useBorders", tr("Use borders")), this);
-			useBorders->setTooltip(tr("Should the border size be taken into account when resizing the window"));
-			useBorders->setDefaultValue(true);
-			resizeGroup->addMember(useBorders);
-
-			addElement(resizeGroup);
+            auto &useBorders = resizeGroup.addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("useBorders"), tr("Use borders")});
+            useBorders.setTooltip(tr("Should the border size be taken into account when resizing the window"));
+            useBorders.setDefaultValue(QStringLiteral("true"));
 
 			addException(WindowInstance::CannotFindWindowException, tr("Cannot find window"));
 			addException(WindowInstance::ActionFailedException, tr("Action failed"));
 		}
 
-		QString name() const													{ return QObject::tr("Window"); }
-		QString id() const														{ return "ActionWindow"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Do some action on a window"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WindowInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
-		QPixmap icon() const													{ return QPixmap(":/icons/window.png"); }
+		QString name() const override													{ return QObject::tr("Window"); }
+		QString id() const override														{ return QStringLiteral("ActionWindow"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Do some action on a window"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WindowInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/window.png")); }
 
 	private:
 		Q_DISABLE_COPY(WindowDefinition)
 	};
 }
 
-#endif // WINDOWDEFINITION_H

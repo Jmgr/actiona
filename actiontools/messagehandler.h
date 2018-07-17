@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MESSAGEHANDLER_H
-#define MESSAGEHANDLER_H
+#pragma once
 
 #include <QAbstractMessageHandler>
 
@@ -28,14 +27,14 @@ namespace ActionTools
 	class MessageHandler : public QAbstractMessageHandler
 	{
 	public:
-		MessageHandler() : QAbstractMessageHandler(0)				{}
+		MessageHandler() : QAbstractMessageHandler(nullptr)				{}
 		
 		QString statusMessage() const								{ return mDescription; }
 		int line() const											{ return mSourceLocation.line(); }
 		int column() const											{ return mSourceLocation.column(); }
 		
 	protected:
-		void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation);
+		void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation) override;
 		
 	private:
 		QtMsgType mMessageType;
@@ -44,4 +43,3 @@ namespace ActionTools
 	};
 }
 
-#endif // MESSAGEHANDLER_H

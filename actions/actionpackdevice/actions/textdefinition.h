@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TEXTDEFINITION_H
-#define TEXTDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "textinstance.h"
@@ -37,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class TextDefinition : public QObject, public ActionTools::ActionDefinition
+	class TextDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 	
@@ -45,40 +44,36 @@ namespace Actions
 		explicit TextDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("text", tr("Text")), this);
-			text->setTooltip(tr("The text to write"));
-			addElement(text);
+			auto &text = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
+            text.setTooltip(tr("The text to write"));
 
-			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition(ActionTools::Name("pause", tr("Pause between characters")), this);
-			pause->setTooltip(tr("The pause duration between each character"));
-			pause->setMinimum(0);
-			pause->setMaximum(std::numeric_limits<int>::max());
-			pause->setDefaultValue(0);
-			pause->setSuffix(tr(" ms", "milliseconds"));
-			addElement(pause, 1);
+            auto &pause = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("pause"), tr("Pause between characters")}, 1);
+            pause.setTooltip(tr("The pause duration between each character"));
+            pause.setMinimum(0);
+            pause.setMaximum(std::numeric_limits<int>::max());
+            pause.setDefaultValue(QStringLiteral("0"));
+            pause.setSuffix(tr(" ms", "milliseconds"));
 
-            ActionTools::BooleanParameterDefinition *noUnicodeCharacters = new ActionTools::BooleanParameterDefinition(ActionTools::Name("noUnicodeCharacters", tr("Do not send Unicode characters")), this);
-            noUnicodeCharacters->setTooltip(tr("Prevent using Unicode characters. Enables a limited set of characters on some programs."));
-            noUnicodeCharacters->setDefaultValue(false);
-            noUnicodeCharacters->setOperatingSystems(ActionTools::WorksOnWindows);
-            addElement(noUnicodeCharacters, 1);
+            auto &noUnicodeCharacters = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("noUnicodeCharacters"), tr("Do not send Unicode characters")}, 1);
+            noUnicodeCharacters.setTooltip(tr("Prevent using Unicode characters. Enables a limited set of characters on some programs."));
+            noUnicodeCharacters.setDefaultValue(QStringLiteral("false"));
+            noUnicodeCharacters.setOperatingSystems(ActionTools::WorksOnWindows);
 
 			addException(TextInstance::FailedToSendInputException, tr("Send input failure"));
 		}
 	
-		QString name() const													{ return QObject::tr("Write text"); }
-		QString id() const														{ return "ActionWriteText"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Write some text"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new TextInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/text.png"); }
-		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Write text"); }
+		QString id() const override														{ return QStringLiteral("ActionWriteText"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Write some text"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new TextInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/text.png")); }
+		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 	
 	private:
 		Q_DISABLE_COPY(TextDefinition)
 	};
 }
 
-#endif // TEXTDEFINITION_H

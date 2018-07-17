@@ -81,7 +81,7 @@ QBatteryInfoPrivate::QBatteryInfoPrivate(QBatteryInfo *parent)
 #if !defined(QT_NO_UDEV)
     , uDevWrapper(0)
 #else
-    , timer(0)
+    , timer(nullptr)
 #endif // QT_NO_UDEV
 {
 }
@@ -105,7 +105,7 @@ QBatteryInfoPrivate::QBatteryInfoPrivate(int batteryIndex, QBatteryInfo *parent)
 #if !defined(QT_NO_UDEV)
     , uDevWrapper(0)
 #else
-    , timer(0)
+    , timer(nullptr)
 #endif // QT_NO_UDEV
 {
 }
@@ -399,7 +399,7 @@ void QBatteryInfoPrivate::connectNotify(const QMetaMethod &signal)
         connect(uDevWrapper, SIGNAL(batteryDataChanged(int,QByteArray,QByteArray)), this, SLOT(onBatteryDataChanged(int,QByteArray,QByteArray)));
     }
 #else
-    if (timer == 0) {
+    if (timer == nullptr) {
        timer = new QTimer;
        timer->setInterval(2000);
        connect(timer, SIGNAL(timeout()), this, SLOT(onTimeout()));

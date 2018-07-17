@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COPYFILEDEFINITION_H
-#define COPYFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "copyfileinstance.h"
@@ -33,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class CopyFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class CopyFileDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -41,35 +40,32 @@ namespace Actions
 		explicit CopyFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *source = new ActionTools::FileParameterDefinition(ActionTools::Name("source", tr("Source file")), this);
-			source->setTooltip(tr("The file to copy"));
-			source->setMode(ActionTools::FileEdit::FileOpen);
-			source->setCaption(tr("Choose the file"));
-			source->setFilter(tr("All files (*.*)"));
-			addElement(source);
+			auto &source = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("source"), tr("Source file")});
+            source.setTooltip(tr("The file to copy"));
+            source.setMode(ActionTools::FileEdit::FileOpen);
+            source.setCaption(tr("Choose the file"));
+            source.setFilter(tr("All files (*.*)"));
 
-			ActionTools::FileParameterDefinition *destination = new ActionTools::FileParameterDefinition(ActionTools::Name("destination", tr("Destination")), this);
-			destination->setTooltip(tr("The destination file"));
-			destination->setMode(ActionTools::FileEdit::FileSave);
-			destination->setCaption(tr("Choose the destination file"));
-			destination->setFilter(tr("All files (*.*)"));
-			addElement(destination);
+			auto &destination = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("destination"), tr("Destination")});
+            destination.setTooltip(tr("The destination file"));
+            destination.setMode(ActionTools::FileEdit::FileSave);
+            destination.setCaption(tr("Choose the destination file"));
+            destination.setFilter(tr("All files (*.*)"));
 
 			addException(CopyFileInstance::UnableToReadFileException, tr("Unable to read source file"));
 			addException(CopyFileInstance::UnableToWriteFileException, tr("Unable to write destination file"));
 		}
 
-		QString name() const													{ return QObject::tr("Copy file"); }
-		QString id() const														{ return "ActionCopyFile"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Copy a file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new CopyFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/copyfile.png"); }
+		QString name() const override													{ return QObject::tr("Copy file"); }
+		QString id() const override														{ return QStringLiteral("ActionCopyFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Copy a file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new CopyFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/copyfile.png")); }
 
 	private:
 		Q_DISABLE_COPY(CopyFileDefinition)
 	};
 }
 
-#endif // COPYFILEDEFINITION_H

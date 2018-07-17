@@ -33,7 +33,7 @@ QWidget* ResourceTypeDelegate::createEditor(QWidget *parent, const QStyleOptionV
     Q_UNUSED(option)
     Q_UNUSED(index)
 
-    QComboBox *comboBox = new QComboBox(parent);
+    auto comboBox = new QComboBox(parent);
     comboBox->setEditable(false);
 
     for(int i = 0; i < ActionTools::Resource::TypeCount; ++i)
@@ -47,7 +47,7 @@ QWidget* ResourceTypeDelegate::createEditor(QWidget *parent, const QStyleOptionV
 
 void ResourceTypeDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-    if(QComboBox *comboBox = qobject_cast<QComboBox *>(editor))
+    if(auto comboBox = qobject_cast<QComboBox *>(editor))
         comboBox->setCurrentIndex(index.data(Qt::UserRole).toInt());
     else
         QStyledItemDelegate::setEditorData(editor, index);
@@ -55,7 +55,7 @@ void ResourceTypeDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 
 void ResourceTypeDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    if(QComboBox *comboBox = qobject_cast<QComboBox *>(editor))
+    if(auto comboBox = qobject_cast<QComboBox *>(editor))
     {
         model->setData(index, comboBox->currentIndex(), Qt::UserRole);
         model->setData(index, ActionTools::Resource::typeNames[comboBox->currentIndex()], Qt::DisplayRole);
@@ -64,13 +64,13 @@ void ResourceTypeDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
         {
         case ActionTools::Resource::BinaryType:
         case ActionTools::Resource::TypeCount:
-            model->setData(index, QIcon(":/images/binary.png"), Qt::DecorationRole);
+			model->setData(index, QIcon(QStringLiteral(":/images/binary.png")), Qt::DecorationRole);
             break;
         case ActionTools::Resource::TextType:
-            model->setData(index, QIcon(":/images/text.png"), Qt::DecorationRole);
+			model->setData(index, QIcon(QStringLiteral(":/images/text.png")), Qt::DecorationRole);
             break;
         case ActionTools::Resource::ImageType:
-            model->setData(index, QIcon(":/images/image.png"), Qt::DecorationRole);
+			model->setData(index, QIcon(QStringLiteral(":/images/image.png")), Qt::DecorationRole);
             break;
         }
     }

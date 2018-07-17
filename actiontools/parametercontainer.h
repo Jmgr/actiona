@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef PARAMETERCONTAINER_H
-#define PARAMETERCONTAINER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -45,4 +44,3 @@ namespace ActionTools
     };
 }
 
-#endif // PARAMETERCONTAINER_H

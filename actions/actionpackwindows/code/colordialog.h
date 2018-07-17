@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COLORDIALOG_H
-#define COLORDIALOG_H
+#pragma once
 
 #include "basewindow.h"
 
@@ -39,7 +38,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
 		ColorDialog();
-		~ColorDialog();
+		~ColorDialog() override;
 		
 		void setOnClosed(const QScriptValue &onClosed)					{ mOnClosed = onClosed; }
 		void setOnColorSelected(const QScriptValue &onColorSelected)	{ mOnColorSelected = onColorSelected; }
@@ -58,7 +57,7 @@ namespace Code
 		int showModal();
 		
 	private slots:
-		QString toString() const					{ return "ColorDialog"; }
+		QString toString() const override					{ return QStringLiteral("ColorDialog"); }
 		void finished(int result);
 		void colorSelected(const QColor &color);
 		void currentColorChanged(const QColor &color);
@@ -73,4 +72,3 @@ namespace Code
 	};
 }
 
-#endif // COLORDIALOG_H

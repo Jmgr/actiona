@@ -22,11 +22,18 @@
 
 namespace Actions
 {
-    Tools::StringListPair ConsoleInstance::outputs = qMakePair(
-			QStringList() << "information" << "warning" << "error",
-			QStringList()
-			<< QT_TRANSLATE_NOOP("ConsoleInstance::outputs", "Information")
-			<< QT_TRANSLATE_NOOP("ConsoleInstance::outputs", "Warning")
-			<< QT_TRANSLATE_NOOP("ConsoleInstance::outputs", "Error"));
+    Tools::StringListPair ConsoleInstance::outputs =
+    {
+        {
+            QStringLiteral("information"),
+            QStringLiteral("warning"),
+            QStringLiteral("error")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("ConsoleInstance::outputs", "Information")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ConsoleInstance::outputs", "Warning")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ConsoleInstance::outputs", "Error"))
+        }
+    };
 }
 

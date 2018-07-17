@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef BEGINPROCEDUREINSTANCE_H
-#define BEGINPROCEDUREINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "actiondefinition.h"
@@ -31,14 +30,14 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		BeginProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		BeginProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
-			setNextLine(runtimeParameter("procedureEndLine").toInt() + 2);//Lines start at 1
+			setNextLine(runtimeParameter(QStringLiteral("procedureEndLine")).toInt() + 2);//Lines start at 1
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -46,4 +45,3 @@ namespace Actions
 	};
 }
 
-#endif // BEGINPROCEDUREINSTANCE_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef REGISTRY_H
-#define REGISTRY_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -52,11 +51,11 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	
 		Registry();
-		~Registry();
+		~Registry() override;
 	
 	public slots:
-        QString toString() const                                { return "Registry"; }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Registry>(other); }
+		QString toString() const override                                { return QStringLiteral("Registry"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Registry>(other); }
 		QScriptValue openKey(Key key, const QString &subKey);
 		QScriptValue createKey(Key key, const QString &subKey);
 		QScriptValue setValue(const QString &value, const QVariant &data) const;
@@ -79,4 +78,3 @@ namespace Code
 	};
 }
 
-#endif // REGISTRY_H

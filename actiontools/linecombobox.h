@@ -18,26 +18,29 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LINECOMBOBOX_H
-#define LINECOMBOBOX_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "codecombobox.h"
 
 namespace ActionTools
 {
+    class Script;
+
 	class ACTIONTOOLSSHARED_EXPORT LineComboBox : public CodeComboBox
 	{
 		Q_OBJECT
 
 	public:
-        LineComboBox(const QStringList &labels, QWidget *parent = 0);
-		
-        void setup(const QStringList &labels);
+        LineComboBox(Script &script, QWidget *parent = nullptr);
+
+        void setFromSubParameter(const SubParameter &subParameter);
+        void setValue(bool code, const QString &lineOrLabel);
 
 	private:
+        Script &mScript;
+
 		Q_DISABLE_COPY(LineComboBox)
 	};
 }
 
-#endif // LINECOMBOBOX_H

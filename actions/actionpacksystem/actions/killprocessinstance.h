@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KILLPROCESSINSTANCE_H
-#define KILLPROCESSINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -40,16 +39,16 @@ namespace Actions
 			GracefulThenForceful = ActionTools::CrossPlatform::GracefulThenForceful
 		};
 
-		KillProcessInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		KillProcessInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
         static Tools::StringListPair killModes;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			int processId = evaluateInteger(ok, "processId");
+			int processId = evaluateInteger(ok, QStringLiteral("processId"));
 
 			if(!ok)
 				return;
@@ -57,7 +56,7 @@ namespace Actions
 			if(processId != 0)
 				ActionTools::CrossPlatform::killProcess(processId, ActionTools::CrossPlatform::GracefulThenForceful, 100);
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -65,4 +64,3 @@ namespace Actions
 	};
 }
 
-#endif // KILLPROCESSINSTANCE_H

@@ -95,12 +95,12 @@ public:
 
     virtual QString description() const;
 
-    virtual ~QtImageFilter() {}
+    virtual ~QtImageFilter() = default;
 };
 
 class QT_QTIMAGEFILTERS_EXPORT QtImageFilterFactory {
 public:
-    typedef QtImageFilter* (*ImageFilterFactoryFunction)(void);
+    typedef QtImageFilter* (*ImageFilterFactoryFunction)();
     static QtImageFilter *createImageFilter(const QString &name);
 
     static void registerImageFilter(const QString &name, ImageFilterFactoryFunction func);

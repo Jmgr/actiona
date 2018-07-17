@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#pragma once
 
 #include <QDialog>
 #include <QButtonGroup>
@@ -40,8 +39,8 @@ class SettingsDialog : public QDialog
 	Q_OBJECT
 
 public:
-	SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent = 0);
-	~SettingsDialog();
+	SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent = nullptr);
+	~SettingsDialog() override;
 
 private slots:
 	void enableCustomProxy();
@@ -49,8 +48,8 @@ private slots:
 	void onTimeout();
 	void on_testConnectivity_clicked();
 	void proxyTestFinished();
-	void accept();
-	void done(int result);
+	void accept() override;
+	void done(int result) override;
     void languageChanged();
 
 private:
@@ -70,6 +69,4 @@ private:
 
 	Q_DISABLE_COPY(SettingsDialog)
 };
-
-#endif // SETTINGSDIALOG_H
 

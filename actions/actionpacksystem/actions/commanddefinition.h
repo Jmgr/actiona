@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COMMANDDEFINITION_H
-#define COMMANDDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "commandinstance.h"
@@ -35,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class CommandDefinition : public QObject, public ActionTools::ActionDefinition
+	class CommandDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -43,55 +42,46 @@ namespace Actions
 		explicit CommandDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *command = new ActionTools::FileParameterDefinition(ActionTools::Name("command", tr("Command")), this);
-			command->setTooltip(tr("The command to execute"));
-			addElement(command);
+            auto &command = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("command"), tr("Command")});
+            command.setTooltip(tr("The command to execute"));
 
-			ActionTools::TextParameterDefinition *parameters = new ActionTools::TextParameterDefinition(ActionTools::Name("parameters", tr("Parameters")), this);
-			parameters->setTooltip(tr("The command's parameters"));
-			addElement(parameters);
+            auto &parameters = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("parameters"), tr("Parameters")});
+            parameters.setTooltip(tr("The command's parameters"));
 
-			ActionTools::FileParameterDefinition *workingDirectory = new ActionTools::FileParameterDefinition(ActionTools::Name("workingDirectory", tr("Working directory")), this);
-			workingDirectory->setTooltip(tr("The command's working directory"));
-			workingDirectory->setCaption(tr("Command working directory"));
-			workingDirectory->setMode(ActionTools::FileEdit::DirectoryOpen);
-			addElement(workingDirectory);
+            auto &workingDirectory = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("workingDirectory"), tr("Working directory")});
+            workingDirectory.setTooltip(tr("The command's working directory"));
+            workingDirectory.setCaption(tr("Command working directory"));
+            workingDirectory.setMode(ActionTools::FileEdit::DirectoryOpen);
 
-			ActionTools::VariableParameterDefinition *exitCode = new ActionTools::VariableParameterDefinition(ActionTools::Name("exitCode", tr("Exit code")), this);
-			exitCode->setTooltip(tr("The command's exit code"));
-			addElement(exitCode, 1);
+            auto &exitCode = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("exitCode"), tr("Exit code")}, 1);
+            exitCode.setTooltip(tr("The command's exit code"));
 
-			ActionTools::VariableParameterDefinition *processId = new ActionTools::VariableParameterDefinition(ActionTools::Name("processId", tr("Process id")), this);
-			processId->setTooltip(tr("The command's process id"));
-			addElement(processId, 1);
+            auto &processId = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("processId"), tr("Process id")}, 1);
+            processId.setTooltip(tr("The command's process id"));
 
-			ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition(ActionTools::Name("output", tr("Output")), this);
-			output->setTooltip(tr("The command's output"));
-			addElement(output);
+            auto &output = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("output"), tr("Output")});
+            output.setTooltip(tr("The command's output"));
 
-			ActionTools::VariableParameterDefinition *errorOutput = new ActionTools::VariableParameterDefinition(ActionTools::Name("errorOutput", tr("Error output")), this);
-			errorOutput->setTooltip(tr("The command's error output"));
-			addElement(errorOutput, 1);
+            auto &errorOutput = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("errorOutput"), tr("Error output")}, 1);
+            errorOutput.setTooltip(tr("The command's error output"));
 
-			ActionTools::VariableParameterDefinition *exitStatus = new ActionTools::VariableParameterDefinition(ActionTools::Name("exitStatus", tr("Exit status")), this);
-			exitStatus->setTooltip(tr("The command's exit status"));
-			addElement(exitStatus, 1);
+            auto &exitStatus = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("exitStatus"), tr("Exit status")}, 1);
+            exitStatus.setTooltip(tr("The command's exit status"));
 
 			addException(CommandInstance::FailedToStartException, tr("Failed to start the command"));
 		}
 
-		QString name() const													{ return QObject::tr("Command"); }
-		QString id() const														{ return "ActionCommand"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Executes a command"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new CommandInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/command.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Command"); }
+		QString id() const override														{ return QStringLiteral("ActionCommand"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Executes a command"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new CommandInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/command.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(CommandDefinition)
 	};
 }
 
-#endif // COMMANDDEFINITION_H

@@ -34,12 +34,12 @@ namespace Code
 		{
 			errorTypeValue = engine->newFunction(emptyFunction);
 			engine->globalObject().setProperty(errorType, errorTypeValue);
-			errorTypeValue.setProperty("prototype", engine->globalObject().property(parent).construct());
+			errorTypeValue.setProperty(QStringLiteral("prototype"), engine->globalObject().property(parent).construct());
 		}
 
 		QScriptValue thrownError = errorTypeValue.construct();
-		thrownError.setProperty("message", message);
-		thrownError.setProperty("name", errorType);
+		thrownError.setProperty(QStringLiteral("message"), message);
+		thrownError.setProperty(QStringLiteral("name"), errorType);
 		context->throwValue(thrownError);
 	}
 

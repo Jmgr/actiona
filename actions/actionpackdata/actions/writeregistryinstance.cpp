@@ -32,10 +32,10 @@ namespace Actions
 	#ifdef Q_OS_WIN
 		bool ok = true;
 
-		ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, ReadRegistryInstance::keys, "key");
-		QString subKey = evaluateString(ok, "subKey");
-		QString value = evaluateString(ok, "value");
-        QScriptValue data = evaluateValue(ok, "data");
+        ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, ReadRegistryInstance::keys, QStringLiteral("key"));
+        QString subKey = evaluateString(ok, QStringLiteral("subKey"));
+        QString value = evaluateString(ok, QStringLiteral("value"));
+        QScriptValue data = evaluateValue(ok, QStringLiteral("data"));
 
 		if(!ok)
 			return;
@@ -43,11 +43,11 @@ namespace Actions
         switch(ActionTools::Registry::write(data.toVariant(), key, subKey, value))
 		{
 		case ActionTools::Registry::WriteCannotFindSubKey:
-			setCurrentParameter("subKey");
+            setCurrentParameter(QStringLiteral("subKey"));
 			emit executionException(CannotFindSubKeyException, tr("Cannot find subKey \"%1\"").arg(subKey));
 			return;
 		case ActionTools::Registry::WriteCannotWriteValue:
-			setCurrentParameter("value");
+            setCurrentParameter(QStringLiteral("value"));
 			emit executionException(CannotWriteValueException, tr("Cannot write value \"%1\"").arg(value));
 			return;
 		default:
@@ -55,6 +55,6 @@ namespace Actions
 		}
 	#endif
 
-		emit executionEnded();
+		executionEnded();
 	}
 }

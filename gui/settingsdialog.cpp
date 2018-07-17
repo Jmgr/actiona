@@ -46,7 +46,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	mExecutionWindowButtonGroup(new QButtonGroup(this)),
 	mConsoleWindowButtonGroup(new QButtonGroup(this)),
 	mNetworkAccessManager(new QNetworkAccessManager(this)),
-	mNetworkReply(0),
+	mNetworkReply(nullptr),
 	mTimeoutTimer(new QTimer(this)),
 	mSystemTrayIcon(systemTrayIcon),
 	mPreviousASCRAssociation(false),
@@ -61,64 +61,76 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	ui->associateACODCheckBox->setVisible(false);
 #endif
 
-	connect(ui->noProxyRadioButton, SIGNAL(clicked()), this, SLOT(disableCustomProxy()));
-	connect(ui->systemProxyRadioButton, SIGNAL(clicked()), this, SLOT(disableCustomProxy()));
-	connect(ui->customProxyRadioButton, SIGNAL(clicked()), this, SLOT(enableCustomProxy()));
+    connect(ui->noProxyRadioButton, &QRadioButton::clicked, this, &SettingsDialog::disableCustomProxy);
+    connect(ui->systemProxyRadioButton, &QRadioButton::clicked, this, &SettingsDialog::disableCustomProxy);
+    connect(ui->customProxyRadioButton, &QRadioButton::clicked, this, &SettingsDialog::enableCustomProxy);
 
 	QSettings settings;
 
-	ui->settingsTab->setCurrentIndex(settings.value("gui/settingsTab", QVariant(0)).toInt());
+	ui->settingsTab->setCurrentIndex(settings.value(QStringLiteral("gui/settingsTab"), QVariant(0)).toInt());
 
 	ui->noSysTrayLabel->setVisible(!QSystemTrayIcon::isSystemTrayAvailable());
 	ui->noSysTrayMessagesLabel->setVisible(!QSystemTrayIcon::supportsMessages());
 
     ui->languageComboBox->clear();
 
-    int languageIndex = 0;
-    for(const QString &language: Tools::Languages::languagesName().second)
+    auto languages = Tools::Languages::languagesName();
+    for(int languageIndex = 0; languageIndex < languages.first.size(); ++languageIndex)
     {
-        ui->languageComboBox->addItem(language, languageIndex);
+        const QString languageName = languages.first[languageIndex];
+        const QString translatedLanguageName = languages.second[languageIndex];
 
-        ++languageIndex;
+        if(languageName.isEmpty())
+            ui->languageComboBox->addItem(translatedLanguageName, languageIndex);
+        else
+        {
+            QString countryName = languageName.split(QLatin1Char('_')).at(1).toLower();
+            QIcon icon{QStringLiteral(":/images/flags/%1.png").arg(countryName)};
+
+            ui->languageComboBox->addItem(icon, translatedLanguageName, languageIndex);
+        }
     }
 
 	//GENERAL
-    ui->languageComboBox->setCurrentIndex(Tools::Languages::languageNameToIndex(settings.value("gui/locale", Tools::Languages::languagesName().first.first()).toString()));
-	ui->showLoadingWindow->setChecked(settings.value("gui/showLoadingWindow", QVariant(true)).toBool());
-	ui->showTaskbarIcon->setChecked(settings.value("gui/showTaskbarIcon", QVariant(true)).toBool());
-	ui->showWindowAfterExecution->setChecked(settings.value("gui/showWindowAfterExecution", QVariant(true)).toBool());
-	ui->addStartEndSeparators->setChecked(settings.value("gui/addConsoleStartEndSeparators", QVariant(true)).toBool());
-	ui->reopenLastScript->setChecked(settings.value("gui/reopenLastScript", QVariant(false)).toBool());
-	ui->maxRecentFiles->setValue(settings.value("gui/maxRecentFiles", QVariant(5)).toInt());
+    ui->languageComboBox->setCurrentIndex(Tools::Languages::languageNameToIndex(settings.value(QStringLiteral("gui/locale"), Tools::Languages::languagesName().first.first()).toString()));
+    ui->showLoadingWindow->setChecked(settings.value(QStringLiteral("gui/showLoadingWindow"), QVariant(true)).toBool());
+    ui->preloadActionDialogsCheckBox->setChecked(settings.value(QStringLiteral("gui/preloadActionDialogs"), QVariant(false)).toBool());
+    ui->showTaskbarIcon->setChecked(settings.value(QStringLiteral("gui/showTaskbarIcon"), QVariant(true)).toBool());
+    ui->showWindowAfterExecution->setChecked(settings.value(QStringLiteral("gui/showWindowAfterExecution"), QVariant(true)).toBool());
+    ui->addStartEndSeparators->setChecked(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool());
+    ui->reopenLastScript->setChecked(settings.value(QStringLiteral("gui/reopenLastScript"), QVariant(false)).toBool());
+    ui->maxRecentFiles->setValue(settings.value(QStringLiteral("gui/maxRecentFiles"), QVariant(5)).toInt());
 
 	//ACTIONS
-	ui->executionWindowGroup->setChecked(settings.value("actions/showExecutionWindow", QVariant(true)).toBool());
-	int screen = settings.value("actions/executionWindowScreen", QVariant(0)).toInt();
-	int position = settings.value("actions/executionWindowPosition", QVariant(0)).toInt();
+	ui->executionWindowGroup->setChecked(settings.value(QStringLiteral("actions/showExecutionWindow"), QVariant(true)).toBool());
+	int screen = settings.value(QStringLiteral("actions/executionWindowScreen"), QVariant(0)).toInt();
+	int position = settings.value(QStringLiteral("actions/executionWindowPosition"), QVariant(0)).toInt();
 	ui->executionWindowPosition->setPosition(screen, position);
-	ui->consoleWindowGroup->setChecked(settings.value("actions/showConsoleWindow", QVariant(true)).toBool());
-	screen = settings.value("actions/consoleWindowScreen", QVariant(0)).toInt();
-	position = settings.value("actions/consoleWindowPosition", QVariant(1)).toInt();
+	ui->consoleWindowGroup->setChecked(settings.value(QStringLiteral("actions/showConsoleWindow"), QVariant(true)).toBool());
+	screen = settings.value(QStringLiteral("actions/consoleWindowScreen"), QVariant(0)).toInt();
+	position = settings.value(QStringLiteral("actions/consoleWindowPosition"), QVariant(1)).toInt();
 	ui->consoleWindowPosition->setPosition(screen, position);
 	ui->stopExecutionHotkey->setKeySequence(
-		QKeySequence(settings.value("actions/stopExecutionHotkey", QKeySequence("Ctrl+Alt+Q")).toString()));
+		QKeySequence(settings.value(QStringLiteral("actions/stopExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+Q"))).toString()));
 	ui->pauseExecutionHotkey->setKeySequence(
-		QKeySequence(settings.value("actions/pauseExecutionHotkey", QKeySequence("Ctrl+Alt+W")).toString()));
+		QKeySequence(settings.value(QStringLiteral("actions/pauseExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+W"))).toString()));
 	ui->switchTextCode->setKeySequence(
-		QKeySequence(settings.value("actions/switchTextCode", QKeySequence("Ctrl+Shift+C")).toString()));
+		QKeySequence(settings.value(QStringLiteral("actions/switchTextCode"), QKeySequence(QStringLiteral("Ctrl+Shift+C"))).toString()));
 	ui->openEditorKey->setKeySequence(
-		QKeySequence(settings.value("actions/openEditorKey", QKeySequence("Ctrl+Shift+V")).toString()));
-	ui->checkCodeSyntaxAutomatically->setChecked(settings.value("actions/checkCodeSyntaxAutomatically", QVariant(true)).toBool());
+		QKeySequence(settings.value(QStringLiteral("actions/openEditorKey"), QKeySequence(QStringLiteral("Ctrl+Shift+V"))).toString()));
+	ui->checkCodeSyntaxAutomatically->setChecked(settings.value(QStringLiteral("actions/checkCodeSyntaxAutomatically"), QVariant(true)).toBool());
+    ui->heatmapMinColorPushButton->setColor(settings.value(QStringLiteral("heatmap/minColor"), QColor{Qt::yellow}).value<QColor>());
+    ui->heatmapMaxColorPushButton->setColor(settings.value(QStringLiteral("heatmap/maxColor"), QColor{Qt::red}).value<QColor>());
 
 	//NETWORK
 #ifdef ACT_NO_UPDATER
 	ui->updatesCheck->hide();
 	ui->updatesCheckLabel->hide();
 #else
-	ui->updatesCheck->setCurrentIndex(settings.value("network/updatesCheck", QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY)).toInt());
+	ui->updatesCheck->setCurrentIndex(settings.value(QStringLiteral("network/updatesCheck"), QVariant(ActionTools::Settings::CHECK_FOR_UPDATES_DAY)).toInt());
 #endif
 
-	int proxyMode = settings.value("network/proxyMode", QVariant(ActionTools::Settings::PROXY_SYSTEM)).toInt();
+	int proxyMode = settings.value(QStringLiteral("network/proxyMode"), QVariant(ActionTools::Settings::PROXY_SYSTEM)).toInt();
 
 	switch(proxyMode)
 	{
@@ -134,26 +146,26 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	}
 
 	setCustomProxyEnabled(ui->customProxyRadioButton->isChecked());
-	ui->proxyHost->setText(settings.value("network/proxyHost", QVariant()).toString());
-	ui->proxyPort->setText(settings.value("network/proxyPort", QVariant()).toString());
-	ui->proxyUser->setText(settings.value("network/proxyUser", QVariant()).toString());
-	ui->proxyPassword->setText(settings.value("network/proxyPassword", QVariant()).toString());
-	ui->proxyType->setCurrentIndex(settings.value("network/proxyType", QVariant(ActionTools::Settings::PROXY_TYPE_HTTP)).toInt());
+	ui->proxyHost->setText(settings.value(QStringLiteral("network/proxyHost"), QVariant()).toString());
+	ui->proxyPort->setText(settings.value(QStringLiteral("network/proxyPort"), QVariant()).toString());
+	ui->proxyUser->setText(settings.value(QStringLiteral("network/proxyUser"), QVariant()).toString());
+	ui->proxyPassword->setText(settings.value(QStringLiteral("network/proxyPassword"), QVariant()).toString());
+	ui->proxyType->setCurrentIndex(settings.value(QStringLiteral("network/proxyType"), QVariant(ActionTools::Settings::PROXY_TYPE_HTTP)).toInt());
 
 #ifdef Q_OS_WIN
 	QVariant result;
-	mPreviousASCRAssociation = (ActionTools::Registry::read(result, ActionTools::Registry::ClassesRoot, ".ascr") == ActionTools::Registry::ReadOk);
-	mPreviousACODAssociation = (ActionTools::Registry::read(result, ActionTools::Registry::ClassesRoot, ".acod") == ActionTools::Registry::ReadOk);
+	mPreviousASCRAssociation = (ActionTools::Registry::read(result, ActionTools::Registry::ClassesRoot, QStringLiteral(".ascr")) == ActionTools::Registry::ReadOk);
+	mPreviousACODAssociation = (ActionTools::Registry::read(result, ActionTools::Registry::ClassesRoot, QStringLiteral(".acod")) == ActionTools::Registry::ReadOk);
 
 	ui->associateASCRCheckBox->setChecked(mPreviousASCRAssociation);
 	ui->associateACODCheckBox->setChecked(mPreviousACODAssociation);
 #endif
 
-    connect(ui->languageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged()));
-	connect(mTimeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+    connect(ui->languageComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SettingsDialog::languageChanged);
+    connect(mTimeoutTimer, &QTimer::timeout, this, &SettingsDialog::onTimeout);
 
 	if(systemTrayIcon)
-		connect(ui->showTaskbarIcon, SIGNAL(clicked(bool)), systemTrayIcon, SLOT(setVisible(bool)));
+        connect(ui->showTaskbarIcon, &QCheckBox::clicked, systemTrayIcon, &QSystemTrayIcon::setVisible);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -215,7 +227,8 @@ void SettingsDialog::on_testConnectivity_clicked()
 
 	QNetworkProxy::setApplicationProxy(proxy);
 	mNetworkReply = mNetworkAccessManager->get(QNetworkRequest(QUrl(Global::CONNECTIVITY_URL)));
-	connect(mNetworkReply, SIGNAL(finished()), this, SLOT(proxyTestFinished()));
+
+    connect(mNetworkReply, &QNetworkReply::finished, this, &SettingsDialog::proxyTestFinished);
 
 	setEnabled(false);
 
@@ -243,7 +256,7 @@ void SettingsDialog::proxyTestFinished()
 	}
 
 	mNetworkReply->deleteLater();
-	mNetworkReply = 0;
+	mNetworkReply = nullptr;
 	setEnabled(true);
 }
 
@@ -257,40 +270,43 @@ void SettingsDialog::accept()
 
 	QSettings settings;
 
-	settings.setValue("gui/settingsTab", ui->settingsTab->currentIndex());
+	settings.setValue(QStringLiteral("gui/settingsTab"), ui->settingsTab->currentIndex());
 
 	//GENERAL
-    settings.setValue("gui/locale", Tools::Languages::languagesName().first[ui->languageComboBox->currentIndex()]);
-	settings.setValue("gui/showLoadingWindow", ui->showLoadingWindow->isChecked());
-	settings.setValue("gui/showTaskbarIcon", ui->showTaskbarIcon->isChecked());
-	settings.setValue("gui/showWindowAfterExecution", ui->showWindowAfterExecution->isChecked());
-	settings.setValue("gui/addConsoleStartEndSeparators", ui->addStartEndSeparators->isChecked());
-	settings.setValue("gui/reopenLastScript", ui->reopenLastScript->isChecked());
-	settings.setValue("gui/maxRecentFiles", ui->maxRecentFiles->value());
+    settings.setValue(QStringLiteral("gui/locale"), Tools::Languages::languagesName().first[ui->languageComboBox->currentIndex()]);
+	settings.setValue(QStringLiteral("gui/showLoadingWindow"), ui->showLoadingWindow->isChecked());
+    settings.setValue(QStringLiteral("gui/preloadActionDialogs"), ui->preloadActionDialogsCheckBox->isChecked());
+	settings.setValue(QStringLiteral("gui/showTaskbarIcon"), ui->showTaskbarIcon->isChecked());
+	settings.setValue(QStringLiteral("gui/showWindowAfterExecution"), ui->showWindowAfterExecution->isChecked());
+	settings.setValue(QStringLiteral("gui/addConsoleStartEndSeparators"), ui->addStartEndSeparators->isChecked());
+	settings.setValue(QStringLiteral("gui/reopenLastScript"), ui->reopenLastScript->isChecked());
+	settings.setValue(QStringLiteral("gui/maxRecentFiles"), ui->maxRecentFiles->value());
 
 	//ACTIONS
-	settings.setValue("actions/showExecutionWindow", ui->executionWindowGroup->isChecked());
-	settings.setValue("actions/executionWindowPosition", ui->executionWindowPosition->position());
-	settings.setValue("actions/executionWindowScreen", ui->executionWindowPosition->screen());
-	settings.setValue("actions/showConsoleWindow", ui->consoleWindowGroup->isChecked());
-	settings.setValue("actions/consoleWindowPosition", ui->consoleWindowPosition->position());
-	settings.setValue("actions/consoleWindowScreen", ui->consoleWindowPosition->screen());
-	settings.setValue("actions/stopExecutionHotkey", QVariant::fromValue(ui->stopExecutionHotkey->keySequence()));
-	settings.setValue("actions/pauseExecutionHotkey", QVariant::fromValue(ui->pauseExecutionHotkey->keySequence()));
-	settings.setValue("actions/switchTextCode", QVariant::fromValue(ui->switchTextCode->keySequence()));
-	settings.setValue("actions/openEditorKey", QVariant::fromValue(ui->openEditorKey->keySequence()));
-	settings.setValue("actions/checkCodeSyntaxAutomatically", ui->checkCodeSyntaxAutomatically->isChecked());
+	settings.setValue(QStringLiteral("actions/showExecutionWindow"), ui->executionWindowGroup->isChecked());
+	settings.setValue(QStringLiteral("actions/executionWindowPosition"), ui->executionWindowPosition->position());
+	settings.setValue(QStringLiteral("actions/executionWindowScreen"), ui->executionWindowPosition->screen());
+	settings.setValue(QStringLiteral("actions/showConsoleWindow"), ui->consoleWindowGroup->isChecked());
+	settings.setValue(QStringLiteral("actions/consoleWindowPosition"), ui->consoleWindowPosition->position());
+	settings.setValue(QStringLiteral("actions/consoleWindowScreen"), ui->consoleWindowPosition->screen());
+	settings.setValue(QStringLiteral("actions/stopExecutionHotkey"), QVariant::fromValue(ui->stopExecutionHotkey->keySequence()));
+	settings.setValue(QStringLiteral("actions/pauseExecutionHotkey"), QVariant::fromValue(ui->pauseExecutionHotkey->keySequence()));
+	settings.setValue(QStringLiteral("actions/switchTextCode"), QVariant::fromValue(ui->switchTextCode->keySequence()));
+	settings.setValue(QStringLiteral("actions/openEditorKey"), QVariant::fromValue(ui->openEditorKey->keySequence()));
+    settings.setValue(QStringLiteral("actions/checkCodeSyntaxAutomatically"), ui->checkCodeSyntaxAutomatically->isChecked());
+    settings.setValue(QStringLiteral("heatmap/minColor"), ui->heatmapMinColorPushButton->color());
+    settings.setValue(QStringLiteral("heatmap/maxColor"), ui->heatmapMaxColorPushButton->color());
 
 	//NETWORK
 #ifndef ACT_NO_UPDATER
-	settings.setValue("network/updatesCheck", QVariant(ui->updatesCheck->currentIndex()));
+	settings.setValue(QStringLiteral("network/updatesCheck"), QVariant(ui->updatesCheck->currentIndex()));
 #endif
-	settings.setValue("network/proxyMode", proxyMode());
-	settings.setValue("network/proxyHost", ui->proxyHost->text());
-	settings.setValue("network/proxyPort", ui->proxyPort->text());
-	settings.setValue("network/proxyUser", ui->proxyUser->text());
-	settings.setValue("network/proxyPassword", ui->proxyPassword->text());
-	settings.setValue("network/proxyType", ui->proxyType->currentIndex());
+	settings.setValue(QStringLiteral("network/proxyMode"), proxyMode());
+	settings.setValue(QStringLiteral("network/proxyHost"), ui->proxyHost->text());
+	settings.setValue(QStringLiteral("network/proxyPort"), ui->proxyPort->text());
+	settings.setValue(QStringLiteral("network/proxyUser"), ui->proxyUser->text());
+	settings.setValue(QStringLiteral("network/proxyPassword"), ui->proxyPassword->text());
+	settings.setValue(QStringLiteral("network/proxyType"), ui->proxyType->currentIndex());
 
 #ifdef Q_OS_WIN
 	bool associateASCR = (ui->associateASCRCheckBox->checkState() == Qt::Checked);
@@ -306,10 +322,10 @@ void SettingsDialog::accept()
             valueData = L"Actiona Script File";
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaScriptFile", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
-			valueData = QString("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
+            valueData = QStringLiteral("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaScriptFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
-			valueData = QString(QString("\"%1\" ").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())) + "\"%1\"").toStdWString();
+            valueData = QString(QStringLiteral("\"%1\" ").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())) + QStringLiteral("\"%1\"")).toStdWString();
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaScriptFile\\shell\\open\\command", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 		}
 		else
@@ -329,7 +345,7 @@ void SettingsDialog::accept()
             valueData = L"Actiona Code File";
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaCodeFile", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 
-			valueData = QString("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
+            valueData = QStringLiteral("%1,0").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())).toStdWString();
             SHSetValue(HKEY_CLASSES_ROOT, L"ActionaCodeFile\\DefaultIcon", 0, REG_SZ, valueData.c_str(), static_cast<DWORD>(valueData.size() * sizeof(wchar_t)));
 		}
 		else
@@ -351,7 +367,7 @@ void SettingsDialog::done(int result)
 	QSettings settings;
 
 	if(mSystemTrayIcon)
-		mSystemTrayIcon->setVisible(settings.value("gui/showTaskbarIcon", QVariant(true)).toBool());
+		mSystemTrayIcon->setVisible(settings.value(QStringLiteral("gui/showTaskbarIcon"), QVariant(true)).toBool());
 
 	if(mNetworkReply)
 		mNetworkReply->abort();

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOTIFYDEFINITION_H
-#define NOTIFYDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "notifyinstance.h"
@@ -37,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class NotifyDefinition : public QObject, public ActionTools::ActionDefinition
+	class NotifyDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -45,40 +44,35 @@ namespace Actions
 		explicit NotifyDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *title = new ActionTools::TextParameterDefinition(ActionTools::Name("title", tr("Title")), this);
-			title->setTooltip(tr("The notification title"));
-			addElement(title);
+            auto &title = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("title"), tr("Title")});
+            title.setTooltip(tr("The notification title"));
 
-			ActionTools::TextParameterDefinition *text = new ActionTools::TextParameterDefinition(ActionTools::Name("text", tr("Text")), this);
-			text->setTooltip(tr("The notification text"));
-			addElement(text);
+            auto &text = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("text"), tr("Text")});
+            text.setTooltip(tr("The notification text"));
 
-			ActionTools::NumberParameterDefinition *timeout = new ActionTools::NumberParameterDefinition(ActionTools::Name("timeout", tr("Timeout")), this);
-			timeout->setTooltip(tr("The notification timeout"));
-			timeout->setMinimum(0);
-			timeout->setMaximum(std::numeric_limits<int>::max());
-			timeout->setDefaultValue(3000);
-			addElement(timeout, 1);
+            auto &timeout = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("timeout"), tr("Timeout")}, 1);
+            timeout.setTooltip(tr("The notification timeout"));
+            timeout.setMinimum(0);
+            timeout.setMaximum(std::numeric_limits<int>::max());
+            timeout.setDefaultValue(QStringLiteral("3000"));
 
-			ActionTools::FileParameterDefinition *icon = new ActionTools::FileParameterDefinition(ActionTools::Name("icon", tr("Icon")), this);
-			icon->setTooltip(tr("The notification icon"));
-			addElement(icon, 1);
+            auto &icon = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("icon"), tr("Icon")}, 1);
+            icon.setTooltip(tr("The notification icon"));
 
 			addException(NotifyInstance::UnableToShowNotificationException, tr("Show notification failure"));
 		}
 
-		QString name() const													{ return QObject::tr("Notify"); }
-		QString id() const														{ return "ActionNotify"; }
-		ActionTools::Flag flags() const											{ return ActionTools::WorksOnGnuLinux | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Shows a message using the notify system"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new NotifyInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/notification.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Notify"); }
+		QString id() const override														{ return QStringLiteral("ActionNotify"); }
+		ActionTools::Flag flags() const override											{ return ActionTools::WorksOnGnuLinux | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Shows a message using the notify system"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new NotifyInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/notification.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(NotifyDefinition)
 	};
 }
 
-#endif // NOTIFYDEFINITION_H

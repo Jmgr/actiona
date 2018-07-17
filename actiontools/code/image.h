@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef IMAGE_H
-#define IMAGE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "qtimagefilters/QtImageFilter"
@@ -96,14 +95,14 @@ namespace Code
 		
 		const QImage &image() const;
 
-        virtual int additionalMemoryCost() const { return mImage.byteCount(); }
+        int additionalMemoryCost() const override { return mImage.byteCount(); }
 	
 	public slots:
 		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const;
-		QString toString() const;
+		bool equals(const QScriptValue &other) const override ;
+		QString toString() const override ;
 		QScriptValue setData(const QScriptValue &data);
-        QScriptValue data(const QString &format = "BMP") const;
+		QScriptValue data(const QString &format = QStringLiteral("BMP")) const;
 		QScriptValue loadFromFile(const QString &filename);
 		QScriptValue saveToFile(const QString &filename) const;
 		QScriptValue applyFilter(Filter filter, const QScriptValue &options = QScriptValue());
@@ -126,7 +125,7 @@ namespace Code
 		void findSubImageAsyncFinished(const ActionTools::MatchingPointList &matchingPointList);
 
 	private:
-        void findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, AlgorithmMethod *method, int *maximumMatches = 0) const;
+        void findSubImageOptions(const QScriptValue &options, int *confidenceMinimum, int *downPyramidCount, int *searchExpansion, AlgorithmMethod *method, int *maximumMatches = nullptr) const;
 
 		enum FilterOption
 		{
@@ -145,8 +144,7 @@ namespace Code
 		QImage mImage;
 		ActionTools::OpenCVAlgorithms *mOpenCVAlgorithms;
 		QScriptValue mFindSubImageAsyncFunction;
-		bool mFindSubImageSearchForOne;
+		bool mFindSubImageSearchForOne{false};
 	};
 }
 
-#endif // IMAGE_H

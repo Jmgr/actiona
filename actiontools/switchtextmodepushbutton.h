@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SWITCHTEXTMODEPUSHBUTTON_H
-#define SWITCHTEXTMODEPUSHBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -32,11 +31,10 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit SwitchTextModePushButton(QWidget *parent = 0);
+		explicit SwitchTextModePushButton(QWidget *parent = nullptr);
 
 	private:
 		Q_DISABLE_COPY(SwitchTextModePushButton)
 	};
 }
 
-#endif // SWITCHTEXTMODEPUSHBUTTON_H

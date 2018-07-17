@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MOUSE_H
-#define MOUSE_H
+#pragma once
 
 #include "../mousedevice.h"
 #include "code/codeclass.h"
@@ -52,7 +51,7 @@ namespace Code
 		};
 		
 		Mouse();
-		~Mouse();
+		~Mouse() override;
 
 		void setOnMotion(const QScriptValue &onMotion)					{ mOnMotion = onMotion; }
 		void setOnWheel(const QScriptValue &onWheel)					{ mOnWheel = onWheel; }
@@ -65,8 +64,8 @@ namespace Code
 		QScriptValue onButtonReleased() const							{ return mOnButtonReleased; }
 
 	public slots:
-		QString toString() const										{ return "Mouse"; }
-        virtual bool equals(const QScriptValue &other) const            { return defaultEqualsImplementation<Mouse>(other); }
+		QString toString() const override										{ return QStringLiteral("Mouse"); }
+        bool equals(const QScriptValue &other) const override            { return defaultEqualsImplementation<Mouse>(other); }
 		QScriptValue position() const;
 		QScriptValue move() const;
 		bool isButtonPressed(Button button = LeftButton) const;
@@ -92,4 +91,3 @@ namespace Code
 
 Q_DECLARE_METATYPE(MouseDevice::Button)
 
-#endif // MOUSE_H

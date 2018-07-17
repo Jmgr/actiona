@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PLAYSOUNDDEFINITION_H
-#define PLAYSOUNDDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "playsoundinstance.h"
@@ -37,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class PlaySoundDefinition : public QObject, public ActionTools::ActionDefinition
+	class PlaySoundDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -45,57 +44,50 @@ namespace Actions
 		explicit PlaySoundDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("Sound file/URL")), this);
-			file->setTooltip(tr("The sound file or URL to play"));
-			file->setMode(ActionTools::FileEdit::FileOpen);
-			file->setCaption(tr("Choose the sound file"));
-			file->setFilter(tr("All files (*.*)"));
-			addElement(file);
+            auto &file = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("Sound file/URL")});
+            file.setTooltip(tr("The sound file or URL to play"));
+            file.setMode(ActionTools::FileEdit::FileOpen);
+            file.setCaption(tr("Choose the sound file"));
+            file.setFilter(tr("All files (*.*)"));
 
-			ActionTools::BooleanParameterDefinition *url = new ActionTools::BooleanParameterDefinition(ActionTools::Name("url", tr("URL")), this);
-			url->setTooltip(tr("Is the sound resource an URL"));
-			url->setDefaultValue(false);
-			addElement(url);
+            auto &url = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("url"), tr("URL")});
+            url.setTooltip(tr("Is the sound resource an URL"));
+            url.setDefaultValue(QStringLiteral("false"));
 
-			ActionTools::NumberParameterDefinition *volume = new ActionTools::NumberParameterDefinition(ActionTools::Name("volume", tr("Volume")), this);
-			volume->setTooltip(tr("The volume to play at"));
-			volume->setMinimum(0);
-			volume->setMaximum(100);
-			volume->setSuffix(tr("%", "percent"));
-			volume->setDefaultValue(100);
-			addElement(volume);
+            auto &volume = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("volume"), tr("Volume")});
+            volume.setTooltip(tr("The volume to play at"));
+            volume.setMinimum(0);
+            volume.setMaximum(100);
+            volume.setSuffix(tr("%", "percent"));
+            volume.setDefaultValue(QStringLiteral("100"));
 
-			ActionTools::BooleanParameterDefinition *blocking = new ActionTools::BooleanParameterDefinition(ActionTools::Name("blocking", tr("Wait until played")), this);
-			blocking->setTooltip(tr("Should the action end only when the sound has finished playing"));
-			blocking->setDefaultValue(true);
-			addElement(blocking);
+            auto &blocking = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("blocking"), tr("Wait until played")});
+            blocking.setTooltip(tr("Should the action end only when the sound has finished playing"));
+            blocking.setDefaultValue(QStringLiteral("true"));
 
-			ActionTools::BooleanParameterDefinition *loop = new ActionTools::BooleanParameterDefinition(ActionTools::Name("looping", tr("Looping")), this);
-			loop->setTooltip(tr("Should the sound loop"));
-			loop->setDefaultValue(false);
-			addElement(loop, 1);
+            auto &loop = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("looping"), tr("Looping")}, 1);
+            loop.setTooltip(tr("Should the sound loop"));
+            loop.setDefaultValue(QStringLiteral("false"));
 
-			ActionTools::NumberParameterDefinition *playbackrate = new ActionTools::NumberParameterDefinition(ActionTools::Name("playbackRate", tr("Playback rate")), this);
-			playbackrate->setTooltip(tr("The playback rate"));
-			playbackrate->setMinimum(std::numeric_limits<int>::min());
-			playbackrate->setMaximum(std::numeric_limits<int>::max());
-			playbackrate->setSuffix(tr("%", "percent"));
-			playbackrate->setDefaultValue(100);
-			addElement(playbackrate, 1);
+            auto &playbackrate = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("playbackRate"), tr("Playback rate")}, 1);
+            playbackrate.setTooltip(tr("The playback rate"));
+            playbackrate.setMinimum(std::numeric_limits<int>::min());
+            playbackrate.setMaximum(std::numeric_limits<int>::max());
+            playbackrate.setSuffix(tr("%", "percent"));
+            playbackrate.setDefaultValue(QStringLiteral("100"));
 		}
 
-		QString name() const													{ return QObject::tr("Play sound"); }
-		QString id() const														{ return "ActionPlaySound"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Plays a sound"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new PlaySoundInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/playsound.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Play sound"); }
+		QString id() const override														{ return QStringLiteral("ActionPlaySound"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Plays a sound"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new PlaySoundInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/playsound.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(PlaySoundDefinition)
 	};
 }
 
-#endif // PLAYSOUNDDEFINITION_H

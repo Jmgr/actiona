@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXECUTIONWINDOW_H
-#define EXECUTIONWINDOW_H
+#pragma once
 
 #include <QWidget>
 
@@ -35,8 +34,8 @@ namespace LibExecuter
 		Q_OBJECT
 	
 	public:
-		ExecutionWindow(QWidget *parent = 0);
-		~ExecutionWindow();
+		ExecutionWindow(QWidget *parent = nullptr);
+		~ExecutionWindow() override;
 
 		void setCurrentActionName(const QString &actionName);
 		void setCurrentActionColor(const QColor &actionColor);
@@ -66,4 +65,3 @@ namespace LibExecuter
 	};
 }
 
-#endif // EXECUTIONWINDOW_H

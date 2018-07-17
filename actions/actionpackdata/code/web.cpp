@@ -30,10 +30,7 @@
 #include <QUrl>
 #include <QAuthenticator>
 #include <QDebug>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QUrlQuery>
-#endif
 
 namespace Code
 {
@@ -47,13 +44,13 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "onFinished")
+			if(it.name() == QLatin1String("onFinished"))
 				web->mOnFinished = it.value();
-			else if(it.name() == "onDownloadProgress")
+			else if(it.name() == QLatin1String("onDownloadProgress"))
 				web->mOnDownloadProgress = it.value();
-			else if(it.name() == "onError")
+			else if(it.name() == QLatin1String("onError"))
 				web->mOnError = it.value();
-			else if(it.name() == "file")
+			else if(it.name() == QLatin1String("file"))
 				web->mFileValue = it.value();
 		}
 
@@ -62,18 +59,13 @@ namespace Code
 
 	Web::Web()
 		: CodeClass(),
-		  mNetworkAccessManager(new QNetworkAccessManager(this)),
-		  mNetworkReply(0),
-		  mFile(0),
-		  mCloseFile(false),
-		  mIsDownloading(false)
+		  mNetworkAccessManager(new QNetworkAccessManager(this))
+		  
 	{
-		QObject::connect(mNetworkAccessManager, SIGNAL(authenticationRequired(QNetworkReply *, QAuthenticator *)), this, SLOT(authenticationRequired(QNetworkReply *, QAuthenticator *)));
+        QObject::connect(mNetworkAccessManager, &QNetworkAccessManager::authenticationRequired, this, &Web::authenticationRequired);
 	}
 
-	Web::~Web()
-    {
-    }
+    Web::~Web() = default;
 
 	QScriptValue Web::download(const QString &urlString, const QScriptValue &options)
 	{
@@ -81,7 +73,7 @@ namespace Code
 
 		if(mFileValue.isValid())
 		{
-			if(Code::File *file = qobject_cast<Code::File*>(mFileValue.toQObject()))
+			if(auto file = qobject_cast<Code::File*>(mFileValue.toQObject()))
 				mFile = file->file();
 			else
 				mFile = new QFile(mFileValue.toString(), this);
@@ -92,7 +84,7 @@ namespace Code
 			{
 				if(!mFile->open(QIODevice::WriteOnly))
 				{
-					throwError("OpenFileError", tr("Unable to open the destination file"));
+					throwError(QStringLiteral("OpenFileError"), tr("Unable to open the destination file"));
 					return thisObject();
 				}
 
@@ -102,12 +94,9 @@ namespace Code
 
 		QUrl url(urlString);
 		if(url.scheme() == QString())
-			url = QUrl("http://" + urlString, QUrl::TolerantMode);
+			url = QUrl(QStringLiteral("http://") + urlString, QUrl::TolerantMode);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QUrlQuery urlQuery;
-#endif
-
 		QNetworkRequest request;
 
 		QScriptValueIterator it(options);
@@ -118,7 +107,7 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "rawHeaders")
+			if(it.name() == QLatin1String("rawHeaders"))
 			{
 				QScriptValueIterator headerIt(it.value());
 
@@ -129,13 +118,12 @@ namespace Code
 					request.setRawHeader(headerIt.name().toUtf8(), headerIt.value().toString().toUtf8());
 				}
 			}
-			else if(it.name() == "method")
+			else if(it.name() == QLatin1String("method"))
 			{
 				method = static_cast<Method>(it.value().toInt32());
 			}
-			else if(it.name() == "postData")
+			else if(it.name() == QLatin1String("postData"))
 			{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
                 QScriptValueIterator postDataIt(it.value());
                 QUrlQuery postDataParameters;
 
@@ -147,21 +135,8 @@ namespace Code
                 }
 
                 postData = postDataParameters.toString(QUrl::FullyEncoded).toLatin1();
-#else
-                QScriptValueIterator postDataIt(it.value());
-                QUrl postDataParameters;
-
-                while(postDataIt.hasNext())
-                {
-                    postDataIt.next();
-
-                    postDataParameters.addQueryItem(postDataIt.name(), postDataIt.value().toString());
-                }
-
-                postData = postDataParameters.encodedQuery();
-#endif
 			}
-			else if(it.name() == "query")
+			else if(it.name() == QLatin1String("query"))
 			{
 				QScriptValueIterator queryIt(it.value());
 
@@ -169,26 +144,20 @@ namespace Code
 				{
 					queryIt.next();
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
                     urlQuery.addQueryItem(queryIt.name(), queryIt.value().toString());
-#else
-					url.addQueryItem(queryIt.name(), queryIt.value().toString());
-#endif
 				}
 			}
-			else if(it.name() == "user")
+			else if(it.name() == QLatin1String("user"))
 			{
 				mUser = it.value().toString();
 			}
-			else if(it.name() == "password")
+			else if(it.name() == QLatin1String("password"))
 			{
 				mPassword = it.value().toString();
 			}
 		}
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         url.setQuery(urlQuery);
-#endif
 
         request.setUrl(url);
 
@@ -203,10 +172,10 @@ namespace Code
 			break;
 		}
 
-		QObject::connect(mNetworkReply, SIGNAL(finished()), this, SLOT(finished()));
-		QObject::connect(mNetworkReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-		QObject::connect(mNetworkReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(error()));
-		QObject::connect(mNetworkReply, SIGNAL(readyRead()), this, SLOT(readyRead()));
+        QObject::connect(mNetworkReply, &QNetworkReply::finished, this, &Web::finished);
+        QObject::connect(mNetworkReply, &QNetworkReply::downloadProgress, this, &Web::downloadProgress);
+        QObject::connect(mNetworkReply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Web::error);
+        QObject::connect(mNetworkReply, &QNetworkReply::readyRead, this, &Web::readyRead);
 
 		mIsDownloading = true;
 
@@ -256,7 +225,7 @@ namespace Code
 				mFile->deleteLater();
 			}
 
-			mFile = 0;
+			mFile = nullptr;
 		}
 		else
 			mData = mNetworkReply->readAll();
@@ -265,7 +234,7 @@ namespace Code
 			mOnFinished.call(thisObject());
 
 		mNetworkReply->deleteLater();
-		mNetworkReply = 0;
+		mNetworkReply = nullptr;
 
 		mIsDownloading = false;
 	}

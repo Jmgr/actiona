@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMINPUTTASK_H
-#define SYSTEMINPUTTASK_H
+#pragma once
 
 #include <QObject>
 
@@ -41,8 +40,8 @@ namespace ActionTools
 			Q_OBJECT
 
 		public:
-			explicit Task(QObject *parent = 0);
-			~Task();
+			explicit Task(QObject *parent = nullptr);
+            ~Task() override;
 
 			static Task *instance()													{ return mInstance; }
 
@@ -72,7 +71,7 @@ namespace ActionTools
 			static Task *mInstance;
 
 			QThread *mThread;
-			bool mStarted;
+			bool mStarted{false};
 #ifdef Q_OS_LINUX
 			QTimer *mProcessRepliesTimer;
 #endif
@@ -80,4 +79,3 @@ namespace ActionTools
 	}
 }
 
-#endif // SYSTEMINPUTTASK_H

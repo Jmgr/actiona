@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef STOPINSTANCE_H
-#define STOPINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "scriptagent.h"
@@ -33,15 +32,15 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		StopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		StopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
-			LibExecuter::ScriptAgent *scriptAgent = dynamic_cast<LibExecuter::ScriptAgent *>(scriptEngine()->agent());
+			auto scriptAgent = dynamic_cast<LibExecuter::ScriptAgent *>(scriptEngine()->agent());
 			scriptAgent->stopExecution();
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -49,4 +48,3 @@ namespace Actions
 	};
 }
 
-#endif // STOPINSTANCE_H

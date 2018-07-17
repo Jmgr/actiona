@@ -36,21 +36,21 @@ namespace Code
 	{
 		Q_UNUSED(engine)
 
-		return QString(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Md4).toHex());
+		return QLatin1String(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Md4).toHex());
 	}
 
 	QScriptValue Algorithms::md5(QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(engine)
 
-		return QString(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Md5).toHex());
+		return QLatin1String(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Md5).toHex());
 	}
 
 	QScriptValue Algorithms::sha1(QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(engine)
 
-		return QString(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Sha1).toHex());
+		return QLatin1String(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Sha1).toHex());
 	}
 
 	QScriptValue Algorithms::setRandomSeed(QScriptContext *context, QScriptEngine *engine)
@@ -86,7 +86,7 @@ namespace Code
 				return randomInteger(min, max);
 			}
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return QScriptValue();
 		}
 	}
@@ -106,7 +106,7 @@ namespace Code
 		Q_UNUSED(engine)
 
 		QScriptValueIterator it(context->argument(0));
-		QString characters("abcdefghijklmnopqrstuvwxyz0123456789");
+		QString characters = QStringLiteral("abcdefghijklmnopqrstuvwxyz0123456789");
 		int minLength = 5;
 		int maxLength = 15;
 
@@ -114,11 +114,11 @@ namespace Code
 		{
 			it.next();
 
-			if(it.name() == "characters")
+			if(it.name() == QLatin1String("characters"))
 				characters = it.value().toString();
-			else if(it.name() == "minLength")
+			else if(it.name() == QLatin1String("minLength"))
 				minLength = it.value().toInt32();
-			else if(it.name() == "maxLength")
+			else if(it.name() == QLatin1String("maxLength"))
 				maxLength = it.value().toInt32();
 		}
 
@@ -136,14 +136,14 @@ namespace Code
 	void Algorithms::registerClass(QScriptEngine *scriptEngine)
 	{
 		CodeTools::addClassToScriptEngine<Algorithms>(scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&md4, "md4", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&md5, "md5", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&sha1, "sha1", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&setRandomSeed, "setRandomSeed", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomMax, "randomMax", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomInteger, "randomInteger", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomFloat, "randomFloat", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomString, "randomString", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&md4, QStringLiteral("md4"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&md5, QStringLiteral("md5"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&sha1, QStringLiteral("sha1"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&setRandomSeed, QStringLiteral("setRandomSeed"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomMax, QStringLiteral("randomMax"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomInteger, QStringLiteral("randomInteger"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomFloat, QStringLiteral("randomFloat"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomString, QStringLiteral("randomString"), scriptEngine);
 	}
 
 	int Algorithms::randomInteger(int min, int max)

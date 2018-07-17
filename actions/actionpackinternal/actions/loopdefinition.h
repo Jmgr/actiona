@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LOOPDEFINITION_H
-#define LOOPDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "loopinstance.h"
@@ -36,7 +35,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class LoopDefinition : public QObject, public ActionTools::ActionDefinition
+	class LoopDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -44,28 +43,25 @@ namespace Actions
 		explicit LoopDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition(ActionTools::Name("line", tr("Line")), this);
-			line->setTooltip(tr("The line (or label) to go to"));
-			addElement(line);
+            auto &line = addParameter<ActionTools::LineParameterDefinition>({QStringLiteral("line"), tr("Line")});
+            line.setTooltip(tr("The line (or label) to go to"));
 
-			ActionTools::NumberParameterDefinition *count = new ActionTools::NumberParameterDefinition(ActionTools::Name("count", tr("Count")), this);
-			count->setTooltip(tr("The amount of times (evaluated the first time)"));
-			count->setMinimum(0);
-			count->setMaximum(std::numeric_limits<int>::max());
-			addElement(count);
+            auto &count = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("count"), tr("Count")});
+            count.setTooltip(tr("The number of times (evaluated the first time)"));
+            count.setMinimum(0);
+            count.setMaximum(std::numeric_limits<int>::max());
 		}
 
-		QString name() const													{ return QObject::tr("Loop"); }
-		QString id() const														{ return "ActionLoop"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Go to a script line a specific number of times"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new LoopInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/loop.png"); }
+		QString name() const override													{ return QObject::tr("Loop"); }
+		QString id() const override														{ return QStringLiteral("ActionLoop"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Go to a script line a specific number of times"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new LoopInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/loop.png")); }
 
 	private:
 		Q_DISABLE_COPY(LoopDefinition)
 	};
 }
 
-#endif // LOOPDEFINITION_H

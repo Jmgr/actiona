@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READTEXTFILEINSTANCE_H
-#define READTEXTFILEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -42,16 +41,15 @@ namespace Actions
 			CannotOpenFileException = ActionTools::ActionException::UserException
 		};
 
-		ReadTextFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadTextFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
         static Tools::StringListPair modes;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		Q_DISABLE_COPY(ReadTextFileInstance)
 	};
 }
 
-#endif // READTEXTFILEINSTANCE_H

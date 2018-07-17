@@ -23,13 +23,15 @@
 #include "actioninstance.h"
 #include "actiondefinition.h"
 #include "script.h"
+#include "scriptproxymodel.h"
 
 #include <algorithm>
 
 //ChangeEnabledCommand
-ChangeEnabledCommand::ChangeEnabledCommand(const QList<int> &rows, bool enabled, ScriptModel *model)
+ChangeEnabledCommand::ChangeEnabledCommand(const QList<int> &rows, bool enabled, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mModel(model),
+    mProxyModel(proxyModel),
 	mRows(rows),
 	mNew(enabled)
 {
@@ -56,7 +58,7 @@ void ChangeEnabledCommand::redo()
 		actionInstance->setEnabled(mNew);
 
 		for(int column = 0; column < mModel->columnCount(); ++column)
-			mModel->emitDataChanged(mModel->index(row, column));
+            mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(row, column)));
 	}
 }
 
@@ -74,14 +76,15 @@ void ChangeEnabledCommand::undo()
 		actionInstance->setEnabled(enabled);
 
 		for(int column = 0; column < mModel->columnCount(); ++column)
-			mModel->emitDataChanged(mModel->index(row, column));
+            mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(row, column)));
 	}
 }
 
 //ChangeColorCommand
-ChangeColorCommand::ChangeColorCommand(const QList<int> &rows, const QColor &color, ScriptModel *model)
+ChangeColorCommand::ChangeColorCommand(const QList<int> &rows, const QColor &color, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mModel(model),
+    mProxyModel(proxyModel),
 	mRows(rows),
 	mNew(color)
 {
@@ -108,7 +111,7 @@ void ChangeColorCommand::redo()
 		actionInstance->setColor(mNew);
 
 		for(int column = 0; column < mModel->columnCount(); ++column)
-			mModel->emitDataChanged(mModel->index(row, column));
+            mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(row, column)));
 	}
 }
 
@@ -126,14 +129,15 @@ void ChangeColorCommand::undo()
 		actionInstance->setColor(color);
 
 		for(int column = 0; column < mModel->columnCount(); ++column)
-			mModel->emitDataChanged(mModel->index(row, column));
+            mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(row, column)));
 	}
 }
 
 //ChangeCommentCommand
-ChangeCommentCommand::ChangeCommentCommand(const QString &value, int row, ScriptModel *model)
+ChangeCommentCommand::ChangeCommentCommand(const QString &value, int row, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mModel(model),
+    mProxyModel(proxyModel),
 	mNew(value),
 	mRow(row)
 {
@@ -153,7 +157,7 @@ void ChangeCommentCommand::redo()
 		return;
 
 	actionInstance->setComment(mNew);
-	mModel->emitDataChanged(mModel->index(mRow, 2));
+    mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(mRow, 2)));
 }
 
 void ChangeCommentCommand::undo()
@@ -163,13 +167,14 @@ void ChangeCommentCommand::undo()
 		return;
 
 	actionInstance->setComment(mOld);
-	mModel->emitDataChanged(mModel->index(mRow, 2));
+    mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(mRow, 2)));
 }
 
 //ChangeLabelCommand
-ChangeLabelCommand::ChangeLabelCommand(const QString &value, int row, ScriptModel *model)
+ChangeLabelCommand::ChangeLabelCommand(const QString &value, int row, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mModel(model),
+    mProxyModel(proxyModel),
 	mNew(value),
 	mRow(row)
 {
@@ -189,7 +194,9 @@ void ChangeLabelCommand::redo()
 		return;
 
 	actionInstance->setLabel(mNew);
-	mModel->emitDataChanged(mModel->index(mRow, 0));
+    mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(mRow, 0)));
+
+    mModel->mScript->invalidateLabelList();
 }
 
 void ChangeLabelCommand::undo()
@@ -199,13 +206,16 @@ void ChangeLabelCommand::undo()
 		return;
 
 	actionInstance->setLabel(mOld);
-	mModel->emitDataChanged(mModel->index(mRow, 0));
+    mModel->emitDataChanged(mProxyModel->mapFromSource(mModel->index(mRow, 0)));
+
+    mModel->mScript->invalidateLabelList();
 }
 
 //ChangeDataCommand
-ChangeDataCommand::ChangeDataCommand(const QModelIndex &index, const ActionTools::ParametersData &value, ScriptModel *model)
+ChangeDataCommand::ChangeDataCommand(const QModelIndex &index, const ActionTools::ParametersData &value, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mModel(model),
+    mProxyModel(proxyModel),
 	mNew(value)
 {
 	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
@@ -221,7 +231,7 @@ ChangeDataCommand::ChangeDataCommand(const QModelIndex &index, const ActionTools
 
 void ChangeDataCommand::redo()
 {
-	QModelIndex index = mModel->index(mRow, mCol);
+    QModelIndex index = mProxyModel->mapFromSource(mModel->index(mRow, mCol));
 	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
 	if(!actionInstance)
 		return;
@@ -232,7 +242,7 @@ void ChangeDataCommand::redo()
 
 void ChangeDataCommand::undo()
 {
-	QModelIndex index = mModel->index(mRow, mCol);
+    QModelIndex index = mProxyModel->mapFromSource(mModel->index(mRow, mCol));
 	ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(mRow);
 	if(!actionInstance)
 		return;
@@ -242,11 +252,12 @@ void ChangeDataCommand::undo()
 }
 
 //CopyActionCommand
-CopyActionCommand::CopyActionCommand(int row, const QList<ActionTools::ActionInstanceBuffer> &actionInstanceBuffers, ScriptModel *model)
+CopyActionCommand::CopyActionCommand(int row, const QList<ActionTools::ActionInstanceBuffer> &actionInstanceBuffers, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mRow(row),
 	mActionInstanceBuffers(actionInstanceBuffers),
-	mModel(model)
+    mModel(model),
+    mProxyModel(proxyModel)
 {
 	setText(QObject::tr("Copy some actions"));
 }
@@ -256,8 +267,8 @@ void CopyActionCommand::redo()
 	for(const ActionTools::ActionInstanceBuffer &actionInstanceBuffer: mActionInstanceBuffers)
 	{
 		mModel->insertRow(mRow);
-		mModel->setData(mModel->index(mRow, 0), actionInstanceBuffer.actionInstanceId(), ScriptModel::ActionIdRole);
-		mModel->setData(mModel->index(mRow, 0), actionInstanceBuffer.actionAsVariant(), ScriptModel::ActionDataRole);
+        mModel->setData(mProxyModel->mapFromSource(mModel->index(mRow, 0)), actionInstanceBuffer.actionInstanceId(), ScriptModel::ActionIdRole);
+        mModel->setData(mProxyModel->mapFromSource(mModel->index(mRow, 0)), actionInstanceBuffer.actionAsVariant(), ScriptModel::ActionDataRole);
 	}
 }
 
@@ -268,11 +279,12 @@ void CopyActionCommand::undo()
 }
 
 //InsertActionCommand
-InsertNewActionCommand::InsertNewActionCommand(int row, const ActionTools::ActionInstanceBuffer &actionInstanceBuffer, ScriptModel *model)
+InsertNewActionCommand::InsertNewActionCommand(int row, const ActionTools::ActionInstanceBuffer &actionInstanceBuffer, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mRow(row),
 	mActionInstanceBuffer(actionInstanceBuffer),
-	mModel(model)
+    mModel(model),
+    mProxyModel(proxyModel)
 {
 	setText(QObject::tr("Add an action"));
 }
@@ -280,8 +292,8 @@ InsertNewActionCommand::InsertNewActionCommand(int row, const ActionTools::Actio
 void InsertNewActionCommand::redo()
 {
 	mModel->insertRow(mRow);
-	mModel->setData(mModel->index(mRow, 0), mActionInstanceBuffer.actionInstanceId(), ScriptModel::ActionIdRole);
-	mModel->setData(mModel->index(mRow, 0), mActionInstanceBuffer.actionAsVariant(), ScriptModel::ActionDataRole);
+    mModel->setData(mProxyModel->mapFromSource(mModel->index(mRow, 0)), mActionInstanceBuffer.actionInstanceId(), ScriptModel::ActionIdRole);
+    mModel->setData(mProxyModel->mapFromSource(mModel->index(mRow, 0)), mActionInstanceBuffer.actionAsVariant(), ScriptModel::ActionDataRole);
 }
 
 void InsertNewActionCommand::undo()
@@ -290,10 +302,11 @@ void InsertNewActionCommand::undo()
 }
 
 //RemoveActionCommand
-RemoveActionCommand::RemoveActionCommand(const QList<int> &rows, ScriptModel *model)
+RemoveActionCommand::RemoveActionCommand(const QList<int> &rows, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mRows(rows),
-	mModel(model)
+    mModel(model),
+    mProxyModel(proxyModel)
 {
 	for(int row: rows)
 	{
@@ -320,19 +333,20 @@ void RemoveActionCommand::undo()
 		int row = mRows.at(rowIndex);
 
 		mModel->insertRow(row);
-		mModel->setData(mModel->index(row, 0), mActionInstanceBuffers.at(rowIndex).actionInstanceId(), ScriptModel::ActionIdRole);
-		mModel->setData(mModel->index(row, 0), mActionInstanceBuffers.at(rowIndex).actionAsVariant(), ScriptModel::ActionDataRole);
+        mModel->setData(mProxyModel->mapFromSource(mModel->index(row, 0)), mActionInstanceBuffers.at(rowIndex).actionInstanceId(), ScriptModel::ActionIdRole);
+        mModel->setData(mProxyModel->mapFromSource(mModel->index(row, 0)), mActionInstanceBuffers.at(rowIndex).actionAsVariant(), ScriptModel::ActionDataRole);
 	}
 }
 
 //MoveActionCommand
-MoveActionCommand::MoveActionCommand(int row, const QList<int> &previousRows, ScriptModel *model)
+MoveActionCommand::MoveActionCommand(int row, const QList<int> &previousRows, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mRow(row),
 	mPreviousRows(previousRows),
 	mModel(model),
-        mChangeDest(0),
-        mChangePrevious(0)
+    mProxyModel(proxyModel),
+    mChangeDest(0),
+    mChangePrevious(0)
 {
 	if(mRow == -1)
 		mRow = mModel->rowCount() - 1;
@@ -398,11 +412,12 @@ void MoveActionCommand::undo()
 }
 
 //MoveActionOneRowCommand
-MoveActionOneRowCommand::MoveActionOneRowCommand(const QList<int> &rows, bool moveUp, ScriptModel *model)
+MoveActionOneRowCommand::MoveActionOneRowCommand(const QList<int> &rows, bool moveUp, ScriptModel *model, ScriptProxyModel *proxyModel)
 	: QUndoCommand(),
 	mRows(rows),
 	mMoveUp(moveUp),
-	mModel(model)
+    mModel(model),
+    mProxyModel(proxyModel)
 {
 	setText(QObject::tr("Move %n action(s)", "", rows.count()));
 }
@@ -444,12 +459,12 @@ bool MoveActionOneRowCommand::move(int &row, int direction)
 	if(row + direction < 0 || row + direction >= mModel->rowCount())
 		return false;
 
-	mModel->mSelectionModel->select(mModel->index(row, 0), QItemSelectionModel::Deselect | QItemSelectionModel::Rows);
+    mModel->mSelectionModel->select(mProxyModel->mapFromSource(mModel->index(row, 0)), QItemSelectionModel::Deselect | QItemSelectionModel::Rows);
 
 	if(mModel->moveRow(row, row + direction))
 	{
-		mModel->mSelectionModel->select(mModel->index(row + direction, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
-		mModel->mSelectionModel->setCurrentIndex(mModel->index(row + direction, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        mModel->mSelectionModel->select(mProxyModel->mapFromSource(mModel->index(row + direction, 0)), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        mModel->mSelectionModel->setCurrentIndex(mProxyModel->mapFromSource(mModel->index(row + direction, 0)), QItemSelectionModel::Select | QItemSelectionModel::Rows);
 
 		row += direction;
 

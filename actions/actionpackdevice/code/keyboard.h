@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#pragma once
 
 #include "../keyboarddevice.h"
 #include "code/codeclass.h"
@@ -40,8 +39,8 @@ namespace Code
 		Keyboard();
 
 	public slots:
-        QString toString() const                                { return "Keyboard"; }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Keyboard>(other); }
+		QString toString() const override                                { return QStringLiteral("Keyboard"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Keyboard>(other); }
 		QScriptValue pressKey(const QString &key);
 		QScriptValue releaseKey(const QString &key);
 		QScriptValue triggerKey(const QString &key);
@@ -52,4 +51,3 @@ namespace Code
 	};
 }
 
-#endif // KEYBOARD_H

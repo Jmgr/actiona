@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef XDISPLAYHELPER_H
-#define XDISPLAYHELPER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -33,7 +32,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT XDisplayHelper
 	{
 	public:
-		XDisplayHelper()			{ mDisplay = XOpenDisplay(NULL); }
+		XDisplayHelper()			{ mDisplay = XOpenDisplay(nullptr); }
 		~XDisplayHelper()			{ if(mDisplay) XCloseDisplay(mDisplay); }
 
 		Display *display() const	{ return mDisplay; }
@@ -45,4 +44,3 @@ namespace ActionTools
 
 #endif
 
-#endif // XDISPLAYHELPER_H

@@ -18,14 +18,16 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTMODEL_H
-#define SCRIPTMODEL_H
+#pragma once
+
+#include "scriptmodelundocommands.h"
+#include "heatmapmode.h"
 
 #include <QAbstractTableModel>
 #include <QItemSelectionModel>
 #include <QColor>
 
-#include "scriptmodelundocommands.h"
+#include <utility>
 
 namespace ActionTools
 {
@@ -36,6 +38,7 @@ namespace ActionTools
 
 class QItemSelectionModel;
 class QUndoStack;
+class ScriptProxyModel;
 
 class ScriptModel : public QAbstractTableModel
 {
@@ -72,14 +75,19 @@ public:
 		ColumnsCount
 	};
 
-	ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory *actionFactory, QObject *parent = 0);
+    ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory *actionFactory, QObject *parent = nullptr);
 
-	void update()														{ emit layoutChanged(); }
 	void setSelectionModel(QItemSelectionModel *selectionModel)			{ mSelectionModel = selectionModel; }
+    void setProxyModel(ScriptProxyModel *proxyModel)                    { mProxyModel = proxyModel; }
 	QUndoStack *undoStack() const										{ return mUndoStack; }
+    void setHeatmapColors(const std::pair<QColor, QColor> &heatmapColors);
+    std::pair<QColor, QColor> heatmapColors() const                     { return mHeatmapColors; }
 
-	int rowCount(const QModelIndex &parent = QModelIndex()) const;
-	int columnCount(const QModelIndex &parent = QModelIndex()) const;
+	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+
+	void reset();
+	void appendActions(QList<ActionTools::ActionInstance *> instances);
 
 public slots:
 	void setActionsEnabled(bool enabled);
@@ -90,6 +98,7 @@ public slots:
 	void moveActions(MoveDirection moveDirection, const QList<int> &rows);
 	void copyActions(const QList<int> &rows);
 	void pasteActions(int row);
+    void setHeatmapMode(HeatmapMode heatmapMode);
 
 signals:
 	void scriptEdited();
@@ -101,25 +110,28 @@ protected:
 	void emitDataChanged(const QModelIndex &index)						{ emit dataChanged(index, index); }
 
 private:
-	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-	Qt::ItemFlags flags(const QModelIndex &index) const;
-	QMap<int, QVariant> itemData(const QModelIndex &index) const;
-	Qt::DropActions supportedDropActions() const;
-	QMimeData* mimeData(const QModelIndexList &indexes) const;
-	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
-	QStringList mimeTypes() const;
-	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
-	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+	Qt::ItemFlags flags(const QModelIndex &index) const override;
+	QMap<int, QVariant> itemData(const QModelIndex &index) const override;
+	Qt::DropActions supportedDropActions() const override;
+	QMimeData* mimeData(const QModelIndexList &indexes) const override;
+	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
+	QStringList mimeTypes() const override;
+	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 	bool moveRow(int row, int destination);
+    QColor computeHeatmapColor(const ActionTools::ActionInstance &actionInstance) const;
 
 	ActionTools::Script *mScript;
 	ActionTools::ActionFactory *mActionFactory;
-	QItemSelectionModel *mSelectionModel;
+    QItemSelectionModel *mSelectionModel{};
+    ScriptProxyModel *mProxyModel{};
 	QUndoStack *mUndoStack;
+    HeatmapMode mHeatmapMode{HeatmapMode::None};
+    std::pair<QColor, QColor> mHeatmapColors{QColor{Qt::yellow}, QColor{Qt::red}};
 
 	Q_DISABLE_COPY(ScriptModel)
 };
 
-#endif // SCRIPTMODEL_H

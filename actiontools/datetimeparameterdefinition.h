@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DATETIMEPARAMETERDEFINITION_H
-#define DATETIMEPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -35,10 +34,10 @@ namespace ActionTools
 	public:
         DateTimeParameterDefinition(const Name &name, QObject *parent);
 
-		void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
-        void setDefaultValues(ActionInstance *actionInstance);
+		void buildEditors(Script *script, QWidget *parent) override;
+		void load(const ActionInstance *actionInstance) override;
+		void save(ActionInstance *actionInstance) override;
+        void setDefaultValues(ActionInstance *actionInstance) override;
 		
 	private:
 		CodeDateTimeEdit *mDateTimeEdit;
@@ -47,4 +46,3 @@ namespace ActionTools
 	};
 }
 
-#endif // DATETIMEPARAMETERDEFINITION_H

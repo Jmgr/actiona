@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef POINTITEMDELEGATE_H
-#define POINTITEMDELEGATE_H
+#pragma once
 
 #include <QStyledItemDelegate>
 
@@ -28,11 +27,10 @@ class PointItemDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit PointItemDelegate(QObject *parent = 0);
+    explicit PointItemDelegate(QObject *parent = nullptr);
 
-	QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-	void setEditorData(QWidget *editor, const QModelIndex &index) const;
-	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+	QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
 };
 
-#endif // POINTITEMDELEGATE_H

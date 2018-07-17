@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXECUTER_H
-#define EXECUTER_H
+#pragma once
 
 #include <QObject>
 
@@ -35,8 +34,8 @@ class Executer : public QObject
     Q_OBJECT
 	
 public:
-    explicit Executer(QObject *parent = 0);
-	virtual ~Executer();
+    explicit Executer(QObject *parent = nullptr);
+	~Executer() override;
 	
 	virtual bool start(QIODevice *device, const QString &filename);
 	
@@ -48,7 +47,6 @@ private slots:
 
 private:
 	ActionTools::ActionFactory *mActionFactory;
-	bool mActionLoadingFailed;
+	bool mActionLoadingFailed{false};
 };
 
-#endif // EXECUTER_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef GOTODEFINITION_H
-#define GOTODEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "gotoinstance.h"
@@ -33,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class GotoDefinition : public QObject, public ActionTools::ActionDefinition
+	class GotoDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -41,22 +40,20 @@ namespace Actions
 		explicit GotoDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::LineParameterDefinition *line = new ActionTools::LineParameterDefinition(ActionTools::Name("line", tr("Line")), this);
-			line->setTooltip(tr("The line (or label) to go to"));
-			addElement(line);
+            auto &line = addParameter<ActionTools::LineParameterDefinition>({QStringLiteral("line"), tr("Line")});
+            line.setTooltip(tr("The line (or label) to go to"));
 		}
 
-		QString name() const													{ return QObject::tr("Goto"); }
-		QString id() const														{ return "ActionGoto"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Go to a script line"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new GotoInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/goto.png"); }
+		QString name() const override													{ return QObject::tr("Goto"); }
+		QString id() const override														{ return QStringLiteral("ActionGoto"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Go to a script line"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new GotoInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/goto.png")); }
 
 	private:
 		Q_DISABLE_COPY(GotoDefinition)
 	};
 }
 
-#endif // GOTODEFINITION_H

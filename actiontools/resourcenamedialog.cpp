@@ -35,7 +35,7 @@ namespace ActionTools
     {
         ui->setupUi(this);
 
-        connect(ui->resourceNameLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onTextChanged(QString)));
+        connect(ui->resourceNameLineEdit, &QLineEdit::textChanged, this, &ResourceNameDialog::onTextChanged);
 
         ui->resourceNameLineEdit->setValidator(new QRegExpValidator(ActionTools::ActionInstance::NameRegExp, ui->resourceNameLineEdit));
         ui->resourceNameLineEdit->setFocus();

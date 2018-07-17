@@ -22,10 +22,6 @@
 
 #include "choosewindowpushbutton.h"
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-#include "nativeeventfilteringapplication.h"
-#endif
-
 #include <QStylePainter>
 #include <QStyleOptionButton>
 #include <QDebug>
@@ -36,13 +32,8 @@
 #ifdef Q_OS_LINUX
 #include <QX11Info>
 #include <X11/Xlib.h>
-#endif
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-#ifdef Q_OS_LINUX
 #include <X11/cursorfont.h>
 #include <xcb/xcb.h>
-#endif
 #endif
 
 #ifdef Q_OS_WIN
@@ -76,13 +67,9 @@ namespace ActionTools
 {
 	ChooseWindowPushButton::ChooseWindowPushButton(QWidget *parent)
 		: QPushButton(parent),
-		mCrossIcon(new QPixmap(":/images/cross.png")),
-		mSearching(false),
-		mMainWindow(0)
+        mCrossIcon(new QPixmap(QStringLiteral(":/images/cross.png")))
 #ifdef Q_OS_LINUX
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
-#endif
 #endif
 #ifdef Q_OS_WIN
 		,mPreviousCursor(NULL)
@@ -92,7 +79,7 @@ namespace ActionTools
 #ifdef Q_OS_LINUX
         for(QWidget *widget: QApplication::topLevelWidgets())
 		{
-			if(QMainWindow *mainWindow = qobject_cast<QMainWindow*>(widget))
+			if(auto mainWindow = qobject_cast<QMainWindow*>(widget))
 			{
 				mMainWindow = mainWindow;
 				break;
@@ -108,19 +95,13 @@ namespace ActionTools
 		if(mSearching)
 			stopMouseCapture();
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QCoreApplication::instance()->removeNativeEventFilter(this);
-#else
-        nativeEventFilteringApp->removeNativeEventFilter(this);
-#endif
 
 #ifdef Q_OS_WIN
 		DeleteObject(mRectanglePen);
 #endif
 #ifdef Q_OS_LINUX
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         XFreeCursor(QX11Info::display(), mCrossCursor);
-#endif
 #endif
 
 		delete mCrossIcon;
@@ -171,11 +152,7 @@ namespace ActionTools
 			widget->setWindowOpacity(0.0f);
 #endif
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QCoreApplication::instance()->installNativeEventFilter(this);
-#else
-        nativeEventFilteringApp->installNativeEventFilter(this);
-#endif
 
 		startMouseCapture();
 	}
@@ -287,28 +264,15 @@ namespace ActionTools
 		QCursor newCursor(*mCrossIcon);
 
 #ifdef Q_OS_WIN
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         mPreviousCursor = SetCursor(LoadCursor(0, IDC_CROSS));
-#else
-        mPreviousCursor = SetCursor(newCursor.handle());
-#endif
 #endif
 #ifdef Q_OS_LINUX
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 		if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
             None, mCrossCursor, CurrentTime) != GrabSuccess)
 		{
 			QMessageBox::warning(this, tr("Choose a window"), tr("Unable to grab the pointer."));
 			mSearching = false;
 		}
-#else
-        if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
-            None, newCursor.handle(), CurrentTime) != GrabSuccess)
-        {
-            QMessageBox::warning(this, tr("Choose a window"), tr("Unable to grab the pointer."));
-            mSearching = false;
-        }
-#endif
 #endif
 	}
 
@@ -334,22 +298,16 @@ namespace ActionTools
 		XUngrabPointer(QX11Info::display(), CurrentTime);
         XFlush(QX11Info::display());
 
-        for(int windowIndex = 0; windowIndex < mShownWindows.size(); ++windowIndex)
+        for(auto shownWindow: mShownWindows)
         {
-            QWidget *window = mShownWindows[windowIndex];
-
-            XMapWindow(QX11Info::display(), window->winId());
+            XMapWindow(QX11Info::display(), shownWindow->winId());
         }
 
 		if(mMainWindow)
 			mMainWindow->showNormal();
 	#endif
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QCoreApplication::instance()->removeNativeEventFilter(this);
-#else
-        nativeEventFilteringApp->removeNativeEventFilter(this);
-#endif
 
         emit searchEnded(mLastFoundWindow);
     }
@@ -376,12 +334,11 @@ namespace ActionTools
 		return back;
 	}
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     bool ChooseWindowPushButton::nativeEventFilter(const QByteArray &eventType, void *message, long *)
     {
         if(eventType == "xcb_generic_event_t")
         {
-            xcb_generic_event_t* event = static_cast<xcb_generic_event_t *>(message);
+            auto* event = static_cast<xcb_generic_event_t *>(message);
 
             switch(event->response_type)
             {
@@ -405,30 +362,9 @@ namespace ActionTools
 
         return false;
     }
-#else
-    bool ChooseWindowPushButton::x11EventFilter(XEvent *event)
-    {
-        if(event->type == ButtonRelease)
-        {
-            Window window = windowAtPointer();
-            if(window == None)
-                return true;
-
-            if(isWindowValid(window))
-                mLastFoundWindow = window;
-
-            stopMouseCapture();
-
-            return true;
-        }
-
-        return false;
-    }
-#endif
 #endif
 
 #ifdef Q_OS_WIN
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     bool ChooseWindowPushButton::nativeEventFilter(const QByteArray &, void *message, long *)
     {
         MSG *msg = static_cast<MSG*>(message);
@@ -530,108 +466,5 @@ namespace ActionTools
 
         return false;
     }
-#else
-	bool ChooseWindowPushButton::winEventFilter(MSG *msg, long *result)
-	{
-		Q_UNUSED(result);
-
-		if(!msg || !mSearching)
-			return false;
-
-		switch(msg->message)
-		{
-		case WM_LBUTTONUP:
-			stopMouseCapture();
-			break;
-
-		case WM_MOUSEMOVE:
-			{
-				POINT screenpoint;
-				GetCursorPos(&screenpoint);
-
-				HWND window = NULL;
-				HWND firstWindow = WindowFromPoint(screenpoint);
-				if(firstWindow && IsWindow(firstWindow))
-				{
-					// try to go to child window
-					if(!GetParent(firstWindow))
-					{
-						POINT pt;
-						pt.x = screenpoint.x;
-						pt.y = screenpoint.y;
-						ScreenToClient(firstWindow, &pt);
-						HWND childWindow = ChildWindowFromPoint(firstWindow, pt);
-						if(firstWindow != childWindow)
-						{
-							RECT rc;
-							GetWindowRect(childWindow, &rc);
-							if(PtInRect(screenpoint, rc))
-								// it may seem strange to check this condition after above lines
-								// but try to comment it and work with MSDN main window,
-								// you will hardly "find" it
-								firstWindow	= childWindow;
-						}
-					}
-
-					// find the best child
-					if(GetParent(firstWindow))
-					{
-						RECT rcFirst;
-						GetWindowRect(firstWindow, &rcFirst);
-
-						// find next/prev windows in the Z-order
-						bool bBestFound = false;
-						HWND hOther = firstWindow;
-						do
-						{
-							hOther	= GetNextWindow(hOther, GW_HWNDPREV);
-							if(!hOther)
-								break;
-							RECT rcOther;
-							GetWindowRect(hOther, &rcOther);
-							if(PtInRect(screenpoint, rcOther) &&
-								PtInRect(RectTopLeft(rcOther), rcFirst) &&
-								PtInRect(RectBottomRight(rcOther), rcFirst))
-							{
-								firstWindow = hOther;
-								bBestFound = true;
-							}
-						}
-						while(!bBestFound);
-
-						if(!bBestFound)
-						{
-							hOther = firstWindow;
-							do
-							{
-								hOther = GetNextWindow(hOther, GW_HWNDNEXT);
-								if (!hOther) break;
-								RECT rcOther;
-								GetWindowRect(hOther, &rcOther);
-								if(PtInRect(screenpoint, rcOther) &&
-									PtInRect(RectTopLeft(rcOther), rcFirst) &&
-									PtInRect(RectBottomRight(rcOther), rcFirst))
-								{
-									firstWindow	= hOther;
-									bBestFound = true;
-								}
-							}
-							while(!bBestFound);
-						}
-					}
-
-					window = firstWindow;
-				}
-				else
-					break;
-
-				foundWindow(WindowHandle(window));
-			}
-			break;
-		}
-
-		return false;
-	}
-#endif
 #endif
 }

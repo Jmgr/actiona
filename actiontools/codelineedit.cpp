@@ -39,51 +39,52 @@
 #include <QCursor>
 #include <QSet>
 #include <QMessageBox>
+#include <QStyleOptionFrame>
 
 namespace ActionTools
 {
     CodeLineEdit::CodeLineEdit(QWidget *parent, const QRegExp &regexpValidation)
         : QLineEdit(parent),
-        mParameterContainer(0),
+        mParameterContainer(nullptr),
 		mCode(false),
 		mMultiline(false),
 		mAllowTextCodeChange(true),
 		mShowEditorButton(true),
 		mEmbedded(false),
-        mSwitchTextCode(new QAction(QIcon(":/images/code.png"), tr("Set to text/code"), this)),
-        mOpenEditor(new QAction(QIcon(":/images/editor.png"), tr("Open editor"), this)),
+		mSwitchTextCode(new QAction(QIcon(QStringLiteral(":/images/code.png")), tr("Set to text/code"), this)),
+		mOpenEditor(new QAction(QIcon(QStringLiteral(":/images/editor.png")), tr("Open editor"), this)),
 		mRegExp(regexpValidation),
-		mCompletionModel(0),
+		mCompletionModel(nullptr),
         mCodeButton(new CodeLineEditButton(this)),
         mEditorButton(new CodeLineEditButton(this)),
         mInsertButton(new CodeLineEditButton(this))
 	{
-		connect(this, SIGNAL(textChanged(const QString &)), this, SLOT(textChanged(const QString &)));
-		connect(mSwitchTextCode, SIGNAL(triggered()), this, SLOT(reverseCode()));
-		connect(mOpenEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
-		connect(mCodeButton, SIGNAL(clicked()), this, SLOT(reverseCode()));
-		connect(mEditorButton, SIGNAL(clicked()), this, SLOT(openEditor()));
-        connect(mInsertButton, SIGNAL(clicked()), this, SLOT(showVariableMenuAsPopup()));
+        connect(this, &CodeLineEdit::textChanged, this, &CodeLineEdit::onTextChanged);
+        connect(mSwitchTextCode, &QAction::triggered, this, &CodeLineEdit::reverseCode);
+        connect(mOpenEditor, &QAction::triggered, [this](){ openEditor(); });
+        connect(mCodeButton, &CodeLineEditButton::clicked, this, &CodeLineEdit::reverseCode);
+        connect(mEditorButton, &CodeLineEditButton::clicked, [this](){ openEditor(); });
+        connect(mInsertButton, &CodeLineEditButton::clicked, this, &CodeLineEdit::showVariableMenuAsPopup);
 
 		QSettings settings;
 
-		mSwitchTextCode->setShortcut(QKeySequence(settings.value("actions/switchTextCode", QKeySequence("Ctrl+Shift+C")).toString()));
+		mSwitchTextCode->setShortcut(QKeySequence(settings.value(QStringLiteral("actions/switchTextCode"), QKeySequence(QStringLiteral("Ctrl+Shift+C"))).toString()));
 		mSwitchTextCode->setShortcutContext(Qt::WidgetShortcut);
-		mOpenEditor->setShortcut(QKeySequence(settings.value("actions/openEditorKey", QKeySequence("Ctrl+Shift+V")).toString()));
+		mOpenEditor->setShortcut(QKeySequence(settings.value(QStringLiteral("actions/openEditorKey"), QKeySequence(QStringLiteral("Ctrl+Shift+V"))).toString()));
 		mOpenEditor->setShortcutContext(Qt::WidgetShortcut);
 
 		addAction(mSwitchTextCode);
 		addAction(mOpenEditor);
 
-		mCodeButton->setIcon(QIcon(":/images/code.png"));
+		mCodeButton->setIcon(QIcon(QStringLiteral(":/images/code.png")));
 		mCodeButton->setMaximumWidth(14);
 		mCodeButton->setToolTip(tr("Click here to switch text/code"));
 		
-		mEditorButton->setIcon(QIcon(":/images/editor.png"));
+		mEditorButton->setIcon(QIcon(QStringLiteral(":/images/editor.png")));
 		mEditorButton->setMaximumWidth(18);
 		mEditorButton->setToolTip(tr("Click here to open the editor"));
 
-        mInsertButton->setIcon(QIcon(":/images/insert.png"));
+		mInsertButton->setIcon(QIcon(QStringLiteral(":/images/insert.png")));
         mInsertButton->setMaximumWidth(18);
         mInsertButton->setToolTip(tr("Click here to insert a variable or a resource"));
 		
@@ -92,9 +93,7 @@ namespace ActionTools
         setEmbedded(false);
     }
 
-    CodeLineEdit::~CodeLineEdit()
-    {
-    }
+    CodeLineEdit::~CodeLineEdit() = default;
 	
 	void CodeLineEdit::setCode(bool code)
 	{
@@ -106,14 +105,14 @@ namespace ActionTools
 		if(code && mCompletionModel)
 			setCompleter(new ScriptCompleter(mCompletionModel, this));
 		else
-			setCompleter(0);
+			setCompleter(nullptr);
 
 		if(mRegExp != QRegExp())
 		{
 			if(code)
 			{
 				delete validator();
-				setValidator(0);
+				setValidator(nullptr);
 			}
 			else
 				setValidator(new QRegExpValidator(mRegExp, this));
@@ -137,7 +136,7 @@ namespace ActionTools
 
         w += mInsertButton->maximumWidth();
 		
-		setStyleSheet(QString("QLineEdit { padding-right: %1px; }").arg(w));
+		setStyleSheet(QStringLiteral("QLineEdit { padding-right: %1px; }").arg(w));
 
 		resizeButtons();
 		update();
@@ -174,9 +173,7 @@ namespace ActionTools
 		if(mAllowTextCodeChange)
 			setCode(subParameter.isCode());
 
-        QString t = subParameter.value().toString();
-
-		setText(subParameter.value().toString());
+        setText(subParameter.value());
 	}
 
 	void CodeLineEdit::addShortcuts(QMenu *menu)
@@ -207,9 +204,9 @@ namespace ActionTools
 		setCode(!isCode());
 	}
 
-	void CodeLineEdit::textChanged(const QString &text)
+    void CodeLineEdit::onTextChanged(const QString &text)
 	{
-		mMultiline = text.contains(QChar('\n'));
+		mMultiline = text.contains(QLatin1Char('\n'));
 		setReadOnly(mMultiline);
 	}
 
@@ -218,7 +215,7 @@ namespace ActionTools
 		if(!mShowEditorButton)
 			return;
 		
-        CodeEditorDialog codeEditorDialog(mCompletionModel, createVariablesMenu(0, true), createResourcesMenu(0, true), this);
+        CodeEditorDialog codeEditorDialog(mCompletionModel, createVariablesMenu(nullptr, true), createResourcesMenu(nullptr, true), this);
 
         codeEditorDialog.setWindowFlags(codeEditorDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 
@@ -278,14 +275,14 @@ namespace ActionTools
         QCompleter *currentCompleter = completer();
         if(currentCompleter)
         {
-            currentCompleter->setParent(0);
-            setCompleter(0);
+            currentCompleter->setParent(nullptr);
+            setCompleter(nullptr);
         }
 
         if(isCode())
             insert(variable);
         else
-            insert("$" + variable);
+			insert(QStringLiteral("$") + variable);
 
         if(currentCompleter)
         {
@@ -301,7 +298,7 @@ namespace ActionTools
 
     QMenu *CodeLineEdit::createVariablesMenu(QMenu *parentMenu, bool ignoreMultiline)
     {
-        QMenu *variablesMenu = 0;
+        QMenu *variablesMenu = nullptr;
 
         if(!ignoreMultiline && isMultiline())
         {
@@ -323,14 +320,14 @@ namespace ActionTools
             }
         }
 
-        variablesMenu->setIcon(QIcon(":/images/variable.png"));
+		variablesMenu->setIcon(QIcon(QStringLiteral(":/images/variable.png")));
 
         return variablesMenu;
     }
 
     QMenu *CodeLineEdit::createResourcesMenu(QMenu *parentMenu, bool ignoreMultiline)
     {
-        QMenu *resourceMenu = 0;
+        QMenu *resourceMenu = nullptr;
 
         if(!ignoreMultiline && isMultiline())
         {
@@ -350,14 +347,14 @@ namespace ActionTools
             }
         }
 
-        resourceMenu->setIcon(QIcon(":/images/resource.png"));
+		resourceMenu->setIcon(QIcon(QStringLiteral(":/images/resource.png")));
 
         return resourceMenu;
     }
 
     void CodeLineEdit::showVariableMenuAsPopup()
     {
-        QMenu *menu = new QMenu;
+        auto menu = new QMenu;
 
         addVariablesAndResourcesMenus(menu);
 
@@ -404,11 +401,11 @@ namespace ActionTools
     void CodeLineEdit::addVariablesAndResourcesMenus(QMenu *menu)
     {
         QMenu *variablesMenu = createVariablesMenu(menu);
-        connect(variablesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+        connect(variablesMenu, &QMenu::triggered, this, static_cast<void (CodeLineEdit::*)(QAction *action)>(&CodeLineEdit::insertVariable));
         menu->addMenu(variablesMenu);
 
         QMenu *resourcesMenu = createResourcesMenu(menu);
-        connect(resourcesMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertVariable(QAction*)));
+        connect(resourcesMenu, &QMenu::triggered, this, static_cast<void (CodeLineEdit::*)(QAction *action)>(&CodeLineEdit::insertVariable));
         menu->addMenu(resourcesMenu);
     }
 
@@ -439,7 +436,7 @@ namespace ActionTools
 
 			if(mMultiline)
 			{
-				QStyleOptionFrameV3 panel;
+                QStyleOptionFrame panel;
 				panel.initFrom(this);
 				
 				if(!mEmbedded)

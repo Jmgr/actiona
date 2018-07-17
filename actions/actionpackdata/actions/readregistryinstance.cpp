@@ -28,9 +28,23 @@
 
 namespace Actions
 {
-    Tools::StringListPair ReadRegistryInstance::keys = qMakePair(
-			QStringList() << "classesRoot" << "currentConfig" << "currentUser" << "users" << "localMachine",
-			QStringList() << "Classes root" << "Current config" << "Current user" << "Users" << "Local machine");
+    Tools::StringListPair ReadRegistryInstance::keys =
+    {
+        {
+            QStringLiteral("classesRoot"),
+            QStringLiteral("currentConfig"),
+            QStringLiteral("currentUser"),
+            QStringLiteral("users"),
+            QStringLiteral("localMachine")
+        },
+        {
+            QStringLiteral("Classes root"),
+            QStringLiteral("Current config"),
+            QStringLiteral("Current user"),
+            QStringLiteral("Users"),
+            QStringLiteral("Local machine")
+        }
+    };
 	//Note : This is not translated, because this is not translated either in Regedit
 
 	void ReadRegistryInstance::startExecution()
@@ -38,10 +52,10 @@ namespace Actions
 	#ifdef Q_OS_WIN
 		bool ok = true;
 
-		ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, keys, "key");
-		QString subKey = evaluateString(ok, "subKey");
-		QString value = evaluateString(ok, "value");
-		QString variable = evaluateVariable(ok, "variable");
+		ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, keys, QStringLiteral("key"));
+		QString subKey = evaluateString(ok, QStringLiteral("subKey"));
+		QString value = evaluateString(ok, QStringLiteral("value"));
+		QString variable = evaluateVariable(ok, QStringLiteral("variable"));
 
 		if(!ok)
 			return;
@@ -50,15 +64,15 @@ namespace Actions
 		switch(ActionTools::Registry::read(resultValue, key, subKey, value))
 		{
 		case ActionTools::Registry::ReadCannotFindSubKey:
-			setCurrentParameter("subKey");
+			setCurrentParameter(QStringLiteral("subKey"));
 			emit executionException(CannotFindSubKeyException, tr("Cannot find subKey \"%1\"").arg(subKey));
 			return;
 		case ActionTools::Registry::ReadCannotFindValue:
-			setCurrentParameter("value");
+			setCurrentParameter(QStringLiteral("value"));
 			emit executionException(CannotFindValueException, tr("Cannot find value \"%1\"").arg(value));
 			return;
 		case ActionTools::Registry::ReadInvalidValueType:
-			setCurrentParameter("value");
+			setCurrentParameter(QStringLiteral("value"));
 			emit executionException(CannotFindValueException, tr("Invalid value type"));
 			return;
 		default:
@@ -67,6 +81,6 @@ namespace Actions
 		}
 	#endif
 
-		emit executionEnded();
+		executionEnded();
 	}
 }

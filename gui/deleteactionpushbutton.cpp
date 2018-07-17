@@ -33,13 +33,13 @@ DeleteActionPushButton::DeleteActionPushButton(QWidget *parent)
 
 void DeleteActionPushButton::dragEnterEvent(QDragEnterEvent *event)
 {
-    if(event->mimeData()->hasFormat("application/actiona.action"))
+	if(event->mimeData()->hasFormat(QStringLiteral("application/actiona.action")))
 		event->acceptProposedAction();
 }
 
 void DeleteActionPushButton::dropEvent(QDropEvent *event)
 {
-    QByteArray encodedData = event->mimeData()->data("application/actiona.action");
+	QByteArray encodedData = event->mimeData()->data(QStringLiteral("application/actiona.action"));
 	QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
 	QList<int> rowIdList;

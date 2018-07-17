@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ENDPROCEDUREDEFINITION_H
-#define ENDPROCEDUREDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "endprocedureinstance.h"
@@ -32,7 +31,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class EndProcedureDefinition : public QObject, public ActionTools::ActionDefinition
+	class EndProcedureDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -42,17 +41,16 @@ namespace Actions
 		{
 		}
 
-		QString name() const													{ return QObject::tr("End procedure"); }
-		QString id() const														{ return "ActionEndProcedure"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Ends a procedure"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new EndProcedureInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Procedures; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/endprocedure.png"); }
+		QString name() const override													{ return QObject::tr("End procedure"); }
+		QString id() const override														{ return QStringLiteral("ActionEndProcedure"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Ends a procedure"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new EndProcedureInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Procedures; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/endprocedure.png")); }
 
 	private:
 		Q_DISABLE_COPY(EndProcedureDefinition)
 	};
 }
 
-#endif // ENDPROCEDUREDEFINITION_H

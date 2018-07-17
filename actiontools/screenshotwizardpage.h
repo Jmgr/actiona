@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef SCREENSHOTWIZARDPAGE_H
-#define SCREENSHOTWIZARDPAGE_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -40,12 +39,12 @@ namespace ActionTools
         Q_OBJECT
 
     public:
-        explicit ScreenshotWizardPage(QWidget *parent = 0);
-        ~ScreenshotWizardPage();
+        explicit ScreenshotWizardPage(QWidget *parent = nullptr);
+        ~ScreenshotWizardPage() override;
 
     protected:
-        virtual bool isComplete() const;
-        virtual void keyPressEvent(QKeyEvent *event);
+        bool isComplete() const override;
+        void keyPressEvent(QKeyEvent *event) override;
 
     private slots:
         void on_captureWholeScreenPushButton_clicked();
@@ -58,9 +57,8 @@ namespace ActionTools
         QPixmap capturePixmap() const;
 
         Ui::ScreenshotWizardPage *ui;
-        ActionTools::TargetWindow *mTargetWindow;
-        bool mDisableEscape;
+        ActionTools::TargetWindow *mTargetWindow{nullptr};
+        bool mDisableEscape{false};
     };
 }
 
-#endif // SCREENSHOTWIZARDPAGE_H

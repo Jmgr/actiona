@@ -21,8 +21,7 @@
 // Copyright (C) 2010 Ariya Hidayat <ariya.hidayat@gmail.com>
 // Licensed under GNU/GPLv3
 
-#ifndef CODEHIGHLIGHTER_H
-#define CODEHIGHLIGHTER_H
+#pragma once
 
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
@@ -54,11 +53,11 @@ namespace ActionTools
 			FormatCount
 		};
 
-		CodeHighlighter(QTextDocument *parent = 0);
+		CodeHighlighter(QTextDocument *parent = nullptr);
 		void addCodeObject(const QString &name);
 
 	protected:
-		void highlightBlock(const QString &text);
+		void highlightBlock(const QString &text) override;
 
 	private:
 		QSet<QString> mUsedKeywords;
@@ -70,4 +69,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CODEHIGHLIGHTER_H

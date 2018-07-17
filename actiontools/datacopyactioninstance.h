@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DATACOPYACTIONINSTANCE_H
-#define DATACOPYACTIONINSTANCE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "actioninstance.h"
@@ -37,11 +36,11 @@ namespace ActionTools
 		Q_OBJECT
 		
 	public:
-		DataCopyActionInstance(const ActionDefinition *definition = 0, QObject *parent = 0);
+		DataCopyActionInstance(const ActionDefinition *definition = nullptr, QObject *parent = nullptr);
 		DataCopyActionInstance(const ActionInstance &other) : ActionInstance(other)			{}
-		virtual ~DataCopyActionInstance()													{}
+		~DataCopyActionInstance()													override = default;
 		
-		virtual void stopExecution();
+		void stopExecution() override ;
 		
 	protected:
 		bool startCopy(QIODevice *input, QIODevice *output);
@@ -58,8 +57,7 @@ namespace ActionTools
 		DeviceCopyThread *mDeviceCopyThread;
 		QIODevice *mInput;
 		QIODevice *mOutput;
-		qint64 mTotalSize;
+		qint64 mTotalSize{0};
 	};
 }
 
-#endif // DATACOPYACTIONINSTANCE_H

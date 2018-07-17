@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WEB_H
-#define WEB_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -51,7 +50,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 		Web();
-		~Web();
+		~Web() override;
 
 		void setOnFinished(const QScriptValue &onFinished)					{ mOnFinished = onFinished; }
 		void setOnDownloadProgress(const QScriptValue &onDownloadProgress)	{ mOnDownloadProgress = onDownloadProgress; }
@@ -62,8 +61,8 @@ namespace Code
 		QScriptValue onError() const										{ return mOnError; }
 
 	public slots:
-        QString toString() const                                            { return "Web"; }
-        virtual bool equals(const QScriptValue &other) const                { return defaultEqualsImplementation<Web>(other); }
+		QString toString() const override                                            { return QStringLiteral("Web"); }
+        bool equals(const QScriptValue &other) const override                { return defaultEqualsImplementation<Web>(other); }
 		QScriptValue download(const QString &urlString, const QScriptValue &options = QScriptValue());
 		bool isDownloading() const;
 		QScriptValue toImage() const;
@@ -80,18 +79,17 @@ namespace Code
 
 	private:
 		QNetworkAccessManager *mNetworkAccessManager;
-		QNetworkReply *mNetworkReply;
+		QNetworkReply *mNetworkReply{nullptr};
 		QScriptValue mOnFinished;
 		QScriptValue mOnDownloadProgress;
 		QScriptValue mOnError;
 		QScriptValue mFileValue;
-		QFile *mFile;
-		bool mCloseFile;
+		QFile *mFile{nullptr};
+		bool mCloseFile{false};
 		QByteArray mData;
-		bool mIsDownloading;
+		bool mIsDownloading{false};
 		QString mUser;
 		QString mPassword;
 	};
 }
 
-#endif // WEB_H

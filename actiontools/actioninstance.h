@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONINSTANCE_H
-#define ACTIONINSTANCE_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "parameter.h"
@@ -32,6 +31,7 @@
 #include <QColor>
 #include <QScriptValue>
 #include <QVariant>
+#include <QElapsedTimer>
 
 class QScriptEngine;
 class QDataStream;
@@ -43,50 +43,34 @@ namespace ActionTools
 	class ParameterDefinition;
 	class Script;
 
-    using ParametersData = QHash<QString, Parameter>;
-    using ExceptionActionInstancesHash = QHash<ActionException::Exception, ActionException::ExceptionActionInstance>;
+	using ParametersData = QMap<QString, Parameter>;
+	using ExceptionActionInstancesHash = QMap<ActionException::Exception, ActionException::ExceptionActionInstance>;
 
-	class ActionInstanceData : public QSharedData
-	{
-	public:
-		ActionInstanceData() : definition(0), enabled(true), selected(false), pauseBefore(0), pauseAfter(0), timeout(0), script(0), scriptEngine(0), scriptLine(0)
-			{}
-		ActionInstanceData(const ActionInstanceData &other)
-			: QSharedData(other),
-			parametersData(other.parametersData),
-			definition(other.definition),
-			comment(other.comment),
-			label(other.label),
-			color(other.color),
-			enabled(other.enabled),
-			selected(other.selected),
-			exceptionActionInstances(other.exceptionActionInstances),
-			pauseBefore(other.pauseBefore),
-			pauseAfter(other.pauseAfter),
-			timeout(other.timeout),
-			script(other.script),
-			scriptEngine(other.scriptEngine),
-			scriptLine(other.scriptLine),
-			runtimeParameters(other.runtimeParameters)
-			{}
+    struct ActionInstanceData : public QSharedData
+    {
+        ActionInstanceData() = default;
+        ActionInstanceData(const ActionInstanceData &other) = default;
 
 		bool operator==(const ActionInstanceData &other) const;
 		
 		ParametersData parametersData;
-		const ActionDefinition *definition;
-		QString comment;
+        const ActionDefinition *definition{nullptr};
+        QString comment;
 		QString label;
 		QColor color;
-		bool enabled;
-		bool selected;
+        bool enabled{true};
+        bool selected{false};
 		ExceptionActionInstancesHash exceptionActionInstances;
-		int pauseBefore;
-		int pauseAfter;
-		int timeout;
-		Script *script;
-		QScriptEngine *scriptEngine;
-		int scriptLine;
+        int pauseBefore{0};
+        int pauseAfter{0};
+        int timeout{0};
+        Script *script{nullptr};
+        QScriptEngine *scriptEngine{nullptr};
+        int scriptLine{0};
 		QVariantHash runtimeParameters;
+        int executionCounter{0};
+        QElapsedTimer executionTimer;
+        qint64 executionDuration{};
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
@@ -94,10 +78,10 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		ActionInstance(const ActionDefinition *definition = 0, QObject *parent = 0);
+		ActionInstance(const ActionDefinition *definition = nullptr, QObject *parent = nullptr);
 		ActionInstance(const ActionInstance &other);
 
-		virtual ~ActionInstance()											{}
+		~ActionInstance()											override = default;
 		
 		bool operator==(const ActionInstance &other) const					{ return ((*d) == (*other.d)); }
 		bool operator!=(const ActionInstance &other) const					{ return !((*d) == (*other.d)); }
@@ -134,9 +118,9 @@ namespace ActionTools
 		void setParameter(const QString &name, const Parameter &parameter)	{ d->parametersData.insert(name, parameter); }
 		void setSubParameter(const QString &parameterName, const QString &subParameterName, const SubParameter &subParameter)
 																			{ d->parametersData[parameterName].setSubParameter(subParameterName, subParameter); }
-		void setSubParameter(const QString &parameterName, const QString &subParameterName, bool code, const QVariant &value)
+        void setSubParameter(const QString &parameterName, const QString &subParameterName, bool code, const QString &value)
 																			{ setSubParameter(parameterName, subParameterName, SubParameter(code, value)); }
-		void setSubParameter(const QString &parameterName, const QString &subParameterName, const QVariant &value)
+        void setSubParameter(const QString &parameterName, const QString &subParameterName, const QString &value)
 																			{ setSubParameter(parameterName, subParameterName, SubParameter(false, value)); }
 		Parameter parameter(const QString &name) const						{ return d->parametersData.value(name); }
 		SubParameter subParameter(const QString &parameterName, const QString &subParameterName) const
@@ -157,11 +141,21 @@ namespace ActionTools
 		virtual void pauseExecution()										{}//This is called when the action should pause its execution
 		virtual void resumeExecution()										{}//This is called when the action should resume its execution
 
+        void doStartExecution();
+        void doStopExecution();
+        void doPauseExecution();
+        void doResumeExecution();
+
+        int executionCounter() const                                        { return d->executionCounter; }
+        qint64 executionDuration() const                                    { return d->executionDuration; }
+
 		void setupExecution(QScriptEngine *scriptEngine, Script *script, int scriptLine)
 		{
 			d->scriptEngine = scriptEngine;
 			d->script = script;
 			d->scriptLine = scriptLine;
+            d->executionCounter = 0;
+            d->executionDuration = 0;
 		}
 
 		void copyActionDataFrom(const ActionInstance &other);
@@ -178,7 +172,7 @@ namespace ActionTools
 		void updateProgressDialog(int value);
 		void hideProgressDialog();
 		void executionException(int exception, const QString &message);
-		void executionEnded();
+        void executionEndedSignal();
 		void disableAction(bool disable = true);
 		void consolePrint(const QString &text);
 		void consolePrintWarning(const QString &text);
@@ -192,25 +186,25 @@ namespace ActionTools
 		/** Parameter management **/
         QScriptValue evaluateValue(bool &ok,
                             const QString &parameterName,
-                            const QString &subParameterName = "value");
+							const QString &subParameterName = QStringLiteral("value"));
 		QString evaluateString(bool &ok,
 							const QString &parameterName,
-							const QString &subParameterName = "value");
+							const QString &subParameterName = QStringLiteral("value"));
         QImage evaluateImage(bool &ok,
                             const QString &parameterName,
-                            const QString &subParameterName = "value");
+							const QString &subParameterName = QStringLiteral("value"));
 		QString evaluateVariable(bool &ok,
 							const QString &parameterName,
-							const QString &subParameterName = "value");
+							const QString &subParameterName = QStringLiteral("value"));
 		int evaluateInteger(bool &ok,
 							 const QString &parameterName,
-							 const QString &subParameterName = "value");
+							 const QString &subParameterName = QStringLiteral("value"));
 		bool evaluateBoolean(bool &ok,
 							 const QString &parameterName,
-							 const QString &subParameterName = "value");
+							 const QString &subParameterName = QStringLiteral("value"));
 		double evaluateDouble(bool &ok,
 						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
 		IfActionValue evaluateIfAction(bool &ok,
 						   const QString &parameterName);
 		QString evaluateSubParameter(bool &ok,
@@ -220,7 +214,7 @@ namespace ActionTools
 		T evaluateListElement(bool &ok,
                                  const Tools::StringListPair &listElements,
 								 const QString &parameterName,
-								 const QString &subParameterName = "value")
+								 const QString &subParameterName = QStringLiteral("value"))
 		{
 			if(!ok)
 				return T();
@@ -280,24 +274,24 @@ namespace ActionTools
         QString evaluateEditableListElement(bool &ok,
                                  const Tools::StringListPair &listElements,
                                  const QString &parameterName,
-                                 const QString &subParameterName = "value");
+								 const QString &subParameterName = QStringLiteral("value"));
 
         QPoint evaluatePoint(bool &ok,
                            const QString &parameterName,
-                           const QString &subParameterName = "value",
+						   const QString &subParameterName = QStringLiteral("value"),
                              bool *empty = nullptr);
 		QStringList evaluateItemList(bool &ok,
 						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
 		QPolygon evaluatePolygon(bool &ok,
 						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
 		QColor evaluateColor(bool &ok,
 						   const QString &parameterName,
-						   const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
         QDateTime evaluateDateTime(bool &ok,
                            const QString &parameterName,
-                           const QString &subParameterName = "value");
+						   const QString &subParameterName = QStringLiteral("value"));
 
         void validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum = std::numeric_limits<int>::max());
 
@@ -311,7 +305,10 @@ namespace ActionTools
 		void setVariable(const QString &name, const QScriptValue &value);
 		QScriptValue variable(const QString &name);
 
-		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = "value");
+		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = QStringLiteral("value"));
+
+        /// Should be called when an action has finished running
+        void executionEnded();
 
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);
@@ -331,8 +328,8 @@ namespace ActionTools
 		QSharedDataPointer<ActionInstanceData> d;
 	};
 
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance);
-	ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, ActionInstance &actionInstance);
+    ACTIONTOOLSSHARED_EXPORT QDataStream &operator << (QDataStream &s, const ActionInstance &actionInstance);
+    ACTIONTOOLSSHARED_EXPORT QDataStream &operator >> (QDataStream &s, ActionInstance &actionInstance);
 	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ActionInstance &actionInstance);
 	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ParametersData &parametersData);
 	ACTIONTOOLSSHARED_EXPORT QDebug &operator << (QDebug &dbg, const ExceptionActionInstancesHash &exceptionActionInstancesHash);
@@ -340,4 +337,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::ActionInstance)
 
-#endif // ACTIONINSTANCE_H

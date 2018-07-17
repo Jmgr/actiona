@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CONSOLEWIDGET_H
-#define CONSOLEWIDGET_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -73,10 +72,10 @@ namespace ActionTools
             ResourceRole
 		};
 
-		explicit ConsoleWidget(QWidget *parent = 0);
-		~ConsoleWidget();
+		explicit ConsoleWidget(QWidget *parent = nullptr);
+		~ConsoleWidget() override ;
 		
-		void setup(QStandardItemModel *model = 0);
+		void setup(QStandardItemModel *model = nullptr);
 
 		void addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type);
         void addResourceLine(const QString &message, const QString &resourceKey, Type type);
@@ -107,7 +106,7 @@ namespace ActionTools
 		void addSeparator(QStandardItem *item);
 
 		Ui::ConsoleWidget *ui;
-		QStandardItemModel *mModel;
+		QStandardItemModel *mModel{nullptr};
 		QDateTime mStartTime;
 
 		Q_DISABLE_COPY(ConsoleWidget)
@@ -117,4 +116,3 @@ namespace ActionTools
 Q_DECLARE_METATYPE(ActionTools::ConsoleWidget::Type)
 Q_DECLARE_METATYPE(ActionTools::ConsoleWidget::Source)
 
-#endif // CONSOLEWIDGET_H

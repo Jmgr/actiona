@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ENDPROCEDUREINSTANCE_H
-#define ENDPROCEDUREINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -31,10 +30,10 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		EndProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		EndProcedureInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			if(script()->hasProcedureCall())
                 setNextLine(script()->popProcedureCall() + 2, true);//Lines start at 1
@@ -45,7 +44,7 @@ namespace Actions
 				return;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -53,4 +52,3 @@ namespace Actions
 	};
 }
 
-#endif // ENDPROCEDUREINSTANCE_H

@@ -18,17 +18,12 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CHOOSEPOSITIONPUSHBUTTON_H
-#define CHOOSEPOSITIONPUSHBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 
 #ifdef Q_OS_LINUX
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QAbstractNativeEventFilter>
-#else
-#include "nativeeventfilter.h"
-#endif
 #endif
 
 #include <QPushButton>
@@ -40,46 +35,36 @@ namespace ActionTools
 {
     class ACTIONTOOLSSHARED_EXPORT ChoosePositionPushButton : public QPushButton
 #ifdef Q_OS_LINUX
-#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
             , public QAbstractNativeEventFilter
-#else
-            , public NativeEventFilter
-#endif
 #endif
 	{
 		Q_OBJECT
 	public:
-		explicit ChoosePositionPushButton(QWidget *parent = 0);
-		~ChoosePositionPushButton();
+		explicit ChoosePositionPushButton(QWidget *parent = nullptr);
+		~ChoosePositionPushButton() override;
 
 	signals:
 		void chooseStarted();
         void positionChosen(QPointF position);
 		
 	private:
-		void paintEvent(QPaintEvent *event);
-		void mousePressEvent(QMouseEvent *event);
+		void paintEvent(QPaintEvent *event) override;
+		void mousePressEvent(QMouseEvent *event) override;
 #ifdef Q_OS_WIN
 		void mouseReleaseEvent(QMouseEvent *event);
 #endif
 #ifdef Q_OS_LINUX
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        bool x11EventFilter(XEvent *event);
-#else
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
-#endif
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
 #endif
 		void stopMouseCapture();
 
 		QPixmap *mCrossIcon;
-		bool mSearching;
+		bool mSearching{false};
 		QPoint mResult;
-		QMainWindow *mMainWindow;
+		QMainWindow *mMainWindow{nullptr};
 #ifdef Q_OS_LINUX
         QList<QWidget*> mShownWindows;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         unsigned long mCrossCursor;
-#endif
 #endif
 #ifdef Q_OS_WIN
 		HCURSOR mPreviousCursor;
@@ -90,4 +75,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CHOOSEPOSITIONPUSHBUTTON_H

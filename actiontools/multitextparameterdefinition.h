@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MULTITEXTPARAMETERDEFINITION_H
-#define MULTITEXTPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -34,11 +33,11 @@ namespace ActionTools
 
 	public:
         MultiTextParameterDefinition(const Name &namez, QObject *parent);
-		virtual ~MultiTextParameterDefinition()			{}
+        ~MultiTextParameterDefinition()	override = default;
 
-		virtual void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
+        void buildEditors(Script *script, QWidget *parent) override;
+        void load(const ActionInstance *actionInstance) override;
+        void save(ActionInstance *actionInstance) override;
 
 	protected:
 		ItemListWidget *mItemListWidget;
@@ -48,4 +47,3 @@ namespace ActionTools
 	};
 }
 
-#endif // MULTITEXTPARAMETERDEFINITION_H

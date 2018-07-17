@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CONSOLETABLEVIEW_H
-#define CONSOLETABLEVIEW_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -32,11 +31,10 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ConsoleTableView(QWidget *parent = 0);
+		explicit ConsoleTableView(QWidget *parent = nullptr);
 
 	private:
-		void keyReleaseEvent(QKeyEvent *event);
+		void keyReleaseEvent(QKeyEvent *event) override;
 	};
 }
 
-#endif // CONSOLETABLEVIEW_H

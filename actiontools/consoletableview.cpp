@@ -37,7 +37,7 @@ namespace ActionTools
 	{
 		if(event->matches(QKeySequence::Copy))
 		{
-			QStandardItemModel *standardItemModel = qobject_cast<QStandardItemModel *>(model());
+			auto standardItemModel = qobject_cast<QStandardItemModel *>(model());
 			if(standardItemModel)
 			{
 				QStandardItem *item = standardItemModel->item(currentIndex().row(), 0);

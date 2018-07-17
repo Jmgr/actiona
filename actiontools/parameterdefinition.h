@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PARAMETERDEFINITION_H
-#define PARAMETERDEFINITION_H
+#pragma once
 
 #include "elementdefinition.h"
 #include "actiontools_global.h"
@@ -40,20 +39,20 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-        ParameterDefinition(const Name &name, QObject *parent = 0);
-        virtual ~ParameterDefinition()                                                  {}
+        ParameterDefinition(const Name &name, QObject *parent = nullptr);
+        ~ParameterDefinition()                                                  override = default;
 
 		virtual void buildEditors(Script *script, QWidget *parent);
 		virtual void load(const ActionInstance *actionInstance) = 0;
 		virtual void save(ActionInstance *actionInstance) = 0;
-		virtual void setDefaultValues(ActionInstance *actionInstance);
+        void setDefaultValues(ActionInstance *actionInstance) override;
         virtual Qt::Orientation editorsOrientation() const                              { return Qt::Horizontal; }
 
         const QList<QWidget *> &editors() const                                         { return mEditors; }
         Flag operatingSystems() const                                                   { return mOperatingSystems; }
 		
-		virtual QVariant defaultValue(QVariant defaultValue = QVariant()) const;
-        virtual void setDefaultValue(const QVariant &defaultValue)                      { mDefaultValue = defaultValue; }
+        virtual QString defaultValue(QString defaultValue = QString()) const;
+        virtual void setDefaultValue(const QString &defaultValue)                       { mDefaultValue = defaultValue; }
         virtual void setOperatingSystems(Flag operatingSystems)                         { mOperatingSystems = operatingSystems; }
 		
         //Called when the action is edited
@@ -69,7 +68,7 @@ namespace ActionTools
 		
 	private:
 		QList<QWidget *> mEditors;
-		QVariant mDefaultValue;
+        QString mDefaultValue;
 		Flag mOperatingSystems;
 		QWidget *mParentWidget;
 
@@ -77,4 +76,3 @@ namespace ActionTools
 	};
 }
 
-#endif // PARAMETERDEFINITION_H

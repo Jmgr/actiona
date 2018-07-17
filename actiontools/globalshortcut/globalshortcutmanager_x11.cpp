@@ -43,7 +43,7 @@ namespace ActionTools
 	class X11KeyTrigger
 	{
 	public:
-		virtual ~X11KeyTrigger() {}
+		virtual ~X11KeyTrigger() = default;
 		virtual void activate() = 0;
 		virtual bool isAccepted(int qkey) const = 0;
 	};
@@ -76,10 +76,10 @@ namespace ActionTools
 	
 	protected:
 		// reimplemented
-		bool eventFilter(QObject* o, QEvent* e)
+		bool eventFilter(QObject* o, QEvent* e) override
 		{
 			if(e->type() == QEvent::KeyPress) {
-				QKeyEvent* k = static_cast<QKeyEvent*>(e);
+				auto* k = static_cast<QKeyEvent*>(e);
 				int qkey = k->key();
 				if (k->modifiers() & Qt::ShiftModifier)
 					qkey |= Qt::SHIFT;
@@ -253,7 +253,7 @@ namespace ActionTools
 		}
 	};
 	
-	X11KeyTriggerManager* X11KeyTriggerManager::instance_ = NULL;
+	X11KeyTriggerManager* X11KeyTriggerManager::instance_ = nullptr;
 	
 	class GlobalShortcutManager::KeyTrigger::Impl : public X11KeyTrigger
 	{
@@ -317,7 +317,7 @@ namespace ActionTools
 		/**
 		 * Destructor unregisters the hotkey.
 		 */
-		~Impl()
+		~Impl() override
 		{
 			X11KeyTriggerManager::instance()->removeTrigger(this);
 	
@@ -325,12 +325,12 @@ namespace ActionTools
 				XUngrabKey(QX11Info::display(), key.code, key.mod, QX11Info::appRootWindow());
 		}
 	
-		void activate()
+		void activate() override
 		{
 			emit trigger_->triggered();
 		}
 	
-		bool isAccepted(int qkey) const
+		bool isAccepted(int qkey) const override
 		{
 			return qkey_ == qkey;
 		}
@@ -436,6 +436,6 @@ namespace ActionTools
 	GlobalShortcutManager::KeyTrigger::~KeyTrigger()
 	{
 		delete d;
-		d = 0;
+		d = nullptr;
 	}
 }

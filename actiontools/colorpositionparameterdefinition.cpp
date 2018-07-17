@@ -28,8 +28,8 @@ namespace ActionTools
 {
     ColorPositionParameterDefinition::ColorPositionParameterDefinition(const Name &name, QObject *parent)
         : ParameterDefinition(name, parent),
-		mPositionEdit(0),
-		mColorEdit(0)
+		mPositionEdit(nullptr),
+		mColorEdit(nullptr)
 	{
 	}
 
@@ -46,27 +46,29 @@ namespace ActionTools
 
 		addEditor(mColorEdit);
 		
-        connect(mPositionEdit, SIGNAL(positionChosen(QPointF)), mColorEdit, SLOT(setPosition(QPointF)));
-        connect(mColorEdit, SIGNAL(positionChosen(QPointF)), mPositionEdit, SLOT(setPosition(QPointF)));
+        connect(mPositionEdit, &PositionEdit::positionChosen, mColorEdit, &ColorEdit::setPosition);
+        connect(mColorEdit, &ColorEdit::positionChosen, mPositionEdit, &PositionEdit::setPosition);
 	}
 
 	void ColorPositionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "position"));
-		mColorEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "color"));
+		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("position")));
+		mColorEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("color")));
 	}
 
 	void ColorPositionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "position", mPositionEdit->isCode(), mPositionEdit->text());
-		actionInstance->setSubParameter(name().original(), "color", mColorEdit->isCode(), mColorEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("position"), mPositionEdit->isCode(), mPositionEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("color"), mColorEdit->isCode(), mColorEdit->text());
 	}
 
 	void ColorPositionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "position", defaultPosition());
+        auto position = defaultPosition();
+
+		actionInstance->setSubParameter(name().original(), QStringLiteral("position"), QStringLiteral("%1:%2").arg(position.x()).arg(position.y()));
 
         QColor localDefaultColor = defaultColor();
-        actionInstance->setSubParameter(name().original(), "color", QString("%1:%2:%3").arg(localDefaultColor.red()).arg(localDefaultColor.green()).arg(localDefaultColor.blue()));
+		actionInstance->setSubParameter(name().original(), QStringLiteral("color"), QStringLiteral("%1:%2:%3").arg(localDefaultColor.red()).arg(localDefaultColor.green()).arg(localDefaultColor.blue()));
 	}
 }

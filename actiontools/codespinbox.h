@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODESPINBOX_H
-#define CODESPINBOX_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -36,7 +35,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit CodeSpinBox(QWidget *parent = 0);
+		explicit CodeSpinBox(QWidget *parent = nullptr);
 
 		CodeLineEdit *codeLineEdit() const;
 		bool isCode() const;
@@ -44,20 +43,20 @@ namespace ActionTools
 
 		void setFromSubParameter(const SubParameter &subParameter);
 
-		void openEditor(int line = -1, int column = -1);
-		void setCompletionModel(QAbstractItemModel *completionModel);
-        void setParameterContainer(const ParameterContainer *parameterContainer);
-        QSet<QString> findVariables() const;
+		void openEditor(int line = -1, int column = -1) override;
+		void setCompletionModel(QAbstractItemModel *completionModel) override;
+        void setParameterContainer(const ParameterContainer *parameterContainer) override;
+        QSet<QString> findVariables() const override;
 
 		QString text();
 
 	private slots:
-		void codeChanged(bool code);
+        void onCodeChanged(bool code);
 
 	private:
-		QValidator::State validate(QString &text, int &pos) const;
-		QString textFromValue(int value) const;
-		void contextMenuEvent(QContextMenuEvent *event);
+		QValidator::State validate(QString &text, int &pos) const override;
+		QString textFromValue(int value) const override;
+		void contextMenuEvent(QContextMenuEvent *event) override;
 		
 		QString mPrefix;
 		QString mSuffix;
@@ -66,4 +65,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CODESPINBOX_H

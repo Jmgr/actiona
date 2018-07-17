@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITEREGISTRYDEFINITION_H
-#define WRITEREGISTRYDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "writeregistryinstance.h"
@@ -35,7 +34,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WriteRegistryDefinition : public QObject, public ActionTools::ActionDefinition
+	class WriteRegistryDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 
@@ -43,39 +42,34 @@ namespace Actions
 		explicit WriteRegistryDefinition(ActionTools::ActionPack *pack)
 			: ActionDefinition(pack)
 		{
-			ActionTools::ListParameterDefinition *key = new ActionTools::ListParameterDefinition(ActionTools::Name("key", tr("Key")), this);
-			key->setTooltip(tr("The registry key to write to"));
-			key->setItems(ReadRegistryInstance::keys);
-			key->setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
-			addElement(key);
+			auto &key = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("key"), tr("Key")});
+            key.setTooltip(tr("The registry key to write to"));
+            key.setItems(ReadRegistryInstance::keys);
+            key.setDefaultValue(ReadRegistryInstance::keys.second.at(ActionTools::Registry::CurrentUser));
 
-			ActionTools::TextParameterDefinition *subKey = new ActionTools::TextParameterDefinition(ActionTools::Name("subKey", tr("Subkey")), this);
-			subKey->setTooltip(tr("The registry subkey to write to"));
-			addElement(subKey);
+			auto &subKey = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("subKey"), tr("Subkey")});
+            subKey.setTooltip(tr("The registry subkey to write to"));
 
-			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
-			value->setTooltip(tr("The value to write to"));
-			addElement(value);
+			auto &value = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
+            value.setTooltip(tr("The value to write to"));
 
-			ActionTools::TextParameterDefinition *data = new ActionTools::TextParameterDefinition(ActionTools::Name("data", tr("Data")), this);
-			data->setTooltip(tr("The data to write"));
-			addElement(data);
+			auto &data = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("data"), tr("Data")});
+            data.setTooltip(tr("The data to write"));
 
 			addException(WriteRegistryInstance::CannotFindSubKeyException, tr("Cannot find subKey"));
 			addException(WriteRegistryInstance::CannotWriteValueException, tr("Cannot write value"));
 		}
 
-		QString name() const													{ return QObject::tr("Write registry"); }
-		QString id() const														{ return "ActionWriteRegistry"; }
-		ActionTools::Flag flags() const											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Writes an entry to the registry"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteRegistryInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/writeregistry.png"); }
+		QString name() const override													{ return QObject::tr("Write registry"); }
+		QString id() const override														{ return QStringLiteral("ActionWriteRegistry"); }
+		ActionTools::Flag flags() const override											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Writes an entry to the registry"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteRegistryInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/writeregistry.png")); }
 
 	private:
 		Q_DISABLE_COPY(WriteRegistryDefinition)
 	};
 }
 
-#endif // WRITEREGISTRYDEFINITION_H

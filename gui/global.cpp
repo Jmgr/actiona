@@ -27,18 +27,18 @@ namespace Global
 	QString currentOSType()
 	{
 #ifdef Q_OS_LINUX
-		return "linux";
+		return QStringLiteral("linux");
 #endif
 #ifdef Q_OS_WIN
-		return "windows";
+		return QStringLiteral("windows");
 #endif
 
-		return "unknown";
+		return QStringLiteral("unknown");
 	}
 
     int currentOSBits()
     {
-        if(QSysInfo::currentCpuArchitecture().contains("64"))
+        if(QSysInfo::currentCpuArchitecture().contains(QStringLiteral("64")))
             return 64;
 
         return 32;

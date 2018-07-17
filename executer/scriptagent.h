@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTAGENT_H
-#define SCRIPTAGENT_H
+#pragma once
 
 #include "executer_global.h"
 
@@ -49,7 +48,7 @@ namespace LibExecuter
 			mContext(Unknown),
 			mPaused(false),
 			mContinueExecution(true),
-			mDebuggerAgent(0),
+			mDebuggerAgent(nullptr),
 			mEngineLevel(0)
 																			{}
 	
@@ -70,17 +69,17 @@ namespace LibExecuter
 		void evaluationStopped();
 	
 	private:
-		void contextPop();
-		void contextPush();
-		void exceptionCatch(qint64 scriptId, const QScriptValue &exception);
-		void exceptionThrow(qint64 scriptId, const QScriptValue &exception, bool hasHandler);
-		QVariant extension(Extension extension, const QVariant &argument = QVariant());
-		void functionEntry(qint64 scriptId);
-		void functionExit(qint64 scriptId, const QScriptValue &returnValue);
-		void positionChange(qint64 scriptId, int lineNumber, int columnNumber);
-		void scriptLoad(qint64 id, const QString &program, const QString &fileName, int baseLineNumber);
-		void scriptUnload(qint64 id);
-		bool supportsExtension(Extension extension) const;
+		void contextPop() override ;
+		void contextPush() override ;
+		void exceptionCatch(qint64 scriptId, const QScriptValue &exception) override ;
+		void exceptionThrow(qint64 scriptId, const QScriptValue &exception, bool hasHandler) override ;
+		QVariant extension(Extension extension, const QVariant &argument = QVariant()) override ;
+		void functionEntry(qint64 scriptId) override ;
+		void functionExit(qint64 scriptId, const QScriptValue &returnValue) override ;
+		void positionChange(qint64 scriptId, int lineNumber, int columnNumber) override ;
+		void scriptLoad(qint64 id, const QString &program, const QString &fileName, int baseLineNumber) override ;
+		void scriptUnload(qint64 id) override ;
+		bool supportsExtension(Extension extension) const override ;
 	
 	private:
 		int mCurrentParameter;
@@ -95,4 +94,3 @@ namespace LibExecuter
 	};
 }
 
-#endif // SCRIPTAGENT_H

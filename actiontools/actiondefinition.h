@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONDEFINITION_H
-#define ACTIONDEFINITION_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "version.h"
@@ -30,6 +29,7 @@
 #include <QPixmap>
 #include <QList>
 #include <QDebug>
+#include <QPixmapCache>
 
 class QScriptEngine;
 
@@ -38,10 +38,15 @@ namespace ActionTools
 	class ActionPack;
 	class ActionInstance;
 	class ElementDefinition;
+    class ParameterDefinition;
+    class GroupDefinition;
 	class ActionException;
+    class Name;
 
-	class ACTIONTOOLSSHARED_EXPORT ActionDefinition
+    class ACTIONTOOLSSHARED_EXPORT ActionDefinition : public QObject
 	{
+        Q_OBJECT
+
 	public:
 		explicit ActionDefinition(ActionPack *pack) : mPack(pack), mIndex(-1)	{}
 		virtual ~ActionDefinition();
@@ -54,11 +59,12 @@ namespace ActionTools
 		virtual ActionInstance *newActionInstance() const = 0;
         virtual ActionStatus status() const                                                             { return Stable; }
 		virtual ActionCategory category() const = 0;
-        virtual QString author() const                                                                  { return (flags() & Official) ? QObject::tr("The Actiona Team") : QString(); }
-        virtual QString website() const                                                                 { return QString(); }
-        virtual QString email() const                                                                   { return QString(); }
-        virtual QPixmap icon() const                                                                    { return QPixmap(); }
-        virtual QStringList tabs() const                                                                { return QStringList(); }
+        virtual QString author() const                                                                  { return (flags() & Official) ? QObject::tr("The Actiona Team") : QString{}; }
+        virtual QString website() const                                                                 { return {}; }
+        virtual QString email() const                                                                   { return {}; }
+        virtual QPixmap icon() const                                                                    { return {}; }
+        QPixmap cachedIcon() const;
+        virtual QStringList tabs() const                                                                { return {}; }
 
         virtual void updateAction(ActionInstance *actionInstance, const Tools::Version &version) const  { Q_UNUSED(actionInstance) Q_UNUSED(version) }
 
@@ -78,18 +84,27 @@ namespace ActionTools
 
 	protected:
         void translateItems(const char *context, Tools::StringListPair &items) const;
-		void addElement(ElementDefinition *element, int tab = 0);
+        template<class ParameterDefinitionT>
+        ParameterDefinitionT &addParameter(const Name &name, int tab = 0)
+        {
+            static_assert(std::is_convertible<ParameterDefinitionT*, ParameterDefinition*>::value, "ParameterDefinitionT must inherit ParameterDefinition");
+
+            return *static_cast<ParameterDefinitionT *>(addElement(new ParameterDefinitionT(name, this), tab));
+        }
+        GroupDefinition &addGroup(int tab = 0);
 		void addException(int id, const QString &name);
 		bool requirementCheckXTest(QStringList &missingRequirements) const;
 
 	private:
+        ElementDefinition *addElement(ElementDefinition *element, int tab);
+
 		ActionPack *mPack;
 		QList<ElementDefinition *> mElements;
 		QList<ActionException *> mExceptions;
 		int mIndex;
+        mutable QPixmap mIcon;
 
 		Q_DISABLE_COPY(ActionDefinition)
 	};
 }
 
-#endif // ACTIONDEFINITION_H

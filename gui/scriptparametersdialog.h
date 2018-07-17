@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTPARAMETERSDIALOG_H
-#define SCRIPTPARAMETERSDIALOG_H
+#pragma once
 
 #include "scriptparameter.h"
 #include "parametercontainer.h"
@@ -45,28 +44,28 @@ class ScriptParametersDialog : public QDialog, public ActionTools::ParameterCont
 	Q_OBJECT
 
 public:
-    ScriptParametersDialog(ActionTools::Script *script, QWidget *parent = 0);
-	~ScriptParametersDialog();
+    ScriptParametersDialog(ActionTools::Script *script, QWidget *parent = nullptr);
+	~ScriptParametersDialog() override;
 
 	void setCurrentParameter(int parameter)						{ mCurrentParameter = parameter; }
 	void setCurrentLine(int line)								{ mCurrentLine = line; }
 	void setCurrentColumn(int column)							{ mCurrentColumn = column; }
 
-	int exec();
+	int exec() override;
 
-    virtual QMenu *createVariablesMenu(QWidget *parent) const;
+    QMenu *createVariablesMenu(QWidget *parent) const override;
 
 private slots:
 	void postInit();
 	void removeParameter();
-	void accept();
+	void accept() override;
 	void parameterTypeChanged(int type);
 	void on_addParameter_clicked();
 
 private:
 	void addParameter(const QString &name, const QString &value, bool code, ActionTools::ScriptParameter::ParameterType parameterType);
 	void setupValueParameter(int row, ActionTools::ScriptParameter::ParameterType type, const QString &value = QString(), bool code = false);
-	bool eventFilter(QObject *obj, QEvent *event);
+	bool eventFilter(QObject *obj, QEvent *event) override;
 
     Ui::ScriptParametersDialog *ui;
 	ActionTools::Script *mScript;
@@ -78,4 +77,3 @@ private:
 	Q_DISABLE_COPY(ScriptParametersDialog)
 };
 
-#endif // SCRIPTPARAMETERSDIALOG_H

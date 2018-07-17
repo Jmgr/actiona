@@ -28,6 +28,11 @@
 #include "messagehandler.h"
 #include "variableparameterdefinition.h"
 #include "groupdefinition.h"
+#include "scriptlinemodel.h"
+
+#ifdef ACT_PROFILE
+#include "highresolutiontimer.h"
+#endif
 
 #include <QIODevice>
 #include <QFile>
@@ -38,28 +43,32 @@
 
 namespace ActionTools
 {
-    const QRegExp Script::CodeVariableDeclarationRegExp("^[ \t]*var ([A-Za-z_][A-Za-z0-9_]*)", Qt::CaseSensitive, QRegExp::RegExp2);
+	const QRegExp Script::CodeVariableDeclarationRegExp(QStringLiteral("^[ \t]*var ([A-Za-z_][A-Za-z0-9_]*)"), Qt::CaseSensitive, QRegExp::RegExp2);
 
 	Script::Script(ActionFactory *actionFactory, QObject *parent)
 		: QObject(parent),
 		mActionFactory(actionFactory),
-		mLine(-1),
-		mColumn(-1),
-		mPauseBefore(0),
-		mPauseAfter(0)
+        mLineModel{new ScriptLineModel(*this, this)}
 	{
 	}
 
 	Script::~Script()
 	{
 		qDeleteAll(mActionInstances);
-	}
+    }
 
-	ActionInstance *Script::appendAction(const QString &actionDefinitionId)
-	{
-		ActionInstance *actionInstance = mActionFactory->newActionInstance(actionDefinitionId);
+    void Script::appendAction(ActionInstance *actionInstance)
+    {
+        mActionInstances.append(actionInstance);
+
+        mRebuildLabelList = true;
+    }
+
+    ActionInstance *Script::appendAction(const QString &actionDefinitionId)
+    {
+        ActionInstance *actionInstance = mActionFactory->newActionInstance(actionDefinitionId);
 		if(!actionInstance)
-			return 0;
+			return nullptr;
 
 		appendAction(actionInstance);
 
@@ -69,7 +78,7 @@ namespace ActionTools
 	ActionInstance *Script::actionAt(int line) const
 	{
 		if(line < 0 || line >= mActionInstances.size())
-			return 0;
+			return nullptr;
 
 		return mActionInstances.at(line);
 	}
@@ -77,6 +86,8 @@ namespace ActionTools
 	void Script::insertAction(int line, ActionInstance *actionInstance)
 	{
 		mActionInstances.insert(line, actionInstance);
+
+        mRebuildLabelList = true;
 	}
 
 	void Script::setAction(int line, ActionInstance *actionInstance)
@@ -87,6 +98,8 @@ namespace ActionTools
 		delete mActionInstances.at(line);
 
 		mActionInstances[line] = actionInstance;
+
+        mRebuildLabelList = true;
 	}
 
 	void Script::removeActions(int line, int count)
@@ -96,6 +109,8 @@ namespace ActionTools
 
 		for(int r = line; r <= line + count - 1; ++r)
 			removeAction(r);
+
+        mRebuildLabelList = true;
 	}
 
 	void Script::removeAction(int line)
@@ -104,6 +119,8 @@ namespace ActionTools
 			return;
 
 		delete mActionInstances.takeAt(line);
+
+        mRebuildLabelList = true;
 	}
 
 	void Script::removeAction(ActionInstance *actionInstance)
@@ -120,6 +137,7 @@ namespace ActionTools
 	{
 		qDeleteAll(mActionInstances);
 		mActionInstances.clear();
+        mRebuildLabelList = true;
 	}
 
 	void Script::moveAction(int startLine, int endLine)
@@ -177,7 +195,7 @@ namespace ActionTools
 				{
 					if(subParameter.isCode())
 					{
-						const QString &value = subParameter.value().toString();
+                        const QString &value = subParameter.value();
 
 						for(int actionIdIndex = 0; actionIdIndex < actions.count(); ++actionIdIndex)
 						{
@@ -192,18 +210,21 @@ namespace ActionTools
 		return result;
 	}
 
-	bool Script::write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion)
+    bool Script::write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion, std::function<void(int, int, QString)> *progressCallback)
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Script::write");
 #endif
-        emit scriptProcessing(0, 0, tr("Writing..."));
+        if(progressCallback)
+        {
+            progressCallback->operator()(0, 0, tr("Writing..."));
+        }
 
 		QXmlStreamWriter stream(device);
 		stream.setAutoFormatting(true);
 
 		stream.writeStartDocument();
-		stream.writeStartElement("scriptfile");
+		stream.writeStartElement(QStringLiteral("scriptfile"));
 
 		QString osName = tr("Unknown");
     #ifdef Q_OS_LINUX
@@ -216,40 +237,43 @@ namespace ActionTools
 		osName = tr("Mac");
 	#endif
 
-		stream.writeStartElement("settings");
+		stream.writeStartElement(QStringLiteral("settings"));
 
-        stream.writeAttribute("program", "actiona");
-		stream.writeAttribute("version", programVersion.toString());
-		stream.writeAttribute("scriptVersion", scriptVersion.toString());
-		stream.writeAttribute("os", osName);
+		stream.writeAttribute(QStringLiteral("program"), QStringLiteral("actiona"));
+		stream.writeAttribute(QStringLiteral("version"), programVersion.toString());
+		stream.writeAttribute(QStringLiteral("scriptVersion"), scriptVersion.toString());
+		stream.writeAttribute(QStringLiteral("os"), osName);
 
 		stream.writeEndElement();
 
-		stream.writeStartElement("actions");
+		stream.writeStartElement(QStringLiteral("actions"));
 
         for(int actionIndex: usedActions())
 		{
 			ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionIndex);
 
-			stream.writeStartElement("action");
-			stream.writeAttribute("name", actionDefinition->id());
-			stream.writeAttribute("version", actionDefinition->version().toString());
+			stream.writeStartElement(QStringLiteral("action"));
+			stream.writeAttribute(QStringLiteral("name"), actionDefinition->id());
+			stream.writeAttribute(QStringLiteral("version"), actionDefinition->version().toString());
 			stream.writeEndElement();
 		}
 
 		stream.writeEndElement();
 
-		stream.writeStartElement("parameters");
+		stream.writeStartElement(QStringLiteral("parameters"));
 
         int parameterIndex = 0;
         for(const ScriptParameter &parameter: mParameters)
 		{
-            emit scriptProcessing(parameterIndex, mParameters.size() - 1, tr("Writing parameters..."));
+            if(progressCallback)
+            {
+                progressCallback->operator()(parameterIndex, mParameters.size() - 1, tr("Writing parameters..."));
+            }
 
-			stream.writeStartElement("parameter");
-			stream.writeAttribute("name", parameter.name());
-			stream.writeAttribute("code", QString("%1").arg(parameter.isCode()));
-			stream.writeAttribute("type", QString::number(parameter.type()));
+			stream.writeStartElement(QStringLiteral("parameter"));
+			stream.writeAttribute(QStringLiteral("name"), parameter.name());
+			stream.writeAttribute(QStringLiteral("code"), QStringLiteral("%1").arg(parameter.isCode()));
+			stream.writeAttribute(QStringLiteral("type"), QString::number(parameter.type()));
 			stream.writeCharacters(parameter.value());
 			stream.writeEndElement();
 
@@ -258,18 +282,21 @@ namespace ActionTools
 
 		stream.writeEndElement();
 
-        stream.writeStartElement("resources");
+		stream.writeStartElement(QStringLiteral("resources"));
 
-        QHash<QString, Resource>::const_iterator resourceIt = mResources.constBegin();
+		QMap<QString, Resource>::const_iterator resourceIt = mResources.constBegin();
         int resourceIndex = 0;
         while(resourceIt != mResources.constEnd())
         {
-            emit scriptProcessing(resourceIndex , mResources.size() - 1, tr("Writing resources..."));
+            if(progressCallback)
+            {
+                progressCallback->operator()(resourceIndex , mResources.size() - 1, tr("Writing resources..."));
+            }
 
-            stream.writeStartElement("resource");
-            stream.writeAttribute("id", resourceIt.key());
-            stream.writeAttribute("type", QString::number(resourceIt.value().type()));
-            stream.writeCharacters(qCompress(resourceIt.value().data()).toBase64());
+			stream.writeStartElement(QStringLiteral("resource"));
+			stream.writeAttribute(QStringLiteral("id"), resourceIt.key());
+			stream.writeAttribute(QStringLiteral("type"), QString::number(resourceIt.value().type()));
+			stream.writeCharacters(QLatin1String(qCompress(resourceIt.value().data()).toBase64()));
             stream.writeEndElement();
 
             ++resourceIt;
@@ -278,41 +305,44 @@ namespace ActionTools
 
         stream.writeEndElement();
 
-		stream.writeStartElement("script");
-		stream.writeAttribute("pauseBefore", QString::number(pauseBefore()));
-		stream.writeAttribute("pauseAfter", QString::number(pauseAfter()));
+		stream.writeStartElement(QStringLiteral("script"));
+		stream.writeAttribute(QStringLiteral("pauseBefore"), QString::number(pauseBefore()));
+		stream.writeAttribute(QStringLiteral("pauseAfter"), QString::number(pauseAfter()));
 
         int actionIndex = 0;
         for(ActionInstance *actionInstance: mActionInstances)
 		{
-            emit scriptProcessing(actionIndex, mActionInstances.size() - 1, tr("Writing actions..."));
+            if(progressCallback)
+            {
+                progressCallback->operator()(actionIndex, mActionInstances.size() - 1, tr("Writing actions..."));
+            }
 
-			stream.writeStartElement("action");
-			stream.writeAttribute("name", actionInstance->definition()->id());
+			stream.writeStartElement(QStringLiteral("action"));
+			stream.writeAttribute(QStringLiteral("name"), actionInstance->definition()->id());
 
 			if(!actionInstance->label().isEmpty())
-				stream.writeAttribute("label", actionInstance->label());
+				stream.writeAttribute(QStringLiteral("label"), actionInstance->label());
 			if(!actionInstance->comment().isEmpty())
-				stream.writeAttribute("comment", actionInstance->comment());
+				stream.writeAttribute(QStringLiteral("comment"), actionInstance->comment());
 			if(actionInstance->color().isValid() && actionInstance->color() != Qt::transparent)
-				stream.writeAttribute("color", actionInstance->color().name());
+				stream.writeAttribute(QStringLiteral("color"), actionInstance->color().name());
 			if(!actionInstance->isEnabled())
-				stream.writeAttribute("enabled", QVariant(actionInstance->isEnabled()).toString());
+				stream.writeAttribute(QStringLiteral("enabled"), QVariant(actionInstance->isEnabled()).toString());
 			if(actionInstance->pauseBefore() != 0)
-				stream.writeAttribute("pauseBefore", QVariant(actionInstance->pauseBefore()).toString());
+				stream.writeAttribute(QStringLiteral("pauseBefore"), QVariant(actionInstance->pauseBefore()).toString());
 			if(actionInstance->pauseAfter() != 0)
-				stream.writeAttribute("pauseAfter", QVariant(actionInstance->pauseAfter()).toString());
+				stream.writeAttribute(QStringLiteral("pauseAfter"), QVariant(actionInstance->pauseAfter()).toString());
 			if(actionInstance->timeout() != 0)
-				stream.writeAttribute("timeout", QVariant(actionInstance->timeout()).toString());
+				stream.writeAttribute(QStringLiteral("timeout"), QVariant(actionInstance->timeout()).toString());
 
 			const ExceptionActionInstancesHash &exceptionActionsHash = actionInstance->exceptionActionInstances();
             for(ActionException::Exception exception: exceptionActionsHash.keys())
 			{
 				ActionException::ExceptionActionInstance exceptionActionInstance = exceptionActionsHash.value(exception);
-				stream.writeStartElement("exception");
-				stream.writeAttribute("id", QString::number(static_cast<int>(exception)));
-				stream.writeAttribute("action", QString::number(static_cast<int>(exceptionActionInstance.action())));
-				stream.writeAttribute("line", exceptionActionInstance.line());
+				stream.writeStartElement(QStringLiteral("exception"));
+				stream.writeAttribute(QStringLiteral("id"), QString::number(static_cast<int>(exception)));
+				stream.writeAttribute(QStringLiteral("action"), QString::number(static_cast<int>(exceptionActionInstance.action())));
+				stream.writeAttribute(QStringLiteral("line"), exceptionActionInstance.line());
 				stream.writeEndElement();
 			}
 
@@ -321,18 +351,18 @@ namespace ActionTools
 			{
 				const Parameter &parameterData = parametersData.value(parameter);
 
-				stream.writeStartElement("parameter");
-				stream.writeAttribute("name", parameter);
+				stream.writeStartElement(QStringLiteral("parameter"));
+				stream.writeAttribute(QStringLiteral("name"), parameter);
 
                 for(const QString &subParameter: parameterData.subParameters().keys())
 				{
 					const SubParameter &subParameterData = parameterData.subParameters().value(subParameter);
 
-					stream.writeStartElement("subParameter");
-					stream.writeAttribute("name", subParameter);
+					stream.writeStartElement(QStringLiteral("subParameter"));
+					stream.writeAttribute(QStringLiteral("name"), subParameter);
 
-					stream.writeAttribute("code", QString("%1").arg(subParameterData.isCode()));
-					stream.writeCharacters(subParameterData.value().toString());
+					stream.writeAttribute(QStringLiteral("code"), QStringLiteral("%1").arg(subParameterData.isCode()));
+                    stream.writeCharacters(subParameterData.value());
 
 					stream.writeEndElement();
 				}
@@ -353,20 +383,31 @@ namespace ActionTools
 		return true;
 	}
 
-    Script::ReadResult Script::read(QIODevice *device, const Tools::Version &scriptVersion)
+    Script::ReadResult Script::read(
+            QIODevice *device,
+            const Tools::Version &scriptVersion,
+            std::function<void(int, int, QString)> *progressCallback,
+            std::function<void()> *resetCallback,
+            std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback)
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Script::read");
 #endif
 		mMissingActions.clear();
 
-        emit scriptProcessing(0, 0, tr("Reading schema..."));
+        if(progressCallback)
+        {
+            progressCallback->operator()(0, 0, tr("Reading schema..."));
+        }
 
         ReadResult result = validateSchema(device, scriptVersion);
         if(result != ReadSuccess)
             return result;
 
-        emit scriptProcessing(0, 0, tr("Listing file content..."));
+        if(progressCallback)
+        {
+            progressCallback->operator()(0, 0, tr("Listing file content..."));
+        }
 
         //List the script content
         device->reset();
@@ -388,11 +429,11 @@ namespace ActionTools
                 if(stream.isStartDocument() || !stream.isStartElement())
                     continue;
 
-                if(stream.name() == "parameters")
+				if(stream.name() == QLatin1String("parameters"))
                 {
                     stream.readNext();
 
-                    for(;!stream.isEndElement() || stream.name() != "parameters";stream.readNext())
+					for(;!stream.isEndElement() || stream.name() != QLatin1String("parameters");stream.readNext())
                     {
                         if(!stream.isStartElement())
                             continue;
@@ -400,11 +441,11 @@ namespace ActionTools
                         ++parameterCount;
                     }
                 }
-                else if(stream.name() == "resources")
+				else if(stream.name() == QLatin1String("resources"))
                 {
                     stream.readNext();
 
-                    for(;!stream.isEndElement() || stream.name() != "resources";stream.readNext())
+					for(;!stream.isEndElement() || stream.name() != QLatin1String("resources");stream.readNext())
                     {
                         if(!stream.isStartElement())
                             continue;
@@ -412,11 +453,11 @@ namespace ActionTools
                         ++resourceCount;
                     }
                 }
-                else if(stream.name() == "script")
+				else if(stream.name() == QLatin1String("script"))
                 {
                     stream.readNext();
 
-                    for(;!stream.isEndElement() || stream.name() != "script";stream.readNext())
+					for(;!stream.isEndElement() || stream.name() != QLatin1String("script");stream.readNext())
                     {
                         if(!stream.isStartElement())
                             continue;
@@ -427,8 +468,11 @@ namespace ActionTools
             }
         }
 
-		qDeleteAll(mActionInstances);
-		mActionInstances.clear();
+		if(resetCallback)
+			(*resetCallback)();
+		else
+			removeAll();
+
 		mParameters.clear();
         mResources.clear();
 
@@ -438,9 +482,13 @@ namespace ActionTools
 		Tools::HighResolutionTimer timer2("Reading content");
 #endif
 
-        emit scriptProcessing(0, 0, tr("Reading content..."));
+        if(progressCallback)
+        {
+            progressCallback->operator()(0, 0, tr("Reading content..."));
+        }
 
         QHash<ActionDefinition *, Tools::Version> updatableActionDefinitions;
+		QList<ActionInstance *> newActions;
 
 		QXmlStreamReader stream(device);
 		while(!stream.atEnd() && !stream.hasError())
@@ -453,29 +501,38 @@ namespace ActionTools
 			if(!stream.isStartElement())
 				continue;
 
-			if(stream.name() == "settings")
+			if(stream.name() == QLatin1String("settings"))
 			{
 				const QXmlStreamAttributes &attributes = stream.attributes();
-				mProgramName = attributes.value("program").toString();
-				mProgramVersion = Tools::Version(attributes.value("version").toString());
-				mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
-				mOs = attributes.value("os").toString();
+				mProgramName = attributes.value(QStringLiteral("program")).toString();
+#if (QT_VERSION >= 0x050600)
+				mProgramVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("version")).toString());
+				mScriptVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("scriptVersion")).toString());
+#else
+                mProgramVersion = Tools::Version(attributes.value("version").toString());
+                mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
+#endif
+				mOs = attributes.value(QStringLiteral("os")).toString();
 
 				if(mScriptVersion > scriptVersion)
 					return ReadInvalidScriptVersion;
 			}
-			else if(stream.name() == "actions")
+			else if(stream.name() == QLatin1String("actions"))
 			{
 				stream.readNext();
 
-				for(;!stream.isEndElement() || stream.name() != "actions";stream.readNext())
+				for(;!stream.isEndElement() || stream.name() != QLatin1String("actions");stream.readNext())
 				{
 					if(!stream.isStartElement())
 						continue;
 
 					const QXmlStreamAttributes &attributes = stream.attributes();
-					QString name = attributes.value("name").toString();
+					QString name = attributes.value(QStringLiteral("name")).toString();
+#if (QT_VERSION >= 0x050600)
+					Tools::Version version = QVersionNumber::fromString(attributes.value(QStringLiteral("version")).toString());
+#else
                     Tools::Version version(attributes.value("version").toString());
+#endif
 
 					ActionDefinition *actionDefinition = mActionFactory->actionDefinition(name);
 					if(!actionDefinition)
@@ -484,68 +541,74 @@ namespace ActionTools
                         updatableActionDefinitions[actionDefinition] = version;
 				}
 			}
-			else if(stream.name() == "parameters")
+			else if(stream.name() == QLatin1String("parameters"))
 			{
 				stream.readNext();
 
-				for(;!stream.isEndElement() || stream.name() != "parameters";stream.readNext())
+				for(;!stream.isEndElement() || stream.name() != QLatin1String("parameters");stream.readNext())
 				{
 					if(!stream.isStartElement())
 						continue;
 
-                    emit scriptProcessing(mParameters.size(), parameterCount - 1, tr("Reading parameters..."));
+                    if(progressCallback)
+                    {
+                        progressCallback->operator()(mParameters.size(), parameterCount - 1, tr("Reading parameters..."));
+                    }
 
 					const QXmlStreamAttributes &attributes = stream.attributes();
-					ScriptParameter scriptParameter(	attributes.value("name").toString(),
+					ScriptParameter scriptParameter(	attributes.value(QStringLiteral("name")).toString(),
 														stream.readElementText(),
-														QVariant(attributes.value("code").toString()).toBool(),
-														static_cast<ScriptParameter::ParameterType>(attributes.value("type").toString().toInt()));
+														QVariant(attributes.value(QStringLiteral("code")).toString()).toBool(),
+														static_cast<ScriptParameter::ParameterType>(attributes.value(QStringLiteral("type")).toString().toInt()));
 
 					mParameters.append(scriptParameter);
 				}
 			}
-            else if(stream.name() == "resources")
+			else if(stream.name() == QLatin1String("resources"))
             {
                 stream.readNext();
 
-                for(;!stream.isEndElement() || stream.name() != "resources";stream.readNext())
+				for(;!stream.isEndElement() || stream.name() != QLatin1String("resources");stream.readNext())
                 {
                     if(!stream.isStartElement())
                         continue;
 
-                    emit scriptProcessing(mResources.size(), resourceCount - 1, tr("Reading resources..."));
+                    if(progressCallback)
+                    {
+                        progressCallback->operator()(mResources.size(), resourceCount - 1, tr("Reading resources..."));
+                    }
 
                     const QXmlStreamAttributes &attributes = stream.attributes();
-                    QString id = attributes.value("id").toString();
+					QString id = attributes.value(QStringLiteral("id")).toString();
                     QString base64Data = stream.readElementText();
                     QByteArray data = qUncompress(QByteArray::fromBase64(base64Data.toLatin1()));
-                    Resource resource(data, static_cast<Resource::Type>(attributes.value("type").toString().toInt()));
+					Resource resource(data, static_cast<Resource::Type>(attributes.value(QStringLiteral("type")).toString().toInt()));
 
                     mResources.insert(id, resource);
                 }
             }
-			else if(stream.name() == "script")
+			else if(stream.name() == QLatin1String("script"))
 			{
 				const QXmlStreamAttributes &attributes = stream.attributes();
-				setPauseBefore(attributes.value("pauseBefore").toString().toInt());
-				setPauseAfter(attributes.value("pauseAfter").toString().toInt());
+				setPauseBefore(attributes.value(QStringLiteral("pauseBefore")).toString().toInt());
+				setPauseAfter(attributes.value(QStringLiteral("pauseAfter")).toString().toInt());
 
 				stream.readNext();
 
-				for(;!stream.isEndElement() || stream.name() != "script";stream.readNext())
+				for(;!stream.isEndElement() || stream.name() != QLatin1String("script");stream.readNext())
 				{
 					if(!stream.isStartElement())
 						continue;
 
 					const QXmlStreamAttributes &attributes = stream.attributes();
-					QString name = attributes.value("name").toString();
-					QString label = attributes.value("label").toString();
-					QString comment = attributes.value("comment").toString();
-					QColor color = QColor(attributes.value("color").toString());
-					bool enabled = (attributes.hasAttribute("enabled") ? QVariant(attributes.value("enabled").toString()).toBool() : true);
-					int pauseBefore = attributes.value("pauseBefore").toString().toInt();
-					int pauseAfter = attributes.value("pauseAfter").toString().toInt();
-					int timeout = attributes.value("timeout").toString().toInt();
+					QString name = attributes.value(QStringLiteral("name")).toString();
+					QString label = attributes.value(QStringLiteral("label")).toString();
+					QString comment = attributes.value(QStringLiteral("comment")).toString();
+					QColor color = QColor(attributes.value(QStringLiteral("color")).toString());
+					bool enabled = (attributes.hasAttribute(QStringLiteral("enabled")) ? QVariant(attributes.value(QStringLiteral("enabled")).toString()).toBool() : true);
+					int pauseBefore = attributes.value(QStringLiteral("pauseBefore")).toString().toInt();
+					int pauseAfter = attributes.value(QStringLiteral("pauseAfter")).toString().toInt();
+					int timeout = attributes.value(QStringLiteral("timeout")).toString().toInt();
 
 					//Add a new action
 					ActionInstance *actionInstance = mActionFactory->newActionInstance(name);
@@ -557,40 +620,43 @@ namespace ActionTools
 
 					stream.readNext();
 
-					for(;!stream.isEndElement() || stream.name() != "action";stream.readNext())
+					for(;!stream.isEndElement() || stream.name() != QLatin1String("action");stream.readNext())
 					{
 						if(!stream.isStartElement())
 							continue;
 
-                        emit scriptProcessing(mActionInstances.size(), actionCount - 1, tr("Reading actions..."));
+                        if(progressCallback)
+                        {
+                            progressCallback->operator()(mActionInstances.size(), actionCount - 1, tr("Reading actions..."));
+                        }
 
-						if(stream.name() == "exception")
+						if(stream.name() == QLatin1String("exception"))
 						{
 							const QXmlStreamAttributes &attributes = stream.attributes();
-							ActionException::Exception exceptionId = static_cast<ActionException::Exception>(attributes.value("id").toString().toInt());
-							ActionException::ExceptionActionInstance exceptionActionInstance(static_cast<ActionException::ExceptionAction>(attributes.value("action").toString().toInt()),
-																							 attributes.value("line").toString());
+							ActionException::Exception exceptionId = static_cast<ActionException::Exception>(attributes.value(QStringLiteral("id")).toString().toInt());
+							ActionException::ExceptionActionInstance exceptionActionInstance(static_cast<ActionException::ExceptionAction>(attributes.value(QStringLiteral("action")).toString().toInt()),
+																							 attributes.value(QStringLiteral("line")).toString());
 							exceptionActionsHash.insert(exceptionId, exceptionActionInstance);
 						}
-						else if(stream.name() == "parameter")
+						else if(stream.name() == QLatin1String("parameter"))
 						{
 							const QXmlStreamAttributes &attributes = stream.attributes();
-							const QString &parameterName = attributes.value("name").toString();
+							const QString &parameterName = attributes.value(QStringLiteral("name")).toString();
 
 							Parameter parameterData;
 
 							stream.readNext();
 
-							for(;!stream.isEndElement() || stream.name() != "parameter";stream.readNext())
+							for(;!stream.isEndElement() || stream.name() != QLatin1String("parameter");stream.readNext())
 							{
 								if(!stream.isStartElement())
 									continue;
 
 								const QXmlStreamAttributes &attributes = stream.attributes();
-								QString subParameterName = attributes.value("name").toString();
+								QString subParameterName = attributes.value(QStringLiteral("name")).toString();
 								SubParameter subParameterData;
 
-								subParameterData.setCode(QVariant(stream.attributes().value("code").toString()).toBool());
+								subParameterData.setCode(QVariant(stream.attributes().value(QStringLiteral("code")).toString()).toBool());
 								subParameterData.setValue(stream.readElementText());
 
 								parameterData.subParameters().insert(subParameterName, subParameterData);
@@ -619,10 +685,15 @@ namespace ActionTools
 					actionInstance->setPauseAfter(pauseAfter);
 					actionInstance->setTimeout(timeout);
 
-					appendAction(actionInstance);
+					newActions.append(actionInstance);
 				}
 			}
 		}
+
+		if(addActionsCallback)
+			(*addActionsCallback)(newActions);
+		else
+			mActionInstances.append(newActions);
 
         for(ActionDefinition *actionDefinition: updatableActionDefinitions.keys())
         {
@@ -646,7 +717,7 @@ namespace ActionTools
 
 		MessageHandler messageHandler;
 
-        QFile schemaFile(QString(":/script%1.xsd").arg(scriptVersion.toString()));
+		QFile schemaFile(QStringLiteral(":/script%1.xsd").arg(scriptVersion.toString()));
 		if(!schemaFile.open(QIODevice::ReadOnly))
 			return false;
 
@@ -688,10 +759,10 @@ namespace ActionTools
 
         for(const ActionInstance *actionInstance: mActionInstances)
 		{
-			if(actionInstance->definition()->id() == "ActionBeginProcedure")
+			if(actionInstance->definition()->id() == QLatin1String("ActionBeginProcedure"))
 			{
-				const ActionTools::SubParameter &nameParameter = actionInstance->subParameter("name", "value");
-				const QString &procedureName = nameParameter.value().toString();
+				const ActionTools::SubParameter &nameParameter = actionInstance->subParameter(QStringLiteral("name"), QStringLiteral("value"));
+                const QString &procedureName = nameParameter.value();
 
 				back.append(procedureName);
 			}
@@ -702,22 +773,28 @@ namespace ActionTools
 
 	QStringList Script::labels() const
 	{
-		QStringList back;
+        if(!mRebuildLabelList)
+            return mLabels;
+        //TODO: cache this
+
+        mLabels.clear();
 
         for(const ActionInstance *actionInstance: mActionInstances)
 		{
 			if(!actionInstance->label().isEmpty())
-				back << actionInstance->label();
+                mLabels << actionInstance->label();
 		}
 
-        return back;
+        mRebuildLabelList = false;
+
+        return mLabels;
     }
 
     Script::ReadResult Script::validateSchema(QIODevice *device, const Tools::Version &scriptVersion, bool tryOlderVersions)
     {
         MessageHandler messageHandler;
 
-        QFile schemaFile(QString(":/script%1.xsd").arg(scriptVersion.toString()));
+		QFile schemaFile(QStringLiteral(":/script%1.xsd").arg(scriptVersion.toString()));
         if(!schemaFile.open(QIODevice::ReadOnly))
             return ReadInternal;
 
@@ -760,13 +837,18 @@ namespace ActionTools
                     if(!stream.isStartElement())
                         continue;
 
-                    if(stream.name() == "settings")
+					if(stream.name() == QLatin1String("settings"))
                     {
                         const QXmlStreamAttributes &attributes = stream.attributes();
-                        mProgramName = attributes.value("program").toString();
-                        mProgramVersion = Tools::Version(attributes.value("version").toString());
-                        mScriptVersion = Tools::Version(attributes.value("scriptVersion").toString());
-                        mOs = attributes.value("os").toString();
+						mProgramName = attributes.value(QStringLiteral("program")).toString();
+#if (QT_VERSION >= 0x050600)
+						mProgramVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("version")).toString());
+						mScriptVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("scriptVersion")).toString());
+#else
+						mProgramVersion = Tools::Version(attributes.value(QStringLiteral("version")).toString());
+						mScriptVersion = Tools::Version(attributes.value(QStringLiteral("scriptVersion")).toString());
+#endif
+						mOs = attributes.value(QStringLiteral("os")).toString();
 
                         device->reset();
 
@@ -814,11 +896,37 @@ namespace ActionTools
         return back;
     }
 
+    void Script::executionStopped()
+    {
+        for(auto actionInstance: mActionInstances)
+            actionInstance->stopLongTermExecution();
+
+        mMinMaxExecutionCounter = {std::numeric_limits<int>::max(), std::numeric_limits<int>::min()};
+        mExecutionDuration = 0;
+
+        for(auto actionInstance: mActionInstances)
+        {
+            auto counter = actionInstance->executionCounter();
+
+            if(counter < mMinMaxExecutionCounter.first)
+                mMinMaxExecutionCounter.first = counter;
+            if(counter > mMinMaxExecutionCounter.second)
+                mMinMaxExecutionCounter.second = counter;
+
+            mExecutionDuration += actionInstance->executionDuration();
+        }
+    }
+
+    void Script::updateLineModel()
+    {
+        mLineModel->update();
+    }
+
     void Script::parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ElementDefinition *elementDefinition) const
     {
         const Parameter &parameter = actionInstance->parameter(elementDefinition->name().original());
         const SubParameterHash &subParameters = parameter.subParameters();
-        QRegExp newLineRegExp("[\n\r;]");
+		QRegExp newLineRegExp(QStringLiteral("[\n\r;]"));
 
         SubParameterHash::ConstIterator it = subParameters.constBegin();
         for(;it != subParameters.constEnd();++it)
@@ -828,7 +936,7 @@ namespace ActionTools
             if(subParameter.isCode())
             {
                 //Add every variable in any parameter type that is in code mode
-                const QString &code = subParameter.value().toString();
+                const QString &code = subParameter.value();
 
                 for(const QString &codeLine: code.split(newLineRegExp, QString::SkipEmptyParts))
                 {
@@ -850,7 +958,7 @@ namespace ActionTools
                 //Add every variable in a variable parameter that is not in code mode
                 if(qobject_cast<const VariableParameterDefinition *>(elementDefinition))
                 {
-                    const QString &foundVariableName = subParameter.value().toString();
+                    const QString &foundVariableName = subParameter.value();
 
                     if(!foundVariableName.isEmpty())
                         variables << foundVariableName;
@@ -859,7 +967,7 @@ namespace ActionTools
                 }
 
                 //Add every variable in any parameter type that is not in code mode
-                const QString &text = subParameter.value().toString();
+                const QString &text = subParameter.value();
 
                 int position = 0;
 
@@ -882,7 +990,7 @@ namespace ActionTools
 
         for(const ElementDefinition *elementDefinition: actionDefinition->elements())
         {
-            if(const GroupDefinition *groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
+            if(const auto groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
             {
                 for(const ParameterDefinition *parameterDefinition: groupDefinition->members())
                     parametersFromDefinition(result, actionInstance, parameterDefinition);

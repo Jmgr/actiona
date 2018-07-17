@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ALGORITHMS_H
-#define ALGORITHMS_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "codeclass.h"
@@ -49,12 +48,11 @@ namespace Code
 		static void registerClass(QScriptEngine *scriptEngine);
 
     public slots:
-        virtual QString toString() const                        { return "Algorithms"; }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Algorithms>(other); }
+		QString toString() const override                        { return QStringLiteral("Algorithms"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Algorithms>(other); }
 
 	private:
 		static int randomInteger(int min, int max);
 	};
 }
 
-#endif // ALGORITHMS_H

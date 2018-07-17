@@ -1,11 +1,11 @@
 #!/bin/sh
-lupdate tools/tools.pro
-lupdate actiontools/actiontools.pro
-lupdate executer/executer.pro
-lupdate actexecuter/actexecuter.pro
-lupdate gui/gui.pro
-lupdate actions/actionpackinternal/actionpackinternal.pro
-lupdate actions/actionpackwindows/actionpackwindows.pro
-lupdate actions/actionpackdevice/actionpackdevice.pro
-lupdate actions/actionpacksystem/actionpacksystem.pro
-lupdate actions/actionpackdata/actionpackdata.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate tools/tools.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate actiontools/actiontools.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate executer/executer.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate actexecuter/actexecuter.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate gui/gui.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate actions/actionpackinternal/actionpackinternal.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate actions/actionpackwindows/actionpackwindows.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate actions/actionpackdevice/actionpackdevice.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate actions/actionpacksystem/actionpacksystem.pro
+/media/jmgr/Raid1Linux/Qt/5.11.0/gcc_64/bin/lupdate actions/actionpackdata/actionpackdata.pro

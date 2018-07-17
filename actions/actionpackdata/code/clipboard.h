@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CLIPBOARD_H
-#define CLIPBOARD_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -59,8 +58,8 @@ namespace Code
 		QScriptValue image() const;
 	
 	public slots:
-        QString toString() const                                { return "Clipboard"; }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Clipboard>(other); }
+		QString toString() const override                                { return QStringLiteral("Clipboard"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Clipboard>(other); }
 		QScriptValue setMode(Mode mode);
 		QScriptValue setText(const QString &value) const;
 		QScriptValue setImage(const QScriptValue &data) const;
@@ -69,8 +68,7 @@ namespace Code
 	private:
 		void setModePrivate(QScriptContext *context, QScriptEngine *engine, Mode mode);
 	
-		QClipboard::Mode mMode;
+		QClipboard::Mode mMode{QClipboard::Clipboard};
 	};
 }
 
-#endif // CLIPBOARD_H

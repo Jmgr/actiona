@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYWORDS_H
-#define KEYWORDS_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -36,4 +35,3 @@ namespace ActionTools
 	void ACTIONTOOLSSHARED_EXPORT addEcmaScriptObjectsKeywords(QStandardItemModel *model);
 }
 
-#endif // KEYWORDS_H

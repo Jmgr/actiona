@@ -18,44 +18,33 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CHOOSEWINDOWPUSHBUTTON_H
-#define CHOOSEWINDOWPUSHBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "windowhandle.h"
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QAbstractNativeEventFilter>
-#else
-#include "nativeeventfilter.h"
-#endif
-
 #include <QPushButton>
 
 class QMainWindow;
 
 namespace ActionTools
 {
-    class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton
-#if (QT_VERSION >= 0x050000)//BUG: Cannot use QT_VERSION_CHECK here, or the MOC will consider the condition to be true
-            , public QAbstractNativeEventFilter
-#else
-            , public NativeEventFilter
-#endif
+    class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton, public QAbstractNativeEventFilter
 	{
 		Q_OBJECT
 
 	public:
-		explicit ChooseWindowPushButton(QWidget *parent = 0);
-		~ChooseWindowPushButton();
+		explicit ChooseWindowPushButton(QWidget *parent = nullptr);
+        ~ChooseWindowPushButton() override;
 
 	signals:
         void foundValidWindow(const ActionTools::WindowHandle &handle);
         void searchEnded(const ActionTools::WindowHandle &handle);
 
 	private:
-		void paintEvent(QPaintEvent *event);
-		void mousePressEvent(QMouseEvent *event);
+        void paintEvent(QPaintEvent *event) override;
+        void mousePressEvent(QMouseEvent *event) override;
 #ifdef Q_OS_WIN
 		void mouseReleaseEvent(QMouseEvent *event);
 
@@ -73,30 +62,17 @@ namespace ActionTools
 
 #ifdef Q_OS_LINUX
 		WId windowAtPointer() const;
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        bool x11EventFilter(XEvent *event);
-#else
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
-#endif
 #endif
 
-#ifdef Q_OS_WIN
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-		bool winEventFilter(MSG *msg, long *result);
-#else
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
-#endif
-#endif
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
 
 		QPixmap *mCrossIcon;
 		WindowHandle mLastFoundWindow;
-		bool mSearching;
-		QMainWindow *mMainWindow;
+		bool mSearching{false};
+		QMainWindow *mMainWindow{nullptr};
 #ifdef Q_OS_LINUX
         QList<QWidget*> mShownWindows;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         unsigned long mCrossCursor;
-#endif
 #endif
 #ifdef Q_OS_WIN
 		HCURSOR mPreviousCursor;
@@ -107,4 +83,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CHOOSEWINDOWPUSHBUTTON_H

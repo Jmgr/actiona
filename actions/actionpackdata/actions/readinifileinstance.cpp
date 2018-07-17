@@ -26,17 +26,25 @@
 
 namespace Actions
 {
-    Tools::StringListPair ReadIniFileInstance::modes = qMakePair(
-            QStringList() << "singleParameter" << "wholeFile",
-            QStringList() << QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read a single parameter") << QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read the entire file"));
+    Tools::StringListPair ReadIniFileInstance::modes =
+    {
+        {
+            QStringLiteral("singleParameter"),
+            QStringLiteral("wholeFile")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read a single parameter")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ReadIniFileInstance::modes", "Read the entire file"))
+        }
+    };
 
 	void ReadIniFileInstance::startExecution()
 	{
 		bool ok = true;
 
-		QString filename = evaluateString(ok, "file");
-		QString variable = evaluateVariable(ok, "variable");
-		Mode mode = evaluateListElement<Mode>(ok, modes, "mode");
+		QString filename = evaluateString(ok, QStringLiteral("file"));
+		QString variable = evaluateVariable(ok, QStringLiteral("variable"));
+		Mode mode = evaluateListElement<Mode>(ok, modes, QStringLiteral("mode"));
 
 		if(!ok)
 			return;
@@ -53,9 +61,9 @@ namespace Actions
         {
             boost::property_tree::ini_parser::read_ini(filename.toStdString(), tree);
         }
-        catch(const std::runtime_error &e)
+        catch(const std::runtime_error &)
         {
-            setCurrentParameter("filename");
+			setCurrentParameter(QStringLiteral("filename"));
             emit executionException(UnableToReadFileException, tr("Unable to read the file"));
             return;
         }
@@ -68,7 +76,7 @@ namespace Actions
             {
                 for(const auto &parameter: section.second)
                 {
-                    fileContent[QString::fromStdString(section.first + "/" + parameter.first)] = QString::fromStdString(parameter.second.get_value<std::string>());
+					fileContent[QString::fromStdString(section.first + "/" + parameter.first)] = QString::fromStdString(parameter.second.get_value<std::string>());
                 }
             }
 
@@ -76,8 +84,8 @@ namespace Actions
         }
         else
         {
-            QString section = evaluateString(ok, "section");
-            QString parameter = evaluateString(ok, "parameter");
+			QString section = evaluateString(ok, QStringLiteral("section"));
+			QString parameter = evaluateString(ok, QStringLiteral("parameter"));
 
             if(!ok)
                 return;
@@ -85,7 +93,7 @@ namespace Actions
             auto sectionNode = tree.get_child_optional(section.toStdString());
             if(!sectionNode)
             {
-                setCurrentParameter("section");
+				setCurrentParameter(QStringLiteral("section"));
                 emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
                 return;
             }
@@ -94,14 +102,14 @@ namespace Actions
             {
                 setVariable(variable, QString::fromStdString((*sectionNode).get<std::string>(parameter.toStdString())));
             }
-            catch(const std::runtime_error &e)
+            catch(const std::runtime_error &)
             {
-                setCurrentParameter("parameter");
+				setCurrentParameter(QStringLiteral("parameter"));
                 emit executionException(UnableToFindSectionException, tr("Unable to find the parameter named \"%1\"").arg(parameter));
                 return;
             }
         }
 
-		emit executionEnded();
+		executionEnded();
 	}
 }

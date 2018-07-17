@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef DETACHEDCOMMANDINSTANCE_H
-#define DETACHEDCOMMANDINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -38,28 +37,28 @@ namespace Actions
 			DetachedCommandFailedException = ActionTools::ActionException::UserException
 		};
 
-		DetachedCommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		DetachedCommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)
 		{
 		}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString command = evaluateString(ok, "command");
-			QString parameters = evaluateString(ok, "parameters");
-			QString workingDirectory = evaluateString(ok, "workingDirectory");
-			QString processId = evaluateVariable(ok, "processId");
+			QString command = evaluateString(ok, QStringLiteral("command"));
+			QString parameters = evaluateString(ok, QStringLiteral("parameters"));
+			QString workingDirectory = evaluateString(ok, QStringLiteral("workingDirectory"));
+			QString processId = evaluateVariable(ok, QStringLiteral("processId"));
 
 			if(!ok)
 				return;
 
-			QStringList parameterList = parameters.split(QChar(' '));
+			QStringList parameterList = parameters.split(QLatin1Char(' '));
 
 			qint64 processIdValue;
 			if(!QProcess::startDetached(command,
-										parameters.isEmpty() ? QStringList() : parameterList,
+                                        parameters.isEmpty() ? QStringList{} : parameterList,
 										workingDirectory,
 										&processIdValue))
 			{
@@ -69,7 +68,7 @@ namespace Actions
 
             setVariable(processId, QString::number(processIdValue));
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -77,4 +76,3 @@ namespace Actions
 	};
 }
 
-#endif // DETACHEDCOMMANDINSTANCE_H

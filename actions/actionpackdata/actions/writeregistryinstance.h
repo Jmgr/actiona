@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITEREGISTRYINSTANCE_H
-#define WRITEREGISTRYINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -38,14 +37,13 @@ namespace Actions
 			CannotWriteValueException
 		};
 
-		WriteRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		WriteRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		Q_DISABLE_COPY(WriteRegistryInstance)
 	};
 }
 
-#endif // WRITEREGISTRYINSTANCE_H

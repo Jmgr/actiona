@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SYSTEMDEFINITION_H
-#define SYSTEMDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "systeminstance.h"
@@ -36,7 +35,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class SystemDefinition : public QObject, public ActionTools::ActionDefinition
+	class SystemDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -46,42 +45,34 @@ namespace Actions
 		{
 			translateItems("SystemInstance::operations", SystemInstance::operations);
 
-			ActionTools::ListParameterDefinition *operation = new ActionTools::ListParameterDefinition(ActionTools::Name("operation", tr("Operation")), this);
-			operation->setTooltip(tr("The operation to execute"));
-			operation->setItems(SystemInstance::operations);
-			operation->setDefaultValue(SystemInstance::operations.second.at(SystemInstance::Logout));
-			addElement(operation);
+            auto &operation = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("operation"), tr("Operation")});
+            operation.setTooltip(tr("The operation to execute"));
+            operation.setItems(SystemInstance::operations);
+            operation.setDefaultValue(SystemInstance::operations.second.at(SystemInstance::Logout));
 
-			ActionTools::GroupDefinition *operationMode = new ActionTools::GroupDefinition(this);
-			operationMode->setMasterList(operation);
-			operationMode->setMasterValues(QStringList()
-										   << SystemInstance::operations.first.at(SystemInstance::Shutdown)
-										   << SystemInstance::operations.first.at(SystemInstance::Restart)
-										   << SystemInstance::operations.first.at(SystemInstance::Logout)
-										   << SystemInstance::operations.first.at(SystemInstance::Suspend)
-										   << SystemInstance::operations.first.at(SystemInstance::Hibernate));
+            auto &operationMode = addGroup();
+            operationMode.setMasterList(operation);
+            operationMode.setMasterValues({SystemInstance::operations.first.at(SystemInstance::Shutdown), SystemInstance::operations.first.at(SystemInstance::Restart),
+                                           SystemInstance::operations.first.at(SystemInstance::Logout), SystemInstance::operations.first.at(SystemInstance::Suspend),
+                                           SystemInstance::operations.first.at(SystemInstance::Hibernate)});
 
-			ActionTools::BooleanParameterDefinition *force = new ActionTools::BooleanParameterDefinition(ActionTools::Name("force", tr("Force")), this);
-			force->setTooltip(tr("Should the operation be forced"));
-			force->setDefaultValue(false);
-			operationMode->addMember(force);
-
-			addElement(operationMode);
+            auto &force = operationMode.addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("force"), tr("Force")});
+            force.setTooltip(tr("Should the operation be forced"));
+            force.setDefaultValue(QStringLiteral("false"));
 
 			addException(SystemInstance::NotAvailable, tr("Not available"));
 		}
 
-		QString name() const													{ return QObject::tr("System"); }
-		QString id() const														{ return "ActionSystem"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Restart, stop the computer or logout the current user"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new SystemInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::System; }
-		QPixmap icon() const													{ return QPixmap(":/icons/system.png"); }
+		QString name() const override													{ return QObject::tr("System"); }
+		QString id() const override														{ return QStringLiteral("ActionSystem"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Restart, stop the computer or logout the current user"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new SystemInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/system.png")); }
 
 	private:
 		Q_DISABLE_COPY(SystemDefinition)
 	};
 }
 
-#endif // SYSTEMDEFINITION_H

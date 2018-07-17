@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWHANDLE_H
-#define WINDOWHANDLE_H
+#pragma once
 
 #include <QWidget>
 #include <QMetaType>
@@ -31,7 +30,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT WindowHandle
 	{
 	public:
-		WindowHandle() : mValue(0)								{}
+        WindowHandle()                                          = default;
 		WindowHandle(WId handle) : mValue(handle)				{}
 
 		bool isValid() const									{ return (mValue != 0); }
@@ -64,10 +63,9 @@ namespace ActionTools
 		static QList<WindowHandle> findWindows(const QRegExp &regExp);
 
 	private:
-		WId mValue;
+		WId mValue{0};
 	};
 }
 
 Q_DECLARE_METATYPE(ActionTools::WindowHandle)
 
-#endif // WINDOWHANDLE_H

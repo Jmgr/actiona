@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITETEXTFILEINSTANCE_H
-#define WRITETEXTFILEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -42,16 +41,15 @@ namespace Actions
 			CannotWriteFileException = ActionTools::ActionException::UserException
 		};
 
-		WriteTextFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		WriteTextFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
         static Tools::StringListPair modes;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		Q_DISABLE_COPY(WriteTextFileInstance)
 	};
 }
 
-#endif // WRITETEXTFILEINSTANCE_H

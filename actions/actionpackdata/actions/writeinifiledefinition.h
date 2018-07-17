@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITEINIFILEDEFINITION_H
-#define WRITEINIFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "writeinifileinstance.h"
@@ -34,7 +33,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class WriteIniFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class WriteIniFileDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -42,39 +41,34 @@ namespace Actions
 		explicit WriteIniFileDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("File")), this);
-			file->setTooltip(tr("The file to create or edit"));
-			file->setMode(ActionTools::FileEdit::FileSave);
-			file->setCaption(tr("Choose the INI file"));
-			file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
-			addElement(file);
+			auto &file = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
+            file.setTooltip(tr("The file to create or edit"));
+            file.setMode(ActionTools::FileEdit::FileSave);
+            file.setCaption(tr("Choose the INI file"));
+            file.setFilter(tr("INI files (*.ini);;All files (*.*)"));
 
-			ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition(ActionTools::Name("section", tr("Section")), this);
-			section->setTooltip(tr("The section name of the parameter"));
-			addElement(section);
+			auto &section = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("section"), tr("Section")});
+            section.setTooltip(tr("The section name of the parameter"));
 
-			ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition(ActionTools::Name("parameter", tr("Parameter")), this);
-			parameter->setTooltip(tr("The parameter name"));
-			addElement(parameter);
+			auto &parameter = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("parameter"), tr("Parameter")});
+            parameter.setTooltip(tr("The parameter name"));
 
-			ActionTools::TextParameterDefinition *value = new ActionTools::TextParameterDefinition(ActionTools::Name("value", tr("Value")), this);
-			value->setTooltip(tr("The new value"));
-			addElement(value);
+			auto &value = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("value"), tr("Value")});
+            value.setTooltip(tr("The new value"));
 
 			addException(WriteIniFileInstance::UnableToWriteFileException, tr("Unable to write file"));
 		}
 
-		QString name() const													{ return QObject::tr("Write INI file"); }
-		QString id() const														{ return "ActionWriteIniFile"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Write an entry in an INI file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new WriteIniFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/writeini.png"); }
+		QString name() const override													{ return QObject::tr("Write INI file"); }
+		QString id() const override														{ return QStringLiteral("ActionWriteIniFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Write an entry in an INI file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteIniFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/writeini.png")); }
 
 	private:
 		Q_DISABLE_COPY(WriteIniFileDefinition)
 	};
 }
 
-#endif // WRITEINIFILEDEFINITION_H

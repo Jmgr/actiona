@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READCLIPBOARDINSTANCE_H
-#define READCLIPBOARDINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -34,14 +33,14 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		ReadClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadClipboardInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString variable = evaluateVariable(ok, "variable");
+			QString variable = evaluateVariable(ok, QStringLiteral("variable"));
 
 			if(!ok)
 				return;
@@ -50,7 +49,7 @@ namespace Actions
 
             setVariable(variable, clipboard->text());
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -58,4 +57,3 @@ namespace Actions
 	};
 }
 
-#endif // READCLIPBOARDINSTANCE_H

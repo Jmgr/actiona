@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MULTIDATAINPUTDEFINITION_H
-#define MULTIDATAINPUTDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "multidatainputinstance.h"
@@ -39,7 +38,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class MultiDataInputDefinition : public QObject, public ActionTools::ActionDefinition
+	class MultiDataInputDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -49,66 +48,53 @@ namespace Actions
 		{
 			translateItems("MultiDataInputInstance::modes", MultiDataInputInstance::modes);
 
-			ActionTools::TextParameterDefinition *question = new ActionTools::TextParameterDefinition(ActionTools::Name("question", tr("Question")), this);
-			question->setTooltip(tr("The question to ask"));
-			addElement(question);
+            auto &question = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("question"), tr("Question")});
+            question.setTooltip(tr("The question to ask"));
 
-			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
-			mode->setTooltip(tr("The input mode"));
-			mode->setItems(MultiDataInputInstance::modes);
-			mode->setDefaultValue(MultiDataInputInstance::modes.second.at(MultiDataInputInstance::ComboBoxMode));
-			addElement(mode);
+            auto &mode = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")});
+            mode.setTooltip(tr("The input mode"));
+            mode.setItems(MultiDataInputInstance::modes);
+            mode.setDefaultValue(MultiDataInputInstance::modes.second.at(MultiDataInputInstance::ComboBoxMode));
 
-			ActionTools::MultiTextParameterDefinition *items = new ActionTools::MultiTextParameterDefinition(ActionTools::Name("items", tr("Items")), this);
-			items->setTooltip(tr("The item list"));
-			addElement(items);
+            auto &items = addParameter<ActionTools::MultiTextParameterDefinition>({QStringLiteral("items"), tr("Items")});
+            items.setTooltip(tr("The item list"));
 
-			ActionTools::TextParameterDefinition *defaultValue = new ActionTools::TextParameterDefinition(ActionTools::Name("defaultValue", tr("Default value")), this);
-			defaultValue->setTooltip(tr("The default value"));
-			addElement(defaultValue);
+            auto &defaultValue = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("defaultValue"), tr("Default value")});
+            defaultValue.setTooltip(tr("The default value"));
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			variable->setTooltip(tr("The variable where to save the entered input"));
-			addElement(variable);
+            auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable where to save the entered input"));
 
-			ActionTools::TextParameterDefinition *windowTitle = new ActionTools::TextParameterDefinition(ActionTools::Name("windowTitle", tr("Window title")), this);
-			windowTitle->setTooltip(tr("The title of the window"));
-			addElement(windowTitle, 1);
+            auto &windowTitle = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("windowTitle"), tr("Window title")}, 1);
+            windowTitle.setTooltip(tr("The title of the window"));
 
-            ActionTools::ImageParameterDefinition *windowIcon = new ActionTools::ImageParameterDefinition(ActionTools::Name("windowIcon", tr("Window icon")), this);
-			windowIcon->setTooltip(tr("The window icon to use"));
-			windowIcon->setMode(ActionTools::FileEdit::FileOpen);
-			windowIcon->setCaption(tr("Select the icon to use"));
-			windowIcon->setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
-			addElement(windowIcon, 1);
+            auto &windowIcon = addParameter<ActionTools::ImageParameterDefinition>({QStringLiteral("windowIcon"), tr("Window icon")}, 1);
+            windowIcon.setTooltip(tr("The window icon to use"));
+            windowIcon.setMode(ActionTools::FileEdit::FileOpen);
+            windowIcon.setCaption(tr("Select the icon to use"));
+            windowIcon.setFilter(tr("Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)"));
 
-			ActionTools::GroupDefinition *choiceGroup = new ActionTools::GroupDefinition(this);
-			choiceGroup->setMasterList(mode);
-			choiceGroup->setMasterValues(QStringList()
-										 << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::ListMode)
-										 << MultiDataInputInstance::modes.first.at(MultiDataInputInstance::CheckboxMode));
+            auto &choiceGroup = addGroup(1);
+            choiceGroup.setMasterList(mode);
+            choiceGroup.setMasterValues({MultiDataInputInstance::modes.first.at(MultiDataInputInstance::ListMode), MultiDataInputInstance::modes.first.at(MultiDataInputInstance::CheckboxMode)});
 
-			ActionTools::NumberParameterDefinition *maximumChoiceCount = new ActionTools::NumberParameterDefinition(ActionTools::Name("maximumChoiceCount", tr("Maximum choice count")), this);
-			maximumChoiceCount->setTooltip(tr("The maximum number of choices that can be made"));
-			maximumChoiceCount->setMinimum(0);
-			maximumChoiceCount->setDefaultValue(1);
-			choiceGroup->addMember(maximumChoiceCount);
-
-			addElement(choiceGroup, 1);
+            auto &maximumChoiceCount = choiceGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("maximumChoiceCount"), tr("Maximum choice count")});
+            maximumChoiceCount.setTooltip(tr("The maximum number of choices that can be made"));
+            maximumChoiceCount.setMinimum(0);
+            maximumChoiceCount.setDefaultValue(QStringLiteral("1"));
 		}
 
-		QString name() const													{ return QObject::tr("Multi data input"); }
-		QString id() const														{ return "ActionMultiDataInput"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Ask the user to choose from a list"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new MultiDataInputInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Windows; }
-		QPixmap icon() const													{ return QPixmap(":/icons/datainput.png"); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Multi data input"); }
+		QString id() const override														{ return QStringLiteral("ActionMultiDataInput"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Ask the user to choose from a list"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new MultiDataInputInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/datainput.png")); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(MultiDataInputDefinition)
 	};
 }
 
-#endif // MULTIDATAINPUTDEFINITION_H

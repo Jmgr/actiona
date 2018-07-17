@@ -49,9 +49,9 @@ struct QxtMailAttachmentPrivate : public QSharedData
 
     QxtMailAttachmentPrivate()
     {
-        content = 0;
+        content = nullptr;
         deleteContent = false;
-        contentType = "text/plain";
+		contentType = QStringLiteral("text/plain");
     }
 
     ~QxtMailAttachmentPrivate()
@@ -59,7 +59,7 @@ struct QxtMailAttachmentPrivate : public QSharedData
         if (deleteContent && content)
             content->deleteLater();
         deleteContent = false;
-        content = 0;
+        content = nullptr;
     }
 };
 
@@ -87,11 +87,7 @@ QxtMailAttachment::QxtMailAttachment(QIODevice* content, const QString& contentT
     setContent(content);
 }
 
-QxtMailAttachment& QxtMailAttachment::operator=(const QxtMailAttachment & other)
-{
-    qxt_d = other.qxt_d;
-    return *this;
-}
+QxtMailAttachment& QxtMailAttachment::operator=(const QxtMailAttachment & other) = default;
 
 QxtMailAttachment::~QxtMailAttachment()
 {
@@ -162,7 +158,7 @@ void QxtMailAttachment::setExtraHeaders(const QHash<QString, QString>& a)
 {
     QHash<QString, QString>& headers = qxt_d->extraHeaders;
     headers.clear();
-    foreach(const QString& key, a.keys())
+    for(const QString& key: a.keys())
     {
         headers[key.toLower()] = a[key];
     }
@@ -189,9 +185,9 @@ QByteArray QxtMailAttachment::mimeData()
 
     QTextCodec* latin1 = QTextCodec::codecForName("latin1");
     QByteArray rv = "Content-Type: " + qxt_d->contentType.toLatin1() + "\r\nContent-Transfer-Encoding: base64\r\n";
-    foreach(const QString& r, qxt_d->extraHeaders.keys())
+    for(const QString& r: qxt_d->extraHeaders.keys())
     {
-        rv += qxt_fold_mime_header(r.toLatin1(), extraHeader(r), latin1);
+		rv += qxt_fold_mime_header(r, extraHeader(r), latin1);
     }
     rv += "\r\n";
 
@@ -199,7 +195,7 @@ QByteArray QxtMailAttachment::mimeData()
     {
         rv += c->read(57).toBase64() + "\r\n";
     }
-    setContent((QIODevice*)0);
+    setContent((QIODevice*)nullptr);
     return rv;
 }
 

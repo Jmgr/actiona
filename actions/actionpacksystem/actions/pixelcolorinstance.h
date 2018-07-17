@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PIXELCOLORINSTANCE_H
-#define PIXELCOLORINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -31,10 +30,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QTimer>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QScreen>
-#endif
 
 namespace Actions
 {
@@ -50,25 +46,25 @@ namespace Actions
 			Lighter
 		};
 
-		PixelColorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		PixelColorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent), mComparison(Equal) {}
 
         static Tools::StringListPair comparisons;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			mPixelPosition = evaluatePoint(ok, "pixel", "position");
-			mPixelColorValue = evaluateColor(ok, "pixel", "color");
-			mComparison = evaluateListElement<Comparison>(ok, comparisons, "comparison");
-			mIfTrue = evaluateIfAction(ok, "ifTrue");
-			ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, "ifFalse");
-			mVariable = evaluateVariable(ok, "variable");
-			int redTolerance = evaluateInteger(ok, "redTolerance");
-			int greenTolerance = evaluateInteger(ok, "greenTolerance");
-			int blueTolerance = evaluateInteger(ok, "blueTolerance");
-            QPoint positionOffset = evaluatePoint(ok, "positionOffset");
+			mPixelPosition = evaluatePoint(ok, QStringLiteral("pixel"), QStringLiteral("position"));
+			mPixelColorValue = evaluateColor(ok, QStringLiteral("pixel"), QStringLiteral("color"));
+			mComparison = evaluateListElement<Comparison>(ok, comparisons, QStringLiteral("comparison"));
+			mIfTrue = evaluateIfAction(ok, QStringLiteral("ifTrue"));
+			ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, QStringLiteral("ifFalse"));
+			mVariable = evaluateVariable(ok, QStringLiteral("variable"));
+			int redTolerance = evaluateInteger(ok, QStringLiteral("redTolerance"));
+			int greenTolerance = evaluateInteger(ok, QStringLiteral("greenTolerance"));
+			int blueTolerance = evaluateInteger(ok, QStringLiteral("blueTolerance"));
+			QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
 
 			if(!ok)
 				return;
@@ -88,7 +84,7 @@ namespace Actions
 
 			if(testPixel())
 			{
-				setCurrentParameter("ifTrue", "line");
+				setCurrentParameter(QStringLiteral("ifTrue"), QStringLiteral("line"));
 
 				QString line = evaluateSubParameter(ok, mIfTrue.actionParameter());
 				if(!ok)
@@ -102,11 +98,11 @@ namespace Actions
 						return;
 				}
 
-				emit executionEnded();
+				executionEnded();
 			}
 			else
 			{
-				setCurrentParameter("ifFalse", "line");
+				setCurrentParameter(QStringLiteral("ifFalse"), QStringLiteral("line"));
 
 				QString line = evaluateSubParameter(ok, ifFalse.actionParameter());
 				if(!ok)
@@ -116,27 +112,27 @@ namespace Actions
 				{
 					setNextLine(line);
 
-					emit executionEnded();
+					executionEnded();
 				}
 				else if(ifFalse.action() == ActionTools::IfActionValue::CALLPROCEDURE)
 				{
 					if(!callProcedure(line))
 						return;
 
-					emit executionEnded();
+					executionEnded();
 				}
 				else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 				{
-					connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkPixel()));
+                    connect(&mTimer, &QTimer::timeout, this, &PixelColorInstance::checkPixel);
 					mTimer.setInterval(100);
 					mTimer.start();
 				}
 				else
-					emit executionEnded();
+					executionEnded();
 			}
 		}
 
-		void stopExecution()
+		void stopExecution() override
 		{
 			mTimer.stop();
 		}
@@ -161,7 +157,7 @@ namespace Actions
 				}
 
 				mTimer.stop();
-				emit executionEnded();
+				executionEnded();
 			}
 		}
 
@@ -177,11 +173,7 @@ namespace Actions
 
 		bool testPixel()
 		{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
             QPixmap pixel = QGuiApplication::primaryScreen()->grabWindow(0, mPixelPosition.x(), mPixelPosition.y(), 1, 1);
-#else
-            QPixmap pixel = QPixmap::grabWindow(QApplication::desktop()->winId(), mPixelPosition.x(), mPixelPosition.y(), 1, 1);
-#endif
 			QColor pixelColor = pixel.toImage().pixel(0, 0);
 
             setVariable(mVariable, Code::Color::constructor(pixelColor, scriptEngine()));
@@ -215,4 +207,3 @@ namespace Actions
 	};
 }
 
-#endif // PIXELCOLORINSTANCE_H

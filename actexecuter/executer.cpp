@@ -29,15 +29,13 @@
 
 Executer::Executer(QObject *parent) :
 	QObject(parent),
-	mActionFactory(new ActionTools::ActionFactory(this)),
-	mActionLoadingFailed(false)
+	mActionFactory(new ActionTools::ActionFactory(this))
+	
 {
-	connect(mActionFactory, SIGNAL(actionPackLoadError(QString)), this, SLOT(actionPackLoadError(QString)));
+    connect(mActionFactory, &ActionTools::ActionFactory::actionPackLoadError, this, &Executer::actionPackLoadError);
 }
 
-Executer::~Executer()
-{
-}
+Executer::~Executer() = default;
 
 bool Executer::start(QIODevice *device, const QString &filename)
 {
@@ -45,12 +43,12 @@ bool Executer::start(QIODevice *device, const QString &filename)
 	Q_UNUSED(filename)
 
 	QSettings settings;
-    QString locale = settings.value("gui/locale", QLocale::system().name()).toString();
+	QString locale = settings.value(QStringLiteral("gui/locale"), QLocale::system().name()).toString();
 
-	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + "/actions/", locale);
+	mActionFactory->loadActionPacks(QApplication::applicationDirPath() + QStringLiteral("/actions/"), locale);
 #ifndef Q_OS_WIN
 	if(mActionFactory->actionPackCount() == 0)
-        mActionFactory->loadActionPacks(QString("%1/%2/actiona/actions/").arg(ACT_PREFIX).arg(ACT_LIBDIR), locale);
+		mActionFactory->loadActionPacks(QStringLiteral("%1/%2/actiona/actions/").arg(QLatin1String(ACT_PREFIX)).arg(QLatin1String(ACT_LIBDIR)), locale);
 #endif
 
 	if(mActionLoadingFailed)

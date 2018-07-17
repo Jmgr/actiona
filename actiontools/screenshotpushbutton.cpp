@@ -25,7 +25,7 @@ namespace ActionTools
     ScreenshotPushButton::ScreenshotPushButton(QWidget *parent)
       : QPushButton(parent)
     {
-        setIcon(QIcon(":/images/capture.png"));
+		setIcon(QIcon(QStringLiteral(":/images/capture.png")));
         setMaximumSize(28, 28);
     }
 }

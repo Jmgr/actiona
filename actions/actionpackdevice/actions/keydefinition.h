@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYDEFINITION_H
-#define KEYDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "keyinstance.h"
@@ -39,7 +38,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class KeyDefinition : public QObject, public ActionTools::ActionDefinition
+	class KeyDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 	
@@ -50,40 +49,32 @@ namespace Actions
 			translateItems("KeyInstance::actions", KeyInstance::actions);
 			translateItems("KeyInstance::types", KeyInstance::types);
 
-			ActionTools::KeyParameterDefinition *key = new ActionTools::KeyParameterDefinition(ActionTools::Name("key", tr("Key")), this);
-			key->setTooltip(tr("The key to simulate"));
-			addElement(key);
-			
-			ActionTools::ListParameterDefinition *action = new ActionTools::ListParameterDefinition(ActionTools::Name("action", tr("Action")), this);
-			action->setTooltip(tr("The action to simulate"));
-			action->setItems(KeyInstance::actions);
-			action->setDefaultValue(KeyInstance::actions.second.at(KeyInstance::PressReleaseAction));
-			addElement(action);
+			auto &key = addParameter<ActionTools::KeyParameterDefinition>({QStringLiteral("key"), tr("Key")});
+            key.setTooltip(tr("The key to simulate"));
 
-			ActionTools::GroupDefinition *pressAndReleaseGroup = new ActionTools::GroupDefinition(this);
-			pressAndReleaseGroup->setMasterList(action);
-			pressAndReleaseGroup->setMasterValues(QStringList() << KeyInstance::actions.first.at(KeyInstance::PressReleaseAction));
+			auto &action = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("action"), tr("Action")});
+            action.setTooltip(tr("The action to simulate"));
+            action.setItems(KeyInstance::actions);
+            action.setDefaultValue(KeyInstance::actions.second.at(KeyInstance::PressReleaseAction));
 
-			ActionTools::NumberParameterDefinition *amount = new ActionTools::NumberParameterDefinition(ActionTools::Name("amount", tr("Amount")), this);
-			amount->setTooltip(tr("The amount of key presses to simulate"));
-			amount->setMinimum(1);
-			amount->setMaximum(std::numeric_limits<int>::max());
-			amount->setDefaultValue(1);
-			pressAndReleaseGroup->addMember(amount);
+            auto &pressAndReleaseGroup = addGroup();
+            pressAndReleaseGroup.setMasterList(action);
+            pressAndReleaseGroup.setMasterValues({KeyInstance::actions.first.at(KeyInstance::PressReleaseAction)});
 
-			addElement(pressAndReleaseGroup);
+            auto &amount = pressAndReleaseGroup.addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("amount"), tr("Amount")});
+            amount.setTooltip(tr("The amount of key presses to simulate"));
+            amount.setMinimum(1);
+            amount.setMaximum(std::numeric_limits<int>::max());
+            amount.setDefaultValue(QStringLiteral("1"));
 
-			ActionTools::BooleanParameterDefinition *ctrl = new ActionTools::BooleanParameterDefinition(ActionTools::Name("ctrl", tr("Ctrl")), this);
-			ctrl->setTooltip(tr("Should the Ctrl key be pressed"));
-			addElement(ctrl);
+			auto &ctrl = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("ctrl"), tr("Ctrl")});
+            ctrl.setTooltip(tr("Should the Ctrl key be pressed"));
 
-			ActionTools::BooleanParameterDefinition *alt = new ActionTools::BooleanParameterDefinition(ActionTools::Name("alt", tr("Alt")), this);
-			alt->setTooltip(tr("Should the Alt key be pressed"));
-			addElement(alt);
+			auto &alt = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("alt"), tr("Alt")});
+            alt.setTooltip(tr("Should the Alt key be pressed"));
 
-			ActionTools::BooleanParameterDefinition *shift = new ActionTools::BooleanParameterDefinition(ActionTools::Name("shift", tr("Shift")), this);
-			shift->setTooltip(tr("Should the Shift key be pressed"));
-			addElement(shift);
+			auto &shift = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("shift"), tr("Shift")});
+            shift.setTooltip(tr("Should the Shift key be pressed"));
 
 		#ifdef Q_OS_WIN
 			QString metaKeyName = tr("Windows");
@@ -91,42 +82,38 @@ namespace Actions
 			QString metaKeyName = tr("Meta");
 		#endif
 
-			ActionTools::BooleanParameterDefinition *meta = new ActionTools::BooleanParameterDefinition(ActionTools::Name("meta", metaKeyName), this);
-			meta->setTooltip(tr("Should the %1 key be pressed").arg(metaKeyName));
-			addElement(meta);
+            auto &meta = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("meta"), metaKeyName});
+            meta.setTooltip(tr("Should the %1 key be pressed").arg(metaKeyName));
 
-			ActionTools::ListParameterDefinition *type = new ActionTools::ListParameterDefinition(ActionTools::Name("type", tr("Type")), this);
-			type->setTooltip(tr("The key type to use"));
-			type->setItems(KeyInstance::types);
-			type->setDefaultValue(KeyInstance::types.second.at(KeyInstance::Win32Type));
-			type->setOperatingSystems(ActionTools::WorksOnWindows);
-			addElement(type, 1);
+            auto &type = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("type"), tr("Type")}, 1);
+            type.setTooltip(tr("The key type to use"));
+            type.setItems(KeyInstance::types);
+            type.setDefaultValue(KeyInstance::types.second.at(KeyInstance::Win32Type));
+            type.setOperatingSystems(ActionTools::WorksOnWindows);
 
-			ActionTools::NumberParameterDefinition *pause = new ActionTools::NumberParameterDefinition(ActionTools::Name("pause", tr("Press/Release pause")), this);
-			pause->setTooltip(tr("The pause duration between press and release"));
-			pause->setMinimum(0);
-			pause->setMaximum(std::numeric_limits<int>::max());
-			pause->setDefaultValue(10);
-			pause->setSuffix(tr(" ms", "milliseconds"));
-			addElement(pause, 1);
+            auto &pause = addParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("pause"), tr("Press/Release pause")}, 1);
+            pause.setTooltip(tr("The pause duration between press and release"));
+            pause.setMinimum(0);
+            pause.setMaximum(std::numeric_limits<int>::max());
+            pause.setDefaultValue(QStringLiteral("10"));
+            pause.setSuffix(tr(" ms", "milliseconds"));
 
 			addException(KeyInstance::FailedToSendInputException, tr("Send input failure"));
 			addException(KeyInstance::InvalidActionException, tr("Invalid action"));
 		}
 
-		QString name() const													{ return QObject::tr("Key"); }
-		QString id() const														{ return "ActionKey"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Emulates a key press"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new KeyInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Device; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/key.png"); }
-		bool requirementCheck(QStringList &missingRequirements) const			{ return requirementCheckXTest(missingRequirements); }
-		QStringList tabs() const												{ return ActionDefinition::StandardTabs; }
+		QString name() const override													{ return QObject::tr("Key"); }
+		QString id() const override														{ return QStringLiteral("ActionKey"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Emulates a key press"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new KeyInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/key.png")); }
+		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
+		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:
 		Q_DISABLE_COPY(KeyDefinition)
 	};
 }
 
-#endif // KEYDEFINITION_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ENVIRONMENTVARIABLEPARAMETERDEFINITION_H
-#define ENVIRONMENTVARIABLEPARAMETERDEFINITION_H
+#pragma once
 
 #include "listparameterdefinition.h"
 #include "actiontools_global.h"
@@ -34,9 +33,8 @@ namespace ActionTools
         EnvironmentVariableParameterDefinition(const Name &name, QObject *parent)
             : ListParameterDefinition(name, parent)									{}
 
-		void buildEditors(Script *script, QWidget *parent);
-		void actionUpdate(Script *script);
+		void buildEditors(Script *script, QWidget *parent) override;
+		void actionUpdate(Script *script) override;
 	};
 }
 
-#endif // ENVIRONMENTVARIABLEPARAMETERDEFINITION_H

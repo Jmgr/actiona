@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef FILETYPEGUESSER_H
-#define FILETYPEGUESSER_H
+#pragma once
 
 #include "resource.h"
 
@@ -32,7 +31,6 @@ public:
     static ActionTools::Resource::Type guessFiletype(const QByteArray &data, const QString &filename);
 
 private:
-    FiletypeGuesser() {}
+    FiletypeGuesser() = default;
 };
 
-#endif // FILETYPEGUESSER_H

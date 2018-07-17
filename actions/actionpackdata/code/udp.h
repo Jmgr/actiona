@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef UDP_H
-#define UDP_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -50,7 +49,7 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
 		Udp();
-		~Udp();
+		~Udp() override;
 		
 		void setOnConnected(const QScriptValue &onConnected)			{ mOnConnected = onConnected; }
 		void setOnDisconnected(const QScriptValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
@@ -63,8 +62,8 @@ namespace Code
 		QScriptValue onError() const									{ return mOnError; }
 
 	public slots:
-        QString toString() const                                        { return "Udp"; }
-        virtual bool equals(const QScriptValue &other) const            { return defaultEqualsImplementation<Udp>(other); }
+		QString toString() const override                                        { return QStringLiteral("Udp"); }
+        bool equals(const QScriptValue &other) const override            { return defaultEqualsImplementation<Udp>(other); }
 		QScriptValue connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
 		QScriptValue waitForConnected(int waitTime = 30000);
 		QScriptValue waitForReadyRead(int waitTime = 30000);
@@ -89,4 +88,3 @@ namespace Code
 	};
 }
 
-#endif // UDP_H

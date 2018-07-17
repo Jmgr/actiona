@@ -36,13 +36,23 @@
 
 namespace Actions
 {
-    Tools::StringListPair SendMailInstance::attachmentContentTypes = qMakePair(
-            QStringList() << "autoDetect" << "application/octet-stream" << "text/plain" << "image/jpeg" << "image/png",
-            QStringList() << QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Auto detect")
-                          << QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Binary")
-                          << QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Text")
-                          << QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Jpg image")
-                          << QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Png image"));
+    Tools::StringListPair SendMailInstance::attachmentContentTypes =
+    {
+        {
+            QStringLiteral("autoDetect"),
+            QStringLiteral("application/octet-stream"),
+            QStringLiteral("text/plain"),
+            QStringLiteral("image/jpeg"),
+            QStringLiteral("image/png")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Auto detect")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Binary")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Text")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Jpg image")),
+            QStringLiteral(QT_TRANSLATE_NOOP("SendMailInstance::attachmentContentTypes", "Png image"))
+        }
+    };
 
     SendMailInstance::SendMailInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
@@ -60,80 +70,80 @@ namespace Actions
 	{
 		bool ok = true;
 
-        QString serverName = evaluateString(ok, "serverName");
-        bool secureConnection = evaluateBoolean(ok, "secureConnection");
-        QString userName = evaluateString(ok, "userName");
-        QString password = evaluateString(ok, "password");
-        QString sender = evaluateString(ok, "sender");
-        QString receivers = evaluateString(ok, "receivers");
-        QString subject = evaluateString(ok, "subject");
-        QString body = evaluateString(ok, "body");
-        QString attachmentName = evaluateString(ok, "attachmentName");
-        QScriptValue attachmentData = evaluateValue(ok, "attachmentData");
-        QString attachmentContentType = evaluateEditableListElement(ok, attachmentContentTypes, "attachmentContentType");
-        QString carbonCopy = evaluateString(ok, "carbonCopy");
-        QString blindCarbonCopy = evaluateString(ok, "blindCarbonCopy");
-        int serverPort = evaluateInteger(ok, "serverPort");
-        QString extraHeaders = evaluateString(ok, "extraHeaders");
+		QString serverName = evaluateString(ok, QStringLiteral("serverName"));
+		bool secureConnection = evaluateBoolean(ok, QStringLiteral("secureConnection"));
+		QString userName = evaluateString(ok, QStringLiteral("userName"));
+		QString password = evaluateString(ok, QStringLiteral("password"));
+		QString sender = evaluateString(ok, QStringLiteral("sender"));
+		QString receivers = evaluateString(ok, QStringLiteral("receivers"));
+		QString subject = evaluateString(ok, QStringLiteral("subject"));
+		QString body = evaluateString(ok, QStringLiteral("body"));
+		QString attachmentName = evaluateString(ok, QStringLiteral("attachmentName"));
+		QScriptValue attachmentData = evaluateValue(ok, QStringLiteral("attachmentData"));
+		QString attachmentContentType = evaluateEditableListElement(ok, attachmentContentTypes, QStringLiteral("attachmentContentType"));
+		QString carbonCopy = evaluateString(ok, QStringLiteral("carbonCopy"));
+		QString blindCarbonCopy = evaluateString(ok, QStringLiteral("blindCarbonCopy"));
+		int serverPort = evaluateInteger(ok, QStringLiteral("serverPort"));
+		QString extraHeaders = evaluateString(ok, QStringLiteral("extraHeaders"));
 
         if(serverName.isEmpty() || sender.isEmpty() || receivers.isEmpty())
         {
-            emit executionEnded();
+            executionEnded();
 
             return;
         }
 
-        if(attachmentContentType == "autoDetect" && !attachmentName.isEmpty() && attachmentData.isValid())
+		if(attachmentContentType == QLatin1String("autoDetect") && !attachmentName.isEmpty() && attachmentData.isValid())
         {
             bool foundAttachmentContentType = true;
 
             if(QObject *scriptObject = attachmentData.toQObject())
             {
                 if(qobject_cast<Code::RawData*>(scriptObject))
-                    attachmentContentType = "application/octet-stream";
+					attachmentContentType = QStringLiteral("application/octet-stream");
                 else if(qobject_cast<Code::Image*>(scriptObject))
                 {
                     QString lowerAttachmentName = attachmentName.toLower();
 
-                    if(lowerAttachmentName.endsWith(".jpg") || lowerAttachmentName.endsWith(".jpeg"))
-                        attachmentContentType = "image/jpeg";
+					if(lowerAttachmentName.endsWith(QStringLiteral(".jpg")) || lowerAttachmentName.endsWith(QStringLiteral(".jpeg")))
+						attachmentContentType = QStringLiteral("image/jpeg");
                     else
-                        attachmentContentType = "image/png";
+						attachmentContentType = QStringLiteral("image/png");
                 }
                 else
                     foundAttachmentContentType = false;
             }
             else if(attachmentData.isString())
-                attachmentContentType = "text/plain";
+				attachmentContentType = QStringLiteral("text/plain");
             else
                 foundAttachmentContentType = false;
 
             if(!foundAttachmentContentType)
             {
-                setCurrentParameter("attachmentContentType");
+				setCurrentParameter(QStringLiteral("attachmentContentType"));
                 emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Failed to auto detect the attachment content type"));
                 return;
             }
         }
 
-        validateParameterRange(ok, serverPort, "serverPort", tr("server port"), 0, 65535);
+		validateParameterRange(ok, serverPort, QStringLiteral("serverPort"), tr("server port"), 0, 65535);
 
 		if(!ok)
 			return;
 
         mSmtp = new QxtSmtp(this);
 
-        connect(mSmtp, SIGNAL(connectionFailed(QByteArray)), this, SLOT(connectionFailed(QByteArray)));
-        connect(mSmtp, SIGNAL(encryptionFailed(QByteArray)), this, SLOT(encryptionFailed(QByteArray)));
-        connect(mSmtp, SIGNAL(authenticationFailed(QByteArray)), this, SLOT(authenticationFailed(QByteArray)));
-        connect(mSmtp, SIGNAL(authenticated()), this, SLOT(authenticated()));
-        connect(mSmtp, SIGNAL(senderRejected(int,QString,QByteArray)), this, SLOT(senderRejected(int,QString,QByteArray)));
-        connect(mSmtp, SIGNAL(recipientRejected(int,QString,QByteArray)), this, SLOT(recipientRejected(int,QString,QByteArray)));
-        connect(mSmtp, SIGNAL(mailFailed(int,int,QByteArray)), this, SLOT(mailFailed(int,int,QByteArray)));
-        connect(mSmtp, SIGNAL(mailSent(int)), this, SLOT(mailSent(int)));
-        connect(mSmtp, SIGNAL(disconnected()), this, SLOT(disconnected()));
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(const QByteArray &)>(&QxtSmtp::connectionFailed), this, &SendMailInstance::connectionFailed);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(const QByteArray &)>(&QxtSmtp::encryptionFailed), this, &SendMailInstance::encryptionFailed);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(const QByteArray &)>(&QxtSmtp::authenticationFailed), this, &SendMailInstance::authenticationFailed);
+        connect(mSmtp, &QxtSmtp::authenticated, this, &SendMailInstance::authenticated);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(int, const QString &, const QByteArray &)>(&QxtSmtp::senderRejected), this, &SendMailInstance::senderRejected);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(int, const QString &, const QByteArray &)>(&QxtSmtp::recipientRejected), this, &SendMailInstance::recipientRejected);
+        connect(mSmtp, static_cast<void (QxtSmtp::*)(int, int, const QByteArray &)>(&QxtSmtp::mailFailed), this, &SendMailInstance::mailFailed);
+        connect(mSmtp, &QxtSmtp::mailSent, this, &SendMailInstance::mailSent);
+        connect(mSmtp, &QxtSmtp::disconnected, this, &SendMailInstance::disconnected);
 
-        connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(canceled()));
+        connect(mProgressDialog, &QProgressDialog::canceled, this, &SendMailInstance::canceled);
 
         mSmtp->setUsername(userName.toUtf8());
         mSmtp->setPassword(password.toUtf8());
@@ -143,25 +153,25 @@ namespace Actions
         mailMessage.setSender(sender);
         mailMessage.setSubject(subject);
         mailMessage.setBody(body);
-        mailMessage.setExtraHeader("Date", QDateTime::currentDateTime().toString(Qt::RFC2822Date));
+		mailMessage.setExtraHeader(QStringLiteral("Date"), QDateTime::currentDateTime().toString(Qt::RFC2822Date));
 
-        for(QString receiver: receivers.split(QChar(','), QString::SkipEmptyParts))
+		for(QString receiver: receivers.split(QLatin1Char(','), QString::SkipEmptyParts))
             mailMessage.addRecipient(receiver.trimmed());
 
-        for(QString carbonCopyReceiver: carbonCopy.split(QChar(','), QString::SkipEmptyParts))
+		for(QString carbonCopyReceiver: carbonCopy.split(QLatin1Char(','), QString::SkipEmptyParts))
             mailMessage.addRecipient(carbonCopyReceiver.trimmed(), QxtMailMessage::Cc);
 
-        for(QString blindCarbonCopyReceiver: blindCarbonCopy.split(QChar(','), QString::SkipEmptyParts))
+		for(QString blindCarbonCopyReceiver: blindCarbonCopy.split(QLatin1Char(','), QString::SkipEmptyParts))
             mailMessage.addRecipient(blindCarbonCopyReceiver.trimmed(), QxtMailMessage::Bcc);
 
-        for(QString extraHeader: extraHeaders.split(QChar('\n'), QString::SkipEmptyParts))
+		for(QString extraHeader: extraHeaders.split(QLatin1Char('\n'), QString::SkipEmptyParts))
         {
-            QStringList extraHeaderParts = extraHeader.split(QChar(':'), QString::SkipEmptyParts);
+			QStringList extraHeaderParts = extraHeader.split(QLatin1Char(':'), QString::SkipEmptyParts);
 
             if(extraHeaderParts.size() != 2)
             {
-                setCurrentParameter("extraHeaders");
-                emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Failed to parse an extra header: \"%1\" has to be in the form \"name: value\"").arg(extraHeader));
+				setCurrentParameter(QStringLiteral("extraHeaders"));
+                emit executionException(ActionTools::ActionException::InvalidParameterException, tr(R"(Failed to parse an extra header: "%1" has to be in the form "name: value")").arg(extraHeader));
                 return;
             }
 
@@ -172,7 +182,7 @@ namespace Actions
         {
             if(!attachmentData.isValid())
             {
-                setCurrentParameter("attachmentData");
+				setCurrentParameter(QStringLiteral("attachmentData"));
                 emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid attachment data"));
                 return;
             }
@@ -181,20 +191,20 @@ namespace Actions
 
             if(QObject *scriptObject = attachmentData.toQObject())
             {
-                if(Code::RawData *codeRawData = qobject_cast<Code::RawData*>(scriptObject))
+                if(auto codeRawData = qobject_cast<Code::RawData*>(scriptObject))
                     attachmentDataByteArray = codeRawData->byteArray();
-                else if(Code::Image *codeImage = qobject_cast<Code::Image*>(scriptObject))
+                else if(auto codeImage = qobject_cast<Code::Image*>(scriptObject))
                 {
                     QImage image = codeImage->image();
                     QString format;
 
-                    if(attachmentContentType == "image/png")
-                        format = "PNG";
-                    else if(attachmentContentType == "image/jpeg")
-                        format = "JPG";
+					if(attachmentContentType == QLatin1String("image/png"))
+						format = QStringLiteral("PNG");
+					else if(attachmentContentType == QLatin1String("image/jpeg"))
+						format = QStringLiteral("JPG");
                     else
                     {
-                        setCurrentParameter("attachmentData");
+						setCurrentParameter(QStringLiteral("attachmentData"));
                         emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unknown image type; supported types are PNG and JPG"));
                         return;
                     }
@@ -202,9 +212,9 @@ namespace Actions
                     QBuffer buffer;
                     buffer.open(QIODevice::WriteOnly);
 
-                    if(!image.save(&buffer, format.toLatin1()))
+					if(!image.save(&buffer, format.toLatin1().constData()))
                     {
-                        setCurrentParameter("attachmentData");
+						setCurrentParameter(QStringLiteral("attachmentData"));
                         emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid image data"));
                         return;
                     }
@@ -216,7 +226,7 @@ namespace Actions
             }
             else
             {
-                if(attachmentContentType == "text/plain")
+				if(attachmentContentType == QLatin1String("text/plain"))
                     attachmentDataByteArray = attachmentData.toString().toUtf8();
                 else
                     attachmentDataByteArray = attachmentData.toVariant().toByteArray();
@@ -356,7 +366,7 @@ namespace Actions
 
         cleanup();
 
-        emit executionEnded();
+        executionEnded();
     }
 
     void SendMailInstance::disconnected()
@@ -368,7 +378,7 @@ namespace Actions
     {
         cleanup();
 
-        emit executionEnded();
+        executionEnded();
     }
 
     void SendMailInstance::cleanup()

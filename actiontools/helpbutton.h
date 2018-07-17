@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef HELPBUTTON_H
-#define HELPBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -32,16 +31,15 @@ namespace ActionTools
 		Q_OBJECT
 		
 	public:
-		explicit HelpButton(QWidget *parent = 0);
+		explicit HelpButton(QWidget *parent = nullptr);
 		
 		void setTopic(const QString &topic)						{ mTopic = topic; }
 		
 	private slots:
-		void clicked();
+        void onClicked();
 		
 	private:
 		QString mTopic;
 	};
 }
 
-#endif // HELPBUTTON_H

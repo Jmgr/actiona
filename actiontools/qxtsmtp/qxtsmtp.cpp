@@ -42,7 +42,7 @@
 #    include <QSslSocket>
 #endif
 
-QxtSmtpPrivate::QxtSmtpPrivate() : QObject(0)
+QxtSmtpPrivate::QxtSmtpPrivate() : QObject(nullptr)
 {
     // empty ctor
 }
@@ -200,7 +200,7 @@ void QxtSmtpPrivate::socketRead()
         case HeloSent:
         case EhloSent:
         case EhloGreetReceived:
-            parseEhlo(code, (line[3] != ' '), line.mid(4));
+			parseEhlo(code, (line[3] != ' '), QLatin1String(line.mid(4)));
             break;
 #ifndef QT_NO_OPENSSL
         case StartTLSSent:
@@ -289,7 +289,7 @@ void QxtSmtpPrivate::socketRead()
 void QxtSmtpPrivate::ehlo()
 {
     QByteArray address = "127.0.0.1";
-    foreach(const QHostAddress& addr, QNetworkInterface::allAddresses())
+    for(const QHostAddress& addr: QNetworkInterface::allAddresses())
     {
         if (addr == QHostAddress::LocalHost || addr == QHostAddress::LocalHostIPv6)
             continue;
@@ -337,12 +337,12 @@ void QxtSmtpPrivate::parseEhlo(const QByteArray& code, bool cont, const QString&
     }
     else
     {
-        extensions[line.section(' ', 0, 0).toUpper()] = line.section(' ', 1);
+		extensions[line.section(QLatin1Char(' '), 0, 0).toUpper()] = line.section(QLatin1Char(' '), 1);
         if (!cont)
             state = EhloDone;
     }
     if (state != EhloDone) return;
-    if (extensions.contains("STARTTLS") && !disableStartTLS)
+	if (extensions.contains(QStringLiteral("STARTTLS")) && !disableStartTLS)
     {
         startTLS();
     }
@@ -364,23 +364,23 @@ void QxtSmtpPrivate::startTLS()
 
 void QxtSmtpPrivate::authenticate()
 {
-    if (!extensions.contains("AUTH") || username.isEmpty() || password.isEmpty())
+	if (!extensions.contains(QStringLiteral("AUTH")) || username.isEmpty() || password.isEmpty())
     {
         state = Authenticated;
         emit qxt_p().authenticated();
     }
     else
     {
-        QStringList auth = extensions["AUTH"].toUpper().split(' ', QString::SkipEmptyParts);
-        if (auth.contains("CRAM-MD5"))
+		QStringList auth = extensions[QStringLiteral("AUTH")].toUpper().split(QLatin1Char(' '), QString::SkipEmptyParts);
+		if (auth.contains(QStringLiteral("CRAM-MD5")))
         {
             authCramMD5();
         }
-        else if (auth.contains("PLAIN"))
+		else if (auth.contains(QStringLiteral("PLAIN")))
         {
             authPlain();
         }
-        else if (auth.contains("LOGIN"))
+		else if (auth.contains(QStringLiteral("LOGIN")))
         {
             authLogin();
         }
@@ -463,29 +463,29 @@ static QByteArray qxt_extract_address(const QString& address)
         QChar ch = address[i];
         if (inQuote)
         {
-            if (ch == '"')
+			if (ch == QLatin1Char('"'))
                 inQuote = false;
         }
         else if (addrStart != -1)
         {
-            if (ch == '>')
+			if (ch == QLatin1Char('>'))
                 return address.mid(addrStart, (i - addrStart)).toLatin1();
         }
-        else if (ch == '(')
+		else if (ch == QLatin1Char('('))
         {
             parenDepth++;
         }
-        else if (ch == ')')
+		else if (ch == QLatin1Char(')'))
         {
             parenDepth--;
             if (parenDepth < 0) parenDepth = 0;
         }
-        else if (ch == '"')
+		else if (ch == QLatin1Char('"'))
         {
             if (parenDepth == 0)
                 inQuote = true;
         }
-        else if (ch == '<')
+		else if (ch == QLatin1Char('<'))
         {
             if (!inQuote && parenDepth == 0)
                 addrStart = i + 1;
@@ -516,7 +516,7 @@ void QxtSmtpPrivate::sendNext()
         return;
     }
     const QxtMailMessage& msg = pending.first().second;
-    rcptNumber = rcptAck = mailAck = 0;
+    rcptNumber = rcptAck = mailAck = false;
     recipients = msg.recipients(QxtMailMessage::To) +
                  msg.recipients(QxtMailMessage::Cc) +
                  msg.recipients(QxtMailMessage::Bcc);
@@ -533,7 +533,7 @@ void QxtSmtpPrivate::sendNext()
     // interprets any string starting with an uppercase R as a request
     // to renegotiate the SSL connection.
     socket->write("mail from:<" + qxt_extract_address(msg.sender()) + ">\r\n");
-    if (extensions.contains("PIPELINING"))  // almost all do nowadays
+	if (extensions.contains(QStringLiteral("PIPELINING")))  // almost all do nowadays
     {
         foreach(const QString& rcpt, recipients)
         {

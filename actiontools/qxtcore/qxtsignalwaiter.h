@@ -51,7 +51,7 @@ public Q_SLOTS:
     void cancelWait();
 
 private:
-    void timerEvent(QTimerEvent* event);
+    void timerEvent(QTimerEvent* event) override ;
 };
 
 #endif

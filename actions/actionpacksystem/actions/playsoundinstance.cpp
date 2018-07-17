@@ -32,23 +32,21 @@ namespace Actions
 	{
 		mMediaPlayer->setPlaylist(mMediaPlaylist);
 
-		connect(mMediaPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(stateChanged(QMediaPlayer::State)));
+        connect(mMediaPlayer, &QMediaPlayer::stateChanged, this, &PlaySoundInstance::stateChanged);
 	}
 
-	PlaySoundInstance::~PlaySoundInstance()
-	{
-	}
+    PlaySoundInstance::~PlaySoundInstance() = default;
 
 	void PlaySoundInstance::startExecution()
 	{
 		bool ok = true;
 
-		QString file = evaluateString(ok, "file");
-		int volume = evaluateInteger(ok, "volume");
-		mBlocking = evaluateBoolean(ok, "blocking");
-		bool looping = evaluateBoolean(ok, "looping");
-		bool isUrl = evaluateBoolean(ok, "url");
-		int playbackRate = evaluateInteger(ok, "playbackRate");
+		QString file = evaluateString(ok, QStringLiteral("file"));
+		int volume = evaluateInteger(ok, QStringLiteral("volume"));
+		mBlocking = evaluateBoolean(ok, QStringLiteral("blocking"));
+		bool looping = evaluateBoolean(ok, QStringLiteral("looping"));
+		bool isUrl = evaluateBoolean(ok, QStringLiteral("url"));
+		int playbackRate = evaluateInteger(ok, QStringLiteral("playbackRate"));
 
 		if(!ok)
 			return;
@@ -81,7 +79,7 @@ namespace Actions
 		}
 
 		if(!mBlocking)
-			emit executionEnded();
+			executionEnded();
 	}
 
 	void PlaySoundInstance::pauseExecution()
@@ -107,6 +105,6 @@ namespace Actions
 	void PlaySoundInstance::stateChanged(QMediaPlayer::State state)
 	{
 		if(state == QMediaPlayer::StoppedState)
-			emit executionEnded();
+			executionEnded();
 	}
 }

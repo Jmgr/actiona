@@ -3,11 +3,10 @@ unix:!mac:QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN -Wl,--rpath=$${PREFIX}/$${LIB
 QT += xml \
 	network \
 	script \
-	scripttools
-equals(QT_MAJOR_VERSION, 5) {
+        scripttools \
+        widgets
 unix:QT += x11extras
-QT += widgets
-}
+win32:QT += winextras
 CONFIG += mobility
 contains(DEFINES, ACT_PROFILE) {
 CONFIG += console
@@ -25,8 +24,6 @@ SOURCES += main.cpp \
 	scriptparametersdialog.cpp \
 	settingsdialog.cpp \
 	settingskeyedit.cpp \
-	newactiontreewidget.cpp \
-	scripttableview.cpp \
 	scriptmodelundocommands.cpp \
 	newactiondialog.cpp \
 	global.cpp \
@@ -38,7 +35,14 @@ SOURCES += main.cpp \
     filetypeguesser.cpp \
     resourcetablewidget.cpp \
     resourcetypedelegate.cpp \
-    resourcenamedelegate.cpp
+    resourcenamedelegate.cpp \
+    newactionmodel.cpp \
+    newactionproxymodel.cpp \
+    scriptproxymodel.cpp \
+    filterlineedit.cpp \
+    scripttreeview.cpp \
+    flagscombobox.cpp \
+    colorpickerpushbutton.cpp
 HEADERS += mainwindow.h \
 	global.h \
 	scriptmodel.h \
@@ -48,8 +52,6 @@ HEADERS += mainwindow.h \
 	scriptparametersdialog.h \
 	settingsdialog.h \
 	settingskeyedit.h \
-	newactiontreewidget.h \
-	scripttableview.h \
 	scriptmodelundocommands.h \
 	newactiondialog.h \
 	scriptcontentdialog.h \
@@ -61,7 +63,16 @@ HEADERS += mainwindow.h \
     resourcetablewidget.h \
     resourcetypedelegate.h \
     resourcesizeitem.h \
-    resourcenamedelegate.h
+    resourcenamedelegate.h \
+    newactionmodel.h \
+    newactionproxymodel.h \
+    scriptproxymodel.h \
+    filterlineedit.h \
+    scripttreeview.h \
+    flagscombobox.h \
+    actionfilteringflags.h \
+    colorpickerpushbutton.h \
+    heatmapmode.h
 !contains(DEFINES, ACT_NO_UPDATER) {
 	SOURCES += changelogdialog.cpp
 	HEADERS += changelogdialog.h
@@ -93,13 +104,18 @@ LIBS += -L.. \
 	-lactiontools \
 	-lexecuter
 RESOURCES += gui.qrc
-win32:RC_FILE = gui.rc
-TRANSLATIONS = ../locale/gui_fr_FR.ts \
-                ../locale/gui_de_DE.ts
+TRANSLATIONS = ../locale/gui_fr_FR.ts
 win32:system(lrelease ../locale/qt_fr_FR.ts) #For Windows we need to copy the qt translation files
-win32:system(lrelease ../locale/qt_de_DE.ts)
 unix:!mac:CONFIG += link_pkgconfig
 unix:!mac:PKGCONFIG += libnotify
+
+win32 {
+QMAKE_TARGET_COMPANY = "https://actiona.tools"
+QMAKE_TARGET_DESCRIPTION = "Actiona: Cross-Platform Automation Tool"
+QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2005 Jonathan Mercier-Ganady"
+QMAKE_TARGET_PRODUCT = "Actiona"
+RC_ICONS = "icons/actiona.ico"
+}
 
 win32 {
     CONFIG += embed_manifest_exe
@@ -110,8 +126,7 @@ unix {
 	target.path = $${PREFIX}/bin
 
         locales.path = $${PREFIX}/share/actiona/locale
-        locales.files = ../locale/gui_fr_FR.qm \
-                        ../locale/gui_de_DE.qm
+        locales.files = ../locale/gui_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
 	icon.path = $${PREFIX}/share/pixmaps

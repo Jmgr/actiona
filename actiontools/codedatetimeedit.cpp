@@ -36,7 +36,7 @@ namespace ActionTools
 
 		setCalendarPopup(true);
 
-		connect(codeLineEdit, SIGNAL(codeChanged(bool)), this, SLOT(codeChanged(bool)));
+        connect(codeLineEdit, &CodeLineEdit::codeChanged, this, &CodeDateTimeEdit::codeChanged);
 
 		addActions(codeLineEdit->actions());
 	}
@@ -59,7 +59,7 @@ namespace ActionTools
 	void CodeDateTimeEdit::setFromSubParameter(const SubParameter &subParameter)
 	{
 		setCode(subParameter.isCode());
-		codeLineEdit()->setText(subParameter.value().toString());
+        codeLineEdit()->setText(subParameter.value());
 	}
 
 	void CodeDateTimeEdit::openEditor(int line, int column)
@@ -89,7 +89,7 @@ namespace ActionTools
 			setCalendarPopup(true);
 			setButtonSymbols(QAbstractSpinBox::UpDownArrows);
 			setDateTime(QDateTime::currentDateTime());
-			setDisplayFormat("dd/MM/yyyy hh:mm:ss");
+			setDisplayFormat(QStringLiteral("dd/MM/yyyy hh:mm:ss"));
 			codeLineEdit()->textChanged(codeLineEdit()->text());
 		}
 		else

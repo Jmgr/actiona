@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef IMAGEPARAMETERDEFINITION_H
-#define IMAGEPARAMETERDEFINITION_H
+#pragma once
 
 #include "fileparameterdefinition.h"
 #include "actiontools_global.h"
@@ -33,7 +32,7 @@ namespace ActionTools
     public:
         ImageParameterDefinition(const Name &name, QObject *parent);
 
-        void buildEditors(Script *script, QWidget *parent);
+        void buildEditors(Script *script, QWidget *parent) override;
 
     private slots:
         void onCaptureClicked();
@@ -46,4 +45,3 @@ namespace ActionTools
     };
 }
 
-#endif // IMAGEPARAMETERDEFINITION_H

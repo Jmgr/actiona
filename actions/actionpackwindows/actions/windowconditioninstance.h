@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOWCONDITIONINSTANCE_H
-#define WINDOWCONDITIONINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -42,12 +41,12 @@ namespace Actions
 			DontExists
 		};
 
-		WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 
         static Tools::StringListPair conditions;
 
-		void stopExecution();
-		void startExecution();
+		void stopExecution() override;
+		void startExecution() override;
 
 	private slots:
 		void checkWindow();
@@ -72,4 +71,3 @@ namespace Actions
 	};
 }
 
-#endif // WINDOWCONDITIONINSTANCE_H

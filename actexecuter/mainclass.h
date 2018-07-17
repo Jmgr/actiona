@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MAINCLASS_H
-#define MAINCLASS_H
+#pragma once
 
 #include "version.h"
 
@@ -53,11 +52,10 @@ private slots:
 	void downloadFinished();
 
 private:
-	Executer *mExecuter;
+	Executer *mExecuter{nullptr};
 	QNetworkAccessManager *mNetworkAccessManager;
 	QNetworkReply *mNetworkReply;
 	ExecutionMode mExecutionMode;
 	QUrl mUrl;
 };
 
-#endif // MAINCLASS_H

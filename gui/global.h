@@ -18,22 +18,25 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#pragma once
 
 #include "version.h"
 
 namespace Global
 {
-    const Tools::Version	ACTIONA_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_VERSION));
-	const Tools::Version	SCRIPT_VERSION =	Tools::Version(VERSION_TO_STRING(ACT_SCRIPT_VERSION));
-    const QString			UPDATE_URL =		"https://updates.actiona.tools/";
+#if (QT_VERSION >= 0x050600)
+	const Tools::Version	ACTIONA_VERSION =	QVersionNumber::fromString(QLatin1String(VERSION_TO_STRING(ACT_VERSION)));
+	const Tools::Version	SCRIPT_VERSION =	QVersionNumber::fromString(QLatin1String(VERSION_TO_STRING(ACT_SCRIPT_VERSION)));
+#else
+	const Tools::Version	ACTIONA_VERSION =	Tools::Version(QLatin1String(VERSION_TO_STRING(ACT_VERSION)));
+	const Tools::Version	SCRIPT_VERSION =	Tools::Version(QLatin1String(VERSION_TO_STRING(ACT_SCRIPT_VERSION)));
+#endif
+	const QString			UPDATE_URL =		QStringLiteral("https://updates.actiona.tools/");
 	const int				UPDATE_TIMEOUT =	5000;
-    const QString			CONNECTIVITY_URL =	"https://actiona.tools/";
+	const QString			CONNECTIVITY_URL =	QStringLiteral("https://actiona.tools/");
 
 	QString currentOSType();
 	int currentOSBits();
     int applicationBits();
 }
 
-#endif // GLOBAL_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCREENPOSITIONWIDGET_H
-#define SCREENPOSITIONWIDGET_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -36,7 +35,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ScreenPositionWidget(QWidget *parent = 0);
+		explicit ScreenPositionWidget(QWidget *parent = nullptr);
 
 		void setPosition(int screen, int position);
 
@@ -53,4 +52,3 @@ namespace ActionTools
 	};
 }
 
-#endif // SCREENPOSITIONWIDGET_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPT_H
-#define SCRIPT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "version.h"
@@ -28,8 +27,11 @@
 
 #include <QVariant>
 #include <QStringList>
-#include <QHash>
+#include <QMap>
 #include <QStack>
+
+#include <functional>
+#include <utility>
 
 class QIODevice;
 
@@ -38,6 +40,7 @@ namespace ActionTools
 	class ActionInstance;
 	class ActionFactory;
     class ElementDefinition;
+    class ScriptLineModel;
 
 	class ACTIONTOOLSSHARED_EXPORT Script : public QObject
 	{
@@ -55,10 +58,10 @@ namespace ActionTools
 
         static const QRegExp CodeVariableDeclarationRegExp;
 
-		Script(ActionFactory *actionFactory, QObject *parent = 0);
-		~Script();
+		Script(ActionFactory *actionFactory, QObject *parent = nullptr);
+		~Script() override;
 
-        void appendAction(ActionInstance *actionInstance)                               { mActionInstances.append(actionInstance); }
+        void appendAction(ActionInstance *actionInstance);
 		ActionInstance *appendAction(const QString &actionDefinitionId);
 		ActionInstance *actionAt(int line) const;
 		void insertAction(int line, ActionInstance *actionInstance);
@@ -71,11 +74,17 @@ namespace ActionTools
         int actionCount() const                                                         { return mActionInstances.count(); }
 		int labelLine(const QString &label) const;
 		bool hasEnabledActions() const;
-
 		QSet<int> usedActions() const;
 
-		bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion);
-		ReadResult read(QIODevice *device, const Tools::Version &scriptVersion);
+        void invalidateLabelList()                                                      { mRebuildLabelList = true; }
+
+        bool write(QIODevice *device, const Tools::Version &programVersion, const Tools::Version &scriptVersion, std::function<void(int, int, QString)> *progressCallback = nullptr);
+        ReadResult read(QIODevice *device,
+                        const Tools::Version &scriptVersion,
+                        std::function<void(int, int, QString)> *progressCallback = nullptr,
+                        std::function<void()> *resetCallback = nullptr,
+                        std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback = nullptr);
+
         bool validateContent(const QString &content, const Tools::Version &scriptVersion);
         const QString &statusMessage() const                                            { return mStatusMessage; }
         int line() const                                                                { return mLine; }
@@ -109,15 +118,21 @@ namespace ActionTools
         bool hasResource(const QString &id) const                                       { return mResources.contains(id); }
         Resource resource(const QString &id) const                                      { return mResources.value(id); }
         void clearResources()                                                           { mResources.clear(); }
-        const QHash<QString, Resource> &resources() const                               { return mResources; }
+		const QMap<QString, Resource> &resources() const								{ return mResources; }
+
+        std::pair<int, int> minMaxExecutionCounter() const                              { return mMinMaxExecutionCounter; }
+        qint64 executionDuration() const                                                { return mExecutionDuration; }
+        bool hasBeenExecuted() const                                                    { return mMinMaxExecutionCounter.first > 0; }
 
 		int actionIndexFromRuntimeId(qint64 runtimeId) const;
 		QStringList procedureNames() const;
 		QStringList labels() const;
-        QSet<QString> findVariables(ActionInstance *actionInstance = 0, ActionInstance *excludedActionInstance = 0) const;
+        QSet<QString> findVariables(ActionInstance *actionInstance = nullptr, ActionInstance *excludedActionInstance = nullptr) const;
 
-    signals:
-        void scriptProcessing(int progress, int total, const QString &description);
+        void executionStopped();
+
+        ScriptLineModel *lineModel() const                                              { return mLineModel; }
+        void updateLineModel();
 
 	private:
         Script::ReadResult validateSchema(QIODevice *device, const Tools::Version &scriptVersion, bool tryOlderVersions = true);
@@ -128,21 +143,25 @@ namespace ActionTools
 		QList<ActionInstance *> mActionInstances;
 		ActionFactory *mActionFactory;
 		QString mStatusMessage;
-		int mLine;
-		int mColumn;
+        int mLine{-1};
+        int mColumn{-1};
 		QString mProgramName;
 		Tools::Version mProgramVersion;
 		Tools::Version mScriptVersion;
 		QString mOs;
 		QStringList mMissingActions;
-		int mPauseBefore;
-		int mPauseAfter;
-		QHash<QString, int> mProcedures;
+        int mPauseBefore{0};
+        int mPauseAfter{0};
+		QMap<QString, int> mProcedures;
 		QStack<int> mCallStack;
-        QHash<QString, Resource> mResources;
+		QMap<QString, Resource> mResources;
+        std::pair<int, int> mMinMaxExecutionCounter;
+        qint64 mExecutionDuration;
+        ScriptLineModel *mLineModel;
+        mutable QStringList mLabels;
+        mutable bool mRebuildLabelList{};
 
 		Q_DISABLE_COPY(Script)
 	};
 }
 
-#endif // SCRIPT_H

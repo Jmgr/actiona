@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef EXITINSTANCE_H
-#define EXITINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -33,14 +32,14 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		ExitInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ExitInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			QApplication::quit();
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -48,4 +47,3 @@ namespace Actions
 	};
 }
 
-#endif // EXITINSTANCE_H

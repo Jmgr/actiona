@@ -35,10 +35,7 @@
 #include <QPixmap>
 #include <QApplication>
 #include <QDesktopWidget>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QScreen>
-#endif
 
 #include <algorithm>
 
@@ -46,7 +43,7 @@ namespace Code
 {
 	QScriptValue Image::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Image *image = 0;
+		Image *image = nullptr;
 		
 		switch(context->argumentCount())
 		{
@@ -58,21 +55,21 @@ namespace Code
 				const QScriptValue &argument = context->argument(0);
 
 				QObject *object = argument.toQObject();
-				if(Image *codeImage = qobject_cast<Image*>(object))
+				if(auto codeImage = qobject_cast<Image*>(object))
 					image = new Image(*codeImage);
 				else if(argument.isString())
 				{
 					image = new Image(argument.toString());
 
 					if(image->image().isNull())
-						throwError(context, engine, "LoadImageError", tr("Unable to load image from file %1").arg(argument.toString()));
+						throwError(context, engine, QStringLiteral("LoadImageError"), tr("Unable to load image from file %1").arg(argument.toString()));
 				}
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 			break;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			break;
 		}
 		
@@ -93,23 +90,19 @@ namespace Code
 		{
             WId windowId;
 
-			if(Window *window = qobject_cast<Window *>(context->argument(0).toQObject()))
+			if(auto window = qobject_cast<Window *>(context->argument(0).toQObject()))
 				windowId = window->windowHandle().value();
 			else
 			{
 #ifdef Q_OS_WIN
-				throwError(context, engine, "InvalidWindowError", tr("Invalid window"));
+                throwError(context, engine, QStringLiteral("InvalidWindowError"), tr("Invalid window"));
 				return engine->undefinedValue();
 #else
 				windowId = context->argument(0).toInt32();
 #endif
 			}
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
             return constructor(QGuiApplication::primaryScreen()->grabWindow(windowId).toImage(), engine);
-#else
-            return constructor(QPixmap::grabWindow(windowId).toImage(), engine);
-#endif
 		}
 
         return constructor(ActionTools::ScreenShooter::captureAllScreens().toImage(), engine);
@@ -119,7 +112,7 @@ namespace Code
     {
         if(context->argumentCount() == 0)
         {
-            throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
             return engine->undefinedValue();
         }
 
@@ -128,54 +121,59 @@ namespace Code
 
         if(screenIndex < 0 || screenIndex >= desktop->screenCount())
         {
-            throwError(context, engine, "InvalidScreenIndexError", tr("Invalid screen index"));
+			throwError(context, engine, QStringLiteral("InvalidScreenIndexError"), tr("Invalid screen index"));
             return engine->undefinedValue();
         }
 
         QRect screenGeometry = desktop->screenGeometry(screenIndex);
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QPixmap screenPixmap = QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
-#else
-        QPixmap screenPixmap = QPixmap::grabWindow(desktop->winId(), screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
-#endif
+
         return constructor(screenPixmap.toImage(), engine);
     }
 
 	void Image::registerClass(QScriptEngine *scriptEngine)
 	{
 		CodeTools::addClassToScriptEngine<Image>(scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshot, "takeScreenshot", scriptEngine);
-        CodeTools::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshotUsingScreenIndex, "takeScreenshotUsingScreenIndex", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshot, QStringLiteral("takeScreenshot"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Image>(&takeScreenshotUsingScreenIndex, QStringLiteral("takeScreenshotUsingScreenIndex"), scriptEngine);
 	}
 	
 	const QString Image::filterNames[] =
 	{
-		"ConvolutionFilter",
-		"GaussianBlur",
-		"Defocus",
-		"Highlight",
-		"Sharpen",
-		"SharpenMore",
-		"SharpenEvenMore",
-		"EdgeDetect",
-		"BigEdge",
-		"Emboss",
-		"EmbossColor",
-		"Negative",
-		"RemoveChannel",
-		"Punch"
+		QStringLiteral("ConvolutionFilter"),
+		QStringLiteral("GaussianBlur"),
+		QStringLiteral("Defocus"),
+		QStringLiteral("Highlight"),
+		QStringLiteral("Sharpen"),
+		QStringLiteral("SharpenMore"),
+		QStringLiteral("SharpenEvenMore"),
+		QStringLiteral("EdgeDetect"),
+		QStringLiteral("BigEdge"),
+		QStringLiteral("Emboss"),
+		QStringLiteral("EmbossColor"),
+		QStringLiteral("Negative"),
+		QStringLiteral("RemoveChannel"),
+		QStringLiteral("Punch")
 	};
 	
-	const QStringList Image::filterOptionsNames = QStringList() << "filterChannels" << "filterBorderPolicy" << "convolutionDivisor"
-												  << "convolutionBias" << "" << "radius" << "force" << "center";
+    const QStringList Image::filterOptionsNames =
+    {
+        QStringLiteral("filterChannels"),
+        QStringLiteral("filterBorderPolicy"),
+        QStringLiteral("convolutionDivisor"),
+        QStringLiteral("convolutionBias"),
+        QStringLiteral(""),
+        QStringLiteral("radius"),
+        QStringLiteral("force"),
+        QStringLiteral("center")
+    };
 	
 	Image::Image()
 		: CodeClass(),
-		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
-		  mFindSubImageSearchForOne(false)
+		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this))
+		  
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+        connect(mOpenCVAlgorithms, &ActionTools::OpenCVAlgorithms::finished, this, &Image::findSubImageAsyncFinished);
 	}
 	
 	Image::Image(const Image &other)
@@ -184,7 +182,7 @@ namespace Code
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mFindSubImageSearchForOne(false)
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+        connect(mOpenCVAlgorithms, &ActionTools::OpenCVAlgorithms::finished, this, &Image::findSubImageAsyncFinished);
 	}
 	
 	Image::Image(const QImage &image)
@@ -193,7 +191,7 @@ namespace Code
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mFindSubImageSearchForOne(false)
 	{
-		connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+        connect(mOpenCVAlgorithms, &ActionTools::OpenCVAlgorithms::finished, this, &Image::findSubImageAsyncFinished);
 	}
 
 	Image::Image(const QString &filename)
@@ -202,7 +200,7 @@ namespace Code
 		  mOpenCVAlgorithms(new ActionTools::OpenCVAlgorithms(this)),
 		  mFindSubImageSearchForOne(false)
 	{
-        connect(mOpenCVAlgorithms, SIGNAL(finished(ActionTools::MatchingPointList)), this, SLOT(findSubImageAsyncFinished(ActionTools::MatchingPointList)));
+        connect(mOpenCVAlgorithms, &ActionTools::OpenCVAlgorithms::finished, this, &Image::findSubImageAsyncFinished);
     }
 
 	Image &Image::operator=(Image other)
@@ -245,7 +243,7 @@ namespace Code
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(Image *otherImage = qobject_cast<Image*>(object))
+		if(auto otherImage = qobject_cast<Image*>(object))
 			return (otherImage == this || otherImage->mImage == mImage);
 			
 		return false;
@@ -253,17 +251,17 @@ namespace Code
 
 	QString Image::toString() const
 	{
-        return QString("Image {width: %1, height: %2}").arg(width()).arg(height());
+		return QStringLiteral("Image {width: %1, height: %2}").arg(width()).arg(height());
 	}
 	
 	QScriptValue Image::setData(const QScriptValue &data)
 	{
 		QObject *object = data.toQObject();
-		if(RawData *codeRawData = qobject_cast<RawData*>(object))
+		if(auto codeRawData = qobject_cast<RawData*>(object))
 		{
 			if(!mImage.loadFromData(codeRawData->byteArray()))
 			{
-				throwError("ImageDataError", tr("Unable to set the image data"));
+				throwError(QStringLiteral("ImageDataError"), tr("Unable to set the image data"));
 				return thisObject();
 			}
 		}
@@ -278,9 +276,9 @@ namespace Code
         QBuffer dataBuffer;
 		dataBuffer.open(QIODevice::WriteOnly);
 		
-        if(!mImage.save(&dataBuffer, format.toLatin1()))
+		if(!mImage.save(&dataBuffer, format.toLatin1().constData()))
 		{
-			throwError("ImageDataError", tr("Unable to get the image data"));
+			throwError(QStringLiteral("ImageDataError"), tr("Unable to get the image data"));
 			return engine()->undefinedValue();
 		}
 		
@@ -291,7 +289,7 @@ namespace Code
 	{
 		if(!mImage.load(filename))
 		{
-			throwError("LoadImageError", tr("Unable to load image from file %1").arg(filename));
+			throwError(QStringLiteral("LoadImageError"), tr("Unable to load image from file %1").arg(filename));
 			return thisObject();
 		}
 	
@@ -302,7 +300,7 @@ namespace Code
 	{
 		if(!mImage.save(filename))
 		{
-			throwError("SaveImageError", tr("Unable to save image to file %1").arg(filename));
+			throwError(QStringLiteral("SaveImageError"), tr("Unable to save image to file %1").arg(filename));
 			return thisObject();
 		}
 	
@@ -314,7 +312,7 @@ namespace Code
 		QtImageFilter *imageFilter = QtImageFilterFactory::createImageFilter(filterNames[filter]);
 		if(!imageFilter)
 		{
-			throwError("ApplyFilterError", tr("Unable to apply filter"));
+			throwError(QStringLiteral("ApplyFilterError"), tr("Unable to apply filter"));
 			return thisObject();
 		}
 		
@@ -327,7 +325,7 @@ namespace Code
 			if(optionIndex == -1)
 				continue;
 			
-			QtImageFilter::FilterOption option = static_cast<QtImageFilter::FilterOption>(optionIndex + 1);
+			auto option = static_cast<QtImageFilter::FilterOption>(optionIndex + 1);
 			QVariant value;
 
 			switch(option)
@@ -343,7 +341,7 @@ namespace Code
 				value = it.value().toNumber();
 				break;
 			case QtImageFilter::Center:
-				value = QPointF(it.value().property("x").toNumber(), it.value().property("y").toNumber());
+				value = QPointF(it.value().property(QStringLiteral("x")).toNumber(), it.value().property(QStringLiteral("y")).toNumber());
 				break;
 			default:
 				break;
@@ -351,7 +349,7 @@ namespace Code
 			
 			if(!imageFilter->setOption(option, value))
 			{
-				throwError("ApplyFilterError", tr("Cannot set filter option %1 %2").arg(it.name()).arg(value.toString()));
+				throwError(QStringLiteral("ApplyFilterError"), tr("Cannot set filter option %1 %2").arg(it.name()).arg(value.toString()));
 				return thisObject();
 			}
 		}
@@ -371,7 +369,7 @@ namespace Code
 		if(context()->argumentCount() == 3)
 		{
 			QObject *object = color.toQObject();
-			if(Color *codeColor = qobject_cast<Color*>(object))
+			if(auto codeColor = qobject_cast<Color*>(object))
 				mImage.setPixel(x, y, codeColor->color().rgb());
 			else
 				mImage.setPixel(x, y, QColor(color.toString()).rgb());
@@ -468,7 +466,7 @@ namespace Code
 
 	QScriptValue Image::findSubImage(const QScriptValue &otherImage, const QScriptValue &options) const
 	{
-		if(Image *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
+		if(auto codeImage = qobject_cast<Image*>(otherImage.toQObject()))
 		{
 			ActionTools::MatchingPointList matchingPointList;
 
@@ -481,7 +479,7 @@ namespace Code
 
             if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, 1, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
-				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
+				throwError(QStringLiteral("FindSubImageError"), tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return QScriptValue();
 			}
 
@@ -491,14 +489,14 @@ namespace Code
 			const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
 			QScriptValue back = engine()->newObject();
 
-            back.setProperty("position", Point::constructor(matchingPoint.position, engine()));
-            back.setProperty("confidence", matchingPoint.confidence);
+			back.setProperty(QStringLiteral("position"), Point::constructor(matchingPoint.position, engine()));
+			back.setProperty(QStringLiteral("confidence"), matchingPoint.confidence);
 
 			return back;
 		}
 		else
 		{
-			throwError("ParameterTypeError", tr("Incorrect parameter type"));
+			throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			return QScriptValue();
 		}
 	}
@@ -510,7 +508,7 @@ namespace Code
 
 	QScriptValue Image::findSubImages(const QScriptValue &otherImage, const QScriptValue &options) const
 	{
-		if(Image *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
+		if(auto codeImage = qobject_cast<Image*>(otherImage.toQObject()))
 		{
 			ActionTools::MatchingPointList matchingPointList;
 
@@ -524,7 +522,7 @@ namespace Code
 
             if(!mOpenCVAlgorithms->findSubImage(QList<QImage>() << mImage, codeImage->image(), matchingPointList, confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
-				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
+				throwError(QStringLiteral("FindSubImageError"), tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return QScriptValue();
 			}
 
@@ -541,8 +539,8 @@ namespace Code
 			{
 				QScriptValue object = engine()->newObject();
 
-                object.setProperty("position", Point::constructor(matchingPointIt->position, engine()));
-                object.setProperty("confidence", matchingPointIt->confidence);
+				object.setProperty(QStringLiteral("position"), Point::constructor(matchingPointIt->position, engine()));
+				object.setProperty(QStringLiteral("confidence"), matchingPointIt->confidence);
 
 				back.setProperty(index, object);
 
@@ -554,7 +552,7 @@ namespace Code
 		}
 		else
 		{
-			throwError("ParameterTypeError", tr("Incorrect parameter type"));
+			throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			return QScriptValue();
 		}
 	}
@@ -565,11 +563,11 @@ namespace Code
 
 		if(!callback.isFunction())
 		{
-			throwError("FindSubImageError", tr("Parameter \"callback\" is not a function"));
+			throwError(QStringLiteral("FindSubImageError"), tr("Parameter \"callback\" is not a function"));
 			return thisObject();
 		}
 
-		if(Image *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
+		if(auto codeImage = qobject_cast<Image*>(otherImage.toQObject()))
 		{
 			int confidenceMinimum;
 			int downPyramidCount;
@@ -580,7 +578,7 @@ namespace Code
 
             if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, 1, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
-				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
+				throwError(QStringLiteral("FindSubImageError"), tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return thisObject();
 			}
 
@@ -590,7 +588,7 @@ namespace Code
 		}
 		else
 		{
-			throwError("ParameterTypeError", tr("Incorrect parameter type"));
+			throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			return thisObject();
 		}
 	}
@@ -601,11 +599,11 @@ namespace Code
 
 		if(!callback.isFunction())
 		{
-			throwError("FindSubImageError", tr("Parameter \"callback\" is not a function"));
+			throwError(QStringLiteral("FindSubImageError"), tr("Parameter \"callback\" is not a function"));
 			return thisObject();
 		}
 
-		if(Image *codeImage = qobject_cast<Image*>(otherImage.toQObject()))
+		if(auto codeImage = qobject_cast<Image*>(otherImage.toQObject()))
 		{
 			int confidenceMinimum;
 			int downPyramidCount;
@@ -617,7 +615,7 @@ namespace Code
 
             if(!mOpenCVAlgorithms->findSubImageAsync(QList<QImage>() << mImage, codeImage->image(), confidenceMinimum, maximumMatches, downPyramidCount, searchExpansion, static_cast<ActionTools::OpenCVAlgorithms::AlgorithmMethod>(method)))
 			{
-				throwError("FindSubImageError", tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
+				throwError(QStringLiteral("FindSubImageError"), tr("Error while searching for a sub-image: %1").arg(mOpenCVAlgorithms->errorString()));
 				return thisObject();
 			}
 
@@ -627,7 +625,7 @@ namespace Code
 		}
 		else
 		{
-			throwError("ParameterTypeError", tr("Incorrect parameter type"));
+			throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			return thisObject();
 		}
 	}
@@ -648,8 +646,8 @@ namespace Code
 				const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
 				QScriptValue back = mFindSubImageAsyncFunction.engine()->newObject();
 
-                back.setProperty("position", CodeClass::constructor(new Point(matchingPoint.position), mFindSubImageAsyncFunction.engine()));
-                back.setProperty("confidence", matchingPoint.confidence);
+				back.setProperty(QStringLiteral("position"), CodeClass::constructor(new Point(matchingPoint.position), mFindSubImageAsyncFunction.engine()));
+				back.setProperty(QStringLiteral("confidence"), matchingPoint.confidence);
 
 				mFindSubImageAsyncFunction.call(thisObject(), QScriptValueList() << back);
 			}
@@ -666,8 +664,8 @@ namespace Code
 				{
 					QScriptValue object = mFindSubImageAsyncFunction.engine()->newObject();
 
-                    object.setProperty("position", CodeClass::constructor(new Point(matchingPointIt->position), mFindSubImageAsyncFunction.engine()));
-                    object.setProperty("confidence", matchingPointIt->confidence);
+					object.setProperty(QStringLiteral("position"), CodeClass::constructor(new Point(matchingPointIt->position), mFindSubImageAsyncFunction.engine()));
+					object.setProperty(QStringLiteral("confidence"), matchingPointIt->confidence);
 
 					back.setProperty(index, object);
 
@@ -703,15 +701,15 @@ namespace Code
 		{
 			it.next();
 
-			if(confidenceMinimum && it.name() == "confidenceMinimum")
+			if(confidenceMinimum && it.name() == QStringLiteral("confidenceMinimum"))
 				*confidenceMinimum = it.value().toInt32();
-			else if(maximumMatches && it.name() == "maximumMatches")
+			else if(maximumMatches && it.name() == QStringLiteral("maximumMatches"))
 				*maximumMatches = it.value().toInt32();
-			else if(downPyramidCount && it.name() == "downPyramidCount")
+			else if(downPyramidCount && it.name() == QStringLiteral("downPyramidCount"))
 				*downPyramidCount = it.value().toInt32();
-			else if(searchExpansion && it.name() == "searchExpansion")
+			else if(searchExpansion && it.name() == QStringLiteral("searchExpansion"))
 				*searchExpansion = it.value().toInt32();
-            else if(searchExpansion && it.name() == "method")
+			else if(searchExpansion && it.name() == QStringLiteral("method"))
                 *method = static_cast<AlgorithmMethod>(it.value().toInt32());
 		}
 	}

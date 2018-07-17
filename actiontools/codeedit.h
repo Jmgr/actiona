@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEEDIT_H
-#define CODEEDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -39,7 +38,7 @@ namespace ActionTools
 		friend class LineNumberArea;
 
 	public:
-		explicit CodeEdit(QWidget *parent = 0);
+		explicit CodeEdit(QWidget *parent = nullptr);
 
 		void setCode(bool code);
 		bool isCode() const							{ return mCode; }
@@ -63,23 +62,22 @@ namespace ActionTools
 	private:
 		void indentOrUnindent(bool doIndent);
 		void lineNumberAreaPaintEvent(QPaintEvent *event);
-		void resizeEvent(QResizeEvent *event);
+		void resizeEvent(QResizeEvent *event) override;
 		QString textUnderCursor() const;
-		void focusInEvent(QFocusEvent *event);
+		void focusInEvent(QFocusEvent *event) override;
 		void autoComplete();
-		void keyPressEvent(QKeyEvent *event);
-		void keyReleaseEvent(QKeyEvent *event);
-		bool event(QEvent *event);
+		void keyPressEvent(QKeyEvent *event) override;
+		void keyReleaseEvent(QKeyEvent *event) override;
+		bool event(QEvent *event) override;
 
 		ScriptCompleter *mCompleter;
 		CodeHighlighter *mHighlighter;
 		QWidget *mLineNumberArea;
-		bool mCode;
+		bool mCode{true};
 		QString mLastSyntaxError;
-		bool mCompletionModelSet;
+		bool mCompletionModelSet{false};
 
 		Q_DISABLE_COPY(CodeEdit)
 	};
 }
 
-#endif // CODEEDIT_H

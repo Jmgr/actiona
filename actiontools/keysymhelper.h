@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYSYMHELPER_H
-#define KEYSYMHELPER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -55,4 +54,3 @@ namespace ActionTools
 
 #endif
 
-#endif // KEYSYMHELPER_H

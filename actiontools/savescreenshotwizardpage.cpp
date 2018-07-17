@@ -63,7 +63,7 @@ namespace ActionTools
 
         QFileInfo fileInfo(filename);
         if(fileInfo.completeSuffix() == QString())
-            filename += ".png";
+			filename += QStringLiteral(".png");
 
         if(!capturePixmap().save(filename))
         {

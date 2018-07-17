@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ITEMLISTVIEW_H
-#define ITEMLISTVIEW_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -31,14 +30,14 @@ namespace ActionTools
 	{
 		Q_OBJECT
 	public:
-		explicit ItemListView(QWidget *parent = 0);
+		explicit ItemListView(QWidget *parent = nullptr);
 
 	protected:
-		virtual void keyPressEvent(QKeyEvent *event);
-		virtual void dragMoveEvent(QDragMoveEvent *event);
-		virtual void dragLeaveEvent(QDragLeaveEvent* event);
-		virtual void dropEvent(QDropEvent* event);
-		virtual void paintEvent(QPaintEvent* event);
+		void keyPressEvent(QKeyEvent *event) override;
+		void dragMoveEvent(QDragMoveEvent *event) override;
+		void dragLeaveEvent(QDragLeaveEvent* event) override;
+		void dropEvent(QDropEvent* event) override;
+		void paintEvent(QPaintEvent* event) override;
 
 	signals:
 		void removeCurrentItem();
@@ -49,4 +48,3 @@ namespace ActionTools
 	};
 }
 
-#endif // ITEMLISTVIEW_H

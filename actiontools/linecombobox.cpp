@@ -19,26 +19,37 @@
 */
 
 #include "linecombobox.h"
+#include "script.h"
+#include "scriptlinemodel.h"
 
 namespace ActionTools
 {
-    LineComboBox::LineComboBox(const QStringList &labels, QWidget *parent)
-        : CodeComboBox(parent)
+    LineComboBox::LineComboBox(Script &script, QWidget *parent)
+        : CodeComboBox(parent),
+          mScript{script}
 	{
-        setup(labels);
-	}
-	
-    void LineComboBox::setup(const QStringList &labels)
-	{
-		clear();
-		
-		if(labels.size() > 0)
-		{
-			addItem(QObject::tr("Labels"), "header");
-			addItems(labels);
-		}
+        delete model();
+        setModel(mScript.lineModel());
+    }
 
-        if(labels.size() > 0)
-			setCurrentIndex(1);
-	}
+    void LineComboBox::setFromSubParameter(const SubParameter &subParameter)
+    {
+        setValue(subParameter.isCode(), subParameter.value());
+    }
+
+    void LineComboBox::setValue(bool code, const QString &lineOrLabel)
+    {
+        setCode(code);
+
+        if(isCode())
+            setEditText(lineOrLabel);
+        else
+        {
+            auto line = findText(lineOrLabel);
+            if(line != -1)
+                setCurrentIndex(line);
+            else
+                setEditText(lineOrLabel);
+        }
+    }
 }

@@ -37,12 +37,12 @@ SFXScriptDialog::SFXScriptDialog(QWidget *parent)
 	}
 
 	QSettings settings;
-	ui->disableTrayIcon->setChecked(settings.value("sfxScript/disableTrayIcon", true).toBool());
-	ui->showConsole->setChecked(settings.value("sfxScript/showConsole", false).toBool());
-	ui->showExecutionWindow->setChecked(settings.value("sfxScript/showExecutionWindow", false).toBool());
-	ui->closeAfterExecution->setChecked(settings.value("sfxScript/closeAfterExecution", true).toBool());
-	ui->use32BitBinaries->setChecked(settings.value("sfxScript/use32BitBinaries", true).toBool());
-    ui->requiresActiona->setChecked(settings.value("sfxScript/requiresActiona", false).toBool());
+	ui->disableTrayIcon->setChecked(settings.value(QStringLiteral("sfxScript/disableTrayIcon"), true).toBool());
+	ui->showConsole->setChecked(settings.value(QStringLiteral("sfxScript/showConsole"), false).toBool());
+	ui->showExecutionWindow->setChecked(settings.value(QStringLiteral("sfxScript/showExecutionWindow"), false).toBool());
+	ui->closeAfterExecution->setChecked(settings.value(QStringLiteral("sfxScript/closeAfterExecution"), true).toBool());
+	ui->use32BitBinaries->setChecked(settings.value(QStringLiteral("sfxScript/use32BitBinaries"), true).toBool());
+	ui->requiresActiona->setChecked(settings.value(QStringLiteral("sfxScript/requiresActiona"), false).toBool());
 
     on_requiresActiona_clicked();
 }
@@ -85,12 +85,12 @@ bool SFXScriptDialog::requiresActiona() const
 void SFXScriptDialog::accept()
 {
 	QSettings settings;
-	settings.setValue("sfxScript/disableTrayIcon", ui->disableTrayIcon->isChecked());
-	settings.setValue("sfxScript/showConsole", ui->showConsole->isChecked());
-	settings.setValue("sfxScript/showExecutionWindow", ui->showExecutionWindow->isChecked());
-	settings.setValue("sfxScript/closeAfterExecution", ui->closeAfterExecution->isChecked());
-	settings.setValue("sfxScript/use32BitBinaries", ui->use32BitBinaries->isChecked());
-    settings.setValue("sfxScript/requiresActiona", ui->requiresActiona->isChecked());
+	settings.setValue(QStringLiteral("sfxScript/disableTrayIcon"), ui->disableTrayIcon->isChecked());
+	settings.setValue(QStringLiteral("sfxScript/showConsole"), ui->showConsole->isChecked());
+	settings.setValue(QStringLiteral("sfxScript/showExecutionWindow"), ui->showExecutionWindow->isChecked());
+	settings.setValue(QStringLiteral("sfxScript/closeAfterExecution"), ui->closeAfterExecution->isChecked());
+	settings.setValue(QStringLiteral("sfxScript/use32BitBinaries"), ui->use32BitBinaries->isChecked());
+	settings.setValue(QStringLiteral("sfxScript/requiresActiona"), ui->requiresActiona->isChecked());
 
 	QDialog::accept();
 }

@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef MAILATTACHMENT_H
-#define MAILATTACHMENT_H
+#pragma once
 
 #include "code/codeclass.h"
 #include "qxtsmtp/qxtmailattachment.h"
@@ -53,8 +52,8 @@ namespace Code
 
     public slots:
         QScriptValue clone() const;
-        QString toString() const                                                { return "MailAttachment"; }
-        virtual bool equals(const QScriptValue &other) const                    { return defaultEqualsImplementation<MailAttachment>(other); }
+		QString toString() const override                                                { return QStringLiteral("MailAttachment"); }
+        bool equals(const QScriptValue &other) const override                    { return defaultEqualsImplementation<MailAttachment>(other); }
 
         QScriptValue setExtraHeader(const QString &name, const QString &value)  { mAttachment.setExtraHeader(name, value); return thisObject(); }
         QScriptValue removeExtraHeader(const QString &name)                     { mAttachment.removeExtraHeader(name); return thisObject(); }
@@ -67,4 +66,3 @@ namespace Code
     };
 }
 
-#endif // MAILATTACHMENT_H

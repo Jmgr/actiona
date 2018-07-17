@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MESSAGEBOX_H
-#define MESSAGEBOX_H
+#pragma once
 
 #include "basewindow.h"
 
@@ -69,14 +68,14 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
 		MessageBox();
-		~MessageBox();
+		~MessageBox() override;
 		
 		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
 		
 		QScriptValue onClosed() const										{ return mOnClosed; }
 
 	public slots:
-		QString toString() const					{ return "MessageBox"; }
+		QString toString() const override					{ return QStringLiteral("MessageBox"); }
 		QScriptValue setText(const QString &text);
 		QScriptValue setDetailedText(const QString &detailedText);
 		QScriptValue setInformativeText(const QString &informativeText);
@@ -98,4 +97,3 @@ namespace Code
 	};
 }
 
-#endif // MESSAGEBOX_H

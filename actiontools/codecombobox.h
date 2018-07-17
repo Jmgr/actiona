@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODECOMBOBOX_H
-#define CODECOMBOBOX_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -38,15 +37,15 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit CodeComboBoxDelegate(QObject *parent = 0) : QStyledItemDelegate(parent)		{}
-		void paint(QPainter * painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+		explicit CodeComboBoxDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent)		{}
+        void paint(QPainter * painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	};
 
 	class CodeComboBoxModel : public QStandardItemModel
 	{
 	public:
-		explicit CodeComboBoxModel(QObject *parent = 0) : QStandardItemModel(parent)	{}
-		Qt::ItemFlags flags(const QModelIndex &index) const;
+		explicit CodeComboBoxModel(QObject *parent = nullptr) : QStandardItemModel(parent)	{}
+        Qt::ItemFlags flags(const QModelIndex &index) const override;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT CodeComboBox : public QComboBox, public AbstractCodeEditor
@@ -55,17 +54,17 @@ namespace ActionTools
 		Q_PROPERTY(bool code READ isCode WRITE setCode)
 
 	public:
-        explicit CodeComboBox(QWidget * parent = 0);
+        explicit CodeComboBox(QWidget * parent = nullptr);
 
 		CodeLineEdit *codeLineEdit() const;
 
 		bool isCode() const;
 		void setCode(bool code);
 
-		void openEditor(int line = -1, int column = -1);
-		void setCompletionModel(QAbstractItemModel *completionModel);
-        void setParameterContainer(const ParameterContainer *parameterContainer);
-        QSet<QString> findVariables() const;
+        void openEditor(int line = -1, int column = -1) override;
+        void setCompletionModel(QAbstractItemModel *completionModel) override;
+        void setParameterContainer(const ParameterContainer *parameterContainer) override;
+        QSet<QString> findVariables() const override;
 
 	signals:
 		void codeChanged(bool code);
@@ -75,4 +74,3 @@ namespace ActionTools
 	};
 }
 
-#endif // CODECOMBOBOX_H

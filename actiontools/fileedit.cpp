@@ -27,8 +27,8 @@ namespace ActionTools
 {
 	FileEdit::FileEdit(QWidget *parent)
 		: QWidget(parent),
-		ui(new Ui::FileEdit),
-		mMode(FileOpen)
+		ui(new Ui::FileEdit)
+		
 	{
 		ui->setupUi(this);
 	}

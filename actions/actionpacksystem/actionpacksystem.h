@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACKSYSTEM_H
-#define ACTIONPACKSYSTEM_H
+#pragma once
 
 #include "actionpack.h"
 #include "actions/commanddefinition.h"
@@ -31,6 +30,10 @@
 #include "actions/detachedcommanddefinition.h"
 #include "actions/playsounddefinition.h"
 #include "actions/findimagedefinition.h"
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include "actions/texttospeechdefinition.h"
+#endif
 
 #include "code/system.h"
 #include "code/mediaplaylist.h"
@@ -48,14 +51,12 @@ class ActionPackSystem : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 	Q_INTERFACES(ActionTools::ActionPack)
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "system.json")
-#endif
 
 public:
-	ActionPackSystem() {}
+    ActionPackSystem()                           = default;
 
-	void createDefinitions()
+	void createDefinitions() override
 	{
 		addActionDefinition(new Actions::CommandDefinition(this));
 		addActionDefinition(new Actions::KillProcessDefinition(this));
@@ -66,29 +67,27 @@ public:
 		addActionDefinition(new Actions::DetachedCommandDefinition(this));
 		addActionDefinition(new Actions::PlaySoundDefinition(this));
 		addActionDefinition(new Actions::FindImageDefinition(this));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+        addActionDefinition(new Actions::TextToSpeechDefinition(this));
+#endif
 	}
 
-	QString id() const							{ return "system"; }
-	QString name() const						{ return tr("Actions dealing with the operating system"); }
-	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
+	QString id() const override							{ return QStringLiteral("system"); }
+	QString name() const override						{ return tr("Actions dealing with the operating system"); }
+	Tools::Version version() const override				{ return Tools::Version(0, 0, 1); }
 
-	void codeInit(QScriptEngine *scriptEngine) const
+	void codeInit(QScriptEngine *scriptEngine) const override
 	{
-		addCodeClass<Code::System>("System", scriptEngine);
-		addCodeClass<Code::MediaPlaylist>("MediaPlaylist", scriptEngine);
-		addCodeClass<Code::Notify>("Notify", scriptEngine);
-		addCodeClass<Code::Process>("Process", scriptEngine);
-		addCodeStaticMethod(&Code::Process::list, "Process", "list", scriptEngine);
-		addCodeStaticMethod(&Code::Process::startDetached, "Process", "startDetached", scriptEngine);
-		addCodeStaticMethod(&Code::Process::thisProcess, "Process", "thisProcess", scriptEngine);
+		addCodeClass<Code::System>(QStringLiteral("System"), scriptEngine);
+		addCodeClass<Code::MediaPlaylist>(QStringLiteral("MediaPlaylist"), scriptEngine);
+		addCodeClass<Code::Notify>(QStringLiteral("Notify"), scriptEngine);
+		addCodeClass<Code::Process>(QStringLiteral("Process"), scriptEngine);
+		addCodeStaticMethod(&Code::Process::list, QStringLiteral("Process"), QStringLiteral("list"), scriptEngine);
+		addCodeStaticMethod(&Code::Process::startDetached, QStringLiteral("Process"), QStringLiteral("startDetached"), scriptEngine);
+		addCodeStaticMethod(&Code::Process::thisProcess, QStringLiteral("Process"), QStringLiteral("thisProcess"), scriptEngine);
 	}
 
 private:
 	Q_DISABLE_COPY(ActionPackSystem)
 };
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-Q_EXPORT_PLUGIN2(ActionPackSystem, ActionPackSystem)
-#endif
-
-#endif // ACTIONPACKSYSTEM_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READCLIPBOARDDEFINITION_H
-#define READCLIPBOARDDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readclipboardinstance.h"
@@ -34,7 +33,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ReadClipboardDefinition : public QObject, public ActionTools::ActionDefinition
+	class ReadClipboardDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -42,22 +41,20 @@ namespace Actions
 		explicit ReadClipboardDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::VariableParameterDefinition *output = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			output->setTooltip(tr("The variable where to save the current clipboard value"));
-			addElement(output);
+            auto &output = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            output.setTooltip(tr("The variable where to save the current clipboard value"));
 		}
 
-		QString name() const													{ return QObject::tr("Read clipboard"); }
-		QString id() const														{ return "ActionReadClipboard"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read the clipboard contents"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadClipboardInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/readclipboard.png"); }
+		QString name() const override													{ return QObject::tr("Read clipboard"); }
+		QString id() const override														{ return QStringLiteral("ActionReadClipboard"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Read the clipboard contents"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadClipboardInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readclipboard.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadClipboardDefinition)
 	};
 }
 
-#endif // READCLIPBOARDDEFINITION_H

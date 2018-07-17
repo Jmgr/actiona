@@ -27,7 +27,7 @@ namespace Code
 {
 	QScriptValue Rect::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Rect *rect = 0;
+		Rect *rect = nullptr;
 		
 		switch(context->argumentCount())
 		{
@@ -40,7 +40,7 @@ namespace Code
 				if(Rect *codeRect = qobject_cast<Rect*>(object))
 					rect = new Rect(*codeRect);
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 			break;
 		case 4:
@@ -50,7 +50,7 @@ namespace Code
 								  context->argument(3).toInt32()));
 			break;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			break;
 		}
 		
@@ -75,16 +75,16 @@ namespace Code
 				if(Rect *rect = qobject_cast<Rect*>(object))
 					return rect->mRect;
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
-			return QRect();
+			return {};
 		case 4:
 			return QRect(context->argument(0).toInt32(),
 						 context->argument(1).toInt32(),
 						 context->argument(2).toInt32(),
 						 context->argument(3).toInt32());
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return QRect();
 		}
 	}
@@ -202,7 +202,7 @@ namespace Code
 	
 	QString Rect::toString() const
 	{
-        return QString("Rect {x: %1, y: %2, width: %3, height: %4}").arg(x()).arg(y()).arg(width()).arg(height());
+		return QStringLiteral("Rect {x: %1, y: %2, width: %3, height: %4}").arg(x()).arg(y()).arg(width()).arg(height());
 	}
 	
 	QScriptValue Rect::normalize()
@@ -304,12 +304,12 @@ namespace Code
 		case 1:
 			{
 				QObject *object = point.toQObject();
-				if(Point *codePoint = qobject_cast<Point*>(object))
+				if(auto codePoint = qobject_cast<Point*>(object))
 					return mRect.contains(codePoint->point());
 				else if(Rect *codeRect = qobject_cast<Rect*>(object))
 					return (codeRect == this || mRect.contains(codeRect->mRect));
 				else
-					throwError("ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 			return false;
 		case 2:
@@ -320,7 +320,7 @@ namespace Code
 										context()->argument(2).toInt32(),
 										context()->argument(3).toInt32()));
 		default:
-			throwError("ParameterCountError", tr("Incorrect parameter count"));
+			throwError(QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return false;
 		}
 	}

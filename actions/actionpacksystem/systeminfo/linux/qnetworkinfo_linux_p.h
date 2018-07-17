@@ -79,8 +79,8 @@ class QNetworkInfoPrivate : public QObject
     Q_OBJECT
 
 public:
-    QNetworkInfoPrivate(QNetworkInfo *parent = 0);
-    ~QNetworkInfoPrivate();
+    QNetworkInfoPrivate(QNetworkInfo *parent = nullptr);
+    ~QNetworkInfoPrivate() override;
 
     int networkInterfaceCount(QNetworkInfo::NetworkMode mode);
     int networkSignalStrength(QNetworkInfo::NetworkMode mode, int interface);
@@ -113,8 +113,8 @@ Q_SIGNALS:
     void networkStatusChanged(QNetworkInfo::NetworkMode mode, int interface, QNetworkInfo::NetworkStatus status);
 
 protected:
-    void connectNotify(const QMetaMethod &signal);
-    void disconnectNotify(const QMetaMethod &signal);
+    void connectNotify(const QMetaMethod &signal) override;
+    void disconnectNotify(const QMetaMethod &signal) override;
 
 private Q_SLOTS:
 #if !defined(QT_NO_UDEV)
@@ -133,18 +133,18 @@ private:
     QNetworkInfo::NetworkStatus getNetworkStatus(QNetworkInfo::NetworkMode mode, int interface);
     QString getNetworkName(QNetworkInfo::NetworkMode mode, int interface);
 
-    bool watchCurrentNetworkMode;
-    bool watchNetworkInterfaceCount;
-    bool watchNetworkSignalStrength;
-    bool watchNetworkStatus;
-    bool watchNetworkName;
+    bool watchCurrentNetworkMode{false};
+    bool watchNetworkInterfaceCount{false};
+    bool watchNetworkSignalStrength{false};
+    bool watchNetworkStatus{false};
+    bool watchNetworkName{false};
     QNetworkInfo::NetworkMode currentMode;
     QMap<QNetworkInfo::NetworkMode, int> networkInterfaceCounts;
     QMap<QPair<QNetworkInfo::NetworkMode, int>, int> networkSignalStrengths;
     QMap<QPair<QNetworkInfo::NetworkMode, int>, QNetworkInfo::NetworkStatus> networkStatuses;
     QMap<QPair<QNetworkInfo::NetworkMode, int>, QString> networkNames;
 
-    QTimer *timer;
+    QTimer *timer{nullptr};
 
 #if !defined(QT_NO_OFONO)
     QOfonoWrapper *ofonoWrapper;

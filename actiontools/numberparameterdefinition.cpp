@@ -28,7 +28,7 @@ namespace ActionTools
 {
     NumberParameterDefinition::NumberParameterDefinition(const Name &name, QObject *parent)
         : ParameterDefinition(name, parent),
-		mSpinBox(0),
+		mSpinBox(nullptr),
 		mMaximum(99),
 		mMinimum(0),
 		mSingleStep(1)
@@ -53,11 +53,11 @@ namespace ActionTools
 
 	void NumberParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-        SubParameter subParameter = actionInstance->subParameter(name().original(), "value");
+		SubParameter subParameter = actionInstance->subParameter(name().original(), QStringLiteral("value"));
 
         mSpinBox->setFromSubParameter(subParameter);
 
-        if(!subParameter.isCode() && !mSpecialValueText.isEmpty() && subParameter.value().toString() == QString::number(mMinimum))
+        if(!subParameter.isCode() && !mSpecialValueText.isEmpty() && subParameter.value() == QString::number(mMinimum))
             mSpinBox->setValue(mMinimum);//Special case to display the special value text
 	}
 
@@ -68,6 +68,6 @@ namespace ActionTools
         if(!mSpecialValueText.isEmpty() && text == mSpecialValueText)
             text = QString::number(mSpinBox->value());
 
-        actionInstance->setSubParameter(name().original(), "value", mSpinBox->isCode(), text);
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mSpinBox->isCode(), text);
 	}
 }

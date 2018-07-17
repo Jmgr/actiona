@@ -30,7 +30,7 @@ namespace Actions
           mCurrentCharacter(0),
           mNoUnicodeCharacters(false)
 	{
-		connect(mTimer, SIGNAL(timeout()), this, SLOT(pressNextKey()));
+        connect(mTimer, &QTimer::timeout, this, &TextInstance::pressNextKey);
 
 		mTimer->setSingleShot(false);
 	}
@@ -39,9 +39,9 @@ namespace Actions
 	{
 		bool ok = true;
 	
-		mText = evaluateString(ok, "text");
-		int pause  = evaluateInteger(ok, "pause");
-        mNoUnicodeCharacters = evaluateBoolean(ok, "noUnicodeCharacters");
+		mText = evaluateString(ok, QStringLiteral("text"));
+		int pause  = evaluateInteger(ok, QStringLiteral("pause"));
+		mNoUnicodeCharacters = evaluateBoolean(ok, QStringLiteral("noUnicodeCharacters"));
 
 		if(pause < 0)
 			pause = 0;
@@ -60,7 +60,10 @@ namespace Actions
 				return;
 			}
 
-			QTimer::singleShot(1, this, SIGNAL(executionEnded()));
+            QTimer::singleShot(1, this, [this]
+            {
+                executionEnded();
+            });
 		}
 		else
 		{
@@ -94,7 +97,10 @@ namespace Actions
 		{
 			mTimer->stop();
 
-			QTimer::singleShot(1, this, SIGNAL(executionEnded()));
+            QTimer::singleShot(1, this, [this]
+            {
+                executionEnded();
+            });
 
 			return;
 		}

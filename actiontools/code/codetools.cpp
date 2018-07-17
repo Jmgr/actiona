@@ -39,7 +39,7 @@ namespace Code
 
 	QString CodeTools::removeCodeNamespace(const QString &className)
 	{
-		if(className.startsWith("Code::"))
+		if(className.startsWith(QStringLiteral("Code::")))
 			return className.right(className.size() - 6);
 		else
 			return className;

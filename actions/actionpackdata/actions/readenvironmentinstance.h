@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READENVIRONMENTINSTANCE_H
-#define READENVIRONMENTINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -38,16 +37,15 @@ namespace Actions
             oneVariableMode
 		};
 
-		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
         static Tools::StringListPair modes;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		Q_DISABLE_COPY(ReadEnvironmentVariableInstance)
 	};
 }
 
-#endif // READENVIRONMENTINSTANCE_H

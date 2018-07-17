@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef UPDATER_H
-#define UPDATER_H
+#pragma once
 
 #include "tools_global.h"
 #include "version.h"
@@ -56,8 +55,8 @@ namespace Tools
 			Rpm
 		};
 		
-		Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent = 0);
-		~Updater();
+		Updater(QNetworkAccessManager *networkAccessManager, const QUrl &url, int timeout, QObject *parent = nullptr);
+		~Updater() override ;
 		
         void checkForUpdates(const QString &program,
                              const Version &programVersion,
@@ -95,4 +94,3 @@ namespace Tools
 	};
 }
 
-#endif // UPDATER_H

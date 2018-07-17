@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef NUMBERFORMAT_H
-#define NUMBERFORMAT_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -31,12 +30,12 @@ namespace ActionTools
     {
     public:
         static QString sizeString(quint64 size);
+        static QString labelIndexString(int rowIndex);
 
     private:
         static QString numberFormat(const QStringList &units, double value);
 
-        NumberFormat() {}
+        NumberFormat() = default;
     };
 }
 
-#endif // NUMBERFORMAT_H

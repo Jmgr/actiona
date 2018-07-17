@@ -27,32 +27,43 @@
 #include <QLibraryInfo>
 #include <QDir>
 
+#include <utility>
+
 namespace Tools
 {
-    QPair<QStringList, QStringList> Languages::m_languagesName = qMakePair(
-                QStringList()   << "" << "en_US" << "fr_FR",
-                QStringList()   << QT_TRANSLATE_NOOP("languagesName", "System language (if available)")
-                                << QT_TRANSLATE_NOOP("languagesName", "English (US)")
-                << QT_TRANSLATE_NOOP("languagesName", "French (France)"));
+    StringListPair Languages::m_languagesName =
+    {
+        {
+            QStringLiteral(""),
+            QStringLiteral("en_US"),
+            QStringLiteral("fr_FR")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "System language (if available)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "English (US)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "French (France)"))
+        }
+    };
+
     bool Languages::m_areLanguagesNameTranslated = false;
 
     QString Languages::locale()
     {
         QSettings settings;
-        QString locale = settings.value("gui/locale").toString();
+		QString locale = settings.value(QStringLiteral("gui/locale")).toString();
 
         if(locale.isEmpty())
         {
             locale = QLocale::system().name();
 
-    #ifdef Q_OS_WIN
-            QString installerLanguage = settings.value("installerLanguage").toString();
+	#ifdef Q_OS_WIN
+			QString installerLanguage = settings.value(QStringLiteral("installerLanguage")).toString();
             if(!installerLanguage.isEmpty())
             {
-                if(installerLanguage == "english")
-                    locale = "en_US";
-                else if(installerLanguage == "french")
-                    locale = "fr_FR";
+				if(installerLanguage == QLatin1String("english"))
+					locale = QStringLiteral("en_US");
+				else if(installerLanguage == QLatin1String("french"))
+					locale = QStringLiteral("fr_FR");
             }
     #endif
         }
@@ -62,13 +73,13 @@ namespace Tools
 
     void Languages::installTranslator(const QString &componentName, const QString &locale)
     {
-        QTranslator *translator = new QTranslator(QCoreApplication::instance());
-        if(!translator->load(QString("%1/locale/%2_%3").arg(QCoreApplication::applicationDirPath()).arg(componentName).arg(locale)))
+        auto translator = new QTranslator(QCoreApplication::instance());
+		if(!translator->load(QStringLiteral("%1/locale/%2_%3").arg(QCoreApplication::applicationDirPath()).arg(componentName).arg(locale)))
         {
-            if(!translator->load(QString("%1/locale/%2_%3").arg(QDir::currentPath()).arg(componentName).arg(locale)))
+			if(!translator->load(QStringLiteral("%1/locale/%2_%3").arg(QDir::currentPath()).arg(componentName).arg(locale)))
             {
     #ifndef Q_OS_WIN
-                translator->load(QString("%1/share/actiona/locale/%2_%3").arg(ACT_PREFIX).arg(componentName).arg(locale));
+				translator->load(QStringLiteral("%1/share/actiona/locale/%2_%3").arg(QLatin1String(ACT_PREFIX)).arg(componentName).arg(locale));
     #endif
             }
         }
@@ -86,7 +97,7 @@ namespace Tools
             m_areLanguagesNameTranslated = true;
 
             for(int index = 0; index < m_languagesName.second.size(); ++index)
-                m_languagesName.second[index] = QCoreApplication::translate("languagesName", m_languagesName.second.at(index).toLatin1());
+                m_languagesName.second[index] = QCoreApplication::translate("languagesName", m_languagesName.second.at(index).toLatin1().constData());
         }
 
         return m_languagesName;
@@ -104,6 +115,6 @@ namespace Tools
             ++index;
         }
 
-        return 0;
-    }
+		return 0;
+	}
 }

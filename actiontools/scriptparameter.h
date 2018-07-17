@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SCRIPTPARAMETER_H
-#define SCRIPTPARAMETER_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -32,18 +31,13 @@ namespace ActionTools
 	class ScriptParameterData : public QSharedData
 	{
 	public:
-		ScriptParameterData() : code(false), type(0)	{}
-		ScriptParameterData(const ScriptParameterData &other) :
-			QSharedData(other),
-			name(other.name),
-			value(other.value),
-			code(other.code),
-			type(other.type)							{}
+		ScriptParameterData()  	= default;
+		ScriptParameterData(const ScriptParameterData &other) = default;
 
 		QString name;
 		QString value;
-		bool code;
-		int type;
+		bool code{false};
+		int type{0};
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ScriptParameter
@@ -66,8 +60,7 @@ namespace ActionTools
 			setCode(code);
 			setType(type);
 		}
-		ScriptParameter(const ScriptParameter &other)
-			: d(other.d)								{}
+        ScriptParameter(const ScriptParameter &other)   = default;
 
 		void setName(const QString &name)				{ d->name = name; }
 		void setValue(const QString &value)				{ d->value = value; }
@@ -89,4 +82,3 @@ namespace ActionTools
 	};
 }
 
-#endif // SCRIPTPARAMETER_H

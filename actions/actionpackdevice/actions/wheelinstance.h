@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WHEELINSTANCE_H
-#define WHEELINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../mousedevice.h"
@@ -36,14 +35,14 @@ namespace Actions
 			FailedToSendInputException = ActionTools::ActionException::UserException
 		};	
 		
-		WheelInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		WheelInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 	
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 		
-			int intensity = evaluateInteger(ok, "intensity");
+			int intensity = evaluateInteger(ok, QStringLiteral("intensity"));
 		
 			if(!ok)
 				return;
@@ -54,10 +53,10 @@ namespace Actions
 				return;
 			}
 	
-			emit executionEnded();
+			executionEnded();
 		}
 
-		void stopLongTermExecution()
+		void stopLongTermExecution() override
 		{
 			mMouseDevice.reset();
 		}
@@ -69,4 +68,3 @@ namespace Actions
 	};
 }
 
-#endif // WHEELINSTANCE_H

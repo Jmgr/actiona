@@ -89,13 +89,13 @@ public:
     ////
     // INHERITED FROM QtImageFilter
     ////
-    QVariant option(int option) const;
-    bool setOption(int option, const QVariant &value);
-    bool supportsOption(int option) const;
-    QImage apply(const QImage &image, const QRect& clipRect = QRect() ) const;
-    QString name() const { return m_name; }
-    QString description() const { return m_description; }
-    ~ConvolutionFilter();
+    QVariant option(int option) const override;
+    bool setOption(int option, const QVariant &value) override;
+    bool supportsOption(int option) const override;
+    QImage apply(const QImage &image, const QRect& clipRect = QRect() ) const override;
+    QString name() const override { return m_name; }
+    QString description() const override { return m_description; }
+    ~ConvolutionFilter() override;
 
 
     void setName(const QString &name){

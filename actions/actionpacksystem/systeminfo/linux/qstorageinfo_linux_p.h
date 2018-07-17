@@ -69,7 +69,7 @@ class QStorageInfo_CustomPrivate : public QObject
 
 public:
     QStorageInfo_CustomPrivate(QStorageInfo_Custom *parent);
-    ~QStorageInfo_CustomPrivate();
+    ~QStorageInfo_CustomPrivate() override;
 
     qlonglong availableDiskSpace(const QString &drive);
     qlonglong totalDiskSpace(const QString &drive);
@@ -81,8 +81,8 @@ Q_SIGNALS:
     void logicalDriveChanged(const QString &drive, bool added);
 
 protected:
-    void connectNotify(const QMetaMethod &signal);
-    void disconnectNotify(const QMetaMethod &signal);
+    void connectNotify(const QMetaMethod &signal) override;
+    void disconnectNotify(const QMetaMethod &signal) override;
 
 private:
     QStorageInfo_Custom * const q_ptr;

@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef LANGUAGES_H
-#define LANGUAGES_H
+#pragma once
 
 #include "tools_global.h"
 #include "stringlistpair.h"
@@ -34,12 +33,11 @@ namespace Tools
         static StringListPair languagesName();
         static int languageNameToIndex(const QString &languageName);
 
-    private:
         Languages() = delete;
 
+    private:
         static StringListPair m_languagesName;
         static bool m_areLanguagesNameTranslated;
     };
 }
 
-#endif // LANGUAGES_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READBINARYFILEINSTANCE_H
-#define READBINARYFILEINSTANCE_H
+#pragma once
 
 #include "datacopyactioninstance.h"
 #include "code/rawdata.h"
@@ -39,17 +38,17 @@ namespace Actions
 			UnableToReadFileException = ActionTools::ActionException::UserException
 		};
 
-		ReadBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadBinaryFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::DataCopyActionInstance(definition, parent)
 		{
 		}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString filename = evaluateString(ok, "file");
-			mVariable = evaluateVariable(ok, "variable");
+			QString filename = evaluateString(ok, QStringLiteral("file"));
+			mVariable = evaluateVariable(ok, QStringLiteral("variable"));
 
 			if(!ok)
 				return;
@@ -58,17 +57,17 @@ namespace Actions
 
 			if(!DataCopyActionInstance::startCopy(&mFile, &mResult))
 			{
-				setCurrentParameter("file");
+				setCurrentParameter(QStringLiteral("file"));
 				emit executionException(UnableToReadFileException, tr("Unable to read the file \"%1\"").arg(filename));
 				return;
 			}
 
-			emit showProgressDialog("Reading file", 100);
-			emit updateProgressDialog("Reading in progress");
+			emit showProgressDialog(tr("Reading file"), 100);
+			emit updateProgressDialog(tr("Reading in progress"));
 		}
 
 	private slots:
-		void done()
+		void done() override
 		{
             setVariable(mVariable, Code::RawData::constructor(mResult.buffer(), scriptEngine()));
 
@@ -76,7 +75,7 @@ namespace Actions
 		}
 
 	private:
-		void clean()
+		void clean() override
 		{
 			DataCopyActionInstance::clean();
 
@@ -91,4 +90,3 @@ namespace Actions
 	};
 }
 
-#endif // READBINARYFILEINSTANCE_H

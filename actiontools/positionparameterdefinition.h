@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef POSITIONPARAMETERDEFINITION_H
-#define POSITIONPARAMETERDEFINITION_H
+#pragma once
 
 #include "parameterdefinition.h"
 #include "actiontools_global.h"
@@ -37,9 +36,9 @@ namespace ActionTools
 	public:
         PositionParameterDefinition(const Name &name, QObject *parent);
 
-		void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
+		void buildEditors(Script *script, QWidget *parent) override;
+		void load(const ActionInstance *actionInstance) override;
+		void save(ActionInstance *actionInstance) override;
 
     private slots:
         void positionChosen(QPointF position);
@@ -52,4 +51,3 @@ namespace ActionTools
 	};
 }
 
-#endif // POSITIONPARAMETERDEFINITION_H

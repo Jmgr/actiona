@@ -15,7 +15,7 @@ HEADERS += actions/commanddefinition.h \
     actions/playsounddefinition.h \
 	actions/playsoundinstance.h \
 	actions/findimagedefinition.h \
-	actions/findimageinstance.h
+        actions/findimageinstance.h
 SOURCES += actions/killprocessinstance.cpp \
 	actions/notifyinstance.cpp \
 	actions/systeminstance.cpp \
@@ -23,3 +23,8 @@ SOURCES += actions/killprocessinstance.cpp \
 	actions/playsoundinstance.cpp \
 	actions/findimageinstance.cpp \
     actions/findimagedefinition.cpp
+
+isQtVersionGreaterOrEqualThan510() {
+HEADERS += actions/texttospeechdefinition.h \
+        actions/texttospeechinstance.h
+}

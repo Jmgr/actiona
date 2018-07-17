@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WRITEINIFILEINSTANCE_H
-#define WRITEINIFILEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -40,17 +39,17 @@ namespace Actions
 			UnableToWriteFileException = ActionTools::ActionException::UserException
 		};
 
-		WriteIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		WriteIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)											{}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString filename = evaluateString(ok, "file");
-			QString section = evaluateString(ok, "section");
-			QString parameter = evaluateString(ok, "parameter");
-			QString value = evaluateString(ok, "value");
+			QString filename = evaluateString(ok, QStringLiteral("file"));
+			QString section = evaluateString(ok, QStringLiteral("section"));
+			QString parameter = evaluateString(ok, QStringLiteral("parameter"));
+			QString value = evaluateString(ok, QStringLiteral("value"));
 
 			if(!ok)
 				return;
@@ -58,7 +57,7 @@ namespace Actions
 			if(!write(filename, section, parameter, value))
 				return;
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -82,7 +81,7 @@ namespace Actions
 
                 if(section.isEmpty())
                 {
-                    setCurrentParameter("filename");
+					setCurrentParameter(QStringLiteral("filename"));
                     emit executionException(UnableToWriteFileException, tr("Unable to write to the file: the section name cannot be empty"));
 
                     return false;
@@ -95,8 +94,8 @@ namespace Actions
             }
             catch(const std::runtime_error &e)
             {
-                setCurrentParameter("filename");
-                emit executionException(UnableToWriteFileException, tr("Unable to write to the file: %1").arg(e.what()));
+				setCurrentParameter(QStringLiteral("filename"));
+				emit executionException(UnableToWriteFileException, tr("Unable to write to the file: %1").arg(QString::fromUtf8(e.what())));
 
                 return false;
             }
@@ -108,4 +107,3 @@ namespace Actions
 	};
 }
 
-#endif // WRITEINIFILEINSTANCE_H

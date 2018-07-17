@@ -31,7 +31,7 @@ namespace Code
 {
 	QScriptValue Window::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Window *window = 0;
+		Window *window = nullptr;
 		
 		switch(context->argumentCount())
 		{
@@ -41,14 +41,14 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Window *codeWindow = qobject_cast<Window*>(object))
+				if(auto codeWindow = qobject_cast<Window*>(object))
 					window = new Window(*codeWindow);
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 			break;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			break;
 		}
 		
@@ -70,14 +70,14 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Window *window = qobject_cast<Window*>(object))
+				if(auto window = qobject_cast<Window*>(object))
 					return window->windowHandle();
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
-			return ActionTools::WindowHandle();
+			return {};
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return ActionTools::WindowHandle();
 		}
 	}
@@ -92,32 +92,32 @@ namespace Code
 		bool titleCaseSensitive = true;
 		bool classNameCaseSensitive = true;
 		int processId = -1;
-		ProcessHandle *processHandle = 0;
+		ProcessHandle *processHandle = nullptr;
 
 		while(it.hasNext())
 		{
 			it.next();
 
-			if(it.name() == "title")
+			if(it.name() == QLatin1String("title"))
 				titlePattern = it.value().toString();
-			else if(it.name() == "className")
+			else if(it.name() == QLatin1String("className"))
 				classNamePattern = it.value().toString();
-			else if(it.name() == "titleMode")
+			else if(it.name() == QLatin1String("titleMode"))
 				titleMode = static_cast<Mode>(it.value().toInt32());
-			else if(it.name() == "classNameMode")
+			else if(it.name() == QLatin1String("classNameMode"))
 				classNameMode = static_cast<Mode>(it.value().toInt32());
-			else if(it.name() == "titleCaseSensitive")
+			else if(it.name() == QLatin1String("titleCaseSensitive"))
 				titleCaseSensitive = it.value().toBool();
-			else if(it.name() == "classNameCaseSensitive")
+			else if(it.name() == QLatin1String("classNameCaseSensitive"))
 				classNameCaseSensitive = it.value().toBool();
-			else if(it.name() == "processId")
+			else if(it.name() == QLatin1String("processId"))
 				processId = it.value().toInt32();
-			else if(it.name() == "process")
+			else if(it.name() == QLatin1String("process"))
 			{
-				if(ProcessHandle *processHandleParameter = qobject_cast<ProcessHandle *>(it.value().toQObject()))
+				if(auto processHandleParameter = qobject_cast<ProcessHandle *>(it.value().toQObject()))
 					processHandle = processHandleParameter;
 				else
-					throwError(context, engine, "ProcessHandleError", tr("Invalid process handle"));
+					throwError(context, engine, QStringLiteral("ProcessHandleError"), tr("Invalid process handle"));
 			}
 		}
 
@@ -181,9 +181,9 @@ namespace Code
 	void Window::registerClass(QScriptEngine *scriptEngine)
 	{
 		CodeTools::addClassToScriptEngine<Window>(scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&all, "all", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&find, "find", scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&foreground, "foreground", scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&all, QStringLiteral("all"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&find, QStringLiteral("find"), scriptEngine);
+		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&foreground, QStringLiteral("foreground"), scriptEngine);
 	}
 	
 	Window::Window()
@@ -246,7 +246,7 @@ namespace Code
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(Window *otherWindow = qobject_cast<Window*>(object))
+		if(auto otherWindow = qobject_cast<Window*>(object))
 			return (otherWindow == this || otherWindow->mWindowHandle == mWindowHandle);
 			
 		return false;
@@ -254,7 +254,7 @@ namespace Code
 
 	QString Window::toString() const
 	{
-        return QString("Window  {title: \"%1\", className: \"%2\"}").arg(title()).arg(className());
+		return QStringLiteral("Window  {title: \"%1\", className: \"%2\"}").arg(title()).arg(className());
 	}
 
 	bool Window::isValid() const
@@ -308,7 +308,7 @@ namespace Code
 			return thisObject();
 
 		if(!mWindowHandle.close())
-			throwError("CloseWindowError", tr("Unable to close the window"));
+			throwError(QStringLiteral("CloseWindowError"), tr("Unable to close the window"));
 		
 		return thisObject();
 	}
@@ -319,7 +319,7 @@ namespace Code
 			return thisObject();
 
 		if(!mWindowHandle.killCreator())
-			throwError("KillCreatorError", tr("Unable to kill the window creator"));
+			throwError(QStringLiteral("KillCreatorError"), tr("Unable to kill the window creator"));
 		
 		return thisObject();
 	}
@@ -330,7 +330,7 @@ namespace Code
 			return thisObject();
 
 		if(!mWindowHandle.setForeground())
-			throwError("SetForegroundError", tr("Unable to set the window foreground"));
+			throwError(QStringLiteral("SetForegroundError"), tr("Unable to set the window foreground"));
 		
 		return thisObject();
 	}
@@ -341,7 +341,7 @@ namespace Code
 			return thisObject();
 
 		if(!mWindowHandle.minimize())
-			throwError("MinimizeError", tr("Unable to minimize the window"));
+			throwError(QStringLiteral("MinimizeError"), tr("Unable to minimize the window"));
 		
 		return thisObject();
 	}
@@ -352,7 +352,7 @@ namespace Code
 			return thisObject();
 
 		if(!mWindowHandle.maximize())
-			throwError("MaximizeError", tr("Unable to maximize the window"));
+			throwError(QStringLiteral("MaximizeError"), tr("Unable to maximize the window"));
 		
 		return thisObject();
 	}
@@ -363,7 +363,7 @@ namespace Code
 			return thisObject();
 
 		if(!mWindowHandle.move(Point::parameter(context(), engine())))
-			throwError("MoveError", tr("Unable to move the window"));
+			throwError(QStringLiteral("MoveError"), tr("Unable to move the window"));
 		
 		return thisObject();
 	}
@@ -374,7 +374,7 @@ namespace Code
 			return thisObject();
 
 		if(!mWindowHandle.resize(Size::parameter(context(), engine()), useBorders))
-			throwError("ResizeError", tr("Unable to resize the window"));
+			throwError(QStringLiteral("ResizeError"), tr("Unable to resize the window"));
 		
 		return thisObject();
 	}
@@ -383,7 +383,7 @@ namespace Code
 	{
 		if(!mWindowHandle.isValid())
 		{
-			throwError("InvalidWindowError", tr("Invalid window"));
+			throwError(QStringLiteral("InvalidWindowError"), tr("Invalid window"));
 			return false;
 		}
 

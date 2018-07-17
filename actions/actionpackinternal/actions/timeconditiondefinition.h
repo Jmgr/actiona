@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TIMECONDITIONDEFINITION_H
-#define TIMECONDITIONDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "timeconditioninstance.h"
@@ -34,7 +33,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class TimeConditionDefinition : public QObject, public ActionTools::ActionDefinition
+    class TimeConditionDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -42,35 +41,30 @@ namespace Actions
 		explicit TimeConditionDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::DateTimeParameterDefinition *date = new ActionTools::DateTimeParameterDefinition(ActionTools::Name("date", tr("Date")), this);
-			date->setTooltip(tr("The date to compare"));
-			addElement(date);
+            auto &date = addParameter<ActionTools::DateTimeParameterDefinition>({QStringLiteral("date"), tr("Date")});
+            date.setTooltip(tr("The date to compare"));
 
-            ActionTools::IfActionParameterDefinition *ifBefore = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifBefore", tr("If in the past")), this);
-			ifBefore->setTooltip(tr("What to do if the date is in the past"));
-			addElement(ifBefore);
+            auto &ifBefore = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifBefore"), tr("If in the past")});
+            ifBefore.setTooltip(tr("What to do if the date is in the past"));
 
-			ActionTools::IfActionParameterDefinition *ifNow = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifNow", tr("If now")), this);
-			ifNow->setTooltip(tr("What to do if the date is the current date"));
-			addElement(ifNow);
+            auto &ifNow = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifNow"), tr("If now")});
+            ifNow.setTooltip(tr("What to do if the date is the current date"));
 
-            ActionTools::IfActionParameterDefinition *ifAfter = new ActionTools::IfActionParameterDefinition(ActionTools::Name("ifAfter", tr("If in the future")), this);
-			ifAfter->setTooltip(tr("What to do if the date is in the future"));
-			ifAfter->setAllowWait(true);
-			addElement(ifAfter);
+            auto &ifAfter = addParameter<ActionTools::IfActionParameterDefinition>({QStringLiteral("ifAfter"), tr("If in the future")});
+            ifAfter.setTooltip(tr("What to do if the date is in the future"));
+            ifAfter.setAllowWait(true);
 		}
 
-		QString name() const													{ return QObject::tr("Time condition"); }
-		QString id() const														{ return "ActionTimeCondition"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Check the current date time and do some action"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new TimeConditionInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/timecondition.png"); }
+		QString name() const override													{ return QObject::tr("Time condition"); }
+		QString id() const override														{ return QStringLiteral("ActionTimeCondition"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Check the current date time and do some action"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new TimeConditionInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/timecondition.png")); }
 
 	private:
 		Q_DISABLE_COPY(TimeConditionDefinition)
 	};
 }
 
-#endif // TIMECONDITIONDEFINITION_H

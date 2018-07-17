@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOTIFY_H
-#define NOTIFY_H
+#pragma once
 
 #include "code/codeclass.h"
 
@@ -40,20 +39,19 @@ namespace Code
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		
 		Notify();
-		~Notify();
+		~Notify() override;
 		
 	public slots:
-        QString toString() const                                { return "Notify"; }
-        virtual bool equals(const QScriptValue &other) const    { return defaultEqualsImplementation<Notify>(other); }
+		QString toString() const override                                { return QStringLiteral("Notify"); }
+        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Notify>(other); }
 		QScriptValue show();
 		
 	private:
-		_NotifyNotification *mNotification;
+		_NotifyNotification *mNotification{nullptr};
 		QString mTitle;
 		QString mText;
 		QString mIcon;
-		int mTimeout;
+		int mTimeout{5000};
 	};
 }
 
-#endif // NOTIFY_H

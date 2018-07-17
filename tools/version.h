@@ -18,15 +18,20 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef VERSION_H
-#define VERSION_H
+#pragma once
 
 #include "tools_global.h"
 
+#if (QT_VERSION < 0x050600)
 #include <QString>
 #include <QDebug>
 #include <QSharedData>
 #include <QMetaType>
+#endif
+
+#if (QT_VERSION >= 0x050600)
+#include <QVersionNumber>
+#endif
 
 #ifdef major
 #undef major
@@ -41,6 +46,9 @@
 
 namespace Tools
 {
+#if (QT_VERSION >= 0x050600)
+    using Version = QVersionNumber;
+#else
 	class VersionData : public QSharedData
 	{
 	public:
@@ -109,12 +117,14 @@ namespace Tools
 
 		QSharedDataPointer<VersionData> d;
 	};
+#endif
 }
 
+#if (QT_VERSION < 0x050600)
 TOOLSSHARED_EXPORT QDataStream &operator<<(QDataStream &s, const Tools::Version &version);
 TOOLSSHARED_EXPORT QDataStream &operator>>(QDataStream &s, Tools::Version &version);
 QDebug TOOLSSHARED_EXPORT &operator<<(QDebug &dbg, const Tools::Version &version);
 
 Q_DECLARE_METATYPE(Tools::Version)
 
-#endif // VERSION_H
+#endif

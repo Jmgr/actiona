@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef RESOURCETABLEWIDGET_H
-#define RESOURCETABLEWIDGET_H
+#pragma once
 
 #include <QTableWidget>
 
@@ -28,20 +27,19 @@ class ResourceTableWidget : public QTableWidget
     Q_OBJECT
 
 public:
-    explicit ResourceTableWidget(QWidget *parent = 0);
+    explicit ResourceTableWidget(QWidget *parent = nullptr);
 
     QString checkResourceName(const QString &originalName) const;
     bool containsResource(const QString &name) const;
 
 protected:
-    virtual void dragMoveEvent(QDragMoveEvent *event);
-    virtual void dragEnterEvent(QDragEnterEvent *event);
-    virtual bool dropMimeData(int row, int column, const QMimeData *data, Qt::DropAction action);
-    virtual void keyReleaseEvent(QKeyEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    bool dropMimeData(int row, int column, const QMimeData *data, Qt::DropAction action) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
     
 signals:
     void filesDropped(const QStringList &filenames);
     void removeSelection();
 };
 
-#endif // RESOURCETABLEWIDGET_H

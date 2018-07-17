@@ -51,7 +51,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QByteArray>
 
-QtImageFilter *createGaussianBlurFilter(void)
+QtImageFilter *createGaussianBlurFilter()
 {
     return reinterpret_cast<QtImageFilter*>(new GaussBlurFilter());
 }
@@ -62,7 +62,7 @@ static int kernelmatrix[ 9 ] =
   { 1,  1, 1,
     1, -7, 1,
     1,  1, 1 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("Defocus"));
     filter->setDescription(QObject::tr("Blurs the image", "ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 3, 3), ConvolutionFilter::RGB, ConvolutionFilter::Extend);
@@ -77,8 +77,8 @@ static int kernelmatrix[ 25 ] =
      0, 0, 0, 0, 0,
      0, 0, 0, 0, 0,
      0, 0, 0, 0, 2 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
-    filter->setName(QLatin1String("Hightlight"));
+    auto filter = new ConvolutionFilter();
+    filter->setName(QLatin1String("Highlight"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 5, 5), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 1, 0);
     return reinterpret_cast<QtImageFilter*>(filter);
 }
@@ -91,7 +91,7 @@ static int kernelmatrix[ 25 ] =
     -1,  2,  8,  2, -1,
     -1,  2,  2,  2, -1,
     -1, -1, -1, -1, -1 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("Sharpen"));
     filter->setDescription(QObject::tr("Sharpens the image","ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 5, 5), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 8, 0);
@@ -104,7 +104,7 @@ static int kernelmatrix[ 9 ] =
   { -1, -1, -1,
     -1,  9, -1,
     -1, -1, -1 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("SharpenMore"));
     filter->setDescription(QObject::tr("Sharpens the image more","ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 3, 3), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 1, 0);
@@ -117,7 +117,7 @@ static int kernelmatrix[ 9 ] =
   { -1, -2, -1,
     -2, 13, -2,
     -1, -2, -1 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("SharpenEvenMore"));
     filter->setDescription(QObject::tr("Sharpens the image even more","ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 3, 3), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 1, 0);
@@ -132,7 +132,7 @@ static int kernelmatrix[ 25 ] =
     -2, -3, 53, -3, -2,
     -2, -3, -3, -3, -2,
     -2, -2, -2, -2, -2 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("BigEdge"));
     filter->setDescription(QObject::tr("Creates big edges","ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 5, 5), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 1, 0);
@@ -145,7 +145,7 @@ static int kernelmatrix[ 9 ] =
   { -1, -1,  0,
     -1,  0,  1,
      0,  1,  1 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("Emboss"));
     filter->setDescription(QObject::tr("Creates an emboss effect on the image, resulting in a greyish image","ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 3, 3), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 1, 128);
@@ -158,7 +158,7 @@ static int kernelmatrix[9] =
 {   -1, -1,  0,
     -1,  1,  1,
      0,  1,  1 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("EmbossColor"));
     filter->setDescription(QObject::tr("Creates an emboss effect on the image, while keeping most of the colours","ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 3, 3), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 1, 0);
@@ -171,7 +171,7 @@ static int kernelmatrix[ 9 ] =
   { -5, -2, -5,
     -5, 39, -5,
     -5, -5, -5 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("EdgeDetect"));
     filter->setDescription(QObject::tr("Creates a filter that enables you to detect edges easily.","ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 3, 3), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 1, 50);
@@ -182,7 +182,7 @@ QtImageFilter *createNegativeFilter()
 {
 static int kernelmatrix[ 1 ] =
   { -1 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("Negative"));
     filter->setDescription(QObject::tr("Negates color channel(s).","ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 1, 1), ConvolutionFilter::RGB, ConvolutionFilter::Extend, 1, 255);
@@ -193,7 +193,7 @@ QtImageFilter *createRemoveChannelFilter()
 {
 static int kernelmatrix[ 1 ] =
   { 0 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("RemoveChannel"));
     filter->setDescription(QObject::tr("Removes channel(s). I.e sets the value of each channel it is processing to 0.","ConvolutionFilter"));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 1, 1), ConvolutionFilter::RGBA, ConvolutionFilter::Extend, 1, 0);
@@ -204,7 +204,7 @@ QtImageFilter *createConvolutionFilter()
 {
 static int kernelmatrix[ 1 ] =
   { 1 };
-    ConvolutionFilter *filter = new ConvolutionFilter();
+    auto filter = new ConvolutionFilter();
     filter->setName(QLatin1String("ConvolutionFilter"));
     filter->setDescription(QObject::tr("Generic convolutionfilter."));
     filter->addKernel(QtConvolutionKernelMatrix(kernelmatrix, 1, 1), ConvolutionFilter::RGBA, ConvolutionFilter::Extend, 1, 0);
@@ -376,7 +376,7 @@ QtImageFilter *QtImageFilterFactory::createImageFilter(const QString &name)
     }
 
     ImageFilterFactoryFunction fnFactory = g_availableFilters.value(name.toLatin1());
-    return fnFactory ? fnFactory() : 0;
+    return fnFactory ? fnFactory() : nullptr;
 }
 
 /*!
@@ -392,7 +392,7 @@ QStringList QtImageFilterFactory::imageFilterList()
     }
 
     for (QMap<QByteArray, ImageFilterFactoryFunction>::iterator it = g_availableFilters.begin(); it != g_availableFilters.end(); ++it) {
-        ss.append(it.key());
+		ss.append(QLatin1String(it.key()));
     }
     return ss;
 }

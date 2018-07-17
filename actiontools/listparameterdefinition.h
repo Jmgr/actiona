@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef LISTPARAMETERDEFINITION_H
-#define LISTPARAMETERDEFINITION_H
+#pragma once
 
 #include "itemsparameterdefinition.h"
 #include "actiontools_global.h"
@@ -34,11 +33,11 @@ namespace ActionTools
 
 	public:
         ListParameterDefinition(const Name &name, QObject *parent);
-		virtual ~ListParameterDefinition()	{}
+        ~ListParameterDefinition()	override = default;
 
-		virtual void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
+        void buildEditors(Script *script, QWidget *parent) override;
+        void load(const ActionInstance *actionInstance) override;
+        void save(ActionInstance *actionInstance) override;
 
 		CodeComboBox *codeComboBox() const										{ return mComboBox; }
 		
@@ -54,4 +53,3 @@ namespace ActionTools
 	};
 }
 
-#endif // LISTPARAMETERDEFINITION_H

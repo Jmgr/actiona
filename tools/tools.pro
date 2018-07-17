@@ -1,8 +1,5 @@
 include(../common.pri)
-QT += network
-equals(QT_MAJOR_VERSION, 5) {
-QT += widgets
-}
+QT += network widgets
 TEMPLATE = lib
 CONFIG += dll
 DEFINES += TOOLS_LIBRARY
@@ -23,16 +20,14 @@ win32:HEADERS += sevenziparchivewrite.h
 	HEADERS += updater.h
 }
 INCLUDEPATH += src
-TRANSLATIONS = ../locale/tools_fr_FR.ts \
-                ../locale/tools_de_DE.ts
+TRANSLATIONS = ../locale/tools_fr_FR.ts
 win32:LIBS += User32.lib
 
 unix {
         target.path = $${PREFIX}/$${LIBDIR}/actiona
 
         locales.path = $${PREFIX}/share/actiona/locale
-        locales.files = ../locale/tools_fr_FR.qm \
-                        ../locale/tools_de_DE.qm
+        locales.files = ../locale/tools_fr_FR.qm
 	locales.CONFIG = no_check_exist
 
 	INSTALLS += target locales

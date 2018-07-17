@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef MAIL_H
-#define MAIL_H
+#pragma once
 
 #include "code/codeclass.h"
 #include "qxtsmtp/qxtsmtp.h"
@@ -55,10 +54,10 @@ namespace Code
 
         Mail();
 
-        QString username() const                                                    { return mSmtp.username(); }
+		QString username() const                                                    { return QString::fromUtf8(mSmtp.username()); }
         void setUsername(const QString &username)                                   { mSmtp.setUsername(username.toUtf8()); }
 
-        QString password() const                                                    { return mSmtp.password(); }
+		QString password() const                                                    { return QString::fromUtf8(mSmtp.password()); }
         void setPassword(const QString &password)                                   { mSmtp.setPassword(password.toUtf8()); }
 
         void setOnConnected(const QScriptValue &onConnected)                        { mOnConnected = onConnected; }
@@ -103,8 +102,8 @@ namespace Code
         void setStartTlsDisabled(bool disable)                                      { mSmtp.setStartTlsDisabled(disable); }
 
     public slots:
-        QString toString() const                                                    { return "Mail"; }
-        virtual bool equals(const QScriptValue &other) const                        { return defaultEqualsImplementation<Mail>(other); }
+		QString toString() const override                                                    { return QStringLiteral("Mail"); }
+        bool equals(const QScriptValue &other) const override                        { return defaultEqualsImplementation<Mail>(other); }
 
         QScriptValue connectToServer(const QString &serverName, int port = 25);
         QScriptValue connectToSecureServer(const QString &serverName, int port = 465);
@@ -150,4 +149,3 @@ namespace Code
     };
 }
 
-#endif // MAIL_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYBOARDDEVICE_H
-#define KEYBOARDDEVICE_H
+#pragma once
 
 #include <QSet>
 #include <QObject>
@@ -42,7 +41,7 @@ public:
 	};
 	
 	KeyboardDevice();
-	~KeyboardDevice();
+    ~KeyboardDevice() override;
 
 	void reset();
 	
@@ -58,7 +57,6 @@ private:
 	int stringToNativeKey(const QString &key) const;
 	
 	QSet<int> mPressedKeys;
-	Type mType;
+	Type mType{Win32};
 };
 
-#endif // KEYBOARDDEVICE_H

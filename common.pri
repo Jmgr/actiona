@@ -1,7 +1,10 @@
 DEFINES += QT_USE_FAST_CONCATENATION \
-	QT_USE_FAST_OPERATOR_PLUS
+        QT_USE_FAST_OPERATOR_PLUS \
+        QT_NO_CAST_TO_ASCII \
+        QT_NO_CAST_FROM_ASCII \
+        QT_NO_CAST_FROM_BYTEARRAY
 
-ACTIONA_VERSION	= 3.9.4
+ACTIONA_VERSION	= 3.10.0
 SCRIPT_VERSION = 1.1.0
 
 if(!isEmpty(VERSION_OVERRIDE)) {
@@ -28,13 +31,7 @@ unix {
 }
 
 win32 {
-	DEFINES += WIN32_LEAN_AND_MEAN NOMINMAX
-}
-
-contains(DEFINES, ACT_PROFILE) {
-	!*-msvc*:QMAKE_CXXFLAGS += -include "highresolutiontimer.h"
-	*-msvc*:QMAKE_CXXFLAGS += /FI "highresolutiontimer.h"
-	INCLUDEPATH += . tools ../tools ../../tools
+        DEFINES += WIN32_LEAN_AND_MEAN NOMINMAX VC_EXTRALEAN
 }
 
 *clang*|*-g++*::QMAKE_CXXFLAGS += -std=c++11
@@ -46,4 +43,11 @@ contains(DEFINES, ACT_PROFILE) {
 
 !contains(QMAKE_HOST.arch, x86_64):{
     *-msvc*::QMAKE_CXXFLAGS_RELEASE += -arch:SSE2
+}
+
+defineTest(isQtVersionGreaterOrEqualThan510) {
+    greaterThan(QT_MAJOR_VERSION, 5): return(true)
+    equals(QT_MAJOR_VERSION, 5):greaterThan(QT_MINOR_VERSION, 10)|equals(QT_MINOR_VERSION, 10): return(true)
+
+    return(false)
 }

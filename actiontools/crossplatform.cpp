@@ -27,12 +27,12 @@
 #include <QDir>
 
 #ifdef Q_OS_LINUX
+#include <QX11Info>
 #include <X11/Xlib.h>
-#include <signal.h>
+#include <cerrno>
+#include <csignal>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <errno.h>
-#include <QX11Info>
 #endif
 
 #ifdef Q_OS_WIN
@@ -124,7 +124,7 @@ namespace ActionTools
 						timespec req;
 						req.tv_sec = 0;
 						req.tv_nsec = 10000; //10 msec
-						nanosleep(&req, 0);
+						nanosleep(&req, nullptr);
 
 						return (processStatus(id) == Stopped);
 					}
@@ -132,7 +132,7 @@ namespace ActionTools
 					timespec req;
 					req.tv_sec = 0;
 					req.tv_nsec = 100000; //100 msec
-					nanosleep(&req, 0);
+					nanosleep(&req, nullptr);
 				}
 			}
 		}
@@ -226,7 +226,7 @@ namespace ActionTools
 	QList<int> CrossPlatform::runningProcesses()
 	{
 #ifdef Q_OS_LINUX
-		QDir procDir("/proc");
+		QDir procDir(QStringLiteral("/proc"));
 		QList<int> back;
 
 		if(!procDir.exists())

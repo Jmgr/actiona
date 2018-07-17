@@ -41,16 +41,16 @@ namespace ActionTools
 
 		Receiver::Receiver()
 			: QObject(),
-			  mCaptureCount(0),
+			  
 			  mTask(new Task)
 		{
 			qRegisterMetaType<ActionTools::SystemInput::Button>("ActionTools::SystemInput::Button");
 
-			connect(mTask, SIGNAL(mouseMotion(int,int)), this, SLOT(mouseMotion(int,int)));
-			connect(mTask, SIGNAL(mouseWheel(int)), this, SLOT(mouseWheel(int)));
-			//connect(mTask, SIGNAL(keyboardEvent()), this, SLOT(keyboardEvent()));//TODO
-			connect(mTask, SIGNAL(mouseButtonPressed(ActionTools::SystemInput::Button)), this, SLOT(mouseButtonPressed(ActionTools::SystemInput::Button)));
-			connect(mTask, SIGNAL(mouseButtonReleased(ActionTools::SystemInput::Button)), this, SLOT(mouseButtonReleased(ActionTools::SystemInput::Button)));
+            connect(mTask, &Task::mouseMotion, this, &Receiver::mouseMotion);
+            connect(mTask, &Task::mouseWheel, this, &Receiver::mouseWheel);
+            //connect(mTask, &Task::keyboardEvent, this, &Receiver::keyboardEvent);//TODO
+            connect(mTask, &Task::mouseButtonPressed, this, &Receiver::mouseButtonPressed);
+            connect(mTask, &Task::mouseButtonReleased, this, &Receiver::mouseButtonReleased);
 		}
 
 		Receiver::~Receiver()

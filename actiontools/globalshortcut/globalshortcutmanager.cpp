@@ -39,7 +39,7 @@ namespace ActionTools
 		clear();
 	}
 	
-	GlobalShortcutManager* GlobalShortcutManager::instance_ = 0;
+	GlobalShortcutManager* GlobalShortcutManager::instance_ = nullptr;
 	
 	/**
 	 * \brief Returns the instance of GlobalShortcutManager.

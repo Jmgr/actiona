@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef CODEDEFINITION_H
-#define CODEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "codeinstance.h"
@@ -33,7 +32,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class CodeDefinition : public QObject, public ActionTools::ActionDefinition
+	class CodeDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -41,23 +40,21 @@ namespace Actions
 		explicit CodeDefinition(ActionTools::ActionPack *pack)
 		: ActionDefinition(pack)
 		{
-			ActionTools::TextParameterDefinition *code = new ActionTools::TextParameterDefinition(ActionTools::Name("code", tr("Code")), this);
-			code->setTooltip(tr("The code to evaluate"));
-			code->setTextCodeMode(ActionTools::TextParameterDefinition::CodeOnly);
-			addElement(code);
+            auto &code = addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("code"), tr("Code")});
+            code.setTooltip(tr("The code to evaluate"));
+            code.setTextCodeMode(ActionTools::TextParameterDefinition::CodeOnly);
 		}
 
-		QString name() const													{ return QObject::tr("Code"); }
-		QString id() const														{ return "ActionCode"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Evaluates some code"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new CodeInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Internal; }
-		QPixmap icon() const													{ return QPixmap(":/actions/icons/code.png"); }
+		QString name() const override													{ return QObject::tr("Code"); }
+		QString id() const override														{ return QStringLiteral("ActionCode"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Evaluates some code"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new CodeInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/code.png")); }
 
 	private:
 		Q_DISABLE_COPY(CodeDefinition)
 	};
 }
 
-#endif // CODEDEFINITION_H

@@ -43,7 +43,7 @@ namespace ActionTools
 	
 	private:
 		GlobalShortcutManager();
-		~GlobalShortcutManager();
+		~GlobalShortcutManager() override ;
 		static GlobalShortcutManager* instance_;
 		class KeyTrigger;
 		QMap<QKeySequence, KeyTrigger*> triggers_;

@@ -26,11 +26,17 @@
 
 namespace Actions
 {
-    Tools::StringListPair WindowConditionInstance::conditions = qMakePair(
-			QStringList() << "exists" << "dontexists",
-			QStringList()
-			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Exists")
-			<< QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Don't exists"));
+    Tools::StringListPair WindowConditionInstance::conditions =
+    {
+        {
+            QStringLiteral("exists"),
+            QStringLiteral("dontexists")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Exists")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WindowConditionInstance::conditions", "Do not exist"))
+        }
+    };
 
 	WindowConditionInstance::WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent), mCondition(Exists)
@@ -41,17 +47,17 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString title = evaluateString(ok, "title");
-		mCondition = evaluateListElement<Condition>(ok, conditions, "condition");
-		mIfTrue = evaluateIfAction(ok, "ifTrue");
-		ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, "ifFalse");
-		mPosition = evaluateVariable(ok, "position");
-		mSize = evaluateVariable(ok, "size");
-		mXCoordinate = evaluateVariable(ok, "xCoordinate");
-		mYCoordinate = evaluateVariable(ok, "yCoordinate");
-		mWidth = evaluateVariable(ok, "width");
-		mHeight = evaluateVariable(ok, "height");
-		mProcessId = evaluateVariable(ok, "processId");
+		QString title = evaluateString(ok, QStringLiteral("title"));
+		mCondition = evaluateListElement<Condition>(ok, conditions, QStringLiteral("condition"));
+		mIfTrue = evaluateIfAction(ok, QStringLiteral("ifTrue"));
+		ActionTools::IfActionValue ifFalse = evaluateIfAction(ok, QStringLiteral("ifFalse"));
+		mPosition = evaluateVariable(ok, QStringLiteral("position"));
+		mSize = evaluateVariable(ok, QStringLiteral("size"));
+		mXCoordinate = evaluateVariable(ok, QStringLiteral("xCoordinate"));
+		mYCoordinate = evaluateVariable(ok, QStringLiteral("yCoordinate"));
+		mWidth = evaluateVariable(ok, QStringLiteral("width"));
+		mHeight = evaluateVariable(ok, QStringLiteral("height"));
+		mProcessId = evaluateVariable(ok, QStringLiteral("processId"));
 
 		if(!ok)
 			return;
@@ -75,7 +81,7 @@ namespace Actions
 					return;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 		else
 		{
@@ -88,23 +94,23 @@ namespace Actions
 			{
 				setNextLine(line);
 
-				emit executionEnded();
+				executionEnded();
 			}
 			else if(ifFalse.action() == ActionTools::IfActionValue::CALLPROCEDURE)
 			{
 				if(!callProcedure(line))
 					return;
 
-				emit executionEnded();
+				executionEnded();
 			}
 			else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 			{
-				connect(&mTimer, SIGNAL(timeout()), this, SLOT(checkWindow()));
+                connect(&mTimer, &QTimer::timeout, this, &WindowConditionInstance::checkWindow);
 				mTimer.setInterval(100);
 				mTimer.start();
 			}
 			else
-				emit executionEnded();
+				executionEnded();
 		}
 	}
 
@@ -134,7 +140,7 @@ namespace Actions
 			}
 
 			mTimer.stop();
-			emit executionEnded();
+			executionEnded();
 		}
 	}
 
@@ -156,6 +162,6 @@ namespace Actions
 			return foundWindow;
 		}
 
-		return ActionTools::WindowHandle();
+		return {};
 	}
 }

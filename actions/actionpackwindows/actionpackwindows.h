@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACKWINDOWS_H
-#define ACTIONPACKWINDOWS_H
+#pragma once
 
 #include "actionpack.h"
 #include "actions/messageboxdefinition.h"
@@ -45,14 +44,12 @@ class ActionPackWindows : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 	Q_INTERFACES(ActionTools::ActionPack)
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "windows.json")
-#endif
 
 public:
-	ActionPackWindows()							{}
+	ActionPackWindows()							= default;
 
-	void createDefinitions()
+	void createDefinitions() override
 	{
 		addActionDefinition(new Actions::MessageBoxDefinition(this));
 		addActionDefinition(new Actions::DataInputDefinition(this));
@@ -61,25 +58,20 @@ public:
 		addActionDefinition(new Actions::MultiDataInputDefinition(this));
 	}
 
-	QString id() const							{ return "windows"; }
-	QString name() const						{ return tr("Actions dealing with windows"); }
-	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
+	QString id() const override							{ return QStringLiteral("windows"); }
+	QString name() const override						{ return tr("Actions dealing with windows"); }
+	Tools::Version version() const override				{ return Tools::Version(0, 0, 1); }
 
-	void codeInit(QScriptEngine *scriptEngine) const
+	void codeInit(QScriptEngine *scriptEngine) const override
 	{
-		addCodeClass<Code::MessageBox>("MessageBox", scriptEngine);
-		addCodeClass<Code::InputDialog>("InputDialog", scriptEngine);
-		addCodeClass<Code::ProgressDialog>("ProgressDialog", scriptEngine);
-		addCodeClass<Code::ColorDialog>("ColorDialog", scriptEngine);
-		addCodeClass<Code::FileDialog>("FileDialog", scriptEngine);
+		addCodeClass<Code::MessageBox>(QStringLiteral("MessageBox"), scriptEngine);
+		addCodeClass<Code::InputDialog>(QStringLiteral("InputDialog"), scriptEngine);
+		addCodeClass<Code::ProgressDialog>(QStringLiteral("ProgressDialog"), scriptEngine);
+		addCodeClass<Code::ColorDialog>(QStringLiteral("ColorDialog"), scriptEngine);
+		addCodeClass<Code::FileDialog>(QStringLiteral("FileDialog"), scriptEngine);
 	}
 
 private:
 	Q_DISABLE_COPY(ActionPackWindows)
 };
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-Q_EXPORT_PLUGIN2(ActionPackWindows, ActionPackWindows)
-#endif
-
-#endif // ACTIONPACKWINDOWS_H

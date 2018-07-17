@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef SETTINGSKEYEDIT_H
-#define SETTINGSKEYEDIT_H
+#pragma once
 
 #include <QLineEdit>
 
@@ -28,13 +27,13 @@ class SettingsKeyEdit : public QLineEdit
 	Q_OBJECT
 
 public:
-	explicit SettingsKeyEdit(QWidget *parent = 0);
+	explicit SettingsKeyEdit(QWidget *parent = nullptr);
 
 	QKeySequence	keySequence() const								{return mKeySequence;}
 	void			setKeySequence(QKeySequence keySequence);
 
 protected:
-	void keyPressEvent(QKeyEvent *event);
+	void keyPressEvent(QKeyEvent *event) override;
 
 private:
 	QKeySequence mKeySequence;
@@ -42,4 +41,3 @@ private:
 	Q_DISABLE_COPY(SettingsKeyEdit)
 };
 
-#endif // SETTINGSKEYEDIT_H

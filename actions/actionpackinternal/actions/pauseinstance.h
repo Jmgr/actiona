@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef PAUSEINSTANCE_H
-#define PAUSEINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -43,20 +42,20 @@ namespace Actions
 			Days
 		};
 
-		PauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		PauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)
 		{
-			connect(&mCheckTimer, SIGNAL(timeout()), this, SLOT(checkTime()));
+            connect(&mCheckTimer, &QTimer::timeout, this, &PauseInstance::checkTime);
 		}
 
         static Tools::StringListPair units;
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			int duration = evaluateInteger(ok, "duration");
-			Unit unit = evaluateListElement<Unit>(ok, units, "unit");
+			int duration = evaluateInteger(ok, QStringLiteral("duration"));
+			Unit unit = evaluateListElement<Unit>(ok, units, QStringLiteral("unit"));
 
 			if(!ok)
 				return;
@@ -95,7 +94,7 @@ namespace Actions
 			}
 		}
 
-		void stopExecution()
+		void stopExecution() override
 		{
 			mCheckTimer.stop();
 		}
@@ -107,7 +106,7 @@ namespace Actions
 			{
 				mCheckTimer.stop();
 
-				emit executionEnded();
+				executionEnded();
 			}
 		}
 
@@ -119,4 +118,3 @@ namespace Actions
 	};
 }
 
-#endif // PAUSEINSTANCE_H

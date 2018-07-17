@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef TEXTINSTANCE_H
-#define TEXTINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "../keyboarddevice.h"
@@ -38,11 +37,11 @@ namespace Actions
 			FailedToSendInputException = ActionTools::ActionException::UserException
 		};
 	
-		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 	
-		void startExecution();
-		void stopExecution();
-		void stopLongTermExecution();
+		void startExecution() override;
+		void stopExecution() override;
+		void stopLongTermExecution() override;
 
 	private slots:
 		void pressNextKey();
@@ -58,4 +57,3 @@ namespace Actions
 	};
 }
 
-#endif // TEXTINSTANCE_H

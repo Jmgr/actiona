@@ -44,10 +44,10 @@
 ** 
 ****************************************************************************/
 
-#include <QtGui>
-#include <QtCore>
 #include "punchfilter.h"
-#include <math.h>
+#include <QtCore>
+#include <QtGui>
+#include <cmath>
 #ifndef M_PI
 #define M_PI 3.14159265358979323846264338327950288
 #endif
@@ -156,7 +156,7 @@ static QRgb getSubpixel(const QImage &img, double x, double y)
 
 }
 
-PunchFilter::PunchFilter() : m_Radius(10.0), m_Center(0.0,0.0), m_Force(0.5)
+PunchFilter::PunchFilter() :  m_Center(0.0,0.0) 
 {
 }
 

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYINPUT_H
-#define KEYINPUT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "stringlistpair.h"
@@ -83,9 +82,8 @@ namespace ActionTools
 		static bool mInitDone;
 		static unsigned long mNativeKey[KeyCount];
 
-		bool mIsQtKey;
-		int mKey;
+		bool mIsQtKey{false};
+		int mKey{InvalidKey};
 	};
 }
 
-#endif // KEYINPUT_H

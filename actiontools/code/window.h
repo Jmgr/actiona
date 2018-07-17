@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef WINDOW_H
-#define WINDOW_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "windowhandle.h"
@@ -69,8 +68,8 @@ namespace Code
 		
 	public slots:
 		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const;
-		QString toString() const;
+		bool equals(const QScriptValue &other) const override;
+		QString toString() const override;
 		bool isValid() const;
 		QString title() const;
 		QString className() const;
@@ -92,4 +91,3 @@ namespace Code
 	};
 }
 
-#endif // WINDOW_H

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef KEYEDIT_H
-#define KEYEDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "codecombobox.h"
@@ -32,7 +31,7 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit KeyEdit(QWidget *parent = 0);
+		explicit KeyEdit(QWidget *parent = nullptr);
 
 		const KeyInput &keyInput() const							{ return mKeyInput; }
 		void setKeyInput(const KeyInput &keyInput);
@@ -41,7 +40,7 @@ namespace ActionTools
 		void currentIndexChanged(const QString &text);
 
 	private:
-		bool eventFilter(QObject *object, QEvent *event);
+		bool eventFilter(QObject *object, QEvent *event) override;
 
 		KeyInput mKeyInput;
 
@@ -49,4 +48,3 @@ namespace ActionTools
 	};
 }
 
-#endif // KEYEDIT_H

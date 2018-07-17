@@ -30,7 +30,7 @@ namespace Code
 {
 	QScriptValue Clipboard::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Clipboard *clipboard = new Clipboard;
+		auto clipboard = new Clipboard;
 
 		if(context->argumentCount() > 0)
 		{
@@ -42,8 +42,8 @@ namespace Code
 	}
 	
 	Clipboard::Clipboard()
-		: CodeClass(),
-		mMode(QClipboard::Clipboard)
+		: CodeClass()
+		
 	{
 	}
 
@@ -84,7 +84,7 @@ namespace Code
 		QClipboard *clipboard = QApplication::clipboard();
 
 		QObject *object = data.toQObject();
-		if(Code::Image *image = qobject_cast<Code::Image*>(object))
+		if(auto image = qobject_cast<Code::Image*>(object))
 			clipboard->setImage(image->image(), mMode);
 		else
 			clipboard->setImage(data.toVariant().value<QImage>(), mMode);
@@ -110,14 +110,14 @@ namespace Code
 		case Selection:
 			if(!QApplication::clipboard()->supportsSelection())
 			{
-				throwError(context, engine, "UnsupportedSelectionModeError", tr("Selection mode is not supported by your operating system"));
+				throwError(context, engine, QStringLiteral("UnsupportedSelectionModeError"), tr("Selection mode is not supported by your operating system"));
 				return;
 			}
 			break;
 		case FindBuffer:
 			if(!QApplication::clipboard()->supportsFindBuffer())
 			{
-				throwError(context, engine, "UnsupportedSelectionModeError", tr("Find buffer mode is not supported by your operating system"));
+				throwError(context, engine, QStringLiteral("UnsupportedSelectionModeError"), tr("Find buffer mode is not supported by your operating system"));
 				return;
 			}
 			break;

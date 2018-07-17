@@ -27,19 +27,26 @@
 
 namespace Actions
 {
-    Tools::StringListPair WebDownloadInstance::destinations = qMakePair(
-			QStringList() << "variable" << "file",
-			QStringList() << QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "Variable")
-						  << QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "File"));
+    Tools::StringListPair WebDownloadInstance::destinations =
+    {
+        {
+            QStringLiteral("variable"),
+            QStringLiteral("file")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "Variable")),
+            QStringLiteral(QT_TRANSLATE_NOOP("WebDownloadInstance::destinations", "File"))
+        }
+    };
 
 	WebDownloadInstance::WebDownloadInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
 		  mNetworkAccessManager(new QNetworkAccessManager(this)),
-		  mReply(0),
+		  mReply(nullptr),
 		  mDestination(Variable),
 		  mProgressDialog(new QProgressDialog)
 	{
-		connect(mProgressDialog, SIGNAL(canceled()), this, SLOT(canceled()));
+        connect(mProgressDialog, &QProgressDialog::canceled, this, &WebDownloadInstance::canceled);
 	}
 
 	WebDownloadInstance::~WebDownloadInstance()
@@ -51,10 +58,10 @@ namespace Actions
 	{
 		bool ok = true;
 
-		QString urlString = evaluateString(ok, "url");
-		mDestination = evaluateListElement<Destination>(ok, destinations, "destination");
-		mVariable = evaluateVariable(ok, "variable");
-		QString file = evaluateString(ok, "file");
+		QString urlString = evaluateString(ok, QStringLiteral("url"));
+		mDestination = evaluateListElement<Destination>(ok, destinations, QStringLiteral("destination"));
+		mVariable = evaluateVariable(ok, QStringLiteral("variable"));
+		QString file = evaluateString(ok, QStringLiteral("file"));
 
 
 		if(!ok)
@@ -62,11 +69,11 @@ namespace Actions
 
 		QUrl url(urlString);
 		if(url.scheme() == QString())
-			url = QUrl("http://" + urlString, QUrl::TolerantMode);
+			url = QUrl(QStringLiteral("http://") + urlString, QUrl::TolerantMode);
 
 		if(!url.isValid())
 		{
-			setCurrentParameter("url");
+			setCurrentParameter(QStringLiteral("url"));
 			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid URL"));
 			return;
 		}
@@ -76,7 +83,7 @@ namespace Actions
 			mFile.setFileName(file);
 			if(!mFile.open(QIODevice::WriteOnly))
 			{
-				setCurrentParameter("file");
+				setCurrentParameter(QStringLiteral("file"));
 				emit executionException(CannotOpenFileException, tr("Cannot write to file"));
 				return;
 			}
@@ -84,9 +91,9 @@ namespace Actions
 
 		mReply = mNetworkAccessManager->get(QNetworkRequest(url));
 
-		connect(mReply, SIGNAL(finished()), this, SLOT(finished()));
-		connect(mReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-		connect(mReply, SIGNAL(readyRead()), this, SLOT(readyRead()));
+        connect(mReply, &QNetworkReply::finished, this, &WebDownloadInstance::finished);
+        connect(mReply, &QNetworkReply::downloadProgress, this, &WebDownloadInstance::downloadProgress);
+        connect(mReply, &QNetworkReply::readyRead, this, &WebDownloadInstance::readyRead);
 
 		mProgressDialog->setModal(false);
 		mProgressDialog->setWindowTitle(tr("Downloading"));
@@ -111,20 +118,20 @@ namespace Actions
 			if(mDestination == Variable)
                 setVariable(mVariable, QString::fromUtf8(mReply->readAll()));
 
-			emit executionEnded();
+            executionEnded();
 			break;
 		case QNetworkReply::OperationCanceledError:
 			if(mDestination == File)
 				mFile.remove();
 
-			emit executionEnded();
+            executionEnded();
 			break;
 		default:
 			{
 				if(mDestination == File)
 					mFile.remove();
 
-				setCurrentParameter("url");
+				setCurrentParameter(QStringLiteral("url"));
 
 				emit executionException(DownloadException, tr("Download error: %1").arg(mReply->errorString()));
 			}
@@ -134,7 +141,7 @@ namespace Actions
 		mProgressDialog->close();
 
 		mReply->deleteLater();
-		mReply = 0;
+		mReply = nullptr;
 	}
 
 	void WebDownloadInstance::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)

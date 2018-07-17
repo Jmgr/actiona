@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READENVIRONMENTDEFINITION_H
-#define READENVIRONMENTDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readenvironmentinstance.h"
@@ -36,7 +35,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ReadEnvironmentVariableDefinition : public QObject, public ActionTools::ActionDefinition
+	class ReadEnvironmentVariableDefinition : public ActionTools::ActionDefinition
 	{
 	   Q_OBJECT
 
@@ -46,38 +45,32 @@ namespace Actions
 		{
             translateItems("ReadEnvironmentVariableInstance::modes", ReadEnvironmentVariableInstance::modes);
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			variable->setTooltip(tr("The variable used to store the selected information from your system environment"));
-			addElement(variable);
+			auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable used to store the selected information from your system environment"));
 
-			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
-			mode->setTooltip(tr("The environment read mode"));
-			mode->setItems(ReadEnvironmentVariableInstance::modes);
-            mode->setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariableMode));
-			addElement(mode);
+			auto &mode = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")});
+            mode.setTooltip(tr("The environment read mode"));
+            mode.setItems(ReadEnvironmentVariableInstance::modes);
+            mode.setDefaultValue(ReadEnvironmentVariableInstance::modes.second.at(ReadEnvironmentVariableInstance::oneVariableMode));
 
-			ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(this);
-			selectionMode->setMasterList(mode);
-            selectionMode->setMasterValues(QStringList() << ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode));
+            auto &selectionMode = addGroup();
+            selectionMode.setMasterList(mode);
+            selectionMode.setMasterValues({ReadEnvironmentVariableInstance::modes.first.at(ReadEnvironmentVariableInstance::oneVariableMode)});
 
-			ActionTools::EnvironmentVariableParameterDefinition *environmentVariableName = new ActionTools::EnvironmentVariableParameterDefinition(ActionTools::Name("environmentVariableName", tr("Environment Variable")), this);
-			environmentVariableName->setTooltip(tr("The specific environment variable to read"));
-			selectionMode->addMember(environmentVariableName);
-
-			addElement(selectionMode);
+            auto &environmentVariableName = selectionMode.addParameter<ActionTools::EnvironmentVariableParameterDefinition>({QStringLiteral("environmentVariableName"), tr("Environment Variable")});
+            environmentVariableName.setTooltip(tr("The specific environment variable to read"));
 		}
 
-        QString name() const													{ return QObject::tr("Read environment variable"); }
-		QString id() const														{ return "ActionReadEnvironmentVariable"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-        QString description() const												{ return QObject::tr("Read a single or multiple environment variables"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadEnvironmentVariableInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/readenvironment.png"); }
+        QString name() const override													{ return QObject::tr("Read environment variable"); }
+		QString id() const override														{ return QStringLiteral("ActionReadEnvironmentVariable"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+        QString description() const override												{ return QObject::tr("Read a single or multiple environment variables"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadEnvironmentVariableInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readenvironment.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadEnvironmentVariableDefinition)
 	};
 }
 
-#endif // READENVIRONMENTDEFINITION_H

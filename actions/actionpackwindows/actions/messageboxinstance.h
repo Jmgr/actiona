@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef MESSAGEBOXINSTANCE_H
-#define MESSAGEBOXINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "ifactionvalue.h"
@@ -63,14 +62,14 @@ namespace Actions
 			PlainTextMode
 		};
 
-		MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0);
+		MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 
         static Tools::StringListPair icons;
         static Tools::StringListPair buttons;
         static Tools::StringListPair textmodes;
 
-		void startExecution();
-		void stopExecution();
+		void startExecution() override;
+		void stopExecution() override;
 
 	private:
 		QMessageBox::Icon messageBoxIcon(Icon icon) const;
@@ -89,4 +88,3 @@ namespace Actions
 	};
 }
 
-#endif // MESSAGEBOXINSTANCE

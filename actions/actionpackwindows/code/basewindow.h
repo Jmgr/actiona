@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef BASEWINDOW_H
-#define BASEWINDOW_H
+#pragma once
 
 #include <QScriptValue>
 #include <QScriptEngine>
@@ -45,7 +44,7 @@ namespace Code
 		QScriptValue setVisible(bool visible);
 		QScriptValue setWindowIcon(const QScriptValue &windowIcon);
 		QScriptValue close();
-        virtual bool equals(const QScriptValue &other) const;
+        bool equals(const QScriptValue &other) const override;
 
 	protected:
 		BaseWindow();
@@ -60,8 +59,7 @@ namespace Code
 		void setupConstructorParameters(QScriptContext *context, QScriptEngine *engine, const QScriptValue &parameters);
 
 	private:
-		QWidget *mWindow;
+		QWidget *mWindow{nullptr};
 	};
 }
 
-#endif // BASEWINDOW_H

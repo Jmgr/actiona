@@ -23,6 +23,10 @@
 #include "actiondefinition.h"
 #include "languages.h"
 
+#ifdef ACT_PROFILE
+#include "highresolutiontimer.h"
+#endif
+
 #include <QPluginLoader>
 #include <QDir>
 #include <QFileInfo>
@@ -56,16 +60,16 @@ namespace ActionTools
 		QDir actionDirectory(directory);
 
 #ifdef Q_OS_WIN
-		QString actionMask = "ActionPack*.dll";
+		QString actionMask = QStringLiteral("ActionPack*.dll");
 #endif
 #ifdef Q_OS_MAC
-		QString actionMask = "libActionPack*.dylib";
+		QString actionMask = QStringLiteral("libActionPack*.dylib");
 #endif
 #ifdef Q_OS_LINUX
-		QString actionMask = "libActionPack*.so";
+		QString actionMask = QStringLiteral("libActionPack*.so");
 #endif
 
-        for(const QString actionFilename: actionDirectory.entryList(QStringList() << actionMask, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
+        for(const QString &actionFilename: actionDirectory.entryList({actionMask}, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
 
         std::sort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
@@ -82,13 +86,13 @@ namespace ActionTools
 				return actionDefinition;
 		}
 
-		return 0;
+		return nullptr;
 	}
 
 	ActionDefinition *ActionFactory::actionDefinition(int index) const
 	{
 		if(index < 0 || index >= mActionDefinitions.count())
-			return 0;
+			return nullptr;
 
 		return mActionDefinitions.at(index);
 	}
@@ -96,7 +100,7 @@ namespace ActionTools
 	ActionPack *ActionFactory::actionPack(int index) const
 	{
 		if(index < 0 || index >= mActionPacks.count())
-			return 0;
+			return nullptr;
 
 		return mActionPacks.at(index);
 	}
@@ -106,7 +110,7 @@ namespace ActionTools
 		ActionDefinition *definition = actionDefinition(actionDefinitionId);
 
 		if(!definition)
-			return 0;
+			return nullptr;
 
 		return definition->newActionInstance();
 	}
@@ -153,7 +157,7 @@ namespace ActionTools
 			return;
 		}
 
-        Tools::Languages::installTranslator(QString("actionpack%1").arg(actionPack->id()), locale);
+        Tools::Languages::installTranslator(QStringLiteral("actionpack%1").arg(actionPack->id()), locale);
 
 		actionPack->createDefinitions();
 
@@ -173,7 +177,7 @@ namespace ActionTools
 					emit actionPackLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
 									   .arg(shortFilename)
 									   .arg(definition->id())
-									   .arg(missingFeatures.join("<li>")));
+									   .arg(missingFeatures.join(QStringLiteral("<li>"))));
 					continue;
 				}
 			}

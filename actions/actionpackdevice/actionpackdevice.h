@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONPACKDEVICE_H
-#define ACTIONPACKDEVICE_H
+#pragma once
 
 #include "actionpack.h"
 #include "actions/textdefinition.h"
@@ -28,6 +27,7 @@
 #include "actions/keydefinition.h"
 #include "actions/movecursordefinition.h"
 #include "actions/cursorpathdefinition.h"
+#include "actions/keyboardkeyconditiondefinition.h"
 
 #include "code/mouse.h"
 #include "code/keyboard.h"
@@ -43,14 +43,12 @@ class ActionPackDevice : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 	Q_INTERFACES(ActionTools::ActionPack)
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "device.json")
-#endif
 
 public:
-	ActionPackDevice()							{}
+	ActionPackDevice()							= default;
 
-	void createDefinitions()
+	void createDefinitions() override
 	{
 		addActionDefinition(new Actions::TextDefinition(this));
 		addActionDefinition(new Actions::ClickDefinition(this));
@@ -58,24 +56,20 @@ public:
 		addActionDefinition(new Actions::KeyDefinition(this));
 		addActionDefinition(new Actions::MoveCursorDefinition(this));
 		addActionDefinition(new Actions::CursorPathDefinition(this));
+        addActionDefinition(new Actions::KeyboardKeyConditionDefinition(this));
 	}
 
-	QString id() const							{ return "device"; }
-	QString name() const						{ return tr("Actions dealing with devices like the keyboard or the mouse"); }
-	Tools::Version version() const				{ return Tools::Version(0, 0, 1); }
+	QString id() const override							{ return QStringLiteral("device"); }
+	QString name() const override						{ return tr("Actions dealing with devices like the keyboard or the mouse"); }
+	Tools::Version version() const override				{ return Tools::Version(0, 0, 1); }
 	
-	void codeInit(QScriptEngine *scriptEngine) const
+	void codeInit(QScriptEngine *scriptEngine) const override
 	{
-		addCodeClass<Code::Mouse>("Mouse", scriptEngine);
-		addCodeClass<Code::Keyboard>("Keyboard", scriptEngine);
+		addCodeClass<Code::Mouse>(QStringLiteral("Mouse"), scriptEngine);
+		addCodeClass<Code::Keyboard>(QStringLiteral("Keyboard"), scriptEngine);
 	}
 
 private:
 	Q_DISABLE_COPY(ActionPackDevice)
 };
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-Q_EXPORT_PLUGIN2(ActionPackDevice, ActionPackDevice)
-#endif
-
-#endif // ACTIONPACKDEVICE_H

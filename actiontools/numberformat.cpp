@@ -28,9 +28,25 @@ namespace ActionTools
     QString NumberFormat::sizeString(quint64 size)
     {
         if(size < 1000)
-            return QObject::tr("%n byte(s)", "", size);
+            return QObject::tr("%n byte(s)", "", static_cast<int>(size));
 
-        return numberFormat(QStringList() << QObject::tr("KB") << QObject::tr("MB") << QObject::tr("GB") << QObject::tr("TB"), static_cast<double>(size));
+        return numberFormat({QObject::tr("KB"), QObject::tr("MB"), QObject::tr("GB"), QObject::tr("TB")}, static_cast<double>(size));
+    }
+
+    QString NumberFormat::labelIndexString(int rowIndex)
+    {
+        static QStringList lineNumbers;
+
+        int linesToAdd = rowIndex - lineNumbers.size() + 1;
+        if(linesToAdd > 0)
+        {
+            lineNumbers.reserve(lineNumbers.size() + linesToAdd);
+
+            for(int lineIndex = 0; lineIndex < linesToAdd; ++lineIndex)
+                lineNumbers.append(QStringLiteral("%1").arg(lineNumbers.size() + 1, 3, 10, QLatin1Char('0')));
+        }
+
+        return lineNumbers[rowIndex];
     }
 
     QString NumberFormat::numberFormat(const QStringList &units, double value)
@@ -46,6 +62,6 @@ namespace ActionTools
             value /= 1000.0;
         }
 
-        return QString().setNum(value, 'f', 2) + QLatin1String(" ") + unit;
+		return QString().setNum(value, 'f', 2) + QStringLiteral(" ") + unit;
     }
 }

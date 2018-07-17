@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>702</width>
-    <height>452</height>
+    <width>1035</width>
+    <height>657</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,14 +52,14 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="label_13">
          <property name="text">
           <string>Taskbar icon:</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QCheckBox" name="showTaskbarIcon">
@@ -95,14 +95,14 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="showWindowAfterExecutionLabel">
          <property name="text">
           <string>Show window after execution:</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QCheckBox" name="showWindowAfterExecution">
          <property name="text">
           <string>Set the main window as the foreground window after execution</string>
@@ -112,14 +112,14 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="label_12">
          <property name="text">
           <string>Console start/end separators:</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QCheckBox" name="addStartEndSeparators">
          <property name="text">
           <string>Add start/end separators</string>
@@ -129,28 +129,28 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="label_14">
          <property name="text">
           <string>Last opened script:</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="7" column="1">
         <widget class="QCheckBox" name="reopenLastScript">
          <property name="text">
           <string>Reopen the last opened script</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="8" column="0">
         <widget class="QLabel" name="label_15">
          <property name="text">
           <string>Maximum recent files:</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="8" column="1">
         <widget class="QSpinBox" name="maxRecentFiles">
          <property name="minimum">
           <number>0</number>
@@ -163,14 +163,14 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="fileAssociationsLabel">
          <property name="text">
           <string>File associations:</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="9" column="1">
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
           <widget class="QCheckBox" name="associateASCRCheckBox">
@@ -197,6 +197,20 @@ p, li { white-space: pre-wrap; }
        </item>
        <item row="0" column="1">
         <widget class="QComboBox" name="languageComboBox"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_23">
+         <property name="text">
+          <string>Action dialogs:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="preloadActionDialogsCheckBox">
+         <property name="text">
+          <string>Preload action dialogs at startup</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -253,6 +267,13 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Console window:</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="1">
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
@@ -297,6 +318,16 @@ p, li { white-space: pre-wrap; }
        <item row="3" column="1">
         <widget class="SettingsKeyEdit" name="stopExecutionHotkey"/>
        </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Pause/Resume execution hotkey:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="SettingsKeyEdit" name="pauseExecutionHotkey"/>
+       </item>
        <item row="5" column="0">
         <widget class="QLabel" name="label_19">
          <property name="text">
@@ -334,22 +365,56 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_11">
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_16">
          <property name="text">
-          <string>Console window:</string>
+          <string>Heatmap colors:</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Pause/Resume execution hotkey:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="SettingsKeyEdit" name="pauseExecutionHotkey"/>
+       <item row="8" column="1">
+        <layout class="QFormLayout" name="formLayout_5">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>Minimum:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="ColorPickerPushButton" name="heatmapMinColorPushButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_22">
+           <property name="text">
+            <string>Maximum:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="ColorPickerPushButton" name="heatmapMaxColorPushButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -558,6 +623,11 @@ p, li { white-space: pre-wrap; }
    <extends>QWidget</extends>
    <header location="global">screenpositionwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ColorPickerPushButton</class>
+   <extends>QPushButton</extends>
+   <header>colorpickerpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources>

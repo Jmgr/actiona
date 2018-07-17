@@ -26,8 +26,8 @@ namespace ActionTools
 {
     ImageParameterDefinition::ImageParameterDefinition(const Name &name, QObject *parent)
       : FileParameterDefinition(name, parent),
-        mScript(0),
-        mParent(0)
+        mScript(nullptr),
+        mParent(nullptr)
     {
     }
 
@@ -38,8 +38,8 @@ namespace ActionTools
         mScript = script;// Is this really safe?
         mParent = parent;
 
-        ScreenshotPushButton *screenshotPushButton = new ScreenshotPushButton(parent);
-        connect(screenshotPushButton, SIGNAL(clicked()), this, SLOT(onCaptureClicked()));
+        auto screenshotPushButton = new ScreenshotPushButton(parent);
+        connect(screenshotPushButton, &ScreenshotPushButton::clicked, this, &ImageParameterDefinition::onCaptureClicked);
 
         addEditor(screenshotPushButton);
     }
@@ -55,7 +55,7 @@ namespace ActionTools
             switch(screenshotWizard.saveTarget())
             {
             case ScreenshotWizard::ResourceSaveTarget:
-                fileEdit()->setText("$" + screenshotWizard.resourceOrFilename());
+				fileEdit()->setText(QStringLiteral("$") + screenshotWizard.resourceOrFilename());
                 break;
             case ScreenshotWizard::FileSaveTarget:
                 fileEdit()->setText(screenshotWizard.resourceOrFilename());

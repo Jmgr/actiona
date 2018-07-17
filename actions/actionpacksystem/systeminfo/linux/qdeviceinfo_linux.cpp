@@ -84,17 +84,16 @@ QDeviceInfoPrivate::QDeviceInfoPrivate(QDeviceInfo *parent)
 #if !defined(QT_SIMULATOR)
     , q_ptr(parent)
 #endif // QT_SIMULATOR
-    , watchThermalState(false)
-    , imeiBuffer(QStringList())
+    , 
+     imeiBuffer(QStringList())
     , uniqueDeviceIDBuffer(QString())
-    , timer(0)
-    , boardNameString(QString())
+    , 
+     boardNameString(QString())
     , osName(QString())
 #if !defined(QT_NO_OFONO)
         , ofonoWrapper(0)
 #endif // QT_NO_OFONO
-    ,connectedBtPower(0)
-    ,btPowered(0)
+    
 {
 }
 
@@ -232,7 +231,7 @@ QDeviceInfo::LockTypeFlags QDeviceInfoPrivate::enabledLocks()
 {
     QDeviceInfo::LockTypeFlags enabledLocks = QDeviceInfo::NoLock;
 
-    QScreenSaverPrivate screenSaver(0);
+    QScreenSaverPrivate screenSaver(nullptr);
     if (screenSaver.screenSaverEnabled())
         enabledLocks = QDeviceInfo::TouchOrKeyboardLock;
 
@@ -407,9 +406,9 @@ QString QDeviceInfoPrivate::uniqueDeviceID()
             QCryptographicHash hash2(QCryptographicHash::Sha1);
             hash2.addData(macaddy.toLocal8Bit());
 
-            QString id = hash2.result().toHex();
+			QString id = QLatin1String(hash2.result().toHex());
 
-            id = id.insert(8,'-').insert(13,'-').insert(18,'-').insert(23,'-');
+			id = id.insert(8,QLatin1Char('-')).insert(13,QLatin1Char('-')).insert(18,QLatin1Char('-')).insert(23,QLatin1Char('-'));
             if (isUuid(id))
                 uniqueDeviceIDBuffer = id;
         }
@@ -421,7 +420,7 @@ QString QDeviceInfoPrivate::uniqueDeviceID()
         if (file.open(QIODevice::ReadOnly)) {
             QString id = QString::fromLocal8Bit(file.readAll().simplified().data());
             if (id.length() == 32) {
-                id = id.insert(8,'-').insert(13,'-').insert(18,'-').insert(23,'-');
+				id = id.insert(8,QLatin1Char('-')).insert(13,QLatin1Char('-')).insert(18,QLatin1Char('-')).insert(23,QLatin1Char('-'));
                 if (isUuid(id)) {
                     uniqueDeviceIDBuffer = id;
                 }
@@ -434,7 +433,7 @@ QString QDeviceInfoPrivate::uniqueDeviceID()
         if (file.open(QIODevice::ReadOnly)) {
             QString id = QString::fromLocal8Bit(file.readAll().simplified().data());
             if (id.length() == 32) {
-                id = id.insert(8,'-').insert(13,'-').insert(18,'-').insert(23,'-');
+				id = id.insert(8,QLatin1Char('-')).insert(13,QLatin1Char('-')).insert(18,QLatin1Char('-')).insert(23,QLatin1Char('-'));
                 if (isUuid(id)) {
                     uniqueDeviceIDBuffer = id;
                 }
@@ -448,7 +447,7 @@ QString QDeviceInfoPrivate::uniqueDeviceID()
         if (file.open(QIODevice::ReadOnly)) {
             QString id = QString::fromLocal8Bit(file.readAll().simplified().data());
             if (id.length() == 32) {
-                id = id.insert(8,'-').insert(13,'-').insert(18,'-').insert(23,'-');
+				id = id.insert(8,QLatin1Char('-')).insert(13,QLatin1Char('-')).insert(18,QLatin1Char('-')).insert(23,QLatin1Char('-'));
                 if (isUuid(id)) {
                     uniqueDeviceIDBuffer = id;
                 }
@@ -647,7 +646,7 @@ extern QMetaMethod proxyToSourceSignal(const QMetaMethod &, QObject *);
 
 void QDeviceInfoPrivate::connectNotify(const QMetaMethod &signal)
 {
-    if (timer == 0) {
+    if (timer == nullptr) {
         timer = new QTimer(this);
         timer->setInterval(2000);
         connect(timer, SIGNAL(timeout()), this, SLOT(onTimeout()));

@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ITEMLISTWIDGET_H
-#define ITEMLISTWIDGET_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -44,8 +43,8 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ItemListWidget(QWidget *parent = 0);
-		~ItemListWidget();
+		explicit ItemListWidget(QWidget *parent = nullptr);
+		~ItemListWidget() override;
 
 		void setItems(const QStringList &items);
 		void appendItems(const QStringList &items);
@@ -69,4 +68,3 @@ namespace ActionTools
 	};
 }
 
-#endif // ITEMLISTWIDGET_H

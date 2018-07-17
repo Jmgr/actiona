@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COLOREDIT_H
-#define COLOREDIT_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "subparameter.h"
@@ -44,8 +43,8 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ColorEdit(QWidget *parent = 0);
-		~ColorEdit();
+		explicit ColorEdit(QWidget *parent = nullptr);
+		~ColorEdit() override;
 
 		void setText(const QString &text);
 		QString text() const;
@@ -53,10 +52,10 @@ namespace ActionTools
 		bool isCode() const;
 		void setCode(bool code);
 		void setFromSubParameter(const SubParameter &subParameter);
-		void openEditor(int line = -1, int column = -1);
-		void setCompletionModel(QAbstractItemModel *completionModel);
-        void setParameterContainer(const ParameterContainer *parameterContainer);
-        QSet<QString> findVariables() const;
+		void openEditor(int line = -1, int column = -1) override;
+		void setCompletionModel(QAbstractItemModel *completionModel) override;
+        void setParameterContainer(const ParameterContainer *parameterContainer) override;
+        QSet<QString> findVariables() const override;
 		void setChooseByPositionButtonVisible(bool visible);
 		
 	signals:
@@ -83,4 +82,3 @@ namespace ActionTools
 	};
 }
 
-#endif // COLOREDIT_H

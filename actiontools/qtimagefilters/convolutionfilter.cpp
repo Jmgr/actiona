@@ -198,10 +198,10 @@ bool ConvolutionFilter::setChannels(const QString &rgba)
     if (bOK)
     {
         FilterChannels channels;
-        if (rgba.contains(QChar('r'))) channels |= ConvolutionFilter::Red;
-        if (rgba.contains(QChar('g'))) channels |= ConvolutionFilter::Green;
-        if (rgba.contains(QChar('b'))) channels |= ConvolutionFilter::Blue;
-        if (rgba.contains(QChar('a'))) channels |= ConvolutionFilter::Alpha;
+		if (rgba.contains(QLatin1Char('r'))) channels |= ConvolutionFilter::Red;
+		if (rgba.contains(QLatin1Char('g'))) channels |= ConvolutionFilter::Green;
+		if (rgba.contains(QLatin1Char('b'))) channels |= ConvolutionFilter::Blue;
+		if (rgba.contains(QLatin1Char('a'))) channels |= ConvolutionFilter::Alpha;
         m_channels = channels;
     }
     return bOK;
@@ -218,17 +218,17 @@ QString ConvolutionFilter::getChannels() const
         chan.append('b');
     if (m_channels & ConvolutionFilter::Alpha)
         chan.append('a');
-    return chan;
+	return QLatin1String(chan);
 }
 
 bool ConvolutionFilter::setBorderPolicy(const QString &borderPolicy)
 {
     bool bOK = true;
-    if (borderPolicy.toLower() == "mirror") {
+	if (borderPolicy.toLower() == QLatin1String("mirror")) {
         m_borderPolicy = ConvolutionFilter::Mirror;
-    }else if (borderPolicy.toLower() == "extend") {
+	}else if (borderPolicy.toLower() == QLatin1String("extend")) {
         m_borderPolicy = ConvolutionFilter::Extend;
-    }else if (borderPolicy.toLower() == "wrap") {
+	}else if (borderPolicy.toLower() == QLatin1String("wrap")) {
         m_borderPolicy = ConvolutionFilter::Wrap;
     }else{
         bOK = false;
@@ -241,13 +241,10 @@ QString ConvolutionFilter::getBorderPolicy() const
     switch (m_borderPolicy) {
     case ConvolutionFilter::Mirror:
         return QLatin1String("mirror");
-        break;
     case ConvolutionFilter::Extend:
-        return QLatin1String("mirror");
-        break;
+		return QLatin1String("extend");
     case ConvolutionFilter::Wrap:
         return QLatin1String("wrap");
-        break;
     default:
         break;
     }
@@ -255,10 +252,7 @@ QString ConvolutionFilter::getBorderPolicy() const
     return QString();
 }
 
-ConvolutionFilter::~ConvolutionFilter()
-{
-
-}
+ConvolutionFilter::~ConvolutionFilter() = default;
 
 QImage ConvolutionFilter::convolve(const QImage &img, const QRect& clipRect) const
 {

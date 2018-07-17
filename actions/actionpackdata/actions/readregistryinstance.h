@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READREGISTRYINSTANCE_H
-#define READREGISTRYINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "stringlistpair.h"
@@ -39,16 +38,15 @@ namespace Actions
 			InvalidValueType
 		};
 
-		ReadRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		ReadRegistryInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
 
         static Tools::StringListPair keys;
 
-		void startExecution();
+		void startExecution() override;
 
 	private:
 		Q_DISABLE_COPY(ReadRegistryInstance)
 	};
 }
 
-#endif // READREGISTRYINSTANCE_H

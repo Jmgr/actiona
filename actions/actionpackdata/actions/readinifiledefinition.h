@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef READINIFILEDEFINITION_H
-#define READINIFILEDEFINITION_H
+#pragma once
 
 #include "actiondefinition.h"
 #include "readinifileinstance.h"
@@ -37,7 +36,7 @@ namespace ActionTools
 
 namespace Actions
 {
-	class ReadIniFileDefinition : public QObject, public ActionTools::ActionDefinition
+	class ReadIniFileDefinition : public ActionTools::ActionDefinition
 	{
 		Q_OBJECT
 
@@ -47,52 +46,44 @@ namespace Actions
 		{
 			translateItems("ReadIniFileInstance::modes", ReadIniFileInstance::modes);
 
-			ActionTools::FileParameterDefinition *file = new ActionTools::FileParameterDefinition(ActionTools::Name("file", tr("File")), this);
-			file->setTooltip(tr("The file to read from"));
-			file->setMode(ActionTools::FileEdit::FileOpen);
-			file->setCaption(tr("Choose the INI file"));
-			file->setFilter(tr("INI files (*.ini);;All files (*.*)"));
-			addElement(file);
+            auto &file = addParameter<ActionTools::FileParameterDefinition>({QStringLiteral("file"), tr("File")});
+            file.setTooltip(tr("The file to read from"));
+            file.setMode(ActionTools::FileEdit::FileOpen);
+            file.setCaption(tr("Choose the INI file"));
+            file.setFilter(tr("INI files (*.ini);;All files (*.*)"));
 
-			ActionTools::VariableParameterDefinition *variable = new ActionTools::VariableParameterDefinition(ActionTools::Name("variable", tr("Variable")), this);
-			variable->setTooltip(tr("The variable where to store the data"));
-			addElement(variable);
+            auto &variable = addParameter<ActionTools::VariableParameterDefinition>({QStringLiteral("variable"), tr("Variable")});
+            variable.setTooltip(tr("The variable where to store the data"));
 
-			ActionTools::ListParameterDefinition *mode = new ActionTools::ListParameterDefinition(ActionTools::Name("mode", tr("Mode")), this);
-			mode->setTooltip(tr("The INI file read mode"));
-            mode->setItems(ReadIniFileInstance::modes);
-            mode->setDefaultValue(ReadIniFileInstance::modes.second.at(ReadIniFileInstance::SingleParameter));
-            addElement(mode);
+            auto &mode = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("mode"), tr("Mode")});
+            mode.setTooltip(tr("The INI file read mode"));
+            mode.setItems(ReadIniFileInstance::modes);
+            mode.setDefaultValue(ReadIniFileInstance::modes.second.at(ReadIniFileInstance::SingleParameter));
 
-			ActionTools::GroupDefinition *selectionMode = new ActionTools::GroupDefinition(this);
-			selectionMode->setMasterList(mode);
-            selectionMode->setMasterValues(QStringList() << ReadIniFileInstance::modes.first.at(ReadIniFileInstance::SingleParameter));
+            auto &selectionMode = addGroup();
+            selectionMode.setMasterList(mode);
+            selectionMode.setMasterValues({ReadIniFileInstance::modes.first.at(ReadIniFileInstance::SingleParameter)});
 
-			ActionTools::TextParameterDefinition *section = new ActionTools::TextParameterDefinition(ActionTools::Name("section", tr("Section")), this);
-            section->setTooltip(tr("The parameter section"));
-            selectionMode->addMember(section);
+            auto &section = selectionMode.addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("section"), tr("Section")});
+            section.setTooltip(tr("The parameter section"));
 
-			ActionTools::TextParameterDefinition *parameter = new ActionTools::TextParameterDefinition(ActionTools::Name("parameter", tr("Parameter")), this);
-			parameter->setTooltip(tr("The parameter name"));
-            selectionMode->addMember(parameter);
-
-            addElement(selectionMode);
+            auto &parameter = selectionMode.addParameter<ActionTools::TextParameterDefinition>({QStringLiteral("parameter"), tr("Parameter")});
+            parameter.setTooltip(tr("The parameter name"));
 
 			addException(ReadIniFileInstance::UnableToReadFileException, tr("Unable to read file"));
 			addException(ReadIniFileInstance::UnableToFindSectionException, tr("Unable to find section"));
 		}
 
-		QString name() const													{ return QObject::tr("Read INI file"); }
-		QString id() const														{ return "ActionReadIniFile"; }
-		ActionTools::Flag flags() const											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const												{ return QObject::tr("Read one or all the entries in an INI file"); }
-		ActionTools::ActionInstance *newActionInstance() const					{ return new ReadIniFileInstance(this); }
-		ActionTools::ActionCategory category() const							{ return ActionTools::Data; }
-		QPixmap icon() const													{ return QPixmap(":/icons/readini.png"); }
+		QString name() const override													{ return QObject::tr("Read INI file"); }
+		QString id() const override														{ return QStringLiteral("ActionReadIniFile"); }
+		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
+		QString description() const override												{ return QObject::tr("Read one or all the entries in an INI file"); }
+		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadIniFileInstance(this); }
+		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }
+		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/icons/readini.png")); }
 
 	private:
 		Q_DISABLE_COPY(ReadIniFileDefinition)
 	};
 }
 
-#endif // READINIFILEDEFINITION_H

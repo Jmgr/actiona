@@ -27,7 +27,7 @@ namespace Code
 {
     QScriptValue MailAttachment::constructor(QScriptContext *context, QScriptEngine *engine)
     {
-        MailAttachment *mailAttachment = new MailAttachment;
+        auto mailAttachment = new MailAttachment;
 
         QScriptValueIterator it(context->argument(0));
 
@@ -35,9 +35,9 @@ namespace Code
         {
             it.next();
 
-            if(it.name() == "contentType")
+			if(it.name() == QLatin1String("contentType"))
                 mailAttachment->setContentType(it.value().toString());
-            else if(it.name() == "content")
+			else if(it.name() == QLatin1String("content"))
                 mailAttachment->setContent(it.value());
         }
 
@@ -67,7 +67,7 @@ namespace Code
 
     QScriptValue MailAttachment::setContent(const QScriptValue &content)
     {
-        if(RawData *rawData = qobject_cast<RawData*>(content.toQObject()))
+        if(auto rawData = qobject_cast<RawData*>(content.toQObject()))
             mContent = rawData->byteArray();
         else
             mContent = content.toVariant().toByteArray();

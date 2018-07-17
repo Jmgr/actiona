@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef GROUPDEFINITION_H
-#define GROUPDEFINITION_H
+#pragma once
 
 #include "elementdefinition.h"
 #include "parameterdefinition.h"
@@ -38,17 +37,22 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		GroupDefinition(QObject *parent = 0);
+		GroupDefinition(QObject *parent = nullptr);
 
-		void addMember(ParameterDefinition *parameter, int tab = 0)		{ parameter->setTab(tab); mMembers.append(parameter); }
-		QList<ParameterDefinition *> members() const					{ return mMembers; }
+        template<class ParameterDefinitionT>
+        ParameterDefinitionT &addParameter(const Name &name, int tab = 0)
+        {
+            return *static_cast<ParameterDefinitionT *>(addParameter(new ParameterDefinitionT(name, this), tab));
+        }
 
-		void setMasterList(ListParameterDefinition *masterList);
-		void setMasterValues(const QStringList &masterValues)			{ mMasterValues = masterValues; }
+        QList<ParameterDefinition *> members() const                                    { return mMembers; }
+
+        void setMasterList(ListParameterDefinition &masterList);
+        void setMasterValues(const QStringList &masterValues)                           { mMasterValues = masterValues; }
 
 		void init();
 		
-		void setDefaultValues(ActionInstance *actionInstance);
+		void setDefaultValues(ActionInstance *actionInstance) override;
 
 	private slots:
 		void masterEditorBuilt();
@@ -56,15 +60,22 @@ namespace ActionTools
 		void masterCodeChanged(bool code);
 
 	private:
+        ParameterDefinition *addParameter(ParameterDefinition *parameter, int tab = 0)
+        {
+            parameter->setTab(tab);
+
+            mMembers.append(parameter);
+
+            return parameter;
+        }
 		void enableMembers(bool enable);
 
 		QList<ParameterDefinition *> mMembers;
-		ListParameterDefinition *mMasterList;
+		ListParameterDefinition *mMasterList{nullptr};
 		QStringList mMasterValues;
-		CodeComboBox *mMasterCodeComboBox;
+		CodeComboBox *mMasterCodeComboBox{nullptr};
 
 		Q_DISABLE_COPY(GroupDefinition)
 	};
 }
 
-#endif // GROUPDEFINITION_H

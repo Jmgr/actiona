@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef SCREENSHOTPUSHBUTTON_H
-#define SCREENSHOTPUSHBUTTON_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -32,11 +31,10 @@ namespace ActionTools
         Q_OBJECT
 
     public:
-        explicit ScreenshotPushButton(QWidget *parent = 0);
+        explicit ScreenshotPushButton(QWidget *parent = nullptr);
 
     private:
         Q_DISABLE_COPY(ScreenshotPushButton)
     };
 }
 
-#endif // SCREENSHOTPUSHBUTTON_H

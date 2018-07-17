@@ -18,14 +18,14 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef SCREENSHOOTER_H
-#define SCREENSHOOTER_H
+#pragma once
 
 #include "actiontools_global.h"
 
 #include <QList>
-#include <QPair>
 #include <QPixmap>
+
+#include <utility>
 
 namespace ActionTools
 {
@@ -35,15 +35,13 @@ namespace ActionTools
     {
     public:
         static QPixmap captureScreen(int screenIndex);
-        static QList< QPair<QPixmap, QRect> > captureScreens();
-        static QList< QPair<QPixmap, QRect> > captureWindows(const QList<WindowHandle> &windows);
+        static QList<std::pair<QPixmap, QRect>> captureScreens();
+        static QList<std::pair<QPixmap, QRect>> captureWindows(const QList<WindowHandle> &windows);
         static QPixmap captureWindow(WindowHandle window);
         static QPixmap captureAllScreens();
         static QPixmap captureRect(const QRect &rect);
 
-    private:
-        ScreenShooter();
+        ScreenShooter() = delete;
     };
 }
 
-#endif // SCREENSHOOTER_H

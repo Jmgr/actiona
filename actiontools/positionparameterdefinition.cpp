@@ -30,8 +30,8 @@ namespace ActionTools
 {
     PositionParameterDefinition::PositionParameterDefinition(const Name &name, QObject *parent)
         : ParameterDefinition(name, parent),
-        mPositionEdit(0),
-        mPositionUnitComboBox(0)
+        mPositionEdit(nullptr),
+        mPositionUnitComboBox(nullptr)
 	{
 	}
 
@@ -40,27 +40,27 @@ namespace ActionTools
 		ParameterDefinition::buildEditors(script, parent);
 
 		mPositionEdit = new PositionEdit(parent);
-        connect(mPositionEdit, SIGNAL(positionChosen(QPointF)), this, SLOT(positionChosen(QPointF)));
+        connect(mPositionEdit, &PositionEdit::positionChosen, this, &PositionParameterDefinition::positionChosen);
 
 		addEditor(mPositionEdit);
 
         mPositionUnitComboBox = new QComboBox(parent);
 
-        mPositionUnitComboBox->addItems(QStringList() << tr("pixels") << tr("percents"));
+        mPositionUnitComboBox->addItems({tr("pixels"), tr("percents")});
 
         addEditor(mPositionUnitComboBox);
 	}
 
 	void PositionParameterDefinition::load(const ActionInstance *actionInstance)
 	{
-		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), "value"));
-        mPositionUnitComboBox->setCurrentIndex(actionInstance->subParameter(name().original(), "unit").value().toInt());
+		mPositionEdit->setFromSubParameter(actionInstance->subParameter(name().original(), QStringLiteral("value")));
+		mPositionUnitComboBox->setCurrentIndex(actionInstance->subParameter(name().original(), QStringLiteral("unit")).value().toInt());
 	}
 
 	void PositionParameterDefinition::save(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), "value", mPositionEdit->isCode(), mPositionEdit->text());
-        actionInstance->setSubParameter(name().original(), "unit", QVariant(mPositionUnitComboBox->currentIndex()));
+		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mPositionEdit->isCode(), mPositionEdit->text());
+		actionInstance->setSubParameter(name().original(), QStringLiteral("unit"), QString::number(mPositionUnitComboBox->currentIndex()));
     }
 
     void PositionParameterDefinition::positionChosen(QPointF position)

@@ -25,7 +25,7 @@ namespace Code
 {
 	QScriptValue Point::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
-		Point *point = 0;
+		Point *point = nullptr;
 		
 		switch(context->argumentCount())
 		{
@@ -35,17 +35,17 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Point *codePoint = qobject_cast<Point*>(object))
+                if(auto codePoint = qobject_cast<Point*>(object))
 					point = new Point(*codePoint);
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
 			break;
 		case 2:
 			point = new Point(QPoint(context->argument(0).toInt32(), context->argument(1).toInt32()));
 			break;
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			break;
 		}
 		
@@ -67,17 +67,17 @@ namespace Code
 		case 1:
 			{
 				QObject *object = context->argument(0).toQObject();
-				if(Point *point = qobject_cast<Point*>(object))
+                if(auto point = qobject_cast<Point*>(object))
 					return point->point();
 				else
-					throwError(context, engine, "ParameterTypeError", tr("Incorrect parameter type"));
+					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
 			}
-			return QPoint();
+			return {};
 		case 2:
 			return QPoint(context->argument(0).toInt32(),
 						 context->argument(1).toInt32());
 		default:
-			throwError(context, engine, "ParameterCountError", tr("Incorrect parameter count"));
+			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
 			return QPoint();
 		}
 	}
@@ -157,7 +157,7 @@ namespace Code
 			return false;
 		
 		QObject *object = other.toQObject();
-		if(Point *otherPoint = qobject_cast<Point*>(object))
+        if(auto otherPoint = qobject_cast<Point*>(object))
 			return (otherPoint == this || otherPoint->mPoint == mPoint);
 			
 		return false;
@@ -165,7 +165,7 @@ namespace Code
 
 	QString Point::toString() const
 	{
-        return QString("Point {x: %1, y: %2}").arg(x()).arg(y());
+		return QStringLiteral("Point {x: %1, y: %2}").arg(x()).arg(y());
 	}
 
 	QScriptValue Point::setX(int x)

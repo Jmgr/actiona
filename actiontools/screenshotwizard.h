@@ -18,8 +18,7 @@
     Contact : jmgr@jmgr.info
 */
 
-#ifndef SCREENSHOTWIZARD_H
-#define SCREENSHOTWIZARD_H
+#pragma once
 
 #include "actiontools_global.h"
 
@@ -41,8 +40,8 @@ namespace ActionTools
             ClipboardSaveTarget
         };
 
-        ScreenshotWizard(ActionTools::Script *script, bool allowSaveToClipboard, QWidget *parent = 0);
-        ~ScreenshotWizard();
+        ScreenshotWizard(ActionTools::Script *script, bool allowSaveToClipboard, QWidget *parent = nullptr);
+        ~ScreenshotWizard() override ;
 
         QString resourceOrFilename() const { return mResourceOrFilename; }
         SaveTarget saveTarget() const { return mSaveTarget; }
@@ -57,4 +56,3 @@ namespace ActionTools
     };
 }
 
-#endif // SCREENSHOTWIZARD_H

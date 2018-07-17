@@ -161,7 +161,7 @@ namespace ActionTools
 		XWindowAttributes windowAttributes;
 
 		if(!XGetWindowAttributes(QX11Info::display(), mValue, &windowAttributes))
-			return QRect();
+			return {};
 
 		Window unused;
 		int positionX, positionY;
@@ -217,7 +217,7 @@ namespace ActionTools
 		int format;
 		unsigned long items;
 		unsigned long bytesAfter;
-		unsigned char *propPID = 0;
+		unsigned char *propPID = nullptr;
 		int back = -1;
 
 		if(XGetWindowProperty(QX11Info::display(), mValue, atomPid, 0, 1, False, XA_CARDINAL,
@@ -445,7 +445,7 @@ namespace ActionTools
             net_clients = XInternAtom(QX11Info::display(), "_NET_CLIENT_LIST_STACKING", True);
 
 		int count = 0;
-		Window* list = 0;
+		Window* list = nullptr;
 		Atom type = 0;
 		int format = 0;
 		unsigned long after = 0;
@@ -494,7 +494,7 @@ namespace ActionTools
 				return windowHandle;
 		}
 
-		return WindowHandle();
+		return {};
 	}
 
 	WindowHandle WindowHandle::findWindow(const QRegExp &regExp)
@@ -508,7 +508,7 @@ namespace ActionTools
 				return windowHandle;
 		}
 
-		return WindowHandle();
+		return {};
 	}
 
 	QList<WindowHandle> WindowHandle::findWindows(const QString &title)

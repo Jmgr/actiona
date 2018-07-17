@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>388</width>
+    <width>507</width>
     <height>407</height>
    </rect>
   </property>
@@ -138,6 +138,12 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>downloadAndInstallButton</tabstop>
+  <tabstop>downloadButton</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>changelog</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

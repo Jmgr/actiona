@@ -87,7 +87,7 @@ public:
  * to be emitted. QxtSignalWaiter objects are intended to be created on the stack, therefore no
  * parent parameter is accepted.
  */
-QxtSignalWaiter::QxtSignalWaiter(const QObject* sender, const char* signal) : QObject(0)
+QxtSignalWaiter::QxtSignalWaiter(const QObject* sender, const char* signal) : QObject(nullptr)
 {
     Q_ASSERT(sender && signal);
     QXT_INIT_PRIVATE(QxtSignalWaiter);

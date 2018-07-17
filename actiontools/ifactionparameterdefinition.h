@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef IFACTIONPARAMETERDEFINITION_H
-#define IFACTIONPARAMETERDEFINITION_H
+#pragma once
 
 #include "itemsparameterdefinition.h"
 #include "actiontools_global.h"
@@ -49,12 +48,12 @@ namespace ActionTools
 
         IfActionParameterDefinition(const Name &name, QObject *parent);
 
-		void buildEditors(Script *script, QWidget *parent);
-		void load(const ActionInstance *actionInstance);
-		void save(ActionInstance *actionInstance);
-		void setDefaultValues(ActionInstance *actionInstance);
+		void buildEditors(Script *script, QWidget *parent) override;
+		void load(const ActionInstance *actionInstance) override;
+		void save(ActionInstance *actionInstance) override;
+		void setDefaultValues(ActionInstance *actionInstance) override;
 
-		void setAllowWait(bool allowWait)										{ mAllowWait = allowWait; }
+        void setAllowWait(bool allowWait);
 		
 		void setDefaultAction(const QString &action)							{ mDefaultAction = action; }
 		QString defaultAction(const QString &defaultValue = QString()) const	{ return (mDefaultAction.isEmpty()) ? defaultValue : mDefaultAction; }
@@ -62,7 +61,7 @@ namespace ActionTools
 		void setDefaultLine(const QString &line)								{ mDefaultLine = line; }
 		QString defaultLine() const												{ return mDefaultLine; }
 		
-		void actionUpdate(Script *script);
+		void actionUpdate(Script *script) override;
 		
 	private slots:
 		void codeChanged(bool code);
@@ -80,8 +79,8 @@ namespace ActionTools
 
 		Editor findAppropriateEditor(const QString &actionText) const;
 		void updateStatus(const QString &actionText);
-		QVariant defaultValue(QVariant defaultValue = QVariant()) const			{ Q_UNUSED(defaultValue); return QVariant(); }
-		void setDefaultValue(const QVariant &defaultValue)						{ Q_UNUSED(defaultValue); }
+        QString defaultValue(QString defaultValue = {}) const override                   { Q_UNUSED(defaultValue); return {}; }
+        void setDefaultValue(const QString &defaultValue) override						{ Q_UNUSED(defaultValue); }
 
 		static bool translated;
 
@@ -92,9 +91,9 @@ namespace ActionTools
 		bool mAllowWait;
 		QString mDefaultAction;
 		QString mDefaultLine;
+        Script *mScript;
 
 		Q_DISABLE_COPY(IfActionParameterDefinition)
 	};
 }
 
-#endif // IFACTIONPARAMETERDEFINITION_H

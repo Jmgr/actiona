@@ -1088,7 +1088,7 @@ QString QNetworkInfoPrivate::networkName(QNetworkInfo::NetworkMode mode, int net
                 DOT11_SSID ssid;
                 ssid = connAtts->wlanAssociationAttributes.dot11Ssid;
                 for (uint i = 0; i < ssid.uSSIDLength;i++) {
-                    QString temp = ssid.ucSSID[i];
+                    QString temp = QLatin1Char(ssid.ucSSID[i]);
                     netname += temp;
                 }
             }

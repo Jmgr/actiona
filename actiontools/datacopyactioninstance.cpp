@@ -26,10 +26,10 @@
 namespace ActionTools
 {
 	DataCopyActionInstance::DataCopyActionInstance(const ActionDefinition *definition, QObject *parent)
-		: ActionInstance(definition, parent),
-		mTotalSize(0)
+		: ActionInstance(definition, parent)
+		
 	{
-		connect(&mProgressTimer, SIGNAL(timeout()), this, SLOT(updateProgress()));
+        connect(&mProgressTimer, &QTimer::timeout, this, &DataCopyActionInstance::updateProgress);
 		
 		mProgressTimer.setSingleShot(false);
 		mProgressTimer.setInterval(50);
@@ -56,7 +56,7 @@ namespace ActionTools
 		mTotalSize = input->size();
 		mDeviceCopyThread = new ActionTools::DeviceCopyThread(input, output);
 		
-		connect(mDeviceCopyThread, SIGNAL(finished()), this, SLOT(done()));
+        connect(mDeviceCopyThread, &ActionTools::DeviceCopyThread::finished, this, &DataCopyActionInstance::done);
 		
 		mProgressTimer.start();
 		mDeviceCopyThread->start();
@@ -87,6 +87,6 @@ namespace ActionTools
 	{
 		clean();
 	
-		emit executionEnded();
+		executionEnded();
 	}
 }

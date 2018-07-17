@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef ACTIONINSTANCEBUFFER_H
-#define ACTIONINSTANCEBUFFER_H
+#pragma once
 
 #include "actiontools_global.h"
 #include "actioninstance.h"
@@ -31,7 +30,7 @@ namespace ActionTools
 	class ActionInstanceBufferData : public QSharedData
 	{
 	public:
-		ActionInstanceBufferData()									{}
+        ActionInstanceBufferData() = default;
 		ActionInstanceBufferData(const ActionInstanceBufferData &other)
 			: QSharedData(other),
 			actionInstanceId(other.actionInstanceId)
@@ -62,8 +61,7 @@ namespace ActionTools
 		{
 			d = new ActionInstanceBufferData();
 		}
-		ActionInstanceBuffer(const ActionInstanceBuffer &other)
-			: d(other.d)									{}
+        ActionInstanceBuffer(const ActionInstanceBuffer &other)     = default;
 
 		void setActionInstanceId(const QString &actionInstanceId)	{ d->actionInstanceId = actionInstanceId; }
 		void setAction(const ActionInstance &action)				{ d->action.copyActionDataFrom(action); }
@@ -83,4 +81,3 @@ namespace ActionTools
 
 Q_DECLARE_METATYPE(ActionTools::ActionInstanceBuffer)
 
-#endif // ACTIONINSTANCEBUFFER_H

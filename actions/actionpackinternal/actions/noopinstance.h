@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef NOOPINSTANCE_H
-#define NOOPINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 
@@ -30,12 +29,12 @@ namespace Actions
 		Q_OBJECT
 
 	public:
-		NoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		NoopInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
-		void startExecution()
+		void startExecution() override
 		{
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -43,4 +42,3 @@ namespace Actions
 	};
 }
 
-#endif // NOOPINSTANCE_H

@@ -31,22 +31,22 @@ namespace ActionTools
 {
 	QString ScreenPositionWidget::iconNames[3][3] =
 	{
-		{"lu",	"u",	"ru"},
-		{"l",	"c",	"r"},
-		{"ld",	"d",	"rd"}
+		{QStringLiteral("lu"),	QStringLiteral("u"),	QStringLiteral("ru")},
+		{QStringLiteral("l"),	QStringLiteral("c"),	QStringLiteral("r")},
+		{QStringLiteral("ld"),	QStringLiteral("d"),	QStringLiteral("rd")}
 	};
 
 	ScreenPositionWidget::ScreenPositionWidget(QWidget *parent)
 		: QWidget(parent),
 		mButtonGroup(new QButtonGroup(this))
 	{
-		QHBoxLayout *mainLayout = new QHBoxLayout();
+		auto mainLayout = new QHBoxLayout();
 
 		int screenCount = QApplication::desktop()->numScreens();
 		for(int screen=0;screen<screenCount;++screen)
 		{
 			QGroupBox *screenPositionGroupBox = new QGroupBox(tr("Screen %1").arg(screen+1));
-			QGridLayout *gridLayout = new QGridLayout();
+			auto gridLayout = new QGridLayout();
 			gridLayout->setMargin(0);
 			gridLayout->setSpacing(0);
 
@@ -55,9 +55,9 @@ namespace ActionTools
 			{
 				for(int row=0;row<3;++row,++i)
 				{
-					QRadioButton *radioButton = new QRadioButton(this);
+					auto radioButton = new QRadioButton(this);
 					radioButton->setIconSize(QSize(40, 40));
-					radioButton->setIcon(QIcon(QString(":/images/monitor_%1.png").arg(iconNames[row][column])));
+					radioButton->setIcon(QIcon(QStringLiteral(":/images/monitor_%1.png").arg(iconNames[row][column])));
 
 					mButtonGroup->addButton(radioButton, screen * 9 + i);
 					mRadioButtons.append(radioButton);

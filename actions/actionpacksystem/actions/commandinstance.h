@@ -18,8 +18,7 @@
 	Contact : jmgr@jmgr.info
 */
 
-#ifndef COMMANDINSTANCE_H
-#define COMMANDINSTANCE_H
+#pragma once
 
 #include "actioninstance.h"
 #include "script.h"
@@ -42,36 +41,36 @@ namespace Actions
 			FailedToStartException = ActionTools::ActionException::UserException
 		};
 
-		CommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = 0)
+		CommandInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent), mProcess(new QProcess(this))
 		{
-			connect(mProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(readyReadStandardOutput()));
-			connect(mProcess, SIGNAL(readyReadStandardError()), this, SLOT(readyReadStandardError()));
+            connect(mProcess, &QProcess::readyReadStandardOutput, this, &CommandInstance::readyReadStandardOutput);
+            connect(mProcess, &QProcess::readyReadStandardError, this, &CommandInstance::readyReadStandardError);
 		}
 
-		void startExecution()
+		void startExecution() override
 		{
 			bool ok = true;
 
-			QString command = evaluateString(ok, "command");
-			QString parameters = evaluateString(ok, "parameters");
-			QString workingDirectory = evaluateString(ok, "workingDirectory");
-			mExitCodeVariable = evaluateVariable(ok, "exitCode");
-			QString processId = evaluateVariable(ok, "processId");
-			mOutputVariable = evaluateVariable(ok, "output");
-			mErrorOutputVariable = evaluateVariable(ok, "errorOutput");
-			mExitStatusVariable = evaluateVariable(ok, "exitStatus");
+			QString command = evaluateString(ok, QStringLiteral("command"));
+			QString parameters = evaluateString(ok, QStringLiteral("parameters"));
+			QString workingDirectory = evaluateString(ok, QStringLiteral("workingDirectory"));
+			mExitCodeVariable = evaluateVariable(ok, QStringLiteral("exitCode"));
+			QString processId = evaluateVariable(ok, QStringLiteral("processId"));
+			mOutputVariable = evaluateVariable(ok, QStringLiteral("output"));
+			mErrorOutputVariable = evaluateVariable(ok, QStringLiteral("errorOutput"));
+			mExitStatusVariable = evaluateVariable(ok, QStringLiteral("exitStatus"));
 
 			if(!ok)
 				return;
 
 			mProcess->setWorkingDirectory(workingDirectory);
 
-			connect(mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
-			connect(mProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
+            connect(mProcess, static_cast<void (QProcess::*)(int,QProcess::ExitStatus)>(&QProcess::finished), this, &CommandInstance::processFinished);
+            connect(mProcess, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &CommandInstance::processError);
 
-			QStringList parameterList = parameters.split(QChar(' '));
-			mProcess->start(command, parameters.isEmpty() ? QStringList() : parameterList);
+			QStringList parameterList = parameters.split(QLatin1Char(' '));
+            mProcess->start(command, parameters.isEmpty() ? QStringList{} : parameterList);
 			setVariable(mOutputVariable, QString());
 			setVariable(mErrorOutputVariable, QString());
 
@@ -80,13 +79,13 @@ namespace Actions
 			if(processInformation)
                 setVariable(processId, QString::number(processInformation->dwProcessId));
 			else
-                setVariable(processId, "0");
+				setVariable(processId, QStringLiteral("0"));
 	#else
             setVariable(processId, QString::number(mProcess->pid()));
 	#endif
 		}
 
-		void stopExecution()
+		void stopExecution() override
 		{
 			terminate();
 		}
@@ -125,14 +124,14 @@ namespace Actions
 			switch(exitStatus)
 			{
 			case QProcess::NormalExit:
-                setVariable(mExitStatusVariable, "normal");
+				setVariable(mExitStatusVariable, QStringLiteral("normal"));
 				break;
 			case QProcess::CrashExit:
-                setVariable(mExitStatusVariable, "crash");
+				setVariable(mExitStatusVariable, QStringLiteral("crash"));
 				break;
 			}
 
-			emit executionEnded();
+			executionEnded();
 		}
 
 	private:
@@ -152,4 +151,3 @@ namespace Actions
 	};
 }
 
-#endif // COMMANDINSTANCE_H

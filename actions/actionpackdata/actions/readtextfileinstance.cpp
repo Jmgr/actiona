@@ -25,19 +25,25 @@
 
 namespace Actions
 {
-    Tools::StringListPair ReadTextFileInstance::modes = qMakePair(
-			QStringList() << "full" << "selection",
-			QStringList() << QT_TRANSLATE_NOOP("ReadTextFileInstance::modes", "Read the entire file") << QT_TRANSLATE_NOOP("ReadTextFileInstance::modes", "Read only a selection"));
+    Tools::StringListPair ReadTextFileInstance::modes =
+    {
+        {
+            QStringLiteral("full"), QStringLiteral("selection")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("ReadTextFileInstance::modes", "Read the entire file")), QStringLiteral(QT_TRANSLATE_NOOP("ReadTextFileInstance::modes", "Read only a selection"))
+        }
+    };
 
 	void ReadTextFileInstance::startExecution()
 	{
 		bool ok = true;
 
-		QString filepath = evaluateString(ok, "file");
-		QString variable = evaluateVariable(ok, "variable");
-		Mode mode = evaluateListElement<Mode>(ok, modes, "mode");
-		int firstline = evaluateInteger(ok, "firstline");
-		int lastline = evaluateInteger(ok, "lastline");
+		QString filepath = evaluateString(ok, QStringLiteral("file"));
+		QString variable = evaluateVariable(ok, QStringLiteral("variable"));
+		Mode mode = evaluateListElement<Mode>(ok, modes, QStringLiteral("mode"));
+		int firstline = evaluateInteger(ok, QStringLiteral("firstline"));
+		int lastline = evaluateInteger(ok, QStringLiteral("lastline"));
 
 		if(!ok)
 			return;
@@ -46,21 +52,21 @@ namespace Actions
 		{
 			if(firstline < 1)
 			{
-				setCurrentParameter("firstline");
+				setCurrentParameter(QStringLiteral("firstline"));
 				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid first line value : %1").arg(firstline));
 				return;
 			}
 
 			if(lastline < 1)
 			{
-				setCurrentParameter("lastline");
+				setCurrentParameter(QStringLiteral("lastline"));
 				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid last line value : %1").arg(lastline));
 				return;
 			}
 
 			if(lastline < firstline)
 			{
-				setCurrentParameter("firstline");
+				setCurrentParameter(QStringLiteral("firstline"));
 				emit executionException(ActionTools::ActionException::InvalidParameterException, tr("The first line has to be smaller than the last line"));
 				return;
 			}
@@ -69,7 +75,7 @@ namespace Actions
 		QFile file(filepath);
 		if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
 		{
-			setCurrentParameter("file");
+			setCurrentParameter(QStringLiteral("file"));
 			emit executionException(CannotOpenFileException, tr("Cannot open file"));
 			return;
 		}
@@ -94,7 +100,7 @@ namespace Actions
 				if(line >= firstline && line <= lastline)
 				{
 					if(!result.isEmpty())
-						result += '\n';
+						result += QLatin1Char('\n');
 
 					result += readLine;
 				}
@@ -108,6 +114,6 @@ namespace Actions
 
 		file.close();
 
-		emit executionEnded();
+		executionEnded();
 	}
 }

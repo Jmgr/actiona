@@ -29,7 +29,7 @@ ActionTools::Resource::Type FiletypeGuesser::guessFiletype(const QByteArray &dat
     if(testImage.loadFromData(data))
         return ActionTools::Resource::ImageType;
 
-    if(filename.endsWith(".txt") || filename.endsWith(".csv"))
+	if(filename.endsWith(QStringLiteral(".txt")) || filename.endsWith(QStringLiteral(".csv")))
         return ActionTools::Resource::TextType;
 
     return ActionTools::Resource::BinaryType;

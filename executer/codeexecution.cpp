@@ -26,7 +26,7 @@
 
 namespace LibExecuter
 {
-	ScriptAgent *CodeExecution::mScriptAgent = 0;
+	ScriptAgent *CodeExecution::mScriptAgent = nullptr;
 
 	QScriptValue CodeExecution::constructor(QScriptContext *context, QScriptEngine *engine)
 	{

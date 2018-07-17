@@ -26,23 +26,44 @@
 
 namespace Actions
 {
-    Tools::StringListPair ClickInstance::buttons = qMakePair(
-			QStringList() << "left" << "middle" << "right",
-			QStringList() << QT_TRANSLATE_NOOP("ClickInstance::buttons", "Left") << QT_TRANSLATE_NOOP("ClickInstance::buttons", "Middle") << QT_TRANSLATE_NOOP("ClickInstance::buttons", "Right"));
-    Tools::StringListPair ClickInstance::actions = qMakePair(
-			QStringList() << "pressRelease" << "press" << "release",
-			QStringList() << QT_TRANSLATE_NOOP("ClickInstance::actions", "Click (press and release)") << QT_TRANSLATE_NOOP("ClickInstance::actions", "Press") << QT_TRANSLATE_NOOP("ClickInstance::actions", "Release"));
+    Tools::StringListPair ClickInstance::buttons =
+    {
+        {
+            QStringLiteral("left"),
+            QStringLiteral("middle"),
+            QStringLiteral("right")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::buttons", "Left")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::buttons", "Middle")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::buttons", "Right"))
+        }
+    };
+    Tools::StringListPair ClickInstance::actions =
+    {
+        {
+            QStringLiteral("pressRelease"),
+            QStringLiteral("press"),
+            QStringLiteral("release")
+        },
+        {
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Click (press and release)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Press")),
+            QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Release"))
+        }
+    };
 	
 	void ClickInstance::startExecution()
 	{
 		bool ok = true;
         bool isPositionEmpty = false;
 	
-		Action action = evaluateListElement<Action>(ok, actions, "action", "value");
-		MouseDevice::Button button = evaluateListElement<MouseDevice::Button>(ok, buttons, "button", "value");
-        QPoint position = evaluatePoint(ok, "position", "value", &isPositionEmpty);
-		QPoint positionOffset = evaluatePoint(ok, "positionOffset");
-		int amount = evaluateInteger(ok, "amount");
+		auto action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"), QStringLiteral("value"));
+		auto button = evaluateListElement<MouseDevice::Button>(ok, buttons, QStringLiteral("button"), QStringLiteral("value"));
+		QPoint position = evaluatePoint(ok, QStringLiteral("position"), QStringLiteral("value"), &isPositionEmpty);
+		QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
+		int amount = evaluateInteger(ok, QStringLiteral("amount"));
+		bool restoreCursorPosition = evaluateBoolean(ok, QStringLiteral("restoreCursorPosition"));
 	
 		if(!ok)
 			return;
@@ -52,10 +73,12 @@ namespace Actions
 	
 		if(amount <= 0)
 		{
-			setCurrentParameter("amount");
+			setCurrentParameter(QStringLiteral("amount"));
 			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid click amount"));
 			return;
 		}
+
+		QPoint previousPosition = mMouseDevice.cursorPosition();
 		
         if(!isPositionEmpty)
         {
@@ -82,8 +105,16 @@ namespace Actions
 				}
 			}
 		}
+
+		if(!isPositionEmpty && restoreCursorPosition)
+		{
+			mMouseDevice.setCursorPosition(previousPosition);
+		}
 	
-		QTimer::singleShot(1, this, SIGNAL(executionEnded()));
+        QTimer::singleShot(1, this, [this]
+        {
+            executionEnded();
+        });
 	}
 
 	void ClickInstance::stopLongTermExecution()
