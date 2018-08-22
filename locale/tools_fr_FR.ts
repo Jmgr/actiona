@@ -33,17 +33,17 @@
 <context>
     <name>languagesName</name>
     <message>
-        <location filename="../tools/languages.cpp" line="36"/>
+        <location filename="../tools/languages.cpp" line="42"/>
         <source>System language (if available)</source>
         <translation>Langue du système (si disponible)</translation>
     </message>
     <message>
-        <location filename="../tools/languages.cpp" line="37"/>
+        <location filename="../tools/languages.cpp" line="43"/>
         <source>English (US)</source>
         <translation>Anglais (États-Unis)</translation>
     </message>
     <message>
-        <location filename="../tools/languages.cpp" line="38"/>
+        <location filename="../tools/languages.cpp" line="44"/>
         <source>French (France)</source>
         <translation>Français (France)</translation>
     </message>

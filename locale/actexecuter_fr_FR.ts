@@ -97,27 +97,27 @@
         <translation type="vanished">Les paramètres sont :</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="122"/>
+        <location filename="../actexecuter/main.cpp" line="119"/>
         <source>Emulates clics, key presses and other actions.</source>
         <translation>Simule des clics de souris, des pressions de touche et d&apos;autres actions.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="126"/>
+        <location filename="../actexecuter/main.cpp" line="123"/>
         <source>Starts in portable mode, storing the settings in the executable folder.</source>
         <translation>Démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="152"/>
+        <location filename="../actexecuter/main.cpp" line="149"/>
         <source>Switch to code mode, may not be used with -s.</source>
         <translation>Passer en mode code, ne peut pas être utilisé avec -s.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="153"/>
+        <location filename="../actexecuter/main.cpp" line="150"/>
         <source>Switch to script mode, may not be used with -c.</source>
         <translation>Passer en mode script, ne peut pas être utiliser avec -c.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="154"/>
+        <location filename="../actexecuter/main.cpp" line="151"/>
         <source>Do not include the Qt library into the code.</source>
         <translation>Ne pas inclure la bibliothèque Qt dans le code.</translation>
     </message>
@@ -130,37 +130,37 @@
         <translation type="vanished">Change de type de proxy, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut).</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="157"/>
+        <location filename="../actexecuter/main.cpp" line="154"/>
         <source>Sets the custom proxy host.</source>
         <translation>Change l&apos;hôte du proxy.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="158"/>
+        <location filename="../actexecuter/main.cpp" line="155"/>
         <source>Sets the custom proxy port.</source>
         <translation>Change le port du proxy.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="159"/>
+        <location filename="../actexecuter/main.cpp" line="156"/>
         <source>Sets the custom proxy user.</source>
         <translation>Change le nom d&apos;utilisateur du proxy.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="160"/>
+        <location filename="../actexecuter/main.cpp" line="157"/>
         <source>Sets the custom proxy password.</source>
         <translation>Change le mot de passe du proxy.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="164"/>
+        <location filename="../actexecuter/main.cpp" line="161"/>
         <source>create a console to see debug output.</source>
         <translation>crée une console pour voir la sortie de débogage.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="165"/>
+        <location filename="../actexecuter/main.cpp" line="162"/>
         <source>wait for user input at the end of the execution, used only with --console.</source>
         <translation>attendre une action de la part de l&apos;utilisateur avant de fermer le programme, utilisé seulement avec --console.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="168"/>
+        <location filename="../actexecuter/main.cpp" line="165"/>
         <source>The filepath of a script/code file to execute.</source>
         <translation>Le chemin vers un fichier script/code à exécuter.</translation>
     </message>
@@ -173,12 +173,12 @@
         <translation type="vanished">Type de proxy inconnu, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="312"/>
+        <location filename="../actexecuter/main.cpp" line="309"/>
         <source>Unknown execution mode, please specify mode=script or mode=code</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier mode=script ou mode=code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="339"/>
+        <location filename="../actexecuter/main.cpp" line="336"/>
         <source>Unknown execution mode, please specify -s (script) or -c (code)</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier -s (script) ou -c (code)</translation>
     </message>
@@ -187,7 +187,7 @@
         <translation type="obsolete">Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="350"/>
+        <location filename="../actexecuter/main.cpp" line="347"/>
         <source>Unable to read input file</source>
         <translation>Impossible de lire le fichier d&apos;entrée</translation>
     </message>

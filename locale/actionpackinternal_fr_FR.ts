@@ -312,7 +312,7 @@
         <translation>Le nom de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="67"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="63"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
@@ -331,24 +331,24 @@
         <translation>Le type de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="68"/>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="77"/>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="86"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="64"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="71"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="78"/>
         <source>The variables new value</source>
         <translation>La nouvelle valeur de la variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="76"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="70"/>
         <source>Color</source>
         <translation>Couleur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="85"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="77"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="88"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="80"/>
         <source>Conversion failed</source>
         <translation>Echec de convertion</translation>
     </message>
@@ -369,17 +369,17 @@
 <context>
     <name>ConsoleInstance::outputs</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/consoleinstance.cpp" line="28"/>
+        <location filename="../actions/actionpackinternal/actions/consoleinstance.cpp" line="33"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/consoleinstance.cpp" line="29"/>
+        <location filename="../actions/actionpackinternal/actions/consoleinstance.cpp" line="34"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/consoleinstance.cpp" line="30"/>
+        <location filename="../actions/actionpackinternal/actions/consoleinstance.cpp" line="35"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -387,27 +387,27 @@
 <context>
     <name>PauseInstance::units</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="28"/>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="35"/>
         <source>Milliseconds</source>
         <translation>Millisecondes</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="29"/>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="36"/>
         <source>Seconds</source>
         <translation>Secondes</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="30"/>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="37"/>
         <source>Minutes</source>
         <translation>Minutes</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="38"/>
         <source>Hours</source>
         <translation>Heures</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackinternal/actions/pauseinstance.cpp" line="39"/>
         <source>Days</source>
         <translation>Jours</translation>
     </message>
@@ -503,12 +503,12 @@
         <translation>Vérifie la valeur d&apos;une variable et effectue une action</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="91"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="83"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="94"/>
+        <location filename="../actions/actionpackinternal/actions/variabledefinition.h" line="86"/>
         <source>Set the value of a variable</source>
         <translation>Change la valeur d&apos;une variable</translation>
     </message>
@@ -606,37 +606,37 @@
 <context>
     <name>VariableConditionInstance::comparisons</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="28"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="37"/>
         <source>Equal (=)</source>
         <translation>Égal (=)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="29"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="38"/>
         <source>Different (!=)</source>
         <translation>Différent (!=)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="30"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="39"/>
         <source>Inferior (&lt;)</source>
         <translation>Inférieur (&lt;)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="31"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="40"/>
         <source>Superior (&gt;)</source>
         <translation>Supérieur (&gt;)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="32"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="41"/>
         <source>Inferior or equal (&lt;=)</source>
         <translation>Inférieur ou égal (&lt;=)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="33"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="42"/>
         <source>Superior or equal (&gt;=)</source>
         <translation>Supérieur ou égal (&gt;=)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="34"/>
+        <location filename="../actions/actionpackinternal/actions/variableconditioninstance.cpp" line="43"/>
         <source>Contains</source>
         <translation>Contient</translation>
     </message>
@@ -644,32 +644,32 @@
 <context>
     <name>VariableInstance::types</name>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="28"/>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="36"/>
         <source>String</source>
         <translation>Chaîne de caractères</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="29"/>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="37"/>
         <source>Integer</source>
         <translation>Nombre entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="30"/>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="38"/>
         <source>Float</source>
         <translation>Nombre décimal</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="39"/>
         <source>Color</source>
         <translation>Couleur</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="40"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="33"/>
+        <location filename="../actions/actionpackinternal/actions/variableinstance.cpp" line="41"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>

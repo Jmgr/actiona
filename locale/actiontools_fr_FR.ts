@@ -77,12 +77,12 @@
 <context>
     <name>ActionTabs</name>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="82"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="84"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="82"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="85"/>
         <source>Advanced</source>
         <translation>Avancé</translation>
     </message>
@@ -525,7 +525,7 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>ActionTools::IfActionParameterDefinition</name>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="71"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="79"/>
         <source>Wait</source>
         <translation>Attendre</translation>
     </message>
@@ -813,10 +813,10 @@ Double-cliquez pour afficher</translation>
     <name>Code::Image</name>
     <message>
         <location filename="../actiontools/code/image.cpp" line="68"/>
-        <location filename="../actiontools/code/image.cpp" line="492"/>
-        <location filename="../actiontools/code/image.cpp" line="548"/>
-        <location filename="../actiontools/code/image.cpp" line="584"/>
-        <location filename="../actiontools/code/image.cpp" line="621"/>
+        <location filename="../actiontools/code/image.cpp" line="499"/>
+        <location filename="../actiontools/code/image.cpp" line="555"/>
+        <location filename="../actiontools/code/image.cpp" line="591"/>
+        <location filename="../actiontools/code/image.cpp" line="628"/>
         <source>Incorrect parameter type</source>
         <translation>Type de paramètre incorrect</translation>
     </message>
@@ -837,47 +837,47 @@ Double-cliquez pour afficher</translation>
         <translation>Index d&apos;écran non valide</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="257"/>
+        <location filename="../actiontools/code/image.cpp" line="264"/>
         <source>Unable to set the image data</source>
         <translation>Impossible de changer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="274"/>
+        <location filename="../actiontools/code/image.cpp" line="281"/>
         <source>Unable to get the image data</source>
         <translation>Impossible de récupérer les données de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="475"/>
-        <location filename="../actiontools/code/image.cpp" line="518"/>
-        <location filename="../actiontools/code/image.cpp" line="574"/>
-        <location filename="../actiontools/code/image.cpp" line="611"/>
+        <location filename="../actiontools/code/image.cpp" line="482"/>
+        <location filename="../actiontools/code/image.cpp" line="525"/>
+        <location filename="../actiontools/code/image.cpp" line="581"/>
+        <location filename="../actiontools/code/image.cpp" line="618"/>
         <source>Error while searching for a sub-image: %1</source>
         <translation>Erreur lors de la recherche d&apos;une sous-image : %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="559"/>
-        <location filename="../actiontools/code/image.cpp" line="595"/>
+        <location filename="../actiontools/code/image.cpp" line="566"/>
+        <location filename="../actiontools/code/image.cpp" line="602"/>
         <source>Parameter &quot;callback&quot; is not a function</source>
         <translation>Le paramètre &quot;callback&quot; n&apos;est pas une fonction</translation>
     </message>
     <message>
         <location filename="../actiontools/code/image.cpp" line="65"/>
-        <location filename="../actiontools/code/image.cpp" line="285"/>
+        <location filename="../actiontools/code/image.cpp" line="292"/>
         <source>Unable to load image from file %1</source>
         <translation>Impossible de charger l&apos;image à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="296"/>
+        <location filename="../actiontools/code/image.cpp" line="303"/>
         <source>Unable to save image to file %1</source>
         <translation>Impossible de sauvegarder l&apos;image dans le fichier %1</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="308"/>
+        <location filename="../actiontools/code/image.cpp" line="315"/>
         <source>Unable to apply filter</source>
         <translation>Impossible d&apos;appliquer le filtre</translation>
     </message>
     <message>
-        <location filename="../actiontools/code/image.cpp" line="345"/>
+        <location filename="../actiontools/code/image.cpp" line="352"/>
         <source>Cannot set filter option %1 %2</source>
         <translation>Impossible de changer les options du filtre %1 %2</translation>
     </message>
@@ -1135,22 +1135,22 @@ Double-cliquez pour afficher</translation>
         <translation type="vanished">Aller à une ligne</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="38"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="44"/>
         <source>Go to next action</source>
         <translation>Passer à l&apos;action suivante</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="39"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="45"/>
         <source>Go to line</source>
         <translation>Aller à une ligne</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="40"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="46"/>
         <source>Run code</source>
         <translation>Exécuter du code</translation>
     </message>
     <message>
-        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="41"/>
+        <location filename="../actiontools/ifactionparameterdefinition.cpp" line="47"/>
         <source>Call procedure</source>
         <translation>Appeler une procédure</translation>
     </message>
@@ -1796,7 +1796,7 @@ Double-cliquez pour afficher</translation>
         <translation type="obsolete">Données</translation>
     </message>
     <message>
-        <location filename="../actiontools/actiondefinition.cpp" line="108"/>
+        <location filename="../actiontools/actiondefinition.cpp" line="112"/>
         <source>missing XTest extension</source>
         <translation>extension XTest manquante</translation>
     </message>
@@ -1859,137 +1859,137 @@ Double-cliquez pour afficher</translation>
         <translation type="vanished">Attendre</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="45"/>
+        <location filename="../actiontools/keyinput.cpp" line="75"/>
         <source>Left Shift</source>
         <translation>Shift gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="45"/>
+        <location filename="../actiontools/keyinput.cpp" line="76"/>
         <source>Right Shift</source>
         <translation>Shift droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="45"/>
+        <location filename="../actiontools/keyinput.cpp" line="77"/>
         <source>Left Control</source>
         <translation>Contrôle gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="45"/>
+        <location filename="../actiontools/keyinput.cpp" line="78"/>
         <source>Right Control</source>
         <translation>Contrôle droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="46"/>
+        <location filename="../actiontools/keyinput.cpp" line="79"/>
         <source>Left Alt</source>
         <translation>Alt gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="46"/>
+        <location filename="../actiontools/keyinput.cpp" line="80"/>
         <source>Right Alt</source>
         <translation>Alt droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="48"/>
+        <location filename="../actiontools/keyinput.cpp" line="82"/>
         <source>Left Windows</source>
         <translation>Windows gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="48"/>
+        <location filename="../actiontools/keyinput.cpp" line="83"/>
         <source>Right Windows</source>
         <translation>Windows droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="50"/>
+        <location filename="../actiontools/keyinput.cpp" line="85"/>
         <source>Left Meta</source>
         <translation>Méta gauche</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="50"/>
+        <location filename="../actiontools/keyinput.cpp" line="86"/>
         <source>Right Meta</source>
         <translation>Méta droit</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="52"/>
+        <location filename="../actiontools/keyinput.cpp" line="88"/>
         <source>Alt Gr</source>
         <translation>Alt Gr</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="52"/>
+        <location filename="../actiontools/keyinput.cpp" line="89"/>
         <source>Numpad 0</source>
         <translation>Pavé numérique 0</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="52"/>
+        <location filename="../actiontools/keyinput.cpp" line="90"/>
         <source>Numpad 1</source>
         <translation>Pavé numérique 1</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="52"/>
+        <location filename="../actiontools/keyinput.cpp" line="91"/>
         <source>Numpad 2</source>
         <translation>Pavé numérique 2</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="52"/>
+        <location filename="../actiontools/keyinput.cpp" line="92"/>
         <source>Numpad 3</source>
         <translation>Pavé numérique 3</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="52"/>
+        <location filename="../actiontools/keyinput.cpp" line="93"/>
         <source>Numpad 4</source>
         <translation>Pavé numérique 4</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="53"/>
+        <location filename="../actiontools/keyinput.cpp" line="94"/>
         <source>Numpad 5</source>
         <translation>Pavé numérique 5</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="53"/>
+        <location filename="../actiontools/keyinput.cpp" line="95"/>
         <source>Numpad 6</source>
         <translation>Pavé numérique 7</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="53"/>
+        <location filename="../actiontools/keyinput.cpp" line="96"/>
         <source>Numpad 7</source>
         <translation>Pavé numérique 7</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="53"/>
+        <location filename="../actiontools/keyinput.cpp" line="97"/>
         <source>Numpad 8</source>
         <translation>Pavé numérique 8</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="53"/>
+        <location filename="../actiontools/keyinput.cpp" line="98"/>
         <source>Numpad 9</source>
         <translation>Pavé numérique 9</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="99"/>
         <source>Numpad *</source>
         <translation>Pavé numérique *</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="100"/>
         <source>Numpad +</source>
         <translation>Pavé numérique +</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="101"/>
         <source>Numpad Separator</source>
         <translation>Pavé numérique séparateur</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="102"/>
         <source>Numpad -</source>
         <translation>Pavé numérique -</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="103"/>
         <source>Numpad .</source>
         <translation>Pavé numérique .</translation>
     </message>
     <message>
-        <location filename="../actiontools/keyinput.cpp" line="54"/>
+        <location filename="../actiontools/keyinput.cpp" line="104"/>
         <source>Numpad /</source>
         <translation>Pavé numérique /</translation>
     </message>
@@ -2136,17 +2136,17 @@ Double-cliquez pour afficher</translation>
 <context>
     <name>Resource::typeNames</name>
     <message>
-        <location filename="../actiontools/resource.cpp" line="26"/>
+        <location filename="../actiontools/resource.cpp" line="27"/>
         <source>Binary</source>
         <translation>Binaire</translation>
     </message>
     <message>
-        <location filename="../actiontools/resource.cpp" line="27"/>
+        <location filename="../actiontools/resource.cpp" line="28"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actiontools/resource.cpp" line="28"/>
+        <location filename="../actiontools/resource.cpp" line="29"/>
         <source>Image</source>
         <translation>Image</translation>
     </message>

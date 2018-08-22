@@ -93,13 +93,13 @@
 <context>
     <name>Actions::ClickInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="57"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="77"/>
         <source>Invalid click amount</source>
         <translation>Quantité de clics incorrecte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="75"/>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="83"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="95"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="103"/>
         <source>Unable to emulate click: button event failed</source>
         <translation>Impossible de simuler un clic : l&apos;évènement de bouton n&apos;a pas pu être envoyé</translation>
     </message>
@@ -254,13 +254,13 @@
 <context>
     <name>Actions::KeyInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="76"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="95"/>
         <source>Invalid key presses amount</source>
         <translation>Quantité de pressions de touches incorrecte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="108"/>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="148"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="127"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="167"/>
         <source>Unable to emulate key: failed to send input</source>
         <translation>Impossible de simuler la touche : l&apos;évènement n&apos;a pas pu être envoyé</translation>
     </message>
@@ -311,7 +311,7 @@
 <context>
     <name>Actions::KeyboardKeyConditionInstance</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditioninstance.cpp" line="52"/>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditioninstance.cpp" line="58"/>
         <source>Invalid key combination</source>
         <translation>Combinaison de touches incorrecte</translation>
     </message>
@@ -421,17 +421,17 @@
 <context>
     <name>ClickInstance::actions</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="50"/>
         <source>Click (press and release)</source>
         <translation>Clic (pression et relâchement)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="51"/>
         <source>Press</source>
         <translation>Pression</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="52"/>
         <source>Release</source>
         <translation>Relâchement</translation>
     </message>
@@ -439,17 +439,17 @@
 <context>
     <name>ClickInstance::buttons</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="37"/>
         <source>Left</source>
         <translation>Gauche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="38"/>
         <source>Middle</source>
         <translation>Milieu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdevice/actions/clickinstance.cpp" line="39"/>
         <source>Right</source>
         <translation>Droit</translation>
     </message>
@@ -503,22 +503,22 @@
 <context>
     <name>CursorPathInstance::buttons</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="27"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="34"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="27"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="35"/>
         <source>Left</source>
         <translation>Gauche</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="27"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="36"/>
         <source>Middle</source>
         <translation>Milieu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="27"/>
+        <location filename="../actions/actionpackdevice/actions/cursorpathinstance.cpp" line="37"/>
         <source>Right</source>
         <translation>Droit</translation>
     </message>
@@ -526,27 +526,27 @@
 <context>
     <name>KeyInstance::actions</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="40"/>
         <source>Press and release</source>
         <translation>Pression et relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="41"/>
         <source>Press</source>
         <translation>Pression</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="42"/>
         <source>Release</source>
         <translation>Relâchement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="53"/>
         <source>Win32</source>
         <translation>Win32</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackdevice/actions/keyinstance.cpp" line="54"/>
         <source>DirectX</source>
         <translation>DirectX</translation>
     </message>
@@ -554,12 +554,12 @@
 <context>
     <name>KeyboardKeyConditionInstance::conditions</name>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditioninstance.cpp" line="33"/>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditioninstance.cpp" line="37"/>
         <source>Is pressed</source>
         <translation>Est pressée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditioninstance.cpp" line="34"/>
+        <location filename="../actions/actionpackdevice/actions/keyboardkeyconditioninstance.cpp" line="38"/>
         <source>Is not pressed</source>
         <translation>N&apos;est pas pressée</translation>
     </message>

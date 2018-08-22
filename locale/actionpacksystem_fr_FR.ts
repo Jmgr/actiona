@@ -384,22 +384,22 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Actions::FindImageInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="86"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="100"/>
         <source>minimum confidence</source>
         <translation>confiance minimum</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="87"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="101"/>
         <source>maximum matches</source>
         <translation>nombre maximum de résultats</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="96"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="110"/>
         <source>Invalid image to find</source>
         <translation>Image à chercher invalide</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="154"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="168"/>
         <source>Invalid image to search in</source>
         <translation>Image où chercher invalide</translation>
     </message>
@@ -408,12 +408,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">nombre de pyramides descendantes</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="88"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="102"/>
         <source>downsampling</source>
         <translation>sous-échantillonnage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="89"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="103"/>
         <source>search expansion</source>
         <translation>expansion de la recherche</translation>
     </message>
@@ -422,7 +422,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Impossible de charger l&apos;image à trouver à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="135"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="149"/>
         <source>Unable to find any window named %1</source>
         <translation>Impossible de trouver une fenêtre nommée %1</translation>
     </message>
@@ -435,7 +435,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Impossible de charger l&apos;image où chercher à partir du fichier %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="178"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="192"/>
         <source>Error while searching: %1</source>
         <translation>Erreur lors de la recherche : %1</translation>
     </message>
@@ -787,12 +787,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Mode</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="62"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="59"/>
         <source>Force</source>
         <translation>Forcer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="63"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="60"/>
         <source>Should the operation be forced</source>
         <translation>L&apos;opération doit-elle être forcée</translation>
     </message>
@@ -809,7 +809,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Pas assez de droits</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="66"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="63"/>
         <source>Not available</source>
         <translation>Non disponible</translation>
     </message>
@@ -817,7 +817,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>Actions::SystemInstance</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="54"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="65"/>
         <source>Logout is not available</source>
         <translation>La déconnexion n&apos;est pas disponible</translation>
     </message>
@@ -834,12 +834,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Pas assez de droits pour se déconnecter</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="61"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="72"/>
         <source>Restart is not available</source>
         <translation>Le redémarrage n&apos;est pas disponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="75"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="86"/>
         <source>Suspend is not available</source>
         <translation>La mise en veille n&apos;est pas disponible</translation>
     </message>
@@ -852,12 +852,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Mise en hibernation échouée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="82"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="93"/>
         <source>Hibernate is not available</source>
         <translation>La mise en hibernation n&apos;est pas disponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="89"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="100"/>
         <source>Lock is not available</source>
         <translation>Le verrouillage de session n&apos;est pas disponible</translation>
     </message>
@@ -866,7 +866,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Droits insuffisants pour verrouiller</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="96"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="107"/>
         <source>Start screen saver is not available</source>
         <translation>Impossible de démarrer l&apos;écran de veille</translation>
     </message>
@@ -883,7 +883,7 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Pas assez de droits pour redémarrer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="68"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="79"/>
         <source>Shutdown is not available</source>
         <translation>L&apos;arrêt n&apos;est pas disponible</translation>
     </message>
@@ -1101,32 +1101,32 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>FindImageInstance::sources</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="35"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="40"/>
         <source>Screenshot</source>
         <translation>Capture d&apos;écran</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="36"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="41"/>
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="37"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="42"/>
         <source>Image</source>
         <translation>Image</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="41"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="53"/>
         <source>Correlation Coefficient</source>
         <translation>Coefficient de corrélation</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="42"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="54"/>
         <source>Cross Correlation</source>
         <translation>Corrélation croisée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="43"/>
+        <location filename="../actions/actionpacksystem/actions/findimageinstance.cpp" line="55"/>
         <source>Squared Difference</source>
         <translation>Différence de carrés</translation>
     </message>
@@ -1134,17 +1134,17 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>KillProcessInstance::killModes</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessinstance.cpp" line="28"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessinstance.cpp" line="33"/>
         <source>Graceful</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessinstance.cpp" line="29"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessinstance.cpp" line="34"/>
         <source>Forceful</source>
         <translation>Forcé</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/killprocessinstance.cpp" line="30"/>
+        <location filename="../actions/actionpacksystem/actions/killprocessinstance.cpp" line="35"/>
         <source>Graceful then forceful</source>
         <translation>Normal puis forcé</translation>
     </message>
@@ -1152,17 +1152,17 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>PixelColorInstance::comparisons</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolorinstance.cpp" line="28"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolorinstance.cpp" line="33"/>
         <source>Equal</source>
         <translation>Égal</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolorinstance.cpp" line="29"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolorinstance.cpp" line="34"/>
         <source>Darker</source>
         <translation>Plus sombre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/pixelcolorinstance.cpp" line="30"/>
+        <location filename="../actions/actionpacksystem/actions/pixelcolorinstance.cpp" line="35"/>
         <source>Lighter</source>
         <translation>Plus clair</translation>
     </message>
@@ -1234,12 +1234,12 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
         <translation type="obsolete">Plus clair</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="69"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="66"/>
         <source>System</source>
         <translation>Système</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="72"/>
+        <location filename="../actions/actionpacksystem/actions/systemdefinition.h" line="69"/>
         <source>Restart, stop the computer or logout the current user</source>
         <translation>Redémarre, arrête l&apos;ordinateur ou déconnecte l&apos;utilisateur courant</translation>
     </message>
@@ -1336,37 +1336,37 @@ Entrez 1 ici si l&apos;image recherchée n&apos;est pas très différente de l&a
 <context>
     <name>SystemInstance::operations</name>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="29"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="38"/>
         <source>Logout</source>
         <translation>Déconnexion</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="30"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="39"/>
         <source>Reboot</source>
         <translation>Redémarrage</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="31"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="40"/>
         <source>Shutdown</source>
         <translation>Arrêt</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="32"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="41"/>
         <source>Suspend</source>
         <translation>Mise en veille</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="33"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="42"/>
         <source>Hibernate</source>
         <translation>Hiberner</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="34"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="43"/>
         <source>Lock screen</source>
         <translation>Verrouiller l&apos;écran</translation>
     </message>
     <message>
-        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="35"/>
+        <location filename="../actions/actionpacksystem/actions/systeminstance.cpp" line="44"/>
         <source>Start screen saver</source>
         <translation>Démarrer l&apos;écran de veille</translation>
     </message>

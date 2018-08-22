@@ -186,7 +186,7 @@
 <context>
     <name>Actions::ReadEnvironmentVariableInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="64"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="72"/>
         <source>The specified variable cannot be found in the system environment</source>
         <translation>La variable spécifiée ne peut pas être trouvée dans votre environnement système</translation>
     </message>
@@ -271,18 +271,18 @@
 <context>
     <name>Actions::ReadIniFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="46"/>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="59"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="54"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="67"/>
         <source>Unable to read the file</source>
         <translation>Impossible de lire le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="89"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="97"/>
         <source>Unable to find the section named &quot;%1&quot;</source>
         <translation>Impossible de trouver la section nommée &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="100"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="108"/>
         <source>Unable to find the parameter named &quot;%1&quot;</source>
         <translation>Impossible de trouver le paramètre nommé &quot;%1&quot;</translation>
     </message>
@@ -348,17 +348,17 @@
 <context>
     <name>Actions::ReadRegistryInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="54"/>
+        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="68"/>
         <source>Cannot find subKey &quot;%1&quot;</source>
         <translation>Impossible de trouver la sous-clef &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="58"/>
+        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="72"/>
         <source>Cannot find value &quot;%1&quot;</source>
         <translation>Impossible de trouver la valeur &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="62"/>
+        <location filename="../actions/actionpackdata/actions/readregistryinstance.cpp" line="76"/>
         <source>Invalid value type</source>
         <translation>Type de valeur incorrect</translation>
     </message>
@@ -428,22 +428,22 @@
 <context>
     <name>Actions::ReadTextFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="50"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="56"/>
         <source>Invalid first line value : %1</source>
         <translation>Valeur de première ligne incorrecte : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="57"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="63"/>
         <source>Invalid last line value : %1</source>
         <translation>Valeur de dernière ligne incorrecte : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="64"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="70"/>
         <source>The first line has to be smaller than the last line</source>
         <translation>La première ligne doit être plus petite que la dernière</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="73"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="79"/>
         <source>Cannot open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
@@ -638,12 +638,12 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>Actions::SendMailInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="114"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="124"/>
         <source>Failed to auto detect the attachment content type</source>
         <translation>Impossible de détecter automatiquement le type de contenu de la pièce jointe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="119"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="129"/>
         <source>server port</source>
         <translation>port du serveur</translation>
     </message>
@@ -652,122 +652,122 @@ Doit contenir un entête par ligne</translation>
         <translation type="vanished">Impossible d&apos;analyser l&apos;entête supplémentaire : &quot;%1&quot; doit être sous la forme &quot;nom: valeur&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="176"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="186"/>
         <source>Invalid attachment data</source>
         <translation>Données de pièce jointe invalides</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="198"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="208"/>
         <source>Unknown image type; supported types are PNG and JPG</source>
         <translation>Type d&apos;image inconnu; les types supportés sont PNG et JPG</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="208"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="218"/>
         <source>Invalid image data</source>
         <translation>Données d&apos;image invalides</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="246"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="256"/>
         <source>Sending e-mail</source>
         <translation>Envoi de l&apos;e-mail</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="247"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="257"/>
         <source>Connecting...</source>
         <translation>Connexion...</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="261"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="271"/>
         <source>Connection failed: %1</source>
         <translation>Impossible de se connecter : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="268"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="278"/>
         <source>Encryption failed: %1</source>
         <translation>Impossible de chiffrer la connexion : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="275"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="285"/>
         <source>Authentication failed: %1</source>
         <translation>L&apos;authentification a échouée : %1</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="281"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="291"/>
         <source>Sending e-mail...</source>
         <translation>Envoi de l&apos;e-mail...</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="290"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="300"/>
         <source>Sender %1 has been rejected: %2</source>
         <translation>L&apos;expéditeur %1 a été rejeté : %2</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="299"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="309"/>
         <source>Recipient %1 has been rejected: %2</source>
         <translation>Le destinataire %1 a été rejeté : %2</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="313"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="323"/>
         <source>No recipients</source>
         <translation>Pas de destinataires</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="316"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="326"/>
         <source>Command unrecognized</source>
         <translation>Commande inconnue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="319"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="329"/>
         <source>Syntax error</source>
         <translation>Erreur de syntaxe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="322"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="332"/>
         <source>Command not implemented</source>
         <translation>Commande non implémentée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="325"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="335"/>
         <source>Bad sequence</source>
         <translation>Mauvaise séquence</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="328"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="338"/>
         <source>Parameter not implemented</source>
         <translation>Paramètre non implémenté</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="331"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="341"/>
         <source>Mailbox unavailable</source>
         <translation>Boîte de réception indisponible</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="334"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="344"/>
         <source>User not local</source>
         <translation>Utilisateur non local</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="337"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="347"/>
         <source>Message is too large</source>
         <translation>Le message est trop grand</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="340"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="350"/>
         <source>Invalid mailbox name</source>
         <translation>Nom de boîte de réception invalide</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="343"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="353"/>
         <source>Transaction failed</source>
         <translation>Échec de la transaction</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="346"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="356"/>
         <source>Unknown error</source>
         <translation>Erreur inconnue</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="350"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="360"/>
         <source>Failed sending e-mail: %1 (%2)</source>
         <translation>Impossible d&apos;envoyer l&apos;e-mail : %1 (%2)</translation>
     </message>
@@ -848,27 +848,27 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>Actions::WebDownloadInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="70"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="77"/>
         <source>Invalid URL</source>
         <translation>URL invalide</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="80"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="87"/>
         <source>Cannot write to file</source>
         <translation>Impossible d&apos;écrire vers le fichier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="92"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="99"/>
         <source>Downloading</source>
         <translation>Téléchargement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="93"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="100"/>
         <source>Downloading...</source>
         <translation>Téléchargement...</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="129"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="136"/>
         <source>Download error: %1</source>
         <translation>Erreur de téléchargement : %1</translation>
     </message>
@@ -1124,7 +1124,7 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>Actions::WriteTextFileInstance</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="47"/>
+        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="54"/>
         <source>Cannot open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
@@ -1689,12 +1689,12 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>ReadEnvironmentVariableInstance::modes</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="33"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="38"/>
         <source>Read all</source>
         <translation>Tout lire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="33"/>
+        <location filename="../actions/actionpackdata/actions/readenvironmentinstance.cpp" line="39"/>
         <source>Read one</source>
         <translation>N&apos;en lire qu&apos;une</translation>
     </message>
@@ -1702,12 +1702,12 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>ReadIniFileInstance::modes</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="36"/>
         <source>Read a single parameter</source>
         <translation>Lire un seul paramètre</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackdata/actions/readinifileinstance.cpp" line="37"/>
         <source>Read the entire file</source>
         <translation>Lire le fichier complet</translation>
     </message>
@@ -1715,12 +1715,12 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>ReadTextFileInstance::modes</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="30"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="34"/>
         <source>Read the entire file</source>
         <translation>Lire le fichier entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="30"/>
+        <location filename="../actions/actionpackdata/actions/readtextfileinstance.cpp" line="34"/>
         <source>Read only a selection</source>
         <translation>Lire une sélection</translation>
     </message>
@@ -1728,27 +1728,27 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>SendMailInstance::attachmentContentTypes</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="41"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="49"/>
         <source>Auto detect</source>
         <translation>Détection automatique</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="42"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="50"/>
         <source>Binary</source>
         <translation>Binaire</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="43"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="51"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="44"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="52"/>
         <source>Jpg image</source>
         <translation>Image Jpg</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="45"/>
+        <location filename="../actions/actionpackdata/actions/sendmailinstance.cpp" line="53"/>
         <source>Png image</source>
         <translation>Image Png</translation>
     </message>
@@ -1756,12 +1756,12 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>WebDownloadInstance::destinations</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="37"/>
         <source>Variable</source>
         <translation>Variable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="33"/>
+        <location filename="../actions/actionpackdata/actions/webdownloadinstance.cpp" line="38"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
@@ -1769,12 +1769,12 @@ Doit contenir un entête par ligne</translation>
 <context>
     <name>WriteTextFileInstance::modes</name>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="30"/>
+        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="34"/>
         <source>Overwrite any content</source>
         <translation>Écraser tout contenu</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="30"/>
+        <location filename="../actions/actionpackdata/actions/writetextfileinstance.cpp" line="35"/>
         <source>Append to the end</source>
         <translation>Ajouter à la fin</translation>
     </message>

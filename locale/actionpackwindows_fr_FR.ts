@@ -285,12 +285,12 @@
         <translation>Images (*.jpg *.jpeg *.png *.bmp *.gif *.pbm *.pgm *.ppm *.xbm *.xpm)</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="83"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="81"/>
         <source>Maximum choice count</source>
         <translation>Nombre maximum de choix</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="84"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="82"/>
         <source>The maximum number of choices that can be made</source>
         <translation>Le nombre maximum d&apos;éléments à sélectionner</translation>
     </message>
@@ -542,12 +542,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>Actions::WindowInstance</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="78"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="89"/>
         <source>Cannot find any window matching &quot;%1&quot;</source>
         <translation>Impossible de trouver une fenêtre correspondant à &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="112"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="123"/>
         <source>&quot;%1&quot; failed</source>
         <translation>Échec de &quot;%1&quot;</translation>
     </message>
@@ -587,17 +587,17 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>DataInputInstance::dataTypes</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="42"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="38"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="43"/>
         <source>Integer</source>
         <translation>Entier</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="39"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="44"/>
         <source>Decimal</source>
         <translation>Décimal</translation>
     </message>
@@ -605,17 +605,17 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>DataInputInstance::editorTypes</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="44"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="56"/>
         <source>Line</source>
         <translation>Ligne</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="45"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="57"/>
         <source>Multiline</source>
         <translation>Multiligne</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="46"/>
+        <location filename="../actions/actionpackwindows/actions/datainputinstance.cpp" line="58"/>
         <source>Password</source>
         <translation>Mot de passe</translation>
     </message>
@@ -623,12 +623,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>MessageBoxInstance::buttons</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="44"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="57"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="45"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="58"/>
         <source>Yes-No</source>
         <translation>Oui-Non</translation>
     </message>
@@ -636,27 +636,27 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>MessageBoxInstance::icons</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="42"/>
         <source>None</source>
         <translation>Aucune</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="43"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="44"/>
         <source>Question</source>
         <translation>Question</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="38"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="45"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="39"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="46"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -664,17 +664,17 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>MessageBoxInstance::textmodes</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="50"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="70"/>
         <source>Automatic</source>
         <translation>Automatique</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="51"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="71"/>
         <source>HTML</source>
         <translation>HTML</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="52"/>
+        <location filename="../actions/actionpackwindows/actions/messageboxinstance.cpp" line="72"/>
         <source>Plain text</source>
         <translation>Texte brut</translation>
     </message>
@@ -682,27 +682,27 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>MultiDataInputInstance::modes</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="45"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="52"/>
         <source>ComboBox</source>
         <translation>Liste déroulante</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="46"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="53"/>
         <source>Editable ComboBox</source>
         <translation>Liste déroulante éditable</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="47"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="54"/>
         <source>List</source>
         <translation>Liste</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="48"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="55"/>
         <source>CheckBox</source>
         <translation>Cases à cocher</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="49"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputinstance.cpp" line="56"/>
         <source>RadioButton</source>
         <translation>Boutons radio</translation>
     </message>
@@ -822,12 +822,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
         <translation>Demande à l&apos;utilisateur d&apos;entrer une donnée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="89"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="87"/>
         <source>Multi data input</source>
         <translation>Liste de sélection</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="92"/>
+        <location filename="../actions/actionpackwindows/actions/multidatainputdefinition.h" line="90"/>
         <source>Ask the user to choose from a list</source>
         <translation>Demande à l&apos;utilisateur de faire un choix parmi une liste</translation>
     </message>
@@ -843,12 +843,12 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
         <translation type="obsolete">Fermée</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="32"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="36"/>
         <source>Exists</source>
         <translation>Existe</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="33"/>
+        <location filename="../actions/actionpackwindows/actions/windowconditioninstance.cpp" line="37"/>
         <source>Do not exist</source>
         <translation>N&apos;existe pas</translation>
     </message>
@@ -860,37 +860,37 @@ Windows seulement, sous Linux les bordures sont ignorées</translation>
 <context>
     <name>WindowInstance::actions</name>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="31"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="40"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="32"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="41"/>
         <source>Kill process</source>
         <translation>Fermer processus</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="33"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="42"/>
         <source>Set foreground</source>
         <translation>Mettre au premier plan</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="34"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="43"/>
         <source>Minimize</source>
         <translation>Minimiser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="35"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="44"/>
         <source>Maximize</source>
         <translation>Maximiser</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="36"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="45"/>
         <source>Move</source>
         <translation>Déplacer</translation>
     </message>
     <message>
-        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="37"/>
+        <location filename="../actions/actionpackwindows/actions/windowinstance.cpp" line="46"/>
         <source>Resize</source>
         <translation>Redimensionner</translation>
     </message>
