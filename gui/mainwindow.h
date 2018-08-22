@@ -67,6 +67,7 @@ class ActionDialog;
 class QModelIndex;
 class NewActionProxyModel;
 class ScriptProxyModel;
+class QHotkey;
 
 #ifdef Q_OS_WIN
 class QWinTaskbarButton;
@@ -246,6 +247,8 @@ private:
     ScriptProxyModel *mScriptProxyModel;
     NewActionModel *mNewActionModel;
     HeatmapMode mHeatmapMode;
+    QHotkey *mStartStopExecutionHotkey;
+    QHotkey *mPauseExecutionHotkey;
 #ifndef ACT_NO_UPDATER
 	QNetworkAccessManager *mNetworkAccessManager;
 	QNetworkReply *mUpdateDownloadNetworkReply;

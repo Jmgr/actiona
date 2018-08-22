@@ -27,7 +27,6 @@
 #include "actioninstancebuffer.h"
 #include "global.h"
 #include "version.h"
-#include "globalshortcut/globalshortcutmanager.h"
 #include "progresssplashscreen.h"
 #include "languages.h"
 #include "qtsingleapplication/qtsingleapplication.h"
@@ -61,8 +60,6 @@
 
 static void cleanup()
 {
-	ActionTools::GlobalShortcutManager::clear();
-
 #ifdef Q_OS_LINUX
 	notify_uninit();
 #endif

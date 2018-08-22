@@ -18,7 +18,6 @@
 	Contact : jmgr@jmgr.info
 */
 
-#include "globalshortcut/globalshortcutmanager.h"
 #include "actioninstance.h"
 #include "version.h"
 #include "mainclass.h"
@@ -63,8 +62,6 @@
 
 static void cleanup()
 {
-	ActionTools::GlobalShortcutManager::clear();
-
 #ifdef Q_OS_LINUX
 	notify_uninit();
 #endif

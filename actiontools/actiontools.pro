@@ -14,7 +14,7 @@ FORMS += codeeditordialog.ui \
     resourcenamedialog.ui \
     screenshotwizardpage.ui \
     savescreenshotwizardpage.ui
-include(globalshortcut/globalshortcut.pri)
+include(qhotkey.pri)
 include(qxtsmtp/qxtsmtp.pri)
 include(qxtcore/qxtcore.pri)
 include(widgets.pri)

@@ -39,7 +39,7 @@
 #include "scriptcontentdialog.h"
 #include "keywords.h"
 #include "modeltest.h"
-#include "globalshortcut/globalshortcutmanager.h"
+#include "QHotkey/QHotkey"
 #ifndef ACT_NO_UPDATER
 #include "changelogdialog.h"
 #include "updater.h"
@@ -117,7 +117,9 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
     mUsedLocale(usedLocale),
     mNewActionProxyModel(new NewActionProxyModel(this)),
     mScriptProxyModel(new ScriptProxyModel(mScript, this)),
-    mNewActionModel(new NewActionModel(this))
+    mNewActionModel(new NewActionModel(this)),
+    mStartStopExecutionHotkey(new QHotkey(this)),
+    mPauseExecutionHotkey(new QHotkey(this))
 #ifndef ACT_NO_UPDATER
 	,mNetworkAccessManager(new QNetworkAccessManager(this)),
 	mUpdateDownloadNetworkReply(nullptr),
@@ -302,6 +304,8 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
         ui->scriptView->viewport()->update();
         ui->scriptView->header()->viewport()->update();
     });
+    connect(mStartStopExecutionHotkey, &QHotkey::activated, this, &MainWindow::startOrStopExecution);
+    connect(mPauseExecutionHotkey, &QHotkey::activated, this, &MainWindow::pauseOrResumeExecution);
 #ifndef ACT_NO_UPDATER
     connect(mUpdater, &Tools::Updater::error, this, &MainWindow::updateError);
     connect(mUpdater, &Tools::Updater::noResult, this, &MainWindow::updateNoResult);
@@ -529,10 +533,10 @@ void MainWindow::postInit()
 
 	const QString &startStopExecutionHotkey = settings.value(QStringLiteral("actions/stopExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+Q"))).toString();
 	if(!startStopExecutionHotkey.isEmpty())
-		ActionTools::GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
+        mStartStopExecutionHotkey->setShortcut(QKeySequence(startStopExecutionHotkey), true);
 	const QString &pauseExecutionHotkey = settings.value(QStringLiteral("actions/pauseExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+W"))).toString();
 	if(!pauseExecutionHotkey.isEmpty())
-		ActionTools::GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
+        mPauseExecutionHotkey->setShortcut(QKeySequence(pauseExecutionHotkey), true);
 
 	if(mCommandLineParser.isSet(QStringLiteral("execute")))
 		execute(false);
@@ -849,15 +853,12 @@ void MainWindow::on_actionSettings_triggered()
 			updateRecentFileActions();
 		}
 		
-		ActionTools::GlobalShortcutManager::clear();
-
 		QString startStopExecutionHotkey = settings.value(QStringLiteral("actions/stopExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+Q"))).toString();
 		if(!startStopExecutionHotkey.isEmpty())
-			ActionTools::GlobalShortcutManager::connect(QKeySequence(startStopExecutionHotkey), this, SLOT(startOrStopExecution()));
-
+            mStartStopExecutionHotkey->setShortcut(QKeySequence(startStopExecutionHotkey), true);
 		QString pauseExecutionHotkey = settings.value(QStringLiteral("actions/pauseExecutionHotkey"), QKeySequence(QStringLiteral("Ctrl+Alt+W"))).toString();
 		if(!pauseExecutionHotkey.isEmpty())
-			ActionTools::GlobalShortcutManager::connect(QKeySequence(pauseExecutionHotkey), this, SLOT(pauseOrResumeExecution()));
+            mPauseExecutionHotkey->setShortcut(QKeySequence(pauseExecutionHotkey), true);
 
         mScriptModel->setHeatmapColors
         ({
