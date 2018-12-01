@@ -11,6 +11,25 @@ if(!isEmpty(VERSION_OVERRIDE)) {
     ACTIONA_VERSION = $$VERSION_OVERRIDE
 }
 
+if(isEmpty(PKGCONFIG_OPENCV)) {
+    PKGCONFIG_OPENCV = opencv
+}
+
+unix:!mac {
+        !system(pkg-config --exists 'x11') {
+                error(Please install pkg-config)	#Here whe assume that x11 is always present, so this is to check if pkg-config is installed
+}
+        !system(pkg-config --exists 'libnotify') {
+                error(Please install libnotify development libraries (libnotify-dev on Debian))
+}
+        !system(pkg-config --exists 'xtst') {
+                error(Please install XTest development libraries (libxtst-dev on Debian))
+}
+        !system(pkg-config --exists '$$PKGCONFIG_OPENCV') {
+                error(Please install OpenCV development libraries (libopencv-dev on Debian))
+}
+}
+
 DEFINES *= ACT_VERSION=$$ACTIONA_VERSION
 DEFINES *= ACT_SCRIPT_VERSION=$$SCRIPT_VERSION
 DEFINES *= ACT_BUILD_NAME=\\\"$$BUILD_NAME\\\"

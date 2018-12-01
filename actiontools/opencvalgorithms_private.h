@@ -33,7 +33,7 @@ namespace cv
 }
 
 using Mat = cv::Mat;
-#elif CV_MAJOR_VERSION == 3
+#elif CV_MAJOR_VERSION >= 3
 namespace cv
 {
     class UMat;

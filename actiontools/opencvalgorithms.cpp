@@ -350,7 +350,7 @@ namespace ActionTools
 
 #if CV_MAJOR_VERSION == 2
         const Mat &matImage = image;
-#elif CV_MAJOR_VERSION == 3
+#elif CV_MAJOR_VERSION >= 3
         cv::Mat matImage = image.getMat(cv::ACCESS_READ);
 #endif
 
@@ -394,7 +394,7 @@ namespace ActionTools
 	{
 #if CV_MAJOR_VERSION == 2
         const cv::Mat &matImage = image;
-#elif CV_MAJOR_VERSION == 3
+#elif CV_MAJOR_VERSION >= 3
         cv::Mat matImage = image.getMat(cv::ACCESS_READ);
 #endif
 
@@ -411,7 +411,7 @@ namespace ActionTools
 
 #if CV_MAJOR_VERSION == 2
                 return back;
-#elif CV_MAJOR_VERSION == 3
+#elif CV_MAJOR_VERSION >= 3
                 return back.getUMat(cv::ACCESS_RW);
 #endif
     }
@@ -421,12 +421,22 @@ namespace ActionTools
         switch(method)
         {
         default:
+#if CV_MAJOR_VERSION < 4
         case ActionTools::OpenCVAlgorithms::CorrelationCoefficientMethod:
             return CV_TM_CCOEFF_NORMED;
         case ActionTools::OpenCVAlgorithms::CrossCorrelationMethod:
             return CV_TM_CCORR_NORMED;
         case ActionTools::OpenCVAlgorithms::SquaredDifferenceMethod:
             return CV_TM_SQDIFF_NORMED;
+#else
+        case ActionTools::OpenCVAlgorithms::CorrelationCoefficientMethod:
+            return cv::TM_CCOEFF_NORMED;
+        case ActionTools::OpenCVAlgorithms::CrossCorrelationMethod:
+            return cv::TM_CCORR_NORMED;
+        case ActionTools::OpenCVAlgorithms::SquaredDifferenceMethod:
+            return cv::TM_SQDIFF_NORMED;
+#endif
+
         }
     }
 }
