@@ -22,7 +22,7 @@
 
 #include "actiontools_global.h"
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>

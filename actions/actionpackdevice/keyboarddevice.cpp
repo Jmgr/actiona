@@ -23,7 +23,7 @@
 #include "keyinput.h"
 #include "crossplatform.h"
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include "keysymhelper.h"
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
@@ -92,7 +92,7 @@ bool KeyboardDevice::triggerKey(const QString &key)
 	return doKeyAction(Trigger, stringToNativeKey(key));
 }
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 static KeyCode keyToKeycode(const char *key)
 {
 	KeySym keySym = XStringToKeysym(key);
@@ -142,7 +142,7 @@ static bool sendKey(const char *key)
 
 bool KeyboardDevice::writeText(const QString &text, int delay, bool noUnicodeCharacters) const
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	bool result = true;
 	KeySym keySym[2];
 	std::wstring wideString = text.toStdWString();
@@ -287,8 +287,8 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey, bool alterPressed
 {
 	bool result = true;
 	
-#ifdef Q_OS_LINUX
-	KeyCode keyCode = XKeysymToKeycode(QX11Info::display(), nativeKey);
+#ifdef Q_OS_UNIX
+    KeyCode keyCode = XKeysymToKeycode(QX11Info::display(), nativeKey);
 	
 	if(action == Press || action == Trigger)
 		result &= XTestFakeKeyEvent(QX11Info::display(), keyCode, True, CurrentTime);

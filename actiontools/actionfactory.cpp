@@ -59,13 +59,11 @@ namespace ActionTools
 
 		QDir actionDirectory(directory);
 
-#ifdef Q_OS_WIN
-		QString actionMask = QStringLiteral("ActionPack*.dll");
-#endif
-#ifdef Q_OS_MAC
+#if defined(Q_OS_WIN)
+        QString actionMask = QStringLiteral("ActionPack*.dll");
+#elif defined(Q_OS_MAC)
 		QString actionMask = QStringLiteral("libActionPack*.dylib");
-#endif
-#ifdef Q_OS_LINUX
+#else
 		QString actionMask = QStringLiteral("libActionPack*.so");
 #endif
 

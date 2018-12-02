@@ -26,7 +26,7 @@
 #include <QDebug>
 #include <QDir>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QX11Info>
 #include <X11/Xlib.h>
 #include <cerrno>
@@ -47,7 +47,7 @@ namespace ActionTools
 
 	void CrossPlatform::setForegroundWindow(QWidget *window)
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		XRaiseWindow(QX11Info::display(), window->winId());
 #endif
 #ifdef Q_OS_WIN
@@ -66,7 +66,7 @@ namespace ActionTools
 
 	bool CrossPlatform::killProcess(int id, KillMode killMode, int timeout)
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		switch(killMode)
 		{
 		case Graceful:
@@ -208,7 +208,7 @@ namespace ActionTools
 
 	CrossPlatform::ProcessStatus CrossPlatform::processStatus(int id)
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		return (kill(id, 0) == 0) ? Running : Stopped;
 #endif
 #ifdef Q_OS_WIN
@@ -225,7 +225,7 @@ namespace ActionTools
 
 	QList<int> CrossPlatform::runningProcesses()
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		QDir procDir(QStringLiteral("/proc"));
 		QList<int> back;
 
@@ -278,7 +278,7 @@ namespace ActionTools
 
 	void CrossPlatform::sleep(int milliseconds)
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		struct timespec timeout0;
 		struct timespec timeout1;
 		struct timespec* tmp;
@@ -302,7 +302,7 @@ namespace ActionTools
 
 	void CrossPlatform::setupLastError()
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		mLastError = errno;
 
 		char *errorStr = strerror(errno);

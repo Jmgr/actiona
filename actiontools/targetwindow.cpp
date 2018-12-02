@@ -26,7 +26,7 @@
 #include <QMessageBox>
 #include <QApplication>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QX11Info>
 #include <X11/Xlib.h>
 #include <X11/cursorfont.h>
@@ -49,7 +49,7 @@ namespace ActionTools
                   | Qt::NoDropShadowWindowHint
                   | Qt::BypassWindowManagerHint
                   )
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
            ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
 #endif
     {
@@ -63,7 +63,7 @@ namespace ActionTools
 
     TargetWindow::~TargetWindow()
     {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         if(mGrabbingPointer || mGrabbingKeyboard)
             ungrab();
 
@@ -103,7 +103,7 @@ namespace ActionTools
 
         QPainter painter(this);
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         if(mMousePressed)
             painter.fillRect(0, 0, width(), height(), QBrush(Qt::black));
 #endif
@@ -139,7 +139,7 @@ namespace ActionTools
 #ifdef Q_OS_WIN
         resize(100, 100);
 #endif
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         resize(1, 1);
 #endif
 
@@ -148,7 +148,7 @@ namespace ActionTools
         mMousePressed = false;
         mResult = QRect();
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         QCursor newCursor(Qt::CrossCursor);
 
         QCoreApplication::instance()->installNativeEventFilter(this);
@@ -178,7 +178,7 @@ namespace ActionTools
 
         mUpdateTimer.stop();
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         ungrab();
 #endif
 
@@ -187,7 +187,7 @@ namespace ActionTools
 
     void TargetWindow::update()
     {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         if(mMousePressed)
             setMask(QRegion(rect()).subtracted(QRegion(QRect(2, 2, width() - 4, height() - 4))));
 #endif
@@ -213,7 +213,7 @@ namespace ActionTools
             move(QCursor::pos() - QPoint(width() / 2, height() / 2));
     }
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     bool TargetWindow::nativeEventFilter(const QByteArray &eventType, void *message, long *)
     {
         if(eventType == "xcb_generic_event_t")
@@ -255,7 +255,7 @@ namespace ActionTools
     }
 #endif
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     void TargetWindow::ungrab()
     {
         if(mGrabbingKeyboard)

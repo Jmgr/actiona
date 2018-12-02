@@ -25,7 +25,7 @@
 #include <QKeySequence>
 #include <QDebug>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #define XK_MISCELLANY
 #define XK_LATIN1
 #define XK_KOREAN
@@ -253,7 +253,7 @@ namespace ActionTools
 
 		mNativeKey[InvalidKey] = 0;
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		mNativeKey[ShiftLeft] = XK_Shift_L;
 		mNativeKey[ShiftRight] = XK_Shift_R;
 		mNativeKey[ControlLeft] = XK_Control_L;

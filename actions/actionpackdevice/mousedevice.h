@@ -54,7 +54,7 @@ public:
 	bool wheel(int intensity = 1) const;
 
 private:
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	int toX11Button(Button button) const;
 #endif
 #ifdef Q_OS_WIN

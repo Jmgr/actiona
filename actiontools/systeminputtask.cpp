@@ -25,7 +25,7 @@
 #include <QSharedPointer>
 #include <QPoint>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QTimer>
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
@@ -42,7 +42,7 @@ namespace ActionTools
 {
 	namespace SystemInput
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		static XRecordContext gXRecordContext;
 
 		static void xRecordCallback(XPointer, XRecordInterceptData *data)
@@ -208,7 +208,7 @@ namespace ActionTools
 		Task::Task(QObject *parent)
 			: QObject(parent),
 			  mThread(new QThread(this))
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
             ,mProcessRepliesTimer(new QTimer(this))
 #endif
 		{
@@ -222,7 +222,7 @@ namespace ActionTools
 			mThread->start();
 #endif
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
             connect(mProcessRepliesTimer, &QTimer::timeout, this, &Task::processReplies);
 
 			start();
@@ -244,7 +244,7 @@ namespace ActionTools
 
 			mStarted = true;
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 			XRecordClientSpec clients = XRecordAllClients;
 			XRecordRange *range = XRecordAllocRange();
 
@@ -288,7 +288,7 @@ namespace ActionTools
 
 			mStarted = false;
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 			mProcessRepliesTimer->stop();
 
 			XRecordDisableContext(QX11Info::display(), gXRecordContext);
@@ -301,7 +301,7 @@ namespace ActionTools
 #endif
 		}
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		void Task::processReplies()
 		{
 			//XRecordProcessReplies(QX11Info::display());

@@ -23,7 +23,7 @@
 #include <QProgressBar>
 #include <QTimer>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QX11Info>
 #endif
 
@@ -70,7 +70,7 @@ void ProgressSplashScreen::fadeOut()
 #ifdef Q_OS_WIN
     mOpacityTimer->start(25);
 #endif
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     close();
 #endif
 }

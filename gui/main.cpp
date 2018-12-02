@@ -45,7 +45,7 @@
 #include <QSettings>
 #include <QCommandLineParser>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #undef signals
 #include <libnotify/notify.h>
 #define signals
@@ -60,7 +60,7 @@
 
 static void cleanup()
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	notify_uninit();
 #endif
 }
@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 		}
 	 }
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     notify_init("Actiona");
 #endif
 
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
 	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");
 	qRegisterMetaTypeStreamOperators<Tools::Version>("Version");
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Load key codes");

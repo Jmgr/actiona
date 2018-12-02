@@ -25,14 +25,14 @@
 
 #include "actiontools_global.h"
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QAbstractNativeEventFilter>
 #endif
 
 namespace ActionTools
 {
     class ACTIONTOOLSSHARED_EXPORT TargetWindow : public QWidget
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
             , public QAbstractNativeEventFilter
 #endif
     {
@@ -58,7 +58,7 @@ namespace ActionTools
         void update();
 
     private:
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
         void ungrab();
 #endif
@@ -68,7 +68,7 @@ namespace ActionTools
         QPoint mMouseClickPosition;
         bool mMousePressed{false};
         QRect mResult;
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         bool mGrabbingPointer{false};
         bool mGrabbingKeyboard{false};
         unsigned long mCrossCursor;

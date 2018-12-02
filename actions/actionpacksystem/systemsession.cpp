@@ -26,19 +26,19 @@
 #include <QMessageBox>
 #endif
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QProcess>
 #include <QDBusInterface>
 #include <QDBusReply>
 #endif
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 int SystemSession::mCapabilities = 0;
 #endif
 
 SystemSession::SystemSession()
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     if(!mCapabilities)
         checkOperatingSystemCapabilities();
 #endif
@@ -46,7 +46,7 @@ SystemSession::SystemSession()
 
 bool SystemSession::logout(bool force) const
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	if(mCapabilities & GnomeSessionManager)
 	{
 		QDBusInterface dbusInterface(QStringLiteral("org.gnome.SessionManager"), QStringLiteral("/org/gnome/SessionManager"), QStringLiteral("org.gnome.SessionManager"), QDBusConnection::sessionBus());
@@ -74,7 +74,7 @@ bool SystemSession::logout(bool force) const
 
 bool SystemSession::restart(bool force) const
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	if(mCapabilities & GnomeSessionManager)
 	{
 		QDBusInterface dbusInterface(QStringLiteral("org.gnome.SessionManager"), QStringLiteral("/org/gnome/SessionManager"), QStringLiteral("org.gnome.SessionManager"), QDBusConnection::sessionBus());
@@ -125,7 +125,7 @@ bool SystemSession::restart(bool force) const
 
 bool SystemSession::shutdown(bool force) const
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	if(mCapabilities & GnomeSessionManager)
 	{
 		QDBusInterface dbusInterface(QStringLiteral("org.gnome.SessionManager"), QStringLiteral("/org/gnome/SessionManager"), QStringLiteral("org.gnome.SessionManager"), QDBusConnection::sessionBus());
@@ -176,7 +176,7 @@ bool SystemSession::shutdown(bool force) const
 
 bool SystemSession::suspend(bool force) const
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	Q_UNUSED(force)
 
 	if(mCapabilities & FreedesktopUPower)
@@ -213,7 +213,7 @@ bool SystemSession::suspend(bool force) const
 
 bool SystemSession::hibernate(bool force) const
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	Q_UNUSED(force)
 
 	if(mCapabilities & FreedesktopUPower)
@@ -250,7 +250,7 @@ bool SystemSession::hibernate(bool force) const
 
 bool SystemSession::lockScreen() const
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	if(mCapabilities & GnomeScreenSaver)
 	{
 		QDBusInterface dbusInterface(QStringLiteral("org.gnome.ScreenSaver"), QStringLiteral("/ScreenSaver"), QStringLiteral("org.gnome.ScreenSaver"), QDBusConnection::sessionBus());
@@ -279,7 +279,7 @@ bool SystemSession::lockScreen() const
 
 bool SystemSession::startScreenSaver() const
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	if(mCapabilities & GnomeScreenSaver)
 	{
 		QDBusInterface dbusInterface(QStringLiteral("org.gnome.ScreenSaver"), QStringLiteral("/ScreenSaver"), QStringLiteral("org.gnome.ScreenSaver"), QDBusConnection::sessionBus());
@@ -314,7 +314,7 @@ bool SystemSession::startScreenSaver() const
 #endif
 }
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 bool SystemSession::checkForDBusInterface(const QString &service, const QString &path, const QString &interface, const QString &testMethod, bool systemBus) const
 {
 	QDBusInterface dbusInterface(service, path, interface, systemBus ? QDBusConnection::systemBus() : QDBusConnection::sessionBus());

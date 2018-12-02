@@ -60,7 +60,7 @@ namespace ActionTools
 		void startMouseCapture();
 		void stopMouseCapture();
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		WId windowAtPointer() const;
 #endif
 
@@ -70,7 +70,7 @@ namespace ActionTools
 		WindowHandle mLastFoundWindow;
 		bool mSearching{false};
 		QMainWindow *mMainWindow{nullptr};
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         QList<QWidget*> mShownWindows;
         unsigned long mCrossCursor;
 #endif

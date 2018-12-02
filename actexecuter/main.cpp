@@ -44,7 +44,7 @@
 #include <QUrlQuery>
 #include <QCommandLineParser>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #undef signals
 #include <libnotify/notify.h>
 #define signals
@@ -62,7 +62,7 @@
 
 static void cleanup()
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	notify_uninit();
 #endif
 }
@@ -111,7 +111,7 @@ int main(int argc, char **argv)
 
 	qsrand(static_cast<uint>(std::time(nullptr)));
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     notify_init("Actiona executer");
 #endif
 
@@ -197,7 +197,7 @@ int main(int argc, char **argv)
 	if(!optionsParser.isSet(QStringLiteral("nocodeqt")))
 		app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/code"));
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	{
 #ifdef ACT_PROFILE
 		Tools::HighResolutionTimer timer("Load key codes");

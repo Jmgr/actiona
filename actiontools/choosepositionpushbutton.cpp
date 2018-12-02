@@ -30,7 +30,7 @@
 #include <QDebug>
 #include <QApplication>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QX11Info>
 #include <X11/Xlib.h>
 #include <X11/cursorfont.h>
@@ -46,14 +46,14 @@ namespace ActionTools
 	ChoosePositionPushButton::ChoosePositionPushButton(QWidget *parent)
 	: QPushButton(parent),
     mCrossIcon(new QPixmap(QStringLiteral(":/images/cross.png")))
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
 #endif
 #ifdef Q_OS_WIN
 	,mPreviousCursor(NULL)
 #endif
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         for(QWidget *widget: QApplication::topLevelWidgets())
 		{
 			if(auto mainWindow = qobject_cast<QMainWindow*>(widget))
@@ -72,7 +72,7 @@ namespace ActionTools
 		if(mSearching)
 			stopMouseCapture();
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         QCoreApplication::instance()->removeNativeEventFilter(this);
         XFreeCursor(QX11Info::display(), mCrossCursor);
 #endif
@@ -104,7 +104,7 @@ namespace ActionTools
 		mSearching = true;
 		update();
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         mShownWindows.clear();
 
         for(QWidget *widget: qApp->topLevelWidgets())
@@ -135,7 +135,7 @@ namespace ActionTools
 #ifdef Q_OS_WIN
         mPreviousCursor = SetCursor(LoadCursor(0, IDC_CROSS));
 #endif
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         QCoreApplication::instance()->installNativeEventFilter(this);
 
         if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
@@ -158,7 +158,7 @@ namespace ActionTools
 	}
 #endif
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     bool ChoosePositionPushButton::nativeEventFilter(const QByteArray &eventType, void *message, long *)
     {
         if(eventType == "xcb_generic_event_t")
@@ -194,7 +194,7 @@ namespace ActionTools
         for(QWidget *widget: qApp->topLevelWidgets())
 			widget->setWindowOpacity(1.0f);
 #endif
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         XUngrabPointer(QX11Info::display(), CurrentTime);
         XFlush(QX11Info::display());
 

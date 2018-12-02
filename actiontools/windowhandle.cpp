@@ -21,7 +21,7 @@
 #include "windowhandle.h"
 #include "crossplatform.h"
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QX11Info>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -38,7 +38,7 @@ namespace ActionTools
 {
 	static QList<WindowHandle> gWindowList;
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     // from wmctrl 1.07 (http://tomas.styblo.name/wmctrl/) by Tomas Styblo + UBUNTU PATCH for 64bit
     // from giuspen-x-osk by Giuseppe Penone
     #define MAX_PROPERTY_VALUE_LEN 4096
@@ -119,7 +119,7 @@ namespace ActionTools
 
 	QString WindowHandle::title() const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         return get_window_title(QX11Info::display(), mValue);
 #endif
 #ifdef Q_OS_WIN
@@ -143,7 +143,7 @@ namespace ActionTools
 
 	QString WindowHandle::classname() const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         return get_window_class(QX11Info::display(), mValue);
 #endif
 #ifdef Q_OS_WIN
@@ -157,7 +157,7 @@ namespace ActionTools
 
 	QRect WindowHandle::rect(bool useBorders) const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		XWindowAttributes windowAttributes;
 
 		if(!XGetWindowAttributes(QX11Info::display(), mValue, &windowAttributes))
@@ -205,7 +205,7 @@ namespace ActionTools
 
 	int WindowHandle::processId() const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		static Atom atomPid = None;
 		if(atomPid == None)
 			atomPid = XInternAtom(QX11Info::display(), "_NET_WM_PID", True);
@@ -244,7 +244,7 @@ namespace ActionTools
 
 	bool WindowHandle::close() const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		return XDestroyWindow(QX11Info::display(), mValue);
 #endif
 #ifdef Q_OS_WIN
@@ -254,7 +254,7 @@ namespace ActionTools
 
 	bool WindowHandle::killCreator() const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		return XKillClient(QX11Info::display(), mValue);
 #endif
 #ifdef Q_OS_WIN
@@ -266,7 +266,7 @@ namespace ActionTools
 
 	bool WindowHandle::setForeground() const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		static Atom atomActiveWindow = None;
 		if(atomActiveWindow == None)
 			atomActiveWindow = XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW", False);
@@ -308,7 +308,7 @@ namespace ActionTools
 
 	bool WindowHandle::minimize() const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		return XIconifyWindow(QX11Info::display(), mValue, DefaultScreen(QX11Info::display()));
 #endif
 #ifdef Q_OS_WIN
@@ -318,7 +318,7 @@ namespace ActionTools
 
 	bool WindowHandle::maximize() const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		static Atom atomState = None;
 		if(atomState == None)
 			atomState = XInternAtom(QX11Info::display(), "_NET_WM_STATE", False);
@@ -357,7 +357,7 @@ namespace ActionTools
 
 	bool WindowHandle::move(QPoint position) const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		return XMoveWindow(QX11Info::display(), mValue, position.x(), position.y());
 #endif
 #ifdef Q_OS_WIN
@@ -367,7 +367,7 @@ namespace ActionTools
 
 	bool WindowHandle::resize(QSize size, bool useBorders) const
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		if(useBorders)
 		{
 			XWindowAttributes windowAttributes;
@@ -410,7 +410,7 @@ namespace ActionTools
 
 	WindowHandle WindowHandle::foregroundWindow()
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		Window focus;
 		int revert = 0;
 
@@ -439,7 +439,7 @@ namespace ActionTools
 	{
 		gWindowList.clear();
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		static Atom net_clients = None;
 		if(!net_clients)
             net_clients = XInternAtom(QX11Info::display(), "_NET_CLIENT_LIST_STACKING", True);

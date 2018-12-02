@@ -22,7 +22,7 @@
 
 #include <QCursor>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QX11Info>
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
@@ -67,7 +67,7 @@ bool MouseDevice::isButtonPressed(Button button) const
 		return false;
 	}
 #endif
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	Window unusedWindow;
 	int unusedInt;
 	unsigned int buttonMask;
@@ -115,7 +115,7 @@ bool MouseDevice::pressButton(Button button)
 {
 	mPressedButtons[button] = true;
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), True, CurrentTime))
 		return false;
 	
@@ -139,7 +139,7 @@ bool MouseDevice::releaseButton(Button button)
 {
 	mPressedButtons[button] = false;
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), False, CurrentTime))
 		return false;
 	
@@ -161,7 +161,7 @@ bool MouseDevice::releaseButton(Button button)
 
 bool MouseDevice::wheel(int intensity) const
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	int button;
 	if(intensity < 0)
 	{
@@ -199,7 +199,7 @@ bool MouseDevice::wheel(int intensity) const
 	return true;
 }
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 int MouseDevice::toX11Button(Button button) const
 {
 	return button + 1;

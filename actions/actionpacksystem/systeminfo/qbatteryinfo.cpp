@@ -46,7 +46,7 @@
 
 #if defined(QT_SIMULATOR)
 #  include "simulator/qsysteminfo_simulator_p.h"
-#elif defined(Q_OS_LINUX)
+#elif defined(Q_OS_UNIX)
 #if defined(QT_NO_UPOWER)
 #include "linux/qbatteryinfo_linux_p.h"
 #else

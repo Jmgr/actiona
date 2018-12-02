@@ -134,11 +134,12 @@ namespace Code
 
 	QString System::osName() const
 	{
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX)
 		return QStringLiteral("GNU/Linux");
-#endif
-#ifdef Q_OS_WIN
+#elif defined(Q_OS_WIN)
 		return QStringLiteral("Windows");
+#else
+        return QStringLiteral("Unknown");
 #endif
 	}
 

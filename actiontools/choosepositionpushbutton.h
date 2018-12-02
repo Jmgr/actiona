@@ -22,7 +22,7 @@
 
 #include "actiontools_global.h"
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QAbstractNativeEventFilter>
 #endif
 
@@ -34,7 +34,7 @@ class QMainWindow;
 namespace ActionTools
 {
     class ACTIONTOOLSSHARED_EXPORT ChoosePositionPushButton : public QPushButton
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
             , public QAbstractNativeEventFilter
 #endif
 	{
@@ -53,7 +53,7 @@ namespace ActionTools
 #ifdef Q_OS_WIN
 		void mouseReleaseEvent(QMouseEvent *event);
 #endif
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
 #endif
 		void stopMouseCapture();
@@ -62,7 +62,7 @@ namespace ActionTools
 		bool mSearching{false};
 		QPoint mResult;
 		QMainWindow *mMainWindow{nullptr};
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         QList<QWidget*> mShownWindows;
         unsigned long mCrossCursor;
 #endif

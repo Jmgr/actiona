@@ -85,7 +85,7 @@
 #include <QStandardPaths>
 #include <QCommandLineParser>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QProcessEnvironment>
 #include <QX11Info>
 #endif
@@ -155,7 +155,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
     mNewActionProxyModel->setDynamicSortFilter(false);
     mScriptProxyModel->setDynamicSortFilter(false);
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     auto environment = QProcessEnvironment::systemEnvironment();
 	auto sessionType = environment.value(QStringLiteral("XDG_SESSION_TYPE"), QStringLiteral("x11")); // Consider an empty value as being X11
 	auto x11Session = (sessionType == QLatin1String("x11"));
@@ -431,7 +431,7 @@ void MainWindow::postInit()
 		mSplashScreen = nullptr;
 	}
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	ActionTools::CrossPlatform::setForegroundWindow(this);
 #endif
 

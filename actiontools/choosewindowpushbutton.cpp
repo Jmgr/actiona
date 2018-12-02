@@ -29,7 +29,7 @@
 #include <QMainWindow>
 #include <QApplication>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QX11Info>
 #include <X11/Xlib.h>
 #include <X11/cursorfont.h>
@@ -68,7 +68,7 @@ namespace ActionTools
 	ChooseWindowPushButton::ChooseWindowPushButton(QWidget *parent)
 		: QPushButton(parent),
         mCrossIcon(new QPixmap(QStringLiteral(":/images/cross.png")))
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
 #endif
 #ifdef Q_OS_WIN
@@ -76,7 +76,7 @@ namespace ActionTools
 		,mRectanglePen(CreatePen(PS_SOLID, 3, RGB(255, 0, 0)))
 #endif
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         for(QWidget *widget: QApplication::topLevelWidgets())
 		{
 			if(auto mainWindow = qobject_cast<QMainWindow*>(widget))
@@ -100,7 +100,7 @@ namespace ActionTools
 #ifdef Q_OS_WIN
 		DeleteObject(mRectanglePen);
 #endif
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         XFreeCursor(QX11Info::display(), mCrossCursor);
 #endif
 
@@ -128,7 +128,7 @@ namespace ActionTools
 	{
 		QPushButton::mousePressEvent(event);
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
         mShownWindows.clear();
 
         for(QWidget *widget: qApp->topLevelWidgets())
@@ -266,7 +266,7 @@ namespace ActionTools
 #ifdef Q_OS_WIN
         mPreviousCursor = SetCursor(LoadCursor(0, IDC_CROSS));
 #endif
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
             None, mCrossCursor, CurrentTime) != GrabSuccess)
 		{
@@ -294,7 +294,7 @@ namespace ActionTools
         for(QWidget *widget: qApp->topLevelWidgets())
 			widget->setWindowOpacity(1.0f);
 	#endif
-	#ifdef Q_OS_LINUX
+    #ifdef Q_OS_UNIX
 		XUngrabPointer(QX11Info::display(), CurrentTime);
         XFlush(QX11Info::display());
 
@@ -312,7 +312,7 @@ namespace ActionTools
         emit searchEnded(mLastFoundWindow);
     }
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	WId ChooseWindowPushButton::windowAtPointer() const
 	{
 		Window window = DefaultRootWindow(QX11Info::display());

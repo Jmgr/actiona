@@ -120,13 +120,13 @@ sub get_utf8 {
  */
 #include <QtGlobal>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QX11Info>
 #endif
 
 #include "keysymhelper.h"
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 namespace ActionTools
 {
 	void KeySymHelper::loadKeyCodes()

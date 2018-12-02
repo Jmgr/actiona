@@ -20,7 +20,7 @@
 
 #include "keymapper.h"
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #define XK_MISCELLANY
 #define XK_LATIN1
 #define XK_KOREAN
@@ -34,7 +34,7 @@
 
 namespace ActionTools
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 	static const int KeyTbl[] = {
 		// misc keys
 
@@ -857,7 +857,7 @@ namespace ActionTools
 
 	int KeyMapper::toNativeKey(Qt::Key key)
 	{
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 		if(key >= Qt::Key_Space && key <= Qt::Key_AsciiTilde)//Ascii
 			return key;
 

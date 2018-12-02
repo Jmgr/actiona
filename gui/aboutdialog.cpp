@@ -33,14 +33,14 @@ AboutDialog::AboutDialog(QWidget *parent)
 {
 	ui->setupUi(this);
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
 	QString os = tr("Windows");
-#endif
-#ifdef Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
 	QString os = tr("GNU/Linux");
-#endif
-#ifdef Q_OS_MAC
+#elif defined(Q_OS_MAC)
 	QString os = tr("Mac");
+#else
+    QString os = tr("Unknown");
 #endif
 
 	QString buildName = QStringLiteral(ACT_BUILD_NAME);
