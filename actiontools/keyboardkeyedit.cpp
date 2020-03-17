@@ -20,6 +20,8 @@
 
 #include "keyboardkeyedit.h"
 
+#include <QKeyEvent>
+
 namespace ActionTools
 {
     KeyboardKeyEdit::KeyboardKeyEdit(QWidget *parent):
