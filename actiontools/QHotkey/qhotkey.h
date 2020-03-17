@@ -1,6 +1,8 @@
 #ifndef QHOTKEY_H
 #define QHOTKEY_H
 
+#include "actiontools_global.h"
+
 #include <QObject>
 #include <QKeySequence>
 #include <QPair>
@@ -17,7 +19,7 @@
 #endif
 
 //! A class to define global, systemwide Hotkeys
-class QHOTKEY_SHARED_EXPORT QHotkey : public QObject
+class ACTIONTOOLSSHARED_EXPORT QHotkey : public QObject
 {
 	Q_OBJECT
 	//! @private
