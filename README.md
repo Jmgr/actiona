@@ -1,4 +1,7 @@
-# Actiona
+![AppVeyor build result](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true) ![License: GPLv3](https://img.shields.io/badge/license-GPLv3-blue)
+
+Actiona
+======
 
 Actiona is an application that allows you to execute many actions on your
 computer such as emulating mouse clicks, key presses, showing message boxes,
