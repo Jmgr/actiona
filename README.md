@@ -1,5 +1,5 @@
-Ubuntu: [![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true)](https://ci.appveyor.com/project/Jmgr/actiona-hhhwb)
-Windows: [![Build status](https://ci.appveyor.com/api/projects/status/rcx3n64xp2jhers5?svg=true)](https://ci.appveyor.com/project/Jmgr/actiona-hhhwb)
+![AppVeyor](https://img.shields.io/appveyor/build/Jmgr/actiona?label=ubuntu-build&logo=appveyor)
+![AppVeyor](https://img.shields.io/appveyor/build/Jmgr/actiona-hhhwb?label=windows-build&logo=appveyor)
 ![License: GPLv3](https://img.shields.io/badge/license-GPLv3-blue)
 
 Actiona
