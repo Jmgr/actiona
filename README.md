@@ -1,5 +1,6 @@
-![AppVeyor](https://img.shields.io/appveyor/build/Jmgr/actiona?label=ubuntu-build&logo=appveyor)
-![AppVeyor](https://img.shields.io/appveyor/build/Jmgr/actiona-hhhwb?label=windows-build&logo=appveyor)
+[![AppVeyor](https://img.shields.io/appveyor/build/Jmgr/actiona?label=ubuntu-gcc-build&logo=appveyor)](https://ci.appveyor.com/project/Jmgr/actiona)
+[![AppVeyor](https://img.shields.io/appveyor/build/Jmgr/actiona-hhhwb?label=windows-msvc-build&logo=appveyor)](https://ci.appveyor.com/project/Jmgr/actiona-hhhwb)
+[![AppVeyor](https://img.shields.io/appveyor/build/Jmgr/actiona-9331s?label=windows-gcc-build&logo=appveyor)](https://ci.appveyor.com/project/Jmgr/actiona-9331s)
 ![License: GPLv3](https://img.shields.io/badge/license-GPLv3-blue)
 
 Actiona
