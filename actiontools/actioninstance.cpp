@@ -88,6 +88,16 @@ namespace ActionTools
 		++mCurrentRuntimeId;
 	}
 
+    bool ActionInstance::operator==(const ActionInstance &other) const
+    {
+        return ((*d) == (*other.d));
+    }
+
+    bool ActionInstance::operator!=(const ActionInstance &other) const
+    {
+        return !((*d) == (*other.d));
+    }
+
     bool ActionInstance::callProcedure(const QString &procedureName)
     {
         //Search for the corresponding ActionBeginProcedure action

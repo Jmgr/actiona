@@ -1,8 +1,6 @@
 TEMPLATE = subdirs
 CONFIG = ordered
 
-win32-g++:error(Mingw is currently not supported, please use the Microsoft compiler suite)
-
 contains(DEFINES, ACT_NO_UPDATER){
 message(** No updater will be built **)
 }

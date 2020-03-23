@@ -83,8 +83,8 @@ namespace ActionTools
 
 		~ActionInstance()											override = default;
 		
-		bool operator==(const ActionInstance &other) const					{ return ((*d) == (*other.d)); }
-		bool operator!=(const ActionInstance &other) const					{ return !((*d) == (*other.d)); }
+        bool operator==(const ActionInstance &other) const;
+        bool operator!=(const ActionInstance &other) const;
 
 		const ActionDefinition *definition() const							{ return d->definition; }
 

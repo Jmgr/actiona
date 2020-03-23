@@ -42,7 +42,7 @@ QMAKE_TARGET_PRODUCT = "Actiona"
 RC_ICONS = "../gui/icons/actiona.ico"
 }
 
-win32 {
+win32-msvc* {
     CONFIG += embed_manifest_exe
     QMAKE_LFLAGS += $$quote( /MANIFESTUAC:\"level=\'asInvoker\' uiAccess=\'true\'\" )
 }

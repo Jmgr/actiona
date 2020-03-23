@@ -117,9 +117,17 @@ QMAKE_TARGET_PRODUCT = "Actiona"
 RC_ICONS = "icons/actiona.ico"
 }
 
-win32 {
+win32-msvc* {
     CONFIG += embed_manifest_exe
     QMAKE_LFLAGS += $$quote( /MANIFESTUAC:\"level=\'asInvoker\' uiAccess=\'true\'\" )
+}
+
+win32-g++ {
+    mkmanifest_rc.target = manifest_res.o
+    mkmanifest_rc.commands = windres -i $$PWD/manifest.rc -o manifest_res.o
+    QMAKE_EXTRA_TARGETS += mkmanifest_rc
+    PRE_TARGETDEPS += manifest_res.o
+    LIBS += manifest_res.o
 }
 
 unix {
@@ -146,3 +154,7 @@ unix {
 
 	INSTALLS += target locales icon desktopicon desktopfile manfile mimefile
 }
+
+DISTFILES += \
+    manifest.rc \
+    manifest.xml

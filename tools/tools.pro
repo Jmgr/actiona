@@ -21,7 +21,7 @@ win32:HEADERS += sevenziparchivewrite.h
 }
 INCLUDEPATH += src
 TRANSLATIONS = ../locale/tools_fr_FR.ts
-win32:LIBS += User32.lib
+win32:LIBS += -luser32
 
 unix {
         target.path = $${PREFIX}/$${LIBDIR}/actiona
