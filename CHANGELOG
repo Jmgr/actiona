@@ -1,3 +1,13 @@
+3.10.1 (24/03/20)
+Global:
+- Unixes: fixed compilation using OpenCV 4
+- Unixes: fixed compilation on unixes other than Linux
+- Fixed compilation using recent Qt versions
+- Windows: fixed compilation using MinGW
+
+Interface:
+- Unixes: fixed broken global shortcuts
+
 3.10.0 (17/07/18)
 Global:
 - Added a keyboard key condition action that allows checking or waiting for a particular key combination to be pressed
