@@ -1,5 +1,5 @@
 /*
-	Contact : jmgr@jmgr.info
+	Contact: jmgr@jmgr.info
 */
 
 #pragma once

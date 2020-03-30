@@ -15,7 +15,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-	Contact : jmgr@jmgr.info
+	Contact: jmgr@jmgr.info
 */
 /* keysym_map.h - Maps the unicode number of charactes to X11 keysym codes.
  *                The first element in the array is unicode number 0x0100.
