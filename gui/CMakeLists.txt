@@ -1,0 +1,131 @@
+set(PROJECT gui)
+
+set(SOURCES_PREFIX src)
+set(SOURCES
+    ${SOURCES_PREFIX}/aboutdialog.cpp
+    ${SOURCES_PREFIX}/actiondialog.cpp
+    ${SOURCES_PREFIX}/changelogdialog.cpp
+    ${SOURCES_PREFIX}/colorpickerpushbutton.cpp
+    ${SOURCES_PREFIX}/deleteactionpushbutton.cpp
+    ${SOURCES_PREFIX}/filetypeguesser.cpp
+    ${SOURCES_PREFIX}/filterlineedit.cpp
+    ${SOURCES_PREFIX}/flagscombobox.cpp
+    ${SOURCES_PREFIX}/global.cpp
+    ${SOURCES_PREFIX}/main.cpp
+    ${SOURCES_PREFIX}/mainwindow.cpp
+    ${SOURCES_PREFIX}/newactiondialog.cpp
+    ${SOURCES_PREFIX}/newactionmodel.cpp
+    ${SOURCES_PREFIX}/newactionproxymodel.cpp
+    ${SOURCES_PREFIX}/newactiontreewidget.cpp
+    ${SOURCES_PREFIX}/progresssplashscreen.cpp
+    ${SOURCES_PREFIX}/resourcedialog.cpp
+    ${SOURCES_PREFIX}/resourcenamedelegate.cpp
+    ${SOURCES_PREFIX}/resourcetablewidget.cpp
+    ${SOURCES_PREFIX}/resourcetypedelegate.cpp
+    ${SOURCES_PREFIX}/scriptcontentdialog.cpp
+    ${SOURCES_PREFIX}/scriptmodel.cpp
+    ${SOURCES_PREFIX}/scriptmodelundocommands.cpp
+    ${SOURCES_PREFIX}/scriptparametersdialog.cpp
+    ${SOURCES_PREFIX}/scriptproxymodel.cpp
+    ${SOURCES_PREFIX}/scriptsettingsdialog.cpp
+    ${SOURCES_PREFIX}/scripttreeview.cpp
+    ${SOURCES_PREFIX}/settingsdialog.cpp
+    ${SOURCES_PREFIX}/settingskeyedit.cpp
+    ${SOURCES_PREFIX}/sfxscriptdialog.cpp
+    ${SOURCES_PREFIX}/QHotkey/qhotkey.cpp
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/QHotkey/qhotkey_win.cpp>
+    $<$<BOOL:UNIX>:${SOURCES_PREFIX}/QHotkey/qhotkey_x11.cpp>
+)
+
+set(HEADERS_PREFIX src)
+set(HEADERS
+    ${HEADERS_PREFIX}/aboutdialog.hpp
+    ${HEADERS_PREFIX}/actiondialog.hpp
+    ${HEADERS_PREFIX}/actionfilteringflags.hpp
+    ${HEADERS_PREFIX}/changelogdialog.hpp
+    ${HEADERS_PREFIX}/colorpickerpushbutton.hpp
+    ${HEADERS_PREFIX}/deleteactionpushbutton.hpp
+    ${HEADERS_PREFIX}/filetypeguesser.hpp
+    ${HEADERS_PREFIX}/filterlineedit.hpp
+    ${HEADERS_PREFIX}/flagscombobox.hpp
+    ${HEADERS_PREFIX}/global.hpp
+    ${HEADERS_PREFIX}/heatmapmode.hpp
+    ${HEADERS_PREFIX}/mainwindow.hpp
+    ${HEADERS_PREFIX}/newactiondialog.hpp
+    ${HEADERS_PREFIX}/newactionmodel.hpp
+    ${HEADERS_PREFIX}/newactionproxymodel.hpp
+    ${HEADERS_PREFIX}/newactiontreewidget.hpp
+    ${HEADERS_PREFIX}/progresssplashscreen.hpp
+    ${HEADERS_PREFIX}/resourcedialog.hpp
+    ${HEADERS_PREFIX}/resourcenamedelegate.hpp
+    ${HEADERS_PREFIX}/resourcesizeitem.hpp
+    ${HEADERS_PREFIX}/resourcetablewidget.hpp
+    ${HEADERS_PREFIX}/resourcetypedelegate.hpp
+    ${HEADERS_PREFIX}/scriptcontentdialog.hpp
+    ${HEADERS_PREFIX}/scriptmodel.hpp
+    ${HEADERS_PREFIX}/scriptmodelundocommands.hpp
+    ${HEADERS_PREFIX}/scriptparametersdialog.hpp
+    ${HEADERS_PREFIX}/scriptproxymodel.hpp
+    ${HEADERS_PREFIX}/scriptsettingsdialog.hpp
+    ${HEADERS_PREFIX}/scripttreeview.hpp
+    ${HEADERS_PREFIX}/settingsdialog.hpp
+    ${HEADERS_PREFIX}/settingskeyedit.hpp
+    ${HEADERS_PREFIX}/sfxscriptdialog.hpp
+    ${HEADERS_PREFIX}/QHotkey/qhotkey.h
+    ${HEADERS_PREFIX}/QHotkey/qhotkey_p.h
+)
+
+set(QRC ${PROJECT}.qrc)
+
+add_executable(${PROJECT}
+    ${SOURCES}
+    ${HEADERS}
+    ${QRC}
+)
+
+set_target_properties(${PROJECT} PROPERTIES VERSION ${PROJECT_VERSION})
+
+add_dependencies(${PROJECT} execution actiontools tools)
+
+if(UNIX)
+    include(FindPkgConfig)
+    pkg_search_module(LIBNOTIFY REQUIRED libnotify)
+    pkg_search_module(LIBX11 REQUIRED x11)
+endif()
+
+target_include_directories(${PROJECT}
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../actiontools/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../execution/include
+        ${LIBNOTIFY_INCLUDE_DIRS}
+        ${LIBX11_INCLUDE_DIRS}
+)
+
+apply_definitions(${PROJECT})
+
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Xml Network Script ScriptTools Widgets REQUIRED)
+
+target_link_libraries(
+    ${PROJECT}
+    execution
+    actiontools
+    tools
+    Qt5::Xml
+    Qt5::Network
+    Qt5::Script
+    Qt5::ScriptTools
+    Qt5::Widgets
+    ${LIBNOTIFY_LIBRARIES}
+    ${LIBX11_LIBRARIES}
+)
+
+if(UNIX)
+    find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)
+    target_link_libraries(${PROJECT} Qt5::X11Extras)
+endif()
+if(WIN32)
+    find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS WinExtras REQUIRED)
+    target_link_libraries(${PROJECT} Qt5::WinExtras)
+endif()
