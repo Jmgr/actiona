@@ -15,7 +15,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-	Contact : jmgr@jmgr.info
+	Contact: jmgr@jmgr.info
 */
 // This file uses some code lines from the Ofi Labs X2 project
 // Copyright (C) 2010 Ariya Hidayat <ariya.hidayat@gmail.com>
