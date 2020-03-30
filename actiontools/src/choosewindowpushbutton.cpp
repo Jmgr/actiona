@@ -15,7 +15,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-	Contact : jmgr@jmgr.info
+	Contact: jmgr@jmgr.info
 */
 //Using parts of the Window Finder : http://www.codeproject.com/KB/dialog/windowfinder.aspx
 //By Lim Bio Liong
