@@ -1,0 +1,5 @@
+add_subdirectory(actionpackdata)
+add_subdirectory(actionpackdevice)
+add_subdirectory(actionpackinternal)
+add_subdirectory(actionpacksystem)
+add_subdirectory(actionpackwindows)
