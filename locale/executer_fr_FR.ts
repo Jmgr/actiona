@@ -25,14 +25,14 @@
     </message>
 </context>
 <context>
-    <name>LibExecuter::CodeConsole</name>
+    <name>Execution::CodeConsole</name>
     <message>
         <source>Warning: </source>
         <translation type="obsolete">Avertissement :</translation>
     </message>
 </context>
 <context>
-    <name>LibExecuter::CodeStdio</name>
+    <name>Execution::CodeStdio</name>
     <message>
         <source>Warning: </source>
         <translation type="obsolete">Avertissement : </translation>
@@ -67,7 +67,7 @@
     </message>
 </context>
 <context>
-    <name>LibExecuter::Executer</name>
+    <name>Execution::Executer</name>
     <message>
         <location filename="../executer/executer.cpp" line="353"/>
         <source>Invalid image resource</source>
