@@ -60,15 +60,20 @@ namespace ActionTools
 		QDir actionDirectory(directory);
 
 #if defined(Q_OS_WIN)
-        QString actionMask = QStringLiteral("ActionPack*.dll");
+        QString actionMask = QStringLiteral("actionpack*.dll");
 #elif defined(Q_OS_MAC)
-		QString actionMask = QStringLiteral("libActionPack*.dylib");
+		QString actionMask = QStringLiteral("actionpack*.dylib");
 #else
-		QString actionMask = QStringLiteral("libActionPack*.so");
+		QString actionMask = QStringLiteral("actionpack*.so");
 #endif
 
+	qDebug() << directory;
+
         for(const QString &actionFilename: actionDirectory.entryList({actionMask}, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
+		{
+			qDebug() << actionFilename;
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
+		}
 
         std::sort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
 

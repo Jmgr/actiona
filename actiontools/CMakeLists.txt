@@ -259,8 +259,6 @@ add_library(${PROJECT} SHARED
     ${QRC}
 )
 
-set_target_properties(${PROJECT} PROPERTIES VERSION ${PROJECT_VERSION})
-
 add_dependencies(${PROJECT} tools)
 
 if(UNIX)
@@ -282,7 +280,7 @@ target_include_directories(${PROJECT}
 
 target_compile_definitions(${PROJECT} PRIVATE ACTIONTOOLS_LIBRARY)
 
-apply_definitions(${PROJECT})
+setup_target(${PROJECT})
 
 find_package(Boost ${ACT_MINIMUM_BOOST_VERSION} REQUIRED)
 find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script XmlPatterns Widgets REQUIRED)
@@ -300,3 +298,5 @@ if(UNIX)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)
     target_link_libraries(${PROJECT} Qt5::X11Extras)
 endif()
+
+compile_translations(${PROJECT})

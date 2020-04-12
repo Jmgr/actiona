@@ -22,8 +22,6 @@ add_executable(${PROJECT}
     ${HEADERS}
 )
 
-set_target_properties(${PROJECT} PROPERTIES VERSION ${PROJECT_VERSION})
-
 add_dependencies(${PROJECT} execution actiontools tools)
 
 if(UNIX)
@@ -40,7 +38,9 @@ target_include_directories(${PROJECT}
         ${LIBNOTIFY_INCLUDE_DIRS}
 )
 
-apply_definitions(${PROJECT})
+set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actexec")
+
+setup_target(${PROJECT})
 
 find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script ScriptTools Widgets REQUIRED)
 
@@ -55,3 +55,5 @@ target_link_libraries(
     Qt5::Widgets
     ${LIBNOTIFY_LIBRARIES}
 )
+
+compile_translations(${PROJECT})

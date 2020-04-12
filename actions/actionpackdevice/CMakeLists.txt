@@ -44,8 +44,6 @@ add_library(${PROJECT} SHARED
     ${QRC}
 )
 
-set_target_properties(${PROJECT} PROPERTIES VERSION ${PROJECT_VERSION})
-
 add_dependencies(${PROJECT} tools actiontools)
 
 target_include_directories(${PROJECT}
@@ -55,13 +53,16 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../../actiontools/include
 )
 
-apply_definitions(${PROJECT})
+setup_target(${PROJECT})
+setup_action(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script Sql Widgets REQUIRED)
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script REQUIRED)
 
-target_link_libraries(${PROJECT} Qt5::Network Qt5::Script Qt5::Sql Qt5::Widgets)
+target_link_libraries(${PROJECT} Qt5::Script)
 
 if(UNIX)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)
     target_link_libraries(${PROJECT} Qt5::X11Extras)
 endif()
+
+compile_translations(${PROJECT})
