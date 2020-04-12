@@ -74,13 +74,13 @@ namespace Tools
     void Languages::installTranslator(const QString &componentName, const QString &locale)
     {
         auto translator = new QTranslator(QCoreApplication::instance());
-		if(!translator->load(QStringLiteral("%1/locale/%2_%3").arg(QCoreApplication::applicationDirPath()).arg(componentName).arg(locale)))
+		if(!translator->load(QStringLiteral("%1/translations/%2_%3").arg(QCoreApplication::applicationDirPath()).arg(componentName).arg(locale)))
         {
-			if(!translator->load(QStringLiteral("%1/locale/%2_%3").arg(QDir::currentPath()).arg(componentName).arg(locale)))
+			if(!translator->load(QStringLiteral("%1/translations/%2_%3").arg(QDir::currentPath()).arg(componentName).arg(locale)))
             {
     #ifndef Q_OS_WIN
                 // TODO: ACT_PREFIX
-				translator->load(QStringLiteral("/usr/local/share/actiona/locale/%2_%3").arg(componentName).arg(locale));
+				translator->load(QStringLiteral("/usr/local/share/actiona/translations/%2_%3").arg(componentName).arg(locale));
     #endif
             }
         }

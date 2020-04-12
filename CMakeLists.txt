@@ -34,18 +34,38 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
 endif()
 
-function(apply_definitions TARGET)
-target_compile_definitions(${TARGET} PRIVATE
-    QT_USE_FAST_CONCATENATION
-    QT_USE_FAST_OPERATOR_PLUS
-    QT_NO_CAST_TO_ASCII
-    QT_NO_CAST_FROM_ASCII
-    QT_NO_CAST_FROM_BYTEARRAY
-    ACT_VERSION="${PROJECT_VERSION}"
-    ACT_SCRIPT_VERSION="${ACT_SCRIPT_VERSION}"
-    ACT_BUILD_NAME="${ACT_BUILD_NAME}"
-    $<$<BOOL:${ACT_UPDATER}>:ACT_UPDATER>
-)
+function(setup_target TARGET)
+    target_compile_definitions(${TARGET} PRIVATE
+        QT_USE_FAST_CONCATENATION
+        QT_USE_FAST_OPERATOR_PLUS
+        QT_NO_CAST_TO_ASCII
+        QT_NO_CAST_FROM_ASCII
+        QT_NO_CAST_FROM_BYTEARRAY
+        ACT_VERSION="${PROJECT_VERSION}"
+        ACT_SCRIPT_VERSION="${ACT_SCRIPT_VERSION}"
+        ACT_BUILD_NAME="${ACT_BUILD_NAME}"
+        $<$<BOOL:${ACT_UPDATER}>:ACT_UPDATER>
+    )
+    #set_target_properties(${TARGET} PROPERTIES VERSION ${PROJECT_VERSION})
+    #set_target_properties(${TARGET} PROPERTIES NO_SONAME TRUE)
+    set_target_properties(${TARGET}
+        PROPERTIES
+            PREFIX ""
+    )
+endfunction()
+
+            #LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+            #RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+
+function(compile_translations TARGET)
+    find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS LinguistTools REQUIRED)
+    set(TS_FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_fr_FR.ts
+        # Add other translations here
+    )
+    set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_BINARY_DIR}/translations)
+    qt5_add_translation(QM_FILES ${TS_FILES})
+    add_custom_target(${TARGET}_translations ALL DEPENDS ${QM_FILES})
 endfunction()
 
 add_subdirectory(tools)
