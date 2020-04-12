@@ -22,8 +22,6 @@ add_library(${PROJECT} SHARED
     ${HEADERS}
 )
 
-set_target_properties(${PROJECT} PROPERTIES VERSION ${PROJECT_VERSION})
-
 target_include_directories(${PROJECT}
     PUBLIC
         $<INSTALL_INTERFACE:include>
@@ -34,8 +32,10 @@ target_include_directories(${PROJECT}
 
 target_compile_definitions(${PROJECT} PRIVATE TOOLS_LIBRARY)
 
-apply_definitions(${PROJECT})
+setup_target(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets REQUIRED)
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network REQUIRED)
 
-target_link_libraries(${PROJECT} Qt5::Network Qt5::Widgets)
+target_link_libraries(${PROJECT} Qt5::Network)
+
+compile_translations(${PROJECT})

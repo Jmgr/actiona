@@ -30,8 +30,6 @@ add_library(${PROJECT} SHARED
     ${QRC}
 )
 
-set_target_properties(${PROJECT} PROPERTIES VERSION ${PROJECT_VERSION})
-
 add_dependencies(${PROJECT} actiontools tools)
 
 target_include_directories(${PROJECT}
@@ -47,8 +45,10 @@ target_include_directories(${PROJECT}
 
 target_compile_definitions(${PROJECT} PRIVATE EXECUTION_LIBRARY)
 
-apply_definitions(${PROJECT})
+setup_target(${PROJECT})
 
 find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script ScriptTools Widgets UiTools REQUIRED)
 
 target_link_libraries(${PROJECT} Qt5::Script Qt5::ScriptTools Qt5::Widgets Qt5::UiTools)
+
+compile_translations(${PROJECT})

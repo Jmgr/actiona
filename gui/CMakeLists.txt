@@ -83,8 +83,6 @@ add_executable(${PROJECT}
     ${QRC}
 )
 
-set_target_properties(${PROJECT} PROPERTIES VERSION ${PROJECT_VERSION})
-
 add_dependencies(${PROJECT} execution actiontools tools)
 
 if(UNIX)
@@ -103,19 +101,21 @@ target_include_directories(${PROJECT}
         ${LIBX11_INCLUDE_DIRS}
 )
 
-apply_definitions(${PROJECT})
+set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actiona")
+set_target_properties(${PROJECT} PROPERTIES SUFFIX "")
+set(CMAKE_EXECUTABLE_SUFFIX "")
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Xml Network Script ScriptTools Widgets REQUIRED)
+setup_target(${PROJECT})
+
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script Widgets REQUIRED)
 
 target_link_libraries(
     ${PROJECT}
     execution
     actiontools
     tools
-    Qt5::Xml
     Qt5::Network
     Qt5::Script
-    Qt5::ScriptTools
     Qt5::Widgets
     ${LIBNOTIFY_LIBRARIES}
     ${LIBX11_LIBRARIES}
@@ -129,3 +129,5 @@ if(WIN32)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS WinExtras REQUIRED)
     target_link_libraries(${PROJECT} Qt5::WinExtras)
 endif()
+
+compile_translations(${PROJECT})
