@@ -62,8 +62,8 @@ target_include_directories(${PROJECT}
 setup_target(${PROJECT})
 setup_action(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script REQUIRED)
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script Widgets REQUIRED)
 
-target_link_libraries(${PROJECT} Qt5::Script)
+target_link_libraries(${PROJECT} Qt5::Script Qt5::Widgets)
 
 compile_translations(${PROJECT})
