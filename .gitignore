@@ -15,3 +15,6 @@ Makefile
 .qmake.stash
 actexec
 actiona
+.vs
+.vscode
+.idea

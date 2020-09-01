@@ -53,5 +53,6 @@
         <file>icons/resources.png</file>
         <file>icons/text.png</file>
         <file>icons/warning.png</file>
+        <file>icons/beginprocedure.png</file>
     </qresource>
 </RCC>

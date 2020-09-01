@@ -127,6 +127,7 @@ private slots:
 	void on_actionNew_action_triggered();
 	void on_actionEdit_action_triggered();
 	void on_actionJump_to_line_triggered();
+	void on_actionJump_to_definition_triggered();
 	void on_actionCheck_for_updates_triggered();
 	void on_actionCreate_shortcut_triggered();
 	void on_actionImport_script_content_triggered();
@@ -190,6 +191,7 @@ private:
 	bool editAction(ActionTools::ActionInstance *actionInstance, int exception);
 	void openParametersDialog(int parameter = -1, int line = -1, int column = -1);
     void openResourceDialog(const QString &resource = QString());
+	void selectRow(int row);
 	QList<int> selectedRows() const;
 	bool loadFile(const QString &fileName, bool verbose = true);
 	bool saveFile(const QString &fileName, bool copy = false);

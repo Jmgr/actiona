@@ -274,6 +274,7 @@
     <addaction name="actionMove_down"/>
     <addaction name="separator"/>
     <addaction name="actionJump_to_line"/>
+     <addaction name="actionJump_to_definition"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -886,6 +887,19 @@
     <string>Ctrl+J</string>
    </property>
   </action>
+   <action name="actionJump_to_definition">
+     <property name="icon">
+       <iconset resource="gui.qrc">
+         <normaloff>:/icons/beginprocedure.png</normaloff>:/icons/beginprocedure.png
+       </iconset>
+     </property>
+     <property name="text">
+       <string>Jump to definition</string>
+     </property>
+     <property name="shortcut">
+       <string>F12</string>
+     </property>
+   </action>
   <action name="actionConsole_window">
    <property name="checkable">
     <bool>true</bool>

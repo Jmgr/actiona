@@ -84,6 +84,7 @@
 #include <QScriptValueIterator>
 #include <QStandardPaths>
 #include <QCommandLineParser>
+#include <QString>
 
 #ifdef Q_OS_UNIX
 #include <QProcessEnvironment>
@@ -96,6 +97,7 @@
 #endif
 
 #include <algorithm>
+#include <exception>
 
 MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
 	: QMainWindow(nullptr),
@@ -1046,10 +1048,52 @@ void MainWindow::on_actionJump_to_line_triggered()
 		if(line >= 0 && line < mScript->actionCount())
 		{
 			ui->scriptView->setFocus();
-            //ui->scriptView->selectRow(line);
+			
+			selectRow(line);
 		}
 	}
 }
+
+void MainWindow::on_actionJump_to_definition_triggered()
+{
+	QList<int> selected = selectedRows();
+	if (selected.size() != 1) {
+		return;
+	}
+	ActionTools::ActionInstance *callProcedure = mScript->actionAt(selected[0]);
+	QString callProcedureName = callProcedure->subParameter(QStringLiteral("name"), QStringLiteral("value")).value();
+
+	for (int i = 0; i < mScriptModel->rowCount(); i++) {
+		ActionTools::ActionInstance *actionInstance = mScript->actionAt(i);
+		if (!actionInstance)
+			continue;
+
+		if (actionInstance->definition()->name() == QStringLiteral("Begin procedure")) {
+			QString beginProcedureName = actionInstance->subParameter(QStringLiteral("name"), QStringLiteral("value")).value();
+			if (beginProcedureName == callProcedureName) {
+				selectRow(i);
+				return;
+			}
+
+		}
+	}
+
+	QString finalMessage = tr("Script line %1: ").arg(selected[0] + 1);
+	QString message = tr("Unable to find any procedure begin named: \"%1\"").arg(callProcedureName);
+
+	int currentActionRuntimeId = -1;
+	if (callProcedure)
+	currentActionRuntimeId = callProcedure->runtimeId();
+	ui->consoleWidget->addActionLine(finalMessage + message,
+		currentActionRuntimeId,
+		QStringLiteral(""),
+		QStringLiteral(""),
+		selected[0],
+		0,
+		ActionTools::ConsoleWidget::Warning);
+
+}
+
 
 void MainWindow::on_actionCheck_for_updates_triggered()
 {
@@ -2191,6 +2235,10 @@ void MainWindow::openResourceDialog(const QString &resource)
     }
 }
 
+void MainWindow::selectRow(int index) {
+	ui->scriptView->setCurrentIndex(mScriptProxyModel->mapFromSource(mScriptModel->index(index, 0)));
+}
+
 QList<int> MainWindow::selectedRows() const
 {
 	QModelIndexList selectedIndexes = ui->scriptView->selectionModel()->selectedIndexes();
@@ -2360,6 +2408,7 @@ void MainWindow::actionSelectionChanged(int selectionCount)
 	bool hasSelection = (selectionCount > 0);
 
 	bool hasSelectionEnabledActions = false;
+	bool hasSelectionCallProcedure = false;
 	for(int row: selectedRows())
 	{
 		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
@@ -2369,6 +2418,9 @@ void MainWindow::actionSelectionChanged(int selectionCount)
 		if(actionInstance->isEnabled() && actionInstance->definition()->worksUnderThisOS())
 		{
 			hasSelectionEnabledActions = true;
+			if (actionInstance->definition()->name() == QStringLiteral("Call procedure") && selectionCount == 1) {
+				hasSelectionCallProcedure = true;
+			}
 			break;
 		}
 	}
@@ -2385,6 +2437,8 @@ void MainWindow::actionSelectionChanged(int selectionCount)
 	ui->deleteDropTarget->setEnabled(hasSelection);
 	ui->actionEnable_selection->setEnabled(hasSelection);
 	ui->actionDisable_selection->setEnabled(hasSelection);
+	ui->actionJump_to_definition->setEnabled(hasSelectionCallProcedure);
+
 }
 
 void MainWindow::actionCountChanged()
