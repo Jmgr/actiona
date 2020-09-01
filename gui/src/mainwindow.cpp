@@ -223,11 +223,20 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
     {
 		QFileInfo sfxFileInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/7zsd.sfx")));
 		QFileInfo sfxBaseArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx.7z")));
-        QFileInfo sfx64BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z")));
+		QFileInfo sfx32BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx32.7z")));
+        bool has64BitArchive = true;
+
+        if(QSysInfo::WordSize == 64)
+        {
+			QFileInfo sfx64BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z")));
+
+            has64BitArchive = sfx64BitArchiveInfo.isReadable();
+        }
 
         ui->actionExport_executable->setEnabled(sfxFileInfo.isReadable() &&
                                                 sfxBaseArchiveInfo.isReadable() &&
-                                                sfx64BitArchiveInfo.isReadable());
+                                                sfx32BitArchiveInfo.isReadable() &&
+                                                has64BitArchive);
     }
 #endif
 
@@ -323,7 +332,7 @@ void MainWindow::postInit()
 	if(mSplashScreen)
 		mSplashScreen->showMessage(tr("Loading actions..."));
 
-    mActionFactory->loadActionPacks(QApplication::applicationDirPath() + QStringLiteral("/actions"), mUsedLocale);
+    mActionFactory->loadActionPacks(QStringLiteral("actions/"), mUsedLocale);
 #ifndef Q_OS_WIN
 	if(mActionFactory->actionPackCount() == 0)
 		mActionFactory->loadActionPacks(QStringLiteral("actiona/actions/"), mUsedLocale);
@@ -704,7 +713,12 @@ void MainWindow::on_actionExport_executable_triggered()
     if(sfxScriptDialog.requiresActiona())
 		sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx.7z"));
 	else
-        sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z"));
+	{
+		if(QSysInfo::WordSize == 32 || sfxScriptDialog.use32BitBinaries())
+			sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx32.7z"));
+		else
+			sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z"));
+	}
 
 	QProgressDialog progressDialog(tr("Creating SFX script"), QString(), 0, 100, this);
 	progressDialog.setWindowTitle(tr("Create SFX script"));
@@ -1492,7 +1506,6 @@ std::unique_ptr<QProgressDialog> MainWindow::createStandardProgressDialog()
 
     result->setWindowModality(Qt::ApplicationModal);
     result->setCancelButton(nullptr);
-    result->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     result->setAutoClose(false);
     result->setMinimumDuration(0);
 
@@ -1679,28 +1692,21 @@ void MainWindow::execute(bool onlySelection)
 						 ui->consoleWidget->model());
 	}
 
-    mWasNewActionDockShown = !ui->actionsDockWidget->isHidden();
-    mWasConsoleDockShown = !ui->consoleDockWidget->isHidden();
-
-    mScriptStopped = false;
     if(mExecuter.startExecution(onlySelection, mCurrentFile))
-    {
-        // mScriptStopped is set to true if a code exception has happened.
-        // In that case we don't want to hide everything.
-        if(!mScriptStopped)
-        {
-            mPreviousWindowPosition = pos();
-            hide();
-            ui->actionsDockWidget->hide();
-            ui->consoleDockWidget->hide();
+	{
+		mPreviousWindowPosition = pos();
+		hide();
+		mWasNewActionDockShown = !ui->actionsDockWidget->isHidden();
+		mWasConsoleDockShown = !ui->consoleDockWidget->isHidden();
+		ui->actionsDockWidget->hide();
+		ui->consoleDockWidget->hide();
 
-            if(mSystemTrayIcon)
-                mSystemTrayIcon->setToolTip(tr("Actiona - executing"));
+		if(mSystemTrayIcon)
+            mSystemTrayIcon->setToolTip(tr("Actiona - executing"));
 
-            ui->actionExecute->setEnabled(false);
-            ui->actionExecute_selection->setEnabled(false);
-            mStopExecutionAction->setEnabled(true);
-        }
+		ui->actionExecute->setEnabled(false);
+		ui->actionExecute_selection->setEnabled(false);
+		mStopExecutionAction->setEnabled(true);
 	}
 	else
 	{
@@ -1898,7 +1904,6 @@ void MainWindow::pauseOrResumeExecution()
 
 void MainWindow::scriptExecutionStopped()
 {
-    mScriptStopped = true;
     ui->heatmapModeComboBox->setEnabled(true);
 
 	QSettings settings;
@@ -1931,10 +1936,7 @@ void MainWindow::scriptExecutionStopped()
 
 void MainWindow::postExecution()
 {
-    if(mScriptStopped)
-        return;
-
-    move(mPreviousWindowPosition);
+	move(mPreviousWindowPosition);
 }
 
 void MainWindow::logItemDoubleClicked(int itemRow)
@@ -2015,7 +2017,7 @@ void MainWindow::updateSuccess(const QVersionNumber &version,
 	}
 
 	ChangelogDialog changelogDialog(this);
-    changelogDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+    changelogDialog.setWindowFlags(changelogDialog.windowFlags() | Qt::WindowContextHelpButtonHint, false);
 	changelogDialog.setVersion(version);
 	changelogDialog.setReleaseDate(releaseDate);
 
