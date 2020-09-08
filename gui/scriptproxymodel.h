@@ -35,6 +35,7 @@ public:
     ScriptProxyModel(ActionTools::Script *script, QObject *parent = nullptr);
 
     void setFilterString(const QString &filterString);
+    QString getFilterString();
     void setFilteringFlags(ActionFilteringFlags filteringFlags);
 
 protected:

@@ -97,7 +97,6 @@
 #endif
 
 #include <algorithm>
-#include <exception>
 
 MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
 	: QMainWindow(nullptr),
@@ -1036,6 +1035,14 @@ void MainWindow::on_actionJump_to_line_triggered()
 		return;
 
 	QInputDialog inputDialog(this);
+
+	if(isFiltering()) 
+	{
+		QList<int> selected = selectedRows();
+		int min = int(*std::min_element(selected.begin(), selected.end()));
+		inputDialog.setIntValue(min + 1);
+	}
+	
     inputDialog.setWindowFlags(inputDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 	inputDialog.setWindowTitle(tr("Jump to line"));
 	inputDialog.setLabelText(tr("Line:"));
@@ -1044,11 +1051,13 @@ void MainWindow::on_actionJump_to_line_triggered()
 
 	if(inputDialog.exec() == QDialog::Accepted)
 	{
+		if(isFiltering()) 
+			mScriptProxyModel->setFilterString(QString());
+
 		int line = inputDialog.intValue() - 1;
 		if(line >= 0 && line < mScript->actionCount())
 		{
 			ui->scriptView->setFocus();
-			
 			selectRow(line);
 		}
 	}
@@ -1783,7 +1792,17 @@ void MainWindow::editAction(const QModelIndex &index)
 	if(index.column() != ScriptModel::ColumnActionName)
 		return;
 
-	editAction(mScript->actionAt(index.row()));
+	int actionIndex = index.row();
+	if(isFiltering()) 
+	{
+		const QList<int> &selected = selectedRows();
+		if(selected.size() != 1)
+			return;
+
+		actionIndex = selected.at(0);
+	}
+
+	editAction(mScript->actionAt(actionIndex));
 }
 
 void MainWindow::wantToAddAction(const QString &actionId)
@@ -1943,6 +1962,16 @@ void MainWindow::logItemDoubleClicked(int itemRow)
 void MainWindow::logItemClicked(int itemRow)
 {
 	logItemClicked(itemRow, false);
+}
+
+bool MainWindow::isFiltering() 
+{
+	QString filterText = mScriptProxyModel->getFilterString();
+
+	if(filterText.isEmpty()) 
+		return false;
+	
+	return true;
 }
 
 void MainWindow::otherInstanceMessage(const QString &message)

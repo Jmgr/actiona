@@ -160,6 +160,7 @@ private slots:
 	void postExecution();
 	void logItemDoubleClicked(int itemRow);
 	void logItemClicked(int itemRow);
+	bool isFiltering();
 #ifndef ACT_NO_UPDATER
 	void updateError(const QString &message);
 	void updateNoResult();

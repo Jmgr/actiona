@@ -41,6 +41,11 @@ void ScriptProxyModel::setFilterString(const QString &filterString)
     invalidateFilter();
 }
 
+QString ScriptProxyModel::getFilterString() 
+{
+    return QString(mFilterString);
+}
+
 void ScriptProxyModel::setFilteringFlags(ActionFilteringFlags filteringFlags)
 {
     mFilteringFlags = filteringFlags;
