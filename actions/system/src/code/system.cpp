@@ -34,6 +34,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <cstdlib>
+#include <QScreen>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -81,27 +82,46 @@ namespace Code
 
 	int System::screenCount() const
 	{
-		return QApplication::desktop()->screenCount();
+        return QGuiApplication::screens().size();
 	}
 
 	QScriptValue System::availableGeometry(int screen) const
 	{
-		return Rect::constructor(QApplication::desktop()->availableGeometry(screen), engine());
+        auto screens = QGuiApplication::screens();
+        if(screen < 0 || screen >= screens.size())
+        {
+            return Rect::constructor({}, engine());
+        }
+        return Rect::constructor(screens[screen]->availableGeometry(), engine());
 	}
 
 	QScriptValue System::screenGeometry(int screen) const
 	{
-		return Rect::constructor(QApplication::desktop()->screenGeometry(screen), engine());
+        auto screens = QGuiApplication::screens();
+        if(screen < 0 || screen >= screens.size())
+        {
+            return Rect::constructor({}, engine());
+        }
+        return Rect::constructor(screens[screen]->geometry(), engine());
 	}
 
 	int System::primaryScreen() const
 	{
-		return QApplication::desktop()->primaryScreen();
+        auto screens = QGuiApplication::screens();
+        for(int i = 0; i < screens.size(); i++)
+        {
+            if(screens[i] == QGuiApplication::primaryScreen())
+            {
+                return i;
+            }
+        }
+        return 0;
 	}
 
 	bool System::isVirtualDesktop() const
 	{
-		return QApplication::desktop()->isVirtualDesktop();
+        auto primaryScreen = QGuiApplication::primaryScreen();
+        return !primaryScreen->virtualSiblings().empty();
 	}
 
 	QString System::currentDirectory() const

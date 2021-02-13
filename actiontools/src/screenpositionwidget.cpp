@@ -42,7 +42,7 @@ namespace ActionTools
 	{
 		auto mainLayout = new QHBoxLayout();
 
-		int screenCount = QApplication::desktop()->numScreens();
+        int screenCount = QGuiApplication::screens().size();
 		for(int screen=0;screen<screenCount;++screen)
 		{
 			QGroupBox *screenPositionGroupBox = new QGroupBox(tr("Screen %1").arg(screen+1));
@@ -77,7 +77,7 @@ namespace ActionTools
 
 	void ScreenPositionWidget::setPosition(int screen, int position)
 	{
-		if(screen < 0 || screen >= QApplication::desktop()->numScreens())
+        if(screen < 0 || screen >= QGuiApplication::screens().size())
 			screen = 0;
 		if(position < 0 || position >= 9)
 			position = 0;

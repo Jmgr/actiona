@@ -33,6 +33,7 @@
 #include <QScriptValueIterator>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QScreen>
 
 namespace ActionTools
 {
@@ -183,7 +184,7 @@ namespace ActionTools
 
         if(code)
         {
-			for(const QString &codeLine: input.split(QRegExp(QStringLiteral("[\n\r;]")), QString::SkipEmptyParts))
+            for(const QString &codeLine: input.split(QRegExp(QStringLiteral("[\n\r;]")), Qt::SkipEmptyParts))
             {
                 int position = 0;
 
@@ -502,7 +503,7 @@ namespace ActionTools
     {
         if(unitSubParameter.value().toInt() == 1)//Percents
         {
-            QRect screenGeometry = QApplication::desktop()->screenGeometry();
+            QRect screenGeometry =  QGuiApplication::primaryScreen()->geometry();
 
             point.setX((point.x() * screenGeometry.width()) / 100.0f);
             point.setY((point.y() * screenGeometry.height()) / 100.0f);
@@ -591,7 +592,7 @@ namespace ActionTools
 		if(!ok)
 			return QStringList();
 
-		return result.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+        return result.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
 	}
 
 	QPolygon ActionInstance::evaluatePolygon(bool &ok,
@@ -615,12 +616,12 @@ namespace ActionTools
 		if(result.isEmpty() || result == QLatin1String(";"))
 			return QPolygon();
 
-		QStringList pointStrings = result.split(QLatin1Char(';'), QString::SkipEmptyParts);
+        QStringList pointStrings = result.split(QLatin1Char(';'), Qt::SkipEmptyParts);
 		QPolygon polygon;
 
         for(const QString &pointString: pointStrings)
 		{
-			QStringList pointComponents = pointString.split(QLatin1Char(':'), QString::SkipEmptyParts);
+            QStringList pointComponents = pointString.split(QLatin1Char(':'), Qt::SkipEmptyParts);
 			if(pointComponents.size() != 2)
 				continue;
 

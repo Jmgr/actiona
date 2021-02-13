@@ -2099,7 +2099,7 @@ void MainWindow::postDownloadOperation()
 	if(mInstallAfterUpdateDownload)
 	{
 		mUpdateFile.setPermissions(mUpdateFile.permissions() | QFile::ExeOwner);
-		if(QProcess::startDetached(mUpdateFile.fileName()))
+        if(QProcess::startDetached(mUpdateFile.fileName(), {}))
 			QApplication::quit();
 		else
 			QMessageBox::warning(this, tr("Update"), tr("Unable to execute the downloaded file."));

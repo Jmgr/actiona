@@ -938,7 +938,7 @@ namespace ActionTools
                 //Add every variable in any parameter type that is in code mode
                 const QString &code = subParameter.value();
 
-                for(const QString &codeLine: code.split(newLineRegExp, QString::SkipEmptyParts))
+                for(const QString &codeLine: code.split(newLineRegExp, Qt::SkipEmptyParts))
                 {
                     int position = 0;
 

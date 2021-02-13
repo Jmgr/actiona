@@ -97,7 +97,7 @@ void ScriptModel::removeActions(const QList<int> &rows)
 	if(localRows.count() == 0)
 		return;
 
-    std::sort(localRows.begin(), localRows.end(), qGreater<int>());
+    std::sort(localRows.begin(), localRows.end(), std::greater<int>());
 
     mUndoStack->push(new RemoveActionCommand(localRows, this, mProxyModel));
 
@@ -477,7 +477,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 			rowIdList << index.row();
 	}
 
-    std::sort(rowIdList.begin(), rowIdList.end(), qGreater<int>());
+    std::sort(rowIdList.begin(), rowIdList.end(), std::greater<int>());
 
 	for(int row: rowIdList)
 	{

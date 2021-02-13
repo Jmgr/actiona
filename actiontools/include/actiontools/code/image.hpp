@@ -95,7 +95,7 @@ namespace Code
 		
 		const QImage &image() const;
 
-        int additionalMemoryCost() const override { return mImage.byteCount(); }
+		int additionalMemoryCost() const override { return mImage.sizeInBytes(); }
 	
 	public slots:
 		QScriptValue clone() const;

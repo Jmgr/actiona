@@ -81,8 +81,6 @@ int main(int argc, char **argv)
 
 	qAddPostRoutine(cleanup);
 
-	qsrand(static_cast<uint>(std::time(nullptr)));
-
 	QCommandLineParser optionsParser;
 	optionsParser.setApplicationDescription(QObject::tr("Emulates clics, key presses and other actions."));
 	optionsParser.addHelpOption();

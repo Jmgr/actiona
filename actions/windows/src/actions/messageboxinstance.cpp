@@ -26,6 +26,7 @@
 #include <QScriptValue>
 #include <QScriptEngine>
 #include <QIcon>
+#include <QScreen>
 
 namespace Actions
 {
@@ -137,7 +138,8 @@ namespace Actions
 		}
 
 		mMessageBox->adjustSize();
-		QRect screenGeometry = QApplication::desktop()->availableGeometry();
+        auto screen = QGuiApplication::primaryScreen();
+        QRect screenGeometry = screen->availableGeometry();
 		mMessageBox->move(screenGeometry.center());
 		mMessageBox->move(mMessageBox->pos().x() - mMessageBox->width()/2, mMessageBox->pos().y() - mMessageBox->height()/2);
 

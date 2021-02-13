@@ -43,7 +43,8 @@ namespace ActionTools
 
         ui->screenComboBox->addItem(tr("All screens"));
 
-        for(int screenIndex = 0; screenIndex < desktopWidget->screenCount(); ++screenIndex)
+        auto screens = QGuiApplication::screens();
+        for(int screenIndex = 0; screenIndex < screens.size(); ++screenIndex)
             ui->screenComboBox->addItem(tr("Screen %1").arg(screenIndex + 1));
     }
 
