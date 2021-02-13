@@ -203,7 +203,7 @@ namespace Code
         return 0;
 #else
         QProcess process;
-		process.start(QStringLiteral("ps h -p %1 -oppid").arg(id()), QIODevice::ReadOnly);
+        process.start(QStringLiteral("ps"), {QStringLiteral("h") , QStringLiteral("-p %1").arg(id()), QStringLiteral("-oppid")}, QIODevice::ReadOnly);
         if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
         {
 			throwError(QStringLiteral("GetProcessError"), tr("Failed to get the process parent id"));
@@ -255,7 +255,7 @@ namespace Code
 		return QString::fromWCharArray(buffer);
 #else
 		QProcess process;
-		process.start(QStringLiteral("ps h -p %1 -ocommand").arg(id()), QIODevice::ReadOnly);
+        process.start(QStringLiteral("ps"), {QStringLiteral("h"), QStringLiteral("-p %1").arg(id()), QStringLiteral("-ocommand")}, QIODevice::ReadOnly);
 		if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
 		{
 			throwError(QStringLiteral("GetProcessError"), tr("Failed to get the process command"));

@@ -55,7 +55,7 @@ namespace ActionTools
 
 		updateLineNumberAreaWidth(0);
 		highlightCurrentLine();
-		setTabStopWidth(30);
+        setTabStopDistance(30);
 
 		QFont font;
 		font.setFamily(QStringLiteral("Arial"));
@@ -83,7 +83,7 @@ namespace ActionTools
 			++digits;
 		}
 
-		int space = 3 + fontMetrics().width(QLatin1Char('9')) * digits;
+        int space = 3 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
 
 		return space;
 	}

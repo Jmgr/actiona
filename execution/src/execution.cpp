@@ -45,6 +45,7 @@
 #include <QProgressDialog>
 #include <QScriptEngine>
 #include <QScriptValueIterator>
+#include <QScreen>
 
 namespace Execution
 {
@@ -488,7 +489,10 @@ namespace Execution
 
 		if(mShowExecutionWindow)
 		{
-			QRect screenRect = QApplication::desktop()->availableGeometry(mExecutionWindowScreen);
+            auto screens = QGuiApplication::screens();
+            if(mExecutionWindowScreen < 0 || mExecutionWindowScreen >= screens.size())
+                return false;
+            QRect screenRect = screens[mExecutionWindowScreen]->availableGeometry();
 			QPoint position;
 
 			if(mExecutionWindowPosition >= 0 && mExecutionWindowPosition <= 2)//Left
@@ -512,7 +516,10 @@ namespace Execution
 
 		if(mShowConsoleWindow)
 		{
-			QRect screenRect = QApplication::desktop()->availableGeometry(mConsoleWindowScreen);
+            auto screens = QGuiApplication::screens();
+            if(mExecutionWindowScreen < 0 || mExecutionWindowScreen >= screens.size())
+                return false;
+            QRect screenRect = screens[mExecutionWindowScreen]->availableGeometry();
 			QPoint position;
 
 			if(mConsoleWindowPosition >= 0 && mConsoleWindowPosition <= 2)//Left

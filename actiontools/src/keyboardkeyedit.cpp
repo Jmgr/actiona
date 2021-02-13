@@ -62,7 +62,7 @@ namespace ActionTools
             m_keys.clear();
 
         m_pressedKeys.insert(key);
-        m_keys = m_pressedKeys.toList();
+        m_keys = m_pressedKeys.values();
 
         updateKeyText();
 

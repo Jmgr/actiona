@@ -141,7 +141,7 @@ QVariant ConvolutionFilter::option(int option) const
             break;
         case QtImageFilter::ConvolutionKernelMatrix:
             if (m_kernels.size()) {
-                qVariantSetValue<QtConvolutionKernelMatrix>(value, m_kernels[0].matrix);
+                value.setValue(m_kernels[0].matrix);
             }
             break;
         default:

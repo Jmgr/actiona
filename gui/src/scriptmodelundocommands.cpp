@@ -356,7 +356,7 @@ MoveActionCommand::MoveActionCommand(int row, const QList<int> &previousRows, Sc
 
 void MoveActionCommand::redo()
 {
-    std::sort(mPreviousRows.begin(), mPreviousRows.end(), qGreater<int>());
+    std::sort(mPreviousRows.begin(), mPreviousRows.end(), std::greater<int>());
 
 	mChangePrevious = 0;
 	mChangeDest = 0;
@@ -386,7 +386,7 @@ void MoveActionCommand::redo()
 
 void MoveActionCommand::undo()
 {
-    std::sort(mPreviousRows.begin(), mPreviousRows.end(), qLess<int>());
+    std::sort(mPreviousRows.begin(), mPreviousRows.end(), std::less<int>());
 
 	for(QList<int>::iterator i = mPreviousRows.begin(); i != mPreviousRows.end();)
 	{
@@ -425,9 +425,9 @@ MoveActionOneRowCommand::MoveActionOneRowCommand(const QList<int> &rows, bool mo
 void MoveActionOneRowCommand::redo()
 {
 	if(mMoveUp)
-        std::sort(mRows.begin(), mRows.end(), qLess<int>());
+        std::sort(mRows.begin(), mRows.end(), std::less<int>());
 	else
-        std::sort(mRows.begin(), mRows.end(), qGreater<int>());
+        std::sort(mRows.begin(), mRows.end(), std::greater<int>());
 
 	moveAllActions(mMoveUp ? -1 : 1);
 }
@@ -435,9 +435,9 @@ void MoveActionOneRowCommand::redo()
 void MoveActionOneRowCommand::undo()
 {
 	if(!mMoveUp)
-        std::sort(mRows.begin(), mRows.end(), qLess<int>());
+        std::sort(mRows.begin(), mRows.end(), std::less<int>());
 	else
-        std::sort(mRows.begin(), mRows.end(), qGreater<int>());
+        std::sort(mRows.begin(), mRows.end(), std::greater<int>());
 
 	moveAllActions(mMoveUp ? 1 : -1);
 }

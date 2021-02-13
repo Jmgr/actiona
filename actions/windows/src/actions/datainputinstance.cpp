@@ -26,6 +26,7 @@
 #include <QDesktopWidget>
 #include <QIcon>
 #include <QLabel>
+#include <QScreen>
 
 #include <limits>
 
@@ -146,7 +147,8 @@ namespace Actions
 		}
 
 		mInputDialog->adjustSize();
-		QRect screenGeometry = QApplication::desktop()->availableGeometry();
+        auto screen = QGuiApplication::primaryScreen();
+        QRect screenGeometry = screen->availableGeometry();
 		mInputDialog->move(screenGeometry.center());
 		mInputDialog->move(mInputDialog->pos().x() - mInputDialog->width()/2, mInputDialog->pos().y() - mInputDialog->height()/2);
 

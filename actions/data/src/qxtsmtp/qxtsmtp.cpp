@@ -371,7 +371,7 @@ void QxtSmtpPrivate::authenticate()
     }
     else
     {
-		QStringList auth = extensions[QStringLiteral("AUTH")].toUpper().split(QLatin1Char(' '), QString::SkipEmptyParts);
+        QStringList auth = extensions[QStringLiteral("AUTH")].toUpper().split(QLatin1Char(' '), Qt::SkipEmptyParts);
 		if (auth.contains(QStringLiteral("CRAM-MD5")))
         {
             authCramMD5();

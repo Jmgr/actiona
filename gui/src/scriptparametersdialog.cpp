@@ -93,7 +93,7 @@ QMenu *ScriptParametersDialog::createVariablesMenu(QWidget *parent) const
             variableSet.unite(codeEditor->findVariables());
     }
 
-    QStringList variableList = variableSet.toList();
+    QStringList variableList = variableSet.values();
     std::sort(variableList.begin(), variableList.end());
 
     if(variableList.isEmpty())

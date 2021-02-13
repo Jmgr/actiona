@@ -120,7 +120,7 @@ namespace ActionTools
         for(QAction *action: mVariablesMenu->actions())
             variables.insert(action->text());
 
-        QStringList variableList = variables.toList();
+        QStringList variableList = variables.values();
         std::sort(variableList.begin(), variableList.end());
 
         QMenu *variablesMenu = nullptr;

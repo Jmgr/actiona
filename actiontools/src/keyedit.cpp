@@ -32,7 +32,7 @@ namespace ActionTools
 	{
 		installEventFilter(this);
 
-        connect(this, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &KeyEdit::currentIndexChanged);
+        connect(this, qOverload<int>(&QComboBox::currentIndexChanged), this, &KeyEdit::currentIndexChanged);
 
 		QKeySequence keySequence(Qt::Key_Print);
 		addItem(keySequence.toString(QKeySequence::NativeText));
@@ -45,8 +45,9 @@ namespace ActionTools
 		codeLineEdit()->setText(mKeyInput.toTranslatedText());
 	}
 
-	void KeyEdit::currentIndexChanged(const QString &text)
+    void KeyEdit::currentIndexChanged(int index)
 	{
+        auto text = itemText(index);
 		//TODO : Doesn't work
 		mKeyInput.fromPortableText(text, true);
 	}

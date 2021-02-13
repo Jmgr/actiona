@@ -117,15 +117,15 @@ namespace Code
         }
 
         int screenIndex = context->argument(0).toInt32();
-        QDesktopWidget *desktop = QApplication::desktop();
+        auto screens = QGuiApplication::screens();
 
-        if(screenIndex < 0 || screenIndex >= desktop->screenCount())
+        if(screenIndex < 0 || screenIndex >= screens.size())
         {
 			throwError(context, engine, QStringLiteral("InvalidScreenIndexError"), tr("Invalid screen index"));
             return engine->undefinedValue();
         }
 
-        QRect screenGeometry = desktop->screenGeometry(screenIndex);
+        QRect screenGeometry = screens[screenIndex]->geometry();
         QPixmap screenPixmap = QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
 
         return constructor(screenPixmap.toImage(), engine);

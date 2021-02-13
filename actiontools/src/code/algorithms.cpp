@@ -24,10 +24,11 @@
 #include <QCryptographicHash>
 #include <QScriptValueIterator>
 #include <cstdlib>
+#include <QRandomGenerator>
 
 namespace Code
 {
-	QScriptValue Algorithms::constructor(QScriptContext *context, QScriptEngine *engine)
+    QScriptValue Algorithms::constructor(QScriptContext *context, QScriptEngine *engine)
 	{
 		return CodeClass::constructor(new Algorithms, context, engine);
 	}
@@ -57,7 +58,7 @@ namespace Code
 	{
 		Q_UNUSED(engine)
 
-		qsrand(context->argument(0).toInt32());
+        QRandomGenerator::global()->seed(context->argument(0).toInt32());
 
 		return QScriptValue();
 	}
@@ -77,7 +78,7 @@ namespace Code
 		switch(context->argumentCount())
 		{
 		case 0:
-			return qrand();
+            return QRandomGenerator::global()->generate();
 		case 2:
 			{
 				int min = context->argument(0).toInt32();
@@ -98,7 +99,7 @@ namespace Code
 		float min = context->argument(0).toNumber();
 		float max = context->argument(1).toNumber();
 
-		return (qrand() / static_cast<float>(RAND_MAX)) * (max - min) + min;
+        return QRandomGenerator::global()->generateDouble() * (max - min) + min;
 	}
 
 	QScriptValue Algorithms::randomString(QScriptContext *context, QScriptEngine *engine)
@@ -148,6 +149,6 @@ namespace Code
 
 	int Algorithms::randomInteger(int min, int max)
 	{
-		return static_cast<int>(min + (static_cast<float>(qrand()) / RAND_MAX * (max - min + 1)));
+        return QRandomGenerator::global()->bounded(min, max+1);
 	}
 }

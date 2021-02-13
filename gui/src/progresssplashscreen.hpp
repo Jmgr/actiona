@@ -27,30 +27,30 @@ class QTimer;
 
 class ProgressSplashScreen : public QSplashScreen
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ProgressSplashScreen(const QPixmap &pixmap = QPixmap(), Qt::WindowFlags f=nullptr);
-	ProgressSplashScreen(QWidget *parent, const QPixmap &pixmap = QPixmap(), Qt::WindowFlags f=nullptr);
+    ProgressSplashScreen(const QPixmap &pixmap = {}, Qt::WindowFlags f={});
+    ProgressSplashScreen(QWidget *parent, const QPixmap &pixmap = {}, Qt::WindowFlags f={});
 
-	void setMaximum(int maximum);
-	void setMinimum(int minimum);
-	void setRange(int minimum, int maximum);
-	void setValue(int value);
-	void fadeOut();
+    void setMaximum(int maximum);
+    void setMinimum(int minimum);
+    void setRange(int minimum, int maximum);
+    void setValue(int value);
+    void fadeOut();
 
 protected:
-	void drawContents(QPainter *painter) override;
+    void drawContents(QPainter *painter) override;
 
 private slots:
     void onMessageChanged(const QString &message);
-	void opacityCloseUpdate();
+    void opacityCloseUpdate();
 
 private:
-	void init();
+    void init();
 
-	QProgressBar *mProgressBar;
-	float mOpacity{1.0f};
-	QTimer *mOpacityTimer;
+    QProgressBar *mProgressBar;
+    float mOpacity{1.0f};
+    QTimer *mOpacityTimer;
 };
 

@@ -33,24 +33,24 @@ namespace ActionTools
 {
     QPixmap ScreenShooter::captureScreen(int screenIndex)
     {
-        QDesktopWidget *desktop = QApplication::desktop();
+        auto screens = QGuiApplication::screens();
 
-        if(screenIndex < 0 || screenIndex >= desktop->screenCount())
+        if(screenIndex < 0 || screenIndex >= screens.size())
             return QPixmap();
 
-        const QRect &screenGeometry = desktop->screenGeometry(screenIndex);
+        const QRect &screenGeometry = screens[screenIndex]->geometry();
 
         return QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
     }
 
     QList<std::pair<QPixmap, QRect>> ScreenShooter::captureScreens()
     {
-        QDesktopWidget *desktop = QApplication::desktop();
+       auto screens = QGuiApplication::screens();
         QList<std::pair<QPixmap, QRect>> result;
 
-        for(int screenIndex = 0; screenIndex < desktop->screenCount(); ++screenIndex)
+        for(int screenIndex = 0; screenIndex < screens.size(); ++screenIndex)
         {
-            const QRect &screenGeometry = desktop->screenGeometry(screenIndex);
+            const QRect &screenGeometry = screens[screenIndex]->geometry();
 
             result.append(std::make_pair(QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height()), screenGeometry));
         }

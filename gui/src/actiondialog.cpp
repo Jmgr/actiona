@@ -318,7 +318,7 @@ QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
         }
     }
 
-    QStringList variableList = thisActionsVariables.unite(mOtherActionsVariables).toList();
+    QStringList variableList = thisActionsVariables.unite(mOtherActionsVariables).values();
     std::sort(variableList.begin(), variableList.end());
 
     if(variableList.isEmpty())
