@@ -36,15 +36,6 @@ ProgressSplashScreen::ProgressSplashScreen(const QPixmap &pixmap, Qt::WindowFlag
 	init();
 }
 
-ProgressSplashScreen::ProgressSplashScreen(QWidget *parent, const QPixmap &pixmap, Qt::WindowFlags f)
-	: QSplashScreen(parent, pixmap, f),
-	mProgressBar(new QProgressBar(this)),
-	mOpacity(1.0f),
-	mOpacityTimer(new QTimer(this))
-{
-	init();
-}
-
 void ProgressSplashScreen::setMaximum(int maximum)
 {
 	mProgressBar->setMaximum(maximum);

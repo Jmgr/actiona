@@ -67,7 +67,7 @@ namespace Actions
 			mProcess->setWorkingDirectory(workingDirectory);
 
             connect(mProcess, static_cast<void (QProcess::*)(int,QProcess::ExitStatus)>(&QProcess::finished), this, &CommandInstance::processFinished);
-            connect(mProcess, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &CommandInstance::processError);
+	    connect(mProcess, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::errorOccurred), this, &CommandInstance::processError);
 
 			QStringList parameterList = parameters.split(QLatin1Char(' '));
             mProcess->start(command, parameters.isEmpty() ? QStringList{} : parameterList);
@@ -81,7 +81,7 @@ namespace Actions
 			else
 				setVariable(processId, QStringLiteral("0"));
 	#else
-            setVariable(processId, QString::number(mProcess->pid()));
+			setVariable(processId, QString::number(mProcess->processId()));
 	#endif
 		}
 

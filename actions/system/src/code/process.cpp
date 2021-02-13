@@ -131,7 +131,7 @@ namespace Code
 		: CodeClass(),
 		mProcess(new QProcess(this))
 	{
-        connect(mProcess, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, static_cast<void (Process::*)(QProcess::ProcessError)>(&Process::onError));
+        connect(mProcess, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::errorOccurred), this, static_cast<void (Process::*)(QProcess::ProcessError)>(&Process::onError));
         connect(mProcess, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &Process::finished);
         connect(mProcess, &QProcess::readyReadStandardError, this, &Process::readyReadStandardError);
         connect(mProcess, &QProcess::readyReadStandardOutput, this, &Process::readyReadStandardOutput);
@@ -149,7 +149,7 @@ namespace Code
 #ifdef Q_OS_WIN
             return mProcess->pid()->dwProcessId;
 #else
-            return mProcess->pid();
+            return mProcess->processId();
 #endif
 	}
 

@@ -104,8 +104,6 @@ int main(int argc, char **argv)
 
 	qAddPostRoutine(cleanup);
 
-	qsrand(static_cast<uint>(std::time(nullptr)));
-
 #ifdef Q_OS_UNIX
     notify_init("Actiona executer");
 #endif

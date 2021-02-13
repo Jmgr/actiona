@@ -174,7 +174,7 @@ namespace Code
 
         QObject::connect(mNetworkReply, &QNetworkReply::finished, this, &Web::finished);
         QObject::connect(mNetworkReply, &QNetworkReply::downloadProgress, this, &Web::downloadProgress);
-        QObject::connect(mNetworkReply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Web::error);
+        QObject::connect(mNetworkReply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::errorOccurred), this, &Web::error);
         QObject::connect(mNetworkReply, &QNetworkReply::readyRead, this, &Web::readyRead);
 
 		mIsDownloading = true;

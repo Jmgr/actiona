@@ -25,6 +25,7 @@
 #include <QComboBox>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QScreen>
 
 namespace ActionTools
 {
@@ -67,7 +68,7 @@ namespace ActionTools
     {
         if(mPositionUnitComboBox->currentIndex() == 1)//Percents
         {
-            QRect screenGeometry = QApplication::desktop()->screenGeometry();
+            QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
 
             mPositionEdit->setPosition(QPointF((position.x() * 100) / screenGeometry.width(),
                                               (position.y() * 100) / screenGeometry.height()));

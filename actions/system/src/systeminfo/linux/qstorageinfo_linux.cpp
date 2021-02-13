@@ -177,7 +177,7 @@ QString QStorageInfo_CustomPrivate::uriForDrive(const QString &drive)
     }
 #endif // QT_NO_UDISKS
 
-    return QString::null;
+    return {};
 }
 
 QStringList QStorageInfo_CustomPrivate::allLogicalDrives()

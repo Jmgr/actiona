@@ -245,7 +245,7 @@ namespace ActionTools
 
 	void ConsoleWidget::addSeparator(QStandardItem *item)
 	{
-		item->setFlags(nullptr);
+        item->setFlags({});
 		item->setBackground(QBrush(Qt::lightGray));
                 item->setForeground(QBrush(Qt::white));
 

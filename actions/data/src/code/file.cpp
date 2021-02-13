@@ -271,7 +271,7 @@ namespace Code
 		{
 			if(createDestinationDirectory)
 			{
-				if(QProcess::execute(QStringLiteral("sh -c \"mkdir -p ") + QString::fromLocal8Bit(QFile::encodeName(destinationCopy)) + QStringLiteral("\"")))
+                if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"mkdir -p %1\"").arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))}))
 				{
 					throwError(context, engine, QStringLiteral("DirectoryCreationError"), tr("Unable to create destination directory"));
 					return context->thisObject();
@@ -284,15 +284,10 @@ namespace Code
 			}
 		}
 
-		QString command = QStringLiteral("sh -c \"cp -fr");
-
-		command += QStringLiteral(" ");
-		command += QString::fromLocal8Bit(QFile::encodeName(sourceCopy));
-		command += QStringLiteral(" ");
-		command += QString::fromLocal8Bit(QFile::encodeName(destinationCopy));
-		command += QStringLiteral("\"");
-
-		if(QProcess::execute(command))
+        if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"cp -fr %1 %2\"")
+                             .arg(QString::fromLocal8Bit(QFile::encodeName(sourceCopy)))
+                             .arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))
+        }))
 		{
 			throwError(context, engine, QStringLiteral("CopyError"), tr("Copy failed"));
 			return context->thisObject();
@@ -367,8 +362,8 @@ namespace Code
 		{
 			if(createDestinationDirectory)
 			{
-				if(QProcess::execute(QStringLiteral("sh -c \"mkdir -p ") + QString::fromLocal8Bit(QFile::encodeName(destinationCopy)) + QStringLiteral("\"")))
-				{
+                if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"mkdir -p %1\"").arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))}))
+                {
 					throwError(context, engine, QStringLiteral("DirectoryCreationError"), tr("Unable to create destination directory"));
 					return context->thisObject();
 				}
@@ -380,15 +375,10 @@ namespace Code
 			}
 		}
 
-		QString command = QStringLiteral("sh -c \"mv -f");
-
-		command += QStringLiteral(" ");
-		command += QString::fromLocal8Bit(QFile::encodeName(sourceCopy));
-		command += QStringLiteral(" ");
-		command += QString::fromLocal8Bit(QFile::encodeName(destinationCopy));
-		command += QStringLiteral("\"");
-
-		if(QProcess::execute(command))
+        if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"mv -f %1 %2\"")
+                             .arg(QString::fromLocal8Bit(QFile::encodeName(sourceCopy)))
+                             .arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))
+        }))
 		{
 			throwError(context, engine, QStringLiteral("MoveRenameError"), tr("Move/rename failed"));
 			return context->thisObject();
@@ -508,13 +498,7 @@ namespace Code
 		QString filenameCopy(filename);
 		filenameCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
 
-		QString command = QStringLiteral("sh -c \"rm -fr");
-
-		command += QStringLiteral(" ");
-		command += QString::fromLocal8Bit(QFile::encodeName(filenameCopy));
-		command += QStringLiteral("\"");
-
-		if(QProcess::execute(command))
+        if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"rm -fr %1\"").arg(QString::fromLocal8Bit(QFile::encodeName(filenameCopy)))}))
 		{
 			throwError(context, engine, QStringLiteral("RemoveError"), tr("Remove failed"));
 			return context->thisObject();

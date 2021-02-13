@@ -37,7 +37,7 @@ namespace ActionTools
 		void setKeyInput(const KeyInput &keyInput);
 
 	private slots:
-		void currentIndexChanged(const QString &text);
+        void currentIndexChanged(int index);
 
 	private:
 		bool eventFilter(QObject *object, QEvent *event) override;
