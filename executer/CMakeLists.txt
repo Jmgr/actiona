@@ -39,6 +39,7 @@ target_include_directories(${PROJECT}
 )
 
 set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actexec")
+set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
 
 setup_target(${PROJECT})
 
