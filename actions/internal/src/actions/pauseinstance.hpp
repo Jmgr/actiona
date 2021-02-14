@@ -91,6 +91,17 @@ namespace Actions
             mTimer.start(duration);
 		}
 
+        void pauseExecution() override
+        {
+            mRemainingTime = mTimer.remainingTime();
+            mTimer.stop();
+        }
+
+        void resumeExecution() override
+        {
+            mTimer.start(mRemainingTime);
+        }
+
 		void stopExecution() override
 		{
             mTimer.stop();
@@ -98,6 +109,7 @@ namespace Actions
 
     private:
         QTimer mTimer;
+        int mRemainingTime{};
 
 		Q_DISABLE_COPY(PauseInstance)
 	};
