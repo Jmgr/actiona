@@ -67,11 +67,12 @@ namespace Actions
           mDownPyramidCount(0),
           mSearchExpansion(0)
 	{
+        mWaitTimer.setSingleShot(true);
+        mWaitTimer.setTimerType(Qt::PreciseTimer);
+
         connect(mOpenCVAlgorithms, static_cast<void (ActionTools::OpenCVAlgorithms::*)(const ActionTools::MatchingPointList &)>(&ActionTools::OpenCVAlgorithms::finished),
                 this, &FindImageInstance::searchFinished);
         connect(&mWaitTimer, &QTimer::timeout, this, &FindImageInstance::startSearching);
-
-        mWaitTimer.setSingleShot(true);
 	}
 
     FindImageInstance::~FindImageInstance() = default;

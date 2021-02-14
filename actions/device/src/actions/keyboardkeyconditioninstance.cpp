@@ -44,6 +44,7 @@ namespace Actions
           mCondition(Pressed),
           mTimer(new QTimer(this))
 	{
+        mTimer->setTimerType(Qt::PreciseTimer);
 	}
 
     void KeyboardKeyConditionInstance::startExecution()

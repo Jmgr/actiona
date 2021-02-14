@@ -30,9 +30,10 @@ namespace Actions
           mCurrentCharacter(0),
           mNoUnicodeCharacters(false)
 	{
-        connect(mTimer, &QTimer::timeout, this, &TextInstance::pressNextKey);
+        mTimer->setTimerType(Qt::PreciseTimer);
+        mTimer->setSingleShot(false);
 
-		mTimer->setSingleShot(false);
+        connect(mTimer, &QTimer::timeout, this, &TextInstance::pressNextKey);
 	}
 
 	void TextInstance::startExecution()
