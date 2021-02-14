@@ -46,6 +46,8 @@ namespace Actions
             mCurrentPoint(0),
             mButton(NoButton)
 		{
+            mMoveTimer.setTimerType(Qt::PreciseTimer);
+
             connect(&mMoveTimer, &QTimer::timeout, this, &CursorPathInstance::moveToNextPosition);
 		}
 

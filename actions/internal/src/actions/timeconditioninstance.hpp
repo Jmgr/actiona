@@ -34,7 +34,10 @@ namespace Actions
 
 	public:
 		TimeConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
-			: ActionTools::ActionInstance(definition, parent)										{}
+            : ActionTools::ActionInstance(definition, parent)
+        {
+            mTimer.setTimerType(Qt::PreciseTimer);
+        }
 
 		void startExecution() override
 		{
