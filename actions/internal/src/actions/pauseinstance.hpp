@@ -23,7 +23,6 @@
 #include "actiontools/actioninstance.hpp"
 
 #include <QTimer>
-#include <QDateTime>
 
 namespace Actions
 {
@@ -45,6 +44,7 @@ namespace Actions
 		PauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)
 		{
+            mTimer.setTimerType(Qt::PreciseTimer);
             mTimer.setSingleShot(true);
 
             connect(&mTimer, &QTimer::timeout, this, [this]{ executionEnded(); });
