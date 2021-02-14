@@ -45,7 +45,9 @@ namespace Actions
 		PauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)
 		{
-            connect(&mCheckTimer, &QTimer::timeout, this, &PauseInstance::checkTime);
+            mTimer.setSingleShot(true);
+
+            connect(&mTimer, &QTimer::timeout, this, [this]{ executionEnded(); });
 		}
 
         static Tools::StringListPair units;
@@ -66,53 +68,36 @@ namespace Actions
 				return;
 			}
 
-			mEndTime = QDateTime::currentDateTime();
+            switch(unit)
+            {
+            case Milliseconds:
+                break;
+            case Seconds:
+                duration = duration * 1000;
+                break;
+            case Minutes:
+                duration = duration * 1000 * 60;
+                break;
+            case Hours:
+                duration = duration * 1000 * 60 * 60;
+                break;
+            case Days:
+                duration = duration * 1000 * 60 * 60 * 24;
+                break;
+            default:
+                break;
+            }
 
-			if(unit == Milliseconds)
-				mCheckTimer.start(duration);
-			else
-			{
-				switch(unit)
-				{
-				case Seconds:
-					mEndTime = mEndTime.addSecs(duration);
-					break;
-				case Minutes:
-					mEndTime = mEndTime.addMSecs(duration * 60000);
-					break;
-				case Hours:
-					mEndTime = mEndTime.addSecs(duration * 3600000);
-					break;
-				case Days:
-					mEndTime = mEndTime.addDays(duration);
-					break;
-				default:
-					break;
-				}
-
-				mCheckTimer.start(1000);
-			}
+            mTimer.start(duration);
 		}
 
 		void stopExecution() override
 		{
-			mCheckTimer.stop();
+            mTimer.stop();
 		}
 
-	private slots:
-		void checkTime()
-		{
-			if(QDateTime::currentDateTime() >= mEndTime)
-			{
-				mCheckTimer.stop();
-
-				executionEnded();
-			}
-		}
-
-	private:
-		QDateTime mEndTime;
-		QTimer mCheckTimer;
+    private:
+        QTimer mTimer;
 
 		Q_DISABLE_COPY(PauseInstance)
 	};
