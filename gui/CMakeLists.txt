@@ -103,6 +103,7 @@ target_include_directories(${PROJECT}
 
 set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actiona")
 set_target_properties(${PROJECT} PROPERTIES SUFFIX "")
+set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
 set(CMAKE_EXECUTABLE_SUFFIX "")
 
 setup_target(${PROJECT})
