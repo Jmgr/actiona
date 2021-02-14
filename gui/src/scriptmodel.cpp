@@ -203,8 +203,9 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 		return actionInstance->definition()->id();
 	case Qt::BackgroundRole:
 		{
-            if(mHeatmapMode != HeatmapMode::None && mScript->hasBeenExecuted())
-                return QBrush{computeHeatmapColor(*actionInstance)};
+            auto hmColor = computeHeatmapColor(*actionInstance);
+            if(hmColor.isValid())
+                return QBrush{hmColor};
             else
             {
                 const QColor &color = actionInstance->color();
@@ -229,8 +230,9 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
 		}
 	case Qt::ForegroundRole:
 		{
-            auto color = (mHeatmapMode != HeatmapMode::None && mScript->hasBeenExecuted()) ? computeHeatmapColor(*actionInstance) : actionInstance->color();
-
+            auto color = computeHeatmapColor(*actionInstance);
+            if(!color.isValid())
+                color = actionInstance->color();
             if(color.isValid())
             {
                 if(color.lightness() < 128)
@@ -274,7 +276,7 @@ QVariant ScriptModel::data(const QModelIndex &index, int role) const
                 case HeatmapMode::ExecutionCount:
                     return tr("%n time(s)", "Execution count", actionInstance->executionCounter());
                 case HeatmapMode::ExecutionDuration:
-                    return tr("%1 seconds").arg(actionInstance->executionCounter() / 1000.0);
+                    return tr("%1 seconds").arg(actionInstance->executionDuration() / 1000.0);
                 case HeatmapMode::None:
                     return actionInstance->comment();
                 }
@@ -618,8 +620,13 @@ bool ScriptModel::moveRow(int row, int destination)
 
 QColor ScriptModel::computeHeatmapColor(const ActionTools::ActionInstance &actionInstance) const
 {
-    const auto minColor = mHeatmapColors.first.toHsv();
-    const auto maxColor = mHeatmapColors.second.toHsv();
+    if(mHeatmapMode == HeatmapMode::None)
+        return {};
+    if(!mScript->hasBeenExecuted())
+        return {};
+    if(!actionInstance.isEnabled())
+        return {};
+
     qreal ratio = 0;
 
     switch(mHeatmapMode)
@@ -628,15 +635,23 @@ QColor ScriptModel::computeHeatmapColor(const ActionTools::ActionInstance &actio
     {
         auto minMaxExecutionCounter = mScript->minMaxExecutionCounter();
 
+        if(actionInstance.executionCounter() < minMaxExecutionCounter.first ||
+                actionInstance.executionCounter() > minMaxExecutionCounter.second)
+            return {};
+
         ratio = (minMaxExecutionCounter.second - minMaxExecutionCounter.first == 0) ? 0 : (actionInstance.executionCounter() - minMaxExecutionCounter.first) / static_cast<qreal>(minMaxExecutionCounter.second - minMaxExecutionCounter.first);
 
         break;
     }
     case HeatmapMode::ExecutionDuration:
     {
-        auto executionDuration = mScript->executionDuration();
+        auto minMaxExecutionDuration = mScript->minMaxExecutionDuration();
 
-        ratio = (executionDuration == 0) ? 0 : actionInstance.executionDuration() / static_cast<qreal>(executionDuration);
+        if(actionInstance.executionDuration() < minMaxExecutionDuration.first ||
+                actionInstance.executionDuration() > minMaxExecutionDuration.second)
+            return {};
+
+        ratio = (minMaxExecutionDuration.second - minMaxExecutionDuration.first == 0) ? 0 : (actionInstance.executionDuration() - minMaxExecutionDuration.first) / static_cast<qreal>(minMaxExecutionDuration.second - minMaxExecutionDuration.first);
 
         break;
     }
@@ -644,6 +659,9 @@ QColor ScriptModel::computeHeatmapColor(const ActionTools::ActionInstance &actio
         Q_ASSERT(false && "computeHeatmapColor called but no heatmap mode set");
         break;
     }
+
+    const auto minColor = mHeatmapColors.first.toHsv();
+    const auto maxColor = mHeatmapColors.second.toHsv();
 
     return QColor::fromHsvF(
                 minColor.hsvHueF() * (1 - ratio) + maxColor.hsvHueF() * ratio,
