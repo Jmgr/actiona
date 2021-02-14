@@ -63,6 +63,8 @@ namespace Actions
 		  mMeta(false),
 		  mTimer(new QTimer(this))
 	{
+        mTimer->setTimerType(Qt::PreciseTimer);
+
         connect(mTimer, &QTimer::timeout, this, &KeyInstance::sendRelease);
 	}
 

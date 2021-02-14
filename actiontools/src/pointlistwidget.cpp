@@ -40,6 +40,8 @@ namespace ActionTools
 		delete ui->list->itemDelegate();
 		ui->list->setItemDelegate(new PointItemDelegate(this));
 
+        mCaptureTimer.setTimerType(Qt::PreciseTimer);
+
         connect(ui->addPositionPushButton, &ActionTools::ChoosePositionPushButton::positionChosen, this, &PointListWidget::positionChosen);
         connect(ui->capturePathPushButton, &ActionTools::ChoosePositionPushButton::positionChosen, this, &PointListWidget::stopCapture);
         connect(&mCaptureTimer, &QTimer::timeout, this, &PointListWidget::capture);
