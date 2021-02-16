@@ -29,7 +29,6 @@ namespace Actions
 	class KillProcessInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(KillMode)
 
 	public:
 		enum KillMode
@@ -38,6 +37,7 @@ namespace Actions
 			Forceful = ActionTools::CrossPlatform::Forceful,
 			GracefulThenForceful = ActionTools::CrossPlatform::GracefulThenForceful
 		};
+        Q_ENUM(KillMode)
 
 		KillProcessInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}

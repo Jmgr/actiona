@@ -38,10 +38,7 @@ namespace Code
 	class System : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(DriveType)
-		Q_ENUMS(PowerState)
-		Q_ENUMS(StorageLocation)
-	
+
 	public:
 		enum DriveType
 		{
@@ -52,6 +49,7 @@ namespace Code
             CdromDrive,
             RamDrive
 		};
+        Q_ENUM(DriveType)
 		enum PowerState
 		{
 			UnknownState,
@@ -59,6 +57,7 @@ namespace Code
 			WallPower,
 			WallPowerChargingBattery
 		};
+        Q_ENUM(PowerState)
         enum StorageLocation
         {
             Desktop,
@@ -79,6 +78,7 @@ namespace Code
             GenericCache,
             GenericConfig
         };
+        Q_ENUM(StorageLocation)
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	

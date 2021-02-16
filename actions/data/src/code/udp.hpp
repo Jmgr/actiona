@@ -32,7 +32,6 @@ namespace Code
 	class Udp : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(OpenMode)
 		Q_PROPERTY(QScriptValue onConnected READ onConnected WRITE setOnConnected)
 		Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
 		Q_PROPERTY(QScriptValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
@@ -45,6 +44,7 @@ namespace Code
 			WriteOnly =		QIODevice::WriteOnly,
 			ReadWrite =		QIODevice::ReadWrite
 		};
+        Q_ENUM(OpenMode)
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		

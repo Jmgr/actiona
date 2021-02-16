@@ -33,8 +33,7 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Window : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(Mode)
-		
+
 	public:
 		enum Mode
 		{
@@ -43,6 +42,7 @@ namespace Code
 			WildcardUnix = QRegExp::WildcardUnix,
 			FixedString = QRegExp::FixedString
 		};
+		Q_ENUM(Mode)
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const ActionTools::WindowHandle &windowHandle, QScriptEngine *engine);

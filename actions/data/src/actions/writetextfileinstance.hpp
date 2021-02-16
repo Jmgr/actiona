@@ -28,7 +28,6 @@ namespace Actions
 	class WriteTextFileInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Mode)
 
 	public:
 		enum Mode
@@ -36,6 +35,7 @@ namespace Actions
 			Truncate,
 			Append
 		};
+        Q_ENUM(Mode)
 		enum Exceptions
 		{
 			CannotWriteFileException = ActionTools::ActionException::UserException

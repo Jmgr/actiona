@@ -29,7 +29,6 @@ namespace Actions
 	class ConsoleInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Output)
 
 	public:
 		enum Output
@@ -38,6 +37,7 @@ namespace Actions
 			Warning,
 			Error
 		};
+        Q_ENUM(Output)
 
 		ConsoleInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}

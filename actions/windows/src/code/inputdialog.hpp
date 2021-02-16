@@ -31,8 +31,6 @@ namespace Code
 	class InputDialog : public BaseWindow
 	{
 		Q_OBJECT
-		Q_ENUMS(InputType)
-		Q_ENUMS(TextEchoMode)
 		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
 		Q_PROPERTY(QScriptValue onValueChanged READ onValueChanged WRITE setOnValueChanged)
 		Q_PROPERTY(QScriptValue value READ value WRITE setValue)
@@ -46,6 +44,7 @@ namespace Code
             Items,
             MultilineText
 		};
+        Q_ENUM(InputType)
 		enum TextEchoMode
 		{
 			Normal = QLineEdit::Normal,
@@ -53,6 +52,7 @@ namespace Code
 			Password = QLineEdit::Password,
 			PasswordEchoOnEdit = QLineEdit::PasswordEchoOnEdit
 		};
+        Q_ENUM(TextEchoMode)
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 

@@ -31,9 +31,8 @@ namespace Code
 {
 	class File : public CodeClass
 	{
-		Q_OBJECT
-		Q_ENUMS(OpenMode)
-		Q_ENUMS(Encoding)
+        Q_OBJECT
+        Q_ENUM(Encoding)
 	
 	public:
 		enum OpenMode
@@ -46,6 +45,7 @@ namespace Code
 			Text =			QIODevice::Text,
 			Unbuffered =	QIODevice::Unbuffered
 		};
+        Q_ENUM(OpenMode)
 	
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue copy(QScriptContext *context, QScriptEngine *engine);

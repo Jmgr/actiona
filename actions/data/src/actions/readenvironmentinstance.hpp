@@ -28,7 +28,6 @@ namespace Actions
 	class ReadEnvironmentVariableInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Mode)
 
 	public:
 		enum Mode
@@ -36,6 +35,7 @@ namespace Actions
             allVariablesMode,
             oneVariableMode
 		};
+        Q_ENUM(Mode)
 
 		ReadEnvironmentVariableInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}

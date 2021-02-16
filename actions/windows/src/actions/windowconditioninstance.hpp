@@ -32,7 +32,6 @@ namespace Actions
 	class WindowConditionInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Condition)
 
 	public:
 		enum Condition
@@ -40,6 +39,7 @@ namespace Actions
 			Exists,
 			DontExists
 		};
+        Q_ENUM(Condition)
 
 		WindowConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 

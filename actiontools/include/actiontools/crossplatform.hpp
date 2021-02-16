@@ -33,9 +33,7 @@ namespace ActionTools
 	class ACTIONTOOLSSHARED_EXPORT CrossPlatform : public QObject
 	{
 		Q_OBJECT
-		Q_ENUMS(KillMode)
-		Q_ENUMS(ProcessStatus)
-		
+
 	public:
 		enum KillMode
 		{
@@ -43,11 +41,13 @@ namespace ActionTools
 			Forceful,
 			GracefulThenForceful
 		};
+        Q_ENUM(KillMode)
 		enum ProcessStatus
 		{
 			Running,
 			Stopped
 		};
+        Q_ENUM(ProcessStatus)
 
 		//Windows
 		static void setForegroundWindow(QWidget *window);

@@ -31,7 +31,6 @@ namespace Actions
 	class VariableConditionInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Comparison)
 
 	public:
 		enum Comparison
@@ -44,6 +43,7 @@ namespace Actions
 			SuperiorEqual,
 			Contains
 		};
+        Q_ENUM(Comparison)
 
 		VariableConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}

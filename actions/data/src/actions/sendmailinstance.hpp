@@ -32,7 +32,6 @@ namespace Actions
     class SendMailInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-        Q_ENUMS(AttachmentContentType)
 
 	public:
         enum AttachmentContentType
@@ -43,6 +42,7 @@ namespace Actions
             JpgImageAttachmentContentType,
             PngImageAttachmentContentType
 		};
+        Q_ENUM(AttachmentContentType)
 		enum Exceptions
 		{
             ConnectionErrorException = ActionTools::ActionException::UserException,

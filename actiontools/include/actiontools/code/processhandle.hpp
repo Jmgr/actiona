@@ -17,8 +17,6 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT ProcessHandle : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(KillMode)
-		Q_ENUMS(Priority)
 
 	public:
 		enum KillMode
@@ -27,6 +25,7 @@ namespace Code
 			Forceful,
 			GracefulThenForceful
 		};
+		Q_ENUM(KillMode)
 		enum Priority
 		{
 			AboveNormal,
@@ -36,6 +35,7 @@ namespace Code
 			Normal,
 			Realtime
 		};
+		Q_ENUM(Priority)
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(int processId, QScriptEngine *engine);

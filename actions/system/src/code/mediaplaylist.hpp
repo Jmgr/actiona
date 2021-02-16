@@ -35,7 +35,6 @@ namespace Code
 	class MediaPlaylist : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(PlaybackMode)
 		Q_PROPERTY(qreal playbackRate READ playbackRate WRITE setPlaybackRate)
 		Q_PROPERTY(qreal volume READ volume WRITE setVolume)
 		Q_PROPERTY(qint64 position READ position WRITE setPosition)
@@ -52,6 +51,7 @@ namespace Code
 			Loop,
 			Random
 		};
+        Q_ENUM(PlaybackMode)
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 

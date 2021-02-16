@@ -29,8 +29,6 @@ namespace Code
 	class MessageBox : public BaseWindow
 	{
 		Q_OBJECT
-		Q_ENUMS(StandardButton)
-		Q_ENUMS(Icon)
 		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
 
 	public:
@@ -56,6 +54,7 @@ namespace Code
 			Ignore = QMessageBox::Ignore,
 			NoButton = QMessageBox::NoButton
 		};
+        Q_ENUM(StandardButton)
 		enum Icon
 		{
 			NoIcon = QMessageBox::NoIcon,
@@ -64,6 +63,7 @@ namespace Code
 			Warning = QMessageBox::Warning,
 			Critical = QMessageBox::Critical
 		};
+        Q_ENUM(Icon)
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 

@@ -40,9 +40,6 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Image : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(Filter)
-		Q_ENUMS(MirrorOrientation)
-        Q_ENUMS(AlgorithmMethod)
 		
 	public:
 		enum Filter
@@ -62,17 +59,20 @@ namespace Code
 			RemoveChannel,
 			Punch
 		};
+        Q_ENUM(Filter)
 		enum MirrorOrientation
 		{
 			Vertical = 1,
 			Horizontal = 2
 		};
+        Q_ENUM(MirrorOrientation)
         enum AlgorithmMethod
         {
             CorrelationCoefficient,
             CrossCorrelation,
             SquaredDifference
         };
+        Q_ENUM(AlgorithmMethod)
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue constructor(const QImage &image, QScriptEngine *engine);

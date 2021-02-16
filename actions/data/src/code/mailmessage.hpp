@@ -32,7 +32,6 @@ namespace Code
     class MailMessage : public CodeClass
     {
         Q_OBJECT
-        Q_ENUMS(RecipientType)
         Q_PROPERTY(QString sender READ sender WRITE setSender)
         Q_PROPERTY(QString subject READ subject WRITE setSubject)
         Q_PROPERTY(QString body READ body WRITE setBody)
@@ -44,6 +43,7 @@ namespace Code
             Cc,
             Bcc
         };
+        Q_ENUM(RecipientType)
 
         static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 

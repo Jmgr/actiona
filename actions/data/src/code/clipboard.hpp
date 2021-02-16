@@ -32,8 +32,6 @@ namespace Code
 	class Clipboard : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(Mode)
-		Q_ENUMS(DataType)
 		Q_PROPERTY(QString text READ text WRITE setText)
 		Q_PROPERTY(QScriptValue image READ image WRITE setImage)
 	
@@ -44,11 +42,13 @@ namespace Code
 			Selection =		QClipboard::Selection,
 			FindBuffer =	QClipboard::FindBuffer
 		};
+        Q_ENUM(Mode)
 		enum DataType
 		{
 			Text,
 			Image
 		};
+        Q_ENUM(DataType)
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	

@@ -29,7 +29,6 @@ namespace Actions
 	class SystemInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Operation)
 
 	public:
 		enum Operation
@@ -42,6 +41,7 @@ namespace Actions
 			LockScreen,
 			StartScreenSaver
 		};
+        Q_ENUM(Operation)
 		enum Exceptions
 		{
 			NotAvailable = ActionTools::ActionException::UserException

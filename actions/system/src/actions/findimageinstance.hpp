@@ -40,8 +40,6 @@ namespace Actions
 	class FindImageInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Source)
-        Q_ENUMS(Method)
 
 	public:
 		enum Source
@@ -50,12 +48,14 @@ namespace Actions
 			WindowSource,
 			ImageSource
 		};
+        Q_ENUM(Source)
         enum Method
         {
             CorrelationCoefficientMethod,
             CrossCorrelationMethod,
             SquaredDifferenceMethod
         };
+        Q_ENUM(Method)
 		enum Exceptions
 		{
             ErrorWhileSearchingException = ActionTools::ActionException::UserException,
