@@ -57,6 +57,8 @@ namespace Execution
 		mConsoleWidget(new ActionTools::ConsoleWidget())
         
 	{
+        mExecutionTimer.setTimerType(Qt::PreciseTimer);
+
         connect(mExecutionWindow, &ExecutionWindow::canceled, this, &Executer::stopExecution);
         connect(mExecutionWindow, &ExecutionWindow::paused, this, &Executer::pauseExecution);
         connect(mExecutionWindow, &ExecutionWindow::debug, this, &Executer::debugExecution);
@@ -135,7 +137,7 @@ namespace Execution
 		mConsoleWidget->setup(consoleModel);
 		
 		mExecutionTimer.setSingleShot(false);
-		mExecutionTimer.setInterval(5);
+        mExecutionTimer.setInterval(1);
 		mConsoleWidget->updateClearButton();
 	}
 	
