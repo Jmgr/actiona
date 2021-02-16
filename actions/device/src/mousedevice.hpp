@@ -26,8 +26,7 @@
 class MouseDevice : public QObject
 {
 	Q_OBJECT
-	Q_ENUMS(Button)
-	
+
 public:
 	enum Button
 	{
@@ -37,6 +36,7 @@ public:
 
 		ButtonCount
 	};
+    Q_ENUM(Button)
 
 	MouseDevice();
     ~MouseDevice() override;

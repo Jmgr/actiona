@@ -58,11 +58,6 @@ class Q_SYSTEMINFO_EXPORT QBatteryInfo : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(ChargerType)
-    Q_ENUMS(ChargingState)
-    Q_ENUMS(LevelStatus)
-    Q_ENUMS(Health)
-
     Q_PROPERTY(int batteryCount READ batteryCount NOTIFY batteryCountChanged)
     Q_PROPERTY(int batteryIndex READ batteryIndex WRITE setBatteryIndex NOTIFY batteryIndexChanged)
     Q_PROPERTY(bool valid READ isValid NOTIFY validChanged)
@@ -86,6 +81,7 @@ public:
         USBCharger,
         VariableCurrentCharger
     };
+    Q_ENUM(ChargerType)
 
     enum ChargingState {
         UnknownChargingState = 0,
@@ -93,6 +89,7 @@ public:
         IdleChargingState,
         Discharging
     };
+    Q_ENUM(ChargingState)
 
     enum LevelStatus {
         LevelUnknown = 0,
@@ -101,12 +98,14 @@ public:
         LevelOk,
         LevelFull
     };
+    Q_ENUM(LevelStatus)
 
     enum Health {
         HealthUnknown = 0,
         HealthOk,
         HealthBad
     };
+    Q_ENUM(Health)
 
     QBatteryInfo(QObject *parent = nullptr);
     QBatteryInfo(int batteryIndex, QObject *parent = nullptr);

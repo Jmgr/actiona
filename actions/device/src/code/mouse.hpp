@@ -34,7 +34,6 @@ namespace Code
 	class Mouse : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(Button)
 		Q_PROPERTY(QScriptValue onMotion READ onMotion WRITE setOnMotion)
 		Q_PROPERTY(QScriptValue onWheel READ onWheel WRITE setOnWheel)
 		Q_PROPERTY(QScriptValue onButtonPressed READ onButtonPressed WRITE setOnButtonPressed)
@@ -49,6 +48,7 @@ namespace Code
 			MiddleButton,
 			RightButton
 		};
+        Q_ENUM(Button)
 		
 		Mouse();
 		~Mouse() override;

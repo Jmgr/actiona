@@ -34,7 +34,6 @@ namespace Actions
 	class MultiDataInputInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Mode)
 
 	public:
 		enum Mode
@@ -45,6 +44,7 @@ namespace Actions
 			CheckboxMode,
 			RadioButtonMode
 		};
+        Q_ENUM(Mode)
 
 		MultiDataInputInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 

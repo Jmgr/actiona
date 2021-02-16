@@ -39,11 +39,6 @@ namespace Code
 		Q_PROPERTY(QScriptValue onReadyReadStandardOutput READ onReadyReadStandardOutput WRITE setOnReadyReadStandardOutput)
 		Q_PROPERTY(QScriptValue onStarted READ onStarted WRITE setOnStarted)
 		Q_PROPERTY(QScriptValue onStateChanged READ onStateChanged WRITE setOnStateChanged)
-		Q_ENUMS(ProcessError)
-		Q_ENUMS(ExitStatus)
-		Q_ENUMS(ProcessState)
-		Q_ENUMS(ProcessChannel)
-		Q_ENUMS(ProcessChannelMode)
 		Q_FLAGS(OpenModeFlag OpenMode)
 
 	public:
@@ -56,28 +51,33 @@ namespace Code
 			WriteError = QProcess::WriteError,
 			UnknownError = QProcess::UnknownError
 		};
+        Q_ENUM(ProcessError)
 		enum ExitStatus
 		{
 			NormalExit = QProcess::NormalExit,
 			CrashExit = QProcess::CrashExit
 		};
+        Q_ENUM(ExitStatus)
 		enum ProcessState
 		{
 			NotRunning = QProcess::NotRunning,
 			Starting = QProcess::Starting,
 			Running = QProcess::Running
 		};
+        Q_ENUM(ProcessState)
 		enum ProcessChannel
 		{
 			StandardOutput = QProcess::StandardOutput,
 			StandardError = QProcess::StandardError
 		};
+        Q_ENUM(ProcessChannel)
 		enum ProcessChannelMode
 		{
 			SeparateChannels = QProcess::SeparateChannels,
 			MergedChannels = QProcess::MergedChannels,
 			ForwardedChannels = QProcess::ForwardedChannels
 		};
+        Q_ENUM(ProcessChannelMode)
 		enum OpenModeFlag
 		{
 			NotOpen = QIODevice::NotOpen,
