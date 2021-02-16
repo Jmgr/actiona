@@ -35,7 +35,6 @@ namespace Code
 	class Web : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(Method)
 		Q_PROPERTY(QScriptValue onFinished READ onFinished WRITE setOnFinished)
 		Q_PROPERTY(QScriptValue onDownloadProgress READ onDownloadProgress WRITE setOnDownloadProgress)
 		Q_PROPERTY(QScriptValue onError READ onError WRITE setOnError)
@@ -46,6 +45,7 @@ namespace Code
 			Get,
 			Post
 		};
+        Q_ENUM(Method)
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 

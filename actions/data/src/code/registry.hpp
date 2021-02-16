@@ -36,7 +36,6 @@ namespace Code
 	class Registry : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(Key)
 	
 	public:
 		enum Key
@@ -47,6 +46,7 @@ namespace Code
 			Users,
 			LocalMachine
 		};
+        Q_ENUM(Key)
 	
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 	

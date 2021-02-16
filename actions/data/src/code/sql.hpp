@@ -34,9 +34,7 @@ namespace Code
 	class Sql : public CodeClass
 	{
 		Q_OBJECT
-		Q_ENUMS(Driver)
-		Q_ENUMS(IndexStyle)
-		
+
 	public:
 		enum Driver
 		{
@@ -52,11 +50,13 @@ namespace Code
 
 			DriverCount
 		};
+        Q_ENUM(Driver)
 		enum IndexStyle
 		{
 			IndexNumber,
 			IndexName
 		};
+        Q_ENUM(IndexStyle)
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		static QScriptValue drivers(QScriptContext *context, QScriptEngine *engine);

@@ -28,7 +28,6 @@ namespace Actions
 	class ReadTextFileInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Mode)
 
 	public:
 		enum Mode
@@ -36,6 +35,7 @@ namespace Actions
 			Full,
 			Selection
 		};
+        Q_ENUM(Mode)
 		enum Exceptions
 		{
 			CannotOpenFileException = ActionTools::ActionException::UserException

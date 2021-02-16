@@ -32,35 +32,34 @@ class QTimer;
 namespace Actions
 {
     class KeyboardKeyConditionInstance : public ActionTools::ActionInstance
+    {
+	Q_OBJECT
+    public:
+	enum Condition
 	{
-		Q_OBJECT
-		Q_ENUMS(Condition)
-
-	public:
-		enum Condition
-		{
-            Pressed,
-            NotPressed
-		};
-
-        KeyboardKeyConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-
-        static Tools::StringListPair conditions;
-
-		void stopExecution() override;
-		void startExecution() override;
-
-
-	private:
-        bool areKeysPressed() const;
-
-		QRegExp mTitleRegExp;
-		ActionTools::IfActionValue mIfTrue;
-		Condition mCondition;
-        QTimer *mTimer;
-        QList<ActionTools::KeyboardKey> mKeyList;
-
-        Q_DISABLE_COPY(KeyboardKeyConditionInstance)
+	    Pressed,
+	    NotPressed
 	};
+	Q_ENUM(Condition)
+
+	KeyboardKeyConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
+
+	static Tools::StringListPair conditions;
+
+	void stopExecution() override;
+	void startExecution() override;
+
+
+    private:
+	bool areKeysPressed() const;
+
+	QRegExp mTitleRegExp;
+	ActionTools::IfActionValue mIfTrue;
+	Condition mCondition;
+	QTimer *mTimer;
+	QList<ActionTools::KeyboardKey> mKeyList;
+
+	Q_DISABLE_COPY(KeyboardKeyConditionInstance)
+    };
 }
 

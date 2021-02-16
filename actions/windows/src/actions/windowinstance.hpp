@@ -28,7 +28,6 @@ namespace Actions
 	class WindowInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Action)
 
 	public:
 		enum Action
@@ -41,6 +40,7 @@ namespace Actions
 			Move,
 			Resize
 		};
+        Q_ENUM(Action)
 		enum Exceptions
 		{
 			CannotFindWindowException = ActionTools::ActionException::UserException,

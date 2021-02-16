@@ -29,12 +29,7 @@ namespace Code
 {
 	class FileDialog : public BaseWindow
 	{
-		Q_OBJECT
-		Q_ENUMS(AcceptMode)
-		Q_ENUMS(FileMode)
-		Q_ENUMS(ViewMode)
-		Q_ENUMS(DialogLabel)
-		Q_ENUMS(Filters)
+        Q_OBJECT
 		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
 		Q_PROPERTY(QScriptValue onCurrentChanged READ onCurrentChanged WRITE setOnCurrentChanged)
 		Q_PROPERTY(QScriptValue onDirectoryEntered READ onDirectoryEntered WRITE setOnDirectoryEntered)
@@ -48,6 +43,7 @@ namespace Code
 			Open = QFileDialog::AcceptOpen,
 			Save = QFileDialog::AcceptSave
 		};
+        Q_ENUM(AcceptMode)
 		enum FileMode
 		{
 			AnyFile = QFileDialog::AnyFile,
@@ -55,11 +51,13 @@ namespace Code
 			ExistingFiles = QFileDialog::ExistingFiles,
 			Directory = QFileDialog::Directory
 		};
+        Q_ENUM(FileMode)
 		enum ViewMode
 		{
 			Detail = QFileDialog::Detail,
 			List = QFileDialog::List
 		};
+        Q_ENUM(ViewMode)
 		enum DialogLabel
 		{
 			LookIn = QFileDialog::LookIn,
@@ -68,6 +66,7 @@ namespace Code
 			Accept = QFileDialog::Accept,
 			Reject = QFileDialog::Reject
 		};
+        Q_ENUM(DialogLabel)
 		enum Filters
 		{
 			Dirs = QDir::Dirs,
@@ -87,6 +86,7 @@ namespace Code
 			System = QDir::System,
 			CaseSensitive = QDir::CaseSensitive
 		};
+        Q_ENUM(Filters)
 		
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 		

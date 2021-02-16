@@ -34,8 +34,7 @@ namespace Actions
 {
 	class WebDownloadInstance : public ActionTools::ActionInstance
 	{
-		Q_OBJECT
-		Q_ENUMS(Destination)
+        Q_OBJECT
 
 	public:
 		enum Destination
@@ -43,6 +42,7 @@ namespace Actions
 			Variable,
 			File
 		};
+        Q_ENUM(Destination)
 		enum Exceptions
 		{
 			CannotOpenFileException = ActionTools::ActionException::UserException,

@@ -57,11 +57,6 @@ class Q_SYSTEMINFO_EXPORT QDeviceInfo : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(Feature)
-    Q_ENUMS(LockType)
-    Q_ENUMS(ThermalState)
-    Q_ENUMS(Version)
-
     Q_FLAGS(LockType LockTypeFlags)
 
     Q_PROPERTY(LockTypeFlags activatedLocks READ activatedLocks NOTIFY activatedLocksChanged)
@@ -87,6 +82,7 @@ public:
         HapticsFeature,
         NfcFeature
     };
+    Q_ENUM(Feature)
 
     enum LockType {
         NoLock = 0,
@@ -94,6 +90,7 @@ public:
         TouchOrKeyboardLock = 0x0000002,
         UnknownLock = 0x0000004
     };
+    Q_ENUM(LockType)
     Q_DECLARE_FLAGS(LockTypeFlags, LockType)
 
     enum ThermalState {
@@ -103,11 +100,13 @@ public:
         AlertThermal,
         ErrorThermal
     };
+    Q_ENUM(ThermalState)
 
     enum Version {
         Os = 0,
         Firmware
     };
+    Q_ENUM(Version)
 
     QDeviceInfo(QObject *parent = nullptr);
     ~QDeviceInfo() override;

@@ -32,7 +32,6 @@ namespace Actions
 	class VariableInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Type)
 
 	public:
 		enum Type
@@ -43,6 +42,7 @@ namespace Actions
 			Color,
             Position
 		};
+        Q_ENUM(Type)
 		enum Exceptions
 		{
 			ConversionFailedException = ActionTools::ActionException::UserException

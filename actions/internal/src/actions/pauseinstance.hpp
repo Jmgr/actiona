@@ -29,7 +29,6 @@ namespace Actions
 	class PauseInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Unit)
 
 	public:
 		enum Unit
@@ -40,6 +39,7 @@ namespace Actions
 			Hours,
 			Days
 		};
+        Q_ENUM(Unit)
 
 		PauseInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)

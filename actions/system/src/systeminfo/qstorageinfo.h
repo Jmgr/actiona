@@ -53,7 +53,6 @@ class QStorageInfo_CustomPrivate;
 class Q_SYSTEMINFO_EXPORT QStorageInfo_Custom : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(DriveType)
     Q_PROPERTY(QStringList allLogicalDrives READ allLogicalDrives NOTIFY logicalDriveChanged)
 
 public:
@@ -65,6 +64,7 @@ public:
         CdromDrive,
         RamDrive
     };
+    Q_ENUM(DriveType)
 
     QStorageInfo_Custom(QObject *parent = nullptr);
     ~QStorageInfo_Custom() override;

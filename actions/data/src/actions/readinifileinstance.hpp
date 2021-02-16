@@ -27,7 +27,6 @@ namespace Actions
 	class ReadIniFileInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Mode)
 
 	public:
 		enum Mode
@@ -35,6 +34,7 @@ namespace Actions
             SingleParameter,
             WholeFile
 		};
+        Q_ENUM(Mode)
 		enum Exceptions
 		{
 			UnableToReadFileException = ActionTools::ActionException::UserException,

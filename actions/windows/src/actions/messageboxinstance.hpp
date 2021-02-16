@@ -30,10 +30,6 @@ namespace Actions
 	class MessageBoxInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
-		Q_ENUMS(Icon)
-		Q_ENUMS(Buttons)
-		Q_ENUMS(Result)
-		Q_ENUMS(TextMode)
 
 	public:
 		enum Icon
@@ -44,23 +40,27 @@ namespace Actions
 			Warning,
 			Error
 		};
+		Q_ENUM(Icon)
 		enum Buttons
 		{
 			OkButton,
 			YesNoButtons
 		};
+		Q_ENUM(Buttons)
 		enum Result
 		{
 			Ok,
 			Yes,
 			No
 		};
+		Q_ENUM(Result)
 		enum TextMode
 		{
 			AutoTextMode,
 			HtmlTextMode,
 			PlainTextMode
 		};
+		Q_ENUM(TextMode)
 
 		MessageBoxInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
 
