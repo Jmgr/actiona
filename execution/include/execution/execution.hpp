@@ -62,8 +62,6 @@ namespace Execution
 				   bool showConsoleWindow,
 				   int consoleWindowPosition,
 				   int consoleWindowScreen,
-				   int pauseBefore,
-				   int pauseAfter,
                    QVersionNumber actionaVersion,
 				   QVersionNumber scriptVersion,
 				   bool isActExec,
@@ -89,8 +87,6 @@ namespace Execution
 	signals:
 		void executionStopped();
 		void scriptError(int actionIndex, const QString &parameter, const QString &error);
-		void actionStarted(int actionIndex, int maxActions);
-		void actionEnded(int actionIndex, int maxActions);
 
 	private slots:
 		void executionException(int exception,
@@ -160,8 +156,6 @@ namespace Execution
 		bool mHasExecuted{false};
 		static ExecutionStatus mExecutionStatus;
 		bool mPauseInterrupt{false};
-		int mPauseBefore;
-		int mPauseAfter;
         QVersionNumber mActionaVersion;
 		QVersionNumber mScriptVersion;
 		bool mIsActExec;

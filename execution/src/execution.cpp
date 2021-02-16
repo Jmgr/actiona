@@ -88,8 +88,6 @@ namespace Execution
 			   bool showConsoleWindow,
 			   int consoleWindowPosition,
 			   int consoleWindowScreen,
-			   int pauseBefore,
-			   int pauseAfter,
                QVersionNumber actionaVersion,
 			   QVersionNumber scriptVersion,
 			   bool isActExec,
@@ -108,8 +106,6 @@ namespace Execution
 		mShowConsoleWindow = showConsoleWindow;
 		mConsoleWindowPosition = consoleWindowPosition;
 		mConsoleWindowScreen = consoleWindowScreen;
-		mPauseBefore = pauseBefore;
-		mPauseAfter = pauseAfter;
 		mCurrentActionIndex = 0;
 		mExecutionStarted = false;
 		mExecutionEnded = false;
@@ -703,21 +699,26 @@ namespace Execution
 		mExecutionTimer.stop();
 		currentActionInstance()->disconnect();
 
-		emit actionEnded(mCurrentActionIndex, mActiveActionsCount);
-		
 		mExecutionStatus = PostPause;
 
-		mExecutionTimer.start();
 		mExecutionTime.start();
-		if(currentActionInstance()->pauseAfter() + mPauseAfter > 0)
+
+        auto pauseAfter = currentActionInstance()->pauseAfter() + mScript->pauseAfter();
+        if(pauseAfter > 0)
 		{
+            mExecutionTimer.start();
+
 			mExecutionWindow->setProgressEnabled(true);
 			mExecutionWindow->setProgressMinimum(0);
-			mExecutionWindow->setProgressMaximum(currentActionInstance()->pauseAfter() + mPauseAfter);
+            mExecutionWindow->setProgressMaximum(pauseAfter);
 			mExecutionWindow->setProgressValue(0);
 		}
 		else
+        {
 			mExecutionWindow->setProgressEnabled(false);
+
+            startNextAction();
+        }
 		
 		mExecutionEnded = true;
 	}
@@ -805,8 +806,6 @@ namespace Execution
 		else
 			mExecutionWindow->setProgressEnabled(false);
 
-		emit actionStarted(mCurrentActionIndex, mActiveActionsCount);
-
         currentActionInstance()->doStartExecution();
 	}
 
@@ -819,14 +818,14 @@ namespace Execution
 		switch(mExecutionStatus)
 		{
 		case PrePause:
-			if(mExecutionTime.elapsed() >= actionInstance->pauseBefore() + mPauseBefore)
+            if(mExecutionTime.elapsed() >= actionInstance->pauseBefore() + mScript->pauseBefore())
 			{
 				mExecutionTimer.stop();
 				startActionExecution();
 			}
 			mExecutionWindow->setProgressValue(mExecutionTime.elapsed());
 			break;
-		case Executing://Timeout
+        case Executing:
 			if(mExecutionTime.elapsed() >= actionInstance->timeout())
 			{
 				mExecutionTimer.stop();
@@ -838,7 +837,7 @@ namespace Execution
 			mExecutionWindow->setProgressValue(mExecutionTime.elapsed());
 			break;
 		case PostPause:
-			if(mExecutionTime.elapsed() >= actionInstance->pauseAfter() + mPauseAfter)
+            if(mExecutionTime.elapsed() >= actionInstance->pauseAfter() + mScript->pauseAfter())
 			{
 				mExecutionTimer.stop();
 				startNextAction();
@@ -1051,20 +1050,27 @@ namespace Execution
         connect(actionInstance, &ActionTools::ActionInstance::consolePrint, this, static_cast<void (Executer::*)(const QString &)>(&Executer::consolePrint));
 		connect(actionInstance, &ActionTools::ActionInstance::consolePrintWarning, this, &Executer::consolePrintWarning);
 		connect(actionInstance, &ActionTools::ActionInstance::consolePrintError, this, &Executer::consolePrintError);
-		
+
+        actionInstance->setupStartExecutionTime();
+
 		mExecutionStatus = PrePause;
 
-		mExecutionTimer.start();
-		mExecutionTime.start();
-		if(currentActionInstance()->pauseBefore() + mPauseBefore > 0)
+        auto pauseBefore = currentActionInstance()->pauseBefore() + mScript->pauseBefore();
+        if(pauseBefore > 0)
 		{
+            mExecutionTimer.start();
+
 			mExecutionWindow->setProgressEnabled(true);
 			mExecutionWindow->setProgressMinimum(0);
-			mExecutionWindow->setProgressMaximum(currentActionInstance()->pauseBefore() + mPauseBefore);
+            mExecutionWindow->setProgressMaximum(pauseBefore);
 			mExecutionWindow->setProgressValue(0);
 		}
 		else
+        {
 			mExecutionWindow->setProgressEnabled(false);
+
+            startActionExecution();
+        }
 
 		mExecutionEnded = true;
 	}
