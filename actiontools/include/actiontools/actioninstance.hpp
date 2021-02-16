@@ -32,6 +32,7 @@
 #include <QScriptValue>
 #include <QVariant>
 #include <QElapsedTimer>
+#include <QDateTime>
 
 class QScriptEngine;
 class QDataStream;
@@ -70,7 +71,8 @@ namespace ActionTools
 		QVariantHash runtimeParameters;
         int executionCounter{0};
         QElapsedTimer executionTimer;
-        qint64 executionDuration{};
+        QDateTime startTime;
+        QDateTime endTime;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
@@ -146,8 +148,13 @@ namespace ActionTools
         void doPauseExecution();
         void doResumeExecution();
 
+        void setupStartExecutionTime()                                      { d->startTime = QDateTime::currentDateTimeUtc(); }
+
         int executionCounter() const                                        { return d->executionCounter; }
-        qint64 executionDuration() const                                    { return d->executionDuration; }
+        qint64 executionDuration() const
+        {
+            return d->startTime.msecsTo(d->endTime);
+        }
 
 		void setupExecution(QScriptEngine *scriptEngine, Script *script, int scriptLine)
 		{
@@ -155,7 +162,8 @@ namespace ActionTools
 			d->script = script;
 			d->scriptLine = scriptLine;
             d->executionCounter = 0;
-            d->executionDuration = 0;
+            d->startTime = {};
+            d->endTime = {};
 		}
 
 		void copyActionDataFrom(const ActionInstance &other);

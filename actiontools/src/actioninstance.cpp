@@ -134,8 +134,6 @@ namespace ActionTools
     void ActionInstance::doPauseExecution()
     {
         pauseExecution();
-
-        d->executionDuration += d->executionTimer.elapsed();
     }
 
     void ActionInstance::doResumeExecution()
@@ -795,9 +793,9 @@ namespace ActionTools
 
     void ActionInstance::executionEnded()
     {
-        emit executionEndedSignal();
+        d->endTime = QDateTime::currentDateTimeUtc();
 
-        d->executionDuration += d->executionTimer.elapsed();
+        emit executionEndedSignal();
     }
 
 	SubParameter ActionInstance::retreiveSubParameter(const QString &parameterName, const QString &subParameterName)
