@@ -99,7 +99,7 @@ namespace Code
 		QString currentDirectory() const;
 		QString username() const;
 		QString variable(const QString &name) const;
-		uint timestamp() const;
+        qint64 timestamp() const;
 		QString osName() const;
 		QString version() const;
 		QString countryCode() const;

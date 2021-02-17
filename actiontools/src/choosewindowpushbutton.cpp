@@ -261,8 +261,6 @@ namespace ActionTools
 		update();
 		mLastFoundWindow.setInvalid();
 
-		QCursor newCursor(*mCrossIcon);
-
 #ifdef Q_OS_WIN
         mPreviousCursor = SetCursor(LoadCursor(0, IDC_CROSS));
 #endif

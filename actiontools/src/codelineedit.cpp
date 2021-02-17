@@ -61,9 +61,9 @@ namespace ActionTools
 	{
         connect(this, &CodeLineEdit::textChanged, this, &CodeLineEdit::onTextChanged);
         connect(mSwitchTextCode, &QAction::triggered, this, &CodeLineEdit::reverseCode);
-        connect(mOpenEditor, &QAction::triggered, [this](){ openEditor(); });
+        connect(mOpenEditor, &QAction::triggered, this, [this](){ openEditor(); });
         connect(mCodeButton, &CodeLineEditButton::clicked, this, &CodeLineEdit::reverseCode);
-        connect(mEditorButton, &CodeLineEditButton::clicked, [this](){ openEditor(); });
+        connect(mEditorButton, &CodeLineEditButton::clicked, this, [this](){ openEditor(); });
         connect(mInsertButton, &CodeLineEditButton::clicked, this, &CodeLineEdit::showVariableMenuAsPopup);
 
 		QSettings settings;

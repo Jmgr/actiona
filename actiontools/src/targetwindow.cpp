@@ -149,8 +149,6 @@ namespace ActionTools
         mResult = QRect();
 
 #ifdef Q_OS_UNIX
-        QCursor newCursor(Qt::CrossCursor);
-
         QCoreApplication::instance()->installNativeEventFilter(this);
 
         if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync,

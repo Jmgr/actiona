@@ -128,8 +128,6 @@ namespace ActionTools
 			widget->setWindowOpacity(0.0f);
 #endif
 
-		QCursor newCursor(*mCrossIcon);
-
 		emit chooseStarted();
 
 #ifdef Q_OS_WIN

@@ -57,8 +57,6 @@ class Q_SYSTEMINFO_EXPORT QDeviceInfo : public QObject
 {
     Q_OBJECT
 
-    Q_FLAGS(LockType LockTypeFlags)
-
     Q_PROPERTY(LockTypeFlags activatedLocks READ activatedLocks NOTIFY activatedLocksChanged)
     Q_PROPERTY(LockTypeFlags enabledLocks READ enabledLocks NOTIFY enabledLocksChanged)
     Q_PROPERTY(ThermalState thermalState READ thermalState NOTIFY thermalStateChanged)
@@ -90,8 +88,8 @@ public:
         TouchOrKeyboardLock = 0x0000002,
         UnknownLock = 0x0000004
     };
-    Q_ENUM(LockType)
     Q_DECLARE_FLAGS(LockTypeFlags, LockType)
+    Q_FLAG(LockTypeFlags)
 
     enum ThermalState {
         UnknownThermal = 0,

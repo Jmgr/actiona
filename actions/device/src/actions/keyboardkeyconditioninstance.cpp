@@ -109,7 +109,7 @@ namespace Actions
             }
             else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
             {
-                connect(mTimer, &QTimer::timeout, [this]()
+                connect(mTimer, &QTimer::timeout, this, [this]()
                 {
                     auto pressed = areKeysPressed();
                     if((pressed && mCondition == Pressed) ||

@@ -25,7 +25,6 @@
 #include "actiontools/screenshotwizard.hpp"
 
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QKeyEvent>
 
 namespace ActionTools
@@ -38,8 +37,6 @@ namespace ActionTools
         ui->setupUi(this);
 
         connect(ui->captureWindowPushButton, &ActionTools::ChooseWindowPushButton::searchEnded, this, &ScreenshotWizardPage::onWindowSearchEnded);
-
-        QDesktopWidget *desktopWidget = QApplication::desktop();
 
         ui->screenComboBox->addItem(tr("All screens"));
 
