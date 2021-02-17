@@ -36,7 +36,7 @@ public:
 
 		ButtonCount
 	};
-    Q_ENUM(Button)
+	Q_ENUM(Button)
 
 	MouseDevice();
     ~MouseDevice() override;

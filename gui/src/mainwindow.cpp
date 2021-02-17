@@ -296,7 +296,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
     connect(ui->consoleWidget, &ActionTools::ConsoleWidget::itemClicked, this, static_cast<void (MainWindow::*)(int)>(&MainWindow::logItemClicked));
     connect(mStopExecutionAction, &QAction::triggered, this, &MainWindow::stopExecution);
     connect(&mExecuter, &Execution::Executer::executionStopped, this, &MainWindow::scriptExecutionStopped);
-    connect(ui->heatmapModeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int index)
+    connect(ui->heatmapModeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this](int index)
     {
         mScriptModel->setHeatmapMode(static_cast<HeatmapMode>(index));
 

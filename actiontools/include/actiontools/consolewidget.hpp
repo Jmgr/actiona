@@ -48,6 +48,7 @@ namespace ActionTools
             Error,
             Separator
 		};
+        Q_ENUM(Type)
 		enum Source
 		{
 			Action,
@@ -57,6 +58,7 @@ namespace ActionTools
             DesignError,
             Resources
 		};
+        Q_ENUM(Source)
 		enum Role
 		{
 			TypeRole = Qt::UserRole + 1,
@@ -112,7 +114,3 @@ namespace ActionTools
 		Q_DISABLE_COPY(ConsoleWidget)
 	};
 }
-
-Q_DECLARE_METATYPE(ActionTools::ConsoleWidget::Type)
-Q_DECLARE_METATYPE(ActionTools::ConsoleWidget::Source)
-

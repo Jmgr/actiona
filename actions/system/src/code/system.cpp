@@ -147,9 +147,9 @@ namespace Code
 		return QString::fromLatin1(std::getenv(name.toLatin1().constData()));
 	}
 
-	uint System::timestamp() const
+    qint64 System::timestamp() const
 	{
-		return QDateTime::currentDateTime().toTime_t();
+        return QDateTime::currentDateTimeUtc().currentSecsSinceEpoch();
 	}
 
 	QString System::osName() const
