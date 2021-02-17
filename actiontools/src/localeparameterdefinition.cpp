@@ -36,7 +36,7 @@ namespace ActionTools
 
 		mComboBox = new CodeComboBox(parent);
 
-        for(const QLocale &locale: mLocales)
+        for(const QLocale &locale: qAsConst(mLocales))
         {
             if(locale == QLocale::C)
                 continue;

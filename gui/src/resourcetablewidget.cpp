@@ -84,7 +84,8 @@ bool ResourceTableWidget::dropMimeData(int row, int column, const QMimeData *dat
         return false;
 
     QStringList droppedFiles;
-    for(const QUrl &url: data->urls())
+    const auto urls = data->urls();
+    for(const QUrl &url: urls)
     {
         if(!url.isLocalFile())
             continue;

@@ -67,7 +67,8 @@ namespace ActionTools
 		QString actionMask = QStringLiteral("actionpack*.so");
 #endif
 
-        for(const QString &actionFilename: actionDirectory.entryList({actionMask}, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks))
+        const auto actionFilenames = actionDirectory.entryList({actionMask}, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+        for(const QString &actionFilename: actionFilenames)
 			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
 
         std::sort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);

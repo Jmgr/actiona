@@ -289,7 +289,8 @@ void QxtSmtpPrivate::socketRead()
 void QxtSmtpPrivate::ehlo()
 {
     QByteArray address = "127.0.0.1";
-    for(const QHostAddress& addr: QNetworkInterface::allAddresses())
+    const auto addrs = QNetworkInterface::allAddresses();
+    for(const QHostAddress& addr: addrs)
     {
         if (addr == QHostAddress::LocalHost || addr == QHostAddress::LocalHostIPv6)
             continue;
