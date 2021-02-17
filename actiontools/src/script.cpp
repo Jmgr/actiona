@@ -1008,7 +1008,8 @@ namespace ActionTools
         {
             if(const auto groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
             {
-                for(const ParameterDefinition *parameterDefinition: groupDefinition->members())
+                const auto parameterDefinitions = groupDefinition->members();
+                for(const ParameterDefinition *parameterDefinition: parameterDefinitions)
                     parametersFromDefinition(result, actionInstance, parameterDefinition);
             }
             else

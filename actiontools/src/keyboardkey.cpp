@@ -247,7 +247,7 @@ namespace ActionTools
         QList<KeyboardKey> keys;
 
         const auto jsonElements = jsonDocument.array();
-        for(auto jsonElement: jsonElements)
+        for(const auto &jsonElement: jsonElements)
         {
             auto jsonObject = jsonElement.toObject();
             auto key = ActionTools::KeyboardKey::load([&jsonObject](const QString &keyName) -> QString
