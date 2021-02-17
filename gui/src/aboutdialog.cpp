@@ -89,7 +89,7 @@ AboutDialog::~AboutDialog()
 
 void AboutDialog::animate()
 {
-	for(QComboBox *comboBox: mComboBoxes)
+	for(QComboBox *comboBox: qAsConst(mComboBoxes))
 	{
 		int count = comboBox->count();
 		int current = comboBox->currentIndex();

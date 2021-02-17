@@ -182,7 +182,8 @@ namespace ActionTools
 
         if(code)
         {
-            for(const QString &codeLine: input.split(QRegExp(QStringLiteral("[\n\r;]")), Qt::SkipEmptyParts))
+            const auto codeLines = input.split(QRegExp(QStringLiteral("[\n\r;]")), Qt::SkipEmptyParts);
+            for(const QString &codeLine: codeLines)
             {
                 int position = 0;
 
@@ -617,7 +618,7 @@ namespace ActionTools
         QStringList pointStrings = result.split(QLatin1Char(';'), Qt::SkipEmptyParts);
 		QPolygon polygon;
 
-        for(const QString &pointString: pointStrings)
+        for(const QString &pointString: qAsConst(pointStrings))
 		{
             QStringList pointComponents = pointString.split(QLatin1Char(':'), Qt::SkipEmptyParts);
 			if(pointComponents.size() != 2)
@@ -1077,7 +1078,8 @@ namespace ActionTools
 
 	QDebug &operator << (QDebug &dbg, const ParametersData &parametersData)
 	{
-        for(const QString &parameterName: parametersData.keys())
+        const auto keys = parametersData.keys();
+        for(const QString &parameterName: keys)
 		{
 			dbg.space() << parameterName << "=" << parametersData.value(parameterName);
 		}
@@ -1087,7 +1089,8 @@ namespace ActionTools
 	
 	QDebug &operator << (QDebug &dbg, const ExceptionActionInstancesHash &exceptionActionInstancesHash)
 	{
-        for(ActionException::Exception exception: exceptionActionInstancesHash.keys())
+        const auto keys = exceptionActionInstancesHash.keys();
+        for(ActionException::Exception exception: keys)
 		{
 			dbg.space() << exception << "=" << exceptionActionInstancesHash.value(exception);
 		}

@@ -35,7 +35,7 @@ ChangeEnabledCommand::ChangeEnabledCommand(const QList<int> &rows, bool enabled,
 	mRows(rows),
 	mNew(enabled)
 {
-	for(int row: mRows)
+	for(int row: qAsConst(mRows))
 	{
 		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
 		if(!actionInstance)
@@ -49,7 +49,7 @@ ChangeEnabledCommand::ChangeEnabledCommand(const QList<int> &rows, bool enabled,
 
 void ChangeEnabledCommand::redo()
 {
-	for(int row: mRows)
+	for(int row: qAsConst(mRows))
 	{
 		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
 		if(!actionInstance)
@@ -88,7 +88,7 @@ ChangeColorCommand::ChangeColorCommand(const QList<int> &rows, const QColor &col
 	mRows(rows),
 	mNew(color)
 {
-	for(int row: mRows)
+	for(int row: qAsConst(mRows))
 	{
 		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
 		if(!actionInstance)
@@ -102,7 +102,7 @@ ChangeColorCommand::ChangeColorCommand(const QList<int> &rows, const QColor &col
 
 void ChangeColorCommand::redo()
 {
-	for(int row: mRows)
+	for(int row: qAsConst(mRows))
 	{
 		ActionTools::ActionInstance *actionInstance = mModel->mScript->actionAt(row);
 		if(!actionInstance)
@@ -264,7 +264,7 @@ CopyActionCommand::CopyActionCommand(int row, const QList<ActionTools::ActionIns
 
 void CopyActionCommand::redo()
 {
-	for(const ActionTools::ActionInstanceBuffer &actionInstanceBuffer: mActionInstanceBuffers)
+	for(const ActionTools::ActionInstanceBuffer &actionInstanceBuffer: qAsConst(mActionInstanceBuffers))
 	{
 		mModel->insertRow(mRow);
         mModel->setData(mProxyModel->mapFromSource(mModel->index(mRow, 0)), actionInstanceBuffer.actionInstanceId(), ScriptModel::ActionIdRole);
@@ -319,7 +319,7 @@ RemoveActionCommand::RemoveActionCommand(const QList<int> &rows, ScriptModel *mo
 
 void RemoveActionCommand::redo()
 {
-	for(int row: mRows)
+	for(int row: qAsConst(mRows))
 	{
 		mModel->removeRow(row);
 	}

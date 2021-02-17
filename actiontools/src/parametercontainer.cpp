@@ -39,7 +39,8 @@ namespace ActionTools
 
         auto back = new QMenu(parent);
 
-        for(const QString &key: mScript->resources().keys())
+        const auto keys = mScript->resources().keys();
+        for(const QString &key: keys)
         {
             const ActionTools::Resource &resource = mScript->resources().value(key);
             switch(resource.type())

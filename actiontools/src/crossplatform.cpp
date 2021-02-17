@@ -233,7 +233,7 @@ namespace ActionTools
 			return back;
 
 		QStringList processes = procDir.entryList(QDir::Dirs);
-        for(const QString &processId: processes)
+        for(const QString &processId: qAsConst(processes))
 		{
 			bool success;
 			int id = processId.toInt(&success);

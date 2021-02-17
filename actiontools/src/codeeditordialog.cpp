@@ -117,7 +117,8 @@ namespace ActionTools
     {
         QSet<QString> variables = ActionTools::ActionInstance::findVariables(text(), isCode());
 
-        for(QAction *action: mVariablesMenu->actions())
+        const auto actions = mVariablesMenu->actions();
+        for(QAction *action: actions)
             variables.insert(action->text());
 
         QStringList variableList = variables.values();
@@ -134,7 +135,7 @@ namespace ActionTools
         {
             variablesMenu = new QMenu(tr("Insert variable"));
             connect(variablesMenu, &QMenu::triggered, this, static_cast<void (CodeEditorDialog::*)(QAction *action)>(&CodeEditorDialog::insertVariable));
-            for(const QString &variable: variableList)
+            for(const QString &variable: qAsConst(variableList))
                 variablesMenu->addAction(variable);
         }
 

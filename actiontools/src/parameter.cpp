@@ -45,7 +45,8 @@ namespace ActionTools
 
 	QDebug &operator << (QDebug &dbg, const Parameter &parameter)
 	{
-		for(const QString &subParameterName: parameter.subParameters().keys())
+        const auto keys = parameter.subParameters().keys();
+        for(const QString &subParameterName: keys)
 		{
 			dbg.space() << subParameterName << "=" << parameter.subParameters().value(subParameterName);
 		}

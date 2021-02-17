@@ -481,7 +481,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 
     std::sort(rowIdList.begin(), rowIdList.end(), std::greater<int>());
 
-	for(int row: rowIdList)
+	for(int row: qAsConst(rowIdList))
 	{
 		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
 

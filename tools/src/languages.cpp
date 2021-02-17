@@ -108,7 +108,7 @@ namespace Tools
     {
         int index = 0;
 
-        for(const QString &language: m_languagesName.first)
+        for(const QString &language: qAsConst(m_languagesName.first))
         {
             if(language == languageName)
                 return index;

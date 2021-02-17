@@ -277,7 +277,8 @@ int main(int argc, char **argv)
 	if(protocolUrl.isValid())
 	{
         QString mode;
-        for(const auto &queryItem: QUrlQuery(protocolUrl.query()).queryItems())
+        const auto queryItems = QUrlQuery(protocolUrl.query()).queryItems();
+        for(const auto &queryItem: queryItems)
 		{
 			if(queryItem.first == QLatin1String("mode"))
 			{

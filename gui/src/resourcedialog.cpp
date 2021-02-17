@@ -146,7 +146,7 @@ void ResourceDialog::removeSelection()
         return (first.topRow() > second.topRow());
     });
 
-    for(const QTableWidgetSelectionRange &selectionRange: selectionRanges)
+    for(const QTableWidgetSelectionRange &selectionRange: qAsConst(selectionRanges))
     {
         for(int row = selectionRange.bottomRow(); row >= selectionRange.topRow(); --row)
             ui->resourcesTableWidget->removeRow(row);

@@ -75,9 +75,11 @@ bool ScriptProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sourc
         return true;
     if(mFilteringFlags == 0 || mFilteringFlags.testFlag(ActionFilteringFlag::CodeParameters))
     {
-        for(const auto &parameter: actionInstance->parametersData())
+        const auto parameters = actionInstance->parametersData();
+        for(const auto &parameter: parameters)
         {
-            for(const auto &subParameter: parameter.subParameters())
+            const auto subParameters = parameter.subParameters();
+            for(const auto &subParameter: subParameters)
             {
                 if(subParameter.isCode() && subParameter.value().contains(mFilterString, Qt::CaseInsensitive))
                     return true;
@@ -86,9 +88,11 @@ bool ScriptProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sourc
     }
     if(mFilteringFlags == 0 || mFilteringFlags.testFlag(ActionFilteringFlag::TextParameters))
     {
-        for(const auto &parameter: actionInstance->parametersData())
+        const auto parameters = actionInstance->parametersData();
+        for(const auto &parameter: parameters)
         {
-            for(const auto &subParameter: parameter.subParameters())
+            const auto subParameters = parameter.subParameters();
+            for(const auto &subParameter: subParameters)
             {
                 if(!subParameter.isCode() && subParameter.value().contains(mFilterString, Qt::CaseInsensitive))
                     return true;

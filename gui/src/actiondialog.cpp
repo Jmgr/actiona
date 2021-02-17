@@ -101,7 +101,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	}
 
 	int tabIndex = 0;
-	for(const QString &tab: tabs)
+	for(const QString &tab: qAsConst(tabs))
 	{
 		QWidget *widget = new QWidget;
 		auto layout = new QVBoxLayout(widget);
@@ -271,7 +271,8 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 			addParameter(currentParameter, currentParameter->tab());
 		else if(auto currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
 		{
-			for(ActionTools::ParameterDefinition *parameter: currentGroup->members())
+            const auto parameters = currentGroup->members();
+            for(ActionTools::ParameterDefinition *parameter: parameters)
 				addParameter(parameter, currentGroup->tab());
 		}
 	}
@@ -326,7 +327,7 @@ QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
 
     auto back = new QMenu(parent);
 
-    for(const QString &variable: variableList)
+    for(const QString &variable: qAsConst(variableList))
         back->addAction(variable);
 
     return back;
@@ -338,7 +339,7 @@ void ActionDialog::accept()
 	Tools::HighResolutionTimer timer("ActionDialog accept");
 #endif
 	
-	for(ActionTools::ParameterDefinition *parameter: mParameters)
+	for(ActionTools::ParameterDefinition *parameter: qAsConst(mParameters))
 		parameter->save(mActionInstance);
 	
 	if(!mParameters.empty())
@@ -394,7 +395,7 @@ void ActionDialog::postInit()
 #endif
     mOtherActionsVariables = mScript->findVariables(nullptr, mActionInstance);//Find in all actions except this one
 
-	for(ActionTools::ParameterDefinition *parameter: mParameters)
+	for(ActionTools::ParameterDefinition *parameter: qAsConst(mParameters))
 	{
         parameter->actionUpdate(mScript);
 		parameter->load(mActionInstance);
@@ -440,7 +441,7 @@ void ActionDialog::postInit()
 	
 	if(!mCurrentField.isEmpty())
 	{
-		for(ActionTools::ParameterDefinition *parameterDefinition: mParameters)
+		for(ActionTools::ParameterDefinition *parameterDefinition: qAsConst(mParameters))
 		{
 			if(parameterDefinition->name().original() == mCurrentField && parameterDefinition->editors().count() > 0)
 			{

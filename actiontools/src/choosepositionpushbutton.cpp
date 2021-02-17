@@ -54,7 +54,8 @@ namespace ActionTools
 #endif
 	{
 #ifdef Q_OS_UNIX
-        for(QWidget *widget: QApplication::topLevelWidgets())
+        const auto widgets = QApplication::topLevelWidgets();
+        for(QWidget *widget: widgets)
 		{
 			if(auto mainWindow = qobject_cast<QMainWindow*>(widget))
 			{
@@ -107,7 +108,8 @@ namespace ActionTools
 #ifdef Q_OS_UNIX
         mShownWindows.clear();
 
-        for(QWidget *widget: qApp->topLevelWidgets())
+        const auto widgets = qApp->topLevelWidgets();
+        for(QWidget *widget: widgets)
         {
             if(mMainWindow == widget)
                 continue;
@@ -198,7 +200,7 @@ namespace ActionTools
 
         QCoreApplication::instance()->removeNativeEventFilter(this);
 
-        for(auto shownWindow: mShownWindows)
+        for(auto shownWindow: qAsConst(mShownWindows))
         {
             XMapWindow(QX11Info::display(), shownWindow->winId());
         }

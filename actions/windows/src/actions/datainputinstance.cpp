@@ -152,7 +152,8 @@ namespace Actions
 		mInputDialog->move(screenGeometry.center());
 		mInputDialog->move(mInputDialog->pos().x() - mInputDialog->width()/2, mInputDialog->pos().y() - mInputDialog->height()/2);
 
-        for(QLabel *label: mInputDialog->findChildren<QLabel*>())
+        const auto labels = mInputDialog->findChildren<QLabel*>();
+        for(QLabel *label: labels)
             label->setOpenExternalLinks(true);
 
 		switch(mDataType)

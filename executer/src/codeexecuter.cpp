@@ -51,7 +51,8 @@ CodeExecuter::CodeExecuter(QObject *parent) :
     connect(mScriptEngineDebugger, &QScriptEngineDebugger::evaluationSuspended, this, &CodeExecuter::onEvaluationPaused);
     connect(mScriptAgent, &Execution::ScriptAgent::executionStopped, this, &CodeExecuter::stopExecution);
 
-    for(QString extension: mScriptEngine->availableExtensions())
+    const auto extensions = mScriptEngine->availableExtensions();
+    for(const QString &extension: extensions)
 		mScriptEngine->importExtension(extension);
 
     Code::setupPrettyPrinting(*mScriptEngine);
