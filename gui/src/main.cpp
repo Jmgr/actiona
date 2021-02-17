@@ -152,7 +152,6 @@ int main(int argc, char **argv)
     notify_init("Actiona");
 #endif
 
-//TMP: app binary path
 	app.addLibraryPath(QDir::currentPath() + QStringLiteral("/actions"));
 	app.addLibraryPath(QDir::currentPath() + QStringLiteral("/plugins"));
 
