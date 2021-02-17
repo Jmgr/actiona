@@ -88,6 +88,3 @@ namespace Code
 		QScriptValue mOnButtonReleased;
 	};
 }
-
-Q_DECLARE_METATYPE(MouseDevice::Button)
-

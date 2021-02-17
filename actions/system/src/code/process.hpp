@@ -39,7 +39,6 @@ namespace Code
 		Q_PROPERTY(QScriptValue onReadyReadStandardOutput READ onReadyReadStandardOutput WRITE setOnReadyReadStandardOutput)
 		Q_PROPERTY(QScriptValue onStarted READ onStarted WRITE setOnStarted)
 		Q_PROPERTY(QScriptValue onStateChanged READ onStateChanged WRITE setOnStateChanged)
-		Q_FLAGS(OpenModeFlag OpenMode)
 
 	public:
 		enum ProcessError
@@ -90,6 +89,7 @@ namespace Code
 			Unbuffered = QIODevice::Unbuffered
 		};
 		Q_DECLARE_FLAGS(OpenMode, OpenModeFlag)
+        Q_FLAG(OpenMode)
 
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
 
