@@ -73,7 +73,8 @@ namespace Code
 			{
 				QList<QUrl> urls;
 				
-                for(const QString &url: arrayParameterToStringList(it.value()))
+                const auto surls = arrayParameterToStringList(it.value());
+                for(const QString &url: surls)
 					urls.append(QUrl::fromLocalFile(url));
 					
 				fileDialog->mFileDialog->setSidebarUrls(urls);
@@ -239,7 +240,8 @@ namespace Code
 	{
 		QList<QUrl> urls;
 		
-        for(const QString &url: arrayParameterToStringList(sidebarUrls))
+        const auto surls = arrayParameterToStringList(sidebarUrls);
+        for(const QString &url: surls)
 			urls.append(QUrl::fromLocalFile(url));
 			
 		mFileDialog->setSidebarUrls(urls);

@@ -155,16 +155,20 @@ namespace Actions
         mailMessage.setBody(body);
 		mailMessage.setExtraHeader(QStringLiteral("Date"), QDateTime::currentDateTime().toString(Qt::RFC2822Date));
 
-        for(QString receiver: receivers.split(QLatin1Char(','), Qt::SkipEmptyParts))
+        const auto sreceivers = receivers.split(QLatin1Char(','), Qt::SkipEmptyParts);
+        for(const QString &receiver: sreceivers)
             mailMessage.addRecipient(receiver.trimmed());
 
-        for(QString carbonCopyReceiver: carbonCopy.split(QLatin1Char(','), Qt::SkipEmptyParts))
+        const auto scarbonCopyReceivers = carbonCopy.split(QLatin1Char(','), Qt::SkipEmptyParts);
+        for(const QString &carbonCopyReceiver: scarbonCopyReceivers)
             mailMessage.addRecipient(carbonCopyReceiver.trimmed(), QxtMailMessage::Cc);
 
-        for(QString blindCarbonCopyReceiver: blindCarbonCopy.split(QLatin1Char(','), Qt::SkipEmptyParts))
+        const auto sblindCarbonCopyReceivers = blindCarbonCopy.split(QLatin1Char(','), Qt::SkipEmptyParts);
+        for(const QString &blindCarbonCopyReceiver: sblindCarbonCopyReceivers)
             mailMessage.addRecipient(blindCarbonCopyReceiver.trimmed(), QxtMailMessage::Bcc);
 
-        for(QString extraHeader: extraHeaders.split(QLatin1Char('\n'), Qt::SkipEmptyParts))
+        const auto sextraHeaders = extraHeaders.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+        for(const QString &extraHeader: sextraHeaders)
         {
             QStringList extraHeaderParts = extraHeader.split(QLatin1Char(':'), Qt::SkipEmptyParts);
 

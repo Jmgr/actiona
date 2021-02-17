@@ -107,7 +107,7 @@ namespace ActionTools
     {
         QString keys;
 
-        for(auto pressedKey: m_keys)
+        for(auto pressedKey: qAsConst(m_keys))
         {
             if(!keys.isEmpty())
                 keys += QStringLiteral(" + ");

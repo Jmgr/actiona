@@ -51,7 +51,8 @@ namespace ActionTools
 	
 	void GroupDefinition::setDefaultValues(ActionInstance *actionInstance)
 	{
-		for(ParameterDefinition *parameterDefinition: members())
+        const auto parameterDefinitions = members();
+        for(ParameterDefinition *parameterDefinition: parameterDefinitions)
 			parameterDefinition->setDefaultValues(actionInstance);
 	}
 
@@ -79,7 +80,8 @@ namespace ActionTools
 
 	void GroupDefinition::enableMembers(bool enable)
 	{
-		for(ParameterDefinition *parameterDefinition: members())
+        const auto parameterDefinitions = members();
+        for(ParameterDefinition *parameterDefinition: parameterDefinitions)
 			parameterDefinition->parentWidget()->setEnabled(enable);
 	}
 }

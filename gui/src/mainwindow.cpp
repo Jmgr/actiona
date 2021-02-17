@@ -470,7 +470,7 @@ void MainWindow::postInit()
 		QString message = tr("<b>Unable to load %n action(s):</b>\n", "", mPackLoadErrors.count());
 		message += QStringLiteral("<ul>");
 
-		for(const QString &error: mPackLoadErrors)
+		for(const QString &error: qAsConst(mPackLoadErrors))
 		{
 			message += QStringLiteral("<li>") + error + QStringLiteral("</li>");
 		}
@@ -2200,7 +2200,7 @@ QList<int> MainWindow::selectedRows() const
 
 	QList<int> selectedRows;
 
-	for(const QModelIndex &index: selectedIndexes)
+	for(const QModelIndex &index: qAsConst(selectedIndexes))
 	{
 		if(index.column() == ScriptModel::ColumnLabel)
 			selectedRows << index.row();
@@ -2357,7 +2357,8 @@ void MainWindow::actionSelectionChanged(int selectionCount)
 	bool hasSelection = (selectionCount > 0);
 
 	bool hasSelectionEnabledActions = false;
-	for(int row: selectedRows())
+    const auto rows = selectedRows();
+    for(int row: rows)
 	{
 		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
 		if(!actionInstance)

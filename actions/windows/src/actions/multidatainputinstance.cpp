@@ -162,7 +162,8 @@ namespace Actions
         connect(mDialog, &QDialog::accepted, this, &MultiDataInputInstance::accepted);
         connect(mDialog, &QDialog::rejected, this, &MultiDataInputInstance::rejected);
 
-        for(QLabel *label: mDialog->findChildren<QLabel*>())
+        const auto labels = mDialog->findChildren<QLabel*>();
+        for(QLabel *label: labels)
             label->setOpenExternalLinks(true);
 
 		mDialog->show();
@@ -210,7 +211,8 @@ namespace Actions
 			{
 				QStringList selectedButtons;
 
-                for(QAbstractButton *button: mButtonGroup->buttons())
+                const auto buttons = mButtonGroup->buttons();
+                for(QAbstractButton *button: buttons)
 				{
 					if(button->isChecked())
 						selectedButtons.append(button->text());
@@ -259,7 +261,8 @@ namespace Actions
 	{
 		int checkedButtonCount = 0;
 
-        for(QAbstractButton *button: mButtonGroup->buttons())
+        const auto buttons = mButtonGroup->buttons();
+        for(QAbstractButton *button: buttons)
 		{
 			if(button->isChecked())
 				++checkedButtonCount;

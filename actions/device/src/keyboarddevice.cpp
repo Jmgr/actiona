@@ -71,7 +71,7 @@ KeyboardDevice::~KeyboardDevice()
 
 void KeyboardDevice::reset()
 {
-    for(int nativeKey: mPressedKeys)
+    for(int nativeKey: qAsConst(mPressedKeys))
         doKeyAction(Release, nativeKey, false);
 
     mPressedKeys.clear();

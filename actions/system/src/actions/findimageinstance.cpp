@@ -179,7 +179,7 @@ namespace Actions
         QList<QImage> sourceImages;
         sourceImages.reserve(mImagesToSearchIn.size());
 
-        for(const auto &imageToSearchIn: mImagesToSearchIn)
+        for(const auto &imageToSearchIn: qAsConst(mImagesToSearchIn))
             sourceImages.append(imageToSearchIn.first.toImage());
 
         if(!mOpenCVAlgorithms->findSubImageAsync(sourceImages,

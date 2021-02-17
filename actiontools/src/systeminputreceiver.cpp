@@ -60,31 +60,31 @@ namespace ActionTools
 
 		void Receiver::mouseMotion(int x, int y)
 		{
-			for(Listener *listener: mListeners)
+			for(Listener *listener: qAsConst(mListeners))
 				listener->mouseMotion(x, y);
 		}
 
 		void Receiver::mouseWheel(int intensity)
 		{
-			for(Listener *listener: mListeners)
+			for(Listener *listener: qAsConst(mListeners))
 				listener->mouseWheel(intensity);
 		}
 
 		void Receiver::mouseButtonPressed(ActionTools::SystemInput::Button button)
 		{
-			for(Listener *listener: mListeners)
+			for(Listener *listener: qAsConst(mListeners))
 				listener->mouseButtonPressed(button);
 		}
 
 		void Receiver::mouseButtonReleased(ActionTools::SystemInput::Button button)
 		{
-			for(Listener *listener: mListeners)
+			for(Listener *listener: qAsConst(mListeners))
 				listener->mouseButtonReleased(button);
 		}
 
 		void Receiver::keyboardEvent()
 		{
-			for(Listener *listener: mListeners)
+			for(Listener *listener: qAsConst(mListeners))
 				listener->keyboardEvent();
 		}
 

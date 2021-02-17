@@ -248,7 +248,8 @@ namespace ActionTools
 
 		stream.writeStartElement(QStringLiteral("actions"));
 
-        for(int actionIndex: usedActions())
+        const auto actionIndexes = usedActions();
+        for(int actionIndex: actionIndexes)
 		{
 			ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionIndex);
 
@@ -263,7 +264,7 @@ namespace ActionTools
 		stream.writeStartElement(QStringLiteral("parameters"));
 
         int parameterIndex = 0;
-        for(const ScriptParameter &parameter: mParameters)
+        for(const ScriptParameter &parameter: qAsConst(mParameters))
 		{
             if(progressCallback)
             {
@@ -310,7 +311,7 @@ namespace ActionTools
 		stream.writeAttribute(QStringLiteral("pauseAfter"), QString::number(pauseAfter()));
 
         int actionIndex = 0;
-        for(ActionInstance *actionInstance: mActionInstances)
+        for(ActionInstance *actionInstance: qAsConst(mActionInstances))
 		{
             if(progressCallback)
             {
@@ -336,7 +337,8 @@ namespace ActionTools
 				stream.writeAttribute(QStringLiteral("timeout"), QVariant(actionInstance->timeout()).toString());
 
 			const ExceptionActionInstancesHash &exceptionActionsHash = actionInstance->exceptionActionInstances();
-            for(ActionException::Exception exception: exceptionActionsHash.keys())
+            const auto exceptions = exceptionActionsHash.keys();
+            for(ActionException::Exception exception: exceptions)
 			{
 				ActionException::ExceptionActionInstance exceptionActionInstance = exceptionActionsHash.value(exception);
 				stream.writeStartElement(QStringLiteral("exception"));
@@ -347,14 +349,16 @@ namespace ActionTools
 			}
 
 			const ParametersData &parametersData = actionInstance->parametersData();
-            for(const QString &parameter: parametersData.keys())
+            const auto parameters = parametersData.keys();
+            for(const QString &parameter: parameters)
 			{
 				const Parameter &parameterData = parametersData.value(parameter);
 
 				stream.writeStartElement(QStringLiteral("parameter"));
 				stream.writeAttribute(QStringLiteral("name"), parameter);
 
-                for(const QString &subParameter: parameterData.subParameters().keys())
+                const auto subParameters = parameterData.subParameters().keys();
+                for(const QString &subParameter: subParameters)
 				{
 					const SubParameter &subParameterData = parameterData.subParameters().value(subParameter);
 
@@ -674,7 +678,8 @@ namespace ActionTools
 					actionInstance->setComment(comment);
 
                     ParametersData defaultParametersData = actionInstance->parametersData();
-                    for(const QString &parameterKey: parametersData.keys())
+                    const auto parameterKeys = parametersData.keys();
+                    for(const QString &parameterKey: parameterKeys)
                         defaultParametersData[parameterKey] = parametersData.value(parameterKey);
 
                     actionInstance->setParametersData(defaultParametersData);
@@ -695,9 +700,10 @@ namespace ActionTools
 		else
 			mActionInstances.append(newActions);
 
-        for(ActionDefinition *actionDefinition: updatableActionDefinitions.keys())
+        const auto actionDefinitions = updatableActionDefinitions.keys();
+        for(ActionDefinition *actionDefinition: actionDefinitions)
         {
-            for(ActionInstance *actionInstance: mActionInstances)
+            for(ActionInstance *actionInstance: qAsConst(mActionInstances))
             {
                 if(actionInstance->definition() == actionDefinition)
                     actionDefinition->updateAction(actionInstance, updatableActionDefinitions.value(actionDefinition));
@@ -898,13 +904,13 @@ namespace ActionTools
 
     void Script::executionStopped()
     {
-        for(auto actionInstance: mActionInstances)
+        for(auto actionInstance: qAsConst(mActionInstances))
             actionInstance->stopLongTermExecution();
 
         mMinMaxExecutionCounter = {std::numeric_limits<int>::max(), std::numeric_limits<int>::min()};
         mMinMaxExecutionDuration = {std::numeric_limits<qint64>::max(), std::numeric_limits<qint64>::min()};
 
-        for(auto actionInstance: mActionInstances)
+        for(auto actionInstance: qAsConst(mActionInstances))
         {
            if(!actionInstance->isEnabled())
                continue;
@@ -946,7 +952,8 @@ namespace ActionTools
                 //Add every variable in any parameter type that is in code mode
                 const QString &code = subParameter.value();
 
-                for(const QString &codeLine: code.split(newLineRegExp, Qt::SkipEmptyParts))
+                const auto codeLines = code.split(newLineRegExp, Qt::SkipEmptyParts);
+                for(const QString &codeLine: codeLines)
                 {
                     int position = 0;
 
@@ -996,7 +1003,8 @@ namespace ActionTools
     {
         const ActionDefinition *actionDefinition = actionInstance->definition();
 
-        for(const ElementDefinition *elementDefinition: actionDefinition->elements())
+        const auto elementDefinitions = actionDefinition->elements();
+        for(const ElementDefinition *elementDefinition: elementDefinitions)
         {
             if(const auto groupDefinition = qobject_cast<const GroupDefinition *>(elementDefinition))
             {

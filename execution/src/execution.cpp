@@ -98,7 +98,8 @@ namespace Execution
 		mScript = script;
 		mScriptEngine = new QScriptEngine(this);
 
-		for(QString extension: mScriptEngine->availableExtensions())
+        const auto extensions = mScriptEngine->availableExtensions();
+        for(const QString &extension: extensions)
 			mScriptEngine->importExtension(extension);
 		
 		mActionFactory = actionFactory;
@@ -329,7 +330,8 @@ namespace Execution
 		mScript->clearCallStack();
 
 		const QMap<QString, ActionTools::Resource> &resources = mScript->resources();
-        for(const QString &key: resources.keys())
+        const auto keys = resources.keys();
+        for(const QString &key: keys)
         {
             const ActionTools::Resource &resource = resources.value(key);
             QScriptValue value;
