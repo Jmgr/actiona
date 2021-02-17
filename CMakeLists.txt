@@ -25,15 +25,6 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
 
-# Only do these if this is the main project, and not if it is included through add_subdirectory
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    # Testing only available if this is the main app
-    # Note this needs to be done in the main CMakeLists
-    # since it calls enable_testing, which must be in the
-    # main CMakeLists.
-    include(CTest)
-endif()
-
 function(setup_target TARGET)
     target_compile_definitions(${TARGET} PRIVATE
         QT_USE_FAST_CONCATENATION
@@ -46,16 +37,11 @@ function(setup_target TARGET)
         ACT_BUILD_NAME="${ACT_BUILD_NAME}"
         $<$<BOOL:${ACT_UPDATER}>:ACT_UPDATER>
     )
-    #set_target_properties(${TARGET} PROPERTIES VERSION ${PROJECT_VERSION})
-    #set_target_properties(${TARGET} PROPERTIES NO_SONAME TRUE)
     set_target_properties(${TARGET}
         PROPERTIES
             PREFIX ""
     )
 endfunction()
-
-            #LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
-            #RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
 
 function(compile_translations TARGET)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS LinguistTools REQUIRED)
@@ -74,9 +60,3 @@ add_subdirectory(execution)
 add_subdirectory(executer)
 add_subdirectory(gui)
 add_subdirectory(actions)
-
-# Testing only available if this is the main app
-# Emergency override MODERN_CMAKE_BUILD_TESTING provided as well
-if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING) AND BUILD_TESTING)
-    # TMP add_subdirectory(tests)
-endif()
