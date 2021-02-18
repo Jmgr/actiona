@@ -18,6 +18,7 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Install Qt
+    
       uses: jurplel/install-qt-action@v2.12.2
 
     - name: Create Build Environment
