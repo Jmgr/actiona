@@ -281,7 +281,7 @@ target_compile_definitions(${PROJECT} PRIVATE ACTIONTOOLS_LIBRARY)
 
 setup_target(${PROJECT})
 
-find_package(OpenCV ${ACT_MINIMUM_OPENCV_VERSION} REQUIRED)
+find_package(OpenCV REQUIRED)
 find_package(Boost ${ACT_MINIMUM_BOOST_VERSION} REQUIRED)
 find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script XmlPatterns Widgets REQUIRED)
 
