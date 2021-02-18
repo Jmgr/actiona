@@ -118,6 +118,7 @@ if(UNIX)
     include(FindPkgConfig)
     pkg_search_module(LIBNOTIFY REQUIRED libnotify)
     pkg_search_module(BLUEZ REQUIRED bluez)
+    pkg_search_module(UDEV REQUIRED udev)
 endif()
 
 target_include_directories(${PROJECT}
@@ -127,6 +128,7 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../../actiontools/include
         ${LIBNOTIFY_INCLUDE_DIRS}
         ${BLUEZ_INCLUDE_DIRS}
+	${UDEV_INCLUDE_DIRS}
 )
 
 setup_target(${PROJECT})
@@ -152,6 +154,7 @@ target_link_libraries(${PROJECT}
     Qt5::TextToSpeech
     ${LIBNOTIFY_LIBRARIES}
     ${BLUEZ_LIBRARIES}
+    ${UDEV_LIBRARIES}
 )
 
 compile_translations(${PROJECT})
