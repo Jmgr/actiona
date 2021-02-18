@@ -1,0 +1,35 @@
+name: Linux
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install packages
+      run: sudo apt-get update && sudo apt-get install -y qtbase5-dev libqt5x11extras5-dev libqt5xmlpatterns5-dev qtscript5-dev qttools5-dev qtmultimedia5-dev qttools5-dev-tools libnotify-dev libopencv-core-dev libopencv-imgproc-dev libxtst-dev libboost-dev qt5-default libopencv-dev libxkbcommon-dev libbluetooth-dev libqt5texttospeech5-dev libudev-dev
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{github.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{github.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+      env:
+        MAKEFLAGS: "-j2"
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: ctest -C $BUILD_TYPE
