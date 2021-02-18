@@ -75,7 +75,7 @@ namespace ActionTools
 
 				if(type == REG_MULTI_SZ)
 				{
-                    QStringList stringList = QString::fromWCharArray(buffer.data(), size / 2).split(QChar(L'\0'), Qt::SkipEmptyParts);
+                    QStringList stringList = QString::fromWCharArray(buffer.data(), size / 2).split(QChar(L'\0'), QString::SkipEmptyParts);
 
 					if(stringList.last().isEmpty())
 						stringList.removeLast();
