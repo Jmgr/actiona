@@ -63,7 +63,7 @@ namespace Code
         QObject::connect(mTcpSocket, &QTcpSocket::disconnected, this, &Tcp::disconnected);
         QObject::connect(mTcpSocket, &QTcpSocket::readyRead, this, &Tcp::readyRead);
         QObject::connect(mTcpSocket, &QTcpSocket::bytesWritten, this, &Tcp::bytesWritten);
-        QObject::connect(mTcpSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::errorOccurred), this, &Tcp::error);
+        QObject::connect(mTcpSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Tcp::error);
 	}
 	
 	Tcp::Tcp(QTcpSocket *tcpSocket)
@@ -74,7 +74,7 @@ namespace Code
         QObject::connect(mTcpSocket, &QTcpSocket::disconnected, this, &Tcp::disconnected);
         QObject::connect(mTcpSocket, &QTcpSocket::readyRead, this, &Tcp::readyRead);
         QObject::connect(mTcpSocket, &QTcpSocket::bytesWritten, this, &Tcp::bytesWritten);
-        QObject::connect(mTcpSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::errorOccurred), this, &Tcp::error);
+        QObject::connect(mTcpSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Tcp::error);
 	}
 	
     Tcp::~Tcp() = default;
