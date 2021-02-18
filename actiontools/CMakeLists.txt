@@ -264,7 +264,6 @@ add_dependencies(${PROJECT} tools)
 if(UNIX)
     include(FindPkgConfig)
     pkg_search_module(LIBXTST REQUIRED xtst)
-    pkg_search_module(LIBOPENCV REQUIRED opencv)
 endif()
 
 target_include_directories(${PROJECT}
@@ -274,14 +273,15 @@ target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
-        ${LIBXTST_INCLUDE_DIRS}
-        ${LIBOPENCV_INCLUDE_DIRS}
+	${LIBXTST_INCLUDE_DIRS}
+	${OpenCV_INCLUDE_DIRS}
 )
 
 target_compile_definitions(${PROJECT} PRIVATE ACTIONTOOLS_LIBRARY)
 
 setup_target(${PROJECT})
 
+find_package(OpenCV ${ACT_MINIMUM_OPENCV_VERSION} REQUIRED)
 find_package(Boost ${ACT_MINIMUM_BOOST_VERSION} REQUIRED)
 find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script XmlPatterns Widgets REQUIRED)
 
@@ -291,7 +291,7 @@ target_link_libraries(
     Qt5::XmlPatterns
     Qt5::Widgets
     ${LIBXTST_LIBRARIES}
-    ${LIBOPENCV_LIBRARIES}
+    ${OpenCV_LIBS}
 )
 
 if(UNIX)
