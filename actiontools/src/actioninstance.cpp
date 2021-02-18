@@ -182,7 +182,7 @@ namespace ActionTools
 
         if(code)
         {
-            const auto codeLines = input.split(QRegExp(QStringLiteral("[\n\r;]")), Qt::SkipEmptyParts);
+            const auto codeLines = input.split(QRegExp(QStringLiteral("[\n\r;]")), QString::SkipEmptyParts);
             for(const QString &codeLine: codeLines)
             {
                 int position = 0;
@@ -591,7 +591,7 @@ namespace ActionTools
 		if(!ok)
 			return QStringList();
 
-        return result.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+        return result.split(QLatin1Char('\n'), QString::SkipEmptyParts);
 	}
 
 	QPolygon ActionInstance::evaluatePolygon(bool &ok,
@@ -615,12 +615,12 @@ namespace ActionTools
 		if(result.isEmpty() || result == QLatin1String(";"))
 			return QPolygon();
 
-        QStringList pointStrings = result.split(QLatin1Char(';'), Qt::SkipEmptyParts);
+        QStringList pointStrings = result.split(QLatin1Char(';'), QString::SkipEmptyParts);
 		QPolygon polygon;
 
         for(const QString &pointString: qAsConst(pointStrings))
 		{
-            QStringList pointComponents = pointString.split(QLatin1Char(':'), Qt::SkipEmptyParts);
+            QStringList pointComponents = pointString.split(QLatin1Char(':'), QString::SkipEmptyParts);
 			if(pointComponents.size() != 2)
 				continue;
 
