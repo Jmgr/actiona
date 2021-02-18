@@ -17,14 +17,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v2.12.2
+    #- name: Install Qt
+    #  uses: jurplel/install-qt-action@v2.12.2
       
-    - name: Download and install Boost
-      uses: MarkusJx/install-boost@v1.0.1
-      id: install-boost
-      with:
-        boost_version: 1.73.0
+    #- name: Download and install Boost
+    #  uses: MarkusJx/install-boost@v1.0.1
+    #  id: install-boost
+    #  with:
+    #    boost_version: 1.73.0
+    
+    - name: Install packages
+      run: sudo apt install build-essential qtbase5-dev libqt5x11extras5-dev libqt5xmlpatterns5-dev qtscript5-dev qttools5-dev qtmultimedia5-dev qttools5-dev-tools libnotify-dev libopencv-core-dev libopencv-imgproc-dev libxtst-dev libboost-dev
       
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
