@@ -34,8 +34,12 @@ target_compile_definitions(${PROJECT} PRIVATE TOOLS_LIBRARY)
 
 setup_target(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network REQUIRED)
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets REQUIRED)
 
-target_link_libraries(${PROJECT} Qt5::Network)
+target_link_libraries(
+    ${PROJECT}
+    Qt5::Network
+    Qt5::Widgets
+)
 
 compile_translations(${PROJECT})
