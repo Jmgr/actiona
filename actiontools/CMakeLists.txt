@@ -292,6 +292,7 @@ target_link_libraries(
     Qt5::Widgets
     ${LIBXTST_LIBRARIES}
     ${OpenCV_LIBS}
+    $<$<PLATFORM_ID:Windows>:Psapi>
 )
 
 if(UNIX)
