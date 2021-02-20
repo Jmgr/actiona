@@ -50,7 +50,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/keyinput.cpp
     ${SOURCES_PREFIX}/keymapper.cpp
     ${SOURCES_PREFIX}/keyparameterdefinition.cpp
-    ${SOURCES_PREFIX}/keysym2ucs.cpp
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keysym2ucs.cpp>
     ${SOURCES_PREFIX}/keysymhelper.cpp
     ${SOURCES_PREFIX}/keywords.cpp
     ${SOURCES_PREFIX}/linecombobox.cpp
@@ -96,7 +96,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/windowhandle.cpp
     ${SOURCES_PREFIX}/windowparameterdefinition.cpp
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keyboardkey_windows.cpp>
-    $<$<BOOL:UNIX>:${SOURCES_PREFIX}/keyboardkey_xkb.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyboardkey_xkb.cpp>
     ${SOURCES_PREFIX}/code/algorithms.cpp
     ${SOURCES_PREFIX}/code/codeclass.cpp
     ${SOURCES_PREFIX}/code/codetools.cpp
@@ -115,7 +115,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/qtimagefilters/qtimagefilterfactory.cpp
     ${SOURCES_PREFIX}/qtsingleapplication/qtlocalpeer.cpp
     ${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile.cpp
-    $<$<BOOL:UNIX>:${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile_unix.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile_unix.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile_win.cpp>
     ${SOURCES_PREFIX}/qtsingleapplication/qtsingleapplication.cpp
 )
@@ -174,7 +174,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/keyinput.hpp
     ${HEADERS_PREFIX}/keymapper.hpp
     ${HEADERS_PREFIX}/keyparameterdefinition.hpp
-    ${HEADERS_PREFIX}/keysym2ucs.hpp
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keysym2ucs.hpp>
     ${HEADERS_PREFIX}/keysymhelper.hpp
     ${HEADERS_PREFIX}/keywords.hpp
     ${HEADERS_PREFIX}/linecombobox.hpp
@@ -266,6 +266,13 @@ if(UNIX)
     pkg_search_module(LIBXTST REQUIRED xtst)
 endif()
 
+target_compile_definitions(${PROJECT} PRIVATE ACTIONTOOLS_LIBRARY)
+
+setup_target(${PROJECT})
+
+find_package(OpenCV REQUIRED)
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script XmlPatterns Widgets REQUIRED)
+
 target_include_directories(${PROJECT}
     PUBLIC
         $<INSTALL_INTERFACE:include>
@@ -273,20 +280,13 @@ target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
-	${LIBXTST_INCLUDE_DIRS}
-	${OpenCV_INCLUDE_DIRS}
+        ${LIBXTST_INCLUDE_DIRS}
+        ${OpenCV_INCLUDE_DIRS}
 )
-
-target_compile_definitions(${PROJECT} PRIVATE ACTIONTOOLS_LIBRARY)
-
-setup_target(${PROJECT})
-
-find_package(OpenCV REQUIRED)
-find_package(Boost ${ACT_MINIMUM_BOOST_VERSION} REQUIRED)
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script XmlPatterns Widgets REQUIRED)
 
 target_link_libraries(
     ${PROJECT}
+    tools
     Qt5::Script
     Qt5::XmlPatterns
     Qt5::Widgets

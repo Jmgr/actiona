@@ -51,6 +51,11 @@ add_library(${PROJECT} SHARED
 
 add_dependencies(${PROJECT} tools actiontools execution)
 
+setup_target(${PROJECT})
+setup_action(${PROJECT})
+
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script Widgets REQUIRED)
+
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -59,11 +64,6 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../../execution/include
 )
 
-setup_target(${PROJECT})
-setup_action(${PROJECT})
-
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script Widgets REQUIRED)
-
-target_link_libraries(${PROJECT} Qt5::Script Qt5::Widgets)
+target_link_libraries(${PROJECT} actiontools execution Qt5::Script Qt5::Widgets)
 
 compile_translations(${PROJECT})

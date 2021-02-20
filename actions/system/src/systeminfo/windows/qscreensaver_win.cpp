@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qscreensaver_win_p.hpp"
+#include "qscreensaver_win_p.h"
 
 #include <QtCore/qsettings.h>
 

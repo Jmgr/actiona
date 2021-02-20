@@ -29,6 +29,13 @@ if(UNIX)
     pkg_search_module(LIBNOTIFY REQUIRED libnotify)
 endif()
 
+set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actexec")
+set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
+
+setup_target(${PROJECT})
+
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script ScriptTools Widgets REQUIRED)
+
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -37,13 +44,6 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../execution/include
         ${LIBNOTIFY_INCLUDE_DIRS}
 )
-
-set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actexec")
-set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
-
-setup_target(${PROJECT})
-
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script ScriptTools Widgets REQUIRED)
 
 target_link_libraries(
     ${PROJECT}

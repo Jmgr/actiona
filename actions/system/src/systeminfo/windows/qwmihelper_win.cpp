@@ -43,7 +43,7 @@
 #if !defined (Q_CC_MINGW) || defined(__MINGW64_VERSION_MAJOR)
 #define _WIN32_DCOM
 
-#include "qwmihelper_win_p.hpp"
+#include "qwmihelper_win_p.h"
 
 #include <QDebug>
 #include <objbase.h>

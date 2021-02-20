@@ -91,18 +91,20 @@ add_library(${PROJECT} SHARED
 
 add_dependencies(${PROJECT} tools actiontools)
 
+setup_target(${PROJECT})
+setup_action(${PROJECT})
+
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script Sql Widgets REQUIRED)
+find_package(Boost ${ACT_MINIMUM_BOOST_VERSION} REQUIRED)
+
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/../../tools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../../actiontools/include
+        ${Boost_INCLUDE_DIRS}
 )
 
-setup_target(${PROJECT})
-setup_action(${PROJECT})
-
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script Sql Widgets REQUIRED)
-
-target_link_libraries(${PROJECT} Qt5::Network Qt5::Script Qt5::Sql Qt5::Widgets)
+target_link_libraries(${PROJECT} actiontools Qt5::Network Qt5::Script Qt5::Sql Qt5::Widgets)
 
 compile_translations(${PROJECT})

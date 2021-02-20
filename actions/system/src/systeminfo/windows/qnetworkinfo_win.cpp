@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qnetworkinfo_win_p.hpp"
+#include "qnetworkinfo_win_p.h"
 
 #include <QMutex>
 #include <QLibraryInfo>
@@ -54,7 +54,7 @@
 
 #if !defined( Q_CC_MINGW)
 #ifndef Q_OS_WINCE
-#include "qwmihelper_win_p.hpp"
+#include "qwmihelper_win_p.h"
 #include <Winioctl.h>
 
 enum NDIS_MEDIUM {
@@ -461,17 +461,6 @@ QNetworkInfoPrivate::QNetworkInfoPrivate(QNetworkInfo *parent)
     startWifiCallback();
 
      timerMs = 5000;
-     switch (QSysInfo::WindowsVersion) {
-     case  QSysInfo::WV_VISTA:
-     case QSysInfo::WV_WINDOWS7:
-         break;
-     default:
-         {
-             if (local_WlanOpenHandle)
-                 QTimer::singleShot(timerMs, this, SLOT(networkStrengthTimeout()));
-         }
-         break;
-     };
 }
 QNetworkInfoPrivate::~QNetworkInfoPrivate()
 {
@@ -566,14 +555,6 @@ void QNetworkInfoPrivate::emitNetworkStatusChanged(QNetworkInfo::NetworkMode mod
 
 void QNetworkInfoPrivate::emitNetworkSignalStrengthChanged(QNetworkInfo::NetworkMode mode,int /*strength*/)
 {
-    switch (QSysInfo::WindowsVersion) {
-    case QSysInfo::WV_VISTA:
-    case QSysInfo::WV_WINDOWS7:
-        break;
-    default:
-        QTimer::singleShot(timerMs, this, SLOT(networkStrengthTimeout()));
-        break;
-    };
     networkSignalStrength(mode, 1);
 }
 
@@ -601,15 +582,6 @@ void QNetworkInfoPrivate::networkStrengthTimeout()
     foreach (const QNetworkInfo::NetworkMode mode, modeList) {
         networkSignalStrength(mode, 1);
     }
-    switch (QSysInfo::WindowsVersion) {
-    case QSysInfo::WV_VISTA:
-    case QSysInfo::WV_WINDOWS7:
-        break;
-    default:
-        if (local_WlanOpenHandle)
-            QTimer::singleShot(timerMs, this, SLOT(networkStrengthTimeout()));
-        break;
-    };
  }
 
 void QNetworkInfoPrivate::networkStatusTimeout()
@@ -768,19 +740,8 @@ bool QNetworkInfoPrivate::isDefaultMode(QNetworkInfo::NetworkMode mode)
 {
     bool isDefaultGateway = false;
     QNetworkInterface netInterface = interfaceForMode(mode,1);
-    QString deviceNameReg;
-
-    switch (QSysInfo::WindowsVersion) {
-    case  QSysInfo::WV_VISTA:
-    case QSysInfo::WV_WINDOWS7:
-        deviceNameReg =  QLatin1String("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\%1\\");
-        deviceNameReg = deviceNameReg.arg(netInterface.name());
-        break;
-    default:
-        deviceNameReg = QLatin1String("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\%1\\Parameters\\Tcpip");
-        deviceNameReg = deviceNameReg.arg(netInterface.name());
-        break;
-    };
+    QString deviceNameReg = QLatin1String("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\%1\\");
+    deviceNameReg = deviceNameReg.arg(netInterface.name());
 
     QSettings deviceSettings(deviceNameReg, QSettings::NativeFormat);
     QString dhcpGw = QLatin1String("DhcpDefaultGateway");
@@ -1088,8 +1049,7 @@ QString QNetworkInfoPrivate::networkName(QNetworkInfo::NetworkMode mode, int net
                 DOT11_SSID ssid;
                 ssid = connAtts->wlanAssociationAttributes.dot11Ssid;
                 for (uint i = 0; i < ssid.uSSIDLength;i++) {
-                    QString temp = QLatin1Char(ssid.ucSSID[i]);
-                    netname += temp;
+                    netname += QString(QChar::fromLatin1(ssid.ucSSID[i]));
                 }
             }
             local_WlanFreeMemory(connAtts);

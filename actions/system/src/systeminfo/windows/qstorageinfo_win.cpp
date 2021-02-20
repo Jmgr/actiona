@@ -39,11 +39,11 @@
 **
 ****************************************************************************/
 
-#include "qstorageinfo_win_p.hpp"
+#include "qstorageinfo_win_p.h"
 
 #if !defined( Q_CC_MINGW)
 #ifndef Q_OS_WINCE
-#include "qwmihelper_win_p.hpp"
+#include "qwmihelper_win_p.h"
 #endif
 #endif
 

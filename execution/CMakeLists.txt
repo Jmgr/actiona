@@ -32,6 +32,12 @@ add_library(${PROJECT} SHARED
 
 add_dependencies(${PROJECT} actiontools tools)
 
+target_compile_definitions(${PROJECT} PRIVATE EXECUTION_LIBRARY)
+
+setup_target(${PROJECT})
+
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script ScriptTools Widgets UiTools REQUIRED)
+
 target_include_directories(${PROJECT}
     PUBLIC
         $<INSTALL_INTERFACE:include>
@@ -43,12 +49,6 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../actiontools/include
 )
 
-target_compile_definitions(${PROJECT} PRIVATE EXECUTION_LIBRARY)
-
-setup_target(${PROJECT})
-
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script ScriptTools Widgets UiTools REQUIRED)
-
-target_link_libraries(${PROJECT} Qt5::Script Qt5::ScriptTools Qt5::Widgets Qt5::UiTools)
+target_link_libraries(${PROJECT} actiontools Qt5::Script Qt5::ScriptTools Qt5::Widgets Qt5::UiTools)
 
 compile_translations(${PROJECT})

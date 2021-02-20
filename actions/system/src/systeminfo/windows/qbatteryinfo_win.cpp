@@ -40,7 +40,7 @@
 **
 ****************************************************************************/
 
-#include "qbatteryinfo_win_p.hpp"
+#include "qbatteryinfo_win_p.h"
 
 #include <qt_windows.h>
 

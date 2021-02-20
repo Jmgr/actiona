@@ -121,16 +121,6 @@ if(UNIX)
     pkg_search_module(UDEV REQUIRED udev)
 endif()
 
-target_include_directories(${PROJECT}
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${CMAKE_CURRENT_SOURCE_DIR}/../../tools/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/../../actiontools/include
-        ${LIBNOTIFY_INCLUDE_DIRS}
-        ${BLUEZ_INCLUDE_DIRS}
-	${UDEV_INCLUDE_DIRS}
-)
-
 setup_target(${PROJECT})
 setup_action(${PROJECT})
 
@@ -144,7 +134,19 @@ find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS
     TextToSpeech
 REQUIRED)
 
+target_include_directories(${PROJECT}
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/systeminfo
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../tools/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../actiontools/include
+        ${LIBNOTIFY_INCLUDE_DIRS}
+        ${BLUEZ_INCLUDE_DIRS}
+        ${UDEV_INCLUDE_DIRS}
+)
+
 target_link_libraries(${PROJECT}
+    actiontools
     Qt5::Network
     Qt5::Script
     Qt5::Widgets
@@ -155,6 +157,10 @@ target_link_libraries(${PROJECT}
     ${LIBNOTIFY_LIBRARIES}
     ${BLUEZ_LIBRARIES}
     ${UDEV_LIBRARIES}
+    $<$<PLATFORM_ID:Windows>:Bthprops>
+    $<$<PLATFORM_ID:Windows>:Ws2_32>
+    $<$<PLATFORM_ID:Windows>:PowrProf>
+    $<$<PLATFORM_ID:Windows>:Vfw32>
 )
 
 compile_translations(${PROJECT})

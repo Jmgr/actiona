@@ -55,7 +55,7 @@
 
 #include <QBasicTimer>
 
-#include "qnetworkinfo.hpp"
+#include "qnetworkinfo.h"
 
 QT_BEGIN_NAMESPACE
 
