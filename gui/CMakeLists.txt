@@ -34,7 +34,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/sfxscriptdialog.cpp
     ${SOURCES_PREFIX}/QHotkey/qhotkey.cpp
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/QHotkey/qhotkey_win.cpp>
-    $<$<BOOL:UNIX>:${SOURCES_PREFIX}/QHotkey/qhotkey_x11.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/QHotkey/qhotkey_x11.cpp>
 )
 
 set(HEADERS_PREFIX src)
@@ -91,6 +91,15 @@ if(UNIX)
     pkg_search_module(LIBX11 REQUIRED x11)
 endif()
 
+set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actiona")
+set_target_properties(${PROJECT} PROPERTIES SUFFIX "")
+set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
+set(CMAKE_EXECUTABLE_SUFFIX "")
+
+setup_target(${PROJECT})
+
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script Widgets REQUIRED)
+
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -100,15 +109,6 @@ target_include_directories(${PROJECT}
         ${LIBNOTIFY_INCLUDE_DIRS}
         ${LIBX11_INCLUDE_DIRS}
 )
-
-set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actiona")
-set_target_properties(${PROJECT} PROPERTIES SUFFIX "")
-set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
-set(CMAKE_EXECUTABLE_SUFFIX "")
-
-setup_target(${PROJECT})
-
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script Widgets REQUIRED)
 
 target_link_libraries(
     ${PROJECT}
@@ -120,6 +120,7 @@ target_link_libraries(
     Qt5::Widgets
     ${LIBNOTIFY_LIBRARIES}
     ${LIBX11_LIBRARIES}
+    $<$<PLATFORM_ID:Windows>:shlwapi>
 )
 
 if(UNIX)

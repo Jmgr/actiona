@@ -26,7 +26,7 @@
 #include "tools/languages.hpp"
 
 #ifdef Q_OS_WIN
-#include "registry.hpp"
+#include "actiontools/registry.hpp"
 #include <Shlwapi.h>
 #include <ShlObj.h>
 #include <QDir>
