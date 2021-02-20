@@ -39,9 +39,9 @@
 **
 ****************************************************************************/
 
-#include "qdeviceinfo_win_p.hpp"
-#include "qnetworkinfo_win_p.hpp"
-#include "qscreensaver_win_p.hpp"
+#include "qdeviceinfo_win_p.h"
+#include "qnetworkinfo_win_p.h"
+#include "qscreensaver_win_p.h"
 
 #include <QtCore/qsettings.h>
 

@@ -132,11 +132,8 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 #endif
 
 #ifdef Q_OS_WIN
-    if(QSysInfo::windowsVersion() > QSysInfo::WV_VISTA)
-    {
-        mTaskbarButton = new QWinTaskbarButton(this);
-        mTaskbarProgress = mTaskbarButton->progress();
-    }
+    mTaskbarButton = new QWinTaskbarButton(this);
+    mTaskbarProgress = mTaskbarButton->progress();
 #endif
 
     setEnabled(false);
@@ -1379,11 +1376,8 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 void MainWindow::setTaskbarProgress(int value, int max)
 {
 #ifdef Q_OS_WIN
-    if(QSysInfo::windowsVersion() > QSysInfo::WV_VISTA)
-    {
-        mTaskbarProgress->setRange(0, max);
-        mTaskbarProgress->setValue(value);
-    }
+    mTaskbarProgress->setRange(0, max);
+    mTaskbarProgress->setValue(value);
 #else
 	Q_UNUSED(value)
 	Q_UNUSED(max)
@@ -1393,10 +1387,7 @@ void MainWindow::setTaskbarProgress(int value, int max)
 void MainWindow::enableTaskbarProgress(bool enable)
 {
 #ifdef Q_OS_WIN
-    if(QSysInfo::windowsVersion() > QSysInfo::WV_VISTA)
-    {
-        mTaskbarProgress->setVisible(enable);
-    }
+    mTaskbarProgress->setVisible(enable);
 #else
     Q_UNUSED(enable)
 #endif
@@ -1517,10 +1508,7 @@ void MainWindow::checkForUpdate(bool silent)
 void MainWindow::showEvent(QShowEvent *event)
 {
 #ifdef Q_OS_WIN
-    if(QSysInfo::windowsVersion() > QSysInfo::WV_VISTA)
-    {
-        mTaskbarButton->setWindow(windowHandle());
-    }
+    mTaskbarButton->setWindow(windowHandle());
 #endif
 
     event->accept();

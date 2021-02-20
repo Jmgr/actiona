@@ -22,6 +22,12 @@ add_library(${PROJECT} SHARED
     ${HEADERS}
 )
 
+target_compile_definitions(${PROJECT} PRIVATE TOOLS_LIBRARY)
+
+setup_target(${PROJECT})
+
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets REQUIRED)
+
 target_include_directories(${PROJECT}
     PUBLIC
         $<INSTALL_INTERFACE:include>
@@ -29,12 +35,6 @@ target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
-
-target_compile_definitions(${PROJECT} PRIVATE TOOLS_LIBRARY)
-
-setup_target(${PROJECT})
-
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets REQUIRED)
 
 target_link_libraries(
     ${PROJECT}

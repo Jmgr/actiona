@@ -53,8 +53,8 @@
 #ifndef QSTORAGEINFO_WIN_P_H
 #define QSTORAGEINFO_WIN_P_H
 
-#include "qstorageinfo.hpp"
-#include "qwmihelper_win_p.hpp"
+#include "qstorageinfo.h"
+#include "qwmihelper_win_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -38,6 +38,10 @@ function(setup_target TARGET)
         ACT_SCRIPT_VERSION="${ACT_SCRIPT_VERSION}"
         ACT_BUILD_NAME="${ACT_BUILD_NAME}"
         $<$<BOOL:${ACT_UPDATER}>:ACT_UPDATER>
+        $<$<PLATFORM_ID:Windows>:UNICODE>
+        $<$<PLATFORM_ID:Windows>:_UNICODE>
+        $<$<PLATFORM_ID:Windows>:WIN32_LEAN_AND_MEAN>
+        $<$<PLATFORM_ID:Windows>:NOMINMAX>
     )
     set_target_properties(${TARGET}
         PROPERTIES
