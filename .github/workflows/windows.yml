@@ -1,4 +1,4 @@
-name: Windows
+name: Windows-msvc
 
 on: [push]
 

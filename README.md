@@ -1,5 +1,5 @@
-![ubuntu-gcc-build](https://github.com/github/docs/actions/workflows/linux.yml/badge.svg)
-![windows-msvc-build](https://github.com/github/docs/actions/workflows/windows.yml/badge.svg)
+![ubuntu-gcc-build](https://github.com/Jmgr/actiona/workflows/Linux-gcc/badge.svg)
+![windows-msvc-build](https://github.com/Jmgr/actiona/workflows/Windows-msvc/badge.svg)
 ![License: GPLv3](https://img.shields.io/badge/license-GPLv3-blue)
 
 Actiona
