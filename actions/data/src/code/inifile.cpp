@@ -22,8 +22,6 @@
 
 #include <QScriptValueIterator>
 
-#include <boost/property_tree/ini_parser.hpp>
-
 namespace Code
 {
 	QScriptValue IniFile::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -51,13 +49,11 @@ namespace Code
 
 	QScriptValue IniFile::load(const QString &filename)
 	{
-        try
+        mINI::INIFile file(toEncoding(filename, mEncoding).constData());
+
+        if(!file.read(mStructure))
         {
-            boost::property_tree::ini_parser::read_ini(toEncoding(filename, mEncoding).constData(), mTree);
-        }
-        catch(const std::runtime_error &)
-        {
-			throwError(QStringLiteral("LoadFileError"), tr("Cannot load the file"));
+            throwError(QStringLiteral("LoadFileError"), tr("Cannot load the file"));
             return thisObject();
         }
 
@@ -69,14 +65,11 @@ namespace Code
 	QScriptValue IniFile::save(const QString &filename)
 	{
         QByteArray filenameByteArray = toEncoding(filename.isEmpty() ? mLatestFilename : filename, mEncoding);
+        mINI::INIFile file(filenameByteArray.constData());
 
-        try
+        if(!file.write(mStructure))
         {
-            boost::property_tree::ini_parser::write_ini(filenameByteArray.constData(), mTree);
-        }
-        catch(const std::runtime_error &)
-        {
-			throwError(QStringLiteral("SaveFileError"), tr("Cannot save the file"));
+            throwError(QStringLiteral("SaveFileError"), tr("Cannot save the file"));
             return thisObject();
         }
 
@@ -85,7 +78,7 @@ namespace Code
 	
 	QScriptValue IniFile::clear()
 	{
-        mTree.clear();
+        mStructure.clear();
 
 		return thisObject();
 	}
@@ -94,18 +87,16 @@ namespace Code
 	{
         QByteArray sectionNameByteArray = toEncoding(sectionName, mEncoding);
 
-        if(mTree.count(sectionNameByteArray.constData()) == 0)
+        if(!mStructure.has(sectionNameByteArray.constData()))
         {
             if(!create)
             {
-				throwError(QStringLiteral("FindSectionError"), tr("Cannot find the section named \"%1\"").arg(sectionName));
+                throwError(QStringLiteral("FindSectionError"), tr("Cannot find the section named \"%1\"").arg(sectionName));
                 return thisObject();
             }
 
-            mCurrentSection = mTree.add_child(sectionNameByteArray.constData(), {});
+            mStructure[sectionNameByteArray.constData()];
         }
-        else
-            mCurrentSection = mTree.get_child(sectionNameByteArray.constData());
 
         mCurrentSectionName = sectionNameByteArray;
 
@@ -121,13 +112,13 @@ namespace Code
 	
     QString IniFile::sectionAt(int sectionIndex) const
 	{
-        if(sectionIndex < 0 || sectionIndex >= static_cast<int>(mTree.size()))
+        if(sectionIndex < 0 || sectionIndex >= static_cast<int>(mStructure.size()))
 		{
 			throwError(QStringLiteral("FindSectionError"), tr("Invalid section index"));
 			return QString();
 		}
 
-        auto it = mTree.begin();
+        auto it = mStructure.begin();
 
         std::advance(it, sectionIndex);
 
@@ -138,7 +129,7 @@ namespace Code
 	{
         QByteArray sectionNameByteArray = toEncoding(sectionName, mEncoding);
 
-        if(!mTree.erase(sectionNameByteArray.constData()))
+        if(!mStructure.remove(sectionNameByteArray.constData()))
 		{
 			throwError(QStringLiteral("FindSectionError"), tr("Cannot delete section named \"%1\"").arg(sectionName));
 			return thisObject();
@@ -149,25 +140,33 @@ namespace Code
 	
 	int IniFile::sectionCount() const
 	{
-        return static_cast<int>(mTree.size());
+        return static_cast<int>(mStructure.size());
 	}
 	
 	bool IniFile::keyExists(const QString &keyName) const
     {
+        if(!mStructure.has(mCurrentSectionName.constData()))
+            return false;
+
         QByteArray keyNameByteArray = toEncoding(keyName, mEncoding);
 
-        return (mCurrentSection.count(keyNameByteArray.constData()) > 0);
+        return mStructure.get(mCurrentSectionName.constData()).has(keyNameByteArray.constData());
 	}
 	
 	QString IniFile::keyAt(int keyIndex) const
 	{
-        if(keyIndex < 0 || keyIndex >= static_cast<int>(mCurrentSection.size()))
+        if(!mStructure.has(mCurrentSectionName.constData()))
+            return {};
+
+        const auto section = mStructure.get(mCurrentSectionName.constData());
+
+        if(keyIndex < 0 || keyIndex >= static_cast<int>(section.size()))
 		{
 			throwError(QStringLiteral("KeyError"), tr("Invalid key index"));
-			return QString();
+            return {};
 		}
 
-        auto it = mCurrentSection.begin();
+        auto it = section.begin();
 
         std::advance(it, keyIndex);
 
@@ -179,38 +178,48 @@ namespace Code
         if(!keyExists(keyName))
         {
 			throwError(QStringLiteral("KeyError"), tr("Cannot find any key named \"%1\"").arg(keyName));
-            return QString();
+            return {};
         }
 
-        return QString::fromStdString(mCurrentSection.get<std::string>(toEncoding(keyName, mEncoding).constData()));
+        const auto section = mStructure.get(mCurrentSectionName.constData());
+
+        return QString::fromStdString(section.get(toEncoding(keyName, mEncoding).constData()));
 	}
 	
 	QScriptValue IniFile::setKeyValue(const QString &keyName, const QString &value)
 	{
-        mCurrentSection.put(toEncoding(keyName, mEncoding).constData(), toEncoding(value, mEncoding).constData());
+        auto &section = mStructure[mCurrentSectionName.constData()];
 
-        mTree.put_child(mCurrentSectionName.constData(), mCurrentSection);
-		
+        section[toEncoding(keyName, mEncoding).constData()] = toEncoding(value, mEncoding).constData();
+
 		return thisObject();
 	}
 	
 	QScriptValue IniFile::deleteKey(const QString &keyName)
 	{
+        if(!mStructure.has(mCurrentSectionName.constData()))
+        {
+            throwError(QStringLiteral("KeyError"), tr("Cannot delete key named \"%1\"").arg(keyName));
+            return thisObject();
+        }
+
+        auto &section = mStructure[mCurrentSectionName.constData()];
         QByteArray keyNameByteArray = toEncoding(keyName, mEncoding);
 
-        if(!mCurrentSection.erase(keyNameByteArray.constData()))
+        if(!section.remove(keyNameByteArray.constData()))
         {
 			throwError(QStringLiteral("KeyError"), tr("Cannot delete key named \"%1\"").arg(keyName));
             return thisObject();
         }
-
-        mTree.put_child(mCurrentSectionName.constData(), mCurrentSection);
 
         return thisObject();
 	}
 	
     int IniFile::keyCount() const
 	{
-        return static_cast<int>(mCurrentSection.size());
+        if(!mStructure.has(mCurrentSectionName.constData()))
+            return 0;
+
+        return static_cast<int>(mStructure.get(mCurrentSectionName.constData()).size());
 	}
 }

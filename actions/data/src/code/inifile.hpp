@@ -21,12 +21,11 @@
 #pragma once
 
 #include "actiontools/code/codeclass.hpp"
+#include "mini/ini.h"
 
 #include <QObject>
 #include <QScriptValue>
 #include <QScriptEngine>
-
-#include <boost/property_tree/ptree.hpp>
 
 namespace Code
 {
@@ -59,8 +58,7 @@ namespace Code
 	
 	private:
         Encoding mEncoding{Native};
-        boost::property_tree::ptree mCurrentSection;
-        boost::property_tree::ptree mTree;
+        mINI::INIStructure mStructure;
         QByteArray mCurrentSectionName;
         QString mLatestFilename;
 	};

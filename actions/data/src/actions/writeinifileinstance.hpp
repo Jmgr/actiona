@@ -21,9 +21,7 @@
 #pragma once
 
 #include "actiontools/actioninstance.hpp"
-
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/ini_parser.hpp>
+#include "mini/ini.h"
 
 #include <QFileInfo>
 
@@ -61,41 +59,32 @@ namespace Actions
 		}
 
 	private:
-        bool write(const QString &filename, QString section, const QString &parameter, const QString &value)
+        bool write(const QString &filename, const QString &sectionName, const QString &parameterName, const QString &value)
 		{
-            try
+            mINI::INIStructure structure;
+            QFileInfo fileInfo(filename);
+
+            if(fileInfo.isReadable())
             {
-                boost::property_tree::ptree tree;
-
-                QFileInfo fileInfo(filename);
-
-                if(fileInfo.isReadable())
-                    boost::property_tree::ini_parser::read_ini(filename.toStdString(), tree);
-
-                //Create/get the parameter and the value
-                boost::property_tree::ptree sectionTree;
-                if(tree.count(section.toStdString()) > 0)
-                    sectionTree = tree.get_child(section.toStdString());
-
-                sectionTree.put(parameter.toStdString(), value.toStdString());
-
-                if(section.isEmpty())
+                mINI::INIFile file(filename.toStdString());
+                if(!file.read(structure))
                 {
-					setCurrentParameter(QStringLiteral("filename"));
-                    emit executionException(UnableToWriteFileException, tr("Unable to write to the file: the section name cannot be empty"));
+                    setCurrentParameter(QStringLiteral("filename"));
+                    emit executionException(UnableToWriteFileException, tr("Unable to read the existing file"));
 
                     return false;
                 }
-
-                //Create the section
-                tree.put_child(section.toStdString(), sectionTree);
-
-                boost::property_tree::ini_parser::write_ini(filename.toStdString(), tree);
             }
-            catch(const std::runtime_error &e)
+
+            auto &section = structure[sectionName.toStdString()];
+
+            section[parameterName.toStdString()] = value.toStdString();
+
+            mINI::INIFile file(filename.toStdString());
+            if(!file.write(structure))
             {
-				setCurrentParameter(QStringLiteral("filename"));
-				emit executionException(UnableToWriteFileException, tr("Unable to write to the file: %1").arg(QString::fromUtf8(e.what())));
+                setCurrentParameter(QStringLiteral("filename"));
+                emit executionException(UnableToWriteFileException, tr("Unable to write to the file"));
 
                 return false;
             }

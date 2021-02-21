@@ -20,9 +20,7 @@
 
 #include "readinifileinstance.hpp"
 #include "tools/stringlistpair.hpp"
-
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/ini_parser.hpp>
+#include "mini/ini.h"
 
 namespace Actions
 {
@@ -55,15 +53,11 @@ namespace Actions
             return;
         }
 
-        boost::property_tree::ptree tree;
-
-        try
+        mINI::INIStructure structure;
+        mINI::INIFile file(filename.toStdString());
+        if(!file.read(structure))
         {
-            boost::property_tree::ini_parser::read_ini(filename.toStdString(), tree);
-        }
-        catch(const std::runtime_error &)
-        {
-			setCurrentParameter(QStringLiteral("filename"));
+            setCurrentParameter(QStringLiteral("filename"));
             emit executionException(UnableToReadFileException, tr("Unable to read the file"));
             return;
         }
@@ -72,42 +66,40 @@ namespace Actions
 		{
             QHash<QString, QString> fileContent;
 
-            for(const auto &section: tree)
+            for(const auto &section: structure)
             {
-                for(const auto &parameter: section.second)
-                {
-					fileContent[QString::fromStdString(section.first + "/" + parameter.first)] = QString::fromStdString(parameter.second.get_value<std::string>());
-                }
+                const auto &collection = section.second;
+                for(const auto &entry: collection)
+                    fileContent[QString::fromStdString(section.first + "/" + entry.first)] = QString::fromStdString(entry.second);
             }
 
             setArrayKeyValue(variable, fileContent);
         }
         else
         {
-			QString section = evaluateString(ok, QStringLiteral("section"));
-			QString parameter = evaluateString(ok, QStringLiteral("parameter"));
+            QString sectionName = evaluateString(ok, QStringLiteral("section"));
+            QString parameterName = evaluateString(ok, QStringLiteral("parameter"));
 
             if(!ok)
                 return;
 
-            auto sectionNode = tree.get_child_optional(section.toStdString());
-            if(!sectionNode)
+            if(!structure.has(sectionName.toStdString()))
             {
-				setCurrentParameter(QStringLiteral("section"));
-                emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(section));
+                setCurrentParameter(QStringLiteral("section"));
+                emit executionException(UnableToFindSectionException, tr("Unable to find the section named \"%1\"").arg(sectionName));
                 return;
             }
 
-            try
+            const auto &section = structure.get(sectionName.toStdString());
+
+            if(!section.has(parameterName.toStdString()))
             {
-                setVariable(variable, QString::fromStdString((*sectionNode).get<std::string>(parameter.toStdString())));
-            }
-            catch(const std::runtime_error &)
-            {
-				setCurrentParameter(QStringLiteral("parameter"));
-                emit executionException(UnableToFindSectionException, tr("Unable to find the parameter named \"%1\"").arg(parameter));
+                setCurrentParameter(QStringLiteral("parameter"));
+                emit executionException(UnableToFindSectionException, tr("Unable to find the parameter named \"%1\"").arg(parameterName));
                 return;
             }
+
+            setVariable(variable, QString::fromStdString(section.get(parameterName.toStdString())));
         }
 
 		executionEnded();
