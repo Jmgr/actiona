@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: recursive
 
     - name: Install packages
-      run: sudo apt-get update && sudo apt-get install -y qtbase5-dev libqt5x11extras5-dev libqt5xmlpatterns5-dev qtscript5-dev qttools5-dev qtmultimedia5-dev qttools5-dev-tools libnotify-dev libopencv-core-dev libopencv-imgproc-dev libxtst-dev libboost-dev qt5-default libopencv-dev libxkbcommon-dev libbluetooth-dev libqt5texttospeech5-dev libudev-dev
+      run: sudo apt-get update && sudo apt-get install -y qtbase5-dev libqt5x11extras5-dev libqt5xmlpatterns5-dev qtscript5-dev qttools5-dev qtmultimedia5-dev qttools5-dev-tools libnotify-dev libopencv-core-dev libopencv-imgproc-dev libxtst-dev qt5-default libopencv-dev libxkbcommon-dev libbluetooth-dev libqt5texttospeech5-dev libudev-dev
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
