@@ -4,7 +4,6 @@ project(actiona VERSION 3.10.1 DESCRIPTION "Cross-platform automation tool" LANG
 
 # Constants
 set(ACT_SCRIPT_VERSION 1.1.0)
-set(ACT_MINIMUM_BOOST_VERSION 1.65)
 set(ACT_MINIMUM_QT_VERSION 5.12)
 set(ACT_MINIMUM_QT_VERSION_HEX 0x050C00)
 
