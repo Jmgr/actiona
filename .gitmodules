@@ -1,0 +1,3 @@
+[submodule "actions/data/src/3rdparty/mINI"]
+	path = actions/data/src/3rdparty/mINI
+	url = https://github.com/pulzed/mINI.git
