@@ -27,9 +27,7 @@ jobs:
     - name: Build
       working-directory: ${{github.workspace}}/build
       shell: bash
-      run: cmake --build . --config $BUILD_TYPE
-      env:
-        MAKEFLAGS: "-j2"
+      run: cmake --build . --config $BUILD_TYPE --parallel 2
 
     - name: Test
       working-directory: ${{github.workspace}}/build
