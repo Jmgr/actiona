@@ -31,7 +31,7 @@
 #include "actiontools/scriptlinemodel.hpp"
 
 #ifdef ACT_PROFILE
-#include "actiontools/highresolutiontimer.hpp"
+#include "tools/highresolutiontimer.hpp"
 #endif
 
 #include <QIODevice>
@@ -213,7 +213,7 @@ namespace ActionTools
     bool Script::write(QIODevice *device, const QVersionNumber &programVersion, const QVersionNumber &scriptVersion, std::function<void(int, int, QString)> *progressCallback)
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("Script::write");
+        Tools::HighResolutionTimer timer(QStringLiteral("Script::write"));
 #endif
         if(progressCallback)
         {
@@ -395,7 +395,7 @@ namespace ActionTools
             std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback)
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("Script::read");
+        Tools::HighResolutionTimer timer(QStringLiteral("Script::read"));
 #endif
 		mMissingActions.clear();
 
@@ -422,7 +422,7 @@ namespace ActionTools
 
         {
 #ifdef ACT_PROFILE
-            Tools::HighResolutionTimer timer("Listing script content");
+            Tools::HighResolutionTimer timer(QStringLiteral("Listing script content"));
 #endif
 
             QXmlStreamReader stream(device);
@@ -483,7 +483,7 @@ namespace ActionTools
 		device->reset();
 
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer2("Reading content");
+        Tools::HighResolutionTimer timer2(QStringLiteral("Reading content"));
 #endif
 
         if(progressCallback)
@@ -809,7 +809,7 @@ namespace ActionTools
 
         {
 #ifdef ACT_PROFILE
-            Tools::HighResolutionTimer timer("loading schema file");
+            Tools::HighResolutionTimer timer(QStringLiteral("loading schema file"));
 #endif
             if(!schema.load(&schemaFile))
                 return ReadInternal;
@@ -817,7 +817,7 @@ namespace ActionTools
 
         {
 #ifdef ACT_PROFILE
-            Tools::HighResolutionTimer timer("validating file");
+            Tools::HighResolutionTimer timer(QStringLiteral("validating file"));
 #endif
             QXmlSchemaValidator validator(schema);
             if(!validator.validate(device))

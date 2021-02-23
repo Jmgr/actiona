@@ -10,6 +10,7 @@ set(ACT_MINIMUM_QT_VERSION_HEX 0x050C00)
 # Build parameters
 set(ACT_BUILD_NAME "" CACHE STRING "Build name")
 option(ACT_UPDATER "Build the Updater" ON)
+option(ACT_PROFILE "Enable profiling" OFF)
 
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result)
@@ -37,6 +38,7 @@ function(setup_target TARGET)
         ACT_SCRIPT_VERSION="${ACT_SCRIPT_VERSION}"
         ACT_BUILD_NAME="${ACT_BUILD_NAME}"
         $<$<BOOL:${ACT_UPDATER}>:ACT_UPDATER>
+        $<$<BOOL:${ACT_PROFILE}>:ACT_PROFILE>
         $<$<PLATFORM_ID:Windows>:UNICODE>
         $<$<PLATFORM_ID:Windows>:_UNICODE>
         $<$<PLATFORM_ID:Windows>:WIN32_LEAN_AND_MEAN>

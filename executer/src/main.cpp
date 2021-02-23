@@ -26,7 +26,7 @@
 #include "tools/languages.hpp"
 
 #ifdef ACT_PROFILE
-#include "actiontools/highresolutiontimer.hpp"
+#include "tools/highresolutiontimer.hpp"
 #endif
 
 #include <ctime>
@@ -193,7 +193,7 @@ int main(int argc, char **argv)
 #ifdef Q_OS_UNIX
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("Load key codes");
+        Tools::HighResolutionTimer timer(QStringLiteral("Load key codes"));
 #endif
 		ActionTools::KeySymHelper::loadKeyCodes();
 	}

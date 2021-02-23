@@ -22,43 +22,21 @@
 
 #include "tools/tools_global.hpp"
 
-#include <QtGlobal>
-
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#else
-#include <sys/time.h>
-#endif
-
-#include <QString>
 #include <QTextStream>
+#include <QElapsedTimer>
 
 namespace Tools
 {
 	class TOOLSSHARED_EXPORT HighResolutionTimer
 	{
 	public:
-		HighResolutionTimer(const QString &taskName = QString());
+        HighResolutionTimer(const QString &taskName);
 		~HighResolutionTimer();
 
-		void start();
-		void stop();
-		double elapsedMicroseconds();
-		double elapsedMilliseconds();
-		double elapsedSeconds();
 	private:
-		static int mLevel;
-		bool mRunning{false};
-		QString mTaskName;
+        static int mLevel;
 		QTextStream mTextStream;
-#ifdef Q_OS_WIN
-		LARGE_INTEGER mTimeStart;
-		LARGE_INTEGER mTimeStop;
-		LARGE_INTEGER mFrequency;
-#else
-		timeval mTimeStart;
-		timeval mTimeStop;
-#endif
+        QElapsedTimer mTimer;
 	};
 }
 
