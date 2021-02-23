@@ -7,6 +7,11 @@ env:
 
 jobs:
   build:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [ON, OFF]
+        updater: [ON, OFF]
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -22,7 +27,7 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{github.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DACT_PROFILE=${{ matrix.profile }} -DACT_UPDATER=${{ matrix.updater }}
 
     - name: Build
       working-directory: ${{github.workspace}}/build
