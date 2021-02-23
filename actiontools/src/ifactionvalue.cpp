@@ -22,8 +22,8 @@
 
 namespace ActionTools
 {
-	QLatin1String IfActionValue::WAIT = QLatin1Literal("wait");
-	QLatin1String IfActionValue::GOTO = QLatin1Literal("goto");
-	QLatin1String IfActionValue::RUNCODE = QLatin1Literal("run_code");
-	QLatin1String IfActionValue::CALLPROCEDURE = QLatin1Literal("call_procedure");
+    QLatin1String IfActionValue::WAIT = QLatin1String("wait");
+    QLatin1String IfActionValue::GOTO = QLatin1String("goto");
+    QLatin1String IfActionValue::RUNCODE = QLatin1String("run_code");
+    QLatin1String IfActionValue::CALLPROCEDURE = QLatin1String("call_procedure");
 }
