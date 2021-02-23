@@ -58,7 +58,7 @@
 #include "tools/languages.hpp"
 
 #ifdef ACT_PROFILE
-#include "highresolutiontimer.hpp"
+#include "tools/highresolutiontimer.hpp"
 #endif
 
 #include <QSystemTrayIcon>
@@ -128,7 +128,7 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 #endif
 {
 #ifdef ACT_PROFILE
-	Tools::HighResolutionTimer timer("MainWindow constructor");
+    Tools::HighResolutionTimer timer(QStringLiteral("MainWindow constructor"));
 #endif
 
 #ifdef Q_OS_WIN
@@ -323,7 +323,7 @@ void MainWindow::postInit()
     QApplication::processEvents();
 
 #ifdef ACT_PROFILE
-	Tools::HighResolutionTimer timer("postInit");
+    Tools::HighResolutionTimer timer(QStringLiteral("postInit"));
 #endif
 
 	mPackLoadErrors.clear();
@@ -341,7 +341,7 @@ void MainWindow::postInit()
 
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("building completion model");
+        Tools::HighResolutionTimer timer(QStringLiteral("building completion model"));
 #endif
 
 		QScriptEngine engine;
@@ -365,7 +365,7 @@ void MainWindow::postInit()
     if(settings.value(QStringLiteral("gui/preloadActionDialogs"), false).toBool())
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("action dialogs creation");
+        Tools::HighResolutionTimer timer(QStringLiteral("action dialogs creation"));
 #endif
 		if(mSplashScreen)
 			mSplashScreen->setMaximum(mActionFactory->actionDefinitionCount() - 1);
@@ -399,7 +399,7 @@ void MainWindow::postInit()
 
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("adding Ecmascript stuff");
+        Tools::HighResolutionTimer timer(QStringLiteral("adding Ecmascript stuff"));
 #endif
 		//Add Ecmascript stuff
 		ActionTools::addEcmaScriptObjectsKeywords(mCompletionModel);
@@ -407,7 +407,7 @@ void MainWindow::postInit()
 
 	{
 #ifdef ACT_PROFILE
-        Tools::HighResolutionTimer timer("filling NewActionModel");
+        Tools::HighResolutionTimer timer(QStringLiteral("filling NewActionModel"));
 #endif
         fillNewActionModel();
 	}
@@ -437,7 +437,7 @@ void MainWindow::postInit()
 
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("loading last file");
+        Tools::HighResolutionTimer timer(QStringLiteral("loading last file"));
 #endif
 		if(!mStartScript.isEmpty())
 		{
@@ -1188,7 +1188,7 @@ void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
 void MainWindow::scriptEdited()
 {
 #ifdef ACT_PROFILE
-	Tools::HighResolutionTimer timer("scriptEdited");
+    Tools::HighResolutionTimer timer(QStringLiteral("scriptEdited"));
 #endif
 	scriptWasModified(true);
 	ui->scriptView->resizeColumnToContents(0);
@@ -1623,7 +1623,7 @@ void MainWindow::execute(bool onlySelection)
 
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("Executer setup");
+        Tools::HighResolutionTimer timer(QStringLiteral("Executer setup"));
 #endif
 		mExecuter.setup(mScript,
 						 mActionFactory,
@@ -2200,7 +2200,7 @@ QList<int> MainWindow::selectedRows() const
 bool MainWindow::loadFile(const QString &fileName, bool verbose)
 {
 #ifdef ACT_PROFILE
-	Tools::HighResolutionTimer timer(QString("load file %1").arg(fileName));
+    Tools::HighResolutionTimer timer(QStringLiteral("load file %1").arg(fileName));
 #endif
 	QFile loadFile(fileName);
 	QFileInfo loadFileInfo(loadFile);
@@ -2236,7 +2236,7 @@ bool MainWindow::loadFile(const QString &fileName, bool verbose)
 bool MainWindow::saveFile(const QString &fileName, bool copy)
 {
 #ifdef ACT_PROFILE
-	Tools::HighResolutionTimer timer(QString("save file %1").arg(fileName));
+    Tools::HighResolutionTimer timer(QStringLiteral("save file %1").arg(fileName));
 #endif
 	QFile saveFile(fileName);
 	if(!saveFile.open(QIODevice::WriteOnly))

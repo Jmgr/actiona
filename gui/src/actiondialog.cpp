@@ -32,7 +32,7 @@
 #include "actiontools/helpbutton.hpp"
 
 #ifdef ACT_PROFILE
-#include "highresolutiontimer.hpp"
+#include "tools/highresolutiontimer.hpp"
 #endif
 
 #include <QGroupBox>
@@ -69,7 +69,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	  mTimeoutSpinBox(new QSpinBox(this))
 {
 #ifdef ACT_PROFILE
-	Tools::HighResolutionTimer timer("ActionDialog creation " + actionDefinition->id());
+    Tools::HighResolutionTimer timer(QStringLiteral("ActionDialog creation ") + actionDefinition->id());
 #endif
 	ui->setupUi(this);
 
@@ -336,7 +336,7 @@ QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
 void ActionDialog::accept()
 {
 #ifdef ACT_PROFILE
-	Tools::HighResolutionTimer timer("ActionDialog accept");
+    Tools::HighResolutionTimer timer(QStringLiteral("ActionDialog accept"));
 #endif
 	
 	for(ActionTools::ParameterDefinition *parameter: qAsConst(mParameters))
@@ -391,7 +391,7 @@ int ActionDialog::exec(ActionTools::ActionInstance *actionInstance, int exceptio
 void ActionDialog::postInit()
 {
 #ifdef ACT_PROFILE
-	Tools::HighResolutionTimer timer("ActionDialog postInit");
+    Tools::HighResolutionTimer timer(QStringLiteral("ActionDialog postInit"));
 #endif
     mOtherActionsVariables = mScript->findVariables(nullptr, mActionInstance);//Find in all actions except this one
 

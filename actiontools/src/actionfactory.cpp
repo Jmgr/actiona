@@ -54,7 +54,7 @@ namespace ActionTools
 	void ActionFactory::loadActionPacks(const QString &directory, const QString &locale)
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("ActionFactory loadActionPacks from " + directory);
+        Tools::HighResolutionTimer timer(QStringLiteral("ActionFactory loadActionPacks from ") + directory);
 #endif
 
 		QDir actionDirectory(directory);

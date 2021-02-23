@@ -31,7 +31,7 @@
 #include "actiontools/qtsingleapplication/QtSingleApplication"
 
 #ifdef ACT_PROFILE
-#include "highresolutiontimer.hpp"
+#include "tools/highresolutiontimer.hpp"
 #endif
 
 #include <ctime>
@@ -67,7 +67,7 @@ static void cleanup()
 int main(int argc, char **argv)
 {
 #ifdef ACT_PROFILE
-	Tools::HighResolutionTimer timer("Application run");
+    Tools::HighResolutionTimer timer(QStringLiteral("Application run"));
 #endif
 
 	QtSingleApplication app(QStringLiteral("actiona-gui"), argc, argv);
@@ -175,7 +175,7 @@ int main(int argc, char **argv)
 #ifdef Q_OS_UNIX
 	{
 #ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("Load key codes");
+        Tools::HighResolutionTimer timer(QStringLiteral("Load key codes"));
 #endif
 		ActionTools::KeySymHelper::loadKeyCodes();
 	}

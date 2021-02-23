@@ -34,7 +34,7 @@
 #include "codeactiona.hpp"
 
 #ifdef ACT_PROFILE
-#include "highresolutiontimer.hpp"
+#include "tools/highresolutiontimer.hpp"
 #endif
 
 #include <QDesktopWidget>
@@ -274,7 +274,7 @@ namespace Execution
 		Q_ASSERT(mScriptEngine);
 		
 	#ifdef ACT_PROFILE
-		Tools::HighResolutionTimer timer("Executer::startExecution");
+        Tools::HighResolutionTimer timer(QStringLiteral("Executer::startExecution"));
 	#endif
 
 		Code::CodeTools::addClassToScriptEngine<CodeActiona>(QStringLiteral("Actiona"), mScriptEngine);
