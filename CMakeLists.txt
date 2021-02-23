@@ -28,8 +28,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
 
 function(setup_target TARGET)
     target_compile_definitions(${TARGET} PRIVATE
-        QT_USE_FAST_CONCATENATION
-        QT_USE_FAST_OPERATOR_PLUS
+        QT_USE_QSTRINGBUILDER
         QT_NO_CAST_TO_ASCII
         QT_NO_CAST_FROM_ASCII
         QT_NO_CAST_FROM_BYTEARRAY
