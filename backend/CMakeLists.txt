@@ -12,7 +12,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/mouse-input.hpp
     ${HEADERS_PREFIX}/mouse.hpp
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-input-x11.hpp>
-    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-input-windows.hpp>
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/mouse-input-windows.hpp>
 )
 
 add_library(${PROJECT} SHARED
