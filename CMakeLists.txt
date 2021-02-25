@@ -61,6 +61,7 @@ function(compile_translations TARGET)
     add_custom_target(${TARGET}_translations ALL DEPENDS ${QM_FILES})
 endfunction()
 
+add_subdirectory(backend)
 add_subdirectory(tools)
 add_subdirectory(actiontools)
 add_subdirectory(execution)
