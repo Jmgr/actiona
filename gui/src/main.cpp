@@ -49,7 +49,6 @@
 #include <libnotify/notify.h>
 #define signals
 
-#include "actiontools/xdisplayhelper.hpp"
 #include "actiontools/keysymhelper.hpp"
 #endif
 
