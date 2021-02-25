@@ -32,7 +32,7 @@
 #ifdef Q_OS_UNIX
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
-#include "actiontools/xdisplayhelper.hpp"
+#include <QX11Info>
 #endif
 
 namespace ActionTools
@@ -105,9 +105,8 @@ namespace ActionTools
 	{
 #ifdef Q_OS_UNIX
 		int unused;
-		XDisplayHelper xDisplayHelper;
-		
-		if(!XTestQueryExtension(xDisplayHelper.display(), &unused, &unused, &unused, &unused))
+
+        if(!XTestQueryExtension(QX11Info::display(), &unused, &unused, &unused, &unused))
 		{
 			missingRequirements << QObject::tr("missing XTest extension");
 			return false;

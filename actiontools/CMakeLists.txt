@@ -221,7 +221,6 @@ set(HEADERS
     ${HEADERS_PREFIX}/windowedit.hpp
     ${HEADERS_PREFIX}/windowhandle.hpp
     ${HEADERS_PREFIX}/windowparameterdefinition.hpp
-    ${HEADERS_PREFIX}/xdisplayhelper.hpp
     ${HEADERS_PREFIX}/code/algorithms.hpp
     ${HEADERS_PREFIX}/code/codeclass.hpp
     ${HEADERS_PREFIX}/code/codetools.hpp
