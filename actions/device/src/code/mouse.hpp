@@ -22,8 +22,7 @@
 
 #include "../mousedevice.hpp"
 #include "actiontools/code/codeclass.hpp"
-#include "actiontools/systeminputlistener.hpp"
-#include "actiontools/systeminputrecorder.hpp"
+#include "actiontools/systeminput.hpp"
 
 #include <QObject>
 #include <QScriptValue>
