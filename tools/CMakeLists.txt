@@ -15,6 +15,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/stringlistpair.hpp
     $<$<BOOL:${ACT_UPDATER}>:${HEADERS_PREFIX}/updater.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/sevenziparchivewrite.hpp>
+    ${HEADERS_PREFIX}/tools_global.hpp
 )
 
 add_library(${PROJECT} SHARED

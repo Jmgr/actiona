@@ -20,6 +20,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/execution.hpp
     ${HEADERS_PREFIX}/executionwindow.hpp
     ${HEADERS_PREFIX}/scriptagent.hpp
+    ${HEADERS_PREFIX}/execution_global.hpp
 )
 
 set(QRC ${PROJECT}.qrc)
