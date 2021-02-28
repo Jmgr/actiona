@@ -27,7 +27,12 @@
 
 namespace Backend
 {
-    bool MouseInputX11::isButtonPressed(Button button) const
+    MouseInputX11::MouseInputX11(QObject *parent):
+        MouseInput(parent)
+    {
+    }
+
+    bool MouseInputX11::isButtonPressed(Mouse::Button button) const
     {
         Window unusedWindow;
         int unusedInt;
@@ -46,11 +51,11 @@ namespace Backend
 
         switch(button)
         {
-        case LeftButton:
+        case Mouse::LeftButton:
             return (buttonMask & Button1Mask);
-        case MiddleButton:
+        case Mouse::MiddleButton:
             return (buttonMask & Button2Mask);
-        case RightButton:
+        case Mouse::RightButton:
             return (buttonMask & Button3Mask);
         default:
             return false;

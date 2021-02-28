@@ -18,25 +18,21 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
-
-#include "backend/backend_global.hpp"
-#include "backend/backend.hpp"
-
-#include <QObject>
-#include <QPoint>
+#include "backend/mouse-output.hpp"
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT MouseInput : public QObject
+    class BACKENDSHARED_EXPORT MouseOutputX11 final : public MouseOutput
     {
         Q_OBJECT
-        Q_DISABLE_COPY(MouseInput)
+        Q_DISABLE_COPY(MouseOutputX11)
 
     public:
-        explicit MouseInput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~MouseInput() {}
-        virtual bool isButtonPressed(Mouse::Button button) const = 0;
-        virtual QPoint cursorPosition() const = 0;
+        explicit MouseOutputX11(QObject *parent = nullptr);
+        void setCursorPosition(const QPoint &position) override;
+        bool buttonClick(Mouse::Button button) override;
+        bool pressButton(Mouse::Button button) override;
+        bool releaseButton(Mouse::Button button) override;
+        bool wheel(int intensity = 1) override;
     };
 }

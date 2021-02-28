@@ -18,6 +18,7 @@
 	Contact: jmgr@jmgr.info
 */
 
+#include "backend/backend.hpp"
 #include "actiontools/actioninstance.hpp"
 #include "mainclass.hpp"
 #include "actiontools/qtsingleapplication/QtSingleApplication"
@@ -104,6 +105,9 @@ int main(int argc, char **argv)
 
 	qAddPostRoutine(cleanup);
 
+    Backend::Backend backend;
+    backend.autoselect();
+
 #ifdef Q_OS_UNIX
     notify_init("Actiona executer");
 #endif
@@ -125,7 +129,6 @@ int main(int argc, char **argv)
 	}
 
     QString locale = Tools::Languages::locale();
-
 
     Tools::Languages::installTranslator(QStringLiteral("qtbase"), locale);
     Tools::Languages::installTranslator(QStringLiteral("qtlocation"), locale);
@@ -195,7 +198,7 @@ int main(int argc, char **argv)
 #ifdef ACT_PROFILE
         Tools::HighResolutionTimer timer(QStringLiteral("Load key codes"));
 #endif
-		ActionTools::KeySymHelper::loadKeyCodes();
+        ActionTools::KeySymHelper::loadKeyCodes(); // TODO: remove
 	}
 #endif
 

@@ -24,19 +24,20 @@
 #include "backend/backend.hpp"
 
 #include <QObject>
-#include <QPoint>
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT MouseInput : public QObject
+    class BACKENDSHARED_EXPORT KeyboardOutput : public QObject
     {
         Q_OBJECT
-        Q_DISABLE_COPY(MouseInput)
+        Q_DISABLE_COPY(KeyboardOutput)
 
     public:
-        explicit MouseInput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~MouseInput() {}
-        virtual bool isButtonPressed(Mouse::Button button) const = 0;
-        virtual QPoint cursorPosition() const = 0;
+        explicit KeyboardOutput(QObject *parent = nullptr): QObject(parent) {}
+        virtual ~KeyboardOutput() {}
+        virtual bool pressKey(const QString &key) = 0;
+        virtual bool releaseKey(const QString &key) = 0;
+        virtual bool triggerKey(const QString &key) = 0;
+        virtual bool writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) = 0;
     };
 }

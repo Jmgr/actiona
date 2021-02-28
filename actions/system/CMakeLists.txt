@@ -146,6 +146,7 @@ target_include_directories(${PROJECT}
 )
 
 target_link_libraries(${PROJECT}
+    tools
     actiontools
     Qt5::Network
     Qt5::Script

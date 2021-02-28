@@ -64,6 +64,6 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../../execution/include
 )
 
-target_link_libraries(${PROJECT} actiontools execution Qt5::Script Qt5::Widgets)
+target_link_libraries(${PROJECT} tools actiontools execution Qt5::Script Qt5::Widgets)
 
 compile_translations(${PROJECT})

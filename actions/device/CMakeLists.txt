@@ -58,7 +58,7 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../../actiontools/include
 )
 
-target_link_libraries(${PROJECT} actiontools Qt5::Script Qt5::Widgets)
+target_link_libraries(${PROJECT} tools actiontools Qt5::Script Qt5::Widgets)
 
 if(UNIX)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)

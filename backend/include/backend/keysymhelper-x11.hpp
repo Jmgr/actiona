@@ -20,16 +20,18 @@
 
 #pragma once
 
-#include "actiontools_global.hpp"
+#include "backend_global.hpp"
 
-#ifdef Q_OS_UNIX
 #include <X11/Xlib.h>
 
-namespace ActionTools
+namespace Backend
 {
-    class ACTIONTOOLSSHARED_EXPORT KeySymHelper // TODO: remove
+    // TODO: keep exporting that?
+    class BACKENDSHARED_EXPORT KeySymHelper final
 	{
 	public:
+        KeySymHelper() = delete;
+
 		static void loadKeyCodes();
 		static KeySym wcharToKeySym(wchar_t c);
 		static int keySymToModifier(KeySym keySym);
@@ -45,12 +47,9 @@ namespace ActionTools
 		static const quint16 multikeyMapFirst[];
 		static const quint16 multikeyMapSecond[];
 
-    private:
+	private:
 		static const quint16 mWCharToKeySym[];
 		static int mKeySymToModifier[MAX_KEYSYM];
 		static KeyCode mKeySymToKeyCode[MAX_KEYSYM];
 	};
 }
-
-#endif
-

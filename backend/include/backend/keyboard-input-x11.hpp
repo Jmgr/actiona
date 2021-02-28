@@ -18,25 +18,16 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
-
-#include "backend/backend_global.hpp"
-#include "backend/backend.hpp"
-
-#include <QObject>
-#include <QPoint>
+#include "backend/keyboard-input.hpp"
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT MouseInput : public QObject
+    class BACKENDSHARED_EXPORT KeyboardInputX11 final : public KeyboardInput
     {
         Q_OBJECT
-        Q_DISABLE_COPY(MouseInput)
+        Q_DISABLE_COPY(KeyboardInputX11)
 
     public:
-        explicit MouseInput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~MouseInput() {}
-        virtual bool isButtonPressed(Mouse::Button button) const = 0;
-        virtual QPoint cursorPosition() const = 0;
+        explicit KeyboardInputX11(QObject *parent = nullptr);
     };
 }

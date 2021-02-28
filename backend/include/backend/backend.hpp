@@ -21,22 +21,53 @@
 #pragma once
 
 #include "backend/backend_global.hpp"
-#include "backend/backend.hpp"
 
 #include <QObject>
-#include <QPoint>
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT MouseInput : public QObject
+    Q_NAMESPACE
+
+    namespace Mouse
+    {
+        Q_NAMESPACE
+
+        enum Button
+        {
+            LeftButton,
+            MiddleButton,
+            RightButton,
+
+            ButtonCount
+        };
+        Q_ENUM_NS(Button)
+    }
+
+    class MouseInput;
+    class MouseOutput;
+    class KeyboardInput;
+    class KeyboardOutput;
+
+    class BACKENDSHARED_EXPORT Backend final : public QObject
     {
         Q_OBJECT
-        Q_DISABLE_COPY(MouseInput)
+        Q_DISABLE_COPY(Backend)
 
     public:
-        explicit MouseInput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~MouseInput() {}
-        virtual bool isButtonPressed(Mouse::Button button) const = 0;
-        virtual QPoint cursorPosition() const = 0;
+        explicit Backend(QObject *parent = nullptr);
+        ~Backend();
+
+        void autoselect();
+
+        MouseInput *mouseInput();
+        MouseOutput *mouseOutput();
+        KeyboardInput *keyboardInput();
+        KeyboardOutput *keyboardOutput();
+
+    private:
+        MouseInput *mMouseInput;
+        MouseOutput *mMouseOutput;
+        KeyboardInput *mKeyboardInput;
+        KeyboardOutput *mKeyboardOutput;
     };
 }

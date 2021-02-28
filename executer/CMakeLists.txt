@@ -39,6 +39,7 @@ find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script ScriptTools
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../backend/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../actiontools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../execution/include
@@ -47,9 +48,10 @@ target_include_directories(${PROJECT}
 
 target_link_libraries(
     ${PROJECT}
-    execution
-    actiontools
+    backend
     tools
+    actiontools
+    execution
     Qt5::Network
     Qt5::Script
     Qt5::ScriptTools

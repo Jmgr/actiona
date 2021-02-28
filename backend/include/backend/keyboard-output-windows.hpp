@@ -18,21 +18,19 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
-
-#include <QObject>
+#include "backend/mouse-output.hpp"
 
 namespace Backend
 {
-    Q_NAMESPACE
-
-    enum Button
+    class BACKENDSHARED_EXPORT MouseOutputWindows : public MouseOutput
     {
-        LeftButton,
-        MiddleButton,
-        RightButton,
+        Q_OBJECT
 
-        ButtonCount
+    public:
+        void setCursorPosition(const QPoint &position) override;
+        bool buttonClick(Button button) override;
+        bool pressButton(Button button) override;
+        bool releaseButton(Button button) override;
+        bool wheel(int intensity = 1) override;
     };
-    Q_ENUM_NS(Button)
 }

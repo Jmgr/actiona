@@ -20,6 +20,7 @@
 
 #include <QtGlobal>
 
+#include "backend/backend.hpp"
 #include "mainwindow.hpp"
 #include "actiontools/actioninstance.hpp"
 #include "actiontools/parameter.hpp"
@@ -79,6 +80,9 @@ int main(int argc, char **argv)
 	app.setApplicationVersion(Global::ACTIONA_VERSION.toString() + QStringLiteral(", script ") + Global::SCRIPT_VERSION.toString());
 
 	qAddPostRoutine(cleanup);
+
+    Backend::Backend backend;
+    backend.autoselect();
 
 	QCommandLineParser optionsParser;
 	optionsParser.setApplicationDescription(QObject::tr("Emulates clics, key presses and other actions."));
@@ -176,7 +180,7 @@ int main(int argc, char **argv)
 #ifdef ACT_PROFILE
         Tools::HighResolutionTimer timer(QStringLiteral("Load key codes"));
 #endif
-		ActionTools::KeySymHelper::loadKeyCodes();
+        ActionTools::KeySymHelper::loadKeyCodes(); // TODO: remove
 	}
 #endif
 

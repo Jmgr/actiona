@@ -18,25 +18,16 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/keyboard-input-x11.hpp"
 
-#include "backend/backend_global.hpp"
-#include "backend/backend.hpp"
+#include <QX11Info>
 
-#include <QObject>
-#include <QPoint>
+#include <X11/Xlib.h>
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT MouseInput : public QObject
+    KeyboardInputX11::KeyboardInputX11(QObject *parent):
+        KeyboardInput(parent)
     {
-        Q_OBJECT
-        Q_DISABLE_COPY(MouseInput)
-
-    public:
-        explicit MouseInput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~MouseInput() {}
-        virtual bool isButtonPressed(Mouse::Button button) const = 0;
-        virtual QPoint cursorPosition() const = 0;
-    };
+    }
 }

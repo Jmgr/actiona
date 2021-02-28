@@ -104,6 +104,6 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../../actiontools/include
 )
 
-target_link_libraries(${PROJECT} actiontools Qt5::Network Qt5::Script Qt5::Sql Qt5::Widgets)
+target_link_libraries(${PROJECT} tools actiontools Qt5::Network Qt5::Script Qt5::Sql Qt5::Widgets)
 
 compile_translations(${PROJECT})

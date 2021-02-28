@@ -2,17 +2,42 @@ set(PROJECT backend)
 
 set(SOURCES_PREFIX src)
 set(SOURCES
+    ${SOURCES_PREFIX}/backend.cpp
+    ${SOURCES_PREFIX}/keyinput.cpp
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyinput-x11.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keyinput-windows.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keysymhelper-x11.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keymapper-x11.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keymapper-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/mouse-input-x11.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/mouse-output-x11.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/mouse-input-windows.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/mouse-output-windows.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyboard-input-x11.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyboard-output-x11.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keyboard-input-windows.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keyboard-output-windows.cpp>
 )
 
 set(HEADERS_PREFIX include/${PROJECT})
 set(HEADERS
     ${HEADERS_PREFIX}/backend_global.hpp
     ${HEADERS_PREFIX}/mouse-input.hpp
-    ${HEADERS_PREFIX}/mouse.hpp
+    ${HEADERS_PREFIX}/mouse-output.hpp
+    ${HEADERS_PREFIX}/keyboard-input.hpp
+    ${HEADERS_PREFIX}/keyboard-output.hpp
+    ${HEADERS_PREFIX}/backend.hpp
+    ${HEADERS_PREFIX}/keymapper.hpp
+    ${HEADERS_PREFIX}/keyinput.hpp
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keysymhelper-x11.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-input-x11.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-output-x11.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/mouse-input-windows.hpp>
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/mouse-output-windows.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keyboard-input-x11.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keyboard-output-x11.hpp>
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/keyboard-input-windows.hpp>
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/keyboard-output-windows.hpp>
 )
 
 add_library(${PROJECT} SHARED

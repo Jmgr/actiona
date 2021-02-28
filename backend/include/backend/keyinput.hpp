@@ -20,15 +20,18 @@
 
 #pragma once
 
-#include "actiontools_global.hpp"
-#include "tools/stringlistpair.hpp"
+#include "backend_global.hpp"
+
+#include <QStringList>
 
 class QKeyEvent;
 
-namespace ActionTools
+namespace Backend
 {
-    class ACTIONTOOLSSHARED_EXPORT KeyInput // TODO: remove
+    class BACKENDSHARED_EXPORT KeyInput final
 	{
+        Q_DISABLE_COPY(KeyInput)
+
 	public:
 		enum Key
 		{
@@ -78,7 +81,9 @@ namespace ActionTools
 		static unsigned long nativeKey(int key)		{ return mNativeKey[key]; }
 
 	private:
-        static const Tools::StringListPair mKeyNames;
+        static void platformInit();
+
+        static const std::pair<QStringList, QStringList> mKeyNames;
 		static bool mInitDone;
 		static unsigned long mNativeKey[KeyCount];
 

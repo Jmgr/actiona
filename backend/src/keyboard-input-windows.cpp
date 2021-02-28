@@ -18,25 +18,31 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/mouse-input-windows.hpp"
 
-#include "backend/backend_global.hpp"
-#include "backend/backend.hpp"
+#include <QCursor>
 
-#include <QObject>
-#include <QPoint>
+#include <Windows.h>
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT MouseInput : public QObject
+    bool MouseInputWindows::isButtonPressed(Button button) const
     {
-        Q_OBJECT
-        Q_DISABLE_COPY(MouseInput)
+        switch(button)
+        {
+        case LeftButton:
+            return (GetAsyncKeyState(GetSystemMetrics(SM_SWAPBUTTON) ? VK_RBUTTON : VK_LBUTTON) & 0x8000);
+        case MiddleButton:
+            return (GetAsyncKeyState(VK_MBUTTON) & 0x8000);
+        case RightButton:
+            return (GetAsyncKeyState(GetSystemMetrics(SM_SWAPBUTTON) ? VK_LBUTTON : VK_RBUTTON) & 0x8000);
+        default:
+            return false;
+        }
+    }
 
-    public:
-        explicit MouseInput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~MouseInput() {}
-        virtual bool isButtonPressed(Mouse::Button button) const = 0;
-        virtual QPoint cursorPosition() const = 0;
-    };
+    QPoint MouseInputWindows::cursorPosition() const
+    {
+        return QCursor::pos();
+    }
 }

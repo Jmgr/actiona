@@ -28,15 +28,18 @@
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT MouseInput : public QObject
+    class BACKENDSHARED_EXPORT MouseOutput : public QObject
     {
         Q_OBJECT
-        Q_DISABLE_COPY(MouseInput)
+        Q_DISABLE_COPY(MouseOutput)
 
     public:
-        explicit MouseInput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~MouseInput() {}
-        virtual bool isButtonPressed(Mouse::Button button) const = 0;
-        virtual QPoint cursorPosition() const = 0;
+        explicit MouseOutput(QObject *parent = nullptr): QObject(parent) {}
+        virtual ~MouseOutput() {}
+        virtual void setCursorPosition(const QPoint &position) = 0;
+        virtual bool buttonClick(Mouse::Button button) = 0;
+        virtual bool pressButton(Mouse::Button button) = 0;
+        virtual bool releaseButton(Mouse::Button button) = 0;
+        virtual bool wheel(int intensity = 1) = 0;
     };
 }

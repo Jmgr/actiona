@@ -20,15 +20,17 @@
 
 #pragma once
 
-#include "actiontools_global.hpp"
+#include <Qt>
 
-#include <qnamespace.h>
+#include "backend/backend_global.hpp"
 
-namespace ActionTools
+namespace Backend
 {
-    class ACTIONTOOLSSHARED_EXPORT KeyMapper // TODO: remove
+    // TODO: keep exporting that?
+    class BACKENDSHARED_EXPORT KeyMapper final
 	{
 	public:
+        KeyMapper() = delete;
 #ifdef Q_OS_WIN
 		static int toDirectXKey(int nativeKey);
 #endif
