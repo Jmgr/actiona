@@ -20,7 +20,6 @@
 
 #pragma once
 
-#include "../keyboarddevice.hpp"
 #include "actiontools/code/codeclass.hpp"
 
 #include <QObject>
@@ -45,9 +44,6 @@ namespace Code
 		QScriptValue releaseKey(const QString &key);
 		QScriptValue triggerKey(const QString &key);
         QScriptValue writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) const;
-
-	private:
-		KeyboardDevice mKeyboardDevice;
 	};
 }
 

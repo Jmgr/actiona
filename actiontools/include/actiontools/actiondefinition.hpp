@@ -77,8 +77,6 @@ namespace ActionTools
 
 		bool worksUnderThisOS() const;
 
-        virtual bool requirementCheck(QStringList &missingRequirements) const                           { Q_UNUSED(missingRequirements) return true; }
-
 		static QString CategoryName[CategoryCount];
 		static QStringList StandardTabs;
 
@@ -93,7 +91,6 @@ namespace ActionTools
         }
         GroupDefinition &addGroup(int tab = 0);
 		void addException(int id, const QString &name);
-		bool requirementCheckXTest(QStringList &missingRequirements) const;
 
 	private:
         ElementDefinition *addElement(ElementDefinition *element, int tab);

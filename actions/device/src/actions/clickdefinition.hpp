@@ -27,6 +27,7 @@
 #include "actiontools/positionparameterdefinition.hpp"
 #include "actiontools/booleanparameterdefinition.hpp"
 #include "actiontools/groupdefinition.hpp"
+#include "backend/mouse-output.hpp"
 
 #include <limits>
 
@@ -57,7 +58,7 @@ namespace Actions
             auto &button = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("button"), tr("Button")});
             button.setTooltip(tr("The button to simulate"));
             button.setItems(ClickInstance::buttons);
-            button.setDefaultValue(ClickInstance::buttons.second.at(MouseDevice::LeftButton));
+            button.setDefaultValue(ClickInstance::buttons.second.at(Backend::Mouse::LeftButton));
 
             auto &position = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("position"), tr("Position")});
             position.setTooltip(tr("The screen position where to simulate a mouse click"));
@@ -89,7 +90,6 @@ namespace Actions
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new ClickInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
 		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/click.png")); }
-		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
 		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 	
 	private:

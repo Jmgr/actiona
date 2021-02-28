@@ -6,6 +6,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/actions/cursorpathinstance.cpp
     ${SOURCES_PREFIX}/actions/keyboardkeyconditioninstance.cpp
     ${SOURCES_PREFIX}/actions/keyinstance.cpp
+    ${SOURCES_PREFIX}/actions/movecursorinstance.cpp
     ${SOURCES_PREFIX}/actions/textinstance.cpp
     ${SOURCES_PREFIX}/actions/wheelinstance.cpp
     ${SOURCES_PREFIX}/code/keyboard.cpp

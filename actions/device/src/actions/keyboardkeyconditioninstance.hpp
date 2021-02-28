@@ -49,7 +49,6 @@ namespace Actions
 	void stopExecution() override;
 	void startExecution() override;
 
-
     private:
 	bool areKeysPressed() const;
 

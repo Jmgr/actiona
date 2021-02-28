@@ -47,11 +47,8 @@ set(SOURCES
     ${SOURCES_PREFIX}/keyboardkeyedit.cpp
     ${SOURCES_PREFIX}/keyboardkeyparameterdefinition.cpp
     ${SOURCES_PREFIX}/keyedit.cpp
-    ${SOURCES_PREFIX}/keyinput.cpp
-    ${SOURCES_PREFIX}/keymapper.cpp
     ${SOURCES_PREFIX}/keyparameterdefinition.cpp
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keysym2ucs.cpp>
-    ${SOURCES_PREFIX}/keysymhelper.cpp
     ${SOURCES_PREFIX}/keywords.cpp
     ${SOURCES_PREFIX}/linecombobox.cpp
     ${SOURCES_PREFIX}/lineparameterdefinition.cpp
@@ -168,11 +165,8 @@ set(HEADERS
     ${HEADERS_PREFIX}/keyboardkey.hpp
     ${HEADERS_PREFIX}/keyboardkeyparameterdefinition.hpp
     ${HEADERS_PREFIX}/keyedit.hpp
-    ${HEADERS_PREFIX}/keyinput.hpp
-    ${HEADERS_PREFIX}/keymapper.hpp
     ${HEADERS_PREFIX}/keyparameterdefinition.hpp
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keysym2ucs.hpp>
-    ${HEADERS_PREFIX}/keysymhelper.hpp
     ${HEADERS_PREFIX}/keywords.hpp
     ${HEADERS_PREFIX}/linecombobox.hpp
     ${HEADERS_PREFIX}/linenumberarea.hpp

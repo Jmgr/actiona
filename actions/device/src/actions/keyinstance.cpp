@@ -19,7 +19,7 @@
 */
 
 #include "keyinstance.hpp"
-#include "actiontools/keyinput.hpp"
+#include "backend/keyinput.hpp"
 #include "backend/keyboard-output.hpp"
 
 #ifdef Q_OS_WIN
@@ -57,8 +57,7 @@ namespace Actions
     };
 
 	KeyInstance::KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
-		: ActionTools::ActionInstance(definition, parent),
-          mAutoreleaser(Backend::Backend::instance().keyboardOutput()),
+        : ActionTools::ActionInstance(definition, parent),
 		  mCtrl(false),
 		  mAlt(false),
 		  mShift(false),
@@ -105,6 +104,8 @@ namespace Actions
 #ifdef Q_OS_WIN
         auto &windowsKeyboardOutput = qobject_cast<Backend::KeyboardOutputWindows&>();
         windowsKeyboardOutput.setType(static_cast<Backend::KeyboardOutputWindows::Type>(type));
+#else
+        Q_UNUSED(type)
 #endif
 
 		bool result = true;

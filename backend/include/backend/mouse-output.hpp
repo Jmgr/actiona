@@ -52,7 +52,5 @@ namespace Backend
         void endSequence();
 
         std::array<bool, Mouse::ButtonCount> mPressedButtons;
-
-        friend class MouseAutoreleaser;
     };
 }

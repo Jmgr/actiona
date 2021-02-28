@@ -38,7 +38,7 @@ namespace ActionTools
 		addItem(keySequence.toString(QKeySequence::NativeText));
 	}
 
-	void KeyEdit::setKeyInput(const KeyInput &keyInput)
+    void KeyEdit::setKeyInput(const Backend::KeyInput &keyInput)
 	{
 		mKeyInput = keyInput;
 

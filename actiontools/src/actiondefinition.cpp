@@ -101,25 +101,6 @@ namespace ActionTools
 		mExceptions.append(new ActionException(id, name));
 	}
 
-    bool ActionDefinition::requirementCheckXTest(QStringList &missingRequirements) const // TODO: remove
-	{
-#ifdef Q_OS_UNIX
-		int unused;
-
-        if(!XTestQueryExtension(QX11Info::display(), &unused, &unused, &unused, &unused))
-		{
-			missingRequirements << QObject::tr("missing XTest extension");
-			return false;
-		}
-		
-		return true;
-#else
-		Q_UNUSED(missingRequirements)
-
-		return true;
-#endif
-    }
-
     ElementDefinition *ActionDefinition::addElement(ElementDefinition *element, int tab)
     {
         if(tab > 0 && tabs().count() > 0)

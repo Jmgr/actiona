@@ -22,7 +22,6 @@
 
 #include "actiontools/actioninstance.hpp"
 #include "tools/stringlistpair.hpp"
-#include "backend/keyboard-autoreleaser.hpp"
 
 class QTimer;
 
@@ -65,7 +64,6 @@ namespace Actions
 	private:
 		void pressOrReleaseModifiers(bool press);
 
-        Backend::KeyboardAutoreleaser mAutoreleaser;
 		QString mKey;
 		bool mCtrl;
 		bool mAlt;

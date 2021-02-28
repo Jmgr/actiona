@@ -18,19 +18,35 @@
 	Contact: jmgr@jmgr.info
 */
 
-#include "backend/mouse-autoreleaser.hpp"
+#include "movecursorinstance.hpp"
+#include "actiontools/actioninstance.hpp"
 #include "backend/mouse-output.hpp"
 
-namespace Backend
+#include <QPoint>
+
+namespace Actions
 {
-    MouseAutoreleaser::MouseAutoreleaser(MouseOutput &mouseOutput):
-        mMouseOutput(mouseOutput)
+    MoveCursorInstance::MoveCursorInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
+        : ActionTools::ActionInstance(definition, parent)
     {
-        mMouseOutput.beginSequence();
     }
 
-    MouseAutoreleaser::~MouseAutoreleaser()
+    void MoveCursorInstance::startExecution()
     {
-        mMouseOutput.beginSequence();
+        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+
+        bool ok = true;
+
+        QPoint position        = evaluatePoint(ok, QStringLiteral("position"));
+        QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
+
+        if(!ok)
+            return;
+
+        position += positionOffset;
+        mouseOutput.setCursorPosition(position);
+
+        executionEnded();
     }
 }
+

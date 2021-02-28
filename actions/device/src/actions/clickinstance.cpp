@@ -56,8 +56,7 @@ namespace Actions
     };
 
     ClickInstance::ClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
-        : ActionTools::ActionInstance(definition, parent),
-          mAutoreleaser(Backend::Backend::instance().mouseOutput())
+        : ActionTools::ActionInstance(definition, parent)
     {
     }
 	

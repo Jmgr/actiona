@@ -22,7 +22,6 @@
 
 #include "actiontools/actioninstance.hpp"
 #include "tools/stringlistpair.hpp"
-#include "backend/mouse-autoreleaser.hpp"
 
 namespace Actions
 {
@@ -51,8 +50,6 @@ namespace Actions
 		void startExecution() override;
 
 	private:
-        Backend::MouseAutoreleaser mAutoreleaser;
-	
 		Q_DISABLE_COPY(ClickInstance)
 	};
 }

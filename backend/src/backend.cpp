@@ -33,6 +33,11 @@
 #include "backend/mouse-output-x11.hpp"
 #include "backend/keyboard-input-x11.hpp"
 #include "backend/keyboard-output-x11.hpp"
+
+#include <QX11Info>
+
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
 #endif
 
 namespace Backend
@@ -42,9 +47,6 @@ namespace Backend
     Backend::Backend(QObject *parent):
         QObject(parent)
     {
-#ifdef Q_OS_UNIX
-        KeySymHelper::loadKeyCodes();
-#endif
 #ifdef Q_OS_WIN
         mMouseInput = new MouseInputWindows(this);
         mMouseOutput = new MouseOutputWindows(this);
@@ -52,10 +54,21 @@ namespace Backend
         mKeyboardOutput = new KeyboardOutputWindows(this);
 #endif
 #ifdef Q_OS_UNIX
+        auto display = QX11Info::display();
+
+        int unused;
+        if(!display || !XTestQueryExtension(display, &unused, &unused, &unused, &unused))
+        {
+            // TODO: display a messagebox?
+            return;
+        }
+
         mMouseInput = new MouseInputX11(this);
         mMouseOutput = new MouseOutputX11(this);
         mKeyboardInput = new KeyboardInputX11(this);
         mKeyboardOutput = new KeyboardOutputX11(this);
+
+        KeySymHelper::loadKeyCodes();
 #endif
         if(mBackend)
             qFatal("Global backend already set");

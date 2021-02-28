@@ -57,7 +57,6 @@ namespace Actions
         ActionTools::ActionInstance *newActionInstance() const override				{ return new WheelInstance(this); }
         ActionTools::ActionCategory category() const override					{ return ActionTools::Device; }
         QPixmap icon() const override								{ return QPixmap(QStringLiteral(":/actions/icons/wheel.png")); }
-        bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
 
     private:
         Q_DISABLE_COPY(WheelDefinition)

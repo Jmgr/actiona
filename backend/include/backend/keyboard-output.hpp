@@ -49,7 +49,5 @@ namespace Backend
         void endSequence();
 
         QSet<QString> mPressedKeys;
-
-        friend class KeyboardAutoreleaser;
     };
 }

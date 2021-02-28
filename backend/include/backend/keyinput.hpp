@@ -30,8 +30,6 @@ namespace Backend
 {
     class BACKENDSHARED_EXPORT KeyInput final
 	{
-        Q_DISABLE_COPY(KeyInput)
-
 	public:
 		enum Key
 		{

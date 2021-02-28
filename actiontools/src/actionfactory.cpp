@@ -168,19 +168,6 @@ namespace ActionTools
 				continue;
 			}
 
-			if(definition->worksUnderThisOS())
-			{
-				QStringList missingFeatures;
-				if(!definition->requirementCheck(missingFeatures))
-				{
-					emit actionPackLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
-									   .arg(shortFilename)
-									   .arg(definition->id())
-									   .arg(missingFeatures.join(QStringLiteral("<li>"))));
-					continue;
-				}
-			}
-
 			mActionDefinitions << definition;
 		}
 

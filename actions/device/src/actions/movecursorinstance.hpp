@@ -21,7 +21,6 @@
 #pragma once
 
 #include "actiontools/actioninstance.hpp"
-#include "../mousedevice.hpp"
 
 namespace Actions
 {
@@ -30,33 +29,10 @@ namespace Actions
 		Q_OBJECT
 	
 	public:
-		MoveCursorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
-			: ActionTools::ActionInstance(definition, parent)										{}
-	
-		void startExecution() override
-		{
-			bool ok = true;
-		
-			QPoint position        = evaluatePoint(ok, QStringLiteral("position"));
-			QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
+        MoveCursorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
+        void startExecution() override;
 
-			if(!ok)
-				return;
-			
-			position += positionOffset;
-			mMouseDevice.setCursorPosition(position);
-		
-			executionEnded();
-		}
-
-		void stopLongTermExecution() override
-		{
-			mMouseDevice.reset();
-		}
-	
 	private:
-		MouseDevice mMouseDevice;
-		
 		Q_DISABLE_COPY(MoveCursorInstance)
 	};
 }

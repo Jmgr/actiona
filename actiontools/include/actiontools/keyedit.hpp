@@ -22,7 +22,7 @@
 
 #include "actiontools_global.hpp"
 #include "codecombobox.hpp"
-#include "keyinput.hpp"
+#include "backend/keyinput.hpp"
 
 namespace ActionTools
 {
@@ -33,8 +33,8 @@ namespace ActionTools
 	public:
 		explicit KeyEdit(QWidget *parent = nullptr);
 
-		const KeyInput &keyInput() const							{ return mKeyInput; }
-		void setKeyInput(const KeyInput &keyInput);
+        const Backend::KeyInput &keyInput() const							{ return mKeyInput; }
+        void setKeyInput(const Backend::KeyInput &keyInput);
 
 	private slots:
         void currentIndexChanged(int index);
@@ -42,7 +42,7 @@ namespace ActionTools
 	private:
 		bool eventFilter(QObject *object, QEvent *event) override;
 
-		KeyInput mKeyInput;
+        Backend::KeyInput mKeyInput;
 
 		Q_DISABLE_COPY(KeyEdit)
 	};

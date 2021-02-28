@@ -22,6 +22,7 @@
 #include "actiontools/keyedit.hpp"
 #include "actiontools/actioninstance.hpp"
 #include "actiontools/codelineedit.hpp"
+#include "backend/keyinput.hpp"
 
 #include <QDebug>
 
@@ -49,7 +50,7 @@ namespace ActionTools
 			mKeyEdit->codeLineEdit()->setFromSubParameter(key);
 		else
 		{
-			KeyInput keyInput;
+            Backend::KeyInput keyInput;
 			
 			keyInput.fromPortableText(key.value(), actionInstance->subParameter(name().original(), QStringLiteral("isQtKey")).value() == QLatin1String("true"));
 			
@@ -68,7 +69,7 @@ namespace ActionTools
 		}
 		else
 		{
-			const KeyInput &keyInput = mKeyEdit->keyInput();
+            const Backend::KeyInput &keyInput = mKeyEdit->keyInput();
 			actionInstance->setSubParameter(originalName, QStringLiteral("key"), keyInput.toPortableText());
 			actionInstance->setSubParameter(originalName, QStringLiteral("isQtKey"), keyInput.isQtKey() ? QStringLiteral("true") : QStringLiteral("false"));
 		}

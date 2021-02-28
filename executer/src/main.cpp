@@ -48,7 +48,6 @@
 #undef signals
 #include <libnotify/notify.h>
 #define signals
-#include "actiontools/keysymhelper.hpp"
 #endif
 
 #ifdef Q_OS_WIN
@@ -191,15 +190,6 @@ int main(int argc, char **argv)
 
 	if(!optionsParser.isSet(QStringLiteral("nocodeqt")))
 		app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/code"));
-
-#ifdef Q_OS_UNIX
-	{
-#ifdef ACT_PROFILE
-        Tools::HighResolutionTimer timer(QStringLiteral("Load key codes"));
-#endif
-        ActionTools::KeySymHelper::loadKeyCodes(); // TODO: remove
-	}
-#endif
 
 	// Proxy settings
 	int proxyMode = ActionTools::Settings::PROXY_SYSTEM;

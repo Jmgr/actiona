@@ -63,7 +63,6 @@ namespace Actions
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new CursorPathInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
 		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/movecursor.png")); }
-		bool requirementCheck(QStringList &missingRequirements) const override			{ return requirementCheckXTest(missingRequirements); }
 		QStringList tabs() const override												{ return ActionDefinition::StandardTabs; }
 
 	private:

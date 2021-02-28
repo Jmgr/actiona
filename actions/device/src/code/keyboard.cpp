@@ -19,6 +19,7 @@
 */
 
 #include "keyboard.hpp"
+#include "backend/keyboard-output.hpp"
 
 namespace Code
 {
@@ -34,7 +35,9 @@ namespace Code
 	
 	QScriptValue Keyboard::pressKey(const QString &key)
 	{
-		if(!mKeyboardDevice.pressKey(key))
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+
+        if(!keyboardOutput.pressKey(key))
 			throwError(QStringLiteral("PressKeyError"), tr("Unable to press the key"));
 		
 		return thisObject();
@@ -42,7 +45,9 @@ namespace Code
 	
 	QScriptValue Keyboard::releaseKey(const QString &key)
 	{
-		if(!mKeyboardDevice.releaseKey(key))
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+
+        if(!keyboardOutput.releaseKey(key))
 			throwError(QStringLiteral("ReleaseKeyError"), tr("Unable to release the key"));
 		
 		return thisObject();
@@ -50,7 +55,9 @@ namespace Code
 	
 	QScriptValue Keyboard::triggerKey(const QString &key)
 	{
-		if(!mKeyboardDevice.triggerKey(key))
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+
+        if(!keyboardOutput.triggerKey(key))
 			throwError(QStringLiteral("TriggerKeyError"), tr("Unable to trigger the key"));
 		
 		return thisObject();
@@ -58,7 +65,9 @@ namespace Code
 	
     QScriptValue Keyboard::writeText(const QString &text, int delay, bool noUnicodeCharacters) const
 	{
-        if(!mKeyboardDevice.writeText(text, delay, noUnicodeCharacters))
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+
+        if(!keyboardOutput.writeText(text, delay, noUnicodeCharacters))
 			throwError(QStringLiteral("WriteTextError"), tr("Unable to write the text"));
 		
 		return thisObject();

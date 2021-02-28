@@ -19,6 +19,7 @@
 */
 
 #include "cursorpathinstance.hpp"
+#include "backend/mouse-output.hpp"
 
 namespace Actions
 {
@@ -37,5 +38,95 @@ namespace Actions
             QStringLiteral(QT_TRANSLATE_NOOP("CursorPathInstance::buttons", "Right"))
         }
     };
+
+    CursorPathInstance::CursorPathInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
+        : ActionTools::ActionInstance(definition, parent),
+        mCurrentPoint(0),
+        mButton(NoButton)
+    {
+        mMoveTimer.setTimerType(Qt::PreciseTimer);
+
+        connect(&mMoveTimer, &QTimer::timeout, this, &CursorPathInstance::moveToNextPosition);
+    }
+
+    void CursorPathInstance::startExecution()
+    {
+        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+
+        bool ok = true;
+
+        mPositionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
+        mButton = evaluateListElement<Button>(ok, buttons, QStringLiteral("button"));
+        mPoints = evaluatePolygon(ok, QStringLiteral("path"));
+
+        if(!ok)
+            return;
+
+        mMoveTimer.start(25);
+
+        mCurrentPoint = 0;
+        mouseOutput.setCursorPosition(mPoints.at(mCurrentPoint) + mPositionOffset);
+        ++mCurrentPoint;
+
+        switch(mButton)
+        {
+        case NoButton:
+            break;
+        case LeftButton:
+            mouseOutput.pressButton(Backend::Mouse::LeftButton);
+            break;
+        case MiddleButton:
+            mouseOutput.pressButton(Backend::Mouse::MiddleButton);
+            break;
+        case RightButton:
+            mouseOutput.pressButton(Backend::Mouse::RightButton);
+            break;
+        }
+    }
+
+    void CursorPathInstance::stopExecution()
+    {
+        releaseButton();
+
+        mMoveTimer.stop();
+    }
+
+    void CursorPathInstance::moveToNextPosition()
+    {
+        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+
+        if(mCurrentPoint >= mPoints.size())
+        {
+            releaseButton();
+
+            executionEnded();
+            mMoveTimer.stop();
+        }
+        else
+        {
+            mouseOutput.setCursorPosition(mPoints.at(mCurrentPoint) + mPositionOffset);
+            ++mCurrentPoint;
+        }
+    }
+
+    void CursorPathInstance::releaseButton()
+    {
+        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+
+        switch(mButton)
+        {
+        case NoButton:
+            break;
+        case LeftButton:
+            mouseOutput.releaseButton(Backend::Mouse::LeftButton);
+            break;
+        case MiddleButton:
+            mouseOutput.releaseButton(Backend::Mouse::MiddleButton);
+            break;
+        case RightButton:
+            mouseOutput.releaseButton(Backend::Mouse::RightButton);
+            break;
+        }
+    }
 }
 

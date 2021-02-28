@@ -20,9 +20,7 @@
 
 #pragma once
 
-#include "../mousedevice.hpp"
 #include "actiontools/code/codeclass.hpp"
-#include "actiontools/systeminput.hpp"
 
 #include <QObject>
 #include <QScriptValue>
@@ -33,10 +31,6 @@ namespace Code
 	class Mouse : public CodeClass
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onMotion READ onMotion WRITE setOnMotion)
-		Q_PROPERTY(QScriptValue onWheel READ onWheel WRITE setOnWheel)
-		Q_PROPERTY(QScriptValue onButtonPressed READ onButtonPressed WRITE setOnButtonPressed)
-		Q_PROPERTY(QScriptValue onButtonReleased READ onButtonReleased WRITE setOnButtonReleased)
 
 	public:
 		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
@@ -52,19 +46,9 @@ namespace Code
 		Mouse();
 		~Mouse() override;
 
-		void setOnMotion(const QScriptValue &onMotion)					{ mOnMotion = onMotion; }
-		void setOnWheel(const QScriptValue &onWheel)					{ mOnWheel = onWheel; }
-		void setOnButtonPressed(const QScriptValue &onButtonPressed)	{ mOnButtonPressed = onButtonPressed; }
-		void setOnButtonReleased(const QScriptValue &onButtonReleased)	{ mOnButtonReleased = onButtonReleased; }
-
-		QScriptValue onMotion() const									{ return mOnMotion; }
-		QScriptValue onWheel() const									{ return mOnWheel; }
-		QScriptValue onButtonPressed() const							{ return mOnButtonPressed; }
-		QScriptValue onButtonReleased() const							{ return mOnButtonReleased; }
-
 	public slots:
-		QString toString() const override										{ return QStringLiteral("Mouse"); }
-        bool equals(const QScriptValue &other) const override            { return defaultEqualsImplementation<Mouse>(other); }
+        QString toString() const override								{ return QStringLiteral("Mouse"); }
+        bool equals(const QScriptValue &other) const override           { return defaultEqualsImplementation<Mouse>(other); }
 		QScriptValue position() const;
 		QScriptValue move() const;
 		bool isButtonPressed(Button button = LeftButton) const;
@@ -72,18 +56,5 @@ namespace Code
 		QScriptValue release(Button button = LeftButton);
 		QScriptValue click(Button button = LeftButton);
 		QScriptValue wheel(int intensity = 1) const;
-
-	private:
-		void mouseMotion(int x, int y);
-		void mouseWheel(int intensity);
-		void mouseButtonPressed(ActionTools::SystemInput::Button button);
-		void mouseButtonReleased(ActionTools::SystemInput::Button button);
-
-	private:
-		MouseDevice mMouseDevice;
-		QScriptValue mOnMotion;
-		QScriptValue mOnWheel;
-		QScriptValue mOnButtonPressed;
-		QScriptValue mOnButtonReleased;
 	};
 }
