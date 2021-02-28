@@ -30,7 +30,7 @@
 #include <Windows.h>
 
 // https://msdn.microsoft.com/en-us/library/windows/desktop/ms646267(v=vs.85).aspx
-static const std::unordered_set<int> extendedKeys =
+const std::unordered_set<int> extendedKeys =
 {{
     VK_RMENU, // Alt
     VK_RCONTROL,
@@ -119,11 +119,15 @@ namespace Backend
 
     bool KeyboardOutputWindows::pressKey(const QString &key)
     {
+        setKeyPressed(key, true);
+
         return doKeyAction(Press, stringToNativeKey(key), mType);
     }
 
     bool KeyboardOutputWindows::releaseKey(const QString &key)
     {
+        setKeyPressed(key, true);
+
         return doKeyAction(Release, stringToNativeKey(key), mType);
     }
 

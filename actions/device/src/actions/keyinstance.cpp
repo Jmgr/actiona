@@ -20,9 +20,10 @@
 
 #include "keyinstance.hpp"
 #include "actiontools/keyinput.hpp"
+#include "backend/keyboard-output.hpp"
 
 #ifdef Q_OS_WIN
-#include <Windows.h>
+#include "backend/keyboard-output-windows.hpp"
 #endif
 
 #include <QTimer>
@@ -57,6 +58,7 @@ namespace Actions
 
 	KeyInstance::KeyInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
+          mAutoreleaser(Backend::Backend::instance().keyboardOutput()),
 		  mCtrl(false),
 		  mAlt(false),
 		  mShift(false),
@@ -70,6 +72,8 @@ namespace Actions
 
 	void KeyInstance::startExecution()
 	{
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+
 		bool ok = true;
 
 		mKey = evaluateString(ok, QStringLiteral("key"), QStringLiteral("key"));
@@ -98,7 +102,10 @@ namespace Actions
 			return;
 		}
 
-		mKeyboardDevice.setType(static_cast<KeyboardDevice::Type>(type));
+#ifdef Q_OS_WIN
+        auto &windowsKeyboardOutput = qobject_cast<Backend::KeyboardOutputWindows&>();
+        windowsKeyboardOutput.setType(static_cast<Backend::KeyboardOutputWindows::Type>(type));
+#endif
 
 		bool result = true;
 
@@ -107,17 +114,17 @@ namespace Actions
 		case PressAction:
 			pressOrReleaseModifiers(true);
 
-			result &= mKeyboardDevice.pressKey(mKey);
+            result &= keyboardOutput.pressKey(mKey);
 			break;
 		case ReleaseAction:
 			pressOrReleaseModifiers(false);
 
-			result &= mKeyboardDevice.releaseKey(mKey);
+            result &= keyboardOutput.releaseKey(mKey);
 			break;
 		case PressReleaseAction:
 			pressOrReleaseModifiers(true);
 
-			result &= mKeyboardDevice.pressKey(mKey);
+            result &= keyboardOutput.pressKey(mKey);
 
 			mTimer->setSingleShot(true);
 			mTimer->start(mPause);
@@ -139,15 +146,12 @@ namespace Actions
 		mTimer->stop();
 	}
 
-	void KeyInstance::stopLongTermExecution()
-	{
-		mKeyboardDevice.reset();
-	}
-
 	void KeyInstance::sendRelease()
 	{
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+
 		pressOrReleaseModifiers(false);
-		mKeyboardDevice.releaseKey(mKey);
+        keyboardOutput.releaseKey(mKey);
 
 		--mAmount;
 		if (mAmount > 0)
@@ -158,11 +162,12 @@ namespace Actions
 
 	void KeyInstance::sendPressKey()
 	{
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
 		bool result = true;
 
 		pressOrReleaseModifiers(true);
 
-		result &= mKeyboardDevice.pressKey(mKey);
+        result &= keyboardOutput.pressKey(mKey);
 
 		if(!result)
 		{
@@ -175,27 +180,29 @@ namespace Actions
 
 	void KeyInstance::pressOrReleaseModifiers(bool press)
 	{
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+
 		if(press)
 		{
 			if(mCtrl)
-				mKeyboardDevice.pressKey(QStringLiteral("controlLeft"));
+                keyboardOutput.pressKey(QStringLiteral("controlLeft"));
 			if(mAlt)
-				mKeyboardDevice.pressKey(QStringLiteral("altLeft"));
+                keyboardOutput.pressKey(QStringLiteral("altLeft"));
 			if(mShift)
-				mKeyboardDevice.pressKey(QStringLiteral("shiftLeft"));
+                keyboardOutput.pressKey(QStringLiteral("shiftLeft"));
 			if(mMeta)
-				mKeyboardDevice.pressKey(QStringLiteral("metaLeft"));
+                keyboardOutput.pressKey(QStringLiteral("metaLeft"));
 		}
 		else
 		{
 			if(mCtrl)
-				mKeyboardDevice.releaseKey(QStringLiteral("controlLeft"));
+                keyboardOutput.releaseKey(QStringLiteral("controlLeft"));
 			if(mAlt)
-				mKeyboardDevice.releaseKey(QStringLiteral("altLeft"));
+                keyboardOutput.releaseKey(QStringLiteral("altLeft"));
 			if(mShift)
-				mKeyboardDevice.releaseKey(QStringLiteral("shiftLeft"));
+                keyboardOutput.releaseKey(QStringLiteral("shiftLeft"));
 			if(mMeta)
-				mKeyboardDevice.releaseKey(QStringLiteral("metaLeft"));
+                keyboardOutput.releaseKey(QStringLiteral("metaLeft"));
 		}
 	}
 }

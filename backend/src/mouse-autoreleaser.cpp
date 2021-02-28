@@ -18,42 +18,19 @@
 	Contact: jmgr@jmgr.info
 */
 
-#pragma once
-
-#include "actiontools/actioninstance.hpp"
-#include "tools/stringlistpair.hpp"
 #include "backend/mouse-autoreleaser.hpp"
+#include "backend/mouse-output.hpp"
 
-namespace Actions
+namespace Backend
 {
-	class ClickInstance : public ActionTools::ActionInstance
-	{
-		Q_OBJECT
-	
-	public:
-		enum Action
-		{
-			ClickAction,
-			PressAction,
-			ReleaseAction
-		};
-		enum Exceptions
-		{
-			FailedToSendInputException = ActionTools::ActionException::UserException,
-			InvalidActionException
-		};
-	
-        ClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-	
-        static Tools::StringListPair buttons;
-        static Tools::StringListPair actions;
-	
-		void startExecution() override;
+    MouseAutoreleaser::MouseAutoreleaser(MouseOutput &mouseOutput):
+        mMouseOutput(mouseOutput)
+    {
+        mMouseOutput.beginSequence();
+    }
 
-	private:
-        Backend::MouseAutoreleaser mAutoreleaser;
-	
-		Q_DISABLE_COPY(ClickInstance)
-	};
+    MouseAutoreleaser::~MouseAutoreleaser()
+    {
+        mMouseOutput.beginSequence();
+    }
 }
-

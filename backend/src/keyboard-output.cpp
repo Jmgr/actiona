@@ -18,39 +18,30 @@
 	Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/keyboard-output.hpp"
 
-#include "actiontools/actioninstance.hpp"
-
-class QTimer;
-
-namespace Actions
+namespace Backend
 {
-	class TextInstance : public ActionTools::ActionInstance
-	{
-		Q_OBJECT
-	
-	public:
-		enum Exceptions
-		{
-			FailedToSendInputException = ActionTools::ActionException::UserException
-		};
-	
-		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-	
-		void startExecution() override;
-        void stopExecution() override;
+    void KeyboardOutput::setKeyPressed(QString key, bool pressed)
+    {
+        if(pressed)
+            mPressedKeys.insert(key);
+        else
+            mPressedKeys.remove(key);
+    }
 
-	private slots:
-		void pressNextKey();
-	
-    private:
-		QTimer *mTimer;
-		QString mText;
-        int mCurrentCharacter;
-        bool mNoUnicodeCharacters;
-		
-		Q_DISABLE_COPY(TextInstance)
-	};
+    void KeyboardOutput::beginSequence()
+    {
+        mPressedKeys.clear();
+    }
+
+    void KeyboardOutput::endSequence()
+    {
+        auto localPressedKeys = mPressedKeys;
+
+        for(auto pressedKey: localPressedKeys)
+        {
+            releaseKey(pressedKey);
+        }
+    }
 }
-

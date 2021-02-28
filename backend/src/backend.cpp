@@ -37,20 +37,14 @@
 
 namespace Backend
 {
+    Backend *Backend::mBackend = nullptr;
+
     Backend::Backend(QObject *parent):
         QObject(parent)
     {
 #ifdef Q_OS_UNIX
         KeySymHelper::loadKeyCodes();
 #endif
-    }
-
-    Backend::~Backend()
-    {
-    }
-
-    void Backend::autoselect()
-    {
 #ifdef Q_OS_WIN
         mMouseInput = new MouseInputWindows(this);
         mMouseOutput = new MouseOutputWindows(this);
@@ -63,33 +57,51 @@ namespace Backend
         mKeyboardInput = new KeyboardInputX11(this);
         mKeyboardOutput = new KeyboardOutputX11(this);
 #endif
+        if(mBackend)
+            qFatal("Global backend already set");
+
+        mBackend = this;
     }
 
-    MouseInput *Backend::mouseInput()
+    Backend::~Backend()
+    {
+    }
+
+    void Backend::releaseAll()
+    {
+        // TODO
+    }
+
+    MouseInput &Backend::mouseInput()
     {
         Q_ASSERT(mMouseInput);
 
-        return mMouseInput;
+        return *mMouseInput;
     }
 
-    MouseOutput *Backend::mouseOutput()
+    MouseOutput &Backend::mouseOutput()
     {
         Q_ASSERT(mMouseOutput);
 
-        return mMouseOutput;
+        return *mMouseOutput;
     }
 
-    KeyboardInput *Backend::keyboardInput()
+    KeyboardInput &Backend::keyboardInput()
     {
         Q_ASSERT(mKeyboardInput);
 
-        return mKeyboardInput;
+        return *mKeyboardInput;
     }
 
-    KeyboardOutput *Backend::keyboardOutput()
+    KeyboardOutput &Backend::keyboardOutput()
     {
         Q_ASSERT(mKeyboardOutput);
 
-        return mKeyboardOutput;
+        return *mKeyboardOutput;
+    }
+
+    Backend &Backend::instance()
+    {
+        return *mBackend;
     }
 }

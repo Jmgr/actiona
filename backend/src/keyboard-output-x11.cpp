@@ -118,11 +118,15 @@ namespace Backend
 
     bool KeyboardOutputX11::pressKey(const QString &key)
     {
+        setKeyPressed(key, true);
+
         return doKeyAction(Press, stringToNativeKey(key));
     }
 
     bool KeyboardOutputX11::releaseKey(const QString &key)
     {
+        setKeyPressed(key, false);
+
         return doKeyAction(Release, stringToNativeKey(key));
     }
 

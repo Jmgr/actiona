@@ -106,7 +106,6 @@ int main(int argc, char **argv)
 	qAddPostRoutine(cleanup);
 
     Backend::Backend backend;
-    backend.autoselect();
 
 #ifdef Q_OS_UNIX
     notify_init("Actiona executer");

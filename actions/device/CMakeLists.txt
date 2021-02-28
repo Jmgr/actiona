@@ -2,13 +2,12 @@ set(PROJECT actionpackdevice)
 
 set(SOURCES_PREFIX src)
 set(SOURCES
-    ${SOURCES_PREFIX}/keyboarddevice.cpp
-    ${SOURCES_PREFIX}/mousedevice.cpp
     ${SOURCES_PREFIX}/actions/clickinstance.cpp
     ${SOURCES_PREFIX}/actions/cursorpathinstance.cpp
     ${SOURCES_PREFIX}/actions/keyboardkeyconditioninstance.cpp
     ${SOURCES_PREFIX}/actions/keyinstance.cpp
     ${SOURCES_PREFIX}/actions/textinstance.cpp
+    ${SOURCES_PREFIX}/actions/wheelinstance.cpp
     ${SOURCES_PREFIX}/code/keyboard.cpp
     ${SOURCES_PREFIX}/code/mouse.cpp
 )
@@ -16,8 +15,6 @@ set(SOURCES
 set(HEADERS_PREFIX src)
 set(HEADERS
     ${HEADERS_PREFIX}/actionpackdevice.hpp
-    ${HEADERS_PREFIX}/keyboarddevice.hpp
-    ${HEADERS_PREFIX}/mousedevice.hpp
     ${HEADERS_PREFIX}/actions/clickdefinition.hpp
     ${HEADERS_PREFIX}/actions/clickinstance.hpp
     ${HEADERS_PREFIX}/actions/cursorpathdefinition.hpp
@@ -54,11 +51,12 @@ find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script Widgets REQUIRED)
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../backend/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../../tools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../../actiontools/include
 )
 
-target_link_libraries(${PROJECT} tools actiontools Qt5::Script Qt5::Widgets)
+target_link_libraries(${PROJECT} backend tools actiontools Qt5::Script Qt5::Widgets)
 
 if(UNIX)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)

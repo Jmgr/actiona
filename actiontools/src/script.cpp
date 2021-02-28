@@ -29,6 +29,7 @@
 #include "actiontools/variableparameterdefinition.hpp"
 #include "actiontools/groupdefinition.hpp"
 #include "actiontools/scriptlinemodel.hpp"
+#include "backend/backend.hpp"
 
 #ifdef ACT_PROFILE
 #include "tools/highresolutiontimer.hpp"
@@ -904,6 +905,8 @@ namespace ActionTools
 
     void Script::executionStopped()
     {
+        Backend::Backend::instance().releaseAll();
+
         for(auto actionInstance: qAsConst(mActionInstances))
             actionInstance->stopLongTermExecution();
 

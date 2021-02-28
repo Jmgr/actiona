@@ -20,43 +20,21 @@
 
 #pragma once
 
-#include <QSet>
-#include <QObject>
+#include "backend_global.hpp"
 
-class KeyboardDevice : public QObject
+namespace Backend
 {
-	Q_OBJECT
-	
-public:
-	enum Action
+    class KeyboardOutput;
+
+    class BACKENDSHARED_EXPORT KeyboardAutoreleaser final
 	{
-		Press,
-		Release,
-		Trigger
+        Q_DISABLE_COPY(KeyboardAutoreleaser)
+
+	public:
+        KeyboardAutoreleaser(KeyboardOutput &keyboardOutput);
+        ~KeyboardAutoreleaser();
+
+    private:
+        KeyboardOutput &mKeyboardOutput;
 	};
-	enum Type
-	{
-		Win32,
-		DirectX
-	};
-	
-	KeyboardDevice();
-    ~KeyboardDevice() override;
-
-	void reset();
-	
-	void setType(Type type) { mType = type; }
-
-	bool pressKey(const QString &key);
-	bool releaseKey(const QString &key);
-	bool triggerKey(const QString &key);
-    bool writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) const;
-
-private:
-    bool doKeyAction(Action action, int nativeKey, bool alterPressedKeys = true);
-	int stringToNativeKey(const QString &key) const;
-	
-	QSet<int> mPressedKeys;
-	Type mType{Win32};
-};
-
+}

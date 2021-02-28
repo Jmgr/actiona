@@ -18,39 +18,28 @@
 	Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/mouse-output.hpp"
 
-#include "actiontools/actioninstance.hpp"
-
-class QTimer;
-
-namespace Actions
+namespace Backend
 {
-	class TextInstance : public ActionTools::ActionInstance
-	{
-		Q_OBJECT
-	
-	public:
-		enum Exceptions
-		{
-			FailedToSendInputException = ActionTools::ActionException::UserException
-		};
-	
-		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-	
-		void startExecution() override;
-        void stopExecution() override;
+    void MouseOutput::setButtonPressed(Mouse::Button button, bool pressed)
+    {
+        mPressedButtons[button] = pressed;
+    }
 
-	private slots:
-		void pressNextKey();
-	
-    private:
-		QTimer *mTimer;
-		QString mText;
-        int mCurrentCharacter;
-        bool mNoUnicodeCharacters;
-		
-		Q_DISABLE_COPY(TextInstance)
-	};
+    void MouseOutput::beginSequence()
+    {
+        mPressedButtons.fill(false);
+    }
+
+    void MouseOutput::endSequence()
+    {
+        auto localPressedButtons = mPressedButtons;
+
+        for(std::size_t i = 0; i < localPressedButtons.size(); ++i)
+        {
+            if(localPressedButtons[i])
+                releaseButton(static_cast<Mouse::Button>(i));
+        }
+    }
 }
-

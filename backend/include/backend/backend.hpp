@@ -57,14 +57,18 @@ namespace Backend
         explicit Backend(QObject *parent = nullptr);
         ~Backend();
 
-        void autoselect();
+        // Release all buttons and keys.
+        void releaseAll();
 
-        MouseInput *mouseInput();
-        MouseOutput *mouseOutput();
-        KeyboardInput *keyboardInput();
-        KeyboardOutput *keyboardOutput();
+        MouseInput &mouseInput();
+        MouseOutput &mouseOutput();
+        KeyboardInput &keyboardInput();
+        KeyboardOutput &keyboardOutput();
+
+        static Backend &instance();
 
     private:
+        static Backend *mBackend;
         MouseInput *mMouseInput;
         MouseOutput *mMouseOutput;
         KeyboardInput *mKeyboardInput;

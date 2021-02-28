@@ -272,6 +272,7 @@ target_include_directories(${PROJECT}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../backend/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
         ${LIBXTST_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
@@ -279,6 +280,7 @@ target_include_directories(${PROJECT}
 
 target_link_libraries(
     ${PROJECT}
+    backend
     tools
     Qt5::Script
     Qt5::XmlPatterns

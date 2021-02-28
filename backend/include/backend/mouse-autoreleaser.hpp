@@ -20,47 +20,21 @@
 
 #pragma once
 
-#include <QPoint>
-#include <QObject>
+#include "backend_global.hpp"
 
-class MouseDevice : public QObject
+namespace Backend
 {
-	Q_OBJECT
+    class MouseOutput;
 
-public:
-	enum Button
+    class BACKENDSHARED_EXPORT MouseAutoreleaser final
 	{
-		LeftButton,
-		MiddleButton,
-		RightButton,
+        Q_DISABLE_COPY(MouseAutoreleaser)
 
-		ButtonCount
+	public:
+        MouseAutoreleaser(MouseOutput &mouseOutput);
+        ~MouseAutoreleaser();
+
+    private:
+        MouseOutput &mMouseOutput;
 	};
-	Q_ENUM(Button)
-
-	MouseDevice();
-    ~MouseDevice() override;
-
-	void reset();
-
-	bool isButtonPressed(Button button) const;
-	QPoint cursorPosition() const;
-	void setCursorPosition(const QPoint &position) const;
-
-	bool buttonClick(Button button);
-	bool pressButton(Button button);
-	bool releaseButton(Button button);
-	
-	bool wheel(int intensity = 1) const;
-
-private:
-#ifdef Q_OS_UNIX
-	int toX11Button(Button button) const;
-#endif
-#ifdef Q_OS_WIN
-	int toWinButton(Button button, bool press) const;
-#endif
-
-	bool mPressedButtons[ButtonCount];
-};
-
+}

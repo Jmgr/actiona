@@ -21,7 +21,6 @@
 #pragma once
 
 #include "actiontools/actioninstance.hpp"
-#include "../mousedevice.hpp"
 
 namespace Actions
 {
@@ -35,35 +34,10 @@ namespace Actions
 			FailedToSendInputException = ActionTools::ActionException::UserException
 		};	
 		
-		WheelInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
-			: ActionTools::ActionInstance(definition, parent)										{}
-	
-		void startExecution() override
-		{
-			bool ok = true;
-		
-			int intensity = evaluateInteger(ok, QStringLiteral("intensity"));
-		
-			if(!ok)
-				return;
-		
-			if(!mMouseDevice.wheel(intensity))
-			{
-				emit executionException(FailedToSendInputException, tr("Unable to emulate wheel: failed to send input"));
-				return;
-			}
-	
-			executionEnded();
-		}
-
-		void stopLongTermExecution() override
-		{
-			mMouseDevice.reset();
-		}
+        WheelInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
+        void startExecution() override;
 
 	private:
-		MouseDevice mMouseDevice;
-		
 		Q_DISABLE_COPY(WheelInstance)
 	};
 }

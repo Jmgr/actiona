@@ -21,8 +21,8 @@
 #pragma once
 
 #include "actiontools/actioninstance.hpp"
-#include "../keyboarddevice.hpp"
 #include "tools/stringlistpair.hpp"
+#include "backend/keyboard-autoreleaser.hpp"
 
 class QTimer;
 
@@ -57,7 +57,6 @@ namespace Actions
 
 		void startExecution() override;
 		void stopExecution() override;
-		void stopLongTermExecution() override;
 
 	private slots:
 		void sendRelease();
@@ -66,7 +65,7 @@ namespace Actions
 	private:
 		void pressOrReleaseModifiers(bool press);
 
-		KeyboardDevice mKeyboardDevice;
+        Backend::KeyboardAutoreleaser mAutoreleaser;
 		QString mKey;
 		bool mCtrl;
 		bool mAlt;

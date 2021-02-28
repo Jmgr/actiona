@@ -24,6 +24,7 @@
 #include "backend/backend.hpp"
 
 #include <QObject>
+#include <QSet>
 
 namespace Backend
 {
@@ -39,5 +40,16 @@ namespace Backend
         virtual bool releaseKey(const QString &key) = 0;
         virtual bool triggerKey(const QString &key) = 0;
         virtual bool writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) = 0;
+
+    protected:
+        void setKeyPressed(QString key, bool pressed);
+
+    private:
+        void beginSequence();
+        void endSequence();
+
+        QSet<QString> mPressedKeys;
+
+        friend class KeyboardAutoreleaser;
     };
 }

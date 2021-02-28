@@ -19,6 +19,7 @@
 */
 
 #include "textinstance.hpp"
+#include "backend/keyboard-output.hpp"
 
 #include <QTimer>
 
@@ -38,6 +39,8 @@ namespace Actions
 
 	void TextInstance::startExecution()
 	{
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+
 		bool ok = true;
 	
 		mText = evaluateString(ok, QStringLiteral("text"));
@@ -55,7 +58,7 @@ namespace Actions
 		
 		if(pause == 0)
 		{
-            if(!mKeyboardDevice.writeText(mText, 0, mNoUnicodeCharacters))
+            if(!keyboardOutput.writeText(mText, 0, mNoUnicodeCharacters))
 			{
 				emit executionException(FailedToSendInputException, tr("Unable to write the text"));
 				return;
@@ -79,14 +82,11 @@ namespace Actions
 		mTimer->stop();
 	}
 
-	void TextInstance::stopLongTermExecution()
-	{
-		mKeyboardDevice.reset();
-	}
-
 	void TextInstance::pressNextKey()
 	{
-        if(!mKeyboardDevice.writeText(QString(mText.at(mCurrentCharacter)), 0, mNoUnicodeCharacters))
+        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+
+        if(!keyboardOutput.writeText(QString(mText.at(mCurrentCharacter)), 0, mNoUnicodeCharacters))
 		{
 			mTimer->stop();
 			emit executionException(FailedToSendInputException, tr("Unable to write the text"));

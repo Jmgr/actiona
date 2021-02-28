@@ -68,11 +68,15 @@ namespace Backend
 
     bool MouseOutputWindows::pressButton(Mouse::Button button)
     {
+        setButtonPressed(button, true);
+
         return ::Backend::pressButton(button, true);
     }
 
     bool MouseOutputWindows::releaseButton(Mouse::Button button)
     {
+        setButtonPressed(button, false);
+
         return ::Backend::pressButton(button, false);
     }
 

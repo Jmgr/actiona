@@ -20,6 +20,8 @@
 
 #include "clickinstance.hpp"
 #include "actiontools/consolewidget.hpp"
+#include "backend/mouse-input.hpp"
+#include "backend/mouse-output.hpp"
 
 #include <QPoint>
 #include <QTimer>
@@ -52,14 +54,23 @@ namespace Actions
             QStringLiteral(QT_TRANSLATE_NOOP("ClickInstance::actions", "Release"))
         }
     };
+
+    ClickInstance::ClickInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
+        : ActionTools::ActionInstance(definition, parent),
+          mAutoreleaser(Backend::Backend::instance().mouseOutput())
+    {
+    }
 	
 	void ClickInstance::startExecution()
 	{
+        auto &mouseInput = Backend::Backend::instance().mouseInput();
+        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+
 		bool ok = true;
         bool isPositionEmpty = false;
 	
 		auto action = evaluateListElement<Action>(ok, actions, QStringLiteral("action"), QStringLiteral("value"));
-		auto button = evaluateListElement<MouseDevice::Button>(ok, buttons, QStringLiteral("button"), QStringLiteral("value"));
+        auto button = evaluateListElement<Backend::Mouse::Button>(ok, buttons, QStringLiteral("button"), QStringLiteral("value"));
 		QPoint position = evaluatePoint(ok, QStringLiteral("position"), QStringLiteral("value"), &isPositionEmpty);
 		QPoint positionOffset = evaluatePoint(ok, QStringLiteral("positionOffset"));
 		int amount = evaluateInteger(ok, QStringLiteral("amount"));
@@ -78,19 +89,19 @@ namespace Actions
 			return;
 		}
 
-		QPoint previousPosition = mMouseDevice.cursorPosition();
+        QPoint previousPosition = mouseInput.cursorPosition();
 		
         if(!isPositionEmpty)
         {
             position += positionOffset;
-            mMouseDevice.setCursorPosition(position);
+            mouseOutput.setCursorPosition(position);
         }
 	
 		for(int i = 0; i < amount; ++i)
 		{
 			if(action == ClickAction || action == PressAction)
 			{
-				if(!mMouseDevice.pressButton(button))
+                if(!mouseOutput.pressButton(button))
 				{
 					emit executionException(FailedToSendInputException, tr("Unable to emulate click: button event failed"));
 					return;
@@ -98,7 +109,7 @@ namespace Actions
 			}
 			if(action == ClickAction || action == ReleaseAction)
 			{
-				if(!mMouseDevice.releaseButton(button))
+                if(!mouseOutput.releaseButton(button))
 				{
 					emit executionException(FailedToSendInputException, tr("Unable to emulate click: button event failed"));
 					return;
@@ -108,17 +119,12 @@ namespace Actions
 
 		if(!isPositionEmpty && restoreCursorPosition)
 		{
-			mMouseDevice.setCursorPosition(previousPosition);
+            mouseOutput.setCursorPosition(previousPosition);
 		}
 	
         QTimer::singleShot(1, this, [this]
         {
             executionEnded();
         });
-	}
-
-	void ClickInstance::stopLongTermExecution()
-	{
-		mMouseDevice.reset();
 	}
 }

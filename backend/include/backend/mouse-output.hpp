@@ -26,6 +26,8 @@
 #include <QObject>
 #include <QPoint>
 
+#include <array>
+
 namespace Backend
 {
     class BACKENDSHARED_EXPORT MouseOutput : public QObject
@@ -41,5 +43,16 @@ namespace Backend
         virtual bool pressButton(Mouse::Button button) = 0;
         virtual bool releaseButton(Mouse::Button button) = 0;
         virtual bool wheel(int intensity = 1) = 0;
+
+    protected:
+        void setButtonPressed(Mouse::Button button, bool pressed);
+
+    private:
+        void beginSequence();
+        void endSequence();
+
+        std::array<bool, Mouse::ButtonCount> mPressedButtons;
+
+        friend class MouseAutoreleaser;
     };
 }

@@ -18,39 +18,19 @@
 	Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/keyboard-autoreleaser.hpp"
+#include "backend/keyboard-output.hpp"
 
-#include "actiontools/actioninstance.hpp"
-
-class QTimer;
-
-namespace Actions
+namespace Backend
 {
-	class TextInstance : public ActionTools::ActionInstance
-	{
-		Q_OBJECT
-	
-	public:
-		enum Exceptions
-		{
-			FailedToSendInputException = ActionTools::ActionException::UserException
-		};
-	
-		TextInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
-	
-		void startExecution() override;
-        void stopExecution() override;
+    KeyboardAutoreleaser::KeyboardAutoreleaser(KeyboardOutput &keyboardOutput):
+        mKeyboardOutput(keyboardOutput)
+    {
+        mKeyboardOutput.beginSequence();
+    }
 
-	private slots:
-		void pressNextKey();
-	
-    private:
-		QTimer *mTimer;
-		QString mText;
-        int mCurrentCharacter;
-        bool mNoUnicodeCharacters;
-		
-		Q_DISABLE_COPY(TextInstance)
-	};
+    KeyboardAutoreleaser::~KeyboardAutoreleaser()
+    {
+        mKeyboardOutput.endSequence();
+    }
 }
-

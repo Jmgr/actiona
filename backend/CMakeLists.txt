@@ -4,6 +4,10 @@ set(SOURCES_PREFIX src)
 set(SOURCES
     ${SOURCES_PREFIX}/backend.cpp
     ${SOURCES_PREFIX}/keyinput.cpp
+    ${SOURCES_PREFIX}/mouse-autoreleaser.cpp
+    ${SOURCES_PREFIX}/keyboard-autoreleaser.cpp
+    ${SOURCES_PREFIX}/keyboard-output.cpp
+    ${SOURCES_PREFIX}/mouse-output.cpp
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyinput-x11.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keyinput-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keysymhelper-x11.cpp>
@@ -29,6 +33,8 @@ set(HEADERS
     ${HEADERS_PREFIX}/backend.hpp
     ${HEADERS_PREFIX}/keymapper.hpp
     ${HEADERS_PREFIX}/keyinput.hpp
+    ${HEADERS_PREFIX}/mouse-autoreleaser.hpp
+    ${HEADERS_PREFIX}/keyboard-autoreleaser.hpp
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keysymhelper-x11.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-input-x11.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-output-x11.hpp>
