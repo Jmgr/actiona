@@ -102,7 +102,7 @@ namespace Actions
 		}
 
 #ifdef Q_OS_WIN
-        auto &windowsKeyboardOutput = qobject_cast<Backend::KeyboardOutputWindows&>();
+        auto &windowsKeyboardOutput = *qobject_cast<Backend::KeyboardOutputWindows*>(&keyboardOutput);
         windowsKeyboardOutput.setType(static_cast<Backend::KeyboardOutputWindows::Type>(type));
 #else
         Q_UNUSED(type)
