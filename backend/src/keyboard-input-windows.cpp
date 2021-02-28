@@ -18,31 +18,14 @@
     Contact: jmgr@jmgr.info
 */
 
-#include "backend/mouse-input-windows.hpp"
-
-#include <QCursor>
+#include "backend/keyboard-input-windows.hpp"
 
 #include <Windows.h>
 
 namespace Backend
 {
-    bool MouseInputWindows::isButtonPressed(Button button) const
+    KeyboardInputWindows::KeyboardInputWindows(QObject *parent):
+        KeyboardInput(parent)
     {
-        switch(button)
-        {
-        case LeftButton:
-            return (GetAsyncKeyState(GetSystemMetrics(SM_SWAPBUTTON) ? VK_RBUTTON : VK_LBUTTON) & 0x8000);
-        case MiddleButton:
-            return (GetAsyncKeyState(VK_MBUTTON) & 0x8000);
-        case RightButton:
-            return (GetAsyncKeyState(GetSystemMetrics(SM_SWAPBUTTON) ? VK_LBUTTON : VK_RBUTTON) & 0x8000);
-        default:
-            return false;
-        }
-    }
-
-    QPoint MouseInputWindows::cursorPosition() const
-    {
-        return QCursor::pos();
     }
 }

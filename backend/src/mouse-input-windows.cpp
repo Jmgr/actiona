@@ -26,15 +26,20 @@
 
 namespace Backend
 {
-    bool MouseInputWindows::isButtonPressed(Button button) const
+    MouseInputWindows::MouseInputWindows(QObject *parent):
+        MouseInput(parent)
+    {
+    }
+
+    bool MouseInputWindows::isButtonPressed(Mouse::Button button) const
     {
         switch(button)
         {
-        case LeftButton:
+        case Mouse::LeftButton:
             return (GetAsyncKeyState(GetSystemMetrics(SM_SWAPBUTTON) ? VK_RBUTTON : VK_LBUTTON) & 0x8000);
-        case MiddleButton:
+        case Mouse::MiddleButton:
             return (GetAsyncKeyState(VK_MBUTTON) & 0x8000);
-        case RightButton:
+        case Mouse::RightButton:
             return (GetAsyncKeyState(GetSystemMetrics(SM_SWAPBUTTON) ? VK_LBUTTON : VK_RBUTTON) & 0x8000);
         default:
             return false;

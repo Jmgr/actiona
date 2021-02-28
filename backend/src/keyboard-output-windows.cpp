@@ -18,67 +18,205 @@
     Contact: jmgr@jmgr.info
 */
 
-#include "backend/mouse-output-windows.hpp"
+#include "backend/keyboard-output-windows.hpp"
+#include "backend/keyinput.hpp"
+#include "backend/keymapper.hpp"
 
-#include <QCursor>
+#include <QThread>
+
+#include <unordered_set>
+#include <array>
 
 #include <Windows.h>
 
+// https://msdn.microsoft.com/en-us/library/windows/desktop/ms646267(v=vs.85).aspx
+static const std::unordered_set<int> extendedKeys =
+{{
+    VK_RMENU, // Alt
+    VK_RCONTROL,
+    VK_INSERT,
+    VK_DELETE,
+    VK_HOME,
+    VK_END,
+    VK_PRIOR, // Page Up
+    VK_NEXT, // Page Down
+    VK_UP,
+    VK_DOWN,
+    VK_LEFT,
+    VK_RIGHT,
+    VK_NUMLOCK,
+    VK_PRINT
+}};
+
 namespace Backend
 {
-    int toWinButton(Button button, bool press)
+    enum Action
     {
-        switch(button)
+        Press,
+        Release,
+        Trigger
+    };
+
+    bool doKeyAction(Action action, int nativeKey, KeyboardOutputWindows::Type type)
+    {
+        bool result = true;
+
+        INPUT input;
+        SecureZeroMemory(&input, sizeof(INPUT));
+        input.type = INPUT_KEYBOARD;
+
+        switch(type)
         {
-        case LeftButton:
-            return press ? MOUSEEVENTF_LEFTDOWN : MOUSEEVENTF_LEFTUP;
-        case MiddleButton:
-            return press ? MOUSEEVENTF_MIDDLEDOWN : MOUSEEVENTF_MIDDLEUP;
-        case RightButton:
-            return press ? MOUSEEVENTF_RIGHTDOWN : MOUSEEVENTF_RIGHTUP;
+        case KeyboardOutputWindows::Win32:
+        {
+            input.ki.wVk = nativeKey;
+
+            HKL keyboardLayout = GetKeyboardLayout(0);
+            input.ki.wScan = MapVirtualKeyEx(nativeKey, MAPVK_VK_TO_VSC, keyboardLayout);
+
+            if(extendedKeys.count(nativeKey) > 0)
+                input.ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+        }
+            break;
+        case KeyboardOutputWindows::DirectX:
+            input.ki.wVk = 0;
+            input.ki.wScan = KeyMapper::toDirectXKey(nativeKey);
+            break;
         }
 
-        return -1;
+        if(action == Press || action == Trigger)
+            result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
+        if(action == Release || action == Trigger)
+        {
+            input.ki.dwFlags |= KEYEVENTF_KEYUP;
+
+            result &= (SendInput(1, &input, sizeof(INPUT)) != 0);
+        }
+
+        return result;
     }
 
-    bool pressButton(Button button, bool press)
+    int stringToNativeKey(const QString &key)
     {
-        INPUT input;
-        SecureZeroMemory(&input, sizeof(INPUT));
-        input.type = INPUT_MOUSE;
-        input.mi.dwFlags = toWinButton(button, press);
+        KeyInput keyInput;
+        keyInput.fromPortableText(key);
 
-        return SendInput(1, &input, sizeof(INPUT));
+        if(keyInput.isQtKey())
+            return KeyMapper::toNativeKey(static_cast<Qt::Key>(keyInput.key()));
+        else
+            return KeyInput::nativeKey(keyInput.key());
     }
 
-    void MouseOutputWindows::setCursorPosition(const QPoint &position)
+    KeyboardOutputWindows::KeyboardOutputWindows(QObject *parent):
+        KeyboardOutput(parent)
     {
-        QCursor::setPos(position);
     }
 
-    bool MouseOutputWindows::buttonClick(Button button)
+    void KeyboardOutputWindows::setType(KeyboardOutputWindows::Type type)
     {
-        return pressButton(button) && releaseButton(button);
+        mType = type;
     }
 
-    bool MouseOutputWindows::pressButton(Button button)
+    bool KeyboardOutputWindows::pressKey(const QString &key)
     {
-        return Backend::pressButton(button, true);
+        return doKeyAction(Press, stringToNativeKey(key), mType);
     }
 
-    bool MouseOutputWindows::releaseButton(Button button)
+    bool KeyboardOutputWindows::releaseKey(const QString &key)
     {
-        return Backend::pressButton(button, false);
+        return doKeyAction(Release, stringToNativeKey(key), mType);
     }
 
-    bool MouseOutputWindows::wheel(int intensity)
+    bool KeyboardOutputWindows::triggerKey(const QString &key)
     {
-        INPUT input;
-        SecureZeroMemory(&input, sizeof(INPUT));
-        input.type = INPUT_MOUSE;
-        input.mi.dwFlags = MOUSEEVENTF_WHEEL;
-        input.mi.mouseData = intensity * WHEEL_DELTA;
+        return doKeyAction(Trigger, stringToNativeKey(key), mType);
+    }
 
-        return SendInput(1, &input, sizeof(INPUT));
+    bool KeyboardOutputWindows::writeText(const QString &text, int delay, bool noUnicodeCharacters)
+    {
+        std::array<INPUT, 2> input;
+        SecureZeroMemory(input.data(), input.size() * sizeof(INPUT));
+        bool result = true;
+
+        for(int i = 0; i < 2; ++i)
+        {
+            input[i].type = INPUT_KEYBOARD;
+            input[i].ki.wVk = 0;
+            if(noUnicodeCharacters)
+                input[i].ki.dwFlags = KEYEVENTF_SCANCODE | (i == 0 ? 0 : KEYEVENTF_KEYUP);
+            else
+                input[i].ki.dwFlags = KEYEVENTF_UNICODE | (i == 0 ? 0 : KEYEVENTF_KEYUP);
+            input[i].ki.time = 0;
+            input[i].ki.dwExtraInfo = 0;
+        }
+
+        HKL keyboardLayout = GetKeyboardLayout(0);
+
+        auto sendModifiersFunction = [&keyboardLayout](int key, int additionalFlags)
+        {
+            INPUT modifierInput;
+            SecureZeroMemory(&modifierInput, sizeof(INPUT));
+
+            modifierInput.type = INPUT_KEYBOARD;
+            modifierInput.ki.dwFlags = KEYEVENTF_SCANCODE | additionalFlags;
+            modifierInput.ki.wScan = MapVirtualKeyEx(key, MAPVK_VK_TO_VSC, keyboardLayout);
+
+            if(extendedKeys.count(key) > 0)
+                modifierInput.ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+
+            SendInput(1, &modifierInput, sizeof(INPUT));
+        };
+
+        for(int i = 0; i < text.length(); ++i)
+        {
+            SHORT virtualKey = 0;
+
+            if(noUnicodeCharacters)
+            {
+                virtualKey = VkKeyScanEx(text[i].unicode(), keyboardLayout);
+                auto scanCode = MapVirtualKeyEx(LOBYTE(virtualKey), MAPVK_VK_TO_VSC, keyboardLayout);
+
+                if(extendedKeys.count(virtualKey) > 0)
+                {
+                    input[0].ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+                    input[1].ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+                }
+
+                if(HIBYTE(virtualKey) & 1) //Shift
+                    sendModifiersFunction(VK_LSHIFT, 0);
+
+                if(HIBYTE(virtualKey) & 2) //Control
+                    sendModifiersFunction(VK_LCONTROL, 0);
+
+                if(HIBYTE(virtualKey) & 4) //Alt
+                    sendModifiersFunction(VK_LMENU, 0);
+
+                input[0].ki.wVk = input[1].ki.wVk = virtualKey;
+                input[0].ki.wScan = input[1].ki.wScan = scanCode;
+            }
+            else
+            {
+                input[0].ki.wScan = input[1].ki.wScan = text[i].unicode();
+            }
+
+            result &= (SendInput(2, input.data(), sizeof(INPUT)) != 0);
+
+            if(noUnicodeCharacters)
+            {
+                if(HIBYTE(virtualKey) & 4) //Alt
+                    sendModifiersFunction(VK_LMENU, KEYEVENTF_KEYUP);
+
+                if(HIBYTE(virtualKey) & 2) //Control
+                    sendModifiersFunction(VK_LCONTROL, KEYEVENTF_KEYUP);
+
+                if(HIBYTE(virtualKey) & 1) //Shift
+                    sendModifiersFunction(VK_LSHIFT, KEYEVENTF_KEYUP);
+            }
+
+            if(delay > 0)
+                QThread::msleep(delay);
+        }
+
+        return result;
     }
 }

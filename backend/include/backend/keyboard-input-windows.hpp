@@ -18,16 +18,16 @@
     Contact: jmgr@jmgr.info
 */
 
-#include "backend/mouse-input.hpp"
+#include "backend/keyboard-input.hpp"
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT MouseInputWindows : public MouseInput
+    class BACKENDSHARED_EXPORT KeyboardInputWindows final : public KeyboardInput
     {
         Q_OBJECT
+        Q_DISABLE_COPY(KeyboardInputWindows)
 
     public:
-        bool isButtonPressed(Button button) const override;
-        QPoint cursorPosition() const override;
+        explicit KeyboardInputWindows(QObject *parent = nullptr);
     };
 }

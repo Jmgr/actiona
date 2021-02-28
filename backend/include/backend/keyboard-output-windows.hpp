@@ -18,19 +18,30 @@
     Contact: jmgr@jmgr.info
 */
 
-#include "backend/mouse-output.hpp"
+#include "backend/keyboard-output.hpp"
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT MouseOutputWindows : public MouseOutput
+    class BACKENDSHARED_EXPORT KeyboardOutputWindows : public KeyboardOutput
     {
         Q_OBJECT
+        Q_DISABLE_COPY(KeyboardOutputWindows)
 
     public:
-        void setCursorPosition(const QPoint &position) override;
-        bool buttonClick(Button button) override;
-        bool pressButton(Button button) override;
-        bool releaseButton(Button button) override;
-        bool wheel(int intensity = 1) override;
+        enum Type
+        {
+            Win32,
+            DirectX
+        };
+
+        explicit KeyboardOutputWindows(QObject *parent = nullptr);
+        void setType(Type type);
+        bool pressKey(const QString &key) override;
+        bool releaseKey(const QString &key) override;
+        bool triggerKey(const QString &key) override;
+        bool writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) override;
+
+    private:
+        Type mType{Win32};
     };
 }

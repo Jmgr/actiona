@@ -22,19 +22,21 @@
 #include "backend/keymapper.hpp"
 
 #include <QKeyEvent>
-#include <QKeySequence>
-#include <QDebug>
 
-#define XK_MISCELLANY
+#define XK_MISCELLANY // TODO: remove
 #define XK_LATIN1
 #define XK_KOREAN
 #define XK_XKB_KEYS
 #include <X11/keysymdef.h>
 #include <X11/XF86keysym.h>
-#include <QX11Info>
 
 namespace Backend
 {
+    void KeyInput::platformFromEvent(QKeyEvent *event)
+    {
+        Q_UNUSED(event)
+    }
+
     void KeyInput::platformInit()
     {
         mNativeKey[ShiftLeft] = XK_Shift_L;

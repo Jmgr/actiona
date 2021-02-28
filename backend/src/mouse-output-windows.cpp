@@ -26,22 +26,22 @@
 
 namespace Backend
 {
-    int toWinButton(Button button, bool press)
+    int toWinButton(Mouse::Button button, bool press)
     {
         switch(button)
         {
-        case LeftButton:
+        case Mouse::LeftButton:
             return press ? MOUSEEVENTF_LEFTDOWN : MOUSEEVENTF_LEFTUP;
-        case MiddleButton:
+        case Mouse::MiddleButton:
             return press ? MOUSEEVENTF_MIDDLEDOWN : MOUSEEVENTF_MIDDLEUP;
-        case RightButton:
+        case Mouse::RightButton:
             return press ? MOUSEEVENTF_RIGHTDOWN : MOUSEEVENTF_RIGHTUP;
         }
 
         return -1;
     }
 
-    bool pressButton(Button button, bool press)
+    bool pressButton(Mouse::Button button, bool press)
     {
         INPUT input;
         SecureZeroMemory(&input, sizeof(INPUT));
@@ -51,24 +51,29 @@ namespace Backend
         return SendInput(1, &input, sizeof(INPUT));
     }
 
+    MouseOutputWindows::MouseOutputWindows(QObject *parent):
+        MouseOutput(parent)
+    {
+    }
+
     void MouseOutputWindows::setCursorPosition(const QPoint &position)
     {
         QCursor::setPos(position);
     }
 
-    bool MouseOutputWindows::buttonClick(Button button)
+    bool MouseOutputWindows::buttonClick(Mouse::Button button)
     {
         return pressButton(button) && releaseButton(button);
     }
 
-    bool MouseOutputWindows::pressButton(Button button)
+    bool MouseOutputWindows::pressButton(Mouse::Button button)
     {
-        return Backend::pressButton(button, true);
+        return ::Backend::pressButton(button, true);
     }
 
-    bool MouseOutputWindows::releaseButton(Button button)
+    bool MouseOutputWindows::releaseButton(Mouse::Button button)
     {
-        return Backend::pressButton(button, false);
+        return ::Backend::pressButton(button, false);
     }
 
     bool MouseOutputWindows::wheel(int intensity)

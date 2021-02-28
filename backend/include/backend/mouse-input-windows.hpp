@@ -25,9 +25,11 @@ namespace Backend
     class BACKENDSHARED_EXPORT MouseInputWindows : public MouseInput
     {
         Q_OBJECT
+        Q_DISABLE_COPY(MouseInputWindows)
 
     public:
-        bool isButtonPressed(Button button) const override;
+        explicit MouseInputWindows(QObject *parent = nullptr);
+        bool isButtonPressed(Mouse::Button button) const override;
         QPoint cursorPosition() const override;
     };
 }

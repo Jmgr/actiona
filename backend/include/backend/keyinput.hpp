@@ -82,6 +82,7 @@ namespace Backend
 
 	private:
         static void platformInit();
+        void platformFromEvent(QKeyEvent *event);
 
         static const std::pair<QStringList, QStringList> mKeyNames;
 		static bool mInitDone;

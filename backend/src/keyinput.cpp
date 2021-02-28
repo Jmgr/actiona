@@ -23,7 +23,6 @@
 
 #include <QKeyEvent>
 #include <QKeySequence>
-#include <QDebug>
 #include <QStringList>
 
 namespace Backend
@@ -189,29 +188,7 @@ namespace Backend
 			}
 		}
 
-		switch(event->key())
-		{
-#ifdef Q_OS_WIN // TODO: move this
-		case Qt::Key_Shift:
-		case Qt::Key_Control:
-		case Qt::Key_Alt:
-		case Qt::Key_Meta:
-		case Qt::Key_AltGr:
-			for(int i = 1; i < KeyCount; ++i)
-			{
-				if(HIBYTE(GetAsyncKeyState(mNativeKey[i])))
-				{
-					mKey = static_cast<Key>(i);
-
-					mIsQtKey = false;
-					break;
-				}
-			}
-			break;
-#endif
-		default:
-			break;
-		}
+        platformFromEvent(event);
 
 		if(mIsQtKey)
 		{
@@ -242,33 +219,5 @@ namespace Backend
 		mNativeKey[InvalidKey] = 0;
 
         platformInit();
-
-#ifdef Q_OS_WIN // TODO: move this
-		mNativeKey[ShiftLeft] = VK_LSHIFT;
-		mNativeKey[ShiftRight] = VK_RSHIFT;
-		mNativeKey[ControlLeft] = VK_LCONTROL;
-		mNativeKey[ControlRight] = VK_RCONTROL;
-		mNativeKey[AltLeft] = VK_LMENU;
-		mNativeKey[AltRight] = VK_RMENU;
-		mNativeKey[MetaLeft] = VK_LWIN;
-		mNativeKey[MetaRight] = VK_RWIN;
-		mNativeKey[AltGr] = 0;
-		mNativeKey[Numpad0] = VK_NUMPAD0;
-		mNativeKey[Numpad1] = VK_NUMPAD1;
-		mNativeKey[Numpad2] = VK_NUMPAD2;
-		mNativeKey[Numpad3] = VK_NUMPAD3;
-		mNativeKey[Numpad4] = VK_NUMPAD4;
-		mNativeKey[Numpad5] = VK_NUMPAD5;
-		mNativeKey[Numpad6] = VK_NUMPAD6;
-		mNativeKey[Numpad7] = VK_NUMPAD7;
-		mNativeKey[Numpad8] = VK_NUMPAD8;
-		mNativeKey[Numpad9] = VK_NUMPAD9;
-		mNativeKey[NumpadMultiply] = VK_MULTIPLY;
-		mNativeKey[NumpadAdd] = VK_ADD;
-		mNativeKey[NumpadSeparator] = VK_SEPARATOR;
-		mNativeKey[NumpadSubstract] = VK_SUBTRACT;
-		mNativeKey[NumpadDecimal] = VK_DECIMAL;
-		mNativeKey[NumpadDivide] = VK_DIVIDE;
-#endif
 	}
 }

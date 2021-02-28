@@ -25,12 +25,14 @@ namespace Backend
     class BACKENDSHARED_EXPORT MouseOutputWindows : public MouseOutput
     {
         Q_OBJECT
+        Q_DISABLE_COPY(MouseOutputWindows)
 
     public:
+        explicit MouseOutputWindows(QObject *parent = nullptr);
         void setCursorPosition(const QPoint &position) override;
-        bool buttonClick(Button button) override;
-        bool pressButton(Button button) override;
-        bool releaseButton(Button button) override;
+        bool buttonClick(Mouse::Button button) override;
+        bool pressButton(Mouse::Button button) override;
+        bool releaseButton(Mouse::Button button) override;
         bool wheel(int intensity = 1) override;
     };
 }
