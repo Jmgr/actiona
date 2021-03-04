@@ -32,7 +32,7 @@ namespace Backend
 {
     class BACKENDSHARED_EXPORT Mouse final
     {
-        Q_DISABLE_COPY_MOVE(Mouse)
+        Q_DISABLE_COPY(Mouse)
 
     private:
         Mouse() = default;

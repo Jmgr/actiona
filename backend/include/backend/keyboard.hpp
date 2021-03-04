@@ -30,7 +30,7 @@ namespace Backend
 {
     class BACKENDSHARED_EXPORT Keyboard final
     {
-        Q_DISABLE_COPY_MOVE(Keyboard)
+        Q_DISABLE_COPY(Keyboard)
 
     private:
         Keyboard() = default;

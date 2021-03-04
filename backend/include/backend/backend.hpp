@@ -22,7 +22,6 @@
 
 #include "backend/backend_global.hpp"
 
-#include <QtGlobal>
 #include <QString>
 
 #include <stdexcept>
@@ -49,7 +48,7 @@ namespace Backend
 
     class BACKENDSHARED_EXPORT Instance final
     {
-        Q_DISABLE_COPY_MOVE(Instance)
+        Q_DISABLE_COPY(Instance)
 
     private:
         Instance();
