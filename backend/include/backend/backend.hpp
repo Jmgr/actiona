@@ -22,6 +22,7 @@
 
 #include "backend/backend_global.hpp"
 
+#include <QtGlobal>
 #include <QString>
 
 #include <stdexcept>
