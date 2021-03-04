@@ -18,16 +18,32 @@
     Contact: jmgr@jmgr.info
 */
 
-#include "backend/keyboard-input.hpp"
+#pragma once
+
+#include "backend/backend_global.hpp"
+#include "backend/backend.hpp"
+
+#include <functional>
+#include <memory>
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT KeyboardInputX11 final : public KeyboardInput
+    class BACKENDSHARED_EXPORT Keyboard final
     {
-        Q_OBJECT
-        Q_DISABLE_COPY(KeyboardInputX11)
+        Q_DISABLE_COPY_MOVE(Keyboard)
+
+    private:
+        Keyboard() = default;
 
     public:
-        explicit KeyboardInputX11(QObject *parent = nullptr);
+        // Output
+        std::function<void(const QString &key, bool press, bool directX)> pressKey; // TODO: enum class for press/release (also mouse button), directX and noUnicodeCharacters
+        std::function<void(const QString &text, int delay, bool noUnicodeCharacters)> writeText;
+
+        friend std::unique_ptr<Keyboard> std::make_unique<Keyboard>();
     };
+
+    // Dummy implementations
+    static void pressKeyDummy(const QString &, bool, bool) {}
+    static void writeTextDummy(const QString &, int, bool) {}
 }

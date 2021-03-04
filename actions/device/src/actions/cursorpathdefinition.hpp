@@ -54,6 +54,8 @@ namespace Actions
 
             auto &positionOffset = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("positionOffset"), tr("Offset")}, 1);
             positionOffset.setTooltip(tr("The offset to apply to the path"));
+
+            addException(CursorPathInstance::FailedToSendInputException, tr("Send input failure"));
 		}
 
 		QString name() const override													{ return QObject::tr("Cursor path"); }

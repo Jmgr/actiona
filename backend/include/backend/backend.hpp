@@ -22,56 +22,55 @@
 
 #include "backend/backend_global.hpp"
 
-#include <QObject>
+#include <QString>
+
+#include <stdexcept>
+#include <memory>
+#include <set>
 
 namespace Backend
 {
-    Q_NAMESPACE
+    class Mouse;
+    class Keyboard;
 
-    namespace Mouse
+    class BACKENDSHARED_EXPORT BackendError
     {
-        Q_NAMESPACE
-
-        enum Button
-        {
-            LeftButton,
-            MiddleButton,
-            RightButton,
-
-            ButtonCount
-        };
-        Q_ENUM_NS(Button)
-    }
-
-    class MouseInput;
-    class MouseOutput;
-    class KeyboardInput;
-    class KeyboardOutput;
-
-    class BACKENDSHARED_EXPORT Backend final : public QObject
-    {
-        Q_OBJECT
-        Q_DISABLE_COPY(Backend)
-
     public:
-        explicit Backend(QObject *parent = nullptr);
-        ~Backend();
+        BackendError(const QString &message): mMessage(message) {}
+        BackendError(int errorCode): mMessage(QStringLiteral("call failed with error code %1").arg(errorCode)) {}
+        BackendError(): mMessage(QStringLiteral("call failed")) {}
 
-        // Release all buttons and keys.
-        void releaseAll();
-
-        MouseInput &mouseInput();
-        MouseOutput &mouseOutput();
-        KeyboardInput &keyboardInput();
-        KeyboardOutput &keyboardOutput();
-
-        static Backend &instance();
+        const QString &what() const noexcept { return mMessage; }
 
     private:
-        static Backend *mBackend;
-        MouseInput *mMouseInput;
-        MouseOutput *mMouseOutput;
-        KeyboardInput *mKeyboardInput;
-        KeyboardOutput *mKeyboardOutput;
+        QString mMessage;
+    };
+
+    class BACKENDSHARED_EXPORT Instance final
+    {
+        Q_DISABLE_COPY_MOVE(Instance)
+
+    private:
+        Instance();
+
+    public:
+        ~Instance();
+
+        static void initialize() { get(); }
+        // Release all buttons and keys.
+        static void releaseAll() { get().instReleaseAll(); }
+        static const Mouse &mouse() { return *get().mMouse.get(); }
+        static const Keyboard &keyboard() { return *get().mKeyboard.get(); }
+
+    private:
+        static Instance &get();
+
+        void useDummy();
+        void instReleaseAll();
+
+        std::unique_ptr<Mouse> mMouse;
+        std::unique_ptr<Keyboard> mKeyboard;
+        std::set<int> mPressedButtons;
+        std::set<std::pair<QString, bool>> mPressedKeys;
     };
 }

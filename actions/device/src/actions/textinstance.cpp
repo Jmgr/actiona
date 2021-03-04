@@ -19,7 +19,7 @@
 */
 
 #include "textinstance.hpp"
-#include "backend/keyboard-output.hpp"
+#include "backend/keyboard.hpp"
 
 #include <QTimer>
 
@@ -39,7 +39,7 @@ namespace Actions
 
 	void TextInstance::startExecution()
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+        auto &keyboard = Backend::Instance::keyboard();
 
 		bool ok = true;
 	
@@ -56,25 +56,29 @@ namespace Actions
 		if(!ok)
 			return;
 		
-		if(pause == 0)
-		{
-            if(!keyboardOutput.writeText(mText, 0, mNoUnicodeCharacters))
-			{
-				emit executionException(FailedToSendInputException, tr("Unable to write the text"));
-				return;
-			}
-
-            QTimer::singleShot(1, this, [this]
+        try
+        {
+            if(pause == 0)
             {
-                executionEnded();
-            });
-		}
-		else
-		{
-			pressNextKey();
+                keyboard.writeText(mText, 0, mNoUnicodeCharacters);
 
-			mTimer->start();
-		}
+                QTimer::singleShot(1, this, [this]
+                {
+                    executionEnded();
+                });
+            }
+            else
+            {
+                pressNextKey();
+
+                mTimer->start();
+            }
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
+            return;
+        }
 	}
 
 	void TextInstance::stopExecution()
@@ -84,14 +88,18 @@ namespace Actions
 
 	void TextInstance::pressNextKey()
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+        auto &keyboard = Backend::Instance::keyboard();
 
-        if(!keyboardOutput.writeText(QString(mText.at(mCurrentCharacter)), 0, mNoUnicodeCharacters))
-		{
-			mTimer->stop();
-			emit executionException(FailedToSendInputException, tr("Unable to write the text"));
-			return;
-		}
+        try
+        {
+            keyboard.writeText(QString(mText.at(mCurrentCharacter)), 0, mNoUnicodeCharacters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            mTimer->stop();
+            emit executionException(FailedToSendInputException, e.what());
+            return;
+        }
 
 		++mCurrentCharacter;
 		if(mCurrentCharacter >= mText.size())

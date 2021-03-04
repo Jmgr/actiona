@@ -20,11 +20,7 @@
 
 #include "keyinstance.hpp"
 #include "backend/keyinput.hpp"
-#include "backend/keyboard-output.hpp"
-
-#ifdef Q_OS_WIN
-#include "backend/keyboard-output-windows.hpp"
-#endif
+#include "backend/keyboard.hpp"
 
 #include <QTimer>
 
@@ -71,7 +67,7 @@ namespace Actions
 
 	void KeyInstance::startExecution()
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+        auto &keyboard = Backend::Instance::keyboard();
 
 		bool ok = true;
 
@@ -83,6 +79,7 @@ namespace Actions
 		mShift = evaluateBoolean(ok, QStringLiteral("shift"));
 		mMeta = evaluateBoolean(ok, QStringLiteral("meta"));
 		Type type = evaluateListElement<Type>(ok, types, QStringLiteral("type"));
+        mDirectX = (type == DirectXType);
 		mPause  = evaluateInteger(ok, QStringLiteral("pause"));
 
 		if(mPause < 0)
@@ -101,42 +98,35 @@ namespace Actions
 			return;
 		}
 
-#ifdef Q_OS_WIN
-        auto &windowsKeyboardOutput = *qobject_cast<Backend::KeyboardOutputWindows*>(&keyboardOutput);
-        windowsKeyboardOutput.setType(static_cast<Backend::KeyboardOutputWindows::Type>(type));
-#else
-        Q_UNUSED(type)
-#endif
+        try
+        {
+            switch(action)
+            {
+            case PressAction:
+                pressOrReleaseModifiers(true);
 
-		bool result = true;
+                keyboard.pressKey(mKey, true, mDirectX);
+                break;
+            case ReleaseAction:
+                pressOrReleaseModifiers(false);
 
-		switch(action)
-		{
-		case PressAction:
-			pressOrReleaseModifiers(true);
+                keyboard.pressKey(mKey, false, mDirectX);
+                break;
+            case PressReleaseAction:
+                pressOrReleaseModifiers(true);
 
-            result &= keyboardOutput.pressKey(mKey);
-			break;
-		case ReleaseAction:
-			pressOrReleaseModifiers(false);
+                keyboard.pressKey(mKey, true, mDirectX);
 
-            result &= keyboardOutput.releaseKey(mKey);
-			break;
-		case PressReleaseAction:
-			pressOrReleaseModifiers(true);
-
-            result &= keyboardOutput.pressKey(mKey);
-
-			mTimer->setSingleShot(true);
-			mTimer->start(mPause);
-			break;
-		}
-
-		if(!result)
-		{
-			emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
-			return;
-		}
+                mTimer->setSingleShot(true);
+                mTimer->start(mPause);
+                break;
+            }
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
+            return;
+        }
 
 		if(action != PressReleaseAction)
 			executionEnded();
@@ -149,61 +139,79 @@ namespace Actions
 
 	void KeyInstance::sendRelease()
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+        auto &keyboard = Backend::Instance::keyboard();
 
 		pressOrReleaseModifiers(false);
-        keyboardOutput.releaseKey(mKey);
+
+        try
+        {
+            keyboard.pressKey(mKey, false, mDirectX);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
+            return;
+        }
 
 		--mAmount;
 		if (mAmount > 0)
-			emit sendPressKey();
+            sendPressKey();
 		else
 			executionEnded();
 	}
 
 	void KeyInstance::sendPressKey()
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
-		bool result = true;
+        auto &keyboard = Backend::Instance::keyboard();
 
 		pressOrReleaseModifiers(true);
 
-        result &= keyboardOutput.pressKey(mKey);
-
-		if(!result)
-		{
-			emit executionException(FailedToSendInputException, tr("Unable to emulate key: failed to send input"));
-			return;
-		}
+        try
+        {
+            keyboard.pressKey(mKey, true, mDirectX);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
+            return;
+        }
 
 		mTimer->start(mPause);
 	}
 
 	void KeyInstance::pressOrReleaseModifiers(bool press)
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+        auto &keyboard = Backend::Instance::keyboard();
 
-		if(press)
-		{
-			if(mCtrl)
-                keyboardOutput.pressKey(QStringLiteral("controlLeft"));
-			if(mAlt)
-                keyboardOutput.pressKey(QStringLiteral("altLeft"));
-			if(mShift)
-                keyboardOutput.pressKey(QStringLiteral("shiftLeft"));
-			if(mMeta)
-                keyboardOutput.pressKey(QStringLiteral("metaLeft"));
-		}
-		else
-		{
-			if(mCtrl)
-                keyboardOutput.releaseKey(QStringLiteral("controlLeft"));
-			if(mAlt)
-                keyboardOutput.releaseKey(QStringLiteral("altLeft"));
-			if(mShift)
-                keyboardOutput.releaseKey(QStringLiteral("shiftLeft"));
-			if(mMeta)
-                keyboardOutput.releaseKey(QStringLiteral("metaLeft"));
-		}
+        try
+        {
+            if(press)
+            {
+                if(mCtrl)
+                    keyboard.pressKey(QStringLiteral("controlLeft"), true, mDirectX);
+                if(mAlt)
+                    keyboard.pressKey(QStringLiteral("altLeft"), true, mDirectX);
+                if(mShift)
+                    keyboard.pressKey(QStringLiteral("shiftLeft"), true, mDirectX);
+                if(mMeta)
+                    keyboard.pressKey(QStringLiteral("metaLeft"), true, mDirectX);
+            }
+            else
+            {
+                if(mCtrl)
+                    keyboard.pressKey(QStringLiteral("controlLeft"), false, mDirectX);
+                if(mAlt)
+                    keyboard.pressKey(QStringLiteral("altLeft"), false, mDirectX);
+                if(mShift)
+                    keyboard.pressKey(QStringLiteral("shiftLeft"), false, mDirectX);
+                if(mMeta)
+                    keyboard.pressKey(QStringLiteral("metaLeft"), false, mDirectX);
+            }
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
+            return;
+        }
 	}
 }

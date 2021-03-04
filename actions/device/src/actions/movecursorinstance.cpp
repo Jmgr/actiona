@@ -20,7 +20,7 @@
 
 #include "movecursorinstance.hpp"
 #include "actiontools/actioninstance.hpp"
-#include "backend/mouse-output.hpp"
+#include "backend/mouse.hpp"
 
 #include <QPoint>
 
@@ -33,7 +33,7 @@ namespace Actions
 
     void MoveCursorInstance::startExecution()
     {
-        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+        auto &mouse = Backend::Instance::mouse();
 
         bool ok = true;
 
@@ -44,7 +44,16 @@ namespace Actions
             return;
 
         position += positionOffset;
-        mouseOutput.setCursorPosition(position);
+
+        try
+        {
+            mouse.setCursorPosition(position);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
+            return;
+        }
 
         executionEnded();
     }

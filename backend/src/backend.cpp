@@ -19,20 +19,13 @@
 */
 
 #include "backend/backend.hpp"
-
-#ifdef Q_OS_WIN
-#include "backend/mouse-input-windows.hpp"
-#include "backend/mouse-output-windows.hpp"
-#include "backend/keyboard-input-windows.hpp"
-#include "backend/keyboard-output-windows.hpp"
-#endif
+#include "backend/mouse.hpp"
+#include "backend/keyboard.hpp"
 
 #ifdef Q_OS_UNIX
+#include "backend/mouse-x11.hpp"
+#include "backend/keyboard-x11.hpp"
 #include "backend/keysymhelper-x11.hpp"
-#include "backend/mouse-input-x11.hpp"
-#include "backend/mouse-output-x11.hpp"
-#include "backend/keyboard-input-x11.hpp"
-#include "backend/keyboard-output-x11.hpp"
 
 #include <QX11Info>
 
@@ -42,79 +35,96 @@
 
 namespace Backend
 {
-    Backend *Backend::mBackend = nullptr;
-
-    Backend::Backend(QObject *parent):
-        QObject(parent)
+    Instance::Instance():
+        mMouse(std::make_unique<Mouse>()),
+        mKeyboard(std::make_unique<Keyboard>())
     {
-#ifdef Q_OS_WIN
-        mMouseInput = new MouseInputWindows(this);
-        mMouseOutput = new MouseOutputWindows(this);
-        mKeyboardInput = new KeyboardInputWindows(this);
-        mKeyboardOutput = new KeyboardOutputWindows(this);
-#endif
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_WIN)
+        mPressButton = nullptr; // TODO
+//        mMouseInput = new MouseInputWindows(this);
+//        mMouseOutput = new MouseOutputWindows(this);
+//        mKeyboardInput = new KeyboardInputWindows(this);
+//        mKeyboardOutput = new KeyboardOutputWindows(this);
+#elif defined(Q_OS_UNIX)
         auto display = QX11Info::display();
 
         int unused;
         if(!display || !XTestQueryExtension(display, &unused, &unused, &unused, &unused))
         {
             // TODO: display a messagebox?
+            useDummy();
             return;
         }
 
-        mMouseInput = new MouseInputX11(this);
-        mMouseOutput = new MouseOutputX11(this);
-        mKeyboardInput = new KeyboardInputX11(this);
-        mKeyboardOutput = new KeyboardOutputX11(this);
+        mMouse->isButtonPressed = isButtonPressedX11;
+        mMouse->cursorPosition = cursorPositionX11;
+        mMouse->setCursorPosition = setCursorPositionX11;
+        mMouse->pressButton = pressButtonX11;
+        mMouse->wheel = wheelX11;
+        mKeyboard->pressKey = pressKeyX11;
+        mKeyboard->writeText = writeTextX11;
 
         KeySymHelper::loadKeyCodes();
+#else
+        useDummy();
 #endif
-        if(mBackend)
-            qFatal("Global backend already set");
 
-        mBackend = this;
+        auto pressButton = mMouse->pressButton;
+        mMouse->pressButton = [this, pressButton](Mouse::Button button, bool press)
+        {
+            pressButton(button, press);
+
+            if(press)
+                mPressedButtons.insert(static_cast<int>(button));
+            else
+                mPressedButtons.erase(static_cast<int>(button));
+        };
+
+        auto pressKey = mKeyboard->pressKey;
+        mKeyboard->pressKey = [this, pressKey](const QString &key, bool press, bool directX)
+        {
+            pressKey(key, press, directX);
+
+            if(press)
+                mPressedKeys.insert(std::make_pair(key, directX));
+            else
+                mPressedKeys.erase(std::make_pair(key, directX));
+        };
     }
 
-    Backend::~Backend()
+    Instance::~Instance()
     {
     }
 
-    void Backend::releaseAll()
+    Instance &Instance::get()
     {
-        // TODO
+        static Instance instance;
+
+        return instance;
     }
 
-    MouseInput &Backend::mouseInput()
+    void Instance::useDummy()
     {
-        Q_ASSERT(mMouseInput);
-
-        return *mMouseInput;
+        qWarning("Backend: using dummy");
+        mMouse->isButtonPressed = isButtonPressedDummy;
+        mMouse->cursorPosition = cursorPositionDummy;
+        mMouse->setCursorPosition = setCursorPositionDummy;
+        mMouse->pressButton = pressButtonDummy;
+        mMouse->wheel = wheelDummy;
+        mKeyboard->pressKey = pressKeyDummy;
+        mKeyboard->writeText = writeTextDummy;
     }
 
-    MouseOutput &Backend::mouseOutput()
+    void Instance::instReleaseAll()
     {
-        Q_ASSERT(mMouseOutput);
+        for(auto buttonIndex: mPressedButtons)
+            mMouse->pressButton(static_cast<Mouse::Button>(buttonIndex), false);
 
-        return *mMouseOutput;
-    }
+        mPressedButtons.clear();
 
-    KeyboardInput &Backend::keyboardInput()
-    {
-        Q_ASSERT(mKeyboardInput);
+        for(const auto &key: mPressedKeys)
+            mKeyboard->pressKey(key.first, false, key.second);
 
-        return *mKeyboardInput;
-    }
-
-    KeyboardOutput &Backend::keyboardOutput()
-    {
-        Q_ASSERT(mKeyboardOutput);
-
-        return *mKeyboardOutput;
-    }
-
-    Backend &Backend::instance()
-    {
-        return *mBackend;
+        mPressedKeys.clear();
     }
 }

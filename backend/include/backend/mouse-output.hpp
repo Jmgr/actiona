@@ -37,7 +37,7 @@ namespace Backend
 
     public:
         explicit MouseOutput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~MouseOutput() {}
+        virtual ~MouseOutput() = default;
         virtual void setCursorPosition(const QPoint &position) = 0;
         virtual bool buttonClick(Mouse::Button button) = 0;
         virtual bool pressButton(Mouse::Button button) = 0;
@@ -52,5 +52,20 @@ namespace Backend
         void endSequence();
 
         std::array<bool, Mouse::ButtonCount> mPressedButtons;
+    };
+
+    class BACKENDSHARED_EXPORT MouseOutputDummy final : public MouseOutput
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(MouseOutputDummy)
+
+    public:
+        explicit MouseOutputDummy(QObject *parent = nullptr): MouseOutput(parent) {}
+        ~MouseOutputDummy() = default;
+        void setCursorPosition(const QPoint &position) override {}
+        bool buttonClick(Mouse::Button button) override { return true; }
+        bool pressButton(Mouse::Button button) override { return true; }
+        bool releaseButton(Mouse::Button button) override { return true; }
+        bool wheel(int intensity = 1) override { return true; }
     };
 }

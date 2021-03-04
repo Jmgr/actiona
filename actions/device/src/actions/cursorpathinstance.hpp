@@ -39,6 +39,10 @@ namespace Actions
             MiddleButton,
             RightButton
         };
+        enum Exceptions
+        {
+            FailedToSendInputException = ActionTools::ActionException::UserException
+        };
 
         static Tools::StringListPair buttons;
 

@@ -35,7 +35,7 @@ namespace Backend
 
     public:
         explicit KeyboardOutput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~KeyboardOutput() {}
+        virtual ~KeyboardOutput() = default;
         virtual bool pressKey(const QString &key) = 0;
         virtual bool releaseKey(const QString &key) = 0;
         virtual bool triggerKey(const QString &key) = 0;
@@ -49,5 +49,19 @@ namespace Backend
         void endSequence();
 
         QSet<QString> mPressedKeys;
+    };
+
+    class BACKENDSHARED_EXPORT KeyboardOutputDummy final : public KeyboardOutput
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(KeyboardOutputDummy)
+
+    public:
+        explicit KeyboardOutputDummy(QObject *parent = nullptr): KeyboardOutput(parent) {}
+        ~KeyboardOutputDummy() = default;
+        bool pressKey(const QString &key) override { return true; }
+        bool releaseKey(const QString &key) override { return true; }
+        bool triggerKey(const QString &key) override { return true; }
+        bool writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) override { return true; }
     };
 }

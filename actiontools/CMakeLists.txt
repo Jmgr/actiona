@@ -248,11 +248,6 @@ add_library(${PROJECT} SHARED
 
 add_dependencies(${PROJECT} tools)
 
-if(UNIX)
-    include(FindPkgConfig)
-    pkg_search_module(LIBXTST REQUIRED xtst)
-endif()
-
 target_compile_definitions(${PROJECT} PRIVATE ACTIONTOOLS_LIBRARY)
 
 setup_target(${PROJECT})
@@ -268,7 +263,6 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/../backend/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
-        ${LIBXTST_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
 )
 
@@ -279,12 +273,11 @@ target_link_libraries(
     Qt5::Script
     Qt5::XmlPatterns
     Qt5::Widgets
-    ${LIBXTST_LIBRARIES}
     ${OpenCV_LIBS}
     $<$<PLATFORM_ID:Windows>:Psapi>
 )
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)
     target_link_libraries(${PROJECT} Qt5::X11Extras)
 endif()

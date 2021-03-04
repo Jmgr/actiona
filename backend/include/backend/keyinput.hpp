@@ -68,7 +68,7 @@ namespace Backend
 		QString toTranslatedText() const;
 		QString toPortableText() const;
 
-		bool fromPortableText(const QString &key);
+        void fromPortableText(const QString &key);
 		bool fromPortableText(const QString &key, bool isQtKey);
 		bool fromEvent(QKeyEvent *event);
 

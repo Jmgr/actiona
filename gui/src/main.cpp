@@ -79,7 +79,8 @@ int main(int argc, char **argv)
 
 	qAddPostRoutine(cleanup);
 
-    Backend::Backend backend;
+    // Initialize the backend
+    Backend::Instance::initialize();
 
 	QCommandLineParser optionsParser;
 	optionsParser.setApplicationDescription(QObject::tr("Emulates clics, key presses and other actions."));

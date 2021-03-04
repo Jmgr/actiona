@@ -19,7 +19,7 @@
 */
 
 #include "cursorpathinstance.hpp"
-#include "backend/mouse-output.hpp"
+#include "backend/mouse.hpp"
 
 namespace Actions
 {
@@ -51,7 +51,7 @@ namespace Actions
 
     void CursorPathInstance::startExecution()
     {
-        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+        auto &mouse = Backend::Instance::mouse();
 
         bool ok = true;
 
@@ -62,25 +62,33 @@ namespace Actions
         if(!ok)
             return;
 
-        mMoveTimer.start(25);
-
-        mCurrentPoint = 0;
-        mouseOutput.setCursorPosition(mPoints.at(mCurrentPoint) + mPositionOffset);
-        ++mCurrentPoint;
-
-        switch(mButton)
+        try
         {
-        case NoButton:
-            break;
-        case LeftButton:
-            mouseOutput.pressButton(Backend::Mouse::LeftButton);
-            break;
-        case MiddleButton:
-            mouseOutput.pressButton(Backend::Mouse::MiddleButton);
-            break;
-        case RightButton:
-            mouseOutput.pressButton(Backend::Mouse::RightButton);
-            break;
+            mMoveTimer.start(25);
+
+            mCurrentPoint = 0;
+            mouse.setCursorPosition(mPoints.at(mCurrentPoint) + mPositionOffset);
+            ++mCurrentPoint;
+
+            switch(mButton)
+            {
+            case NoButton:
+                break;
+            case LeftButton:
+                mouse.pressButton(Backend::Mouse::Button::Left, true);
+                break;
+            case MiddleButton:
+                mouse.pressButton(Backend::Mouse::Button::Middle, true);
+                break;
+            case RightButton:
+                mouse.pressButton(Backend::Mouse::Button::Right, true);
+                break;
+            }
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
+            return;
         }
     }
 
@@ -93,7 +101,7 @@ namespace Actions
 
     void CursorPathInstance::moveToNextPosition()
     {
-        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+        auto &mouse = Backend::Instance::mouse();
 
         if(mCurrentPoint >= mPoints.size())
         {
@@ -104,28 +112,44 @@ namespace Actions
         }
         else
         {
-            mouseOutput.setCursorPosition(mPoints.at(mCurrentPoint) + mPositionOffset);
-            ++mCurrentPoint;
+            try
+            {
+                mouse.setCursorPosition(mPoints.at(mCurrentPoint) + mPositionOffset);
+                ++mCurrentPoint;
+            }
+            catch(const Backend::BackendError &e)
+            {
+                emit executionException(FailedToSendInputException, e.what());
+                return;
+            }
         }
     }
 
     void CursorPathInstance::releaseButton()
     {
-        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+        auto &mouse = Backend::Instance::mouse();
 
-        switch(mButton)
+        try
         {
-        case NoButton:
-            break;
-        case LeftButton:
-            mouseOutput.releaseButton(Backend::Mouse::LeftButton);
-            break;
-        case MiddleButton:
-            mouseOutput.releaseButton(Backend::Mouse::MiddleButton);
-            break;
-        case RightButton:
-            mouseOutput.releaseButton(Backend::Mouse::RightButton);
-            break;
+            switch(mButton)
+            {
+            case NoButton:
+                break;
+            case LeftButton:
+                mouse.pressButton(Backend::Mouse::Button::Left, false);
+                break;
+            case MiddleButton:
+                mouse.pressButton(Backend::Mouse::Button::Middle, false);
+                break;
+            case RightButton:
+                mouse.pressButton(Backend::Mouse::Button::Right, false);
+                break;
+            }
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
+            return;
         }
     }
 }

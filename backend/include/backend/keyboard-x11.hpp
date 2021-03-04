@@ -18,20 +18,13 @@
     Contact: jmgr@jmgr.info
 */
 
-#include "backend/keyboard-output.hpp"
+#pragma once
+
+#include "backend/backend_global.hpp"
+#include "backend/keyboard.hpp"
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT KeyboardOutputX11 final : public KeyboardOutput
-    {
-        Q_OBJECT
-        Q_DISABLE_COPY(KeyboardOutputX11)
-
-    public:
-        explicit KeyboardOutputX11(QObject *parent = nullptr);
-        bool pressKey(const QString &key) override;
-        bool releaseKey(const QString &key) override;
-        bool triggerKey(const QString &key) override;
-        bool writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) override;
-    };
+    void BACKENDSHARED_EXPORT pressKeyX11(const QString &key, bool press, bool directX);
+    void BACKENDSHARED_EXPORT writeTextX11(const QString &text, int delay, bool noUnicodeCharacters);
 }

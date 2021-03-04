@@ -59,7 +59,7 @@ target_include_directories(${PROJECT}
 
 target_link_libraries(${PROJECT} backend tools actiontools Qt5::Script Qt5::Widgets)
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)
     target_link_libraries(${PROJECT} Qt5::X11Extras)
 endif()

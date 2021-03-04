@@ -60,8 +60,6 @@ namespace ActionTools
 		static int lastError()						{ return mLastError; }
 		static QString lastErrorString()			{ return mLastErrorString; }
 		
-		static void sleep(int milliseconds);
-
 	private:
 		static void setupLastError();
 

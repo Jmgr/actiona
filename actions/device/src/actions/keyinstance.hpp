@@ -72,6 +72,7 @@ namespace Actions
 		int  mAmount;
 		int  mPause;
 		QTimer *mTimer;
+        bool mDirectX;
 
 		Q_DISABLE_COPY(KeyInstance)
 	};

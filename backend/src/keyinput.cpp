@@ -124,7 +124,7 @@ namespace Backend
 		return mKeyNames.first[mKey];
 	}
 
-	bool KeyInput::fromPortableText(const QString &key)
+    void KeyInput::fromPortableText(const QString &key)
 	{
 		mIsQtKey = true;
 
@@ -134,8 +134,6 @@ namespace Backend
 			{
 				mKey = i;
 				mIsQtKey = false;
-
-				return true;
 			}
 		}
 
@@ -143,8 +141,6 @@ namespace Backend
 
 		mKey = keySequence[0];
 		mKey &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
-
-		return true;
 	}
 
 	bool KeyInput::fromPortableText(const QString &key, bool isQtKey)

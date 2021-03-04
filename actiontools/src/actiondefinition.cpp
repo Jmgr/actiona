@@ -24,16 +24,7 @@
 #include "actiontools/elementdefinition.hpp"
 #include "actiontools/groupdefinition.hpp"
 
-#include <QScriptEngine>
-#include <QScriptValue>
-#include <QSysInfo>
 #include <QApplication>
-
-#ifdef Q_OS_UNIX
-#include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
-#include <QX11Info>
-#endif
 
 namespace ActionTools
 {

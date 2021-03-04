@@ -905,7 +905,7 @@ namespace ActionTools
 
     void Script::executionStopped()
     {
-        Backend::Backend::instance().releaseAll();
+        Backend::Instance::releaseAll();
 
         for(auto actionInstance: qAsConst(mActionInstances))
             actionInstance->stopLongTermExecution();

@@ -35,8 +35,20 @@ namespace Backend
 
     public:
         explicit MouseInput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~MouseInput() {}
+        virtual ~MouseInput() = default;
         virtual bool isButtonPressed(Mouse::Button button) const = 0;
         virtual QPoint cursorPosition() const = 0;
+    };
+
+    class BACKENDSHARED_EXPORT MouseInputDummy final : public MouseInput
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(MouseInputDummy)
+
+    public:
+        explicit MouseInputDummy(QObject *parent = nullptr): MouseInput(parent) {}
+        ~MouseInputDummy() = default;
+        bool isButtonPressed(Mouse::Button button) const override { return false; }
+        QPoint cursorPosition() const override { return {}; }
     };
 }

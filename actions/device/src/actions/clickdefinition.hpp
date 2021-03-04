@@ -27,7 +27,7 @@
 #include "actiontools/positionparameterdefinition.hpp"
 #include "actiontools/booleanparameterdefinition.hpp"
 #include "actiontools/groupdefinition.hpp"
-#include "backend/mouse-output.hpp"
+#include "backend/mouse.hpp"
 
 #include <limits>
 
@@ -58,7 +58,7 @@ namespace Actions
             auto &button = addParameter<ActionTools::ListParameterDefinition>({QStringLiteral("button"), tr("Button")});
             button.setTooltip(tr("The button to simulate"));
             button.setItems(ClickInstance::buttons);
-            button.setDefaultValue(ClickInstance::buttons.second.at(Backend::Mouse::LeftButton));
+            button.setDefaultValue(ClickInstance::buttons.second.at(static_cast<int>(Backend::Mouse::Button::Left)));
 
             auto &position = addParameter<ActionTools::PositionParameterDefinition>({QStringLiteral("position"), tr("Position")});
             position.setTooltip(tr("The screen position where to simulate a mouse click"));

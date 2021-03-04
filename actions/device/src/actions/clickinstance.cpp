@@ -20,8 +20,7 @@
 
 #include "clickinstance.hpp"
 #include "actiontools/consolewidget.hpp"
-#include "backend/mouse-input.hpp"
-#include "backend/mouse-output.hpp"
+#include "backend/mouse.hpp"
 
 #include <QPoint>
 #include <QTimer>
@@ -62,8 +61,7 @@ namespace Actions
 	
 	void ClickInstance::startExecution()
 	{
-        auto &mouseInput = Backend::Backend::instance().mouseInput();
-        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+        auto &mouse = Backend::Instance::mouse();
 
 		bool ok = true;
         bool isPositionEmpty = false;
@@ -88,38 +86,34 @@ namespace Actions
 			return;
 		}
 
-        QPoint previousPosition = mouseInput.cursorPosition();
-		
-        if(!isPositionEmpty)
+        try
         {
-            position += positionOffset;
-            mouseOutput.setCursorPosition(position);
-        }
-	
-		for(int i = 0; i < amount; ++i)
-		{
-			if(action == ClickAction || action == PressAction)
-			{
-                if(!mouseOutput.pressButton(button))
-				{
-					emit executionException(FailedToSendInputException, tr("Unable to emulate click: button event failed"));
-					return;
-				}
-			}
-			if(action == ClickAction || action == ReleaseAction)
-			{
-                if(!mouseOutput.releaseButton(button))
-				{
-					emit executionException(FailedToSendInputException, tr("Unable to emulate click: button event failed"));
-					return;
-				}
-			}
-		}
+            QPoint previousPosition = mouse.cursorPosition();
 
-		if(!isPositionEmpty && restoreCursorPosition)
-		{
-            mouseOutput.setCursorPosition(previousPosition);
-		}
+            if(!isPositionEmpty)
+            {
+                position += positionOffset;
+                mouse.setCursorPosition(position);
+            }
+
+            for(int i = 0; i < amount; ++i)
+            {
+                bool press = (action == ClickAction || action == PressAction);
+                bool release = (action == ClickAction || action == ReleaseAction);
+                if(press)
+                    mouse.pressButton(button, true);
+                if(release)
+                    mouse.pressButton(button, false);
+            }
+
+            if(!isPositionEmpty && restoreCursorPosition)
+                mouse.setCursorPosition(previousPosition);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
+            return;
+        }
 	
         QTimer::singleShot(1, this, [this]
         {

@@ -19,7 +19,7 @@
 */
 
 #include "wheelinstance.hpp"
-#include "backend/mouse-output.hpp"
+#include "backend/mouse.hpp"
 
 namespace Actions
 {
@@ -30,7 +30,7 @@ namespace Actions
 
     void WheelInstance::startExecution()
     {
-        auto &mouseOutput = Backend::Backend::instance().mouseOutput();
+        auto &mouse = Backend::Instance::mouse();
 
         bool ok = true;
 
@@ -39,9 +39,13 @@ namespace Actions
         if(!ok)
             return;
 
-        if(!mouseOutput.wheel(intensity))
+        try
         {
-            emit executionException(FailedToSendInputException, tr("Unable to emulate wheel: failed to send input"));
+            mouse.wheel(intensity);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(FailedToSendInputException, e.what());
             return;
         }
 

@@ -19,7 +19,7 @@
 */
 
 #include "keyboard.hpp"
-#include "backend/keyboard-output.hpp"
+#include "backend/keyboard.hpp"
 
 namespace Code
 {
@@ -35,40 +35,66 @@ namespace Code
 	
 	QScriptValue Keyboard::pressKey(const QString &key)
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+        auto &keyboard = Backend::Instance::keyboard();
 
-        if(!keyboardOutput.pressKey(key))
-			throwError(QStringLiteral("PressKeyError"), tr("Unable to press the key"));
+        try
+        {
+            keyboard.pressKey(key, true, false);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("KeyboardError"), e.what());
+        }
 		
 		return thisObject();
 	}
 	
 	QScriptValue Keyboard::releaseKey(const QString &key)
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+        auto &keyboard = Backend::Instance::keyboard();
 
-        if(!keyboardOutput.releaseKey(key))
-			throwError(QStringLiteral("ReleaseKeyError"), tr("Unable to release the key"));
+        try
+        {
+            keyboard.pressKey(key, false, false);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("KeyboardError"), e.what());
+        }
 		
 		return thisObject();
 	}
 	
 	QScriptValue Keyboard::triggerKey(const QString &key)
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+        auto &keyboard = Backend::Instance::keyboard();
 
-        if(!keyboardOutput.triggerKey(key))
-			throwError(QStringLiteral("TriggerKeyError"), tr("Unable to trigger the key"));
+        try
+        {
+            keyboard.pressKey(key, true, false);
+            keyboard.pressKey(key, false, false);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("KeyboardError"), e.what());
+        }
 		
 		return thisObject();
 	}
 	
     QScriptValue Keyboard::writeText(const QString &text, int delay, bool noUnicodeCharacters) const
 	{
-        auto &keyboardOutput = Backend::Backend::instance().keyboardOutput();
+        auto &keyboard = Backend::Instance::keyboard();
 
-        if(!keyboardOutput.writeText(text, delay, noUnicodeCharacters))
-			throwError(QStringLiteral("WriteTextError"), tr("Unable to write the text"));
+        try
+        {
+            keyboard.writeText(text, delay, noUnicodeCharacters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("KeyboardError"), e.what());
+        }
+
 		
 		return thisObject();
 	}

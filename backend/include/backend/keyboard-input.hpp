@@ -34,6 +34,16 @@ namespace Backend
 
     public:
         explicit KeyboardInput(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~KeyboardInput() {}
+        virtual ~KeyboardInput() = default;
+    };
+
+    class BACKENDSHARED_EXPORT KeyboardInputDummy final : public KeyboardInput
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(KeyboardInputDummy)
+
+    public:
+        explicit KeyboardInputDummy(QObject *parent = nullptr): KeyboardInput(parent) {}
+        ~KeyboardInputDummy() = default;
     };
 }

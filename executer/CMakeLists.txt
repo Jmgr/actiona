@@ -24,7 +24,7 @@ add_executable(${PROJECT}
 
 add_dependencies(${PROJECT} execution actiontools tools)
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     include(FindPkgConfig)
     pkg_search_module(LIBNOTIFY REQUIRED libnotify)
 endif()

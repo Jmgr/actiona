@@ -23,6 +23,7 @@
 #include "actiontools/crossplatform.hpp"
 
 #include <QScriptEngine>
+#include <QThread>
 
 namespace Execution
 {
@@ -39,7 +40,7 @@ namespace Execution
 	{
 		Q_UNUSED(engine)
 
-		ActionTools::CrossPlatform::sleep(context->argument(0).toInt32());
+        QThread::msleep(context->argument(0).toInt32());
 
 		return context->thisObject();
 	}

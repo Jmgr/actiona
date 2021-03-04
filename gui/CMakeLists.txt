@@ -85,10 +85,9 @@ add_executable(${PROJECT}
 
 add_dependencies(${PROJECT} execution actiontools tools)
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     include(FindPkgConfig)
     pkg_search_module(LIBNOTIFY REQUIRED libnotify)
-    pkg_search_module(LIBX11 REQUIRED x11)
 endif()
 
 set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actiona")
@@ -100,6 +99,10 @@ setup_target(${PROJECT})
 
 find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script Widgets REQUIRED)
 
+if(UNIX AND NOT APPLE)
+    find_package(X11)
+endif()
+
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -108,7 +111,7 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../actiontools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../execution/include
         ${LIBNOTIFY_INCLUDE_DIRS}
-        ${LIBX11_INCLUDE_DIRS}
+        ${X11_INCLUDE_DIR}
 )
 
 target_link_libraries(
@@ -121,11 +124,11 @@ target_link_libraries(
     Qt5::Script
     Qt5::Widgets
     ${LIBNOTIFY_LIBRARIES}
-    ${LIBX11_LIBRARIES}
+    ${X11_LIBRARIES}
     $<$<PLATFORM_ID:Windows>:shlwapi>
 )
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)
     target_link_libraries(${PROJECT} Qt5::X11Extras)
 endif()

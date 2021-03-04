@@ -29,6 +29,11 @@ namespace Actions
 		Q_OBJECT
 	
 	public:
+        enum Exceptions
+        {
+            FailedToSendInputException = ActionTools::ActionException::UserException
+        };
+
         MoveCursorInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr);
         void startExecution() override;
 
