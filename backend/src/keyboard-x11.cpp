@@ -94,19 +94,6 @@ namespace Backend
             throw BackendError();
     }
 
-    void doKeyAction(int nativeKey, bool press)
-    {
-        auto keyCode = XKeysymToKeycode(QX11Info::display(), nativeKey);
-        if(keyCode == 0)
-            throw BackendError();
-
-        if(!XTestFakeKeyEvent(QX11Info::display(), keyCode, press, CurrentTime))
-            throw BackendError();
-
-        if(!XFlush(QX11Info::display()))
-            throw BackendError();
-    }
-
     int stringToNativeKey(const QString &key)
     {
         KeyInput keyInput;
@@ -122,7 +109,16 @@ namespace Backend
     {
         Q_UNUSED(directX)
 
-        doKeyAction(press, stringToNativeKey(key));
+        auto nativeKey = stringToNativeKey(key);
+        auto keyCode = XKeysymToKeycode(QX11Info::display(), nativeKey);
+        if(keyCode == 0)
+            throw BackendError();
+
+        if(!XTestFakeKeyEvent(QX11Info::display(), keyCode, press, CurrentTime))
+            throw BackendError();
+
+        if(!XFlush(QX11Info::display()))
+            throw BackendError();
     }
 
     void writeTextX11(const QString &text, int delay, bool noUnicodeCharacters)

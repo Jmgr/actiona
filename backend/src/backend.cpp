@@ -22,6 +22,10 @@
 #include "backend/mouse.hpp"
 #include "backend/keyboard.hpp"
 
+#ifdef Q_OS_WIN
+#include "backend/mouse-windows.hpp"
+#include "backend/keyboard-windows.hpp"
+#endif
 #ifdef Q_OS_UNIX
 #include "backend/mouse-x11.hpp"
 #include "backend/keyboard-x11.hpp"
@@ -40,11 +44,13 @@ namespace Backend
         mKeyboard(std::make_unique<Keyboard>())
     {
 #if defined(Q_OS_WIN)
-        mPressButton = nullptr; // TODO
-//        mMouseInput = new MouseInputWindows(this);
-//        mMouseOutput = new MouseOutputWindows(this);
-//        mKeyboardInput = new KeyboardInputWindows(this);
-//        mKeyboardOutput = new KeyboardOutputWindows(this);
+        mMouse->isButtonPressed = isButtonPressedWindows;
+        mMouse->cursorPosition = cursorPositionWindows;
+        mMouse->setCursorPosition = setCursorPositionWindows;
+        mMouse->pressButton = pressButtonWindows;
+        mMouse->rotateWheel = rotateWheelWindows;
+        mKeyboard->pressKey = pressKeyWindows;
+        mKeyboard->writeText = writeTextWindows;
 #elif defined(Q_OS_UNIX)
         auto display = QX11Info::display();
 
@@ -60,7 +66,7 @@ namespace Backend
         mMouse->cursorPosition = cursorPositionX11;
         mMouse->setCursorPosition = setCursorPositionX11;
         mMouse->pressButton = pressButtonX11;
-        mMouse->wheel = wheelX11;
+        mMouse->rotateWheel = rotateWheelX11;
         mKeyboard->pressKey = pressKeyX11;
         mKeyboard->writeText = writeTextX11;
 
@@ -110,7 +116,7 @@ namespace Backend
         mMouse->cursorPosition = cursorPositionDummy;
         mMouse->setCursorPosition = setCursorPositionDummy;
         mMouse->pressButton = pressButtonDummy;
-        mMouse->wheel = wheelDummy;
+        mMouse->rotateWheel = rotateWheelDummy;
         mKeyboard->pressKey = pressKeyDummy;
         mKeyboard->writeText = writeTextDummy;
     }

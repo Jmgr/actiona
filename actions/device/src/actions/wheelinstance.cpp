@@ -41,7 +41,7 @@ namespace Actions
 
         try
         {
-            mouse.wheel(intensity);
+            mouse.rotateWheel(intensity);
         }
         catch(const Backend::BackendError &e)
         {

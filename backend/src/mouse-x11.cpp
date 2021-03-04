@@ -82,7 +82,7 @@ namespace Backend
             throw BackendError();
     }
 
-    void wheelX11(int intensity)
+    void rotateWheelX11(int intensity)
     {
         int button;
         if(intensity < 0)

@@ -54,7 +54,7 @@ namespace Backend
         // Output
         std::function<void(const QPoint &position)> setCursorPosition;
         std::function<void(Button button, bool press)> pressButton;
-        std::function<void(int intensity)> wheel;
+        std::function<void(int intensity)> rotateWheel;
 
         friend std::unique_ptr<Mouse> std::make_unique<Mouse>();
     };
@@ -64,5 +64,5 @@ namespace Backend
     static QPoint cursorPositionDummy() { return {}; }
     static void setCursorPositionDummy(const QPoint &) {}
     static void pressButtonDummy(Mouse::Button, bool) {}
-    static void wheelDummy(int) {}
+    static void rotateWheelDummy(int) {}
 }

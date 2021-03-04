@@ -29,5 +29,5 @@ namespace Backend
     QPoint BACKENDSHARED_EXPORT cursorPositionX11();
     void BACKENDSHARED_EXPORT setCursorPositionX11(const QPoint &position);
     void BACKENDSHARED_EXPORT pressButtonX11(Mouse::Button button, bool press);
-    void BACKENDSHARED_EXPORT wheelX11(int intensity);
+    void BACKENDSHARED_EXPORT rotateWheelX11(int intensity);
 }

@@ -6,6 +6,8 @@ set(SOURCES
     ${SOURCES_PREFIX}/keyinput.cpp
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/mouse-x11.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyboard-x11.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/mouse-windows.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keyboard-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyinput-x11.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keyinput-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keysymhelper-x11.cpp>
@@ -23,6 +25,8 @@ set(HEADERS
     ${HEADERS_PREFIX}/keyboard.hpp
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-x11.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keyboard-x11.hpp>
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/mouse-windows.hpp>
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/keyboard-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keysymhelper-x11.hpp>
 )
 
@@ -35,7 +39,7 @@ target_compile_definitions(${PROJECT} PRIVATE BACKEND_LIBRARY)
 
 setup_target(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Core REQUIRED)
+find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Gui REQUIRED)
 
 if(UNIX AND NOT APPLE)
     find_package(X11 COMPONENTS Xtst REQUIRED)
@@ -52,7 +56,7 @@ target_include_directories(${PROJECT}
 
 target_link_libraries(
     ${PROJECT}
-    Qt5::Core
+    Qt5::Gui
     ${X11_Xtst_LIB}
 )
 
