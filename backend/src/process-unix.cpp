@@ -86,7 +86,16 @@ namespace Backend
 
     Process::ProcessStatus processStatusUnix(int id)
     {
-        return (kill(id, 0) == 0) ? Process::ProcessStatus::Running : Process::ProcessStatus::Stopped;
+        auto res = kill(id, 0);
+        switch(res)
+        {
+        case 0:
+            return Process::ProcessStatus::Running;
+        case -1:
+            throw BackendError(lastErrorString());
+        default:
+            return Process::ProcessStatus::Stopped;
+        }
     }
 
     QList<int> runningProcessesUnix()
