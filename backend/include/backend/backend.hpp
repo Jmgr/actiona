@@ -32,6 +32,7 @@ namespace Backend
 {
     class Mouse;
     class Keyboard;
+    class Process;
 
     class BACKENDSHARED_EXPORT BackendError
     {
@@ -61,6 +62,7 @@ namespace Backend
         static void releaseAll() { get().instReleaseAll(); }
         static const Mouse &mouse() { return *get().mMouse.get(); }
         static const Keyboard &keyboard() { return *get().mKeyboard.get(); }
+        static const Process &process() { return *get().mProcess.get(); }
 
     private:
         static Instance &get();
@@ -70,6 +72,7 @@ namespace Backend
 
         std::unique_ptr<Mouse> mMouse;
         std::unique_ptr<Keyboard> mKeyboard;
+        std::unique_ptr<Process> mProcess;
         std::set<int> mPressedButtons;
         std::set<std::pair<QString, bool>> mPressedKeys;
     };

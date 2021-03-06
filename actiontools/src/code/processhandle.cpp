@@ -20,6 +20,7 @@
 
 #include "actiontools/code/processhandle.hpp"
 #include "actiontools/code/codetools.hpp"
+#include "backend/process.hpp"
 
 #include <QProcess>
 
@@ -225,12 +226,28 @@ namespace Code
 	
 	bool ProcessHandle::kill(KillMode killMode, int timeout) const
 	{
-		return ActionTools::CrossPlatform::killProcess(mProcessId, static_cast<ActionTools::CrossPlatform::KillMode>(killMode), timeout);
+        try
+        {
+            Backend::Instance::process().killProcess(mProcessId, static_cast<Backend::Process::KillMode>(killMode), timeout);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            return false;
+        }
+
+        return true;
 	}
 	
 	bool ProcessHandle::isRunning() const
 	{
-		return (ActionTools::CrossPlatform::processStatus(mProcessId) == ActionTools::CrossPlatform::Running);
+        try
+        {
+            return (Backend::Instance::process().processStatus(mProcessId) == Backend::Process::ProcessStatus::Running);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            return false;
+        }
 	}
 
 	QString ProcessHandle::command() const

@@ -59,6 +59,8 @@ namespace Actions
             timeout.setMinimum(0);
             timeout.setMaximum(std::numeric_limits<int>::max());
             timeout.setDefaultValue(QStringLiteral("1000"));
+
+            addException(KillProcessInstance::FailedToKillProcessException, tr("Failed to kill process"));
 		}
 
 		QString name() const override													{ return QObject::tr("Kill process"); }

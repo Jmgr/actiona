@@ -30,6 +30,7 @@
 #include "backend/mouse-x11.hpp"
 #include "backend/keyboard-x11.hpp"
 #include "backend/keysymhelper-x11.hpp"
+#include "backend/process-unix.hpp"
 
 #include <QX11Info>
 
@@ -41,7 +42,8 @@ namespace Backend
 {
     Instance::Instance():
         mMouse(std::make_unique<Mouse>()),
-        mKeyboard(std::make_unique<Keyboard>())
+        mKeyboard(std::make_unique<Keyboard>()),
+        mProcess(std::make_unique<Process>())
     {
 #if defined(Q_OS_WIN)
         mMouse->isButtonPressed = isButtonPressedWindows;
@@ -51,7 +53,14 @@ namespace Backend
         mMouse->rotateWheel = rotateWheelWindows;
         mKeyboard->pressKey = pressKeyWindows;
         mKeyboard->writeText = writeTextWindows;
+        mProcess->killProcess = killProcessDummy; // TODO
+        mProcess->processStatus = processStatusDummy; // TODO
+        mProcess->runningProcesses = runningProcessesDummy; // TODO
 #elif defined(Q_OS_UNIX)
+        mProcess->killProcess = killProcessUnix;
+        mProcess->processStatus = processStatusUnix;
+        mProcess->runningProcesses = runningProcessesUnix;
+
         auto display = QX11Info::display();
 
         int unused;
@@ -119,6 +128,9 @@ namespace Backend
         mMouse->rotateWheel = rotateWheelDummy;
         mKeyboard->pressKey = pressKeyDummy;
         mKeyboard->writeText = writeTextDummy;
+        mProcess->killProcess = killProcessDummy;
+        mProcess->processStatus = processStatusDummy;
+        mProcess->runningProcesses = runningProcessesDummy;
     }
 
     void Instance::instReleaseAll()

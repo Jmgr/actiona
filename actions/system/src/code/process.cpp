@@ -21,6 +21,7 @@
 #include "process.hpp"
 #include "actiontools/code/processhandle.hpp"
 #include "actiontools/code/rawdata.hpp"
+#include "backend/process.hpp"
 
 #include <QDir>
 #include <QScriptValueIterator>
@@ -72,7 +73,17 @@ namespace Code
 	{
 		Q_UNUSED(context)
 
-		QList<int> processesList = ActionTools::CrossPlatform::runningProcesses();
+        QList<int> processesList;
+
+        try
+        {
+            processesList = Backend::Instance::process().runningProcesses();
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(context, engine, QStringLiteral("ListProcessError"), tr("Failed to list processes: %1").arg(e.what()));
+            return engine->undefinedValue();
+        }
 
 		QScriptValue back = engine->newArray(processesList.count());
 

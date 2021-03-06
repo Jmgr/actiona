@@ -76,7 +76,7 @@ namespace Backend
     void pressButtonX11(Mouse::Button button, bool press)
     {
         if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), press, CurrentTime))
-            throw BackendError();
+            throw BackendError(); // TODO: get error message
 
         if(!XFlush(QX11Info::display()))
             throw BackendError();

@@ -35,27 +35,8 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		enum KillMode
-		{
-			Graceful,
-			Forceful,
-			GracefulThenForceful
-		};
-        Q_ENUM(KillMode)
-		enum ProcessStatus
-		{
-			Running,
-			Stopped
-		};
-        Q_ENUM(ProcessStatus)
-
 		//Windows
 		static void setForegroundWindow(QWidget *window);
-
-		//Processes
-		static bool killProcess(int id, KillMode killMode = GracefulThenForceful, int timeout = 3000);
-		static ProcessStatus processStatus(int id);
-		static QList<int> runningProcesses();
 
 		static int lastError()						{ return mLastError; }
 		static QString lastErrorString()			{ return mLastErrorString; }

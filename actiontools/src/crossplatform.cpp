@@ -64,6 +64,7 @@ namespace ActionTools
 #endif
 	}
 
+    /* // TODO: remove
 	bool CrossPlatform::killProcess(int id, KillMode killMode, int timeout)
 	{
 #ifdef Q_OS_UNIX
@@ -275,6 +276,7 @@ namespace ActionTools
 		return back;
 #endif
 	}
+    */
 
 	void CrossPlatform::setupLastError()
 	{

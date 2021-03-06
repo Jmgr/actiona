@@ -23,6 +23,7 @@
 #include "actiontools/actioninstance.hpp"
 #include "actiontools/script.hpp"
 #include "actiontools/crossplatform.hpp"
+#include "backend/process.hpp"
 
 namespace Actions
 {
@@ -33,11 +34,15 @@ namespace Actions
 	public:
 		enum KillMode
 		{
-			Graceful = ActionTools::CrossPlatform::Graceful,
-			Forceful = ActionTools::CrossPlatform::Forceful,
-			GracefulThenForceful = ActionTools::CrossPlatform::GracefulThenForceful
+            Graceful = static_cast<int>(Backend::Process::KillMode::Graceful),
+            Forceful = static_cast<int>(Backend::Process::KillMode::Forceful),
+            GracefulThenForceful = static_cast<int>(Backend::Process::KillMode::GracefulThenForceful)
 		};
         Q_ENUM(KillMode)
+        enum Exceptions
+        {
+            FailedToKillProcessException = ActionTools::ActionException::UserException
+        };
 
 		KillProcessInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)												{}
@@ -54,7 +59,17 @@ namespace Actions
 				return;
 
 			if(processId != 0)
-				ActionTools::CrossPlatform::killProcess(processId, ActionTools::CrossPlatform::GracefulThenForceful, 100);
+            {
+                try
+                {
+                    Backend::Instance::process().killProcess(processId, Backend::Process::KillMode::GracefulThenForceful, 100);
+                }
+                catch(const Backend::BackendError &e)
+                {
+                    emit executionException(FailedToKillProcessException, e.what());
+                    return;
+                }
+            }
 
 			executionEnded();
 		}
