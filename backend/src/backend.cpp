@@ -25,6 +25,7 @@
 #ifdef Q_OS_WIN
 #include "backend/mouse-windows.hpp"
 #include "backend/keyboard-windows.hpp"
+#include "backend/process-windows.hpp"
 #endif
 #ifdef Q_OS_UNIX
 #include "backend/mouse-x11.hpp"
@@ -53,9 +54,9 @@ namespace Backend
         mMouse->rotateWheel = rotateWheelWindows;
         mKeyboard->pressKey = pressKeyWindows;
         mKeyboard->writeText = writeTextWindows;
-        mProcess->killProcess = killProcessDummy; // TODO
-        mProcess->processStatus = processStatusDummy; // TODO
-        mProcess->runningProcesses = runningProcessesDummy; // TODO
+        mProcess->killProcess = killProcessWindows;
+        mProcess->processStatus = processStatusWindows;
+        mProcess->runningProcesses = runningProcessesWindows;
 #elif defined(Q_OS_UNIX)
         mProcess->killProcess = killProcessUnix;
         mProcess->processStatus = processStatusUnix;

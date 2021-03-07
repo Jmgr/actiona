@@ -5,6 +5,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/backend.cpp
     ${SOURCES_PREFIX}/keyinput.cpp
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/process-unix.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/process-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/mouse-x11.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyboard-x11.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/mouse-windows.cpp>
@@ -26,6 +27,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/keyboard.hpp
     ${HEADERS_PREFIX}/process.hpp
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/process-unix.hpp>
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/process-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-x11.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keyboard-x11.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/mouse-windows.hpp>

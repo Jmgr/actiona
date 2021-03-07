@@ -20,6 +20,7 @@
 
 #include "actiontools/windowhandle.hpp"
 #include "actiontools/crossplatform.hpp"
+#include "backend/process.hpp"
 
 #ifdef Q_OS_UNIX
 #include <QX11Info>
@@ -260,7 +261,16 @@ namespace ActionTools
 #ifdef Q_OS_WIN
 		int id = processId();
 
-		return CrossPlatform::killProcess(id);
+        try
+        {
+            Backend::Instance::process().killProcess(id, Backend::Process::KillMode::GracefulThenForceful, 3000);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            return false;
+        }
+
+        return true;
 #endif
 	}
 

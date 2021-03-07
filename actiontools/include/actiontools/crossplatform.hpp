@@ -37,15 +37,6 @@ namespace ActionTools
 	public:
 		//Windows
 		static void setForegroundWindow(QWidget *window);
-
-		static int lastError()						{ return mLastError; }
-		static QString lastErrorString()			{ return mLastErrorString; }
-		
-	private:
-		static void setupLastError();
-
-		static QString mLastErrorString;
-		static int mLastError;
 	};
 }
 
