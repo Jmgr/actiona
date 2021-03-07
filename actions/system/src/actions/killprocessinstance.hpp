@@ -22,7 +22,6 @@
 
 #include "actiontools/actioninstance.hpp"
 #include "actiontools/script.hpp"
-#include "actiontools/crossplatform.hpp"
 #include "backend/process.hpp"
 
 namespace Actions

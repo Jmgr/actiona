@@ -25,7 +25,6 @@ set(SOURCES
     ${SOURCES_PREFIX}/colorpositionparameterdefinition.cpp
     ${SOURCES_PREFIX}/consoletableview.cpp
     ${SOURCES_PREFIX}/consolewidget.cpp
-    ${SOURCES_PREFIX}/crossplatform.cpp
     ${SOURCES_PREFIX}/datacopyactioninstance.cpp
     ${SOURCES_PREFIX}/datetimeparameterdefinition.cpp
     ${SOURCES_PREFIX}/devicecopythread.cpp
@@ -142,7 +141,6 @@ set(HEADERS
     ${HEADERS_PREFIX}/colorpositionparameterdefinition.hpp
     ${HEADERS_PREFIX}/consoletableview.hpp
     ${HEADERS_PREFIX}/consolewidget.hpp
-    ${HEADERS_PREFIX}/crossplatform.hpp
     ${HEADERS_PREFIX}/datacopyactioninstance.hpp
     ${HEADERS_PREFIX}/datetimeparameterdefinition.hpp
     ${HEADERS_PREFIX}/devicecopythread.hpp

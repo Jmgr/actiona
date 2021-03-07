@@ -5,7 +5,6 @@
 #pragma once
 
 #include "actiontools/actiontools_global.hpp"
-#include "actiontools/crossplatform.hpp"
 #include "actiontools/code/codeclass.hpp"
 
 #include <QObject>

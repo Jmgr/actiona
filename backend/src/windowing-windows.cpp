@@ -18,47 +18,29 @@
 	Contact: jmgr@jmgr.info
 */
 
-#include "actiontools/crossplatform.hpp"
-#include "actiontools/windowhandle.hpp"
+#include "backend/windowing-windows.hpp"
+#include "backend/backend.hpp"
 
 #include <QWidget>
-#include <QElapsedTimer>
-#include <QDebug>
-#include <QDir>
 
-#ifdef Q_OS_UNIX
-#include <QX11Info>
-#include <X11/Xlib.h>
-#include <cerrno>
-#include <csignal>
-#include <sys/types.h>
-#include <sys/wait.h>
-#endif
-
-#ifdef Q_OS_WIN
 #include <Windows.h>
 #include <Tlhelp32.h>
-#endif
 
-namespace ActionTools
+namespace Backend
 {
-    // TODO
-	void CrossPlatform::setForegroundWindow(QWidget *window)
-	{
-#ifdef Q_OS_UNIX
-		XRaiseWindow(QX11Info::display(), window->winId());
-#endif
-#ifdef Q_OS_WIN
+    void setForegroundWindowWindows(QWidget *window)
+    {
+        // TODO
         if(IsIconic(reinterpret_cast<HWND>(window->winId())))
             ShowWindow(reinterpret_cast<HWND>(window->winId()), SW_RESTORE);
-		else
-		{
+                else
+                {
             if(!SetForegroundWindow(reinterpret_cast<HWND>(window->winId())))
                 ;//setupLastError();
 
             if(!SetWindowPos(reinterpret_cast<HWND>(window->winId()), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE))
                 ;//setupLastError();
-		}
-#endif
-	}
+                }
+    }
 }
+

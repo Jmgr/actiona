@@ -20,7 +20,6 @@
 
 #include "codeexecution.hpp"
 #include "scriptagent.hpp"
-#include "actiontools/crossplatform.hpp"
 
 #include <QScriptEngine>
 #include <QThread>

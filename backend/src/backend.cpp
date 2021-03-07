@@ -21,17 +21,20 @@
 #include "backend/backend.hpp"
 #include "backend/mouse.hpp"
 #include "backend/keyboard.hpp"
+#include "backend/windowing.hpp"
 
 #ifdef Q_OS_WIN
 #include "backend/mouse-windows.hpp"
 #include "backend/keyboard-windows.hpp"
 #include "backend/process-windows.hpp"
+#include "backend/windowing-windows.hpp"
 #endif
 #ifdef Q_OS_UNIX
 #include "backend/mouse-x11.hpp"
 #include "backend/keyboard-x11.hpp"
 #include "backend/keysymhelper-x11.hpp"
 #include "backend/process-unix.hpp"
+#include "backend/windowing-x11.hpp"
 
 #include <QX11Info>
 
@@ -44,7 +47,8 @@ namespace Backend
     Instance::Instance():
         mMouse(std::make_unique<Mouse>()),
         mKeyboard(std::make_unique<Keyboard>()),
-        mProcess(std::make_unique<Process>())
+        mProcess(std::make_unique<Process>()),
+        mWindowing(std::make_unique<Windowing>())
     {
 #if defined(Q_OS_WIN)
         mMouse->isButtonPressed = isButtonPressedWindows;
@@ -57,6 +61,20 @@ namespace Backend
         mProcess->killProcess = killProcessWindows;
         mProcess->processStatus = processStatusWindows;
         mProcess->runningProcesses = runningProcessesWindows;
+        mWindowing->setForegroundWindow = setForegroundWindowWindows;
+        mWindowing->title = titleWindows;
+        mWindowing->classname = classnameWindows;
+        mWindowing->rect = rectWindows;
+        mWindowing->processId = processIdWindows;
+        mWindowing->close = closeWindows;
+        mWindowing->killCreator = killCreatorWindows;
+        mWindowing->minimize = minimizeWindows;
+        mWindowing->maximize = maximizeWindows;
+        mWindowing->move = moveWindows;
+        mWindowing->resize = resizeWindows;
+        mWindowing->isActive = isActiveWindows;
+        mWindowing->foregroundWindow = foregroundWindowWindows;
+        mWindowing->windowList = windowListWindows;
 #elif defined(Q_OS_UNIX)
         mProcess->killProcess = killProcessUnix;
         mProcess->processStatus = processStatusUnix;
@@ -79,6 +97,20 @@ namespace Backend
         mMouse->rotateWheel = rotateWheelX11;
         mKeyboard->pressKey = pressKeyX11;
         mKeyboard->writeText = writeTextX11;
+        mWindowing->setForegroundWindow = setForegroundWindowX11;
+        mWindowing->title = titleX11;
+        mWindowing->classname = classnameX11;
+        mWindowing->rect = rectX11;
+        mWindowing->processId = processIdX11;
+        mWindowing->close = closeX11;
+        mWindowing->killCreator = killCreatorX11;
+        mWindowing->minimize = minimizeX11;
+        mWindowing->maximize = maximizeX11;
+        mWindowing->move = moveX11;
+        mWindowing->resize = resizeX11;
+        mWindowing->isActive = isActiveX11;
+        mWindowing->foregroundWindow = foregroundWindowX11;
+        mWindowing->windowList = windowListX11;
 
         KeySymHelper::loadKeyCodes();
 #else
@@ -132,6 +164,20 @@ namespace Backend
         mProcess->killProcess = killProcessDummy;
         mProcess->processStatus = processStatusDummy;
         mProcess->runningProcesses = runningProcessesDummy;
+        mWindowing->setForegroundWindow = setForegroundWindowDummy;
+        mWindowing->title = titleDummy;
+        mWindowing->classname = classnameDummy;
+        mWindowing->rect = rectDummy;
+        mWindowing->processId = processIdDummy;
+        mWindowing->close = closeDummy;
+        mWindowing->killCreator = killCreatorDummy;
+        mWindowing->minimize = minimizeDummy;
+        mWindowing->maximize = maximizeDummy;
+        mWindowing->move = moveDummy;
+        mWindowing->resize = resizeDummy;
+        mWindowing->isActive = isActiveDummy;
+        mWindowing->foregroundWindow = foregroundWindowDummy;
+        mWindowing->windowList = windowListDummy;
     }
 
     void Instance::instReleaseAll()

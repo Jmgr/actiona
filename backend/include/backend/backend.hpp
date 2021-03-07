@@ -33,6 +33,7 @@ namespace Backend
     class Mouse;
     class Keyboard;
     class Process;
+    class Windowing;
 
     class BACKENDSHARED_EXPORT BackendError
     {
@@ -63,6 +64,7 @@ namespace Backend
         static const Mouse &mouse() { return *get().mMouse.get(); }
         static const Keyboard &keyboard() { return *get().mKeyboard.get(); }
         static const Process &process() { return *get().mProcess.get(); }
+        static const Windowing &windowing() { return *get().mWindowing.get(); }
 
     private:
         static Instance &get();
@@ -73,6 +75,7 @@ namespace Backend
         std::unique_ptr<Mouse> mMouse;
         std::unique_ptr<Keyboard> mKeyboard;
         std::unique_ptr<Process> mProcess;
+        std::unique_ptr<Windowing> mWindowing;
         std::set<int> mPressedButtons;
         std::set<std::pair<QString, bool>> mPressedKeys;
     };

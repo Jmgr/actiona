@@ -33,7 +33,6 @@
 #include "settingsdialog.hpp"
 #include "actiontools/settings.hpp"
 #include "scriptparametersdialog.hpp"
-#include "actiontools/crossplatform.hpp"
 #include "execution/execution.hpp"
 #include "newactiondialog.hpp"
 #include "scriptcontentdialog.hpp"
@@ -56,6 +55,7 @@
 #include "newactionproxymodel.hpp"
 #include "scriptproxymodel.hpp"
 #include "tools/languages.hpp"
+#include "backend/windowing.hpp"
 
 #ifdef ACT_PROFILE
 #include "tools/highresolutiontimer.hpp"
@@ -427,11 +427,18 @@ void MainWindow::postInit()
 		mSplashScreen = nullptr;
 	}
 
-#ifdef Q_OS_UNIX
-	ActionTools::CrossPlatform::setForegroundWindow(this);
-#endif
-
 	setCurrentFile(QString());
+
+#ifdef Q_OS_UNIX
+    try
+    {
+        Backend::Instance::windowing().setForegroundWindow(winId());
+    }
+    catch(const Backend::BackendError &e)
+    {
+        // ignore errors here
+    }
+#endif
 
     QApplication::processEvents();
 
@@ -1167,22 +1174,30 @@ void MainWindow::on_scriptFilterCriteriaFlagsComboBox_flagsChanged(unsigned int 
 
 void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-	if(reason == QSystemTrayIcon::DoubleClick)
-	{
-		switch(windowState())
-		{
-			case Qt::WindowNoState:
-			case Qt::WindowMaximized:
-			case Qt::WindowFullScreen:
-			case Qt::WindowActive:
-				showMinimized();
-				break;
-			case Qt::WindowMinimized:
-				showNormal();
-				ActionTools::CrossPlatform::setForegroundWindow(this);
-				break;
-		}
-	}
+    if(reason == QSystemTrayIcon::DoubleClick)
+    {
+        switch(windowState())
+        {
+        case Qt::WindowNoState:
+        case Qt::WindowMaximized:
+        case Qt::WindowFullScreen:
+        case Qt::WindowActive:
+            showMinimized();
+            break;
+        case Qt::WindowMinimized:
+            showNormal();
+            try
+            {
+                Backend::Instance::windowing().setForegroundWindow(winId());
+            }
+            catch(const Backend::BackendError &e)
+            {
+                // ignore errors here
+            }
+
+            break;
+        }
+    }
 }
 
 void MainWindow::scriptEdited()

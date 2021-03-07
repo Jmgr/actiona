@@ -19,7 +19,6 @@
 */
 
 #include "actiontools/windowhandle.hpp"
-#include "actiontools/crossplatform.hpp"
 #include "backend/process.hpp"
 
 #ifdef Q_OS_UNIX
