@@ -45,13 +45,13 @@ namespace ActionTools
 		QString classname() const;
 		QRect rect(bool useBorders = true) const;
 		int processId() const;
-		bool close() const;
-		bool killCreator() const;
-		bool setForeground() const;
-		bool minimize() const;
-		bool maximize() const;
-		bool move(QPoint position) const;
-		bool resize(QSize size, bool useBorders = true) const;
+        void close() const;
+        void killCreator() const;
+        void setForeground() const;
+        void minimize() const;
+        void maximize() const;
+        void move(QPoint position) const;
+        void resize(QSize size, bool useBorders = true) const;
 		bool isActive() const;
 
 		static WindowHandle foregroundWindow();

@@ -49,10 +49,22 @@ namespace Backend
             Running,
             Stopped
         };
+        enum class Priority
+        {
+            AboveNormal,
+            BelowNormal,
+            High,
+            Idle,
+            Normal,
+            Realtime
+        };
 
         std::function<void(int id, KillMode killMode, int timeout)> killProcess;
         std::function<ProcessStatus(int id)> processStatus;
         std::function<QList<int>()> runningProcesses;
+        std::function<int(int id)> parentProcess;
+        std::function<QString(int id)> processCommand;
+        std::function<Priority(int id)> processPriority;
 
         friend std::unique_ptr<Process> std::make_unique<Process>();
     };
@@ -61,4 +73,7 @@ namespace Backend
     static void killProcessDummy(int, Process::KillMode, int) {}
     static Process::ProcessStatus processStatusDummy(int) { return Process::ProcessStatus::Running; }
     static QList<int> runningProcessesDummy() { return {}; }
+    static int parentProcessDummy(int) { return {}; }
+    static QString processCommandDummy(int) { return {}; }
+    static Process::Priority processPriorityDummy(int) { return {}; }
 }

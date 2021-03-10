@@ -4,6 +4,7 @@ set(SOURCES_PREFIX src)
 set(SOURCES
     ${SOURCES_PREFIX}/backend.cpp
     ${SOURCES_PREFIX}/keyinput.cpp
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/backend-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/windowing-x11.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/windowing-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/process-unix.cpp>
@@ -29,6 +30,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/keyboard.hpp
     ${HEADERS_PREFIX}/process.hpp
     ${HEADERS_PREFIX}/windowing.hpp
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/backend-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/windowing-x11.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/windowing-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/process-unix.hpp>

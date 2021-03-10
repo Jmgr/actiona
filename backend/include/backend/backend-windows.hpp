@@ -21,14 +21,8 @@
 #pragma once
 
 #include "backend/backend_global.hpp"
-#include "backend/process.hpp"
 
 namespace Backend
 {
-    void BACKENDSHARED_EXPORT killProcessWindows(int id, Process::KillMode killMode, int timeout);
-    Process::ProcessStatus BACKENDSHARED_EXPORT processStatusWindows(int id);
-    QList<int> BACKENDSHARED_EXPORT runningProcessesWindows();
-    int BACKENDSHARED_EXPORT parentProcessWindows(int id);
-    QString BACKENDSHARED_EXPORT processCommandWindows(int id);
-    Process::Priority BACKENDSHARED_EXPORT processPriorityWindows(int id);
+    QString BACKENDSHARED_EXPORT lastErrorString();
 }

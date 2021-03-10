@@ -20,6 +20,7 @@
 
 #include "windowinstance.hpp"
 #include "actiontools/windowhandle.hpp"
+#include "backend/windowing.hpp"
 
 #include <QRegExp>
 
@@ -81,7 +82,16 @@ namespace Actions
 				return;
 		}
 
-		ActionTools::WindowHandle foundWindow = ActionTools::WindowHandle::findWindow(QRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix));
+        ActionTools::WindowHandle foundWindow;
+
+        try
+        {
+            foundWindow = ActionTools::WindowHandle::findWindow(QRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix));
+        }
+        catch(const Backend::BackendError &)
+        {
+            // ignore errors
+        }
 
 		if(!foundWindow.isValid())
 		{
@@ -90,39 +100,39 @@ namespace Actions
 			return;
 		}
 
-		bool result = true;
-
-		switch(action)
-		{
-		case Close:
-			result = foundWindow.close();
-			break;
-		case KillProcess:
-			result = foundWindow.killCreator();
-			break;
-		case SetForeground:
-			result = foundWindow.setForeground();
-			break;
-		case Minimize:
-			result = foundWindow.minimize();
-			break;
-		case Maximize:
-			result = foundWindow.maximize();
-			break;
-		case Move:
-			result = foundWindow.move(movePosition);
-			break;
-		case Resize:
-			result = foundWindow.resize(QSize(resizeWidth, resizeHeight), useBorders);
-			break;
-		}
-
-		if(!result)
-		{
-			setCurrentParameter(QStringLiteral("action"));
-			emit executionException(ActionFailedException, tr("\"%1\" failed").arg(actions.second[action]));
-			return;
-		}
+        try
+        {
+            switch(action)
+            {
+            case Close:
+                foundWindow.close();
+                break;
+            case KillProcess:
+                foundWindow.killCreator();
+                break;
+            case SetForeground:
+                foundWindow.setForeground();
+                break;
+            case Minimize:
+                foundWindow.minimize();
+                break;
+            case Maximize:
+                foundWindow.maximize();
+                break;
+            case Move:
+                foundWindow.move(movePosition);
+                break;
+            case Resize:
+                foundWindow.resize(QSize(resizeWidth, resizeHeight), useBorders);
+                break;
+            }
+        }
+        catch(const Backend::BackendError &e)
+        {
+            setCurrentParameter(QStringLiteral("action"));
+            emit executionException(ActionFailedException, tr("\"%1\" failed: %2").arg(actions.second[action]).arg(e.what()));
+            return;
+        }
 
 		executionEnded();
 	}

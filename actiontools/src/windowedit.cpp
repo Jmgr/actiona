@@ -22,6 +22,7 @@
 #include "ui_windowedit.h"
 
 #include "actiontools/codelineedit.hpp"
+#include "backend/backend.hpp"
 
 namespace ActionTools
 {
@@ -95,6 +96,13 @@ namespace ActionTools
 
     void WindowEdit::on_choose_searchEnded(const ActionTools::WindowHandle &handle)
 	{
-		ui->window->codeLineEdit()->setText(handle.title());
+        try
+        {
+            ui->window->codeLineEdit()->setText(handle.title());
+        }
+        catch(const Backend::BackendError &)
+        {
+            // ignore errors
+        }
 	}
 }

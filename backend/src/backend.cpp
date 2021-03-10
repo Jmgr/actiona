@@ -61,6 +61,9 @@ namespace Backend
         mProcess->killProcess = killProcessWindows;
         mProcess->processStatus = processStatusWindows;
         mProcess->runningProcesses = runningProcessesWindows;
+        mProcess->parentProcess = parentProcessWindows;
+        mProcess->processCommand = processCommandWindows;
+        mProcess->processPriority = processPriorityWindows;
         mWindowing->setForegroundWindow = setForegroundWindowWindows;
         mWindowing->title = titleWindows;
         mWindowing->classname = classnameWindows;
@@ -79,6 +82,9 @@ namespace Backend
         mProcess->killProcess = killProcessUnix;
         mProcess->processStatus = processStatusUnix;
         mProcess->runningProcesses = runningProcessesUnix;
+        mProcess->parentProcess = parentProcessUnix;
+        mProcess->processCommand = processCommandUnix;
+        mProcess->processPriority = processPriorityUnix;
 
         auto display = QX11Info::display();
 
@@ -116,6 +122,7 @@ namespace Backend
 #else
         useDummy();
 #endif
+        // TODO: use auto-closer class to close HANDLEs
 
         auto pressButton = mMouse->pressButton;
         mMouse->pressButton = [this, pressButton](Mouse::Button button, bool press)
@@ -164,6 +171,9 @@ namespace Backend
         mProcess->killProcess = killProcessDummy;
         mProcess->processStatus = processStatusDummy;
         mProcess->runningProcesses = runningProcessesDummy;
+        mProcess->parentProcess = parentProcessDummy;
+        mProcess->processCommand = processCommandDummy;
+        mProcess->processPriority = processPriorityDummy;
         mWindowing->setForegroundWindow = setForegroundWindowDummy;
         mWindowing->title = titleDummy;
         mWindowing->classname = classnameDummy;

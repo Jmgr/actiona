@@ -23,6 +23,7 @@
 #include "actiontools/windowedit.hpp"
 #include "actiontools/actioninstance.hpp"
 #include "actiontools/windowhandle.hpp"
+#include "backend/windowing.hpp"
 
 namespace ActionTools
 {
@@ -55,6 +56,13 @@ namespace ActionTools
 	{
 		Q_UNUSED(script)
 
-        mWindowEdit->setWindowTitles(ActionTools::WindowHandle::windowTitles());
+        try
+        {
+            mWindowEdit->setWindowTitles(ActionTools::WindowHandle::windowTitles());
+        }
+        catch(const Backend::BackendError &)
+        {
+            // ignore errors
+        }
 	}
 }

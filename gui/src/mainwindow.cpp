@@ -1190,7 +1190,7 @@ void MainWindow::systemTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
             {
                 Backend::Instance::windowing().setForegroundWindow(winId());
             }
-            catch(const Backend::BackendError &e)
+            catch(const Backend::BackendError &)
             {
                 // ignore errors here
             }

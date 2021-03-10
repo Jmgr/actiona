@@ -25,5 +25,18 @@
 
 namespace Backend
 {
-    void BACKENDSHARED_EXPORT setForegroundWindowWindows(QWidget *window);
+    void BACKENDSHARED_EXPORT setForegroundWindowWindows(WId windowId);
+    QString BACKENDSHARED_EXPORT titleWindows(WId windowId);
+    QString BACKENDSHARED_EXPORT classnameWindows(WId windowId);
+    QRect BACKENDSHARED_EXPORT rectWindows(WId windowId, bool useBorders);
+    int BACKENDSHARED_EXPORT processIdWindows(WId windowId);
+    void BACKENDSHARED_EXPORT closeWindows(WId windowId);
+    void BACKENDSHARED_EXPORT killCreatorWindows(WId windowId);
+    void BACKENDSHARED_EXPORT minimizeWindows(WId windowId);
+    void BACKENDSHARED_EXPORT maximizeWindows(WId windowId);
+    void BACKENDSHARED_EXPORT moveWindows(WId windowId, QPoint position);
+    void BACKENDSHARED_EXPORT resizeWindows(WId windowId, QSize size, bool useBorders);
+    bool BACKENDSHARED_EXPORT isActiveWindows(WId windowId);
+    WId BACKENDSHARED_EXPORT foregroundWindowWindows();
+    QList<WId> BACKENDSHARED_EXPORT windowListWindows();
 }

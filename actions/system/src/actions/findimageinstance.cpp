@@ -22,6 +22,7 @@
 #include "actiontools/opencvalgorithms.hpp"
 #include "actiontools/code/point.hpp"
 #include "actiontools/screenshooter.hpp"
+#include "backend/windowing.hpp"
 
 #include <QPixmap>
 #include <QApplication>
@@ -143,7 +144,14 @@ namespace Actions
                 if(!ok)
                     return;
 
-                mWindows = ActionTools::WindowHandle::findWindows(QRegExp(windowName, Qt::CaseSensitive, QRegExp::WildcardUnix));
+                try
+                {
+                    mWindows = ActionTools::WindowHandle::findWindows(QRegExp(windowName, Qt::CaseSensitive, QRegExp::WildcardUnix));
+                }
+                catch(const Backend::BackendError &)
+                {
+                    // ignore errors
+                }
 
                 if(mWindows.isEmpty())
                 {

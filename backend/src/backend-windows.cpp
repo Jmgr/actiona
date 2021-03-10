@@ -18,17 +18,28 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/backend-windows.hpp"
 
-#include "backend/backend_global.hpp"
-#include "backend/process.hpp"
+#include <QString>
+#include <QObject>
+
+#include <Windows.h>
 
 namespace Backend
 {
-    void BACKENDSHARED_EXPORT killProcessWindows(int id, Process::KillMode killMode, int timeout);
-    Process::ProcessStatus BACKENDSHARED_EXPORT processStatusWindows(int id);
-    QList<int> BACKENDSHARED_EXPORT runningProcessesWindows();
-    int BACKENDSHARED_EXPORT parentProcessWindows(int id);
-    QString BACKENDSHARED_EXPORT processCommandWindows(int id);
-    Process::Priority BACKENDSHARED_EXPORT processPriorityWindows(int id);
+    QString lastErrorString()
+    {
+        auto lastError = GetLastError();
+        LPTSTR message;
+
+        if(!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+                      0, lastError, 0, reinterpret_cast<LPTSTR>(&message), 0, 0))
+            return QObject::tr("Error: failed to get last error string for error %1. GetLastError returned %2.").arg(lastError).arg(GetLastError());
+
+        auto result = QString::fromWCharArray(message).trimmed();
+
+        LocalFree(message);
+
+        return result;
+    }
 }

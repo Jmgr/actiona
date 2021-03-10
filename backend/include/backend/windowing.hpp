@@ -65,17 +65,17 @@ namespace Backend
 
     // Dummy implementations
     static void setForegroundWindowDummy(WId) {}
-    static QString titleDummy(WId) {}
-    static QString classnameDummy(WId) {}
-    static QRect rectDummy(WId, bool) {}
-    static int processIdDummy(WId) {}
+    static QString titleDummy(WId) { return {}; }
+    static QString classnameDummy(WId) { return {}; }
+    static QRect rectDummy(WId, bool) { return {}; }
+    static int processIdDummy(WId) { return {}; }
     static void closeDummy(WId) {}
     static void killCreatorDummy(WId) {}
     static void minimizeDummy(WId) {}
     static void maximizeDummy(WId) {}
     static void moveDummy(WId, const QPoint &) {}
     static void resizeDummy(WId, const QSize &, bool) {}
-    static bool isActiveDummy(WId) {}
-    static WId foregroundWindowDummy() {}
-    static QList<WId> windowListDummy() {}
+    static bool isActiveDummy(WId) { return true; }
+    static WId foregroundWindowDummy() { return {}; }
+    static QList<WId> windowListDummy() { return {}; }
 }

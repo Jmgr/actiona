@@ -27,6 +27,7 @@
 #include "actiontools/windowedit.hpp"
 #include "actiontools/fileedit.hpp"
 #include "actiontools/linecombobox.hpp"
+#include "backend/windowing.hpp"
 
 #include <QMessageBox>
 #include <QScriptEngine>
@@ -319,7 +320,15 @@ void ScriptParametersDialog::setupValueParameter(int row, ActionTools::ScriptPar
 			valueWidget->setCode(code);
 			valueWidget->codeLineEdit()->setText(value);
             valueWidget->setParameterContainer(this);
-            valueWidget->setWindowTitles(ActionTools::WindowHandle::windowTitles());
+
+            try
+            {
+                valueWidget->setWindowTitles(ActionTools::WindowHandle::windowTitles());
+            }
+            catch(const Backend::BackendError &)
+            {
+                // ignore errors
+            }
 
 			ui->parameterTable->setCellWidget(row, 1, valueWidget);
 		}

@@ -21,6 +21,7 @@
 #include "windowconditioninstance.hpp"
 #include "actiontools/code/point.hpp"
 #include "actiontools/code/size.hpp"
+#include "backend/windowing.hpp"
 
 #include <QRegExp>
 
@@ -146,7 +147,17 @@ namespace Actions
 
 	ActionTools::WindowHandle WindowConditionInstance::findWindow()
 	{
-		ActionTools::WindowHandle foundWindow = ActionTools::WindowHandle::findWindow(mTitleRegExp);
+        ActionTools::WindowHandle foundWindow;
+
+        try
+        {
+            foundWindow = ActionTools::WindowHandle::findWindow(mTitleRegExp);
+        }
+        catch(const Backend::BackendError &)
+        {
+            // ignore errors
+        }
+
 		if(foundWindow.isValid())
 		{
 			QRect windowRect = foundWindow.rect();

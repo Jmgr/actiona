@@ -24,6 +24,7 @@
 #include "actiontools/code/point.hpp"
 #include "actiontools/code/processhandle.hpp"
 #include "actiontools/code/codetools.hpp"
+#include "backend/backend.hpp"
 
 #include <QScriptValueIterator>
 
@@ -121,7 +122,17 @@ namespace Code
 			}
 		}
 
-		QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
+        QList<ActionTools::WindowHandle> windowList;
+
+        try
+        {
+            windowList = ActionTools::WindowHandle::windowList();
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(context, engine, QStringLiteral("ListWindowsError"), e.what());
+            return engine->undefinedValue();
+        }
 
 		QRegExp titleRegExp(titlePattern,
 							titleCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
@@ -134,17 +145,24 @@ namespace Code
 
         for(const ActionTools::WindowHandle &windowHandle: qAsConst(windowList))
 		{
-			if(!titlePattern.isNull() && !titleRegExp.exactMatch(windowHandle.title()))
-				continue;
+            try
+            {
+                if(!titlePattern.isNull() && !titleRegExp.exactMatch(windowHandle.title()))
+                    continue;
 
-			if(!classNamePattern.isNull() && !classNameRegExp.exactMatch(windowHandle.classname()))
-				continue;
+                if(!classNamePattern.isNull() && !classNameRegExp.exactMatch(windowHandle.classname()))
+                    continue;
 
-			if(processId != -1 && windowHandle.processId() != processId)
-				continue;
+                if(processId != -1 && windowHandle.processId() != processId)
+                    continue;
 
-			if(processHandle && windowHandle.processId() != processHandle->processId())
-				continue;
+                if(processHandle && windowHandle.processId() != processHandle->processId())
+                    continue;
+            }
+            catch(const Backend::BackendError &)
+            {
+                continue;
+            }
 
 			foundWindows.append(windowHandle);
 		}
@@ -161,7 +179,17 @@ namespace Code
 	{
 		Q_UNUSED(context)
 
-		QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
+        QList<ActionTools::WindowHandle> windowList;
+
+        try
+        {
+            windowList = ActionTools::WindowHandle::windowList();
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(context, engine, QStringLiteral("ListWindowsError"), e.what());
+            return engine->undefinedValue();
+        }
 
 		QScriptValue back = engine->newArray(windowList.count());
 
@@ -175,7 +203,19 @@ namespace Code
 	{
 		Q_UNUSED(context)
 
-		return constructor(ActionTools::WindowHandle::foregroundWindow(), engine);
+        ActionTools::WindowHandle window;
+
+        try
+        {
+            window = ActionTools::WindowHandle::foregroundWindow();
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(context, engine, QStringLiteral("GetForegroundWindowError"), e.what());
+            return engine->undefinedValue();
+        }
+
+        return constructor(window, engine);
 	}
 
 	void Window::registerClass(QScriptEngine *scriptEngine)
@@ -265,17 +305,31 @@ namespace Code
 	QString Window::title() const
 	{
 		if(!checkValidity())
-			return QString();
+            return {};
 
-		return mWindowHandle.title();
+        try
+        {
+            return mWindowHandle.title();
+        }
+        catch(const Backend::BackendError &)
+        {
+            return {};
+        }
 	}
 	
 	QString Window::className() const
 	{
 		if(!checkValidity())
-			return QString();
+            return {};
 
-		return mWindowHandle.classname();
+        try
+        {
+            return mWindowHandle.classname();
+        }
+        catch(const Backend::BackendError &)
+        {
+            return {};
+        }
 	}
 
 	bool Window::isActive() const
@@ -283,15 +337,29 @@ namespace Code
 		if(!checkValidity())
 			return false;
 
-		return mWindowHandle.isActive();
+        try
+        {
+            return mWindowHandle.isActive();
+        }
+        catch(const Backend::BackendError &)
+        {
+            return {};
+        }
 	}
 	
 	QScriptValue Window::rect(bool useBorders) const
 	{
 		if(!checkValidity())
-			return QScriptValue();
+            return {};
 
-		return Rect::constructor(mWindowHandle.rect(useBorders), engine());
+        try
+        {
+            return Rect::constructor(mWindowHandle.rect(useBorders), engine());
+        }
+        catch(const Backend::BackendError &)
+        {
+            return {};
+        }
 	}
 	
 	QScriptValue Window::process() const
@@ -299,7 +367,14 @@ namespace Code
 		if(!checkValidity())
 			return -1;
 
-		return ProcessHandle::constructor(mWindowHandle.processId(), engine());
+        try
+        {
+            return ProcessHandle::constructor(mWindowHandle.processId(), engine());
+        }
+        catch(const Backend::BackendError &)
+        {
+            return {};
+        }
 	}
 	
 	QScriptValue Window::close() const
@@ -307,9 +382,15 @@ namespace Code
 		if(!checkValidity())
 			return thisObject();
 
-		if(!mWindowHandle.close())
-			throwError(QStringLiteral("CloseWindowError"), tr("Unable to close the window"));
-		
+        try
+        {
+            mWindowHandle.close();
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("CloseWindowError"), tr("Unable to close the window: %1").arg(e.what()));
+        }
+
 		return thisObject();
 	}
 	
@@ -318,9 +399,15 @@ namespace Code
 		if(!checkValidity())
 			return thisObject();
 
-		if(!mWindowHandle.killCreator())
-			throwError(QStringLiteral("KillCreatorError"), tr("Unable to kill the window creator"));
-		
+        try
+        {
+            mWindowHandle.killCreator();
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("KillCreatorError"), tr("Unable to kill the window creator: %1").arg(e.what()));
+        }
+
 		return thisObject();
 	}
 	
@@ -329,9 +416,15 @@ namespace Code
 		if(!checkValidity())
 			return thisObject();
 
-		if(!mWindowHandle.setForeground())
-			throwError(QStringLiteral("SetForegroundError"), tr("Unable to set the window foreground"));
-		
+        try
+        {
+            mWindowHandle.setForeground();
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("SetForegroundError"), tr("Unable to set the window foreground: %1").arg(e.what()));
+        }
+
 		return thisObject();
 	}
 	
@@ -340,9 +433,15 @@ namespace Code
 		if(!checkValidity())
 			return thisObject();
 
-		if(!mWindowHandle.minimize())
-			throwError(QStringLiteral("MinimizeError"), tr("Unable to minimize the window"));
-		
+        try
+        {
+            mWindowHandle.minimize();
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("MinimizeError"), tr("Unable to minimize the window: %1").arg(e.what()));
+        }
+
 		return thisObject();
 	}
 	
@@ -351,9 +450,15 @@ namespace Code
 		if(!checkValidity())
 			return thisObject();
 
-		if(!mWindowHandle.maximize())
-			throwError(QStringLiteral("MaximizeError"), tr("Unable to maximize the window"));
-		
+        try
+        {
+            mWindowHandle.maximize();
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("MaximizeError"), tr("Unable to maximize the window: %1").arg(e.what()));
+        }
+
 		return thisObject();
 	}
 	
@@ -362,9 +467,15 @@ namespace Code
 		if(!checkValidity())
 			return thisObject();
 
-		if(!mWindowHandle.move(Point::parameter(context(), engine())))
-			throwError(QStringLiteral("MoveError"), tr("Unable to move the window"));
-		
+        try
+        {
+            mWindowHandle.move(Point::parameter(context(), engine()));
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("MoveError"), tr("Unable to move the window: %1").arg(e.what()));
+        }
+
 		return thisObject();
 	}
 	
@@ -373,9 +484,15 @@ namespace Code
 		if(!checkValidity())
 			return thisObject();
 
-		if(!mWindowHandle.resize(Size::parameter(context(), engine()), useBorders))
-			throwError(QStringLiteral("ResizeError"), tr("Unable to resize the window"));
-		
+        try
+        {
+            mWindowHandle.resize(Size::parameter(context(), engine()), useBorders);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("ResizeError"), tr("Unable to resize the window: %1").arg(e.what()));
+        }
+
 		return thisObject();
 	}
 

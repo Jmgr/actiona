@@ -20,6 +20,8 @@
 
 #include "backend/process-windows.hpp"
 #include "backend/backend.hpp"
+#include "backend/backend-windows.hpp"
+#include "backend/windowing.hpp"
 
 #include <QObject>
 #include <QThread>
@@ -27,25 +29,12 @@
 
 #include <Windows.h>
 #include <Tlhelp32.h>
+#include <Psapi.h>
+
+#include <array>
 
 namespace Backend
 {
-    QString lastErrorString()
-    {
-        auto lastError = GetLastError();
-        LPTSTR message;
-
-        if(!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-                      0, lastError, 0, reinterpret_cast<LPTSTR>(&message), 0, 0))
-            return QObject::tr("Error: failed to get last error string for error %1. GetLastError returned %2.").arg(lastError).arg(GetLastError());
-
-        auto result = QString::fromWCharArray(message).trimmed();
-
-        LocalFree(message);
-
-        return result;
-    }
-
     void killProcessWindows(int id, Process::KillMode killMode, int timeout)
     {
         auto handle = OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_INFORMATION, FALSE, id);
@@ -60,14 +49,12 @@ namespace Backend
             return;
         }
 
-        // TODO
-        /*
-        for(const ActionTools::WindowHandle &windowHandle: ActionTools::WindowHandle::windowList())
+        auto windows = Instance::windowing().windowList();
+        for(const auto &windowHandle: windows)
         {
-            if(windowHandle.processId() == id)
-                windowHandle.close();
+            if(Instance::windowing().processId(windowHandle) == id)
+                Instance::windowing().close(windowHandle);
         }
-        */
 
         QElapsedTimer timer;
         timer.start();
@@ -90,7 +77,7 @@ namespace Backend
 
         if(exitCode == STILL_ACTIVE)
         {
-            if(killMode == Backend::Process::KillMode::Graceful)
+            if(killMode == Process::KillMode::Graceful)
             {
                 CloseHandle(handle);
                 throw BackendError(QObject::tr("failed to gracefully terminate the process"));
@@ -154,6 +141,95 @@ namespace Backend
         }
 
         return back;
+    }
+
+    int parentProcessWindows(int id)
+    {
+        auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+        if(snapshot == INVALID_HANDLE_VALUE)
+            throw BackendError(lastErrorString());
+
+        PROCESSENTRY32 processEntry;
+        ZeroMemory(&processEntry, sizeof(processEntry));
+        processEntry.dwSize = sizeof(processEntry);
+
+        if(!Process32First(snapshot, &processEntry))
+        {
+            if(GetLastError() != ERROR_NO_MORE_FILES)
+            {
+                CloseHandle(snapshot);
+                throw BackendError(lastErrorString());
+            }
+        }
+
+        while(true)
+        {
+            if(!Process32Next(snapshot, &processEntry))
+            {
+                if(GetLastError() != ERROR_NO_MORE_FILES)
+                {
+                    CloseHandle(snapshot);
+                    throw BackendError(lastErrorString());
+                }
+            }
+
+            if(processEntry.th32ProcessID == id)
+            {
+                CloseHandle(snapshot);
+                return processEntry.th32ParentProcessID;
+            }
+        }
+
+        CloseHandle(snapshot);
+
+        return 0;
+    }
+
+    QString processCommandWindows(int id)
+    {
+        auto process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, id);
+        if(!process)
+            throw BackendError(lastErrorString());
+
+        std::array<TCHAR, 256> buffer;
+        if(!GetModuleFileNameEx(process, nullptr, buffer.data(), buffer.size()))
+        {
+            CloseHandle(process);
+            throw BackendError(lastErrorString());
+        }
+
+        CloseHandle(process);
+
+        return QString::fromWCharArray(buffer.data());
+    }
+
+    Process::Priority processPriorityWindows(int id)
+    {
+        auto process = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, id);
+        if(!process)
+            throw BackendError(lastErrorString());
+
+        int priority = GetPriorityClass(process);
+        CloseHandle(process);
+        if(!priority)
+            throw BackendError(lastErrorString());
+
+        switch(priority)
+        {
+        case ABOVE_NORMAL_PRIORITY_CLASS:
+            return Process::Priority::AboveNormal;
+        case BELOW_NORMAL_PRIORITY_CLASS:
+            return Process::Priority::BelowNormal;
+        case HIGH_PRIORITY_CLASS:
+            return Process::Priority::High;
+        case IDLE_PRIORITY_CLASS:
+            return Process::Priority::Idle;
+        case NORMAL_PRIORITY_CLASS:
+        default:
+            return Process::Priority::Normal;
+        case REALTIME_PRIORITY_CLASS:
+            return Process::Priority::Realtime;
+        }
     }
 }
 
