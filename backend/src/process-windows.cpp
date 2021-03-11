@@ -22,6 +22,7 @@
 #include "backend/backend.hpp"
 #include "backend/backend-windows.hpp"
 #include "backend/windowing.hpp"
+#include "backend/scopeguard.hpp"
 
 #include <QObject>
 #include <QThread>
@@ -41,9 +42,10 @@ namespace Backend
         if(!handle)
             throw BackendError(lastErrorString());
 
+        auto guard = make_scope_guard([handle]{CloseHandle(handle);});
+
         if(killMode == Process::KillMode::Forceful)
         {
-            CloseHandle(handle);
             if(!TerminateProcess(handle, 0))
                 throw BackendError(lastErrorString());
             return;
@@ -64,7 +66,6 @@ namespace Backend
         {
             if(!GetExitCodeProcess(handle, &exitCode))
             {
-                CloseHandle(handle);
                 throw BackendError(lastErrorString());
             }
 
@@ -79,18 +80,14 @@ namespace Backend
         {
             if(killMode == Process::KillMode::Graceful)
             {
-                CloseHandle(handle);
                 throw BackendError(QObject::tr("failed to gracefully terminate the process"));
             }
 
             if(!TerminateProcess(handle, 0))
             {
-                CloseHandle(handle);
                 throw BackendError(lastErrorString());
             }
         }
-
-        CloseHandle(handle);
     }
 
     Process::ProcessStatus processStatusWindows(int id)
@@ -111,13 +108,14 @@ namespace Backend
         if(!handle)
             throw BackendError(lastErrorString());
 
+        auto guard = make_scope_guard([handle]{CloseHandle(handle);});
+
         PROCESSENTRY32 entry;
         entry.dwSize = sizeof(PROCESSENTRY32);
 
         bool first = Process32First(handle, &entry);
         if(!first)
         {
-            CloseHandle(handle);
             if(GetLastError() == ERROR_NO_MORE_FILES)
                 return {};
 
@@ -130,7 +128,6 @@ namespace Backend
             bool next = Process32Next(handle, &entry);
             if(!next)
             {
-                CloseHandle(handle);
                 if(GetLastError() == ERROR_NO_MORE_FILES)
                     return {};
 
@@ -149,6 +146,8 @@ namespace Backend
         if(snapshot == INVALID_HANDLE_VALUE)
             throw BackendError(lastErrorString());
 
+        auto guard = make_scope_guard([snapshot]{CloseHandle(snapshot);});
+
         PROCESSENTRY32 processEntry;
         ZeroMemory(&processEntry, sizeof(processEntry));
         processEntry.dwSize = sizeof(processEntry);
@@ -156,10 +155,7 @@ namespace Backend
         if(!Process32First(snapshot, &processEntry))
         {
             if(GetLastError() != ERROR_NO_MORE_FILES)
-            {
-                CloseHandle(snapshot);
                 throw BackendError(lastErrorString());
-            }
         }
 
         while(true)
@@ -167,20 +163,12 @@ namespace Backend
             if(!Process32Next(snapshot, &processEntry))
             {
                 if(GetLastError() != ERROR_NO_MORE_FILES)
-                {
-                    CloseHandle(snapshot);
                     throw BackendError(lastErrorString());
-                }
             }
 
             if(processEntry.th32ProcessID == id)
-            {
-                CloseHandle(snapshot);
                 return processEntry.th32ParentProcessID;
-            }
         }
-
-        CloseHandle(snapshot);
 
         return 0;
     }
@@ -191,14 +179,11 @@ namespace Backend
         if(!process)
             throw BackendError(lastErrorString());
 
+        auto guard = make_scope_guard([process]{CloseHandle(process);});
+
         std::array<TCHAR, 256> buffer;
         if(!GetModuleFileNameEx(process, nullptr, buffer.data(), buffer.size()))
-        {
-            CloseHandle(process);
             throw BackendError(lastErrorString());
-        }
-
-        CloseHandle(process);
 
         return QString::fromWCharArray(buffer.data());
     }
