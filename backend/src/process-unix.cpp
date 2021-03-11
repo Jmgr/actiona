@@ -25,6 +25,7 @@
 #include <QString>
 #include <QElapsedTimer>
 #include <QThread>
+#include <QProcess>
 
 #include <csignal>
 
@@ -119,6 +120,40 @@ namespace Backend
         }
 
         return back;
+    }
+
+    int parentProcessUnix(int id)
+    {
+        QProcess process;
+        process.start(QStringLiteral("ps"), {QStringLiteral("h") , QStringLiteral("-p %1").arg(id), QStringLiteral("-oppid")}, QIODevice::ReadOnly);
+        if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
+            throw BackendError(QStringLiteral("failed to get the process parent id"));
+
+        bool ok = true;
+        auto res = process.readAll().trimmed();
+        int result = res.toInt(&ok);
+
+        if(!ok)
+            throw BackendError(QStringLiteral("failed to get the process parent id, 'ps' returned %1").arg(QString::fromLocal8Bit(res)));
+
+        return result;
+    }
+
+    QString processCommandUnix(int id)
+    {
+        QProcess process;
+        process.start(QStringLiteral("ps"), {QStringLiteral("h"), QStringLiteral("-p %1").arg(id), QStringLiteral("-ocommand")}, QIODevice::ReadOnly);
+        if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
+            throw BackendError(QStringLiteral("failed to get the process command"));
+
+        return QLatin1String(process.readAll().trimmed());
+    }
+
+    Process::Priority processPriorityUnix(int id)
+    {
+        Q_UNUSED(id)
+
+        throw BackendError(QStringLiteral("this is not available under your operating system"));
     }
 }
 

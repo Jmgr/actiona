@@ -171,27 +171,6 @@ namespace Code
             throwError(QStringLiteral("GetProcessParentError"), tr("Failed to get the process parent id: %1").arg(e.what()));
             return 0;
         }
-
-#ifndef Q_OS_WIN // TODO
-        QProcess process;
-        process.start(QStringLiteral("ps"), {QStringLiteral("h") , QStringLiteral("-p %1").arg(id()), QStringLiteral("-oppid")}, QIODevice::ReadOnly);
-        if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
-        {
-			throwError(QStringLiteral("GetProcessError"), tr("Failed to get the process parent id"));
-            return 0;
-        }
-
-        bool ok = true;
-        int result = process.readAll().trimmed().toInt(&ok);
-
-        if(!ok)
-        {
-			throwError(QStringLiteral("GetProcessError"), tr("Failed to get the process parent id"));
-            return 0;
-        }
-
-        return result;
-#endif
     }
 	
 	bool ProcessHandle::kill(KillMode killMode, int timeout) const
@@ -231,17 +210,6 @@ namespace Code
             throwError(QStringLiteral("GetProcessCommandError"), tr("Failed to get the process command: %1").arg(e.what()));
             return {};
         }
-#ifndef Q_OS_WIN // TODO
-		QProcess process;
-        process.start(QStringLiteral("ps"), {QStringLiteral("h"), QStringLiteral("-p %1").arg(id()), QStringLiteral("-ocommand")}, QIODevice::ReadOnly);
-		if(!process.waitForStarted(2000) || !process.waitForReadyRead(2000) || !process.waitForFinished(2000) || process.exitCode() != 0)
-		{
-			throwError(QStringLiteral("GetProcessError"), tr("Failed to get the process command"));
-			return QString();
-		}
-
-		return QLatin1String(process.readAll().trimmed());
-#endif
 	}
 
 	ProcessHandle::Priority ProcessHandle::priority() const
@@ -255,10 +223,5 @@ namespace Code
             throwError(QStringLiteral("GetProcessPriorityError"), tr("Failed to get the process priority: %1").arg(e.what()));
             return {};
         }
-
-#ifndef Q_OS_WIN // TODO
-		throwError(QStringLiteral("OperatingSystemError"), tr("This is not available under your operating system"));
-		return Normal;
-#endif
 	}
 }

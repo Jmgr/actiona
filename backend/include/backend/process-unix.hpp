@@ -28,4 +28,7 @@ namespace Backend
     void BACKENDSHARED_EXPORT killProcessUnix(int id, Process::KillMode killMode, int timeout);
     Process::ProcessStatus BACKENDSHARED_EXPORT processStatusUnix(int id);
     QList<int> BACKENDSHARED_EXPORT runningProcessesUnix();
+    int BACKENDSHARED_EXPORT parentProcessUnix(int id);
+    QString BACKENDSHARED_EXPORT processCommandUnix(int id);
+    Process::Priority BACKENDSHARED_EXPORT processPriorityUnix(int id);
 }
