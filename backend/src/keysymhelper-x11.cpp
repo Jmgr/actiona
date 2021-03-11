@@ -123,7 +123,7 @@ sub get_utf8 {
 #include <QX11Info>
 
 #include "backend/keysymhelper-x11.hpp"
-#include "backend/handlescopeguard.hpp"
+#include "backend/scopeguard.hpp"
 
 namespace Backend
 {
