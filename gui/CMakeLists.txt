@@ -32,9 +32,6 @@ set(SOURCES
     ${SOURCES_PREFIX}/settingsdialog.cpp
     ${SOURCES_PREFIX}/settingskeyedit.cpp
     ${SOURCES_PREFIX}/sfxscriptdialog.cpp
-    ${SOURCES_PREFIX}/QHotkey/qhotkey.cpp
-    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/QHotkey/qhotkey_win.cpp>
-    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/QHotkey/qhotkey_x11.cpp>
 )
 
 set(HEADERS_PREFIX src)
@@ -71,8 +68,6 @@ set(HEADERS
     ${HEADERS_PREFIX}/settingsdialog.hpp
     ${HEADERS_PREFIX}/settingskeyedit.hpp
     ${HEADERS_PREFIX}/sfxscriptdialog.hpp
-    ${HEADERS_PREFIX}/QHotkey/qhotkey.h
-    ${HEADERS_PREFIX}/QHotkey/qhotkey_p.h
 )
 
 set(QRC ${PROJECT}.qrc)
@@ -97,6 +92,7 @@ set(CMAKE_EXECUTABLE_SUFFIX "")
 set(QAPPLICATION_CLASS QApplication CACHE STRING "Inheritance class for SingleApplication")
 
 add_subdirectory(src/3rdparty/singleapplication)
+add_subdirectory(src/3rdparty/qhotkey)
 
 setup_target(${PROJECT})
 
@@ -128,6 +124,7 @@ target_link_libraries(
     Qt5::Script
     Qt5::Widgets
     SingleApplication::SingleApplication
+    qhotkey
     ${LIBNOTIFY_LIBRARIES}
     ${X11_LIBRARIES}
     $<$<PLATFORM_ID:Windows>:shlwapi>

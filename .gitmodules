@@ -7,3 +7,6 @@
 [submodule "gui/src/3rdparty/singleapplication"]
 	path = gui/src/3rdparty/singleapplication
 	url = https://github.com/itay-grudev/SingleApplication.git
+[submodule "gui/src/3rdparty/qhotkey"]
+	path = gui/src/3rdparty/qhotkey
+	url = https://github.com/Skycoder42/QHotkey.git

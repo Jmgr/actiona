@@ -37,7 +37,7 @@
 #include "newactiondialog.hpp"
 #include "scriptcontentdialog.hpp"
 #include "actiontools/keywords.hpp"
-#include "QHotkey/QHotkey"
+#include "qhotkey/QHotkey/QHotkey"
 #ifdef ACT_UPDATER
 #include "changelogdialog.hpp"
 #include "tools/updater.hpp"
