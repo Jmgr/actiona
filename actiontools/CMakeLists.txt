@@ -106,11 +106,6 @@ set(SOURCES
     ${SOURCES_PREFIX}/qtimagefilters/punchfilter.cpp
     ${SOURCES_PREFIX}/qtimagefilters/qtimagefilter.cpp
     ${SOURCES_PREFIX}/qtimagefilters/qtimagefilterfactory.cpp
-    ${SOURCES_PREFIX}/qtsingleapplication/qtlocalpeer.cpp
-    ${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile.cpp
-    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile_unix.cpp>
-    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile_win.cpp>
-    ${SOURCES_PREFIX}/qtsingleapplication/qtsingleapplication.cpp
 )
 
 set(HEADERS_PREFIX include/${PROJECT})
@@ -231,9 +226,6 @@ set(HEADERS
     ${HEADERS_PREFIX}/qtimagefilters/punchfilter.h
     ${HEADERS_PREFIX}/qtimagefilters/qtimagefilter.h
     ${HEADERS_PREFIX}/qtimagefilters/qtmatrix.h
-    ${HEADERS_PREFIX}/qtsingleapplication/qtlocalpeer.h
-    ${HEADERS_PREFIX}/qtsingleapplication/qtlockedfile.h
-    ${HEADERS_PREFIX}/qtsingleapplication/qtsingleapplication.h
 )
 
 set(QRC ${PROJECT}.qrc)

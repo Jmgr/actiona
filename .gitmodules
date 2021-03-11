@@ -4,3 +4,6 @@
 [submodule "backend/include/backend/3rdparty/scope_guard"]
 	path = backend/include/backend/3rdparty/scope_guard
 	url = https://github.com/ricab/scope_guard.git
+[submodule "gui/src/3rdparty/singleapplication"]
+	path = gui/src/3rdparty/singleapplication
+	url = https://github.com/itay-grudev/SingleApplication.git

@@ -29,7 +29,7 @@
 #include "global.hpp"
 #include "progresssplashscreen.hpp"
 #include "tools/languages.hpp"
-#include "actiontools/qtsingleapplication/QtSingleApplication"
+#include "singleapplication/SingleApplication"
 
 #ifdef ACT_PROFILE
 #include "tools/highresolutiontimer.hpp"
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     Tools::HighResolutionTimer timer(QStringLiteral("Application run"));
 #endif
 
-	QtSingleApplication app(QStringLiteral("actiona-gui"), argc, argv);
+    SingleApplication app(argc, argv);
 
 	app.setQuitOnLastWindowClosed(false);
 
@@ -137,14 +137,14 @@ int main(int argc, char **argv)
 		QFileInfo absoluteFileInfo(startScript);
 		if(absoluteFileInfo.isFile() && absoluteFileInfo.isReadable())
 		{
-			if(app.sendMessage(absoluteFileInfo.absoluteFilePath()))
+            if(app.sendMessage(absoluteFileInfo.absoluteFilePath().toUtf8()))
 				return 0;
 		}
 
 		QFileInfo relativeFileInfo(QDir::current().filePath(startScript));
 		if(relativeFileInfo.isFile() && relativeFileInfo.isReadable())
 		{
-			if(app.sendMessage(absoluteFileInfo.absoluteFilePath()))
+            if(app.sendMessage(absoluteFileInfo.absoluteFilePath().toUtf8()))
 				return 0;
 		}
 	 }
@@ -200,11 +200,7 @@ int main(int argc, char **argv)
 
 	MainWindow mainWindow(optionsParser, splash, startScript, locale);
 
-	QObject::connect(&app, &QtSingleApplication::messageReceived, &mainWindow, &MainWindow::otherInstanceMessage);
-
-	app.setActivationWindow(&mainWindow);
-
-	QObject::connect(&mainWindow, &MainWindow::needToShow, &app, &QtSingleApplication::activateWindow);
+    QObject::connect(&app, &SingleApplication::receivedMessage, &mainWindow, &MainWindow::otherInstanceMessage);
 
 	if(!optionsParser.isSet(QStringLiteral("execute")))
 		mainWindow.show();

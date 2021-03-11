@@ -84,11 +84,8 @@ public:
 	MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale);
 	~MainWindow() override;
 
-signals:
-	void needToShow();
-
 public slots:
-    void otherInstanceMessage(const QString &message);
+    void otherInstanceMessage(quint32 instanceId, QByteArray message);
 
 private slots:
 	void postInit();

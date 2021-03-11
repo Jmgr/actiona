@@ -12,6 +12,7 @@ set(ACT_BUILD_NAME "" CACHE STRING "Build name")
 option(ACT_UPDATER "Build the Updater" ON)
 option(ACT_PROFILE "Enable profiling" OFF)
 
+set(CMAKE_POLICY_DEFAULT_CMP0069 NEW)
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result)
 if(result)

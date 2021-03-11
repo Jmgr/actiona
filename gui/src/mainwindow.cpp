@@ -1901,21 +1901,30 @@ void MainWindow::logItemClicked(int itemRow)
 	logItemClicked(itemRow, false);
 }
 
-void MainWindow::otherInstanceMessage(const QString &message)
+void MainWindow::otherInstanceMessage(quint32 instanceId, QByteArray message)
 {
+    Q_UNUSED(instanceId)
+
 	if(!mCurrentFile.isEmpty() && !ui->actionExecute->isEnabled()) // Executing
 		return;
 
 	if(!message.isEmpty())
 	{
-		QFileInfo fileInfo(message);
+        QFileInfo fileInfo(QString::fromUtf8(message));
 
 		if(fileInfo.isFile() && fileInfo.isReadable())
 		{
 			if(maybeSave())
-				loadFile(message);
+                loadFile(QString::fromUtf8(message));
 
-			emit needToShow();
+            try
+            {
+                Backend::Instance::windowing().setForegroundWindow(winId());
+            }
+            catch(const Backend::BackendError &e)
+            {
+                // ignore errors here
+            }
 		}
     }
 }

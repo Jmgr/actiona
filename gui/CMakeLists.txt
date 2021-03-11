@@ -94,6 +94,9 @@ set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actiona")
 set_target_properties(${PROJECT} PROPERTIES SUFFIX "")
 set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
 set(CMAKE_EXECUTABLE_SUFFIX "")
+set(QAPPLICATION_CLASS QApplication CACHE STRING "Inheritance class for SingleApplication")
+
+add_subdirectory(src/3rdparty/singleapplication)
 
 setup_target(${PROJECT})
 
@@ -106,6 +109,7 @@ endif()
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/3rdparty
         ${CMAKE_CURRENT_SOURCE_DIR}/../backend/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../actiontools/include
@@ -123,6 +127,7 @@ target_link_libraries(
     Qt5::Network
     Qt5::Script
     Qt5::Widgets
+    SingleApplication::SingleApplication
     ${LIBNOTIFY_LIBRARIES}
     ${X11_LIBRARIES}
     $<$<PLATFORM_ID:Windows>:shlwapi>

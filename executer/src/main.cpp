@@ -21,7 +21,6 @@
 #include "backend/backend.hpp"
 #include "actiontools/actioninstance.hpp"
 #include "mainclass.hpp"
-#include "actiontools/qtsingleapplication/QtSingleApplication"
 #include "global.hpp"
 #include "actiontools/settings.hpp"
 #include "tools/languages.hpp"
@@ -99,7 +98,7 @@ static void createConsole()
 
 int main(int argc, char **argv)
 {
-	QtSingleApplication app(QStringLiteral("actiona-exec"), argc, argv);
+    QApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
 	qAddPostRoutine(cleanup);
