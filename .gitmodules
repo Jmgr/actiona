@@ -1,3 +1,6 @@
 [submodule "actions/data/src/3rdparty/mINI"]
 	path = actions/data/src/3rdparty/mINI
 	url = https://github.com/pulzed/mINI.git
+[submodule "backend/include/backend/3rdparty/scope_guard"]
+	path = backend/include/backend/3rdparty/scope_guard
+	url = https://github.com/ricab/scope_guard.git

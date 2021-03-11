@@ -30,6 +30,8 @@ set(HEADERS
     ${HEADERS_PREFIX}/keyboard.hpp
     ${HEADERS_PREFIX}/process.hpp
     ${HEADERS_PREFIX}/windowing.hpp
+    ${HEADERS_PREFIX}/scopeguard.hpp
+    ${HEADERS_PREFIX}/3rdparty/scope_guard/scope_guard.hpp
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/backend-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/windowing-x11.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/windowing-windows.hpp>

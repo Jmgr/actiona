@@ -123,6 +123,7 @@ sub get_utf8 {
 #include <QX11Info>
 
 #include "backend/keysymhelper-x11.hpp"
+#include "backend/handlescopeguard.hpp"
 
 namespace Backend
 {
@@ -139,6 +140,7 @@ namespace Backend
 									  minKeyCode,
 									  maxKeyCode + 1 - minKeyCode,
 									  &keysymsPerKeycode);
+        auto guard = make_scope_guard([keysyms]{ XFree(keysyms); });
 
 		if(keysymsPerKeycode < NUM_KEY_MODIFIERS * 2)
 			numModifiers = keysymsPerKeycode;
@@ -167,8 +169,7 @@ namespace Backend
 					}
 				}
 			}
-		}
-		XFree(keysyms);
+        }
 	}
 
 	KeySym KeySymHelper::wcharToKeySym(wchar_t c)
