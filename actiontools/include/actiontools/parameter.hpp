@@ -34,6 +34,7 @@ namespace ActionTools
 	public:
 		ParameterData()																= default;
         ParameterData(const ParameterData &other)                                   = default;
+        ParameterData &operator=(const ParameterData &other)                        = default;
 
 		SubParameterHash subParameters;
 	};
@@ -43,6 +44,7 @@ namespace ActionTools
 	public:
 		Parameter()																	{ d = new ParameterData(); }
         Parameter(const Parameter &other)                                           = default;
+        Parameter &operator=(const Parameter &other)                                = default;
 
 		const SubParameterHash &subParameters() const								{ return d->subParameters; }
 		SubParameterHash &subParameters()											{ return d->subParameters; }

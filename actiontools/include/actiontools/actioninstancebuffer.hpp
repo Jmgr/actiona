@@ -61,7 +61,8 @@ namespace ActionTools
 		{
 			d = new ActionInstanceBufferData();
 		}
-        ActionInstanceBuffer(const ActionInstanceBuffer &other)     = default;
+        ActionInstanceBuffer(const ActionInstanceBuffer &other)            = default;
+        ActionInstanceBuffer &operator=(const ActionInstanceBuffer &other) = default;
 
 		void setActionInstanceId(const QString &actionInstanceId)	{ d->actionInstanceId = actionInstanceId; }
 		void setAction(const ActionInstance &action)				{ d->action.copyActionDataFrom(action); }

@@ -60,7 +60,7 @@ public:
     {
         m_rows = rows;
         m_cols = columns;
-        m_data = (T*)malloc(m_rows * m_cols * sizeof(T));
+        m_data = (T*)malloc(static_cast<std::size_t>(m_rows) * static_cast<std::size_t>(m_cols) * sizeof(T));
     }
     QtMatrix()
     {
@@ -95,8 +95,8 @@ public:
     {
         m_rows = rows;
         m_cols = columns;
-        m_data = (T*)realloc(m_data, m_rows * m_cols * sizeof(T));
-        memcpy(m_data, data, m_rows * m_cols * sizeof(T));
+        m_data = (T*)realloc(m_data, static_cast<std::size_t>(m_rows) * static_cast<std::size_t>(m_cols) * sizeof(T));
+        memcpy(m_data, data, static_cast<std::size_t>(m_rows) * static_cast<std::size_t>(m_cols) * sizeof(T));
     }
 
     void setData(int row, int column, const T &value)
