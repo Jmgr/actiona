@@ -60,9 +60,10 @@ namespace ActionTools
 			setCode(code);
 			setType(type);
 		}
-        ScriptParameter(const ScriptParameter &other)   = default;
+        ScriptParameter(const ScriptParameter &other)            = default;
+        ScriptParameter &operator=(const ScriptParameter &other) = default;
 
-		void setName(const QString &name)				{ d->name = name; }
+        void setName(const QString &name)				{ d->name = name; }
 		void setValue(const QString &value)				{ d->value = value; }
 		void setCode(bool code)							{ d->code = code; }
 		void setType(ParameterType type)				{ d->type = type; }

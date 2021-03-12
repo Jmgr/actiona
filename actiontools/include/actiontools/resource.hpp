@@ -60,7 +60,8 @@ namespace ActionTools
             setData(data);
             setType(type);
         }
-        Resource(const Resource &other)         = default;
+        Resource(const Resource &other)            = default;
+        Resource &operator=(const Resource &other) = default;
 
         const QByteArray &data() const          { return d->data; }
         Type type() const                       { return static_cast<Type>(d->type); }

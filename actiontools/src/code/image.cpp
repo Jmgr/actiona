@@ -376,13 +376,13 @@ namespace Code
 		}
 		else if(context()->argumentCount() == 5)
 		{
-			QColor color(context()->argument(2).toInt32(), context()->argument(3).toInt32(), context()->argument(4).toInt32());
-			mImage.setPixel(x, y, color.rgb());
+            QColor argColor(context()->argument(2).toInt32(), context()->argument(3).toInt32(), context()->argument(4).toInt32());
+            mImage.setPixel(x, y, argColor.rgb());
 		}
 		else if(context()->argumentCount() == 6)
 		{
-			QColor color(context()->argument(2).toInt32(), context()->argument(3).toInt32(), context()->argument(4).toInt32());
-			mImage.setPixel(x, y, color.rgb());
+            QColor argColor(context()->argument(2).toInt32(), context()->argument(3).toInt32(), context()->argument(4).toInt32());
+            mImage.setPixel(x, y, argColor.rgb());
 		}
 
         return thisObject();

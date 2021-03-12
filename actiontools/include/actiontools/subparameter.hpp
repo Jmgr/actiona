@@ -30,8 +30,8 @@ namespace ActionTools
 	class SubParameterData : public QSharedData
 	{
 	public:
-        SubParameterData()                                              = default;
-        SubParameterData(const SubParameterData &other)                 = default;
+        SubParameterData()                                               = default;
+        SubParameterData(const SubParameterData &other)                  = default;
 
 		bool code{false};
         QString value;
@@ -46,16 +46,17 @@ namespace ActionTools
 			setCode(code);
 			setValue(value);
 		}
-        SubParameter(const SubParameter &other)                         = default;
+        SubParameter(const SubParameter &other)            = default;
+        SubParameter &operator=(const SubParameter &other) = default;
 
-		bool isCode() const												{ return d->code; }
-        QString value() const											{ return d->value; }
+        bool isCode() const												 { return d->code; }
+        QString value() const											 { return d->value; }
 
-		void setCode(bool code)											{ d->code = code; }
-        void setValue(const QString &value)                             { d->value = value; }
+        void setCode(bool code)											 { d->code = code; }
+        void setValue(const QString &value)                              { d->value = value; }
 
-		bool operator == (const SubParameter &other) const				{ return (isCode() == other.isCode() && value() == other.value()); }
-		bool operator != (const SubParameter &other) const				{ return (isCode() != other.isCode() || value() != other.value()); }
+        bool operator == (const SubParameter &other) const				 { return (isCode() == other.isCode() && value() == other.value()); }
+        bool operator != (const SubParameter &other) const				 { return (isCode() != other.isCode() || value() != other.value()); }
 
 	private:
 		QSharedDataPointer<SubParameterData> d;
