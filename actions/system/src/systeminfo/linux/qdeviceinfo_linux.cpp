@@ -597,11 +597,11 @@ void QDeviceInfoPrivate::connectBtPowered()
         if (connectionInterface->isValid()) {
             QDBusReply <QDBusObjectPath> reply = connectionInterface->call(QStringLiteral("DefaultAdapter"));
             if (reply.isValid() && !reply.value().path().isEmpty()) {
-                !QDBusConnection::systemBus().connect(QStringLiteral("org.bluez"), reply.value().path(),
-                                                      QStringLiteral("org.bluez.Adapter"),
-                                                      QStringLiteral("PropertyChanged"),
-                                                      this,
-                                                      SLOT(bluezPropertyChanged(QString,QDBusVariant)));
+                QDBusConnection::systemBus().connect(QStringLiteral("org.bluez"), reply.value().path(),
+                                                     QStringLiteral("org.bluez.Adapter"),
+                                                     QStringLiteral("PropertyChanged"),
+                                                     this,
+                                                     SLOT(bluezPropertyChanged(QString,QDBusVariant)));
             }
         }
         connectedBtPower = true;
