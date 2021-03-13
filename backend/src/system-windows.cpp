@@ -18,44 +18,54 @@
 	Contact: jmgr@jmgr.info
 */
 
-#include "backend/system-unix.hpp"
+#include "backend/system-windows.hpp"
 #include "backend/backend.hpp"
+#include "backend/backend-windows.hpp"
+
+#include <Windows.h>
+#include <powrprof.h>
 
 namespace Backend
 {
-    void logoutUnix(bool force)
+    void logoutWindows(bool force)
     {
-
+        if(!ExitWindowsEx(EWX_LOGOFF | (force ? EWX_FORCE : 0), SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER))
+            throw BackendError(lastErrorString());
     }
 
-    void restartUnix(bool force)
+    void restartWindows(bool force)
     {
-
+        if(!ExitWindowsEx(EWX_REBOOT | (force ? EWX_FORCE : 0), SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER))
+            throw BackendError(lastErrorString());
     }
 
-    void shutdownUnix(bool force)
+    void shutdownWindows(bool force)
     {
-
+        if(!ExitWindowsEx(EWX_POWEROFF | (force ? EWX_FORCE : 0), SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER))
+            throw BackendError(lastErrorString());
     }
 
-    void suspendUnix(bool force)
+    void suspendWindows(bool force)
     {
-
+        if(!SetSuspendState(false, force, true))
+            throw BackendError(lastErrorString());
     }
 
-    void hibernateUnix(bool force)
+    void hibernateWindows(bool force)
     {
-
+        if(!SetSuspendState(true, force, false))
+            throw BackendError(lastErrorString());
     }
 
-    void lockScreenUnix()
+    void lockScreenWindows()
     {
-
+        if(!LockWorkStation())
+            throw BackendError(lastErrorString());
     }
 
-    void startScreenSaverUnix()
+    void startScreenSaverWindows()
     {
-
+        SendMessage(GetDesktopWindow(), WM_SYSCOMMAND, SC_SCREENSAVE, 0);
     }
 }
 

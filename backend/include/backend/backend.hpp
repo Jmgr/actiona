@@ -34,13 +34,13 @@ namespace Backend
     class Keyboard;
     class Process;
     class Windowing;
+    class System;
 
     class BACKENDSHARED_EXPORT BackendError
     {
     public:
         BackendError(const QString &message): mMessage(message) {}
-        BackendError(int errorCode): mMessage(QStringLiteral("call failed with error code %1").arg(errorCode)) {}
-        BackendError(): mMessage(QStringLiteral("call failed")) {}
+        BackendError(): mMessage(QStringLiteral("call failed")) {} // TODO: remove
 
         const QString &what() const noexcept { return mMessage; }
 
@@ -65,6 +65,7 @@ namespace Backend
         static const Keyboard &keyboard() { return *get().mKeyboard.get(); }
         static const Process &process() { return *get().mProcess.get(); }
         static const Windowing &windowing() { return *get().mWindowing.get(); }
+        static const System &system() { return *get().mSystem.get(); }
 
     private:
         static Instance &get();
@@ -76,6 +77,7 @@ namespace Backend
         std::unique_ptr<Keyboard> mKeyboard;
         std::unique_ptr<Process> mProcess;
         std::unique_ptr<Windowing> mWindowing;
+        std::unique_ptr<System> mSystem;
         std::set<int> mPressedButtons;
         std::set<std::pair<QString, bool>> mPressedKeys;
     };

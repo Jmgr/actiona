@@ -144,7 +144,7 @@ namespace Code
 
 	QString System::variable(const QString &name) const
 	{
-		return QString::fromLatin1(std::getenv(name.toLatin1().constData()));
+        return qEnvironmentVariable(name.toLocal8Bit().constData());
 	}
 
     qint64 System::timestamp() const

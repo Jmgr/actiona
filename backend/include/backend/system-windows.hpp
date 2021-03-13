@@ -25,11 +25,11 @@
 
 namespace Backend
 {
-    void BACKENDSHARED_EXPORT logoutUnix(bool force);
-    void BACKENDSHARED_EXPORT restartUnix(bool force);
-    void BACKENDSHARED_EXPORT shutdownUnix(bool force);
-    void BACKENDSHARED_EXPORT suspendUnix(bool force);
-    void BACKENDSHARED_EXPORT hibernateUnix(bool force);
-    void BACKENDSHARED_EXPORT lockScreenUnix();
-    void BACKENDSHARED_EXPORT startScreenSaverUnix();
+    void BACKENDSHARED_EXPORT logoutWindows(bool force);
+    void BACKENDSHARED_EXPORT restartWindows(bool force);
+    void BACKENDSHARED_EXPORT shutdownWindows(bool force);
+    void BACKENDSHARED_EXPORT suspendWindows(bool force);
+    void BACKENDSHARED_EXPORT hibernateWindows(bool force);
+    void BACKENDSHARED_EXPORT lockScreenWindows();
+    void BACKENDSHARED_EXPORT startScreenSaverWindows();
 }

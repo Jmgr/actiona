@@ -1921,7 +1921,7 @@ void MainWindow::otherInstanceMessage(quint32 instanceId, QByteArray message)
             {
                 Backend::Instance::windowing().setForegroundWindow(winId());
             }
-            catch(const Backend::BackendError &e)
+            catch(const Backend::BackendError &)
             {
                 // ignore errors here
             }

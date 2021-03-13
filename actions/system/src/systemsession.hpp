@@ -22,7 +22,7 @@
 
 #include <QObject>
 
-class SystemSession
+class SystemSession // TODO: remove
 {
 public:
     SystemSession();

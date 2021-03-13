@@ -22,12 +22,14 @@
 #include "backend/mouse.hpp"
 #include "backend/keyboard.hpp"
 #include "backend/windowing.hpp"
+#include "backend/system.hpp"
 
 #ifdef Q_OS_WIN
 #include "backend/mouse-windows.hpp"
 #include "backend/keyboard-windows.hpp"
 #include "backend/process-windows.hpp"
 #include "backend/windowing-windows.hpp"
+#include "backend/system-windows.hpp"
 #endif
 #ifdef Q_OS_UNIX
 #include "backend/mouse-x11.hpp"
@@ -35,6 +37,7 @@
 #include "backend/keysymhelper-x11.hpp"
 #include "backend/process-unix.hpp"
 #include "backend/windowing-x11.hpp"
+#include "backend/system-unix.hpp"
 
 #include <QX11Info>
 
@@ -48,7 +51,8 @@ namespace Backend
         mMouse(std::make_unique<Mouse>()),
         mKeyboard(std::make_unique<Keyboard>()),
         mProcess(std::make_unique<Process>()),
-        mWindowing(std::make_unique<Windowing>())
+        mWindowing(std::make_unique<Windowing>()),
+        mSystem(std::make_unique<System>())
     {
 #if defined(Q_OS_WIN)
         mMouse->isButtonPressed = isButtonPressedWindows;
@@ -78,6 +82,13 @@ namespace Backend
         mWindowing->isActive = isActiveWindows;
         mWindowing->foregroundWindow = foregroundWindowWindows;
         mWindowing->windowList = windowListWindows;
+        mSystem->logout = logoutWindows;
+        mSystem->restart = restartWindows;
+        mSystem->shutdown = shutdownWindows;
+        mSystem->suspend = suspendWindows;
+        mSystem->hibernate = hibernateWindows;
+        mSystem->lockScreen = lockScreenWindows;
+        mSystem->startScreenSaver = startScreenSaverWindows;
 #elif defined(Q_OS_UNIX)
         mProcess->killProcess = killProcessUnix;
         mProcess->processStatus = processStatusUnix;
@@ -85,6 +96,13 @@ namespace Backend
         mProcess->parentProcess = parentProcessUnix;
         mProcess->processCommand = processCommandUnix;
         mProcess->processPriority = processPriorityUnix;
+        mSystem->logout = logoutUnix;
+        mSystem->restart = restartUnix;
+        mSystem->shutdown = shutdownUnix;
+        mSystem->suspend = suspendUnix;
+        mSystem->hibernate = hibernateUnix;
+        mSystem->lockScreen = lockScreenUnix;
+        mSystem->startScreenSaver = startScreenSaverUnix;
 
         auto display = QX11Info::display();
 
@@ -188,6 +206,13 @@ namespace Backend
         mWindowing->isActive = isActiveDummy;
         mWindowing->foregroundWindow = foregroundWindowDummy;
         mWindowing->windowList = windowListDummy;
+        mSystem->logout = logoutDummy;
+        mSystem->restart = restartDummy;
+        mSystem->shutdown = shutdownDummy;
+        mSystem->suspend = suspendDummy;
+        mSystem->hibernate = hibernateDummy;
+        mSystem->lockScreen = lockScreenDummy;
+        mSystem->startScreenSaver = startScreenSaverDummy;
     }
 
     void Instance::instReleaseAll()

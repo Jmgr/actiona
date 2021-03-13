@@ -78,6 +78,7 @@ target_link_libraries(
     Qt5::Widgets
     ${X11_Xtst_LIB}
     ${X11_Xtest_LIB} # allow old cmake to compile this
+    $<$<PLATFORM_ID:Windows>:PowrProf>
 )
 
 if(UNIX AND NOT APPLE)
