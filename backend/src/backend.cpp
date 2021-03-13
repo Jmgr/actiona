@@ -89,6 +89,7 @@ namespace Backend
         mSystem->hibernate = hibernateWindows;
         mSystem->lockScreen = lockScreenWindows;
         mSystem->startScreenSaver = startScreenSaverWindows;
+        mSystem->getUsername = getUsernameWindows;
 #elif defined(Q_OS_UNIX)
         mProcess->killProcess = killProcessUnix;
         mProcess->processStatus = processStatusUnix;
@@ -103,6 +104,7 @@ namespace Backend
         mSystem->hibernate = hibernateUnix;
         mSystem->lockScreen = lockScreenUnix;
         mSystem->startScreenSaver = startScreenSaverUnix;
+        mSystem->getUsername = getUsernameUnix;
 
         auto display = QX11Info::display();
 
@@ -213,6 +215,7 @@ namespace Backend
         mSystem->hibernate = hibernateDummy;
         mSystem->lockScreen = lockScreenDummy;
         mSystem->startScreenSaver = startScreenSaverDummy;
+        mSystem->getUsername = getUsernameDummy;
     }
 
     void Instance::instReleaseAll()

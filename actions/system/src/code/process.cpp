@@ -23,16 +23,9 @@
 #include "actiontools/code/rawdata.hpp"
 #include "backend/process.hpp"
 
+#include <QCoreApplication>
 #include <QDir>
 #include <QScriptValueIterator>
-
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
-#ifdef Q_OS_UNIX
-#include <unistd.h>
-#endif
 
 namespace Code
 {
@@ -131,11 +124,7 @@ namespace Code
 	{
 		Q_UNUSED(context)
 
-#ifdef Q_OS_WIN
-		return ProcessHandle::constructor(GetCurrentProcessId(), engine);
-#else
-		return ProcessHandle::constructor(getpid(), engine);
-#endif
+        return ProcessHandle::constructor(QCoreApplication::applicationPid(), engine);
 	}
 
 	Process::Process()
@@ -157,11 +146,7 @@ namespace Code
 
 	int Process::id() const
 	{
-#ifdef Q_OS_WIN
-            return mProcess->pid()->dwProcessId;
-#else
-            return mProcess->processId();
-#endif
+        return mProcess->processId();
 	}
 
 	QScriptValue Process::start()

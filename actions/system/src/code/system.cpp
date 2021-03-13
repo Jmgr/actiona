@@ -36,11 +36,6 @@
 #include <cstdlib>
 #include <QScreen>
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#include <LMCons.h>
-#endif
-
 namespace Code
 {
 	QScriptValue System::constructor(QScriptContext *context, QScriptEngine *engine)
@@ -129,15 +124,15 @@ namespace Code
 
 	QString System::username() const
 	{
-    #ifdef Q_OS_WIN
-		TCHAR buffer[UNLEN+1];
-		DWORD size = sizeof(buffer);
-		GetUserName(buffer, &size);
-
-		return QString::fromWCharArray(buffer);
-	#else
-        return qEnvironmentVariable("USER");
-	#endif
+        try
+        {
+            return Backend::Instance::system().getUsername();
+        }
+        catch(const Backend::BackendError &)
+        {
+            // ignore errors
+            return {};
+        }
 	}
 
 	QString System::variable(const QString &name) const

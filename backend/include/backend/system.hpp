@@ -43,6 +43,7 @@ namespace Backend
         std::function<void(bool force)> hibernate;
         std::function<void()> lockScreen;
         std::function<void()> startScreenSaver;
+        std::function<QString()> getUsername;
 
         friend std::unique_ptr<System> std::make_unique<System>();
     };
@@ -55,4 +56,5 @@ namespace Backend
     static void hibernateDummy(bool) {}
     static void lockScreenDummy() {}
     static void startScreenSaverDummy() {}
+    static QString getUsernameDummy() { return {}; }
 }

@@ -32,4 +32,5 @@ namespace Backend
     void BACKENDSHARED_EXPORT hibernateUnix(bool force);
     void BACKENDSHARED_EXPORT lockScreenUnix();
     void BACKENDSHARED_EXPORT startScreenSaverUnix();
+    QString BACKENDSHARED_EXPORT getUsernameUnix();
 }

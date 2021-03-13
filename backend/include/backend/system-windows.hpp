@@ -32,4 +32,5 @@ namespace Backend
     void BACKENDSHARED_EXPORT hibernateWindows(bool force);
     void BACKENDSHARED_EXPORT lockScreenWindows();
     void BACKENDSHARED_EXPORT startScreenSaverWindows();
+    QString BACKENDSHARED_EXPORT getUsernameWindows();
 }

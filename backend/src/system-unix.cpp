@@ -300,5 +300,10 @@ namespace Backend
     {
         call(startScreenSaverEndpoints, false);
     }
+
+    QString getUsernameUnix()
+    {
+        return qEnvironmentVariable("USER");
+    }
 }
 

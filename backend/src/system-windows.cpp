@@ -24,6 +24,9 @@
 
 #include <Windows.h>
 #include <powrprof.h>
+#include <lmcons.h>
+
+#include <array>
 
 namespace Backend
 {
@@ -66,6 +69,16 @@ namespace Backend
     void startScreenSaverWindows()
     {
         SendMessage(GetDesktopWindow(), WM_SYSCOMMAND, SC_SCREENSAVE, 0);
+    }
+
+    QString getUsernameWindows()
+    {
+        std::array<TCHAR, UNLEN+1> buffer;
+        DWORD size = buffer.size();
+        if(!GetUserName(buffer.data(), &size))
+            throw BackendError(lastErrorString());
+
+        return QString::fromWCharArray(buffer.data());
     }
 }
 
