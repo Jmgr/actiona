@@ -18,24 +18,44 @@
 	Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/system-unix.hpp"
+#include "backend/backend.hpp"
 
-#include <QObject>
-
-class SystemSession
+namespace Backend
 {
-public:
-    SystemSession();
+    void logoutUnix(bool force)
+    {
 
-	bool logout(bool force) const;
-	bool restart(bool force) const;
-	bool shutdown(bool force) const;
-	bool suspend(bool force) const;
-	bool hibernate(bool force) const;
-	bool lockScreen() const;
-	bool startScreenSaver() const;
+    }
 
-private:
-	Q_DISABLE_COPY(SystemSession)
-};
+    void restartUnix(bool force)
+    {
+
+    }
+
+    void shutdownUnix(bool force)
+    {
+
+    }
+
+    void suspendUnix(bool force)
+    {
+
+    }
+
+    void hibernateUnix(bool force)
+    {
+
+    }
+
+    void lockScreenUnix()
+    {
+
+    }
+
+    void startScreenSaverUnix()
+    {
+
+    }
+}
 

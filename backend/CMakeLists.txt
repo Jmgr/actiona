@@ -5,6 +5,8 @@ set(SOURCES
     ${SOURCES_PREFIX}/backend.cpp
     ${SOURCES_PREFIX}/keyinput.cpp
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/backend-windows.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/system-unix.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/system-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/windowing-x11.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/windowing-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/process-unix.cpp>
@@ -30,9 +32,12 @@ set(HEADERS
     ${HEADERS_PREFIX}/keyboard.hpp
     ${HEADERS_PREFIX}/process.hpp
     ${HEADERS_PREFIX}/windowing.hpp
+    ${HEADERS_PREFIX}/system.hpp
     ${HEADERS_PREFIX}/scopeguard.hpp
     ${HEADERS_PREFIX}/3rdparty/scope_guard/scope_guard.hpp
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/backend-windows.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/system-unix.hpp>
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/system-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/windowing-x11.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/windowing-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/process-unix.hpp>
@@ -76,8 +81,8 @@ target_link_libraries(
 )
 
 if(UNIX AND NOT APPLE)
-    find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)
-    target_link_libraries(${PROJECT} Qt5::X11Extras)
+    find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras DBus REQUIRED)
+    target_link_libraries(${PROJECT} Qt5::X11Extras Qt5::DBus)
 endif()
 
 compile_translations(${PROJECT})
