@@ -72,6 +72,7 @@ target_link_libraries(
     ${PROJECT}
     Qt5::Widgets
     ${X11_Xtst_LIB}
+    ${X11_Xtest_LIB} # allow old cmake to compile this
 )
 
 if(UNIX AND NOT APPLE)
