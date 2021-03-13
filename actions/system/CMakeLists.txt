@@ -2,7 +2,6 @@ set(PROJECT actionpacksystem)
 
 set(SOURCES_PREFIX src)
 set(SOURCES
-    ${SOURCES_PREFIX}/systemsession.cpp
     ${SOURCES_PREFIX}/actions/findimagedefinition.cpp
     ${SOURCES_PREFIX}/actions/findimageinstance.cpp
     ${SOURCES_PREFIX}/actions/killprocessinstance.cpp
@@ -47,7 +46,6 @@ endif()
 set(HEADERS_PREFIX src)
 set(HEADERS
     ${HEADERS_PREFIX}/actionpacksystem.hpp
-    ${HEADERS_PREFIX}/systemsession.hpp
     ${HEADERS_PREFIX}/actions/commanddefinition.hpp
     ${HEADERS_PREFIX}/actions/commandinstance.hpp
     ${HEADERS_PREFIX}/actions/detachedcommanddefinition.hpp

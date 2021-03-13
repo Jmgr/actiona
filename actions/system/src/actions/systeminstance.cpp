@@ -20,6 +20,7 @@
 
 #include "systeminstance.hpp"
 #include "actiontools/actiondefinition.hpp"
+#include "backend/system.hpp"
 
 namespace Actions
 {
@@ -55,60 +56,40 @@ namespace Actions
 		if(!ok)
 			return;
 
-		SystemSession systemSession;
+        const auto &system = Backend::Instance::system();
 
-		switch(operation)
-		{
-		case Logout:
-			if(!systemSession.logout(force))
-			{
-				emit executionException(NotAvailable, tr("Logout is not available"));
-				return;
-			}
-			break;
-		case Restart:
-			if(!systemSession.restart(force))
-			{
-				emit executionException(NotAvailable, tr("Restart is not available"));
-				return;
-			}
-			break;
-		case Shutdown:
-			if(!systemSession.shutdown(force))
-			{
-				emit executionException(NotAvailable, tr("Shutdown is not available"));
-				return;
-			}
-			break;
-		case Suspend:
-			if(!systemSession.suspend(force))
-			{
-				emit executionException(NotAvailable, tr("Suspend is not available"));
-				return;
-			}
-			break;
-		case Hibernate:
-			if(!systemSession.hibernate(force))
-			{
-				emit executionException(NotAvailable, tr("Hibernate is not available"));
-				return;
-			}
-			break;
-		case LockScreen:
-			if(!systemSession.lockScreen())
-			{
-				emit executionException(NotAvailable, tr("Lock is not available"));
-				return;
-			}
-			break;
-		case StartScreenSaver:
-			if(!systemSession.startScreenSaver())
-			{
-				emit executionException(NotAvailable, tr("Start screen saver is not available"));
-				return;
-			}
-			break;
-		}
+        try
+        {
+            switch(operation)
+            {
+            case Logout:
+                system.logout(force);
+                break;
+            case Restart:
+                system.restart(force);
+                break;
+            case Shutdown:
+                system.shutdown(force);
+                break;
+            case Suspend:
+                system.suspend(force);
+                break;
+            case Hibernate:
+                system.hibernate(force);
+                break;
+            case LockScreen:
+                system.lockScreen();
+                break;
+            case StartScreenSaver:
+                system.startScreenSaver();
+                break;
+            }
+        }
+        catch(const Backend::BackendError &e)
+        {
+            emit executionException(NotAvailable, tr("Operation not available: %1").arg(e.what()));
+            return;
+        }
 
 		executionEnded();
 	}

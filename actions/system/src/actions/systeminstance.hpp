@@ -22,7 +22,6 @@
 
 #include "actiontools/actioninstance.hpp"
 #include "actiontools/script.hpp"
-#include "../systemsession.hpp"
 
 namespace Actions
 {
@@ -33,7 +32,7 @@ namespace Actions
 	public:
 		enum Operation
 		{
-			Logout,
+            Logout,
 			Restart,
 			Shutdown,
 			Suspend,

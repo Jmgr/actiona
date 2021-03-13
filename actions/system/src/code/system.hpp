@@ -31,8 +31,6 @@ class QDeviceInfo;
 class QBatteryInfo;
 class QStorageInfo_Custom;
 
-class SystemSession;
-
 namespace Code
 {
 	class System : public CodeClass
@@ -124,7 +122,6 @@ namespace Code
 		QScriptValue startScreenSaver() const;
 		
 	private:
-		SystemSession *mSystemSession;
         QDeviceInfo *mDeviceInfo;
         QBatteryInfo *mBatteryInfo;
         QStorageInfo_Custom *mStorageInfo;

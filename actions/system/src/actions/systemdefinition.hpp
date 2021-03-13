@@ -25,7 +25,6 @@
 #include "actiontools/listparameterdefinition.hpp"
 #include "actiontools/groupdefinition.hpp"
 #include "actiontools/booleanparameterdefinition.hpp"
-#include "../systemsession.hpp"
 
 namespace ActionTools
 {
