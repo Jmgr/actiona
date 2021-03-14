@@ -90,6 +90,10 @@ namespace Backend
         mSystem->lockScreen = lockScreenWindows;
         mSystem->startScreenSaver = startScreenSaverWindows;
         mSystem->getUsername = getUsernameWindows;
+        mSystem->copyFiles = copyFilesWindows;
+        mSystem->moveFiles = moveFilesWindows;
+        mSystem->renameFiles = renameFilesWindows;
+        mSystem->removeFiles = removeFilesWindows;
 #elif defined(Q_OS_UNIX)
         mProcess->killProcess = killProcessUnix;
         mProcess->processStatus = processStatusUnix;
@@ -105,6 +109,10 @@ namespace Backend
         mSystem->lockScreen = lockScreenUnix;
         mSystem->startScreenSaver = startScreenSaverUnix;
         mSystem->getUsername = getUsernameUnix;
+        mSystem->copyFiles = copyFilesUnix;
+        mSystem->moveFiles = moveFilesUnix;
+        mSystem->renameFiles = renameFilesUnix;
+        mSystem->removeFiles = removeFilesUnix;
 
         auto display = QX11Info::display();
 
@@ -216,6 +224,10 @@ namespace Backend
         mSystem->lockScreen = lockScreenDummy;
         mSystem->startScreenSaver = startScreenSaverDummy;
         mSystem->getUsername = getUsernameDummy;
+        mSystem->copyFiles = copyFilesDummy;
+        mSystem->moveFiles = moveFilesDummy;
+        mSystem->renameFiles = renameFilesDummy;
+        mSystem->removeFiles = removeFilesDummy;
     }
 
     void Instance::instReleaseAll()

@@ -253,46 +253,6 @@ namespace Code
 	QScriptValue File::copyPrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
 	{
 		Q_UNUSED(engine)
-
-#ifdef Q_OS_UNIX
-		Q_UNUSED(noErrorDialog)
-		Q_UNUSED(noConfirmDialog)
-		Q_UNUSED(noProgressDialog)
-		Q_UNUSED(allowUndo)
-
-		QDir destinationDir(destination);
-		QString sourceCopy(source);
-		QString destinationCopy(destination);
-
-		sourceCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
-		destinationCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
-
-		if(!destinationDir.exists())
-		{
-			if(createDestinationDirectory)
-			{
-                if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"mkdir -p %1\"").arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))}))
-				{
-					throwError(context, engine, QStringLiteral("DirectoryCreationError"), tr("Unable to create destination directory"));
-					return context->thisObject();
-				}
-			}
-			else
-			{
-				throwError(context, engine, QStringLiteral("DirectoryDoesntExistError"), tr("Destination directory doesn't exist"));
-				return context->thisObject();
-			}
-		}
-
-        if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"cp -fr %1 %2\"")
-                             .arg(QString::fromLocal8Bit(QFile::encodeName(sourceCopy)))
-                             .arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))
-        }))
-		{
-			throwError(context, engine, QStringLiteral("CopyError"), tr("Copy failed"));
-			return context->thisObject();
-		}
-#endif
 #ifdef Q_OS_WIN
 		Q_UNUSED(createDestinationDirectory)
 
@@ -345,45 +305,6 @@ namespace Code
 	{
 		Q_UNUSED(engine)
 
-#ifdef Q_OS_UNIX
-		Q_UNUSED(noErrorDialog)
-		Q_UNUSED(noConfirmDialog)
-		Q_UNUSED(noProgressDialog)
-		Q_UNUSED(allowUndo)
-
-		QDir destinationDir(destination);
-		QString sourceCopy(source);
-		QString destinationCopy(destination);
-
-		sourceCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
-		destinationCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
-
-		if(!destinationDir.exists())
-		{
-			if(createDestinationDirectory)
-			{
-                if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"mkdir -p %1\"").arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))}))
-                {
-					throwError(context, engine, QStringLiteral("DirectoryCreationError"), tr("Unable to create destination directory"));
-					return context->thisObject();
-				}
-			}
-			else
-			{
-				throwError(context, engine, QStringLiteral("DirectoryDoesntExistError"), tr("Destination directory doesn't exist"));
-				return context->thisObject();
-			}
-		}
-
-        if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"mv -f %1 %2\"")
-                             .arg(QString::fromLocal8Bit(QFile::encodeName(sourceCopy)))
-                             .arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))
-        }))
-		{
-			throwError(context, engine, QStringLiteral("MoveRenameError"), tr("Move/rename failed"));
-			return context->thisObject();
-		}
-#endif
 #ifdef Q_OS_WIN
 		Q_UNUSED(createDestinationDirectory)
 
@@ -436,9 +357,6 @@ namespace Code
 	{
 		Q_UNUSED(engine)
 
-#ifdef Q_OS_UNIX
-		movePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
-#endif
 #ifdef Q_OS_WIN
 		Q_UNUSED(createDestinationDirectory)
 
@@ -489,21 +407,6 @@ namespace Code
 
 	QScriptValue File::removePrivate(const QString &filename, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
 	{
-#ifdef Q_OS_UNIX
-		Q_UNUSED(noErrorDialog)
-		Q_UNUSED(noConfirmDialog)
-		Q_UNUSED(noProgressDialog)
-		Q_UNUSED(allowUndo)
-
-		QString filenameCopy(filename);
-		filenameCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
-
-        if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"rm -fr %1\"").arg(QString::fromLocal8Bit(QFile::encodeName(filenameCopy)))}))
-		{
-			throwError(context, engine, QStringLiteral("RemoveError"), tr("Remove failed"));
-			return context->thisObject();
-		}
-#endif
 #ifdef Q_OS_WIN
 		QDir filenameDir(filename);
 

@@ -41,6 +41,7 @@
 #include <QXmlSchema>
 #include <QXmlSchemaValidator>
 #include <QBuffer>
+#include <QSysInfo>
 
 namespace ActionTools
 {
@@ -226,24 +227,12 @@ namespace ActionTools
 
 		stream.writeStartDocument();
 		stream.writeStartElement(QStringLiteral("scriptfile"));
-
-		QString osName = tr("Unknown");
-    #ifdef Q_OS_LINUX
-		osName = tr("GNU/Linux");
-	#endif
-    #ifdef Q_OS_WIN
-		osName = tr("Windows");
-	#endif
-    #ifdef Q_OS_MAC
-		osName = tr("Mac");
-	#endif
-
 		stream.writeStartElement(QStringLiteral("settings"));
 
 		stream.writeAttribute(QStringLiteral("program"), QStringLiteral("actiona"));
 		stream.writeAttribute(QStringLiteral("version"), programVersion.toString());
 		stream.writeAttribute(QStringLiteral("scriptVersion"), scriptVersion.toString());
-		stream.writeAttribute(QStringLiteral("os"), osName);
+        stream.writeAttribute(QStringLiteral("os"), QSysInfo::prettyProductName());
 
 		stream.writeEndElement();
 

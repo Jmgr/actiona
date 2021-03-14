@@ -33,4 +33,8 @@ namespace Backend
     void BACKENDSHARED_EXPORT lockScreenUnix();
     void BACKENDSHARED_EXPORT startScreenSaverUnix();
     QString BACKENDSHARED_EXPORT getUsernameUnix();
+    void BACKENDSHARED_EXPORT copyFilesUnix(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters);
+    void BACKENDSHARED_EXPORT moveFilesUnix(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters);
+    void BACKENDSHARED_EXPORT renameFilesUnix(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters);
+    void BACKENDSHARED_EXPORT removeFilesUnix(const QString &filepath, const System::FileOperationParameters &parameters);
 }

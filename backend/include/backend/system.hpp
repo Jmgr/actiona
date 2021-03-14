@@ -36,6 +36,15 @@ namespace Backend
         System() = default;
 
     public:
+        struct FileOperationParameters
+        {
+            bool noErrorDialog;
+            bool noConfirmDialog;
+            bool noProgressDialog;
+            bool allowUndo;
+            bool createDestinationDirectory;
+        };
+
         std::function<void(bool force)> logout;
         std::function<void(bool force)> restart;
         std::function<void(bool force)> shutdown;
@@ -44,6 +53,10 @@ namespace Backend
         std::function<void()> lockScreen;
         std::function<void()> startScreenSaver;
         std::function<QString()> getUsername;
+        std::function<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> copyFiles;
+        std::function<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> moveFiles;
+        std::function<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> renameFiles;
+        std::function<void(const QString &filepath, const FileOperationParameters &parameters)> removeFiles;
 
         friend std::unique_ptr<System> std::make_unique<System>();
     };
@@ -57,4 +70,8 @@ namespace Backend
     static void lockScreenDummy() {}
     static void startScreenSaverDummy() {}
     static QString getUsernameDummy() { return {}; }
+    static void copyFilesDummy(const QString &, const QString &, const System::FileOperationParameters &) {}
+    static void moveFilesDummy(const QString &, const QString &, const System::FileOperationParameters &) {}
+    static void renameFilesDummy(const QString &, const QString &, const System::FileOperationParameters &) {}
+    static void removeFilesDummy(const QString &, const System::FileOperationParameters &) {}
 }

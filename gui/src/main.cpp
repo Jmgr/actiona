@@ -51,10 +51,6 @@
 #define signals
 #endif
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 static void cleanup()
 {
 #ifdef Q_OS_UNIX

@@ -23,8 +23,10 @@
 
 #include <QDBusConnection>
 #include <QDBusInterface>
+#include <QDir>
 #include <QList>
 #include <QVariant>
+#include <QProcess>
 
 #include <vector>
 
@@ -304,6 +306,76 @@ namespace Backend
     QString getUsernameUnix()
     {
         return qEnvironmentVariable("USER");
+    }
+
+    void copyFilesUnix(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters)
+    {
+        QDir destinationDir(destinationFilepath);
+        QString sourceCopy(sourceFilepath);
+        QString destinationCopy(destinationFilepath);
+
+        sourceCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
+        destinationCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
+
+        if(!destinationDir.exists())
+        {
+            if(parameters.createDestinationDirectory)
+            {
+                if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"mkdir -p %1\"").arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))}))
+                    throw BackendError(QObject::tr("Unable to create destination directory"));
+            }
+            else
+                throw BackendError(QObject::tr("Destination directory doesn't exist"));
+        }
+
+        if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"cp -fr %1 %2\"")
+                             .arg(QString::fromLocal8Bit(QFile::encodeName(sourceCopy)))
+                             .arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))
+        }))
+            throw BackendError(QObject::tr("Copy failed"));
+    }
+
+    void moveFilesUnix(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters)
+    {
+        QDir destinationDir(destinationFilepath);
+        QString sourceCopy(sourceFilepath);
+        QString destinationCopy(destinationFilepath);
+
+        sourceCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
+        destinationCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
+
+        if(!destinationDir.exists())
+        {
+            if(parameters.createDestinationDirectory)
+            {
+                if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"mkdir -p %1\"").arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))}))
+                    throw BackendError(QObject::tr("Unable to create destination directory"));
+            }
+            else
+                throw BackendError(QObject::tr("Destination directory doesn't exist"));
+        }
+
+        if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"mv -f %1 %2\"")
+                             .arg(QString::fromLocal8Bit(QFile::encodeName(sourceCopy)))
+                             .arg(QString::fromLocal8Bit(QFile::encodeName(destinationCopy)))
+        }))
+            throw BackendError(QObject::tr("Move/rename failed"));
+    }
+
+    void renameFilesUnix(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters)
+    {
+        Instance::system().moveFiles(sourceFilepath, destinationFilepath, parameters);
+    }
+
+    void removeFilesUnix(const QString &filepath, const System::FileOperationParameters &parameters)
+    {
+        Q_UNUSED(parameters)
+
+        QString filenameCopy(filepath);
+        filenameCopy.replace(QStringLiteral(" "), QStringLiteral("\\ "));
+
+        if(QProcess::execute(QStringLiteral("sh"), {QStringLiteral("-c \"rm -fr %1\"").arg(QString::fromLocal8Bit(QFile::encodeName(filenameCopy)))}))
+            throw BackendError(QObject::tr("Remove failed"));
     }
 }
 

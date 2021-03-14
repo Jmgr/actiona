@@ -26,22 +26,13 @@
 #include <QTimer>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QSysInfo>
 
 AboutDialog::AboutDialog(QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::AboutDialog)
 {
 	ui->setupUi(this);
-
-#if defined(Q_OS_WIN)
-	QString os = tr("Windows");
-#elif defined(Q_OS_LINUX)
-	QString os = tr("GNU/Linux");
-#elif defined(Q_OS_MAC)
-	QString os = tr("Mac");
-#else
-    QString os = tr("Unknown");
-#endif
 
 	QString buildName = QStringLiteral(ACT_BUILD_NAME);
 
@@ -55,7 +46,7 @@ AboutDialog::AboutDialog(QWidget *parent)
     message += tr("<i>Emulates clics, key presses and other actions</i><br/><br/>Using Qt %1 (runtime %2) under %3 (%4 bit)")
 			   .arg(QLatin1String(QT_VERSION_STR))
 			   .arg(QLatin1String(qVersion()))
-			   .arg(os)
+               .arg(QSysInfo::prettyProductName())
                .arg(QSysInfo::WordSize);
 #ifdef ACT_ENABLE_BUILD_DATE
     message += tr("<br/>Build date: %1 %2")
