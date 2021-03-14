@@ -12,7 +12,7 @@ jobs:
       matrix:
         profile: [ON, OFF]
         updater: [ON, OFF]
-    runs-on: windows-2016
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
       with:
@@ -22,7 +22,7 @@ jobs:
       id: downloadfile
       name: Download prebuilt OpenCV
       with:
-        url: "https://actiona.tools/files/opencv-4.2.0-x64-vc15.7z"
+        url: "https://actiona.tools/files/opencv-4.5.1-x64-vc16.7z"
 
     - name: Extract OpenCV
       run: 7z x -oopencv ${{ steps.downloadfile.outputs.filename }}
@@ -33,8 +33,8 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.12.2
       with:
-        version: 5.12.9
-        arch: win64_msvc2017_64
+        version: 5.15.2
+        arch: win64_msvc2019_64
         modules: 'qtscript'
 
     - name: Create Build Environment
@@ -43,7 +43,7 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{github.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DACT_PROFILE=${{ matrix.profile }} -DACT_UPDATER=${{ matrix.updater }} -G "Visual Studio 15 2017 Win64" -DOpenCV_DIR=$GITHUB_WORKSPACE/opencv/x64/vc15/lib
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DACT_PROFILE=${{ matrix.profile }} -DACT_UPDATER=${{ matrix.updater }} -G "Visual Studio 16 2019" -DOpenCV_DIR=$GITHUB_WORKSPACE/opencv/x64/vc16/lib
       env:
         BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
 
