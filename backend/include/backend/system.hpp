@@ -38,11 +38,11 @@ namespace Backend
     public:
         struct FileOperationParameters
         {
-            bool noErrorDialog;
-            bool noConfirmDialog;
-            bool noProgressDialog;
-            bool allowUndo;
-            bool createDestinationDirectory;
+            bool noErrorDialog{};
+            bool noConfirmDialog{};
+            bool noProgressDialog{};
+            bool allowUndo{};
+            bool createDestinationDirectory{true};
         };
 
         std::function<void(bool force)> logout;

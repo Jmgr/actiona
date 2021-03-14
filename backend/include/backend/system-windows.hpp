@@ -33,4 +33,8 @@ namespace Backend
     void BACKENDSHARED_EXPORT lockScreenWindows();
     void BACKENDSHARED_EXPORT startScreenSaverWindows();
     QString BACKENDSHARED_EXPORT getUsernameWindows();
+    void BACKENDSHARED_EXPORT copyFilesWindows(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters);
+    void BACKENDSHARED_EXPORT moveFilesWindows(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters);
+    void BACKENDSHARED_EXPORT renameFilesWindows(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters);
+    void BACKENDSHARED_EXPORT removeFilesWindows(const QString &filepath, const System::FileOperationParameters &parameters);
 }

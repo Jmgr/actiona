@@ -22,9 +22,12 @@
 #include "backend/backend.hpp"
 #include "backend/backend-windows.hpp"
 
+#include <QDir>
+
 #include <Windows.h>
 #include <powrprof.h>
 #include <lmcons.h>
+#include <Shellapi.h>
 
 #include <array>
 
@@ -79,6 +82,182 @@ namespace Backend
             throw BackendError(lastErrorString());
 
         return QString::fromWCharArray(buffer.data());
+    }
+
+    QString getErrorString(int error)
+    {
+        switch(error)
+        {
+        case ERROR_SUCCESS:
+            return QString();
+        case ERROR_FILE_NOT_FOUND:
+            return QObject::tr("File not found");
+        case ERROR_PATH_NOT_FOUND:
+            return QObject::tr("Path not found");
+        case ERROR_ACCESS_DENIED:
+            return QObject::tr("Access denied");
+        case ERROR_SHARING_VIOLATION:
+            return QObject::tr("This file is used by another process");
+        case ERROR_DISK_FULL:
+            return QObject::tr("The disk is full");
+        case ERROR_FILE_EXISTS:
+        case ERROR_ALREADY_EXISTS:
+            return QObject::tr("The file already exists");
+        case ERROR_INVALID_NAME:
+            return QObject::tr("Invalid name");
+        case ERROR_CANCELLED:
+            return QObject::tr("Canceled");
+        default:
+            return QObject::tr("Unknown error (%1)").arg(error);
+        }
+    }
+
+    void copyFilesWindows(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters)
+    {
+        QDir sourceDir(sourceFilepath);
+        QDir destinationDir(destinationFilepath);
+
+        std::wstring wideSource = QDir::toNativeSeparators(sourceDir.absolutePath()).toStdWString();
+        wideSource += L'\0';
+
+        std::wstring wideDestination = QDir::toNativeSeparators(destinationDir.absolutePath()).toStdWString();
+        wideDestination += L'\0';
+
+        SHFILEOPSTRUCT shFileOpStruct;
+        shFileOpStruct.hwnd = 0;
+        shFileOpStruct.wFunc = FO_COPY;
+        shFileOpStruct.pFrom = wideSource.c_str();
+        shFileOpStruct.pTo = wideDestination.c_str();
+        shFileOpStruct.fFlags = 0;
+        shFileOpStruct.fAnyOperationsAborted = false;
+        shFileOpStruct.lpszProgressTitle = 0;
+        shFileOpStruct.hNameMappings = 0;
+
+        if(parameters.noErrorDialog)
+            shFileOpStruct.fFlags |= FOF_NOERRORUI;
+        if(parameters.noConfirmDialog)
+            shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
+        if(parameters.noProgressDialog)
+            shFileOpStruct.fFlags |= FOF_SILENT;
+        if(parameters.allowUndo)
+            shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
+
+        int result = SHFileOperation(&shFileOpStruct);
+        if(result != 0)
+            throw BackendError(QObject::tr("Copy failed: %1").arg(getErrorString(result)));
+
+        if(shFileOpStruct.fAnyOperationsAborted)
+            throw BackendError(QObject::tr("Copy failed: aborted"));
+    }
+
+    void moveFilesWindows(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters)
+    {
+        QDir sourceDir(sourceFilepath);
+        QDir destinationDir(destinationFilepath);
+
+        std::wstring wideSource = QDir::toNativeSeparators(sourceDir.absolutePath()).toStdWString();
+        wideSource += L'\0';
+
+        std::wstring wideDestination = QDir::toNativeSeparators(destinationDir.absolutePath()).toStdWString();
+        wideDestination += L'\0';
+
+        SHFILEOPSTRUCT shFileOpStruct;
+        shFileOpStruct.hwnd = 0;
+        shFileOpStruct.wFunc = FO_MOVE;
+        shFileOpStruct.pFrom = wideSource.c_str();
+        shFileOpStruct.pTo = wideDestination.c_str();
+        shFileOpStruct.fFlags = 0;
+        shFileOpStruct.fAnyOperationsAborted = false;
+        shFileOpStruct.lpszProgressTitle = 0;
+        shFileOpStruct.hNameMappings = 0;
+
+        if(parameters.noErrorDialog)
+            shFileOpStruct.fFlags |= FOF_NOERRORUI;
+        if(parameters.noConfirmDialog)
+            shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
+        if(parameters.noProgressDialog)
+            shFileOpStruct.fFlags |= FOF_SILENT;
+        if(parameters.allowUndo)
+            shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
+
+        int result = SHFileOperation(&shFileOpStruct);
+        if(result != 0)
+            throw BackendError(QObject::tr("Move failed: %1").arg(getErrorString(result)));
+
+        if(shFileOpStruct.fAnyOperationsAborted)
+            throw BackendError(QObject::tr("Move failed: aborted"));
+    }
+
+    void renameFilesWindows(const QString &sourceFilepath, const QString &destinationFilepath, const System::FileOperationParameters &parameters)
+    {
+        QDir sourceDir(sourceFilepath);
+        QDir destinationDir(destinationFilepath);
+
+        std::wstring wideSource = QDir::toNativeSeparators(sourceDir.absolutePath()).toStdWString();
+        wideSource += L'\0';
+
+        std::wstring wideDestination = QDir::toNativeSeparators(destinationDir.absolutePath()).toStdWString();
+        wideDestination += L'\0';
+
+        SHFILEOPSTRUCT shFileOpStruct;
+        shFileOpStruct.hwnd = 0;
+        shFileOpStruct.wFunc = FO_RENAME;
+        shFileOpStruct.pFrom = wideSource.c_str();
+        shFileOpStruct.pTo = wideDestination.c_str();
+        shFileOpStruct.fFlags = 0;
+        shFileOpStruct.fAnyOperationsAborted = false;
+        shFileOpStruct.lpszProgressTitle = 0;
+        shFileOpStruct.hNameMappings = 0;
+
+        if(parameters.noErrorDialog)
+            shFileOpStruct.fFlags |= FOF_NOERRORUI;
+        if(parameters.noConfirmDialog)
+            shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
+        if(parameters.noProgressDialog)
+            shFileOpStruct.fFlags |= FOF_SILENT;
+        if(parameters.allowUndo)
+            shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
+
+        int result = SHFileOperation(&shFileOpStruct);
+        if(result != 0)
+            throw BackendError(QObject::tr("Rename failed: %1").arg(getErrorString(result)));
+
+        if(shFileOpStruct.fAnyOperationsAborted)
+            throw BackendError(QObject::tr("Rename failed: aborted"));
+    }
+
+    void removeFilesWindows(const QString &filepath, const System::FileOperationParameters &parameters)
+    {
+        QDir filenameDir(filepath);
+
+        std::wstring wideFilename = QDir::toNativeSeparators(filenameDir.absolutePath()).toStdWString();
+        wideFilename += L'\0';
+
+        SHFILEOPSTRUCT shFileOpStruct;
+        shFileOpStruct.hwnd = 0;
+        shFileOpStruct.wFunc = FO_DELETE;
+        shFileOpStruct.pFrom = wideFilename.c_str();
+        shFileOpStruct.pTo = 0;
+        shFileOpStruct.fFlags = 0;
+        shFileOpStruct.fAnyOperationsAborted = false;
+        shFileOpStruct.lpszProgressTitle = 0;
+        shFileOpStruct.hNameMappings = 0;
+
+        if(parameters.noErrorDialog)
+            shFileOpStruct.fFlags |= FOF_NOERRORUI;
+        if(parameters.noConfirmDialog)
+            shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
+        if(parameters.noProgressDialog)
+            shFileOpStruct.fFlags |= FOF_SILENT;
+        if(parameters.allowUndo)
+            shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
+
+        int result = SHFileOperation(&shFileOpStruct);
+        if(result != 0)
+            throw BackendError(QObject::tr("Remove failed: %1").arg(getErrorString(result)));
+
+        if(shFileOpStruct.fAnyOperationsAborted)
+            throw BackendError(QObject::tr("Remove failed: aborted"));
     }
 }
 

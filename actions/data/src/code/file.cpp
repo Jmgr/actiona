@@ -20,31 +20,71 @@
 
 #include "file.hpp"
 #include "actiontools/code/rawdata.hpp"
+#include "backend/system.hpp"
 
 #include <QScriptValueIterator>
 #include <QProcess>
 #include <QDir>
 #include <QDebug>
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#include <Shellapi.h>
-#endif
-
 namespace Code
 {
+    Backend::System::FileOperationParameters parametersFromScriptOptions(const QScriptValue &options)
+    {
+        QScriptValueIterator it(options);
+
+        Backend::System::FileOperationParameters parameters;
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("noErrorDialog"))
+                parameters.noErrorDialog = it.value().toBool();
+            else if(it.name() == QLatin1String("noConfirmDialog"))
+                parameters.noConfirmDialog = it.value().toBool();
+            else if(it.name() == QLatin1String("noProgressDialog"))
+                parameters.noProgressDialog = it.value().toBool();
+            else if(it.name() == QLatin1String("allowUndo"))
+                parameters.allowUndo = it.value().toBool();
+            else if(it.name() == QLatin1String("createDestinationDirectory"))
+                parameters.createDestinationDirectory = it.value().toBool();
+        }
+
+        return parameters;
+    }
+
+    std::tuple<QString, QString, Backend::System::FileOperationParameters> parametersFromScriptContext(const QScriptValue &options, QScriptContext *context)
+    {
+        auto source = context->argument(0).toString();
+        auto destination = context->argument(1).toString();
+
+        return {source, destination, parametersFromScriptOptions(options)};
+    }
+
 	QScriptValue File::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-			return CodeClass::constructor(new File, context, engine);
+    {
+        return CodeClass::constructor(new File, context, engine);
 	}
 
 	QScriptValue File::copy(QScriptContext *context, QScriptEngine *engine)
 	{
-		QString source, destination;
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
+        if(context->argumentCount() < 2)
+        {
+            throwError(context, engine, QStringLiteral("ParameterCountError"), QObject::tr("Incorrect parameter count"));
+            return engine->undefinedValue();
+        }
 
-		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine))
-			copyPrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
+        auto [source, destination, parameters] = parametersFromScriptContext(context->argument(2), context);
+
+        try
+        {
+            Backend::Instance::system().copyFiles(source, destination, parameters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(context, engine, QStringLiteral("CopyError"), QObject::tr("Failed copying files: %1").arg(e.what()));
+        }
 
 		return engine->undefinedValue();
 	}
@@ -54,7 +94,7 @@ namespace Code
 		if(context->argumentCount() != 1)
 		{
 			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return false;
+            return engine->undefinedValue();
 		}
 
 		return QFile::exists(context->argument(0).toString());
@@ -62,42 +102,66 @@ namespace Code
 
 	QScriptValue File::move(QScriptContext *context, QScriptEngine *engine)
 	{
-		QString source, destination;
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
+        if(context->argumentCount() < 2)
+        {
+            throwError(context, engine, QStringLiteral("ParameterCountError"), QObject::tr("Incorrect parameter count"));
+            return engine->undefinedValue();
+        }
 
-		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine))
-			movePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
+        auto [source, destination, parameters] = parametersFromScriptContext(context->argument(2), context);
+
+        try
+        {
+            Backend::Instance::system().moveFiles(source, destination, parameters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(context, engine, QStringLiteral("MoveError"), QObject::tr("Failed moving files: %1").arg(e.what()));
+        }
 
 		return engine->undefinedValue();
 	}
 
 	QScriptValue File::rename(QScriptContext *context, QScriptEngine *engine)
 	{
-		QString source, destination;
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
+        if(context->argumentCount() < 2)
+        {
+            throwError(context, engine, QStringLiteral("ParameterCountError"), QObject::tr("Incorrect parameter count"));
+            return engine->undefinedValue();
+        }
 
-		if(getParameters(source, destination, context->argument(2), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine))
-			renamePrivate(source, destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context, engine);
+        auto [source, destination, parameters] = parametersFromScriptContext(context->argument(2), context);
+
+        try
+        {
+            Backend::Instance::system().renameFiles(source, destination, parameters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(context, engine, QStringLiteral("RenameError"), QObject::tr("Failed renaming files: %1").arg(e.what()));
+        }
 
 		return engine->undefinedValue();
 	}
 
 	QScriptValue File::remove(QScriptContext *context, QScriptEngine *engine)
 	{
-		QString filename;
-
 		if(context->argumentCount() < 1)
 		{
 			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return false;
+            return engine->undefinedValue();
 		}
 
-		filename = context->argument(0).toString();
+        auto [source, _, parameters] = parametersFromScriptContext(context->argument(1), context);
 
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
-
-		if(getParameters(context->argument(1), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
-			removePrivate(filename, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context, engine);
+        try
+        {
+            Backend::Instance::system().removeFiles(source, parameters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(context, engine, QStringLiteral("RemoveError"), QObject::tr("Failed removing files: %1").arg(e.what()));
+        }
 
 		return engine->undefinedValue();
 	}
@@ -165,323 +229,69 @@ namespace Code
 	
 	QScriptValue File::copy(const QString &destination, const QScriptValue &options) const
 	{
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
+        auto parameters = parametersFromScriptOptions(options);
 
-		if(getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
-			return copyPrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context(), engine());
-		else
-			return false;
+        try
+        {
+            Backend::Instance::system().copyFiles(mFile.fileName(), destination, parameters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("CopyError"), QObject::tr("Failed copying files: %1").arg(e.what()));
+        }
+
+        return thisObject();
 	}
 	
 	QScriptValue File::move(const QString &destination, const QScriptValue &options)
 	{
 		mFile.close();
 	
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
+        auto parameters = parametersFromScriptOptions(options);
 
-		if(getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
-			return movePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context(), engine());
-		else
-			return false;
+        try
+        {
+            Backend::Instance::system().moveFiles(mFile.fileName(), destination, parameters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("MoveError"), QObject::tr("Failed moving files: %1").arg(e.what()));
+        }
+
+        return thisObject();
 	}
 	
 	QScriptValue File::rename(const QString &destination, const QScriptValue &options)
 	{
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
+        auto parameters = parametersFromScriptOptions(options);
 
-		if(getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
-			return renamePrivate(mFile.fileName(), destination, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory, context(), engine());
-		else
-			return false;
+        try
+        {
+            Backend::Instance::system().renameFiles(mFile.fileName(), destination, parameters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("RenameError"), QObject::tr("Failed moving files: %1").arg(e.what()));
+        }
+
+        return thisObject();
 	}
 	
 	QScriptValue File::remove(const QScriptValue &options)
 	{
 		mFile.close();
 
-		bool noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory;
+        auto parameters = parametersFromScriptOptions(options);
 
-		if(getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory))
-			return removePrivate(mFile.fileName(), noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, context(), engine());
-		else
-			return false;
-	}
+        try
+        {
+            Backend::Instance::system().removeFiles(mFile.fileName(), parameters);
+        }
+        catch(const Backend::BackendError &e)
+        {
+            throwError(QStringLiteral("RemoveError"), QObject::tr("Failed removing files: %1").arg(e.what()));
+        }
 
-	bool File::getParameters(QString &source, QString &destination, const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
-	{
-		if(context->argumentCount() < 2)
-		{
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return false;
-		}
-
-		source = context->argument(0).toString();
-		destination = context->argument(1).toString();
-
-		return getParameters(options, noErrorDialog, noConfirmDialog, noProgressDialog, allowUndo, createDestinationDirectory);
-	}
-
-	bool File::getParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory)
-	{
-		QScriptValueIterator it(options);
-
-		noErrorDialog = false;
-		noConfirmDialog = false;
-		noProgressDialog = false;
-		allowUndo = false;
-		createDestinationDirectory = true;
-
-		while(it.hasNext())
-		{
-			it.next();
-
-			if(it.name() == QLatin1String("noErrorDialog"))
-				noErrorDialog = it.value().toBool();
-			else if(it.name() == QLatin1String("noConfirmDialog"))
-				noConfirmDialog = it.value().toBool();
-			else if(it.name() == QLatin1String("noProgressDialog"))
-				noProgressDialog = it.value().toBool();
-			else if(it.name() == QLatin1String("allowUndo"))
-				allowUndo = it.value().toBool();
-			else if(it.name() == QLatin1String("createDestinationDirectory"))
-				createDestinationDirectory = it.value().toBool();
-		}
-
-		return true;
-	}
-
-	QScriptValue File::copyPrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
-#ifdef Q_OS_WIN
-		Q_UNUSED(createDestinationDirectory)
-
-		QDir sourceDir(source);
-		QDir destinationDir(destination);
-
-		std::wstring wideSource = QDir::toNativeSeparators(sourceDir.absolutePath()).toStdWString();
-		wideSource += L'\0';
-
-		std::wstring wideDestination = QDir::toNativeSeparators(destinationDir.absolutePath()).toStdWString();
-		wideDestination += L'\0';
-
-		SHFILEOPSTRUCT shFileOpStruct;
-		shFileOpStruct.hwnd = 0;
-		shFileOpStruct.wFunc = FO_COPY;
-		shFileOpStruct.pFrom = wideSource.c_str();
-		shFileOpStruct.pTo = wideDestination.c_str();
-		shFileOpStruct.fFlags = 0;
-		shFileOpStruct.fAnyOperationsAborted = false;
-		shFileOpStruct.lpszProgressTitle = 0;
-		shFileOpStruct.hNameMappings = 0;
-
-		if(noErrorDialog)
-			shFileOpStruct.fFlags |= FOF_NOERRORUI;
-		if(noConfirmDialog)
-			shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
-		if(noProgressDialog)
-			shFileOpStruct.fFlags |= FOF_SILENT;
-		if(allowUndo)
-			shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
-
-		int result = SHFileOperation(&shFileOpStruct);
-		if(result != 0)
-		{
-			throwError(context, engine, QStringLiteral("CopyError"), tr("Copy failed: %1").arg(getErrorString(result)));
-			return context->thisObject();
-		}
-
-		if(shFileOpStruct.fAnyOperationsAborted)
-		{
-			throwError(context, engine, QStringLiteral("CopyAbortedError"), tr("Copy failed: aborted"));
-			return context->thisObject();
-		}
-#endif
-
-		return context->thisObject();
-	}
-
-	QScriptValue File::movePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
-
-#ifdef Q_OS_WIN
-		Q_UNUSED(createDestinationDirectory)
-
-		QDir sourceDir(source);
-		QDir destinationDir(destination);
-
-		std::wstring wideSource = QDir::toNativeSeparators(sourceDir.absolutePath()).toStdWString();
-		wideSource += L'\0';
-
-		std::wstring wideDestination = QDir::toNativeSeparators(destinationDir.absolutePath()).toStdWString();
-		wideDestination += L'\0';
-
-		SHFILEOPSTRUCT shFileOpStruct;
-		shFileOpStruct.hwnd = 0;
-		shFileOpStruct.wFunc = FO_MOVE;
-		shFileOpStruct.pFrom = wideSource.c_str();
-		shFileOpStruct.pTo = wideDestination.c_str();
-		shFileOpStruct.fFlags = 0;
-		shFileOpStruct.fAnyOperationsAborted = false;
-		shFileOpStruct.lpszProgressTitle = 0;
-		shFileOpStruct.hNameMappings = 0;
-
-		if(noErrorDialog)
-			shFileOpStruct.fFlags |= FOF_NOERRORUI;
-		if(noConfirmDialog)
-			shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
-		if(noProgressDialog)
-			shFileOpStruct.fFlags |= FOF_SILENT;
-		if(allowUndo)
-			shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
-
-		int result = SHFileOperation(&shFileOpStruct);
-		if(result != 0)
-		{
-			throwError(context, engine, QStringLiteral("MoveError"), tr("Move failed: %1").arg(getErrorString(result)));
-			return context->thisObject();
-		}
-
-		if(shFileOpStruct.fAnyOperationsAborted)
-		{
-			throwError(context, engine, QStringLiteral("MoveAbortedError"), tr("Move failed: aborted"));
-			return context->thisObject();
-		}
-#endif
-
-		return context->thisObject();
-	}
-
-	QScriptValue File::renamePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
-
-#ifdef Q_OS_WIN
-		Q_UNUSED(createDestinationDirectory)
-
-		QDir sourceDir(source);
-		QDir destinationDir(destination);
-
-		std::wstring wideSource = QDir::toNativeSeparators(sourceDir.absolutePath()).toStdWString();
-		wideSource += L'\0';
-
-		std::wstring wideDestination = QDir::toNativeSeparators(destinationDir.absolutePath()).toStdWString();
-		wideDestination += L'\0';
-
-		SHFILEOPSTRUCT shFileOpStruct;
-		shFileOpStruct.hwnd = 0;
-		shFileOpStruct.wFunc = FO_RENAME;
-		shFileOpStruct.pFrom = wideSource.c_str();
-		shFileOpStruct.pTo = wideDestination.c_str();
-		shFileOpStruct.fFlags = 0;
-		shFileOpStruct.fAnyOperationsAborted = false;
-		shFileOpStruct.lpszProgressTitle = 0;
-		shFileOpStruct.hNameMappings = 0;
-
-		if(noErrorDialog)
-			shFileOpStruct.fFlags |= FOF_NOERRORUI;
-		if(noConfirmDialog)
-			shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
-		if(noProgressDialog)
-			shFileOpStruct.fFlags |= FOF_SILENT;
-		if(allowUndo)
-			shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
-
-		int result = SHFileOperation(&shFileOpStruct);
-		if(result != 0)
-		{
-			throwError(context, engine, QStringLiteral("RenameError"), tr("Rename failed: %1").arg(getErrorString(result)));
-			return context->thisObject();
-		}
-
-		if(shFileOpStruct.fAnyOperationsAborted)
-		{
-			throwError(context, engine, QStringLiteral("RenameAbortedError"), tr("Rename failed: aborted"));
-			return context->thisObject();
-		}
-#endif
-
-		return context->thisObject();
-	}
-
-	QScriptValue File::removePrivate(const QString &filename, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine)
-	{
-#ifdef Q_OS_WIN
-		QDir filenameDir(filename);
-
-		std::wstring wideFilename = QDir::toNativeSeparators(filenameDir.absolutePath()).toStdWString();
-		wideFilename += L'\0';
-
-		SHFILEOPSTRUCT shFileOpStruct;
-		shFileOpStruct.hwnd = 0;
-		shFileOpStruct.wFunc = FO_DELETE;
-		shFileOpStruct.pFrom = wideFilename.c_str();
-		shFileOpStruct.pTo = 0;
-		shFileOpStruct.fFlags = 0;
-		shFileOpStruct.fAnyOperationsAborted = false;
-		shFileOpStruct.lpszProgressTitle = 0;
-		shFileOpStruct.hNameMappings = 0;
-
-		if(noErrorDialog)
-			shFileOpStruct.fFlags |= FOF_NOERRORUI;
-		if(noConfirmDialog)
-			shFileOpStruct.fFlags |= (FOF_NOCONFIRMATION | FOF_NOCONFIRMMKDIR);
-		if(noProgressDialog)
-			shFileOpStruct.fFlags |= FOF_SILENT;
-		if(allowUndo)
-			shFileOpStruct.fFlags |= FOF_ALLOWUNDO;
-
-		int result = SHFileOperation(&shFileOpStruct);
-		if(result != 0)
-		{
-			throwError(context, engine, QStringLiteral("RemoveError"), tr("Remove failed: %1").arg(getErrorString(result)));
-			return context->thisObject();
-		}
-
-		if(shFileOpStruct.fAnyOperationsAborted)
-		{
-			throwError(context, engine, QStringLiteral("RemoveAbortedError"), tr("Remove failed: aborted"));
-			return context->thisObject();
-		}
-#endif
-
-		return context->thisObject();
-	}
-
-	QString File::getErrorString(int error)
-	{
-#ifdef Q_OS_UNIX
-		Q_UNUSED(error)
-
-		return QString();
-#endif
-#ifdef Q_OS_WIN
-		switch(error)
-		{
-		case ERROR_SUCCESS:
-			return QString();
-		case ERROR_FILE_NOT_FOUND:
-			return tr("File not found");
-		case ERROR_PATH_NOT_FOUND:
-			return tr("Path not found");
-		case ERROR_ACCESS_DENIED:
-			return tr("Access denied");
-		case ERROR_SHARING_VIOLATION:
-			return tr("This file is used by another process");
-		case ERROR_DISK_FULL:
-			return tr("The disk is full");
-		case ERROR_FILE_EXISTS:
-		case ERROR_ALREADY_EXISTS:
-			return tr("The file already exists");
-		case ERROR_INVALID_NAME:
-			return tr("Invalid name");
-		case ERROR_CANCELLED:
-			return tr("Canceled");
-		default:
-			return tr("Unknown error (%1)").arg(error);
-		}
-
-#endif
+        return thisObject();
 	}
 }
