@@ -76,8 +76,10 @@ namespace Actions
 			auto &shift = addParameter<ActionTools::BooleanParameterDefinition>({QStringLiteral("shift"), tr("Shift")});
             shift.setTooltip(tr("Should the Shift key be pressed"));
 
-		#ifdef Q_OS_WIN
+        #if defined(Q_OS_WIN)
 			QString metaKeyName = tr("Windows");
+        #elif defined(Q_OS_MACOS)
+            QString metaKeyName = tr("Command");
 		#else
 			QString metaKeyName = tr("Meta");
 		#endif

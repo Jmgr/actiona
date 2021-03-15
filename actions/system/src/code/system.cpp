@@ -151,6 +151,8 @@ namespace Code
 		return QStringLiteral("GNU/Linux");
 #elif defined(Q_OS_WIN)
 		return QStringLiteral("Windows");
+#elif defined(Q_OS_MACOS)
+        return QStringLiteral("macOS");
 #else
         return QStringLiteral("Unknown");
 #endif
