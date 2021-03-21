@@ -1,8 +1,8 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 #include "backend/backend.hpp"
-#include "backend/targetwindow.hpp"
 #include "backend/windowing.hpp"
+#include "backend/windowhandle.hpp"
 
 #include <QKeyEvent>
 
@@ -14,17 +14,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    connect(ui->choosePositionPushButton, &Backend::ChoosePositionPushButton::chooseStarted, this, &MainWindow::positionChooseStarted);
-    connect(ui->choosePositionPushButton, &Backend::ChoosePositionPushButton::positionChosen, this, &MainWindow::positionChosen);
-    connect(ui->chooseWindowPushButton, &Backend::ChooseWindowPushButton::foundValidWindow, this, &MainWindow::foundValidWindow);
-    connect(ui->chooseWindowPushButton, &Backend::ChooseWindowPushButton::searchEnded, this, &MainWindow::windowSearchEnded);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete mTargetWindow;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -33,52 +27,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         return;
 
     QMainWindow::keyPressEvent(event);
-}
-
-void MainWindow::positionChooseStarted()
-{
-    ui->positionLabel->setText(QStringLiteral("Choosing..."));
-}
-
-void MainWindow::positionChosen(QPointF position)
-{
-    ui->positionLabel->setText(QStringLiteral("Result: %1:%2").arg(position.x()).arg(position.y()));
-}
-
-void MainWindow::foundValidWindow(const Backend::WindowHandle &handle)
-{
-    try
-    {
-        ui->windowLabel->setText(QStringLiteral("Found: %1 (%2))").arg(handle.title()).arg(handle.classname()));
-    }
-    catch(const Backend::BackendError &e)
-    {
-        ui->windowLabel->setText(QStringLiteral("Error: %1").arg(e.what()));
-    }
-}
-
-void MainWindow::windowSearchEnded(const Backend::WindowHandle &handle)
-{
-    try
-    {
-        ui->windowLabel->setText(QStringLiteral("Ended: %1 (%2))").arg(handle.title()).arg(handle.classname()));
-    }
-    catch(const Backend::BackendError &e)
-    {
-        ui->windowLabel->setText(QStringLiteral("Error: %1").arg(e.what()));
-    }
-}
-
-void MainWindow::on_chooseRectanglePushButton_clicked()
-{
-    mDisableEscape = true;
-    delete mTargetWindow;
-    mTargetWindow = new Backend::TargetWindow();
-    connect(mTargetWindow, &Backend::TargetWindow::rectangleSelected, this, [this](const QRect &rectangle){
-        ui->rectangleLabel->setText(QStringLiteral("Rectangle: (%1:%2)(%3:%4)").arg(rectangle.x()).arg(rectangle.y()).arg(rectangle.width()).arg(rectangle.height()));
-        mDisableEscape = false;
-    });
-    mTargetWindow->show();
 }
 
 void MainWindow::on_chooseRectangleGnomePushButton_clicked()
@@ -109,20 +57,6 @@ void MainWindow::on_chooseRectangleGnomePushButton_clicked()
     ui->rectangleGnomeLabel->setText(QStringLiteral("Rectangle: (%1:%2)(%3:%4)").arg(args[0].toInt()).arg(args[1].toInt()).arg(args[2].toInt()).arg(args[3].toInt()));
 }
 
-void MainWindow::on_choosePositionNewPushButton_clicked()
-{
-    auto posChooser = Backend::Instance::windowing().createPositionChooser(this);
-    connect(posChooser, &Backend::PositionChooser::done, this, [this, posChooser](const QPoint &position){
-        ui->choosePositionNewLabel->setText(QStringLiteral("%1:%2").arg(position.x()).arg(position.y()));
-        posChooser->deleteLater();
-    });
-    connect(posChooser, &Backend::PositionChooser::canceled, this, [this, posChooser]{
-        ui->choosePositionNewLabel->setText(QStringLiteral("canceled"));
-        posChooser->deleteLater();
-    });
-    posChooser->choose();
-}
-
 void MainWindow::on_chooseAreaPushButton_clicked()
 {
     auto areaChooser = Backend::Instance::windowing().createAreaChooser(this);
@@ -137,7 +71,7 @@ void MainWindow::on_chooseAreaPushButton_clicked()
     areaChooser->choose();
 }
 
-void MainWindow::on_chooseWindowNewPushButton_clicked()
+void MainWindow::on_chooseWindowNewPushButton_pressed()
 {
     auto windowChooser = Backend::Instance::windowing().createWindowChooser(this);
     connect(windowChooser, &Backend::WindowChooser::done, this, [this, windowChooser](const WId &window){
@@ -157,4 +91,18 @@ void MainWindow::on_chooseWindowNewPushButton_clicked()
         windowChooser->deleteLater();
     });
     windowChooser->choose();
+}
+
+void MainWindow::on_choosePositionNewPushButton_pressed()
+{
+    auto posChooser = Backend::Instance::windowing().createPositionChooser(this);
+    connect(posChooser, &Backend::PositionChooser::done, this, [this, posChooser](const QPoint &position){
+        ui->choosePositionNewLabel->setText(QStringLiteral("%1:%2").arg(position.x()).arg(position.y()));
+        posChooser->deleteLater();
+    });
+    connect(posChooser, &Backend::PositionChooser::canceled, this, [this, posChooser]{
+        ui->choosePositionNewLabel->setText(QStringLiteral("canceled"));
+        posChooser->deleteLater();
+    });
+    posChooser->choose();
 }

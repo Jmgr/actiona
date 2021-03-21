@@ -21,57 +21,31 @@
 #pragma once
 
 #include "backend_global.hpp"
+#include "backend/windowing.hpp"
 
-#ifdef Q_OS_UNIX
 #include <QAbstractNativeEventFilter>
-#endif
-
-#include <QPushButton>
-#include <QList>
-
-class QMainWindow;
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT ChoosePositionPushButton : public QPushButton
-#ifdef Q_OS_UNIX
-            , public QAbstractNativeEventFilter
-#endif
+    class BACKENDSHARED_EXPORT WindowChooserWindows : public WindowChooser, public QAbstractNativeEventFilter
 	{
 		Q_OBJECT
-	public:
-		explicit ChoosePositionPushButton(QWidget *parent = nullptr);
-		~ChoosePositionPushButton() override;
+        Q_DISABLE_COPY(WindowChooserWindows)
 
-	signals:
-		void chooseStarted();
-        void positionChosen(QPointF position);
-		
+	public:
+        explicit WindowChooserWindows(QObject *parent);
+        ~WindowChooserWindows() override;
+
+        void choose() override;
+
 	private:
-		void paintEvent(QPaintEvent *event) override;
-		void mousePressEvent(QMouseEvent *event) override;
-#ifdef Q_OS_WIN
-		void mouseReleaseEvent(QMouseEvent *event);
-#endif
-#ifdef Q_OS_UNIX
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
-#endif
+        void foundWindow(WId wid);
 		void stopMouseCapture();
 
-		QPixmap *mCrossIcon;
-		bool mSearching{false};
-		QPoint mResult;
-		QMainWindow *mMainWindow{nullptr};
-#ifdef Q_OS_UNIX
-        QList<QWidget*> mShownWindows;
-        unsigned long mCrossCursor;
-#endif
-#ifdef Q_OS_WIN
-		HCURSOR mPreviousCursor;
-		HPEN	mRectanglePen;
-#endif
-
-		Q_DISABLE_COPY(ChoosePositionPushButton)
+        WId mLastFoundWindow{};
+        bool mSearching{false};
+        HCURSOR mPreviousCursor{};
+        HPEN mRectanglePen;
 	};
 }
-

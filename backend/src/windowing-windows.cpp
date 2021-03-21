@@ -22,6 +22,9 @@
 #include "backend/backend.hpp"
 #include "backend/backend-windows.hpp"
 #include "backend/process.hpp"
+#include "backend/positionchooser-windows.hpp"
+#include "backend/areachooser-windows.hpp"
+#include "backend/windowchooser-windows.hpp"
 
 #include <QWidget>
 
@@ -215,6 +218,21 @@ namespace Backend
             throw BackendError(lastErrorString());
 
         return result;
+    }
+
+    PositionChooser *createPositionChooserWindows(QObject *parent)
+    {
+        return new PositionChooserWindows(parent);
+    }
+
+    AreaChooser *createAreaChooserWindows(QObject *parent)
+    {
+        return new AreaChooserWindows(parent);
+    }
+
+    WindowChooser *createWindowChooserWindows(QObject *parent)
+    {
+        return new WindowChooserWindows(parent);
     }
 }
 

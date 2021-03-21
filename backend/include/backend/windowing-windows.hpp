@@ -39,4 +39,7 @@ namespace Backend
     bool BACKENDSHARED_EXPORT isActiveWindows(WId windowId);
     WId BACKENDSHARED_EXPORT foregroundWindowWindows();
     QList<WId> BACKENDSHARED_EXPORT windowListWindows();
+    PositionChooser BACKENDSHARED_EXPORT *createPositionChooserWindows(QObject *parent);
+    AreaChooser BACKENDSHARED_EXPORT *createAreaChooserWindows(QObject *parent);
+    WindowChooser BACKENDSHARED_EXPORT *createWindowChooserWindows(QObject *parent);
 }
