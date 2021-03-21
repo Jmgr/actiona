@@ -40,7 +40,7 @@ namespace Backend
         unsigned int buttonMask;
 
         if(!XQueryPointer(QX11Info::display(),
-                          XDefaultRootWindow(QX11Info::display()),
+                          QX11Info::appRootWindow(),
                           &unusedWindow,
                           &unusedWindow,
                           &unusedInt,

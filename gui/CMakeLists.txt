@@ -72,6 +72,7 @@ set(HEADERS
 
 set(QRC ${PROJECT}.qrc)
 
+#TODO: add UI files
 add_executable(${PROJECT}
     ${SOURCES}
     ${HEADERS}

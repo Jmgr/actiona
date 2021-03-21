@@ -4,6 +4,10 @@ set(SOURCES_PREFIX src)
 set(SOURCES
     ${SOURCES_PREFIX}/backend.cpp
     ${SOURCES_PREFIX}/keyinput.cpp
+    ${SOURCES_PREFIX}/choosepositionpushbutton.cpp
+    ${SOURCES_PREFIX}/choosewindowpushbutton.cpp
+    ${SOURCES_PREFIX}/targetwindow.cpp
+    ${SOURCES_PREFIX}/windowhandle.cpp
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/backend-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/system-unix.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/system-windows.cpp>
@@ -20,6 +24,9 @@ set(SOURCES
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keysymhelper-x11.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keymapper-x11.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keymapper-windows.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/positionchooser-x11.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/areachooser-x11.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/windowchooser-x11.cpp>
 )
 
 set(HEADERS_PREFIX include/${PROJECT})
@@ -35,6 +42,10 @@ set(HEADERS
     ${HEADERS_PREFIX}/system.hpp
     ${HEADERS_PREFIX}/scopeguard.hpp
     ${HEADERS_PREFIX}/3rdparty/scope_guard/scope_guard.hpp
+    ${HEADERS_PREFIX}/choosepositionpushbutton.hpp
+    ${HEADERS_PREFIX}/choosewindowpushbutton.hpp
+    ${HEADERS_PREFIX}/targetwindow.hpp
+    ${HEADERS_PREFIX}/windowhandle.hpp
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/backend-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/system-unix.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/system-windows.hpp>
@@ -47,6 +58,9 @@ set(HEADERS
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/mouse-windows.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/keyboard-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keysymhelper-x11.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/positionchooser-x11.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/areachooser-x11.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/windowchooser-x11.hpp>
 )
 
 add_library(${PROJECT} SHARED
@@ -87,3 +101,9 @@ if(UNIX AND NOT APPLE)
 endif()
 
 compile_translations(${PROJECT})
+
+add_subdirectory(test)
+
+if(UNIX AND NOT APPLE)
+    add_subdirectory(3rdparty/xrectsel)
+endif()

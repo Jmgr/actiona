@@ -39,4 +39,7 @@ namespace Backend
     bool BACKENDSHARED_EXPORT isActiveX11(WId windowId);
     WId BACKENDSHARED_EXPORT foregroundWindowX11();
     QList<WId> BACKENDSHARED_EXPORT windowListX11();
+    PositionChooser BACKENDSHARED_EXPORT *createPositionChooserX11(QObject *parent);
+    AreaChooser BACKENDSHARED_EXPORT *createAreaChooserX11(QObject *parent);
+    WindowChooser BACKENDSHARED_EXPORT *createWindowChooserX11(QObject *parent);
 }

@@ -20,6 +20,9 @@
 
 #include "backend/windowing-x11.hpp"
 #include "backend/backend.hpp"
+#include "backend/positionchooser-x11.hpp"
+#include "backend/areachooser-x11.hpp"
+#include "backend/windowchooser-x11.hpp"
 
 #include <QWidget>
 #include <QX11Info>
@@ -275,5 +278,20 @@ namespace Backend
         XFree(list);
 
         return res;
+    }
+
+    PositionChooser *createPositionChooserX11(QObject *parent)
+    {
+        return new PositionChooserX11(parent);
+    }
+
+    AreaChooser *createAreaChooserX11(QObject *parent)
+    {
+        return new AreaChooserX11(parent);
+    }
+
+    WindowChooser *createWindowChooserX11(QObject *parent)
+    {
+        return new WindowChooserX11(parent);
     }
 }

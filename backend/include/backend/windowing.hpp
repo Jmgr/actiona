@@ -24,6 +24,7 @@
 #include "backend/backend.hpp"
 
 #include <qwindowdefs.h>
+#include <QObject>
 #include <QString>
 #include <QRect>
 #include <QPoint>
@@ -37,6 +38,90 @@ class QWidget;
 
 namespace Backend
 {
+    class BACKENDSHARED_EXPORT PositionChooser : public QObject
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(PositionChooser)
+
+    public:
+        PositionChooser(QObject *parent = nullptr): QObject(parent) {}
+        virtual ~PositionChooser() = default;
+
+        virtual void choose() = 0;
+
+    signals:
+        void done(const QPoint &position);
+        void canceled();
+    };
+
+    class BACKENDSHARED_EXPORT PositionChooserDummy final : public PositionChooser
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(PositionChooserDummy)
+
+    public:
+        PositionChooserDummy(QObject *parent = nullptr): PositionChooser(parent) {}
+        ~PositionChooserDummy() = default;
+
+        void choose() override { emit done({}); }
+    };
+
+    class BACKENDSHARED_EXPORT AreaChooser : public QObject
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(AreaChooser)
+
+    public:
+        AreaChooser(QObject *parent = nullptr): QObject(parent) {}
+        virtual ~AreaChooser() = default;
+
+        virtual void choose() = 0;
+
+    signals:
+        void done(const QRect &area);
+        void canceled();
+    };
+
+    class BACKENDSHARED_EXPORT AreaChooserDummy final : public AreaChooser
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(AreaChooserDummy)
+
+    public:
+        AreaChooserDummy(QObject *parent = nullptr): AreaChooser(parent) {}
+        ~AreaChooserDummy() = default;
+
+        void choose() override { emit done({}); }
+    };
+
+    class BACKENDSHARED_EXPORT WindowChooser : public QObject
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(WindowChooser)
+
+    public:
+        WindowChooser(QObject *parent = nullptr): QObject(parent) {}
+        virtual ~WindowChooser() = default;
+
+        virtual void choose() = 0;
+
+    signals:
+        void done(const WId &window);
+        void canceled();
+    };
+
+    class BACKENDSHARED_EXPORT WindowChooserDummy final : public WindowChooser
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(WindowChooserDummy)
+
+    public:
+        WindowChooserDummy(QObject *parent = nullptr): WindowChooser(parent) {}
+        ~WindowChooserDummy() = default;
+
+        void choose() override { emit done({}); }
+    };
+
     class BACKENDSHARED_EXPORT Windowing final
     {
         Q_DISABLE_COPY(Windowing)
@@ -59,6 +144,9 @@ namespace Backend
         std::function<bool(WId windowId)> isActive;
         std::function<WId()> foregroundWindow;
         std::function<QList<WId>()> windowList;
+        std::function<PositionChooser*(QObject*)> createPositionChooser;
+        std::function<AreaChooser*(QObject*)> createAreaChooser;
+        std::function<WindowChooser*(QObject*)> createWindowChooser;
 
         friend std::unique_ptr<Windowing> std::make_unique<Windowing>();
     };
@@ -78,4 +166,7 @@ namespace Backend
     static bool isActiveDummy(WId) { return true; }
     static WId foregroundWindowDummy() { return {}; }
     static QList<WId> windowListDummy() { return {}; }
+    static PositionChooser *createPositionChooserDummy(QObject *parent) { return new PositionChooserDummy(parent); }
+    static AreaChooser *createAreaChooserDummy(QObject *parent) { return new AreaChooserDummy(parent); }
+    static WindowChooser *createWindowChooserDummy(QObject *parent) { return new WindowChooserDummy(parent); }
 }

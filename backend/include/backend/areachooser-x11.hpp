@@ -20,28 +20,26 @@
 
 #pragma once
 
-#include "actiontools_global.hpp"
+#include "backend_global.hpp"
+#include "backend/windowing.hpp"
 
-#include <QList>
-#include <QPixmap>
+class QProcess;
 
-#include <utility>
-
-namespace ActionTools
+namespace Backend
 {
-    class WindowHandle;
-
-    class ACTIONTOOLSSHARED_EXPORT ScreenShooter // TODO: move to backend
+    class BACKENDSHARED_EXPORT AreaChooserX11: public AreaChooser
     {
-    public:
-        static QPixmap captureScreen(int screenIndex);
-        static QList<std::pair<QPixmap, QRect>> captureScreens();
-        static QList<std::pair<QPixmap, QRect>> captureWindows(const QList<WindowHandle> &windows);
-        static QPixmap captureWindow(WindowHandle window);
-        static QPixmap captureAllScreens();
-        static QPixmap captureRect(const QRect &rect);
+        Q_OBJECT
+        Q_DISABLE_COPY(AreaChooserX11)
 
-        ScreenShooter() = delete;
+    public:
+        explicit AreaChooserX11(QObject *parent);
+        ~AreaChooserX11() override;
+
+        void choose() override;
+
+    private:
+        QProcess *mXRectSelProcess;
     };
 }
 

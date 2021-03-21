@@ -82,6 +82,9 @@ namespace Backend
         mWindowing->isActive = isActiveWindows;
         mWindowing->foregroundWindow = foregroundWindowWindows;
         mWindowing->windowList = windowListWindows;
+        mWindowing->createPositionChooser = createPositionChooserWindows;
+        mWindowing->createAreaChooser = createAreaChooserWindows;
+        mWindowing->createWindowChooser = createWindowChooserWindows;
         mSystem->logout = logoutWindows;
         mSystem->restart = restartWindows;
         mSystem->shutdown = shutdownWindows;
@@ -145,6 +148,9 @@ namespace Backend
         mWindowing->isActive = isActiveX11;
         mWindowing->foregroundWindow = foregroundWindowX11;
         mWindowing->windowList = windowListX11;
+        mWindowing->createPositionChooser = createPositionChooserX11;
+        mWindowing->createAreaChooser = createAreaChooserX11;
+        mWindowing->createWindowChooser = createWindowChooserX11;
 
         KeySymHelper::loadKeyCodes();
 #else
@@ -216,6 +222,9 @@ namespace Backend
         mWindowing->isActive = isActiveDummy;
         mWindowing->foregroundWindow = foregroundWindowDummy;
         mWindowing->windowList = windowListDummy;
+        mWindowing->createPositionChooser = createPositionChooserDummy;
+        mWindowing->createAreaChooser = createAreaChooserDummy;
+        mWindowing->createWindowChooser = createWindowChooserDummy;
         mSystem->logout = logoutDummy;
         mSystem->restart = restartDummy;
         mSystem->shutdown = shutdownDummy;
