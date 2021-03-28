@@ -22,28 +22,28 @@
 
 #include "backend/backend_global.hpp"
 #include "backend/backend.hpp"
-
-#include <functional>
-#include <memory>
+#include "backend/feature.hpp"
 
 namespace Backend
 {
+    class Capabilities;
+
     class BACKENDSHARED_EXPORT Keyboard final
     {
         Q_DISABLE_COPY(Keyboard)
 
-    private:
-        Keyboard() = default;
-
     public:
-        // Output
-        std::function<void(const QString &key, bool press, bool directX)> pressKey; // TODO: enum class for press/release (also mouse button), directX and noUnicodeCharacters
-        std::function<void(const QString &text, int delay, bool noUnicodeCharacters)> writeText;
+        Keyboard(Capabilities &caps);
 
-        friend std::unique_ptr<Keyboard> std::make_unique<Keyboard>();
+        Feature<void(const QString &key, bool press, bool directX)> pressKey
+        {
+            QStringLiteral("pressKey"),
+            [](const QString &, bool, bool){}
+        };
+        Feature<void(const QString &text, int delay, bool noUnicodeCharacters)> writeText
+        {
+            QStringLiteral("writeText"),
+            [](const QString &, int, bool){}
+        };
     };
-
-    // Dummy implementations
-    static void pressKeyDummy(const QString &, bool, bool) {}
-    static void writeTextDummy(const QString &, int, bool) {}
 }

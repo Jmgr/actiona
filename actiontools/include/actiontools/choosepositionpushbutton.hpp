@@ -22,56 +22,31 @@
 
 #include "actiontools_global.hpp"
 
-#ifdef Q_OS_UNIX
-#include <QAbstractNativeEventFilter>
-#endif
-
 #include <QPushButton>
-#include <QList>
 
-class QMainWindow;
+namespace Backend
+{
+    class PositionChooser;
+}
 
 namespace ActionTools
 {
     class ACTIONTOOLSSHARED_EXPORT ChoosePositionPushButton : public QPushButton
-#ifdef Q_OS_UNIX
-            , public QAbstractNativeEventFilter
-#endif
 	{
 		Q_OBJECT
+        Q_DISABLE_COPY(ChoosePositionPushButton)
+
 	public:
 		explicit ChoosePositionPushButton(QWidget *parent = nullptr);
 		~ChoosePositionPushButton() override;
 
 	signals:
-		void chooseStarted();
-        void positionChosen(QPointF position);
-		
-	private:
-		void paintEvent(QPaintEvent *event) override;
-		void mousePressEvent(QMouseEvent *event) override;
-#ifdef Q_OS_WIN
-		void mouseReleaseEvent(QMouseEvent *event);
-#endif
-#ifdef Q_OS_UNIX
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
-#endif
-		void stopMouseCapture();
+        void positionChosen(const QPoint &position);
+        void canceled();
+        void errorOccurred(const QString error);
 
-		QPixmap *mCrossIcon;
-		bool mSearching{false};
-		QPoint mResult;
-		QMainWindow *mMainWindow{nullptr};
-#ifdef Q_OS_UNIX
-        QList<QWidget*> mShownWindows;
-        unsigned long mCrossCursor;
-#endif
-#ifdef Q_OS_WIN
-		HCURSOR mPreviousCursor;
-		HPEN	mRectanglePen;
-#endif
-
-		Q_DISABLE_COPY(ChoosePositionPushButton)
+    private:
+        Backend::PositionChooser *mChooser;
 	};
 }
 

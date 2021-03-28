@@ -20,12 +20,14 @@
 
 #include "actiontools/screenshotwizardpage.hpp"
 #include "ui_screenshotwizardpage.h"
-#include "actiontools/targetwindow.hpp"
 #include "actiontools/screenshooter.hpp"
 #include "actiontools/screenshotwizard.hpp"
+#include "actiontools/windowhandle.hpp"
+#include "backend/windowing.hpp"
 
 #include <QApplication>
 #include <QKeyEvent>
+#include <QDebug>
 
 namespace ActionTools
 {
@@ -47,7 +49,6 @@ namespace ActionTools
 
     ScreenshotWizardPage::~ScreenshotWizardPage()
     {
-        delete mTargetWindow;
         delete ui;
     }
 
@@ -83,13 +84,13 @@ namespace ActionTools
     void ScreenshotWizardPage::on_captureScreenPartPushButton_clicked()
     {
         mDisableEscape = true;
-        if(mTargetWindow)
-            delete mTargetWindow;
-        mTargetWindow = new ActionTools::TargetWindow;
-        connect(mTargetWindow, &ActionTools::TargetWindow::rectangleSelected, this, &ScreenshotWizardPage::onRectangleSelected);
-        mTargetWindow->show();
+        mAreaChooser = Backend::Instance::windowing().createAreaChooser(this);
+        connect(mAreaChooser, &Backend::AreaChooser::done, this, &ScreenshotWizardPage::onRectangleSelected);
+        connect(mAreaChooser, &Backend::AreaChooser::canceled, this, []{ qDebug() << "test"; });// TODO
+        connect(mAreaChooser, &Backend::AreaChooser::errorOccurred, this, [](const Backend::BackendError &e){ qDebug() << e.what(); });// TODO
+        mAreaChooser->choose();
 
-        emit completeChanged();
+        //emit completeChanged();
     }
 
     void ScreenshotWizardPage::onWindowSearchEnded(const ActionTools::WindowHandle &handle)
@@ -104,8 +105,7 @@ namespace ActionTools
     void ScreenshotWizardPage::onRectangleSelected(QRect rect)
     {
         mDisableEscape = false;
-        mTargetWindow->deleteLater();
-        mTargetWindow = nullptr;
+        mAreaChooser->deleteLater();
 
         if(rect != QRect())
         {

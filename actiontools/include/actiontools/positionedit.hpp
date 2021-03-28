@@ -57,13 +57,13 @@ namespace ActionTools
         QSet<QString> findVariables() const override;
 
 	signals:
-        void positionChosen(QPointF position);
+        void positionChosen(const QPoint &position);
 		
 	public slots:
-        void setPosition(QPointF position);
+        void setPosition(const QPoint &position);
 
 	private slots:
-        void on_choose_positionChosen(QPointF position);
+        void on_choose_positionChosen(const QPoint &position);
 		void on_position_codeChanged(bool code);
 
 	private:

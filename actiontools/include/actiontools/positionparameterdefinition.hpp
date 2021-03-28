@@ -41,7 +41,7 @@ namespace ActionTools
 		void save(ActionInstance *actionInstance) override;
 
     private slots:
-        void positionChosen(QPointF position);
+        void positionChosen(const QPoint &position);
 		
 	private:
 		PositionEdit *mPositionEdit;

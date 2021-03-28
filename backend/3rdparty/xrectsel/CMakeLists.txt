@@ -11,7 +11,7 @@ add_executable(${PROJECT}
 )
 
 set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "backend-xrectsel")
-set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../..)
+set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../../..)
 
 if(UNIX AND NOT APPLE)
     find_package(X11 REQUIRED)

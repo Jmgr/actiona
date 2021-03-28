@@ -18,7 +18,7 @@
 	Contact: jmgr@jmgr.info
 */
 
-#include "backend/keyboard-x11.hpp"
+#include "backend/keyboard-xtest.hpp"
 #include "backend/keysymhelper-x11.hpp"
 #include "backend/keyinput.hpp"
 #include "backend/keymapper.hpp"
@@ -105,7 +105,7 @@ namespace Backend
             return KeyInput::nativeKey(keyInput.key());
     }
 
-    void pressKeyX11(const QString &key, bool press, bool directX)
+    void pressKeyXTest(const QString &key, bool press, bool directX)
     {
         Q_UNUSED(directX)
 
@@ -121,7 +121,7 @@ namespace Backend
             throw BackendError();
     }
 
-    void writeTextX11(const QString &text, int delay, bool noUnicodeCharacters)
+    void writeTextXTest(const QString &text, int delay, bool noUnicodeCharacters)
     {
         Q_UNUSED(noUnicodeCharacters)
 

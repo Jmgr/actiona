@@ -153,6 +153,8 @@ namespace Backend
     {
         Q_UNUSED(id)
 
+        // TODO: remove this if there is no possible implementation
+
         throw BackendError(QStringLiteral("this is not available under your operating system"));
     }
 }

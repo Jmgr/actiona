@@ -20,26 +20,25 @@
 
 #pragma once
 
-#include "backend/backend_global.hpp"
 #include "backend/windowing.hpp"
 
 namespace Backend
 {
-    void BACKENDSHARED_EXPORT setForegroundWindowX11(WId windowId);
-    QString BACKENDSHARED_EXPORT titleX11(WId windowId);
-    QString BACKENDSHARED_EXPORT classnameX11(WId windowId);
-    QRect BACKENDSHARED_EXPORT rectX11(WId windowId, bool useBorders);
-    int BACKENDSHARED_EXPORT processIdX11(WId windowId);
-    void BACKENDSHARED_EXPORT closeX11(WId windowId);
-    void BACKENDSHARED_EXPORT killCreatorX11(WId windowId);
-    void BACKENDSHARED_EXPORT minimizeX11(WId windowId);
-    void BACKENDSHARED_EXPORT maximizeX11(WId windowId);
-    void BACKENDSHARED_EXPORT moveX11(WId windowId, QPoint position);
-    void BACKENDSHARED_EXPORT resizeX11(WId windowId, QSize size, bool useBorders);
-    bool BACKENDSHARED_EXPORT isActiveX11(WId windowId);
-    WId BACKENDSHARED_EXPORT foregroundWindowX11();
-    QList<WId> BACKENDSHARED_EXPORT windowListX11();
-    PositionChooser BACKENDSHARED_EXPORT *createPositionChooserX11(QObject *parent);
-    AreaChooser BACKENDSHARED_EXPORT *createAreaChooserX11(QObject *parent);
-    WindowChooser BACKENDSHARED_EXPORT *createWindowChooserX11(QObject *parent);
+    void setForegroundWindowX11(WId windowId);
+    QString titleX11(WId windowId);
+    QString classnameX11(WId windowId);
+    QRect rectX11(WId windowId, bool useBorders);
+    int processIdX11(WId windowId);
+    void closeX11(WId windowId);
+    void killCreatorX11(WId windowId);
+    void minimizeX11(WId windowId);
+    void maximizeX11(WId windowId);
+    void moveX11(WId windowId, const QPoint &position);
+    void resizeX11(WId windowId, const QSize &size, bool useBorders);
+    bool isActiveX11(WId windowId);
+    WId foregroundWindowX11();
+    QList<WId> windowListX11();
+    PositionChooser *createPositionChooserX11(QObject *parent);
+    AreaChooser *createAreaChooserX11(QObject *parent);
+    WindowChooser *createWindowChooserX11(QObject *parent);
 }

@@ -30,6 +30,7 @@
 
 namespace Backend
 {
+    class Capabilities;
     class Mouse;
     class Keyboard;
     class Process;
@@ -70,9 +71,9 @@ namespace Backend
     private:
         static Instance &get();
 
-        void useDummy();
         void instReleaseAll();
 
+        std::unique_ptr<Capabilities> mCapabilities;
         std::unique_ptr<Mouse> mMouse;
         std::unique_ptr<Keyboard> mKeyboard;
         std::unique_ptr<Process> mProcess;

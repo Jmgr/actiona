@@ -105,7 +105,7 @@ namespace Backend
     bool WindowChooserX11::nativeEventFilter(const QByteArray &eventType, void *message, long *)
     {
         if(eventType != "xcb_generic_event_t")
-            return true;
+            return false;
 
         auto* event = static_cast<xcb_generic_event_t *>(message);
 
@@ -138,10 +138,10 @@ namespace Backend
 
                 return false;
             }
-            return true;
+            return false;
         }
         }
 
-        return true;
+        return false;
     }
 }

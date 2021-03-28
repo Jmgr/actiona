@@ -20,11 +20,11 @@
 
 #pragma once
 
-#include "backend/backend_global.hpp"
-#include "backend/keyboard.hpp"
+#include "backend/mouse.hpp"
 
 namespace Backend
 {
-    void BACKENDSHARED_EXPORT pressKeyX11(const QString &key, bool press, bool directX);
-    void BACKENDSHARED_EXPORT writeTextX11(const QString &text, int delay, bool noUnicodeCharacters);
+    bool isButtonPressedXTest(Mouse::Button button);
+    void pressButtonXTest(Mouse::Button button, bool press);
+    void rotateWheelXTest(int intensity);
 }

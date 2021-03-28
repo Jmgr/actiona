@@ -100,7 +100,7 @@ namespace ActionTools
 		ui->chooseByPosition->setVisible(visible);
 	}
 	
-    void ColorEdit::setPosition(QPointF position)
+    void ColorEdit::setPosition(const QPoint &position)
 	{
         QPixmap pixel = QGuiApplication::primaryScreen()->grabWindow(0, position.x(), position.y(), 1, 1);
 		QColor pixelColor = pixel.toImage().pixel(0, 0);
@@ -109,7 +109,7 @@ namespace ActionTools
 		on_colorLineEdit_textChanged(QString());
 	}
 
-    void ColorEdit::on_chooseByPosition_positionChosen(QPointF position)
+    void ColorEdit::on_chooseByPosition_positionChosen(const QPoint position)
 	{
 		setPosition(position);
 		

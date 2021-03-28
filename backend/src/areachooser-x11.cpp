@@ -30,6 +30,14 @@ namespace Backend
         mXRectSelProcess(new QProcess(this))
     {
         mXRectSelProcess->setProgram(QStringLiteral("backend-xrectsel"));
+        connect(mXRectSelProcess, &QProcess::errorOccurred, this, [this](QProcess::ProcessError error)
+        {
+            if(error == QProcess::FailedToStart)
+            {
+                qDebug("failed to start");
+                emit canceled(); // TODO: add error signal
+            }
+        });
         connect(mXRectSelProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [this](int exitCode, QProcess::ExitStatus exitStatus)
         {
             static QRegularExpression resultRegex(QStringLiteral(R"((\d+)x(\d+)\+(\d+)\+(\d+))"));

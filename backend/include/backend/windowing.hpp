@@ -22,6 +22,7 @@
 
 #include "backend/backend_global.hpp"
 #include "backend/backend.hpp"
+#include "backend/feature.hpp"
 
 #include <qwindowdefs.h>
 #include <QObject>
@@ -30,28 +31,41 @@
 #include <QPoint>
 #include <QSize>
 #include <QList>
-
-#include <functional>
-#include <memory>
+#include <QPixmap>
 
 class QWidget;
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT PositionChooser : public QObject
+    class Capabilities;
+
+    class BACKENDSHARED_EXPORT Chooser : public QObject
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(Chooser)
+
+    public:
+        explicit Chooser(QObject *parent = nullptr): QObject(parent) {}
+        virtual ~Chooser() = default;
+
+        virtual void choose() = 0;
+
+    signals:
+        void canceled();
+        void errorOccurred(const BackendError &error);
+    };
+
+    class BACKENDSHARED_EXPORT PositionChooser : public Chooser
     {
         Q_OBJECT
         Q_DISABLE_COPY(PositionChooser)
 
     public:
-        PositionChooser(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~PositionChooser() = default;
-
-        virtual void choose() = 0;
+        explicit PositionChooser(QObject *parent = nullptr): Chooser(parent) {}
+        ~PositionChooser() override = default;
 
     signals:
         void done(const QPoint &position);
-        void canceled();
     };
 
     class BACKENDSHARED_EXPORT PositionChooserDummy final : public PositionChooser
@@ -60,26 +74,23 @@ namespace Backend
         Q_DISABLE_COPY(PositionChooserDummy)
 
     public:
-        PositionChooserDummy(QObject *parent = nullptr): PositionChooser(parent) {}
-        ~PositionChooserDummy() = default;
+        explicit PositionChooserDummy(QObject *parent = nullptr): PositionChooser(parent) {}
+        ~PositionChooserDummy() override = default;
 
         void choose() override { emit done({}); }
     };
 
-    class BACKENDSHARED_EXPORT AreaChooser : public QObject
+    class BACKENDSHARED_EXPORT AreaChooser : public Chooser
     {
         Q_OBJECT
         Q_DISABLE_COPY(AreaChooser)
 
     public:
-        AreaChooser(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~AreaChooser() = default;
-
-        virtual void choose() = 0;
+        explicit AreaChooser(QObject *parent = nullptr): Chooser(parent) {}
+        ~AreaChooser() override = default;
 
     signals:
         void done(const QRect &area);
-        void canceled();
     };
 
     class BACKENDSHARED_EXPORT AreaChooserDummy final : public AreaChooser
@@ -88,26 +99,23 @@ namespace Backend
         Q_DISABLE_COPY(AreaChooserDummy)
 
     public:
-        AreaChooserDummy(QObject *parent = nullptr): AreaChooser(parent) {}
-        ~AreaChooserDummy() = default;
+        explicit AreaChooserDummy(QObject *parent = nullptr): AreaChooser(parent) {}
+        ~AreaChooserDummy() override = default;
 
         void choose() override { emit done({}); }
     };
 
-    class BACKENDSHARED_EXPORT WindowChooser : public QObject
+    class BACKENDSHARED_EXPORT WindowChooser : public Chooser
     {
         Q_OBJECT
         Q_DISABLE_COPY(WindowChooser)
 
     public:
-        WindowChooser(QObject *parent = nullptr): QObject(parent) {}
-        virtual ~WindowChooser() = default;
-
-        virtual void choose() = 0;
+        explicit WindowChooser(QObject *parent = nullptr): Chooser(parent) {}
+        ~WindowChooser() override = default;
 
     signals:
         void done(const WId &window);
-        void canceled();
     };
 
     class BACKENDSHARED_EXPORT WindowChooserDummy final : public WindowChooser
@@ -116,57 +124,154 @@ namespace Backend
         Q_DISABLE_COPY(WindowChooserDummy)
 
     public:
-        WindowChooserDummy(QObject *parent = nullptr): WindowChooser(parent) {}
-        ~WindowChooserDummy() = default;
+        explicit WindowChooserDummy(QObject *parent = nullptr): WindowChooser(parent) {}
+        ~WindowChooserDummy() override = default;
 
         void choose() override { emit done({}); }
+    };
+
+    class BACKENDSHARED_EXPORT Screenshooter : public QObject
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(Screenshooter)
+
+    public:
+        explicit Screenshooter(QObject *parent = nullptr): QObject(parent) {}
+        virtual ~Screenshooter() = default;
+
+        virtual void capture(bool includeCursor, bool includeFrame, bool flash) = 0;
+
+    signals:
+        void done(const QPixmap &pixmap);
+        void canceled();
+        void errorOccurred(const BackendError &error);
+    };
+
+    class BACKENDSHARED_EXPORT ScreenshooterDummy final : public Screenshooter
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(ScreenshooterDummy)
+
+    public:
+        explicit ScreenshooterDummy(QObject *parent = nullptr): Screenshooter(parent) {}
+        ~ScreenshooterDummy() override = default;
+
+        void capture(bool includeCursor, bool includeFrame, bool flash) override
+        {
+            Q_UNUSED(includeCursor)
+            Q_UNUSED(includeFrame)
+            Q_UNUSED(flash)
+
+            emit done({});
+        }
     };
 
     class BACKENDSHARED_EXPORT Windowing final
     {
         Q_DISABLE_COPY(Windowing)
 
-    private:
-        Windowing() = default;
-
     public:
-        std::function<void(WId windowId)> setForegroundWindow;
-        std::function<QString(WId windowId)> title;
-        std::function<QString(WId windowId)> classname;
-        std::function<QRect(WId windowId, bool useBorders)> rect;
-        std::function<int(WId windowId)> processId;
-        std::function<void(WId windowId)> close;
-        std::function<void(WId windowId)> killCreator;
-        std::function<void(WId windowId)> minimize;
-        std::function<void(WId windowId)> maximize;
-        std::function<void(WId windowId, const QPoint &position)> move;
-        std::function<void(WId windowId, const QSize &size, bool useBorders)> resize;
-        std::function<bool(WId windowId)> isActive;
-        std::function<WId()> foregroundWindow;
-        std::function<QList<WId>()> windowList;
-        std::function<PositionChooser*(QObject*)> createPositionChooser;
-        std::function<AreaChooser*(QObject*)> createAreaChooser;
-        std::function<WindowChooser*(QObject*)> createWindowChooser;
+        Windowing(Capabilities &caps);
 
-        friend std::unique_ptr<Windowing> std::make_unique<Windowing>();
+        Feature<void(WId windowId)> setForegroundWindow
+        {
+            QStringLiteral("setForegroundWindow"),
+            [](WId){}
+        };
+        Feature<QString(WId windowId)> title
+        {
+            QStringLiteral("title"),
+            [](WId){ return QString{}; }
+        };
+        Feature<QString(WId windowId)> classname
+        {
+            QStringLiteral("classname"),
+            [](WId){ return QString{}; }
+        };
+        Feature<QRect(WId windowId, bool useBorders)> rect
+        {
+            QStringLiteral("rect"),
+            [](WId, bool){ return QRect{}; }
+        };
+        Feature<int(WId windowId)> processId
+        {
+            QStringLiteral("processId"),
+            [](WId){ return 0; }
+        };
+        Feature<void(WId windowId)> close
+        {
+            QStringLiteral("close"),
+            [](WId){}
+        };
+        Feature<void(WId windowId)> killCreator
+        {
+            QStringLiteral("killCreator"),
+            [](WId){}
+        };
+        Feature<void(WId windowId)> minimize
+        {
+            QStringLiteral("minimize"),
+            [](WId){}
+        };
+        Feature<void(WId windowId)> maximize
+        {
+            QStringLiteral("maximize"),
+            [](WId){}
+        };
+        Feature<void(WId windowId, const QPoint &position)> move
+        {
+            QStringLiteral("move"),
+            [](WId, const QPoint &){}
+        };
+        Feature<void(WId windowId, const QSize &size, bool useBorders)> resize
+        {
+            QStringLiteral("resize"),
+            [](WId, const QSize &, bool){}
+        };
+        Feature<bool(WId windowId)> isActive
+        {
+            QStringLiteral("isActive"),
+            [](WId){ return false; }
+        };
+        Feature<WId()> foregroundWindow
+        {
+            QStringLiteral("foregroundWindow"),
+            []{ return WId{}; }
+        };
+        Feature<QList<WId>()> windowList
+        {
+            QStringLiteral("windowList"),
+            []{ return QList<WId>{}; }
+        };
+        Feature<PositionChooser*(QObject*)> createPositionChooser
+        {
+            QStringLiteral("createPositionChooser"),
+            [](QObject *parent) -> PositionChooser* { return new PositionChooserDummy(parent); }
+        };
+        Feature<AreaChooser*(QObject*)> createAreaChooser
+        {
+            QStringLiteral("createAreaChooser"),
+            [](QObject *parent) -> AreaChooser* { return new AreaChooserDummy(parent); }
+        };
+        Feature<WindowChooser*(QObject*)> createWindowChooser
+        {
+            QStringLiteral("createWindowChooser"),
+            [](QObject *parent) -> WindowChooser* { return new WindowChooserDummy(parent); }
+        };
+        Feature<Screenshooter*(QObject*)> createFullscreenScreenshooter
+        {
+            QStringLiteral("createFullscreenScreenshooter"),
+            [](QObject *parent) -> Screenshooter* { return new ScreenshooterDummy(parent); }
+        };
+        Feature<Screenshooter*(QObject*)> createAreaScreenshooter
+        {
+            QStringLiteral("createAreaScreenshooter"),
+            [](QObject *parent) -> Screenshooter* { return new ScreenshooterDummy(parent); }
+        };
+        Feature<Screenshooter*(QObject*)> createWindowScreenshooter
+        {
+            QStringLiteral("createWindowScreenshooter"),
+            [](QObject *parent) -> Screenshooter* { return new ScreenshooterDummy(parent); }
+        };
     };
-
-    // Dummy implementations
-    static void setForegroundWindowDummy(WId) {}
-    static QString titleDummy(WId) { return {}; }
-    static QString classnameDummy(WId) { return {}; }
-    static QRect rectDummy(WId, bool) { return {}; }
-    static int processIdDummy(WId) { return {}; }
-    static void closeDummy(WId) {}
-    static void killCreatorDummy(WId) {}
-    static void minimizeDummy(WId) {}
-    static void maximizeDummy(WId) {}
-    static void moveDummy(WId, const QPoint &) {}
-    static void resizeDummy(WId, const QSize &, bool) {}
-    static bool isActiveDummy(WId) { return true; }
-    static WId foregroundWindowDummy() { return {}; }
-    static QList<WId> windowListDummy() { return {}; }
-    static PositionChooser *createPositionChooserDummy(QObject *parent) { return new PositionChooserDummy(parent); }
-    static AreaChooser *createAreaChooserDummy(QObject *parent) { return new AreaChooserDummy(parent); }
-    static WindowChooser *createWindowChooserDummy(QObject *parent) { return new WindowChooserDummy(parent); }
 }

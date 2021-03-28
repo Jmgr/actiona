@@ -18,16 +18,44 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/capabilities.hpp"
 
-#include "backend/process.hpp"
+#ifdef Q_OS_UNIX
+#include <QX11Info>
+
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
+#endif
 
 namespace Backend
 {
-    void killProcessUnix(int id, Process::KillMode killMode, int timeout);
-    Process::ProcessStatus processStatusUnix(int id);
-    QList<int> runningProcessesUnix();
-    int parentProcessUnix(int id);
-    QString processCommandUnix(int id);
-    Process::Priority processPriorityUnix(int id);
+    Capabilities::Capabilities()
+    {
+        detectX11();
+        detectXTest();
+    }
+
+    void Capabilities::detectX11()
+    {
+#ifdef Q_OS_UNIX
+        auto display = QX11Info::display();
+
+        if(display)
+            mHasX11 = true;
+#endif
+    }
+
+    void Capabilities::detectXTest()
+    {
+#ifdef Q_OS_UNIX
+        if(!mHasX11)
+            return;
+
+        auto display = QX11Info::display();
+        int unused;
+
+        if(XTestQueryExtension(display, &unused, &unused, &unused, &unused))
+            mHasXTest = true;
+#endif
+    }
 }

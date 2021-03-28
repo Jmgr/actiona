@@ -20,14 +20,25 @@
 
 #pragma once
 
-#include "backend/process.hpp"
+#include <qglobal.h>
 
 namespace Backend
 {
-    void killProcessUnix(int id, Process::KillMode killMode, int timeout);
-    Process::ProcessStatus processStatusUnix(int id);
-    QList<int> runningProcessesUnix();
-    int parentProcessUnix(int id);
-    QString processCommandUnix(int id);
-    Process::Priority processPriorityUnix(int id);
+    class Capabilities final
+    {
+        Q_DISABLE_COPY(Capabilities)
+
+    public:
+        Capabilities();
+
+        bool hasX11() const { return mHasX11; }
+        bool hasXTest() const { return mHasXTest; }
+
+    private:
+        void detectX11();
+        void detectXTest();
+
+        bool mHasX11{};
+        bool mHasXTest{};
+    };
 }

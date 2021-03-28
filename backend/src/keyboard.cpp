@@ -18,16 +18,26 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/keyboard.hpp"
+#include "backend/capabilities.hpp"
 
-#include "backend/process.hpp"
+#if defined(Q_OS_LINUX)
+#include "backend/keyboard-xtest.hpp"
+#endif
 
 namespace Backend
 {
-    void killProcessUnix(int id, Process::KillMode killMode, int timeout);
-    Process::ProcessStatus processStatusUnix(int id);
-    QList<int> runningProcessesUnix();
-    int parentProcessUnix(int id);
-    QString processCommandUnix(int id);
-    Process::Priority processPriorityUnix(int id);
+    Keyboard::Keyboard(Capabilities &caps)
+    {
+#if defined(Q_OS_LINUX)
+        if(caps.hasXTest())
+        {
+            pressKey.addImplementation(x11Impl, pressKeyXTest);
+            writeText.addImplementation(x11Impl, writeTextXTest);
+        }
+#endif
+
+        pressKey.choose();
+        writeText.choose();
+    }
 }

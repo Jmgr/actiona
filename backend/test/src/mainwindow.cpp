@@ -68,6 +68,10 @@ void MainWindow::on_chooseAreaPushButton_clicked()
         ui->chooseAreaLabel->setText(QStringLiteral("canceled"));
         areaChooser->deleteLater();
     });
+    connect(areaChooser, &Backend::AreaChooser::errorOccurred, this, [this, areaChooser](const Backend::BackendError &e){
+        ui->chooseAreaLabel->setText(QStringLiteral("error: %1").arg(e.what()));
+        areaChooser->deleteLater();
+    });
     areaChooser->choose();
 }
 
@@ -90,6 +94,10 @@ void MainWindow::on_chooseWindowNewPushButton_pressed()
         ui->chooseWindowNewLabel->setText(QStringLiteral("canceled"));
         windowChooser->deleteLater();
     });
+    connect(windowChooser, &Backend::AreaChooser::errorOccurred, this, [this, windowChooser](const Backend::BackendError &e){
+        ui->chooseWindowNewLabel->setText(QStringLiteral("error: %1").arg(e.what()));
+        windowChooser->deleteLater();
+    });
     windowChooser->choose();
 }
 
@@ -102,6 +110,10 @@ void MainWindow::on_choosePositionNewPushButton_pressed()
     });
     connect(posChooser, &Backend::PositionChooser::canceled, this, [this, posChooser]{
         ui->choosePositionNewLabel->setText(QStringLiteral("canceled"));
+        posChooser->deleteLater();
+    });
+    connect(posChooser, &Backend::AreaChooser::errorOccurred, this, [this, posChooser](const Backend::BackendError &e){
+        ui->choosePositionNewLabel->setText(QStringLiteral("error: %1").arg(e.what()));
         posChooser->deleteLater();
     });
     posChooser->choose();

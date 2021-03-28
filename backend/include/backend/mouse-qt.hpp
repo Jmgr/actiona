@@ -20,14 +20,10 @@
 
 #pragma once
 
-#include "backend/process.hpp"
+#include "backend/mouse.hpp"
 
 namespace Backend
 {
-    void killProcessUnix(int id, Process::KillMode killMode, int timeout);
-    Process::ProcessStatus processStatusUnix(int id);
-    QList<int> runningProcessesUnix();
-    int parentProcessUnix(int id);
-    QString processCommandUnix(int id);
-    Process::Priority processPriorityUnix(int id);
+    QPoint cursorPositionQt();
+    void setCursorPositionQt(const QPoint &position);
 }

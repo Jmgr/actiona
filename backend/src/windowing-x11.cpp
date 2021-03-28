@@ -219,14 +219,16 @@ namespace Backend
             throw BackendError(QObject::tr("failed to send an event to window id %1").arg(windowId));
     }
 
-    void moveX11(WId windowId, QPoint position)
+    void moveX11(WId windowId, const QPoint &position)
     {
         if(!XMoveWindow(QX11Info::display(), windowId, position.x(), position.y()))
             throw BackendError(QObject::tr("failed to move window id %1").arg(windowId));
     }
 
-    void resizeX11(WId windowId, QSize size, bool useBorders)
+    void resizeX11(WId windowId, const QSize &size, bool useBorders)
     {
+        auto localSize = size;
+
         if(useBorders)
         {
             XWindowAttributes windowAttributes;
@@ -234,17 +236,17 @@ namespace Backend
             if(!XGetWindowAttributes(QX11Info::display(), windowId, &windowAttributes))
                 throw BackendError(QObject::tr("failed to get window attributes for window id %1").arg(windowId));
 
-            size.rwidth() += windowAttributes.border_width;
-            size.rheight() += windowAttributes.border_width;
+            localSize.rwidth() += windowAttributes.border_width;
+            localSize.rheight() += windowAttributes.border_width;
         }
 
-        if(!XResizeWindow(QX11Info::display(), windowId, size.width(), size.height()))
+        if(!XResizeWindow(QX11Info::display(), windowId, localSize.width(), localSize.height()))
             throw BackendError(QObject::tr("failed to resize window id %1").arg(windowId));
     }
 
     bool isActiveX11(WId windowId)
     {
-        return (Backend::Instance::windowing().foregroundWindow() == windowId);
+        return (Instance::windowing().foregroundWindow() == windowId);
     }
 
     WId foregroundWindowX11()

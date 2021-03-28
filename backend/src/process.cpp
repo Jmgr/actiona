@@ -18,16 +18,30 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
-
 #include "backend/process.hpp"
+
+#if defined(Q_OS_LINUX)
+#include "backend/process-unix.hpp"
+#endif
 
 namespace Backend
 {
-    void killProcessUnix(int id, Process::KillMode killMode, int timeout);
-    Process::ProcessStatus processStatusUnix(int id);
-    QList<int> runningProcessesUnix();
-    int parentProcessUnix(int id);
-    QString processCommandUnix(int id);
-    Process::Priority processPriorityUnix(int id);
+    Process::Process()
+    {
+#if defined(Q_OS_LINUX)
+        killProcess.addImplementation(unixImpl, killProcessUnix);
+        processStatus.addImplementation(unixImpl, processStatusUnix);
+        runningProcesses.addImplementation(unixImpl, runningProcessesUnix);
+        parentProcess.addImplementation(unixImpl, parentProcessUnix);
+        processCommand.addImplementation(unixImpl, processCommandUnix);
+        processPriority.addImplementation(unixImpl, processPriorityUnix);
+#endif
+
+        killProcess.choose();
+        processStatus.choose();
+        runningProcesses.choose();
+        parentProcess.choose();
+        processCommand.choose();
+        processPriority.choose();
+    }
 }

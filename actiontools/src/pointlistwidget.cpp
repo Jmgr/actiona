@@ -123,9 +123,9 @@ namespace ActionTools
 		updateClearStatus();
 	}
 
-    void PointListWidget::positionChosen(QPointF position)
+    void PointListWidget::positionChosen(const QPoint &position)
 	{
-        addPoint(QPoint(position.x(), position.y()));
+        addPoint(position);
 	}
 
 	void PointListWidget::on_list_itemSelectionChanged()
@@ -133,7 +133,7 @@ namespace ActionTools
 		ui->removePushButton->setEnabled(!ui->list->selectedItems().isEmpty());
 	}
 
-	void PointListWidget::on_capturePathPushButton_chooseStarted()
+    void PointListWidget::on_capturePathPushButton_pressed()
 	{
 		mCaptureTimer.start(25);
 	}

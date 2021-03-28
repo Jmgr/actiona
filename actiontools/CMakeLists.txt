@@ -81,7 +81,6 @@ set(SOURCES
     ${SOURCES_PREFIX}/scriptlinemodel.cpp
     ${SOURCES_PREFIX}/subparameter.cpp
     ${SOURCES_PREFIX}/switchtextmodepushbutton.cpp
-    ${SOURCES_PREFIX}/targetwindow.cpp
     ${SOURCES_PREFIX}/textparameterdefinition.cpp
     ${SOURCES_PREFIX}/variablelineedit.cpp
     ${SOURCES_PREFIX}/variableparameterdefinition.cpp
@@ -201,7 +200,6 @@ set(HEADERS
     ${HEADERS_PREFIX}/swappairs.hpp
     ${HEADERS_PREFIX}/switchtextmodepushbutton.hpp
     ${HEADERS_PREFIX}/systeminput.hpp
-    ${HEADERS_PREFIX}/targetwindow.hpp
     ${HEADERS_PREFIX}/textparameterdefinition.hpp
     ${HEADERS_PREFIX}/variablelineedit.hpp
     ${HEADERS_PREFIX}/variableparameterdefinition.hpp

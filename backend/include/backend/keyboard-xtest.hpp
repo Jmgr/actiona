@@ -20,14 +20,11 @@
 
 #pragma once
 
-#include "backend/process.hpp"
+#include "backend/backend_global.hpp"
+#include "backend/keyboard.hpp"
 
 namespace Backend
 {
-    void killProcessUnix(int id, Process::KillMode killMode, int timeout);
-    Process::ProcessStatus processStatusUnix(int id);
-    QList<int> runningProcessesUnix();
-    int parentProcessUnix(int id);
-    QString processCommandUnix(int id);
-    Process::Priority processPriorityUnix(int id);
+    void BACKENDSHARED_EXPORT pressKeyXTest(const QString &key, bool press, bool directX);
+    void BACKENDSHARED_EXPORT writeTextXTest(const QString &text, int delay, bool noUnicodeCharacters);
 }

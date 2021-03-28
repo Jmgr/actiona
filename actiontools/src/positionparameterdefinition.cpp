@@ -64,14 +64,13 @@ namespace ActionTools
 		actionInstance->setSubParameter(name().original(), QStringLiteral("unit"), QString::number(mPositionUnitComboBox->currentIndex()));
     }
 
-    void PositionParameterDefinition::positionChosen(QPointF position)
+    void PositionParameterDefinition::positionChosen(const QPoint &position)
     {
         if(mPositionUnitComboBox->currentIndex() == 1)//Percents
         {
             QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
 
-            mPositionEdit->setPosition(QPointF((position.x() * 100) / screenGeometry.width(),
-                                              (position.y() * 100) / screenGeometry.height()));
+            mPositionEdit->setPosition(QPoint((position.x() * 100) / screenGeometry.width(), (position.y() * 100) / screenGeometry.height()));
         }
     }
 }

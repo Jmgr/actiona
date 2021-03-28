@@ -22,18 +22,15 @@
 
 #include "backend/backend_global.hpp"
 #include "backend/backend.hpp"
-
-#include <functional>
-#include <memory>
+#include "backend/feature.hpp"
 
 namespace Backend
 {
+    class Capabilities;
+
     class BACKENDSHARED_EXPORT System final
     {
         Q_DISABLE_COPY(System)
-
-    private:
-        System() = default;
 
     public:
         struct FileOperationParameters
@@ -45,33 +42,67 @@ namespace Backend
             bool createDestinationDirectory{true};
         };
 
-        std::function<void(bool force)> logout;
-        std::function<void(bool force)> restart;
-        std::function<void(bool force)> shutdown;
-        std::function<void(bool force)> suspend;
-        std::function<void(bool force)> hibernate;
-        std::function<void()> lockScreen;
-        std::function<void()> startScreenSaver;
-        std::function<QString()> getUsername;
-        std::function<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> copyFiles;
-        std::function<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> moveFiles;
-        std::function<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> renameFiles;
-        std::function<void(const QString &filepath, const FileOperationParameters &parameters)> removeFiles;
+        System(Capabilities &caps);
 
-        friend std::unique_ptr<System> std::make_unique<System>();
+        Feature<void(bool force)> logout
+        {
+            QStringLiteral("logout"),
+            [](bool){}
+        };
+        Feature<void(bool force)> restart
+        {
+            QStringLiteral("restart"),
+            [](bool){}
+        };
+        Feature<void(bool force)> shutdown
+        {
+            QStringLiteral("shutdown"),
+            [](bool){}
+        };
+        Feature<void(bool force)> suspend
+        {
+            QStringLiteral("suspend"),
+            [](bool){}
+        };
+        Feature<void(bool force)> hibernate
+        {
+            QStringLiteral("hibernate"),
+            [](bool){}
+        };
+        Feature<void()> lockScreen
+        {
+            QStringLiteral("lockScreen"),
+            []{}
+        };
+        Feature<void()> startScreenSaver
+        {
+            QStringLiteral("startScreenSaver"),
+            []{}
+        };
+        Feature<QString()> getUsername
+        {
+            QStringLiteral("getUsername"),
+            []{ return QString{}; }
+        };
+        Feature<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> copyFiles
+        {
+            QStringLiteral("copyFiles"),
+            [](const QString &, const QString &, const FileOperationParameters &){}
+        };
+        Feature<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> moveFiles
+        {
+            QStringLiteral("moveFiles"),
+            [](const QString &, const QString &, const FileOperationParameters &){}
+        };
+        Feature<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> renameFiles
+        {
+            QStringLiteral("renameFiles"),
+            [](const QString &, const QString &, const FileOperationParameters &){}
+        };
+        Feature<void(const QString &filepath, const FileOperationParameters &parameters)> removeFiles
+        {
+            QStringLiteral("removeFiles"),
+            [](const QString &, const FileOperationParameters &){}
+        };
     };
-
-    // Dummy implementations
-    static void logoutDummy(bool) {}
-    static void restartDummy(bool) {}
-    static void shutdownDummy(bool) {}
-    static void suspendDummy(bool) {}
-    static void hibernateDummy(bool) {}
-    static void lockScreenDummy() {}
-    static void startScreenSaverDummy() {}
-    static QString getUsernameDummy() { return {}; }
-    static void copyFilesDummy(const QString &, const QString &, const System::FileOperationParameters &) {}
-    static void moveFilesDummy(const QString &, const QString &, const System::FileOperationParameters &) {}
-    static void renameFilesDummy(const QString &, const QString &, const System::FileOperationParameters &) {}
-    static void removeFilesDummy(const QString &, const System::FileOperationParameters &) {}
 }

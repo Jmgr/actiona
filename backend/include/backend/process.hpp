@@ -22,20 +22,15 @@
 
 #include "backend/backend_global.hpp"
 #include "backend/backend.hpp"
+#include "backend/feature.hpp"
 
 #include <QList>
-
-#include <functional>
-#include <memory>
 
 namespace Backend
 {
     class BACKENDSHARED_EXPORT Process final
     {
         Q_DISABLE_COPY(Process)
-
-    private:
-        Process() = default;
 
     public:
         enum class KillMode
@@ -59,21 +54,37 @@ namespace Backend
             Realtime
         };
 
-        std::function<void(int id, KillMode killMode, int timeout)> killProcess;
-        std::function<ProcessStatus(int id)> processStatus;
-        std::function<QList<int>()> runningProcesses;
-        std::function<int(int id)> parentProcess;
-        std::function<QString(int id)> processCommand;
-        std::function<Priority(int id)> processPriority;
+        Process();
 
-        friend std::unique_ptr<Process> std::make_unique<Process>();
+        Feature<void(int id, KillMode killMode, int timeout)> killProcess
+        {
+            QStringLiteral("killProcess"),
+            [](int, Process::KillMode, int){}
+        };
+        Feature<ProcessStatus(int id)> processStatus
+        {
+            QStringLiteral("processStatus"),
+            [](int){ return Process::ProcessStatus::Running; }
+        };
+        Feature<QList<int>()> runningProcesses
+        {
+            QStringLiteral("runningProcesses"),
+            [](){ return QList<int>{}; }
+        };
+        Feature<int(int id)> parentProcess
+        {
+            QStringLiteral("parentProcess"),
+            [](int){ return 0; }
+        };
+        Feature<QString(int id)> processCommand
+        {
+            QStringLiteral("processCommand"),
+            [](int){ return QString{}; }
+        };
+        Feature<Priority(int id)> processPriority
+        {
+            QStringLiteral("processPriority"),
+            [](int){ return Process::Priority{}; }
+        };
     };
-
-    // Dummy implementations
-    static void killProcessDummy(int, Process::KillMode, int) {}
-    static Process::ProcessStatus processStatusDummy(int) { return Process::ProcessStatus::Running; }
-    static QList<int> runningProcessesDummy() { return {}; }
-    static int parentProcessDummy(int) { return {}; }
-    static QString processCommandDummy(int) { return {}; }
-    static Process::Priority processPriorityDummy(int) { return {}; }
 }

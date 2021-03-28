@@ -18,37 +18,20 @@
 	Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/mouse-qt.hpp"
 
-#include "actiontools_global.hpp"
-
-#include <QPushButton>
+#include <QCursor>
 
 namespace Backend
 {
-    class WindowChooser;
-}
+    QPoint cursorPositionQt()
+    {
+        return QCursor::pos();
+    }
 
-namespace ActionTools
-{
-    class WindowHandle;
-
-    class ACTIONTOOLSSHARED_EXPORT ChooseWindowPushButton : public QPushButton
-	{
-		Q_OBJECT
-        Q_DISABLE_COPY(ChooseWindowPushButton)
-
-	public:
-		explicit ChooseWindowPushButton(QWidget *parent = nullptr);
-        ~ChooseWindowPushButton() override;
-
-	signals:
-        void searchEnded(const ActionTools::WindowHandle &handle);
-        void canceled();
-        void errorOccurred(const QString error);
-
-	private:
-        Backend::WindowChooser *mChooser;
-	};
+    void setCursorPositionQt(const QPoint &position)
+    {
+        QCursor::setPos(position);
+    }
 }
 

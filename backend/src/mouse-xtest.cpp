@@ -18,10 +18,9 @@
 	Contact: jmgr@jmgr.info
 */
 
-#include "backend/mouse-x11.hpp"
+#include "backend/mouse-xtest.hpp"
 
 #include <QX11Info>
-#include <QCursor>
 
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
@@ -33,7 +32,7 @@ namespace Backend
         return static_cast<int>(button) + 1;
     }
 
-    bool isButtonPressedX11(Mouse::Button button)
+    bool isButtonPressedXTest(Mouse::Button button)
     {
         Window unusedWindow;
         int unusedInt;
@@ -63,17 +62,7 @@ namespace Backend
         }
     }
 
-    QPoint cursorPositionX11()
-    {
-        return QCursor::pos();
-    }
-
-    void setCursorPositionX11(const QPoint &position)
-    {
-        QCursor::setPos(position);
-    }
-
-    void pressButtonX11(Mouse::Button button, bool press)
+    void pressButtonXTest(Mouse::Button button, bool press)
     {
         if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), press, CurrentTime))
             throw BackendError(); // TODO: get error message
@@ -82,7 +71,7 @@ namespace Backend
             throw BackendError();
     }
 
-    void rotateWheelX11(int intensity)
+    void rotateWheelXTest(int intensity)
     {
         int button;
         if(intensity < 0)

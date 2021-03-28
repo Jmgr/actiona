@@ -22,20 +22,17 @@
 
 #include "backend/backend_global.hpp"
 #include "backend/backend.hpp"
+#include "backend/feature.hpp"
 
 #include <QPoint>
 
-#include <functional>
-#include <memory>
-
 namespace Backend
 {
+    class Capabilities;
+
     class BACKENDSHARED_EXPORT Mouse final
     {
         Q_DISABLE_COPY(Mouse)
-
-    private:
-        Mouse() = default;
 
     public:
         enum class Button
@@ -47,22 +44,32 @@ namespace Backend
             Count
         };
 
-        // Input
-        std::function<bool(Button button)> isButtonPressed;
-        std::function<QPoint()> cursorPosition;
+        Mouse(Capabilities &caps);
 
-        // Output
-        std::function<void(const QPoint &position)> setCursorPosition;
-        std::function<void(Button button, bool press)> pressButton;
-        std::function<void(int intensity)> rotateWheel;
-
-        friend std::unique_ptr<Mouse> std::make_unique<Mouse>();
+        Feature<bool(Button button)> isButtonPressed
+        {
+            QStringLiteral("isButtonPressed"),
+            [](Mouse::Button){ return false; }
+        };
+        Feature<QPoint()> cursorPosition
+        {
+            QStringLiteral("cursorPosition"),
+            []{ return QPoint{}; }
+        };
+        Feature<void(const QPoint &position)> setCursorPosition
+        {
+            QStringLiteral("setCursorPosition"),
+            [](const QPoint &){}
+        };
+        Feature<void(Button button, bool press)> pressButton
+        {
+            QStringLiteral("pressButton"),
+            [](Mouse::Button, bool){}
+        };
+        Feature<void(int intensity)> rotateWheel
+        {
+            QStringLiteral("rotateWheel"),
+            [](int){}
+        };
     };
-
-    // Dummy implementations
-    static bool isButtonPressedDummy(Mouse::Button) { return false; }
-    static QPoint cursorPositionDummy() { return {}; }
-    static void setCursorPositionDummy(const QPoint &) {}
-    static void pressButtonDummy(Mouse::Button, bool) {}
-    static void rotateWheelDummy(int) {}
 }

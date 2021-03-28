@@ -32,6 +32,7 @@ namespace Ui
 
 namespace ActionTools
 {
+    // TODO: broken on linux
 	class ACTIONTOOLSSHARED_EXPORT PointListWidget : public QWidget
 	{
 		Q_OBJECT
@@ -51,9 +52,9 @@ namespace ActionTools
 		void on_addPositionPushButton_clicked();
 		void on_removePushButton_clicked();
 		void on_clearPushButton_clicked();
-        void positionChosen(QPointF position);
+        void positionChosen(const QPoint &position);
 		void on_list_itemSelectionChanged();
-		void on_capturePathPushButton_chooseStarted();
+        void on_capturePathPushButton_pressed();
 		void capture();
 		void stopCapture();
 

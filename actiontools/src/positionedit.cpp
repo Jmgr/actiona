@@ -90,12 +90,12 @@ namespace ActionTools
         return codeLineEdit()->findVariables();
     }
 
-    void PositionEdit::setPosition(QPointF position)
+    void PositionEdit::setPosition(const QPoint &position)
 	{
 		ui->position->setText(QStringLiteral("%1:%2").arg(position.x()).arg(position.y()));
 	}
 
-    void PositionEdit::on_choose_positionChosen(QPointF position)
+    void PositionEdit::on_choose_positionChosen(const QPoint &position)
 	{
 		setPosition(position);
 		

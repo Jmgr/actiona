@@ -29,10 +29,14 @@ namespace Ui
     class ScreenshotWizardPage;
 }
 
+namespace Backend
+{
+    class AreaChooser;
+}
+
 namespace ActionTools
 {
     class WindowHandle;
-    class TargetWindow;
 
     class ACTIONTOOLSSHARED_EXPORT ScreenshotWizardPage : public QWizardPage
     {
@@ -57,7 +61,7 @@ namespace ActionTools
         QPixmap capturePixmap() const;
 
         Ui::ScreenshotWizardPage *ui;
-        ActionTools::TargetWindow *mTargetWindow{nullptr};
+        Backend::AreaChooser *mAreaChooser{nullptr};
         bool mDisableEscape{false};
     };
 }

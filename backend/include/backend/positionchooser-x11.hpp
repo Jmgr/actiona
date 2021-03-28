@@ -45,4 +45,3 @@ namespace Backend
         unsigned long mTargetCursor;
 	};
 }
-

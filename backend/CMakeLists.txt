@@ -5,6 +5,13 @@ set(SOURCES
     ${SOURCES_PREFIX}/backend.cpp
     ${SOURCES_PREFIX}/keyinput.cpp
     ${SOURCES_PREFIX}/windowhandle.cpp
+    ${SOURCES_PREFIX}/mouse.cpp
+    ${SOURCES_PREFIX}/mouse-qt.cpp
+    ${SOURCES_PREFIX}/capabilities.cpp
+    ${SOURCES_PREFIX}/keyboard.cpp
+    ${SOURCES_PREFIX}/process.cpp
+    ${SOURCES_PREFIX}/windowing.cpp
+    ${SOURCES_PREFIX}/system.cpp
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/backend-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/system-unix.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/system-windows.cpp>
@@ -12,8 +19,8 @@ set(SOURCES
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/windowing-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/process-unix.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/process-windows.cpp>
-    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/mouse-x11.cpp>
-    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyboard-x11.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/mouse-xtest.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyboard-xtest.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/mouse-windows.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/keyboard-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyinput-x11.cpp>
@@ -36,6 +43,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/keymapper.hpp
     ${HEADERS_PREFIX}/keyinput.hpp
     ${HEADERS_PREFIX}/mouse.hpp
+    ${HEADERS_PREFIX}/mouse-qt.hpp
     ${HEADERS_PREFIX}/keyboard.hpp
     ${HEADERS_PREFIX}/process.hpp
     ${HEADERS_PREFIX}/windowing.hpp
@@ -43,6 +51,9 @@ set(HEADERS
     ${HEADERS_PREFIX}/scopeguard.hpp
     ${HEADERS_PREFIX}/3rdparty/scope_guard/scope_guard.hpp
     ${HEADERS_PREFIX}/windowhandle.hpp
+    ${HEADERS_PREFIX}/3rdparty/functional_unwrap.hpp
+    ${HEADERS_PREFIX}/feature.hpp
+    ${HEADERS_PREFIX}/capabilities.hpp
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/backend-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/system-unix.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/system-windows.hpp>
@@ -50,8 +61,8 @@ set(HEADERS
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/windowing-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/process-unix.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/process-windows.hpp>
-    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-x11.hpp>
-    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keyboard-x11.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/mouse-xtest.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keyboard-xtest.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/mouse-windows.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/keyboard-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keysymhelper-x11.hpp>

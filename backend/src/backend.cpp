@@ -18,11 +18,15 @@
     Contact: jmgr@jmgr.info
 */
 
+#include <QDebug>//TMP
+
 #include "backend/backend.hpp"
+#include "backend/capabilities.hpp"
 #include "backend/mouse.hpp"
 #include "backend/keyboard.hpp"
 #include "backend/windowing.hpp"
 #include "backend/system.hpp"
+#include "backend/feature.hpp"
 
 #ifdef Q_OS_WIN
 #include "backend/mouse-windows.hpp"
@@ -32,132 +36,40 @@
 #include "backend/system-windows.hpp"
 #endif
 #ifdef Q_OS_UNIX
-#include "backend/mouse-x11.hpp"
-#include "backend/keyboard-x11.hpp"
+#include "backend/mouse-xtest.hpp"
+#include "backend/keyboard-xtest.hpp"
 #include "backend/keysymhelper-x11.hpp"
 #include "backend/process-unix.hpp"
 #include "backend/windowing-x11.hpp"
 #include "backend/system-unix.hpp"
-
-#include <QX11Info>
-
-#include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
 #endif
 
 namespace Backend
 {
     Instance::Instance():
-        mMouse(std::make_unique<Mouse>()),
-        mKeyboard(std::make_unique<Keyboard>()),
+        mCapabilities(std::make_unique<Capabilities>()),
+        mMouse(std::make_unique<Mouse>(*mCapabilities)),
+        mKeyboard(std::make_unique<Keyboard>(*mCapabilities)),
         mProcess(std::make_unique<Process>()),
-        mWindowing(std::make_unique<Windowing>()),
-        mSystem(std::make_unique<System>())
+        mWindowing(std::make_unique<Windowing>(*mCapabilities)),
+        mSystem(std::make_unique<System>(*mCapabilities))
     {
 #if defined(Q_OS_WIN)
-        mMouse->isButtonPressed = isButtonPressedWindows;
-        mMouse->cursorPosition = cursorPositionWindows;
-        mMouse->setCursorPosition = setCursorPositionWindows;
-        mMouse->pressButton = pressButtonWindows;
-        mMouse->rotateWheel = rotateWheelWindows;
-        mKeyboard->pressKey = pressKeyWindows;
-        mKeyboard->writeText = writeTextWindows;
-        mProcess->killProcess = killProcessWindows;
-        mProcess->processStatus = processStatusWindows;
-        mProcess->runningProcesses = runningProcessesWindows;
-        mProcess->parentProcess = parentProcessWindows;
-        mProcess->processCommand = processCommandWindows;
-        mProcess->processPriority = processPriorityWindows;
-        mWindowing->setForegroundWindow = setForegroundWindowWindows;
-        mWindowing->title = titleWindows;
-        mWindowing->classname = classnameWindows;
-        mWindowing->rect = rectWindows;
-        mWindowing->processId = processIdWindows;
-        mWindowing->close = closeWindows;
-        mWindowing->killCreator = killCreatorWindows;
-        mWindowing->minimize = minimizeWindows;
-        mWindowing->maximize = maximizeWindows;
-        mWindowing->move = moveWindows;
-        mWindowing->resize = resizeWindows;
-        mWindowing->isActive = isActiveWindows;
-        mWindowing->foregroundWindow = foregroundWindowWindows;
-        mWindowing->windowList = windowListWindows;
-        mWindowing->createPositionChooser = createPositionChooserWindows;
-        mWindowing->createAreaChooser = createAreaChooserWindows;
-        mWindowing->createWindowChooser = createWindowChooserWindows;
-        mSystem->logout = logoutWindows;
-        mSystem->restart = restartWindows;
-        mSystem->shutdown = shutdownWindows;
-        mSystem->suspend = suspendWindows;
-        mSystem->hibernate = hibernateWindows;
-        mSystem->lockScreen = lockScreenWindows;
-        mSystem->startScreenSaver = startScreenSaverWindows;
-        mSystem->getUsername = getUsernameWindows;
-        mSystem->copyFiles = copyFilesWindows;
-        mSystem->moveFiles = moveFilesWindows;
-        mSystem->renameFiles = renameFilesWindows;
-        mSystem->removeFiles = removeFilesWindows;
+        // TODO
 #elif defined(Q_OS_UNIX)
-        mProcess->killProcess = killProcessUnix;
-        mProcess->processStatus = processStatusUnix;
-        mProcess->runningProcesses = runningProcessesUnix;
-        mProcess->parentProcess = parentProcessUnix;
-        mProcess->processCommand = processCommandUnix;
-        mProcess->processPriority = processPriorityUnix;
-        mSystem->logout = logoutUnix;
-        mSystem->restart = restartUnix;
-        mSystem->shutdown = shutdownUnix;
-        mSystem->suspend = suspendUnix;
-        mSystem->hibernate = hibernateUnix;
-        mSystem->lockScreen = lockScreenUnix;
-        mSystem->startScreenSaver = startScreenSaverUnix;
-        mSystem->getUsername = getUsernameUnix;
-        mSystem->copyFiles = copyFilesUnix;
-        mSystem->moveFiles = moveFilesUnix;
-        mSystem->renameFiles = renameFilesUnix;
-        mSystem->removeFiles = removeFilesUnix;
-
-        auto display = QX11Info::display();
-
-        int unused;
-        if(!display || !XTestQueryExtension(display, &unused, &unused, &unused, &unused))
-        {
-            // TODO: display a messagebox?
-            useDummy();
-            return;
-        }
-
-        mMouse->isButtonPressed = isButtonPressedX11;
-        mMouse->cursorPosition = cursorPositionX11;
-        mMouse->setCursorPosition = setCursorPositionX11;
-        mMouse->pressButton = pressButtonX11;
-        mMouse->rotateWheel = rotateWheelX11;
-        mKeyboard->pressKey = pressKeyX11;
-        mKeyboard->writeText = writeTextX11;
-        mWindowing->setForegroundWindow = setForegroundWindowX11;
-        mWindowing->title = titleX11;
-        mWindowing->classname = classnameX11;
-        mWindowing->rect = rectX11;
-        mWindowing->processId = processIdX11;
-        mWindowing->close = closeX11;
-        mWindowing->killCreator = killCreatorX11;
-        mWindowing->minimize = minimizeX11;
-        mWindowing->maximize = maximizeX11;
-        mWindowing->move = moveX11;
-        mWindowing->resize = resizeX11;
-        mWindowing->isActive = isActiveX11;
-        mWindowing->foregroundWindow = foregroundWindowX11;
-        mWindowing->windowList = windowListX11;
-        mWindowing->createPositionChooser = createPositionChooserX11;
-        mWindowing->createAreaChooser = createAreaChooserX11;
-        mWindowing->createWindowChooser = createWindowChooserX11;
+        //mWindowing->createFullscreenScreenshooter = createFullscreenScreenshooterX11;
+        //mWindowing->createAreaScreenshooter = createAreaScreenshooterX11;
+        //mWindowing->createWindowScreenshooter = createWindowScreenshooterX11;
+        //TODO: choose one
+        //mWindowing->createFullscreenScreenshooter = createFullscreenScreenshooterGnome; // TODO
+        //mWindowing->createAreaScreenshooter = createAreaScreenshooterGnome; // TODO
+        //mWindowing->createWindowScreenshooter = createWindowScreenshooterGnome; // TODO
 
         KeySymHelper::loadKeyCodes();
-#else
-        useDummy();
 #endif
-        // TODO: use auto-closer class to close HANDLEs
 
+        /*
+        //TODO
         auto pressButton = mMouse->pressButton;
         mMouse->pressButton = [this, pressButton](Mouse::Button button, bool press)
         {
@@ -179,6 +91,7 @@ namespace Backend
             else
                 mPressedKeys.erase(std::make_pair(key, directX));
         };
+        */
     }
 
     Instance::~Instance()
@@ -190,53 +103,6 @@ namespace Backend
         static Instance instance;
 
         return instance;
-    }
-
-    void Instance::useDummy()
-    {
-        qWarning("Backend: using dummy");
-        mMouse->isButtonPressed = isButtonPressedDummy;
-        mMouse->cursorPosition = cursorPositionDummy;
-        mMouse->setCursorPosition = setCursorPositionDummy;
-        mMouse->pressButton = pressButtonDummy;
-        mMouse->rotateWheel = rotateWheelDummy;
-        mKeyboard->pressKey = pressKeyDummy;
-        mKeyboard->writeText = writeTextDummy;
-        mProcess->killProcess = killProcessDummy;
-        mProcess->processStatus = processStatusDummy;
-        mProcess->runningProcesses = runningProcessesDummy;
-        mProcess->parentProcess = parentProcessDummy;
-        mProcess->processCommand = processCommandDummy;
-        mProcess->processPriority = processPriorityDummy;
-        mWindowing->setForegroundWindow = setForegroundWindowDummy;
-        mWindowing->title = titleDummy;
-        mWindowing->classname = classnameDummy;
-        mWindowing->rect = rectDummy;
-        mWindowing->processId = processIdDummy;
-        mWindowing->close = closeDummy;
-        mWindowing->killCreator = killCreatorDummy;
-        mWindowing->minimize = minimizeDummy;
-        mWindowing->maximize = maximizeDummy;
-        mWindowing->move = moveDummy;
-        mWindowing->resize = resizeDummy;
-        mWindowing->isActive = isActiveDummy;
-        mWindowing->foregroundWindow = foregroundWindowDummy;
-        mWindowing->windowList = windowListDummy;
-        mWindowing->createPositionChooser = createPositionChooserDummy;
-        mWindowing->createAreaChooser = createAreaChooserDummy;
-        mWindowing->createWindowChooser = createWindowChooserDummy;
-        mSystem->logout = logoutDummy;
-        mSystem->restart = restartDummy;
-        mSystem->shutdown = shutdownDummy;
-        mSystem->suspend = suspendDummy;
-        mSystem->hibernate = hibernateDummy;
-        mSystem->lockScreen = lockScreenDummy;
-        mSystem->startScreenSaver = startScreenSaverDummy;
-        mSystem->getUsername = getUsernameDummy;
-        mSystem->copyFiles = copyFilesDummy;
-        mSystem->moveFiles = moveFilesDummy;
-        mSystem->renameFiles = renameFilesDummy;
-        mSystem->removeFiles = removeFilesDummy;
     }
 
     void Instance::instReleaseAll()
