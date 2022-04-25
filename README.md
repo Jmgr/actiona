@@ -59,3 +59,9 @@ Please visit http://actiona.tools for more information.
  - Begin/end/call a procedure
 
 Each action has parameters, and Javascript can be written in every field and will be run when the action is executed.
+
+## Contributing
+
+Code contributions as PR are very welcome. Sponsoring is also possible either through [Liberapay](https://liberapay.com/Jmgr), GitHub [Sponsors](https://github.com/sponsors/Jmgr) or using the Cardano (ADA) cryptocurrency: addr1v9zj0klgp8pwa6kf7956nfj5qn7gjuw5x2lyt86vhcwj0xg0eytad -- thanks!
+
+Monetary contributions will be used to pay for the rental of the dedicated server hosting Actiona's updater and installers (~€37/month), and to pay for the required code signing certificates on Windows (a few hundred pounds at least).
