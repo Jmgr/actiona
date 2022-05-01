@@ -23,24 +23,31 @@
 #include "backend_global.hpp"
 #include "backend/windowing.hpp"
 
+#include <QList>
+
+class QWidget;
+
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT PositionChooserWindows : public PositionChooser
+    class BACKENDSHARED_EXPORT WindowsHidingToolX11 : public WindowsHidingTool
 	{
 		Q_OBJECT
-        Q_DISABLE_COPY(PositionChooserWindows)
+        Q_DISABLE_COPY(WindowsHidingToolX11)
 
 	public:
-        explicit PositionChooserWindows(QObject *parent);
-        ~PositionChooserWindows() override;
+        explicit WindowsHidingToolX11(QObject *parent);
+        ~WindowsHidingToolX11() override;
 
-        void mousePressEvent(QMouseEvent *event) override;
-		void mouseReleaseEvent(QMouseEvent *event) override;
+        void hide() override;
+        void show() override;
 
 	private:
-		void stopMouseCapture();
+        struct VisibleWindow
+        {
+            QWidget *window;
+            QPoint position;
+        };
 
-        HCURSOR mPreviousCursor;
+        QList<VisibleWindow> mShownWindows;
 	};
 }
-

@@ -25,22 +25,16 @@
 
 namespace Backend
 {
-    class BACKENDSHARED_EXPORT PositionChooserWindows : public PositionChooser
+    class BACKENDSHARED_EXPORT WindowsHidingToolWindows : public WindowsHidingTool
 	{
 		Q_OBJECT
-        Q_DISABLE_COPY(PositionChooserWindows)
+        Q_DISABLE_COPY(WindowsHidingToolWindows)
 
 	public:
-        explicit PositionChooserWindows(QObject *parent);
-        ~PositionChooserWindows() override;
+        explicit WindowsHidingToolWindows(QObject *parent);
+        ~WindowsHidingToolWindows() override;
 
-        void mousePressEvent(QMouseEvent *event) override;
-		void mouseReleaseEvent(QMouseEvent *event) override;
-
-	private:
-		void stopMouseCapture();
-
-        HCURSOR mPreviousCursor;
+        void hide() override;
+        void show() override;
 	};
 }
-

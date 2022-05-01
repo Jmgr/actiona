@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>476</width>
+    <height>175</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Testing</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="ActionTools::ChoosePositionPushButton" name="choosePositionPushButton">
+      <property name="text">
+       <string>Choose position</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="choosePositionLabel">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="ActionTools::ChooseWindowPushButton" name="chooseWindowPushButton">
+      <property name="text">
+       <string>Choose window</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="chooseWindowLabel">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="chooseAreaPushButton">
+      <property name="text">
+       <string>Choose area</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="chooseAreaLabel">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="chooseRectangleGnomePushButton">
+      <property name="text">
+       <string>Choose area (gnome screenshot)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLabel" name="rectangleGnomeLabel">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="chooseAreaIntegratedPushButton">
+      <property name="text">
+       <string>Choose area (integrated)</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ActionTools::ChoosePositionPushButton</class>
+   <extends>QPushButton</extends>
+   <header>actiontools/choosepositionpushbutton.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>ActionTools::ChooseWindowPushButton</class>
+   <extends>QPushButton</extends>
+   <header>actiontools/choosewindowpushbutton.hpp</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

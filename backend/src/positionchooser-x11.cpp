@@ -19,10 +19,13 @@
 */
 
 #include "backend/positionchooser-x11.hpp"
+#include "backend/x11.hpp"
 
-#include <QCoreApplication>
+#include <QApplication>
 #include <QCursor>
 #include <QX11Info>
+#include <QMouseEvent>
+#include <QDebug>
 
 #include <X11/Xlib.h>
 #include <X11/cursorfont.h>
@@ -43,13 +46,17 @@ namespace Backend
         XFreeCursor(QX11Info::display(), mTargetCursor);
     }
 
-    void PositionChooserX11::choose()
+    void PositionChooserX11::mousePressEvent(QMouseEvent *event)
     {
-        QCoreApplication::instance()->installNativeEventFilter(this);
+        QApplication::instance()->installNativeEventFilter(this);
 
-        if(XGrabPointer(QX11Info::display(), QX11Info::appRootWindow(), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
-                        None, mTargetCursor, CurrentTime) != GrabSuccess)
-            throw BackendError(QStringLiteral("failed to grab the mouse pointer"));
+        auto result = XGrabPointer(QX11Info::display(), QX11Info::appRootWindow(), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
+                        None, mTargetCursor, CurrentTime);
+        if(result != GrabSuccess)
+        {
+            event->ignore();
+            emit errorOccurred(BackendError(QStringLiteral("failed to grab the mouse pointer: error is %1").arg(formatGrabError(result))));
+        }
     }
 
     bool PositionChooserX11::nativeEventFilter(const QByteArray &eventType, void *message, long *)
@@ -62,34 +69,21 @@ namespace Backend
         switch(event->response_type)
         {
         case XCB_BUTTON_RELEASE:
-            emit done(QCursor::pos());
+            emit positionChosen(QCursor::pos());
 
             stopMouseCapture();
 
             return false;
-        case XCB_KEY_PRESS:
-        {
-            auto keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
-            if(keyPressEvent->detail == 0x09) // Escape
-            {
-                emit canceled();
-
-                stopMouseCapture();
-
-                return false;
-            }
-            return false;
-        }
         }
 
         return false;
     }
 
     void PositionChooserX11::stopMouseCapture()
-	{
+    {
         XUngrabPointer(QX11Info::display(), CurrentTime);
         XFlush(QX11Info::display());
 
-        QCoreApplication::instance()->removeNativeEventFilter(this);
+        QApplication::instance()->removeNativeEventFilter(this);
     }
 }

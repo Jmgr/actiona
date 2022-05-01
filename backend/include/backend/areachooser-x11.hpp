@@ -23,10 +23,18 @@
 #include "backend_global.hpp"
 #include "backend/windowing.hpp"
 
-class QProcess;
+//class QProcess;
+
+#include <QAbstractNativeEventFilter>
+
+#include <memory>
+
+struct _XGC;
+class QRubberBand;
 
 namespace Backend
 {
+    /*
     class BACKENDSHARED_EXPORT AreaChooserX11: public AreaChooser
     {
         Q_OBJECT
@@ -41,5 +49,31 @@ namespace Backend
     private:
         QProcess *mXRectSelProcess;
     };
+    */
+    class BACKENDSHARED_EXPORT AreaChooserX11 : public AreaChooser, public QAbstractNativeEventFilter
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(AreaChooserX11)
+
+    public:
+        explicit AreaChooserX11(QObject *parent);
+        ~AreaChooserX11() override;
+
+        void choose() override;
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
+
+    private:
+        void stopMouseCapture();
+
+        unsigned long mTargetCursor;
+        bool mButtonPressed{false};
+        _XGC *gc;
+        unsigned long cursor, cursor2;
+        int rx = 0, ry = 0, rw = 0, rh = 0;
+        int rect_x = 0, rect_y = 0, rect_w = 0, rect_h = 0;
+        int rootX = 0, rootY = 0;
+        std::unique_ptr<QRubberBand> mRubberBand;
+    };
 }
+
 

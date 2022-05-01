@@ -19,11 +19,15 @@
 */
 
 #include "backend/windowchooser-x11.hpp"
-#include "backend/windowhandle.hpp"
+#include "backend/x11.hpp"
 
 #include <QApplication>
-
+#include <QCursor>
 #include <QX11Info>
+#include <QMouseEvent>
+#include <QWidget>
+#include <QDebug>
+
 #include <X11/Xlib.h>
 #include <X11/cursorfont.h>
 #include <xcb/xcb.h>
@@ -41,35 +45,24 @@ namespace Backend
         stopMouseCapture();
 
         XFreeCursor(QX11Info::display(), mTargetCursor);
-	}
-
-    void WindowChooserX11::choose()
-    {
-        QCoreApplication::instance()->installNativeEventFilter(this);
-
-        mSearching = true;
-
-        if(XGrabPointer(QX11Info::display(), QX11Info::appRootWindow(), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
-            None, mTargetCursor, CurrentTime) != GrabSuccess)
-            emit canceled();// TODO: Error
     }
 
-    void WindowChooserX11::stopMouseCapture()
-	{
-		if(!mSearching)
-			return;
+    void WindowChooserX11::mousePressEvent(QMouseEvent *event)
+    {
+        QApplication::instance()->installNativeEventFilter(this);
 
-		mSearching = false;;
-
-		XUngrabPointer(QX11Info::display(), CurrentTime);
-        XFlush(QX11Info::display());
-
-        QCoreApplication::instance()->removeNativeEventFilter(this);
+        auto result = XGrabPointer(QX11Info::display(), QX11Info::appRootWindow(), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
+                        None, mTargetCursor, CurrentTime);
+        if(result != GrabSuccess)
+        {
+            event->ignore();
+            emit errorOccurred(BackendError(QStringLiteral("failed to grab the mouse pointer: error is %1").arg(formatGrabError(result))));
+        }
     }
 
     WId windowAtPointer()
 	{
-        Window window = QX11Info::appRootWindow();
+		Window window = QX11Info::appRootWindow();
 		Window back = None;
 
 		while(window)
@@ -88,60 +81,47 @@ namespace Backend
 		return back;
 	}
 
-    bool isWindowValid(const WindowHandle &handle)    {
-        if(!handle.isValid())
-            return false;
-
-        const auto widgets = QApplication::allWidgets();
-        for(QWidget *widget: widgets)
-        {
-            if(widget->winId() == handle.value())
-                return false;
-        }
-
-        return true;
-    }
-
     bool WindowChooserX11::nativeEventFilter(const QByteArray &eventType, void *message, long *)
     {
         if(eventType != "xcb_generic_event_t")
             return false;
 
-        auto* event = static_cast<xcb_generic_event_t *>(message);
+        auto *event = static_cast<xcb_generic_event_t *>(message);
 
         switch(event->response_type)
         {
         case XCB_BUTTON_RELEASE:
         {
-            Window window = windowAtPointer();
-            if(window == None || !isWindowValid(window))
-            {
-                emit canceled();
-
-                return false;
-            }
+            auto window = windowAtPointer();
+            if(window != None && isWindowValid(window))
+                emit windowChosen(window);
 
             stopMouseCapture();
 
-            emit done(window);
-
-            return false;
-        }
-        case XCB_KEY_PRESS:
-        {
-            auto keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
-            if(keyPressEvent->detail == 0x09) // Escape
-            {
-                emit canceled();
-
-                stopMouseCapture();
-
-                return false;
-            }
             return false;
         }
         }
 
         return false;
+    }
+
+    void WindowChooserX11::stopMouseCapture()
+    {
+        XUngrabPointer(QX11Info::display(), CurrentTime);
+        XFlush(QX11Info::display());
+
+        QApplication::instance()->removeNativeEventFilter(this);
+    }
+
+    bool WindowChooserX11::isWindowValid(WId windowId) const
+    {
+        const auto widgets = QApplication::allWidgets();
+        for(auto *widget: widgets)
+        {
+            if(widget->winId() == windowId)
+                return false;
+        }
+
+        return true;
     }
 }

@@ -34,10 +34,37 @@
 #include <QPixmap>
 
 class QWidget;
+class QMouseEvent;
 
 namespace Backend
 {
     class Capabilities;
+
+    class BACKENDSHARED_EXPORT WindowsHidingTool : public QObject
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(WindowsHidingTool)
+
+    public:
+        explicit WindowsHidingTool(QObject *parent = nullptr): QObject(parent) {}
+        virtual ~WindowsHidingTool() = default;
+
+        virtual void hide() = 0;
+        virtual void show() = 0;
+    };
+
+    class BACKENDSHARED_EXPORT WindowsHidingToolDummy final : public WindowsHidingTool
+    {
+        Q_OBJECT
+        Q_DISABLE_COPY(WindowsHidingToolDummy)
+
+    public:
+        explicit WindowsHidingToolDummy(QObject *parent = nullptr): WindowsHidingTool(parent) {}
+        ~WindowsHidingToolDummy() override = default;
+
+        void hide() override {}
+        void show() override {}
+    };
 
     class BACKENDSHARED_EXPORT Chooser : public QObject
     {
@@ -55,17 +82,21 @@ namespace Backend
         void errorOccurred(const BackendError &error);
     };
 
-    class BACKENDSHARED_EXPORT PositionChooser : public Chooser
+    class BACKENDSHARED_EXPORT PositionChooser : public QObject
     {
         Q_OBJECT
         Q_DISABLE_COPY(PositionChooser)
 
     public:
-        explicit PositionChooser(QObject *parent = nullptr): Chooser(parent) {}
+        explicit PositionChooser(QObject *parent = nullptr): QObject(parent) {}
         ~PositionChooser() override = default;
 
+        virtual void mousePressEvent(QMouseEvent *event) = 0;
+        virtual void mouseReleaseEvent(QMouseEvent *event) {}
+
     signals:
-        void done(const QPoint &position);
+        void positionChosen(const QPoint &position);
+        void errorOccurred(const BackendError &error);
     };
 
     class BACKENDSHARED_EXPORT PositionChooserDummy final : public PositionChooser
@@ -77,7 +108,7 @@ namespace Backend
         explicit PositionChooserDummy(QObject *parent = nullptr): PositionChooser(parent) {}
         ~PositionChooserDummy() override = default;
 
-        void choose() override { emit done({}); }
+        void mousePressEvent(QMouseEvent *event) override {}
     };
 
     class BACKENDSHARED_EXPORT AreaChooser : public Chooser
@@ -105,17 +136,21 @@ namespace Backend
         void choose() override { emit done({}); }
     };
 
-    class BACKENDSHARED_EXPORT WindowChooser : public Chooser
+    class BACKENDSHARED_EXPORT WindowChooser : public QObject
     {
         Q_OBJECT
         Q_DISABLE_COPY(WindowChooser)
 
     public:
-        explicit WindowChooser(QObject *parent = nullptr): Chooser(parent) {}
+        explicit WindowChooser(QObject *parent = nullptr): QObject(parent) {}
         ~WindowChooser() override = default;
 
+        virtual void mousePressEvent(QMouseEvent *event) = 0;
+        virtual void mouseReleaseEvent(QMouseEvent *event) {}
+
     signals:
-        void done(const WId &window);
+        void windowChosen(WId windowId);
+        void errorOccurred(const BackendError &error);
     };
 
     class BACKENDSHARED_EXPORT WindowChooserDummy final : public WindowChooser
@@ -127,7 +162,7 @@ namespace Backend
         explicit WindowChooserDummy(QObject *parent = nullptr): WindowChooser(parent) {}
         ~WindowChooserDummy() override = default;
 
-        void choose() override { emit done({}); }
+        void mousePressEvent(QMouseEvent *event) override {}
     };
 
     class BACKENDSHARED_EXPORT Screenshooter : public QObject
@@ -175,73 +210,64 @@ namespace Backend
 
         Feature<void(WId windowId)> setForegroundWindow
         {
-            QStringLiteral("setForegroundWindow"),
-            [](WId){}
+            QStringLiteral("setForegroundWindow")
         };
         Feature<QString(WId windowId)> title
         {
-            QStringLiteral("title"),
-            [](WId){ return QString{}; }
+            QStringLiteral("title")
         };
         Feature<QString(WId windowId)> classname
         {
-            QStringLiteral("classname"),
-            [](WId){ return QString{}; }
+            QStringLiteral("classname")
         };
         Feature<QRect(WId windowId, bool useBorders)> rect
         {
-            QStringLiteral("rect"),
-            [](WId, bool){ return QRect{}; }
+            QStringLiteral("rect")
         };
         Feature<int(WId windowId)> processId
         {
-            QStringLiteral("processId"),
-            [](WId){ return 0; }
+            QStringLiteral("processId")
         };
         Feature<void(WId windowId)> close
         {
-            QStringLiteral("close"),
-            [](WId){}
+            QStringLiteral("close")
         };
         Feature<void(WId windowId)> killCreator
         {
-            QStringLiteral("killCreator"),
-            [](WId){}
+            QStringLiteral("killCreator")
         };
         Feature<void(WId windowId)> minimize
         {
-            QStringLiteral("minimize"),
-            [](WId){}
+            QStringLiteral("minimize")
         };
         Feature<void(WId windowId)> maximize
         {
-            QStringLiteral("maximize"),
-            [](WId){}
+            QStringLiteral("maximize")
         };
         Feature<void(WId windowId, const QPoint &position)> move
         {
-            QStringLiteral("move"),
-            [](WId, const QPoint &){}
+            QStringLiteral("move")
         };
         Feature<void(WId windowId, const QSize &size, bool useBorders)> resize
         {
-            QStringLiteral("resize"),
-            [](WId, const QSize &, bool){}
+            QStringLiteral("resize")
         };
         Feature<bool(WId windowId)> isActive
         {
-            QStringLiteral("isActive"),
-            [](WId){ return false; }
+            QStringLiteral("isActive")
         };
         Feature<WId()> foregroundWindow
         {
-            QStringLiteral("foregroundWindow"),
-            []{ return WId{}; }
+            QStringLiteral("foregroundWindow")
         };
         Feature<QList<WId>()> windowList
         {
-            QStringLiteral("windowList"),
-            []{ return QList<WId>{}; }
+            QStringLiteral("windowList")
+        };
+        Feature<WindowsHidingTool*(QObject*)> createWindowsHidingTool
+        {
+            QStringLiteral("createWindowsHidingTool"),
+            [](QObject *parent) -> WindowsHidingTool* { return new WindowsHidingToolDummy(parent); }
         };
         Feature<PositionChooser*(QObject*)> createPositionChooser
         {

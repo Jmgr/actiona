@@ -38,6 +38,7 @@ namespace Backend
     bool isActiveX11(WId windowId);
     WId foregroundWindowX11();
     QList<WId> windowListX11();
+    WindowsHidingTool *createWindowsHidingToolX11(QObject *parent);
     PositionChooser *createPositionChooserX11(QObject *parent);
     AreaChooser *createAreaChooserX11(QObject *parent);
     WindowChooser *createWindowChooserX11(QObject *parent);

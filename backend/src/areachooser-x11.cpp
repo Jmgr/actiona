@@ -19,12 +19,204 @@
 */
 
 #include "backend/areachooser-x11.hpp"
+#include "backend/x11.hpp"
 
+#include <QApplication>
+#include <QCursor>
+#include <QX11Info>
+#include <QMouseEvent>
+#include <QDebug>
+
+#include <QRubberBand>
+
+#include <X11/Xlib.h>
+#include <X11/cursorfont.h>
+#include <xcb/xcb.h>
+
+/*
 #include <QProcess>
 #include <QRegularExpression>
+*/
 
 namespace Backend
 {
+    AreaChooserX11::AreaChooserX11(QObject *parent):
+        AreaChooser(parent),
+        mTargetCursor(XCreateFontCursor(QX11Info::display(), XC_target)),
+        mRubberBand(std::make_unique<QRubberBand>(QRubberBand::Line, nullptr))
+    {
+        mRubberBand->setWindowOpacity(0.5);
+        mRubberBand->setWindowFlag(Qt::WindowTransparentForInput);
+    }
+
+    AreaChooserX11::~AreaChooserX11()
+    {
+        stopMouseCapture();
+
+        XFreeCursor(QX11Info::display(), mTargetCursor);
+    }
+
+    void AreaChooserX11::choose()
+    {
+        XGCValues gcval;
+        gcval.foreground = XWhitePixel(QX11Info::display(), 0);
+        gcval.function = GXxor;
+        gcval.background = XBlackPixel(QX11Info::display(), 0);
+        gcval.plane_mask = gcval.background ^ gcval.foreground;
+        gcval.subwindow_mode = IncludeInferiors;
+
+        gc = XCreateGC(QX11Info::display(), QX11Info::appRootWindow(),
+                       GCFunction | GCForeground | GCBackground | GCSubwindowMode,
+                       &gcval);
+
+        cursor = XCreateFontCursor(QX11Info::display(), XC_cross);
+        cursor2 = XCreateFontCursor(QX11Info::display(), XC_lr_angle);
+
+        QApplication::instance()->installNativeEventFilter(this);
+
+        auto result = XGrabPointer(QX11Info::display(), QX11Info::appRootWindow(), True, ButtonMotionMask | ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
+                        None, mTargetCursor, CurrentTime);
+        if(result != GrabSuccess)
+        {
+            emit errorOccurred(BackendError(QStringLiteral("failed to grab the mouse pointer: error is %1").arg(formatGrabError(result))));
+        }
+
+        result = XGrabKeyboard(QX11Info::display(), QX11Info::appRootWindow(), True, GrabModeAsync, GrabModeAsync, CurrentTime);
+        if(result != GrabSuccess)
+        {
+            emit errorOccurred(BackendError(QStringLiteral("failed to grab the keyboard: error is %1").arg(formatGrabError(result))));
+        }
+
+        /*
+        result = XGrabServer(QX11Info::display());
+        if(!result)
+        {
+            emit errorOccurred(BackendError(QStringLiteral("failed to grab the server")));
+        }
+        */
+
+        mRubberBand->raise();
+        mRubberBand->show();
+    }
+
+    bool AreaChooserX11::nativeEventFilter(const QByteArray &eventType, void *message, long *)
+    {
+        if(eventType != "xcb_generic_event_t")
+            return false;
+
+        auto *event = static_cast<xcb_generic_event_t *>(message);
+
+        switch(event->response_type)
+        {
+        case XCB_MOTION_NOTIFY:
+        {
+            if(!mButtonPressed)
+                break;
+
+            auto *motionEvent = reinterpret_cast<xcb_motion_notify_event_t *>(event);
+
+
+            /*
+            if (rect_w) {
+              XDrawRectangle(QX11Info::display(), QX11Info::appRootWindow(), gc, rect_x, rect_y, rect_w, rect_h);
+            } else {
+              XChangeActivePointerGrab(QX11Info::display(),
+                                       ButtonMotionMask | ButtonReleaseMask,
+                                       cursor2, CurrentTime);
+            }
+                    */
+            rect_x = rx;
+            rect_y = ry;
+            rect_w = motionEvent->root_x - rect_x;
+            rect_h = motionEvent->root_y - rect_y;
+
+            if (rect_w < 0) {
+              rect_x += rect_w;
+              rect_w = 0 - rect_w;
+            }
+            if (rect_h < 0) {
+              rect_y += rect_h;
+              rect_h = 0 - rect_h;
+            }
+            mRubberBand->setGeometry(rect_x, rect_y, rect_w, rect_h);
+            /*
+            XDrawRectangle(QX11Info::display(), QX11Info::appRootWindow(), gc, rect_x, rect_y, rect_w, rect_h);
+            XFlush(QX11Info::display());
+            */
+
+            break;
+        }
+        case XCB_BUTTON_PRESS:
+        {
+            auto *buttonPressEvent = reinterpret_cast<xcb_button_press_event_t *>(event);
+
+            mButtonPressed = true;
+            rx = buttonPressEvent->root_x;
+            ry = buttonPressEvent->root_y;
+            rootX = buttonPressEvent->root_x;
+            rootY = buttonPressEvent->root_y;
+            break;
+        }
+        case XCB_BUTTON_RELEASE:
+        {
+            auto *buttonReleaseEvent = reinterpret_cast<xcb_button_release_event_t *>(event);
+
+            mButtonPressed = false;
+
+            rootX = buttonReleaseEvent->root_x;
+            rootY = buttonReleaseEvent->root_y;
+
+            stopMouseCapture();
+            break;
+        }
+        case XCB_KEY_PRESS:
+        {
+            auto *keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
+
+            rootX = keyPressEvent->root_x;
+            rootY = keyPressEvent->root_y;
+
+            if(keyPressEvent->detail == 0x09) // Escape
+            {
+                stopMouseCapture();
+            }
+            break;
+        }
+        }
+
+        return false;
+    }
+
+    void AreaChooserX11::stopMouseCapture()
+    {
+        mRubberBand->hide();
+
+        if (rect_w) {
+          XDrawRectangle(QX11Info::display(), QX11Info::appRootWindow(), gc, rect_x, rect_y, rect_w, rect_h);
+          XFlush(QX11Info::display());
+        }
+        rw = rootX - rx;
+        rh = rootY - ry;
+        /* cursor moves backwards */
+        if (rw < 0) {
+          rx += rw;
+          rw = 0 - rw;
+        }
+        if (rh < 0) {
+          ry += rh;
+          rh = 0 - rh;
+        }
+
+        emit done(QRect(rx,ry, rw,rh));
+
+        //XUngrabServer(QX11Info::display());
+        XUngrabKeyboard(QX11Info::display(), CurrentTime);
+        XUngrabPointer(QX11Info::display(), CurrentTime);
+        XFlush(QX11Info::display());
+
+        QApplication::instance()->removeNativeEventFilter(this);
+    }
+    /*
     AreaChooserX11::AreaChooserX11(QObject *parent):
         AreaChooser(parent),
         mXRectSelProcess(new QProcess(this))
@@ -80,4 +272,5 @@ namespace Backend
     {
         mXRectSelProcess->start();
     }
+    */
 }

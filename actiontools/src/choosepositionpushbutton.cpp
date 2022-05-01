@@ -21,30 +21,45 @@
 #include "actiontools/choosepositionpushbutton.hpp"
 #include "backend/windowing.hpp"
 
+#include <QMouseEvent>
+
 namespace ActionTools
 {
-	ChoosePositionPushButton::ChoosePositionPushButton(QWidget *parent)
+    ChoosePositionPushButton::ChoosePositionPushButton(QWidget *parent)
     : QPushButton(parent),
-      mChooser(Backend::Instance::windowing().createPositionChooser(this))
-	{
+      mPositionChooser(Backend::Instance::windowing().createPositionChooser(this)),
+      mWindowsHidingTool(Backend::Instance::windowing().createWindowsHidingTool(this))
+    {
         setIcon(QIcon(QStringLiteral(":/images/cross.png")));
 
-#ifdef Q_OS_WIN
-		setToolTip(tr("Target a position by clicking this button, moving the cursor to the desired position and releasing the mouse button."));
-#endif
+        connect(mPositionChooser, &Backend::PositionChooser::positionChosen, this, [this](const QPoint &position){
+            mWindowsHidingTool->show();
 
-#ifdef Q_OS_WIN
-        connect(this, &QPushButton::pressed, mChooser, &Backend::PositionChooser::choose);
-#else
-        connect(this, &QPushButton::clicked, mChooser, &Backend::PositionChooser::choose);
-#endif
+            emit positionChosen(position);
+        });
+        connect(mPositionChooser, &Backend::PositionChooser::errorOccurred, this, [this](const Backend::BackendError &error){
+            emit errorOccurred(error.what());
+        });
 
-        connect(mChooser, &Backend::PositionChooser::done, this, &ChoosePositionPushButton::positionChosen);
-        connect(mChooser, &Backend::PositionChooser::canceled, this, &ChoosePositionPushButton::canceled);
-        connect(mChooser, &Backend::PositionChooser::errorOccurred, this, [this](const Backend::BackendError &e){ emit errorOccurred(e.what()); });
-	}
+        setToolTip(tr("Target a position by clicking this button, moving the cursor to the desired position and releasing the mouse button."));
+    }
 
-	ChoosePositionPushButton::~ChoosePositionPushButton()
-	{
+    ChoosePositionPushButton::~ChoosePositionPushButton()
+    {
+    }
+
+    void ChoosePositionPushButton::mousePressEvent(QMouseEvent *event)
+    {
+        QPushButton::mousePressEvent(event);
+
+        mWindowsHidingTool->hide();
+        mPositionChooser->mousePressEvent(event);
+    }
+
+    void ChoosePositionPushButton::mouseReleaseEvent(QMouseEvent *event)
+    {
+        mPositionChooser->mouseReleaseEvent(event);
+        
+        QPushButton::mouseReleaseEvent(event);
     }
 }

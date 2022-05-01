@@ -48,28 +48,23 @@ namespace Backend
 
         Feature<bool(Button button)> isButtonPressed
         {
-            QStringLiteral("isButtonPressed"),
-            [](Mouse::Button){ return false; }
+            QStringLiteral("isButtonPressed")
         };
         Feature<QPoint()> cursorPosition
         {
-            QStringLiteral("cursorPosition"),
-            []{ return QPoint{}; }
+            QStringLiteral("cursorPosition")
         };
         Feature<void(const QPoint &position)> setCursorPosition
         {
-            QStringLiteral("setCursorPosition"),
-            [](const QPoint &){}
+            QStringLiteral("setCursorPosition")
         };
         Feature<void(Button button, bool press)> pressButton
         {
-            QStringLiteral("pressButton"),
-            [](Mouse::Button, bool){}
+            QStringLiteral("pressButton")
         };
         Feature<void(int intensity)> rotateWheel
         {
-            QStringLiteral("rotateWheel"),
-            [](int){}
+            QStringLiteral("rotateWheel")
         };
     };
 }

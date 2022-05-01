@@ -20,6 +20,7 @@
 
 #include "backend/windowing-x11.hpp"
 #include "backend/backend.hpp"
+#include "backend/windowshidingtool-x11.hpp"
 #include "backend/positionchooser-x11.hpp"
 #include "backend/areachooser-x11.hpp"
 #include "backend/windowchooser-x11.hpp"
@@ -71,13 +72,13 @@ namespace Backend
             if(property)
                 XFree(property);
 
-            throw BackendError(QObject::tr("failed to get property %1 from a window").arg(QString::fromLocal8Bit(prop_name)));
+            return {};
         }
 
         auto ret_prop = std::unique_ptr<unsigned char, void(*)(unsigned char *)>(property, [](unsigned char *pointer){ XFree(pointer); });
 
         if(xa_ret_type != xa_prop_type)
-            throw BackendError(QObject::tr("invalid window property for %1").arg(QString::fromLocal8Bit(prop_name)));
+            return {};
 
         /* null terminate the result to make string handling easier */
         tmp_size = (ret_format / 8) * ret_nitems;
@@ -280,6 +281,11 @@ namespace Backend
         XFree(list);
 
         return res;
+    }
+
+    WindowsHidingTool *createWindowsHidingToolX11(QObject *parent)
+    {
+        return new WindowsHidingToolX11(parent);
     }
 
     PositionChooser *createPositionChooserX11(QObject *parent)

@@ -67,6 +67,35 @@ namespace Backend
             std::function<Func> mFunc;
             std::function<bool()> mChecker;
         };
+
+        template<typename Ret, typename... Args>
+        class Default
+        {
+        };
+
+        template<typename... Args>
+        class Default<void(Args...)>
+        {
+            public:
+                static auto function()
+                {
+                    return [](Args...){};
+                }
+        };
+
+        template<typename Ret, typename... Args>
+        class Default<Ret(Args...)>
+        {
+            public:
+                static auto function()
+                {
+                    return [](Args...){ return Ret{}; };
+                }
+                static auto function(Ret ret)
+                {
+                    return [ret](Args...){ return ret; };
+                }
+        };
     }
 
     inline static const QString windowImpl = QStringLiteral("Windows");
@@ -81,9 +110,14 @@ namespace Backend
         Q_DISABLE_COPY(Feature)
 
     public:
-        Feature(QString name, Func dummyFunc):
+        Feature(const QString &name, Func dummyFunc):
             mName(name),
             mChosenImplementation(QStringLiteral("dummy"), dummyFunc)
+        {
+        }
+        Feature(const QString &name):
+            mName(name),
+            mChosenImplementation(QStringLiteral("dummy"), detail::Default<Func>::function())
         {
         }
 

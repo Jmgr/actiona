@@ -27,6 +27,7 @@
 namespace Backend
 {
     class PositionChooser;
+    class WindowsHidingTool;
 }
 
 namespace ActionTools
@@ -40,13 +41,16 @@ namespace ActionTools
 		explicit ChoosePositionPushButton(QWidget *parent = nullptr);
 		~ChoosePositionPushButton() override;
 
-	signals:
+    signals:
         void positionChosen(const QPoint &position);
-        void canceled();
-        void errorOccurred(const QString error);
+        void errorOccurred(const QString &errorText);
 
     private:
-        Backend::PositionChooser *mChooser;
+        void mousePressEvent(QMouseEvent *event) override;
+        void mouseReleaseEvent(QMouseEvent *event) override;
+
+        Backend::PositionChooser *mPositionChooser;
+        Backend::WindowsHidingTool *mWindowsHidingTool;
 	};
 }
 

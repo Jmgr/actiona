@@ -18,42 +18,32 @@
 	Contact: jmgr@jmgr.info
 */
 
-#include "backend/positionchooser-windows.hpp"
-#include "backend/mouse.hpp"
+#include "backend/windowshidingtool-windows.hpp"
 
 #include <QApplication>
 
-#include <Windows.h>
-
 namespace Backend
 {
-    PositionChooserWindows::PositionChooserWindows(QObject *parent):
-        PositionChooser(parent),
-        mPreviousCursor(nullptr)
+    WindowsHidingToolWindows::WindowsHidingToolWindows(QObject *parent):
+        WindowsHidingTool(parent)
 	{
 	}
 
-    PositionChooserWindows::~PositionChooserWindows()
+    WindowsHidingToolWindows::~WindowsHidingToolWindows()
 	{
-        stopMouseCapture();
-    }
+	}
 
-    void PositionChooserX11::mousePressEvent(QMouseEvent *event)
+    void WindowsHidingToolWindows::hide()
     {
-        mPreviousCursor = SetCursor(LoadCursor(0, IDC_CROSS));
+        const auto widgets = QApplication::topLevelWidgets();
+        for(auto *widget: widgets)
+            widget->setWindowOpacity(0.0f);
     }
 
-    void PositionChooserX11::mouseReleaseEvent(QMouseEvent *event)
+    void WindowsHidingToolWindows::show()
     {
-        emit positionChosen(event->globalPos());
-
-        stopMouseCapture();
-    }
-
-
-    void PositionChooserWindows::stopMouseCapture()
-	{
-        if(mPreviousCursor)
-            SetCursor(mPreviousCursor);
+        const auto widgets = QApplication::topLevelWidgets();
+        for(auto *widget: widgets)
+            widget->setWindowOpacity(1.0f);
     }
 }

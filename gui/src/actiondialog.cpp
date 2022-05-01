@@ -107,11 +107,9 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		auto layout = new QVBoxLayout(widget);
 
 		QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), widget);
-		inputParametersGroupBox->setStyleSheet(QStringLiteral("QGroupBox { background-color: #DDDDFF; }"));
 		inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][tabIndex]);
 		groupBoxes[InputParameters].append(inputParametersGroupBox);
 		QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), widget);
-		outputParametersGroupBox->setStyleSheet(QStringLiteral("QGroupBox { background-color: #ffedce; }"));
 		outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][tabIndex]);
 		groupBoxes[OutputParameters].append(outputParametersGroupBox);
 
@@ -131,7 +129,6 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	//Init of common parameters
 	auto commonParametersLayout = new QVBoxLayout;
 	QGroupBox *inputCommonParametersGroupBox = new QGroupBox(tr("Input parameters"), mCommonTabWidget);
-	inputCommonParametersGroupBox->setStyleSheet(QStringLiteral("QGroupBox { background-color: #DDDDFF; }"));
 	auto inputCommonParametersLayout = new QFormLayout;
 	
 	mPauseBeforeSpinBox->setToolTip(tr("Pause before executing the action"));

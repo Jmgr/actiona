@@ -34,11 +34,13 @@ find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets DBus REQUIRED)
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../actiontools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../backend/include
 )
 
 target_link_libraries(
     ${PROJECT}
+    actiontools
     backend
     Qt5::Widgets
     Qt5::DBus

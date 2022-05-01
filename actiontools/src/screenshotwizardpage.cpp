@@ -38,7 +38,7 @@ namespace ActionTools
     {
         ui->setupUi(this);
 
-        connect(ui->captureWindowPushButton, &ActionTools::ChooseWindowPushButton::searchEnded, this, &ScreenshotWizardPage::onWindowSearchEnded);
+        connect(ui->captureWindowPushButton, &ActionTools::ChooseWindowPushButton::windowChosen, this, &ScreenshotWizardPage::onWindowSearchEnded);
 
         ui->screenComboBox->addItem(tr("All screens"));
 

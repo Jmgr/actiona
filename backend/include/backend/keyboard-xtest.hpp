@@ -25,6 +25,7 @@
 
 namespace Backend
 {
+    // TODO: remove BACKENDSHARED_EXPORT here
     void BACKENDSHARED_EXPORT pressKeyXTest(const QString &key, bool press, bool directX);
     void BACKENDSHARED_EXPORT writeTextXTest(const QString &text, int delay, bool noUnicodeCharacters);
 }

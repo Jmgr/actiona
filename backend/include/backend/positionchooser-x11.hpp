@@ -36,12 +36,12 @@ namespace Backend
         explicit PositionChooserX11(QObject *parent);
         ~PositionChooserX11() override;
 
-        void choose() override;
-
-	private:
+        void mousePressEvent(QMouseEvent *event) override;
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
-		void stopMouseCapture();
+
+    private:
+        void stopMouseCapture();
 
         unsigned long mTargetCursor;
-	};
+    };
 }

@@ -18,38 +18,35 @@
     Contact: jmgr@jmgr.info
 */
 
-#pragma once
+#include "backend/x11.hpp"
 
-#include <Qt>
+#include <QX11Info>
 
-#ifdef Q_OS_UNIX
-#include <QSet>
-#endif
+#include <X11/Xlib.h>
 
 namespace Backend
 {
-    class Capabilities final
+    QString formatX11Error(int errorCode)
     {
-        Q_DISABLE_COPY(Capabilities)
+        char errStr[256];
+        XGetErrorText(QX11Info::display(), errorCode, errStr, 256);
+        return QString::fromLatin1(errStr);
+    }
 
-    public:
-        Capabilities();
-
-        bool hasX11() const { return mHasX11; }
-        bool hasXTest() const { return mHasXTest; }
-        bool hasDBusService(const QString &service) const { return mServices.contains(service); }
-
-    private:
-        void detectX11();
-        void detectXTest();
-        void detectDBus();
-
-        bool mHasX11{};
-        bool mHasXTest{};
-        bool mHasDBus{};
-
-#ifdef Q_OS_UNIX
-        QSet<QString> mServices;
-#endif
-    };
+    QString formatGrabError(int errorCode)
+    {
+        switch(errorCode)
+        {
+        case AlreadyGrabbed:
+            return QStringLiteral("AlreadyGrabbed");
+        case GrabInvalidTime:
+            return QStringLiteral("GrabInvalidTime");
+        case GrabNotViewable:
+            return QStringLiteral("GrabNotViewable");
+        case GrabFrozen:
+            return QStringLiteral("GrabFrozen");
+        default:
+            return {};
+        }
+    }
 }

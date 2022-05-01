@@ -37,13 +37,11 @@ namespace Backend
 
         Feature<void(const QString &key, bool press, bool directX)> pressKey
         {
-            QStringLiteral("pressKey"),
-            [](const QString &, bool, bool){}
+            QStringLiteral("pressKey")
         };
         Feature<void(const QString &text, int delay, bool noUnicodeCharacters)> writeText
         {
-            QStringLiteral("writeText"),
-            [](const QString &, int, bool){}
+            QStringLiteral("writeText")
         };
     };
 }

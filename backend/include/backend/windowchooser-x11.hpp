@@ -36,13 +36,13 @@ namespace Backend
         explicit WindowChooserX11(QObject *parent);
         ~WindowChooserX11() override;
 
-        void choose() override;
+        void mousePressEvent(QMouseEvent *event) override;
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
 
 	private:
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
-		void stopMouseCapture();
+        void stopMouseCapture();
+        bool isWindowValid(WId windowId) const;
 
-        bool mSearching{false};
         unsigned long mTargetCursor;
 	};
 }

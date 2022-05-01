@@ -20,36 +20,10 @@
 
 #pragma once
 
-#include <Qt>
-
-#ifdef Q_OS_UNIX
-#include <QSet>
-#endif
+#include <QString>
 
 namespace Backend
 {
-    class Capabilities final
-    {
-        Q_DISABLE_COPY(Capabilities)
-
-    public:
-        Capabilities();
-
-        bool hasX11() const { return mHasX11; }
-        bool hasXTest() const { return mHasXTest; }
-        bool hasDBusService(const QString &service) const { return mServices.contains(service); }
-
-    private:
-        void detectX11();
-        void detectXTest();
-        void detectDBus();
-
-        bool mHasX11{};
-        bool mHasXTest{};
-        bool mHasDBus{};
-
-#ifdef Q_OS_UNIX
-        QSet<QString> mServices;
-#endif
-    };
+    QString formatX11Error(int errorCode);
+    QString formatGrabError(int errorCode);
 }

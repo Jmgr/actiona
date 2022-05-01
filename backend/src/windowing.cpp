@@ -46,6 +46,7 @@ namespace Backend
             isActive.addImplementation(x11Impl, isActiveX11);
             foregroundWindow.addImplementation(x11Impl, foregroundWindowX11);
             windowList.addImplementation(x11Impl, windowListX11);
+            createWindowsHidingTool.addImplementation(x11Impl, createWindowsHidingToolX11);
             createPositionChooser.addImplementation(x11Impl, createPositionChooserX11);
             createAreaChooser.addImplementation(x11Impl, createAreaChooserX11);
             createWindowChooser.addImplementation(x11Impl, createWindowChooserX11);
@@ -72,6 +73,7 @@ namespace Backend
         isActive.choose();
         foregroundWindow.choose();
         windowList.choose();
+        createWindowsHidingTool.choose();
         createPositionChooser.choose();
         createAreaChooser.choose();
         createWindowChooser.choose();

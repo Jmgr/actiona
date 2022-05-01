@@ -22,6 +22,7 @@
 #include "mainwindow.hpp"
 
 #include <QApplication>
+#include <QDialog>
 
 int main(int argc, char **argv)
 {
@@ -32,6 +33,16 @@ int main(int argc, char **argv)
 
     MainWindow mainWindow;
     mainWindow.show();
+
+    QDialog dummyWindow;
+    dummyWindow.show();
+    auto pos = mainWindow.pos();
+    auto size = mainWindow.size();
+    pos.setX(pos.x() + size.width());
+    pos.setY(pos.y() + size.height());
+    dummyWindow.move(pos);
+
+    QObject::connect(&mainWindow, &MainWindow::closed, &dummyWindow, &QDialog::close);
 
 	return app.exec();
 }

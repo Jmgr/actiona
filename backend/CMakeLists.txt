@@ -12,6 +12,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/process.cpp
     ${SOURCES_PREFIX}/windowing.cpp
     ${SOURCES_PREFIX}/system.cpp
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/windowing-linux.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/backend-windows.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/system-unix.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/system-windows.cpp>
@@ -34,6 +35,9 @@ set(SOURCES
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/positionchooser-windows.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/areachooser-windows.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/windowchooser-windows.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/windowshidingtool-x11.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/windowshidingtool-windows.cpp>
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/x11.cpp>
 )
 
 set(HEADERS_PREFIX include/${PROJECT})
@@ -54,6 +58,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/3rdparty/functional_unwrap.hpp
     ${HEADERS_PREFIX}/feature.hpp
     ${HEADERS_PREFIX}/capabilities.hpp
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/windowing-linux.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/backend-windows.hpp>
     $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/system-unix.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/system-windows.hpp>
@@ -72,6 +77,9 @@ set(HEADERS
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/positionchooser-windows.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/areachooser-windows.hpp>
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/windowchooser-windows.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/windowshidingtool-x11.hpp>
+    $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/windowshidingtool-windows.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/x11.hpp>
 )
 
 add_library(${PROJECT} SHARED
@@ -112,9 +120,3 @@ if(UNIX AND NOT APPLE)
 endif()
 
 compile_translations(${PROJECT})
-
-add_subdirectory(test)
-
-if(UNIX AND NOT APPLE)
-    add_subdirectory(3rdparty/xrectsel)
-endif()

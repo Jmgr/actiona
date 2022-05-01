@@ -58,33 +58,27 @@ namespace Backend
 
         Feature<void(int id, KillMode killMode, int timeout)> killProcess
         {
-            QStringLiteral("killProcess"),
-            [](int, Process::KillMode, int){}
+            QStringLiteral("killProcess")
         };
         Feature<ProcessStatus(int id)> processStatus
         {
-            QStringLiteral("processStatus"),
-            [](int){ return Process::ProcessStatus::Running; }
+            QStringLiteral("processStatus")
         };
         Feature<QList<int>()> runningProcesses
         {
-            QStringLiteral("runningProcesses"),
-            [](){ return QList<int>{}; }
+            QStringLiteral("runningProcesses")
         };
         Feature<int(int id)> parentProcess
         {
-            QStringLiteral("parentProcess"),
-            [](int){ return 0; }
+            QStringLiteral("parentProcess")
         };
         Feature<QString(int id)> processCommand
         {
-            QStringLiteral("processCommand"),
-            [](int){ return QString{}; }
+            QStringLiteral("processCommand")
         };
         Feature<Priority(int id)> processPriority
         {
-            QStringLiteral("processPriority"),
-            [](int){ return Process::Priority{}; }
+            QStringLiteral("processPriority")
         };
     };
 }

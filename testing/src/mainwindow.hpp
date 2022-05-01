@@ -21,14 +21,17 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    void closed();
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void on_chooseRectangleGnomePushButton_clicked();
     void on_chooseAreaPushButton_clicked();
-    void on_chooseWindowNewPushButton_pressed();
-    void on_choosePositionNewPushButton_pressed();
+    void on_chooseAreaIntegratedPushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

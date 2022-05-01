@@ -46,63 +46,51 @@ namespace Backend
 
         Feature<void(bool force)> logout
         {
-            QStringLiteral("logout"),
-            [](bool){}
+            QStringLiteral("logout")
         };
         Feature<void(bool force)> restart
         {
-            QStringLiteral("restart"),
-            [](bool){}
+            QStringLiteral("restart")
         };
         Feature<void(bool force)> shutdown
         {
-            QStringLiteral("shutdown"),
-            [](bool){}
+            QStringLiteral("shutdown")
         };
         Feature<void(bool force)> suspend
         {
-            QStringLiteral("suspend"),
-            [](bool){}
+            QStringLiteral("suspend")
         };
         Feature<void(bool force)> hibernate
         {
-            QStringLiteral("hibernate"),
-            [](bool){}
+            QStringLiteral("hibernate")
         };
         Feature<void()> lockScreen
         {
-            QStringLiteral("lockScreen"),
-            []{}
+            QStringLiteral("lockScreen")
         };
         Feature<void()> startScreenSaver
         {
-            QStringLiteral("startScreenSaver"),
-            []{}
+            QStringLiteral("startScreenSaver")
         };
         Feature<QString()> getUsername
         {
-            QStringLiteral("getUsername"),
-            []{ return QString{}; }
+            QStringLiteral("getUsername")
         };
         Feature<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> copyFiles
         {
-            QStringLiteral("copyFiles"),
-            [](const QString &, const QString &, const FileOperationParameters &){}
+            QStringLiteral("copyFiles")
         };
         Feature<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> moveFiles
         {
-            QStringLiteral("moveFiles"),
-            [](const QString &, const QString &, const FileOperationParameters &){}
+            QStringLiteral("moveFiles")
         };
         Feature<void(const QString &sourceFilepath, const QString &destinationFilepath, const FileOperationParameters &parameters)> renameFiles
         {
-            QStringLiteral("renameFiles"),
-            [](const QString &, const QString &, const FileOperationParameters &){}
+            QStringLiteral("renameFiles")
         };
         Feature<void(const QString &filepath, const FileOperationParameters &parameters)> removeFiles
         {
-            QStringLiteral("removeFiles"),
-            [](const QString &, const FileOperationParameters &){}
+            QStringLiteral("removeFiles")
         };
     };
 }
