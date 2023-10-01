@@ -27,12 +27,19 @@ set(UI_FILES
     ${UI_PREFIX}/executionwindow.ui
 )
 
+set(TS_PREFIX translations)
+set(TS_FILES
+    ${TS_PREFIX}/execution_fr_FR.ts
+    ${TS_PREFIX}/execution_zh_CN.ts
+)
+
 set(QRC ${PROJECT}.qrc)
 
 add_library(${PROJECT} SHARED
     ${SOURCES}
     ${HEADERS}
     ${UI_FILES}
+    ${TS_FILES}
     ${QRC}
 )
 

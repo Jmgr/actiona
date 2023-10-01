@@ -17,9 +17,16 @@ set(HEADERS
     ${HEADERS_PREFIX}/scriptexecuter.hpp
 )
 
+set(TS_PREFIX translations)
+set(TS_FILES
+    ${TS_PREFIX}/executer_fr_FR.ts
+    ${TS_PREFIX}/executer_zh_CN.ts
+)
+
 add_executable(${PROJECT}
     ${SOURCES}
     ${HEADERS}
+    ${TS_FILES}
 )
 
 add_dependencies(${PROJECT} execution actiontools tools)

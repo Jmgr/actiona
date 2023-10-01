@@ -90,6 +90,12 @@ set(UI_FILES
     ${UI_PREFIX}/sfxscriptdialog.ui
 )
 
+set(TS_PREFIX translations)
+set(TS_FILES
+    ${TS_PREFIX}/gui_fr_FR.ts
+    ${TS_PREFIX}/gui_zh_CN.ts
+)
+
 set(QRC ${PROJECT}.qrc)
 
 add_executable(${PROJECT}
@@ -97,6 +103,7 @@ add_executable(${PROJECT}
     ${SOURCES}
     ${HEADERS}
     ${UI_FILES}
+    ${TS_FILES}
     ${QRC}
 )
 
