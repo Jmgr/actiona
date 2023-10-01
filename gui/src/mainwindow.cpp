@@ -2017,7 +2017,7 @@ void MainWindow::updateSuccess(const QVersionNumber &version,
 	}
 
 	ChangelogDialog changelogDialog(this);
-    changelogDialog.setWindowFlags(changelogDialog.windowFlags() | Qt::WindowContextHelpButtonHint, false);
+    changelogDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 	changelogDialog.setVersion(version);
 	changelogDialog.setReleaseDate(releaseDate);
 
