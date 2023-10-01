@@ -36,11 +36,18 @@ set(HEADERS
     ${HEADERS_PREFIX}/code/progressdialog.hpp
 )
 
+set(TS_PREFIX translations)
+set(TS_FILES
+    ${TS_PREFIX}/actionpackwindows_fr_FR.ts
+    ${TS_PREFIX}/actionpackwindows_zh_CN.ts
+)
+
 set(QRC ${PROJECT}.qrc)
 
 add_library(${PROJECT} SHARED
     ${SOURCES}
     ${HEADERS}
+    ${TS_FILES}
     ${QRC}
 )
 

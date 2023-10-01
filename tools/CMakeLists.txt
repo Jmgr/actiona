@@ -17,9 +17,16 @@ set(HEADERS
     $<$<PLATFORM_ID:Windows>:${HEADERS_PREFIX}/sevenziparchivewrite.hpp>
 )
 
+set(TS_PREFIX translations)
+set(TS_FILES
+    ${TS_PREFIX}/tools_fr_FR.ts
+    ${TS_PREFIX}/tools_zh_CN.ts
+)
+
 add_library(${PROJECT} SHARED
     ${SOURCES}
     ${HEADERS}
+    ${TS_FILES}
 )
 
 target_compile_definitions(${PROJECT} PRIVATE TOOLS_LIBRARY)

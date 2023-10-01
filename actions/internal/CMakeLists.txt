@@ -41,11 +41,18 @@ set(HEADERS
     ${HEADERS_PREFIX}/actions/variableinstance.hpp
 )
 
+set(TS_PREFIX translations)
+set(TS_FILES
+    ${TS_PREFIX}/actionpackinternal_fr_FR.ts
+    ${TS_PREFIX}/actionpackinternal_zh_CN.ts
+)
+
 set(QRC ${PROJECT}.qrc)
 
 add_library(${PROJECT} SHARED
     ${SOURCES}
     ${HEADERS}
+    ${TS_FILES}
     ${QRC}
 )
 
