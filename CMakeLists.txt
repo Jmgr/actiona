@@ -54,6 +54,7 @@ function(compile_translations TARGET)
     find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS LinguistTools REQUIRED)
     set(TS_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_fr_FR.ts
+        ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_zh_CN.ts
         # Add other translations here
     )
     set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_BINARY_DIR}/translations)
