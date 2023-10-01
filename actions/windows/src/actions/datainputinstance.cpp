@@ -107,7 +107,7 @@ namespace Actions
 
 		mInputDialog = new QInputDialog();
 
-        mInputDialog->setWindowFlags(mInputDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+        mInputDialog->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 		mInputDialog->setWindowModality(Qt::NonModal);
 		mInputDialog->setLabelText(question);
 		mInputDialog->setWindowTitle(windowTitle);

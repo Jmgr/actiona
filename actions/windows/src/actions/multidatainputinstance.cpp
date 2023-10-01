@@ -90,7 +90,7 @@ namespace Actions
 
 		mDialog = new QDialog;
 
-        mDialog->setWindowFlags(mDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+        mDialog->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 		auto layout = new QVBoxLayout(mDialog);
 

@@ -92,7 +92,7 @@ namespace ActionTools
 	{
 		QFileDialog fileDialog(this, mCaption, mDirectory, mFilter);
 
-        fileDialog.setWindowFlags(fileDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+        fileDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 		switch(mMode)
 		{

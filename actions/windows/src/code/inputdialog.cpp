@@ -79,7 +79,7 @@ namespace Code
 		
 		mInputDialog(new QInputDialog)
 	{
-        mInputDialog->setWindowFlags(mInputDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+        mInputDialog->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 		setWidget(mInputDialog);
 		

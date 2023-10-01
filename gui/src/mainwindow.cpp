@@ -660,7 +660,7 @@ void MainWindow::on_actionAbout_triggered()
 {
 	AboutDialog aboutDialog(this);
 
-    aboutDialog.setWindowFlags(aboutDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    aboutDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 	aboutDialog.exec();
 }
@@ -685,7 +685,7 @@ void MainWindow::on_actionExport_executable_triggered()
 
 	SFXScriptDialog sfxScriptDialog(this);
 
-    sfxScriptDialog.setWindowFlags(sfxScriptDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    sfxScriptDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 	if(!sfxScriptDialog.exec())
 		return;
@@ -834,7 +834,7 @@ void MainWindow::on_actionSettings_triggered()
 {
 	SettingsDialog settingsDialog(mSystemTrayIcon, this);
 
-    settingsDialog.setWindowFlags(settingsDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    settingsDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 	if(settingsDialog.exec() == QDialog::Accepted)
 	{
@@ -970,7 +970,7 @@ void MainWindow::on_actionSet_action_color_triggered()
 		return;
 
 	QColorDialog colorDialog(firstActionInstance->color(), this);
-    colorDialog.setWindowFlags(colorDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    colorDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 	colorDialog.setOptions(QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
 	colorDialog.setCurrentColor(firstActionInstance->color());
 
@@ -1011,7 +1011,7 @@ void MainWindow::on_actionNew_action_triggered()
     NewActionDialog dialog(mActionFactory,
                            mNewActionModel,
                            this);
-    dialog.setWindowFlags(dialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    dialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 	if(dialog.exec() == QDialog::Accepted)
 		wantToAddAction(dialog.selectedAction());
 }
@@ -1039,7 +1039,7 @@ void MainWindow::on_actionJump_to_line_triggered()
 		inputDialog.setIntValue(min + 1);
 	}
 	
-    inputDialog.setWindowFlags(inputDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    inputDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 	inputDialog.setWindowTitle(tr("Jump to line"));
 	inputDialog.setLabelText(tr("Line:"));
 	inputDialog.setInputMode(QInputDialog::IntInput);
@@ -1133,7 +1133,7 @@ void MainWindow::on_actionCreate_shortcut_triggered()
 void MainWindow::on_actionImport_script_content_triggered()
 {
 	ScriptContentDialog scriptContentDialog(ScriptContentDialog::Write, mScript, this);
-    scriptContentDialog.setWindowFlags(scriptContentDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    scriptContentDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 	if(scriptContentDialog.exec() == QDialog::Accepted)
 	{
 		QByteArray newContent(scriptContentDialog.text().trimmed().toUtf8());
@@ -1153,7 +1153,7 @@ void MainWindow::on_actionExport_script_content_triggered()
     writeScript(&buffer);
 
     ScriptContentDialog scriptContentDialog(ScriptContentDialog::Read, mScript, this);
-    scriptContentDialog.setWindowFlags(scriptContentDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    scriptContentDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     scriptContentDialog.setText(QString::fromUtf8(buffer.buffer()));
     scriptContentDialog.exec();
 }
@@ -1161,7 +1161,7 @@ void MainWindow::on_actionExport_script_content_triggered()
 void MainWindow::on_actionScriptSettings_triggered()
 {
 	ScriptSettingsDialog scriptSettingsDialog(this);
-    scriptSettingsDialog.setWindowFlags(scriptSettingsDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    scriptSettingsDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 	scriptSettingsDialog.setPauseBefore(mScript->pauseBefore());
 	scriptSettingsDialog.setPauseAfter(mScript->pauseAfter());
 	if(scriptSettingsDialog.exec() == QDialog::Accepted)
@@ -1194,7 +1194,7 @@ void MainWindow::on_actionHelp_triggered()
 void MainWindow::on_actionTake_screenshot_triggered()
 {
     ActionTools::ScreenshotWizard screenshotWizard(mScript, true, this);
-    screenshotWizard.setWindowFlags(screenshotWizard.windowFlags() | Qt::WindowContextHelpButtonHint);
+    screenshotWizard.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     screenshotWizard.exec();
 }
 
@@ -1412,7 +1412,7 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 								   .arg(mScript->statusMessage())
 								   .arg(mScript->line())
 								   .arg(mScript->column()), QMessageBox::Warning, QMessageBox::Ok, 0, 0, this);
-            messageBox.setWindowFlags(messageBox.windowFlags() | Qt::WindowContextHelpButtonHint);
+            messageBox.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 			messageBox.setTextFormat(Qt::RichText);
 			messageBox.exec();
 		}
@@ -1522,7 +1522,7 @@ ActionDialog *MainWindow::getOrCreateActionDialog(const ActionTools::ActionDefin
     {
         auto newActionDialog = new ActionDialog(mCompletionModel, mScript, actionDefinition, mUsedLocale, this);
 
-        newActionDialog->setWindowFlags(newActionDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+        newActionDialog->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
         mActionDialogs.insert(actionIndex, newActionDialog);
 
@@ -2017,7 +2017,7 @@ void MainWindow::updateSuccess(const QVersionNumber &version,
 	}
 
 	ChangelogDialog changelogDialog(this);
-    changelogDialog.setWindowFlags(changelogDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    changelogDialog.setWindowFlags(changelogDialog.windowFlags() | Qt::WindowContextHelpButtonHint, false);
 	changelogDialog.setVersion(version);
 	changelogDialog.setReleaseDate(releaseDate);
 
@@ -2227,7 +2227,7 @@ bool MainWindow::editAction(ActionTools::ActionInstance *actionInstance, int exc
 void MainWindow::openParametersDialog(int parameter, int line, int column)
 {
     ScriptParametersDialog scriptParametersDialog(mScript, this);
-    scriptParametersDialog.setWindowFlags(scriptParametersDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    scriptParametersDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 	QList<ActionTools::ScriptParameter> parameters = mScript->parameters();
 	scriptParametersDialog.setCurrentParameter(parameter);
 	scriptParametersDialog.setCurrentLine(line);
@@ -2239,7 +2239,7 @@ void MainWindow::openParametersDialog(int parameter, int line, int column)
 void MainWindow::openResourceDialog(const QString &resource)
 {
     ResourceDialog resourceDialog(mScript, this);
-    resourceDialog.setWindowFlags(resourceDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+    resourceDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     resourceDialog.setCurrentResource(resource);
 	QMap<QString, ActionTools::Resource> resources = mScript->resources();
     if(resourceDialog.exec() == QDialog::Accepted)

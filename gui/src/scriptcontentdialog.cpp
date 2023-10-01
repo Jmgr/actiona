@@ -73,7 +73,7 @@ void ScriptContentDialog::accept()
 								   .arg(mScript->statusMessage())
 								   .arg(mScript->line())
 								   .arg(mScript->column()), QMessageBox::Warning, QMessageBox::Ok, 0, 0, this);
-            messageBox.setWindowFlags(messageBox.windowFlags() | Qt::WindowContextHelpButtonHint);
+            messageBox.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 			messageBox.setTextFormat(Qt::RichText);
 			messageBox.exec();
 			
