@@ -26,6 +26,7 @@
 #include <QCoreApplication>
 #include <QLibraryInfo>
 #include <QDir>
+#include <QDebug>
 
 #include <utility>
 
@@ -36,12 +37,14 @@ namespace Tools
         {
             QStringLiteral(""),
             QStringLiteral("en_US"),
-            QStringLiteral("fr_FR")
+            QStringLiteral("fr_FR"),
+            QStringLiteral("zh_CN"),
         },
         {
             QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "System language (if available)")),
             QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "English (US)")),
-            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "French (France)"))
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "French (France)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "Simplified Chinese (China)"))
         }
     };
 
@@ -50,7 +53,7 @@ namespace Tools
     QString Languages::locale()
     {
         QSettings settings;
-		QString locale = settings.value(QStringLiteral("gui/locale")).toString();
+        QString locale = settings.value(QStringLiteral("gui/translations")).toString();
 
         if(locale.isEmpty())
         {
@@ -62,8 +65,10 @@ namespace Tools
             {
 				if(installerLanguage == QLatin1String("english"))
 					locale = QStringLiteral("en_US");
-				else if(installerLanguage == QLatin1String("french"))
-					locale = QStringLiteral("fr_FR");
+                else if(installerLanguage == QLatin1String("fr"))
+                    locale = QStringLiteral("fr_FR");
+                else if(installerLanguage == QLatin1String("zh"))
+                    locale = QStringLiteral("zh_CN");
             }
     #endif
         }
@@ -76,8 +81,10 @@ namespace Tools
         auto translator = new QTranslator(QCoreApplication::instance());
 		if(!translator->load(QStringLiteral("%1/translations/%2_%3").arg(QCoreApplication::applicationDirPath()).arg(componentName).arg(locale)))
         {
-			if(!translator->load(QStringLiteral("%1/translations/%2_%3").arg(QDir::currentPath()).arg(componentName).arg(locale)))
+            auto path = QStringLiteral("%1/translations/%2_%3").arg(QDir::currentPath()).arg(componentName).arg(locale);
+            if(!translator->load(path))
             {
+                qDebug() << "Failed loading translation from" << path;
     #ifndef Q_OS_WIN
                 // TODO: ACT_PREFIX
 				translator->load(QStringLiteral("/usr/local/share/actiona/translations/%2_%3").arg(componentName).arg(locale));
