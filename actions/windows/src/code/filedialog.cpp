@@ -100,7 +100,7 @@ namespace Code
 		: BaseWindow(),
 		mFileDialog(new QFileDialog)
 	{
-        mFileDialog->setWindowFlags(mFileDialog->windowFlags() | Qt::WindowContextHelpButtonHint);
+        mFileDialog->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 		setWidget(mFileDialog);
 		

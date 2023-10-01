@@ -62,7 +62,7 @@ namespace Code
 		: BaseWindow(),
 		mMessageBox(new QMessageBox)
 	{
-        mMessageBox->setWindowFlags(mMessageBox->windowFlags() | Qt::WindowContextHelpButtonHint);
+        mMessageBox->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 		setWidget(mMessageBox);
 

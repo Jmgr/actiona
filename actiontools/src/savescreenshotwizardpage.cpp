@@ -82,7 +82,7 @@ namespace ActionTools
     {
         ResourceNameDialog resourceNameDialog(mScript, this);
 
-        resourceNameDialog.setWindowFlags(resourceNameDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
+        resourceNameDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
         if(resourceNameDialog.exec() != QDialog::Accepted)
             return;
