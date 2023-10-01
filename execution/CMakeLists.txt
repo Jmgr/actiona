@@ -22,11 +22,17 @@ set(HEADERS
     ${HEADERS_PREFIX}/scriptagent.hpp
 )
 
+set(UI_PREFIX ui)
+set(UI_FILES
+    ${UI_PREFIX}/executionwindow.ui
+)
+
 set(QRC ${PROJECT}.qrc)
 
 add_library(${PROJECT} SHARED
     ${SOURCES}
     ${HEADERS}
+    ${UI_FILES}
     ${QRC}
 )
 

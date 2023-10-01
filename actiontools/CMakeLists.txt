@@ -243,11 +243,28 @@ set(HEADERS
     ${HEADERS_PREFIX}/qtsingleapplication/qtsingleapplication.h
 )
 
+set(UI_PREFIX ui)
+set(UI_FILES
+    ${UI_PREFIX}/booleanedit.ui
+    ${UI_PREFIX}/codeeditordialog.ui
+    ${UI_PREFIX}/coloredit.ui
+    ${UI_PREFIX}/consolewidget.ui
+    ${UI_PREFIX}/fileedit.ui
+    ${UI_PREFIX}/itemlistwidget.ui
+    ${UI_PREFIX}/pointlistwidget.ui
+    ${UI_PREFIX}/positionedit.ui
+    ${UI_PREFIX}/resourcenamedialog.ui
+    ${UI_PREFIX}/savescreenshotwizardpage.ui
+    ${UI_PREFIX}/screenshotwizardpage.ui
+    ${UI_PREFIX}/windowedit.ui
+)
+
 set(QRC ${PROJECT}.qrc)
 
 add_library(${PROJECT} SHARED
     ${SOURCES}
     ${HEADERS}
+    ${UI_FILES}
     ${QRC}
 )
 

@@ -29,20 +29,21 @@ SFXScriptDialog::SFXScriptDialog(QWidget *parent)
 {
 	ui->setupUi(this);
 
-	if(QSysInfo::WordSize == 32)
-	{
+    // We disable this until we know we don't have to keep 32 bit compatibility.
+    // if(QSysInfo::WordSize == 32)
+    // {
 		ui->use32BitBinariesLabel->setVisible(false);
 		ui->use32BitBinaries->setVisible(false);
 		adjustSize();
-	}
+    // }
 
 	QSettings settings;
 	ui->disableTrayIcon->setChecked(settings.value(QStringLiteral("sfxScript/disableTrayIcon"), true).toBool());
 	ui->showConsole->setChecked(settings.value(QStringLiteral("sfxScript/showConsole"), false).toBool());
 	ui->showExecutionWindow->setChecked(settings.value(QStringLiteral("sfxScript/showExecutionWindow"), false).toBool());
 	ui->closeAfterExecution->setChecked(settings.value(QStringLiteral("sfxScript/closeAfterExecution"), true).toBool());
-	ui->use32BitBinaries->setChecked(settings.value(QStringLiteral("sfxScript/use32BitBinaries"), true).toBool());
-	ui->requiresActiona->setChecked(settings.value(QStringLiteral("sfxScript/requiresActiona"), false).toBool());
+    ui->use32BitBinaries->setChecked(settings.value(QStringLiteral("sfxScript/use32BitBinaries"), true).toBool());
+    ui->requiresActiona->setChecked(settings.value(QStringLiteral("sfxScript/requiresActiona"), false).toBool());
 
     on_requiresActiona_clicked();
 }
