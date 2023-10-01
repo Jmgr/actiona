@@ -75,11 +75,28 @@ set(HEADERS
     ${HEADERS_PREFIX}/QHotkey/qhotkey_p.h
 )
 
+set(UI_PREFIX ui)
+set(UI_FILES
+    ${UI_PREFIX}/aboutdialog.ui
+    ${UI_PREFIX}/actiondialog.ui
+    ${UI_PREFIX}/changelogdialog.ui
+    ${UI_PREFIX}/mainwindow.ui
+    ${UI_PREFIX}/newactiondialog.ui
+    ${UI_PREFIX}/resourcedialog.ui
+    ${UI_PREFIX}/scriptcontentdialog.ui
+    ${UI_PREFIX}/scriptparametersdialog.ui
+    ${UI_PREFIX}/scriptsettingsdialog.ui
+    ${UI_PREFIX}/settingsdialog.ui
+    ${UI_PREFIX}/sfxscriptdialog.ui
+)
+
 set(QRC ${PROJECT}.qrc)
 
 add_executable(${PROJECT}
+    WIN32
     ${SOURCES}
     ${HEADERS}
+    ${UI_FILES}
     ${QRC}
 )
 
@@ -92,9 +109,7 @@ if(UNIX)
 endif()
 
 set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actiona")
-set_target_properties(${PROJECT} PROPERTIES SUFFIX "")
 set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
-set(CMAKE_EXECUTABLE_SUFFIX "")
 
 setup_target(${PROJECT})
 
