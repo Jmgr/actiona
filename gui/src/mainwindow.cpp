@@ -223,20 +223,11 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
     {
 		QFileInfo sfxFileInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/7zsd.sfx")));
 		QFileInfo sfxBaseArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx.7z")));
-		QFileInfo sfx32BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx32.7z")));
-        bool has64BitArchive = true;
-
-        if(QSysInfo::WordSize == 64)
-        {
-			QFileInfo sfx64BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z")));
-
-            has64BitArchive = sfx64BitArchiveInfo.isReadable();
-        }
+        QFileInfo sfx64BitArchiveInfo(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z")));
 
         ui->actionExport_executable->setEnabled(sfxFileInfo.isReadable() &&
                                                 sfxBaseArchiveInfo.isReadable() &&
-                                                sfx32BitArchiveInfo.isReadable() &&
-                                                has64BitArchive);
+                                                sfx64BitArchiveInfo.isReadable());
     }
 #endif
 
@@ -713,12 +704,7 @@ void MainWindow::on_actionExport_executable_triggered()
     if(sfxScriptDialog.requiresActiona())
 		sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx.7z"));
 	else
-	{
-		if(QSysInfo::WordSize == 32 || sfxScriptDialog.use32BitBinaries())
-			sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx32.7z"));
-		else
-			sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z"));
-	}
+        sourceArchive = QDir(QApplication::applicationDirPath()).filePath(QStringLiteral("sfx/sfx64.7z"));
 
 	QProgressDialog progressDialog(tr("Creating SFX script"), QString(), 0, 100, this);
 	progressDialog.setWindowTitle(tr("Create SFX script"));

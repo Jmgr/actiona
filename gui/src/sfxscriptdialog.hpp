@@ -39,14 +39,10 @@ public:
 	bool showConsole() const;
 	bool showExecutionWindow() const;
 	bool closeAfterExecution() const;
-	bool use32BitBinaries() const;
     bool requiresActiona() const;
 
 public slots:
 	void accept() override;
-
-private slots:
-    void on_requiresActiona_clicked();
 
 private:
 	Ui::SFXScriptDialog *ui;

@@ -24,9 +24,11 @@ set(TS_FILES
 )
 
 add_executable(${PROJECT}
+    WIN32
     ${SOURCES}
     ${HEADERS}
     ${TS_FILES}
+    ../gui/app.rc
 )
 
 add_dependencies(${PROJECT} execution actiontools tools)

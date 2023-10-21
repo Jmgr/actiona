@@ -105,6 +105,7 @@ add_executable(${PROJECT}
     ${UI_FILES}
     ${TS_FILES}
     ${QRC}
+    app.rc
 )
 
 add_dependencies(${PROJECT} execution actiontools tools)

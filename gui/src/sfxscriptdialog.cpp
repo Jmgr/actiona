@@ -29,23 +29,12 @@ SFXScriptDialog::SFXScriptDialog(QWidget *parent)
 {
 	ui->setupUi(this);
 
-    // We disable this until we know we don't have to keep 32 bit compatibility.
-    // if(QSysInfo::WordSize == 32)
-    // {
-		ui->use32BitBinariesLabel->setVisible(false);
-		ui->use32BitBinaries->setVisible(false);
-		adjustSize();
-    // }
-
 	QSettings settings;
 	ui->disableTrayIcon->setChecked(settings.value(QStringLiteral("sfxScript/disableTrayIcon"), true).toBool());
 	ui->showConsole->setChecked(settings.value(QStringLiteral("sfxScript/showConsole"), false).toBool());
 	ui->showExecutionWindow->setChecked(settings.value(QStringLiteral("sfxScript/showExecutionWindow"), false).toBool());
 	ui->closeAfterExecution->setChecked(settings.value(QStringLiteral("sfxScript/closeAfterExecution"), true).toBool());
-    ui->use32BitBinaries->setChecked(settings.value(QStringLiteral("sfxScript/use32BitBinaries"), true).toBool());
     ui->requiresActiona->setChecked(settings.value(QStringLiteral("sfxScript/requiresActiona"), false).toBool());
-
-    on_requiresActiona_clicked();
 }
 
 SFXScriptDialog::~SFXScriptDialog()
@@ -73,11 +62,6 @@ bool SFXScriptDialog::closeAfterExecution() const
 	return ui->closeAfterExecution->isChecked();
 }
 
-bool SFXScriptDialog::use32BitBinaries() const
-{
-	return ui->use32BitBinaries->isChecked();
-}
-
 bool SFXScriptDialog::requiresActiona() const
 {
     return ui->requiresActiona->isChecked();
@@ -90,16 +74,7 @@ void SFXScriptDialog::accept()
 	settings.setValue(QStringLiteral("sfxScript/showConsole"), ui->showConsole->isChecked());
 	settings.setValue(QStringLiteral("sfxScript/showExecutionWindow"), ui->showExecutionWindow->isChecked());
 	settings.setValue(QStringLiteral("sfxScript/closeAfterExecution"), ui->closeAfterExecution->isChecked());
-	settings.setValue(QStringLiteral("sfxScript/use32BitBinaries"), ui->use32BitBinaries->isChecked());
 	settings.setValue(QStringLiteral("sfxScript/requiresActiona"), ui->requiresActiona->isChecked());
 
 	QDialog::accept();
-}
-
-void SFXScriptDialog::on_requiresActiona_clicked()
-{
-    bool requiresActiona = ui->requiresActiona->isChecked();
-
-    ui->use32BitBinaries->setEnabled(!requiresActiona);
-    ui->use32BitBinariesLabel->setEnabled(!requiresActiona);
 }
