@@ -42,7 +42,7 @@ function(setup_target TARGET)
         $<$<PLATFORM_ID:Windows>:_UNICODE>
         $<$<PLATFORM_ID:Windows>:WIN32_LEAN_AND_MEAN>
         $<$<PLATFORM_ID:Windows>:NOMINMAX>
-        $<$<PLATFORM_ID:Windows>:WINVER=_WIN32_WINNT_VISTA>
+        $<$<PLATFORM_ID:Windows>:WINVER=_WIN32_WINNT_WIN7>
     )
     set_target_properties(${TARGET}
         PROPERTIES
