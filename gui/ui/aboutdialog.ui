@@ -261,6 +261,16 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="act3Donators">
             <item>
              <property name="text">
+              <string>Armel François</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Fredy123</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>David-Yossef Messika</string>
              </property>
             </item>
