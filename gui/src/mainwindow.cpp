@@ -1626,21 +1626,28 @@ void MainWindow::execute(bool onlySelection)
 						 ui->consoleWidget->model());
 	}
 
+    mWasNewActionDockShown = !ui->actionsDockWidget->isHidden();
+    mWasConsoleDockShown = !ui->consoleDockWidget->isHidden();
+
+    mScriptStopped = false;
     if(mExecuter.startExecution(onlySelection, mCurrentFile))
-	{
-		mPreviousWindowPosition = pos();
-		hide();
-		mWasNewActionDockShown = !ui->actionsDockWidget->isHidden();
-		mWasConsoleDockShown = !ui->consoleDockWidget->isHidden();
-		ui->actionsDockWidget->hide();
-		ui->consoleDockWidget->hide();
+    {
+        // mScriptStopped is set to true if a code exception has happened.
+        // In that case we don't want to hide everything.
+        if(!mScriptStopped)
+        {
+            mPreviousWindowPosition = pos();
+            hide();
+            ui->actionsDockWidget->hide();
+            ui->consoleDockWidget->hide();
 
-		if(mSystemTrayIcon)
-            mSystemTrayIcon->setToolTip(tr("Actiona - executing"));
+            if(mSystemTrayIcon)
+                mSystemTrayIcon->setToolTip(tr("Actiona - executing"));
 
-		ui->actionExecute->setEnabled(false);
-		ui->actionExecute_selection->setEnabled(false);
-		mStopExecutionAction->setEnabled(true);
+            ui->actionExecute->setEnabled(false);
+            ui->actionExecute_selection->setEnabled(false);
+            mStopExecutionAction->setEnabled(true);
+        }
 	}
 	else
 	{
@@ -1828,6 +1835,7 @@ void MainWindow::pauseOrResumeExecution()
 
 void MainWindow::scriptExecutionStopped()
 {
+    mScriptStopped = true;
     ui->heatmapModeComboBox->setEnabled(true);
 
 	QSettings settings;
@@ -1860,7 +1868,10 @@ void MainWindow::scriptExecutionStopped()
 
 void MainWindow::postExecution()
 {
-	move(mPreviousWindowPosition);
+    if(mScriptStopped)
+        return;
+
+    move(mPreviousWindowPosition);
 }
 
 void MainWindow::logItemDoubleClicked(int itemRow)

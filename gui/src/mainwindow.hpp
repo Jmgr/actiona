@@ -231,6 +231,7 @@ private:
 	QFile *mFile;
 	QStringList mPackLoadErrors;
 	Execution::Executer mExecuter;
+    bool mScriptStopped{false};
 	bool mWasNewActionDockShown;
 	bool mWasConsoleDockShown;
 	QUndoGroup *mUndoGroup;
