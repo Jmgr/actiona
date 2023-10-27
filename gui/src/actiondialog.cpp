@@ -370,8 +370,10 @@ int ActionDialog::exec(ActionTools::ActionInstance *actionInstance, const QStrin
 	mCurrentField = field;
 	mCurrentSubField = subField;
 	mCurrentLine = currentLine;
-	mCurrentColumn = currentColumn;
-	
+    mCurrentColumn = currentColumn;
+
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setFocus();
+
 	return QDialog::exec();
 }
 
@@ -380,7 +382,9 @@ int ActionDialog::exec(ActionTools::ActionInstance *actionInstance, int exceptio
 	QTimer::singleShot(1, this, SLOT(postInit()));
 	
 	mActionInstance = actionInstance;
-	mCurrentException = exception;
+    mCurrentException = exception;
+
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setFocus();
 	
 	return QDialog::exec();
 }
