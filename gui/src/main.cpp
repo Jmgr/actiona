@@ -30,6 +30,11 @@
 #include "tools/languages.hpp"
 #include "actiontools/qtsingleapplication/QtSingleApplication"
 
+#ifdef Q_OS_WIN
+#include "client/windows/handler/exception_handler.h"
+#include <QStandardPaths>
+#endif
+
 #ifdef ACT_PROFILE
 #include "tools/highresolutiontimer.hpp"
 #endif
@@ -79,6 +84,20 @@ int main(int argc, char **argv)
 	app.setApplicationVersion(Global::ACTIONA_VERSION.toString() + QStringLiteral(", script ") + Global::SCRIPT_VERSION.toString());
 
 	qAddPostRoutine(cleanup);
+
+#ifdef Q_OS_WIN
+    QString dumpPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+    dumpPath = QDir(dumpPath).filePath(QStringLiteral("CrashDumps"));
+    if (!QDir(dumpPath).exists()) {
+        QDir().mkpath(dumpPath);
+    }
+
+    auto buffer = std::make_unique<wchar_t[]>(dumpPath.length() + 1);
+    int charsCopied = dumpPath.toWCharArray(buffer.get());
+    buffer[charsCopied] = L'\0';
+
+    google_breakpad::ExceptionHandler eh(buffer.get(), nullptr, nullptr, nullptr, -1);
+#endif
 
 	QCommandLineParser optionsParser;
 	optionsParser.setApplicationDescription(QObject::tr("Emulates clics, key presses and other actions."));
