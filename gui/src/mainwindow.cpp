@@ -323,7 +323,7 @@ void MainWindow::postInit()
 	if(mSplashScreen)
 		mSplashScreen->showMessage(tr("Loading actions..."));
 
-    mActionFactory->loadActionPacks(QStringLiteral("actions/"), mUsedLocale);
+    mActionFactory->loadActionPacks(QApplication::applicationDirPath() + QStringLiteral("/actions"), mUsedLocale);
 #ifndef Q_OS_WIN
 	if(mActionFactory->actionPackCount() == 0)
 		mActionFactory->loadActionPacks(QStringLiteral("actiona/actions/"), mUsedLocale);
