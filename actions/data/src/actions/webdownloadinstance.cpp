@@ -46,6 +46,8 @@ namespace Actions
 		  mDestination(Variable),
 		  mProgressDialog(new QProgressDialog)
 	{
+        mProgressDialog->close(); // Prevent the progress dialog from displaying after 4 seconds
+
         connect(mProgressDialog, &QProgressDialog::canceled, this, &WebDownloadInstance::canceled);
 	}
 
@@ -99,6 +101,7 @@ namespace Actions
 		mProgressDialog->setWindowTitle(tr("Downloading"));
 		mProgressDialog->setLabelText(tr("Downloading..."));
 		mProgressDialog->setMaximum(100);
+        mProgressDialog->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 		mProgressDialog->show();
 	}
 

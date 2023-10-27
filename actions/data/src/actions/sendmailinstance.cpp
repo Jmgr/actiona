@@ -58,7 +58,10 @@ namespace Actions
 		: ActionTools::ActionInstance(definition, parent),
           mSmtp(nullptr),
 		  mProgressDialog(new QProgressDialog)
-	{
+    {
+        mProgressDialog->close(); // Prevent the progress dialog from displaying after 4 seconds
+
+        connect(mProgressDialog, &QProgressDialog::canceled, this, &SendMailInstance::canceled);
 	}
 
     SendMailInstance::~SendMailInstance()
@@ -142,8 +145,6 @@ namespace Actions
         connect(mSmtp, static_cast<void (QxtSmtp::*)(int, int, const QByteArray &)>(&QxtSmtp::mailFailed), this, &SendMailInstance::mailFailed);
         connect(mSmtp, &QxtSmtp::mailSent, this, &SendMailInstance::mailSent);
         connect(mSmtp, &QxtSmtp::disconnected, this, &SendMailInstance::disconnected);
-
-        connect(mProgressDialog, &QProgressDialog::canceled, this, &SendMailInstance::canceled);
 
         mSmtp->setUsername(userName.toUtf8());
         mSmtp->setPassword(password.toUtf8());
