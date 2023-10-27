@@ -1074,7 +1074,7 @@ namespace Execution
         {
 			mExecutionWindow->setProgressEnabled(false);
 
-            startActionExecution();
+            QTimer::singleShot(0, this, &Executer::startActionExecution);
         }
 
         mExecutionEnded = false;
