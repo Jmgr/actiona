@@ -31,8 +31,8 @@ namespace Execution
 		
 		setProgressEnabled(false);
 	
-		setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-		ui->debugPushButton->setEnabled(false);
+        setWindowFlags(Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+        ui->debugPushButton->setEnabled(false);
 	
         connect(ui->cancelPushButton, &QPushButton::clicked, this, &ExecutionWindow::canceled);
         connect(ui->pausePushButton, &QPushButton::clicked, this, &ExecutionWindow::paused);
