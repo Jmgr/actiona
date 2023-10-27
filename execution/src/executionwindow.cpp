@@ -29,9 +29,9 @@ namespace Execution
 	{
 		ui->setupUi(this);
 		
-		setProgressEnabled(false);
-	
-        setWindowFlags(Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+        setProgressEnabled(false);
+
+        setWindowFlags(Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::Tool);
         ui->debugPushButton->setEnabled(false);
 	
         connect(ui->cancelPushButton, &QPushButton::clicked, this, &ExecutionWindow::canceled);
