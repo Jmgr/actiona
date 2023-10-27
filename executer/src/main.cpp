@@ -184,7 +184,6 @@ int main(int argc, char **argv)
 	if(positionalArguments.count() < 1 || (optionsParser.isSet(QStringLiteral("code")) && optionsParser.isSet(QStringLiteral("script"))))
 		optionsParser.showHelp(-1);
 
-	app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/actions"));
 	app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/plugins"));
 
 	if(!optionsParser.isSet(QStringLiteral("nocodeqt")))
