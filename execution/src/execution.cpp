@@ -1077,6 +1077,6 @@ namespace Execution
             startActionExecution();
         }
 
-		mExecutionEnded = true;
+        mExecutionEnded = false;
 	}
 }
