@@ -35,6 +35,9 @@ set(SOURCES
     ${SOURCES_PREFIX}/QHotkey/qhotkey.cpp
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/QHotkey/qhotkey_win.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/QHotkey/qhotkey_x11.cpp>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/3rdparty/breakpad/src/client/windows/crash_generation/crash_generation_client.cc>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/3rdparty/breakpad/src/client/windows/handler/exception_handler.cc>
+    $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/3rdparty/breakpad/src/common/windows/guid_string.cc>
 )
 
 set(HEADERS_PREFIX src)
@@ -129,6 +132,7 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../actiontools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../execution/include
+        $<$<PLATFORM_ID:Windows>:${CMAKE_CURRENT_SOURCE_DIR}/src/3rdparty/breakpad/src>
         ${LIBNOTIFY_INCLUDE_DIRS}
         ${LIBX11_INCLUDE_DIRS}
 )

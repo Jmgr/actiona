@@ -1,3 +1,6 @@
 [submodule "actions/data/src/3rdparty/mINI"]
 	path = actions/data/src/3rdparty/mINI
 	url = https://github.com/pulzed/mINI.git
+[submodule "gui/src/3rdparty/breakpad"]
+	path = gui/src/3rdparty/breakpad
+	url = https://chromium.googlesource.com/breakpad/breakpad
