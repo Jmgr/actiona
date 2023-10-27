@@ -1439,6 +1439,7 @@ std::unique_ptr<QProgressDialog> MainWindow::createStandardProgressDialog()
 
     result->setWindowModality(Qt::ApplicationModal);
     result->setCancelButton(nullptr);
+    result->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     result->setAutoClose(false);
     result->setMinimumDuration(0);
 

@@ -261,6 +261,7 @@ namespace Actions
         mProgressDialog->setWindowTitle(tr("Sending e-mail"));
         mProgressDialog->setLabelText(tr("Connecting..."));
         mProgressDialog->setMaximum(2);
+        mProgressDialog->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 		mProgressDialog->show();
 	}
 
