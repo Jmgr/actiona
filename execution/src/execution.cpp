@@ -272,7 +272,7 @@ namespace Execution
 	{
 		Q_ASSERT(mScriptAgent);
 		Q_ASSERT(mScriptEngine);
-		
+
 	#ifdef ACT_PROFILE
         Tools::HighResolutionTimer timer(QStringLiteral("Executer::startExecution"));
 	#endif
@@ -863,6 +863,7 @@ namespace Execution
 
 		mProgressDialog->setWindowTitle(title);
 		mProgressDialog->setMaximum(maximum);
+        mProgressDialog->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 		mProgressDialog->setValue(0);
 
 		mProgressDialog->show();
