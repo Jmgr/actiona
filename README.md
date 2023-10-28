@@ -9,7 +9,7 @@ editing text files, etc. Tasks can be created using a simple editor or using
 the EcmaScript (JavaScript) programming language for more customization.
 Actiona is cross-platform.
 
-Please visit [actiona.tools](http://actiona.tools) and the [Discord server](https://discord.gg/h3r76Fwz) for more information.
+Please visit [actiona.tools](http://actiona.tools) and the [Discord server](https://discord.gg/ubTjJu3dVZ) for more information.
 
 ## Actions
 ### Device emulation
