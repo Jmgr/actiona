@@ -53,7 +53,7 @@ namespace Tools
     QString Languages::locale()
     {
         QSettings settings;
-        QString locale = settings.value(QStringLiteral("gui/translations")).toString();
+        QString locale = settings.value(QStringLiteral("gui/locale")).toString();
 
         if(locale.isEmpty())
         {
