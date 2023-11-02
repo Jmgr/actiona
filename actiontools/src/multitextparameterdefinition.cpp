@@ -44,7 +44,7 @@ namespace ActionTools
 	{
 		QString textBuffer = actionInstance->subParameter(name().original(), QStringLiteral("value")).value();
 
-        mItemListWidget->setItems(textBuffer.split(QLatin1Char('\n'), QString::SkipEmptyParts));
+        mItemListWidget->setItems(textBuffer.split(QLatin1Char('\n'), Qt::SkipEmptyParts));
 	}
 
 	void MultiTextParameterDefinition::save(ActionInstance *actionInstance)

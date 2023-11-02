@@ -22,45 +22,45 @@
 
 namespace Code
 {
-	QScriptValue Keyboard::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new Keyboard, context, engine);
-	}
-	
 	Keyboard::Keyboard()
 		: CodeClass()
 	{
 	}
 	
-	QScriptValue Keyboard::pressKey(const QString &key)
+    Keyboard *Keyboard::pressKey(const QString &key)
 	{
 		if(!mKeyboardDevice.pressKey(key))
 			throwError(QStringLiteral("PressKeyError"), tr("Unable to press the key"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Keyboard::releaseKey(const QString &key)
+    Keyboard *Keyboard::releaseKey(const QString &key)
 	{
 		if(!mKeyboardDevice.releaseKey(key))
 			throwError(QStringLiteral("ReleaseKeyError"), tr("Unable to release the key"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Keyboard::triggerKey(const QString &key)
+    Keyboard *Keyboard::triggerKey(const QString &key)
 	{
 		if(!mKeyboardDevice.triggerKey(key))
 			throwError(QStringLiteral("TriggerKeyError"), tr("Unable to trigger the key"));
 		
-		return thisObject();
+        return this;
 	}
 	
-    QScriptValue Keyboard::writeText(const QString &text, int delay, bool noUnicodeCharacters) const
+    Keyboard *Keyboard::writeText(const QString &text, int delay, bool noUnicodeCharacters)
 	{
         if(!mKeyboardDevice.writeText(text, delay, noUnicodeCharacters))
 			throwError(QStringLiteral("WriteTextError"), tr("Unable to write the text"));
 		
-		return thisObject();
+        return this;
 	}
+
+    void Keyboard::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Keyboard>(QStringLiteral("Keyboard"), scriptEngine);
+    }
 }

@@ -210,6 +210,16 @@ namespace ActionTools
         return {};
     }
 
+    QChar KeyboardKey::character() const
+    {
+        Q_ASSERT(mKeyType == KeyType::Character);
+
+        QByteArray byteArray = QByteArray::fromHex(QByteArray::number(mNativeKey, 16));
+        QString str = QString::fromUtf8(byteArray);
+
+        return str[0];
+    }
+
     void KeyboardKey::save(std::function<void (const QString &, const QString &)> keyValueCallback) const
     {
         keyValueCallback(QStringLiteral("type"), QString::number(static_cast<int>(mKeyType)));

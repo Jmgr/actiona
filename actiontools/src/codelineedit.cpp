@@ -33,7 +33,7 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <QSettings>
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 #include <QDebug>
 #include <QToolButton>
 #include <QCursor>
@@ -43,7 +43,7 @@
 
 namespace ActionTools
 {
-    CodeLineEdit::CodeLineEdit(QWidget *parent, const QRegExp &regexpValidation)
+    CodeLineEdit::CodeLineEdit(QWidget *parent, const QRegularExpression &regexpValidation)
         : QLineEdit(parent),
         mParameterContainer(nullptr),
 		mCode(false),
@@ -107,7 +107,7 @@ namespace ActionTools
 		else
 			setCompleter(nullptr);
 
-		if(mRegExp != QRegExp())
+        if(mRegExp != QRegularExpression())
 		{
 			if(code)
 			{
@@ -115,7 +115,7 @@ namespace ActionTools
 				setValidator(nullptr);
 			}
 			else
-				setValidator(new QRegExpValidator(mRegExp, this));
+                setValidator(new QRegularExpressionValidator(mRegExp, this));
 		}
 		
 		update();

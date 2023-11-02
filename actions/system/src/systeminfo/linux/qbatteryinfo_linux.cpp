@@ -554,13 +554,13 @@ void QBatteryInfoPrivate::onBatteryDataChanged(int battery, const QByteArray &at
 
     if (watchChargingState && attribute.contains("status")) {
         QBatteryInfo::ChargingState state = QBatteryInfo::UnknownChargingState;
-        if (qstrcmp(value, "Charging") == 0)
+        if (qstrcmp(value.data(), "Charging") == 0)
             state = QBatteryInfo::Charging;
-        else if (qstrcmp(value, "Not charging") == 0)
+        else if (qstrcmp(value.data(), "Not charging") == 0)
             state = QBatteryInfo::IdleChargingState;
-        else if (qstrcmp(value, "Discharging") == 0)
+        else if (qstrcmp(value.data(), "Discharging") == 0)
             state = QBatteryInfo::Discharging;
-        else if (qstrcmp(value, "Full") == 0)
+        else if (qstrcmp(value.data(), "Full") == 0)
             state = QBatteryInfo::IdleChargingState;
         if (chargingStates.value(battery) != state) {
             chargingStates[battery] = state;
@@ -618,13 +618,13 @@ void QBatteryInfoPrivate::onBatteryDataChanged(int battery, const QByteArray &at
 
     if (watchLevelStatus && attribute.contains("capacity_level")) {
         QBatteryInfo::LevelStatus levelStatus = QBatteryInfo::LevelUnknown;
-        if (qstrcmp(value, "Critical") == 0)
+        if (qstrcmp(value.data(), "Critical") == 0)
             levelStatus = QBatteryInfo::LevelEmpty;
-        else if (qstrcmp(value, "Low") == 0)
+        else if (qstrcmp(value.data(), "Low") == 0)
             levelStatus = QBatteryInfo::LevelLow;
-        else if (qstrcmp(value, "Normal") == 0)
+        else if (qstrcmp(value.data(), "Normal") == 0)
             levelStatus = QBatteryInfo::LevelOk;
-        else if (qstrcmp(value, "Full") == 0)
+        else if (qstrcmp(value.data(), "Full") == 0)
             levelStatus = QBatteryInfo::LevelFull;
         if (levelStatuss.value(battery) != levelStatus) {
             levelStatuss[battery] = levelStatus;
@@ -639,11 +639,11 @@ void QBatteryInfoPrivate::onChargerTypeChanged(const QByteArray &value, bool ena
     if (watchChargerType) {
         QBatteryInfo::ChargerType charger = QBatteryInfo::UnknownCharger;
         if (enabled) {
-            if ((qstrcmp(value, "AC") == 0) || qstrcmp(value, "USB_DCP") == 0)
+            if ((qstrcmp(value.data(), "AC") == 0) || qstrcmp(value.data(), "USB_DCP") == 0)
                 charger = QBatteryInfo::WallCharger;
-            else if (qstrcmp(value, "USB") == 0)
+            else if (qstrcmp(value.data(), "USB") == 0)
                 charger = QBatteryInfo::USBCharger;
-            else if (qstrcmp(value, "USB_CDP") == 0 || qstrcmp(value, "USB_SDP") == 0)
+            else if (qstrcmp(value.data(), "USB_CDP") == 0 || qstrcmp(value.data(), "USB_SDP") == 0)
                 charger = QBatteryInfo::VariableCurrentCharger;
         }
         if (currentChargerType != charger) {
@@ -890,13 +890,13 @@ QBatteryInfo::LevelStatus QBatteryInfoPrivate::getLevelStatus(int battery)
         return QBatteryInfo::LevelUnknown;
 
     QByteArray levelStatus = levelStatusFile.readAll().simplified();
-    if (qstrcmp(levelStatus, "Critical") == 0)
+    if (qstrcmp(levelStatus.data(), "Critical") == 0)
         return QBatteryInfo::LevelEmpty;
-    else if (qstrcmp(levelStatus, "Low") == 0)
+    else if (qstrcmp(levelStatus.data(), "Low") == 0)
         return QBatteryInfo::LevelLow;
-    else if (qstrcmp(levelStatus, "Normal") == 0)
+    else if (qstrcmp(levelStatus.data(), "Normal") == 0)
         return QBatteryInfo::LevelOk;
-    else if (qstrcmp(levelStatus, "Full") == 0)
+    else if (qstrcmp(levelStatus.data(), "Full") == 0)
         return QBatteryInfo::LevelFull;
 
     return QBatteryInfo::LevelUnknown;

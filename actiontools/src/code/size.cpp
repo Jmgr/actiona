@@ -19,79 +19,21 @@
 */
 
 #include "actiontools/code/size.hpp"
-#include "actiontools/code/codetools.hpp"
 
 namespace Code
 {
-	QScriptValue Size::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		Size *size = nullptr;
-		
-		switch(context->argumentCount())
-		{
-		case 0:
-			size = new Size;
-			break;
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-				if(Size *codeSize = qobject_cast<Size*>(object))
-					size = new Size(*codeSize);
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			break;
-		case 2:
-			size = new Size(QSize(context->argument(0).toInt32(), context->argument(1).toInt32()));
-			break;
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			break;
-		}
-		
-		if(!size)
-			return engine->undefinedValue();
-
-		return CodeClass::constructor(size, context, engine);
-	}
-	
-	QScriptValue Size::constructor(const QSize &size, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new Size(size), engine);
-	}
-	
-	QSize Size::parameter(QScriptContext *context, QScriptEngine *engine)
-	{
-		switch(context->argumentCount())
-		{
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-				if(Size *size = qobject_cast<Size*>(object))
-					return size->size();
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			return {};
-		case 2:
-			return QSize(context->argument(0).toInt32(),
-						 context->argument(1).toInt32());
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return QSize();
-		}
-	}
-
-	void Size::registerClass(QScriptEngine *scriptEngine)
-	{
-		CodeTools::addClassToScriptEngine<Size>(scriptEngine);
-	}
-	
 	Size::Size()
 		: CodeClass()
 	{
 		
 	}
+
+    Size::Size(int width, int height)
+        : CodeClass(),
+        mSize(width, height)
+    {
+
+    }
 
 	Size::Size(const Size &other)
 		: CodeClass(),
@@ -146,12 +88,12 @@ namespace Code
 		return mSize.height();
 	}
 	
-	QScriptValue Size::clone() const
-	{
-		return constructor(mSize, engine());
+	QJSValue Size::clone() const
+    {
+        return CodeClass::clone<Size>();
 	}
 
-	bool Size::equals(const QScriptValue &other) const
+	bool Size::equals(const QJSValue &other) const
 	{
 		if(other.isUndefined() || other.isNull())
 			return false;
@@ -168,17 +110,22 @@ namespace Code
 		return QStringLiteral("Size {width: %1, height: %2}").arg(width()).arg(height());
 	}
 
-	QScriptValue Size::setWidth(int width)
+    Size *Size::setWidth(int width)
 	{
 		mSize.setWidth(width);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Size::setHeight(int height)
+    Size *Size::setHeight(int height)
 	{
-		mSize.setHeight(height);
-		
-		return thisObject();
-	}
+        mSize.setHeight(height);
+
+        return this;
+    }
+
+    void Size::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Size>(QStringLiteral("Size"), scriptEngine);
+    }
 }

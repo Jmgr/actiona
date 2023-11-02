@@ -20,25 +20,26 @@
 
 #include "tools/highresolutiontimer.hpp"
 
+#include <QIODevice>
+
 namespace Tools
 {
 	int HighResolutionTimer::mLevel = 0;
 
-    HighResolutionTimer::HighResolutionTimer(const QString &taskName):
-		mTextStream(stdout, QIODevice::WriteOnly)
+	HighResolutionTimer::HighResolutionTimer(const QString &taskName) : mTextStream(stdout, QIODevice::WriteOnly)
 	{
-        for(int i = 0; i < mLevel; ++i)
-            mTextStream << "-";
+		for (int i = 0; i < mLevel; ++i)
+			mTextStream << "-";
 
-        mTextStream << ">Profiling [" << taskName << "] -> ";
+		mTextStream << ">Profiling [" << taskName << "] -> ";
 
-        mTimer.start();
-        ++mLevel;
+		mTimer.start();
+		++mLevel;
 	}
 
 	HighResolutionTimer::~HighResolutionTimer()
 	{
-        mTextStream << (mTimer.elapsed() / 1000.) << "s\n";
-        --mLevel;
+		mTextStream << (mTimer.elapsed() / 1000.) << "s\n";
+		--mLevel;
 	}
 }

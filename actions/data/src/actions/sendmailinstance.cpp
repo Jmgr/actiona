@@ -31,7 +31,7 @@
 #include <QNetworkRequest>
 #include <QProgressDialog>
 #include <QRegularExpression>
-#include <QScriptValue>
+#include <QJSValue>
 #include <QBuffer>
 
 namespace Actions
@@ -82,7 +82,7 @@ namespace Actions
 		QString subject = evaluateString(ok, QStringLiteral("subject"));
 		QString body = evaluateString(ok, QStringLiteral("body"));
 		QString attachmentName = evaluateString(ok, QStringLiteral("attachmentName"));
-		QScriptValue attachmentData = evaluateValue(ok, QStringLiteral("attachmentData"));
+		QJSValue attachmentData = evaluateValue(ok, QStringLiteral("attachmentData"));
 		QString attachmentContentType = evaluateEditableListElement(ok, attachmentContentTypes, QStringLiteral("attachmentContentType"));
 		QString carbonCopy = evaluateString(ok, QStringLiteral("carbonCopy"));
 		QString blindCarbonCopy = evaluateString(ok, QStringLiteral("blindCarbonCopy"));
@@ -96,7 +96,7 @@ namespace Actions
             return;
         }
 
-		if(attachmentContentType == QLatin1String("autoDetect") && !attachmentName.isEmpty() && attachmentData.isValid())
+        if(attachmentContentType == QLatin1String("autoDetect") && !attachmentName.isEmpty() && !attachmentData.isUndefined())
         {
             bool foundAttachmentContentType = true;
 
@@ -156,22 +156,22 @@ namespace Actions
         mailMessage.setBody(body);
 		mailMessage.setExtraHeader(QStringLiteral("Date"), QDateTime::currentDateTime().toString(Qt::RFC2822Date));
 
-        const auto sreceivers = receivers.split(QLatin1Char(','), QString::SkipEmptyParts);
+        const auto sreceivers = receivers.split(QLatin1Char(','), Qt::SkipEmptyParts);
         for(const QString &receiver: sreceivers)
             mailMessage.addRecipient(receiver.trimmed());
 
-        const auto scarbonCopyReceivers = carbonCopy.split(QLatin1Char(','), QString::SkipEmptyParts);
+        const auto scarbonCopyReceivers = carbonCopy.split(QLatin1Char(','), Qt::SkipEmptyParts);
         for(const QString &carbonCopyReceiver: scarbonCopyReceivers)
             mailMessage.addRecipient(carbonCopyReceiver.trimmed(), QxtMailMessage::Cc);
 
-        const auto sblindCarbonCopyReceivers = blindCarbonCopy.split(QLatin1Char(','), QString::SkipEmptyParts);
+        const auto sblindCarbonCopyReceivers = blindCarbonCopy.split(QLatin1Char(','), Qt::SkipEmptyParts);
         for(const QString &blindCarbonCopyReceiver: sblindCarbonCopyReceivers)
             mailMessage.addRecipient(blindCarbonCopyReceiver.trimmed(), QxtMailMessage::Bcc);
 
-        const auto sextraHeaders = extraHeaders.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+        const auto sextraHeaders = extraHeaders.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
         for(const QString &extraHeader: sextraHeaders)
         {
-            QStringList extraHeaderParts = extraHeader.split(QLatin1Char(':'), QString::SkipEmptyParts);
+            QStringList extraHeaderParts = extraHeader.split(QLatin1Char(':'), Qt::SkipEmptyParts);
 
             if(extraHeaderParts.size() != 2)
             {
@@ -185,7 +185,7 @@ namespace Actions
 
         if(!attachmentName.isEmpty())
         {
-            if(!attachmentData.isValid())
+            if(attachmentData.isUndefined())
             {
 				setCurrentParameter(QStringLiteral("attachmentData"));
                 emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid attachment data"));

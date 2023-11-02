@@ -21,50 +21,53 @@
 #include "mouse.hpp"
 #include "actiontools/code/point.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 
 namespace Code
 {
-	QScriptValue Mouse::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		auto mouse = new Mouse;
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-
-			if(it.name() == QLatin1String("onMotion"))
-				mouse->mOnMotion = it.value();
-			else if(it.name() == QLatin1String("onWheel"))
-				mouse->mOnWheel = it.value();
-			else if(it.name() == QLatin1String("onButtonPressed"))
-				mouse->mOnButtonPressed = it.value();
-			else if(it.name() == QLatin1String("onButtonReleased"))
-				mouse->mOnButtonReleased = it.value();
-		}
-
-		return CodeClass::constructor(mouse, context, engine);
-	}
-	
 	Mouse::Mouse()
 		: CodeClass()
 	{
 	}
 
+    Mouse::Mouse(const QJSValue &parameters)
+        : Mouse()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("onMotion"))
+                mOnMotion = it.value();
+            else if(it.name() == QLatin1String("onWheel"))
+                mOnWheel = it.value();
+            else if(it.name() == QLatin1String("onButtonPressed"))
+                mOnButtonPressed = it.value();
+            else if(it.name() == QLatin1String("onButtonReleased"))
+                mOnButtonReleased = it.value();
+        }
+    }
+
     Mouse::~Mouse() = default;
 
-	QScriptValue Mouse::position() const
+	QJSValue Mouse::position() const
 	{
-		return Point::constructor(mMouseDevice.cursorPosition(), engine());
+        return CodeClass::construct<Point>(mMouseDevice.cursorPosition());
 	}
 
-	QScriptValue Mouse::move() const
-	{
-		mMouseDevice.setCursorPosition(Point::parameter(context(), engine()));
+    Mouse *Mouse::move(const Point *point)
+    {
+        mMouseDevice.setCursorPosition(point->point());
 		
-		return thisObject();
+        return this;
 	}
 	
 	bool Mouse::isButtonPressed(Button button) const
@@ -72,59 +75,64 @@ namespace Code
 		return mMouseDevice.isButtonPressed(static_cast<MouseDevice::Button>(button));
 	}
 	
-	QScriptValue Mouse::press(Button button)
+    Mouse *Mouse::press(Button button)
 	{
 		if(!mMouseDevice.pressButton(static_cast<MouseDevice::Button>(button)))
 			throwError(QStringLiteral("PressButtonError"), tr("Unable to press the button"));
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Mouse::release(Button button)
+    Mouse *Mouse::release(Button button)
 	{
 		if(!mMouseDevice.releaseButton(static_cast<MouseDevice::Button>(button)))
 			throwError(QStringLiteral("ReleaseButtonError"), tr("Unable to release the button"));
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Mouse::click(Button button)
+    Mouse *Mouse::click(Button button)
 	{
 		if(!mMouseDevice.buttonClick(static_cast<MouseDevice::Button>(button)))
 			throwError(QStringLiteral("ClickError"), tr("Unable to emulate a button click"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Mouse::wheel(int intensity) const
+    Mouse *Mouse::wheel(int intensity)
 	{
 		if(!mMouseDevice.wheel(intensity))
 			throwError(QStringLiteral("WheelError"), tr("Unable to emulate the wheel"));
 		
-		return thisObject();
+        return this;
 	}
+
+    void Mouse::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Mouse>(QStringLiteral("Mouse"), scriptEngine);
+    }
 
 	void Mouse::mouseMotion(int x, int y)
 	{
-		if(mOnMotion.isValid())
-			mOnMotion.call(thisObject(), QScriptValueList() << x << y);
+        if(!mOnMotion.isUndefined())
+            mOnMotion.call(QJSValueList() << x << y);
 	}
 
 	void Mouse::mouseWheel(int intensity)
 	{
-		if(mOnWheel.isValid())
-			mOnWheel.call(thisObject(), QScriptValueList() << intensity);
+        if(!mOnWheel.isUndefined())
+            mOnWheel.call(QJSValueList() << intensity);
 	}
 
 	void Mouse::mouseButtonPressed(ActionTools::SystemInput::Button button)
 	{
-		if(mOnButtonPressed.isValid())
-			mOnButtonPressed.call(thisObject(), QScriptValueList() << button);
+        if(!mOnButtonPressed.isUndefined())
+            mOnButtonPressed.call(QJSValueList() << button);
 	}
 
 	void Mouse::mouseButtonReleased(ActionTools::SystemInput::Button button)
 	{
-		if(mOnButtonReleased.isValid())
-			mOnButtonReleased.call(thisObject(), QScriptValueList() << button);
+        if(!mOnButtonReleased.isUndefined())
+            mOnButtonReleased.call(QJSValueList() << button);
 	}
 }

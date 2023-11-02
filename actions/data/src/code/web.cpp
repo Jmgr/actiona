@@ -23,7 +23,7 @@
 #include "actiontools/code/rawdata.hpp"
 #include "file.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -34,29 +34,6 @@
 
 namespace Code
 {
-	QScriptValue Web::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		Web *web = new Web;
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-
-			if(it.name() == QLatin1String("onFinished"))
-				web->mOnFinished = it.value();
-			else if(it.name() == QLatin1String("onDownloadProgress"))
-				web->mOnDownloadProgress = it.value();
-			else if(it.name() == QLatin1String("onError"))
-				web->mOnError = it.value();
-			else if(it.name() == QLatin1String("file"))
-				web->mFileValue = it.value();
-		}
-
-		return CodeClass::constructor(web, context, engine);
-	}
-
 	Web::Web()
 		: CodeClass(),
 		  mNetworkAccessManager(new QNetworkAccessManager(this))
@@ -65,13 +42,39 @@ namespace Code
         QObject::connect(mNetworkAccessManager, &QNetworkAccessManager::authenticationRequired, this, &Web::authenticationRequired);
 	}
 
+    Web::Web(const QJSValue &parameters)
+        : Web()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("onFinished"))
+                mOnFinished = it.value();
+            else if(it.name() == QLatin1String("onDownloadProgress"))
+                mOnDownloadProgress = it.value();
+            else if(it.name() == QLatin1String("onError"))
+                mOnError = it.value();
+            else if(it.name() == QLatin1String("file"))
+                mFileValue = it.value();
+        }
+    }
+
     Web::~Web() = default;
 
-	QScriptValue Web::download(const QString &urlString, const QScriptValue &options)
+    Web *Web::download(const QString &urlString, const QJSValue &options)
 	{
 		mData.clear();
 
-		if(mFileValue.isValid())
+        if(!mFileValue.isUndefined())
 		{
 			if(auto file = qobject_cast<Code::File*>(mFileValue.toQObject()))
 				mFile = file->file();
@@ -85,7 +88,7 @@ namespace Code
 				if(!mFile->open(QIODevice::WriteOnly))
 				{
 					throwError(QStringLiteral("OpenFileError"), tr("Unable to open the destination file"));
-					return thisObject();
+                    return this;
 				}
 
 				mCloseFile = true;
@@ -99,7 +102,7 @@ namespace Code
         QUrlQuery urlQuery;
 		QNetworkRequest request;
 
-		QScriptValueIterator it(options);
+		QJSValueIterator it(options);
 		Method method = Get;
 		QByteArray postData;
 
@@ -109,7 +112,7 @@ namespace Code
 
 			if(it.name() == QLatin1String("rawHeaders"))
 			{
-				QScriptValueIterator headerIt(it.value());
+				QJSValueIterator headerIt(it.value());
 
 				while(headerIt.hasNext())
 				{
@@ -120,11 +123,11 @@ namespace Code
 			}
 			else if(it.name() == QLatin1String("method"))
 			{
-				method = static_cast<Method>(it.value().toInt32());
+                method = static_cast<Method>(it.value().toInt());
 			}
 			else if(it.name() == QLatin1String("postData"))
 			{
-                QScriptValueIterator postDataIt(it.value());
+                QJSValueIterator postDataIt(it.value());
                 QUrlQuery postDataParameters;
 
                 while(postDataIt.hasNext())
@@ -138,7 +141,7 @@ namespace Code
 			}
 			else if(it.name() == QLatin1String("query"))
 			{
-				QScriptValueIterator queryIt(it.value());
+				QJSValueIterator queryIt(it.value());
 
 				while(queryIt.hasNext())
 				{
@@ -174,12 +177,12 @@ namespace Code
 
         QObject::connect(mNetworkReply, &QNetworkReply::finished, this, &Web::finished);
         QObject::connect(mNetworkReply, &QNetworkReply::downloadProgress, this, &Web::downloadProgress);
-        QObject::connect(mNetworkReply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Web::error);
+        QObject::connect(mNetworkReply, &QNetworkReply::errorOccurred, this, &Web::error);
         QObject::connect(mNetworkReply, &QNetworkReply::readyRead, this, &Web::readyRead);
 
 		mIsDownloading = true;
 
-		return thisObject();
+        return this;
 	}
 
 	bool Web::isDownloading() const
@@ -187,37 +190,43 @@ namespace Code
 		return mIsDownloading;
 	}
 
-	QScriptValue Web::toImage() const
-	{
-		return Image::constructor(QImage::fromData(mData), engine());
+	QJSValue Web::toImage() const
+    {
+        return CodeClass::construct<Image>(QImage::fromData(mData));
 	}
 
-	QScriptValue Web::toText(Encoding encoding) const
+	QJSValue Web::toText(Encoding encoding) const
 	{
 		return fromEncoding(mData, encoding);
 	}
 
-	QScriptValue Web::toRawData() const
+	QJSValue Web::toRawData() const
 	{
-		return RawData::constructor(mData, engine());
+        return CodeClass::construct<RawData>(mData);
 	}
 
-	QScriptValue Web::cancel()
+    Web *Web::cancel()
 	{
 		if(!mNetworkReply)
-			return thisObject();
+            return this;
 
 		mNetworkReply->abort();
 
-		return thisObject();
+        return this;
 	}
+
+    void Web::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Web>(QStringLiteral("Web"), scriptEngine);
+    }
+
 
 	void Web::finished()
 	{
 		if(!mNetworkReply)
 			return;
 
-		if(mFileValue.isValid() && mFile)
+        if(!mFileValue.isUndefined() && mFile)
 		{
 			if(mCloseFile)
 			{
@@ -230,8 +239,8 @@ namespace Code
 		else
 			mData = mNetworkReply->readAll();
 
-		if(mOnFinished.isValid())
-			mOnFinished.call(thisObject());
+        if(!mOnFinished.isUndefined())
+            mOnFinished.call();
 
 		mNetworkReply->deleteLater();
 		mNetworkReply = nullptr;
@@ -244,8 +253,8 @@ namespace Code
 		if(bytesTotal == -1)
 			return;
 
-		if(mOnDownloadProgress.isValid())
-			mOnDownloadProgress.call(thisObject(), QScriptValueList() << static_cast<qsreal>(bytesReceived) << static_cast<qsreal>(bytesTotal));
+        if(!mOnDownloadProgress.isUndefined())
+            mOnDownloadProgress.call(QJSValueList() << static_cast<qreal>(bytesReceived) << static_cast<qreal>(bytesTotal));
 	}
 
 	void Web::error()
@@ -256,8 +265,8 @@ namespace Code
 		if(mNetworkReply->error() == QNetworkReply::OperationCanceledError)
 			return;
 
-		if(mOnError.isValid())
-			mOnError.call(thisObject(), QScriptValueList() << mNetworkReply->errorString());
+        if(!mOnError.isUndefined())
+            mOnError.call(QJSValueList() << mNetworkReply->errorString());
 	}
 
 	void Web::authenticationRequired(QNetworkReply *, QAuthenticator *authenticator)
@@ -268,7 +277,7 @@ namespace Code
 
 	void Web::readyRead()
 	{
-		if(mFileValue.isValid() && mFile)
+        if(!mFileValue.isUndefined() && mFile)
 			mFile->write(mNetworkReply->readAll());
 	}
 }

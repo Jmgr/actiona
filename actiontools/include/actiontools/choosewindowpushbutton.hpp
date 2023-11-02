@@ -64,7 +64,7 @@ namespace ActionTools
 		WId windowAtPointer() const;
 #endif
 
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
+        bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override;
 
 		QPixmap *mCrossIcon;
 		WindowHandle mLastFoundWindow;

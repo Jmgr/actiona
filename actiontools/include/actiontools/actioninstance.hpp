@@ -29,12 +29,12 @@
 #include <QObject>
 #include <QSharedData>
 #include <QColor>
-#include <QScriptValue>
+#include <QJSValue>
 #include <QVariant>
 #include <QElapsedTimer>
 #include <QDateTime>
 
-class QScriptEngine;
+class QJSEngine;
 class QDataStream;
 
 namespace ActionTools
@@ -66,7 +66,7 @@ namespace ActionTools
         int pauseAfter{0};
         int timeout{0};
         Script *script{nullptr};
-        QScriptEngine *scriptEngine{nullptr};
+        QJSEngine *scriptEngine{nullptr};
         int scriptLine{0};
 		QVariantHash runtimeParameters;
         int executionCounter{0};
@@ -156,7 +156,7 @@ namespace ActionTools
             return d->startTime.msecsTo(d->endTime);
         }
 
-		void setupExecution(QScriptEngine *scriptEngine, Script *script, int scriptLine)
+		void setupExecution(QJSEngine *scriptEngine, Script *script, int scriptLine)
 		{
 			d->scriptEngine = scriptEngine;
 			d->script = script;
@@ -168,9 +168,9 @@ namespace ActionTools
 
 		void copyActionDataFrom(const ActionInstance &other);
 
-        static const QRegExp NumericalIndex;
-        static const QRegExp NameRegExp;
-        static const QRegExp VariableRegExp;
+        static const QRegularExpression NumericalIndex;
+        static const QRegularExpression NameRegExp;
+        static const QRegularExpression VariableRegExp;
         static QString convertToVariableName(const QString &input);
         static QSet<QString> findVariables(const QString &input, bool code);
 
@@ -180,19 +180,19 @@ namespace ActionTools
 		void updateProgressDialog(int value);
 		void hideProgressDialog();
 		void executionException(int exception, const QString &message);
-        void executionEndedSignal();
+        void executionEndedSignal(bool stopScript);
 		void disableAction(bool disable = true);
 		void consolePrint(const QString &text);
 		void consolePrintWarning(const QString &text);
 		void consolePrintError(const QString &text);
 
 	protected:
-		QScriptEngine *scriptEngine() const									{ return d->scriptEngine; }
+		QJSEngine *scriptEngine() const									{ return d->scriptEngine; }
 		Script *script() const												{ return d->script; }
 		int scriptLine() const												{ return d->scriptLine; }
 
 		/** Parameter management **/
-        QScriptValue evaluateValue(bool &ok,
+        QJSValue evaluateValue(bool &ok,
                             const QString &parameterName,
 							const QString &subParameterName = QStringLiteral("value"));
 		QString evaluateString(bool &ok,
@@ -310,20 +310,20 @@ namespace ActionTools
 		void setArray(const QString &name, const QStringList &stringList);
 		void setArrayKeyValue(const QString &name, const QHash<QString, QString> &hashKeyValue);
 
-		void setVariable(const QString &name, const QScriptValue &value);
-		QScriptValue variable(const QString &name);
+		void setVariable(const QString &name, const QJSValue &value);
+		QJSValue variable(const QString &name);
 
 		void setCurrentParameter(const QString &parameterName, const QString &subParameterName = QStringLiteral("value"));
 
         /// Should be called when an action has finished running
-        void executionEnded();
+        void executionEnded(bool stopScript = false);
 
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);
-        QScriptValue evaluateCode(bool &ok, const QString &toEvaluate);
-        QScriptValue evaluateCode(bool &ok, const SubParameter &toEvaluate);
+        QJSValue evaluateCode(bool &ok, const QString &toEvaluate);
+        QJSValue evaluateCode(bool &ok, const SubParameter &toEvaluate);
 
-		QString evaluateVariableArray(bool &ok, const QScriptValue &scriptValue);
+		QString evaluateVariableArray(bool &ok, const QJSValue &scriptValue);
 
         QString evaluateText(bool &ok, const QString &toEvaluate);
         QString evaluateText(bool &ok, const SubParameter &toEvaluate);

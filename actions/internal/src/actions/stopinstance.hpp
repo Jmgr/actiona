@@ -21,9 +21,8 @@
 #pragma once
 
 #include "actiontools/actioninstance.hpp"
-#include "execution/scriptagent.hpp"
 
-#include <QScriptEngine>
+#include <QJSEngine>
 
 namespace Actions
 {
@@ -37,10 +36,8 @@ namespace Actions
 
 		void startExecution() override
 		{
-			auto scriptAgent = dynamic_cast<Execution::ScriptAgent *>(scriptEngine()->agent());
-			scriptAgent->stopExecution();
-
-			executionEnded();
+            bool stopScript = true;
+            executionEnded(stopScript);
 		}
 
 	private:

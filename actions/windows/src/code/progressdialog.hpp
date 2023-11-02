@@ -29,36 +29,36 @@ namespace Code
 	class ProgressDialog : public BaseWindow
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onCanceled READ onCanceled WRITE setOnCanceled)
+		Q_PROPERTY(QJSValue onCanceled READ onCanceled WRITE setOnCanceled)
 		Q_PROPERTY(int value READ value WRITE setValue)
 		
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);		
-		
-		ProgressDialog();
+        Q_INVOKABLE ProgressDialog();
+        Q_INVOKABLE ProgressDialog(const QJSValue &parameters);
 		~ProgressDialog() override;
 		
-		void setOnCanceled(const QScriptValue &onCanceled)					{ mOnCanceled = onCanceled; }
+		void setOnCanceled(const QJSValue &onCanceled)					{ mOnCanceled = onCanceled; }
 		
-		QScriptValue onCanceled() const										{ return mOnCanceled; }
+		QJSValue onCanceled() const										{ return mOnCanceled; }
 		int value() const;
 		
-	public slots:
-		QString toString() const override					{ return QStringLiteral("ProgressDialog"); }
-		QScriptValue setValue(int value);
-		QScriptValue setLabelText(const QString &labelText);
-		QScriptValue setMinimum(int minimum);
-		QScriptValue setMaximum(int maximum);
-		QScriptValue setRange(int minimum, int maximum);
-		QScriptValue show();
-		int showModal();
+        Q_INVOKABLE QString toString() const override					{ return QStringLiteral("ProgressDialog"); }
+        Q_INVOKABLE ProgressDialog *setValue(int value);
+        Q_INVOKABLE ProgressDialog *setLabelText(const QString &labelText);
+        Q_INVOKABLE ProgressDialog *setMinimum(int minimum);
+        Q_INVOKABLE ProgressDialog *setMaximum(int maximum);
+        Q_INVOKABLE ProgressDialog *setRange(int minimum, int maximum);
+        Q_INVOKABLE ProgressDialog *show();
+        Q_INVOKABLE int showModal();
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private slots:
 		void canceled();
 		
 	private:
 		QProgressDialog *mProgressDialog;
-		QScriptValue mOnCanceled;
+		QJSValue mOnCanceled;
 	};
 }
 

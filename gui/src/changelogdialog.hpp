@@ -35,9 +35,9 @@ class ChangelogDialog : public QDialog
 	Q_OBJECT
 
 public:
-	enum ChangelogAction
+    enum ChangelogAction
 	{
-		None,
+        NoAction,
 		DownloadAndInstall,
 		DownloadOnly
 	};
@@ -57,7 +57,7 @@ private slots:
 	void on_downloadButton_clicked();
 
 private:
-	Ui::ChangelogDialog *ui;
-	ChangelogAction mChangelogAction{None};
+    Ui::ChangelogDialog *ui;
+    ChangelogAction mChangelogAction{NoAction};
 };
 

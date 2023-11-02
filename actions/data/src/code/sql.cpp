@@ -19,9 +19,8 @@
 */
 
 #include "sql.hpp"
-#include "actiontools/code/codetools.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlRecord>
@@ -31,54 +30,6 @@
 
 namespace Code
 {
-	QScriptValue Sql::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		if(context->argumentCount() < 1)
-		{
-			throwError(context, engine, QStringLiteral("NoDatabaseDriverError"), tr("Please specify the database driver that should be used"));
-			return engine->undefinedValue();
-		}
-
-		Driver driver = static_cast<Driver>(context->argument(0).toInt32());
-
-		return CodeClass::constructor(new Sql(driver), context, engine);
-	}
-
-	QScriptValue Sql::drivers(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(context)
-
-		QStringList driverNames = QSqlDatabase::drivers();
-		QSet<Driver> driverList;
-
-		for(int index = 0; index < driverNames.size(); ++index)
-		{
-			const QString &driverNameToInclude = driverNames.at(index);
-
-			for(int driverIndex = 0; driverIndex < DriverCount; ++driverIndex)
-			{
-				if(driverName(static_cast<Driver>(driverIndex)) == driverNameToInclude)
-					driverList.insert(static_cast<Driver>(driverIndex));
-			}
-		}
-
-		QScriptValue back = engine->newArray(driverList.size());
-		int index = 0;
-        for(const Driver &driver: driverList)
-		{
-			back.setProperty(index, driver);
-
-			++index;
-		}
-
-		return back;
-	}
-
-	void Sql::registerClass(QScriptEngine *scriptEngine)
-	{
-		CodeTools::addClassGlobalFunctionToScriptEngine<Sql>(&drivers, QStringLiteral("drivers"), scriptEngine);
-	}
-
 	Sql::Sql(Driver driver)
 		: CodeClass(),
 		mDatabase(new QSqlDatabase)
@@ -96,24 +47,30 @@ namespace Code
         QSqlDatabase::removeDatabase(connectionName);
     }
 
-	QScriptValue Sql::connect(const QScriptValue &parameters) const
+    Sql *Sql::connect(const QJSValue &parameters)
 	{
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return this;
+        }
+
 		mDatabase->close();
 
 		if(!QSqlDatabase::isDriverAvailable(mDriverName))
 		{
 			throwError(QStringLiteral("DatabaseDriverUnavailableError"), tr("The requested database driver is not available"));
-			return thisObject();
+            return this;
 		}
 
 		*mDatabase = QSqlDatabase::addDatabase(mDriverName, QUuid::createUuid().toString());
 		if(!mDatabase->isValid())
 		{
 			throwError(QStringLiteral("DatabaseDriverUnavailableError"), tr("The requested database driver is not available"));
-			return thisObject();
+            return this;
 		}
 
-		QScriptValueIterator it(parameters);
+		QJSValueIterator it(parameters);
 		QString hostName;
 		int port = 0;
 		QString databaseName;
@@ -128,7 +85,7 @@ namespace Code
 			if(it.name() == QLatin1String("hostName"))
 				hostName = it.value().toString();
 			else if(it.name() == QLatin1String("port"))
-				port = it.value().toInteger();
+                port = it.value().toInt();
 			else if(it.name() == QLatin1String("databaseName"))
 				databaseName = it.value().toString();
 			else if(it.name() == QLatin1String("userName"))
@@ -147,23 +104,29 @@ namespace Code
 		if(!mDatabase->open(userName, password))
 		{
 			throwError(QStringLiteral("ConnectionError"), tr("Unable to establish a connection to the database"));
-			return thisObject();
+            return this;
 		}
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Sql::prepare(const QString &queryString, const QScriptValue &parameters)
+    Sql *Sql::prepare(const QString &queryString, const QJSValue &parameters)
 	{
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return this;
+        }
+
 		mQuery = QSqlQuery(*mDatabase);
 		mQuery.setForwardOnly(true);
 		if(!mQuery.prepare(queryString))
 		{
 			throwError(QStringLiteral("PrepareQueryError"), tr("Failed to prepare the query"));
-			return thisObject();
+            return this;
 		}
 
-		QScriptValueIterator it(parameters);
+		QJSValueIterator it(parameters);
 		while(it.hasNext())
 		{
 			it.next();
@@ -171,10 +134,10 @@ namespace Code
 			mQuery.bindValue(it.name(), it.value().toString());
 		}
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Sql::execute(const QString &queryString)
+    Sql *Sql::execute(const QString &queryString)
 	{
         bool result = false;
 
@@ -194,25 +157,25 @@ namespace Code
 		{
 			QSqlError error = mQuery.lastError();
 			throwError(QStringLiteral("ExecuteQueryError"), tr("Failed to execute the query : %1").arg(error.text()));
-			return thisObject();
+            return this;
 		}
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Sql::fetchResult(IndexStyle indexStyle)
+	QJSValue Sql::fetchResult(IndexStyle indexStyle)
 	{
 		if(!mQuery.isSelect())
 		{
 			throwError(QStringLiteral("FetchError"), tr("Cannot fetch the result of a non-select query"));
-			return thisObject();
+            return {};
 		}
 
 		int size = mQuery.size();
 		if(size == -1)
 			size = 0;
 
-		QScriptValue back = engine()->newArray(size);
+        QJSValue back = qjsEngine(this)->newArray(size);
 
 		switch(indexStyle)
 		{
@@ -221,10 +184,10 @@ namespace Code
 				QSqlRecord record = mQuery.record();
 				for(int index = 0; mQuery.next(); ++index)
 				{
-					QScriptValue row = engine()->newArray();
+                    QJSValue row = qjsEngine(this)->newArray();
 					for(int columnIndex = 0; columnIndex < record.count(); ++columnIndex)
 					{
-						row.setProperty(columnIndex, engine()->newVariant(mQuery.value(columnIndex)));
+                        row.setProperty(columnIndex, qjsEngine(this)->toScriptValue(mQuery.value(columnIndex)));
 					}
 
 					back.setProperty(index, row);
@@ -236,10 +199,10 @@ namespace Code
 				for(int index = 0; mQuery.next(); ++index)
 				{
 					QSqlRecord record = mQuery.record();
-					QScriptValue row = engine()->newArray(record.count());
+                    QJSValue row = qjsEngine(this)->newArray(record.count());
 					for(int columnIndex = 0; columnIndex < record.count(); ++columnIndex)
 					{
-						row.setProperty(record.fieldName(columnIndex), engine()->newVariant(record.value(columnIndex)));
+                        row.setProperty(record.fieldName(columnIndex), qjsEngine(this)->toScriptValue(record.value(columnIndex)));
 					}
 
 					back.setProperty(index, row);
@@ -251,12 +214,17 @@ namespace Code
 		return back;
 	}
 
-	QScriptValue Sql::disconnect() const
+    Sql *Sql::disconnect()
 	{
 		mDatabase->close();
 
-		return thisObject();
+        return this;
 	}
+
+    void Sql::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClassWithStaticFunctions<Sql, StaticSql>(QStringLiteral("Sql"),  {QStringLiteral("drivers")}, scriptEngine);
+    }
 
 	QString Sql::driverName(Driver driver)
 	{
@@ -284,4 +252,32 @@ namespace Code
 			return QString();
 		}
 	}
+
+    QJSValue StaticSql::drivers()
+    {
+        QStringList driverNames = QSqlDatabase::drivers();
+        QSet<Sql::Driver> driverList;
+
+        for(int index = 0; index < driverNames.size(); ++index)
+        {
+            const QString &driverNameToInclude = driverNames.at(index);
+
+            for(int driverIndex = 0; driverIndex < Sql::DriverCount; ++driverIndex)
+            {
+                    if(Sql::driverName(static_cast<Sql::Driver>(driverIndex)) == driverNameToInclude)
+                        driverList.insert(static_cast<Sql::Driver>(driverIndex));
+            }
+        }
+
+        QJSValue back = qjsEngine(this)->newArray(driverList.size());
+        int index = 0;
+        for(const Sql::Driver &driver: driverList)
+        {
+            back.setProperty(index, driver);
+
+            ++index;
+        }
+
+        return back;
+    }
 }

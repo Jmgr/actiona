@@ -22,7 +22,6 @@
 #include "ui_codeeditordialog.h"
 #include "actiontools/actioninstance.hpp"
 
-#include <QtScript>
 #include <QSettings>
 #include <QMessageBox>
 #include <QMenu>

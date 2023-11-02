@@ -23,7 +23,7 @@
 #include "actiontools/code/size.hpp"
 #include "actiontools/code/image.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QWidget>
 #include <QIcon>
 
@@ -42,11 +42,13 @@ namespace Code
 		return mWindow->windowTitle();
 	}
 
-	QScriptValue BaseWindow::position() const
+    const Point *BaseWindow::position() const
 	{
 		Q_ASSERT(mWindow);
 
-		return Point::constructor(mWindow->pos(), engine());
+        auto point = Code::CodeClass::construct<Code::Point>(mWindow->pos());
+
+        return qobject_cast<Point *>(point.toQObject());
 	}
 
 	float BaseWindow::opacity() const
@@ -75,90 +77,90 @@ namespace Code
 		mWindow = widget;
 	}
 
-	void BaseWindow::setupConstructorParameters(QScriptContext *context, QScriptEngine *engine, const QScriptValue &parameters)
-	{
-		Q_ASSERT(mWindow);
-		
-		mWindow->setWindowTitle(tr("Window"));
+    void BaseWindow::setupConstructorParameters(const QJSValue &parameters)
+    {
+        Q_ASSERT(mWindow);
 
-		QScriptValueIterator it(parameters);
+        mWindow->setWindowTitle(tr("Window"));
 
-		while(it.hasNext())
-		{
-			it.next();
+        QJSValueIterator it(parameters);
 
-			if(it.name() == QLatin1String("title"))
-				mWindow->setWindowTitle(it.value().toString());
-			else if(it.name() == QLatin1String("position"))
-			{
-				QObject *object = it.value().toQObject();
-				if(auto codePoint = qobject_cast<Point*>(object))
-					mWindow->move(codePoint->point());
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			else if(it.name() == QLatin1String("opacity"))
-				mWindow->setWindowOpacity(it.value().toNumber());
-			else if(it.name() == QLatin1String("enabled"))
-				mWindow->setEnabled(it.value().toBool());
-			else if(it.name() == QLatin1String("visible"))
-				mWindow->setVisible(it.value().toBool());
-			else if(it.name() == QLatin1String("windowIcon"))
-			{
-				if(auto icon = qobject_cast<Image*>(it.value().toQObject()))
-					mWindow->setWindowIcon(QIcon(QPixmap::fromImage(icon->image())));
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-		}
-	}
-	
-	QScriptValue BaseWindow::setTitle(const QString &title)
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("title"))
+                mWindow->setWindowTitle(it.value().toString());
+            else if(it.name() == QLatin1String("position"))
+            {
+                QObject *object = it.value().toQObject();
+                if(auto codePoint = qobject_cast<Point*>(object))
+                    mWindow->move(codePoint->point());
+                else
+                    throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
+            }
+            else if(it.name() == QLatin1String("opacity"))
+                mWindow->setWindowOpacity(it.value().toNumber());
+            else if(it.name() == QLatin1String("enabled"))
+                mWindow->setEnabled(it.value().toBool());
+            else if(it.name() == QLatin1String("visible"))
+                mWindow->setVisible(it.value().toBool());
+            else if(it.name() == QLatin1String("windowIcon"))
+            {
+                if(auto icon = qobject_cast<Image*>(it.value().toQObject()))
+                    mWindow->setWindowIcon(QIcon(QPixmap::fromImage(icon->image())));
+                else
+                    throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
+            }
+        }
+    }
+
+    BaseWindow *BaseWindow::setTitle(const QString &title)
 	{
 		Q_ASSERT(mWindow);
 		
 		mWindow->setWindowTitle(title);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue BaseWindow::setPosition(const QScriptValue &)
+    BaseWindow *BaseWindow::setPosition(const Code::Point *position)
 	{
 		Q_ASSERT(mWindow);
 
-		mWindow->move(Point::parameter(context(), engine()));
+        mWindow->move(position->point());
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue BaseWindow::setOpacity(float opacity)
+    BaseWindow *BaseWindow::setOpacity(float opacity)
 	{
 		Q_ASSERT(mWindow);
 
 		mWindow->setWindowOpacity(opacity);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue BaseWindow::setEnabled(bool enabled)
+    BaseWindow *BaseWindow::setEnabled(bool enabled)
 	{
 		Q_ASSERT(mWindow);
 		
 		mWindow->setEnabled(enabled);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue BaseWindow::setVisible(bool visible)
+    BaseWindow *BaseWindow::setVisible(bool visible)
 	{
 		Q_ASSERT(mWindow);
 		
 		mWindow->setVisible(visible);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue BaseWindow::setWindowIcon(const QScriptValue &windowIcon)
+    BaseWindow *BaseWindow::setWindowIcon(const QJSValue &windowIcon)
 	{
 		Q_ASSERT(mWindow);
 
@@ -166,7 +168,7 @@ namespace Code
 		{
 			mWindow->setWindowIcon(QIcon());
 
-			return thisObject();
+            return this;
 		}
 
 		if(auto icon = qobject_cast<Image*>(windowIcon.toQObject()))
@@ -174,22 +176,22 @@ namespace Code
 		else
 		{
 			throwError(QStringLiteral("SetWindowIcon"), tr("Invalid image"));
-			return thisObject();
+            return this;
 		}
 
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue BaseWindow::close()
+    BaseWindow *BaseWindow::close()
 	{
 		Q_ASSERT(mWindow);
 		
 		mWindow->close();
 
-        return thisObject();
+        return this;
     }
 
-    bool BaseWindow::equals(const QScriptValue &other) const
+    bool BaseWindow::equals(const QJSValue &other) const
     {
         if(other.isUndefined() || other.isNull())
             return false;

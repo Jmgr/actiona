@@ -26,6 +26,7 @@
 #include "actiontools/keyboardkey.hpp"
 
 #include <QList>
+#include <QRegularExpression>
 
 class QTimer;
 
@@ -53,7 +54,7 @@ namespace Actions
     private:
 	bool areKeysPressed() const;
 
-	QRegExp mTitleRegExp;
+	QRegularExpression mTitleRegExp;
 	ActionTools::IfActionValue mIfTrue;
 	Condition mCondition;
 	QTimer *mTimer;

@@ -23,38 +23,35 @@
 #include "actiontools/code/codeclass.hpp"
 #include "mini/ini.h"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 
 namespace Code
 {
-	class IniFile : public CodeClass
+    class IniFile : public CodeClass
 	{
 		Q_OBJECT
 	
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-		IniFile();
+        Q_INVOKABLE IniFile();
+        Q_INVOKABLE explicit IniFile(const QJSValue &parameters);
 	
-	public slots:
-		QString toString() const override                                { return QStringLiteral("IniFile"); }
-        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<IniFile>(other); }
-		QScriptValue load(const QString &filename);
-		QScriptValue save(const QString &filename = QString());
-		QScriptValue clear();
-		QScriptValue setSection(const QString &sectionName, bool create = true);
-		QScriptValue setEncoding(Encoding encoding);
-        QString sectionAt(int sectionIndex) const;
-		QScriptValue deleteSection(const QString &sectionName);
-		int sectionCount() const;
-		bool keyExists(const QString &keyName) const;
-		QString keyAt(int keyIndex) const;
-		QString keyValue(const QString &keyName) const;
-		QScriptValue setKeyValue(const QString &keyName, const QString &value);
-		QScriptValue deleteKey(const QString &keyName);
-        int keyCount() const;
+        Q_INVOKABLE QString toString() const override                                { return QStringLiteral("IniFile"); }
+        Q_INVOKABLE IniFile *load(const QString &filename);
+        Q_INVOKABLE IniFile *save(const QString &filename = QString());
+        Q_INVOKABLE IniFile *clear();
+        Q_INVOKABLE IniFile *setSection(const QString &sectionName, bool create = true);
+        Q_INVOKABLE IniFile *setEncoding(Encoding encoding);
+        Q_INVOKABLE QString sectionAt(int sectionIndex) const;
+        Q_INVOKABLE IniFile *deleteSection(const QString &sectionName);
+        Q_INVOKABLE int sectionCount() const;
+        Q_INVOKABLE bool keyExists(const QString &keyName) const;
+        Q_INVOKABLE QString keyAt(int keyIndex) const;
+        Q_INVOKABLE QString keyValue(const QString &keyName) const;
+        Q_INVOKABLE IniFile *setKeyValue(const QString &keyName, const QString &value);
+        Q_INVOKABLE IniFile *deleteKey(const QString &keyName);
+        Q_INVOKABLE int keyCount() const;
+
+        static void registerClass(QJSEngine &scriptEngine);
 	
 	private:
         Encoding mEncoding{Native};

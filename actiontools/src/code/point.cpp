@@ -19,79 +19,20 @@
 */
 
 #include "actiontools/code/point.hpp"
-#include "actiontools/code/codetools.hpp"
 
 namespace Code
 {
-	QScriptValue Point::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		Point *point = nullptr;
-		
-		switch(context->argumentCount())
-		{
-		case 0:
-			point = new Point;
-			break;
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-                if(auto codePoint = qobject_cast<Point*>(object))
-					point = new Point(*codePoint);
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			break;
-		case 2:
-			point = new Point(QPoint(context->argument(0).toInt32(), context->argument(1).toInt32()));
-			break;
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			break;
-		}
-		
-		if(!point)
-			return engine->undefinedValue();
-
-		return CodeClass::constructor(point, context, engine);
-	}
-	
-	QScriptValue Point::constructor(const QPoint &point, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new Point(point), engine);
-	}
-	
-	QPoint Point::parameter(QScriptContext *context, QScriptEngine *engine)
-	{
-		switch(context->argumentCount())
-		{
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-                if(auto point = qobject_cast<Point*>(object))
-					return point->point();
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			return {};
-		case 2:
-			return QPoint(context->argument(0).toInt32(),
-						 context->argument(1).toInt32());
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return QPoint();
-		}
-	}
-
-	void Point::registerClass(QScriptEngine *scriptEngine)
-	{
-		CodeTools::addClassToScriptEngine<Point>(scriptEngine);
-	}
-	
 	Point::Point()
 		: CodeClass()
 	{
 		
 	}
+
+    Point::Point(int x, int y)
+        : CodeClass(),
+        mPoint(x, y)
+    {
+    }
 
 	Point::Point(const Point &other)
 		: CodeClass(),
@@ -142,16 +83,16 @@ namespace Code
 	}
 
 	int Point::y() const
-	{
+    {
 		return mPoint.y();
 	}
 	
-	QScriptValue Point::clone() const
-	{
-		return constructor(mPoint, engine());
+	QJSValue Point::clone() const
+    {
+        return CodeClass::clone<Point>();
 	}
 
-	bool Point::equals(const QScriptValue &other) const
+	bool Point::equals(const QJSValue &other) const
 	{
 		if(other.isUndefined() || other.isNull())
 			return false;
@@ -168,17 +109,22 @@ namespace Code
 		return QStringLiteral("Point {x: %1, y: %2}").arg(x()).arg(y());
 	}
 
-	QScriptValue Point::setX(int x)
+    Point *Point::setX(int x)
 	{
 		mPoint.setX(x);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Point::setY(int y)
+    Point *Point::setY(int y)
 	{
 		mPoint.setY(y);
 		
-		return thisObject();
+        return this;
 	}
+
+    void Point::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Point>(QStringLiteral("Point"), scriptEngine);
+    }
 }

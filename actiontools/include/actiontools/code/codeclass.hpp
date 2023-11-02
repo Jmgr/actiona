@@ -23,22 +23,27 @@
 #include "actiontools/actiontools_global.hpp"
 
 #include <QObject>
-#include <QScriptable>
 #include <QByteArray>
-#include <QScriptValue>
+#include <QJSEngine>
+
+class QJSValue;
 
 namespace Code
 {
-	class ACTIONTOOLSSHARED_EXPORT CodeClass : public QObject, public QScriptable
+	class ACTIONTOOLSSHARED_EXPORT CodeClass : public QObject
 	{
 		Q_OBJECT
 
-	public:
-		static void throwError(QScriptContext *context, QScriptEngine *engine, const QString &errorType, const QString &message, const QString &parent = QStringLiteral("Error"));
+        Q_INVOKABLE virtual QString toString() const = 0;
 
-    public slots:
-        virtual QString toString() const = 0;
-        virtual bool equals(const QScriptValue &other) const = 0;
+    public:
+        void throwError(const QString &errorType, const QString &message) const;
+
+        template<class T, typename U>
+        static QJSValue construct(U &&param, QJSEngine &engine)
+        {
+            return engine.newQObject(new T(param));
+        }
 
 	protected:
 		enum Encoding
@@ -49,34 +54,47 @@ namespace Code
 			UTF8
 		};
 
-		explicit CodeClass();
-        ~CodeClass() override = default;
+        explicit CodeClass(QObject *parent = nullptr);
+		~CodeClass() override = default;
 
-        template<class T>
-        bool defaultEqualsImplementation(const QScriptValue &other) const
+        template<class T, class... Args>
+        static void registerStaticClass(const QString &name, QJSEngine &engine, Args&&... args)
         {
-            if(other.isUndefined() || other.isNull())
-                return false;
-
-            QObject *object = other.toQObject();
-            if(T *otherObject = qobject_cast<T*>(object))
-                return (otherObject == this);
-
-            return false;
+            engine.globalObject().setProperty(name, engine.newQObject(new T(&engine, std::forward<Args>(args)...)));
+        }
+        template<class T>
+        static void registerClass(const QString &name, QJSEngine &engine)
+        {
+            engine.globalObject().setProperty(name, engine.newQMetaObject(&T::staticMetaObject));
+        }
+        template<class T, class ST>
+        static void registerClassWithStaticFunctions(const QString &name, const QStringList &staticFunctions, QJSEngine &engine)
+        {
+            // Ugly hack to get static functions.
+            auto class_ = engine.newQMetaObject(&T::staticMetaObject);
+            auto staticClass_ = engine.newQObject(new ST(&engine));
+            for(const auto &staticFunction: staticFunctions)
+            {
+                class_.setProperty(staticFunction, staticClass_.property(staticFunction));
+            }
+            engine.globalObject().setProperty(name, class_);
         }
 
-		void throwError(const QString &errorType, const QString &message, const QString &parent = QStringLiteral("Error")) const;
+        template<class T>
+        QJSValue clone() const
+        {
+            return qjsEngine(this)->newQObject(new T(*static_cast<const T*>(this)));
+        }
+        template<class T, typename U>
+        QJSValue construct(U &&param) const
+        {
+            return qjsEngine(this)->newQObject(new T(param));
+        }
 
-		static QScriptValue constructor(CodeClass *object, QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(CodeClass *object, QScriptEngine *engine);
 		static QByteArray toEncoding(const QString &string, Encoding encoding);
 		static QString fromEncoding(const QByteArray &byteArray, Encoding encoding);
-        static QStringList arrayParameterToStringList(const QScriptValue &scriptValue);
-
-        virtual int additionalMemoryCost() const { return 0; }
-
-	private:
-		static QScriptValue emptyFunction(QScriptContext *context, QScriptEngine *engine);
+		static QStringList arrayParameterToStringList(const QJSValue &scriptValue);
 	};
-}
 
+    std::tuple<bool, QString, int> ACTIONTOOLSSHARED_EXPORT checkSyntax(const QString &program);
+}

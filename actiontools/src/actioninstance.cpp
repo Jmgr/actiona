@@ -20,20 +20,17 @@
 
 #include "actiontools/actioninstance.hpp"
 #include "actiontools/actiondefinition.hpp"
-#include "actiontools/actionfactory.hpp"
 #include "actiontools/elementdefinition.hpp"
-#include "actiontools/parameterdefinition.hpp"
-#include "actiontools/groupdefinition.hpp"
 #include "actiontools/script.hpp"
 #include "actiontools/code/point.hpp"
 #include "actiontools/code/color.hpp"
 #include "actiontools/code/image.hpp"
 
 #include <QDateTime>
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QScreen>
+#include <QRegularExpression>
 
 namespace ActionTools
 {
@@ -53,9 +50,9 @@ namespace ActionTools
 	}
 
 
-	const QRegExp ActionInstance::NumericalIndex(QStringLiteral("(\\d+)"));
-	const QRegExp ActionInstance::NameRegExp(QStringLiteral("^[A-Za-z_][A-Za-z0-9_]*$"), Qt::CaseSensitive, QRegExp::RegExp2);
-	const QRegExp ActionInstance::VariableRegExp(QStringLiteral("\\$([A-Za-z_][A-Za-z0-9_]*)"), Qt::CaseSensitive, QRegExp::RegExp2);
+    const QRegularExpression ActionInstance::NumericalIndex(QStringLiteral("(\\d+)"));
+    const QRegularExpression ActionInstance::NameRegExp(QStringLiteral("^[A-Za-z_][A-Za-z0-9_]*$"));
+    const QRegularExpression ActionInstance::VariableRegExp(QStringLiteral("\\$([A-Za-z_][A-Za-z0-9_]*)"));
 	qint64 ActionInstance::mCurrentRuntimeId = 0;
 
 	ActionInstance::ActionInstance(const ActionDefinition *definition, QObject *parent)
@@ -182,49 +179,46 @@ namespace ActionTools
 
         if(code)
         {
-            const auto codeLines = input.split(QRegExp(QStringLiteral("[\n\r;]")), QString::SkipEmptyParts);
+            static const auto regexp = QRegularExpression(QStringLiteral("[\n\r;]"));
+            const auto codeLines = input.split(regexp, Qt::SkipEmptyParts);
             for(const QString &codeLine: codeLines)
             {
-                int position = 0;
+                QRegularExpressionMatchIterator matchIterator = Script::CodeVariableDeclarationRegExp.globalMatch(codeLine);
+                while (matchIterator.hasNext()) {
+                    QRegularExpressionMatch match = matchIterator.next();
+                    QString foundVariableName = match.captured(1);
 
-                while((position = Script::CodeVariableDeclarationRegExp.indexIn(codeLine, position)) != -1)
-                {
-                    QString foundVariableName = Script::CodeVariableDeclarationRegExp.cap(1);
-
-                    position += Script::CodeVariableDeclarationRegExp.cap(1).length();
-
-                    if(!foundVariableName.isEmpty())
+                    if (!foundVariableName.isEmpty()) {
                         back << foundVariableName;
+                    }
                 }
             }
         }
         else
         {
-            int position = 0;
+            QRegularExpressionMatchIterator matchIterator = ActionInstance::VariableRegExp.globalMatch(input);
+            while (matchIterator.hasNext()) {
+                QRegularExpressionMatch match = matchIterator.next();
+                QString foundVariableName = match.captured(1);
 
-            while((position = ActionInstance::VariableRegExp.indexIn(input, position)) != -1)
-            {
-                QString foundVariableName = ActionInstance::VariableRegExp.cap(1);
-
-                position += ActionInstance::VariableRegExp.cap(0).length();
-
-                if(!foundVariableName.isEmpty())
+                if (!foundVariableName.isEmpty()) {
                     back << foundVariableName;
+                }
             }
         }
 
         return back;
     }
 
-    QScriptValue ActionInstance::evaluateValue(bool &ok,
+    QJSValue ActionInstance::evaluateValue(bool &ok,
                                                const QString &parameterName,
                                                const QString &subParameterName)
     {
         if(!ok)
-            return QScriptValue();
+            return QJSValue();
 
         const SubParameter &subParameter = retreiveSubParameter(parameterName, subParameterName);
-        QScriptValue result;
+        QJSValue result;
 
         if(subParameter.isCode())
             result = evaluateCode(ok, subParameter);
@@ -232,7 +226,7 @@ namespace ActionTools
             result = evaluateText(ok, subParameter);
 
         if(!ok)
-            return QScriptValue();
+            return QJSValue();
 
         return result;
     }
@@ -268,7 +262,7 @@ namespace ActionTools
 
         if(subParameter.isCode())
         {
-            QScriptValue evaluationResult = evaluateCode(ok, subParameter);
+            QJSValue evaluationResult = evaluateCode(ok, subParameter);
             if(auto codeImage = qobject_cast<Code::Image*>(evaluationResult.toQObject()))
                 return codeImage->image();
 
@@ -310,7 +304,7 @@ namespace ActionTools
 		if(!ok)
 			return QString();
 
-        if(!result.isEmpty() && !NameRegExp.exactMatch(result))
+        if(!result.isEmpty() && !NameRegExp.match(result).hasMatch())
 		{
 			ok = false;
 
@@ -322,11 +316,11 @@ namespace ActionTools
 		return result;
 	}
 
-	QString ActionInstance::evaluateVariableArray(bool &ok, const QScriptValue &scriptValue)
+	QString ActionInstance::evaluateVariableArray(bool &ok, const QJSValue &scriptValue)
 	{
 		QString result;
 
-		QScriptValueIterator it(scriptValue);
+        QJSValueIterator it(scriptValue);
 
 		if(scriptValue.isArray())
 		{
@@ -336,15 +330,12 @@ namespace ActionTools
 			while (it.hasNext()) {
 				it.next();
 
-				if (it.flags() & QScriptValue::SkipInEnumeration)
-					continue;
-
-				QScriptValue nextScriptValue = it.value();
+				QJSValue nextScriptValue = it.value();
 				//is it an array ?
 				if(nextScriptValue.isArray())
 					result += evaluateVariableArray(ok, nextScriptValue);
 				else
-                    if(NumericalIndex.exactMatch(it.name())) //it.name : numerical only ?
+                    if(NumericalIndex.match(it.name()).hasMatch()) //it.name : numerical only ?
 					{
 						int newIndex = it.name().toInt();
 						if( newIndex > lastIndex+1)
@@ -526,7 +517,7 @@ namespace ActionTools
 
         if(subParameter.isCode())
         {
-            QScriptValue evaluationResult = evaluateCode(ok, subParameter);
+            QJSValue evaluationResult = evaluateCode(ok, subParameter);
             if(auto codePoint = qobject_cast<Code::Point*>(evaluationResult.toQObject()))
             {
                 QPointF point = QPointF(codePoint->point().x(), codePoint->point().y());
@@ -591,7 +582,7 @@ namespace ActionTools
 		if(!ok)
 			return QStringList();
 
-        return result.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+        return result.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
 	}
 
 	QPolygon ActionInstance::evaluatePolygon(bool &ok,
@@ -615,12 +606,12 @@ namespace ActionTools
 		if(result.isEmpty() || result == QLatin1String(";"))
 			return QPolygon();
 
-        QStringList pointStrings = result.split(QLatin1Char(';'), QString::SkipEmptyParts);
+        QStringList pointStrings = result.split(QLatin1Char(';'), Qt::SkipEmptyParts);
 		QPolygon polygon;
 
         for(const QString &pointString: qAsConst(pointStrings))
 		{
-            QStringList pointComponents = pointString.split(QLatin1Char(':'), QString::SkipEmptyParts);
+            QStringList pointComponents = pointString.split(QLatin1Char(':'), Qt::SkipEmptyParts);
 			if(pointComponents.size() != 2)
 				continue;
 
@@ -642,7 +633,7 @@ namespace ActionTools
 
 		if(subParameter.isCode())
 		{
-			QScriptValue evaluationResult = evaluateCode(ok, subParameter);
+			QJSValue evaluationResult = evaluateCode(ok, subParameter);
 			if(auto codeColor = qobject_cast<Code::Color*>(evaluationResult.toQObject()))
 				return codeColor->color();
 
@@ -688,7 +679,7 @@ namespace ActionTools
 
         if(subParameter.isCode())
         {
-            QScriptValue evaluationResult = evaluateCode(ok, subParameter);
+            QJSValue evaluationResult = evaluateCode(ok, subParameter);
             if(evaluationResult.isDate())
                 return evaluationResult.toDateTime();
 
@@ -731,8 +722,8 @@ namespace ActionTools
 
     void ActionInstance::setNextLine(const QString &nextLine, bool doNotResetPreviousActions)
 	{
-		QScriptValue scriptValue = d->scriptEngine->globalObject().property(QStringLiteral("Script"));
-		scriptValue.setProperty(QStringLiteral("nextLine"), d->scriptEngine->newVariant(QVariant(nextLine)));
+		QJSValue scriptValue = d->scriptEngine->globalObject().property(QStringLiteral("Script"));
+        scriptValue.setProperty(QStringLiteral("nextLine"), d->scriptEngine->toScriptValue(QVariant(nextLine)));
 		scriptValue.setProperty(QStringLiteral("doNotResetPreviousActions"), doNotResetPreviousActions);
 	}
 
@@ -746,12 +737,12 @@ namespace ActionTools
 		if(stringList.isEmpty())
 			return;
 
-		QScriptValue back = d->scriptEngine->newArray(stringList.count());
+		QJSValue back = d->scriptEngine->newArray(stringList.count());
 
 		for(int index = 0; index < stringList.count(); ++index)
 			back.setProperty(index, stringList.at(index));
 
-        if(!name.isEmpty() && NameRegExp.exactMatch(name))
+        if(!name.isEmpty() && NameRegExp.match(name).hasMatch())
 			d->scriptEngine->globalObject().setProperty(name, back);
 	}
 
@@ -760,7 +751,7 @@ namespace ActionTools
 		if(hashKeyValue.isEmpty())
 			return;
 
-		QScriptValue back = d->scriptEngine->newArray(hashKeyValue.count());
+		QJSValue back = d->scriptEngine->newArray(hashKeyValue.count());
 
 		QHashIterator<QString, QString> it(hashKeyValue);
 		while (it.hasNext())
@@ -772,31 +763,31 @@ namespace ActionTools
 		setVariable(name, back);
 	}
 
-	void ActionInstance::setVariable(const QString &name, const QScriptValue &value)
+	void ActionInstance::setVariable(const QString &name, const QJSValue &value)
 	{
-        if(!name.isEmpty() && NameRegExp.exactMatch(name))
+        if(!name.isEmpty() && NameRegExp.match(name).hasMatch())
 			d->scriptEngine->globalObject().setProperty(name, value);
 	}
 
-    QScriptValue ActionInstance::variable(const QString &name)
+    QJSValue ActionInstance::variable(const QString &name)
 	{
-        if(name.isEmpty() || !NameRegExp.exactMatch(name))
-            return QScriptValue();
+        if(name.isEmpty() || !NameRegExp.match(name).hasMatch())
+            return QJSValue();
 
         return d->scriptEngine->globalObject().property(name);
 	}
 
 	void ActionInstance::setCurrentParameter(const QString &parameterName, const QString &subParameterName)
 	{
-		d->scriptEngine->globalObject().setProperty(QStringLiteral("currentParameter"), parameterName, QScriptValue::ReadOnly);
-        d->scriptEngine->globalObject().setProperty(QStringLiteral("currentSubParameter"), subParameterName, QScriptValue::ReadOnly);
+        d->scriptEngine->globalObject().setProperty(QStringLiteral("currentParameter"), parameterName);
+        d->scriptEngine->globalObject().setProperty(QStringLiteral("currentSubParameter"), subParameterName);
     }
 
-    void ActionInstance::executionEnded()
+    void ActionInstance::executionEnded(bool stopScript)
     {
         d->endTime = QDateTime::currentDateTimeUtc();
 
-        emit executionEndedSignal();
+        emit executionEndedSignal(stopScript);
     }
 
 	SubParameter ActionInstance::retreiveSubParameter(const QString &parameterName, const QString &subParameterName)
@@ -810,9 +801,9 @@ namespace ActionTools
         {
             QString stringValue = back.value();
             QString variableName = stringValue.right(stringValue.size() - 1);
-            const QScriptValue &value = d->scriptEngine->globalObject().property(variableName);
+            const QJSValue &value = d->scriptEngine->globalObject().property(variableName);
 
-            if(value.isValid())
+            if(!value.isUndefined())
             {
                 back.setCode(true);
                 back.setValue(variableName);
@@ -822,30 +813,30 @@ namespace ActionTools
         return back;
 	}
 
-    QScriptValue ActionInstance::evaluateCode(bool &ok, const QString &toEvaluate)
+    QJSValue ActionInstance::evaluateCode(bool &ok, const QString &toEvaluate)
 	{
 		ok = true;
 
-        QScriptValue result = d->scriptEngine->evaluate(toEvaluate);
+        QJSValue result = d->scriptEngine->evaluate(toEvaluate);
 		if(result.isError())
 		{
             ok = false;
 
             emit executionException(ActionException::CodeErrorException, result.toString());
-			return QScriptValue();
+			return QJSValue();
 		}
 
-		if(!result.isValid())
+        if(result.isUndefined())
 		{
 			ok = false;
 
-			return QScriptValue();
+			return QJSValue();
 		}
 
         return result;
     }
 
-    QScriptValue ActionInstance::evaluateCode(bool &ok, const SubParameter &toEvaluate)
+    QJSValue ActionInstance::evaluateCode(bool &ok, const SubParameter &toEvaluate)
     {
         return evaluateCode(ok, toEvaluate.value());
     }
@@ -877,14 +868,15 @@ namespace ActionTools
 			if(toEvaluate[position] == QLatin1Char('$'))
 			{
 				//find a variable name
-				if(VariableRegExp.indexIn(toEvaluate, position) != -1)
+                auto match = VariableRegExp.match(toEvaluate);
+                if(match.hasMatch())
 				{
-					QString foundVariableName = VariableRegExp.cap(1);
-					QScriptValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
+                    QString foundVariableName = match.captured(1);
+					QJSValue foundVariable = d->scriptEngine->globalObject().property(foundVariableName);
 
 					position += foundVariableName.length();
 
-					if(!foundVariable.isValid())
+                    if(foundVariable.isUndefined())
 					{
 						ok = false;
 
@@ -907,14 +899,7 @@ namespace ActionTools
 
 							if((position < toEvaluate.length()) && toEvaluate[position] == QLatin1Char(']'))
 							{
-								QScriptString internalIndexArray = d->scriptEngine->toStringHandle(indexArray);
-								bool flag = true;
-								int numIndex = internalIndexArray.toArrayIndex(&flag);
-
-								if(flag) //numIndex is valid
-									foundVariable = foundVariable.property(numIndex);
-								else //use internalIndexArray
-									foundVariable = foundVariable.property(internalIndexArray);
+                                foundVariable = foundVariable.property(indexArray);
 							}
 							else
 							{
@@ -938,18 +923,12 @@ namespace ActionTools
 					else if(foundVariable.isVariant())
 					{
 						QVariant variantEvaluationResult = foundVariable.toVariant();
-						switch(variantEvaluationResult.type())
-						{
-						case QVariant::StringList:
-							stringEvaluationResult = variantEvaluationResult.toStringList().join(QStringLiteral("\n"));
-							break;
-						case QVariant::ByteArray:
-							stringEvaluationResult = QStringLiteral("[Raw data]");
-							break;
-						default:
-							stringEvaluationResult = foundVariable.toString();
-							break;
-						}
+                        if(variantEvaluationResult.metaType() == QMetaType::fromType<QStringList>())
+                            stringEvaluationResult = variantEvaluationResult.toStringList().join(QStringLiteral("\n"));
+                        else if(variantEvaluationResult.metaType() == QMetaType::fromType<QByteArray>())
+                            stringEvaluationResult = QStringLiteral("[Raw data]");
+                        else
+                            stringEvaluationResult = foundVariable.toString();
 					}
 					else
 						stringEvaluationResult = foundVariable.toString();

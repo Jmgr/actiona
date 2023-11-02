@@ -21,14 +21,14 @@
 #include "actiontools/positionedit.hpp"
 #include "ui_positionedit.h"
 
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 
 namespace ActionTools
 {
 	PositionEdit::PositionEdit(QWidget *parent)
 		: QWidget(parent),
         ui(new Ui::PositionEdit),
-		mValidator(new QRegExpValidator(QRegExp(QStringLiteral("^\\d+(\\.\\d{1,2})?:\\d+(\\.\\d{1,2})?$"), Qt::CaseSensitive, QRegExp::RegExp2), this))
+        mValidator(new QRegularExpressionValidator(QRegularExpression(QStringLiteral("^\\d+(\\.\\d{1,2})?:\\d+(\\.\\d{1,2})?$")), this))
 	{
 		ui->setupUi(this);
 

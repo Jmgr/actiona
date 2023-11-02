@@ -56,7 +56,7 @@ namespace ActionTools
             ReadCanceled                // Loading was canceled
 		};
 
-        static const QRegExp CodeVariableDeclarationRegExp;
+        static const QRegularExpression CodeVariableDeclarationRegExp;
 
 		Script(ActionFactory *actionFactory, QObject *parent = nullptr);
 		~Script() override;

@@ -131,9 +131,8 @@ endif()
 setup_target(${PROJECT})
 setup_action(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS
     Network
-    Script
     Widgets
     DBus
     Multimedia
@@ -154,13 +153,12 @@ target_include_directories(${PROJECT}
 
 target_link_libraries(${PROJECT}
     actiontools
-    Qt5::Network
-    Qt5::Script
-    Qt5::Widgets
-    Qt5::DBus
-    Qt5::Multimedia
-    Qt5::MultimediaWidgets
-    Qt5::TextToSpeech
+    Qt6::Network
+    Qt6::Widgets
+    Qt6::DBus
+    Qt6::Multimedia
+    Qt6::MultimediaWidgets
+    Qt6::TextToSpeech
     ${LIBNOTIFY_LIBRARIES}
     ${BLUEZ_LIBRARIES}
     ${UDEV_LIBRARIES}

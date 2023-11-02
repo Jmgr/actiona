@@ -23,7 +23,6 @@
 
 #include <QInputDialog>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QIcon>
 #include <QLabel>
 #include <QScreen>

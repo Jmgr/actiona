@@ -25,7 +25,7 @@
 
 #include <QPixmap>
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QRegularExpression>
 
 namespace Actions
 {
@@ -123,6 +123,13 @@ namespace Actions
         mWaitTimer.stop();
     }
 
+    QString wildcardToRegex(const QString &wildcard) {
+        QString pattern = QRegularExpression::escape(wildcard);
+        pattern.replace(QStringLiteral("\\*"), QStringLiteral(".*"));
+        pattern.replace(QStringLiteral("\\?"), QStringLiteral("."));
+        return pattern;
+    }
+
     void FindImageInstance::startSearching()
     {
         mOpenCVAlgorithms->cancelSearch();
@@ -143,7 +150,7 @@ namespace Actions
                 if(!ok)
                     return;
 
-                mWindows = ActionTools::WindowHandle::findWindows(QRegExp(windowName, Qt::CaseSensitive, QRegExp::WildcardUnix));
+                mWindows = ActionTools::WindowHandle::findWindows(QRegularExpression::fromWildcard(windowName, Qt::CaseSensitive));
 
                 if(mWindows.isEmpty())
                 {
@@ -239,13 +246,13 @@ namespace Actions
             if(mSource != WindowSource || !mWindowRelativePosition)
                 position += mImagesToSearchIn.at(bestMatchingPoint.imageIndex).second.topLeft();
 
-			setVariable(mPositionVariableName, Code::Point::constructor(position, scriptEngine()));
+            setVariable(mPositionVariableName, Code::CodeClass::construct<Code::Point>(position, *scriptEngine()));
             setVariable(mConfidenceVariableName, bestMatchingPoint.confidence);
 		}
 		else
 		{
-			QScriptValue arrayResult = scriptEngine()->newArray(matchingPointList.size());
-            QScriptValue arrayConfidenceResult = scriptEngine()->newArray(matchingPointList.size());
+			QJSValue arrayResult = scriptEngine()->newArray(matchingPointList.size());
+            QJSValue arrayConfidenceResult = scriptEngine()->newArray(matchingPointList.size());
 
 			for(int i = 0; i < matchingPointList.size(); ++i)
             {
@@ -255,7 +262,7 @@ namespace Actions
                 if(mSource != WindowSource || !mWindowRelativePosition)
                     position += mImagesToSearchIn.at(matchingPoint.imageIndex).second.topLeft();
 
-                arrayResult.setProperty(i, Code::Point::constructor(position, scriptEngine()));
+                arrayResult.setProperty(i, Code::CodeClass::construct<Code::Point>(position, *scriptEngine()));
                 arrayConfidenceResult.setProperty(i, matchingPoint.confidence);
             }
 

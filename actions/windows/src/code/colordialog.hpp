@@ -21,6 +21,7 @@
 #pragma once
 
 #include "basewindow.hpp"
+#include "actiontools/code/color.hpp"
 
 class QColorDialog;
 
@@ -29,32 +30,32 @@ namespace Code
 	class ColorDialog : public BaseWindow
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
-		Q_PROPERTY(QScriptValue onColorSelected READ onColorSelected WRITE setOnColorSelected)
-		Q_PROPERTY(QScriptValue onColorChanged READ onColorChanged WRITE setOnColorChanged)
-		Q_PROPERTY(QScriptValue color READ color WRITE setColor)
+		Q_PROPERTY(QJSValue onClosed READ onClosed WRITE setOnClosed)
+		Q_PROPERTY(QJSValue onColorSelected READ onColorSelected WRITE setOnColorSelected)
+		Q_PROPERTY(QJSValue onColorChanged READ onColorChanged WRITE setOnColorChanged)
+        Q_PROPERTY(const Color *color READ color WRITE setColor)
 		
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-		ColorDialog();
+        Q_INVOKABLE ColorDialog();
+        Q_INVOKABLE ColorDialog(const QJSValue &parameters);
 		~ColorDialog() override;
 		
-		void setOnClosed(const QScriptValue &onClosed)					{ mOnClosed = onClosed; }
-		void setOnColorSelected(const QScriptValue &onColorSelected)	{ mOnColorSelected = onColorSelected; }
-		void setOnColorChanged(const QScriptValue &onColorChanged)		{ mOnColorChanged = onColorChanged; }
+		void setOnClosed(const QJSValue &onClosed)					{ mOnClosed = onClosed; }
+		void setOnColorSelected(const QJSValue &onColorSelected)	{ mOnColorSelected = onColorSelected; }
+		void setOnColorChanged(const QJSValue &onColorChanged)		{ mOnColorChanged = onColorChanged; }
 		
-		QScriptValue onClosed() const									{ return mOnClosed; }
-		QScriptValue onColorSelected() const							{ return mOnColorSelected; }
-		QScriptValue onColorChanged() const								{ return mOnColorChanged; }
+		QJSValue onClosed() const									{ return mOnClosed; }
+		QJSValue onColorSelected() const							{ return mOnColorSelected; }
+		QJSValue onColorChanged() const								{ return mOnColorChanged; }
 
-		QScriptValue color() const;
+        const Color *color() const;
 		
-	public slots:
-		QScriptValue showAlphaChannel(bool showAlphaChannel);
-		QScriptValue setColor(const QScriptValue &color);
-		QScriptValue show();
-		int showModal();
+        Q_INVOKABLE ColorDialog *showAlphaChannel(bool showAlphaChannel);
+        Q_INVOKABLE ColorDialog *setColor(const Color *color);
+        Q_INVOKABLE ColorDialog *show();
+        Q_INVOKABLE int showModal();
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private slots:
 		QString toString() const override					{ return QStringLiteral("ColorDialog"); }
@@ -63,12 +64,10 @@ namespace Code
 		void currentColorChanged(const QColor &color);
 		
 	private:
-		void setColorPrivate(const QScriptValue &color, QScriptContext *context);
-		
 		QColorDialog *mColorDialog;
-		QScriptValue mOnClosed;
-		QScriptValue mOnColorSelected;
-		QScriptValue mOnColorChanged;
+		QJSValue mOnClosed;
+		QJSValue mOnColorSelected;
+		QJSValue mOnColorChanged;
 	};
 }
 

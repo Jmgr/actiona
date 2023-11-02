@@ -4,8 +4,8 @@ project(actiona VERSION 3.10.2 DESCRIPTION "Cross-platform automation tool" LANG
 
 # Constants
 set(ACT_SCRIPT_VERSION 1.1.0)
-set(ACT_MINIMUM_QT_VERSION 5.12)
-set(ACT_MINIMUM_QT_VERSION_HEX 0x050C00)
+set(ACT_MINIMUM_QT_VERSION 6.2)
+set(ACT_MINIMUM_QT_VERSION_HEX 0x060200)
 
 # Build parameters
 set(ACT_BUILD_NAME "" CACHE STRING "Build name")
@@ -18,7 +18,7 @@ if(result)
   set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_AUTOMOC ON)
@@ -51,14 +51,14 @@ function(setup_target TARGET)
 endfunction()
 
 function(compile_translations TARGET)
-    find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS LinguistTools REQUIRED)
+    find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS LinguistTools REQUIRED)
     set(TS_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_fr_FR.ts
         ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_zh_CN.ts
         # Add other translations here
     )
     set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_BINARY_DIR}/translations)
-    qt5_add_translation(QM_FILES ${TS_FILES})
+    qt_add_translations(${TARGET} QM_FILES ${TS_FILES})
     add_custom_target(${TARGET}_translations ALL DEPENDS ${QM_FILES})
 endfunction()
 

@@ -35,7 +35,7 @@ namespace Actions
         ActionTools::Registry::Key key = evaluateListElement<ActionTools::Registry::Key>(ok, ReadRegistryInstance::keys, QStringLiteral("key"));
         QString subKey = evaluateString(ok, QStringLiteral("subKey"));
         QString value = evaluateString(ok, QStringLiteral("value"));
-        QScriptValue data = evaluateValue(ok, QStringLiteral("data"));
+        QJSValue data = evaluateValue(ok, QStringLiteral("data"));
 
 		if(!ok)
 			return;

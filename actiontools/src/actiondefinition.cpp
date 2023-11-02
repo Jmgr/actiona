@@ -24,15 +24,15 @@
 #include "actiontools/elementdefinition.hpp"
 #include "actiontools/groupdefinition.hpp"
 
-#include <QScriptEngine>
-#include <QScriptValue>
+#include <QJSEngine>
+#include <QJSValue>
 #include <QSysInfo>
 #include <QApplication>
 
 #ifdef Q_OS_UNIX
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #endif
 
 namespace ActionTools
@@ -106,7 +106,7 @@ namespace ActionTools
 #ifdef Q_OS_UNIX
 		int unused;
 
-        if(!XTestQueryExtension(QX11Info::display(), &unused, &unused, &unused, &unused))
+        if(!XTestQueryExtension(X11Info::display(), &unused, &unused, &unused, &unused))
 		{
 			missingRequirements << QObject::tr("missing XTest extension");
 			return false;

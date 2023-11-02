@@ -21,10 +21,9 @@
 #include "actiontools/keyboardkey.hpp"
 #include "actiontools/swappairs.hpp"
 #include "actiontools/keysym2ucs.hpp"
+#include "actiontools/x11info.hpp"
 
 #include <map>
-
-#include <QtX11Extras/QX11Info>
 
 #include <xkbcommon/xkbcommon-keysyms.h>
 #include <X11/Xlib.h>
@@ -158,17 +157,17 @@ namespace ActionTools
         case KeyType::Invalid:
             return false;
         case KeyType::Native:
-            keyCode = XKeysymToKeycode(QX11Info::display(), mNativeKey);
+            keyCode = XKeysymToKeycode(X11Info::display(), mNativeKey);
             break;
         case KeyType::Standard:
-            keyCode = XKeysymToKeycode(QX11Info::display(), standardKeyToKeySym.at(mStandardKey));
+            keyCode = XKeysymToKeycode(X11Info::display(), standardKeyToKeySym.at(mStandardKey));
             break;
         case KeyType::Character:
         {
             QChar character{mNativeKey};
             char latin1Character = character.toLatin1();
             if(latin1Character >= 0x20)
-                keyCode = XKeysymToKeycode(QX11Info::display(), static_cast<KeySym>(latin1Character));
+                keyCode = XKeysymToKeycode(X11Info::display(), static_cast<KeySym>(latin1Character));
             else
             {
                 auto name = QStringLiteral("U%1").arg(QString::number(mNativeKey, 16));
@@ -177,14 +176,14 @@ namespace ActionTools
                 if(keySym == NoSymbol)
                     return false;
 
-                keyCode = XKeysymToKeycode(QX11Info::display(), keySym);
+                keyCode = XKeysymToKeycode(X11Info::display(), keySym);
             }
         }
             break;
         }
 
         static char keymap[32];
-        XQueryKeymap(QX11Info::display(), keymap);
+        XQueryKeymap(X11Info::display(), keymap);
 
         return keymap[keyCode / 8] & (1 << (keyCode % 8));
     }
@@ -195,7 +194,7 @@ namespace ActionTools
 
         char keys[32];
 
-        XQueryKeymap(QX11Info::display(), keys);
+        XQueryKeymap(X11Info::display(), keys);
 
         QList<KeyboardKey> result;
 
@@ -203,7 +202,7 @@ namespace ActionTools
         for(const auto &standardKeyAndKeySym: standardKeyToKeySym)
         {
             auto keySym = standardKeyAndKeySym.second;
-            auto keyCode = XKeysymToKeycode(QX11Info::display(), keySym);
+            auto keyCode = XKeysymToKeycode(X11Info::display(), keySym);
 
             if(keySym == XKB_KEY_ISO_Level3_Shift)
                 keyCode = 108;
@@ -218,7 +217,7 @@ namespace ActionTools
         for(const auto &unicodeCharAndKeySym: unicodeCharToKeySym)
         {
             auto keySym = unicodeCharAndKeySym.second;
-            auto keyCode = XKeysymToKeycode(QX11Info::display(), keySym);
+            auto keyCode = XKeysymToKeycode(X11Info::display(), keySym);
 
             if(keys[keyCode / 8] & (0x1 << (keyCode % 8)))
             {
@@ -238,19 +237,25 @@ namespace ActionTools
 
         keySymToStandardKey = swapPairs(standardKeyToKeySym);
 
-        auto keyboardMap = XkbGetMap(QX11Info::display(), XkbAllClientInfoMask, XkbUseCoreKbd);
+        auto keyboardMap = XkbGetMap(X11Info::display(), XkbAllClientInfoMask, XkbUseCoreKbd);
 
         if(keyboardMap)
         {
             for(int keyCode = keyboardMap->min_key_code; keyCode <= keyboardMap->max_key_code; ++keyCode)
             {
-                auto keySym = XkbKeycodeToKeysym(QX11Info::display(), keyCode, 0, 0);
+                auto keySym = XkbKeycodeToKeysym(X11Info::display(), keyCode, 0, 0);
                 if(keySym == NoSymbol)
                     continue;
                 if(keySymToStandardKey.find(static_cast<unsigned int>(keySym)) != keySymToStandardKey.cend())
                     continue;
 
-                QChar character = (uint)keysym2ucs(keySym);
+                auto ucs = keysym2ucs(keySym);
+                QString str = QString::fromUcs4(reinterpret_cast<const char32_t*>(&ucs), 1);
+                if(str.length() != 1)
+                    continue;
+
+                auto character = str.at(0);
+
                 if(character.isNull() || character.isNonCharacter())
                     continue;
 
@@ -267,8 +272,8 @@ namespace ActionTools
         Q_UNUSED(text)
 
         // Transform the virtual key (KeySym) into a key code and then back again to remove the effect of any modifier
-        auto keyCode = XKeysymToKeycode(QX11Info::display(), virtualKey);
-        virtualKey = XkbKeycodeToKeysym(QX11Info::display(), keyCode, 0, 0);
+        auto keyCode = XKeysymToKeycode(X11Info::display(), virtualKey);
+        virtualKey = XkbKeycodeToKeysym(X11Info::display(), keyCode, 0, 0);
 
         {
             auto it = keySymToStandardKey.find(virtualKey);
@@ -276,12 +281,17 @@ namespace ActionTools
                 return it->second;
         }
 
-        QChar character = static_cast<uint>(keysym2ucs(virtualKey));
-
+        auto ucs = keysym2ucs(virtualKey);
+        QString str = QString::fromUcs4(reinterpret_cast<const char32_t*>(&ucs), 1);
+        if(str.length() == 1)
         {
-            auto it = unicodeCharToKeySym.find(character.unicode());
-            if(it != unicodeCharToKeySym.cend())
-                return KeyboardKey{character};
+            auto character = str.at(0);
+
+            {
+                auto it = unicodeCharToKeySym.find(character.unicode());
+                if(it != unicodeCharToKeySym.cend())
+                    return KeyboardKey{character};
+            }
         }
 
         return KeyboardKey{virtualKey};

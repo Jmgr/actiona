@@ -69,10 +69,10 @@ void ScriptContentDialog::accept()
 	{
 		if(!mScript->statusMessage().isEmpty())
 		{
-			QMessageBox messageBox(tr("Script error"), tr("Unable to validate the script content.%1Line: %2<br>Column: %3")
+            QMessageBox messageBox(QMessageBox::Warning, tr("Script error"), tr("Unable to validate the script content.%1Line: %2<br>Column: %3")
 								   .arg(mScript->statusMessage())
 								   .arg(mScript->line())
-								   .arg(mScript->column()), QMessageBox::Warning, QMessageBox::Ok, 0, 0, this);
+                                   .arg(mScript->column()), QMessageBox::Ok, this);
             messageBox.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 			messageBox.setTextFormat(Qt::RichText);
 			messageBox.exec();

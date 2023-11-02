@@ -19,136 +19,89 @@
 */
 
 #include "actiontools/code/algorithms.hpp"
-#include "actiontools/code/codetools.hpp"
 
 #include <QCryptographicHash>
-#include <QScriptValueIterator>
-#include <cstdlib>
 #include <QRandomGenerator>
 
 namespace Code
 {
-    QScriptValue Algorithms::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new Algorithms, context, engine);
-	}
+    QString Algorithms::md4(const QString &input)
+    {
+        return QString::fromUtf8(QCryptographicHash::hash(input.toUtf8(), QCryptographicHash::Md4).toHex());
+    }
 
-	QScriptValue Algorithms::md4(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
+    QString Algorithms::md5(const QString &input)
+    {
+        return QString::fromUtf8(QCryptographicHash::hash(input.toUtf8(), QCryptographicHash::Md5).toHex());
+    }
 
-		return QLatin1String(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Md4).toHex());
-	}
+    QString Algorithms::sha1(const QString &input)
+    {
+        return QString::fromUtf8(QCryptographicHash::hash(input.toUtf8(), QCryptographicHash::Sha1).toHex());
+    }
 
-	QScriptValue Algorithms::md5(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
+    void Algorithms::setRandomSeed(qint32 seed)
+    {
+        QRandomGenerator::global()->seed(seed);
+    }
 
-		return QLatin1String(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Md5).toHex());
-	}
+    qint32 Algorithms::randomMax()
+    {
+        return RAND_MAX;
+    }
 
-	QScriptValue Algorithms::sha1(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
+    qint32 Algorithms::randomInteger()
+    {
+        return randomInteger_(0, RAND_MAX - 1);
+    }
 
-		return QLatin1String(QCryptographicHash::hash(context->argument(0).toString().toUtf8(), QCryptographicHash::Sha1).toHex());
-	}
+    qint32 Algorithms::randomInteger(int min, int max)
+    {
+        return randomInteger_(min, max);
+    }
 
-	QScriptValue Algorithms::setRandomSeed(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
-
-        QRandomGenerator::global()->seed(context->argument(0).toInt32());
-
-		return QScriptValue();
-	}
-
-	QScriptValue Algorithms::randomMax(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(context)
-		Q_UNUSED(engine)
-
-		return RAND_MAX;
-	}
-
-	QScriptValue Algorithms::randomInteger(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
-
-		switch(context->argumentCount())
-		{
-		case 0:
-            return QRandomGenerator::global()->generate();
-		case 2:
-			{
-				int min = context->argument(0).toInt32();
-				int max = context->argument(1).toInt32();
-
-				return randomInteger(min, max);
-			}
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return QScriptValue();
-		}
-	}
-
-	QScriptValue Algorithms::randomFloat(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
-
-		float min = context->argument(0).toNumber();
-		float max = context->argument(1).toNumber();
-
+    double Algorithms::randomFloat(double min, double max)
+    {
         return QRandomGenerator::global()->generateDouble() * (max - min) + min;
-	}
+    }
 
-	QScriptValue Algorithms::randomString(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
+    QString Algorithms::randomString(const QJSValue &parameters)
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return {};
+        }
 
-		QScriptValueIterator it(context->argument(0));
-		QString characters = QStringLiteral("abcdefghijklmnopqrstuvwxyz0123456789");
-		int minLength = 5;
-		int maxLength = 15;
+        QString characters = QStringLiteral("abcdefghijklmnopqrstuvwxyz0123456789");
+        int minLength = 5;
+        int maxLength = 15;
 
-		while(it.hasNext())
-		{
-			it.next();
+        if (parameters.hasProperty(QLatin1String("characters")))
+            characters = parameters.property(QLatin1String("characters")).toString();
+        if (parameters.hasProperty(QLatin1String("minLength")))
+            minLength = parameters.property(QLatin1String("minLength")).toInt();
+        if (parameters.hasProperty(QLatin1String("maxLength")))
+            maxLength = parameters.property(QLatin1String("maxLength")).toInt();
 
-			if(it.name() == QLatin1String("characters"))
-				characters = it.value().toString();
-			else if(it.name() == QLatin1String("minLength"))
-				minLength = it.value().toInt32();
-			else if(it.name() == QLatin1String("maxLength"))
-				maxLength = it.value().toInt32();
-		}
+        QString back;
+        int charactersLength = characters.length();
+        int finalLength = randomInteger_(minLength, maxLength);
+        for (int i = 0; i < finalLength; ++i)
+        {
+            back += characters.at(randomInteger_(0, charactersLength - 1));
+        }
 
-		QString back;
-		int charactersLength = characters.length();
-		int finalLength = randomInteger(minLength, maxLength);
-		for(int i = 0; i < finalLength; ++i)
-		{
-			back += characters.at(randomInteger(0, charactersLength - 1));
-		}
+        return back;
+    }
 
-		return back;
-	}
+    void Algorithms::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerStaticClass<Algorithms>(QStringLiteral("Algorithms"), scriptEngine);
+    }
 
-	void Algorithms::registerClass(QScriptEngine *scriptEngine)
-	{
-		CodeTools::addClassToScriptEngine<Algorithms>(scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&md4, QStringLiteral("md4"), scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&md5, QStringLiteral("md5"), scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&sha1, QStringLiteral("sha1"), scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&setRandomSeed, QStringLiteral("setRandomSeed"), scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomMax, QStringLiteral("randomMax"), scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomInteger, QStringLiteral("randomInteger"), scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomFloat, QStringLiteral("randomFloat"), scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Algorithms>(&randomString, QStringLiteral("randomString"), scriptEngine);
-	}
-
-	int Algorithms::randomInteger(int min, int max)
-	{
-        return QRandomGenerator::global()->bounded(min, max+1);
-	}
+    int Algorithms::randomInteger_(int min, int max)
+    {
+        return QRandomGenerator::global()->bounded(min, max + 1);
+    }
 }

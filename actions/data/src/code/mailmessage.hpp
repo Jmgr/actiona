@@ -23,9 +23,7 @@
 #include "actiontools/code/codeclass.hpp"
 #include "qxtsmtp/qxtmailmessage.h"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 
 namespace Code
 {
@@ -45,9 +43,8 @@ namespace Code
         };
         Q_ENUM(RecipientType)
 
-        static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-
-        MailMessage();
+        Q_INVOKABLE MailMessage();
+        Q_INVOKABLE explicit MailMessage(const QJSValue &parameters);
 
         QString sender() const                                                      { return mMessage.sender(); }
         void setSender(const QString &sender)                                       { mMessage.setSender(sender); }
@@ -60,23 +57,23 @@ namespace Code
 
         QxtMailMessage &message()                                                   { return mMessage; }
 
-    public slots:
-		QString toString() const override                                                    { return QStringLiteral("MailMessage"); }
-        bool equals(const QScriptValue &other) const override                        { return defaultEqualsImplementation<MailMessage>(other); }
+        Q_INVOKABLE QString toString() const override                                                    { return QStringLiteral("MailMessage"); }
 
-        QScriptValue setExtraHeader(const QString &name, const QString &value)      { mMessage.setExtraHeader(name, value); return thisObject(); }
-        QScriptValue removeExtraHeader(const QString &name)                         { mMessage.removeExtraHeader(name); return thisObject(); }
-        bool hasExtraHeader(const QString &name) const                              { return mMessage.hasExtraHeader(name); }
-        QString extraHeader(const QString &name) const                              { return mMessage.extraHeader(name); }
+        Q_INVOKABLE MailMessage *setExtraHeader(const QString &name, const QString &value)      { mMessage.setExtraHeader(name, value); return this; }
+        Q_INVOKABLE MailMessage *removeExtraHeader(const QString &name)                         { mMessage.removeExtraHeader(name); return this; }
+        Q_INVOKABLE bool hasExtraHeader(const QString &name) const                              { return mMessage.hasExtraHeader(name); }
+        Q_INVOKABLE QString extraHeader(const QString &name) const                              { return mMessage.extraHeader(name); }
 
-        QStringList recipients(RecipientType type = To) const                       { return mMessage.recipients(static_cast<QxtMailMessage::RecipientType>(type)); }
-        QScriptValue addRecipient(const QString &recipient, RecipientType type = To){ mMessage.addRecipient(recipient, static_cast<QxtMailMessage::RecipientType>(type)); return thisObject(); }
-        QScriptValue removeRecipient(const QString &recipient)                      { mMessage.removeRecipient(recipient); return thisObject(); }
+        Q_INVOKABLE QStringList recipients(RecipientType type = To) const                       { return mMessage.recipients(static_cast<QxtMailMessage::RecipientType>(type)); }
+        Q_INVOKABLE MailMessage *addRecipient(const QString &recipient, RecipientType type = To){ mMessage.addRecipient(recipient, static_cast<QxtMailMessage::RecipientType>(type)); return this; }
+        Q_INVOKABLE MailMessage *removeRecipient(const QString &recipient)                      { mMessage.removeRecipient(recipient); return this; }
 
-        QScriptValue attachments() const;
-        QScriptValue attachment(const QString &filename) const;
-        QScriptValue addAttachment(const QString &filename, const QScriptValue &attachment);
-        QScriptValue removeAttachment(const QString &filename);
+        Q_INVOKABLE QJSValue attachments() const;
+        Q_INVOKABLE QJSValue attachment(const QString &filename) const;
+        Q_INVOKABLE MailMessage *addAttachment(const QString &filename, const QJSValue &attachment);
+        Q_INVOKABLE MailMessage *removeAttachment(const QString &filename);
+
+        static void registerClass(QJSEngine &scriptEngine);
 
     private:
         QxtMailMessage mMessage;

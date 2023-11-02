@@ -25,7 +25,7 @@
 #include "abstractcodeeditor.hpp"
 
 #include <QLineEdit>
-#include <QRegExp>
+#include <QRegularExpression>
 
 class QMenu;
 class QAbstractItemModel;
@@ -41,7 +41,7 @@ namespace ActionTools
 		Q_PROPERTY(bool code READ isCode WRITE setCode)
 
 	public:
-        CodeLineEdit(QWidget *parent, const QRegExp &regexpValidation = QRegExp());
+        CodeLineEdit(QWidget *parent, const QRegularExpression &regexpValidation = QRegularExpression());
         ~CodeLineEdit() override ;
 
 		bool isMultiline() const										{ return mMultiline; }
@@ -57,7 +57,7 @@ namespace ActionTools
 		void setAllowTextCodeChange(bool allowTextCodeChange);
 		void setShowEditorButton(bool showEditorButton);
 		void setFromSubParameter(const SubParameter &subParameter);
-        void setRegexpValidation(const QRegExp &regexpValidation)       { mRegExp = regexpValidation; }
+        void setRegexpValidation(const QRegularExpression &regexpValidation)       { mRegExp = regexpValidation; }
 
 		void addShortcuts(QMenu *menu);
 		
@@ -104,7 +104,7 @@ namespace ActionTools
 		bool mEmbedded;
 		QAction *mSwitchTextCode;
 		QAction *mOpenEditor;
-		QRegExp mRegExp;
+        QRegularExpression mRegExp;
 		QAbstractItemModel *mCompletionModel;
         CodeLineEditButton *mCodeButton;
         CodeLineEditButton *mEditorButton;

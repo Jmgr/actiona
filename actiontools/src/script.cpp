@@ -25,10 +25,10 @@
 #include "actiontools/actionfactory.hpp"
 #include "actiontools/parameter.hpp"
 #include "actiontools/subparameter.hpp"
-#include "actiontools/messagehandler.hpp"
 #include "actiontools/variableparameterdefinition.hpp"
 #include "actiontools/groupdefinition.hpp"
 #include "actiontools/scriptlinemodel.hpp"
+#include "actiontools/xmlvalidator.hpp"
 
 #ifdef ACT_PROFILE
 #include "tools/highresolutiontimer.hpp"
@@ -37,13 +37,12 @@
 #include <QIODevice>
 #include <QFile>
 #include <QXmlStreamReader>
-#include <QXmlSchema>
-#include <QXmlSchemaValidator>
 #include <QBuffer>
+#include <QRegularExpression>
 
 namespace ActionTools
 {
-	const QRegExp Script::CodeVariableDeclarationRegExp(QStringLiteral("^[ \t]*var ([A-Za-z_][A-Za-z0-9_]*)"), Qt::CaseSensitive, QRegExp::RegExp2);
+    const QRegularExpression Script::CodeVariableDeclarationRegExp(QStringLiteral("^[ \t]*var ([A-Za-z_][A-Za-z0-9_]*)"));
 
 	Script::Script(ActionFactory *actionFactory, QObject *parent)
 		: QObject(parent),
@@ -721,30 +720,23 @@ namespace ActionTools
 
 		mStatusMessage.clear();
 
-		MessageHandler messageHandler;
-
 		QFile schemaFile(QStringLiteral(":/script%1.xsd").arg(scriptVersion.toString()));
 		if(!schemaFile.open(QIODevice::ReadOnly))
 			return false;
 
-		QXmlSchema schema;
-		schema.setMessageHandler(&messageHandler);
+        auto schemaData = schemaFile.readAll();
 
-		if(!schema.load(&schemaFile))
-			return false;
+        XmlValidator validator(schemaData);
+        const auto [success, message, line, column] = validator.validate(content.toUtf8());
+        if(!success)
+        {
+            mStatusMessage = message;
+            mLine = line;
+            mColumn = column;
+        }
 
-		QXmlSchemaValidator validator(schema);
-		if(!validator.validate(&buffer))
-		{
-			mStatusMessage = messageHandler.statusMessage();
-			mLine = messageHandler.line();
-			mColumn = messageHandler.column();
-
-			return false;
-		}
-
-		return true;
-	}
+        return false;
+    }
 
 	int Script::actionIndexFromRuntimeId(qint64 runtimeId) const
 	{
@@ -798,78 +790,61 @@ namespace ActionTools
 
     Script::ReadResult Script::validateSchema(QIODevice *device, const QVersionNumber &scriptVersion, bool tryOlderVersions)
     {
-        MessageHandler messageHandler;
-
 		QFile schemaFile(QStringLiteral(":/script%1.xsd").arg(scriptVersion.toString()));
         if(!schemaFile.open(QIODevice::ReadOnly))
             return ReadInternal;
 
-        QXmlSchema schema;
-        schema.setMessageHandler(&messageHandler);
-
+        XmlValidator validator(schemaFile.readAll());
+        const auto [success, message, line, column] = validator.validate(device->readAll());
+        if(!success)
         {
-#ifdef ACT_PROFILE
-            Tools::HighResolutionTimer timer(QStringLiteral("loading schema file"));
-#endif
-            if(!schema.load(&schemaFile))
-                return ReadInternal;
-        }
+            mStatusMessage = message;
+            mLine = line;
+            mColumn = column;
 
-        {
-#ifdef ACT_PROFILE
-            Tools::HighResolutionTimer timer(QStringLiteral("validating file"));
-#endif
-            QXmlSchemaValidator validator(schema);
-            if(!validator.validate(device))
-            {
-                mStatusMessage = messageHandler.statusMessage();
-                mLine = messageHandler.line();
-                mColumn = messageHandler.column();
-
-                if(!tryOlderVersions)
-                    return ReadInvalidSchema;
-
-                //If we could not validate, try to read the settings value to get the version
-                device->reset();
-
-                QXmlStreamReader stream(device);
-                while(!stream.atEnd() && !stream.hasError())
-                {
-                    stream.readNext();
-
-                    if(stream.isStartDocument())
-                        continue;
-
-                    if(!stream.isStartElement())
-                        continue;
-
-					if(stream.name() == QLatin1String("settings"))
-                    {
-                        const QXmlStreamAttributes &attributes = stream.attributes();
-						mProgramName = attributes.value(QStringLiteral("program")).toString();
-#if (QT_VERSION >= 0x050600)
-						mProgramVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("version")).toString());
-						mScriptVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("scriptVersion")).toString());
-#else
-						mProgramVersion = QVersionNumber(attributes.value(QStringLiteral("version")).toString());
-						mScriptVersion = QVersionNumber(attributes.value(QStringLiteral("scriptVersion")).toString());
-#endif
-						mOs = attributes.value(QStringLiteral("os")).toString();
-
-                        device->reset();
-
-                        if(mScriptVersion == scriptVersion)
-                            return ReadInvalidSchema;
-
-                        if(validateSchema(device, mScriptVersion, false) != ReadSuccess)
-                            return ReadInvalidSchema;
-
-                        return ReadSuccess;
-                    }
-                }
-
+            if(!tryOlderVersions)
                 return ReadInvalidSchema;
+
+            //If we could not validate, try to read the settings value to get the version
+            device->reset();
+
+            QXmlStreamReader stream(device);
+            while(!stream.atEnd() && !stream.hasError())
+            {
+                stream.readNext();
+
+                if(stream.isStartDocument())
+                    continue;
+
+                if(!stream.isStartElement())
+                    continue;
+
+                if(stream.name() == QLatin1String("settings"))
+                {
+                    const QXmlStreamAttributes &attributes = stream.attributes();
+                    mProgramName = attributes.value(QStringLiteral("program")).toString();
+#if (QT_VERSION >= 0x050600)
+                    mProgramVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("version")).toString());
+                    mScriptVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("scriptVersion")).toString());
+#else
+                    mProgramVersion = QVersionNumber(attributes.value(QStringLiteral("version")).toString());
+                    mScriptVersion = QVersionNumber(attributes.value(QStringLiteral("scriptVersion")).toString());
+#endif
+                    mOs = attributes.value(QStringLiteral("os")).toString();
+
+                    device->reset();
+
+                    if(mScriptVersion == scriptVersion)
+                        return ReadInvalidSchema;
+
+                    if(validateSchema(device, mScriptVersion, false) != ReadSuccess)
+                        return ReadInvalidSchema;
+
+                    return ReadSuccess;
+                }
             }
+
+            return ReadInvalidSchema;
         }
 
         return ReadSuccess;
@@ -940,7 +915,7 @@ namespace ActionTools
     {
         const Parameter &parameter = actionInstance->parameter(elementDefinition->name().original());
         const SubParameterHash &subParameters = parameter.subParameters();
-		QRegExp newLineRegExp(QStringLiteral("[\n\r;]"));
+		QRegularExpression newLineRegExp(QStringLiteral("[\n\r;]"));
 
         SubParameterHash::ConstIterator it = subParameters.constBegin();
         for(;it != subParameters.constEnd();++it)
@@ -952,19 +927,18 @@ namespace ActionTools
                 //Add every variable in any parameter type that is in code mode
                 const QString &code = subParameter.value();
 
-                const auto codeLines = code.split(newLineRegExp, QString::SkipEmptyParts);
+                const auto codeLines = code.split(newLineRegExp, Qt::SkipEmptyParts);
                 for(const QString &codeLine: codeLines)
                 {
-                    int position = 0;
-
-                    while((position = CodeVariableDeclarationRegExp.indexIn(codeLine, position)) != -1)
+                    QRegularExpressionMatchIterator matchIterator = CodeVariableDeclarationRegExp.globalMatch(codeLine);
+                    while (matchIterator.hasNext())
                     {
-                        QString foundVariableName = CodeVariableDeclarationRegExp.cap(1);
+                        QRegularExpressionMatch match = matchIterator.next();
+                        QString foundVariableName = match.captured(1);
 
-                        position += CodeVariableDeclarationRegExp.cap(1).length();
-
-                        if(!foundVariableName.isEmpty())
+                        if (!foundVariableName.isEmpty()) {
                             variables << foundVariableName;
+                        }
                     }
                 }
             }
@@ -984,16 +958,15 @@ namespace ActionTools
                 //Add every variable in any parameter type that is not in code mode
                 const QString &text = subParameter.value();
 
-                int position = 0;
-
-                while((position = ActionInstance::VariableRegExp.indexIn(text, position)) != -1)
+                QRegularExpressionMatchIterator matchIterator = ActionInstance::VariableRegExp.globalMatch(text);
+                while (matchIterator.hasNext())
                 {
-                    QString foundVariableName = ActionInstance::VariableRegExp.cap(1);
+                    QRegularExpressionMatch match = matchIterator.next();
+                    QString foundVariableName = match.captured(1);
 
-                    position += ActionInstance::VariableRegExp.cap(0).length();
-
-                    if(!foundVariableName.isEmpty())
+                    if (!foundVariableName.isEmpty()) {
                         variables << foundVariableName;
+                    }
                 }
             }
         }

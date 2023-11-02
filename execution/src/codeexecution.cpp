@@ -19,45 +19,37 @@
 */
 
 #include "codeexecution.hpp"
-#include "scriptagent.hpp"
 #include "actiontools/crossplatform.hpp"
-
-#include <QScriptEngine>
 
 namespace Execution
 {
-	ScriptAgent *CodeExecution::mScriptAgent = nullptr;
-
-	QScriptValue CodeExecution::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
-
-		return context->thisObject();
+    void CodeExecution::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClassWithStaticFunctions<CodeExecution, StaticCodeExecution>(
+            QStringLiteral("Execution"),
+            {QStringLiteral("pause"), QStringLiteral("sleep"), QStringLiteral("stop")},
+            scriptEngine
+            );
     }
 
-	QScriptValue CodeExecution::pause(QScriptContext *context, QScriptEngine *engine)
+    StaticCodeExecution *StaticCodeExecution::pause(int duration)
 	{
-		Q_UNUSED(engine)
+        ActionTools::CrossPlatform::sleep(duration);
 
-		ActionTools::CrossPlatform::sleep(context->argument(0).toInt32());
-
-		return context->thisObject();
+        return this;
 	}
 	
-	QScriptValue CodeExecution::sleep(QScriptContext *context, QScriptEngine *engine)
+    StaticCodeExecution *StaticCodeExecution::sleep(int duration)
 	{
-		pause(context, engine);
+        pause(duration);
 
-		return context->thisObject();
+        return this;
 	}
 	
-	QScriptValue CodeExecution::stop(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(engine)
+    StaticCodeExecution *StaticCodeExecution::stop()
+    {
+        qjsEngine(this)->setInterrupted(true);
 
-		if(mScriptAgent)
-			mScriptAgent->stopExecution();
-
-		return context->thisObject();
+        return this;
 	}
 }

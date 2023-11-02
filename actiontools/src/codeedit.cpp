@@ -23,13 +23,13 @@
 #include "actiontools/linenumberarea.hpp"
 #include "actiontools/scriptcompleter.hpp"
 #include "actiontools/keywords.hpp"
-#include "actiontools/code/codetools.hpp"
+#include "actiontools/code/codeclass.hpp"
 
 #include <QAbstractItemView>
 #include <QScrollBar>
 #include <QApplication>
 #include <QPainter>
-#include <QScriptEngine>
+#include <QJSEngine>
 #include <QDebug>
 #include <QStandardItemModel>
 
@@ -131,16 +131,16 @@ namespace ActionTools
 	{
 		if(mCode)
 		{
-			QScriptSyntaxCheckResult result = QScriptEngine::checkSyntax(toPlainText());
-			if(result.state() != QScriptSyntaxCheckResult::Valid)
-			{
-				setCurrentLine(result.errorLineNumber());
-				setCurrentColumn(result.errorColumnNumber());
+            auto [ok, message, line] = Code::checkSyntax(toPlainText());
+            if(!ok)
+            {
+                setCurrentLine(line);
+                setCurrentColumn(0);
 
-				mLastSyntaxError = result.errorMessage();
+                mLastSyntaxError = message;
 
-				return false;
-			}
+                return false;
+            }
 		}
 
 		return true;
@@ -378,7 +378,7 @@ namespace ActionTools
 		int curpos = cursor.position();
 		QString text = cursor.block().text().left(curpos);
 	
-		QStringList wordList = text.split(QRegExp(QStringLiteral("[^\\w\\.]")));
+		QStringList wordList = text.split(QRegularExpression(QStringLiteral("[^\\w\\.]")));
 	
 		if (wordList.isEmpty())
 			return QString();

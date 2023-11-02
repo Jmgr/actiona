@@ -9,8 +9,8 @@
 #include "actiontools/code/codeclass.hpp"
 
 #include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
+#include <QJSEngine>
 
 namespace Code
 {
@@ -37,15 +37,9 @@ namespace Code
 		};
 		Q_ENUM(Priority)
 
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(int processId, QScriptEngine *engine);
-		static int parameter(QScriptContext *context, QScriptEngine *engine);
-
-		static void registerClass(QScriptEngine *scriptEngine);
-
-		ProcessHandle();
-		ProcessHandle(const ProcessHandle &other);
-		ProcessHandle(int processId);
+        Q_INVOKABLE ProcessHandle();
+        explicit ProcessHandle(const ProcessHandle &other);
+        Q_INVOKABLE explicit ProcessHandle(int processId);
 
 		ProcessHandle &operator=(ProcessHandle other);
 		ProcessHandle &operator=(int processId);
@@ -55,16 +49,17 @@ namespace Code
 
 		int processId() const;
 
-	public slots:
-		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const override;
-		QString toString() const override;
-		int id() const;
-        int parentId() const;
-		bool kill(KillMode killMode = GracefulThenForceful, int timeout = 3000) const;
-		bool isRunning() const;
-		QString command() const;
-		Priority priority() const;
+        Q_INVOKABLE QJSValue clone() const;
+        Q_INVOKABLE bool equals(const QJSValue &other) const;
+        Q_INVOKABLE QString toString() const override;
+        Q_INVOKABLE int id() const;
+        Q_INVOKABLE int parentId() const;
+        Q_INVOKABLE bool kill(KillMode killMode = GracefulThenForceful, int timeout = 3000) const;
+        Q_INVOKABLE bool isRunning() const;
+        Q_INVOKABLE QString command() const;
+        Q_INVOKABLE Priority priority() const;
+
+        static void registerClass(QJSEngine &scriptEngine);
 
 	private:
 		int mProcessId;

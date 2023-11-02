@@ -22,54 +22,11 @@
 #include "mailmessage.hpp"
 #include "qxtcore/qxtsignalwaiter.h"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QDateTime>
 
 namespace Code
 {
-    QScriptValue Mail::constructor(QScriptContext *context, QScriptEngine *engine)
-    {
-        Mail *mail = new Mail;
-
-        QScriptValueIterator it(context->argument(0));
-
-        while(it.hasNext())
-        {
-            it.next();
-
-			if(it.name() == QLatin1String("username"))
-                mail->setUsername(it.value().toString());
-			else if(it.name() == QLatin1String("password"))
-                mail->setPassword(it.value().toString());
-			else if(it.name() == QLatin1String("onConnected"))
-                mail->mOnConnected = it.value();
-			else if(it.name() == QLatin1String("onConnectionFailed"))
-                mail->mOnConnectionFailed = it.value();
-			else if(it.name() == QLatin1String("onEncrypted"))
-                mail->mOnEncrypted = it.value();
-			else if(it.name() == QLatin1String("onEncryptionFailed"))
-                mail->mOnEncryptionFailed = it.value();
-			else if(it.name() == QLatin1String("onAuthenticated"))
-                mail->mOnAuthenticated = it.value();
-			else if(it.name() == QLatin1String("onAuthenticationFailed"))
-                mail->mOnAuthenticationFailed = it.value();
-			else if(it.name() == QLatin1String("onSenderRejected"))
-                mail->mOnSenderRejected = it.value();
-			else if(it.name() == QLatin1String("onRecipientRejected"))
-                mail->mOnRecipientRejected = it.value();
-			else if(it.name() == QLatin1String("onMailFailed"))
-                mail->mOnMailFailed = it.value();
-			else if(it.name() == QLatin1String("onMailSent"))
-                mail->mOnMailSent = it.value();
-			else if(it.name() == QLatin1String("onFinished"))
-                mail->mOnFinished = it.value();
-			else if(it.name() == QLatin1String("onDisconnected"))
-                mail->mOnDisconnected = it.value();
-        }
-
-        return CodeClass::constructor(mail, context, engine);
-    }
-
     Mail::Mail()
         : CodeClass()
     {
@@ -87,21 +44,67 @@ namespace Code
         connect(&mSmtp, &QxtSmtp::disconnected, this, &Mail::disconnected);
     }
 
-    QScriptValue Mail::connectToServer(const QString &serverName, int port)
+    Mail::Mail(const QJSValue &parameters)
+        : Mail()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("username"))
+                setUsername(it.value().toString());
+            else if(it.name() == QLatin1String("password"))
+                setPassword(it.value().toString());
+            else if(it.name() == QLatin1String("onConnected"))
+                mOnConnected = it.value();
+            else if(it.name() == QLatin1String("onConnectionFailed"))
+                mOnConnectionFailed = it.value();
+            else if(it.name() == QLatin1String("onEncrypted"))
+                mOnEncrypted = it.value();
+            else if(it.name() == QLatin1String("onEncryptionFailed"))
+                mOnEncryptionFailed = it.value();
+            else if(it.name() == QLatin1String("onAuthenticated"))
+                mOnAuthenticated = it.value();
+            else if(it.name() == QLatin1String("onAuthenticationFailed"))
+                mOnAuthenticationFailed = it.value();
+            else if(it.name() == QLatin1String("onSenderRejected"))
+                mOnSenderRejected = it.value();
+            else if(it.name() == QLatin1String("onRecipientRejected"))
+                mOnRecipientRejected = it.value();
+            else if(it.name() == QLatin1String("onMailFailed"))
+                mOnMailFailed = it.value();
+            else if(it.name() == QLatin1String("onMailSent"))
+                mOnMailSent = it.value();
+            else if(it.name() == QLatin1String("onFinished"))
+                mOnFinished = it.value();
+            else if(it.name() == QLatin1String("onDisconnected"))
+                mOnDisconnected = it.value();
+        }
+    }
+
+    Mail *Mail::connectToServer(const QString &serverName, int port)
     {
         mSmtp.connectToHost(serverName, port);
 
-        return thisObject();
+        return this;
     }
 
-    QScriptValue Mail::connectToSecureServer(const QString &serverName, int port)
+    Mail *Mail::connectToSecureServer(const QString &serverName, int port)
     {
         mSmtp.connectToSecureHost(serverName, port);
 
-        return thisObject();
+        return this;
     }
 
-    int Mail::send(const QScriptValue &mail)
+    int Mail::send(const QJSValue &mail)
     {
         if(auto mailMessage = qobject_cast<MailMessage*>(mail.toQObject()))
         {
@@ -119,120 +122,125 @@ namespace Code
         }
     }
 
-    QScriptValue Mail::waitForConnected(int waitTime)
+    Mail *Mail::waitForConnected(int waitTime)
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(connected()));
         if(!waiter.wait(waitTime))
 			throwError(QStringLiteral("ConnectionError"), tr("Cannot establish a connection to the server"));
 
-        return thisObject();
+        return this;
     }
 
-    QScriptValue Mail::waitForEncrypted(int waitTime)
+    Mail *Mail::waitForEncrypted(int waitTime)
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(encrypted()));
         if(!waiter.wait(waitTime))
 			throwError(QStringLiteral("EncryptionError"), tr("Cannot encrypt the connection"));
 
-        return thisObject();
+        return this;
     }
 
-    QScriptValue Mail::waitForAuthenticated(int waitTime)
+    Mail *Mail::waitForAuthenticated(int waitTime)
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(authenticated()));
         if(!waiter.wait(waitTime))
 			throwError(QStringLiteral("AuthenticationError"), tr("Cannot authenticate to the server"));
 
-        return thisObject();
+        return this;
     }
 
-    QScriptValue Mail::waitForFinished(int waitTime)
+    Mail *Mail::waitForFinished(int waitTime)
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(finished()));
         if(!waiter.wait(waitTime))
 			throwError(QStringLiteral("WaitForFinishedError"), tr("Wait for finished failed"));
 
-        return thisObject();
+        return this;
     }
 
-    QScriptValue Mail::waitForDisconnected(int waitTime)
+    Mail *Mail::waitForDisconnected(int waitTime)
     {
         QxtSignalWaiter waiter(&mSmtp, SIGNAL(disconnected()));
         if(!waiter.wait(waitTime))
 			throwError(QStringLiteral("WaitForDisconnectedError"), tr("Wait for disconnected failed"));
 
-        return thisObject();
+        return this;
+    }
+
+    void Mail::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Mail>(QStringLiteral("Mail"), scriptEngine);
     }
 
     void Mail::connected()
     {
-        if(mOnConnected.isValid())
-            mOnConnected.call(thisObject());
+        if(!mOnConnected.isUndefined())
+            mOnConnected.call();
     }
 
     void Mail::connectionFailed(const QByteArray &msg)
     {
-        if(mOnConnectionFailed.isValid())
-            mOnConnectionFailed.call(thisObject(), QScriptValueList() << QString::fromUtf8(msg));
+        if(!mOnConnectionFailed.isUndefined())
+            mOnConnectionFailed.call(QJSValueList() << QString::fromUtf8(msg));
     }
 
     void Mail::encrypted()
     {
-        if(mOnEncrypted.isValid())
-            mOnEncrypted.call(thisObject());
+        if(!mOnEncrypted.isUndefined())
+            mOnEncrypted.call();
     }
 
     void Mail::encryptionFailed(const QByteArray &msg)
     {
-        if(mOnEncryptionFailed.isValid())
-            mOnEncryptionFailed.call(thisObject(), QScriptValueList() << QString::fromUtf8(msg));
+        if(!mOnEncryptionFailed.isUndefined())
+            mOnEncryptionFailed.call(QJSValueList() << QString::fromUtf8(msg));
     }
 
     void Mail::authenticated()
     {
-        if(mOnAuthenticated.isValid())
-            mOnAuthenticated.call(thisObject());
+        if(!mOnAuthenticated.isUndefined())
+            mOnAuthenticated.call();
     }
 
     void Mail::authenticationFailed(const QByteArray &msg)
     {
-        if(mOnAuthenticationFailed.isValid())
-            mOnAuthenticationFailed.call(thisObject(), QScriptValueList() << QString::fromUtf8(msg));
+        if(!mOnAuthenticationFailed.isUndefined())
+            mOnAuthenticationFailed.call(QJSValueList() << QString::fromUtf8(msg));
     }
 
     void Mail::senderRejected(int mailID, const QString &address, const QByteArray &msg)
     {
-        if(mOnSenderRejected.isValid())
-            mOnSenderRejected.call(thisObject(), QScriptValueList() << mailID << address << QString::fromUtf8(msg));
+        if(!mOnSenderRejected.isUndefined())
+            mOnSenderRejected.call(QJSValueList() << mailID << address << QString::fromUtf8(msg));
     }
 
     void Mail::recipientRejected(int mailID, const QString &address, const QByteArray &msg)
     {
-        if(mOnRecipientRejected.isValid())
-            mOnRecipientRejected.call(thisObject(), QScriptValueList() << mailID << address << QString::fromUtf8(msg));
+        if(!mOnRecipientRejected.isUndefined())
+            mOnRecipientRejected.call(QJSValueList() << mailID << address << QString::fromUtf8(msg));
     }
 
     void Mail::mailFailed(int mailID, int errorCode, const QByteArray &msg)
     {
-        if(mOnMailFailed.isValid())
-            mOnMailFailed.call(thisObject(), QScriptValueList() << mailID << errorCode << QString::fromUtf8(msg));
+        if(!mOnMailFailed.isUndefined())
+            mOnMailFailed.call(QJSValueList() << mailID << errorCode << QString::fromUtf8(msg));
     }
 
     void Mail::mailSent(int mailID)
     {
-        if(mOnMailSent.isValid())
-            mOnMailSent.call(thisObject(), QScriptValueList() << mailID);
+        if(!mOnMailSent.isUndefined())
+            mOnMailSent.call(QJSValueList() << mailID);
     }
 
     void Mail::finished()
     {
-        if(mOnFinished.isValid())
-            mOnFinished.call(thisObject());
+        if(!mOnFinished.isUndefined())
+            mOnFinished.call();
     }
 
     void Mail::disconnected()
     {
-        if(mOnDisconnected.isValid())
-            mOnDisconnected.call(thisObject());
+        if(!mOnDisconnected.isUndefined())
+            mOnDisconnected.call();
     }
 }

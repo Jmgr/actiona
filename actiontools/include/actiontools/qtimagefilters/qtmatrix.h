@@ -311,9 +311,9 @@ QDebug operator<<(QDebug dbg, const QtMatrix<T> &matrix) {
         dbg << "[";
         for (int r = 0; r < rows; r++) {
             dbg << "[";
-            dbg << matrix.getData(r, 0);
+            dbg << matrix.at(r, 0);
             for (int c = 1; c < cols; c++) {
-                dbg << ',' << matrix.getData(r, c);
+                dbg << ',' << matrix.at(r, c);
             }
             dbg << "]" << "\n";
         }

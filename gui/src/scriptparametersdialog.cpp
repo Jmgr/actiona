@@ -27,9 +27,10 @@
 #include "actiontools/windowedit.hpp"
 #include "actiontools/fileedit.hpp"
 #include "actiontools/linecombobox.hpp"
+#include "actiontools/code/codeclass.hpp"
 
 #include <QMessageBox>
-#include <QScriptEngine>
+#include <QJSEngine>
 #include <QTimer>
 #include <QComboBox>
 #include <QMenu>
@@ -147,7 +148,7 @@ void ScriptParametersDialog::accept()
 {
 	int rowCount = ui->parameterTable->rowCount();
 
-	QScriptEngine scriptEngine;
+	QJSEngine scriptEngine;
 
 	mScript->removeAllParameters();
 
@@ -166,8 +167,8 @@ void ScriptParametersDialog::accept()
 		if(nameLineEdit->text().isEmpty())
 			continue;
 
-		QRegExp nameRegExp(QStringLiteral("[a-z_][a-z0-9_]*"), Qt::CaseInsensitive);
-		if(!nameRegExp.exactMatch(nameLineEdit->text()))
+        QRegularExpression nameRegExp(QStringLiteral("[a-z_][a-z0-9_]*"), QRegularExpression::CaseInsensitiveOption);
+        if(!nameRegExp.match(nameLineEdit->text()).hasMatch())
 		{
 			QMessageBox::warning(this, tr("Script parameter error"), tr("Incorrect parameter name \"%1\".")
 				.arg(nameLineEdit->text()));
@@ -224,17 +225,17 @@ void ScriptParametersDialog::accept()
 		}
 
 		if(isCode)
-		{
-			QScriptSyntaxCheckResult result = scriptEngine.checkSyntax(value);
-			if(result.state() != QScriptSyntaxCheckResult::Valid)
-			{
-				QMessageBox::warning(this, tr("Script parameter error"), tr(R"(The script parameter named "%1" contains an error: "%2", please correct it.)")
-					.arg(nameLineEdit->text())
-					.arg(result.errorMessage()));
-				widget->setFocus();
+        {
+            auto [ok, message, line] = Code::checkSyntax(value);
+            if(!ok)
+            {
+                QMessageBox::warning(this, tr("Script parameter error"), tr(R"(The script parameter named "%1" contains an error: "%2", please correct it.)")
+                                                                             .arg(nameLineEdit->text())
+                                                                             .arg(message));
+                widget->setFocus();
 
-				return;
-			}
+                return;
+            }
 		}
 
 		mScript->addParameter(ActionTools::ScriptParameter(nameLineEdit->text(), value, isCode, mParameterTypes.at(row)));

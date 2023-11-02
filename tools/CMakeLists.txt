@@ -33,7 +33,7 @@ target_compile_definitions(${PROJECT} PRIVATE TOOLS_LIBRARY)
 
 setup_target(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets REQUIRED)
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets REQUIRED)
 
 target_include_directories(${PROJECT}
     PUBLIC
@@ -45,8 +45,8 @@ target_include_directories(${PROJECT}
 
 target_link_libraries(
     ${PROJECT}
-    Qt5::Network
-    Qt5::Widgets
+    Qt6::Network
+    Qt6::Widgets
 )
 
 compile_translations(${PROJECT})

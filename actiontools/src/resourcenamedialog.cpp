@@ -23,7 +23,7 @@
 #include "actiontools/actioninstance.hpp"
 #include "actiontools/script.hpp"
 
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 #include <QPushButton>
 
 namespace ActionTools
@@ -37,7 +37,7 @@ namespace ActionTools
 
         connect(ui->resourceNameLineEdit, &QLineEdit::textChanged, this, &ResourceNameDialog::onTextChanged);
 
-        ui->resourceNameLineEdit->setValidator(new QRegExpValidator(ActionTools::ActionInstance::NameRegExp, ui->resourceNameLineEdit));
+        ui->resourceNameLineEdit->setValidator(new QRegularExpressionValidator(ActionTools::ActionInstance::NameRegExp, ui->resourceNameLineEdit));
         ui->resourceNameLineEdit->setFocus();
 
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);

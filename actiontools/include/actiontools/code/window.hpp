@@ -24,12 +24,14 @@
 #include "actiontools/windowhandle.hpp"
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
+#include <QRegularExpression>
 
 namespace Code
 {
+    class Point;
+    class Size;
+
 	class ACTIONTOOLSSHARED_EXPORT Window : public CodeClass
 	{
 		Q_OBJECT
@@ -37,24 +39,14 @@ namespace Code
 	public:
 		enum Mode
 		{
-			RegExp = QRegExp::RegExp2,
-			Wildcard = QRegExp::Wildcard,
-			WildcardUnix = QRegExp::WildcardUnix,
-			FixedString = QRegExp::FixedString
+            RegExp,
+            Wildcard,
+            WildcardUnix,
+            FixedString
 		};
 		Q_ENUM(Mode)
 
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const ActionTools::WindowHandle &windowHandle, QScriptEngine *engine);
-		static ActionTools::WindowHandle parameter(QScriptContext *context, QScriptEngine *engine);
-
-		static QScriptValue find(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue all(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue foreground(QScriptContext *context, QScriptEngine *engine);
-
-		static void registerClass(QScriptEngine *scriptEngine);
-
-		Window();
+        Q_INVOKABLE Window();
 		Window(const Window &other);
 		Window(const ActionTools::WindowHandle &windowHandle);
 		
@@ -65,29 +57,43 @@ namespace Code
 		void swap(ActionTools::WindowHandle &windowHandle);
 		
 		const ActionTools::WindowHandle &windowHandle() const;
-		
-	public slots:
-		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const override;
-		QString toString() const override;
-		bool isValid() const;
-		QString title() const;
-		QString className() const;
-		bool isActive() const;
-		QScriptValue rect(bool useBorders = true) const;
-		QScriptValue process() const;
-		QScriptValue close() const;
-		QScriptValue killCreator() const;
-		QScriptValue setForeground() const;
-		QScriptValue minimize() const;
-		QScriptValue maximize() const;
-		QScriptValue move() const;
-		QScriptValue resize(bool useBorders = true) const;
+
+        Q_INVOKABLE QJSValue clone() const;
+        Q_INVOKABLE bool equals(const QJSValue &other) const;
+        Q_INVOKABLE QString toString() const override;
+        Q_INVOKABLE bool isValid() const;
+        Q_INVOKABLE QString title() const;
+        Q_INVOKABLE QString className() const;
+        Q_INVOKABLE bool isActive() const;
+        Q_INVOKABLE QJSValue rect(bool useBorders = true) const;
+        Q_INVOKABLE QJSValue process() const;
+        Q_INVOKABLE Window *close();
+        Q_INVOKABLE Window *killCreator();
+        Q_INVOKABLE Window *setForeground();
+        Q_INVOKABLE Window *minimize();
+        Q_INVOKABLE Window *maximize();
+        Q_INVOKABLE Window *move(const Point *point);
+        Q_INVOKABLE Window *resize(const Size *size, bool useBorders = true);
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private:
 		bool checkValidity() const;
 
 		ActionTools::WindowHandle mWindowHandle;
 	};
+
+    class ACTIONTOOLSSHARED_EXPORT StaticWindow : public CodeClass
+    {
+        Q_OBJECT
+
+    public:
+        StaticWindow(QObject *parent): CodeClass(parent) {}
+
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticWindow"); }
+        Q_INVOKABLE QJSValue find(const QJSValue &parameters);
+        Q_INVOKABLE QJSValue all();
+        Q_INVOKABLE QJSValue foreground();
+    };
 }
 

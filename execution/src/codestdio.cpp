@@ -20,69 +20,73 @@
 
 #include "codestdio.hpp"
 
-#include <QScriptContext>
 #include <QTextStream>
 
 namespace Execution
 {
-	QScriptValue CodeStdio::constructor(QScriptContext *context, QScriptEngine *)
-	{
-		return context->thisObject();
-	}
-	
-	QScriptValue CodeStdio::print(QScriptContext *context, QScriptEngine *)
-	{
-		print(context->argument(0).toString());
-		
-		return context->thisObject();
-	}
+    void CodeStdio::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClassWithStaticFunctions<CodeStdio, StaticCodeStdio>(
+            QStringLiteral("Stdio"),
+            {QStringLiteral("print"), QStringLiteral("println"), QStringLiteral("printWarning"), QStringLiteral("printlnWarning"),
+             QStringLiteral("printError"), QStringLiteral("printlnError"), QStringLiteral("clear")},
+            scriptEngine
+            );
+    }
 
-	QScriptValue CodeStdio::println(QScriptContext *context, QScriptEngine *)
-	{
-		print(QStringLiteral("%1\n").arg(context->argument(0).toString()));
+    StaticCodeStdio *StaticCodeStdio::print(const QString &text)
+    {
+        printInternal(text);
 
-		return context->thisObject();
-	}
+        return this;
+    }
 
-	QScriptValue CodeStdio::printWarning(QScriptContext *context, QScriptEngine *)
-	{
-		print(tr("Warning: %1").arg(context->argument(0).toString()));
+    StaticCodeStdio *StaticCodeStdio::println(const QString &text)
+    {
+        printInternal(QStringLiteral("%1\n").arg(text));
 
-		return context->thisObject();
-	}
+        return this;
+    }
 
-	QScriptValue CodeStdio::printlnWarning(QScriptContext *context, QScriptEngine *)
-	{
-		print(tr("Warning: %1\n").arg(context->argument(0).toString()));
+    StaticCodeStdio *StaticCodeStdio::printWarning(const QString &text)
+    {
+        printInternal(tr("Warning: %1").arg(text));
 
-		return context->thisObject();
-	}
+        return this;
+    }
 
-	QScriptValue CodeStdio::printError(QScriptContext *context, QScriptEngine *)
-	{
-		print(tr("Error: %1").arg(context->argument(0).toString()));
-		
-		return context->thisObject();
-	}
+    StaticCodeStdio *StaticCodeStdio::printlnWarning(const QString &text)
+    {
+        printInternal(tr("Warning: %1\n").arg(text));
 
-	QScriptValue CodeStdio::printlnError(QScriptContext *context, QScriptEngine *)
-	{
-		print(tr("Error: %1\n").arg(context->argument(0).toString()));
+        return this;
+    }
 
-		return context->thisObject();
-	}
+    StaticCodeStdio *StaticCodeStdio::printError(const QString &text)
+    {
+        printInternal(tr("Error: %1").arg(text));
 
-    QScriptValue CodeStdio::clear(QScriptContext *context, QScriptEngine *)
+        return this;
+    }
+
+    StaticCodeStdio *StaticCodeStdio::printlnError(const QString &text)
+    {
+        printInternal(tr("Error: %1\n").arg(text));
+
+        return this;
+    }
+
+    StaticCodeStdio *StaticCodeStdio::clear()
     {
         // Do nothing here
 
-        return context->thisObject();
+        return this;
     }
 
-	void CodeStdio::print(const QString &text)
-	{
-		QTextStream stream(stdout);
-		stream << text;
-		stream.flush();
-	}
+    void StaticCodeStdio::printInternal(const QString &text)
+    {
+        QTextStream stream(stdout);
+        stream << text;
+        stream.flush();
+    }
 }

@@ -21,48 +21,51 @@
 #include "mailmessage.hpp"
 #include "mailattachment.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 
 namespace Code
 {
-    QScriptValue MailMessage::constructor(QScriptContext *context, QScriptEngine *engine)
-    {
-        auto mailMessage = new MailMessage;
-
-        QScriptValueIterator it(context->argument(0));
-
-        while(it.hasNext())
-        {
-            it.next();
-
-			if(it.name() == QLatin1String("sender"))
-                mailMessage->mMessage.setSender(it.value().toString());
-			else if(it.name() == QLatin1String("subject"))
-                mailMessage->mMessage.setSubject(it.value().toString());
-			else if(it.name() == QLatin1String("body"))
-                mailMessage->mMessage.setBody(it.value().toString());
-        }
-
-        return CodeClass::constructor(mailMessage, context, engine);
-    }
-
     MailMessage::MailMessage()
         : CodeClass()
     {
     }
 
-    QScriptValue MailMessage::attachments() const
+    MailMessage::MailMessage(const QJSValue &parameters)
+        : MailMessage()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("sender"))
+                mMessage.setSender(it.value().toString());
+            else if(it.name() == QLatin1String("subject"))
+                mMessage.setSubject(it.value().toString());
+            else if(it.name() == QLatin1String("body"))
+                mMessage.setBody(it.value().toString());
+        }
+    }
+
+    QJSValue MailMessage::attachments() const
     {
         const QHash<QString, QxtMailAttachment> &attachments = mMessage.attachments();
-        QScriptValue back = engine()->newArray(attachments.size());
+        QJSValue back = qjsEngine(this)->newArray(attachments.size());
 
         int index = 0;
         for(QHash<QString, QxtMailAttachment>::ConstIterator it = attachments.constBegin(); it != attachments.constEnd(); ++it)
         {
-            QScriptValue attachmentObject = engine()->newObject();
+            QJSValue attachmentObject = qjsEngine(this)->newObject();
 
-			attachmentObject.setProperty(QStringLiteral("filename"), it.key());
-			attachmentObject.setProperty(QStringLiteral("attachment"), MailAttachment::constructor(it.value(), engine()));
+            attachmentObject.setProperty(QStringLiteral("filename"), it.key());
+            attachmentObject.setProperty(QStringLiteral("attachment"), CodeClass::construct<MailAttachment>(it.value()));
 
             back.setProperty(index, attachmentObject);
 
@@ -72,25 +75,30 @@ namespace Code
         return back;
     }
 
-    QScriptValue MailMessage::attachment(const QString &filename) const
+    QJSValue MailMessage::attachment(const QString &filename) const
     {
-        return MailAttachment::constructor(mMessage.attachment(filename), engine());
+        return CodeClass::construct<MailAttachment>(mMessage.attachment(filename));
     }
 
-    QScriptValue MailMessage::addAttachment(const QString &filename, const QScriptValue &attachment)
+    MailMessage *MailMessage::addAttachment(const QString &filename, const QJSValue &attachment)
     {
         if(auto mailAttachment = qobject_cast<MailAttachment*>(attachment.toQObject()))
             mMessage.addAttachment(filename, mailAttachment->attachment());
         else
 			throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type: not a MailAttachment"));
 
-        return thisObject();
+        return this;
     }
 
-    QScriptValue MailMessage::removeAttachment(const QString &filename)
+    MailMessage *MailMessage::removeAttachment(const QString &filename)
     {
         mMessage.removeAttachment(filename);
 
-        return thisObject();
+        return this;
+    }
+
+    void MailMessage::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<MailMessage>(QStringLiteral("MailMessage"), scriptEngine);
     }
 }

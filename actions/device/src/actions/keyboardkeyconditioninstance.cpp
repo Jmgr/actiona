@@ -19,10 +19,7 @@
 */
 
 #include "keyboardkeyconditioninstance.hpp"
-#include "actiontools/code/point.hpp"
-#include "actiontools/code/size.hpp"
 
-#include <QRegExp>
 #include <QTimer>
 
 namespace Actions

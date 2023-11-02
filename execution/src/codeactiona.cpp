@@ -20,7 +20,6 @@
 
 #include "codeactiona.hpp"
 
-#include <QScriptContext>
 #include <QTextStream>
 
 namespace Execution
@@ -29,30 +28,14 @@ namespace Execution
     QVersionNumber CodeActiona::mActionaVersion = QVersionNumber();
     QVersionNumber CodeActiona::mScriptVersion = QVersionNumber();
 
-    QScriptValue CodeActiona::constructor(QScriptContext *context, QScriptEngine *)
-	{
-		return context->thisObject();
-	}
-
-    QScriptValue CodeActiona::version(QScriptContext *, QScriptEngine *)
-	{
-        return mActionaVersion.toString();
-	}
-
-    QScriptValue CodeActiona::scriptVersion(QScriptContext *, QScriptEngine *)
-	{
-		return mScriptVersion.toString();
-	}
-
-    QScriptValue CodeActiona::isActExec(QScriptContext *, QScriptEngine *)
-	{
-		return mIsActExec;
-	}
-
-    QScriptValue CodeActiona::isActiona(QScriptContext *, QScriptEngine *)
-	{
-		return !mIsActExec;
-	}
+    void CodeActiona::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClassWithStaticFunctions<CodeActiona, StaticCodeActiona>(
+            QStringLiteral("Actiona"),
+            {QStringLiteral("version"), QStringLiteral("scriptVersion"), QStringLiteral("isActExec"), QStringLiteral("isActiona")},
+            scriptEngine
+            );
+    }
 
     void CodeActiona::setActExec(bool isActExec)
 	{
@@ -68,4 +51,24 @@ namespace Execution
 	{
 		mScriptVersion = version;
 	}
+
+    QString StaticCodeActiona::version()
+    {
+        return CodeActiona::mActionaVersion.toString();
+    }
+
+    QString StaticCodeActiona::scriptVersion()
+    {
+        return CodeActiona::mScriptVersion.toString();
+    }
+
+    bool StaticCodeActiona::isActExec()
+    {
+        return CodeActiona::mIsActExec;
+    }
+
+    bool StaticCodeActiona::isActiona()
+    {
+        return !CodeActiona::mIsActExec;
+    }
 }

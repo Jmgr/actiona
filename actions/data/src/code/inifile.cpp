@@ -20,49 +20,51 @@
 
 #include "inifile.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 
 namespace Code
 {
-	QScriptValue IniFile::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		auto iniFile = new IniFile;
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-			
-			if(it.name() == QLatin1String("encoding"))
-				iniFile->mEncoding = static_cast<Encoding>(it.value().toInt32());
-		}
-
-		return CodeClass::constructor(iniFile, context, engine);
-	}
-	
 	IniFile::IniFile()
 		: CodeClass()
-		
     {
     }
 
-	QScriptValue IniFile::load(const QString &filename)
+    IniFile::IniFile(const QJSValue &parameters)
+        : CodeClass()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("encoding"))
+                mEncoding = static_cast<Encoding>(it.value().toInt());
+        }
+    }
+
+    IniFile *IniFile::load(const QString &filename)
 	{
         mINI::INIFile file(toEncoding(filename, mEncoding).constData());
 
         if(!file.read(mStructure))
         {
             throwError(QStringLiteral("LoadFileError"), tr("Cannot load the file"));
-            return thisObject();
+            return this;
         }
 
         mLatestFilename = filename;
 	
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue IniFile::save(const QString &filename)
+    IniFile *IniFile::save(const QString &filename)
 	{
         QByteArray filenameByteArray = toEncoding(filename.isEmpty() ? mLatestFilename : filename, mEncoding);
         mINI::INIFile file(filenameByteArray.constData());
@@ -70,20 +72,20 @@ namespace Code
         if(!file.write(mStructure))
         {
             throwError(QStringLiteral("SaveFileError"), tr("Cannot save the file"));
-            return thisObject();
+            return this;
         }
 
-        return thisObject();
+        return this;
 	}
 	
-	QScriptValue IniFile::clear()
+    IniFile *IniFile::clear()
 	{
         mStructure.clear();
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue IniFile::setSection(const QString &sectionName, bool create)
+    IniFile *IniFile::setSection(const QString &sectionName, bool create)
 	{
         QByteArray sectionNameByteArray = toEncoding(sectionName, mEncoding);
 
@@ -92,7 +94,7 @@ namespace Code
             if(!create)
             {
                 throwError(QStringLiteral("FindSectionError"), tr("Cannot find the section named \"%1\"").arg(sectionName));
-                return thisObject();
+                return this;
             }
 
             mStructure[sectionNameByteArray.constData()];
@@ -100,14 +102,14 @@ namespace Code
 
         mCurrentSectionName = sectionNameByteArray;
 
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue IniFile::setEncoding(Encoding encoding)
+    IniFile *IniFile::setEncoding(Encoding encoding)
 	{
 		mEncoding = encoding;
 		
-		return thisObject();
+        return this;
 	}
 	
     QString IniFile::sectionAt(int sectionIndex) const
@@ -125,17 +127,17 @@ namespace Code
         return QString::fromStdString(it->first);
 	}
 	
-	QScriptValue IniFile::deleteSection(const QString &sectionName)
+    IniFile *IniFile::deleteSection(const QString &sectionName)
 	{
         QByteArray sectionNameByteArray = toEncoding(sectionName, mEncoding);
 
         if(!mStructure.remove(sectionNameByteArray.constData()))
 		{
 			throwError(QStringLiteral("FindSectionError"), tr("Cannot delete section named \"%1\"").arg(sectionName));
-			return thisObject();
+            return this;
 		}
 		
-		return thisObject();
+        return this;
 	}
 	
 	int IniFile::sectionCount() const
@@ -186,21 +188,21 @@ namespace Code
         return QString::fromStdString(section.get(toEncoding(keyName, mEncoding).constData()));
 	}
 	
-	QScriptValue IniFile::setKeyValue(const QString &keyName, const QString &value)
+    IniFile *IniFile::setKeyValue(const QString &keyName, const QString &value)
 	{
         auto &section = mStructure[mCurrentSectionName.constData()];
 
         section[toEncoding(keyName, mEncoding).constData()] = toEncoding(value, mEncoding).constData();
 
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue IniFile::deleteKey(const QString &keyName)
+    IniFile *IniFile::deleteKey(const QString &keyName)
 	{
         if(!mStructure.has(mCurrentSectionName.constData()))
         {
             throwError(QStringLiteral("KeyError"), tr("Cannot delete key named \"%1\"").arg(keyName));
-            return thisObject();
+            return this;
         }
 
         auto &section = mStructure[mCurrentSectionName.constData()];
@@ -209,10 +211,10 @@ namespace Code
         if(!section.remove(keyNameByteArray.constData()))
         {
 			throwError(QStringLiteral("KeyError"), tr("Cannot delete key named \"%1\"").arg(keyName));
-            return thisObject();
+            return this;
         }
 
-        return thisObject();
+        return this;
 	}
 	
     int IniFile::keyCount() const
@@ -222,4 +224,9 @@ namespace Code
 
         return static_cast<int>(mStructure.get(mCurrentSectionName.constData()).size());
 	}
+
+    void IniFile::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<IniFile>(QStringLiteral("IniFile"), scriptEngine);
+    }
 }

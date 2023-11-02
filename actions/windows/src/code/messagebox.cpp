@@ -21,43 +21,11 @@
 #include "messagebox.hpp"
 #include "actiontools/code/image.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QPushButton>
 
 namespace Code
 {
-	QScriptValue MessageBox::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-        auto messageBox = new MessageBox;
-		messageBox->setupConstructorParameters(context, engine, context->argument(0));
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-
-			if(it.name() == QLatin1String("text"))
-				messageBox->mMessageBox->setText(it.value().toString());
-			else if(it.name() == QLatin1String("detailedText"))
-				messageBox->mMessageBox->setDetailedText(it.value().toString());
-			else if(it.name() == QLatin1String("informativeText"))
-				messageBox->mMessageBox->setInformativeText(it.value().toString());
-			else if(it.name() == QLatin1String("buttons"))
-				messageBox->mMessageBox->setStandardButtons(static_cast<QMessageBox::StandardButton>(it.value().toInt32()));
-			else if(it.name() == QLatin1String("icon"))
-				messageBox->mMessageBox->setIcon(static_cast<QMessageBox::Icon>(it.value().toInt32()));
-			else if(it.name() == QLatin1String("defaultButton"))
-				messageBox->mMessageBox->setDefaultButton(static_cast<QMessageBox::StandardButton>(it.value().toInt32()));
-			else if(it.name() == QLatin1String("escapeButton"))
-				messageBox->mMessageBox->setEscapeButton(static_cast<QMessageBox::StandardButton>(it.value().toInt32()));
-			else if(it.name() == QLatin1String("onClosed"))
-				messageBox->mOnClosed = it.value();
-		}
-
-		return CodeClass::constructor(messageBox, context, engine);
-	}
-
 	MessageBox::MessageBox()
 		: BaseWindow(),
 		mMessageBox(new QMessageBox)
@@ -69,53 +37,89 @@ namespace Code
         connect(mMessageBox, &QMessageBox::finished, this, &MessageBox::finished);
 	}
 
+    MessageBox::MessageBox(const QJSValue &parameters)
+        : MessageBox()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        setupConstructorParameters(parameters);
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("text"))
+                mMessageBox->setText(it.value().toString());
+            else if(it.name() == QLatin1String("detailedText"))
+                mMessageBox->setDetailedText(it.value().toString());
+            else if(it.name() == QLatin1String("informativeText"))
+                mMessageBox->setInformativeText(it.value().toString());
+            else if(it.name() == QLatin1String("buttons"))
+                mMessageBox->setStandardButtons(static_cast<QMessageBox::StandardButton>(it.value().toInt()));
+            else if(it.name() == QLatin1String("icon"))
+                mMessageBox->setIcon(static_cast<QMessageBox::Icon>(it.value().toInt()));
+            else if(it.name() == QLatin1String("defaultButton"))
+                mMessageBox->setDefaultButton(static_cast<QMessageBox::StandardButton>(it.value().toInt()));
+            else if(it.name() == QLatin1String("escapeButton"))
+                mMessageBox->setEscapeButton(static_cast<QMessageBox::StandardButton>(it.value().toInt()));
+            else if(it.name() == QLatin1String("onClosed"))
+                mOnClosed = it.value();
+        }
+    }
+
 	MessageBox::~MessageBox()
 	{
 		delete mMessageBox;
 	}
 
-	QScriptValue MessageBox::setText(const QString &text)
+    MessageBox *MessageBox::setText(const QString &text)
 	{
 		mMessageBox->setText(text);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MessageBox::setDetailedText(const QString &detailedText)
+    MessageBox *MessageBox::setDetailedText(const QString &detailedText)
 	{
 		mMessageBox->setDetailedText(detailedText);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MessageBox::setInformativeText(const QString &informativeText)
+    MessageBox *MessageBox::setInformativeText(const QString &informativeText)
 	{
 		mMessageBox->setInformativeText(informativeText);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MessageBox::setButtons(StandardButton buttons)
+    MessageBox *MessageBox::setButtons(StandardButton buttons)
 	{
 		mMessageBox->setStandardButtons(static_cast<QMessageBox::StandardButton>(buttons));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MessageBox::setIcon(Icon icon)
+    MessageBox *MessageBox::setIcon(Icon icon)
 	{
 		mMessageBox->setIcon(static_cast<QMessageBox::Icon>(icon));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MessageBox::setIconPixmap(const QScriptValue &image)
+    MessageBox *MessageBox::setIconPixmap(const QJSValue &image)
 	{
 		if(image.isUndefined() || image.isNull())
 		{
 			mMessageBox->setIconPixmap(QPixmap());
 
-			return thisObject();
+            return this;
 		}
 
 		QObject *object = image.toQObject();
@@ -126,45 +130,45 @@ namespace Code
 		else
 		{
 			throwError(QStringLiteral("SetIconPixmapError"), tr("Invalid image"));
-			return thisObject();
+            return this;
 		}
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MessageBox::setDefaultButton(StandardButton button)
+    MessageBox *MessageBox::setDefaultButton(StandardButton button)
 	{
 		mMessageBox->setDefaultButton(static_cast<QMessageBox::StandardButton>(button));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MessageBox::setEscapeButton(StandardButton button)
+    MessageBox *MessageBox::setEscapeButton(StandardButton button)
 	{
 		mMessageBox->setEscapeButton(static_cast<QMessageBox::StandardButton>(button));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MessageBox::addCustomButton(StandardButton button, const QString &text)
+    MessageBox *MessageBox::addCustomButton(StandardButton button, const QString &text)
 	{
 		QPushButton *addedButton = mMessageBox->addButton(static_cast<QMessageBox::StandardButton>(button));
 		if(!addedButton)
 		{
 			throwError(QStringLiteral("AddCustomButtonError"), tr("Add custom button failed"));
-			return thisObject();
+            return this;
 		}
 
 		addedButton->setText(text);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MessageBox::show()
+    MessageBox *MessageBox::show()
 	{
 		mMessageBox->open();
 
-		return thisObject();
+        return this;
 	}
 
 	int MessageBox::showModal()
@@ -172,9 +176,14 @@ namespace Code
 		return mMessageBox->exec();
 	}
 
+    void MessageBox::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<MessageBox>(QStringLiteral("MessageBox"), scriptEngine);
+    }
+
 	void MessageBox::finished(int result)
 	{
-		if(mOnClosed.isValid())
-			mOnClosed.call(thisObject(), QScriptValueList() << result);
+        if(!mOnClosed.isUndefined())
+            mOnClosed.call(QJSValueList() << result);
 	}
 }

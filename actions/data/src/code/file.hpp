@@ -22,15 +22,15 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QFile>
 
 namespace Code
 {
 	class File : public CodeClass
 	{
+        friend class StaticFile;
+
         Q_OBJECT
         Q_ENUM(Encoding)
 	
@@ -47,43 +47,48 @@ namespace Code
 		};
         Q_ENUM(OpenMode)
 	
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue copy(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue exists(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue move(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue rename(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue remove(QScriptContext *context, QScriptEngine *engine);
-
-		static void registerClass(QScriptEngine *scriptEngine);
-	
         ~File() override                                                 { mFile.close(); }
 
         QFile *file()                                           { return &mFile; }
 	
-	public slots:
-		QString toString() const override                                { return QStringLiteral("File"); }
-        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<File>(other); }
-		QScriptValue open(const QString &filename, OpenMode mode);
-		QScriptValue write(const QScriptValue &data);
-		QScriptValue writeText(const QString &value, Encoding encoding = Native);
-		QScriptValue read();
-		QString readText(Encoding encoding = Native);
-		QScriptValue close();
-		QScriptValue copy(const QString &destination, const QScriptValue &options = QScriptValue()) const;
-		QScriptValue move(const QString &destination, const QScriptValue &options = QScriptValue());
-		QScriptValue rename(const QString &destination, const QScriptValue &options = QScriptValue());
-		QScriptValue remove(const QScriptValue &options = QScriptValue());
+        Q_INVOKABLE QString toString() const override                                { return QStringLiteral("File"); }
+        Q_INVOKABLE File *open(const QString &filename, OpenMode mode);
+        Q_INVOKABLE File *write(const QJSValue &data);
+        Q_INVOKABLE File *writeText(const QString &value, Encoding encoding = Native);
+        Q_INVOKABLE QJSValue read();
+        Q_INVOKABLE QString readText(Encoding encoding = Native);
+        Q_INVOKABLE File *close();
+        Q_INVOKABLE File *copy(const QString &destination, const QJSValue &options = QJSValue());
+        Q_INVOKABLE File *move(const QString &destination, const QJSValue &options = QJSValue());
+        Q_INVOKABLE File *rename(const QString &destination, const QJSValue &options = QJSValue());
+        Q_INVOKABLE File *remove(const QJSValue &options = QJSValue());
+
+        static void registerClass(QJSEngine &scriptEngine);
 	
-	private:
-		static bool getParameters(QString &source, QString &destination, const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
-		static bool getParameters(const QScriptValue &options, bool &noErrorDialog, bool &noConfirmDialog, bool &noProgressDialog, bool &allowUndo, bool &createDestinationDirectory);
-		static QScriptValue copyPrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue movePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue renamePrivate(const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory, QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue removePrivate(const QString &filename, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, QScriptContext *context, QScriptEngine *engine);
+    private:
+        static std::tuple<bool, bool, bool, bool, bool> getParameters(const QJSValue &options);
+        static void copyPrivate(CodeClass *self, const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory);
+        static void movePrivate(CodeClass *self, const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory);
+        static void renamePrivate(CodeClass *self, const QString &source, const QString &destination, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo, bool createDestinationDirectory);
+        static void removePrivate(CodeClass *self, const QString &filename, bool noErrorDialog, bool noConfirmDialog, bool noProgressDialog, bool allowUndo);
 		static QString getErrorString(int error);
 
 		QFile mFile;
 	};
+
+    class StaticFile : public CodeClass
+    {
+        Q_OBJECT
+
+    public:
+        StaticFile(QObject *parent): CodeClass(parent) {}
+
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticFile"); }
+        Q_INVOKABLE void copy(const QString &source, const QString &destination, const QJSValue &options);
+        Q_INVOKABLE bool exists(const QString &filename);
+        Q_INVOKABLE void move(const QString &source, const QString &destination, const QJSValue &options);
+        Q_INVOKABLE void rename(const QString &source, const QString &destination, const QJSValue &options);
+        Q_INVOKABLE void remove(const QString &filename, const QJSValue &options);
+    };
 }
 

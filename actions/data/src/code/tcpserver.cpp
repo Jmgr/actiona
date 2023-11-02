@@ -21,64 +21,67 @@
 #include "tcpserver.hpp"
 #include "tcp.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 
 namespace Code
 {
-	QScriptValue TcpServer::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		auto tcpServer = new TcpServer;
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-			
-			if(it.name() == QLatin1String("onNewConnection"))
-				tcpServer->mOnNewConnection = it.value();
-		}
-
-		return CodeClass::constructor(tcpServer, context, engine);
-	}
-	
 	TcpServer::TcpServer()
 		: CodeClass()
 	{
         connect(&mTcpServer, &QTcpServer::newConnection, this, &TcpServer::newConnection);
 	}
+
+    TcpServer::TcpServer(const QJSValue &parameters)
+        : TcpServer()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("onNewConnection"))
+                mOnNewConnection = it.value();
+        }
+    }
 	
 	TcpServer::~TcpServer()
 	{
         mTcpServer.close();
     }
 
-	QScriptValue TcpServer::listen(const QString &address, int port)
+    TcpServer *TcpServer::listen(const QString &address, int port)
 	{
 		if(!mTcpServer.listen(QHostAddress(address), port))
 			throwError(QStringLiteral("ListenError"), tr("Unable to start listening"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue TcpServer::waitForNewConnection(int waitTime)
+    TcpServer *TcpServer::waitForNewConnection(int waitTime)
 	{
 		if(!mTcpServer.waitForNewConnection(waitTime))
 			throwError(QStringLiteral("WaitForNewConnectionError"), tr("Waiting for new connection failed"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue TcpServer::nextPendingConnection()
+	QJSValue TcpServer::nextPendingConnection()
 	{
 		QTcpSocket *tcpSocket = mTcpServer.nextPendingConnection();
 		if(!tcpSocket)
 		{
-			throwError(QStringLiteral("NoPendingConnectionError"), tr("There is no pending connection"));
-			return engine()->undefinedValue();
-		}
-		
-		return Tcp::constructor(tcpSocket, engine());
+            throwError(QStringLiteral("NoPendingConnectionError"), tr("There is no pending connection"));
+            return {};
+        }
+
+        return CodeClass::construct<Tcp>(tcpSocket);
 	}
 	
 	QString TcpServer::address() const
@@ -90,10 +93,15 @@ namespace Code
 	{
 		return mTcpServer.serverPort();
 	}
+
+    void TcpServer::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<TcpServer>(QStringLiteral("TcpServer"), scriptEngine);
+    }
 	
 	void TcpServer::newConnection()
 	{
-		if(mOnNewConnection.isValid())
-			mOnNewConnection.call(thisObject());
+        if(!mOnNewConnection.isUndefined())
+            mOnNewConnection.call();
 	}
 }

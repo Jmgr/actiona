@@ -22,9 +22,7 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QSqlQuery>
 
 class QSqlDatabase;
@@ -33,6 +31,8 @@ namespace Code
 {
 	class Sql : public CodeClass
 	{
+        friend class StaticSql;
+
 		Q_OBJECT
 
 	public:
@@ -57,23 +57,18 @@ namespace Code
 			IndexName
 		};
         Q_ENUM(IndexStyle)
-		
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue drivers(QScriptContext *context, QScriptEngine *engine);
-
-		static void registerClass(QScriptEngine *scriptEngine);
-		
-		Sql(Driver driver);
+				
+        Q_INVOKABLE Sql(Driver driver);
 		~Sql() override;
 		
-	public slots:
-		QString toString() const override                                { return QStringLiteral("Sql"); }
-        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Sql>(other); }
-		QScriptValue connect(const QScriptValue &parameters) const;
-		QScriptValue prepare(const QString &queryString, const QScriptValue &parameters);
-		QScriptValue execute(const QString &queryString = QString());
-		QScriptValue fetchResult(IndexStyle indexStyle = IndexName);
-		QScriptValue disconnect() const;
+        Q_INVOKABLE QString toString() const override                                { return QStringLiteral("Sql"); }
+        Q_INVOKABLE Sql *connect(const QJSValue &parameters);
+        Q_INVOKABLE Sql *prepare(const QString &queryString, const QJSValue &parameters);
+        Q_INVOKABLE Sql *execute(const QString &queryString = QString());
+        Q_INVOKABLE QJSValue fetchResult(IndexStyle indexStyle = IndexName);
+        Q_INVOKABLE Sql *disconnect();
+
+        static void registerClass(QJSEngine &scriptEngine);
 	
 	private:
 		static QString driverName(Driver driver);
@@ -82,5 +77,18 @@ namespace Code
 		QSqlDatabase *mDatabase;
 		QSqlQuery mQuery;
 	};
+
+    class StaticSql : public CodeClass
+    {
+        Q_OBJECT
+
+    public:
+        StaticSql(QObject *parent): CodeClass(parent) {}
+
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticSql"); }
+        Q_INVOKABLE QJSValue drivers();
+
+        static void registerClass(QJSEngine &scriptEngine);
+    };
 }
 

@@ -26,6 +26,7 @@
 #include "actiontools/ifactionvalue.hpp"
 
 #include <QTimer>
+#include <QRegularExpression>
 
 namespace Actions
 {
@@ -54,7 +55,7 @@ namespace Actions
 	private:
 		ActionTools::WindowHandle findWindow();
 
-		QRegExp mTitleRegExp;
+		QRegularExpression mTitleRegExp;
 		ActionTools::IfActionValue mIfTrue;
 		Condition mCondition;
 		QString mPosition;

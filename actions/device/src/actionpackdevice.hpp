@@ -63,10 +63,10 @@ public:
 	QString name() const override						{ return tr("Actions dealing with devices like the keyboard or the mouse"); }
 	QVersionNumber version() const override				{ return QVersionNumber(0, 0, 1); }
 	
-	void codeInit(QScriptEngine *scriptEngine) const override
-	{
-		addCodeClass<Code::Mouse>(QStringLiteral("Mouse"), scriptEngine);
-		addCodeClass<Code::Keyboard>(QStringLiteral("Keyboard"), scriptEngine);
+    void codeInit(QJSEngine &scriptEngine) const override
+    {
+        Code::Mouse::registerClass(scriptEngine);
+        Code::Keyboard::registerClass(scriptEngine);
 	}
 
 private:

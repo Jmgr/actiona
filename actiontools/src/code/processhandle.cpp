@@ -19,7 +19,6 @@
 */
 
 #include "actiontools/code/processhandle.hpp"
-#include "actiontools/code/codetools.hpp"
 
 #include <QProcess>
 
@@ -31,64 +30,6 @@
 
 namespace Code
 {
-	QScriptValue ProcessHandle::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		ProcessHandle *process = nullptr;
-		
-		switch(context->argumentCount())
-		{
-		case 0:
-			process = new ProcessHandle;
-			break;
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-				if(auto codeProcess = qobject_cast<ProcessHandle*>(object))
-					process = new ProcessHandle(*codeProcess);
-				else
-					process = new ProcessHandle(context->argument(0).toInt32());
-			}
-			break;
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			break;
-		}
-		
-		if(!process)
-			return engine->undefinedValue();
-
-		return CodeClass::constructor(process, context, engine);
-	}
-	
-	QScriptValue ProcessHandle::constructor(int processId, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new ProcessHandle(processId), engine);
-	}
-	
-	int ProcessHandle::parameter(QScriptContext *context, QScriptEngine *engine)
-	{
-		switch(context->argumentCount())
-		{
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-				if(auto process = qobject_cast<ProcessHandle*>(object))
-					return process->processId();
-				else
-					return context->argument(0).toInt32();
-			}
-			return -1;
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return -1;
-		}
-	}
-
-	void ProcessHandle::registerClass(QScriptEngine *scriptEngine)
-	{
-		CodeTools::addClassToScriptEngine<ProcessHandle>(scriptEngine);
-	}
-	
 	ProcessHandle::ProcessHandle()
 		: CodeClass()
 	{
@@ -138,12 +79,12 @@ namespace Code
 		return mProcessId;
 	}
 	
-	QScriptValue ProcessHandle::clone() const
+	QJSValue ProcessHandle::clone() const
 	{
-		return constructor(mProcessId, engine());
+        return CodeClass::clone<ProcessHandle>();
 	}
 
-	bool ProcessHandle::equals(const QScriptValue &other) const
+	bool ProcessHandle::equals(const QJSValue &other) const
 	{
 		if(other.isUndefined() || other.isNull())
 			return false;
@@ -302,4 +243,9 @@ namespace Code
 		return Normal;
 #endif
 	}
+
+    void ProcessHandle::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<ProcessHandle>(QStringLiteral("ProcessHandle"), scriptEngine);
+    }
 }

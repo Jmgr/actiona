@@ -21,7 +21,6 @@
 #include "actiontools/screenshooter.hpp"
 #include "actiontools/windowhandle.hpp"
 
-#include <QDesktopWidget>
 #include <QApplication>
 #include <QImage>
 #include <QPainter>
@@ -60,7 +59,6 @@ namespace ActionTools
 
     QList<std::pair<QPixmap, QRect>> ScreenShooter::captureWindows(const QList<WindowHandle> &windows)
     {
-        QDesktopWidget *desktop = QApplication::desktop();
         QList<std::pair<QPixmap, QRect>> result;
 
         for(const WindowHandle &window: windows)
@@ -70,7 +68,7 @@ namespace ActionTools
 
             const QRect &windowGeometry = window.rect();
 
-            result.append(std::make_pair(QGuiApplication::primaryScreen()->grabWindow(desktop->winId(), windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height()), windowGeometry));
+            result.append(std::make_pair(QGuiApplication::primaryScreen()->grabWindow(0, windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height()), windowGeometry));
         }
 
         return result;

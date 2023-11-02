@@ -4,3 +4,6 @@
 [submodule "gui/src/3rdparty/breakpad"]
 	path = gui/src/3rdparty/breakpad
 	url = https://chromium.googlesource.com/breakpad/breakpad
+[submodule "actiontools/src/3rdparty/libxml2"]
+	path = actiontools/src/3rdparty/libxml2
+	url = https://github.com/GNOME/libxml2

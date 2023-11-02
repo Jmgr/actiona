@@ -23,9 +23,7 @@
 #include "actiontools/code/codeclass.hpp"
 #include "qxtsmtp/qxtmailattachment.h"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 
 namespace Code
 {
@@ -33,32 +31,30 @@ namespace Code
     {
         Q_OBJECT
         Q_PROPERTY(QString contentType READ contentType WRITE setContentType)
-        Q_PROPERTY(QScriptValue content READ content WRITE setContent)
+        Q_PROPERTY(QJSValue content READ content WRITE setContent)
 
     public:
-        static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-        static QScriptValue constructor(const QxtMailAttachment &attachment, QScriptEngine *engine);
-
-        MailAttachment();
+        Q_INVOKABLE MailAttachment();
+        Q_INVOKABLE MailAttachment(const QJSValue &parameters);
+        MailAttachment(const MailAttachment &other);
         MailAttachment(const QxtMailAttachment &attachment);
 
         QString contentType() const                                             { return mAttachment.contentType(); }
-        QScriptValue content() const;
+        QJSValue content() const;
 
         void setContentType(const QString &contentType)                         { mAttachment.setContentType(contentType); }
-        QScriptValue setContent(const QScriptValue &content);
+        MailAttachment *setContent(const QJSValue &content);
 
         const QxtMailAttachment &attachment() const                             { return mAttachment; }
 
-    public slots:
-        QScriptValue clone() const;
-		QString toString() const override                                                { return QStringLiteral("MailAttachment"); }
-        bool equals(const QScriptValue &other) const override                    { return defaultEqualsImplementation<MailAttachment>(other); }
+        Q_INVOKABLE QJSValue clone() const;
+        Q_INVOKABLE QString toString() const override                                                { return QStringLiteral("MailAttachment"); }
+        Q_INVOKABLE MailAttachment *setExtraHeader(const QString &name, const QString &value)  { mAttachment.setExtraHeader(name, value); return this; }
+        Q_INVOKABLE MailAttachment *removeExtraHeader(const QString &name)                     { mAttachment.removeExtraHeader(name); return this; }
+        Q_INVOKABLE bool hasExtraHeader(const QString &name) const                          { return mAttachment.hasExtraHeader(name); }
+        Q_INVOKABLE QString extraHeader(const QString &name) const                          { return mAttachment.extraHeader(name); }
 
-        QScriptValue setExtraHeader(const QString &name, const QString &value)  { mAttachment.setExtraHeader(name, value); return thisObject(); }
-        QScriptValue removeExtraHeader(const QString &name)                     { mAttachment.removeExtraHeader(name); return thisObject(); }
-        bool hasExtraHeader(const QString &name) const                          { return mAttachment.hasExtraHeader(name); }
-        QString extraHeader(const QString &name) const                          { return mAttachment.extraHeader(name); }
+        static void registerClass(QJSEngine &scriptEngine);
 
     private:
         QxtMailAttachment mAttachment;

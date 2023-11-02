@@ -8,7 +8,8 @@ set(SOURCES
     ${SOURCES_PREFIX}/codestdio.cpp
     ${SOURCES_PREFIX}/execution.cpp
     ${SOURCES_PREFIX}/executionwindow.cpp
-    ${SOURCES_PREFIX}/scriptagent.cpp
+    ${SOURCES_PREFIX}/codescript.cpp
+    ${SOURCES_PREFIX}/codeconsole.cpp
 )
 
 set(HEADERS_PREFIX include/${PROJECT})
@@ -19,7 +20,8 @@ set(HEADERS
     ${HEADERS_PREFIX}/codestdio.hpp
     ${HEADERS_PREFIX}/execution.hpp
     ${HEADERS_PREFIX}/executionwindow.hpp
-    ${HEADERS_PREFIX}/scriptagent.hpp
+    ${HEADERS_PREFIX}/codescript.hpp
+    ${HEADERS_PREFIX}/codeconsole.hpp
 )
 
 set(UI_PREFIX ui)
@@ -49,7 +51,7 @@ target_compile_definitions(${PROJECT} PRIVATE EXECUTION_LIBRARY)
 
 setup_target(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script ScriptTools Widgets UiTools REQUIRED)
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets UiTools Qml REQUIRED)
 
 target_include_directories(${PROJECT}
     PUBLIC
@@ -62,6 +64,6 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../actiontools/include
 )
 
-target_link_libraries(${PROJECT} actiontools Qt5::Script Qt5::ScriptTools Qt5::Widgets Qt5::UiTools)
+target_link_libraries(${PROJECT} actiontools Qt6::Widgets Qt6::UiTools Qt6::Qml)
 
 compile_translations(${PROJECT})

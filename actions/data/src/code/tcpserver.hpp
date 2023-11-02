@@ -22,9 +22,7 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QTcpServer>
 
 namespace Code
@@ -32,33 +30,32 @@ namespace Code
 	class TcpServer : public CodeClass
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onNewConnection READ onNewConnection WRITE setOnNewConnection)
+		Q_PROPERTY(QJSValue onNewConnection READ onNewConnection WRITE setOnNewConnection)
 		
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-		TcpServer();
+        Q_INVOKABLE TcpServer();
+        Q_INVOKABLE TcpServer(const QJSValue &parameters);
 		~TcpServer() override;
 		
-		void setOnNewConnection(const QScriptValue &onNewConnection)		{ mOnNewConnection = onNewConnection; }
+		void setOnNewConnection(const QJSValue &onNewConnection)		{ mOnNewConnection = onNewConnection; }
 		
-		QScriptValue onNewConnection() const								{ return mOnNewConnection; }
+		QJSValue onNewConnection() const								{ return mOnNewConnection; }
 		
-	public slots:
-		QString toString() const override                                            { return QStringLiteral("TcpServer"); }
-        bool equals(const QScriptValue &other) const override                { return defaultEqualsImplementation<TcpServer>(other); }
-		QScriptValue listen(const QString &address = QString(), int port = 0);
-		QScriptValue waitForNewConnection(int waitTime = 30000);
-		QScriptValue nextPendingConnection();
-		QString address() const;
-		int port() const;
-		
+        Q_INVOKABLE QString toString() const override                                            { return QStringLiteral("TcpServer"); }
+        Q_INVOKABLE TcpServer *listen(const QString &address = QString(), int port = 0);
+        Q_INVOKABLE TcpServer *waitForNewConnection(int waitTime = 30000);
+        Q_INVOKABLE QJSValue nextPendingConnection();
+        Q_INVOKABLE QString address() const;
+        Q_INVOKABLE int port() const;
+
+        static void registerClass(QJSEngine &scriptEngine);
+
 	private slots:
 		void newConnection();
 		
 	private:
 		QTcpServer mTcpServer;
-		QScriptValue mOnNewConnection;
+		QJSValue mOnNewConnection;
 	};
 }
 

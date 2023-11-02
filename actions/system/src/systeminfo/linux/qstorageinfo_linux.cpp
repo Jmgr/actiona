@@ -138,7 +138,17 @@ QString QStorageInfo_CustomPrivate::uriForDrive(const QString &drive)
         while ((getmntent_r(fsDescription, &entry, buffer, sizeof(buffer))) != nullptr) {
             if (drive != QString::fromLatin1(entry.mnt_dir))
                 continue;
-            int idx = fileinfolist.indexOf(QString::fromLatin1(entry.mnt_fsname));
+
+            int idx = -1; // Start with an invalid index
+            QString target = QString::fromLatin1(entry.mnt_fsname);
+
+            for (int i = 0; i < fileinfolist.size(); ++i) {
+                if (fileinfolist.at(i).filePath() == target) {
+                    idx = i;
+                    break;
+                }
+            }
+
             if (idx != -1)
                 uri = fileinfolist[idx].fileName();
             break;

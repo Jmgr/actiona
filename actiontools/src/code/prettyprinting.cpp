@@ -21,16 +21,15 @@
 #include "actiontools/code/prettyprinting.hpp"
 
 #include <QString>
-#include <QScriptValue>
-#include <QScriptValueIterator>
-#include <QScriptContext>
-#include <QScriptEngine>
+#include <QJSValue>
+#include <QJSValueIterator>
+#include <QJSEngine>
 
 namespace Code
 {
-    void prettyPrintScriptValue(QString &result, std::size_t tabCount, const QScriptValue &value, bool quoteString);
+    void prettyPrintScriptValue(QString &result, std::size_t tabCount, const QJSValue &value, bool quoteString);
 
-    void prettyPrintArrayOrObject(QString &result, std::size_t tabCount, const QScriptValue &value)
+    void prettyPrintArrayOrObject(QString &result, std::size_t tabCount, const QJSValue &value)
     {
         bool isArray = value.isArray();
 
@@ -38,14 +37,11 @@ namespace Code
 
         ++tabCount;
 
-        QScriptValueIterator it(value);
+        QJSValueIterator it(value);
         bool first{true};
         while(it.hasNext())
         {
             it.next();
-
-            if(it.flags() & QScriptValue::SkipInEnumeration)
-                continue;
 
             if(first)
                 first = false;
@@ -71,7 +67,7 @@ namespace Code
         result += isArray ? QStringLiteral("]") : QStringLiteral("}");
     }
 
-    void prettyPrintScriptValue(QString &result, std::size_t tabCount, const QScriptValue &value, bool quoteString)
+    void prettyPrintScriptValue(QString &result, std::size_t tabCount, const QJSValue &value, bool quoteString)
     {
         if(value.isQObject())
             result += value.toString();
@@ -83,7 +79,7 @@ namespace Code
             result += value.toString();
     }
 
-    QScriptValue toStringFunction(QScriptContext *context, QScriptEngine *engine)
+    QJSValue toStringFunction(QScriptContext *context, QJSEngine *engine)
     {
         Q_UNUSED(engine)
 
@@ -92,14 +88,5 @@ namespace Code
         prettyPrintScriptValue(result, 0, context->thisObject(), false);
 
         return result;
-    }
-
-    void setupPrettyPrinting(QScriptEngine &scriptEngine)
-    {
-        // Replace the default toString() functions for Array and Object with a more readable one
-		QScriptValue arrayPrototypeScriptValue = scriptEngine.globalObject().property(QStringLiteral("Array")).property(QStringLiteral("prototype"));
-		arrayPrototypeScriptValue.setProperty(QStringLiteral("toString"), scriptEngine.newFunction(toStringFunction));
-		QScriptValue objectPrototypeScriptValue = scriptEngine.globalObject().property(QStringLiteral("Object")).property(QStringLiteral("prototype"));
-		objectPrototypeScriptValue.setProperty(QStringLiteral("toString"), scriptEngine.newFunction(toStringFunction));
     }
 }

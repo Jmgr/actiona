@@ -21,7 +21,6 @@
 #include "scriptexecuter.hpp"
 #include "actiontools/script.hpp"
 #include "execution/execution.hpp"
-#include "mainclass.hpp"
 #include "global.hpp"
 
 #include <QFile>

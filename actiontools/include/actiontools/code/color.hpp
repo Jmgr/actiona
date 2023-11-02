@@ -23,9 +23,6 @@
 #include "actiontools/actiontools_global.hpp"
 #include "codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
 #include <QColor>
 
 namespace Code
@@ -33,19 +30,16 @@ namespace Code
 	class ACTIONTOOLSSHARED_EXPORT Color : public CodeClass
 	{
 		Q_OBJECT
-		Q_PROPERTY(int red READ red WRITE setRed)
-		Q_PROPERTY(int green READ green WRITE setGreen)
-		Q_PROPERTY(int blue READ blue WRITE setBlue)
-		Q_PROPERTY(int alpha READ alpha WRITE setAlpha)
+        Q_PROPERTY(int red READ red WRITE setRed)
+        Q_PROPERTY(int green READ green WRITE setGreen)
+        Q_PROPERTY(int blue READ blue WRITE setBlue)
+        Q_PROPERTY(int alpha READ alpha WRITE setAlpha)
 		
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QColor &color, QScriptEngine *engine);
-
-		static void registerClass(QScriptEngine *scriptEngine);
-		
-		Color();
-		Color(const Color &other);
+        Q_INVOKABLE Color();
+        Q_INVOKABLE explicit Color(const QString &colorName);
+        Q_INVOKABLE explicit Color(int red, int green, int blue, int alpha = 255);
+        Color(const Color &other);
 		Color(const QColor &color);
 		
 		Color &operator=(Color other);
@@ -60,29 +54,30 @@ namespace Code
 		int green() const;
 		int blue() const;
 		int alpha() const;
-		
-	public slots:
-		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const override;
-		QString toString() const override;
-		QScriptValue setRed(int red);
-		QScriptValue setGreen(int green);
-		QScriptValue setBlue(int blue);
-		QScriptValue setAlpha(int alpha);
-		QScriptValue setCmyk(int cyan, int magenta, int yellow, int black, int alpha = 255);
-		QScriptValue setHsl(int hue, int saturation, int lightness, int alpha = 255);
-		QScriptValue setHsv(int hue, int saturation, int value, int alpha = 255);
-		QScriptValue setNamedColor(const QString &name);
-		QScriptValue lighter(int factor = 150);
-		QScriptValue darker(int factor = 200);
-		int cyan() const;
-		int magenta() const;
-		int yellow() const;
-		int black() const;
-		int hue() const;
-		int saturation() const;
-		int lightness() const;
-		QString name() const;
+
+        Q_INVOKABLE QJSValue clone() const;
+        Q_INVOKABLE bool equals(const QJSValue &other) const;
+        Q_INVOKABLE QString toString() const override;
+        Q_INVOKABLE Color *setRed(int red);
+        Q_INVOKABLE Color *setGreen(int green);
+        Q_INVOKABLE Color *setBlue(int blue);
+        Q_INVOKABLE Color *setAlpha(int alpha);
+        Q_INVOKABLE Color *setCmyk(int cyan, int magenta, int yellow, int black, int alpha = 255);
+        Q_INVOKABLE Color *setHsl(int hue, int saturation, int lightness, int alpha = 255);
+        Q_INVOKABLE Color *setHsv(int hue, int saturation, int value, int alpha = 255);
+        Q_INVOKABLE Color *setNamedColor(const QString &name);
+        Q_INVOKABLE Color *lighter(int factor = 150);
+        Q_INVOKABLE Color *darker(int factor = 200);
+        Q_INVOKABLE int cyan() const;
+        Q_INVOKABLE int magenta() const;
+        Q_INVOKABLE int yellow() const;
+        Q_INVOKABLE int black() const;
+        Q_INVOKABLE int hue() const;
+        Q_INVOKABLE int saturation() const;
+        Q_INVOKABLE int lightness() const;
+        Q_INVOKABLE QString name() const;
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private:
 		QColor mColor;

@@ -20,12 +20,9 @@
 
 #pragma once
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QProcess>
 
-#include "actiontools/code/codetools.hpp"
 #include "actiontools/code/codeclass.hpp"
 
 namespace Code
@@ -33,12 +30,12 @@ namespace Code
 	class Process : public CodeClass
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onError READ onError WRITE setOnError)
-		Q_PROPERTY(QScriptValue onFinished READ onFinished WRITE setOnFinished)
-		Q_PROPERTY(QScriptValue onReadyReadStandardError READ onReadyReadStandardError WRITE setOnReadyReadStandardError)
-		Q_PROPERTY(QScriptValue onReadyReadStandardOutput READ onReadyReadStandardOutput WRITE setOnReadyReadStandardOutput)
-		Q_PROPERTY(QScriptValue onStarted READ onStarted WRITE setOnStarted)
-		Q_PROPERTY(QScriptValue onStateChanged READ onStateChanged WRITE setOnStateChanged)
+		Q_PROPERTY(QJSValue onError READ onError WRITE setOnError)
+		Q_PROPERTY(QJSValue onFinished READ onFinished WRITE setOnFinished)
+		Q_PROPERTY(QJSValue onReadyReadStandardError READ onReadyReadStandardError WRITE setOnReadyReadStandardError)
+		Q_PROPERTY(QJSValue onReadyReadStandardOutput READ onReadyReadStandardOutput WRITE setOnReadyReadStandardOutput)
+		Q_PROPERTY(QJSValue onStarted READ onStarted WRITE setOnStarted)
+		Q_PROPERTY(QJSValue onStateChanged READ onStateChanged WRITE setOnStateChanged)
 
 	public:
 		enum ProcessError
@@ -91,66 +88,63 @@ namespace Code
 		Q_DECLARE_FLAGS(OpenMode, OpenModeFlag)
         Q_FLAG(OpenMode)
 
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+        Q_INVOKABLE Process();
+        Q_INVOKABLE Process(const QJSValue &parameters);
 
-		static QScriptValue list(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue startDetached(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue thisProcess(QScriptContext *context, QScriptEngine *engine);
+		void setOnError(const QJSValue &onError)									{ mOnError = onError; }
+		void setOnFinished(const QJSValue &onFinished)								{ mOnFinished = onFinished; }
+		void setOnReadyReadStandardError(const QJSValue &onReadyReadStandardError)	{ mOnReadyReadStandardError = onReadyReadStandardError; }
+		void setOnReadyReadStandardOutput(const QJSValue &onReadyReadStandardOutput){ mOnReadyReadStandardOutput = onReadyReadStandardOutput; }
+		void setOnStarted(const QJSValue &onStarted)								{ mOnStarted = onStarted; }
+		void setOnStateChanged(const QJSValue &onStateChanged)						{ mOnStateChanged = onStateChanged; }
 
-		Process();
-
-		void setOnError(const QScriptValue &onError)									{ mOnError = onError; }
-		void setOnFinished(const QScriptValue &onFinished)								{ mOnFinished = onFinished; }
-		void setOnReadyReadStandardError(const QScriptValue &onReadyReadStandardError)	{ mOnReadyReadStandardError = onReadyReadStandardError; }
-		void setOnReadyReadStandardOutput(const QScriptValue &onReadyReadStandardOutput){ mOnReadyReadStandardOutput = onReadyReadStandardOutput; }
-		void setOnStarted(const QScriptValue &onStarted)								{ mOnStarted = onStarted; }
-		void setOnStateChanged(const QScriptValue &onStateChanged)						{ mOnStateChanged = onStateChanged; }
-
-		QScriptValue onError() const													{ return mOnError; }
-		QScriptValue onFinished() const													{ return mOnFinished; }
-		QScriptValue onReadyReadStandardError() const									{ return mOnReadyReadStandardError; }
-		QScriptValue onReadyReadStandardOutput() const									{ return mOnReadyReadStandardOutput; }
-		QScriptValue onStarted() const													{ return mOnStarted; }
-		QScriptValue onStateChanged() const												{ return mOnStateChanged; }
+		QJSValue onError() const													{ return mOnError; }
+		QJSValue onFinished() const													{ return mOnFinished; }
+		QJSValue onReadyReadStandardError() const									{ return mOnReadyReadStandardError; }
+		QJSValue onReadyReadStandardOutput() const									{ return mOnReadyReadStandardOutput; }
+		QJSValue onStarted() const													{ return mOnStarted; }
+		QJSValue onStateChanged() const												{ return mOnStateChanged; }
 
 		QProcess *process() const														{ return mProcess; }
 
-	public slots:
-		QString toString() const override														{ return QStringLiteral("Process"); }
-        bool equals(const QScriptValue &other) const override                            { return defaultEqualsImplementation<Process>(other); }
-		QScriptValue handle() const;
-		int id() const;
-		QScriptValue start();
-		ProcessState state() const;
-		ProcessError error() const;
-		int exitCode() const;
-		ExitStatus exitStatus() const;
-		QScriptValue readError() const;
-		QScriptValue read() const;
-		QString readErrorText(Encoding encoding = Native) const;
-		QString readText(Encoding encoding = Native) const;
-		bool atEnd() const;
-		qint64 bytesAvailable() const;
-		qint64 bytesToWrite() const;
-		bool canReadLine() const;
-		QScriptValue write(const QScriptValue &data);
-		QScriptValue writeText(const QString &data, Encoding encoding = Native);
-		QScriptValue setWorkingDirectory(const QString &workingDirectory);
-		QScriptValue setProcessChannelMode(ProcessChannelMode channelMode);
-		QScriptValue setEnvironment();
-		QScriptValue updateEnvironment();
-		QScriptValue setReadChannel(ProcessChannel channel);
-		QScriptValue setStandardErrorFile(const QString &fileName, int openMode = Truncate);
-		QScriptValue setStandardInputFile(const QString &fileName);
-		QScriptValue setStandardOutputFile(const QString &fileName, int openMode = Truncate);
-		QScriptValue setStandardOutputProcess(const QScriptValue &processValue);
-		QScriptValue waitForFinished(int waitTime = 30000);
-		QScriptValue waitForStarted(int waitTime = 30000);
-		QScriptValue waitForBytesWritten(int waitTime = 30000);
-		QScriptValue waitForReadyRead(int waitTime = 30000);
-		QScriptValue close();
-		QScriptValue kill();
-		QScriptValue terminate();
+        Q_INVOKABLE QString toString() const override								{ return QStringLiteral("Process"); }
+        Q_INVOKABLE QJSValue handle() const;
+        Q_INVOKABLE int id() const;
+        Q_INVOKABLE Process *start(const QString &filename);
+        Q_INVOKABLE Process *start(const QString &filename, const QStringList &parameters);
+        Q_INVOKABLE Process *start(const QString &filename, const QStringList &parameters, OpenMode openMode);
+        Q_INVOKABLE ProcessState state() const;
+        Q_INVOKABLE ProcessError error() const;
+        Q_INVOKABLE int exitCode() const;
+        Q_INVOKABLE ExitStatus exitStatus() const;
+        Q_INVOKABLE QJSValue readError() const;
+        Q_INVOKABLE QJSValue read() const;
+        Q_INVOKABLE QString readErrorText(Encoding encoding = Native) const;
+        Q_INVOKABLE QString readText(Encoding encoding = Native) const;
+        Q_INVOKABLE bool atEnd() const;
+        Q_INVOKABLE qint64 bytesAvailable() const;
+        Q_INVOKABLE qint64 bytesToWrite() const;
+        Q_INVOKABLE bool canReadLine() const;
+        Q_INVOKABLE Process *write(const QJSValue &data);
+        Q_INVOKABLE Process *writeText(const QString &data, Encoding encoding = Native);
+        Q_INVOKABLE Process *setWorkingDirectory(const QString &workingDirectory);
+        Q_INVOKABLE Process *setProcessChannelMode(ProcessChannelMode channelMode);
+        Q_INVOKABLE Process *setEnvironment(const QJSValue &environment);
+        Q_INVOKABLE Process *updateEnvironment(const QJSValue &environment);
+        Q_INVOKABLE Process *setReadChannel(ProcessChannel channel);
+        Q_INVOKABLE Process *setStandardErrorFile(const QString &fileName, int openMode = Truncate);
+        Q_INVOKABLE Process *setStandardInputFile(const QString &fileName);
+        Q_INVOKABLE Process *setStandardOutputFile(const QString &fileName, int openMode = Truncate);
+        Q_INVOKABLE Process *setStandardOutputProcess(const QJSValue &processValue);
+        Q_INVOKABLE Process *waitForFinished(int waitTime = 30000);
+        Q_INVOKABLE Process *waitForStarted(int waitTime = 30000);
+        Q_INVOKABLE Process *waitForBytesWritten(int waitTime = 30000);
+        Q_INVOKABLE Process *waitForReadyRead(int waitTime = 30000);
+        Q_INVOKABLE Process *close();
+        Q_INVOKABLE Process *kill();
+        Q_INVOKABLE Process *terminate();
+
+        static void registerClass(QJSEngine &scriptEngine);
 
 	private slots:
         void onError(QProcess::ProcessError processError);
@@ -162,12 +156,27 @@ namespace Code
 
 	private:
 		QProcess *mProcess;
-		QScriptValue mOnError;
-		QScriptValue mOnFinished;
-		QScriptValue mOnReadyReadStandardError;
-		QScriptValue mOnReadyReadStandardOutput;
-		QScriptValue mOnStarted;
-		QScriptValue mOnStateChanged;
+		QJSValue mOnError;
+		QJSValue mOnFinished;
+		QJSValue mOnReadyReadStandardError;
+		QJSValue mOnReadyReadStandardOutput;
+		QJSValue mOnStarted;
+		QJSValue mOnStateChanged;
 	};
+
+    class StaticProcess : public CodeClass
+    {
+        Q_OBJECT
+
+    public:
+        StaticProcess(QObject *parent): CodeClass(parent) {}
+
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticProcess"); }
+        QJSValue list();
+        QJSValue startDetached(const QString &filename);
+        QJSValue startDetached(const QString &filename, const QStringList &parameters);
+        QJSValue startDetached(const QString &filename, const QStringList &parameters, const QString &workingDirectory);
+        QJSValue thisProcess();
+    };
 }
 

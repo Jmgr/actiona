@@ -20,10 +20,10 @@
 
 #pragma once
 
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 
 #include "actiontools/code/codeclass.hpp"
+#include "actiontools/code/point.hpp"
 
 namespace Code
 {
@@ -31,32 +31,32 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_PROPERTY(QString title READ title WRITE setTitle)
-		Q_PROPERTY(QScriptValue position READ position WRITE setPosition)
+        Q_PROPERTY(const Code::Point *position READ position WRITE setPosition)
 		Q_PROPERTY(float opacity READ opacity WRITE setOpacity)
 		Q_PROPERTY(bool enabled READ enabled WRITE setEnabled)
 		Q_PROPERTY(bool visible READ visible WRITE setVisible)
 
-	public slots:
-		QScriptValue setTitle(const QString &title);
-		QScriptValue setPosition(const QScriptValue &);
-		QScriptValue setOpacity(float opacity);
-		QScriptValue setEnabled(bool enabled);
-		QScriptValue setVisible(bool visible);
-		QScriptValue setWindowIcon(const QScriptValue &windowIcon);
-		QScriptValue close();
-        bool equals(const QScriptValue &other) const override;
+    public:
+        Q_INVOKABLE BaseWindow *setTitle(const QString &title);
+        Q_INVOKABLE BaseWindow *setPosition(const Code::Point *position);
+        Q_INVOKABLE BaseWindow *setOpacity(float opacity);
+        Q_INVOKABLE BaseWindow *setEnabled(bool enabled);
+        Q_INVOKABLE BaseWindow *setVisible(bool visible);
+        Q_INVOKABLE BaseWindow *setWindowIcon(const QJSValue &windowIcon);
+        Q_INVOKABLE BaseWindow *close();
+        Q_INVOKABLE bool equals(const QJSValue &other) const;
 
 	protected:
 		BaseWindow();
 
 		QString title() const;
-		QScriptValue position() const;
+        const Code::Point *position() const;
 		float opacity() const;
 		bool enabled() const;
 		bool visible() const;
 
 		void setWidget(QWidget *widget);
-		void setupConstructorParameters(QScriptContext *context, QScriptEngine *engine, const QScriptValue &parameters);
+        void setupConstructorParameters(const QJSValue &parameters);
 
 	private:
 		QWidget *mWindow{nullptr};

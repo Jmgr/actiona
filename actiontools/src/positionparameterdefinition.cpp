@@ -24,7 +24,6 @@
 
 #include <QComboBox>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QScreen>
 
 namespace ActionTools

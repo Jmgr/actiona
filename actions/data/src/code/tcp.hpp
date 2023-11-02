@@ -22,9 +22,7 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QTcpSocket>
 
 namespace Code
@@ -32,11 +30,11 @@ namespace Code
 	class Tcp : public CodeClass
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onConnected READ onConnected WRITE setOnConnected)
-		Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
-		Q_PROPERTY(QScriptValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
-		Q_PROPERTY(QScriptValue onBytesWritten READ onBytesWritten WRITE setOnBytesWritten)
-		Q_PROPERTY(QScriptValue onError READ onError WRITE setOnError)
+		Q_PROPERTY(QJSValue onConnected READ onConnected WRITE setOnConnected)
+		Q_PROPERTY(QJSValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
+		Q_PROPERTY(QJSValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
+		Q_PROPERTY(QJSValue onBytesWritten READ onBytesWritten WRITE setOnBytesWritten)
+		Q_PROPERTY(QJSValue onError READ onError WRITE setOnError)
 		
 	public:
 		enum OpenMode
@@ -47,38 +45,36 @@ namespace Code
 		};	
         Q_ENUM(OpenMode)
 
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(QTcpSocket *tcpSocket, QScriptEngine *engine);
-		
-		Tcp();
+        Q_INVOKABLE Tcp();
+        Q_INVOKABLE Tcp(const QJSValue &parameters);
 		Tcp(QTcpSocket *tcpSocket);
 		~Tcp() override;
 		
-		void setOnConnected(const QScriptValue &onConnected)			{ mOnConnected = onConnected; }
-		void setOnDisconnected(const QScriptValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
-		void setOnReadyRead(const QScriptValue &onReadyRead)			{ mOnReadyRead = onReadyRead; }
-		void setOnBytesWritten(const QScriptValue &onBytesWritten)		{ mOnBytesWritten = onBytesWritten; }
-		void setOnError(const QScriptValue &onError)					{ mOnError = onError; }
+		void setOnConnected(const QJSValue &onConnected)			{ mOnConnected = onConnected; }
+		void setOnDisconnected(const QJSValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
+		void setOnReadyRead(const QJSValue &onReadyRead)			{ mOnReadyRead = onReadyRead; }
+		void setOnBytesWritten(const QJSValue &onBytesWritten)		{ mOnBytesWritten = onBytesWritten; }
+		void setOnError(const QJSValue &onError)					{ mOnError = onError; }
 		
-		QScriptValue onConnected() const								{ return mOnConnected; }
-		QScriptValue onDisconnected() const								{ return mOnDisconnected; }
-		QScriptValue onReadyRead() const								{ return mOnReadyRead; }
-		QScriptValue onBytesWritten() const								{ return mOnBytesWritten; }
-		QScriptValue onError() const									{ return mOnError; }
+		QJSValue onConnected() const								{ return mOnConnected; }
+		QJSValue onDisconnected() const								{ return mOnDisconnected; }
+		QJSValue onReadyRead() const								{ return mOnReadyRead; }
+		QJSValue onBytesWritten() const								{ return mOnBytesWritten; }
+		QJSValue onError() const									{ return mOnError; }
 		
-	public slots:
-		QString toString() const override										{ return QStringLiteral("Tcp"); }
-        bool equals(const QScriptValue &other) const override            { return defaultEqualsImplementation<Tcp>(other); }
-		QScriptValue connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
-		QScriptValue waitForConnected(int waitTime = 30000);
-		QScriptValue waitForBytesWritten(int waitTime = 30000);
-		QScriptValue waitForReadyRead(int waitTime = 30000);
-		QScriptValue waitForDisconnected(int waitTime = 30000);
-		QScriptValue write(const QScriptValue &data);
-		QScriptValue writeText(const QString &data, Encoding encoding = Native);
-		QScriptValue read();
-		QString readText(Encoding encoding = Native);
-		QScriptValue disconnect();
+        Q_INVOKABLE QString toString() const override										{ return QStringLiteral("Tcp"); }
+        Q_INVOKABLE Tcp *connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
+        Q_INVOKABLE Tcp *waitForConnected(int waitTime = 30000);
+        Q_INVOKABLE Tcp *waitForBytesWritten(int waitTime = 30000);
+        Q_INVOKABLE Tcp *waitForReadyRead(int waitTime = 30000);
+        Q_INVOKABLE Tcp *waitForDisconnected(int waitTime = 30000);
+        Q_INVOKABLE Tcp *write(const QJSValue &data);
+        Q_INVOKABLE Tcp *writeText(const QString &data, Encoding encoding = Native);
+        Q_INVOKABLE QJSValue read();
+        Q_INVOKABLE QString readText(Encoding encoding = Native);
+        Q_INVOKABLE Tcp *disconnect();
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private slots:
 		void connected();
@@ -89,11 +85,11 @@ namespace Code
 	
 	private:
 		QTcpSocket *mTcpSocket;
-		QScriptValue mOnConnected;
-		QScriptValue mOnDisconnected;
-		QScriptValue mOnReadyRead;
-		QScriptValue mOnBytesWritten;
-		QScriptValue mOnError;
+		QJSValue mOnConnected;
+		QJSValue mOnDisconnected;
+		QJSValue mOnReadyRead;
+		QJSValue mOnBytesWritten;
+		QJSValue mOnError;
 	};
 }
 

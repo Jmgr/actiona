@@ -20,60 +20,11 @@
 
 #include "inputdialog.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QInputDialog>
 
 namespace Code
 {
-	QScriptValue InputDialog::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		auto inputDialog = new InputDialog;
-		inputDialog->setupConstructorParameters(context, engine, context->argument(0));
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-			
-			if(it.name() == QLatin1String("labelText"))
-				inputDialog->mInputDialog->setLabelText(it.value().toString());
-			else if(it.name() == QLatin1String("okButtonText"))
-				inputDialog->mInputDialog->setOkButtonText(it.value().toString());
-			else if(it.name() == QLatin1String("cancelButtonText"))
-				inputDialog->mInputDialog->setCancelButtonText(it.value().toString());
-			else if(it.name() == QLatin1String("textEchoMode"))
-				inputDialog->mInputDialog->setTextEchoMode(static_cast<QLineEdit::EchoMode>(it.value().toInt32()));
-			else if(it.name() == QLatin1String("floatDecimals"))
-				inputDialog->mInputDialog->setDoubleDecimals(it.value().toInt32());
-			else if(it.name() == QLatin1String("integerStep"))
-				inputDialog->mInputDialog->setIntStep(it.value().toInt32());
-			else if(it.name() == QLatin1String("minimum"))
-				inputDialog->mMinimum = it.value();
-			else if(it.name() == QLatin1String("maximum"))
-				inputDialog->mMaximum = it.value();
-			else if(it.name() == QLatin1String("range"))
-			{
-				inputDialog->mMinimum = it.value().property(QStringLiteral("minimum"));
-				inputDialog->mMaximum = it.value().property(QStringLiteral("maximum"));
-			}
-			else if(it.name() == QLatin1String("inputType"))
-				inputDialog->mInputType = static_cast<InputType>(it.value().toInt32());
-			else if(it.name() == QLatin1String("value"))
-				inputDialog->mValue = it.value();
-			else if(it.name() == QLatin1String("items"))
-				inputDialog->mItems = it.value();
-			else if(it.name() == QLatin1String("itemsEditable"))
-				inputDialog->mInputDialog->setComboBoxEditable(it.value().toBool());
-			else if(it.name() == QLatin1String("onClosed"))
-				inputDialog->mOnClosed = it.value();
-			else if(it.name() == QLatin1String("onValueChanged"))
-				inputDialog->mOnValueChanged = it.value();
-		}
-
-		return CodeClass::constructor(inputDialog, context, engine);
-	}
-
 	InputDialog::InputDialog()
 		: BaseWindow(),
 		
@@ -88,128 +39,181 @@ namespace Code
         connect(mInputDialog, &QInputDialog::intValueChanged, this, &InputDialog::intValueChanged);
         connect(mInputDialog, &QInputDialog::textValueChanged, this, &InputDialog::textValueChanged);
 	}
+
+    InputDialog::InputDialog(const QJSValue &parameters)
+        : InputDialog()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        setupConstructorParameters(parameters);
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("labelText"))
+                mInputDialog->setLabelText(it.value().toString());
+            else if(it.name() == QLatin1String("okButtonText"))
+                mInputDialog->setOkButtonText(it.value().toString());
+            else if(it.name() == QLatin1String("cancelButtonText"))
+                mInputDialog->setCancelButtonText(it.value().toString());
+            else if(it.name() == QLatin1String("textEchoMode"))
+                mInputDialog->setTextEchoMode(static_cast<QLineEdit::EchoMode>(it.value().toInt()));
+            else if(it.name() == QLatin1String("floatDecimals"))
+                mInputDialog->setDoubleDecimals(it.value().toInt());
+            else if(it.name() == QLatin1String("integerStep"))
+                mInputDialog->setIntStep(it.value().toInt());
+            else if(it.name() == QLatin1String("minimum"))
+                mMinimum = it.value();
+            else if(it.name() == QLatin1String("maximum"))
+                mMaximum = it.value();
+            else if(it.name() == QLatin1String("range"))
+            {
+                mMinimum = it.value().property(QStringLiteral("minimum"));
+                mMaximum = it.value().property(QStringLiteral("maximum"));
+            }
+            else if(it.name() == QLatin1String("inputType"))
+                mInputType = static_cast<InputType>(it.value().toInt());
+            else if(it.name() == QLatin1String("value"))
+                mValue = it.value();
+            else if(it.name() == QLatin1String("items"))
+                mItems = it.value();
+            else if(it.name() == QLatin1String("itemsEditable"))
+                mInputDialog->setComboBoxEditable(it.value().toBool());
+            else if(it.name() == QLatin1String("onClosed"))
+                mOnClosed = it.value();
+            else if(it.name() == QLatin1String("onValueChanged"))
+                mOnValueChanged = it.value();
+        }
+    }
 	
 	InputDialog::~InputDialog()
 	{
 		delete mInputDialog;
 	}
 
-	QScriptValue InputDialog::value() const
+	QJSValue InputDialog::value() const
 	{
 		switch(mInputType)
 		{
 		case Integer:
-			return engine()->newVariant(mInputDialog->intValue());
+            return mInputDialog->intValue();
 		case Float:
-			return engine()->newVariant(mInputDialog->doubleValue());
+            return mInputDialog->doubleValue();
 		case Items:
 		case Text:
         case MultilineText:
 		default:
-			return engine()->newVariant(mInputDialog->textValue());
+            return mInputDialog->textValue();
 			break;
 		}
 	}
 	
-	QScriptValue InputDialog::setLabelText(const QString &labelText)
+    InputDialog *InputDialog::setLabelText(const QString &labelText)
 	{
 		mInputDialog->setLabelText(labelText);
 
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue InputDialog::setOkButtonText(const QString &okButtonText)
+    InputDialog *InputDialog::setOkButtonText(const QString &okButtonText)
 	{
 		mInputDialog->setOkButtonText(okButtonText);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue InputDialog::setCancelButtonText(const QString &cancelButtonText)
+    InputDialog *InputDialog::setCancelButtonText(const QString &cancelButtonText)
 	{
 		mInputDialog->setCancelButtonText(cancelButtonText);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue InputDialog::setTextEchoMode(TextEchoMode textEchoMode)
+    InputDialog *InputDialog::setTextEchoMode(TextEchoMode textEchoMode)
 	{
 		mInputDialog->setTextEchoMode(static_cast<QLineEdit::EchoMode>(textEchoMode));
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue InputDialog::setFloatDecimals(int decimals)
+    InputDialog *InputDialog::setFloatDecimals(int decimals)
 	{
 		mInputDialog->setDoubleDecimals(decimals);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue InputDialog::setIntegerStep(int step)
+    InputDialog *InputDialog::setIntegerStep(int step)
 	{
 		mInputDialog->setIntStep(step);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue InputDialog::setMaximum(const QScriptValue &maximum)
+    InputDialog *InputDialog::setMaximum(const QJSValue &maximum)
 	{
 		mMaximum = maximum;
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue InputDialog::setMinimum(const QScriptValue &minimum)
+    InputDialog *InputDialog::setMinimum(const QJSValue &minimum)
 	{
 		mMinimum = minimum;
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue InputDialog::setRange(const QScriptValue &minimum, const QScriptValue &maximum)
+    InputDialog *InputDialog::setRange(const QJSValue &minimum, const QJSValue &maximum)
 	{
 		mMinimum = minimum;
 		mMaximum = maximum;
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue InputDialog::setInputType(InputType inputType)
+    InputDialog *InputDialog::setInputType(InputType inputType)
 	{
 		mInputType = inputType;
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue InputDialog::setValue(const QScriptValue &value)
+    InputDialog *InputDialog::setValue(const QJSValue &value)
 	{
 		mValue = value;
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue InputDialog::setItems(const QScriptValue &items)
+    InputDialog *InputDialog::setItems(const QJSValue &items)
 	{
 		mItems = items;
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue InputDialog::setItemsEditable(bool itemsEditable)
+    InputDialog *InputDialog::setItemsEditable(bool itemsEditable)
 	{
 		mInputDialog->setComboBoxEditable(itemsEditable);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue InputDialog::show()
+    InputDialog *InputDialog::show()
 	{
 		setup();
 		
 		mInputDialog->open();
 
-		return thisObject();
+        return this;
 	}
 
 	int InputDialog::showModal()
@@ -218,29 +222,34 @@ namespace Code
 		
 		return mInputDialog->exec();
 	}
+
+    void InputDialog::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<InputDialog>(QStringLiteral("InputDialog"), scriptEngine);
+    }
 	
 	void InputDialog::finished(int result)
 	{
-		if(mOnClosed.isValid())
-			mOnClosed.call(thisObject(), QScriptValueList() << result);
+        if(!mOnClosed.isUndefined())
+            mOnClosed.call(QJSValueList() << result);
 	}
 	
 	void InputDialog::doubleValueChanged(double value)
 	{
-		if(mOnValueChanged.isValid())
-			mOnValueChanged.call(thisObject(), QScriptValueList() << value);
+        if(!mOnValueChanged.isUndefined())
+            mOnValueChanged.call(QJSValueList() << value);
 	}
 
 	void InputDialog::intValueChanged(int value)
 	{
-		if(mOnValueChanged.isValid())
-			mOnValueChanged.call(thisObject(), QScriptValueList() << value);
+        if(!mOnValueChanged.isUndefined())
+            mOnValueChanged.call(QJSValueList() << value);
 	}
 
 	void InputDialog::textValueChanged(const QString &value)
 	{
-		if(mOnValueChanged.isValid())
-			mOnValueChanged.call(thisObject(), QScriptValueList() << value);
+        if(!mOnValueChanged.isUndefined())
+            mOnValueChanged.call(QJSValueList() << value);
 	}
 	
 	void InputDialog::setup()
@@ -251,30 +260,27 @@ namespace Code
 		{
 		case Integer:
 			mInputDialog->setInputMode(QInputDialog::IntInput);
-			mInputDialog->setIntValue(mValue.toInt32());
-			if(mMinimum.isValid())
-				mInputDialog->setIntMinimum(mMinimum.toInt32());
-			if(mMaximum.isValid())
-				mInputDialog->setIntMaximum(mMaximum.toInt32());
+            mInputDialog->setIntValue(mValue.toInt());
+            if(!mMinimum.isUndefined())
+                mInputDialog->setIntMinimum(mMinimum.toInt());
+            if(!mMaximum.isUndefined())
+                mInputDialog->setIntMaximum(mMaximum.toInt());
 			break;
 		case Float:
 			mInputDialog->setInputMode(QInputDialog::DoubleInput);
 			mInputDialog->setDoubleValue(mValue.toNumber());
-			if(mMinimum.isValid())
+            if(!mMinimum.isUndefined())
 				mInputDialog->setDoubleMinimum(mMinimum.toNumber());
-			if(mMaximum.isValid())
+            if(!mMaximum.isUndefined())
 				mInputDialog->setDoubleMaximum(mMaximum.toNumber());
 			break;
 		case Items:
 			{
-				QScriptValueIterator it(mItems);
+				QJSValueIterator it(mItems);
 				QStringList values;
 				while(it.hasNext())
 				{
 					it.next();
-					
-					if (it.flags() & QScriptValue::SkipInEnumeration)
-							 continue;
 					
 					values << it.value().toString();
 				}

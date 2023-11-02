@@ -21,7 +21,6 @@
 #pragma once
 
 #include "actiontools/actioninstance.hpp"
-#include "actiontools/script.hpp"
 #include "actiontools/code/color.hpp"
 #include "actiontools/code/point.hpp"
 
@@ -97,12 +96,12 @@ namespace Actions
 				break;
 			case Color:
 				{
-                    setVariable(variable, Code::Color::constructor(colorValue, scriptEngine()));
+                    setVariable(variable, Code::CodeClass::construct<Code::Color>(colorValue, *scriptEngine()));
 				}
 				break;
 			case Position:
 				{
-                    setVariable(variable, Code::Point::constructor(positionValue, scriptEngine()));
+                    setVariable(variable, Code::CodeClass::construct<Code::Point>(positionValue, *scriptEngine()));
 				}
 				break;
 			}

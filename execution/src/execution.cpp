@@ -25,32 +25,30 @@
 #include "codeinitializer.hpp"
 #include "actiontools/actiondefinition.hpp"
 #include "actiontools/actionexception.hpp"
-#include "scriptagent.hpp"
 #include "actiontools/actioninstance.hpp"
-#include "actiontools/code/codetools.hpp"
 #include "actiontools/code/image.hpp"
 #include "actiontools/code/rawdata.hpp"
-#include "actiontools/code/prettyprinting.hpp"
 #include "codeactiona.hpp"
+#include "codescript.hpp"
+#include "codeconsole.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #ifdef ACT_PROFILE
 #include "tools/highresolutiontimer.hpp"
 #endif
 
-#include <QDesktopWidget>
 #include <QAction>
 #include <QMainWindow>
 #include <QApplication>
 #include <QLocale>
 #include <QProgressDialog>
-#include <QScriptEngine>
-#include <QScriptValueIterator>
+#include <QJSEngine>
+#include <QJSValueIterator>
 #include <QScreen>
+#include <QRegularExpression>
 
 namespace Execution
 {
-	Executer::ExecutionStatus Executer::mExecutionStatus = Executer::Stopped;
-	
 	Executer::Executer(QObject *parent)
 		: QObject(parent),
 		mExecutionWindow(new ExecutionWindow()),
@@ -63,12 +61,6 @@ namespace Execution
         connect(mExecutionWindow, &ExecutionWindow::paused, this, &Executer::pauseExecution);
         connect(mExecutionWindow, &ExecutionWindow::debug, this, &Executer::debugExecution);
         connect(&mExecutionTimer, &QTimer::timeout, this, &Executer::updateTimerProgress);
-        connect(&mScriptEngineDebugger, &QScriptEngineDebugger::evaluationSuspended, mExecutionWindow, &ExecutionWindow::onEvaluationPaused);
-        connect(&mScriptEngineDebugger, &QScriptEngineDebugger::evaluationResumed, mExecutionWindow, &ExecutionWindow::onEvaluationResumed);
-        connect(&mScriptEngineDebugger, &QScriptEngineDebugger::evaluationSuspended, this, &Executer::executionPaused);
-        connect(&mScriptEngineDebugger, &QScriptEngineDebugger::evaluationResumed, this, &Executer::executionResumed);
-
-		mScriptEngineDebugger.setAutoShowStandardWindow(false);
 
 		mConsoleWidget->setWindowFlags(Qt::Tool |
 					   Qt::WindowStaysOnTopHint |
@@ -96,12 +88,8 @@ namespace Execution
 			   QStandardItemModel *consoleModel)
 	{
 		mScript = script;
-		mScriptEngine = new QScriptEngine(this);
+        mScriptEngine = new ActionTools::ScriptEngine(this);
 
-        const auto extensions = mScriptEngine->availableExtensions();
-        for(const QString &extension: extensions)
-			mScriptEngine->importExtension(extension);
-		
 		mActionFactory = actionFactory;
 		mShowExecutionWindow = showExecutionWindow;
 		mExecutionWindowPosition = executionWindowPosition;
@@ -120,21 +108,6 @@ namespace Execution
 		mScriptVersion = scriptVersion;
 		mIsActExec = isActExec;
 
-        Code::setupPrettyPrinting(*mScriptEngine);
-		
-		mScriptEngineDebugger.attachTo(mScriptEngine);
-		mDebuggerWindow = mScriptEngineDebugger.standardWindow();
-
-		mScriptAgent = new ScriptAgent(mScriptEngine);
-
-        connect(mScriptAgent, &ScriptAgent::executionStopped, this, &Executer::stopExecution);
-        connect(mScriptAgent, &ScriptAgent::evaluationStarted, mExecutionWindow, &ExecutionWindow::enableDebug);
-        connect(mScriptAgent, &ScriptAgent::evaluationStopped, mExecutionWindow, &ExecutionWindow::disableDebug);
-
-		QScriptEngineAgent *debuggerAgent = mScriptEngine->agent();
-		mScriptEngine->setAgent(mScriptAgent);
-		mScriptAgent->setDebuggerAgent(debuggerAgent);
-		
 		mConsoleWidget->setup(consoleModel);
 		
 		mExecutionTimer.setSingleShot(false);
@@ -150,173 +123,25 @@ namespace Execution
         return mScript->actionAt(mCurrentActionIndex);
     }
 
-	void printCall(QScriptContext *context, ActionTools::ConsoleWidget::Type type)
-	{
-		QApplication::processEvents();//Call this to prevent UI freeze when calling print often
-
-		QScriptValue calleeData = context->callee().data();
-		auto executer = qobject_cast<Executer *>(calleeData.toQObject());
-		QString message;
-		ScriptAgent *agent = executer->scriptAgent();
-
-		if(!agent)
-			return;
-		
-		for(int argumentIndex = 0; argumentIndex < context->argumentCount(); ++argumentIndex)
-			message += context->argument(argumentIndex).toString();
-
-		switch(executer->scriptAgent()->context())
-		{
-		case ScriptAgent::Parameters:
-			executer->consoleWidget()->addScriptParameterLine(message,
-															  agent->currentParameter(),
-															  agent->currentLine(),
-															  agent->currentColumn(),
-															  type);
-			break;
-		case ScriptAgent::Actions:
-			{
-				ActionTools::ActionInstance *currentAction = executer->script()->actionAt(executer->currentActionIndex());
-				qint64 currentActionRuntimeId = -1;
-				if(currentAction)
-					currentActionRuntimeId = currentAction->runtimeId();
-
-				executer->consoleWidget()->addUserLine(message,
-													   currentActionRuntimeId,
-													   context->engine()->globalObject().property(QStringLiteral("currentParameter")).toString(),
-													   context->engine()->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
-													   agent->currentLine(),
-													   agent->currentColumn(),
-													   context->backtrace(),
-													   type);
-			}
-			break;
-		default:
-			return;
-		}
-	}
-
-	QScriptValue printFunction(QScriptContext *context, QScriptEngine *engine)
-	{
-		if(!Executer::isExecuterRunning())
-			return QScriptValue();
-
-		if(context->argumentCount() < 1)
-			return engine->undefinedValue();
-
-		printCall(context, ActionTools::ConsoleWidget::Information);
-
-		return engine->undefinedValue();
-	}
-
-	QScriptValue printWarningFunction(QScriptContext *context, QScriptEngine *engine)
-	{
-		if(!Executer::isExecuterRunning())
-			return QScriptValue();
-
-		if(context->argumentCount() < 1)
-			return engine->undefinedValue();
-
-		printCall(context, ActionTools::ConsoleWidget::Warning);
-
-		return engine->undefinedValue();
-	}
-
-	QScriptValue printErrorFunction(QScriptContext *context, QScriptEngine *engine)
-	{
-		if(!Executer::isExecuterRunning())
-			return QScriptValue();
-
-		if(context->argumentCount() < 1)
-			return engine->undefinedValue();
-
-		printCall(context, ActionTools::ConsoleWidget::Error);
-
-		return engine->undefinedValue();
-	}
-
-    QScriptValue clearConsoleFunction(QScriptContext *context, QScriptEngine *engine)
-    {
-        if(!Executer::isExecuterRunning())
-            return QScriptValue();
-
-        QApplication::processEvents();//Call this to prevent UI freeze when calling clear often
-
-        QScriptValue calleeData = context->callee().data();
-        auto executer = qobject_cast<Executer *>(calleeData.toQObject());
-
-        executer->consoleWidget()->clearExceptSeparators();
-
-        return engine->undefinedValue();
-    }
-
-    QScriptValue callProcedureFunction(QScriptContext *context, QScriptEngine *engine)
-    {
-        if(!Executer::isExecuterRunning())
-            return QScriptValue();
-
-        if(context->argumentCount() < 1)
-            return engine->undefinedValue();
-
-        QScriptValue calleeData = context->callee().data();
-        auto executer = qobject_cast<Executer *>(calleeData.toQObject());
-        ActionTools::ActionInstance *currentActionInstance = executer->currentActionInstance();
-
-        if(currentActionInstance)
-            currentActionInstance->callProcedure(context->argument(0).toString());
-
-        return engine->undefinedValue();
-    }
-
     bool Executer::startExecution(bool onlySelection, const QString &filename)
 	{
-		Q_ASSERT(mScriptAgent);
 		Q_ASSERT(mScriptEngine);
 
 	#ifdef ACT_PROFILE
         Tools::HighResolutionTimer timer(QStringLiteral("Executer::startExecution"));
 	#endif
 
-		Code::CodeTools::addClassToScriptEngine<CodeActiona>(QStringLiteral("Actiona"), mScriptEngine);
+        CodeActiona::registerClass(mScriptEngine->engine());
         CodeActiona::setActExec(mIsActExec);
         CodeActiona::setActionaVersion(mActionaVersion);
         CodeActiona::setScriptVersion(mScriptVersion);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &CodeActiona::version, QStringLiteral("version"), mScriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &CodeActiona::scriptVersion, QStringLiteral("scriptVersion"), mScriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &CodeActiona::isActExec, QStringLiteral("isActExec"), mScriptEngine);
-		Code::CodeTools::addClassGlobalFunctionToScriptEngine(QStringLiteral("Actiona"), &CodeActiona::isActiona, QStringLiteral("isActiona"), mScriptEngine);
-		
-		mScriptAgent->setContext(ScriptAgent::ActionInit);
-        CodeInitializer::initialize(mScriptEngine, mScriptAgent, mActionFactory, filename);
-		mScriptAgent->setContext(ScriptAgent::Parameters);
-		
-        QScriptValue script = mScriptEngine->newObject();
-		mScriptEngine->globalObject().setProperty(QStringLiteral("Script"), script, QScriptValue::ReadOnly);
-		script.setProperty(QStringLiteral("nextLine"), 1);
-		script.setProperty(QStringLiteral("doNotResetPreviousActions"), false);
-		script.setProperty(QStringLiteral("line"), 1, QScriptValue::ReadOnly);
-        QScriptValue callProcedureFun = mScriptEngine->newFunction(callProcedureFunction);
-        callProcedureFun.setData(mScriptEngine->newQObject(this));
-		script.setProperty(QStringLiteral("callProcedure"), callProcedureFun);
 
-		QScriptValue console = mScriptEngine->newObject();
-		mScriptEngine->globalObject().setProperty(QStringLiteral("Console"), console, QScriptValue::ReadOnly);
+        mScriptEngine->setContext(ActionTools::ScriptEngine::ActionInit);
+        CodeInitializer::initialize(mScriptEngine->engine(), mActionFactory, filename);
+        mScriptEngine->setContext(ActionTools::ScriptEngine::Parameters);
 
-        QScriptValue function = mScriptEngine->newFunction(printFunction);
-        function.setData(mScriptEngine->newQObject(this));
-		console.setProperty(QStringLiteral("print"), function);
-
-        function = mScriptEngine->newFunction(printWarningFunction);
-        function.setData(mScriptEngine->newQObject(this));
-		console.setProperty(QStringLiteral("printWarning"), function);
-
-        function = mScriptEngine->newFunction(printErrorFunction);
-        function.setData(mScriptEngine->newQObject(this));
-		console.setProperty(QStringLiteral("printError"), function);
-
-        function = mScriptEngine->newFunction(clearConsoleFunction);
-        function.setData(mScriptEngine->newQObject(this));
-		console.setProperty(QStringLiteral("clear"), function);
+        CodeScript::registerClass(mScriptEngine->engine(), *this);
+        CodeConsole::registerClass(mScriptEngine->engine(), *this);
 
 		mExecuteOnlySelection = onlySelection;
 		mCurrentActionIndex = 0;
@@ -334,13 +159,13 @@ namespace Execution
         for(const QString &key: keys)
         {
             const ActionTools::Resource &resource = resources.value(key);
-            QScriptValue value;
+            QJSValue value;
 
             switch(resource.type())
             {
             case ActionTools::Resource::BinaryType:
             case ActionTools::Resource::TypeCount:
-                value = Code::RawData::constructor(resource.data(), mScriptEngine);
+                    value = Code::CodeClass::construct<Code::RawData>(resource.data(), mScriptEngine->engine());
                 break;
             case ActionTools::Resource::TextType:
 				value = QString::fromUtf8(resource.data());
@@ -356,12 +181,12 @@ namespace Execution
                         return false;
                     }
 
-                    value = Code::Image::constructor(image, mScriptEngine);
+                    value = Code::CodeClass::construct<Code::Image>(image, mScriptEngine->engine());
                 }
                 break;
             }
 
-            mScriptEngine->globalObject().setProperty(key, value, QScriptValue::ReadOnly | QScriptValue::Undeletable);
+            mScriptEngine->globalObject().setProperty(key, value);
         }
 
 		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
@@ -369,7 +194,7 @@ namespace Execution
 			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
 			actionInstance->reset();
 			actionInstance->clearRuntimeParameters();
-			actionInstance->setupExecution(mScriptEngine, mScript, actionIndex);
+            actionInstance->setupExecution(&mScriptEngine->engine(), mScript, actionIndex);
 			mActionEnabled.append(true);
 
 			qint64 currentActionRuntimeId = -1;
@@ -443,12 +268,12 @@ namespace Execution
 
 		for(int parameterIndex = 0; parameterIndex < mScript->parameterCount(); ++parameterIndex)
 		{
-			mScriptAgent->setCurrentParameter(parameterIndex);
+            setCurrentParameter(parameterIndex);
 
 			const ActionTools::ScriptParameter &scriptParameter = mScript->parameter(parameterIndex);
-			QRegExp nameRegExp(QStringLiteral("[a-z_][a-z0-9_]*"), Qt::CaseInsensitive);
+            QRegularExpression nameRegExp(QStringLiteral("[a-z_][a-z0-9_]*"), QRegularExpression::CaseInsensitiveOption);
 
-			if(!nameRegExp.exactMatch(scriptParameter.name()))
+            if(!nameRegExp.match(scriptParameter.name()).hasMatch())
 			{
 				mConsoleWidget->addScriptParameterLine(tr("Incorrect parameter name: \"%1\"").arg(scriptParameter.name()),
 													   parameterIndex,
@@ -462,7 +287,7 @@ namespace Execution
 			QString value;
 			if(scriptParameter.isCode())
 			{
-				QScriptValue result = mScriptEngine->evaluate(scriptParameter.value());
+				QJSValue result = mScriptEngine->evaluate(scriptParameter.value());
 				if(result.isError())
 				{
 					mConsoleWidget->addScriptParameterLine(tr(R"(Error while evaluating parameter "%1", error message: "%2")")
@@ -481,7 +306,7 @@ namespace Execution
 			else
 				value = scriptParameter.value();
 
-			mScriptEngine->globalObject().setProperty(scriptParameter.name(), value, QScriptValue::ReadOnly | QScriptValue::Undeletable);
+            mScriptEngine->globalObject().setProperty(scriptParameter.name(), value);
 		}
 
 		if(!initSucceeded || mScript->actionCount() == 0)
@@ -542,8 +367,8 @@ namespace Execution
 
 		mExecutionStarted = true;
 
-		mScriptAgent->setContext(ScriptAgent::Actions);
-		
+        mScriptEngine->setContext(ActionTools::ScriptEngine::Actions);
+
 		mHasExecuted = true;
 
 		executeCurrentAction();
@@ -555,16 +380,12 @@ namespace Execution
 	{
         if(!mExecutionStarted)
 			return;
-		
-		mScriptAgent->pause(false);
-		mScriptAgent->stopExecution(false);
-		mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
-		
+
 		mExecutionStarted = false;
 		mExecutionStatus = Stopped;
 
         if(mScriptEngine)
-            mScriptEngine->abortEvaluation();
+            mScriptEngine->setInterrupted(true);
 
 		mExecutionTimer.stop();
 
@@ -577,13 +398,6 @@ namespace Execution
 
         mScript->executionStopped();
 
-		mScriptEngineDebugger.detach();
-		
-        if(mScriptAgent)
-        {
-            mScriptAgent->deleteLater();
-            mScriptAgent = nullptr;
-        }
         if(mScriptEngine)
         {
             mScriptEngine->deleteLater();
@@ -592,7 +406,6 @@ namespace Execution
 
 		delete mProgressDialog;
 		mProgressDialog = nullptr;
-		mDebuggerWindow->hide();
 		mExecutionWindow->hide();
 		mConsoleWidget->hide();
 
@@ -664,8 +477,8 @@ namespace Execution
 				}
 				else
 				{
-					QScriptValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
-					script.setProperty(QStringLiteral("nextLine"), mScriptEngine->newVariant(QVariant(exceptionActionInstance.line())));
+                    QJSValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
+                    script.setProperty(QStringLiteral("nextLine"), exceptionActionInstance.line());
 					actionExecutionEnded();
 					shouldStopExecution = false;
 				}
@@ -686,20 +499,28 @@ namespace Execution
 			if(currentAction)
 				currentActionRuntimeId = currentAction->runtimeId();
 
+            auto [line, column] = mScriptEngine->currentLineAndColumn();
+
 			mConsoleWidget->addActionLine(finalMessage + message,
 										currentActionRuntimeId,
 										mScriptEngine->globalObject().property(QStringLiteral("currentParameter")).toString(),
 										mScriptEngine->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
-										mScriptAgent->currentLine(),
-										mScriptAgent->currentColumn(),
+                                        line,
+                                        column,
 										exceptionType);
 
 			stopExecution();
 		}
 	}
 
-	void Executer::actionExecutionEnded()
+    void Executer::actionExecutionEnded(bool stopScript)
 	{
+        if(stopScript)
+        {
+            stopExecution();
+            return;
+        }
+
 		mExecutionTimer.stop();
 		currentActionInstance()->disconnect();
 
@@ -736,7 +557,7 @@ namespace Execution
 	{
 		mExecutionEnded = false;
 
-		QScriptValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
+		QJSValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
 		QString nextLineString = script.property(QStringLiteral("nextLine")).toString();
 		int previousLine = mCurrentActionIndex;
 
@@ -891,12 +712,10 @@ namespace Execution
 
         if(!mPauseInterrupt)
         {
-            if(mShowDebuggerOnCodeError)
-                mDebuggerWindow->show();
-            else
-                mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
+            if(mScriptEngine)
+                mScriptEngine->setInterrupted(false);
         }
-		else
+        else
 			mPauseInterrupt = false;
 	}
 
@@ -940,13 +759,14 @@ namespace Execution
 		if(currentAction)
 			currentActionRuntimeId = currentAction->runtimeId();
 
+        auto [line, column] = mScriptEngine->currentLineAndColumn();
+
 		consoleWidget()->addUserLine(text,
 									   currentActionRuntimeId,
 									   mScriptEngine->globalObject().property(QStringLiteral("currentParameter")).toString(),
 									   mScriptEngine->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
-									   mScriptAgent->currentLine(),
-									   mScriptAgent->currentColumn(),
-									   mScriptEngine->currentContext()->backtrace(),
+                                       line,
+                                       column,
 									   type);
 	}
 
@@ -961,22 +781,7 @@ namespace Execution
 
 		if(mScriptEngine->isEvaluating())
 		{
-			if(mExecutionPaused)
-			{
-				mScriptEngineDebugger.action(QScriptEngineDebugger::InterruptAction)->trigger();
-
-				if(debug)
-					mDebuggerWindow->show();
-			}
-			else
-			{
-				mScriptEngineDebugger.action(QScriptEngineDebugger::ContinueAction)->trigger();
-
-				if(debug)
-					mDebuggerWindow->hide();
-			}
-
-			mScriptAgent->pause(mExecutionPaused);
+            mScriptEngine->setInterrupted(mExecutionPaused);
 		}
 		else
 		{
@@ -1030,9 +835,9 @@ namespace Execution
 		if(nextLine > mScript->actionCount())
 			nextLine = -1;
 
-		QScriptValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
-		script.setProperty(QStringLiteral("nextLine"), mScriptEngine->newVariant(QVariant(nextLine)));
-		script.setProperty(QStringLiteral("line"), mCurrentActionIndex + 1, QScriptValue::ReadOnly);
+		QJSValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
+        script.setProperty(QStringLiteral("nextLine"), nextLine);
+        script.setProperty(QStringLiteral("line"), mCurrentActionIndex + 1);
 
 		ActionTools::ActionInstance *actionInstance = currentActionInstance();
 

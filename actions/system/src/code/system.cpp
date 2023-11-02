@@ -28,7 +28,6 @@
 #include "systeminfo/qstorageinfo.h"
 #include <QLocale>
 #include <QDesktopServices>
-#include <QDesktopWidget>
 #include <QApplication>
 #include <QUrl>
 #include <QDir>
@@ -43,11 +42,6 @@
 
 namespace Code
 {
-	QScriptValue System::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new System, context, engine);
-	}
-
 	System::System()
 		: CodeClass(),
         mSystemSession(new SystemSession)
@@ -72,12 +66,12 @@ namespace Code
         return QStandardPaths::displayName(static_cast<QStandardPaths::StandardLocation>(location));
 	}
 
-	QScriptValue System::openUrl(const QString &url) const
+    System *System::openUrl(const QString &url)
 	{
 		if(!QDesktopServices::openUrl(QUrl(url)))
 			throwError(QStringLiteral("OpenUrlError"), tr("Cannot open the url"));
 
-		return thisObject();
+        return this;
 	}
 
 	int System::screenCount() const
@@ -85,24 +79,24 @@ namespace Code
         return QGuiApplication::screens().size();
 	}
 
-	QScriptValue System::availableGeometry(int screen) const
+	QJSValue System::availableGeometry(int screen) const
 	{
         auto screens = QGuiApplication::screens();
         if(screen < 0 || screen >= screens.size())
         {
-            return Rect::constructor({}, engine());
+            return CodeClass::construct<Rect>(QRect{});
         }
-        return Rect::constructor(screens[screen]->availableGeometry(), engine());
+        return CodeClass::construct<Rect>(screens[screen]->availableGeometry());
 	}
 
-	QScriptValue System::screenGeometry(int screen) const
+	QJSValue System::screenGeometry(int screen) const
 	{
         auto screens = QGuiApplication::screens();
         if(screen < 0 || screen >= screens.size())
         {
-            return Rect::constructor({}, engine());
+            return CodeClass::construct<Rect>(QRect{});
         }
-        return Rect::constructor(screens[screen]->geometry(), engine());
+        return CodeClass::construct<Rect>(screens[screen]->geometry());
 	}
 
 	int System::primaryScreen() const
@@ -274,59 +268,64 @@ namespace Code
         return mDeviceInfo->productName();
 	}
 
-	QScriptValue System::logout(bool force) const
+    System *System::logout(bool force)
 	{
 		if(!mSystemSession->logout(force))
 			throwError(QStringLiteral("LogoutError"), tr("Logout failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue System::restart(bool force) const
+    System *System::restart(bool force)
 	{
 		if(!mSystemSession->restart(force))
 			throwError(QStringLiteral("RestartError"), tr("Restart failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue System::shutdown(bool force) const
+    System *System::shutdown(bool force)
 	{
 		if(!mSystemSession->shutdown(force))
 			throwError(QStringLiteral("ShutdownError"), tr("Shutdown failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue System::suspend(bool force) const
+    System *System::suspend(bool force)
 	{
 		if(!mSystemSession->suspend(force))
 			throwError(QStringLiteral("SuspendError"), tr("Suspend failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue System::hibernate(bool force) const
+    System *System::hibernate(bool force)
 	{
 		if(!mSystemSession->hibernate(force))
 			throwError(QStringLiteral("HibernateError"), tr("Hibernate failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue System::lockScreen() const
+    System *System::lockScreen()
 	{
 		if(!mSystemSession->lockScreen())
 			throwError(QStringLiteral("LockScreenError"), tr("Lock screen failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue System::startScreenSaver() const
+    System *System::startScreenSaver()
 	{
 		if(!mSystemSession->startScreenSaver())
 			throwError(QStringLiteral("StartScreenSaverError"), tr("Start screen saver failed"));
 
-		return thisObject();
+        return this;
 	}
+
+    void System::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<System>(QStringLiteral("System"), scriptEngine);
+    }
 }

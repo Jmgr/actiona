@@ -25,7 +25,6 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QApplication>
-#include <QDesktopWidget>
 
 namespace ActionTools
 {
@@ -47,7 +46,7 @@ namespace ActionTools
 		{
 			QGroupBox *screenPositionGroupBox = new QGroupBox(tr("Screen %1").arg(screen+1));
 			auto gridLayout = new QGridLayout();
-			gridLayout->setMargin(0);
+            gridLayout->setContentsMargins(0, 0, 0, 0);
 			gridLayout->setSpacing(0);
 
 			int i = 0;

@@ -22,50 +22,6 @@
 
 namespace Code
 {
-	QScriptValue RawData::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		RawData *rawData = nullptr;
-		
-		switch(context->argumentCount())
-		{
-		case 0:
-			rawData = new RawData;
-			break;
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-				if(auto codeRawData = qobject_cast<RawData*>(object))
-					rawData = new RawData(*codeRawData);
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			break;
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			break;
-		}
-		
-		if(!rawData)
-			return engine->undefinedValue();
-		
-		return CodeClass::constructor(rawData, context, engine);
-	}
-	
-	QScriptValue RawData::constructor(const RawData &other, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new RawData(other), engine);
-	}
-	
-	QScriptValue RawData::constructor(const QByteArray &byteArray, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new RawData(byteArray), engine);
-	}
-
-	void RawData::registerClass(QScriptEngine *scriptEngine)
-	{
-		CodeTools::addClassToScriptEngine<RawData>(scriptEngine);
-	}
-	
 	RawData::RawData()
 		: CodeClass()
 	{
@@ -112,12 +68,12 @@ namespace Code
 		return mByteArray;
 	}
 	
-	QScriptValue RawData::clone() const
-	{
-		return constructor(mByteArray, engine());
+	QJSValue RawData::clone() const
+    {
+        return CodeClass::clone<RawData>();
 	}
 	
-	bool RawData::equals(const QScriptValue &other) const
+	bool RawData::equals(const QJSValue &other) const
 	{
 		if(other.isUndefined() || other.isNull())
 			return false;
@@ -134,25 +90,25 @@ namespace Code
 		return QStringLiteral("RawData {size: %1}").arg(size());
 	}
 	
-	QScriptValue RawData::append(const QVariant &data)
+    RawData *RawData::append(const QVariant &data)
 	{
 		mByteArray.append(data.toByteArray());
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue RawData::chop(int n)
+    RawData *RawData::chop(int n)
 	{
 		mByteArray.chop(n);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue RawData::clear()
+    RawData *RawData::clear()
 	{
 		mByteArray.clear();
 		
-		return thisObject();
+        return this;
 	}
 	
 	bool RawData::contains(const QVariant &data)
@@ -185,9 +141,9 @@ namespace Code
 		return mByteArray.lastIndexOf(data.toByteArray());
 	}
 	
-	QScriptValue RawData::left(int len) const
+    QJSValue RawData::left(int len) const
 	{
-		return RawData::constructor(mByteArray.left(len), engine());
+        return CodeClass::construct<RawData>(mByteArray.left(len));
 	}
 	
 	int RawData::length() const
@@ -195,49 +151,49 @@ namespace Code
 		return mByteArray.length();
 	}
 	
-	QScriptValue RawData::mid(int pos, int len) const
+    QJSValue RawData::mid(int pos, int len) const
 	{
-		return RawData::constructor(mByteArray.mid(pos, len), engine());
+        return CodeClass::construct<RawData>(mByteArray.mid(pos, len));
 	}
 	
-	QScriptValue RawData::prepend(const QVariant &data)
+    RawData *RawData::prepend(const QVariant &data)
 	{
 		mByteArray.prepend(data.toByteArray());
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue RawData::remove(int pos, int len)
+    RawData *RawData::remove(int pos, int len)
 	{
 		mByteArray.remove(pos, len);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue RawData::replace(const QString &before, const QString &after)
+    RawData *RawData::replace(const QString &before, const QString &after)
 	{
 		mByteArray.replace(before.toLatin1(), after.toLatin1());
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue RawData::resize(int size)
+    RawData *RawData::resize(int size)
 	{
 		mByteArray.resize(size);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue RawData::right(int len) const
+    QJSValue RawData::right(int len) const
 	{
-		return RawData::constructor(mByteArray.right(len), engine());
+        return CodeClass::construct<RawData>(mByteArray.right(len));
 	}
 	
-	QScriptValue RawData::setData(const QVariant &data)
+    RawData *RawData::setData(const QVariant &data)
 	{
 		mByteArray = data.toByteArray();
 		
-		return thisObject();
+        return this;
 	}
 	
 	int RawData::size() const
@@ -260,10 +216,15 @@ namespace Code
 		return fromEncoding(mByteArray, encoding);
 	}
 	
-	QScriptValue RawData::truncate(int pos)
+    RawData *RawData::truncate(int pos)
 	{
 		mByteArray.truncate(pos);
 		
-		return thisObject();
+        return this;
 	}
+
+    void RawData::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<RawData>(QStringLiteral("RawData"), scriptEngine);
+    }
 }

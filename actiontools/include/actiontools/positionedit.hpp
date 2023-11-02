@@ -31,7 +31,7 @@ namespace Ui
 	class PositionEdit;
 }
 
-class QRegExpValidator;
+class QRegularExpressionValidator;
 
 namespace ActionTools
 {
@@ -68,7 +68,7 @@ namespace ActionTools
 
 	private:
 		Ui::PositionEdit *ui;
-        QRegExpValidator *mValidator;
+        QRegularExpressionValidator *mValidator;
 
 		Q_DISABLE_COPY(PositionEdit)
 	};

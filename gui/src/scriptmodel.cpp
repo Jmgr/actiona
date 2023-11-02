@@ -35,6 +35,7 @@
 #include <QApplication>
 #include <QMimeData>
 #include <QUrl>
+#include <QIODevice>
 
 #include <algorithm>
 
@@ -146,7 +147,7 @@ void ScriptModel::setHeatmapMode(HeatmapMode heatmapMode)
 {
     mHeatmapMode = heatmapMode;
 
-    emit dataChanged(index(0, 0), index(rowCount(), ColumnsCount - 1), {Qt::ToolTipRole, Qt::BackgroundColorRole, Qt::ForegroundRole});
+    emit dataChanged(index(0, 0), index(rowCount(), ColumnsCount - 1), {Qt::ToolTipRole, Qt::BackgroundRole, Qt::ForegroundRole});
 }
 
 void ScriptModel::setHeatmapColors(const std::pair<QColor, QColor> &heatmapColors)
@@ -156,7 +157,7 @@ void ScriptModel::setHeatmapColors(const std::pair<QColor, QColor> &heatmapColor
     mHeatmapColors = heatmapColors;
 
     if(mHeatmapMode != HeatmapMode::None && changed)
-        emit dataChanged(index(0, 0), index(rowCount(), ColumnsCount - 1), {Qt::ToolTipRole, Qt::BackgroundColorRole});
+        emit dataChanged(index(0, 0), index(rowCount(), ColumnsCount - 1), {Qt::ToolTipRole, Qt::BackgroundRole});
 }
 
 int ScriptModel::rowCount(const QModelIndex &parent) const

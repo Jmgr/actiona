@@ -136,6 +136,3 @@ namespace ActionTools
         std::unique_ptr<OpenCVAlgorithmsPrivate> mPrivate;
 	};
 }
-
-Q_DECLARE_METATYPE(ActionTools::MatchingPointList)
-

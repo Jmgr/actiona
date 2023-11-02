@@ -179,10 +179,10 @@ void QUDevWrapper::onUDevChanges()
             if (qstrcmp(subsystem, "block") == 0 && qstrcmp(action, "change") == 0)
                 emit driveChanged();
 #endif
-            if (qstrcmp(subsystem, "block") == 0
-                    && ((qstrcmp(action, "add") == 0) || qstrcmp(action, "remove") == 0)) {
+            if (qstrcmp(subsystem.data(), "block") == 0
+                    && ((qstrcmp(action.data(), "add") == 0) || qstrcmp(action.data(), "remove") == 0)) {
                 emit driveChanged();
-            } else if (qstrcmp(subsystem, "power_supply") == 0) {
+            } else if (qstrcmp(subsystem.data(), "power_supply") == 0) {
                 int i = -1;
                 if (sysname.contains("AC")) {
                     bool enabled = false;

@@ -30,12 +30,12 @@ namespace Code
 	class FileDialog : public BaseWindow
 	{
         Q_OBJECT
-		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
-		Q_PROPERTY(QScriptValue onCurrentChanged READ onCurrentChanged WRITE setOnCurrentChanged)
-		Q_PROPERTY(QScriptValue onDirectoryEntered READ onDirectoryEntered WRITE setOnDirectoryEntered)
-		Q_PROPERTY(QScriptValue onFileSelected READ onFileSelected WRITE setOnFileSelected)
-		Q_PROPERTY(QScriptValue onFilesSelected READ onFilesSelected WRITE setOnFilesSelected)
-		Q_PROPERTY(QScriptValue onFilterSelected READ onFilterSelected WRITE setOnFilterSelected)
+		Q_PROPERTY(QJSValue onClosed READ onClosed WRITE setOnClosed)
+		Q_PROPERTY(QJSValue onCurrentChanged READ onCurrentChanged WRITE setOnCurrentChanged)
+		Q_PROPERTY(QJSValue onDirectoryEntered READ onDirectoryEntered WRITE setOnDirectoryEntered)
+		Q_PROPERTY(QJSValue onFileSelected READ onFileSelected WRITE setOnFileSelected)
+		Q_PROPERTY(QJSValue onFilesSelected READ onFilesSelected WRITE setOnFilesSelected)
+		Q_PROPERTY(QJSValue onFilterSelected READ onFilterSelected WRITE setOnFilterSelected)
 		
 	public:
 		enum AcceptMode
@@ -88,50 +88,50 @@ namespace Code
 		};
         Q_ENUM(Filters)
 		
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-		FileDialog();
+        Q_INVOKABLE FileDialog();
+        Q_INVOKABLE FileDialog(const QJSValue &parameters);
 		~FileDialog() override;
 		
-		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
-		void setOnCurrentChanged(const QScriptValue &onCurrentChanged)		{ mOnCurrentChanged = onCurrentChanged; }
-		void setOnDirectoryEntered(const QScriptValue &onDirectoryEntered)	{ mOnDirectoryEntered = onDirectoryEntered; }
-		void setOnFileSelected(const QScriptValue &onFileSelected)			{ mOnFileSelected = onFileSelected; }
-		void setOnFilesSelected(const QScriptValue &onFilesSelected)		{ mOnFilesSelected = onFilesSelected; }
-		void setOnFilterSelected(const QScriptValue &onFilterSelected)		{ mOnFilterSelected = onFilterSelected; }
+		void setOnClosed(const QJSValue &onClosed)						{ mOnClosed = onClosed; }
+		void setOnCurrentChanged(const QJSValue &onCurrentChanged)		{ mOnCurrentChanged = onCurrentChanged; }
+		void setOnDirectoryEntered(const QJSValue &onDirectoryEntered)	{ mOnDirectoryEntered = onDirectoryEntered; }
+		void setOnFileSelected(const QJSValue &onFileSelected)			{ mOnFileSelected = onFileSelected; }
+		void setOnFilesSelected(const QJSValue &onFilesSelected)		{ mOnFilesSelected = onFilesSelected; }
+		void setOnFilterSelected(const QJSValue &onFilterSelected)		{ mOnFilterSelected = onFilterSelected; }
 		
-		QScriptValue onClosed() const										{ return mOnClosed; }
-		QScriptValue onCurrentChanged() const								{ return mOnCurrentChanged; }
-		QScriptValue onDirectoryEntered() const								{ return mOnDirectoryEntered; }
-		QScriptValue onFileSelected() const									{ return mOnFileSelected; }
-		QScriptValue onFilesSelected() const								{ return mOnFilesSelected; }
-		QScriptValue onFilterSelected() const								{ return mOnFilterSelected; }
+		QJSValue onClosed() const										{ return mOnClosed; }
+		QJSValue onCurrentChanged() const								{ return mOnCurrentChanged; }
+		QJSValue onDirectoryEntered() const								{ return mOnDirectoryEntered; }
+		QJSValue onFileSelected() const									{ return mOnFileSelected; }
+		QJSValue onFilesSelected() const								{ return mOnFilesSelected; }
+		QJSValue onFilterSelected() const								{ return mOnFilterSelected; }
 		
-	public slots:
-		QString toString() const override					{ return QStringLiteral("FileDialog"); }
-		QScriptValue setAcceptMode(AcceptMode acceptMode);
-		QScriptValue setFileMode(FileMode fileMode);
-		QScriptValue setViewMode(ViewMode viewMode);
-		QScriptValue setLabelText(DialogLabel dialogLabel, const QString &text);
-		QScriptValue selectFile(const QString &filename);
-		QScriptValue selectNameFilter(const QString &filter);
-		QScriptValue setDefaultSuffix(const QString &defaultSuffix);
-		QScriptValue setDirectory(const QString &directory);
-		QScriptValue setFilter(Filters filters);
-		QScriptValue setNameFilter(const QString &nameFilter);
-		QScriptValue setNameFilters(const QScriptValue &nameFilters);
-		QScriptValue setShowDirectoriesOnly(bool showDirectoriesOnly);
-		QScriptValue setDontResolveSymlinks(bool dontResolveSymlinks);
-		QScriptValue setDontConfirmOverwrite(bool dontConfirmOverwrite);
-		QScriptValue setDontUseNativeDialog(bool dontUseNativeDialog);
-		QScriptValue setReadOnly(bool readOnly);
-		QScriptValue setHideNameFilterDetails(bool hideNameFilterDetails);
-		QScriptValue setSidebarUrls(const QScriptValue &sidebarUrls);
-		QString selectedFile() const;
-		QScriptValue selectedFiles() const;
-		QString selectedNameFilter() const;
-		QScriptValue show();
-		int showModal();
+        Q_INVOKABLE QString toString() const override					{ return QStringLiteral("FileDialog"); }
+        Q_INVOKABLE FileDialog *setAcceptMode(AcceptMode acceptMode);
+        Q_INVOKABLE FileDialog *setFileMode(FileMode fileMode);
+        Q_INVOKABLE FileDialog *setViewMode(ViewMode viewMode);
+        Q_INVOKABLE FileDialog *setLabelText(DialogLabel dialogLabel, const QString &text);
+        Q_INVOKABLE FileDialog *selectFile(const QString &filename);
+        Q_INVOKABLE FileDialog *selectNameFilter(const QString &filter);
+        Q_INVOKABLE FileDialog *setDefaultSuffix(const QString &defaultSuffix);
+        Q_INVOKABLE FileDialog *setDirectory(const QString &directory);
+        Q_INVOKABLE FileDialog *setFilter(Filters filters);
+        Q_INVOKABLE FileDialog *setNameFilter(const QString &nameFilter);
+        Q_INVOKABLE FileDialog *setNameFilters(const QJSValue &nameFilters);
+        Q_INVOKABLE FileDialog *setShowDirectoriesOnly(bool showDirectoriesOnly);
+        Q_INVOKABLE FileDialog *setDontResolveSymlinks(bool dontResolveSymlinks);
+        Q_INVOKABLE FileDialog *setDontConfirmOverwrite(bool dontConfirmOverwrite);
+        Q_INVOKABLE FileDialog *setDontUseNativeDialog(bool dontUseNativeDialog);
+        Q_INVOKABLE FileDialog *setReadOnly(bool readOnly);
+        Q_INVOKABLE FileDialog *setHideNameFilterDetails(bool hideNameFilterDetails);
+        Q_INVOKABLE FileDialog *setSidebarUrls(const QJSValue &sidebarUrls);
+        Q_INVOKABLE QString selectedFile() const;
+        Q_INVOKABLE QJSValue selectedFiles() const;
+        Q_INVOKABLE QString selectedNameFilter() const;
+        Q_INVOKABLE FileDialog *show();
+        Q_INVOKABLE int showModal();
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private slots:
 		void finished(int result);
@@ -143,12 +143,12 @@ namespace Code
 		
 	private:
 		QFileDialog *mFileDialog;
-		QScriptValue mOnClosed;
-		QScriptValue mOnCurrentChanged;
-		QScriptValue mOnDirectoryEntered;
-		QScriptValue mOnFileSelected;
-		QScriptValue mOnFilesSelected;
-		QScriptValue mOnFilterSelected;
+		QJSValue mOnClosed;
+		QJSValue mOnCurrentChanged;
+		QJSValue mOnDirectoryEntered;
+		QJSValue mOnFileSelected;
+		QJSValue mOnFilesSelected;
+		QJSValue mOnFilterSelected;
 	};
 }
 

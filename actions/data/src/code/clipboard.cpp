@@ -24,28 +24,20 @@
 #include <QApplication>
 #include <QImage>
 #include <QMimeData>
-#include <QScriptValueIterator>
 
 namespace Code
 {
-	QScriptValue Clipboard::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		auto clipboard = new Clipboard;
-
-		if(context->argumentCount() > 0)
-		{
-			Mode mode = static_cast<Mode>(context->argument(0).toInt32());
-			clipboard->setModePrivate(context, engine, mode);
-		}
-
-		return CodeClass::constructor(clipboard, context, engine);
-	}
-	
 	Clipboard::Clipboard()
 		: CodeClass()
 		
 	{
 	}
+
+    Clipboard::Clipboard(Mode mode)
+        : CodeClass()
+    {
+        setModePrivate(mode);
+    }
 
 	QString Clipboard::text() const
 	{
@@ -54,32 +46,30 @@ namespace Code
 		return clipboard->text(mMode);
 	}
 
-	QScriptValue Clipboard::image() const
+	QJSValue Clipboard::image() const
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 
-        return Image::constructor(clipboard->image(mMode), engine());
+        return CodeClass::construct<Code::Image>(clipboard->image(mMode));
     }
 
-
-	
-	QScriptValue Clipboard::setMode(Mode mode)
+    Clipboard *Clipboard::setMode(Mode mode)
 	{
-		setModePrivate(context(), engine(), mode);
+        setModePrivate(mode);
 	
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Clipboard::setText(const QString &value) const
+    Clipboard *Clipboard::setText(const QString &value)
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 
 		clipboard->setText(value, mMode);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Clipboard::setImage(const QScriptValue &data) const
+    Clipboard *Clipboard::setImage(const QJSValue &data)
 	{
 		QClipboard *clipboard = QApplication::clipboard();
 
@@ -89,7 +79,7 @@ namespace Code
 		else
 			clipboard->setImage(data.toVariant().value<QImage>(), mMode);
 	
-		return thisObject();
+        return this;
 	}
 	
 	Clipboard::DataType Clipboard::dataType() const
@@ -102,22 +92,27 @@ namespace Code
 		else
 			return Text;
 	}
+
+    void Clipboard::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Clipboard>(QStringLiteral("Clipboard"), scriptEngine);
+    }
 	
-	void Clipboard::setModePrivate(QScriptContext *context, QScriptEngine *engine, Mode mode)
+    void Clipboard::setModePrivate(Mode mode)
 	{
 		switch(mode)
 		{
 		case Selection:
 			if(!QApplication::clipboard()->supportsSelection())
 			{
-				throwError(context, engine, QStringLiteral("UnsupportedSelectionModeError"), tr("Selection mode is not supported by your operating system"));
+                throwError(QStringLiteral("UnsupportedSelectionModeError"), tr("Selection mode is not supported by your operating system"));
 				return;
 			}
 			break;
 		case FindBuffer:
 			if(!QApplication::clipboard()->supportsFindBuffer())
 			{
-				throwError(context, engine, QStringLiteral("UnsupportedSelectionModeError"), tr("Find buffer mode is not supported by your operating system"));
+                throwError(QStringLiteral("UnsupportedSelectionModeError"), tr("Find buffer mode is not supported by your operating system"));
 				return;
 			}
 			break;

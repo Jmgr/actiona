@@ -21,27 +21,24 @@
 #pragma once
 
 #include "execution_global.hpp"
+#include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
 #include <QVersionNumber>
-
-class QScriptContext;
-class QScriptEngine;
 
 namespace Execution
 {
-    class EXECUTIONSHARED_EXPORT CodeActiona : public QObject
+    class EXECUTIONSHARED_EXPORT CodeActiona : public Code::CodeClass
 	{
+        friend class StaticCodeActiona;
+
 		Q_OBJECT
 
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
+        Q_INVOKABLE CodeActiona() = default;
 
-		static QScriptValue version(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue scriptVersion(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue isActExec(QScriptContext *context, QScriptEngine *engine);
-        static QScriptValue isActiona(QScriptContext *context, QScriptEngine *engine);
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("Actiona"); }
+
+        static void registerClass(QJSEngine &scriptEngine);
 
 		static void setActExec(bool isActExec);
         static void setActionaVersion(const QVersionNumber &version);
@@ -51,5 +48,19 @@ namespace Execution
         static QVersionNumber mActionaVersion;
 		static QVersionNumber mScriptVersion;
 	};
+
+    class EXECUTIONSHARED_EXPORT StaticCodeActiona : public Code::CodeClass
+    {
+        Q_OBJECT
+
+    public:
+        StaticCodeActiona(QObject *parent): CodeClass(parent) {}
+
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticActiona"); }
+        Q_INVOKABLE QString version();
+        Q_INVOKABLE QString scriptVersion();
+        Q_INVOKABLE bool isActExec();
+        Q_INVOKABLE bool isActiona();
+    };
 }
 

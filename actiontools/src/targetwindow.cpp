@@ -27,7 +27,7 @@
 #include <QApplication>
 
 #ifdef Q_OS_UNIX
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #include <X11/Xlib.h>
 #include <X11/cursorfont.h>
 #include <xcb/xcb.h>
@@ -50,7 +50,7 @@ namespace ActionTools
                   | Qt::BypassWindowManagerHint
                   )
 #ifdef Q_OS_UNIX
-           ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
+           ,mCrossCursor(XCreateFontCursor(X11Info::display(), XC_crosshair))
 #endif
     {
         setWindowModality(Qt::ApplicationModal);
@@ -67,7 +67,7 @@ namespace ActionTools
         if(mGrabbingPointer || mGrabbingKeyboard)
             ungrab();
 
-        XFreeCursor(QX11Info::display(), mCrossCursor);
+        XFreeCursor(X11Info::display(), mCrossCursor);
 #endif
     }
 
@@ -151,7 +151,7 @@ namespace ActionTools
 #ifdef Q_OS_UNIX
         QCoreApplication::instance()->installNativeEventFilter(this);
 
-        if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
+        if(XGrabPointer(X11Info::display(), DefaultRootWindow(X11Info::display()), True, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
                         None, mCrossCursor, CurrentTime) != GrabSuccess)
         {
             QMessageBox::warning(this, tr("Choose a screen rectangle"), tr("Unable to grab the pointer."));
@@ -160,7 +160,7 @@ namespace ActionTools
 
         mGrabbingPointer = true;
 
-        if(XGrabKeyboard(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, GrabModeAsync, GrabModeAsync, CurrentTime) != GrabSuccess)
+        if(XGrabKeyboard(X11Info::display(), DefaultRootWindow(X11Info::display()), True, GrabModeAsync, GrabModeAsync, CurrentTime) != GrabSuccess)
         {
             QMessageBox::warning(this, tr("Choose a screen rectangle"), tr("Unable to grab the pointer."));
             event->ignore();
@@ -212,7 +212,7 @@ namespace ActionTools
     }
 
 #ifdef Q_OS_UNIX
-    bool TargetWindow::nativeEventFilter(const QByteArray &eventType, void *message, long *)
+    bool TargetWindow::nativeEventFilter(const QByteArray &eventType, void *message, qintptr *)
     {
         if(eventType == "xcb_generic_event_t")
         {
@@ -257,13 +257,13 @@ namespace ActionTools
     void TargetWindow::ungrab()
     {
         if(mGrabbingKeyboard)
-            XUngrabKeyboard(QX11Info::display(), CurrentTime);
+            XUngrabKeyboard(X11Info::display(), CurrentTime);
 
         if(mGrabbingPointer)
-            XUngrabPointer(QX11Info::display(), CurrentTime);
+            XUngrabPointer(X11Info::display(), CurrentTime);
 
         if(mGrabbingKeyboard || mGrabbingPointer)
-            XFlush(QX11Info::display());
+            XFlush(X11Info::display());
 
         QCoreApplication::instance()->removeNativeEventFilter(this);
 
