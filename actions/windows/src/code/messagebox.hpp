@@ -29,7 +29,7 @@ namespace Code
 	class MessageBox : public BaseWindow
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
+		Q_PROPERTY(QJSValue onClosed READ onClosed WRITE setOnClosed)
 
 	public:
 		enum StandardButton
@@ -65,35 +65,35 @@ namespace Code
 		};
         Q_ENUM(Icon)
 
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-
-		MessageBox();
+        Q_INVOKABLE MessageBox();
+        Q_INVOKABLE MessageBox(const QJSValue &parameters);
 		~MessageBox() override;
 		
-		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
+		void setOnClosed(const QJSValue &onClosed)						{ mOnClosed = onClosed; }
 		
-		QScriptValue onClosed() const										{ return mOnClosed; }
+		QJSValue onClosed() const										{ return mOnClosed; }
 
-	public slots:
-		QString toString() const override					{ return QStringLiteral("MessageBox"); }
-		QScriptValue setText(const QString &text);
-		QScriptValue setDetailedText(const QString &detailedText);
-		QScriptValue setInformativeText(const QString &informativeText);
-		QScriptValue setButtons(StandardButton buttons);
-		QScriptValue setIcon(Icon icon);
-		QScriptValue setIconPixmap(const QScriptValue &image);
-		QScriptValue setDefaultButton(StandardButton button);
-		QScriptValue setEscapeButton(StandardButton button);
-		QScriptValue addCustomButton(StandardButton button, const QString &text);
-		QScriptValue show();
-		int showModal();
+        Q_INVOKABLE QString toString() const override					{ return QStringLiteral("MessageBox"); }
+        Q_INVOKABLE MessageBox *setText(const QString &text);
+        Q_INVOKABLE MessageBox *setDetailedText(const QString &detailedText);
+        Q_INVOKABLE MessageBox *setInformativeText(const QString &informativeText);
+        Q_INVOKABLE MessageBox *setButtons(StandardButton buttons);
+        Q_INVOKABLE MessageBox *setIcon(Icon icon);
+        Q_INVOKABLE MessageBox *setIconPixmap(const QJSValue &image);
+        Q_INVOKABLE MessageBox *setDefaultButton(StandardButton button);
+        Q_INVOKABLE MessageBox *setEscapeButton(StandardButton button);
+        Q_INVOKABLE MessageBox *addCustomButton(StandardButton button, const QString &text);
+        Q_INVOKABLE MessageBox *show();
+        Q_INVOKABLE int showModal();
+
+        static void registerClass(QJSEngine &scriptEngine);
 
 	private slots:
 		void finished(int result);
 
 	private:
 		QMessageBox *mMessageBox;
-		QScriptValue mOnClosed;
+		QJSValue mOnClosed;
 	};
 }
 

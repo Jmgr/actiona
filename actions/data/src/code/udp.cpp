@@ -21,33 +21,10 @@
 #include "udp.hpp"
 #include "actiontools/code/rawdata.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 
 namespace Code
 {
-	QScriptValue Udp::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		Udp *udp = new Udp;
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-			
-			if(it.name() == QLatin1String("onConnected"))
-				udp->mOnConnected = it.value();
-			else if(it.name() == QLatin1String("onDisconnected"))
-				udp->mOnDisconnected = it.value();
-			else if(it.name() == QLatin1String("onReadyRead"))
-				udp->mOnReadyRead = it.value();
-			else if(it.name() == QLatin1String("onError"))
-				udp->mOnError = it.value();
-		}
-
-		return CodeClass::constructor(udp, context, engine);
-	}
-	
 	Udp::Udp()
 		: CodeClass(),
 		mUdpSocket(new QUdpSocket(this))
@@ -55,35 +32,61 @@ namespace Code
         QObject::connect(mUdpSocket, &QUdpSocket::connected, this, &Udp::connected);
         QObject::connect(mUdpSocket, &QUdpSocket::disconnected, this, &Udp::disconnected);
         QObject::connect(mUdpSocket, &QUdpSocket::readyRead, this, &Udp::readyRead);
-        QObject::connect(mUdpSocket, static_cast<void (QUdpSocket::*)(QAbstractSocket::SocketError)>(&QUdpSocket::error), this, &Udp::error);
+        QObject::connect(mUdpSocket, &QUdpSocket::errorOccurred, this, &Udp::error);
 	}
+
+    Udp::Udp(const QJSValue &parameters)
+        : Udp()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("onConnected"))
+                mOnConnected = it.value();
+            else if(it.name() == QLatin1String("onDisconnected"))
+                mOnDisconnected = it.value();
+            else if(it.name() == QLatin1String("onReadyRead"))
+                mOnReadyRead = it.value();
+            else if(it.name() == QLatin1String("onError"))
+                mOnError = it.value();
+        }
+    }
 	
     Udp::~Udp() = default;
 	
-	QScriptValue Udp::connect(const QString &hostname, quint16 port, OpenMode openMode)
+    Udp *Udp::connect(const QString &hostname, quint16 port, OpenMode openMode)
 	{
 		mUdpSocket->connectToHost(hostname, port, static_cast<QIODevice::OpenMode>(openMode));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Udp::waitForConnected(int waitTime)
+    Udp *Udp::waitForConnected(int waitTime)
 	{
 		if(!mUdpSocket->waitForConnected(waitTime))
 			throwError(QStringLiteral("ConnectionError"), tr("Cannot establish a connection to the host"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Udp::waitForReadyRead(int waitTime)
+    Udp *Udp::waitForReadyRead(int waitTime)
 	{
 		if(!mUdpSocket->waitForReadyRead(waitTime))
 			throwError(QStringLiteral("ReadyReadError"), tr("Waiting for ready read failed"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Udp::write(const QScriptValue &data)
+    Udp *Udp::write(const QJSValue &data)
 	{
 		QObject *object = data.toQObject();
 		if(auto rawData = qobject_cast<RawData*>(object))
@@ -97,20 +100,20 @@ namespace Code
 				throwError(QStringLiteral("WriteError"), tr("Write failed"));
 		}
 	
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Udp::writeText(const QString &data, Encoding encoding)
+    Udp *Udp::writeText(const QString &data, Encoding encoding)
 	{
 		if(mUdpSocket->write(toEncoding(data, encoding)) == -1)
 			throwError(QStringLiteral("WriteError"), tr("Write failed"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Udp::read()
-	{
-		return RawData::constructor(mUdpSocket->readAll(), engine());
+	QJSValue Udp::read()
+    {
+        return CodeClass::construct<RawData>(mUdpSocket->readAll());
 	}
 	
 	QString Udp::readText(Encoding encoding)
@@ -118,36 +121,41 @@ namespace Code
 		return fromEncoding(mUdpSocket->readAll(), encoding);
 	}
 	
-	QScriptValue Udp::disconnect()
+    Udp *Udp::disconnect()
 	{
 		mUdpSocket->disconnectFromHost();
 		
-		return thisObject();
+        return this;
 	}
 	
 	void Udp::connected()
 	{
-		if(mOnConnected.isValid())
-			mOnConnected.call(thisObject());
+        if(!mOnConnected.isUndefined())
+            mOnConnected.call();
 	}
 
 	void Udp::disconnected()
 	{
-		if(mOnDisconnected.isValid())
-			mOnDisconnected.call(thisObject());
+        if(!mOnDisconnected.isUndefined())
+            mOnDisconnected.call();
 	}
+
+    void Udp::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Udp>(QStringLiteral("Udp"), scriptEngine);
+    }
 
 	void Udp::readyRead()
 	{
-		if(mOnReadyRead.isValid())
-			mOnReadyRead.call(thisObject());
+        if(!mOnReadyRead.isUndefined())
+            mOnReadyRead.call();
 	}
 
 	void Udp::error(QAbstractSocket::SocketError socketError)
 	{
 		Q_UNUSED(socketError)
 
-		if(mOnError.isValid())
-			mOnError.call(thisObject(), QScriptValueList() << mUdpSocket->errorString());
+        if(!mOnError.isUndefined())
+            mOnError.call(QJSValueList() << mUdpSocket->errorString());
 	}
 }

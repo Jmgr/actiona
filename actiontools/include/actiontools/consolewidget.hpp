@@ -68,7 +68,6 @@ namespace ActionTools
 			ActionRole,
 			FieldRole,
 			SubFieldRole,
-			BacktraceRole,
 			ParameterRole,
             ExceptionRole,
             ResourceRole
@@ -82,7 +81,7 @@ namespace ActionTools
 		void addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type);
         void addResourceLine(const QString &message, const QString &resourceKey, Type type);
 		void addActionLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type);
-		void addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, const QStringList &backtrace, Type type);
+        void addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type);
 		void addExceptionLine(const QString &message, qint64 actionRuntimeId, int exception, Type type);
 		void addDesignErrorLine(const QString &message, Type type);
 		void addStartSeparator();

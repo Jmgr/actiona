@@ -47,7 +47,7 @@ namespace Actions
 			bool ok = true;
 
 			QString filename = evaluateString(ok, QStringLiteral("file"));
-			QScriptValue data = evaluateValue(ok, QStringLiteral("data"));
+			QJSValue data = evaluateValue(ok, QStringLiteral("data"));
 
 			if(!ok)
 				return;

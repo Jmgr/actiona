@@ -61,7 +61,7 @@ add_dependencies(${PROJECT} tools actiontools execution)
 setup_target(${PROJECT})
 setup_action(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script Widgets REQUIRED)
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets REQUIRED)
 
 target_include_directories(${PROJECT}
     PRIVATE
@@ -71,6 +71,6 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../../execution/include
 )
 
-target_link_libraries(${PROJECT} actiontools execution Qt5::Script Qt5::Widgets)
+target_link_libraries(${PROJECT} actiontools execution Qt6::Widgets)
 
 compile_translations(${PROJECT})

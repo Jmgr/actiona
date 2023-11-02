@@ -23,7 +23,7 @@
 #include "actiontools/code/rawdata.hpp"
 
 #include <QDir>
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -35,102 +35,10 @@
 
 namespace Code
 {
-	QScriptValue Process::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		auto process = new Process;
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-
-			if(it.name() == QLatin1String("workingDirectory"))
-				process->process()->setWorkingDirectory(it.value().toString());
-			else if(it.name() == QLatin1String("processChannelMode"))
-				process->process()->setProcessChannelMode(static_cast<QProcess::ProcessChannelMode>(it.value().toInt32()));
-			else if(it.name() == QLatin1String("readChannel"))
-				process->process()->setReadChannel(static_cast<QProcess::ProcessChannel>(it.value().toInt32()));
-			else if(it.name() == QLatin1String("onError"))
-				process->mOnError = it.value();
-			else if(it.name() == QLatin1String("onFinished"))
-				process->mOnFinished = it.value();
-			else if(it.name() == QLatin1String("onReadyReadStandardError"))
-				process->mOnReadyReadStandardError = it.value();
-			else if(it.name() == QLatin1String("onReadyReadStandardOutput"))
-				process->mOnReadyReadStandardOutput = it.value();
-			else if(it.name() == QLatin1String("onStarted"))
-				process->mOnStarted = it.value();
-			else if(it.name() == QLatin1String("onStateChanged"))
-				process->mOnStateChanged = it.value();
-		}
-
-		return CodeClass::constructor(process, context, engine);
-	}
-
-	QScriptValue Process::list(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(context)
-
-		QList<int> processesList = ActionTools::CrossPlatform::runningProcesses();
-
-		QScriptValue back = engine->newArray(processesList.count());
-
-		for(int index = 0; index < processesList.count(); ++index)
-			back.setProperty(index, ProcessHandle::constructor(processesList.at(index), engine));
-
-		return back;
-	}
-
-	QScriptValue Process::startDetached(QScriptContext *context, QScriptEngine *engine)
-	{
-		QString filename = context->argument(0).toString();
-		if(filename.isEmpty())
-		{
-			throwError(context, engine, QStringLiteral("FilenameError"), tr("Invalid filename"));
-			return engine->undefinedValue();
-		}
-
-		QStringList parameters;
-		if(context->argumentCount() > 1)
-		{
-			const QScriptValue &parametersScriptValue = context->argument(1);
-
-			if(parametersScriptValue.isArray())
-				parameters = arrayParameterToStringList(parametersScriptValue);
-			else
-				parameters.append(parametersScriptValue.toString());
-		}
-
-		QString workingDirectory = QDir::currentPath();
-		if(context->argumentCount() > 2)
-			workingDirectory = context->argument(2).toString();
-
-		qint64 processId;
-		if(!QProcess::startDetached(filename, parameters, workingDirectory, &processId))
-		{
-			throwError(context, engine, QStringLiteral("StartProcessError"), tr("Unable to start the process"));
-			return engine->undefinedValue();
-		}
-
-		return ProcessHandle::constructor(processId, engine);
-	}
-
-	QScriptValue Process::thisProcess(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(context)
-
-#ifdef Q_OS_WIN
-		return ProcessHandle::constructor(GetCurrentProcessId(), engine);
-#else
-		return ProcessHandle::constructor(getpid(), engine);
-#endif
-	}
-
-	Process::Process()
-		: CodeClass(),
-		mProcess(new QProcess(this))
-	{
+    Process::Process()
+        : CodeClass(),
+        mProcess(new QProcess(this))
+    {
         connect(mProcess, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::errorOccurred), this, static_cast<void (Process::*)(QProcess::ProcessError)>(&Process::onError));
         connect(mProcess, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &Process::finished);
         connect(mProcess, &QProcess::readyReadStandardError, this, &Process::readyReadStandardError);
@@ -139,9 +47,45 @@ namespace Code
         connect(mProcess, &QProcess::stateChanged, this, &Process::stateChanged);
     }
 
-	QScriptValue Process::handle() const
+    Process::Process(const QJSValue &parameters)
+        : Process()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("workingDirectory"))
+                process()->setWorkingDirectory(it.value().toString());
+            else if(it.name() == QLatin1String("processChannelMode"))
+                process()->setProcessChannelMode(static_cast<QProcess::ProcessChannelMode>(it.value().toInt()));
+            else if(it.name() == QLatin1String("readChannel"))
+                process()->setReadChannel(static_cast<QProcess::ProcessChannel>(it.value().toInt()));
+            else if(it.name() == QLatin1String("onError"))
+                mOnError = it.value();
+            else if(it.name() == QLatin1String("onFinished"))
+                mOnFinished = it.value();
+            else if(it.name() == QLatin1String("onReadyReadStandardError"))
+                mOnReadyReadStandardError = it.value();
+            else if(it.name() == QLatin1String("onReadyReadStandardOutput"))
+                mOnReadyReadStandardOutput = it.value();
+            else if(it.name() == QLatin1String("onStarted"))
+                mOnStarted = it.value();
+            else if(it.name() == QLatin1String("onStateChanged"))
+                mOnStateChanged = it.value();
+        }
+    }
+
+	QJSValue Process::handle() const
 	{
-		return ProcessHandle::constructor(id(), engine());
+        return CodeClass::construct<ProcessHandle>(id());
 	}
 
 	int Process::id() const
@@ -153,34 +97,30 @@ namespace Code
 #endif
 	}
 
-	QScriptValue Process::start()
-	{
-		QString filename = context()->argument(0).toString();
-		if(filename.isEmpty())
-		{
-			throwError(QStringLiteral("FilenameError"), tr("Invalid filename"));
-			return engine()->undefinedValue();
-		}
+    Process *Process::start(const QString &filename)
+    {
+        return start(filename, {}, ReadWrite);
+    }
 
-		QStringList parameters;
-		if(context()->argumentCount() > 1)
-		{
-			const QScriptValue &parametersScriptValue = context()->argument(1);
+    Process *Process::start(const QString &filename, const QStringList &parameters)
+    {
+        return start(filename, parameters, ReadWrite);
+    }
 
-			if(parametersScriptValue.isArray())
-				parameters = arrayParameterToStringList(parametersScriptValue);
-			else
-				parameters.append(parametersScriptValue.toString());
-		}
+    Process *Process::start(const QString &filename, const QStringList &parameters, OpenMode openMode)
+    {
+        if(filename.isEmpty())
+        {
+            throwError(QStringLiteral("FilenameError"), tr("Invalid filename"));
+            return this;
+        }
 
-		QIODevice::OpenMode openMode = QIODevice::ReadWrite;
-		if(context()->argumentCount() > 2)
-			openMode = static_cast<QIODevice::OpenMode>(context()->argument(2).toInt32());
+        auto ioDeviceOpenMode = static_cast<QIODevice::OpenMode>(static_cast<int>(openMode));
 
-		mProcess->start(filename, parameters, openMode);
+        mProcess->start(filename, parameters, ioDeviceOpenMode);
 
-		return thisObject();
-	}
+        return this;
+    }
 
 	Process::ProcessState Process::state() const
 	{
@@ -202,14 +142,14 @@ namespace Code
 		return static_cast<ExitStatus>(mProcess->exitStatus());
 	}
 
-	QScriptValue Process::readError() const
-	{
-		return RawData::constructor(mProcess->readAllStandardError(), engine());
+	QJSValue Process::readError() const
+    {
+        return CodeClass::construct<RawData>(mProcess->readAllStandardError());
 	}
 
-	QScriptValue Process::read() const
-	{
-		return RawData::constructor(mProcess->readAllStandardOutput(), engine());
+	QJSValue Process::read() const
+    {
+        return CodeClass::construct<RawData>(mProcess->readAllStandardOutput());
 	}
 
 	QString Process::readErrorText(Encoding encoding) const
@@ -242,7 +182,7 @@ namespace Code
 		return mProcess->canReadLine();
 	}
 
-	QScriptValue Process::write(const QScriptValue &data)
+    Process *Process::write(const QJSValue &data)
 	{
 		QObject *object = data.toQObject();
 		if(auto rawData = qobject_cast<RawData*>(object))
@@ -256,193 +196,263 @@ namespace Code
 				throwError(QStringLiteral("WriteError"), tr("Write failed"));
 		}
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::writeText(const QString &data, Encoding encoding)
+    Process *Process::writeText(const QString &data, Encoding encoding)
 	{
 		if(mProcess->write(toEncoding(data, encoding)) == -1)
 			throwError(QStringLiteral("WriteError"), tr("Write failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::setWorkingDirectory(const QString &workingDirectory)
+    Process *Process::setWorkingDirectory(const QString &workingDirectory)
 	{
 		mProcess->setWorkingDirectory(workingDirectory);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::setProcessChannelMode(ProcessChannelMode channelMode)
+    Process *Process::setProcessChannelMode(ProcessChannelMode channelMode)
 	{
 		mProcess->setProcessChannelMode(static_cast<QProcess::ProcessChannelMode>(channelMode));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::setEnvironment()
+    Process *Process::setEnvironment(const QJSValue &environment)
 	{
-		QProcessEnvironment environment;
-		QScriptValueIterator it(context()->argument(0));
+        if(!environment.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return this;
+        }
+
+        QProcessEnvironment processEnvironment;
+        QJSValueIterator it(environment);
 
 		while(it.hasNext())
 		{
 			it.next();
 
-			environment.insert(it.name(), it.value().toString());
+            processEnvironment.insert(it.name(), it.value().toString());
 		}
 
-		mProcess->setProcessEnvironment(environment);
+        mProcess->setProcessEnvironment(processEnvironment);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::updateEnvironment()
+    Process *Process::updateEnvironment(const QJSValue &environment)
 	{
-		QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
-		QScriptValueIterator it(context()->argument(0));
+        if(!environment.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return this;
+        }
+
+        QProcessEnvironment processEnvironment = QProcessEnvironment::systemEnvironment();
+        QJSValueIterator it(environment);
 
 		while(it.hasNext())
 		{
 			it.next();
 
-			environment.insert(it.name(), it.value().toString());
+            processEnvironment.insert(it.name(), it.value().toString());
 		}
 
-		mProcess->setProcessEnvironment(environment);
+        mProcess->setProcessEnvironment(processEnvironment);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::setReadChannel(ProcessChannel channel)
+    Process *Process::setReadChannel(ProcessChannel channel)
 	{
 		mProcess->setReadChannel(static_cast<QProcess::ProcessChannel>(channel));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::setStandardErrorFile(const QString &fileName, int openMode)
+    Process *Process::setStandardErrorFile(const QString &fileName, int openMode)
 	{
 		mProcess->setStandardErrorFile(fileName, static_cast<QIODevice::OpenModeFlag>(openMode));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::setStandardInputFile(const QString &fileName)
+    Process *Process::setStandardInputFile(const QString &fileName)
 	{
 		mProcess->setStandardInputFile(fileName);
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::setStandardOutputFile(const QString &fileName, int openMode)
+    Process *Process::setStandardOutputFile(const QString &fileName, int openMode)
 	{
 		mProcess->setStandardOutputFile(fileName, static_cast<QIODevice::OpenModeFlag>(openMode));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::setStandardOutputProcess(const QScriptValue &processValue)
+    Process *Process::setStandardOutputProcess(const QJSValue &processValue)
 	{
 		auto otherProcess = qobject_cast<Process *>(processValue.toQObject());
 		if(!otherProcess)
 		{
 			throwError(QStringLiteral("InvalidProcessError"), tr("Invalid process"));
-			return thisObject();
+            return this;
 		}
 
 		mProcess->setStandardOutputProcess(otherProcess->process());
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::waitForFinished(int waitTime)
+    Process *Process::waitForFinished(int waitTime)
 	{
 		if(!mProcess->waitForFinished(waitTime))
 			throwError(QStringLiteral("WaitForFinishedError"), tr("Wait for finished failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::waitForStarted(int waitTime)
+    Process *Process::waitForStarted(int waitTime)
 	{
 		if(!mProcess->waitForStarted(waitTime))
 			throwError(QStringLiteral("WaitForStartedError"), tr("Wait for started failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::waitForBytesWritten(int waitTime)
+    Process *Process::waitForBytesWritten(int waitTime)
 	{
 		if(!mProcess->waitForBytesWritten(waitTime))
 			throwError(QStringLiteral("WaitForBytesWrittenError"), tr("Waiting for bytes written failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::waitForReadyRead(int waitTime)
+    Process *Process::waitForReadyRead(int waitTime)
 	{
 		if(!mProcess->waitForReadyRead(waitTime))
 			throwError(QStringLiteral("WaitForReadyReadError"), tr("Waiting for ready read failed"));
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::close()
+    Process *Process::close()
 	{
 		mProcess->close();
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::kill()
+    Process *Process::kill()
 	{
 		mProcess->kill();
 
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Process::terminate()
+    Process *Process::terminate()
 	{
 		mProcess->terminate();
 
-		return thisObject();
+        return this;
 	}
+
+    void Process::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClassWithStaticFunctions<Process, StaticProcess>(QStringLiteral("Process"),
+                                                                            {QStringLiteral("list"),
+                                                                             QStringLiteral("startDetached"),
+                                                                             QStringLiteral("thisProcess")},
+                                                                            scriptEngine);
+    }
 
     void Process::onError(QProcess::ProcessError processError)
 	{
-		if(mOnError.isValid())
-			mOnError.call(thisObject(), QScriptValueList() << static_cast<ProcessError>(processError));
+        if(!mOnError.isUndefined())
+            mOnError.call(QJSValueList() << static_cast<ProcessError>(processError));
 	}
 
 	void Process::finished(int exitCode, QProcess::ExitStatus exitStatus)
 	{
-		if(mOnFinished.isValid())
-			mOnFinished.call(thisObject(), QScriptValueList() << exitCode << static_cast<ExitStatus>(exitStatus));
+        if(!mOnFinished.isUndefined())
+            mOnFinished.call(QJSValueList() << exitCode << static_cast<ExitStatus>(exitStatus));
 	}
 
 	void Process::readyReadStandardError()
 	{
-		if(mOnReadyReadStandardError.isValid())
-			mOnReadyReadStandardError.call(thisObject());
+        if(!mOnReadyReadStandardError.isUndefined())
+            mOnReadyReadStandardError.call();
 	}
 
 	void Process::readyReadStandardOutput()
 	{
-		if(mOnReadyReadStandardOutput.isValid())
-			mOnReadyReadStandardOutput.call(thisObject());
+        if(!mOnReadyReadStandardOutput.isUndefined())
+            mOnReadyReadStandardOutput.call();
 	}
 
 	void Process::started()
 	{
-		if(mOnStarted.isValid())
-			mOnStarted.call(thisObject());
+        if(!mOnStarted.isUndefined())
+            mOnStarted.call();
 	}
 
 	void Process::stateChanged(QProcess::ProcessState newState)
 	{
-		if(mOnStateChanged.isValid())
-			mOnStateChanged.call(thisObject(), QScriptValueList() << static_cast<ProcessState>(newState));
+        if(!mOnStateChanged.isUndefined())
+            mOnStateChanged.call(QJSValueList() << static_cast<ProcessState>(newState));
 	}
+
+    QJSValue StaticProcess::list()
+    {
+        QList<int> processesList = ActionTools::CrossPlatform::runningProcesses();
+
+        QJSValue back = qjsEngine(this)->newArray(processesList.count());
+
+        for(int index = 0; index < processesList.count(); ++index)
+            back.setProperty(index, CodeClass::construct<ProcessHandle>(processesList.at(index)));
+
+        return back;
+    }
+
+    QJSValue StaticProcess::startDetached(const QString &filename)
+    {
+        return startDetached(filename, {}, QDir::currentPath());
+    }
+
+    QJSValue StaticProcess::startDetached(const QString &filename, const QStringList &parameters)
+    {
+        return startDetached(filename, parameters, QDir::currentPath());
+    }
+
+    QJSValue StaticProcess::startDetached(const QString &filename, const QStringList &parameters, const QString &workingDirectory)
+    {
+        if(filename.isEmpty())
+        {
+            throwError(QStringLiteral("FilenameError"), tr("Invalid filename"));
+            return {};
+        }
+
+        qint64 processId;
+        if(!QProcess::startDetached(filename, parameters, workingDirectory, &processId))
+        {
+            throwError(QStringLiteral("StartProcessError"), tr("Unable to start the process"));
+            return {};
+        }
+
+        return CodeClass::construct<ProcessHandle>(processId);
+    }
+
+    QJSValue StaticProcess::thisProcess()
+    {
+#ifdef Q_OS_WIN
+        return CodeClass::construct<ProcessHandle>(GetCurrentProcessId());
+#else
+        return CodeClass::construct<ProcessHandle>(getpid());
+#endif
+    }
 }

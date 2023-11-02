@@ -27,7 +27,12 @@ namespace Execution
 	class ScriptAgent;
 }
 
-class QScriptEngine;
+namespace ActionTools
+{
+    class ScriptEngine;
+}
+
+class QJSEngine;
 class QScriptEngineDebugger;
 class QMainWindow;
 
@@ -37,6 +42,7 @@ class CodeExecuter : public Executer
 	
 public:
     explicit CodeExecuter(QObject *parent = nullptr);
+    ~CodeExecuter() override;
 	
 	bool start(QIODevice *device, const QString &filename) override;
 	
@@ -46,7 +52,7 @@ private slots:
 	void stopExecution();
 	
 private:
-	QScriptEngine *mScriptEngine;
+    std::unique_ptr<ActionTools::ScriptEngine> mScriptEngine;
 	Execution::ScriptAgent *mScriptAgent;
 	QScriptEngineDebugger *mScriptEngineDebugger;
 	QMainWindow *mDebuggerWindow;

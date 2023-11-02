@@ -23,9 +23,7 @@
 #include "actiontools/actiontools_global.hpp"
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QSize>
 
 namespace Code
@@ -37,13 +35,8 @@ namespace Code
 		Q_PROPERTY(int height READ height WRITE setHeight)
 		
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QSize &size, QScriptEngine *engine);
-		static QSize parameter(QScriptContext *context, QScriptEngine *engine);
-
-		static void registerClass(QScriptEngine *scriptEngine);
-		
-		Size();
+        Q_INVOKABLE Size();
+        Q_INVOKABLE Size(int width, int height);
 		Size(const Size &other);
 		Size(const QSize &size);
 		
@@ -58,13 +51,14 @@ namespace Code
 		int width() const;
 		int height() const;
 		
-	public slots:
-		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const override;
-		QString toString() const override;
-		QScriptValue setWidth(int width);
-		QScriptValue setHeight(int height);
-		
+        Q_INVOKABLE QJSValue clone() const;
+        Q_INVOKABLE bool equals(const QJSValue &other) const;
+        Q_INVOKABLE QString toString() const override;
+        Q_INVOKABLE Size *setWidth(int width);
+        Q_INVOKABLE Size *setHeight(int height);
+
+        static void registerClass(QJSEngine &scriptEngine);
+
 	private:
 		QSize mSize;
 	};

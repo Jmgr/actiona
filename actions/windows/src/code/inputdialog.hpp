@@ -31,9 +31,9 @@ namespace Code
 	class InputDialog : public BaseWindow
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onClosed READ onClosed WRITE setOnClosed)
-		Q_PROPERTY(QScriptValue onValueChanged READ onValueChanged WRITE setOnValueChanged)
-		Q_PROPERTY(QScriptValue value READ value WRITE setValue)
+		Q_PROPERTY(QJSValue onClosed READ onClosed WRITE setOnClosed)
+		Q_PROPERTY(QJSValue onValueChanged READ onValueChanged WRITE setOnValueChanged)
+		Q_PROPERTY(QJSValue value READ value WRITE setValue)
 
 	public:
 		enum InputType
@@ -54,36 +54,36 @@ namespace Code
 		};
         Q_ENUM(TextEchoMode)
 		
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-
-		InputDialog();
+        Q_INVOKABLE InputDialog();
+        Q_INVOKABLE InputDialog(const QJSValue &parameters);
 		~InputDialog() override;
 		
-		void setOnClosed(const QScriptValue &onClosed)						{ mOnClosed = onClosed; }
-		void setOnValueChanged(const QScriptValue &onValueChanged)			{ mOnValueChanged = onValueChanged; }
+		void setOnClosed(const QJSValue &onClosed)						{ mOnClosed = onClosed; }
+		void setOnValueChanged(const QJSValue &onValueChanged)			{ mOnValueChanged = onValueChanged; }
 		
-		QScriptValue onClosed() const										{ return mOnClosed; }
-		QScriptValue onValueChanged() const									{ return mOnValueChanged; }
+		QJSValue onClosed() const										{ return mOnClosed; }
+		QJSValue onValueChanged() const									{ return mOnValueChanged; }
 
-		QScriptValue value() const;
+		QJSValue value() const;
 		
-	public slots:
-		QString toString() const override					{ return QStringLiteral("InputDialog"); }
-		QScriptValue setLabelText(const QString &labelText);
-		QScriptValue setOkButtonText(const QString &okButtonText);
-		QScriptValue setCancelButtonText(const QString &cancelButtonText);
-		QScriptValue setTextEchoMode(TextEchoMode textEchoMode);
-		QScriptValue setFloatDecimals(int decimals);
-		QScriptValue setIntegerStep(int step);
-		QScriptValue setMaximum(const QScriptValue &maximum);
-		QScriptValue setMinimum(const QScriptValue &minimum);
-		QScriptValue setRange(const QScriptValue &minimum, const QScriptValue &maximum);
-		QScriptValue setInputType(InputType inputType);
-		QScriptValue setValue(const QScriptValue &value);
-		QScriptValue setItems(const QScriptValue &items);
-		QScriptValue setItemsEditable(bool itemsEditable);
-		QScriptValue show();
-		int showModal();
+        Q_INVOKABLE QString toString() const override					{ return QStringLiteral("InputDialog"); }
+        Q_INVOKABLE InputDialog *setLabelText(const QString &labelText);
+        Q_INVOKABLE InputDialog *setOkButtonText(const QString &okButtonText);
+        Q_INVOKABLE InputDialog *setCancelButtonText(const QString &cancelButtonText);
+        Q_INVOKABLE InputDialog *setTextEchoMode(TextEchoMode textEchoMode);
+        Q_INVOKABLE InputDialog *setFloatDecimals(int decimals);
+        Q_INVOKABLE InputDialog *setIntegerStep(int step);
+        Q_INVOKABLE InputDialog *setMaximum(const QJSValue &maximum);
+        Q_INVOKABLE InputDialog *setMinimum(const QJSValue &minimum);
+        Q_INVOKABLE InputDialog *setRange(const QJSValue &minimum, const QJSValue &maximum);
+        Q_INVOKABLE InputDialog *setInputType(InputType inputType);
+        Q_INVOKABLE InputDialog *setValue(const QJSValue &value);
+        Q_INVOKABLE InputDialog *setItems(const QJSValue &items);
+        Q_INVOKABLE InputDialog *setItemsEditable(bool itemsEditable);
+        Q_INVOKABLE InputDialog *show();
+        Q_INVOKABLE int showModal();
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private slots:
 		void finished(int result);
@@ -95,13 +95,13 @@ namespace Code
 		void setup();
 
 		InputType mInputType{Text};
-		QScriptValue mValue;
-		QScriptValue mItems;
-		QScriptValue mMinimum;
-		QScriptValue mMaximum;
+		QJSValue mValue;
+		QJSValue mItems;
+		QJSValue mMinimum;
+		QJSValue mMaximum;
 		QInputDialog *mInputDialog;
-		QScriptValue mOnClosed;
-		QScriptValue mOnValueChanged;
+		QJSValue mOnClosed;
+		QJSValue mOnValueChanged;
 	};
 }
 

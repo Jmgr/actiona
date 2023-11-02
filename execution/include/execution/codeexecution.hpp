@@ -21,31 +21,33 @@
 #pragma once
 
 #include "execution_global.hpp"
-
-#include <QObject>
-#include <QScriptValue>
-
-class QScriptContext;
-class QScriptEngine;
+#include "actiontools/code/codeclass.hpp"
 
 namespace Execution
 {
-	class ScriptAgent;
-	
-	class EXECUTIONSHARED_EXPORT CodeExecution : public QObject
+    class EXECUTIONSHARED_EXPORT CodeExecution : public Code::CodeClass
 	{
 		Q_OBJECT
 		
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static void setScriptAgent(ScriptAgent *scriptAgent) { mScriptAgent = scriptAgent; }
+        Q_INVOKABLE CodeExecution() = default;
 
-		static QScriptValue pause(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue sleep(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue stop(QScriptContext *context, QScriptEngine *engine);
-		
-	private:
-		static ScriptAgent *mScriptAgent;
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("Execution"); }
+
+        static void registerClass(QJSEngine &scriptEngine);
 	};
+
+    class EXECUTIONSHARED_EXPORT StaticCodeExecution : public Code::CodeClass
+    {
+        Q_OBJECT
+
+    public:
+        StaticCodeExecution(QObject *parent): CodeClass(parent) {}
+
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticExecution"); }
+        Q_INVOKABLE StaticCodeExecution *pause(int duration);
+        Q_INVOKABLE StaticCodeExecution *sleep(int duration);
+        Q_INVOKABLE StaticCodeExecution *stop();
+    };
 }
 

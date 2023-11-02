@@ -22,6 +22,7 @@
 
 #include <QPoint>
 #include <QList>
+#include <QMetaType>
 
 namespace ActionTools
 {
@@ -42,3 +43,4 @@ namespace ActionTools
     using MatchingPointList = QList<MatchingPoint>;
 }
 
+Q_DECLARE_METATYPE(ActionTools::MatchingPoint)

@@ -26,7 +26,6 @@
 #include <QObject>
 #include <QTimer>
 #include <QElapsedTimer>
-#include <QScriptEngineDebugger>
 #include <QVersionNumber>
 
 namespace ActionTools
@@ -34,17 +33,16 @@ namespace ActionTools
 	class Script;
 	class ActionFactory;
 	class ActionInstance;
+    class ScriptEngine;
 }
 
 class QStandardItemModel;
 class QMainWindow;
-class QScriptEngine;
 class QProgressDialog;
 
 namespace Execution
 {
 	class ExecutionWindow;
-	class ScriptAgent;
 
 	class EXECUTIONSHARED_EXPORT Executer : public QObject
 	{
@@ -69,12 +67,16 @@ namespace Execution
 
 		ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
 		ActionTools::ConsoleWidget *consoleWidget() const	{ return mConsoleWidget; }
-		ScriptAgent *scriptAgent() const					{ return mScriptAgent; }
 
 		int currentActionIndex() const						{ return mCurrentActionIndex; }
 		ActionTools::Script *script() const					{ return mScript; }
+
+        ActionTools::ScriptEngine &scriptEngine() const     { return *mScriptEngine; }
+
+        void setCurrentParameter(int parameter) { mCurrentParameter = parameter; }
+        int currentParameter() const { return mCurrentParameter; }
 		
-		static bool isExecuterRunning()						{ return (mExecutionStatus != Stopped); }
+        bool isExecuterRunning() const                      { return (mExecutionStatus != Stopped); }
 
         ActionTools::ActionInstance *currentActionInstance() const;
 
@@ -91,7 +93,7 @@ namespace Execution
 	private slots:
 		void executionException(int exception,
 								const QString &message);
-		void actionExecutionEnded();
+        void actionExecutionEnded(bool stopScript = false);
 		void disableAction(bool disable);
 		void startNextAction();
 		void startActionExecution();
@@ -142,24 +144,23 @@ namespace Execution
 		int mCurrentActionIndex;
 		bool mExecutionStarted;
 		bool mExecutionEnded;
-		QScriptEngine *mScriptEngine{nullptr};
-		QScriptEngineDebugger mScriptEngineDebugger;
-		QMainWindow *mDebuggerWindow;
+        ActionTools::ScriptEngine *mScriptEngine{nullptr};
+        bool mIsEvaluatingScript{false};
 		bool mExecuteOnlySelection;
-		ScriptAgent *mScriptAgent{nullptr};
 		QList<bool> mActionEnabled;
 		QTimer mExecutionTimer;
 		QElapsedTimer mExecutionTime;
 		QProgressDialog *mProgressDialog;
 		int mActiveActionsCount;
 		bool mExecutionPaused;
-		bool mHasExecuted{false};
-		static ExecutionStatus mExecutionStatus;
+        bool mHasExecuted{false};
+        ExecutionStatus mExecutionStatus{Stopped};
 		bool mPauseInterrupt{false};
         QVersionNumber mActionaVersion;
 		QVersionNumber mScriptVersion;
 		bool mIsActExec;
         bool mShowDebuggerOnCodeError{true};
+        int mCurrentParameter{0};
 
 		Q_DISABLE_COPY(Executer)
 	};

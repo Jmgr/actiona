@@ -32,7 +32,7 @@
 #define XK_XKB_KEYS
 #include <X11/keysymdef.h>
 #include <X11/XF86keysym.h>
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #endif
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -154,7 +154,7 @@ namespace ActionTools
 
 		QKeySequence keySequence(key);
 
-		mKey = keySequence[0];
+        mKey = keySequence[0].toCombined();
 		mKey &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
 
 		return true;
@@ -168,7 +168,7 @@ namespace ActionTools
 		{
 			QKeySequence keySequence(key);
 
-			mKey = keySequence[0];
+            mKey = keySequence[0].toCombined();
 			mKey &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
 
 			return true;

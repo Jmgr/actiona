@@ -29,11 +29,6 @@
 
 namespace Code
 {
-	QScriptValue Registry::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new Registry, context, engine);
-	}
-	
 	Registry::Registry()
 		: CodeClass()
 	#ifdef Q_OS_WIN
@@ -50,7 +45,7 @@ namespace Code
 #endif
     }
 	
-	QScriptValue Registry::openKey(Key key, const QString &subKey)
+    Registry *Registry::openKey(Key key, const QString &subKey)
 	{
 	#ifdef Q_OS_WIN
 		HKEY hKey = enumToKey(key);
@@ -66,10 +61,10 @@ namespace Code
 		Q_UNUSED(key)
 		Q_UNUSED(subKey)
 	#endif
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Registry::createKey(Key key, const QString &subKey)
+    Registry *Registry::createKey(Key key, const QString &subKey)
 	{
 	#ifdef Q_OS_WIN
 		HKEY hKey = enumToKey(key);
@@ -85,10 +80,10 @@ namespace Code
 		Q_UNUSED(key)
 		Q_UNUSED(subKey)
 	#endif
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Registry::setValue(const QString &value, const QVariant &data) const
+    Registry *Registry::setValue(const QString &value, const QVariant &data)
 	{
 	#ifdef Q_OS_WIN
 		std::wstring wideValue = value.toStdWString();
@@ -150,7 +145,7 @@ namespace Code
 		Q_UNUSED(value)
 		Q_UNUSED(data)
 	#endif
-		return thisObject();
+        return this;
 	}
 	
 	QVariant Registry::value(const QString &value) const
@@ -197,7 +192,7 @@ namespace Code
 	
 				if(type == REG_MULTI_SZ)
 				{
-                    QStringList stringList = QString::fromWCharArray(buffer.data(), size / 2).split(QChar(L'\0'), QString::SkipEmptyParts);
+                    QStringList stringList = QString::fromWCharArray(buffer.data(), size / 2).split(QChar(L'\0'), Qt::SkipEmptyParts);
 
 					if(stringList.last().isEmpty())
 						stringList.removeLast();
@@ -324,7 +319,7 @@ namespace Code
 	#endif
 	}
 	
-	QScriptValue Registry::deleteValue(const QString &value) const
+    Registry *Registry::deleteValue(const QString &value)
 	{
 	#ifdef Q_OS_WIN
 		if(RegDeleteValue(mHKey, value.toStdWString().c_str()) != ERROR_SUCCESS)
@@ -332,7 +327,7 @@ namespace Code
 	#else
 		Q_UNUSED(value)
 	#endif
-		return thisObject();
+        return this;
 	}
 	
 	#ifdef Q_OS_WIN
@@ -427,7 +422,7 @@ namespace Code
 	}
 	#endif
 	
-	QScriptValue Registry::deleteKey(Key key, const QString &subKey) const
+    Registry *Registry::deleteKey(Key key, const QString &subKey)
 	{
 	#ifdef Q_OS_WIN
 		HKEY hKey = enumToKey(key);
@@ -438,25 +433,25 @@ namespace Code
 		Q_UNUSED(key)
 		Q_UNUSED(subKey)
 	#endif
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Registry::deleteKey() const
+    Registry *Registry::deleteKey()
 	{
 	#ifdef Q_OS_WIN
 		RegCloseKey(mHKey);
 	
 		deleteKey(mRootKey, mSubKey);
 	#endif
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Registry::closeKey() const
+    Registry *Registry::closeKey()
 	{
 	#ifdef Q_OS_WIN
 		RegCloseKey(mHKey);
 	#endif
-		return thisObject();
+        return this;
 	}
 	
 	#ifdef Q_OS_WIN
@@ -479,4 +474,9 @@ namespace Code
 		}
 	}
 	#endif
+
+    void Registry::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Registry>(QStringLiteral("Registry"), scriptEngine);
+    }
 }

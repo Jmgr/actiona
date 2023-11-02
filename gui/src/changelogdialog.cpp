@@ -43,7 +43,8 @@ void ChangelogDialog::setVersion(const QVersionNumber &version)
 
 void ChangelogDialog::setReleaseDate(const QDate &releaseDate)
 {
-	ui->releaseDate->setText(releaseDate.toString(Qt::DefaultLocaleLongDate));
+    QLocale locale;
+    ui->releaseDate->setText(locale.toString(releaseDate, QLocale::LongFormat));
 }
 
 void ChangelogDialog::setType(const QString &type)

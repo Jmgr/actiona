@@ -21,8 +21,9 @@
 #pragma once
 
 #include "execution_global.hpp"
+#include "actiontools/code/codeclass.hpp"
 
-class QScriptEngine;
+class QJSEngine;
 
 namespace ActionTools
 {
@@ -36,10 +37,22 @@ namespace Execution
 	class EXECUTIONSHARED_EXPORT CodeInitializer
 	{
 	public:
-        static void initialize(QScriptEngine *scriptEngine,
-                               ScriptAgent *scriptAgent,
+        static void initialize(QJSEngine &scriptEngine,
                                ActionTools::ActionFactory *actionFactory,
                                const QString &filename);
 	};
+
+    class EXECUTIONSHARED_EXPORT CodeGlobal : public Code::CodeClass
+    {
+        Q_OBJECT
+
+    public:
+        Q_INVOKABLE CodeGlobal(QObject *parent): Code::CodeClass(parent) {};
+
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("Global"); }
+        Q_INVOKABLE QJSValue includeFunction(const QString &filepath);
+
+        static void registerClass(QJSEngine &scriptEngine);
+    };
 }
 

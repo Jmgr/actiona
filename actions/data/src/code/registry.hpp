@@ -22,9 +22,7 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QStringList>
 
 #ifdef Q_OS_WIN
@@ -48,25 +46,23 @@ namespace Code
 		};
         Q_ENUM(Key)
 	
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-	
-		Registry();
+        Q_INVOKABLE Registry();
 		~Registry() override;
 	
-	public slots:
-		QString toString() const override                                { return QStringLiteral("Registry"); }
-        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Registry>(other); }
-		QScriptValue openKey(Key key, const QString &subKey);
-		QScriptValue createKey(Key key, const QString &subKey);
-		QScriptValue setValue(const QString &value, const QVariant &data) const;
-		QVariant value(const QString &value = QString()) const;
-		QStringList valueNames() const;
-		QStringList keys() const;
-		QScriptValue deleteValue(const QString &value = QString()) const;
-		QScriptValue deleteKey(Key key, const QString &subKey) const;
-		QScriptValue deleteKey() const;
-		QScriptValue closeKey() const;
-	
+        Q_INVOKABLE QString toString() const override                                { return QStringLiteral("Registry"); }
+        Q_INVOKABLE Registry *openKey(Key key, const QString &subKey);
+        Q_INVOKABLE Registry *createKey(Key key, const QString &subKey);
+        Q_INVOKABLE Registry *setValue(const QString &value, const QVariant &data);
+        Q_INVOKABLE QVariant value(const QString &value = QString()) const;
+        Q_INVOKABLE QStringList valueNames() const;
+        Q_INVOKABLE QStringList keys() const;
+        Q_INVOKABLE Registry *deleteValue(const QString &value = QString());
+        Q_INVOKABLE Registry *deleteKey(Key key, const QString &subKey);
+        Q_INVOKABLE Registry *deleteKey();
+        Q_INVOKABLE Registry *closeKey();
+
+        static void registerClass(QJSEngine &scriptEngine);
+
 	private:
 	#ifdef Q_OS_WIN
 		HKEY enumToKey(Key key) const;

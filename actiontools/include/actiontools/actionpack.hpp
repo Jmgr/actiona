@@ -22,9 +22,10 @@
 
 #include "actiontools_global.hpp"
 
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QtPlugin>
 #include <QVersionNumber>
+
+class QJSEngine;
 
 namespace ActionTools
 {
@@ -42,7 +43,7 @@ namespace ActionTools
 		virtual QString id() const = 0;
 		virtual QString name() const = 0;
 		virtual QVersionNumber version() const = 0;
-		virtual void codeInit(QScriptEngine *scriptEngine) const	{ Q_UNUSED(scriptEngine) }
+        virtual void codeInit(QJSEngine &scriptEngine) const	{ Q_UNUSED(scriptEngine) }
 		
 		//Returns an instance of each plugin definition
 		const ActionDefinitionList &actionsDefinitions() const		{ return mActionDefinitions; }
@@ -55,15 +56,6 @@ namespace ActionTools
 		{
 			mActionDefinitions.append(actionDefinition);
 		}
-		
-		template<typename T>
-		void addCodeClass(const QString &objectName, QScriptEngine *scriptEngine) const
-		{
-			QScriptValue metaObject = scriptEngine->newQMetaObject(&T::staticMetaObject, scriptEngine->newFunction(&T::constructor));
-			scriptEngine->globalObject().setProperty(objectName, metaObject);
-		}
-
-		void addCodeStaticMethod(QScriptEngine::FunctionSignature method, const QString &objectName, const QString &methodName, QScriptEngine *scriptEngine) const;
 
 	private:
 		ActionDefinitionList mActionDefinitions;

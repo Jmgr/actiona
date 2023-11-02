@@ -21,12 +21,9 @@
 #pragma once
 
 #include "actiontools/actiontools_global.hpp"
-#include "codetools.hpp"
 #include "codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QByteArray>
 
 namespace Code
@@ -36,13 +33,7 @@ namespace Code
 		Q_OBJECT
 	
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const RawData &other, QScriptEngine *engine);
-		static QScriptValue constructor(const QByteArray &byteArray, QScriptEngine *engine);
-
-		static void registerClass(QScriptEngine *scriptEngine);
-		
-		RawData();
+        Q_INVOKABLE RawData();
 		RawData(const RawData &other);
 		RawData(const QByteArray &byteArray);
 		
@@ -54,36 +45,35 @@ namespace Code
 		
 		const QByteArray &byteArray() const;
 
-        int additionalMemoryCost() const override { return mByteArray.size(); }
-	
-	public slots:
-		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const override ;
-		QString toString() const override ;
-		QScriptValue append(const QVariant &data);
-		QScriptValue chop(int n);
-		QScriptValue clear();
-		bool contains(const QVariant &data);
-		int count(const QVariant &data) const;
-		bool endsWith(const QVariant &data) const;
-		int indexOf(const QVariant &data, int from = 0) const;
-		bool isEmpty() const;
-		int lastIndexOf(const QVariant &data) const;
-		QScriptValue left(int len) const;
-		int length() const;
-		QScriptValue mid(int pos, int len = -1) const;
-		QScriptValue prepend(const QVariant &data);
-		QScriptValue remove(int pos, int len);
-		QScriptValue replace(const QString &before, const QString &after);
-		QScriptValue resize(int size);
-		QScriptValue right(int len) const;
-		QScriptValue setData(const QVariant &data);
-		int size() const;
-		bool startsWith(const QVariant &data);
-		double convertToNumber() const;
-		QString convertToString(Encoding encoding = Native) const;
-		QScriptValue truncate(int pos);
-		
+        Q_INVOKABLE QJSValue clone() const;
+        Q_INVOKABLE bool equals(const QJSValue &other) const;
+        Q_INVOKABLE QString toString() const override;
+        Q_INVOKABLE RawData *append(const QVariant &data);
+        Q_INVOKABLE RawData *chop(int n);
+        Q_INVOKABLE RawData *clear();
+        Q_INVOKABLE bool contains(const QVariant &data);
+        Q_INVOKABLE int count(const QVariant &data) const;
+        Q_INVOKABLE bool endsWith(const QVariant &data) const;
+        Q_INVOKABLE int indexOf(const QVariant &data, int from = 0) const;
+        Q_INVOKABLE bool isEmpty() const;
+        Q_INVOKABLE int lastIndexOf(const QVariant &data) const;
+        Q_INVOKABLE QJSValue left(int len) const;
+        Q_INVOKABLE int length() const;
+        Q_INVOKABLE QJSValue mid(int pos, int len = -1) const;
+        Q_INVOKABLE RawData *prepend(const QVariant &data);
+        Q_INVOKABLE RawData *remove(int pos, int len);
+        Q_INVOKABLE RawData *replace(const QString &before, const QString &after);
+        Q_INVOKABLE RawData *resize(int size);
+        Q_INVOKABLE QJSValue right(int len) const;
+        Q_INVOKABLE RawData *setData(const QVariant &data);
+        Q_INVOKABLE int size() const;
+        Q_INVOKABLE bool startsWith(const QVariant &data);
+        Q_INVOKABLE double convertToNumber() const;
+        Q_INVOKABLE QString convertToString(Encoding encoding = Native) const;
+        Q_INVOKABLE RawData *truncate(int pos);
+
+        static void registerClass(QJSEngine &scriptEngine);
+
 	private:
 		QByteArray mByteArray;
 	};

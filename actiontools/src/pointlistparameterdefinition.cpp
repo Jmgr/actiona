@@ -44,11 +44,11 @@ namespace ActionTools
 	{
 		QString pointBuffer = actionInstance->subParameter(name().original(), QStringLiteral("value")).value();
 		QPolygon polygon;
-        QStringList pointStrings = pointBuffer.split(QLatin1Char(';'), QString::SkipEmptyParts);
+        QStringList pointStrings = pointBuffer.split(QLatin1Char(';'), Qt::SkipEmptyParts);
 
 		for(const QString &pointString: qAsConst(pointStrings))
 		{
-            QStringList pointComponents = pointString.split(QLatin1Char(':'), QString::SkipEmptyParts);
+            QStringList pointComponents = pointString.split(QLatin1Char(':'), Qt::SkipEmptyParts);
 			if(pointComponents.size() != 2)
 				continue;
 

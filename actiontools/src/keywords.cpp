@@ -19,7 +19,6 @@
 */
 
 #include "actiontools/keywords.hpp"
-#include "actiontools/code/codetools.hpp"
 
 #include <QStandardItemModel>
 #include <QMetaMethod>

@@ -175,11 +175,6 @@ int main(int argc, char **argv)
 	qRegisterMetaType<ActionTools::SubParameter>("SubParameter");
 	qRegisterMetaType<QVersionNumber>("Version");
 
-	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstance>("ActionInstance");
-	qRegisterMetaTypeStreamOperators<ActionTools::Parameter>("Parameter");
-	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
-	qRegisterMetaTypeStreamOperators<QVersionNumber>("Version");
-
 	const auto &positionalArguments = optionsParser.positionalArguments();
 	if(positionalArguments.count() < 1 || (optionsParser.isSet(QStringLiteral("code")) && optionsParser.isSet(QStringLiteral("script"))))
 		optionsParser.showHelp(-1);

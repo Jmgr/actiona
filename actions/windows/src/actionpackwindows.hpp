@@ -62,13 +62,13 @@ public:
 	QString name() const override						{ return tr("Actions dealing with windows"); }
 	QVersionNumber version() const override				{ return QVersionNumber(0, 0, 1); }
 
-	void codeInit(QScriptEngine *scriptEngine) const override
+    void codeInit(QJSEngine &scriptEngine) const override
 	{
-		addCodeClass<Code::MessageBox>(QStringLiteral("MessageBox"), scriptEngine);
-		addCodeClass<Code::InputDialog>(QStringLiteral("InputDialog"), scriptEngine);
-		addCodeClass<Code::ProgressDialog>(QStringLiteral("ProgressDialog"), scriptEngine);
-		addCodeClass<Code::ColorDialog>(QStringLiteral("ColorDialog"), scriptEngine);
-		addCodeClass<Code::FileDialog>(QStringLiteral("FileDialog"), scriptEngine);
+        Code::MessageBox::registerClass(scriptEngine);
+        Code::InputDialog::registerClass(scriptEngine);
+        Code::ProgressDialog::registerClass(scriptEngine);
+        Code::ColorDialog::registerClass(scriptEngine);
+        Code::FileDialog::registerClass(scriptEngine);
 	}
 
 private:

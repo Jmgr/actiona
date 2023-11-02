@@ -20,57 +20,22 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QStringList>
-#include <QScriptValueIterator>
 
 namespace Code
 {
-	void CodeClass::throwError(QScriptContext *context, QScriptEngine *engine, const QString &errorType, const QString &message, const QString &parent)
+    void CodeClass::throwError(const QString &errorType, const QString &message) const
+    {
+        auto engine = qjsEngine(this);
+        auto error = engine->newErrorObject(QJSValue::TypeError, message);
+        error.setProperty(QStringLiteral("name"), errorType);
+        engine->throwError(error);
+    }
+
+    CodeClass::CodeClass(QObject *parent)
+        : QObject(parent)
 	{
-		QScriptValue errorTypeValue = engine->globalObject().property(errorType);
-		if(!errorTypeValue.isValid())
-		{
-			errorTypeValue = engine->newFunction(emptyFunction);
-			engine->globalObject().setProperty(errorType, errorTypeValue);
-			errorTypeValue.setProperty(QStringLiteral("prototype"), engine->globalObject().property(parent).construct());
-		}
-
-		QScriptValue thrownError = errorTypeValue.construct();
-		thrownError.setProperty(QStringLiteral("message"), message);
-		thrownError.setProperty(QStringLiteral("name"), errorType);
-		context->throwValue(thrownError);
-	}
-
-	CodeClass::CodeClass()
-		: QObject(),
-		QScriptable()
-	{
-	}
-
-	void CodeClass::throwError(const QString &errorType, const QString &message, const QString &parent) const
-	{
-		throwError(context(), engine(), errorType, message, parent);
-	}
-
-	QScriptValue CodeClass::constructor(CodeClass *object, QScriptContext *context, QScriptEngine *engine)
-	{
-		if(context->isCalledAsConstructor())
-        {
-            engine->reportAdditionalMemoryCost(object->additionalMemoryCost());
-
-            return engine->newQObject(context->thisObject(), object, QScriptEngine::ScriptOwnership);
-        }
-        else
-			return constructor(object, engine);
-	}
-
-	QScriptValue CodeClass::constructor(CodeClass *object, QScriptEngine *engine)
-	{
-        engine->reportAdditionalMemoryCost(object->additionalMemoryCost());
-
-        return engine->newQObject(object, QScriptEngine::ScriptOwnership);
 	}
 
 	QByteArray CodeClass::toEncoding(const QString &string, Encoding encoding)
@@ -105,20 +70,36 @@ namespace Code
 		}
 	}
 
-	QStringList CodeClass::arrayParameterToStringList(const QScriptValue &scriptValue)
+	QStringList CodeClass::arrayParameterToStringList(const QJSValue &scriptValue)
 	{
+        if(!scriptValue.isArray())
+            return {};
+
+        auto length = scriptValue.property(QStringLiteral("length")).toInt();
         QStringList back;
 
-        qScriptValueToSequence(scriptValue, back);
+        back.reserve(length);
+
+        for(int i = 0; i < length; i++)
+        {
+            back.append(scriptValue.property(i).toString());
+        }
 
 		return back;
 	}
 
-	QScriptValue CodeClass::emptyFunction(QScriptContext *context, QScriptEngine *engine)
-	{
-		if(context->isCalledAsConstructor())
-			return context->thisObject();
-		else
-			return engine->newObject();
-	}
+    std::tuple<bool, QString, int> checkSyntax(const QString &program)
+    {
+        QString prefix = QStringLiteral("function checkSyntax() { ");
+        QJSEngine engine;
+        QJSValue result = engine.evaluate(QStringLiteral("%1%2 }").arg(prefix).arg(program));
+
+        if(!result.isError())
+            return {true, {}, {}};
+
+        auto message = result.property(QStringLiteral("message")).toString();
+        auto line = result.property(QStringLiteral("lineNumber")).toInt();
+
+        return {false, message, line};
+    }
 }

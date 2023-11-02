@@ -19,6 +19,7 @@
 */
 
 #include <QtGlobal>
+#include <QAudioOutput>
 
 #include "playsoundinstance.hpp"
 
@@ -27,12 +28,9 @@ namespace Actions
 	PlaySoundInstance::PlaySoundInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
 		  mMediaPlayer(new QMediaPlayer(this)),
-		  mMediaPlaylist(new QMediaPlaylist(this)),
 		  mBlocking(false)
 	{
-		mMediaPlayer->setPlaylist(mMediaPlaylist);
-
-        connect(mMediaPlayer, &QMediaPlayer::stateChanged, this, &PlaySoundInstance::stateChanged);
+        connect(mMediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &PlaySoundInstance::mediaStatusChanged);
 	}
 
     PlaySoundInstance::~PlaySoundInstance() = default;
@@ -51,7 +49,7 @@ namespace Actions
 		if(!ok)
 			return;
 
-		mMediaPlaylist->clear();
+        mMediaPlayer->stop();
 
 		QUrl url;
 
@@ -60,16 +58,12 @@ namespace Actions
 		else
 			url = QUrl::fromLocalFile(file);
 
-		if(!mMediaPlaylist->addMedia(url))
-		{
-			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to load file %1: %2").arg(file).arg(mMediaPlayer->errorString()));
-			return;
-		}
+        mMediaPlayer->setSource(url);
 
-		mMediaPlaylist->setPlaybackMode(looping ? QMediaPlaylist::Loop : QMediaPlaylist::CurrentItemOnce);
+        mMediaPlayer->setLoops(looping ? QMediaPlayer::Infinite : QMediaPlayer::Once);
 
-		mMediaPlayer->setPlaybackRate(playbackRate / 100.0f);
-		mMediaPlayer->setVolume(volume);
+        mMediaPlayer->setPlaybackRate(playbackRate / 100.0f);
+        mMediaPlayer->audioOutput()->setVolume(volume);
 		mMediaPlayer->play();
 
 		if(mMediaPlayer->error() != QMediaPlayer::NoError)
@@ -102,9 +96,9 @@ namespace Actions
 		mMediaPlayer->stop();
 	}
 
-	void PlaySoundInstance::stateChanged(QMediaPlayer::State state)
+    void PlaySoundInstance::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 	{
-		if(state == QMediaPlayer::StoppedState)
+        if(status == QMediaPlayer::EndOfMedia)
 			executionEnded();
 	}
 }

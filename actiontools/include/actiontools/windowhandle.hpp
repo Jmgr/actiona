@@ -58,9 +58,9 @@ namespace ActionTools
 		static QList<WindowHandle> windowList();
         static QStringList windowTitles();
 		static WindowHandle findWindow(const QString &title);
-		static WindowHandle findWindow(const QRegExp &regExp);
+		static WindowHandle findWindow(const QRegularExpression &regExp);
 		static QList<WindowHandle> findWindows(const QString &title);
-		static QList<WindowHandle> findWindows(const QRegExp &regExp);
+		static QList<WindowHandle> findWindows(const QRegularExpression &regExp);
 
 	private:
 		WId mValue{0};

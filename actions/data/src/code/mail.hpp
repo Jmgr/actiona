@@ -23,9 +23,7 @@
 #include "actiontools/code/codeclass.hpp"
 #include "qxtsmtp/qxtsmtp.h"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 
 namespace Code
 {
@@ -34,25 +32,24 @@ namespace Code
         Q_OBJECT
         Q_PROPERTY(QString username READ username WRITE setUsername)
         Q_PROPERTY(QString password READ password WRITE setPassword)
-        Q_PROPERTY(QScriptValue onConnected READ onConnected WRITE setOnConnected)
-        Q_PROPERTY(QScriptValue onConnectionFailed READ onConnectionFailed WRITE setOnConnectionFailed)
-        Q_PROPERTY(QScriptValue onEncrypted READ onEncrypted WRITE setOnEncrypted)
-        Q_PROPERTY(QScriptValue onEncryptionFailed READ onEncryptionFailed WRITE setOnEncryptionFailed)
-        Q_PROPERTY(QScriptValue onAuthenticated READ onAuthenticated WRITE setOnAuthenticated)
-        Q_PROPERTY(QScriptValue onAuthenticationFailed READ onAuthenticationFailed WRITE setOnAuthenticationFailed)
-        Q_PROPERTY(QScriptValue onSenderRejected READ onSenderRejected WRITE setOnSenderRejected)
-        Q_PROPERTY(QScriptValue onRecipientRejected READ onRecipientRejected WRITE setOnRecipientRejected)
-        Q_PROPERTY(QScriptValue onMailFailed READ onMailFailed WRITE setOnMailFailed)
-        Q_PROPERTY(QScriptValue onMailSent READ onMailSent WRITE setOnMailSent)
-        Q_PROPERTY(QScriptValue onFinished READ onFinished WRITE setOnFinished)
-        Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
+        Q_PROPERTY(QJSValue onConnected READ onConnected WRITE setOnConnected)
+        Q_PROPERTY(QJSValue onConnectionFailed READ onConnectionFailed WRITE setOnConnectionFailed)
+        Q_PROPERTY(QJSValue onEncrypted READ onEncrypted WRITE setOnEncrypted)
+        Q_PROPERTY(QJSValue onEncryptionFailed READ onEncryptionFailed WRITE setOnEncryptionFailed)
+        Q_PROPERTY(QJSValue onAuthenticated READ onAuthenticated WRITE setOnAuthenticated)
+        Q_PROPERTY(QJSValue onAuthenticationFailed READ onAuthenticationFailed WRITE setOnAuthenticationFailed)
+        Q_PROPERTY(QJSValue onSenderRejected READ onSenderRejected WRITE setOnSenderRejected)
+        Q_PROPERTY(QJSValue onRecipientRejected READ onRecipientRejected WRITE setOnRecipientRejected)
+        Q_PROPERTY(QJSValue onMailFailed READ onMailFailed WRITE setOnMailFailed)
+        Q_PROPERTY(QJSValue onMailSent READ onMailSent WRITE setOnMailSent)
+        Q_PROPERTY(QJSValue onFinished READ onFinished WRITE setOnFinished)
+        Q_PROPERTY(QJSValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
         Q_PROPERTY(int pendingMessageCount READ pendingMessageCount)
         Q_PROPERTY(bool startTlsDisabled READ startTlsDisabled WRITE setStartTlsDisabled)
 
     public:
-        static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-
-        Mail();
+        Q_INVOKABLE Mail();
+        Q_INVOKABLE Mail(const QJSValue &parameters);
 
 		QString username() const                                                    { return QString::fromUtf8(mSmtp.username()); }
         void setUsername(const QString &username)                                   { mSmtp.setUsername(username.toUtf8()); }
@@ -60,63 +57,61 @@ namespace Code
 		QString password() const                                                    { return QString::fromUtf8(mSmtp.password()); }
         void setPassword(const QString &password)                                   { mSmtp.setPassword(password.toUtf8()); }
 
-        void setOnConnected(const QScriptValue &onConnected)                        { mOnConnected = onConnected; }
-        QScriptValue onConnected() const                                            { return mOnConnected; }
+        void setOnConnected(const QJSValue &onConnected)                        { mOnConnected = onConnected; }
+        QJSValue onConnected() const                                            { return mOnConnected; }
 
-        void setOnConnectionFailed(const QScriptValue &onConnectionFailed)          { mOnConnectionFailed = onConnectionFailed; }
-        QScriptValue onConnectionFailed() const                                     { return mOnConnectionFailed; }
+        void setOnConnectionFailed(const QJSValue &onConnectionFailed)          { mOnConnectionFailed = onConnectionFailed; }
+        QJSValue onConnectionFailed() const                                     { return mOnConnectionFailed; }
 
-        void setOnEncrypted(const QScriptValue &onEncrypted)                        { mOnEncrypted = onEncrypted; }
-        QScriptValue onEncrypted() const                                            { return mOnEncrypted; }
+        void setOnEncrypted(const QJSValue &onEncrypted)                        { mOnEncrypted = onEncrypted; }
+        QJSValue onEncrypted() const                                            { return mOnEncrypted; }
 
-        void setOnEncryptionFailed(const QScriptValue &onEncryptionFailed)          { mOnEncryptionFailed = onEncryptionFailed; }
-        QScriptValue onEncryptionFailed() const                                     { return mOnEncryptionFailed; }
+        void setOnEncryptionFailed(const QJSValue &onEncryptionFailed)          { mOnEncryptionFailed = onEncryptionFailed; }
+        QJSValue onEncryptionFailed() const                                     { return mOnEncryptionFailed; }
 
-        void setOnAuthenticated(const QScriptValue &onAuthenticated)                { mOnAuthenticated = onAuthenticated; }
-        QScriptValue onAuthenticated() const                                        { return mOnAuthenticated; }
+        void setOnAuthenticated(const QJSValue &onAuthenticated)                { mOnAuthenticated = onAuthenticated; }
+        QJSValue onAuthenticated() const                                        { return mOnAuthenticated; }
 
-        void setOnAuthenticationFailed(const QScriptValue &onAuthenticationFailed)	{ mOnAuthenticationFailed = onAuthenticationFailed; }
-        QScriptValue onAuthenticationFailed() const                                 { return mOnAuthenticationFailed; }
+        void setOnAuthenticationFailed(const QJSValue &onAuthenticationFailed)	{ mOnAuthenticationFailed = onAuthenticationFailed; }
+        QJSValue onAuthenticationFailed() const                                 { return mOnAuthenticationFailed; }
 
-        void setOnSenderRejected(const QScriptValue &onSenderRejected)              { mOnSenderRejected = onSenderRejected; }
-        QScriptValue onSenderRejected() const                                       { return mOnSenderRejected; }
+        void setOnSenderRejected(const QJSValue &onSenderRejected)              { mOnSenderRejected = onSenderRejected; }
+        QJSValue onSenderRejected() const                                       { return mOnSenderRejected; }
 
-        void setOnRecipientRejected(const QScriptValue &onRecipientRejected)        { mOnRecipientRejected = onRecipientRejected; }
-        QScriptValue onRecipientRejected() const                                    { return mOnRecipientRejected; }
+        void setOnRecipientRejected(const QJSValue &onRecipientRejected)        { mOnRecipientRejected = onRecipientRejected; }
+        QJSValue onRecipientRejected() const                                    { return mOnRecipientRejected; }
 
-        void setOnMailFailed(const QScriptValue &onMailFailed)                      { mOnMailFailed = onMailFailed; }
-        QScriptValue onMailFailed() const                                           { return mOnMailFailed; }
+        void setOnMailFailed(const QJSValue &onMailFailed)                      { mOnMailFailed = onMailFailed; }
+        QJSValue onMailFailed() const                                           { return mOnMailFailed; }
 
-        void setOnMailSent(const QScriptValue &onMailSent)                          { mOnMailSent = onMailSent; }
-        QScriptValue onMailSent() const                                             { return mOnMailSent; }
+        void setOnMailSent(const QJSValue &onMailSent)                          { mOnMailSent = onMailSent; }
+        QJSValue onMailSent() const                                             { return mOnMailSent; }
 
-        void setOnFinished(const QScriptValue &onFinished)                          { mOnFinished = onFinished; }
-        QScriptValue onFinished() const                                             { return mOnFinished; }
+        void setOnFinished(const QJSValue &onFinished)                          { mOnFinished = onFinished; }
+        QJSValue onFinished() const                                             { return mOnFinished; }
 
-        void setOnDisconnected(const QScriptValue &onDisconnected)                  { mOnDisconnected = onDisconnected; }
-        QScriptValue onDisconnected() const                                         { return mOnDisconnected; }
+        void setOnDisconnected(const QJSValue &onDisconnected)                  { mOnDisconnected = onDisconnected; }
+        QJSValue onDisconnected() const                                         { return mOnDisconnected; }
 
         int pendingMessageCount() const                                             { return mSmtp.pendingMessages(); }
 
         bool startTlsDisabled() const                                               { return mSmtp.startTlsDisabled(); }
         void setStartTlsDisabled(bool disable)                                      { mSmtp.setStartTlsDisabled(disable); }
 
-    public slots:
-		QString toString() const override                                                    { return QStringLiteral("Mail"); }
-        bool equals(const QScriptValue &other) const override                        { return defaultEqualsImplementation<Mail>(other); }
+        Q_INVOKABLE QString toString() const override                                                    { return QStringLiteral("Mail"); }
+        Q_INVOKABLE Mail *connectToServer(const QString &serverName, int port = 25);
+        Q_INVOKABLE Mail *connectToSecureServer(const QString &serverName, int port = 465);
+        Q_INVOKABLE int send(const QJSValue &mail);
+        Q_INVOKABLE Mail *disconnectFromServer()                                         { mSmtp.disconnectFromHost(); return this; }
+        Q_INVOKABLE bool hasExtension(const QString &extension)                                 { return mSmtp.hasExtension(extension); }
+        Q_INVOKABLE QString extensionData(const QString &extension)                             { return mSmtp.extensionData(extension); }
+        Q_INVOKABLE Mail *waitForConnected(int waitTime = 30000);
+        Q_INVOKABLE Mail *waitForEncrypted(int waitTime = 30000);
+        Q_INVOKABLE Mail *waitForAuthenticated(int waitTime = 30000);
+        Q_INVOKABLE Mail *waitForFinished(int waitTime = 30000);
+        Q_INVOKABLE Mail *waitForDisconnected(int waitTime = 30000);
 
-        QScriptValue connectToServer(const QString &serverName, int port = 25);
-        QScriptValue connectToSecureServer(const QString &serverName, int port = 465);
-        int send(const QScriptValue &mail);
-        QScriptValue disconnectFromServer()                                         { mSmtp.disconnectFromHost(); return thisObject(); }
-        bool hasExtension(const QString &extension)                                 { return mSmtp.hasExtension(extension); }
-        QString extensionData(const QString &extension)                             { return mSmtp.extensionData(extension); }
-
-        QScriptValue waitForConnected(int waitTime = 30000);
-        QScriptValue waitForEncrypted(int waitTime = 30000);
-        QScriptValue waitForAuthenticated(int waitTime = 30000);
-        QScriptValue waitForFinished(int waitTime = 30000);
-        QScriptValue waitForDisconnected(int waitTime = 30000);
+        static void registerClass(QJSEngine &scriptEngine);
 
     private slots:
         void connected();
@@ -134,18 +129,18 @@ namespace Code
 
     private:
         QxtSmtp mSmtp;
-        QScriptValue mOnConnected;
-        QScriptValue mOnConnectionFailed;
-        QScriptValue mOnEncrypted;
-        QScriptValue mOnEncryptionFailed;
-        QScriptValue mOnAuthenticated;
-        QScriptValue mOnAuthenticationFailed;
-        QScriptValue mOnSenderRejected;
-        QScriptValue mOnRecipientRejected;
-        QScriptValue mOnMailFailed;
-        QScriptValue mOnMailSent;
-        QScriptValue mOnFinished;
-        QScriptValue mOnDisconnected;
+        QJSValue mOnConnected;
+        QJSValue mOnConnectionFailed;
+        QJSValue mOnEncrypted;
+        QJSValue mOnEncryptionFailed;
+        QJSValue mOnAuthenticated;
+        QJSValue mOnAuthenticationFailed;
+        QJSValue mOnSenderRejected;
+        QJSValue mOnRecipientRejected;
+        QJSValue mOnMailFailed;
+        QJSValue mOnMailSent;
+        QJSValue mOnFinished;
+        QJSValue mOnDisconnected;
     };
 }
 

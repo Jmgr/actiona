@@ -21,32 +21,40 @@
 #pragma once
 
 #include "execution_global.hpp"
-
-#include <QObject>
-#include <QScriptValue>
-
-class QScriptContext;
-class QScriptEngine;
+#include "actiontools/code/codeclass.hpp"
 
 namespace Execution
 {
-	class EXECUTIONSHARED_EXPORT CodeStdio : public QObject
+    class EXECUTIONSHARED_EXPORT CodeStdio : public Code::CodeClass
 	{
 		Q_OBJECT
 
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-				
-		static QScriptValue print(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue println(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue printWarning(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue printlnWarning(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue printError(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue printlnError(QScriptContext *context, QScriptEngine *engine);
-        static QScriptValue clear(QScriptContext *context, QScriptEngine *engine);
+        Q_INVOKABLE CodeStdio() = default;
 
-	private:
-		static void print(const QString &text);
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("Stdio"); }
+
+        static void registerClass(QJSEngine &scriptEngine);
 	};
+
+    class EXECUTIONSHARED_EXPORT StaticCodeStdio : public Code::CodeClass
+    {
+        Q_OBJECT
+
+    public:
+        StaticCodeStdio(QObject *parent): CodeClass(parent) {}
+
+        Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticStdio"); }
+        Q_INVOKABLE StaticCodeStdio *print(const QString &text);
+        Q_INVOKABLE StaticCodeStdio *println(const QString &text);
+        Q_INVOKABLE StaticCodeStdio *printWarning(const QString &text);
+        Q_INVOKABLE StaticCodeStdio *printlnWarning(const QString &text);
+        Q_INVOKABLE StaticCodeStdio *printError(const QString &text);
+        Q_INVOKABLE StaticCodeStdio *printlnError(const QString &text);
+        Q_INVOKABLE StaticCodeStdio *clear();
+
+    private:
+        void printInternal(const QString &text);
+    };
 }
 

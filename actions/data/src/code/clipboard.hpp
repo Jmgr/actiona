@@ -22,9 +22,7 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QClipboard>
 
 namespace Code
@@ -33,7 +31,7 @@ namespace Code
 	{
 		Q_OBJECT
 		Q_PROPERTY(QString text READ text WRITE setText)
-		Q_PROPERTY(QScriptValue image READ image WRITE setImage)
+		Q_PROPERTY(QJSValue image READ image WRITE setImage)
 	
 	public:
 		enum Mode
@@ -50,23 +48,22 @@ namespace Code
 		};
         Q_ENUM(DataType)
 		
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-	
-		Clipboard();
+        Q_INVOKABLE Clipboard();
+        Q_INVOKABLE explicit Clipboard(Mode mode);
 
 		QString text() const;
-		QScriptValue image() const;
+		QJSValue image() const;
 	
-	public slots:
-		QString toString() const override                                { return QStringLiteral("Clipboard"); }
-        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Clipboard>(other); }
-		QScriptValue setMode(Mode mode);
-		QScriptValue setText(const QString &value) const;
-		QScriptValue setImage(const QScriptValue &data) const;
-		DataType dataType() const;
+        Q_INVOKABLE QString toString() const override           { return QStringLiteral("Clipboard"); }
+        Q_INVOKABLE Clipboard *setMode(Mode mode);
+        Q_INVOKABLE Clipboard *setText(const QString &value);
+        Q_INVOKABLE Clipboard *setImage(const QJSValue &data);
+        Q_INVOKABLE DataType dataType() const;
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private:
-		void setModePrivate(QScriptContext *context, QScriptEngine *engine, Mode mode);
+        void setModePrivate(Mode mode);
 	
 		QClipboard::Mode mMode{QClipboard::Clipboard};
 	};

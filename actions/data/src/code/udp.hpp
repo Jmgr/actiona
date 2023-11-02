@@ -22,9 +22,7 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QUdpSocket>
 
 namespace Code
@@ -32,10 +30,10 @@ namespace Code
 	class Udp : public CodeClass
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onConnected READ onConnected WRITE setOnConnected)
-		Q_PROPERTY(QScriptValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
-		Q_PROPERTY(QScriptValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
-		Q_PROPERTY(QScriptValue onError READ onError WRITE setOnError)
+		Q_PROPERTY(QJSValue onConnected READ onConnected WRITE setOnConnected)
+		Q_PROPERTY(QJSValue onDisconnected READ onDisconnected WRITE setOnDisconnected)
+		Q_PROPERTY(QJSValue onReadyRead READ onReadyRead WRITE setOnReadyRead)
+		Q_PROPERTY(QJSValue onError READ onError WRITE setOnError)
 		
 	public:
 		enum OpenMode
@@ -45,33 +43,32 @@ namespace Code
 			ReadWrite =		QIODevice::ReadWrite
 		};
         Q_ENUM(OpenMode)
-		
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-		Udp();
+
+        Q_INVOKABLE Udp();
+        Q_INVOKABLE Udp(const QJSValue &parameters);
 		~Udp() override;
 		
-		void setOnConnected(const QScriptValue &onConnected)			{ mOnConnected = onConnected; }
-		void setOnDisconnected(const QScriptValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
-		void setOnReadyRead(const QScriptValue &onReadyRead)			{ mOnReadyRead = onReadyRead; }
-		void setOnError(const QScriptValue &onError)					{ mOnError = onError; }
+		void setOnConnected(const QJSValue &onConnected)			{ mOnConnected = onConnected; }
+		void setOnDisconnected(const QJSValue &onDisconnected)		{ mOnDisconnected = onDisconnected; }
+		void setOnReadyRead(const QJSValue &onReadyRead)			{ mOnReadyRead = onReadyRead; }
+		void setOnError(const QJSValue &onError)					{ mOnError = onError; }
 
-		QScriptValue onConnected() const								{ return mOnConnected; }
-		QScriptValue onDisconnected() const								{ return mOnDisconnected; }
-		QScriptValue onReadyRead() const								{ return mOnReadyRead; }
-		QScriptValue onError() const									{ return mOnError; }
+		QJSValue onConnected() const								{ return mOnConnected; }
+		QJSValue onDisconnected() const								{ return mOnDisconnected; }
+		QJSValue onReadyRead() const								{ return mOnReadyRead; }
+		QJSValue onError() const									{ return mOnError; }
 
-	public slots:
-		QString toString() const override                                        { return QStringLiteral("Udp"); }
-        bool equals(const QScriptValue &other) const override            { return defaultEqualsImplementation<Udp>(other); }
-		QScriptValue connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
-		QScriptValue waitForConnected(int waitTime = 30000);
-		QScriptValue waitForReadyRead(int waitTime = 30000);
-		QScriptValue write(const QScriptValue &data);
-		QScriptValue writeText(const QString &data, Encoding encoding = Native);
-		QScriptValue read();
-		QString readText(Encoding encoding = Native);
-		QScriptValue disconnect();
+        Q_INVOKABLE QString toString() const override                                        { return QStringLiteral("Udp"); }
+        Q_INVOKABLE Udp *connect(const QString &hostname, quint16 port, OpenMode openMode = ReadWrite);
+        Q_INVOKABLE Udp *waitForConnected(int waitTime = 30000);
+        Q_INVOKABLE Udp *waitForReadyRead(int waitTime = 30000);
+        Q_INVOKABLE Udp *write(const QJSValue &data);
+        Q_INVOKABLE Udp *writeText(const QString &data, Encoding encoding = Native);
+        Q_INVOKABLE QJSValue read();
+        Q_INVOKABLE QString readText(Encoding encoding = Native);
+        Q_INVOKABLE Udp *disconnect();
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private slots:
 		void connected();
@@ -81,10 +78,10 @@ namespace Code
 	
 	private:
 		QUdpSocket *mUdpSocket;
-		QScriptValue mOnConnected;
-		QScriptValue mOnDisconnected;
-		QScriptValue mOnReadyRead;
-		QScriptValue mOnError;
+		QJSValue mOnConnected;
+		QJSValue mOnDisconnected;
+		QJSValue mOnReadyRead;
+		QJSValue mOnError;
 	};
 }
 

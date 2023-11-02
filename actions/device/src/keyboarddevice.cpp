@@ -33,7 +33,7 @@
 #define XK_XKB_KEYS
 #include <X11/keysymdef.h>
 #include <X11/XF86keysym.h>
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #endif
 
 #ifdef Q_OS_WIN
@@ -100,7 +100,7 @@ static KeyCode keyToKeycode(const char *key)
 	if(keySym == NoSymbol)
 		return keyToKeycode("space");
 
-	return XKeysymToKeycode(QX11Info::display(), keySym);
+    return XKeysymToKeycode(ActionTools::X11Info::display(), keySym);
 }
 
 static bool sendCharacter(KeySym keySym)
@@ -112,19 +112,19 @@ static bool sendCharacter(KeySym keySym)
 			(ActionTools::KeySymHelper::keySymToModifier(keySym) - shift) / 2];
 
 	if(wrapKey)
-		result &= XTestFakeKeyEvent(QX11Info::display(), keyToKeycode(wrapKey), True, CurrentTime);
+        result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyToKeycode(wrapKey), True, CurrentTime);
 	if(shift)
-		result &= XTestFakeKeyEvent(QX11Info::display(), keyToKeycode("Shift_L"), True, CurrentTime);
+        result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyToKeycode("Shift_L"), True, CurrentTime);
 
-	result &= XTestFakeKeyEvent(QX11Info::display(), keyCode, True, CurrentTime);
-	result &= XTestFakeKeyEvent(QX11Info::display(), keyCode, False, CurrentTime);
+    result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyCode, True, CurrentTime);
+    result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyCode, False, CurrentTime);
 
 	if(shift)
-		result &= XTestFakeKeyEvent(QX11Info::display(), keyToKeycode("Shift_L"), False, CurrentTime);
+        result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyToKeycode("Shift_L"), False, CurrentTime);
 	if(wrapKey)
-		result &= XTestFakeKeyEvent(QX11Info::display(), keyToKeycode(wrapKey), False, CurrentTime);
+        result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyToKeycode(wrapKey), False, CurrentTime);
 
-	XFlush(QX11Info::display());
+    XFlush(ActionTools::X11Info::display());
 
 	return result;
 }
@@ -133,8 +133,8 @@ static bool sendKey(const char *key)
 {
 	bool result = true;
 
-	result &= XTestFakeKeyEvent(QX11Info::display(), keyToKeycode(key), True, CurrentTime);
-	result &= XTestFakeKeyEvent(QX11Info::display(), keyToKeycode(key), False, CurrentTime);
+    result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyToKeycode(key), True, CurrentTime);
+    result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyToKeycode(key), False, CurrentTime);
 
 	return result;
 }
@@ -288,14 +288,14 @@ bool KeyboardDevice::doKeyAction(Action action, int nativeKey, bool alterPressed
 	bool result = true;
 	
 #ifdef Q_OS_UNIX
-    KeyCode keyCode = XKeysymToKeycode(QX11Info::display(), nativeKey);
+    KeyCode keyCode = XKeysymToKeycode(ActionTools::X11Info::display(), nativeKey);
 	
 	if(action == Press || action == Trigger)
-		result &= XTestFakeKeyEvent(QX11Info::display(), keyCode, True, CurrentTime);
+        result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyCode, True, CurrentTime);
 	if(action == Release || action == Trigger)
-		result &= XTestFakeKeyEvent(QX11Info::display(), keyCode, False, CurrentTime);
+        result &= XTestFakeKeyEvent(ActionTools::X11Info::display(), keyCode, False, CurrentTime);
 
-	XFlush(QX11Info::display());
+    XFlush(ActionTools::X11Info::display());
 #endif
 	
 #ifdef Q_OS_WIN

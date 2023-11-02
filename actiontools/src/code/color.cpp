@@ -19,73 +19,30 @@
 */
 
 #include "actiontools/code/color.hpp"
-#include "actiontools/code/codetools.hpp"
 
 namespace Code
 {
-	QScriptValue Color::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		Color *color = nullptr;
-		
-		switch(context->argumentCount())
-		{
-		case 0:
-			color = new Color;
-			break;
-		case 1:
-			{
-				if(context->argument(0).isString())
-				{
-					if(!QColor::isValidColor(context->argument(0).toString()))
-					{
-						throwError(context, engine, QStringLiteral("ColorNameError"), tr("Invalid color name"));
-						color = new Color;
-					}
-					else
-						color = new Color(QColor(context->argument(0).toString()));
-				}
-				else
-				{
-					QObject *object = context->argument(0).toQObject();
-					if(auto codeColor = qobject_cast<Color*>(object))
-						color = new Color(*codeColor);
-					else
-						throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-				}
-			}
-			break;
-		case 3:
-			color = new Color(QColor(context->argument(0).toInt32(), context->argument(1).toInt32(), context->argument(2).toInt32()));
-			break;
-		case 4:
-			color = new Color(QColor(context->argument(0).toInt32(), context->argument(1).toInt32(), context->argument(2).toInt32(), context->argument(3).toInt32()));
-			break;
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			break;
-		}
-		
-		if(!color)
-			return engine->undefinedValue();
-	
-		return CodeClass::constructor(color, context, engine);
-	}
-	
-	QScriptValue Color::constructor(const QColor &color, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new Color(color), engine);
-	}
-
-	void Color::registerClass(QScriptEngine *scriptEngine)
-	{
-		CodeTools::addClassToScriptEngine<Color>(scriptEngine);
-	}
-	
 	Color::Color()
 		: CodeClass()
 	{
 		
 	}
+
+    Color::Color(const QString &colorName)
+                : CodeClass()
+    {
+        if(!QColor::isValidColor(colorName))
+            throwError(QStringLiteral("ColorNameError"), tr("Invalid color name"));
+        else
+            mColor = {colorName};
+    }
+
+    Color::Color(int red, int green, int blue, int alpha)
+                : CodeClass(),
+        mColor(red, green, blue, alpha)
+    {
+
+    }
 
 	Color::Color(const Color &other)
 		: CodeClass(),
@@ -150,12 +107,12 @@ namespace Code
 		return mColor.alpha();
 	}
 	
-	QScriptValue Color::clone() const
-	{
-		return constructor(mColor, engine());
+	QJSValue Color::clone() const
+    {
+        return CodeClass::clone<Color>();
 	}
 	
-	bool Color::equals(const QScriptValue &other) const
+	bool Color::equals(const QJSValue &other) const
 	{
 		if(other.isUndefined() || other.isNull())
 			return false;
@@ -172,81 +129,81 @@ namespace Code
 		return QStringLiteral("Color {red: %1, green: %2, blue: %3, alpha: %4}").arg(mColor.red()).arg(green()).arg(blue()).arg(alpha());
 	}
 	
-	QScriptValue Color::setRed(int red)
+    Color *Color::setRed(int red)
 	{
 		mColor.setRed(red);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Color::setGreen(int green)
+    Color *Color::setGreen(int green)
 	{
-		mColor.setGreen(green);
-		
-		return thisObject();
-	}
+        mColor.setGreen(green);
 
-	QScriptValue Color::setBlue(int blue)
+        return this;
+    }
+
+    Color *Color::setBlue(int blue)
 	{
-		mColor.setBlue(blue);
-		
-		return thisObject();
-	}
+        mColor.setBlue(blue);
 
-	QScriptValue Color::setAlpha(int alpha)
+        return this;
+    }
+
+    Color *Color::setAlpha(int alpha)
 	{
-		mColor.setAlpha(alpha);
-		
-		return thisObject();
-	}
+        mColor.setAlpha(alpha);
 
-	QScriptValue Color::setCmyk(int cyan, int magenta, int yellow, int black, int alpha)
+        return this;
+    }
+
+    Color *Color::setCmyk(int cyan, int magenta, int yellow, int black, int alpha)
 	{
-		mColor.setCmyk(cyan, magenta, yellow, black, alpha);
-		
-		return thisObject();
-	}
+        mColor.setCmyk(cyan, magenta, yellow, black, alpha);
 
-	QScriptValue Color::setHsl(int hue, int saturation, int lightness, int alpha)
+        return this;
+    }
+
+    Color *Color::setHsl(int hue, int saturation, int lightness, int alpha)
 	{
-		mColor.setHsl(hue, saturation, lightness, alpha);
-		
-		return thisObject();
-	}
+        mColor.setHsl(hue, saturation, lightness, alpha);
 
-	QScriptValue Color::setHsv(int hue, int saturation, int value, int alpha)
+        return this;
+    }
+
+    Color *Color::setHsv(int hue, int saturation, int value, int alpha)
 	{
-		mColor.setHsv(hue, saturation, value, alpha);
-		
-		return thisObject();
-	}
+        mColor.setHsv(hue, saturation, value, alpha);
 
-	QScriptValue Color::setNamedColor(const QString &name)
+        return this;
+    }
+
+    Color *Color::setNamedColor(const QString &name)
 	{
 		if(!QColor::isValidColor(name))
 		{
-			throwError(QStringLiteral("ColorNameError"), tr("Invalid color name"));
-			return thisObject();
-		}
+            throwError(QStringLiteral("ColorNameError"), tr("Invalid color name"));
+            return this;
+        }
 		
-		mColor.setNamedColor(name);
-		
-		return thisObject();
-	}
+        mColor.setNamedColor(name);
 
-	QScriptValue Color::lighter(int factor)
+        return this;
+    }
+
+    Color *Color::lighter(int factor)
 	{
-		mColor = mColor.lighter(factor);
-		
-		return thisObject();
-	}
+        mColor = mColor.lighter(factor);
+
+        return this;
+    }
 	
-	QScriptValue Color::darker(int factor)
+    Color *Color::darker(int factor)
 	{
-		mColor = mColor.darker(factor);
-		
-		return thisObject();
-	}
+        mColor = mColor.darker(factor);
+
+        return this;
+    }
 	
 	int Color::cyan() const
 	{
@@ -287,4 +244,9 @@ namespace Code
 	{
 		return mColor.name();
 	}
+
+    void Color::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Color>(QStringLiteral("Color"), scriptEngine);
+    }
 }

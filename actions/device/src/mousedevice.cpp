@@ -23,7 +23,7 @@
 #include <QCursor>
 
 #ifdef Q_OS_UNIX
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
 #endif
@@ -70,9 +70,9 @@ bool MouseDevice::isButtonPressed(Button button) const
 #ifdef Q_OS_UNIX
 	Window unusedWindow;
 	int unusedInt;
-	unsigned int buttonMask;
-	if(!XQueryPointer(QX11Info::display(),
-					  XDefaultRootWindow(QX11Info::display()),
+    unsigned int buttonMask;
+    if(!XQueryPointer(ActionTools::X11Info::display(),
+                      XDefaultRootWindow(ActionTools::X11Info::display()),
 					  &unusedWindow,
 					  &unusedWindow,
 					  &unusedInt,
@@ -116,10 +116,10 @@ bool MouseDevice::pressButton(Button button)
 	mPressedButtons[button] = true;
 
 #ifdef Q_OS_UNIX
-	if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), True, CurrentTime))
+    if(!XTestFakeButtonEvent(ActionTools::X11Info::display(), toX11Button(button), True, CurrentTime))
 		return false;
 	
-	XFlush(QX11Info::display());
+    XFlush(ActionTools::X11Info::display());
 #endif
 	
 #ifdef Q_OS_WIN
@@ -140,10 +140,10 @@ bool MouseDevice::releaseButton(Button button)
 	mPressedButtons[button] = false;
 
 #ifdef Q_OS_UNIX
-	if(!XTestFakeButtonEvent(QX11Info::display(), toX11Button(button), False, CurrentTime))
+    if(!XTestFakeButtonEvent(ActionTools::X11Info::display(), toX11Button(button), False, CurrentTime))
 		return false;
 	
-	XFlush(QX11Info::display());
+    XFlush(ActionTools::X11Info::display());
 #endif
 	
 #ifdef Q_OS_WIN
@@ -175,10 +175,10 @@ bool MouseDevice::wheel(int intensity) const
 
 	for(int i = 0; i < intensity; ++i)
 	{
-		result &= XTestFakeButtonEvent(QX11Info::display(), button, True, CurrentTime);
-		result &= XTestFakeButtonEvent(QX11Info::display(), button, False, CurrentTime);
+        result &= XTestFakeButtonEvent(ActionTools::X11Info::display(), button, True, CurrentTime);
+        result &= XTestFakeButtonEvent(ActionTools::X11Info::display(), button, False, CurrentTime);
 		
-		XFlush(QX11Info::display());
+        XFlush(ActionTools::X11Info::display());
 	}
 
 	if(!result)

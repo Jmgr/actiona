@@ -19,39 +19,12 @@
 */
 
 #include "colordialog.hpp"
-#include "actiontools/code/color.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QColorDialog>
 
 namespace Code
 {
-	QScriptValue ColorDialog::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		auto colorDialog = new ColorDialog;
-		colorDialog->setupConstructorParameters(context, engine, context->argument(0));
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-			
-			if(it.name() == QLatin1String("showAlphaChannel"))
-				colorDialog->mColorDialog->setOption(QColorDialog::ShowAlphaChannel, it.value().toBool());
-			else if(it.name() == QLatin1String("color"))
-				colorDialog->setColorPrivate(it.value(), context);
-			else if(it.name() == QLatin1String("onClosed"))
-				colorDialog->mOnClosed = it.value();
-			else if(it.name() == QLatin1String("onColorSelected"))
-				colorDialog->mOnColorSelected = it.value();
-			else if(it.name() == QLatin1String("onColorChanged"))
-				colorDialog->mOnColorChanged = it.value();
-		}
-
-		return CodeClass::constructor(colorDialog, context, engine);
-	}
-
 	ColorDialog::ColorDialog()
 		: BaseWindow(),
 		mColorDialog(new QColorDialog)
@@ -64,72 +37,103 @@ namespace Code
         connect(mColorDialog, &QColorDialog::colorSelected, this, &ColorDialog::colorSelected);
         connect(mColorDialog, &QColorDialog::currentColorChanged, this, &ColorDialog::currentColorChanged);
 	}
+
+    ColorDialog::ColorDialog(const QJSValue &parameters)
+        : ColorDialog()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        setupConstructorParameters(parameters);
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("showAlphaChannel"))
+                mColorDialog->setOption(QColorDialog::ShowAlphaChannel, it.value().toBool());
+            else if(it.name() == QLatin1String("color"))
+            {
+                if(auto color = qobject_cast<Color*>(it.value().toQObject()))
+                    mColorDialog->setCurrentColor(color->color());
+                else
+                {
+                    throwError(QStringLiteral("Parameter"), QStringLiteral("parameter has to be a Color"));
+                    return;
+                }
+            }
+            else if(it.name() == QLatin1String("onClosed"))
+                mOnClosed = it.value();
+            else if(it.name() == QLatin1String("onColorSelected"))
+                mOnColorSelected = it.value();
+            else if(it.name() == QLatin1String("onColorChanged"))
+                mOnColorChanged = it.value();
+        }
+    }
 	
 	ColorDialog::~ColorDialog()
 	{
 		delete mColorDialog;
 	}
 
-	QScriptValue ColorDialog::color() const
-	{
-		return Color::constructor(mColorDialog->currentColor(), engine());
+    const Color *ColorDialog::color() const
+    {
+        auto color = CodeClass::construct<Color>(mColorDialog->currentColor());
+
+        return qobject_cast<Color *>(color.toQObject());
 	}
 	
-	QScriptValue ColorDialog::showAlphaChannel(bool showAlphaChannel)
+    ColorDialog *ColorDialog::showAlphaChannel(bool showAlphaChannel)
 	{
 		mColorDialog->setOption(QColorDialog::ShowAlphaChannel, showAlphaChannel);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue ColorDialog::setColor(const QScriptValue &color)
+    ColorDialog *ColorDialog::setColor(const Color *color)
 	{
-		setColorPrivate(color, context());
+        mColorDialog->setCurrentColor(color->color());
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue ColorDialog::show()
+    ColorDialog *ColorDialog::show()
 	{
 		mColorDialog->open();
 
-		return thisObject();
+        return this;
 	}
 
 	int ColorDialog::showModal()
 	{
 		return mColorDialog->exec();
 	}
+
+    void ColorDialog::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<ColorDialog>(QStringLiteral("ColorDialog"), scriptEngine);
+    }
 	
 	void ColorDialog::finished(int result)
 	{
-		if(mOnClosed.isValid())
-			mOnClosed.call(thisObject(), QScriptValueList() << result);
+        if(!mOnClosed.isUndefined())
+            mOnClosed.call(QJSValueList() << result);
 	}
 	
 	void ColorDialog::colorSelected(const QColor &color)
 	{
-		if(mOnColorSelected.isValid())
-			mOnColorSelected.call(thisObject(), QScriptValueList() << Color::constructor(color, engine()));
+        if(!mOnColorSelected.isUndefined())
+            mOnColorSelected.call(QJSValueList() << CodeClass::construct<Color>(color));
 	}
 
 	void ColorDialog::currentColorChanged(const QColor &color)
 	{
-		if(mOnColorChanged.isValid())
-			mOnColorChanged.call(thisObject(), QScriptValueList() << Color::constructor(color, engine()));
-	}
-	
-	void ColorDialog::setColorPrivate(const QScriptValue &color, QScriptContext *context)
-	{
-		if(context->argumentCount() == 1)
-		{
-			QObject *object = color.toQObject();
-			if(auto codeColor = qobject_cast<Color*>(object))
-				mColorDialog->setCurrentColor(codeColor->color());
-			else
-				mColorDialog->setCurrentColor(QColor(color.toString()));
-		}
-		else if(context->argumentCount() == 3)
-			mColorDialog->setCurrentColor(QColor(context->argument(0).toInt32(), context->argument(1).toInt32(), context->argument(2).toInt32()));
+        if(!mOnColorChanged.isUndefined())
+            mOnColorChanged.call(QJSValueList() << CodeClass::construct<Color>(color));
 	}
 }

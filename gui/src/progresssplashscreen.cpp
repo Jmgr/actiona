@@ -24,7 +24,7 @@
 #include <QTimer>
 
 #ifdef Q_OS_UNIX
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #endif
 
 ProgressSplashScreen::ProgressSplashScreen(const QPixmap &pixmap, Qt::WindowFlags f)

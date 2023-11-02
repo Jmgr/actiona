@@ -23,169 +23,11 @@
 #include "actiontools/code/size.hpp"
 #include "actiontools/code/point.hpp"
 #include "actiontools/code/processhandle.hpp"
-#include "actiontools/code/codetools.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 
 namespace Code
 {
-	QScriptValue Window::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		Window *window = nullptr;
-		
-		switch(context->argumentCount())
-		{
-		case 0:
-			window = new Window;
-			break;
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-				if(auto codeWindow = qobject_cast<Window*>(object))
-					window = new Window(*codeWindow);
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			break;
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			break;
-		}
-		
-		if(!window)
-			return engine->undefinedValue();
-
-		return CodeClass::constructor(window, context, engine);
-	}
-	
-	QScriptValue Window::constructor(const ActionTools::WindowHandle &windowHandle, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new Window(windowHandle), engine);
-	}
-	
-	ActionTools::WindowHandle Window::parameter(QScriptContext *context, QScriptEngine *engine)
-	{
-		switch(context->argumentCount())
-		{
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-				if(auto window = qobject_cast<Window*>(object))
-					return window->windowHandle();
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			return {};
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return ActionTools::WindowHandle();
-		}
-	}
-	
-	QScriptValue Window::find(QScriptContext *context, QScriptEngine *engine)
-	{
-		QScriptValueIterator it(context->argument(0));
-		QString titlePattern;
-		QString classNamePattern;
-		Mode titleMode = WildcardUnix;
-		Mode classNameMode = WildcardUnix;
-		bool titleCaseSensitive = true;
-		bool classNameCaseSensitive = true;
-		int processId = -1;
-		ProcessHandle *processHandle = nullptr;
-
-		while(it.hasNext())
-		{
-			it.next();
-
-			if(it.name() == QLatin1String("title"))
-				titlePattern = it.value().toString();
-			else if(it.name() == QLatin1String("className"))
-				classNamePattern = it.value().toString();
-			else if(it.name() == QLatin1String("titleMode"))
-				titleMode = static_cast<Mode>(it.value().toInt32());
-			else if(it.name() == QLatin1String("classNameMode"))
-				classNameMode = static_cast<Mode>(it.value().toInt32());
-			else if(it.name() == QLatin1String("titleCaseSensitive"))
-				titleCaseSensitive = it.value().toBool();
-			else if(it.name() == QLatin1String("classNameCaseSensitive"))
-				classNameCaseSensitive = it.value().toBool();
-			else if(it.name() == QLatin1String("processId"))
-				processId = it.value().toInt32();
-			else if(it.name() == QLatin1String("process"))
-			{
-				if(auto processHandleParameter = qobject_cast<ProcessHandle *>(it.value().toQObject()))
-					processHandle = processHandleParameter;
-				else
-					throwError(context, engine, QStringLiteral("ProcessHandleError"), tr("Invalid process handle"));
-			}
-		}
-
-		QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
-
-		QRegExp titleRegExp(titlePattern,
-							titleCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
-							static_cast<QRegExp::PatternSyntax>(titleMode));
-		QRegExp classNameRegExp(classNamePattern,
-							classNameCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
-							static_cast<QRegExp::PatternSyntax>(classNameMode));
-
-		QList<ActionTools::WindowHandle> foundWindows;
-
-        for(const ActionTools::WindowHandle &windowHandle: qAsConst(windowList))
-		{
-			if(!titlePattern.isNull() && !titleRegExp.exactMatch(windowHandle.title()))
-				continue;
-
-			if(!classNamePattern.isNull() && !classNameRegExp.exactMatch(windowHandle.classname()))
-				continue;
-
-			if(processId != -1 && windowHandle.processId() != processId)
-				continue;
-
-			if(processHandle && windowHandle.processId() != processHandle->processId())
-				continue;
-
-			foundWindows.append(windowHandle);
-		}
-
-		QScriptValue back = engine->newArray(foundWindows.count());
-
-		for(int index = 0; index < foundWindows.count(); ++index)
-			back.setProperty(index, constructor(foundWindows.at(index), engine));
-
-		return back;
-	}
-
-	QScriptValue Window::all(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(context)
-
-		QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
-
-		QScriptValue back = engine->newArray(windowList.count());
-
-		for(int index = 0; index < windowList.count(); ++index)
-			back.setProperty(index, constructor(windowList.at(index), engine));
-
-		return back;
-	}
-
-	QScriptValue Window::foreground(QScriptContext *context, QScriptEngine *engine)
-	{
-		Q_UNUSED(context)
-
-		return constructor(ActionTools::WindowHandle::foregroundWindow(), engine);
-	}
-
-	void Window::registerClass(QScriptEngine *scriptEngine)
-	{
-		CodeTools::addClassToScriptEngine<Window>(scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&all, QStringLiteral("all"), scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&find, QStringLiteral("find"), scriptEngine);
-		CodeTools::addClassGlobalFunctionToScriptEngine<Window>(&foreground, QStringLiteral("foreground"), scriptEngine);
-	}
-	
 	Window::Window()
 		: CodeClass()
 	{
@@ -235,12 +77,12 @@ namespace Code
 		return mWindowHandle;
 	}
 	
-	QScriptValue Window::clone() const
+	QJSValue Window::clone() const
 	{
-		return constructor(mWindowHandle, engine());
+        return CodeClass::clone<Window>();
 	}
 
-	bool Window::equals(const QScriptValue &other) const
+	bool Window::equals(const QJSValue &other) const
 	{
 		if(other.isUndefined() || other.isNull())
 			return false;
@@ -264,16 +106,16 @@ namespace Code
 	
 	QString Window::title() const
 	{
-		if(!checkValidity())
-			return QString();
+        if(!checkValidity())
+            return {};
 
 		return mWindowHandle.title();
 	}
 	
 	QString Window::className() const
 	{
-		if(!checkValidity())
-			return QString();
+        if(!checkValidity())
+            return {};
 
 		return mWindowHandle.classname();
 	}
@@ -286,98 +128,107 @@ namespace Code
 		return mWindowHandle.isActive();
 	}
 	
-	QScriptValue Window::rect(bool useBorders) const
+	QJSValue Window::rect(bool useBorders) const
+	{
+        if(!checkValidity())
+            return {};
+
+        return CodeClass::construct<Rect>(mWindowHandle.rect(useBorders));
+    }
+	
+	QJSValue Window::process() const
 	{
 		if(!checkValidity())
-			return QScriptValue();
+            return {};
 
-		return Rect::constructor(mWindowHandle.rect(useBorders), engine());
+        return CodeClass::construct<ProcessHandle>(mWindowHandle.processId());
 	}
 	
-	QScriptValue Window::process() const
+    Window *Window::close()
 	{
 		if(!checkValidity())
-			return -1;
-
-		return ProcessHandle::constructor(mWindowHandle.processId(), engine());
-	}
-	
-	QScriptValue Window::close() const
-	{
-		if(!checkValidity())
-			return thisObject();
+            return this;
 
 		if(!mWindowHandle.close())
 			throwError(QStringLiteral("CloseWindowError"), tr("Unable to close the window"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Window::killCreator() const
+    Window *Window::killCreator()
 	{
 		if(!checkValidity())
-			return thisObject();
+            return this;
 
 		if(!mWindowHandle.killCreator())
 			throwError(QStringLiteral("KillCreatorError"), tr("Unable to kill the window creator"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Window::setForeground() const
+    Window *Window::setForeground()
 	{
 		if(!checkValidity())
-			return thisObject();
+            return this;
 
 		if(!mWindowHandle.setForeground())
 			throwError(QStringLiteral("SetForegroundError"), tr("Unable to set the window foreground"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Window::minimize() const
+    Window *Window::minimize()
 	{
 		if(!checkValidity())
-			return thisObject();
+            return this;
 
 		if(!mWindowHandle.minimize())
 			throwError(QStringLiteral("MinimizeError"), tr("Unable to minimize the window"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Window::maximize() const
+    Window *Window::maximize()
 	{
 		if(!checkValidity())
-			return thisObject();
+            return this;
 
 		if(!mWindowHandle.maximize())
 			throwError(QStringLiteral("MaximizeError"), tr("Unable to maximize the window"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Window::move() const
+    Window *Window::move(const Point *point)
 	{
 		if(!checkValidity())
-			return thisObject();
+            return this;
 
-		if(!mWindowHandle.move(Point::parameter(context(), engine())))
+        if(!mWindowHandle.move(point->point()))
 			throwError(QStringLiteral("MoveError"), tr("Unable to move the window"));
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Window::resize(bool useBorders) const
+    Window *Window::resize(const Size *size, bool useBorders)
 	{
 		if(!checkValidity())
-			return thisObject();
+            return this;
 
-		if(!mWindowHandle.resize(Size::parameter(context(), engine()), useBorders))
+        if(!mWindowHandle.resize(size->size(), useBorders))
 			throwError(QStringLiteral("ResizeError"), tr("Unable to resize the window"));
 		
-		return thisObject();
+        return this;
 	}
+
+    void Window::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClassWithStaticFunctions<Window, StaticWindow>(
+            QStringLiteral("Window"),
+            {QStringLiteral("all"), QStringLiteral("find"), QStringLiteral("foreground")},
+            scriptEngine
+        );
+    }
 
 	bool Window::checkValidity() const
 	{
@@ -389,4 +240,112 @@ namespace Code
 
 		return true;
 	}
+
+    QRegularExpression windowModeToRegularExpression(Window::Mode mode, const QString &pattern, bool caseSensitive)
+    {
+        QString localPattern = QRegularExpression::anchoredPattern(pattern);
+
+        QRegularExpression result;
+        switch(mode)
+        {
+        case Window::RegExp:
+            result = QRegularExpression(localPattern, caseSensitive? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption);
+            break;
+        case Window::Wildcard:
+            result = QRegularExpression::fromWildcard(localPattern, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+            result.setPatternOptions(QRegularExpression::DotMatchesEverythingOption);
+            break;
+        case Window::WildcardUnix:
+            result = QRegularExpression::fromWildcard(localPattern, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+            break;
+        case Window::FixedString:
+            localPattern = QRegularExpression::escape(localPattern);
+            result.setPattern(pattern);
+            result.setPatternOptions(caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption);
+            break;
+        }
+        return result;
+    }
+
+    QJSValue StaticWindow::find(const QJSValue &parameters)
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return {};
+        }
+
+        QString titlePattern = parameters.property(QStringLiteral("title")).toString();
+        QString classNamePattern = parameters.property(QStringLiteral("className")).toString();
+        Window::Mode titleMode = Window::WildcardUnix;
+        if(parameters.hasProperty(QStringLiteral("titleMode")))
+            titleMode = static_cast<Window::Mode>(parameters.property(QStringLiteral("titleMode")).toInt());
+        Window::Mode classNameMode = Window::WildcardUnix;
+        if(parameters.hasProperty(QStringLiteral("classNameMode")))
+            classNameMode = static_cast<Window::Mode>(parameters.property(QStringLiteral("classNameMode")).toInt());
+        bool titleCaseSensitive = true;
+        if(parameters.hasProperty(QStringLiteral("titleCaseSensitive")))
+            titleCaseSensitive = parameters.property(QStringLiteral("titleCaseSensitive")).toBool();
+        bool classNameCaseSensitive = true;
+        if(parameters.hasProperty(QStringLiteral("classNameCaseSensitive")))
+            classNameCaseSensitive = parameters.property(QStringLiteral("classNameCaseSensitive")).toBool();
+        int processId = -1;
+        if(parameters.hasProperty(QStringLiteral("processId")))
+            processId = parameters.property(QStringLiteral("processId")).toInt();
+        ProcessHandle *processHandle = nullptr;
+        if(parameters.hasProperty(QStringLiteral("process")))
+        {
+            if(auto processHandleParameter = qobject_cast<ProcessHandle *>(parameters.property(QStringLiteral("process")).toQObject()))
+                processHandle = processHandleParameter;
+            else
+                throwError(QStringLiteral("ProcessHandleError"), tr("Invalid process handle"));
+        }
+
+        QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
+
+        QRegularExpression titleRegExp = windowModeToRegularExpression(titleMode, titlePattern, titleCaseSensitive);
+        QRegularExpression classNameRegExp = windowModeToRegularExpression(classNameMode, classNamePattern, classNameCaseSensitive);
+        QList<ActionTools::WindowHandle> foundWindows;
+
+        for(const ActionTools::WindowHandle &windowHandle: qAsConst(windowList))
+        {
+            if(!titlePattern.isNull() && titleRegExp.match(windowHandle.title()).hasMatch())
+                    continue;
+
+            if(!classNamePattern.isNull() && classNameRegExp.match(windowHandle.classname()).hasMatch())
+                    continue;
+
+            if(processId != -1 && windowHandle.processId() != processId)
+                    continue;
+
+            if(processHandle && windowHandle.processId() != processHandle->processId())
+                    continue;
+
+            foundWindows.append(windowHandle);
+        }
+
+        QJSValue back = qjsEngine(this)->newArray(foundWindows.count());
+
+        for(int index = 0; index < foundWindows.count(); ++index)
+            back.setProperty(index, CodeClass::construct<Window>(foundWindows.at(index)));
+
+        return back;
+    }
+
+    QJSValue StaticWindow::all()
+    {
+        QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
+
+        QJSValue back = qjsEngine(this)->newArray(windowList.count());
+
+        for(int index = 0; index < windowList.count(); ++index)
+            back.setProperty(index, CodeClass::construct<Window>(windowList.at(index)));
+
+        return back;
+    }
+
+    QJSValue StaticWindow::foreground()
+    {
+        return CodeClass::construct<Window>(ActionTools::WindowHandle::foregroundWindow());
+    }
 }

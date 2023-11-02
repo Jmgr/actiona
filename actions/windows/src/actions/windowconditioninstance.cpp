@@ -22,7 +22,7 @@
 #include "actiontools/code/point.hpp"
 #include "actiontools/code/size.hpp"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 namespace Actions
 {
@@ -62,7 +62,7 @@ namespace Actions
 		if(!ok)
 			return;
 
-		mTitleRegExp = QRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix);
+        mTitleRegExp = QRegularExpression::fromWildcard(title, Qt::CaseSensitive);
 
 		ActionTools::WindowHandle foundWindow = findWindow();
 		if((foundWindow.isValid() && mCondition == Exists) ||
@@ -151,8 +151,8 @@ namespace Actions
 		{
 			QRect windowRect = foundWindow.rect();
 
-            setVariable(mPosition, Code::Point::constructor(windowRect.topLeft(), scriptEngine()));
-            setVariable(mSize, Code::Size::constructor(windowRect.size(), scriptEngine()));
+            setVariable(mPosition, Code::CodeClass::construct<Code::Point>(windowRect.topLeft(), *scriptEngine()));
+            setVariable(mSize, Code::CodeClass::construct<Code::Size>(windowRect.size(), *scriptEngine()));
             setVariable(mXCoordinate, windowRect.x());
             setVariable(mYCoordinate, windowRect.y());
             setVariable(mWidth, windowRect.width());

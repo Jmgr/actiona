@@ -69,7 +69,7 @@ namespace Actions
 	private slots:
 		void done() override
 		{
-            setVariable(mVariable, Code::RawData::constructor(mResult.buffer(), scriptEngine()));
+            setVariable(mVariable, Code::CodeClass::construct<Code::RawData>(mResult.buffer(), *scriptEngine()));
 
 			DataCopyActionInstance::done();
 		}

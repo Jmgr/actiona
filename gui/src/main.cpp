@@ -183,12 +183,6 @@ int main(int argc, char **argv)
 	qRegisterMetaType<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");
 	qRegisterMetaType<QVersionNumber>("Version");
 
-	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstance>("ActionInstance");
-	qRegisterMetaTypeStreamOperators<ActionTools::Parameter>("Parameter");
-	qRegisterMetaTypeStreamOperators<ActionTools::SubParameter>("SubParameter");
-	qRegisterMetaTypeStreamOperators<ActionTools::ActionInstanceBuffer>("ActionInstanceBuffer");
-	qRegisterMetaTypeStreamOperators<QVersionNumber>("Version");
-
 #ifdef Q_OS_UNIX
 	{
 #ifdef ACT_PROFILE

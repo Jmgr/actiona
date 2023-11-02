@@ -21,36 +21,40 @@
 #include "mailattachment.hpp"
 #include "actiontools/code/rawdata.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 
 namespace Code
 {
-    QScriptValue MailAttachment::constructor(QScriptContext *context, QScriptEngine *engine)
+    MailAttachment::MailAttachment()
+        : CodeClass()
     {
-        auto mailAttachment = new MailAttachment;
+    }
 
-        QScriptValueIterator it(context->argument(0));
+    MailAttachment::MailAttachment(const QJSValue &parameters)
+        : MailAttachment()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
 
         while(it.hasNext())
         {
             it.next();
 
-			if(it.name() == QLatin1String("contentType"))
-                mailAttachment->setContentType(it.value().toString());
-			else if(it.name() == QLatin1String("content"))
-                mailAttachment->setContent(it.value());
+            if(it.name() == QLatin1String("contentType"))
+                setContentType(it.value().toString());
+            else if(it.name() == QLatin1String("content"))
+                setContent(it.value());
         }
-
-        return CodeClass::constructor(mailAttachment, context, engine);
     }
 
-    QScriptValue MailAttachment::constructor(const QxtMailAttachment &attachment, QScriptEngine* engine)
-    {
-        return CodeClass::constructor(new MailAttachment(attachment), engine);
-    }
-
-    MailAttachment::MailAttachment()
-        : CodeClass()
+    MailAttachment::MailAttachment(const MailAttachment &other)
+        : CodeClass(),
+          mAttachment(other.mAttachment)
     {
     }
 
@@ -60,12 +64,12 @@ namespace Code
     {
     }
 
-    QScriptValue MailAttachment::content() const
+    QJSValue MailAttachment::content() const
     {
-        return RawData::constructor(mContent, engine());
+        return CodeClass::construct<RawData>(mContent);
     }
 
-    QScriptValue MailAttachment::setContent(const QScriptValue &content)
+    MailAttachment *MailAttachment::setContent(const QJSValue &content)
     {
         if(auto rawData = qobject_cast<RawData*>(content.toQObject()))
             mContent = rawData->byteArray();
@@ -74,11 +78,16 @@ namespace Code
 
         mAttachment.setContent(mContent);
 
-        return thisObject();
+        return this;
     }
 
-    QScriptValue MailAttachment::clone() const
+    QJSValue MailAttachment::clone() const
     {
-        return constructor(mAttachment, engine());
+        return CodeClass::clone<MailAttachment>();
+    }
+
+    void MailAttachment::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<MailAttachment>(QStringLiteral("MailAttachment"), scriptEngine);
     }
 }

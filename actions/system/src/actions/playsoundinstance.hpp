@@ -23,7 +23,6 @@
 #include "actiontools/actioninstance.hpp"
 
 #include <QMediaPlayer>
-#include <QMediaPlaylist>
 
 namespace Actions
 {
@@ -42,11 +41,10 @@ namespace Actions
 		void stopLongTermExecution() override;
 
 	private slots:
-		void stateChanged(QMediaPlayer::State state);
+        void mediaStatusChanged(QMediaPlayer::MediaStatus status);
 
 	private:
 		QMediaPlayer *mMediaPlayer;
-		QMediaPlaylist *mMediaPlaylist;
 		bool mBlocking;
 
 		Q_DISABLE_COPY(PlaySoundInstance)

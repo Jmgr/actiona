@@ -23,9 +23,7 @@
 #include "../keyboarddevice.hpp"
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 
 namespace Code
 {
@@ -34,17 +32,15 @@ namespace Code
 		Q_OBJECT
 
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-		Keyboard();
+        Q_INVOKABLE Keyboard();
 
-	public slots:
-		QString toString() const override                                { return QStringLiteral("Keyboard"); }
-        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Keyboard>(other); }
-		QScriptValue pressKey(const QString &key);
-		QScriptValue releaseKey(const QString &key);
-		QScriptValue triggerKey(const QString &key);
-        QScriptValue writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false) const;
+        Q_INVOKABLE QString toString() const override                                { return QStringLiteral("Keyboard"); }
+        Q_INVOKABLE Keyboard *pressKey(const QString &key);
+        Q_INVOKABLE Keyboard *releaseKey(const QString &key);
+        Q_INVOKABLE Keyboard *triggerKey(const QString &key);
+        Q_INVOKABLE Keyboard *writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false);
+
+        static void registerClass(QJSEngine &scriptEngine);
 
 	private:
 		KeyboardDevice mKeyboardDevice;

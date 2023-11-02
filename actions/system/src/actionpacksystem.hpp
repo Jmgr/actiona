@@ -76,15 +76,12 @@ public:
 	QString name() const override						{ return tr("Actions dealing with the operating system"); }
 	QVersionNumber version() const override				{ return QVersionNumber(0, 0, 1); }
 
-	void codeInit(QScriptEngine *scriptEngine) const override
+    void codeInit(QJSEngine &scriptEngine) const override
 	{
-		addCodeClass<Code::System>(QStringLiteral("System"), scriptEngine);
-		addCodeClass<Code::MediaPlaylist>(QStringLiteral("MediaPlaylist"), scriptEngine);
-		addCodeClass<Code::Notify>(QStringLiteral("Notify"), scriptEngine);
-		addCodeClass<Code::Process>(QStringLiteral("Process"), scriptEngine);
-		addCodeStaticMethod(&Code::Process::list, QStringLiteral("Process"), QStringLiteral("list"), scriptEngine);
-		addCodeStaticMethod(&Code::Process::startDetached, QStringLiteral("Process"), QStringLiteral("startDetached"), scriptEngine);
-		addCodeStaticMethod(&Code::Process::thisProcess, QStringLiteral("Process"), QStringLiteral("thisProcess"), scriptEngine);
+        Code::System::registerClass(scriptEngine);
+        Code::MediaPlaylist::registerClass(scriptEngine);
+        Code::Notify::registerClass(scriptEngine);
+        Code::Process::registerClass(scriptEngine);
 	}
 
 private:

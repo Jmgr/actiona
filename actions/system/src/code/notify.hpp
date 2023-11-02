@@ -22,9 +22,7 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QStringList>
 
 struct _NotifyNotification;
@@ -36,15 +34,14 @@ namespace Code
 		Q_OBJECT
 		
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		
-		Notify();
+        Q_INVOKABLE Notify();
+        Q_INVOKABLE Notify(const QJSValue &parameters);
 		~Notify() override;
 		
-	public slots:
-		QString toString() const override                                { return QStringLiteral("Notify"); }
-        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<Notify>(other); }
-		QScriptValue show();
+        Q_INVOKABLE QString toString() const override                                { return QStringLiteral("Notify"); }
+        Q_INVOKABLE Notify *show(const QJSValue &parameters);
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private:
 		_NotifyNotification *mNotification{nullptr};

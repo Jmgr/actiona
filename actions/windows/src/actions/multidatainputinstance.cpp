@@ -19,7 +19,6 @@
 */
 
 #include "multidatainputinstance.hpp"
-#include "actiontools/script.hpp"
 
 #include <QDialog>
 #include <QVBoxLayout>
@@ -31,11 +30,11 @@
 #include <QRadioButton>
 #include <QGridLayout>
 #include <QLineEdit>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QButtonGroup>
-#include <QScriptEngine>
+#include <QJSEngine>
 
 namespace Actions
 {
@@ -189,13 +188,13 @@ namespace Actions
 				if(mMaximumChoiceCount <= 1)
 				{
 					if(selectedItems.isEmpty())
-                        setVariable(mVariable, scriptEngine()->nullValue());
+                        setVariable(mVariable, {});
 					else
                         setVariable(mVariable, selectedItems.first()->text());
 				}
 				else
 				{
-					QScriptValue back = scriptEngine()->newArray(selectedItems.size());
+					QJSValue back = scriptEngine()->newArray(selectedItems.size());
 
 					for(int index = 0; index < selectedItems.size(); ++index)
 						back.setProperty(index, selectedItems.at(index)->text());
@@ -218,7 +217,7 @@ namespace Actions
 						selectedButtons.append(button->text());
 				}
 
-				QScriptValue back = scriptEngine()->newArray(selectedButtons.size());
+				QJSValue back = scriptEngine()->newArray(selectedButtons.size());
 
 				for(int index = 0; index < selectedButtons.size(); ++index)
 					back.setProperty(index, selectedButtons.at(index));
@@ -313,7 +312,7 @@ namespace Actions
 		if(checkedButton)
             setVariable(mVariable, checkedButton->text());
 		else
-            setVariable(mVariable, scriptEngine()->nullValue());
+            setVariable(mVariable, {});
 	}
 
 	void MultiDataInputInstance::closeDialog()

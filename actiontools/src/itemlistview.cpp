@@ -53,14 +53,14 @@ namespace ActionTools
 
 	void ItemListView::dragMoveEvent(QDragMoveEvent *event)
 	{
-		QModelIndex index = indexAt(event->pos());
+        QModelIndex index = indexAt(event->position().toPoint());
 		bool afterLastItem = false;
 
 		if(index.isValid())
 		{
 			mDropIndicator = visualRect(index);
 
-			if(event->pos().y() > mDropIndicator.top() + mDropIndicator.height() / 2)
+            if(event->position().y() > mDropIndicator.top() + mDropIndicator.height() / 2)
 			{
 				index = model()->index(index.row() + 1, 0, QModelIndex());
 				if(index.isValid())

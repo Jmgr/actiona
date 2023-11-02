@@ -30,7 +30,7 @@
 #include <QApplication>
 
 #ifdef Q_OS_UNIX
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #include <X11/Xlib.h>
 #include <X11/cursorfont.h>
 #include <xcb/xcb.h>
@@ -69,7 +69,7 @@ namespace ActionTools
 		: QPushButton(parent),
         mCrossIcon(new QPixmap(QStringLiteral(":/images/cross.png")))
 #ifdef Q_OS_UNIX
-        ,mCrossCursor(XCreateFontCursor(QX11Info::display(), XC_crosshair))
+        ,mCrossCursor(XCreateFontCursor(X11Info::display(), XC_crosshair))
 #endif
 #ifdef Q_OS_WIN
 		,mPreviousCursor(NULL)
@@ -102,7 +102,7 @@ namespace ActionTools
 		DeleteObject(mRectanglePen);
 #endif
 #ifdef Q_OS_UNIX
-        XFreeCursor(QX11Info::display(), mCrossCursor);
+        XFreeCursor(X11Info::display(), mCrossCursor);
 #endif
 
 		delete mCrossIcon;
@@ -142,7 +142,7 @@ namespace ActionTools
             {
                 mShownWindows.append(widget);
 
-                XUnmapWindow(QX11Info::display(), widget->winId());
+                XUnmapWindow(X11Info::display(), widget->winId());
             }
         }
 
@@ -268,7 +268,7 @@ namespace ActionTools
         mPreviousCursor = SetCursor(LoadCursor(0, IDC_CROSS));
 #endif
 #ifdef Q_OS_UNIX
-		if(XGrabPointer(QX11Info::display(), DefaultRootWindow(QX11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
+		if(XGrabPointer(X11Info::display(), DefaultRootWindow(X11Info::display()), True, ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
             None, mCrossCursor, CurrentTime) != GrabSuccess)
 		{
 			QMessageBox::warning(this, tr("Choose a window"), tr("Unable to grab the pointer."));
@@ -296,12 +296,12 @@ namespace ActionTools
 			widget->setWindowOpacity(1.0f);
 	#endif
     #ifdef Q_OS_UNIX
-		XUngrabPointer(QX11Info::display(), CurrentTime);
-        XFlush(QX11Info::display());
+		XUngrabPointer(X11Info::display(), CurrentTime);
+        XFlush(X11Info::display());
 
         for(auto shownWindow: qAsConst(mShownWindows))
         {
-            XMapWindow(QX11Info::display(), shownWindow->winId());
+            XMapWindow(X11Info::display(), shownWindow->winId());
         }
 
 		if(mMainWindow)
@@ -316,7 +316,7 @@ namespace ActionTools
 #ifdef Q_OS_UNIX
 	WId ChooseWindowPushButton::windowAtPointer() const
 	{
-		Window window = DefaultRootWindow(QX11Info::display());
+		Window window = DefaultRootWindow(X11Info::display());
 		Window back = None;
 
 		while(window)
@@ -327,7 +327,7 @@ namespace ActionTools
 
 			back = window;
 
-			XQueryPointer(QX11Info::display(), window, &root, &child, &rx, &ry, &x, &y, &mask);
+			XQueryPointer(X11Info::display(), window, &root, &child, &rx, &ry, &x, &y, &mask);
 
 			window = child;
 		}
@@ -335,7 +335,7 @@ namespace ActionTools
 		return back;
 	}
 
-    bool ChooseWindowPushButton::nativeEventFilter(const QByteArray &eventType, void *message, long *)
+    bool ChooseWindowPushButton::nativeEventFilter(const QByteArray &eventType, void *message, qintptr *)
     {
         if(eventType == "xcb_generic_event_t")
         {

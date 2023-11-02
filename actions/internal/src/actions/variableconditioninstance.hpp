@@ -48,22 +48,30 @@ namespace Actions
 		VariableConditionInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)										{}
 
+        bool jsValueLessThan(const QJSValue &lhs, const QJSValue &rhs) {
+            QJSEngine engine;
+            QJSValue compareFunction = engine.evaluate(QStringLiteral("(function(a, b) { return a < b; })"));
+            QJSValue result = compareFunction.call(QJSValueList() << lhs << rhs);
+
+            return result.toBool();
+        }
+
 		void startExecution() override
 		{
 			bool ok = true;
 
 			QString variableName = evaluateVariable(ok, QStringLiteral("variable"));
 			auto comparison = evaluateListElement<Comparison>(ok, comparisons, QStringLiteral("comparison"));
-			QScriptValue value = evaluateValue(ok, QStringLiteral("value"));
+			QJSValue value = evaluateValue(ok, QStringLiteral("value"));
 			ActionTools::IfActionValue ifEqual = evaluateIfAction(ok, QStringLiteral("ifEqual"));
 			ActionTools::IfActionValue ifDifferent = evaluateIfAction(ok, QStringLiteral("ifDifferent"));
 
 			if(!ok)
 				return;
 
-            QScriptValue variableValue = variable(variableName);
+            QJSValue variableValue = variable(variableName);
 
-            if(!variableValue.isValid())
+            if(variableValue.isUndefined())
             {
 				setCurrentParameter(QStringLiteral("variable"));
                 emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Invalid variable"));
@@ -97,7 +105,7 @@ namespace Actions
                 }
                 else if(variableValue.isArray())
                 {
-					int arrayLength = variableValue.property(QStringLiteral("length")).toInteger();
+                    int arrayLength = variableValue.property(QStringLiteral("length")).toInt();
 
                     result = false;
                     hasResult = true;
@@ -125,16 +133,16 @@ namespace Actions
                     result = (!variableValue.equals(value));
                     break;
                 case Inferior:
-                    result = (variableValue.lessThan(value));
+                    result = (jsValueLessThan(variableValue, value));
                     break;
                 case Superior:
-                    result = (!variableValue.lessThan(value) && !variableValue.equals(value));
+                    result = (!jsValueLessThan(variableValue, value) && !variableValue.equals(value));
                     break;
                 case InferiorEqual:
-                    result = (variableValue.lessThan(value) || variableValue.equals(value));
+                    result = (jsValueLessThan(variableValue, value) || variableValue.equals(value));
                     break;
                 case SuperiorEqual:
-                    result = (!variableValue.lessThan(value));
+                    result = (!jsValueLessThan(variableValue, value));
                     break;
                 default:
                     result = false;

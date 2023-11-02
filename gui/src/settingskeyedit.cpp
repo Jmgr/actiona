@@ -45,6 +45,6 @@ void SettingsKeyEdit::keyPressEvent(QKeyEvent *event)
 		return;
 	}
 
-	setKeySequence(QKeySequence(modifier + event->key()));
+    setKeySequence(QKeySequence::fromString(QKeySequence(modifier).toString() + event->text()));
 	event->accept();
 }

@@ -166,7 +166,7 @@ namespace ActionTools
         KeyType keyType() const { return mKeyType; }
         StandardKey standardKey() const { Q_ASSERT(mKeyType == KeyType::Standard); return mStandardKey; }
         unsigned int nativeKey() const { Q_ASSERT(mKeyType == KeyType::Native); return mNativeKey; }
-        QChar character() const { Q_ASSERT(mKeyType == KeyType::Character); return mNativeKey; }
+        QChar character() const;
 
         void save(std::function<void(const QString &, const QString &)> keyValueCallback) const;
         static KeyboardKey load(std::function<QString(const QString &)> keyValueCallback);

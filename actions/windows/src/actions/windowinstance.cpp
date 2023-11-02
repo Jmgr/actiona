@@ -21,7 +21,7 @@
 #include "windowinstance.hpp"
 #include "actiontools/windowhandle.hpp"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 namespace Actions
 {
@@ -81,7 +81,7 @@ namespace Actions
 				return;
 		}
 
-		ActionTools::WindowHandle foundWindow = ActionTools::WindowHandle::findWindow(QRegExp(title, Qt::CaseSensitive, QRegExp::WildcardUnix));
+        ActionTools::WindowHandle foundWindow = ActionTools::WindowHandle::findWindow(QRegularExpression::fromWildcard(title, Qt::CaseSensitive));
 
 		if(!foundWindow.isValid())
 		{

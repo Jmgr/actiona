@@ -22,9 +22,8 @@
 #include "actiontools/consolewidget.hpp"
 
 #include <QApplication>
-#include <QDesktopWidget>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
+#include <QJSEngine>
 #include <QIcon>
 #include <QScreen>
 

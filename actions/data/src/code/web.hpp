@@ -22,8 +22,8 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
+#include <QJSEngine>
 
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -35,9 +35,9 @@ namespace Code
 	class Web : public CodeClass
 	{
 		Q_OBJECT
-		Q_PROPERTY(QScriptValue onFinished READ onFinished WRITE setOnFinished)
-		Q_PROPERTY(QScriptValue onDownloadProgress READ onDownloadProgress WRITE setOnDownloadProgress)
-		Q_PROPERTY(QScriptValue onError READ onError WRITE setOnError)
+		Q_PROPERTY(QJSValue onFinished READ onFinished WRITE setOnFinished)
+		Q_PROPERTY(QJSValue onDownloadProgress READ onDownloadProgress WRITE setOnDownloadProgress)
+		Q_PROPERTY(QJSValue onError READ onError WRITE setOnError)
 
 	public:
 		enum Method
@@ -47,28 +47,27 @@ namespace Code
 		};
         Q_ENUM(Method)
 
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-
-		Web();
+        Q_INVOKABLE Web();
+        Q_INVOKABLE Web(const QJSValue &parameters);
 		~Web() override;
 
-		void setOnFinished(const QScriptValue &onFinished)					{ mOnFinished = onFinished; }
-		void setOnDownloadProgress(const QScriptValue &onDownloadProgress)	{ mOnDownloadProgress = onDownloadProgress; }
-		void setOnError(const QScriptValue &onError)						{ mOnError = onError; }
+		void setOnFinished(const QJSValue &onFinished)					{ mOnFinished = onFinished; }
+		void setOnDownloadProgress(const QJSValue &onDownloadProgress)	{ mOnDownloadProgress = onDownloadProgress; }
+		void setOnError(const QJSValue &onError)						{ mOnError = onError; }
 
-		QScriptValue onFinished() const										{ return mOnFinished; }
-		QScriptValue onDownloadProgress() const								{ return mOnDownloadProgress; }
-		QScriptValue onError() const										{ return mOnError; }
+		QJSValue onFinished() const										{ return mOnFinished; }
+		QJSValue onDownloadProgress() const								{ return mOnDownloadProgress; }
+		QJSValue onError() const										{ return mOnError; }
 
-	public slots:
-		QString toString() const override                                            { return QStringLiteral("Web"); }
-        bool equals(const QScriptValue &other) const override                { return defaultEqualsImplementation<Web>(other); }
-		QScriptValue download(const QString &urlString, const QScriptValue &options = QScriptValue());
-		bool isDownloading() const;
-		QScriptValue toImage() const;
-		QScriptValue toText(Encoding encoding = Native) const;
-		QScriptValue toRawData() const;
-		QScriptValue cancel();
+        Q_INVOKABLE QString toString() const override                                            { return QStringLiteral("Web"); }
+        Q_INVOKABLE Web *download(const QString &urlString, const QJSValue &options = QJSValue());
+        Q_INVOKABLE bool isDownloading() const;
+        Q_INVOKABLE QJSValue toImage() const;
+        Q_INVOKABLE QJSValue toText(Encoding encoding = Native) const;
+        Q_INVOKABLE QJSValue toRawData() const;
+        Q_INVOKABLE Web *cancel();
+
+        static void registerClass(QJSEngine &scriptEngine);
 
 	private slots:
 		void finished();
@@ -80,10 +79,10 @@ namespace Code
 	private:
 		QNetworkAccessManager *mNetworkAccessManager;
 		QNetworkReply *mNetworkReply{nullptr};
-		QScriptValue mOnFinished;
-		QScriptValue mOnDownloadProgress;
-		QScriptValue mOnError;
-		QScriptValue mFileValue;
+		QJSValue mOnFinished;
+		QJSValue mOnDownloadProgress;
+		QJSValue mOnError;
+		QJSValue mFileValue;
 		QFile *mFile{nullptr};
 		bool mCloseFile{false};
 		QByteArray mData;

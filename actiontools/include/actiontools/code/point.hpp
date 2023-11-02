@@ -23,9 +23,7 @@
 #include "actiontools/actiontools_global.hpp"
 #include "codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QPoint>
 
 namespace Code
@@ -36,14 +34,9 @@ namespace Code
 		Q_PROPERTY(int x READ x WRITE setX)
 		Q_PROPERTY(int y READ y WRITE setY)
 		
-	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QPoint &point, QScriptEngine *engine);
-		static QPoint parameter(QScriptContext *context, QScriptEngine *engine);
-
-		static void registerClass(QScriptEngine *scriptEngine);
-		
-		Point();
+    public:
+        Q_INVOKABLE Point();
+        Q_INVOKABLE Point(int x, int y);
 		Point(const Point &other);
 		Point(const QPoint &point);
 		
@@ -58,15 +51,15 @@ namespace Code
 		int x() const;
 		int y() const;
 		
-	public slots:
-		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const override;
-		QString toString() const override;
-		QScriptValue setX(int x);
-		QScriptValue setY(int y);
-		
+        Q_INVOKABLE QJSValue clone() const;
+        Q_INVOKABLE bool equals(const QJSValue &other) const;
+        Q_INVOKABLE QString toString() const override;
+        Q_INVOKABLE Point *setX(int x);
+        Q_INVOKABLE Point *setY(int y);
+
+        static void registerClass(QJSEngine &scriptEngine);
+
 	private:
 		QPoint mPoint;
 	};
 }
-

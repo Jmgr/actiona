@@ -27,7 +27,7 @@
 #include <QDir>
 
 #ifdef Q_OS_UNIX
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #include <X11/Xlib.h>
 #include <cerrno>
 #include <csignal>
@@ -48,7 +48,7 @@ namespace ActionTools
 	void CrossPlatform::setForegroundWindow(QWidget *window)
 	{
 #ifdef Q_OS_UNIX
-		XRaiseWindow(QX11Info::display(), window->winId());
+		XRaiseWindow(X11Info::display(), window->winId());
 #endif
 #ifdef Q_OS_WIN
         if(IsIconic(reinterpret_cast<HWND>(window->winId())))

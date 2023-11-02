@@ -24,11 +24,11 @@
 #include "actiontools/script.hpp"
 #include "actiontools/ifactionvalue.hpp"
 #include "actiontools/code/color.hpp"
+#include "actiontools/code/codeclass.hpp"
 
 #include <QPoint>
 #include <QPixmap>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QTimer>
 #include <QScreen>
 
@@ -176,7 +176,7 @@ namespace Actions
             QPixmap pixel = QGuiApplication::primaryScreen()->grabWindow(0, mPixelPosition.x(), mPixelPosition.y(), 1, 1);
 			QColor pixelColor = pixel.toImage().pixel(0, 0);
 
-            setVariable(mVariable, Code::Color::constructor(pixelColor, scriptEngine()));
+            setVariable(mVariable, Code::CodeClass::construct<Code::Color>(pixelColor, *scriptEngine()));
 
 			switch(mComparison)
 			{

@@ -43,7 +43,7 @@ set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CUR
 
 setup_target(${PROJECT})
 
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Script ScriptTools Widgets REQUIRED)
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets Core5Compat REQUIRED)
 
 target_include_directories(${PROJECT}
     PRIVATE
@@ -59,10 +59,9 @@ target_link_libraries(
     execution
     actiontools
     tools
-    Qt5::Network
-    Qt5::Script
-    Qt5::ScriptTools
-    Qt5::Widgets
+    Qt6::Network
+    Qt6::Widgets
+    Qt6::Core5Compat
     ${LIBNOTIFY_LIBRARIES}
 )
 

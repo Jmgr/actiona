@@ -20,7 +20,7 @@
 
 #include "notify.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 
 #ifdef Q_OS_UNIX
 #undef signals
@@ -34,34 +34,37 @@
 
 namespace Code
 {
-	QScriptValue Notify::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		auto notify = new Notify;
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-			
-			if(it.name() == QLatin1String("title"))
-				notify->mTitle = it.value().toString();
-			else if(it.name() == QLatin1String("text"))
-				notify->mText = it.value().toString();
-			else if(it.name() == QLatin1String("icon"))
-				notify->mIcon = it.value().toString();
-			else if(it.name() == QLatin1String("timeout"))
-				notify->mTimeout = it.value().toInt32();
-		}
-
-		return CodeClass::constructor(notify, context, engine);
-	}
-	
 	Notify::Notify()
 		: CodeClass()
 		
 	{
 	}
+
+    Notify::Notify(const QJSValue &parameters)
+        : Notify()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("title"))
+                mTitle = it.value().toString();
+            else if(it.name() == QLatin1String("text"))
+                mText = it.value().toString();
+            else if(it.name() == QLatin1String("icon"))
+                mIcon = it.value().toString();
+            else if(it.name() == QLatin1String("timeout"))
+                mTimeout = it.value().toInt();
+        }
+    }
 	
 	Notify::~Notify()
 	{
@@ -74,10 +77,16 @@ namespace Code
 #endif
 	}
 	
-	QScriptValue Notify::show()
+    Notify *Notify::show(const QJSValue &parameters)
 	{
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return this;
+        }
+
 #ifdef Q_OS_UNIX
-		QScriptValueIterator it(context()->argument(0));
+        QJSValueIterator it(parameters);
 
 		while(it.hasNext())
 		{
@@ -90,7 +99,7 @@ namespace Code
 			else if(it.name() == QLatin1String("icon"))
 				mIcon = it.value().toString();
 			else if(it.name() == QLatin1String("timeout"))
-				mTimeout = it.value().toInt32();
+                mTimeout = it.value().toInt();
 		}
 		
 		if(!mNotification)
@@ -108,6 +117,11 @@ namespace Code
 		if(!notify_notification_show(mNotification, nullptr))
 			throwError(QStringLiteral("NotificationError"), tr("Unable to show the notification"));
 #endif
-		return thisObject();
+        return this;
 	}
+
+    void Notify::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Notify>(QStringLiteral("Notify"), scriptEngine);
+    }
 }

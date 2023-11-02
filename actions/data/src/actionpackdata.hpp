@@ -87,22 +87,21 @@ public:
 	QString name() const override							{ return tr("Data related actions"); }
 	QVersionNumber version() const override					{ return QVersionNumber(0, 0, 1); }
 	
-	void codeInit(QScriptEngine *scriptEngine) const override
+    void codeInit(QJSEngine &scriptEngine) const override
 	{
-		addCodeClass<Code::File>(QStringLiteral("File"), scriptEngine);
 		Code::File::registerClass(scriptEngine);
-		addCodeClass<Code::Clipboard>(QStringLiteral("Clipboard"), scriptEngine);
-		addCodeClass<Code::Registry>(QStringLiteral("Registry"), scriptEngine);
-		addCodeClass<Code::IniFile>(QStringLiteral("IniFile"), scriptEngine);
-		addCodeClass<Code::Udp>(QStringLiteral("Udp"), scriptEngine);
-		addCodeClass<Code::Tcp>(QStringLiteral("Tcp"), scriptEngine);
-		addCodeClass<Code::Sql>(QStringLiteral("Sql"), scriptEngine);
+        Code::Clipboard::registerClass(scriptEngine);
+        Code::Registry::registerClass(scriptEngine);
+        Code::IniFile::registerClass(scriptEngine);
+        Code::Udp::registerClass(scriptEngine);
+        Code::Tcp::registerClass(scriptEngine);
+        Code::Sql::registerClass(scriptEngine);
 		Code::Sql::registerClass(scriptEngine);
-		addCodeClass<Code::TcpServer>(QStringLiteral("TcpServer"), scriptEngine);
-		addCodeClass<Code::Web>(QStringLiteral("Web"), scriptEngine);
-		addCodeClass<Code::MailAttachment>(QStringLiteral("MailAttachment"), scriptEngine);
-		addCodeClass<Code::MailMessage>(QStringLiteral("MailMessage"), scriptEngine);
-		addCodeClass<Code::Mail>(QStringLiteral("Mail"), scriptEngine);
+        Code::TcpServer::registerClass(scriptEngine);
+        Code::Web::registerClass(scriptEngine);
+        Code::MailAttachment::registerClass(scriptEngine);
+        Code::MailMessage::registerClass(scriptEngine);
+        Code::Mail::registerClass(scriptEngine);
 	}
 
 private:

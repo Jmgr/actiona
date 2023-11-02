@@ -521,7 +521,7 @@ void ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter, int
 #endif
 
 	auto layout = new QBoxLayout(parameter->editorsOrientation() == Qt::Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom );
-	layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(1);
 
 	QWidget *parentWidget = new QWidget(this);

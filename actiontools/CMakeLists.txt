@@ -57,7 +57,6 @@ set(SOURCES
     ${SOURCES_PREFIX}/lineparameterdefinition.cpp
     ${SOURCES_PREFIX}/listparameterdefinition.cpp
     ${SOURCES_PREFIX}/localeparameterdefinition.cpp
-    ${SOURCES_PREFIX}/messagehandler.cpp
     ${SOURCES_PREFIX}/multitextparameterdefinition.cpp
     ${SOURCES_PREFIX}/numberformat.cpp
     ${SOURCES_PREFIX}/numberparameterdefinition.cpp
@@ -96,11 +95,9 @@ set(SOURCES
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/keyboardkey_xkb.cpp>
     ${SOURCES_PREFIX}/code/algorithms.cpp
     ${SOURCES_PREFIX}/code/codeclass.cpp
-    ${SOURCES_PREFIX}/code/codetools.cpp
     ${SOURCES_PREFIX}/code/color.cpp
     ${SOURCES_PREFIX}/code/image.cpp
     ${SOURCES_PREFIX}/code/point.cpp
-    ${SOURCES_PREFIX}/code/prettyprinting.cpp
     ${SOURCES_PREFIX}/code/processhandle.cpp
     ${SOURCES_PREFIX}/code/rawdata.cpp
     ${SOURCES_PREFIX}/code/rect.cpp
@@ -115,30 +112,45 @@ set(SOURCES
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile_unix.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile_win.cpp>
     ${SOURCES_PREFIX}/qtsingleapplication/qtsingleapplication.cpp
+    $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/x11info.cpp>
+    ${SOURCES_PREFIX}/xmlvalidator.cpp
+    ${SOURCES_PREFIX}/scriptengine.cpp
 )
 
 set(HEADERS_PREFIX include/${PROJECT})
 set(HEADERS
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keysym2ucs.hpp>
+    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/x11info.hpp>
     ${HEADERS_PREFIX}/abstractcodeeditor.hpp
-    ${HEADERS_PREFIX}/actiondefinitionenums.hpp
     ${HEADERS_PREFIX}/actiondefinition.hpp
+    ${HEADERS_PREFIX}/actiondefinitionenums.hpp
     ${HEADERS_PREFIX}/actionexception.hpp
     ${HEADERS_PREFIX}/actionfactory.hpp
-    ${HEADERS_PREFIX}/actioninstancebuffer.hpp
     ${HEADERS_PREFIX}/actioninstance.hpp
+    ${HEADERS_PREFIX}/actioninstancebuffer.hpp
     ${HEADERS_PREFIX}/actionpack.hpp
     ${HEADERS_PREFIX}/actiontools_global.hpp
     ${HEADERS_PREFIX}/booleanedit.hpp
     ${HEADERS_PREFIX}/booleanparameterdefinition.hpp
     ${HEADERS_PREFIX}/choosepositionpushbutton.hpp
     ${HEADERS_PREFIX}/choosewindowpushbutton.hpp
+    ${HEADERS_PREFIX}/code/algorithms.hpp
+    ${HEADERS_PREFIX}/code/codeclass.hpp
+    ${HEADERS_PREFIX}/code/color.hpp
+    ${HEADERS_PREFIX}/code/image.hpp
+    ${HEADERS_PREFIX}/code/point.hpp
+    ${HEADERS_PREFIX}/code/processhandle.hpp
+    ${HEADERS_PREFIX}/code/rawdata.hpp
+    ${HEADERS_PREFIX}/code/rect.hpp
+    ${HEADERS_PREFIX}/code/size.hpp
+    ${HEADERS_PREFIX}/code/window.hpp
     ${HEADERS_PREFIX}/codecombobox.hpp
     ${HEADERS_PREFIX}/codedatetimeedit.hpp
     ${HEADERS_PREFIX}/codeedit.hpp
     ${HEADERS_PREFIX}/codeeditordialog.hpp
     ${HEADERS_PREFIX}/codehighlighter.hpp
-    ${HEADERS_PREFIX}/codelineeditbutton.hpp
     ${HEADERS_PREFIX}/codelineedit.hpp
+    ${HEADERS_PREFIX}/codelineeditbutton.hpp
     ${HEADERS_PREFIX}/codespinbox.hpp
     ${HEADERS_PREFIX}/coloredit.hpp
     ${HEADERS_PREFIX}/colorparameterdefinition.hpp
@@ -149,8 +161,8 @@ set(HEADERS
     ${HEADERS_PREFIX}/datacopyactioninstance.hpp
     ${HEADERS_PREFIX}/datetimeparameterdefinition.hpp
     ${HEADERS_PREFIX}/devicecopythread.hpp
-    ${HEADERS_PREFIX}/elementdefinition.hpp
     ${HEADERS_PREFIX}/element.hpp
+    ${HEADERS_PREFIX}/elementdefinition.hpp
     ${HEADERS_PREFIX}/environmentvariableparameterdefinition.hpp
     ${HEADERS_PREFIX}/fileedit.hpp
     ${HEADERS_PREFIX}/fileparameterdefinition.hpp
@@ -164,14 +176,13 @@ set(HEADERS
     ${HEADERS_PREFIX}/itemlistview.hpp
     ${HEADERS_PREFIX}/itemlistwidget.hpp
     ${HEADERS_PREFIX}/itemsparameterdefinition.hpp
-    ${HEADERS_PREFIX}/keyboardkeyedit.hpp
     ${HEADERS_PREFIX}/keyboardkey.hpp
+    ${HEADERS_PREFIX}/keyboardkeyedit.hpp
     ${HEADERS_PREFIX}/keyboardkeyparameterdefinition.hpp
     ${HEADERS_PREFIX}/keyedit.hpp
     ${HEADERS_PREFIX}/keyinput.hpp
     ${HEADERS_PREFIX}/keymapper.hpp
     ${HEADERS_PREFIX}/keyparameterdefinition.hpp
-    $<$<PLATFORM_ID:Linux>:${HEADERS_PREFIX}/keysym2ucs.hpp>
     ${HEADERS_PREFIX}/keysymhelper.hpp
     ${HEADERS_PREFIX}/keywords.hpp
     ${HEADERS_PREFIX}/linecombobox.hpp
@@ -180,33 +191,41 @@ set(HEADERS
     ${HEADERS_PREFIX}/listparameterdefinition.hpp
     ${HEADERS_PREFIX}/localeparameterdefinition.hpp
     ${HEADERS_PREFIX}/matchingpointlist.hpp
-    ${HEADERS_PREFIX}/messagehandler.hpp
     ${HEADERS_PREFIX}/multitextparameterdefinition.hpp
     ${HEADERS_PREFIX}/name.hpp
     ${HEADERS_PREFIX}/numberformat.hpp
     ${HEADERS_PREFIX}/numberparameterdefinition.hpp
     ${HEADERS_PREFIX}/opencvalgorithms.hpp
     ${HEADERS_PREFIX}/opencvalgorithms_private.hpp
+    ${HEADERS_PREFIX}/parameter.hpp
     ${HEADERS_PREFIX}/parametercontainer.hpp
     ${HEADERS_PREFIX}/parameterdefinition.hpp
-    ${HEADERS_PREFIX}/parameter.hpp
     ${HEADERS_PREFIX}/pointitemdelegate.hpp
     ${HEADERS_PREFIX}/pointlistparameterdefinition.hpp
     ${HEADERS_PREFIX}/pointlistwidget.hpp
     ${HEADERS_PREFIX}/positionedit.hpp
     ${HEADERS_PREFIX}/positionparameterdefinition.hpp
     ${HEADERS_PREFIX}/procedureparameterdefinition.hpp
+    ${HEADERS_PREFIX}/qtimagefilters/convolutionfilter.h
+    ${HEADERS_PREFIX}/qtimagefilters/gaussfilter.h
+    ${HEADERS_PREFIX}/qtimagefilters/punchfilter.h
+    ${HEADERS_PREFIX}/qtimagefilters/qtimagefilter.h
+    ${HEADERS_PREFIX}/qtimagefilters/qtmatrix.h
+    ${HEADERS_PREFIX}/qtsingleapplication/qtlocalpeer.h
+    ${HEADERS_PREFIX}/qtsingleapplication/qtlockedfile.h
+    ${HEADERS_PREFIX}/qtsingleapplication/qtsingleapplication.h
     ${HEADERS_PREFIX}/registry.hpp
     ${HEADERS_PREFIX}/resource.hpp
     ${HEADERS_PREFIX}/resourcenamedialog.hpp
     ${HEADERS_PREFIX}/savescreenshotwizardpage.hpp
+    ${HEADERS_PREFIX}/scopeguard.hpp
     ${HEADERS_PREFIX}/screenpositionwidget.hpp
     ${HEADERS_PREFIX}/screenshooter.hpp
     ${HEADERS_PREFIX}/screenshotpushbutton.hpp
     ${HEADERS_PREFIX}/screenshotwizard.hpp
     ${HEADERS_PREFIX}/screenshotwizardpage.hpp
-    ${HEADERS_PREFIX}/scriptcompleter.hpp
     ${HEADERS_PREFIX}/script.hpp
+    ${HEADERS_PREFIX}/scriptcompleter.hpp
     ${HEADERS_PREFIX}/scriptlinemodel.hpp
     ${HEADERS_PREFIX}/scriptparameter.hpp
     ${HEADERS_PREFIX}/settings.hpp
@@ -221,26 +240,8 @@ set(HEADERS
     ${HEADERS_PREFIX}/windowedit.hpp
     ${HEADERS_PREFIX}/windowhandle.hpp
     ${HEADERS_PREFIX}/windowparameterdefinition.hpp
-    ${HEADERS_PREFIX}/code/algorithms.hpp
-    ${HEADERS_PREFIX}/code/codeclass.hpp
-    ${HEADERS_PREFIX}/code/codetools.hpp
-    ${HEADERS_PREFIX}/code/color.hpp
-    ${HEADERS_PREFIX}/code/image.hpp
-    ${HEADERS_PREFIX}/code/point.hpp
-    ${HEADERS_PREFIX}/code/prettyprinting.hpp
-    ${HEADERS_PREFIX}/code/processhandle.hpp
-    ${HEADERS_PREFIX}/code/rawdata.hpp
-    ${HEADERS_PREFIX}/code/rect.hpp
-    ${HEADERS_PREFIX}/code/size.hpp
-    ${HEADERS_PREFIX}/code/window.hpp
-    ${HEADERS_PREFIX}/qtimagefilters/convolutionfilter.h
-    ${HEADERS_PREFIX}/qtimagefilters/gaussfilter.h
-    ${HEADERS_PREFIX}/qtimagefilters/punchfilter.h
-    ${HEADERS_PREFIX}/qtimagefilters/qtimagefilter.h
-    ${HEADERS_PREFIX}/qtimagefilters/qtmatrix.h
-    ${HEADERS_PREFIX}/qtsingleapplication/qtlocalpeer.h
-    ${HEADERS_PREFIX}/qtsingleapplication/qtlockedfile.h
-    ${HEADERS_PREFIX}/qtsingleapplication/qtsingleapplication.h
+    ${HEADERS_PREFIX}/xmlvalidator.hpp
+    ${HEADERS_PREFIX}/scriptengine.hpp
 )
 
 set(UI_PREFIX ui)
@@ -287,7 +288,7 @@ target_compile_definitions(${PROJECT} PRIVATE ACTIONTOOLS_LIBRARY)
 setup_target(${PROJECT})
 
 find_package(OpenCV REQUIRED)
-find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Script XmlPatterns Widgets REQUIRED)
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets Qml REQUIRED)
 
 target_include_directories(${PROJECT}
     PUBLIC
@@ -296,6 +297,8 @@ target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/3rdparty/libxml2/include
+        ${CMAKE_CURRENT_BINARY_DIR}/src/3rdparty/libxml2
         ${LIBXTST_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
 )
@@ -303,17 +306,15 @@ target_include_directories(${PROJECT}
 target_link_libraries(
     ${PROJECT}
     tools
-    Qt5::Script
-    Qt5::XmlPatterns
-    Qt5::Widgets
+    Qt6::Widgets
+    Qt6::Qml
+    Qt6::QmlPrivate
     ${LIBXTST_LIBRARIES}
     ${OpenCV_LIBS}
     $<$<PLATFORM_ID:Windows>:Psapi>
+    xml2
 )
 
-if(UNIX)
-    find_package(Qt5 ${ACT_MINIMUM_QT_VERSION} COMPONENTS X11Extras REQUIRED)
-    target_link_libraries(${PROJECT} Qt5::X11Extras)
-endif()
-
 compile_translations(${PROJECT})
+
+add_subdirectory(src/3rdparty/libxml2)

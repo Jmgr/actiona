@@ -22,9 +22,7 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QStringList>
 
 class QDeviceInfo;
@@ -80,48 +78,46 @@ namespace Code
         };
         Q_ENUM(StorageLocation)
 		
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-	
-		System();
+        Q_INVOKABLE System();
 		~System() override;
 	
-	public slots:
-		QString toString() const override                                { return QStringLiteral("System"); }
-        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<System>(other); }
-		QString storageLocationPath(StorageLocation location) const;
-		QString storageLocationName(StorageLocation location) const;
-		QScriptValue openUrl(const QString &url) const;
-		int screenCount() const;
-		QScriptValue availableGeometry(int screen = -1) const;
-		QScriptValue screenGeometry(int screen = -1) const;
-		int primaryScreen() const;
-		bool isVirtualDesktop() const;
-		QString currentDirectory() const;
-		QString username() const;
-		QString variable(const QString &name) const;
-        qint64 timestamp() const;
-		QString osName() const;
-		QString version() const;
-		QString countryCode() const;
-		QString language() const;
-		QStringList logicalDrives() const;
-		qlonglong availableDiskSpace(const QString &drive) const;
-		qlonglong totalDiskSpace(const QString &drive) const;
-		DriveType driveType(const QString &drive) const;
-		int colorDepth(int screenId = -1) const;
-		int displayBrightness(int screenId = -1) const;
-		int batteryLevel() const;
-		PowerState powerState() const;
-		QString manufacturer() const;
-		QString model() const;
-		QString productName() const;
-		QScriptValue logout(bool force) const;
-		QScriptValue restart(bool force) const;
-		QScriptValue shutdown(bool force) const;
-		QScriptValue suspend(bool force) const;
-		QScriptValue hibernate(bool force) const;
-		QScriptValue lockScreen() const;
-		QScriptValue startScreenSaver() const;
+        Q_INVOKABLE QString toString() const override                                { return QStringLiteral("System"); }
+        Q_INVOKABLE QString storageLocationPath(StorageLocation location) const;
+        Q_INVOKABLE QString storageLocationName(StorageLocation location) const;
+        Q_INVOKABLE System *openUrl(const QString &url);
+        Q_INVOKABLE int screenCount() const;
+        Q_INVOKABLE QJSValue availableGeometry(int screen = -1) const;
+        Q_INVOKABLE QJSValue screenGeometry(int screen = -1) const;
+        Q_INVOKABLE int primaryScreen() const;
+        Q_INVOKABLE bool isVirtualDesktop() const;
+        Q_INVOKABLE QString currentDirectory() const;
+        Q_INVOKABLE QString username() const;
+        Q_INVOKABLE QString variable(const QString &name) const;
+        Q_INVOKABLE qint64 timestamp() const;
+        Q_INVOKABLE QString osName() const;
+        Q_INVOKABLE QString version() const;
+        Q_INVOKABLE QString countryCode() const;
+        Q_INVOKABLE QString language() const;
+        Q_INVOKABLE QStringList logicalDrives() const;
+        Q_INVOKABLE qlonglong availableDiskSpace(const QString &drive) const;
+        Q_INVOKABLE qlonglong totalDiskSpace(const QString &drive) const;
+        Q_INVOKABLE DriveType driveType(const QString &drive) const;
+        Q_INVOKABLE int colorDepth(int screenId = -1) const;
+        Q_INVOKABLE int displayBrightness(int screenId = -1) const;
+        Q_INVOKABLE int batteryLevel() const;
+        Q_INVOKABLE PowerState powerState() const;
+        Q_INVOKABLE QString manufacturer() const;
+        Q_INVOKABLE QString model() const;
+        Q_INVOKABLE QString productName() const;
+        Q_INVOKABLE System *logout(bool force);
+        Q_INVOKABLE System *restart(bool force);
+        Q_INVOKABLE System *shutdown(bool force);
+        Q_INVOKABLE System *suspend(bool force);
+        Q_INVOKABLE System *hibernate(bool force);
+        Q_INVOKABLE System *lockScreen();
+        Q_INVOKABLE System *startScreenSaver();
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private:
 		SystemSession *mSystemSession;

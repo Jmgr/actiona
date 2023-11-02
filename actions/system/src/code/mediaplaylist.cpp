@@ -20,29 +20,20 @@
 
 #include "mediaplaylist.hpp"
 
-#include <QMediaPlaylist>
 #include <QMediaPlayer>
+#include <QAudioOutput>
 #include <QVideoWidget>
 
 namespace Code
 {
-	QScriptValue MediaPlaylist::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new MediaPlaylist, context, engine);
-	}
-	
 	MediaPlaylist::MediaPlaylist()
 		: CodeClass(),
-		mMediaPlaylist(new QMediaPlaylist(this)),
 		mMediaPlayer(new QMediaPlayer(this)),
 		mVideoWidget(new QVideoWidget())
 	{
-		mMediaPlayer->setPlaylist(mMediaPlaylist);
 		mMediaPlayer->setVideoOutput(mVideoWidget);
 		mVideoWidget->setVisible(false);
-		
-        connect(mMediaPlayer, &QMediaPlayer::videoAvailableChanged, this, &MediaPlaylist::videoAvailableChanged);
-	}
+    }
 	
 	MediaPlaylist::~MediaPlaylist()
 	{
@@ -55,72 +46,61 @@ namespace Code
 	}
 
 	qreal MediaPlaylist::volume() const
-	{
-		return mMediaPlayer->volume();
+    {
+        return mMediaPlayer->audioOutput()->volume();
 	}
 
 	qint64 MediaPlaylist::position() const
 	{
 		return mMediaPlayer->position();
 	}
-
-
-	int MediaPlaylist::currentMedia() const
-	{
-		return mMediaPlaylist->currentIndex();
-	}
-
-	MediaPlaylist::PlaybackMode MediaPlaylist::playbackMode() const
-	{
-        return static_cast<MediaPlaylist::PlaybackMode>(mMediaPlaylist->playbackMode());
-    }
 	
-	QScriptValue MediaPlaylist::setPlaybackRate(qreal rate)
+    MediaPlaylist *MediaPlaylist::setPlaybackRate(qreal rate)
 	{
 		mMediaPlayer->setPlaybackRate(rate);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue MediaPlaylist::setVolume(qreal volume)
+    MediaPlaylist *MediaPlaylist::setVolume(qreal volume)
 	{
-		mMediaPlayer->setVolume(volume);
+        mMediaPlayer->audioOutput()->setVolume(volume);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue MediaPlaylist::setPosition(qint64 position)
+    MediaPlaylist *MediaPlaylist::setPosition(qint64 position)
 	{
 		mMediaPlayer->setPosition(position);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue MediaPlaylist::setMuted(bool muted)
+    MediaPlaylist *MediaPlaylist::setMuted(bool muted)
 	{
-		mMediaPlayer->setMuted(muted);
+        mMediaPlayer->audioOutput()->setMuted(muted);
 		
-		return thisObject();
+        return this;
 	}
 
 	qint64 MediaPlaylist::duration() const
 	{
 		return mMediaPlayer->duration();
 	}
-	
-	bool MediaPlaylist::hasAudio() const
-	{
-		return mMediaPlayer->isAudioAvailable();
-	}
-	
-	bool MediaPlaylist::hasVideo() const
-	{
-		return mMediaPlayer->isVideoAvailable();
-	}
+
+    bool MediaPlaylist::hasAudio() const
+    {
+        return mMediaPlayer->hasAudio();
+    }
+
+    bool MediaPlaylist::hasVideo() const
+    {
+        return mMediaPlayer->hasVideo();
+    }
 	
 	bool MediaPlaylist::isMuted() const
 	{
-		return mMediaPlayer->isMuted();
+        return mMediaPlayer->audioOutput()->isMuted();
 	}
 	
 	bool MediaPlaylist::isSeekable() const
@@ -130,153 +110,32 @@ namespace Code
 	
 	int MediaPlaylist::bufferStatus() const
 	{
-		return mMediaPlayer->bufferStatus();
+        return static_cast<int>(mMediaPlayer->bufferProgress() * 100.f);
 	}
 	
-	QScriptValue MediaPlaylist::play()
+    MediaPlaylist *MediaPlaylist::play()
 	{
 		mMediaPlayer->play();
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue MediaPlaylist::pause()
+    MediaPlaylist *MediaPlaylist::pause()
 	{
 		mMediaPlayer->pause();
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue MediaPlaylist::stop()
+    MediaPlaylist *MediaPlaylist::stop()
 	{
 		mMediaPlayer->stop();
 		
-		return thisObject();
-	}
-	
-	QScriptValue MediaPlaylist::addLocalMedia(const QString &path)
-	{
-		if(!mMediaPlaylist->addMedia(QUrl::fromLocalFile(path)))
-		{
-			throwError(QStringLiteral("AddMediaError"), tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
-			return thisObject();
-		}
-		
-		return thisObject();
-	}
-	
-	QScriptValue MediaPlaylist::addDistantMedia(const QString &path)
-	{
-		if(!mMediaPlaylist->addMedia(QUrl(path)))
-		{
-			throwError(QStringLiteral("AddMediaError"), tr("Add media failed : %1").arg(mMediaPlaylist->errorString()));
-			return thisObject();
-		}
-		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue MediaPlaylist::insertLocalMedia(int position, const QString &path)
-	{
-		if(!mMediaPlaylist->insertMedia(position, QUrl::fromLocalFile(path)))
-		{
-			throwError(QStringLiteral("InsertMediaError"), tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
-			return thisObject();
-		}
-		
-		return thisObject();
-	}
-	
-	QScriptValue MediaPlaylist::insertDistantMedia(int position, const QString &path)
-	{
-		if(!mMediaPlaylist->insertMedia(position, QUrl(path)))
-		{
-			throwError(QStringLiteral("InsertMediaError"), tr("Insert media failed : %1").arg(mMediaPlaylist->errorString()));
-			return thisObject();
-		}
-		
-		return thisObject();
-	}
-
-	QScriptValue MediaPlaylist::clear()
-	{
-		if(!mMediaPlaylist->clear())
-		{
-			throwError(QStringLiteral("ClearMediaError"), tr("Clear failed : %1").arg(mMediaPlaylist->errorString()));
-			return thisObject();
-		}
-		
-		return thisObject();
-	}
-
-	QScriptValue MediaPlaylist::next()
-	{
-		mMediaPlaylist->next();
-		
-		return thisObject();
-	}
-
-	QScriptValue MediaPlaylist::previous()
-	{
-		mMediaPlaylist->previous();
-		
-		return thisObject();
-	}
-
-	QScriptValue MediaPlaylist::setCurrentMedia(int mediaIndex)
-	{
-		mMediaPlaylist->setCurrentIndex(mediaIndex);
-		
-		return thisObject();
-	}
-
-	QScriptValue MediaPlaylist::shuffle()
-	{
-		mMediaPlaylist->shuffle();
-		
-		return thisObject();
-	}
-
-	QScriptValue MediaPlaylist::setPlaybackMode(PlaybackMode playbackMode)
-	{
-		mMediaPlaylist->setPlaybackMode(static_cast<QMediaPlaylist::PlaybackMode>(playbackMode));
-		
-		return thisObject();
-	}
-
-	QScriptValue MediaPlaylist::removeMedia(int position)
-	{
-		if(!mMediaPlaylist->removeMedia(position))
-		{
-			throwError(QStringLiteral("RemoveMediaError"), tr("Remove media failed : %1").arg(mMediaPlaylist->errorString()));
-			return thisObject();
-		}
-		
-		return thisObject();
-	}
-	
-	bool MediaPlaylist::isEmpty() const
-	{
-		return mMediaPlaylist->isEmpty();
-	}
-	
-	int MediaPlaylist::mediaCount() const
-	{
-		return mMediaPlaylist->mediaCount();
-	}
-	
-	int MediaPlaylist::nextMedia() const
-	{
-		return mMediaPlaylist->nextIndex();
-	}
-	
-	int MediaPlaylist::previousMedia() const
-	{
-		return mMediaPlaylist->previousIndex();
-	}
-	
-	void MediaPlaylist::videoAvailableChanged(bool videoAvailable)
-	{
-		mVideoWidget->setVisible(videoAvailable);
-	}
+    void MediaPlaylist::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<MediaPlaylist>(QStringLiteral("MediaPlaylist"), scriptEngine);
+    }
 }

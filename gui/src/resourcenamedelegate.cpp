@@ -24,7 +24,7 @@
 #include "actiontools/actioninstance.hpp"
 
 #include <QLineEdit>
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 
 ResourceNameDelegate::ResourceNameDelegate(ResourceTableWidget *resourceTableWidget, QObject *parent)
     : QStyledItemDelegate(parent),
@@ -39,7 +39,7 @@ QWidget* ResourceNameDelegate::createEditor(QWidget *parent, const QStyleOptionV
 
     auto lineEdit = new QLineEdit(parent);
 
-    lineEdit->setValidator(new QRegExpValidator(ActionTools::ActionInstance::NameRegExp, lineEdit));
+    lineEdit->setValidator(new QRegularExpressionValidator(ActionTools::ActionInstance::NameRegExp, lineEdit));
 
     return lineEdit;
 }
@@ -58,7 +58,7 @@ void ResourceNameDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
     {
         QString name = lineEdit->text();
 
-        if(!name.isEmpty() && !mResourceTableWidget->containsResource(name) && ActionTools::ActionInstance::NameRegExp.exactMatch(name))
+        if(!name.isEmpty() && !mResourceTableWidget->containsResource(name) && ActionTools::ActionInstance::NameRegExp.match(name).hasMatch())
             model->setData(index, lineEdit->text(), Qt::DisplayRole);
     }
     else

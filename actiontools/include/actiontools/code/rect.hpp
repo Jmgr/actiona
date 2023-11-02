@@ -23,15 +23,14 @@
 #include "actiontools/actiontools_global.hpp"
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 #include <QRect>
-#include <QPoint>
-#include <QSize>
 
 namespace Code
 {
+    class Point;
+    class Size;
+
 	class ACTIONTOOLSSHARED_EXPORT Rect : public CodeClass
 	{
 		Q_OBJECT
@@ -45,13 +44,8 @@ namespace Code
 		Q_PROPERTY(int height READ height WRITE setHeight)
 		
 	public:
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-		static QScriptValue constructor(const QRect &rect, QScriptEngine *engine);
-		static QRect parameter(QScriptContext *context, QScriptEngine *engine);
-
-		static void registerClass(QScriptEngine *scriptEngine);
-		
-		Rect();
+        Q_INVOKABLE Rect();
+        Q_INVOKABLE Rect(int left, int top, int width, int height);
 		Rect(const Rect &other);
 		Rect(const QRect &rect);
 		
@@ -71,31 +65,35 @@ namespace Code
 		int right() const;
 		int top() const;
 		int bottom() const;
-		
-	public slots:
-		QScriptValue clone() const;
-		bool equals(const QScriptValue &other) const override;
-		QString toString() const override;
-		QScriptValue normalize();
-		QScriptValue setTop(int top);
-		QScriptValue setBottom(int bottom);
-		QScriptValue setLeft(int left);
-		QScriptValue setRight(int right);
-		QScriptValue setX(int x);
-		QScriptValue setY(int y);
-		QScriptValue setWidth(int width);
-		QScriptValue setHeight(int height);
-		QScriptValue setSize();
-		QScriptValue setCoords(int x1, int y1, int x2, int y2);
-		QScriptValue setRect();
-		QScriptValue translate();
-		bool contains(const QScriptValue &point) const;
-		QScriptValue united() const;
-		QScriptValue intersected() const;
-		bool intersects() const;
-		bool isEmpty() const;
-		QScriptValue center() const;
-		QScriptValue size() const;
+
+        Q_INVOKABLE QJSValue clone() const;
+        Q_INVOKABLE bool equals(const QJSValue &other) const;
+        Q_INVOKABLE QString toString() const override;
+        Q_INVOKABLE Rect *normalize();
+        Q_INVOKABLE Rect *setTop(int top);
+        Q_INVOKABLE Rect *setBottom(int bottom);
+        Q_INVOKABLE Rect *setLeft(int left);
+        Q_INVOKABLE Rect *setRight(int right);
+        Q_INVOKABLE Rect *setX(int x);
+        Q_INVOKABLE Rect *setY(int y);
+        Q_INVOKABLE Rect *setWidth(int width);
+        Q_INVOKABLE Rect *setHeight(int height);
+        Q_INVOKABLE Rect *setSize(const Size *size);
+        Q_INVOKABLE Rect *setCoords(int x1, int y1, int x2, int y2);
+        Q_INVOKABLE Rect *setRect(int x, int y, int width, int height);
+        Q_INVOKABLE Rect *translate(const Point *point);
+        Q_INVOKABLE bool contains(const Point *point) const;
+        Q_INVOKABLE bool contains(const Rect *rect) const;
+        Q_INVOKABLE bool contains(int x, int y) const;
+        Q_INVOKABLE bool contains(int left, int top, int width, int height) const;
+        Q_INVOKABLE QJSValue united(const Rect *rect) const;
+        Q_INVOKABLE QJSValue intersected(const Rect *rect) const;
+        Q_INVOKABLE bool intersects(const Rect *rect) const;
+        Q_INVOKABLE bool isEmpty() const;
+        Q_INVOKABLE QJSValue center() const;
+        Q_INVOKABLE QJSValue size() const;
+
+        static void registerClass(QJSEngine &scriptEngine);
 		
 	private:
 		QRect mRect;

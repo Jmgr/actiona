@@ -87,7 +87,7 @@ namespace ActionTools
 		addLine(message, item, Action, type);
 	}
 
-	void ConsoleWidget::addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, const QStringList &backtrace, Type type)
+    void ConsoleWidget::addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type)
 	{
 		auto item = new QStandardItem();
 
@@ -96,7 +96,6 @@ namespace ActionTools
 		item->setData(subField, SubFieldRole);
 		item->setData(line, LineRole);
 		item->setData(column, ColumnRole);
-		item->setData(backtrace, BacktraceRole);
 
 		addLine(message, item, User, type);
 	}

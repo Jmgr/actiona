@@ -48,7 +48,6 @@
 #include "sfxscriptdialog.hpp"
 #include "progresssplashscreen.hpp"
 #include "execution/codeinitializer.hpp"
-#include "actiontools/code/codetools.hpp"
 #include "scriptsettingsdialog.hpp"
 #include "resourcedialog.hpp"
 #include "actiontools/screenshotwizard.hpp"
@@ -80,13 +79,13 @@
 #include <QProcess>
 #include <QTemporaryFile>
 #include <QListWidget>
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QStandardPaths>
 #include <QCommandLineParser>
 
 #ifdef Q_OS_UNIX
 #include <QProcessEnvironment>
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #endif
 
 #ifdef Q_OS_WIN
@@ -335,13 +334,13 @@ void MainWindow::postInit()
         Tools::HighResolutionTimer timer(QStringLiteral("building completion model"));
 #endif
 
-		QScriptEngine engine;
-        Execution::CodeInitializer::initialize(&engine, nullptr, mActionFactory, mCurrentFile);
+		QJSEngine engine;
+        Execution::CodeInitializer::initialize(engine, mActionFactory, mCurrentFile);
 
 		mCompletionModel->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/class.png")), QStringLiteral("include")));
 		mCompletionModel->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/class.png")), QStringLiteral("loadUI")));
 		
-		QScriptValueIterator it(engine.globalObject());
+		QJSValueIterator it(engine.globalObject());
 		while(it.hasNext())
 		{
 			it.next();
@@ -1341,10 +1340,10 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 		return false;
 	case ActionTools::Script::ReadInvalidSchema:
 		{
-			QMessageBox messageBox(tr("Load script"), tr("Unable to load the script because it has an incorrect schema.%1Line: %2<br>Column: %3")
+            QMessageBox messageBox(QMessageBox::Warning, tr("Load script"), tr("Unable to load the script because it has an incorrect schema.%1Line: %2<br>Column: %3")
 								   .arg(mScript->statusMessage())
 								   .arg(mScript->line())
-								   .arg(mScript->column()), QMessageBox::Warning, QMessageBox::Ok, 0, 0, this);
+                                   .arg(mScript->column()), QMessageBox::Ok, this);
             messageBox.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 			messageBox.setTextFormat(Qt::RichText);
 			messageBox.exec();
@@ -1956,11 +1955,11 @@ void MainWindow::updateSuccess(const QVersionNumber &version,
 	changelogDialog.setChangelog(changelog);
 	changelogDialog.exec();
 
-	if(changelogDialog.changelogAction() == ChangelogDialog::None)
+    if(changelogDialog.changelogAction() == ChangelogDialog::NoAction)
 		return;
 
-	QString updateFilename;
-	if(changelogDialog.changelogAction() == ChangelogDialog::DownloadOnly)
+    QString updateFilename;
+    if(changelogDialog.changelogAction() == ChangelogDialog::DownloadOnly)
 	{
         updateFilename = QFileDialog::getSaveFileName(	this,
                                     tr("Select where to save the installation file"),

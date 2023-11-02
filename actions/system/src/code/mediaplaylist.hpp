@@ -22,11 +22,8 @@
 
 #include "actiontools/code/codeclass.hpp"
 
-#include <QObject>
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
 
-class QMediaPlaylist;
 class QMediaPlayer;
 class QVideoWidget;
 
@@ -39,71 +36,33 @@ namespace Code
 		Q_PROPERTY(qreal volume READ volume WRITE setVolume)
 		Q_PROPERTY(qint64 position READ position WRITE setPosition)
 		Q_PROPERTY(bool muted READ isMuted WRITE setMuted)
-		Q_PROPERTY(int currentMedia READ currentMedia WRITE setCurrentMedia)
-		Q_PROPERTY(PlaybackMode playbackMode READ playbackMode WRITE setPlaybackMode)
 
 	public:
-		enum PlaybackMode
-		{
-			CurrentItemOnce,
-			CurrentItemInLoop,
-			Sequential,
-			Loop,
-			Random
-		};
-        Q_ENUM(PlaybackMode)
-
-		static QScriptValue constructor(QScriptContext *context, QScriptEngine *engine);
-
-		MediaPlaylist();
+        Q_INVOKABLE MediaPlaylist();
 		~MediaPlaylist() override;
 
 		qreal playbackRate() const;
 		qreal volume() const;
 		qint64 position() const;
-		int currentMedia() const;
-		PlaybackMode playbackMode() const;
 
-	public slots:
-		QString toString() const override                                { return QStringLiteral("MediaPlaylist"); }
-        bool equals(const QScriptValue &other) const override    { return defaultEqualsImplementation<MediaPlaylist>(other); }
-		//Player
-		QScriptValue setPlaybackRate(qreal rate);
-		QScriptValue setVolume(qreal volume);
-		QScriptValue setPosition(qint64 position);
-		QScriptValue setMuted(bool muted);
-		qint64 duration() const;
-		bool hasAudio() const;
-		bool hasVideo() const;
-		bool isMuted() const;
-		bool isSeekable() const;
-		int bufferStatus() const;
-		QScriptValue play();
-		QScriptValue pause();
-		QScriptValue stop();
+        Q_INVOKABLE QString toString() const override                                { return QStringLiteral("MediaPlaylist"); }
+        Q_INVOKABLE MediaPlaylist *setPlaybackRate(qreal rate);
+        Q_INVOKABLE MediaPlaylist *setVolume(qreal volume);
+        Q_INVOKABLE MediaPlaylist *setPosition(qint64 position);
+        Q_INVOKABLE MediaPlaylist *setMuted(bool muted);
+        Q_INVOKABLE qint64 duration() const;
+        Q_INVOKABLE bool hasAudio() const;
+        Q_INVOKABLE bool hasVideo() const;
+        Q_INVOKABLE bool isMuted() const;
+        Q_INVOKABLE bool isSeekable() const;
+        Q_INVOKABLE int bufferStatus() const;
+        Q_INVOKABLE MediaPlaylist *play();
+        Q_INVOKABLE MediaPlaylist *pause();
+        Q_INVOKABLE MediaPlaylist *stop();
 
-		//Playlist
-		QScriptValue addLocalMedia(const QString &path);
-		QScriptValue addDistantMedia(const QString &path);
-		QScriptValue insertLocalMedia(int position, const QString &path);
-		QScriptValue insertDistantMedia(int position, const QString &path);
-		QScriptValue clear();
-		QScriptValue next();
-		QScriptValue previous();
-		QScriptValue setCurrentMedia(int mediaIndex);
-		QScriptValue shuffle();
-		QScriptValue setPlaybackMode(PlaybackMode playbackMode);
-		QScriptValue removeMedia(int position);
-		bool isEmpty() const;
-		int mediaCount() const;
-		int nextMedia() const;
-		int previousMedia() const;
-
-	private slots:
-		void videoAvailableChanged(bool videoAvailable);
+        static void registerClass(QJSEngine &scriptEngine);
 
 	private:
-		QMediaPlaylist *mMediaPlaylist;
 		QMediaPlayer *mMediaPlayer;
 		QVideoWidget *mVideoWidget;
 	};

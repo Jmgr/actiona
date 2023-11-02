@@ -30,8 +30,9 @@
 #include <QDebug>
 #include <QPixmapCache>
 #include <QVersionNumber>
+#include <QObject>
 
-class QScriptEngine;
+class QJSEngine;
 
 namespace ActionTools
 {

@@ -20,42 +20,11 @@
 
 #include "progressdialog.hpp"
 
-#include <QScriptValueIterator>
+#include <QJSValueIterator>
 #include <QProgressDialog>
 
 namespace Code
 {
-	QScriptValue ProgressDialog::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		auto progressDialog = new ProgressDialog;
-		progressDialog->setupConstructorParameters(context, engine, context->argument(0));
-
-		QScriptValueIterator it(context->argument(0));
-
-		while(it.hasNext())
-		{
-			it.next();
-
-			if(it.name() == QLatin1String("value"))
-				progressDialog->mProgressDialog->setValue(it.value().toInt32());
-			else if(it.name() == QLatin1String("labelText"))
-				progressDialog->mProgressDialog->setLabelText(it.value().toString());
-			else if(it.name() == QLatin1String("minimum"))
-				progressDialog->mProgressDialog->setMinimum(it.value().toInt32());
-			else if(it.name() == QLatin1String("maximum"))
-				progressDialog->mProgressDialog->setMaximum(it.value().toInt32());
-			else if(it.name() == QLatin1String("range"))
-			{
-				progressDialog->mProgressDialog->setMinimum(it.value().property(QStringLiteral("minimum")).toInt32());
-				progressDialog->mProgressDialog->setMaximum(it.value().property(QStringLiteral("maximum")).toInt32());
-			}
-			else if(it.name() == QLatin1String("onCanceled"))
-				progressDialog->mOnCanceled = it.value();
-		}
-
-		return CodeClass::constructor(progressDialog, context, engine);
-	}
-	
 	ProgressDialog::ProgressDialog()
 		: BaseWindow(),
 		mProgressDialog(new QProgressDialog)
@@ -65,8 +34,43 @@ namespace Code
 		setWidget(mProgressDialog);
 
         connect(mProgressDialog, &QProgressDialog::canceled, this, &ProgressDialog::canceled);
-	}
-	
+    }
+
+    ProgressDialog::ProgressDialog(const QJSValue &parameters)
+        : ProgressDialog()
+    {
+        if(!parameters.isObject())
+        {
+            throwError(QStringLiteral("ObjectParameter"), QStringLiteral("parameter has to be an object"));
+            return;
+        }
+
+        setupConstructorParameters(parameters);
+
+        QJSValueIterator it(parameters);
+
+        while(it.hasNext())
+        {
+            it.next();
+
+            if(it.name() == QLatin1String("value"))
+                mProgressDialog->setValue(it.value().toInt());
+            else if(it.name() == QLatin1String("labelText"))
+                mProgressDialog->setLabelText(it.value().toString());
+            else if(it.name() == QLatin1String("minimum"))
+                mProgressDialog->setMinimum(it.value().toInt());
+            else if(it.name() == QLatin1String("maximum"))
+                mProgressDialog->setMaximum(it.value().toInt());
+            else if(it.name() == QLatin1String("range"))
+            {
+                mProgressDialog->setMinimum(it.value().property(QStringLiteral("minimum")).toInt());
+                mProgressDialog->setMaximum(it.value().property(QStringLiteral("maximum")).toInt());
+            }
+            else if(it.name() == QLatin1String("onCanceled"))
+                mOnCanceled = it.value();
+        }
+    }
+
 	ProgressDialog::~ProgressDialog()
 	{
 		delete mProgressDialog;
@@ -77,57 +81,62 @@ namespace Code
 		return mProgressDialog->value();
 	}
 	
-	QScriptValue ProgressDialog::setValue(int value)
+    ProgressDialog *ProgressDialog::setValue(int value)
 	{
 		mProgressDialog->setValue(value);
 
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue ProgressDialog::setLabelText(const QString &labelText)
+    ProgressDialog *ProgressDialog::setLabelText(const QString &labelText)
 	{
 		mProgressDialog->setLabelText(labelText);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue ProgressDialog::setMinimum(int minimum)
+    ProgressDialog *ProgressDialog::setMinimum(int minimum)
 	{
 		mProgressDialog->setMinimum(minimum);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue ProgressDialog::setMaximum(int maximum)
+    ProgressDialog *ProgressDialog::setMaximum(int maximum)
 	{
 		mProgressDialog->setMaximum(maximum);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue ProgressDialog::setRange(int minimum, int maximum)
+    ProgressDialog *ProgressDialog::setRange(int minimum, int maximum)
 	{
 		mProgressDialog->setMinimum(minimum);
 		mProgressDialog->setMaximum(maximum);
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue ProgressDialog::show()
+    ProgressDialog *ProgressDialog::show()
 	{
 		mProgressDialog->open();
 
-        return thisObject();
+        return this;
     }
 
 	int ProgressDialog::showModal()
 	{
 		return mProgressDialog->exec();
 	}
+
+    void ProgressDialog::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<ProgressDialog>(QStringLiteral("ProgressDialog"), scriptEngine);
+    }
 	
 	void ProgressDialog::canceled()
 	{
-		if(mProgressDialog->isVisible() && mOnCanceled.isValid())
-			mOnCanceled.call(thisObject());
+        if(mProgressDialog->isVisible() && !mOnCanceled.isUndefined())
+            mOnCanceled.call();
 	}
 }

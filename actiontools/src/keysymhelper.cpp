@@ -121,7 +121,7 @@ sub get_utf8 {
 #include <QtGlobal>
 
 #ifdef Q_OS_UNIX
-#include <QX11Info>
+#include "actiontools/x11info.hpp"
 #endif
 
 #include "actiontools/keysymhelper.hpp"
@@ -137,8 +137,8 @@ namespace ActionTools
 		int numModifiers;
 		KeySym *keysyms;
 
-		XDisplayKeycodes(QX11Info::display(), &minKeyCode, &maxKeyCode);
-		keysyms = XGetKeyboardMapping(QX11Info::display(),
+		XDisplayKeycodes(X11Info::display(), &minKeyCode, &maxKeyCode);
+		keysyms = XGetKeyboardMapping(X11Info::display(),
 									  minKeyCode,
 									  maxKeyCode + 1 - minKeyCode,
 									  &keysymsPerKeycode);

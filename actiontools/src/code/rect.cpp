@@ -21,84 +21,21 @@
 #include "actiontools/code/rect.hpp"
 #include "actiontools/code/point.hpp"
 #include "actiontools/code/size.hpp"
-#include "actiontools/code/codetools.hpp"
 
 namespace Code
 {
-	QScriptValue Rect::constructor(QScriptContext *context, QScriptEngine *engine)
-	{
-		Rect *rect = nullptr;
-		
-		switch(context->argumentCount())
-		{
-		case 0:
-			rect = new Rect;
-			break;
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-				if(Rect *codeRect = qobject_cast<Rect*>(object))
-					rect = new Rect(*codeRect);
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			break;
-		case 4:
-			rect = new Rect(QRect(context->argument(0).toInt32(),
-								  context->argument(1).toInt32(),
-								  context->argument(2).toInt32(),
-								  context->argument(3).toInt32()));
-			break;
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			break;
-		}
-		
-		if(!rect)
-			return engine->undefinedValue();
-
-		return CodeClass::constructor(rect, context, engine);
-	}
-	
-	QScriptValue Rect::constructor(const QRect &rect, QScriptEngine *engine)
-	{
-		return CodeClass::constructor(new Rect(rect), engine);
-	}
-	
-	QRect Rect::parameter(QScriptContext *context, QScriptEngine *engine)
-	{
-		switch(context->argumentCount())
-		{
-		case 1:
-			{
-				QObject *object = context->argument(0).toQObject();
-				if(Rect *rect = qobject_cast<Rect*>(object))
-					return rect->mRect;
-				else
-					throwError(context, engine, QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			return {};
-		case 4:
-			return QRect(context->argument(0).toInt32(),
-						 context->argument(1).toInt32(),
-						 context->argument(2).toInt32(),
-						 context->argument(3).toInt32());
-		default:
-			throwError(context, engine, QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return QRect();
-		}
-	}
-
-	void Rect::registerClass(QScriptEngine *scriptEngine)
-	{
-		CodeTools::addClassToScriptEngine<Rect>(scriptEngine);
-	}
-	
 	Rect::Rect()
 		: CodeClass()
 	{
 		
 	}
+
+    Rect::Rect(int left, int top, int width, int height)
+        : CodeClass(),
+        mRect(left, top, width, height)
+    {
+
+    }
 
 	Rect::Rect(const Rect &other)
 		: CodeClass(),
@@ -183,12 +120,12 @@ namespace Code
 		return mRect.bottom();
 	}
 	
-	QScriptValue Rect::clone() const
-	{
-		return constructor(mRect, engine());
+	QJSValue Rect::clone() const
+    {
+        return CodeClass::clone<Rect>();
 	}
 
-	bool Rect::equals(const QScriptValue &other) const
+	bool Rect::equals(const QJSValue &other) const
 	{
 		if(other.isUndefined() || other.isNull())
 			return false;
@@ -205,139 +142,130 @@ namespace Code
 		return QStringLiteral("Rect {x: %1, y: %2, width: %3, height: %4}").arg(x()).arg(y()).arg(width()).arg(height());
 	}
 	
-	QScriptValue Rect::normalize()
+    Rect *Rect::normalize()
 	{
 		mRect = mRect.normalized();
 		
-		return thisObject();
+        return this;
 	}
 	
-	QScriptValue Rect::setTop(int top)
+    Rect *Rect::setTop(int top)
 	{
 		mRect.setTop(top);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setBottom(int bottom)
+    Rect *Rect::setBottom(int bottom)
 	{
 		mRect.setBottom(bottom);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setLeft(int left)
+    Rect *Rect::setLeft(int left)
 	{
 		mRect.setLeft(left);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setRight(int right)
+    Rect *Rect::setRight(int right)
 	{
 		mRect.setRight(right);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setX(int x)
+    Rect *Rect::setX(int x)
 	{
 		mRect.setX(x);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setY(int y)
+    Rect *Rect::setY(int y)
 	{
 		mRect.setY(y);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setWidth(int width)
+    Rect *Rect::setWidth(int width)
 	{
 		mRect.setWidth(width);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setHeight(int height)
+    Rect *Rect::setHeight(int height)
 	{
 		mRect.setHeight(height);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setSize()
-	{
-		mRect.setSize(Size::parameter(context(), engine()));
+    Rect *Rect::setSize(const Size *size)
+    {
+        mRect.setSize(size->size());
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setCoords(int x1, int y1, int x2, int y2)
+    Rect *Rect::setCoords(int x1, int y1, int x2, int y2)
 	{
 		mRect.setCoords(x1, y1, x2, y2);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::setRect()
+    Rect *Rect::setRect(int x, int y, int width, int height)
 	{
-		const QRect &rect = parameter(context(), engine());
-		mRect.setRect(rect.x(), rect.y(), rect.width(), rect.height());
+        mRect.setRect(x, y, width, height);
 		
-		return thisObject();
+        return this;
 	}
 
-	QScriptValue Rect::translate()
+    Rect *Rect::translate(const Point *point)
 	{
-		mRect.translate(Point::parameter(context(), engine()));
+        mRect.translate(point->point());
 		
-		return thisObject();
+        return this;
 	}
 
-	bool Rect::contains(const QScriptValue &point) const
+    bool Rect::contains(const Point *point) const
+    {
+        return mRect.contains(point->point());
+    }
+
+    bool Rect::contains(const Rect *rect) const
+    {
+        return mRect.contains(rect->mRect);
+    }
+
+    bool Rect::contains(int x, int y) const
+    {
+        return mRect.contains(x, y);
+    }
+
+    bool Rect::contains(int left, int top, int width, int height) const
+    {
+        return mRect.contains(QRect(left, top, width, height));
+    }
+
+    QJSValue Rect::united(const Rect *rect) const
 	{
-		switch(context()->argumentCount())
-		{
-		case 1:
-			{
-				QObject *object = point.toQObject();
-				if(auto codePoint = qobject_cast<Point*>(object))
-					return mRect.contains(codePoint->point());
-				else if(Rect *codeRect = qobject_cast<Rect*>(object))
-					return (codeRect == this || mRect.contains(codeRect->mRect));
-				else
-					throwError(QStringLiteral("ParameterTypeError"), tr("Incorrect parameter type"));
-			}
-			return false;
-		case 2:
-			return mRect.contains(QPoint(context()->argument(0).toInt32(), context()->argument(1).toInt32()));
-		case 4:
-			return mRect.contains(QRect(context()->argument(0).toInt32(),
-										context()->argument(1).toInt32(),
-										context()->argument(2).toInt32(),
-										context()->argument(3).toInt32()));
-		default:
-			throwError(QStringLiteral("ParameterCountError"), tr("Incorrect parameter count"));
-			return false;
-		}
+        return CodeClass::construct<Rect>(mRect.united(rect->mRect));
+    }
+	
+    QJSValue Rect::intersected(const Rect *rect) const
+	{
+        return CodeClass::construct<Rect>(mRect.intersected(rect->mRect));
 	}
 	
-	QScriptValue Rect::united() const
+    bool Rect::intersects(const Rect *rect) const
 	{
-		return constructor(mRect.united(parameter(context(), engine())), engine());
-	}
-	
-	QScriptValue Rect::intersected() const
-	{
-		return constructor(mRect.intersected(parameter(context(), engine())), engine());
-	}
-	
-	bool Rect::intersects() const
-	{
-		return mRect.intersects(parameter(context(), engine()));
+        return mRect.intersects(rect->mRect);
 	}
 	
 	bool Rect::isEmpty() const
@@ -345,13 +273,18 @@ namespace Code
 		return mRect.isEmpty();
 	}
 	
-	QScriptValue Rect::center() const
+	QJSValue Rect::center() const
 	{
-		return Point::constructor(mRect.center(), engine());
+        return CodeClass::construct<Point>(mRect.center());
 	}
 	
-	QScriptValue Rect::size() const
+	QJSValue Rect::size() const
 	{
-		return Size::constructor(mRect.size(), engine());
+        return CodeClass::construct<Size>(mRect.size());
 	}
+
+    void Rect::registerClass(QJSEngine &scriptEngine)
+    {
+        CodeClass::registerClass<Rect>(QStringLiteral("Rect"), scriptEngine);
+    }
 }

@@ -22,8 +22,7 @@
 #include "ui_coloredit.h"
 
 #include <QColorDialog>
-#include <QDesktopWidget>
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 #include <QApplication>
 #include <QScreen>
 
@@ -33,7 +32,7 @@ namespace ActionTools
 		: QWidget(parent),
 		ui(new Ui::ColorEdit),
         mColorDialog(new QColorDialog(this)),
-		mValidator(new QRegExpValidator(QRegExp(QStringLiteral("^\\d\\d{0,2}:\\d\\d{0,2}:\\d\\d{0,2}$"), Qt::CaseSensitive, QRegExp::RegExp2), this))
+        mValidator(new QRegularExpressionValidator(QRegularExpression(QStringLiteral("^\\d\\d{0,2}:\\d\\d{0,2}:\\d\\d{0,2}$")), this))
 	{
 		ui->setupUi(this);
 

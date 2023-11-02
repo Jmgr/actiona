@@ -32,7 +32,7 @@ namespace Ui
 }
 
 class QColorDialog;
-class QRegExpValidator;
+class QRegularExpressionValidator;
 
 namespace ActionTools
 {
@@ -76,7 +76,7 @@ namespace ActionTools
 
 		Ui::ColorEdit *ui;
 		QColorDialog *mColorDialog;
-        QRegExpValidator *mValidator;
+        QRegularExpressionValidator *mValidator;
 
 		Q_DISABLE_COPY(ColorEdit)
 	};

@@ -59,7 +59,7 @@ namespace ActionTools
 
     private:
 #ifdef Q_OS_UNIX
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
+        bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override;
         void ungrab();
 #endif
         void mouseButtonReleased();
