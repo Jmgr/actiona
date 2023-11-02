@@ -1040,15 +1040,6 @@ void MainWindow::on_actionJump_to_line_triggered()
 	}
 	
     inputDialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
-
-	if(isFiltering()) 
-	{
-		QList<int> selected = selectedRows();
-		int min = int(*std::min_element(selected.begin(), selected.end()));
-		inputDialog.setIntValue(min + 1);
-	}
-	
-    inputDialog.setWindowFlags(inputDialog.windowFlags() | Qt::WindowContextHelpButtonHint);
 	inputDialog.setWindowTitle(tr("Jump to line"));
 	inputDialog.setLabelText(tr("Line:"));
 	inputDialog.setInputMode(QInputDialog::IntInput);
