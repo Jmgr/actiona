@@ -532,7 +532,7 @@ namespace Execution
         if(pauseAfter > 0)
 		{
             mExecutionTimer.start();
-
+            mExecutionTime.start();
 			mExecutionWindow->setProgressEnabled(true);
 			mExecutionWindow->setProgressMinimum(0);
             mExecutionWindow->setProgressMaximum(pauseAfter);
@@ -869,7 +869,7 @@ namespace Execution
         if(pauseBefore > 0)
 		{
             mExecutionTimer.start();
-
+            mExecutionTime.start();
 			mExecutionWindow->setProgressEnabled(true);
 			mExecutionWindow->setProgressMinimum(0);
             mExecutionWindow->setProgressMaximum(pauseBefore);
