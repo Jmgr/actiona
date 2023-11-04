@@ -55,42 +55,6 @@ ScriptContentDialog::~ScriptContentDialog()
     delete ui;
 }
 
-void ScriptContentDialog::accept()
-{
-	if(mType == Read)
-	{
-		QDialog::accept();
-		
-		return;
-	}
-	
-	QString content = ui->scriptContent->toPlainText().trimmed();
-    if(!content.isEmpty() && !mScript->validateContent(content, Global::SCRIPT_VERSION))
-	{
-		if(!mScript->statusMessage().isEmpty())
-		{
-            QMessageBox messageBox(QMessageBox::Warning, tr("Script error"), tr("Unable to validate the script content.%1Line: %2<br>Column: %3")
-								   .arg(mScript->statusMessage())
-								   .arg(mScript->line())
-                                   .arg(mScript->column()), QMessageBox::Ok, this);
-            messageBox.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
-			messageBox.setTextFormat(Qt::RichText);
-			messageBox.exec();
-			
-			ui->scriptContent->moveCursor(QTextCursor::Start);
-			for(int i=1; i < mScript->line(); ++i)
-				ui->scriptContent->moveCursor(QTextCursor::Down);
-			
-			for(int i=1; i < mScript->column(); ++i)
-				ui->scriptContent->moveCursor(QTextCursor::Right);
-		}
-	
-		return;
-	}
-	
-	QDialog::accept();
-}
-
 void ScriptContentDialog::on_clipboardButton_clicked()
 {
 	QClipboard *clipboard = QApplication::clipboard();

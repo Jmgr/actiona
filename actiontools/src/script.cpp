@@ -28,7 +28,6 @@
 #include "actiontools/variableparameterdefinition.hpp"
 #include "actiontools/groupdefinition.hpp"
 #include "actiontools/scriptlinemodel.hpp"
-#include "actiontools/xmlvalidator.hpp"
 
 #ifdef ACT_PROFILE
 #include "tools/highresolutiontimer.hpp"
@@ -400,15 +399,6 @@ namespace ActionTools
 
         if(progressCallback)
         {
-            progressCallback->operator()(0, 0, tr("Reading schema..."));
-        }
-
-        ReadResult result = validateSchema(device, scriptVersion);
-        if(result != ReadSuccess)
-            return result;
-
-        if(progressCallback)
-        {
             progressCallback->operator()(0, 0, tr("Listing file content..."));
         }
 
@@ -712,32 +702,6 @@ namespace ActionTools
 		return ReadSuccess;
 	}
 
-    bool Script::validateContent(const QString &content, const QVersionNumber &scriptVersion)
-	{
-		QByteArray byteArray(content.toUtf8());
-		QBuffer buffer(&byteArray);
-		buffer.open(QIODevice::ReadOnly);
-
-		mStatusMessage.clear();
-
-		QFile schemaFile(QStringLiteral(":/script%1.xsd").arg(scriptVersion.toString()));
-		if(!schemaFile.open(QIODevice::ReadOnly))
-			return false;
-
-        auto schemaData = schemaFile.readAll();
-
-        XmlValidator validator(schemaData);
-        const auto [success, message, line, column] = validator.validate(content.toUtf8());
-        if(!success)
-        {
-            mStatusMessage = message;
-            mLine = line;
-            mColumn = column;
-        }
-
-        return false;
-    }
-
 	int Script::actionIndexFromRuntimeId(qint64 runtimeId) const
 	{
 		for(int actionIndex = 0; actionIndex < actionCount(); ++actionIndex)
@@ -786,68 +750,6 @@ namespace ActionTools
         mRebuildLabelList = false;
 
         return mLabels;
-    }
-
-    Script::ReadResult Script::validateSchema(QIODevice *device, const QVersionNumber &scriptVersion, bool tryOlderVersions)
-    {
-		QFile schemaFile(QStringLiteral(":/script%1.xsd").arg(scriptVersion.toString()));
-        if(!schemaFile.open(QIODevice::ReadOnly))
-            return ReadInternal;
-
-        XmlValidator validator(schemaFile.readAll());
-        const auto [success, message, line, column] = validator.validate(device->readAll());
-        if(!success)
-        {
-            mStatusMessage = message;
-            mLine = line;
-            mColumn = column;
-
-            if(!tryOlderVersions)
-                return ReadInvalidSchema;
-
-            //If we could not validate, try to read the settings value to get the version
-            device->reset();
-
-            QXmlStreamReader stream(device);
-            while(!stream.atEnd() && !stream.hasError())
-            {
-                stream.readNext();
-
-                if(stream.isStartDocument())
-                    continue;
-
-                if(!stream.isStartElement())
-                    continue;
-
-                if(stream.name() == QLatin1String("settings"))
-                {
-                    const QXmlStreamAttributes &attributes = stream.attributes();
-                    mProgramName = attributes.value(QStringLiteral("program")).toString();
-#if (QT_VERSION >= 0x050600)
-                    mProgramVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("version")).toString());
-                    mScriptVersion = QVersionNumber::fromString(attributes.value(QStringLiteral("scriptVersion")).toString());
-#else
-                    mProgramVersion = QVersionNumber(attributes.value(QStringLiteral("version")).toString());
-                    mScriptVersion = QVersionNumber(attributes.value(QStringLiteral("scriptVersion")).toString());
-#endif
-                    mOs = attributes.value(QStringLiteral("os")).toString();
-
-                    device->reset();
-
-                    if(mScriptVersion == scriptVersion)
-                        return ReadInvalidSchema;
-
-                    if(validateSchema(device, mScriptVersion, false) != ReadSuccess)
-                        return ReadInvalidSchema;
-
-                    return ReadSuccess;
-                }
-            }
-
-            return ReadInvalidSchema;
-        }
-
-        return ReadSuccess;
     }
 
     QSet<QString> Script::findVariables(ActionInstance *actionInstance, ActionInstance *excludedActionInstance) const

@@ -46,8 +46,6 @@ public:
 	ScriptContentDialog(Type type, ActionTools::Script *script, QWidget *parent = nullptr);
     ~ScriptContentDialog() override;
 	
-	void accept() override;
-
 	void setText(const QString &text);
 	QString text() const;
 
