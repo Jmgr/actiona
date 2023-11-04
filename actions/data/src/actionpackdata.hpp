@@ -49,8 +49,6 @@
 #include "code/mailmessage.hpp"
 #include "code/mail.hpp"
 
-#include <QtCore/qplugin.h>
-
 namespace ActionTools
 {
 	class ActionDefinition;
@@ -59,8 +57,6 @@ namespace ActionTools
 class ActionPackData : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
-	Q_INTERFACES(ActionTools::ActionPack)
-    Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "data.json")
 
 public:
 	ActionPackData()								= default;

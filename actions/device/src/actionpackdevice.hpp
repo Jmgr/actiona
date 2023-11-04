@@ -32,8 +32,6 @@
 #include "code/mouse.hpp"
 #include "code/keyboard.hpp"
 
-#include <QtCore/qplugin.h>
-
 namespace ActionTools
 {
 	class ActionDefinition;
@@ -42,8 +40,6 @@ namespace ActionTools
 class ActionPackDevice : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
-	Q_INTERFACES(ActionTools::ActionPack)
-    Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "device.json")
 
 public:
 	ActionPackDevice()							= default;

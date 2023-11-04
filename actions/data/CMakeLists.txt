@@ -10,6 +10,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/actions/webdownloadinstance.cpp
     ${SOURCES_PREFIX}/actions/writeregistryinstance.cpp
     ${SOURCES_PREFIX}/actions/writetextfileinstance.cpp
+    ${SOURCES_PREFIX}/actions/writeinifileinstance.cpp
     ${SOURCES_PREFIX}/code/clipboard.cpp
     ${SOURCES_PREFIX}/code/file.cpp
     ${SOURCES_PREFIX}/code/inifile.cpp
@@ -99,7 +100,6 @@ add_library(${PROJECT} SHARED
 add_dependencies(${PROJECT} tools actiontools)
 
 setup_target(${PROJECT})
-setup_action(${PROJECT})
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Sql Widgets Core5Compat REQUIRED)
 

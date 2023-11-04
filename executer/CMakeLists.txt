@@ -31,7 +31,7 @@ add_executable(${PROJECT}
     ../gui/app.rc
 )
 
-add_dependencies(${PROJECT} execution actiontools tools)
+add_dependencies(${PROJECT} execution actiontools tools actionpackdata actionpackdevice actionpackinternal actionpacksystem actionpackwindows)
 
 if(UNIX)
     include(FindPkgConfig)
@@ -39,11 +39,10 @@ if(UNIX)
 endif()
 
 set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actexec")
-set_target_properties(${PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
 
 setup_target(${PROJECT})
 
-find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets Core5Compat REQUIRED)
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets Core5Compat Multimedia TextToSpeech REQUIRED)
 
 target_include_directories(${PROJECT}
     PRIVATE
@@ -51,6 +50,11 @@ target_include_directories(${PROJECT}
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../actiontools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../execution/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../actions/data/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../actions/device/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../actions/internal/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../actions/system/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../actions/windows/src
         ${LIBNOTIFY_INCLUDE_DIRS}
 )
 
@@ -59,9 +63,16 @@ target_link_libraries(
     execution
     actiontools
     tools
+    actionpackdata
+    actionpackdevice
+    actionpackinternal
+    actionpacksystem
+    actionpackwindows
     Qt6::Network
     Qt6::Widgets
     Qt6::Core5Compat
+    Qt6::Multimedia
+    Qt6::TextToSpeech
     ${LIBNOTIFY_LIBRARIES}
 )
 

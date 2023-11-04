@@ -19,18 +19,25 @@
 */
 
 #include "inifile.hpp"
+#include "mini/ini.h"
 
 #include <QJSValueIterator>
+
+struct INIStructure
+{
+    mINI::INIStructure structure;
+};
 
 namespace Code
 {
 	IniFile::IniFile()
-		: CodeClass()
+        : CodeClass(),
+        mStructure(std::make_unique<INIStructure>())
     {
     }
 
     IniFile::IniFile(const QJSValue &parameters)
-        : CodeClass()
+        : IniFile()
     {
         if(!parameters.isObject())
         {
@@ -49,11 +56,15 @@ namespace Code
         }
     }
 
+    IniFile::~IniFile()
+    {
+    }
+
     IniFile *IniFile::load(const QString &filename)
 	{
         mINI::INIFile file(toEncoding(filename, mEncoding).constData());
 
-        if(!file.read(mStructure))
+        if(!file.read(mStructure->structure))
         {
             throwError(QStringLiteral("LoadFileError"), tr("Cannot load the file"));
             return this;
@@ -69,7 +80,7 @@ namespace Code
         QByteArray filenameByteArray = toEncoding(filename.isEmpty() ? mLatestFilename : filename, mEncoding);
         mINI::INIFile file(filenameByteArray.constData());
 
-        if(!file.write(mStructure))
+        if(!file.write(mStructure->structure))
         {
             throwError(QStringLiteral("SaveFileError"), tr("Cannot save the file"));
             return this;
@@ -80,7 +91,7 @@ namespace Code
 	
     IniFile *IniFile::clear()
 	{
-        mStructure.clear();
+        mStructure->structure.clear();
 
         return this;
 	}
@@ -89,7 +100,7 @@ namespace Code
 	{
         QByteArray sectionNameByteArray = toEncoding(sectionName, mEncoding);
 
-        if(!mStructure.has(sectionNameByteArray.constData()))
+        if(!mStructure->structure.has(sectionNameByteArray.constData()))
         {
             if(!create)
             {
@@ -97,7 +108,7 @@ namespace Code
                 return this;
             }
 
-            mStructure[sectionNameByteArray.constData()];
+            mStructure->structure[sectionNameByteArray.constData()];
         }
 
         mCurrentSectionName = sectionNameByteArray;
@@ -114,13 +125,13 @@ namespace Code
 	
     QString IniFile::sectionAt(int sectionIndex) const
 	{
-        if(sectionIndex < 0 || sectionIndex >= static_cast<int>(mStructure.size()))
+        if(sectionIndex < 0 || sectionIndex >= static_cast<int>(mStructure->structure.size()))
 		{
 			throwError(QStringLiteral("FindSectionError"), tr("Invalid section index"));
 			return QString();
 		}
 
-        auto it = mStructure.begin();
+        auto it = mStructure->structure.begin();
 
         std::advance(it, sectionIndex);
 
@@ -131,7 +142,7 @@ namespace Code
 	{
         QByteArray sectionNameByteArray = toEncoding(sectionName, mEncoding);
 
-        if(!mStructure.remove(sectionNameByteArray.constData()))
+        if(!mStructure->structure.remove(sectionNameByteArray.constData()))
 		{
 			throwError(QStringLiteral("FindSectionError"), tr("Cannot delete section named \"%1\"").arg(sectionName));
             return this;
@@ -142,25 +153,25 @@ namespace Code
 	
 	int IniFile::sectionCount() const
 	{
-        return static_cast<int>(mStructure.size());
+        return static_cast<int>(mStructure->structure.size());
 	}
 	
 	bool IniFile::keyExists(const QString &keyName) const
     {
-        if(!mStructure.has(mCurrentSectionName.constData()))
+        if(!mStructure->structure.has(mCurrentSectionName.constData()))
             return false;
 
         QByteArray keyNameByteArray = toEncoding(keyName, mEncoding);
 
-        return mStructure.get(mCurrentSectionName.constData()).has(keyNameByteArray.constData());
+        return mStructure->structure.get(mCurrentSectionName.constData()).has(keyNameByteArray.constData());
 	}
 	
 	QString IniFile::keyAt(int keyIndex) const
 	{
-        if(!mStructure.has(mCurrentSectionName.constData()))
+        if(!mStructure->structure.has(mCurrentSectionName.constData()))
             return {};
 
-        const auto section = mStructure.get(mCurrentSectionName.constData());
+        const auto section = mStructure->structure.get(mCurrentSectionName.constData());
 
         if(keyIndex < 0 || keyIndex >= static_cast<int>(section.size()))
 		{
@@ -183,14 +194,14 @@ namespace Code
             return {};
         }
 
-        const auto section = mStructure.get(mCurrentSectionName.constData());
+        const auto section = mStructure->structure.get(mCurrentSectionName.constData());
 
         return QString::fromStdString(section.get(toEncoding(keyName, mEncoding).constData()));
 	}
 	
     IniFile *IniFile::setKeyValue(const QString &keyName, const QString &value)
 	{
-        auto &section = mStructure[mCurrentSectionName.constData()];
+        auto &section = mStructure->structure[mCurrentSectionName.constData()];
 
         section[toEncoding(keyName, mEncoding).constData()] = toEncoding(value, mEncoding).constData();
 
@@ -199,13 +210,13 @@ namespace Code
 	
     IniFile *IniFile::deleteKey(const QString &keyName)
 	{
-        if(!mStructure.has(mCurrentSectionName.constData()))
+        if(!mStructure->structure.has(mCurrentSectionName.constData()))
         {
             throwError(QStringLiteral("KeyError"), tr("Cannot delete key named \"%1\"").arg(keyName));
             return this;
         }
 
-        auto &section = mStructure[mCurrentSectionName.constData()];
+        auto &section = mStructure->structure[mCurrentSectionName.constData()];
         QByteArray keyNameByteArray = toEncoding(keyName, mEncoding);
 
         if(!section.remove(keyNameByteArray.constData()))
@@ -219,10 +230,10 @@ namespace Code
 	
     int IniFile::keyCount() const
 	{
-        if(!mStructure.has(mCurrentSectionName.constData()))
+        if(!mStructure->structure.has(mCurrentSectionName.constData()))
             return 0;
 
-        return static_cast<int>(mStructure.get(mCurrentSectionName.constData()).size());
+        return static_cast<int>(mStructure->structure.get(mCurrentSectionName.constData()).size());
 	}
 
     void IniFile::registerClass(QJSEngine &scriptEngine)

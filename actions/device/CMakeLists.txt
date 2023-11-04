@@ -54,7 +54,6 @@ add_library(${PROJECT} SHARED
 add_dependencies(${PROJECT} tools actiontools)
 
 setup_target(${PROJECT})
-setup_action(${PROJECT})
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets REQUIRED)
 

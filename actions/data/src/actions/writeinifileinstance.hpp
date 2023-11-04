@@ -21,7 +21,6 @@
 #pragma once
 
 #include "actiontools/actioninstance.hpp"
-#include "mini/ini.h"
 
 #include <QFileInfo>
 
@@ -40,57 +39,10 @@ namespace Actions
 		WriteIniFileInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
 			: ActionTools::ActionInstance(definition, parent)											{}
 
-		void startExecution() override
-		{
-			bool ok = true;
-
-			QString filename = evaluateString(ok, QStringLiteral("file"));
-			QString section = evaluateString(ok, QStringLiteral("section"));
-			QString parameter = evaluateString(ok, QStringLiteral("parameter"));
-			QString value = evaluateString(ok, QStringLiteral("value"));
-
-			if(!ok)
-				return;
-
-			if(!write(filename, section, parameter, value))
-				return;
-
-			executionEnded();
-		}
+        void startExecution() override;
 
 	private:
-        bool write(const QString &filename, const QString &sectionName, const QString &parameterName, const QString &value)
-		{
-            mINI::INIStructure structure;
-            QFileInfo fileInfo(filename);
-
-            if(fileInfo.isReadable())
-            {
-                mINI::INIFile file(filename.toStdString());
-                if(!file.read(structure))
-                {
-                    setCurrentParameter(QStringLiteral("filename"));
-                    emit executionException(UnableToWriteFileException, tr("Unable to read the existing file"));
-
-                    return false;
-                }
-            }
-
-            auto &section = structure[sectionName.toStdString()];
-
-            section[parameterName.toStdString()] = value.toStdString();
-
-            mINI::INIFile file(filename.toStdString());
-            if(!file.write(structure))
-            {
-                setCurrentParameter(QStringLiteral("filename"));
-                emit executionException(UnableToWriteFileException, tr("Unable to write to the file"));
-
-                return false;
-            }
-
-            return true;
-		}
+        bool write(const QString &filename, const QString &sectionName, const QString &parameterName, const QString &value);
 
 		Q_DISABLE_COPY(WriteIniFileInstance)
 	};

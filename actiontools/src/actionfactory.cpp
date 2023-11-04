@@ -27,7 +27,6 @@
 #include "tools/highresolutiontimer.hpp"
 #endif
 
-#include <QPluginLoader>
 #include <QDir>
 #include <QFileInfo>
 #include <QApplication>
@@ -51,31 +50,48 @@ namespace ActionTools
 		return s1->name() < s2->name();
 	}
 
-	void ActionFactory::loadActionPacks(const QString &directory, const QString &locale)
-	{
-#ifdef ACT_PROFILE
-        Tools::HighResolutionTimer timer(QStringLiteral("ActionFactory loadActionPacks from ") + directory);
-#endif
+    void ActionFactory::loadActionPacks(const QList<ActionPack *> packs, const QString &locale)
+    {
+        mActionPacks.clear();
 
-		QDir actionDirectory(directory);
+        for(auto pack: packs)
+        {
+            Tools::Languages::installTranslator(QStringLiteral("actionpack%1").arg(pack->id()), locale);
 
-#if defined(Q_OS_WIN)
-        QString actionMask = QStringLiteral("actionpack*.dll");
-#elif defined(Q_OS_MAC)
-		QString actionMask = QStringLiteral("actionpack*.dylib");
-#else
-		QString actionMask = QStringLiteral("actionpack*.so");
-#endif
+            pack->createDefinitions();
 
-        const auto actionFilenames = actionDirectory.entryList({actionMask}, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-        for(const QString &actionFilename: actionFilenames)
-			loadActionPack(actionDirectory.absoluteFilePath(actionFilename), locale);
+            for(ActionDefinition *definition: pack->actionsDefinitions())
+            {
+                if(actionDefinition(definition->id()))
+                {
+                    emit actionPackLoadError(tr("%1: <b>%2</b> already loaded").arg(pack->id()).arg(definition->id()));
+                    continue;
+                }
+
+                if(definition->worksUnderThisOS())
+                {
+                    QStringList missingFeatures;
+                    if(!definition->requirementCheck(missingFeatures))
+                    {
+                        emit actionPackLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
+                                                     .arg(pack->id())
+                                                     .arg(definition->id())
+                                                     .arg(missingFeatures.join(QStringLiteral("<li>"))));
+                        continue;
+                    }
+                }
+
+                mActionDefinitions << definition;
+            }
+
+            mActionPacks << pack;
+        }
 
         std::sort(mActionDefinitions.begin(), mActionDefinitions.end(), actionDefinitionLessThan);
 
-		for(int index = 0; index < mActionDefinitions.count(); ++index)
-			mActionDefinitions.at(index)->setIndex(index);
-	}
+        for(int index = 0; index < mActionDefinitions.count(); ++index)
+            mActionDefinitions.at(index)->setIndex(index);
+    }
 
 	ActionDefinition *ActionFactory::actionDefinition(const QString &actionId) const
 	{
@@ -135,57 +151,5 @@ namespace ActionTools
 
 		mActionDefinitions.clear();
 		mActionPacks.clear();
-	}
-
-	void ActionFactory::loadActionPack(const QString &filename, const QString &locale)
-	{
-		QPluginLoader pluginLoader(filename);
-		QObject *actionPackObject = pluginLoader.instance();
-		QString shortFilename = QFileInfo(filename).baseName();
-
-		if(!actionPackObject)
-		{
-			emit actionPackLoadError(tr("%1: \"%2\"").arg(shortFilename).arg(pluginLoader.errorString()));
-			return;
-		}
-
-		ActionPack *actionPack = qobject_cast<ActionPack *>(actionPackObject);
-		if(!actionPack)
-		{
-            emit actionPackLoadError(tr("%1: invalid definition version").arg(shortFilename));
-			return;
-		}
-
-        Tools::Languages::installTranslator(QStringLiteral("actionpack%1").arg(actionPack->id()), locale);
-
-		actionPack->createDefinitions();
-
-        for(ActionDefinition *definition: actionPack->actionsDefinitions())
-		{
-			if(actionDefinition(definition->id()))
-			{
-				emit actionPackLoadError(tr("%1: <b>%2</b> already loaded").arg(shortFilename).arg(definition->id()));
-				continue;
-			}
-
-			if(definition->worksUnderThisOS())
-			{
-				QStringList missingFeatures;
-				if(!definition->requirementCheck(missingFeatures))
-				{
-					emit actionPackLoadError(tr("%1: <b>%2</b> cannot be loaded:<ul><li>%3</ul>")
-									   .arg(shortFilename)
-									   .arg(definition->id())
-									   .arg(missingFeatures.join(QStringLiteral("<li>"))));
-					continue;
-				}
-			}
-
-			mActionDefinitions << definition;
-		}
-
-		actionPack->setFilename(filename);
-
-		mActionPacks << actionPack;
 	}
 }

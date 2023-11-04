@@ -87,7 +87,8 @@ namespace Tools
                 qDebug() << "Failed loading translation from" << path;
     #ifndef Q_OS_WIN
                 // TODO: ACT_PREFIX
-				translator->load(QStringLiteral("/usr/local/share/actiona/translations/%2_%3").arg(componentName).arg(locale));
+                auto unused = translator->load(QStringLiteral("/usr/local/share/actiona/translations/%2_%3").arg(componentName).arg(locale));
+                Q_UNUSED(unused)
     #endif
             }
         }

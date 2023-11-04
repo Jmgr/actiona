@@ -170,8 +170,6 @@ int main(int argc, char **argv)
     notify_init("Actiona");
 #endif
 
-	app.addLibraryPath(QDir::currentPath() + QStringLiteral("/plugins"));
-
 	if(!optionsParser.isSet(QStringLiteral("nocodeqt")))
 		app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/code"));
 

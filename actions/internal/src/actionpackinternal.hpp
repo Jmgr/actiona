@@ -36,8 +36,6 @@
 #include "actions/callproceduredefinition.hpp"
 #include "actions/endproceduredefinition.hpp"
 
-#include <QtCore/qplugin.h>
-
 namespace ActionTools
 {
 	class ActionDefinition;
@@ -46,8 +44,6 @@ namespace ActionTools
 class ActionPackInternal : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
-	Q_INTERFACES(ActionTools::ActionPack)
-    Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "internal.json")
 
 public:
 	ActionPackInternal()							= default;

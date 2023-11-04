@@ -20,6 +20,11 @@
 
 #include "executer.hpp"
 #include "actiontools/actionfactory.hpp"
+#include "actionpackdata.hpp"
+#include "actionpackdevice.hpp"
+#include "actionpackinternal.hpp"
+#include "actionpacksystem.hpp"
+#include "actionpackwindows.hpp"
 
 #include <iostream>
 #include <QApplication>
@@ -45,11 +50,13 @@ bool Executer::start(QIODevice *device, const QString &filename)
 	QSettings settings;
 	QString locale = settings.value(QStringLiteral("gui/locale"), QLocale::system().name()).toString();
 
-    mActionFactory->loadActionPacks(QApplication::applicationDirPath() + QStringLiteral("/actions"), locale);
-#ifndef Q_OS_WIN
-	if(mActionFactory->actionPackCount() == 0)
-		mActionFactory->loadActionPacks(QStringLiteral("actiona/actions/"), locale);
-#endif
+    mActionFactory->loadActionPacks({
+                                        new ActionPackData(),
+                                        new ActionPackDevice(),
+                                        new ActionPackInternal(),
+                                        new ActionPackSystem(),
+                                        new ActionPackWindows(),
+                                    }, locale);
 
 	if(mActionLoadingFailed)
 		return false;

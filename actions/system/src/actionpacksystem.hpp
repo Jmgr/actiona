@@ -40,8 +40,6 @@
 #include "code/notify.hpp"
 #include "code/process.hpp"
 
-#include <QtCore/qplugin.h>
-
 namespace ActionTools
 {
 	class ActionDefinition;
@@ -50,8 +48,6 @@ namespace ActionTools
 class ActionPackSystem : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
-	Q_INTERFACES(ActionTools::ActionPack)
-    Q_PLUGIN_METADATA(IID "tools.actiona.ActionPack" FILE "system.json")
 
 public:
     ActionPackSystem()                           = default;

@@ -48,9 +48,6 @@ namespace ActionTools
 		//Returns an instance of each plugin definition
 		const ActionDefinitionList &actionsDefinitions() const		{ return mActionDefinitions; }
 
-		void setFilename(const QString &filename)					{ mFilename = filename; }
-		const QString &filename() const								{ return mFilename; }
-
 	protected:
 		void addActionDefinition(ActionDefinition *actionDefinition)
 		{
@@ -64,7 +61,4 @@ namespace ActionTools
 		Q_DISABLE_COPY(ActionPack)
 	};
 }
-
-Q_DECLARE_INTERFACE(ActionTools::ActionPack,
-                    "tools.actiona.ActionPack/1.0")
 

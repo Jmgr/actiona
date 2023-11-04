@@ -21,9 +21,10 @@
 #pragma once
 
 #include "actiontools/code/codeclass.hpp"
-#include "mini/ini.h"
 
 #include <QJSValue>
+
+class INIStructure;
 
 namespace Code
 {
@@ -34,6 +35,7 @@ namespace Code
 	public:
         Q_INVOKABLE IniFile();
         Q_INVOKABLE explicit IniFile(const QJSValue &parameters);
+        ~IniFile();
 	
         Q_INVOKABLE QString toString() const override                                { return QStringLiteral("IniFile"); }
         Q_INVOKABLE IniFile *load(const QString &filename);
@@ -55,7 +57,7 @@ namespace Code
 	
 	private:
         Encoding mEncoding{Native};
-        mINI::INIStructure mStructure;
+        std::unique_ptr<INIStructure> mStructure;
         QByteArray mCurrentSectionName;
         QString mLatestFilename;
 	};

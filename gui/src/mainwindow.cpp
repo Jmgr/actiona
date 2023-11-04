@@ -55,6 +55,11 @@
 #include "newactionproxymodel.hpp"
 #include "scriptproxymodel.hpp"
 #include "tools/languages.hpp"
+#include "actionpackdata.hpp"
+#include "actionpackdevice.hpp"
+#include "actionpackinternal.hpp"
+#include "actionpacksystem.hpp"
+#include "actionpackwindows.hpp"
 
 #ifdef ACT_PROFILE
 #include "tools/highresolutiontimer.hpp"
@@ -307,13 +312,15 @@ void MainWindow::postInit()
 	mPackLoadErrors.clear();
 
 	if(mSplashScreen)
-		mSplashScreen->showMessage(tr("Loading actions..."));
+        mSplashScreen->showMessage(tr("Loading actions..."));
 
-    mActionFactory->loadActionPacks(QApplication::applicationDirPath() + QStringLiteral("/actions"), mUsedLocale);
-#ifndef Q_OS_WIN
-	if(mActionFactory->actionPackCount() == 0)
-		mActionFactory->loadActionPacks(QStringLiteral("actiona/actions/"), mUsedLocale);
-#endif
+    mActionFactory->loadActionPacks({
+                                        new ActionPackData(),
+                                        new ActionPackDevice(),
+                                        new ActionPackInternal(),
+                                        new ActionPackSystem(),
+                                        new ActionPackWindows(),
+                                    }, mUsedLocale);
 
 	QSettings settings;
 

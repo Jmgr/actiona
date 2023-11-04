@@ -125,11 +125,10 @@ if(UNIX)
     include(FindPkgConfig)
     pkg_search_module(LIBNOTIFY REQUIRED libnotify)
     pkg_search_module(BLUEZ REQUIRED bluez)
-    pkg_search_module(UDEV REQUIRED udev)
+    pkg_search_module(UDEV REQUIRED libudev)
 endif()
 
 setup_target(${PROJECT})
-setup_action(${PROJECT})
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS
     Network
@@ -152,6 +151,7 @@ target_include_directories(${PROJECT}
 )
 
 target_link_libraries(${PROJECT}
+    PRIVATE
     actiontools
     Qt6::Network
     Qt6::Widgets
@@ -161,11 +161,17 @@ target_link_libraries(${PROJECT}
     Qt6::TextToSpeech
     ${LIBNOTIFY_LIBRARIES}
     ${BLUEZ_LIBRARIES}
-    ${UDEV_LIBRARIES}
     $<$<PLATFORM_ID:Windows>:Bthprops>
     $<$<PLATFORM_ID:Windows>:Ws2_32>
     $<$<PLATFORM_ID:Windows>:PowrProf>
     $<$<PLATFORM_ID:Windows>:Vfw32>
 )
+
+if(UNIX)
+    target_link_libraries(${PROJECT}
+        PUBLIC
+        ${UDEV_LIBRARIES}
+    )
+endif()
 
 compile_translations(${PROJECT})
