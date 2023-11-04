@@ -113,7 +113,6 @@ set(SOURCES
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/qtsingleapplication/qtlockedfile_win.cpp>
     ${SOURCES_PREFIX}/qtsingleapplication/qtsingleapplication.cpp
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/x11info.cpp>
-    ${SOURCES_PREFIX}/xmlvalidator.cpp
     ${SOURCES_PREFIX}/scriptengine.cpp
 )
 
@@ -240,7 +239,6 @@ set(HEADERS
     ${HEADERS_PREFIX}/windowedit.hpp
     ${HEADERS_PREFIX}/windowhandle.hpp
     ${HEADERS_PREFIX}/windowparameterdefinition.hpp
-    ${HEADERS_PREFIX}/xmlvalidator.hpp
     ${HEADERS_PREFIX}/scriptengine.hpp
 )
 
@@ -297,8 +295,6 @@ target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/3rdparty/libxml2/include
-        ${CMAKE_CURRENT_BINARY_DIR}/src/3rdparty/libxml2
         ${LIBXTST_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
 )
@@ -312,9 +308,6 @@ target_link_libraries(
     ${LIBXTST_LIBRARIES}
     ${OpenCV_LIBS}
     $<$<PLATFORM_ID:Windows>:Psapi>
-    xml2
 )
 
 compile_translations(${PROJECT})
-
-add_subdirectory(src/3rdparty/libxml2)

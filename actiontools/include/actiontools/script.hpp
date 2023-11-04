@@ -85,7 +85,6 @@ namespace ActionTools
                         std::function<void()> *resetCallback = nullptr,
                         std::function<void(QList<ActionTools::ActionInstance *>)> *addActionsCallback = nullptr);
 
-        bool validateContent(const QString &content, const QVersionNumber &scriptVersion);
         const QString &statusMessage() const                                            { return mStatusMessage; }
         int line() const                                                                { return mLine; }
         int column() const                                                          	{ return mColumn; }
@@ -135,7 +134,6 @@ namespace ActionTools
         void updateLineModel();
 
 	private:
-        Script::ReadResult validateSchema(QIODevice *device, const QVersionNumber &scriptVersion, bool tryOlderVersions = true);
         void parametersFromDefinition(QSet<QString> &variables, const ActionInstance *actionInstance, const ActionTools::ElementDefinition *elementDefinition) const;
         void findVariablesInAction(ActionInstance *actionInstance, QSet<QString> &result) const;
 
