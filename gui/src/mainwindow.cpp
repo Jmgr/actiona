@@ -88,11 +88,6 @@
 #include "actiontools/x11info.hpp"
 #endif
 
-#ifdef Q_OS_WIN
-#include <QWinTaskbarButton>
-#include <QWinTaskbarProgress>
-#endif
-
 #include <algorithm>
 
 MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScreen *splashScreen, const QString &startScript, const QString &usedLocale)
@@ -128,11 +123,6 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 {
 #ifdef ACT_PROFILE
     Tools::HighResolutionTimer timer(QStringLiteral("MainWindow constructor"));
-#endif
-
-#ifdef Q_OS_WIN
-    mTaskbarButton = new QWinTaskbarButton(this);
-    mTaskbarProgress = mTaskbarButton->progress();
 #endif
 
     setEnabled(false);
@@ -173,8 +163,6 @@ MainWindow::MainWindow(QCommandLineParser &commandLineParser, ProgressSplashScre
 #endif
 
 	ui->consoleWidget->setup();
-
-    enableTaskbarProgress(true);
 
 	if(mSplashScreen)
 	{
@@ -370,8 +358,6 @@ void MainWindow::postInit()
 				mSplashScreen->setValue(actionDefinitionIndex);
 			}
 
-			setTaskbarProgress(actionDefinitionIndex, mActionFactory->actionDefinitionCount() - 1);
-
             getOrCreateActionDialog(actionDefinition);
 
             QApplication::processEvents();
@@ -384,8 +370,6 @@ void MainWindow::postInit()
 		mSplashScreen->setValue(0);
 		mSplashScreen->setMaximum(1);
 	}
-
-    enableTaskbarProgress(false);
 
 	{
 #ifdef ACT_PROFILE
@@ -1358,26 +1342,6 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 	}
 }
 
-void MainWindow::setTaskbarProgress(int value, int max)
-{
-#ifdef Q_OS_WIN
-    mTaskbarProgress->setRange(0, max);
-    mTaskbarProgress->setValue(value);
-#else
-	Q_UNUSED(value)
-	Q_UNUSED(max)
-#endif
-}
-
-void MainWindow::enableTaskbarProgress(bool enable)
-{
-#ifdef Q_OS_WIN
-    mTaskbarProgress->setVisible(enable);
-#else
-    Q_UNUSED(enable)
-#endif
-}
-
 ActionTools::Script::ReadResult MainWindow::readScript(QIODevice *device)
 {
     auto progressDialog = createStandardProgressDialog();
@@ -1489,16 +1453,6 @@ void MainWindow::checkForUpdate(bool silent)
                               languageName);
 }
 #endif
-
-
-void MainWindow::showEvent(QShowEvent *event)
-{
-#ifdef Q_OS_WIN
-    mTaskbarButton->setWindow(windowHandle());
-#endif
-
-    event->accept();
-}
 
 void MainWindow::logItemClicked(int itemRow, bool doubleClick)
 {

@@ -73,16 +73,7 @@ namespace Actions
             mProcess->start(command, parameters.isEmpty() ? QStringList{} : parameterList);
 			setVariable(mOutputVariable, QString());
 			setVariable(mErrorOutputVariable, QString());
-
-	#ifdef Q_OS_WIN
-			_PROCESS_INFORMATION *processInformation = mProcess->pid();
-			if(processInformation)
-                setVariable(processId, QString::number(processInformation->dwProcessId));
-			else
-				setVariable(processId, QStringLiteral("0"));
-	#else
 			setVariable(processId, QString::number(mProcess->processId()));
-	#endif
 		}
 
 		void stopExecution() override

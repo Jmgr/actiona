@@ -90,11 +90,7 @@ namespace Code
 
 	int Process::id() const
 	{
-#ifdef Q_OS_WIN
-            return mProcess->pid()->dwProcessId;
-#else
-            return mProcess->processId();
-#endif
+        return mProcess->processId();
 	}
 
     Process *Process::start(const QString &filename)

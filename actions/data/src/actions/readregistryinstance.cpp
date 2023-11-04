@@ -76,7 +76,7 @@ namespace Actions
 			emit executionException(CannotFindValueException, tr("Invalid value type"));
 			return;
 		default:
-            setVariable(variable, scriptEngine()->newVariant(resultValue));
+            setVariable(variable, scriptEngine()->toScriptValue(resultValue));
 			break;
 		}
 	#endif

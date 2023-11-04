@@ -366,7 +366,7 @@ namespace ActionTools
 #endif
 
 #ifdef Q_OS_WIN
-    bool ChooseWindowPushButton::nativeEventFilter(const QByteArray &, void *message, long *)
+    bool ChooseWindowPushButton::nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result)
     {
         MSG *msg = static_cast<MSG*>(message);
 
