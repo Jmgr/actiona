@@ -47,6 +47,7 @@ endif()
 set(HEADERS_PREFIX src)
 set(HEADERS
     ${HEADERS_PREFIX}/actionpacksystem.hpp
+    ${HEADERS_PREFIX}/system_global.hpp
     ${HEADERS_PREFIX}/systemsession.hpp
     ${HEADERS_PREFIX}/actions/commanddefinition.hpp
     ${HEADERS_PREFIX}/actions/commandinstance.hpp
@@ -129,6 +130,8 @@ if(UNIX)
 endif()
 
 setup_target(${PROJECT})
+
+target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKSYSTEM_LIBRARY)
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS
     Network

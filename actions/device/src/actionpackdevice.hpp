@@ -21,6 +21,7 @@
 #pragma once
 
 #include "actiontools/actionpack.hpp"
+#include "device_global.hpp"
 #include "actions/textdefinition.hpp"
 #include "actions/clickdefinition.hpp"
 #include "actions/wheeldefinition.hpp"
@@ -37,7 +38,7 @@ namespace ActionTools
 	class ActionDefinition;
 }
 
-class ActionPackDevice : public QObject, public ActionTools::ActionPack
+class ACTIONPACKDEVICE_EXPORT ActionPackDevice : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 

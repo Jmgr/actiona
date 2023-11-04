@@ -21,6 +21,7 @@
 #pragma once
 
 #include "actiontools/actionpack.hpp"
+#include "data_global.hpp"
 #include "actions/writetextfiledefinition.hpp"
 #include "actions/readtextfiledefinition.hpp"
 #include "actions/writeinifiledefinition.hpp"
@@ -54,7 +55,7 @@ namespace ActionTools
 	class ActionDefinition;
 }
 
-class ActionPackData : public QObject, public ActionTools::ActionPack
+class ACTIONPACKDATA_EXPORT ActionPackData : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 

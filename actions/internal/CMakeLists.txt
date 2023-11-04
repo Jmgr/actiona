@@ -11,6 +11,7 @@ set(SOURCES
 set(HEADERS_PREFIX src)
 set(HEADERS
     ${HEADERS_PREFIX}/actionpackinternal.hpp
+    ${HEADERS_PREFIX}/internal_global.hpp
     ${HEADERS_PREFIX}/actions/beginproceduredefinition.hpp
     ${HEADERS_PREFIX}/actions/beginprocedureinstance.hpp
     ${HEADERS_PREFIX}/actions/callproceduredefinition.hpp
@@ -59,6 +60,8 @@ add_library(${PROJECT} SHARED
 add_dependencies(${PROJECT} tools actiontools execution)
 
 setup_target(${PROJECT})
+
+target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKINTERNAL_LIBRARY)
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets REQUIRED)
 

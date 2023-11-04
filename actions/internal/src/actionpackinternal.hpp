@@ -21,6 +21,7 @@
 #pragma once
 
 #include "actiontools/actionpack.hpp"
+#include "internal_global.hpp"
 #include "actions/pausedefinition.hpp"
 #include "actions/codedefinition.hpp"
 #include "actions/gotodefinition.hpp"
@@ -41,7 +42,7 @@ namespace ActionTools
 	class ActionDefinition;
 }
 
-class ActionPackInternal : public QObject, public ActionTools::ActionPack
+class ACTIONPACKINTERNAL_EXPORT ActionPackInternal : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 

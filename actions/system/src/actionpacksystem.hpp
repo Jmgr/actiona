@@ -21,6 +21,7 @@
 #pragma once
 
 #include "actiontools/actionpack.hpp"
+#include "system_global.hpp"
 #include "actions/commanddefinition.hpp"
 #include "actions/killprocessdefinition.hpp"
 #include "actions/notifydefinition.hpp"
@@ -45,7 +46,7 @@ namespace ActionTools
 	class ActionDefinition;
 }
 
-class ActionPackSystem : public QObject, public ActionTools::ActionPack
+class ACTIONPACKSYSTEM_EXPORT ActionPackSystem : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 

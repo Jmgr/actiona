@@ -33,6 +33,7 @@ set(SOURCES
 set(HEADERS_PREFIX src)
 set(HEADERS
     ${HEADERS_PREFIX}/actionpackdata.hpp
+    ${HEADERS_PREFIX}/data_global.hpp
     ${HEADERS_PREFIX}/actions/copyfiledefinition.hpp
     ${HEADERS_PREFIX}/actions/copyfileinstance.hpp
     ${HEADERS_PREFIX}/actions/readbinaryfiledefinition.hpp
@@ -100,6 +101,8 @@ add_library(${PROJECT} SHARED
 add_dependencies(${PROJECT} tools actiontools)
 
 setup_target(${PROJECT})
+
+target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKDATA_LIBRARY)
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Sql Widgets Core5Compat REQUIRED)
 

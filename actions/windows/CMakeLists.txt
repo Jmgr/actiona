@@ -18,6 +18,7 @@ set(SOURCES
 set(HEADERS_PREFIX src)
 set(HEADERS
     ${HEADERS_PREFIX}/actionpackwindows.hpp
+    ${HEADERS_PREFIX}/windows_global.hpp
     ${HEADERS_PREFIX}/actions/datainputdefinition.hpp
     ${HEADERS_PREFIX}/actions/datainputinstance.hpp
     ${HEADERS_PREFIX}/actions/messageboxdefinition.hpp
@@ -54,6 +55,8 @@ add_library(${PROJECT} SHARED
 add_dependencies(${PROJECT} tools actiontools)
 
 setup_target(${PROJECT})
+
+target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKWINDOWS_LIBRARY)
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets REQUIRED)
 

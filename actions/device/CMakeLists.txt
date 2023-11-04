@@ -16,6 +16,7 @@ set(SOURCES
 set(HEADERS_PREFIX src)
 set(HEADERS
     ${HEADERS_PREFIX}/actionpackdevice.hpp
+    ${HEADERS_PREFIX}/device_global.hpp
     ${HEADERS_PREFIX}/keyboarddevice.hpp
     ${HEADERS_PREFIX}/mousedevice.hpp
     ${HEADERS_PREFIX}/actions/clickdefinition.hpp
@@ -54,6 +55,8 @@ add_library(${PROJECT} SHARED
 add_dependencies(${PROJECT} tools actiontools)
 
 setup_target(${PROJECT})
+
+target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKDEVICE_LIBRARY)
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets REQUIRED)
 

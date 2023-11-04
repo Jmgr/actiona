@@ -21,6 +21,7 @@
 #pragma once
 
 #include "actiontools/actionpack.hpp"
+#include "windows_global.hpp"
 #include "actions/messageboxdefinition.hpp"
 #include "actions/datainputdefinition.hpp"
 #include "actions/windowconditiondefinition.hpp"
@@ -38,7 +39,7 @@ namespace ActionTools
 	class ActionDefinition;
 }
 
-class ActionPackWindows : public QObject, public ActionTools::ActionPack
+class ACTIONPACKWINDOWS_EXPORT ActionPackWindows : public QObject, public ActionTools::ActionPack
 {
 	Q_OBJECT
 
