@@ -30,16 +30,10 @@ jobs:
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1
 
-    - name: Install strawberryperl
-      uses: shogo82148/actions-setup-perl@v1
-      with:
-        perl-version: '5.30'
-        distribution: strawberry
-
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
-        version: 6.6.0
+        version: 6.4.3
         arch: win64_msvc2019_64
         modules: 'qtspeech qtmultimedia qt5compat'
 
