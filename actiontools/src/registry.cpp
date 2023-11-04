@@ -132,10 +132,10 @@ namespace ActionTools
 
 		std::wstring wideValue = value.toStdWString();
 
-		switch(data.type())
+        switch(data.metaType().id())
 		{
-		case QVariant::Int:
-		case QVariant::UInt:
+        case QMetaType::Int:
+        case QMetaType::UInt:
 			{
 				int intData = data.toInt();
 				if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_DWORD, reinterpret_cast<LPBYTE>(&intData), sizeof(int)) != ERROR_SUCCESS)
@@ -145,8 +145,8 @@ namespace ActionTools
 				}
 			}
 			break;
-		case QVariant::LongLong:
-		case QVariant::ULongLong:
+        case QMetaType::LongLong:
+        case QMetaType::ULongLong:
 			{
 				long long intData = data.toLongLong();
 				if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_QWORD, reinterpret_cast<LPBYTE>(&intData), sizeof(long long)) != ERROR_SUCCESS)
@@ -156,37 +156,35 @@ namespace ActionTools
 				}
 			}
 			break;
-		case QVariant::StringList:
-			{
-				const QStringList &stringList = data.toStringList();
-				std::wstring wideData;
-
-				for(const QString &string: stringList)
-				{
-					wideData += string.toStdWString();
-					wideData += L'\0';
-				}
-
-				if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_MULTI_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), static_cast<DWORD>(wideData.size() * sizeof(wchar_t))) != ERROR_SUCCESS)
-				{
-					RegCloseKey(hKey);
-					return WriteCannotWriteValue;
-				}
-			}
-			break;
-		case QVariant::ByteArray:
-			{
-				QByteArray byteArray = data.toByteArray();
-				if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_BINARY, reinterpret_cast<LPBYTE>(byteArray.data()), byteArray.size()) != ERROR_SUCCESS)
-				{
-					RegCloseKey(hKey);
-					return WriteCannotWriteValue;
-				}
-			}
-			break;
 		default:
-			{
-				if(data.type() == QVariant::String || data.canConvert(QVariant::String))
+            {
+                if (data.metaType().id() == QMetaType::fromType<QByteArray>().id())
+                {
+                    QByteArray byteArray = data.toByteArray();
+                    if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_BINARY, reinterpret_cast<LPBYTE>(byteArray.data()), byteArray.size()) != ERROR_SUCCESS)
+                    {
+                        RegCloseKey(hKey);
+                        return WriteCannotWriteValue;
+                    }
+                }
+                else if(data.metaType().id() == QMetaType::fromType<QList<QString>>().id())
+                {
+                    const QStringList &stringList = data.toStringList();
+                    std::wstring wideData;
+
+                    for(const QString &string: stringList)
+                    {
+                        wideData += string.toStdWString();
+                        wideData += L'\0';
+                    }
+
+                    if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_MULTI_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), static_cast<DWORD>(wideData.size() * sizeof(wchar_t))) != ERROR_SUCCESS)
+                    {
+                        RegCloseKey(hKey);
+                        return WriteCannotWriteValue;
+                    }
+                }
+                else if(data.metaType().id() == QMetaType::QString || data.canConvert<QString>())
 				{
 					std::wstring wideData = data.toString().toStdWString();
 					if(RegSetValueEx(hKey, wideValue.c_str(), 0, REG_SZ, reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(wideData.c_str())), static_cast<DWORD>(wideData.size() * sizeof(wchar_t))) != ERROR_SUCCESS)

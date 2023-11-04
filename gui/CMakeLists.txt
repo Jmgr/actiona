@@ -150,9 +150,4 @@ target_link_libraries(
     $<$<PLATFORM_ID:Windows>:shlwapi>
 )
 
-if(WIN32)
-    find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS WinExtras REQUIRED)
-    target_link_libraries(${PROJECT} Qt6::WinExtras)
-endif()
-
 compile_translations(${PROJECT})

@@ -91,8 +91,8 @@ void WMIHelper::initializeWMI(const QString &wmiNamespace)
     HRESULT hres;
     wbemLocator = 0;
 
-    QUuid wbemLocatorClsid = "4590f811-1d3a-11d0-891f-00aa004b2e24";
-    QUuid wbemLocatorIid = "dc12a687-737f-11cf-884d-00aa004b2e24";
+    QUuid wbemLocatorClsid = QUuid::fromString("4590f811-1d3a-11d0-891f-00aa004b2e24");
+    QUuid wbemLocatorIid = QUuid::fromString("dc12a687-737f-11cf-884d-00aa004b2e24");
 
     hres = CoCreateInstance(wbemLocatorClsid,0,CLSCTX_INPROC_SERVER,
                             wbemLocatorIid, (LPVOID *) &wbemLocator);
@@ -143,8 +143,12 @@ QVariant WMIHelper::getWMIData(const QString &wmiNamespace, const QString &class
 
     bstrQuery = ::SysAllocString(oleStr);
 
-    hres = wbemServices->ExecQuery(L"WQL", bstrQuery,
+    BSTR bstrQueryLanguage = SysAllocString(L"WQL");
+
+    hres = wbemServices->ExecQuery(bstrQueryLanguage, bstrQuery,
             WBEM_FLAG_BIDIRECTIONAL | WBEM_FLAG_RETURN_IMMEDIATELY,0,&wbemEnumerator);
+
+    SysFreeString(bstrQueryLanguage);
 
     if (hres != WBEM_S_NO_ERROR){
         qWarning() << "WMI Query failed.";
@@ -259,8 +263,8 @@ void WMIHelper::setupNotfication(const QString &wmiNamespace,const QString &clas
 
     IUnsecuredApartment* pUnsecApp = NULL;
 
-    QUuid clsidUnsecuredApartment = "49bd2028-1523-11d1-ad79-00c04fd8fdff";
-    QUuid iidUnsecuredApartment = "1cfaba8c-1523-11d1-ad79-00c04fd8fdff";
+    QUuid clsidUnsecuredApartment = QUuid::fromString("49bd2028-1523-11d1-ad79-00c04fd8fdff");
+    QUuid iidUnsecuredApartment = QUuid::fromString("1cfaba8c-1523-11d1-ad79-00c04fd8fdff");
 
      hres = CoCreateInstance(clsidUnsecuredApartment, NULL,
          CLSCTX_LOCAL_SERVER,iidUnsecuredApartment,
@@ -286,7 +290,7 @@ void WMIHelper::setupNotfication(const QString &wmiNamespace,const QString &clas
      pUnsecApp->CreateObjectStub(pSink, &pStubUnk);
 
      IWbemObjectSink* pStubSink = NULL;
-     QUuid iidWbemObjectSink = "7c857801-7381-11cf-884d-00aa004b2e24";
+     QUuid iidWbemObjectSink = QUuid::fromString("7c857801-7381-11cf-884d-00aa004b2e24");
 
      pStubUnk->QueryInterface(iidWbemObjectSink,(void **) &pStubSink);
 
@@ -298,12 +302,16 @@ void WMIHelper::setupNotfication(const QString &wmiNamespace,const QString &clas
 
      bstrQuery = ::SysAllocString(oleStr);
 
+     BSTR bstrQueryLanguage = SysAllocString(L"WQL");
+
      hres = wbemServices->ExecNotificationQueryAsync(
-         L"WQL",
+         bstrQueryLanguage,
          bstrQuery,
          WBEM_FLAG_SEND_STATUS,
          NULL,
          pStubSink);
+
+     SysFreeString(bstrQueryLanguage);
 
      if (FAILED(hres)) {
          printf("ExecNotificationQueryAsync failed "
@@ -339,7 +347,7 @@ ULONG EventSink::Release()
 
 HRESULT EventSink::QueryInterface(REFIID riid, void** ppv)
 {
-    QUuid iidWbemObjectSink = "7c857801-7381-11cf-884d-00aa004b2e24";
+    QUuid iidWbemObjectSink = QUuid::fromString("7c857801-7381-11cf-884d-00aa004b2e24");
 
     if (riid == IID_IUnknown || riid == iidWbemObjectSink){
         *ppv = (IWbemObjectSink *) this;

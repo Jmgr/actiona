@@ -412,7 +412,7 @@ void wlanNotificationCallback(WLAN_NOTIFICATION_DATA *pNotifyData, QNetworkInfoP
 
 QT_BEGIN_NAMESPACE
 
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, dynamicLoadMutex, (QMutex::Recursive));
+Q_GLOBAL_STATIC_WITH_ARGS(QRecursiveMutex, dynamicLoadMutex, ());
 
 static void resolveLibrary()
 {

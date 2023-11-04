@@ -69,11 +69,6 @@ class NewActionProxyModel;
 class ScriptProxyModel;
 class QHotkey;
 
-#ifdef Q_OS_WIN
-class QWinTaskbarButton;
-class QWinTaskbarProgress;
-#endif
-
 #include <QNetworkReply>
 #include <QSystemTrayIcon>
 
@@ -177,9 +172,6 @@ private slots:
 	void postDownloadOperation();
 #endif
 
-protected:
-    void showEvent(QShowEvent *event) override;
-
 private:
 	void logItemClicked(int itemRow, bool doubleClick);
 	void updateUndoRedoStatus();
@@ -208,8 +200,6 @@ private:
 	void updateRecentFileActions();
 	void updateProxySettings();
 	bool checkReadResult(ActionTools::Script::ReadResult result);
-	void setTaskbarProgress(int value, int max);
-    void enableTaskbarProgress(bool enable);
     ActionTools::Script::ReadResult readScript(QIODevice *device);
     bool writeScript(QIODevice *device);
     std::unique_ptr<QProgressDialog> createStandardProgressDialog();
@@ -261,10 +251,6 @@ private:
 	int mUpdateFileSize;
 	QString mUpdateFileHash;
 	QCryptographicHash mHashCalculator;
-#endif
-#ifdef Q_OS_WIN
-    QWinTaskbarButton *mTaskbarButton;
-    QWinTaskbarProgress* mTaskbarProgress;
 #endif
 
 	Q_DISABLE_COPY(MainWindow)

@@ -93,11 +93,13 @@ qlonglong QStorageInfo_CustomPrivate::totalDiskSpace(const QString &drive)
     return totalBytes;
 }
 
-QString QStorageInfo_CustomPrivate::uriForDrive(const QString &drive)
-{
-    WCHAR uri[50];
-    if (GetVolumeNameForVolumeMountPoint((WCHAR *)drive.utf16(), uri, 50))
-        return QString::fromUtf16(reinterpret_cast<const unsigned short *>(uri));
+QString QStorageInfo_CustomPrivate::uriForDrive(const QString &drive) {
+    WCHAR uri[50] = {0};
+    // Make sure the drive string is null-terminated
+    if (GetVolumeNameForVolumeMountPoint(reinterpret_cast<LPCWSTR>(drive.utf16()), uri, 50)) {
+        // Correctly cast to the expected type
+        return QString::fromUtf16(reinterpret_cast<const char16_t *>(uri));
+    }
     return QString();
 }
 

@@ -82,7 +82,7 @@ namespace ActionTools
 
     void TargetWindow::mousePressEvent(QMouseEvent *event)
     {
-        mMouseClickPosition = event->globalPos();
+        mMouseClickPosition = event->globalPosition().toPoint();
         mMousePressed = true;
     }
 
