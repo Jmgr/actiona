@@ -1,4 +1,4 @@
-set(PROJECT gui)
+set(PROJECT actiona)
 
 set(SOURCES_PREFIX src)
 set(SOURCES
@@ -95,8 +95,8 @@ set(UI_FILES
 
 set(TS_PREFIX translations)
 set(TS_FILES
-    ${TS_PREFIX}/gui_fr_FR.ts
-    ${TS_PREFIX}/gui_zh_CN.ts
+    ${TS_PREFIX}/actiona_fr_FR.ts
+    ${TS_PREFIX}/actiona_zh_CN.ts
 )
 
 set(QRC ${PROJECT}.qrc)
@@ -109,6 +109,7 @@ add_executable(${PROJECT}
     ${TS_FILES}
     ${QRC}
     app.rc
+
 )
 
 add_dependencies(${PROJECT} execution actiontools tools actionpackdata actionpackdevice actionpackinternal actionpacksystem actionpackwindows)
@@ -118,8 +119,6 @@ if(UNIX)
     pkg_search_module(LIBNOTIFY REQUIRED libnotify)
     pkg_search_module(LIBX11 REQUIRED x11)
 endif()
-
-set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actiona")
 
 setup_target(${PROJECT})
 

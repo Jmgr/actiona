@@ -87,44 +87,74 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 	//Init of tabs & group boxes
 	QStringList tabs = actionDefinition->tabs();
-	if(tabs.count() == 0)
-		tabs << QStringLiteral(QT_TRANSLATE_NOOP("ActionTabs", "Parameters"));
+    if(tabs.count() == 0)
+        tabs << QStringLiteral(QT_TRANSLATE_NOOP("ActionTabs", "Parameters"));
 
-	int tabCount = tabs.count();
+    int tabCount = tabs.count();
 
-	QVector<QGroupBox *> groupBoxes[2];
+    QVector<QGroupBox *> groupBoxes[2];
 
     for(auto &parameterLayout: mParameterLayouts)
-	{
-		for(int i = 0; i < tabCount; ++i)
+    {
+        for(int i = 0; i < tabCount; ++i)
             parameterLayout.append(new QFormLayout);
-	}
+    }
 
-	int tabIndex = 0;
-	for(const QString &tab: qAsConst(tabs))
-	{
-		QWidget *widget = new QWidget;
-		auto layout = new QVBoxLayout(widget);
+    int tabIndex = 0;
+    for(const QString &tab: qAsConst(tabs))
+    {
+        QWidget *widget = new QWidget;
+        auto layout = new QVBoxLayout(widget);
 
-		QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), widget);
-		inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][tabIndex]);
-		groupBoxes[InputParameters].append(inputParametersGroupBox);
-		QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), widget);
-		outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][tabIndex]);
-		groupBoxes[OutputParameters].append(outputParametersGroupBox);
+        QGroupBox *inputParametersGroupBox = new QGroupBox(tr("Input parameters"), widget);
+        inputParametersGroupBox->setLayout(mParameterLayouts[InputParameters][tabIndex]);
+        groupBoxes[InputParameters].append(inputParametersGroupBox);
+        QGroupBox *outputParametersGroupBox = new QGroupBox(tr("Output parameters"), widget);
+        outputParametersGroupBox->setLayout(mParameterLayouts[OutputParameters][tabIndex]);
+        groupBoxes[OutputParameters].append(outputParametersGroupBox);
 
-		layout->addWidget(inputParametersGroupBox);
-		layout->addWidget(outputParametersGroupBox);
+        layout->addWidget(inputParametersGroupBox);
+        layout->addWidget(outputParametersGroupBox);
 
-		widget->setLayout(layout);
+        widget->setLayout(layout);
 
-		mParameterTabWidgets.append(widget);
-		mTabWidget->addTab(widget, QApplication::translate("ActionTabs", tab.toUtf8().constData()));
+        mParameterTabWidgets.append(widget);
+        mTabWidget->addTab(widget, QApplication::translate("ActionTabs", tab.toUtf8().constData()));
 
-		++tabIndex;
-	}
+        ++tabIndex;
+    }
 
 	ui->parametersLayout->addWidget(mTabWidget);
+
+    //Init of script parameters
+    auto scriptParameters = actionDefinition->scriptElements();
+    if(!scriptParameters.isEmpty())
+    {
+        auto scriptWidget = new QWidget(mTabWidget);
+        auto layout = new QVBoxLayout(scriptWidget);
+        scriptWidget->setLayout(layout);
+
+        for(ActionTools::ElementDefinition *element: scriptParameters)
+        {
+            if(auto currentParameter = qobject_cast<ActionTools::ParameterDefinition *>(element))
+                addParameter(currentParameter, currentParameter->tab());
+            else if(auto currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
+            {
+                const auto parameters = currentGroup->members();
+                for(ActionTools::ParameterDefinition *parameter: parameters)
+                    addParameter(parameter, currentGroup->tab());
+            }
+        }
+
+
+        for(ActionTools::ElementDefinition *element: scriptParameters)
+        {
+            if(auto currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
+                currentGroup->init();
+        }
+
+        mTabWidget->addTab(scriptWidget, tr("Script"));
+    }
 	
 	//Init of common parameters
 	auto commonParametersLayout = new QVBoxLayout;
@@ -215,52 +245,9 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 		mTabWidget->addTab(mExceptionsTabWidget, tr("Exceptions"));
 	}
-	else
-		delete mExceptionsLayout;
+    else
+        delete mExceptionsLayout;
 
-	//Init of action infos
-	QString informations;
-	QString author = actionDefinition->author();
-	QString email = actionDefinition->email();
-	QString website = actionDefinition->website();
-	QVersionNumber version = actionDefinition->version();
-	ActionTools::ActionStatus status = actionDefinition->status();
-
-	if(!author.isEmpty())
-	{
-		informations = tr("By ");
-		if(!email.isEmpty())
-			informations += QStringLiteral("<a href=\"mailto:%1\">%2</a>").arg(email).arg(author);
-		else
-			informations += author;
-	}
-
-	if(!website.isEmpty())
-	{
-		if(!author.isEmpty())
-			informations += QStringLiteral(" - ");
-		informations += QStringLiteral("<a href=\"http://%1\">%1</a>").arg(website);
-	}
-
-	if(!informations.isEmpty())
-		informations += QStringLiteral("<br/>");
-
-	informations += tr("Version %1").arg(version.toString());
-
-	QString statusString;
-
-	switch(status)
-	{
-	case ActionTools::Alpha:	statusString = tr("Alpha"); break;
-	case ActionTools::Beta:		statusString = tr("Beta"); break;
-	case ActionTools::Testing:	statusString = tr("Testing"); break;
-	case ActionTools::Stable:	statusString = tr("Stable"); break;
-	}
-
-	informations += QStringLiteral(" (%1)").arg(statusString);
-
-	ui->actionInfo->setText(informations);
-	
 	//Init of parameters
 	for(ActionTools::ElementDefinition *element: elements)
 	{
@@ -291,9 +278,9 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 			else
 				++parameterCount;
 		}
-		
-		if(parameterCount == 0)
-			mParameterTabWidgets[i]->layout()->addWidget(new QLabel(tr("<i>No parameters</i>"), mParameterTabWidgets[i]));
+
+        if(parameterCount == 0)
+            mParameterTabWidgets[i]->layout()->addWidget(new QLabel(tr("<i>No parameters</i>"), mParameterTabWidgets[i]));
 	}
 
 	adjustSize();

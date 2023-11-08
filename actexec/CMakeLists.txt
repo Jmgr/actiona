@@ -1,4 +1,4 @@
-set(PROJECT executer)
+set(PROJECT actexec)
 
 set(SOURCES_PREFIX src)
 set(SOURCES
@@ -19,8 +19,8 @@ set(HEADERS
 
 set(TS_PREFIX translations)
 set(TS_FILES
-    ${TS_PREFIX}/executer_fr_FR.ts
-    ${TS_PREFIX}/executer_zh_CN.ts
+    ${TS_PREFIX}/actexec_fr_FR.ts
+    ${TS_PREFIX}/actexec_zh_CN.ts
 )
 
 add_executable(${PROJECT}
@@ -28,7 +28,7 @@ add_executable(${PROJECT}
     ${SOURCES}
     ${HEADERS}
     ${TS_FILES}
-    ../gui/app.rc
+    ../actiona/app.rc
 )
 
 add_dependencies(${PROJECT} execution actiontools tools actionpackdata actionpackdevice actionpackinternal actionpacksystem actionpackwindows)
@@ -37,8 +37,6 @@ if(UNIX)
     include(FindPkgConfig)
     pkg_search_module(LIBNOTIFY REQUIRED libnotify)
 endif()
-
-set_target_properties(${PROJECT} PROPERTIES OUTPUT_NAME "actexec")
 
 setup_target(${PROJECT})
 

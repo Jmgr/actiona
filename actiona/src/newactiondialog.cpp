@@ -113,31 +113,6 @@ void NewActionDialog::onCurrentChanged(const QModelIndex &current, const QModelI
 
     ui->actionDescription->setText(actionDefinition->description());
     ui->versionLabel->setText(actionDefinition->version().toString());
-
-    QString status;
-    switch(actionDefinition->status())
-    {
-    case ActionTools::Alpha:
-        status = tr("Alpha");
-        break;
-    case ActionTools::Beta:
-        status = tr("Beta");
-        break;
-    case ActionTools::Testing:
-        status = tr("Testing");
-        break;
-    case ActionTools::Stable:
-        status = tr("Stable");
-        break;
-    }
-    ui->statusLabel->setText(status);
-
-    QString official;
-    if(actionDefinition->flags() & ActionTools::Official)
-        official = tr("Yes");
-    else
-        official = tr("No");
-    ui->officialLabel->setText(official);
 }
 
 void NewActionDialog::accept()

@@ -45,7 +45,7 @@
       <string notr="true"/>
      </property>
      <property name="pixmap">
-      <pixmap resource="gui.qrc">:/icons/warning.png</pixmap>
+      <pixmap resource="../actiona.qrc">:/icons/warning.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -83,7 +83,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="gui.qrc">:/icons/warning.png</pixmap>
+        <pixmap resource="../actiona.qrc">:/icons/warning.png</pixmap>
        </property>
       </widget>
      </item>
@@ -130,20 +130,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
-     <item>
-      <widget class="QLabel" name="actionInfo">
-       <property name="text">
-        <string notr="true">[Action author &amp; infos]</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::RichText</enum>
-       </property>
-       <property name="openExternalLinks">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
      <item>
       <widget class="ActionTools::HelpButton" name="helpPushButton">
        <property name="toolTip">
@@ -179,7 +166,7 @@
   <tabstop>helpPushButton</tabstop>
  </tabstops>
  <resources>
-  <include location="gui.qrc"/>
+  <include location="../actiona.qrc"/>
  </resources>
  <connections>
   <connection>

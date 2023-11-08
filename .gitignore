@@ -13,7 +13,5 @@ generated
 *.cache*
 Makefile
 .qmake.stash
-actexec
-actiona
 build*
 .vscode

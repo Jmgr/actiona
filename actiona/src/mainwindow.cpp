@@ -1329,17 +1329,6 @@ bool MainWindow::checkReadResult(ActionTools::Script::ReadResult result)
 	case ActionTools::Script::ReadInternal:
 		QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script due to an internal error."));
 		return false;
-	case ActionTools::Script::ReadInvalidSchema:
-		{
-            QMessageBox messageBox(QMessageBox::Warning, tr("Load script"), tr("Unable to load the script because it has an incorrect schema.%1Line: %2<br>Column: %3")
-								   .arg(mScript->statusMessage())
-								   .arg(mScript->line())
-                                   .arg(mScript->column()), QMessageBox::Ok, this);
-            messageBox.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
-			messageBox.setTextFormat(Qt::RichText);
-			messageBox.exec();
-		}
-		return false;
 	case ActionTools::Script::ReadInvalidScriptVersion:
         QMessageBox::warning(this, tr("Load script"), tr("Unable to load the script because it was created with a more recent version of Actiona.\nPlease update your version of Actiona to load this script.\nYour version: %1\nScript version: %2")
 							 .arg(Global::SCRIPT_VERSION.toString()).arg(mScript->scriptVersion().toString()));
