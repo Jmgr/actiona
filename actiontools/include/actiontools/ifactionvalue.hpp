@@ -46,6 +46,7 @@ namespace ActionTools
 		static QLatin1String GOTO;
 		static QLatin1String RUNCODE;
 		static QLatin1String CALLPROCEDURE;
+        static QLatin1String STOPEXECUTION;
 		
 	private:
 		QString mAction;

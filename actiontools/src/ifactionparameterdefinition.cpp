@@ -38,13 +38,15 @@ namespace ActionTools
             QStringLiteral("do_nothing"),
             QStringLiteral("goto"),
             QStringLiteral("run_code"),
-            QStringLiteral("call_procedure")
+            QStringLiteral("call_procedure"),
+            QStringLiteral("stop_execution")
         },
         {
             QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to next action")),
             QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Go to line")),
             QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Run code")),
-            QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Call procedure"))
+            QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Call procedure")),
+            QStringLiteral(QT_TRANSLATE_NOOP("IfActionParameterDefinition::actions", "Stop execution"))
         }
     };
 
@@ -199,6 +201,7 @@ namespace ActionTools
             return TextCodeEditor;
 
         if(actionText == mItems.first.at(DoNothing) || actionText == mItems.second.at(DoNothing) ||
+            actionText == mItems.first.at(StopExecution) || actionText == mItems.second.at(StopExecution) ||
             (mAllowWait && (actionText == mItems.first.at(Wait) || actionText == mItems.second.at(Wait))))
             return NoEditor;
 

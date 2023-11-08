@@ -95,15 +95,20 @@ namespace Actions
 					return;
 			}
 
+            bool stopScript = false;
 			if(action == ActionTools::IfActionValue::GOTO)
 				setNextLine(line);
 			else if(action == ActionTools::IfActionValue::CALLPROCEDURE)
 			{
 				if(!callProcedure(line))
 					return;
-			}
+            }
+            else if(action == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                stopScript = true;
+            }
 
-			executionEnded();
+            executionEnded(stopScript);
 		}
 
 		void stopExecution() override

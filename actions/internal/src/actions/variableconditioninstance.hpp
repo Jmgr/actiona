@@ -157,6 +157,7 @@ namespace Actions
 			if(!ok)
 				return;
 
+            bool stopScript = false;
 			if(action == ActionTools::IfActionValue::GOTO)
 				setNextLine(line);
 			else if(action == ActionTools::IfActionValue::CALLPROCEDURE)
@@ -164,8 +165,12 @@ namespace Actions
 				if(!callProcedure(line))
 					return;
 			}
+            else if(action == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                stopScript = true;
+            }
 
-			executionEnded();
+            executionEnded(stopScript);
 		}
 
         static Tools::StringListPair comparisons;

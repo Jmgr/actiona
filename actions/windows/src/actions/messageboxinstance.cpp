@@ -168,6 +168,7 @@ namespace Actions
 
 		QString line;
 
+        bool stopScript = false;
 		if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::Yes))
 		{
 			line = evaluateSubParameter(ok, mIfYes.actionParameter());
@@ -188,7 +189,11 @@ namespace Actions
 
 					return;
 				}
-			}
+            }
+            else if(mIfYes.action() == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                stopScript = true;
+            }
 		}
 		else if(mMessageBox->clickedButton() == mMessageBox->button(QMessageBox::No))
 		{
@@ -211,11 +216,15 @@ namespace Actions
 					return;
 				}
 			}
+            else if(mIfNo.action() == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                stopScript = true;
+            }
 		}
 
 		closeAndDelete();
 
-		executionEnded();
+        executionEnded(stopScript);
 	}
 
 	void MessageBoxInstance::closeAndDelete()

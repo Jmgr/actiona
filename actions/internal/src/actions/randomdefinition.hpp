@@ -88,12 +88,6 @@ namespace Actions
             stringLength.setDefaultValue(QStringLiteral("10"));
             stringLength.setTooltip(tr("The generated string's length"));
 
-            auto &seed = addGlobalParameter<ActionTools::NumberParameterDefinition>({QStringLiteral("seed"), tr("Seed")});
-            seed.setMinimum(std::numeric_limits<int>::min());
-            seed.setMaximum(std::numeric_limits<int>::max());
-            // TODO: SpinBox with special value == Random
-            // TODO: default value == Random
-
             addException(RandomInstance::RangeException, tr("Invalid range"));
 		}
 

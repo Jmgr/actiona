@@ -27,7 +27,6 @@ namespace Actions
     struct Generator : public ActionTools::RuntimeStorageItem
     {
         Generator(): gen{std::random_device{}()} {}
-        Generator(std::size_t seed): gen{seed} {}
 
         std::mt19937 gen;
     };
@@ -56,7 +55,7 @@ namespace Actions
         if(!ok)
             return;
 
-        auto &generator = storage()->get<Generator>(42);
+        auto &generator = storage()->get<Generator>();
 
         switch(type)
         {

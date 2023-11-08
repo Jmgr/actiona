@@ -73,6 +73,7 @@ namespace Actions
 			if(!ok)
 				return;
 
+            bool stopScript = false;
 			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
 				setNextLine(line);
 			else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
@@ -80,8 +81,12 @@ namespace Actions
 				if(!callProcedure(line))
 					return;
 			}
+            else if(mIfTrue.action() == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                stopScript = true;
+            }
 
-			executionEnded();
+            executionEnded(stopScript);
 		}
 		else
 		{
@@ -90,27 +95,29 @@ namespace Actions
 			if(!ok)
 				return;
 
+            bool stopScript = false;
 			if(ifFalse.action() == ActionTools::IfActionValue::GOTO)
 			{
 				setNextLine(line);
-
-				executionEnded();
 			}
 			else if(ifFalse.action() == ActionTools::IfActionValue::CALLPROCEDURE)
 			{
 				if(!callProcedure(line))
 					return;
-
-				executionEnded();
 			}
+            else if(ifFalse.action() == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                stopScript = true;
+            }
 			else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
 			{
                 connect(&mTimer, &QTimer::timeout, this, &WindowConditionInstance::checkWindow);
 				mTimer.setInterval(100);
 				mTimer.start();
+                return;
 			}
-			else
-				executionEnded();
+
+            executionEnded(stopScript);
 		}
 	}
 
@@ -131,6 +138,7 @@ namespace Actions
 			if(!ok)
 				return;
 
+            bool stopScript = false;
 			if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
 				setNextLine(line);
 			else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
@@ -138,9 +146,13 @@ namespace Actions
 				if(!callProcedure(line))
 					return;
 			}
+            else if(mIfTrue.action() == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                stopScript = true;
+            }
 
 			mTimer.stop();
-			executionEnded();
+            executionEnded(stopScript);
 		}
 	}
 

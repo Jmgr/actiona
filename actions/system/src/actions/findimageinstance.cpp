@@ -215,27 +215,27 @@ namespace Actions
             if(!ok)
                 return;
 
+            bool stopScript = false;
             if(mIfNotFound.action() == ActionTools::IfActionValue::GOTO)
             {
                 setNextLine(line);
-
-                executionEnded();
             }
             else if(mIfNotFound.action() == ActionTools::IfActionValue::CALLPROCEDURE)
             {
                 if(!callProcedure(line))
                     return;
-
-                executionEnded();
+            }
+            else if(mIfNotFound.action() == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                stopScript = true;
             }
             else if(mIfNotFound.action() == ActionTools::IfActionValue::WAIT)
             {
                 mWaitTimer.start(mSearchDelay);
+                return;
             }
-            else
-                executionEnded();
 
-            return;
+            executionEnded(stopScript);
         }
 
 		if(mMaximumMatches == 1)
@@ -276,25 +276,27 @@ namespace Actions
         if(!ok)
             return;
 
+        bool stopScript = false;
         if(mIfFound.action() == ActionTools::IfActionValue::GOTO)
         {
             setNextLine(line);
-
-            executionEnded();
         }
         else if(mIfFound.action() == ActionTools::IfActionValue::CALLPROCEDURE)
         {
             if(!callProcedure(line))
                 return;
-
-            executionEnded();
+        }
+        else if(mIfFound.action() == ActionTools::IfActionValue::STOPEXECUTION)
+        {
+            stopScript = true;
         }
         else if(mIfFound.action() == ActionTools::IfActionValue::WAIT)
         {
             mWaitTimer.start(mSearchDelay);
+            return;
         }
-        else
-            executionEnded();
+
+        executionEnded(stopScript);
     }
 }
 

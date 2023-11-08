@@ -74,6 +74,7 @@ namespace Actions
             if(!ok)
                 return;
 
+            bool stopScript = false;
             if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
                 setNextLine(line);
             else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
@@ -81,8 +82,12 @@ namespace Actions
                 if(!callProcedure(line))
                     return;
             }
+            else if(mIfTrue.action() == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                stopScript = true;
+            }
 
-            executionEnded();
+            executionEnded(stopScript);
         }
         else
         {
@@ -104,6 +109,11 @@ namespace Actions
 
                 executionEnded();
             }
+            else if(ifFalse.action() == ActionTools::IfActionValue::STOPEXECUTION)
+            {
+                bool stopScript = true;
+                executionEnded(stopScript);
+            }
             else if(ifFalse.action() == ActionTools::IfActionValue::WAIT)
             {
                 connect(mTimer, &QTimer::timeout, this, [this]()
@@ -118,6 +128,7 @@ namespace Actions
                         if(!ok)
                             return;
 
+                        bool stopScript = false;
                         if(mIfTrue.action() == ActionTools::IfActionValue::GOTO)
                             setNextLine(line);
                         else if(mIfTrue.action() == ActionTools::IfActionValue::CALLPROCEDURE)
@@ -125,9 +136,13 @@ namespace Actions
                             if(!callProcedure(line))
                                 return;
                         }
+                        else if(mIfTrue.action() == ActionTools::IfActionValue::STOPEXECUTION)
+                        {
+                            stopScript = true;
+                        }
 
                         mTimer->stop();
-                        executionEnded();
+                        executionEnded(stopScript);
                     }
                 });
                 mTimer->setInterval(100);

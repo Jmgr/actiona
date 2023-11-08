@@ -26,4 +26,5 @@ namespace ActionTools
     QLatin1String IfActionValue::GOTO = QLatin1String("goto");
     QLatin1String IfActionValue::RUNCODE = QLatin1String("run_code");
     QLatin1String IfActionValue::CALLPROCEDURE = QLatin1String("call_procedure");
+    QLatin1String IfActionValue::STOPEXECUTION = QLatin1String("stop_execution");
 }

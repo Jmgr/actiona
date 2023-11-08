@@ -41,6 +41,7 @@ namespace ActionTools
             Goto,
             RunCode,
             CallProcedure,
+            StopExecution,
             Wait
         };
 
