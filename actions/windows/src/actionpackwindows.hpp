@@ -57,7 +57,6 @@ public:
 
 	QString id() const override							{ return QStringLiteral("windows"); }
 	QString name() const override						{ return tr("Actions dealing with windows"); }
-	QVersionNumber version() const override				{ return QVersionNumber(0, 0, 1); }
 
     void codeInit(QJSEngine &scriptEngine) const override
 	{

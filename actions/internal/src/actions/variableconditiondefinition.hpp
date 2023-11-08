@@ -66,8 +66,7 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Variable condition"); }
 		QString id() const override														{ return QStringLiteral("ActionVariableCondition"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const override												{ return QObject::tr("Check the value of a variable and do some action"); }
+        QString description() const override												{ return QObject::tr("Check the value of a variable and do some action"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new VariableConditionInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
 		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/variablecondition.png")); }

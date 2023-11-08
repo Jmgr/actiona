@@ -49,8 +49,7 @@ namespace Actions
 	
 		QString name() const override													{ return QObject::tr("Move cursor"); }
 		QString id() const override														{ return QStringLiteral("ActionMoveCursor"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
-		QString description() const override												{ return QObject::tr("Move the mouse cursor"); }
+        QString description() const override												{ return QObject::tr("Move the mouse cursor"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new MoveCursorInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }
 		QPixmap icon() const override													{ return QPixmap(QStringLiteral(":/actions/icons/movecursor.png")); }

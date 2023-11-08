@@ -104,7 +104,6 @@ namespace Actions
 
         QString name() const override													{ return QObject::tr("Send e-mail"); }
 		QString id() const override														{ return QStringLiteral("ActionSendMail"); }
-        ActionTools::Flag flags() const override										{ return ActionDefinition::flags() | ActionTools::Official; }
         QString description() const override											{ return QObject::tr("Sends an e-mail"); }
         ActionTools::ActionInstance *newActionInstance() const override					{ return new SendMailInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

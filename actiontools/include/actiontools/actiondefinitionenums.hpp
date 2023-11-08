@@ -24,13 +24,6 @@ namespace ActionTools
 {
     using Flag = int;
 
-	enum ActionStatus
-	{
-		Alpha,
-		Beta,
-		Testing,
-		Stable
-	};
 	enum ActionCategory
 	{
 		None = -1,
@@ -46,9 +39,7 @@ namespace ActionTools
 	enum ActionFlags
 	{
 		WorksOnWindows =    1 << 1,
-		WorksOnGnuLinux =	1 << 2,
-		WorksOnMac =	    1 << 3,
-		Official =			1 << 4
+        WorksOnGnuLinux =	1 << 2
 	};
 }
 

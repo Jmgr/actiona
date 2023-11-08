@@ -36,6 +36,7 @@
 #include "actions/beginproceduredefinition.hpp"
 #include "actions/callproceduredefinition.hpp"
 #include "actions/endproceduredefinition.hpp"
+#include "actions/randomdefinition.hpp"
 
 namespace ActionTools
 {
@@ -65,11 +66,11 @@ public:
 		addActionDefinition(new Actions::BeginProcedureDefinition(this));
 		addActionDefinition(new Actions::CallProcedureDefinition(this));
 		addActionDefinition(new Actions::EndProcedureDefinition(this));
+        addActionDefinition(new Actions::RandomDefinition(this));
 	}
 
 	QString id() const override								{ return QStringLiteral("internal"); }
 	QString name() const override							{ return tr("Internal actions"); }
-	QVersionNumber version() const override					{ return QVersionNumber(0, 0, 1); }
 
 private:
 	Q_DISABLE_COPY(ActionPackInternal)

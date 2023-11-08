@@ -160,7 +160,7 @@ namespace ActionTools
         }
     }
 
-    void IfActionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
+    void IfActionParameterDefinition::applyDefaultValuesTo(ActionInstance *actionInstance)
     {
         actionInstance->setSubParameter(name().original(), QStringLiteral("action"), defaultAction(actions.second[DoNothing]));
         actionInstance->setSubParameter(name().original(), QStringLiteral("line"), defaultLine());

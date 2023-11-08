@@ -54,15 +54,11 @@ namespace ActionTools
 
 		virtual QString name() const = 0;
 		virtual QString id() const = 0;
-        virtual Flag flags() const                                                                      { return WorksOnWindows | WorksOnGnuLinux | WorksOnMac; }
+        virtual Flag flags() const                                                                      { return WorksOnWindows | WorksOnGnuLinux; }
         virtual QString description() const                                                             { return QObject::tr("No description"); }
         virtual QVersionNumber version() const                                                          { return QVersionNumber(1, 0, 0); }
-		virtual ActionInstance *newActionInstance() const = 0;
-        virtual ActionStatus status() const                                                             { return Stable; }
-		virtual ActionCategory category() const = 0;
-        virtual QString author() const                                                                  { return (flags() & Official) ? QObject::tr("The Actiona Team") : QString{}; }
-        virtual QString website() const                                                                 { return {}; }
-        virtual QString email() const                                                                   { return {}; }
+        virtual ActionInstance *newActionInstance() const = 0;
+        virtual ActionCategory category() const = 0;
         virtual QPixmap icon() const                                                                    { return {}; }
         QPixmap cachedIcon() const;
         virtual QStringList tabs() const                                                                { return {}; }

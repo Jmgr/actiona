@@ -61,7 +61,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Write INI file"); }
 		QString id() const override														{ return QStringLiteral("ActionWriteIniFile"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Write an entry in an INI file"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteIniFileInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

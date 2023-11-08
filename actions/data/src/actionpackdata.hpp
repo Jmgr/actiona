@@ -82,8 +82,7 @@ public:
 
 	QString id() const override								{ return QStringLiteral("data"); }
 	QString name() const override							{ return tr("Data related actions"); }
-	QVersionNumber version() const override					{ return QVersionNumber(0, 0, 1); }
-	
+
     void codeInit(QJSEngine &scriptEngine) const override
 	{
 		Code::File::registerClass(scriptEngine);

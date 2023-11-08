@@ -67,7 +67,7 @@ namespace ActionTools
 		if(definition)
 		{
             for(ElementDefinition *element: definition->elements())
-				element->setDefaultValues(this);
+                element->applyDefaultValuesTo(this);
 
 			//Set the default exception action
 			for(int i = 0; i < ActionTools::ActionException::ExceptionCount; ++i)

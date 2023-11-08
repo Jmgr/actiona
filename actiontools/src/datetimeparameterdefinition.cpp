@@ -50,7 +50,7 @@ namespace ActionTools
 		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), mDateTimeEdit->isCode(), mDateTimeEdit->text());
 	}
 
-    void DateTimeParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
+    void DateTimeParameterDefinition::applyDefaultValuesTo(ActionInstance *actionInstance)
     {
 		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), QDateTime::currentDateTime().toString(QStringLiteral("dd/MM/yyyy hh:mm:ss")));
     }

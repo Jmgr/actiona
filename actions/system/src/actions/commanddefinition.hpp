@@ -73,7 +73,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Command"); }
 		QString id() const override														{ return QStringLiteral("ActionCommand"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Executes a command"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new CommandInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }

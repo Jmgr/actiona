@@ -55,7 +55,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Read binary file"); }
 		QString id() const override														{ return QStringLiteral("ActionReadBinaryFile"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Read a binary file"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadBinaryFileInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

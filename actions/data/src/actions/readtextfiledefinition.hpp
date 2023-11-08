@@ -76,7 +76,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Read text file"); }
 		QString id() const override														{ return QStringLiteral("ActionReadTextFile"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Read a plain text file"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadTextFileInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

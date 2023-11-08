@@ -28,8 +28,7 @@ namespace ActionTools
     ParameterDefinition::ParameterDefinition(const Name &name, QObject *parent)
         : ElementDefinition(name, parent),
 		  mOperatingSystems(WorksOnGnuLinux |
-							WorksOnWindows |
-							WorksOnMac),
+                            WorksOnWindows),
 		  mParentWidget(nullptr)
 	{
 	}
@@ -43,14 +42,6 @@ namespace ActionTools
 		mEditors.clear();
 	}
 
-    QString ParameterDefinition::defaultValue(QString defaultValue) const
-	{
-        if(mDefaultValue.isEmpty())
-			return defaultValue;
-			
-		return mDefaultValue;
-	}
-
 	void ParameterDefinition::addEditor(QWidget *editor)
 	{
 		editor->setToolTip(tooltip());
@@ -58,8 +49,12 @@ namespace ActionTools
 		mEditors.append(editor);
 	}
 	
-	void ParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
+    void ParameterDefinition::applyDefaultValuesTo(ActionInstance *actionInstance)
 	{
-		actionInstance->setSubParameter(name().original(), QStringLiteral("value"), defaultValue());
+        for(const QString &subParameter: mDefaultValues.keys())
+        {
+            auto value = mDefaultValues[subParameter];
+            actionInstance->setSubParameter(name().original(), subParameter, value);
+        }
 	}
 }

@@ -49,11 +49,11 @@ namespace ActionTools
 		masterCodeChanged(mMasterCodeComboBox->codeLineEdit()->isCode());
 	}
 	
-	void GroupDefinition::setDefaultValues(ActionInstance *actionInstance)
+    void GroupDefinition::applyDefaultValuesTo(ActionInstance *actionInstance)
 	{
         const auto parameterDefinitions = members();
         for(ParameterDefinition *parameterDefinition: parameterDefinitions)
-			parameterDefinition->setDefaultValues(actionInstance);
+            parameterDefinition->applyDefaultValuesTo(actionInstance);
 	}
 
 	void GroupDefinition::masterEditorBuilt()

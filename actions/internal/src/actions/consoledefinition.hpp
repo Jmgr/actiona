@@ -54,7 +54,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Console"); }
 		QString id() const override														{ return QStringLiteral("ActionConsole"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Write an entry in the console"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new ConsoleInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }

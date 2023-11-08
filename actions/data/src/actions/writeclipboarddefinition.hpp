@@ -47,7 +47,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Write clipboard"); }
 		QString id() const override														{ return QStringLiteral("ActionWriteClipboard"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Set the clipboard contents"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteClipboardInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

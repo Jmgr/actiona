@@ -63,7 +63,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Kill process"); }
 		QString id() const override														{ return QStringLiteral("ActionKillProcess"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Kills a process"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new KillProcessInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }

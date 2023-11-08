@@ -64,7 +64,7 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Notify"); }
 		QString id() const override														{ return QStringLiteral("ActionNotify"); }
-		ActionTools::Flag flags() const override											{ return ActionTools::WorksOnGnuLinux | ActionTools::Official; }
+        ActionTools::Flag flags() const override											{ return ActionTools::WorksOnGnuLinux; }
 		QString description() const override												{ return QObject::tr("Shows a message using the notify system"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new NotifyInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }

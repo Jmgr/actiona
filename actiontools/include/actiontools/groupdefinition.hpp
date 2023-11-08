@@ -52,7 +52,7 @@ namespace ActionTools
 
 		void init();
 		
-		void setDefaultValues(ActionInstance *actionInstance) override;
+        void applyDefaultValuesTo(ActionInstance *actionInstance) override;
 
 	private slots:
 		void masterEditorBuilt();

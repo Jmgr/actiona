@@ -125,36 +125,6 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
     }
 
 	ui->parametersLayout->addWidget(mTabWidget);
-
-    //Init of script parameters
-    auto scriptParameters = actionDefinition->scriptElements();
-    if(!scriptParameters.isEmpty())
-    {
-        auto scriptWidget = new QWidget(mTabWidget);
-        auto layout = new QVBoxLayout(scriptWidget);
-        scriptWidget->setLayout(layout);
-
-        for(ActionTools::ElementDefinition *element: scriptParameters)
-        {
-            if(auto currentParameter = qobject_cast<ActionTools::ParameterDefinition *>(element))
-                addParameter(currentParameter, currentParameter->tab());
-            else if(auto currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
-            {
-                const auto parameters = currentGroup->members();
-                for(ActionTools::ParameterDefinition *parameter: parameters)
-                    addParameter(parameter, currentGroup->tab());
-            }
-        }
-
-
-        for(ActionTools::ElementDefinition *element: scriptParameters)
-        {
-            if(auto currentGroup = qobject_cast<ActionTools::GroupDefinition *>(element))
-                currentGroup->init();
-        }
-
-        mTabWidget->addTab(scriptWidget, tr("Script"));
-    }
 	
 	//Init of common parameters
 	auto commonParametersLayout = new QVBoxLayout;

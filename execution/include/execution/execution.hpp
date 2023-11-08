@@ -34,6 +34,7 @@ namespace ActionTools
 	class ActionFactory;
 	class ActionInstance;
     class ScriptEngine;
+    class RuntimeStorage;
 }
 
 class QStandardItemModel;
@@ -161,6 +162,7 @@ namespace Execution
 		bool mIsActExec;
         bool mShowDebuggerOnCodeError{true};
         int mCurrentParameter{0};
+        std::unordered_map<QString, std::unique_ptr<ActionTools::RuntimeStorage>> mRuntimeStorage;
 
 		Q_DISABLE_COPY(Executer)
 	};

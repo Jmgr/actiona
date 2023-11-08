@@ -58,7 +58,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Copy file"); }
 		QString id() const override														{ return QStringLiteral("ActionCopyFile"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Copy a file"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new CopyFileInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

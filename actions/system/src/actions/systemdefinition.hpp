@@ -65,7 +65,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("System"); }
 		QString id() const override														{ return QStringLiteral("ActionSystem"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Restart, stop the computer or logout the current user"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new SystemInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }

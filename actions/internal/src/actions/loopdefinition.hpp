@@ -54,7 +54,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Loop"); }
 		QString id() const override														{ return QStringLiteral("ActionLoop"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Go to a script line a specific number of times"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new LoopInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }

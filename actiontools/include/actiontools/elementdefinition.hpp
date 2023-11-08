@@ -56,7 +56,7 @@ namespace ActionTools
         void setDescription(const QString &description)             { mDescription = description; }
         void setTab(int tab)                                        { mTab = tab; }
 		
-		virtual void setDefaultValues(ActionInstance *actionInstance) = 0;
+        virtual void applyDefaultValuesTo(ActionInstance *actionInstance) = 0;
 
 	private:
 		Name mName;

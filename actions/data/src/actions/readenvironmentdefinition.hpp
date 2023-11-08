@@ -63,7 +63,6 @@ namespace Actions
 
         QString name() const override													{ return QObject::tr("Read environment variable"); }
 		QString id() const override														{ return QStringLiteral("ActionReadEnvironmentVariable"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
         QString description() const override												{ return QObject::tr("Read a single or multiple environment variables"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadEnvironmentVariableInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

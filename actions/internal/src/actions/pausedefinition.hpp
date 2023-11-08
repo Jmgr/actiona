@@ -59,7 +59,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Pause"); }
 		QString id() const override														{ return QStringLiteral("ActionPause"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Pauses the script execution"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new PauseInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }

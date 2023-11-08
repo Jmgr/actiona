@@ -61,7 +61,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Detached command"); }
 		QString id() const override														{ return QStringLiteral("ActionDetachedCommand"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Executes a detached command"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new DetachedCommandInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }

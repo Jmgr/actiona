@@ -76,7 +76,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Read INI file"); }
 		QString id() const override														{ return QStringLiteral("ActionReadIniFile"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Read one or all the entries in an INI file"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadIniFileInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

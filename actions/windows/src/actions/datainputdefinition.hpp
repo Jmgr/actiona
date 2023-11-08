@@ -77,7 +77,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Data input"); }
 		QString id() const override														{ return QStringLiteral("ActionDataInput"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Ask the user to enter some data"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new DataInputInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }

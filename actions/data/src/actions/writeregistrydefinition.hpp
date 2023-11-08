@@ -62,7 +62,7 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Write registry"); }
 		QString id() const override														{ return QStringLiteral("ActionWriteRegistry"); }
-		ActionTools::Flag flags() const override											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
+        ActionTools::Flag flags() const override											{ return ActionTools::WorksOnWindows; }
 		QString description() const override												{ return QObject::tr("Writes an entry to the registry"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteRegistryInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

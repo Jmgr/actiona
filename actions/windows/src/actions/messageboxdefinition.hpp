@@ -94,7 +94,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Message Box"); }
 		QString id() const override														{ return QStringLiteral("ActionMessageBox"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Shows a message box"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new MessageBoxInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }

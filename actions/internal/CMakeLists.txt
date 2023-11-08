@@ -6,6 +6,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/actions/pauseinstance.cpp
     ${SOURCES_PREFIX}/actions/variableconditioninstance.cpp
     ${SOURCES_PREFIX}/actions/variableinstance.cpp
+    ${SOURCES_PREFIX}/actions/randominstance.cpp
 )
 
 set(HEADERS_PREFIX src)
@@ -40,6 +41,8 @@ set(HEADERS
     ${HEADERS_PREFIX}/actions/variableconditioninstance.hpp
     ${HEADERS_PREFIX}/actions/variabledefinition.hpp
     ${HEADERS_PREFIX}/actions/variableinstance.hpp
+    ${HEADERS_PREFIX}/actions/randomdefinition.hpp
+    ${HEADERS_PREFIX}/actions/randominstance.hpp
 )
 
 set(TS_PREFIX translations)

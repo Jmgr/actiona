@@ -46,7 +46,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Call procedure"); }
 		QString id() const override														{ return QStringLiteral("ActionCallProcedure"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Calls a procedure"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new CallProcedureInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Procedures; }

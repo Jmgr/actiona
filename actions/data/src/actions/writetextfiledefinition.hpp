@@ -60,7 +60,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Write text file"); }
 		QString id() const override														{ return QStringLiteral("ActionWriteTextFile"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Write a plain text file"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new WriteTextFileInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

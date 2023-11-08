@@ -45,14 +45,13 @@ namespace ActionTools
 		virtual void buildEditors(Script *script, QWidget *parent);
 		virtual void load(const ActionInstance *actionInstance) = 0;
 		virtual void save(ActionInstance *actionInstance) = 0;
-        void setDefaultValues(ActionInstance *actionInstance) override;
+        void applyDefaultValuesTo(ActionInstance *actionInstance) override;
         virtual Qt::Orientation editorsOrientation() const                              { return Qt::Horizontal; }
 
         const QList<QWidget *> &editors() const                                         { return mEditors; }
         Flag operatingSystems() const                                                   { return mOperatingSystems; }
-		
-        virtual QString defaultValue(QString defaultValue = QString()) const;
-        virtual void setDefaultValue(const QString &defaultValue)                       { mDefaultValue = defaultValue; }
+
+        virtual void setDefaultValue(const QString &defaultValue, const QString &subParameter = QStringLiteral("value"))    { mDefaultValues[subParameter] = defaultValue; }
         virtual void setOperatingSystems(Flag operatingSystems)                         { mOperatingSystems = operatingSystems; }
 		
         //Called when the action is edited
@@ -68,7 +67,7 @@ namespace ActionTools
 		
 	private:
 		QList<QWidget *> mEditors;
-        QString mDefaultValue;
+        QHash<QString, QString> mDefaultValues;
 		Flag mOperatingSystems;
 		QWidget *mParentWidget;
 

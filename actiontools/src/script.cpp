@@ -252,9 +252,8 @@ namespace ActionTools
 			ActionDefinition *actionDefinition = mActionFactory->actionDefinition(actionIndex);
 
 			stream.writeStartElement(QStringLiteral("action"));
-			stream.writeAttribute(QStringLiteral("name"), actionDefinition->id());
-			stream.writeAttribute(QStringLiteral("version"), actionDefinition->version().toString());
-			stream.writeEndElement();
+            stream.writeAttribute(QStringLiteral("name"), actionDefinition->id());
+            stream.writeEndElement();
 		}
 
 		stream.writeEndElement();
@@ -661,7 +660,7 @@ namespace ActionTools
 
                     //Set default values, will be overwritten afterwards, but this is done to make sure we have valid parameters everywhere
                     for(ElementDefinition *element: actionInstance->definition()->elements())
-                        element->setDefaultValues(actionInstance);
+                        element->applyDefaultValuesTo(actionInstance);
 
 					actionInstance->setLabel(label);
 					actionInstance->setComment(comment);

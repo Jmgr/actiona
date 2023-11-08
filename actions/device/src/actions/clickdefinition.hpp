@@ -84,7 +84,6 @@ namespace Actions
 	
 		QString name() const override													{ return QObject::tr("Click"); }
 		QString id() const override														{ return QStringLiteral("ActionClick"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Emulates a mouse click"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new ClickInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Device; }

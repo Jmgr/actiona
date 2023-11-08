@@ -63,7 +63,7 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Read registry"); }
 		QString id() const override														{ return QStringLiteral("ActionReadRegistry"); }
-		ActionTools::Flag flags() const override											{ return ActionTools::WorksOnWindows | ActionTools::Official; }
+        ActionTools::Flag flags() const override											{ return ActionTools::WorksOnWindows; }
 		QString description() const override												{ return QObject::tr("Read an entry from the registry"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new ReadRegistryInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

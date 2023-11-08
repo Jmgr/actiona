@@ -60,7 +60,7 @@ namespace ActionTools
             actionInstance->setSubParameter(originalName, QStringLiteral("value"), false, KeyboardKey::saveKeyListToJson(mKeyboardKeyEdit->keys()));
 	}
 	
-    void KeyboardKeyParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
+    void KeyboardKeyParameterDefinition::applyDefaultValuesTo(ActionInstance *actionInstance)
 	{
 		Q_UNUSED(actionInstance)
 

@@ -86,7 +86,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Multi data input"); }
 		QString id() const override														{ return QStringLiteral("ActionMultiDataInput"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Ask the user to choose from a list"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new MultiDataInputInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }

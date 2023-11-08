@@ -62,7 +62,7 @@ namespace ActionTools
 		actionInstance->setSubParameter(name().original(), QStringLiteral("color"), mColorEdit->isCode(), mColorEdit->text());
 	}
 
-	void ColorPositionParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
+    void ColorPositionParameterDefinition::applyDefaultValuesTo(ActionInstance *actionInstance)
 	{
         auto position = defaultPosition();
 

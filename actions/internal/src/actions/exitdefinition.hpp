@@ -43,7 +43,6 @@ namespace Actions
 
         QString name() const override													{ return QObject::tr("Exit Actiona", "action name: to exit"); }
 		QString id() const override														{ return QStringLiteral("ActionExit"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
         QString description() const override												{ return QObject::tr("Exit Actiona", "action description: this exits"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new ExitInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }

@@ -139,7 +139,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Find image"); }
 		QString id() const override														{ return QStringLiteral("ActionFindImage"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Finds an image on the screen, on a window or on another image"); }
         QVersionNumber version() const override                                          { return QVersionNumber(1, 1, 0); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new FindImageInstance(this); }

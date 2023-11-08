@@ -20,6 +20,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/codelineeditbutton.cpp
     ${SOURCES_PREFIX}/codelineedit.cpp
     ${SOURCES_PREFIX}/codespinbox.cpp
+    ${SOURCES_PREFIX}/codedoublespinbox.cpp
     ${SOURCES_PREFIX}/coloredit.cpp
     ${SOURCES_PREFIX}/colorparameterdefinition.cpp
     ${SOURCES_PREFIX}/colorpositionparameterdefinition.cpp
@@ -60,6 +61,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/multitextparameterdefinition.cpp
     ${SOURCES_PREFIX}/numberformat.cpp
     ${SOURCES_PREFIX}/numberparameterdefinition.cpp
+    ${SOURCES_PREFIX}/numberrangeparameterdefinition.cpp
     ${SOURCES_PREFIX}/opencvalgorithms.cpp
     ${SOURCES_PREFIX}/parametercontainer.cpp
     ${SOURCES_PREFIX}/parameter.cpp
@@ -151,6 +153,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/codelineedit.hpp
     ${HEADERS_PREFIX}/codelineeditbutton.hpp
     ${HEADERS_PREFIX}/codespinbox.hpp
+    ${HEADERS_PREFIX}/codedoublespinbox.hpp
     ${HEADERS_PREFIX}/coloredit.hpp
     ${HEADERS_PREFIX}/colorparameterdefinition.hpp
     ${HEADERS_PREFIX}/colorpositionparameterdefinition.hpp
@@ -194,6 +197,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/name.hpp
     ${HEADERS_PREFIX}/numberformat.hpp
     ${HEADERS_PREFIX}/numberparameterdefinition.hpp
+    ${HEADERS_PREFIX}/numberrangeparameterdefinition.hpp
     ${HEADERS_PREFIX}/opencvalgorithms.hpp
     ${HEADERS_PREFIX}/opencvalgorithms_private.hpp
     ${HEADERS_PREFIX}/parameter.hpp

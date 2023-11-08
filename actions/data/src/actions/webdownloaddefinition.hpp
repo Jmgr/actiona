@@ -82,7 +82,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Web download"); }
 		QString id() const override														{ return QStringLiteral("ActionWebDownload"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Downloads data from the Web"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new WebDownloadInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Data; }

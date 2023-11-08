@@ -43,7 +43,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Stop"); }
 		QString id() const override														{ return QStringLiteral("ActionStop"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Stop the script execution"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new StopInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }

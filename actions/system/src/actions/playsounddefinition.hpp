@@ -79,7 +79,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Play sound"); }
 		QString id() const override														{ return QStringLiteral("ActionPlaySound"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Plays a sound"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new PlaySoundInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }

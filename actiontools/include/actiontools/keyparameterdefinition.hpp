@@ -37,11 +37,10 @@ namespace ActionTools
 		void buildEditors(Script *script, QWidget *parent) override;
 		void load(const ActionInstance *actionInstance) override;
 		void save(ActionInstance *actionInstance) override;
-		void setDefaultValues(ActionInstance *actionInstance) override;
+        void applyDefaultValuesTo(ActionInstance *actionInstance) override;
 		
 	private:
-        QString defaultValue(QString defaultValue = {}) const override                   { Q_UNUSED(defaultValue); return {}; }
-        void setDefaultValue(const QString &defaultValue) override						{ Q_UNUSED(defaultValue); }
+        void setDefaultValue(const QString &defaultValue, const QString &subParameter = QStringLiteral("value")) override						{ Q_UNUSED(defaultValue); }
 		
 		KeyEdit *mKeyEdit;
 

@@ -107,6 +107,7 @@ namespace Execution
         mActionaVersion = actionaVersion;
 		mScriptVersion = scriptVersion;
 		mIsActExec = isActExec;
+        mRuntimeStorage.clear();
 
 		mConsoleWidget->setup(consoleModel);
 		
@@ -193,8 +194,16 @@ namespace Execution
 		{
 			ActionTools::ActionInstance *actionInstance = mScript->actionAt(actionIndex);
 			actionInstance->reset();
-			actionInstance->clearRuntimeParameters();
-            actionInstance->setupExecution(&mScriptEngine->engine(), mScript, actionIndex);
+            actionInstance->clearRuntimeParameters();
+
+            auto key = actionInstance->definition()->id();
+            auto it = mRuntimeStorage.find(key);
+            if (it == mRuntimeStorage.end()) {
+                auto storage = std::make_unique<ActionTools::RuntimeStorage>();
+                it = mRuntimeStorage.emplace(key, std::move(storage)).first;
+            }
+
+            actionInstance->setupExecution(&mScriptEngine->engine(), mScript, actionIndex, it->second.get());
 			mActionEnabled.append(true);
 
 			qint64 currentActionRuntimeId = -1;
@@ -403,6 +412,8 @@ namespace Execution
             mScriptEngine->deleteLater();
             mScriptEngine = nullptr;
         }
+
+        mRuntimeStorage.clear();
 
 		delete mProgressDialog;
 		mProgressDialog = nullptr;

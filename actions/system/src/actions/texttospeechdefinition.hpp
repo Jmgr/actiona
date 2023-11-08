@@ -81,7 +81,6 @@ namespace Actions
 
         QString name() const override													{ return QObject::tr("Text to speech"); }
         QString id() const override														{ return QStringLiteral("ActionTextToSpeech"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
         QString description() const override												{ return QObject::tr("Reads some text using text to speech"); }
         ActionTools::ActionInstance *newActionInstance() const override					{ return new TextToSpeechInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::System; }

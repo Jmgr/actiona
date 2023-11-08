@@ -34,6 +34,9 @@
 #include <QElapsedTimer>
 #include <QDateTime>
 
+#include <typeindex>
+#include <typeinfo>
+
 class QJSEngine;
 class QDataStream;
 
@@ -46,6 +49,44 @@ namespace ActionTools
 
 	using ParametersData = QMap<QString, Parameter>;
 	using ExceptionActionInstancesHash = QMap<ActionException::Exception, ActionException::ExceptionActionInstance>;
+
+    class ACTIONTOOLSSHARED_EXPORT RuntimeStorageItem
+    {
+    public:
+        RuntimeStorageItem() = default;
+        virtual ~RuntimeStorageItem() = default;
+
+    private:
+        Q_DISABLE_COPY(RuntimeStorageItem)
+    };
+
+    class ACTIONTOOLSSHARED_EXPORT RuntimeStorage final
+    {
+    public:
+        RuntimeStorage() = default;
+
+        template<class T, typename... Args>
+        T &get(Args&&... args)
+        {
+            static_assert(std::is_base_of<RuntimeStorageItem, T>::value, "T must derive from RuntimeStorageItem");
+
+            auto index = std::type_index(typeid(T));
+            auto it = mStorage.find(index);
+
+            if(it == mStorage.end())
+            {
+                auto newItem = std::make_unique<T>(std::forward<Args>(args)...);
+                it = mStorage.emplace(index, std::move(newItem)).first;
+            }
+
+            return static_cast<T&>(*it->second.get());
+        }
+
+    private:
+        std::unordered_map<std::type_index, std::unique_ptr<RuntimeStorageItem>> mStorage;
+
+        Q_DISABLE_COPY(RuntimeStorage)
+    };
 
     struct ActionInstanceData : public QSharedData
     {
@@ -73,6 +114,7 @@ namespace ActionTools
         QElapsedTimer executionTimer;
         QDateTime startTime;
         QDateTime endTime;
+        RuntimeStorage *runtimeStorage;
 	};
 
 	class ACTIONTOOLSSHARED_EXPORT ActionInstance : public QObject
@@ -156,7 +198,7 @@ namespace ActionTools
             return d->startTime.msecsTo(d->endTime);
         }
 
-		void setupExecution(QJSEngine *scriptEngine, Script *script, int scriptLine)
+        void setupExecution(QJSEngine *scriptEngine, Script *script, int scriptLine, RuntimeStorage *runtimeStorage)
 		{
 			d->scriptEngine = scriptEngine;
 			d->script = script;
@@ -164,6 +206,7 @@ namespace ActionTools
             d->executionCounter = 0;
             d->startTime = {};
             d->endTime = {};
+            d->runtimeStorage = runtimeStorage;
 		}
 
 		void copyActionDataFrom(const ActionInstance &other);
@@ -190,6 +233,7 @@ namespace ActionTools
 		QJSEngine *scriptEngine() const									{ return d->scriptEngine; }
 		Script *script() const												{ return d->script; }
 		int scriptLine() const												{ return d->scriptLine; }
+        RuntimeStorage *storage()                                       { return d->runtimeStorage; }
 
 		/** Parameter management **/
         QJSValue evaluateValue(bool &ok,
@@ -317,6 +361,8 @@ namespace ActionTools
 
         /// Should be called when an action has finished running
         void executionEnded(bool stopScript = false);
+
+        RuntimeStorage &runtimeStorage();
 
 	private:
 		SubParameter retreiveSubParameter(const QString &parameterName, const QString &subParameterName);

@@ -88,7 +88,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Window"); }
 		QString id() const override														{ return QStringLiteral("ActionWindow"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Do some action on a window"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new WindowInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Windows; }

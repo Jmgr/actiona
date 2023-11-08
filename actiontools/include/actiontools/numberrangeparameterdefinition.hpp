@@ -23,40 +23,45 @@
 #include "parameterdefinition.hpp"
 #include "actiontools_global.hpp"
 
-#include <QPoint>
-#include <QColor>
-
 namespace ActionTools
 {
-	class PositionEdit;
-	class ColorEdit;
+    class CodeSpinBox;
+    class CodeDoubleSpinBox;
 
-	class ACTIONTOOLSSHARED_EXPORT ColorPositionParameterDefinition : public ParameterDefinition
+    class ACTIONTOOLSSHARED_EXPORT IntegerRangeParameterDefinition : public ParameterDefinition
 	{
 		Q_OBJECT
 
 	public:
-        ColorPositionParameterDefinition(const Name &name, QObject *parent);
+        IntegerRangeParameterDefinition(const Name &namez, QObject *parent);
 
 		void buildEditors(Script *script, QWidget *parent) override;
 		void load(const ActionInstance *actionInstance) override;
 		void save(ActionInstance *actionInstance) override;
-        void applyDefaultValuesTo(ActionInstance *actionInstance) override;
-		Qt::Orientation editorsOrientation() const override								{ return Qt::Vertical; }
-		
-		void setDefaultPosition(const QPoint &position)							{ mDefaultPosition = position; }
-		QPoint defaultPosition() const											{ return mDefaultPosition; }
-		
-		void setDefaultColor(const QColor &color)								{ mDefaultColor = color; }
-		QColor defaultColor() const												{ return mDefaultColor; }
-		
-	private:		
-		PositionEdit *mPositionEdit;
-		ColorEdit *mColorEdit;
-		QPoint mDefaultPosition;
-		QColor mDefaultColor;
 
-		Q_DISABLE_COPY(ColorPositionParameterDefinition)
+    private:
+        CodeSpinBox *mMinSpinBox;
+        CodeSpinBox *mMaxSpinBox;
+
+        Q_DISABLE_COPY(IntegerRangeParameterDefinition)
 	};
+
+    class ACTIONTOOLSSHARED_EXPORT DoubleRangeParameterDefinition : public ParameterDefinition
+    {
+        Q_OBJECT
+
+    public:
+        DoubleRangeParameterDefinition(const Name &namez, QObject *parent);
+
+        void buildEditors(Script *script, QWidget *parent) override;
+        void load(const ActionInstance *actionInstance) override;
+        void save(ActionInstance *actionInstance) override;
+
+    private:
+        CodeDoubleSpinBox *mMinSpinBox;
+        CodeDoubleSpinBox *mMaxSpinBox;
+
+        Q_DISABLE_COPY(DoubleRangeParameterDefinition)
+    };
 }
 

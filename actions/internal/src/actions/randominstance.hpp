@@ -1,6 +1,6 @@
 /*
 	Actiona
-	Copyright (C) 2005 Jonathan Mercier-Ganady
+    Copyright (C) 2005 Jonathan Mercier-Ganady
 
 	Actiona is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,29 +20,36 @@
 
 #pragma once
 
-#include "parameterdefinition.hpp"
-#include "actiontools_global.hpp"
+#include "actiontools/actioninstance.hpp"
 
-namespace ActionTools
+namespace Actions
 {
-	class CodeDateTimeEdit;
-
-	class ACTIONTOOLSSHARED_EXPORT DateTimeParameterDefinition : public ParameterDefinition
+    class RandomInstance : public ActionTools::ActionInstance
 	{
 		Q_OBJECT
 
 	public:
-        DateTimeParameterDefinition(const Name &name, QObject *parent);
+		enum Type
+		{
+            Integer,
+            Decimal,
+			String,
+		};
+        Q_ENUM(Type)
+        enum Exceptions
+        {
+            RangeException = ActionTools::ActionException::UserException
+        };
 
-		void buildEditors(Script *script, QWidget *parent) override;
-		void load(const ActionInstance *actionInstance) override;
-		void save(ActionInstance *actionInstance) override;
-        void applyDefaultValuesTo(ActionInstance *actionInstance) override;
-		
+        RandomInstance(const ActionTools::ActionDefinition *definition, QObject *parent = nullptr)
+			: ActionTools::ActionInstance(definition, parent)										{}
+
+        static Tools::StringListPair types;
+
+        void startExecution() override;
+
 	private:
-		CodeDateTimeEdit *mDateTimeEdit;
-
-		Q_DISABLE_COPY(DateTimeParameterDefinition)
+        Q_DISABLE_COPY(RandomInstance)
 	};
 }
 

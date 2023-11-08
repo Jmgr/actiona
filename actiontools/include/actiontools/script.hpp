@@ -51,7 +51,6 @@ namespace ActionTools
 		{
             ReadSuccess,                // Ok
             ReadInternal,               // Internal error
-			ReadInvalidSchema,			// Did not pass schema validation
             ReadInvalidScriptVersion,	// Script version is newer than ours
             ReadCanceled                // Loading was canceled
 		};

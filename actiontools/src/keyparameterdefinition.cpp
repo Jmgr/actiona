@@ -74,7 +74,7 @@ namespace ActionTools
 		}
 	}
 	
-	void KeyParameterDefinition::setDefaultValues(ActionInstance *actionInstance)
+    void KeyParameterDefinition::applyDefaultValuesTo(ActionInstance *actionInstance)
 	{
 		Q_UNUSED(actionInstance)
 

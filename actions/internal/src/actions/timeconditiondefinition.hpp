@@ -57,7 +57,6 @@ namespace Actions
 
 		QString name() const override													{ return QObject::tr("Time condition"); }
 		QString id() const override														{ return QStringLiteral("ActionTimeCondition"); }
-		ActionTools::Flag flags() const override											{ return ActionDefinition::flags() | ActionTools::Official; }
 		QString description() const override												{ return QObject::tr("Check the current date time and do some action"); }
 		ActionTools::ActionInstance *newActionInstance() const override					{ return new TimeConditionInstance(this); }
 		ActionTools::ActionCategory category() const override							{ return ActionTools::Internal; }
