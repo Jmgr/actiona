@@ -65,3 +65,13 @@ Each action has parameters, and Javascript can be written in every field and wil
 Code contributions as PR are very welcome. Sponsoring is also possible either through [Liberapay](https://liberapay.com/Jmgr), GitHub [Sponsors](https://github.com/sponsors/Jmgr) or using the Cardano (ADA) cryptocurrency: addr1v9zj0klgp8pwa6kf7956nfj5qn7gjuw5x2lyt86vhcwj0xg0eytad -- thanks!
 
 Monetary contributions will be used to pay for the rental of the dedicated server hosting Actiona's updater and installers (~€37/month), and to pay for the required code signing certificates on Windows (a few hundred pounds at least).
+
+## License
+
+Actiona is licensed under the GNU/GPLv3 License, but includes code and other resources licensed under other licenses:
+* QDarkStyleSheet: [MIT License - Source Code, and Creative Commons Attribution International 4.0 - Images](https://github.com/ColinDuquesnoy/QDarkStyleSheet/blob/master/LICENSE.rst)
+* QHotkey: [BSD-3-Clause License](https://github.com/Skycoder42/QHotkey/blob/master/LICENSE)
+* breakpad: [BSD License](https://chromium.googlesource.com/breakpad/breakpad/+/master/LICENSE)
+* mINI: [MIT License](https://github.com/pulzed/mINI/blob/master/LICENSE)
+* Qxt library: Common Public License version 1 and GNU/LGPL version 2.1
+* Crystal Clear icons: [GNU/LGPL](https://web.archive.org/web/20070626051615/https://www.everaldo.com/crystal/?action=license)
