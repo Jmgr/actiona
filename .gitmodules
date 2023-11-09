@@ -4,3 +4,9 @@
 [submodule "gui/src/3rdparty/breakpad"]
 	path = gui/src/3rdparty/breakpad
 	url = https://chromium.googlesource.com/breakpad/breakpad
+[submodule "actiona/src/3rdparty/breakpad"]
+	path = actiona/src/3rdparty/breakpad
+	url = https://chromium.googlesource.com/breakpad/breakpad
+[submodule "actiona/3rdparty/QDarkStyleSheet"]
+	path = actiona/3rdparty/QDarkStyleSheet
+	url = https://github.com/ColinDuquesnoy/QDarkStyleSheet

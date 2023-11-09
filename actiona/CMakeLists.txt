@@ -33,6 +33,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/settingskeyedit.cpp
     ${SOURCES_PREFIX}/sfxscriptdialog.cpp
     ${SOURCES_PREFIX}/QHotkey/qhotkey.cpp
+    ${SOURCES_PREFIX}/themeselection.cpp
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/QHotkey/qhotkey_win.cpp>
     $<$<PLATFORM_ID:Linux>:${SOURCES_PREFIX}/QHotkey/qhotkey_x11.cpp>
     $<$<PLATFORM_ID:Windows>:${SOURCES_PREFIX}/3rdparty/breakpad/src/client/windows/crash_generation/crash_generation_client.cc>
@@ -76,6 +77,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/sfxscriptdialog.hpp
     ${HEADERS_PREFIX}/QHotkey/qhotkey.h
     ${HEADERS_PREFIX}/QHotkey/qhotkey_p.h
+    ${HEADERS_PREFIX}/themeselection.hpp
 )
 
 set(UI_PREFIX ui)
@@ -109,7 +111,8 @@ add_executable(${PROJECT}
     ${TS_FILES}
     ${QRC}
     app.rc
-
+    3rdparty/QDarkStyleSheet/qdarkstyle/dark/darkstyle.qrc
+    3rdparty/QDarkStyleSheet/qdarkstyle/light/lightstyle.qrc
 )
 
 add_dependencies(${PROJECT} execution actiontools tools actionpackdata actionpackdevice actionpackinternal actionpacksystem actionpackwindows)

@@ -51,7 +51,8 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	mSystemTrayIcon(systemTrayIcon),
 	mPreviousASCRAssociation(false),
     mPreviousACODAssociation(false),
-    mLocaleChangeWarning(false)
+    mLocaleChangeWarning(false),
+    mInitialTheme(ThemeSelection::currentTheme())
 {
 	ui->setupUi(this);
 
@@ -93,6 +94,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 
 	//GENERAL
     ui->languageComboBox->setCurrentIndex(Tools::Languages::languageNameToIndex(settings.value(QStringLiteral("gui/locale"), Tools::Languages::languagesName().first.first()).toString()));
+    ui->themeComboBox->setCurrentIndex(settings.value(QStringLiteral("gui/theme"), QVariant(static_cast<int>(ThemeSelection::Theme::Default))).toInt());
     ui->showLoadingWindow->setChecked(settings.value(QStringLiteral("gui/showLoadingWindow"), QVariant(true)).toBool());
     ui->preloadActionDialogsCheckBox->setChecked(settings.value(QStringLiteral("gui/preloadActionDialogs"), QVariant(false)).toBool());
     ui->showTaskbarIcon->setChecked(settings.value(QStringLiteral("gui/showTaskbarIcon"), QVariant(true)).toBool());
@@ -274,7 +276,8 @@ void SettingsDialog::accept()
 
 	//GENERAL
     settings.setValue(QStringLiteral("gui/locale"), Tools::Languages::languagesName().first[ui->languageComboBox->currentIndex()]);
-	settings.setValue(QStringLiteral("gui/showLoadingWindow"), ui->showLoadingWindow->isChecked());
+    settings.setValue(QStringLiteral("gui/theme"), QVariant(ui->themeComboBox->currentIndex()));
+    settings.setValue(QStringLiteral("gui/showLoadingWindow"), ui->showLoadingWindow->isChecked());
     settings.setValue(QStringLiteral("gui/preloadActionDialogs"), ui->preloadActionDialogsCheckBox->isChecked());
 	settings.setValue(QStringLiteral("gui/showTaskbarIcon"), ui->showTaskbarIcon->isChecked());
 	settings.setValue(QStringLiteral("gui/showWindowAfterExecution"), ui->showWindowAfterExecution->isChecked());
@@ -359,7 +362,14 @@ void SettingsDialog::accept()
 		SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
 #endif
 
-	QDialog::accept();
+    QDialog::accept();
+}
+
+void SettingsDialog::reject()
+{
+    ThemeSelection::selectTheme(mInitialTheme);
+
+    QDialog::reject();
 }
 
 void SettingsDialog::done(int result)
@@ -399,3 +409,9 @@ int SettingsDialog::proxyMode() const
 	else
 		return ActionTools::Settings::PROXY_CUSTOM;
 }
+
+void SettingsDialog::on_themeComboBox_currentIndexChanged(int index)
+{
+    ThemeSelection::selectTheme(static_cast<ThemeSelection::Theme>(index));
+}
+

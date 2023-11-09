@@ -29,6 +29,7 @@
 #include "progresssplashscreen.hpp"
 #include "tools/languages.hpp"
 #include "actiontools/qtsingleapplication/QtSingleApplication"
+#include "themeselection.hpp"
 
 #ifdef Q_OS_WIN
 #include "client/windows/handler/exception_handler.h"
@@ -48,6 +49,7 @@
 #include <QElapsedTimer>
 #include <QSettings>
 #include <QCommandLineParser>
+#include <QSettings>
 
 #ifdef Q_OS_UNIX
 #undef signals
@@ -214,6 +216,10 @@ int main(int argc, char **argv)
 			splash->repaint();
 		}
 	}
+
+    QSettings settings;
+    auto theme = static_cast<ThemeSelection::Theme>(settings.value(QStringLiteral("gui/theme"), QVariant(static_cast<int>(ThemeSelection::Theme::Default))).toInt());
+    ThemeSelection::selectTheme(theme);
 
 	MainWindow mainWindow(optionsParser, splash, startScript, locale);
 
