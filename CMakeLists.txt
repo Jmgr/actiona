@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(actiona VERSION 3.10.2 DESCRIPTION "Cross-platform automation tool" LANGUAGES CXX)
+project(actiona VERSION 3.11.0 DESCRIPTION "Cross-platform automation tool" LANGUAGES CXX)
 
 # Constants
 set(ACT_SCRIPT_VERSION 1.1.0)
