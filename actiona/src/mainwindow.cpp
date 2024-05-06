@@ -1251,7 +1251,7 @@ void MainWindow::updateRecentFileActions()
 		mRecentFileActs.at(i)->setVisible(true);
 	}
 
-	for(int j = numRecentFiles; j < mMaxRecentFiles; ++j)
+    for(int j = numRecentFiles; j < mMaxRecentFiles && j < mRecentFileActs.size(); ++j)
 		mRecentFileActs.at(j)->setVisible(false);
 
 	ui->menuRecent_scripts->setEnabled(numRecentFiles > 0);
