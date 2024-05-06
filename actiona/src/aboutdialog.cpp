@@ -67,6 +67,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	ui->titleLabel->setText(message);
 
 	mComboBoxes.append(ui->act3Prog);
+    mComboBoxes.append(ui->act3CodeContrib);
 	mComboBoxes.append(ui->act3Ideas);
 	mComboBoxes.append(ui->act3Donators);
 	mComboBoxes.append(ui->act3Art);
