@@ -101,7 +101,15 @@ namespace ActionTools
 	
     void ColorEdit::setPosition(QPointF position)
 	{
-        QPixmap pixel = QGuiApplication::primaryScreen()->grabWindow(0, position.x(), position.y(), 1, 1);
+        auto screen = QGuiApplication::screenAt(position.toPoint());
+        if(!screen)
+            return;
+
+        auto geometry = screen->geometry();
+        auto localX = position.x() - geometry.x();
+        auto localY = position.y() - geometry.y();
+
+        QPixmap pixel = screen->grabWindow(0, localX, localY, 1, 1);
 		QColor pixelColor = pixel.toImage().pixel(0, 0);
 		mColorDialog->setCurrentColor(pixelColor);
 		onColorSelected();

@@ -185,7 +185,15 @@ namespace Actions
 
 		bool testPixel()
 		{
-            QPixmap pixel = QGuiApplication::primaryScreen()->grabWindow(0, mPixelPosition.x(), mPixelPosition.y(), 1, 1);
+            auto screen = QGuiApplication::screenAt(mPixelPosition);
+            if(!screen)
+                return false;
+
+            auto geometry = screen->geometry();
+            auto localX = mPixelPosition.x() - geometry.x();
+            auto localY = mPixelPosition.y() - geometry.y();
+
+            QPixmap pixel = screen->grabWindow(0, localX, localY, 1, 1);
 			QColor pixelColor = pixel.toImage().pixel(0, 0);
 
             setVariable(mVariable, Code::CodeClass::construct<Code::Color>(pixelColor, *scriptEngine()));

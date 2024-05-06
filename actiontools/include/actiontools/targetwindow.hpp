@@ -22,19 +22,13 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QMouseEvent>
 
 #include "actiontools_global.hpp"
-
-#ifdef Q_OS_UNIX
-#include <QAbstractNativeEventFilter>
-#endif
 
 namespace ActionTools
 {
     class ACTIONTOOLSSHARED_EXPORT TargetWindow : public QWidget
-#ifdef Q_OS_UNIX
-            , public QAbstractNativeEventFilter
-#endif
     {
         Q_OBJECT
     public:
@@ -45,11 +39,9 @@ namespace ActionTools
         void rectangleSelected(const QRect &rect);
 
     protected:
-#ifdef Q_OS_WIN
-        virtual void keyPressEvent(QKeyEvent *event);
-        virtual void mousePressEvent(QMouseEvent *event);
-        virtual void mouseReleaseEvent(QMouseEvent *event);
-#endif
+        void keyPressEvent(QKeyEvent *event) override;
+        void mousePressEvent(QMouseEvent *event) override;
+        void mouseReleaseEvent(QMouseEvent *event) override;
         void paintEvent(QPaintEvent *event) override;
         void showEvent(QShowEvent *event) override;
         void hideEvent(QHideEvent *event) override;
@@ -58,21 +50,12 @@ namespace ActionTools
         void update();
 
     private:
-#ifdef Q_OS_UNIX
-        bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override;
-        void ungrab();
-#endif
         void mouseButtonReleased();
 
         QTimer mUpdateTimer;
         QPoint mMouseClickPosition;
         bool mMousePressed{false};
         QRect mResult;
-#ifdef Q_OS_UNIX
-        bool mGrabbingPointer{false};
-        bool mGrabbingKeyboard{false};
-        unsigned long mCrossCursor;
-#endif
     };
 }
 

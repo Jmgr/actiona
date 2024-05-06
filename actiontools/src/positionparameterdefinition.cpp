@@ -67,10 +67,12 @@ namespace ActionTools
     {
         if(mPositionUnitComboBox->currentIndex() == 1)//Percents
         {
-            QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
+            QRect virtualScreenGeometry;
+            for(auto screen: QGuiApplication::screens())
+                virtualScreenGeometry = virtualScreenGeometry.united(screen->geometry());
 
-            mPositionEdit->setPosition(QPointF((position.x() * 100) / screenGeometry.width(),
-                                              (position.y() * 100) / screenGeometry.height()));
+            mPositionEdit->setPosition(QPointF((position.x() * 100) / virtualScreenGeometry.width(),
+                                              (position.y() * 100) / virtualScreenGeometry.height()));
         }
     }
 }

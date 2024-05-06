@@ -154,9 +154,6 @@ namespace Code
         Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticImage"); }
         Q_INVOKABLE QJSValue takeScreenshot();
         Q_INVOKABLE QJSValue takeScreenshot(const Window *window);
-#ifdef Q_OS_UNIX
-        Q_INVOKABLE QJSValue takeScreenshot(int windowIndex);
-#endif
         Q_INVOKABLE QJSValue takeScreenshotUsingScreenIndex(int screenIndex);
     };
 }

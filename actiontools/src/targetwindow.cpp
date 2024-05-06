@@ -26,13 +26,6 @@
 #include <QMessageBox>
 #include <QApplication>
 
-#ifdef Q_OS_UNIX
-#include "actiontools/x11info.hpp"
-#include <X11/Xlib.h>
-#include <X11/cursorfont.h>
-#include <xcb/xcb.h>
-#endif
-
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -49,9 +42,6 @@ namespace ActionTools
                   | Qt::NoDropShadowWindowHint
                   | Qt::BypassWindowManagerHint
                   )
-#ifdef Q_OS_UNIX
-           ,mCrossCursor(XCreateFontCursor(X11Info::display(), XC_crosshair))
-#endif
     {
         setWindowModality(Qt::ApplicationModal);
         setAttribute(Qt::WA_TranslucentBackground);
@@ -63,15 +53,8 @@ namespace ActionTools
 
     TargetWindow::~TargetWindow()
     {
-#ifdef Q_OS_UNIX
-        if(mGrabbingPointer || mGrabbingKeyboard)
-            ungrab();
-
-        XFreeCursor(X11Info::display(), mCrossCursor);
-#endif
     }
 
-#ifdef Q_OS_WIN
     void TargetWindow::keyPressEvent(QKeyEvent *event)
     {
         if(event->key() == Qt::Key_Escape)
@@ -95,7 +78,6 @@ namespace ActionTools
         mouseButtonReleased();
         close();
     }
-#endif
 
     void TargetWindow::paintEvent(QPaintEvent *event)
     {
@@ -147,27 +129,6 @@ namespace ActionTools
 
         mMousePressed = false;
         mResult = QRect();
-
-#ifdef Q_OS_UNIX
-        QCoreApplication::instance()->installNativeEventFilter(this);
-
-        if(XGrabPointer(X11Info::display(), DefaultRootWindow(X11Info::display()), True, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync,
-                        None, mCrossCursor, CurrentTime) != GrabSuccess)
-        {
-            QMessageBox::warning(this, tr("Choose a screen rectangle"), tr("Unable to grab the pointer."));
-            event->ignore();
-        }
-
-        mGrabbingPointer = true;
-
-        if(XGrabKeyboard(X11Info::display(), DefaultRootWindow(X11Info::display()), True, GrabModeAsync, GrabModeAsync, CurrentTime) != GrabSuccess)
-        {
-            QMessageBox::warning(this, tr("Choose a screen rectangle"), tr("Unable to grab the pointer."));
-            event->ignore();
-        }
-
-        mGrabbingKeyboard = true;
-#endif
     }
 
     void TargetWindow::hideEvent(QHideEvent *event)
@@ -175,10 +136,6 @@ namespace ActionTools
         Q_UNUSED(event)
 
         mUpdateTimer.stop();
-
-#ifdef Q_OS_UNIX
-        ungrab();
-#endif
 
         emit rectangleSelected(mResult);
     }
@@ -211,72 +168,18 @@ namespace ActionTools
             move(QCursor::pos() - QPoint(width() / 2, height() / 2));
     }
 
-#ifdef Q_OS_UNIX
-    bool TargetWindow::nativeEventFilter(const QByteArray &eventType, void *message, qintptr *)
-    {
-        if(eventType == "xcb_generic_event_t")
-        {
-            auto* event = static_cast<xcb_generic_event_t *>(message);
-
-            switch(event->response_type)
-            {
-            case XCB_BUTTON_PRESS:
-                mMouseClickPosition = QCursor::pos();
-                mMousePressed = true;
-
-                return true;
-            case XCB_BUTTON_RELEASE:
-                mMousePressed = false;
-
-                mouseButtonReleased();
-                close();
-
-                return true;
-            case XCB_KEY_PRESS:
-            {
-                auto keyPressEvent = reinterpret_cast<xcb_key_press_event_t *>(event);
-                if(keyPressEvent->detail == 0x09)//Escape
-                {
-                    close();
-
-                    return false;
-                }
-
-                return true;
-            }
-            }
-
-            return false;
-        }
-
-        return false;
-    }
-#endif
-
-#ifdef Q_OS_UNIX
-    void TargetWindow::ungrab()
-    {
-        if(mGrabbingKeyboard)
-            XUngrabKeyboard(X11Info::display(), CurrentTime);
-
-        if(mGrabbingPointer)
-            XUngrabPointer(X11Info::display(), CurrentTime);
-
-        if(mGrabbingKeyboard || mGrabbingPointer)
-            XFlush(X11Info::display());
-
-        QCoreApplication::instance()->removeNativeEventFilter(this);
-
-        mGrabbingPointer = false;
-        mGrabbingKeyboard = false;
-    }
-#endif
-
     void TargetWindow::mouseButtonReleased()
     {
         if(width() < 1 || height() < 1)
             return;
 
         mResult = QRect(pos(), size());
+
+#ifdef Q_OS_UNIX
+        mResult = mResult.marginsRemoved(QMargins(2, 2, 2, 2));
+#endif
+
+        if(mResult.isEmpty())
+            mResult = {};
     }
 }

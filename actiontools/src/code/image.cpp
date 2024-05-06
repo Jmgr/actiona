@@ -645,16 +645,16 @@ namespace Code
     QJSValue StaticImage::takeScreenshot(const Window *window)
     {
         WId windowId = window->windowHandle().value();
+        auto pos = window->windowHandle().rect().topLeft();
 
-        return CodeClass::construct<Image>(QGuiApplication::primaryScreen()->grabWindow(windowId).toImage());
-    }
+        auto screen = QGuiApplication::screenAt(pos);
+        if(!screen)
+            return {};
 
-#ifdef Q_OS_UNIX
-    QJSValue StaticImage::takeScreenshot(int windowIndex)
-    {
-        return CodeClass::construct<Image>(QGuiApplication::primaryScreen()->grabWindow(windowIndex).toImage());
+        auto geometry = screen->geometry();
+
+        return CodeClass::construct<Image>(screen->grabWindow(windowId).toImage());
     }
-#endif
 
     QJSValue StaticImage::takeScreenshotUsingScreenIndex(int screenIndex)
     {
@@ -666,8 +666,7 @@ namespace Code
             return {};
         }
 
-        QRect screenGeometry = screens[screenIndex]->geometry();
-        QPixmap screenPixmap = QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
+        QPixmap screenPixmap = screens[screenIndex]->grabWindow(0);
 
         return CodeClass::construct<Image>(screenPixmap.toImage());
     }

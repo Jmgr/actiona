@@ -491,12 +491,14 @@ namespace ActionTools
 
     void computePercentPosition(QPointF &point, const SubParameter &unitSubParameter)
     {
-        if(unitSubParameter.value().toInt() == 1)//Percents
+        if(unitSubParameter.value().toInt() == 1)// Percent
         {
-            QRect screenGeometry =  QGuiApplication::primaryScreen()->geometry();
+            QRect virtualScreenGeometry;
+            for(auto screen: QGuiApplication::screens())
+                virtualScreenGeometry = virtualScreenGeometry.united(screen->geometry());
 
-            point.setX((point.x() * screenGeometry.width()) / 100.0f);
-            point.setY((point.y() * screenGeometry.height()) / 100.0f);
+            point.setX((point.x() * virtualScreenGeometry.width()) / 100.0f);
+            point.setY((point.y() * virtualScreenGeometry.height()) / 100.0f);
         }
     }
 

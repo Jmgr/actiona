@@ -35,11 +35,11 @@ namespace ActionTools
         auto screens = QGuiApplication::screens();
 
         if(screenIndex < 0 || screenIndex >= screens.size())
-            return QPixmap();
+            return {};
 
-        const QRect &screenGeometry = screens[screenIndex]->geometry();
+        auto screen = screens[screenIndex];
 
-        return QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height());
+        return screen->grabWindow(0);
     }
 
     QList<std::pair<QPixmap, QRect>> ScreenShooter::captureScreens()
@@ -48,11 +48,7 @@ namespace ActionTools
         QList<std::pair<QPixmap, QRect>> result;
 
         for(int screenIndex = 0; screenIndex < screens.size(); ++screenIndex)
-        {
-            const QRect &screenGeometry = screens[screenIndex]->geometry();
-
-            result.append(std::make_pair(QGuiApplication::primaryScreen()->grabWindow(0, screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), screenGeometry.height()), screenGeometry));
-        }
+            result.append(std::make_pair(screens[screenIndex]->grabWindow(0), screens[screenIndex]->geometry()));
 
         return result;
     }
@@ -68,7 +64,15 @@ namespace ActionTools
 
             const QRect &windowGeometry = window.rect();
 
-            result.append(std::make_pair(QGuiApplication::primaryScreen()->grabWindow(0, windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height()), windowGeometry));
+            auto screen = QGuiApplication::screenAt(windowGeometry.center());
+            if(!screen)
+                continue;
+
+            auto geometry = screen->geometry();
+            auto localX = windowGeometry.x() - geometry.x();
+            auto localY = windowGeometry.y() - geometry.y();
+
+            result.append(std::make_pair(screen->grabWindow(0, localX, localY, windowGeometry.width(), windowGeometry.height()), windowGeometry));
         }
 
         return result;
@@ -77,11 +81,19 @@ namespace ActionTools
     QPixmap ScreenShooter::captureWindow(WindowHandle window)
     {
         if(!window.isValid())
-            return QPixmap();
+            return {};
 
         const QRect &windowGeometry = window.rect();
 
-        return QGuiApplication::primaryScreen()->grabWindow(0, windowGeometry.x(), windowGeometry.y(), windowGeometry.width(), windowGeometry.height());
+        auto screen = QGuiApplication::screenAt(windowGeometry.center());
+        if(!screen)
+            return {};
+
+        auto geometry = screen->geometry();
+        auto localX = windowGeometry.x() - geometry.x();
+        auto localY = windowGeometry.y() - geometry.y();
+
+        return screen->grabWindow(0, localX, localY, windowGeometry.width(), windowGeometry.height());
     }
 
     QPixmap ScreenShooter::captureAllScreens()
@@ -121,6 +133,14 @@ namespace ActionTools
 
     QPixmap ScreenShooter::captureRect(const QRect &rect)
     {
-        return QGuiApplication::primaryScreen()->grabWindow(0, rect.x(), rect.y(), rect.width(), rect.height());
+        auto screen = QGuiApplication::screenAt(rect.center());
+        if(!screen)
+            return {};
+
+        auto geometry = screen->geometry();
+        auto localX = rect.x() - geometry.x();
+        auto localY = rect.y() - geometry.y();
+
+        return screen->grabWindow(0, localX, localY, rect.width(), rect.height());
     }
 }
