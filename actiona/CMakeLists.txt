@@ -125,7 +125,7 @@ endif()
 
 setup_target(${PROJECT})
 
-find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Widgets Core5Compat Multimedia TextToSpeech REQUIRED)
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Qml Network Widgets Core5Compat Multimedia TextToSpeech REQUIRED)
 
 target_include_directories(${PROJECT}
     PRIVATE

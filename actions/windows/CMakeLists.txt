@@ -58,7 +58,7 @@ setup_target(${PROJECT})
 
 target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKWINDOWS_LIBRARY)
 
-find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets REQUIRED)
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Qml Widgets REQUIRED)
 
 target_include_directories(${PROJECT}
     PRIVATE

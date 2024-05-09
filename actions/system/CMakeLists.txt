@@ -134,6 +134,7 @@ setup_target(${PROJECT})
 target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKSYSTEM_LIBRARY)
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS
+    Qml
     Network
     Widgets
     DBus

@@ -58,7 +58,7 @@ function(compile_translations TARGET)
         # Add other translations here
     )
     set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_BINARY_DIR}/translations)
-    qt_add_translations(${TARGET} QM_FILES ${TS_FILES})
+    qt6_add_translation(${TARGET} QM_FILES ${TS_FILES})
     add_custom_target(${TARGET}_translations ALL DEPENDS ${QM_FILES})
 endfunction()
 

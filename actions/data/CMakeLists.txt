@@ -104,7 +104,7 @@ setup_target(${PROJECT})
 
 target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKDATA_LIBRARY)
 
-find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Network Sql Widgets Core5Compat REQUIRED)
+find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Qml Network Sql Widgets Core5Compat REQUIRED)
 
 target_include_directories(${PROJECT}
     PRIVATE

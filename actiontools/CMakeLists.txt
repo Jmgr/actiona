@@ -289,7 +289,7 @@ target_compile_definitions(${PROJECT} PRIVATE ACTIONTOOLS_LIBRARY)
 
 setup_target(${PROJECT})
 
-find_package(OpenCV REQUIRED)
+find_package(OpenCV REQUIRED core imgproc)
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets Qml REQUIRED)
 
 target_include_directories(${PROJECT}
@@ -310,8 +310,10 @@ target_link_libraries(
     Qt6::Qml
     Qt6::QmlPrivate
     ${LIBXTST_LIBRARIES}
-    ${OpenCV_LIBS}
     $<$<PLATFORM_ID:Windows>:Psapi>
+    $<$<PLATFORM_ID:Windows>:${OPENCV_LIB_CORE}>
+    $<$<PLATFORM_ID:Windows>:${OPENCV_LIB_IMGPROC}>
+    $<$<PLATFORM_ID:Linux>:${OpenCV_LIBS}>
 )
 
 compile_translations(${PROJECT})
