@@ -311,9 +311,7 @@ target_link_libraries(
     Qt6::QmlPrivate
     ${LIBXTST_LIBRARIES}
     $<$<PLATFORM_ID:Windows>:Psapi>
-    $<$<PLATFORM_ID:Windows>:${OPENCV_LIB_CORE}>
-    $<$<PLATFORM_ID:Windows>:${OPENCV_LIB_IMGPROC}>
-    $<$<PLATFORM_ID:Linux>:${OpenCV_LIBS}>
+    ${OpenCV_LIBS}
 )
 
 compile_translations(${PROJECT})
