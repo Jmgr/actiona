@@ -141,7 +141,6 @@ int main(int argc, char **argv)
 	{
 		{{QStringLiteral("c"), QStringLiteral("code")}, QObject::tr("Switch to code mode, may not be used with -s.")},
 		{{QStringLiteral("s"), QStringLiteral("script")}, QObject::tr("Switch to script mode, may not be used with -c.")},
-		{{QStringLiteral("Q"), QStringLiteral("nocodeqt")}, QObject::tr("Do not include the Qt library into the code.")},
 		{{QStringLiteral("proxy-mode")}, QObject::tr(R"(Sets the proxy mode, values are "none", "system" (default) or "custom".)")},
 		{{QStringLiteral("proxy-type")}, QObject::tr(R"(Sets the custom proxy type, values are "http" or "socks" (default).)")},
 		{{QStringLiteral("proxy-host")}, QObject::tr("Sets the custom proxy host.")},
@@ -178,9 +177,6 @@ int main(int argc, char **argv)
 	const auto &positionalArguments = optionsParser.positionalArguments();
 	if(positionalArguments.count() < 1 || (optionsParser.isSet(QStringLiteral("code")) && optionsParser.isSet(QStringLiteral("script"))))
 		optionsParser.showHelp(-1);
-
-	if(!optionsParser.isSet(QStringLiteral("nocodeqt")))
-		app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/code"));
 
 #ifdef Q_OS_UNIX
 	{

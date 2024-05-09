@@ -135,7 +135,6 @@ int main(int argc, char **argv)
 		{{QStringLiteral("t"), QStringLiteral("notrayicon")}, QObject::tr("Disable the tray icon.")},
 		{{QStringLiteral("E"), QStringLiteral("noexecutionwindow")}, QObject::tr("Do not show the execution window.")},
 		{{QStringLiteral("C"), QStringLiteral("noconsolewindow")}, QObject::tr("Do not show the console window.")},
-		{{QStringLiteral("Q"), QStringLiteral("nocodeqt")}, QObject::tr("Do not include the Qt library into the code.")},
 		{{QStringLiteral("e"), QStringLiteral("execute")}, QObject::tr("Execute the current script.")},
 		{{QStringLiteral("x"), QStringLiteral("exitatend")}, QObject::tr("Close Actiona after execution - requires execute.")},
 	});
@@ -171,9 +170,6 @@ int main(int argc, char **argv)
 #ifdef Q_OS_UNIX
     notify_init("Actiona");
 #endif
-
-	if(!optionsParser.isSet(QStringLiteral("nocodeqt")))
-		app.addLibraryPath(QApplication::applicationDirPath() + QStringLiteral("/code"));
 
     //TODO: Move this in the constructor of these classes
     qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
