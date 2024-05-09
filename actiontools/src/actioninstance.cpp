@@ -820,18 +820,11 @@ namespace ActionTools
 		ok = true;
 
         QJSValue result = d->scriptEngine->evaluate(toEvaluate);
-		if(result.isError())
+        if(result.isError())
 		{
             ok = false;
 
             emit executionException(ActionException::CodeErrorException, result.toString());
-			return QJSValue();
-		}
-
-        if(result.isUndefined())
-		{
-			ok = false;
-
 			return QJSValue();
 		}
 
