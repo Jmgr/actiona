@@ -20,9 +20,8 @@
 
 #include "readregistryinstance.hpp"
 
-#include <QJSEngine>
-
 #ifdef Q_OS_WIN
+#include <QJSEngine>
 #include <Windows.h>
 #endif
 

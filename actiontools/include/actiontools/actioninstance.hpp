@@ -35,7 +35,6 @@
 #include <QDateTime>
 
 #include <typeindex>
-#include <typeinfo>
 
 class QJSEngine;
 class QDataStream;

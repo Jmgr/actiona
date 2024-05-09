@@ -29,7 +29,6 @@
 #include <QScrollBar>
 #include <QApplication>
 #include <QPainter>
-#include <QJSEngine>
 #include <QDebug>
 #include <QStandardItemModel>
 

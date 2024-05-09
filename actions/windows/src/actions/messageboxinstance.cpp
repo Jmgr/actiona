@@ -19,11 +19,9 @@
 */
 
 #include "messageboxinstance.hpp"
-#include "actiontools/consolewidget.hpp"
 
 #include <QApplication>
 #include <QJSValue>
-#include <QJSEngine>
 #include <QIcon>
 #include <QScreen>
 

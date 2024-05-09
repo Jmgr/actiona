@@ -32,8 +32,6 @@ namespace ActionTools
     class ScriptEngine;
 }
 
-class QJSEngine;
-class QScriptEngineDebugger;
 class QMainWindow;
 
 class CodeExecuter : public Executer
@@ -54,7 +52,6 @@ private slots:
 private:
     std::unique_ptr<ActionTools::ScriptEngine> mScriptEngine;
 	Execution::ScriptAgent *mScriptAgent;
-	QScriptEngineDebugger *mScriptEngineDebugger;
 	QMainWindow *mDebuggerWindow;
 };
 

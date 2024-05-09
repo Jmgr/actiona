@@ -22,8 +22,6 @@
 
 #include "actiontools/actioninstance.hpp"
 
-#include <QJSEngine>
-
 namespace Actions
 {
 	class StopInstance : public ActionTools::ActionInstance

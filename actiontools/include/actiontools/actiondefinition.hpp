@@ -32,8 +32,6 @@
 #include <QVersionNumber>
 #include <QObject>
 
-class QJSEngine;
-
 namespace ActionTools
 {
 	class ActionPack;

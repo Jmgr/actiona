@@ -30,7 +30,6 @@
 #include "actiontools/code/codeclass.hpp"
 
 #include <QMessageBox>
-#include <QJSEngine>
 #include <QTimer>
 #include <QComboBox>
 #include <QMenu>
@@ -147,8 +146,6 @@ void ScriptParametersDialog::removeParameter()
 void ScriptParametersDialog::accept()
 {
 	int rowCount = ui->parameterTable->rowCount();
-
-	QJSEngine scriptEngine;
 
 	mScript->removeAllParameters();
 

@@ -24,7 +24,6 @@
 #include "actiontools/elementdefinition.hpp"
 #include "actiontools/groupdefinition.hpp"
 
-#include <QJSEngine>
 #include <QJSValue>
 #include <QSysInfo>
 #include <QApplication>
