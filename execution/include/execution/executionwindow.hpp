@@ -37,7 +37,7 @@ namespace Execution
 		ExecutionWindow(QWidget *parent = nullptr);
 		~ExecutionWindow() override;
 
-		void setCurrentActionName(const QString &actionName);
+        void setCurrentActionName(const QString &actionName, const QString &line);
 		void setCurrentActionColor(const QColor &actionColor);
 		void setProgressEnabled(bool enabled);
 		void setProgressValue(int value);

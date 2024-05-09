@@ -44,9 +44,10 @@ namespace Execution
 		delete ui;
 	}
 	
-	void ExecutionWindow::setCurrentActionName(const QString &actionName)
+    void ExecutionWindow::setCurrentActionName(const QString &actionName, const QString &line)
 	{
 		ui->currentActionLabel->setText(actionName);
+        ui->currentLineLabel->setText(line);
 	
 		adjustSize();
 	}

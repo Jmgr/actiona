@@ -26,6 +26,7 @@
 #include "actiontools/actiondefinition.hpp"
 #include "actiontools/actionexception.hpp"
 #include "actiontools/actioninstance.hpp"
+#include "actiontools/numberformat.hpp"
 #include "actiontools/code/image.hpp"
 #include "actiontools/code/rawdata.hpp"
 #include "codeactiona.hpp"
@@ -42,7 +43,6 @@
 #include <QApplication>
 #include <QLocale>
 #include <QProgressDialog>
-#include <QJSEngine>
 #include <QJSValueIterator>
 #include <QScreen>
 #include <QRegularExpression>
@@ -371,7 +371,7 @@ namespace Execution
 				position.setY(screenRect.top() + screenRect.height() - mConsoleWidget->height());
 
 			mConsoleWidget->move(position);
-			mConsoleWidget->show();
+            mConsoleWidget->show();
 		}
 
 		mExecutionStarted = true;
@@ -417,8 +417,10 @@ namespace Execution
 
 		delete mProgressDialog;
 		mProgressDialog = nullptr;
-		mExecutionWindow->hide();
-		mConsoleWidget->hide();
+
+        // HACK: workaround display glitches if the execution is very short.
+        QTimer::singleShot(100, mExecutionWindow, &QWidget::hide);
+        QTimer::singleShot(100, mConsoleWidget, &QWidget::hide);
 
 		emit executionStopped();
 	}
@@ -856,7 +858,14 @@ namespace Execution
         const ActionTools::ActionException::ExceptionActionInstance &exceptionAction = exceptionActionInstancesHash.value(ActionTools::ActionException::CodeErrorException);
         mShowDebuggerOnCodeError = (exceptionAction.action() == ActionTools::ActionException::StopExecutionExceptionAction);
 
-		mExecutionWindow->setCurrentActionName(actionInstance->definition()->name());
+        auto line = ActionTools::NumberFormat::labelIndexString(mCurrentActionIndex);
+        auto actionLineOrLabel = QStringLiteral("");
+        if(actionInstance->label().isEmpty())
+            actionLineOrLabel = line;
+        else
+            actionLineOrLabel = QStringLiteral("%1 (%2)").arg(actionInstance->label()).arg(line);
+
+        mExecutionWindow->setCurrentActionName(actionInstance->definition()->name(), actionLineOrLabel);
 		mExecutionWindow->setCurrentActionColor(actionInstance->color());
 
         connect(actionInstance, &ActionTools::ActionInstance::executionEndedSignal, this, &Executer::actionExecutionEnded);

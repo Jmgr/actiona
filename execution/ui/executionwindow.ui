@@ -31,7 +31,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="executer.qrc">
+        <iconset resource="../execution.qrc">
          <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
        </property>
        <property name="iconSize">
@@ -51,7 +51,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="executer.qrc">
+        <iconset resource="../execution.qrc">
          <normaloff>:/images/debug.png</normaloff>:/images/debug.png</iconset>
        </property>
        <property name="iconSize">
@@ -77,7 +77,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="executer.qrc">
+        <iconset resource="../execution.qrc">
          <normaloff>:/images/pause.png</normaloff>:/images/pause.png</iconset>
        </property>
        <property name="iconSize">
@@ -113,6 +113,25 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="currentLineLabel">
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="text">
+      <string notr="true">[current line here]</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QProgressBar" name="timeoutProgressBar">
      <property name="maximumSize">
       <size>
@@ -134,7 +153,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="executer.qrc"/>
+  <include location="../execution.qrc"/>
  </resources>
  <connections>
   <connection>

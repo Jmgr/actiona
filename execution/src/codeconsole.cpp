@@ -79,15 +79,13 @@ namespace Execution
     {
         QApplication::processEvents();//Call this to prevent UI freeze when calling print often
 
-        QString message;
-
         switch(mExecuter.scriptEngine().context())
         {
         case ActionTools::ScriptEngine::Parameters:
         {
             auto [line, column] = mExecuter.scriptEngine().currentLineAndColumn();
 
-            mExecuter.consoleWidget()->addScriptParameterLine(message,
+            mExecuter.consoleWidget()->addScriptParameterLine(text,
                                                               mExecuter.currentParameter(),
                                                               line,
                                                               column,
@@ -103,7 +101,7 @@ namespace Execution
 
             auto [line, column] = mExecuter.scriptEngine().currentLineAndColumn();
 
-            mExecuter.consoleWidget()->addUserLine(message,
+            mExecuter.consoleWidget()->addUserLine(text,
                                                    currentActionRuntimeId,
                                                    qjsEngine(this)->globalObject().property(QStringLiteral("currentParameter")).toString(),
                                                    qjsEngine(this)->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
