@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>805</width>
-    <height>656</height>
+    <width>775</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,33 +74,6 @@ p, li { white-space: pre-wrap; }
             <item>
              <property name="text">
               <string>David Zaccaria</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="6" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout_11">
-          <item>
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:600;&quot;&gt;Packaging&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="act3Pack">
-            <item>
-             <property name="text">
-              <string>Adrien &quot;Adri2000&quot; Cunin</string>
              </property>
             </item>
            </widget>
@@ -209,15 +182,15 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
         <item row="3" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout_6">
+         <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
-           <widget class="QLabel" name="label_5">
+           <widget class="QLabel" name="label_10">
             <property name="text">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ideas / Bugfinding&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:600;&quot;&gt;Packaging&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -225,55 +198,10 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="act3Ideas">
+           <widget class="QComboBox" name="act3Pack">
             <item>
              <property name="text">
-              <string>Astalol</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>wismerheal</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>niconil</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>cyberia</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Fredy123</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Matthieu Hazon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Loïc Vauvrecy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>djez</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Le lapin</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>mchelen</string>
+              <string>Debian =&gt; Adrien &quot;Adri2000&quot; Cunin</string>
              </property>
             </item>
            </widget>
@@ -281,53 +209,6 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
         <item row="5" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout_12">
-          <item>
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Documentation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="act3Documentation">
-            <item>
-             <property name="text">
-              <string>Jonathan &quot;Jmgr&quot; Mercier-Ganady</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>wismerheal</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Yann Huriez</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Fredy123</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Floche</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="6" column="1">
          <layout class="QVBoxLayout" name="verticalLayout_14">
           <item>
            <widget class="QLabel" name="label_12">
@@ -672,9 +553,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <tabstop>act3Prog</tabstop>
   <tabstop>act3Art</tabstop>
   <tabstop>act3Donators</tabstop>
-  <tabstop>act3Ideas</tabstop>
   <tabstop>act3Pack</tabstop>
-  <tabstop>act3Documentation</tabstop>
   <tabstop>act2Prog</tabstop>
   <tabstop>act2Art</tabstop>
   <tabstop>act2Donators</tabstop>
