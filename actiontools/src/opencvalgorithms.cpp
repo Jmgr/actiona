@@ -401,9 +401,22 @@ namespace ActionTools
         return QImage(matImage.data, image.size().width, image.size().height, image.step, QImage::Format_RGB888).rgbSwapped();
 	}
 
+    QImage prepareImageForOpenCV(const QImage &image)
+    {
+        // Note: this is incomplete and doesn't take into account many other potential issues, but for now I prefer adding this fix rather than risking adding more instability.
+        if(image.format() != QImage::Format_Indexed8)
+            return image;
+
+        return image.convertToFormat(QImage::Format_RGB32);
+    }
+
     Mat OpenCVAlgorithmsPrivate::toCVMat(const QImage &image)
     {
-        cv::Mat mat(image.height(), image.width(), CV_8UC4, const_cast<uchar *>(image.bits()), image.bytesPerLine());
+        if(image.isNull() || image.format() == QImage::Format_Invalid)
+            return {};
+
+        auto preparedImage = prepareImageForOpenCV(image);
+        cv::Mat mat(preparedImage.height(), preparedImage.width(), CV_8UC4, const_cast<uchar *>(preparedImage.bits()), preparedImage.bytesPerLine());
         cv::Mat back(mat.rows, mat.cols, CV_8UC3);
         int from_to[] = {0,0,  1,1,  2,2};
 
