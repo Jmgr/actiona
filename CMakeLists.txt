@@ -4,8 +4,8 @@ project(actiona VERSION 3.11.0 DESCRIPTION "Cross-platform automation tool" LANG
 
 # Constants
 set(ACT_SCRIPT_VERSION 1.1.0)
-set(ACT_MINIMUM_QT_VERSION 6.2)
-set(ACT_MINIMUM_QT_VERSION_HEX 0x060200)
+set(ACT_MINIMUM_QT_VERSION 6.4)
+set(ACT_MINIMUM_QT_VERSION_HEX 0x060400)
 
 # Build parameters
 set(ACT_BUILD_NAME "" CACHE STRING "Build name")
