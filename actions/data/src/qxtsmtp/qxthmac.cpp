@@ -170,7 +170,7 @@ bool QxtHmac::verify(const QByteArray& otherInner)
 void QxtHmac::addData(const char* data, int length)
 {
     Q_ASSERT(qxt_d().opad.size());
-    qxt_d().ihash->addData(data, length);
+    qxt_d().ihash->addData(data);
     qxt_d().result.clear();
 }
 
