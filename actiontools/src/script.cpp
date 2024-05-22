@@ -253,6 +253,7 @@ namespace ActionTools
 
 			stream.writeStartElement(QStringLiteral("action"));
             stream.writeAttribute(QStringLiteral("name"), actionDefinition->id());
+            stream.writeAttribute(QStringLiteral("version"), QStringLiteral("1.0.0")); // We have to write this to stay compatible with previous versions
             stream.writeEndElement();
 		}
 
