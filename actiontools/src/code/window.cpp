@@ -25,6 +25,7 @@
 #include "actiontools/code/processhandle.hpp"
 
 #include <QJSValueIterator>
+#include <QDebug>
 
 namespace Code
 {
@@ -243,7 +244,7 @@ namespace Code
 
     QRegularExpression windowModeToRegularExpression(Window::Mode mode, const QString &pattern, bool caseSensitive)
     {
-        QString localPattern = QRegularExpression::anchoredPattern(pattern);
+        QString localPattern = pattern;
 
         QRegularExpression result;
         switch(mode)
@@ -260,7 +261,7 @@ namespace Code
             break;
         case Window::FixedString:
             localPattern = QRegularExpression::escape(localPattern);
-            result.setPattern(pattern);
+            result.setPattern(localPattern);
             result.setPatternOptions(caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption);
             break;
         }
@@ -275,8 +276,10 @@ namespace Code
             return {};
         }
 
-        QString titlePattern = parameters.property(QStringLiteral("title")).toString();
-        QString classNamePattern = parameters.property(QStringLiteral("className")).toString();
+        auto titlePattern = parameters.property(QStringLiteral("title"));
+        auto classNamePattern = parameters.property(QStringLiteral("className"));
+        QString titlePatternString = titlePattern.toString();
+        QString classNamePatternString = classNamePattern.toString();
         Window::Mode titleMode = Window::WildcardUnix;
         if(parameters.hasProperty(QStringLiteral("titleMode")))
             titleMode = static_cast<Window::Mode>(parameters.property(QStringLiteral("titleMode")).toInt());
@@ -303,16 +306,16 @@ namespace Code
 
         QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
 
-        QRegularExpression titleRegExp = windowModeToRegularExpression(titleMode, titlePattern, titleCaseSensitive);
-        QRegularExpression classNameRegExp = windowModeToRegularExpression(classNameMode, classNamePattern, classNameCaseSensitive);
+        QRegularExpression titleRegExp = windowModeToRegularExpression(titleMode, titlePatternString, titleCaseSensitive);
+        QRegularExpression classNameRegExp = windowModeToRegularExpression(classNameMode, classNamePatternString, classNameCaseSensitive);
         QList<ActionTools::WindowHandle> foundWindows;
 
         for(const ActionTools::WindowHandle &windowHandle: qAsConst(windowList))
         {
-            if(!titlePattern.isNull() && titleRegExp.match(windowHandle.title()).hasMatch())
+            if(!titlePattern.isUndefined() && !titleRegExp.match(windowHandle.title()).hasMatch())
                     continue;
 
-            if(!classNamePattern.isNull() && classNameRegExp.match(windowHandle.classname()).hasMatch())
+            if(!classNamePattern.isUndefined() && !classNameRegExp.match(windowHandle.classname()).hasMatch())
                     continue;
 
             if(processId != -1 && windowHandle.processId() != processId)
