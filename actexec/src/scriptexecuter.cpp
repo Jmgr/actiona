@@ -64,7 +64,7 @@ bool ScriptExecuter::start(QIODevice *device, const QString &filename)
 	
 	device->close();
 	
-    mExecuter->setup(mScript, actionFactory(), false, 0, 0, false, 0, 0, Global::ACTIONA_VERSION, Global::SCRIPT_VERSION, true, nullptr);
+    mExecuter->setup(mScript, actionFactory(), false, 0, 0, false, 0, 0, Global::ACTIONA_VERSION, Global::SCRIPT_VERSION, true, nullptr, 0);
     if(!mExecuter->startExecution(false, filename))
 	{
 		QTextStream stream(stdout);

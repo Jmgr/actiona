@@ -1546,8 +1546,12 @@ void MainWindow::execute(bool onlySelection)
 
 	QSettings settings;
 
-	if(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool())
+    bool addStartEndSeparators = settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool();
+    if(addStartEndSeparators)
 		ui->consoleWidget->addStartSeparator();
+
+    int maxEntries = settings.value(QStringLiteral("gui/consoleMaxEntries"), QVariant(0)).toInt();
+    ui->consoleWidget->setMaxEntries(maxEntries);
 
 	bool showExecutionWindow = settings.value(QStringLiteral("actions/showExecutionWindow"), QVariant(true)).toBool();
 	int executionWindowPosition = settings.value(QStringLiteral("actions/executionWindowPosition"), QVariant(0)).toInt();
@@ -1576,7 +1580,8 @@ void MainWindow::execute(bool onlySelection)
                          Global::ACTIONA_VERSION,
 						 Global::SCRIPT_VERSION,
 						 false,
-						 ui->consoleWidget->model());
+                         ui->consoleWidget->model(),
+                         maxEntries);
 	}
 
     mWasNewActionDockShown = !ui->actionsDockWidget->isHidden();

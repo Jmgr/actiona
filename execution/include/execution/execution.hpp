@@ -52,19 +52,20 @@ namespace Execution
 	public:
 		Executer(QObject *parent = nullptr);
 		~Executer() override ;
-		
-		void setup(ActionTools::Script *script,
-				   ActionTools::ActionFactory *actionFactory,
-				   bool showExecutionWindow,
-				   int executionWindowPosition,
-				   int executionWindowScreen,
-				   bool showConsoleWindow,
-				   int consoleWindowPosition,
-				   int consoleWindowScreen,
+
+        void setup(ActionTools::Script *script,
+                   ActionTools::ActionFactory *actionFactory,
+                   bool showExecutionWindow,
+                   int executionWindowPosition,
+                   int executionWindowScreen,
+                   bool showConsoleWindow,
+                   int consoleWindowPosition,
+                   int consoleWindowScreen,
                    QVersionNumber actionaVersion,
-				   QVersionNumber scriptVersion,
-				   bool isActExec,
-				   QStandardItemModel *consoleModel);
+                   QVersionNumber scriptVersion,
+                   bool isActExec,
+                   QStandardItemModel *consoleModel,
+                   int consoleMaxEntries);
 
 		ExecutionWindow *executionWindow() const			{ return mExecutionWindow; }
 		ActionTools::ConsoleWidget *consoleWidget() const	{ return mConsoleWidget; }

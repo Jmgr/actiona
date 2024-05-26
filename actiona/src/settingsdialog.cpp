@@ -100,6 +100,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
     ui->showTaskbarIcon->setChecked(settings.value(QStringLiteral("gui/showTaskbarIcon"), QVariant(true)).toBool());
     ui->showWindowAfterExecution->setChecked(settings.value(QStringLiteral("gui/showWindowAfterExecution"), QVariant(true)).toBool());
     ui->addStartEndSeparators->setChecked(settings.value(QStringLiteral("gui/addConsoleStartEndSeparators"), QVariant(true)).toBool());
+    ui->consoleMaxEntries->setValue(settings.value(QStringLiteral("gui/consoleMaxEntries"), QVariant(0)).toInt());
     ui->reopenLastScript->setChecked(settings.value(QStringLiteral("gui/reopenLastScript"), QVariant(false)).toBool());
     ui->maxRecentFiles->setValue(settings.value(QStringLiteral("gui/maxRecentFiles"), QVariant(5)).toInt());
 
@@ -282,6 +283,7 @@ void SettingsDialog::accept()
 	settings.setValue(QStringLiteral("gui/showTaskbarIcon"), ui->showTaskbarIcon->isChecked());
 	settings.setValue(QStringLiteral("gui/showWindowAfterExecution"), ui->showWindowAfterExecution->isChecked());
 	settings.setValue(QStringLiteral("gui/addConsoleStartEndSeparators"), ui->addStartEndSeparators->isChecked());
+    settings.setValue(QStringLiteral("gui/consoleMaxEntries"), ui->consoleMaxEntries->value());
 	settings.setValue(QStringLiteral("gui/reopenLastScript"), ui->reopenLastScript->isChecked());
 	settings.setValue(QStringLiteral("gui/maxRecentFiles"), ui->maxRecentFiles->value());
 

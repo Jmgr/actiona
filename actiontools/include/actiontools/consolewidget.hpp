@@ -76,7 +76,7 @@ namespace ActionTools
 		explicit ConsoleWidget(QWidget *parent = nullptr);
 		~ConsoleWidget() override ;
 		
-		void setup(QStandardItemModel *model = nullptr);
+        void setup(QStandardItemModel *model = nullptr, int maxEntries = 0);
 
 		void addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type);
         void addResourceLine(const QString &message, const QString &resourceKey, Type type);
@@ -88,6 +88,7 @@ namespace ActionTools
 		void addEndSeparator();
 		void clear();
         void clearExceptSeparators();
+        void setMaxEntries(int value) { mMaxEntries = value; }
 
 		void updateClearButton();
 
@@ -109,6 +110,7 @@ namespace ActionTools
 		Ui::ConsoleWidget *ui;
 		QStandardItemModel *mModel{nullptr};
 		QDateTime mStartTime;
+        int mMaxEntries{0};
 
 		Q_DISABLE_COPY(ConsoleWidget)
 	};

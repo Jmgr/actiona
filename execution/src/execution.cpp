@@ -85,7 +85,8 @@ namespace Execution
                QVersionNumber actionaVersion,
 			   QVersionNumber scriptVersion,
 			   bool isActExec,
-			   QStandardItemModel *consoleModel)
+               QStandardItemModel *consoleModel,
+               int consoleMaxEntries)
 	{
 		mScript = script;
         mScriptEngine = new ActionTools::ScriptEngine(this);
@@ -109,7 +110,7 @@ namespace Execution
 		mIsActExec = isActExec;
         mRuntimeStorage.clear();
 
-		mConsoleWidget->setup(consoleModel);
+        mConsoleWidget->setup(consoleModel, consoleMaxEntries);
 		
 		mExecutionTimer.setSingleShot(false);
         mExecutionTimer.setInterval(1);

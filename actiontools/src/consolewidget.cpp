@@ -42,9 +42,10 @@ namespace ActionTools
 		delete ui;
 	}
 	
-	void ConsoleWidget::setup(QStandardItemModel *model)
+    void ConsoleWidget::setup(QStandardItemModel *model, int maxEntries)
 	{
 		mModel = (model ? model : new QStandardItemModel(0, 1, this));
+        mMaxEntries = maxEntries;
 		
 		QItemSelectionModel *oldModel = ui->console->selectionModel();
 		ui->console->setModel(mModel);
@@ -234,6 +235,12 @@ namespace ActionTools
 		item->setData(QVariant::fromValue<Type>(type), TypeRole);
 
 		mModel->appendRow(item);
+
+        if(mMaxEntries > 0)
+        {
+            if(mModel->rowCount() > mMaxEntries)
+                mModel->removeRows(0, 1);
+        }
 
         qApp->processEvents(); // This is needed so that the console output gets displayed before a blocking call (such as sleep)
         // It would be better not to have any blocking code calls, but then this would cause some bugs when the user cancels the execution during a non-blocking sleep
