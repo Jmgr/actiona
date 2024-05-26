@@ -19,6 +19,7 @@
 */
 
 #include "sql.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #include <QJSValueIterator>
 #include <QSqlDatabase>
@@ -175,7 +176,7 @@ namespace Code
 		if(size == -1)
 			size = 0;
 
-        QJSValue back = qjsEngine(this)->newArray(size);
+        QJSValue back = ActionTools::ScriptEngine::current()->newArray(size);
 
 		switch(indexStyle)
 		{
@@ -184,10 +185,10 @@ namespace Code
 				QSqlRecord record = mQuery.record();
 				for(int index = 0; mQuery.next(); ++index)
 				{
-                    QJSValue row = qjsEngine(this)->newArray();
+                    QJSValue row = ActionTools::ScriptEngine::current()->newArray();
 					for(int columnIndex = 0; columnIndex < record.count(); ++columnIndex)
 					{
-                        row.setProperty(columnIndex, qjsEngine(this)->toScriptValue(mQuery.value(columnIndex)));
+                        row.setProperty(columnIndex, ActionTools::ScriptEngine::current()->toScriptValue(mQuery.value(columnIndex)));
 					}
 
 					back.setProperty(index, row);
@@ -199,10 +200,10 @@ namespace Code
 				for(int index = 0; mQuery.next(); ++index)
 				{
 					QSqlRecord record = mQuery.record();
-                    QJSValue row = qjsEngine(this)->newArray(record.count());
+                    QJSValue row = ActionTools::ScriptEngine::current()->newArray(record.count());
 					for(int columnIndex = 0; columnIndex < record.count(); ++columnIndex)
 					{
-                        row.setProperty(record.fieldName(columnIndex), qjsEngine(this)->toScriptValue(record.value(columnIndex)));
+                        row.setProperty(record.fieldName(columnIndex), ActionTools::ScriptEngine::current()->toScriptValue(record.value(columnIndex)));
 					}
 
 					back.setProperty(index, row);
@@ -221,7 +222,7 @@ namespace Code
         return this;
 	}
 
-    void Sql::registerClass(QJSEngine &scriptEngine)
+    void Sql::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClassWithStaticFunctions<Sql, StaticSql>(QStringLiteral("Sql"),  {QStringLiteral("drivers")}, scriptEngine);
     }
@@ -269,7 +270,7 @@ namespace Code
             }
         }
 
-        QJSValue back = qjsEngine(this)->newArray(driverList.size());
+        QJSValue back = ActionTools::ScriptEngine::current()->newArray(driverList.size());
         int index = 0;
         for(const Sql::Driver &driver: driverList)
         {

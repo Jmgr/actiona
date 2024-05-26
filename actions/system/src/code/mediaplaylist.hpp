@@ -60,7 +60,7 @@ namespace Code
         Q_INVOKABLE MediaPlaylist *pause();
         Q_INVOKABLE MediaPlaylist *stop();
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private:
 		QMediaPlayer *mMediaPlayer;

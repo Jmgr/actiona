@@ -125,7 +125,7 @@ namespace Code
         return this;
 	}
 
-    void File::registerClass(QJSEngine &scriptEngine)
+    void File::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClassWithStaticFunctions<File, StaticFile>(QStringLiteral("File"), {QStringLiteral("copy"), QStringLiteral("move"), QStringLiteral("rename"), QStringLiteral("remove"), QStringLiteral("exists")}, scriptEngine);
     }

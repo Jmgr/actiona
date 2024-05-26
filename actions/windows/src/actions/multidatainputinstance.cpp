@@ -19,6 +19,7 @@
 */
 
 #include "multidatainputinstance.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #include <QDialog>
 #include <QVBoxLayout>
@@ -34,7 +35,6 @@
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QButtonGroup>
-#include <QJSEngine>
 
 namespace Actions
 {
@@ -194,7 +194,7 @@ namespace Actions
 				}
 				else
 				{
-					QJSValue back = scriptEngine()->newArray(selectedItems.size());
+                    QJSValue back = scriptEngine()->engine().newArray(selectedItems.size());
 
 					for(int index = 0; index < selectedItems.size(); ++index)
 						back.setProperty(index, selectedItems.at(index)->text());
@@ -217,7 +217,7 @@ namespace Actions
 						selectedButtons.append(button->text());
 				}
 
-				QJSValue back = scriptEngine()->newArray(selectedButtons.size());
+                QJSValue back = scriptEngine()->engine().newArray(selectedButtons.size());
 
 				for(int index = 0; index < selectedButtons.size(); ++index)
 					back.setProperty(index, selectedButtons.at(index));

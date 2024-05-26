@@ -38,7 +38,7 @@ namespace Execution
 
         Q_INVOKABLE QString toString() const override { return QStringLiteral("Actiona"); }
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 		static void setActExec(bool isActExec);
         static void setActionaVersion(const QVersionNumber &version);

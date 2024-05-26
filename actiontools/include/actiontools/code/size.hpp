@@ -57,7 +57,7 @@ namespace Code
         Q_INVOKABLE Size *setWidth(int width);
         Q_INVOKABLE Size *setHeight(int height);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private:
 		QSize mSize;

@@ -28,7 +28,7 @@
 
 namespace Execution
 {
-    void CodeConsole::registerClass(QJSEngine &scriptEngine, Executer &executer)
+    void CodeConsole::registerClass(ActionTools::ScriptEngine &scriptEngine, Executer &executer)
     {
         CodeClass::registerStaticClass<CodeConsole>(QStringLiteral("Console"), scriptEngine, executer);
     }
@@ -103,8 +103,8 @@ namespace Execution
 
             mExecuter.consoleWidget()->addUserLine(text,
                                                    currentActionRuntimeId,
-                                                   qjsEngine(this)->globalObject().property(QStringLiteral("currentParameter")).toString(),
-                                                   qjsEngine(this)->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
+                                                   ActionTools::ScriptEngine::current()->globalObject().property(QStringLiteral("currentParameter")).toString(),
+                                                   ActionTools::ScriptEngine::current()->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
                                                    line,
                                                    column,
                                                    type);

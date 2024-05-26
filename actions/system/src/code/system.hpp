@@ -117,7 +117,7 @@ namespace Code
         Q_INVOKABLE System *lockScreen();
         Q_INVOKABLE System *startScreenSaver();
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 		
 	private:
 		SystemSession *mSystemSession;

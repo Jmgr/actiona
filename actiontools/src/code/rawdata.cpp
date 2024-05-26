@@ -223,7 +223,7 @@ namespace Code
         return this;
 	}
 
-    void RawData::registerClass(QJSEngine &scriptEngine)
+    void RawData::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<RawData>(QStringLiteral("RawData"), scriptEngine);
     }

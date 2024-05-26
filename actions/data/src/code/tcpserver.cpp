@@ -94,7 +94,7 @@ namespace Code
 		return mTcpServer.serverPort();
 	}
 
-    void TcpServer::registerClass(QJSEngine &scriptEngine)
+    void TcpServer::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<TcpServer>(QStringLiteral("TcpServer"), scriptEngine);
     }

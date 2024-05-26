@@ -24,7 +24,7 @@
 
 namespace Execution
 {
-    void CodeStdio::registerClass(QJSEngine &scriptEngine)
+    void CodeStdio::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClassWithStaticFunctions<CodeStdio, StaticCodeStdio>(
             QStringLiteral("Stdio"),

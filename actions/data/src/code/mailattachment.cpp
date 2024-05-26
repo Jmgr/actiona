@@ -86,7 +86,7 @@ namespace Code
         return CodeClass::clone<MailAttachment>();
     }
 
-    void MailAttachment::registerClass(QJSEngine &scriptEngine)
+    void MailAttachment::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<MailAttachment>(QStringLiteral("MailAttachment"), scriptEngine);
     }

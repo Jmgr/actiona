@@ -124,7 +124,7 @@ namespace Code
         return this;
     }
 
-    void Size::registerClass(QJSEngine &scriptEngine)
+    void Size::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Size>(QStringLiteral("Size"), scriptEngine);
     }

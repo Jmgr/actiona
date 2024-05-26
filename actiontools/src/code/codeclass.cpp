@@ -19,6 +19,7 @@
 */
 
 #include "actiontools/code/codeclass.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #include <QJSValue>
 #include <QStringList>
@@ -27,7 +28,7 @@ namespace Code
 {
     void CodeClass::throwError(const QString &errorType, const QString &message) const
     {
-        auto engine = qjsEngine(this);
+        auto engine = ActionTools::ScriptEngine::current();
         auto error = engine->newErrorObject(QJSValue::TypeError, message);
         error.setProperty(QStringLiteral("name"), errorType);
         engine->throwError(error);

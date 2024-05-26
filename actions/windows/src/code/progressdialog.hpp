@@ -51,7 +51,7 @@ namespace Code
         Q_INVOKABLE ProgressDialog *show();
         Q_INVOKABLE int showModal();
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 		
 	private slots:
 		void canceled();

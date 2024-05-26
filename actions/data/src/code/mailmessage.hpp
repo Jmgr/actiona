@@ -73,7 +73,7 @@ namespace Code
         Q_INVOKABLE MailMessage *addAttachment(const QString &filename, const QJSValue &attachment);
         Q_INVOKABLE MailMessage *removeAttachment(const QString &filename);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
     private:
         QxtMailMessage mMessage;

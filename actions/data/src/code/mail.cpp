@@ -167,7 +167,7 @@ namespace Code
         return this;
     }
 
-    void Mail::registerClass(QJSEngine &scriptEngine)
+    void Mail::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Mail>(QStringLiteral("Mail"), scriptEngine);
     }

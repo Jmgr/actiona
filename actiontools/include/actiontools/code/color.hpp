@@ -77,7 +77,7 @@ namespace Code
         Q_INVOKABLE int lightness() const;
         Q_INVOKABLE QString name() const;
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 		
 	private:
 		QColor mColor;

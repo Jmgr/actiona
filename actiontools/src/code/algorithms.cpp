@@ -95,7 +95,7 @@ namespace Code
         return back;
     }
 
-    void Algorithms::registerClass(QJSEngine &scriptEngine)
+    void Algorithms::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerStaticClass<Algorithms>(QStringLiteral("Algorithms"), scriptEngine);
     }

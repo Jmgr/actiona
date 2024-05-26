@@ -215,7 +215,7 @@ namespace Code
         return this;
 	}
 
-    void Web::registerClass(QJSEngine &scriptEngine)
+    void Web::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Web>(QStringLiteral("Web"), scriptEngine);
     }

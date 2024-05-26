@@ -223,7 +223,7 @@ namespace Code
 		return mInputDialog->exec();
 	}
 
-    void InputDialog::registerClass(QJSEngine &scriptEngine)
+    void InputDialog::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<InputDialog>(QStringLiteral("InputDialog"), scriptEngine);
     }

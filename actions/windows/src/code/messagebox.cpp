@@ -176,7 +176,7 @@ namespace Code
 		return mMessageBox->exec();
 	}
 
-    void MessageBox::registerClass(QJSEngine &scriptEngine)
+    void MessageBox::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<MessageBox>(QStringLiteral("MessageBox"), scriptEngine);
     }

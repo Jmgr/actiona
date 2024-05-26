@@ -120,7 +120,7 @@ namespace Code
         return this;
 	}
 
-    void Notify::registerClass(QJSEngine &scriptEngine)
+    void Notify::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Notify>(QStringLiteral("Notify"), scriptEngine);
     }

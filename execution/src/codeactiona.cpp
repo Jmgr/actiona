@@ -28,7 +28,7 @@ namespace Execution
     QVersionNumber CodeActiona::mActionaVersion = QVersionNumber();
     QVersionNumber CodeActiona::mScriptVersion = QVersionNumber();
 
-    void CodeActiona::registerClass(QJSEngine &scriptEngine)
+    void CodeActiona::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClassWithStaticFunctions<CodeActiona, StaticCodeActiona>(
             QStringLiteral("Actiona"),

@@ -53,7 +53,7 @@ namespace Code
         Q_INVOKABLE IniFile *deleteKey(const QString &keyName);
         Q_INVOKABLE int keyCount() const;
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 	
 	private:
         Encoding mEncoding{Native};

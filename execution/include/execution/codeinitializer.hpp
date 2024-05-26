@@ -23,8 +23,6 @@
 #include "execution_global.hpp"
 #include "actiontools/code/codeclass.hpp"
 
-class QJSEngine;
-
 namespace ActionTools
 {
 	class ActionFactory;
@@ -37,7 +35,7 @@ namespace Execution
 	class EXECUTIONSHARED_EXPORT CodeInitializer
 	{
 	public:
-        static void initialize(QJSEngine &scriptEngine,
+        static void initialize(ActionTools::ScriptEngine &scriptEngine,
                                ActionTools::ActionFactory *actionFactory,
                                const QString &filename);
 	};
@@ -52,7 +50,7 @@ namespace Execution
         Q_INVOKABLE QString toString() const override { return QStringLiteral("Global"); }
         Q_INVOKABLE QJSValue includeFunction(const QString &filepath);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
     };
 }
 

@@ -60,7 +60,7 @@ namespace Code
         Q_INVOKABLE Clipboard *setImage(const QJSValue &data);
         Q_INVOKABLE DataType dataType() const;
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 		
 	private:
         void setModePrivate(Mode mode);

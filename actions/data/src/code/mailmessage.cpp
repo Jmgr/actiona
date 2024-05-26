@@ -20,6 +20,7 @@
 
 #include "mailmessage.hpp"
 #include "mailattachment.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #include <QJSValueIterator>
 
@@ -57,12 +58,12 @@ namespace Code
     QJSValue MailMessage::attachments() const
     {
         const QHash<QString, QxtMailAttachment> &attachments = mMessage.attachments();
-        QJSValue back = qjsEngine(this)->newArray(attachments.size());
+        QJSValue back = ActionTools::ScriptEngine::current()->newArray(attachments.size());
 
         int index = 0;
         for(QHash<QString, QxtMailAttachment>::ConstIterator it = attachments.constBegin(); it != attachments.constEnd(); ++it)
         {
-            QJSValue attachmentObject = qjsEngine(this)->newObject();
+            QJSValue attachmentObject = ActionTools::ScriptEngine::current()->newObject();
 
             attachmentObject.setProperty(QStringLiteral("filename"), it.key());
             attachmentObject.setProperty(QStringLiteral("attachment"), CodeClass::construct<MailAttachment>(it.value()));
@@ -97,7 +98,7 @@ namespace Code
         return this;
     }
 
-    void MailMessage::registerClass(QJSEngine &scriptEngine)
+    void MailMessage::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<MailMessage>(QStringLiteral("MailMessage"), scriptEngine);
     }

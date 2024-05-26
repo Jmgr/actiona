@@ -725,7 +725,7 @@ namespace ActionTools
     void ActionInstance::setNextLine(const QString &nextLine, bool doNotResetPreviousActions)
 	{
 		QJSValue scriptValue = d->scriptEngine->globalObject().property(QStringLiteral("Script"));
-        scriptValue.setProperty(QStringLiteral("nextLine"), d->scriptEngine->toScriptValue(QVariant(nextLine)));
+        scriptValue.setProperty(QStringLiteral("nextLine"), d->scriptEngine->engine().toScriptValue(QVariant(nextLine)));
 		scriptValue.setProperty(QStringLiteral("doNotResetPreviousActions"), doNotResetPreviousActions);
 	}
 
@@ -739,7 +739,7 @@ namespace ActionTools
 		if(stringList.isEmpty())
 			return;
 
-		QJSValue back = d->scriptEngine->newArray(stringList.count());
+        QJSValue back = d->scriptEngine->engine().newArray(stringList.count());
 
 		for(int index = 0; index < stringList.count(); ++index)
 			back.setProperty(index, stringList.at(index));
@@ -753,7 +753,7 @@ namespace ActionTools
 		if(hashKeyValue.isEmpty())
 			return;
 
-		QJSValue back = d->scriptEngine->newArray(hashKeyValue.count());
+        QJSValue back = d->scriptEngine->engine().newArray(hashKeyValue.count());
 
 		QHashIterator<QString, QString> it(hashKeyValue);
 		while (it.hasNext())

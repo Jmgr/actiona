@@ -57,7 +57,7 @@ namespace Code
         Q_INVOKABLE Point *setX(int x);
         Q_INVOKABLE Point *setY(int y);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private:
 		QPoint mPoint;

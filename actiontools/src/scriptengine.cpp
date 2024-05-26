@@ -24,6 +24,8 @@
 
 namespace ActionTools
 {
+    QJSEngine *ScriptEngine::mCurrent = nullptr;
+
     ScriptEngine::ScriptEngine(QObject *parent):
         QObject(parent),
         mEngine(std::make_unique<QJSEngine>())
@@ -33,7 +35,9 @@ namespace ActionTools
     QJSValue ScriptEngine::evaluate(const QString &program, const QString &fileName, int lineNumber, QStringList *exceptionStackTrace)
     {
         mIsEvaluating = true;
+        mCurrent = mEngine.get();
         auto result = mEngine->evaluate(program, fileName, lineNumber, exceptionStackTrace);
+        mCurrent = nullptr;
         mIsEvaluating = false;
 
         return result;

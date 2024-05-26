@@ -107,7 +107,7 @@ namespace Code
         return this;
 	}
 
-    void Mouse::registerClass(QJSEngine &scriptEngine)
+    void Mouse::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Mouse>(QStringLiteral("Mouse"), scriptEngine);
     }

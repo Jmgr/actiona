@@ -116,7 +116,7 @@ namespace Code
         Q_INVOKABLE Image *findSubImageAsync(const QJSValue &otherImage, const QJSValue &callback, const QJSValue &options = QJSValue());
         Q_INVOKABLE Image *findSubImagesAsync(const QJSValue &otherImage, const QJSValue &callback, const QJSValue &options = QJSValue());
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private slots:
 		void findSubImageAsyncFinished(const ActionTools::MatchingPointList &matchingPointList);

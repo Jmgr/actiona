@@ -474,7 +474,7 @@ namespace Code
 	}
 	#endif
 
-    void Registry::registerClass(QJSEngine &scriptEngine)
+    void Registry::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Registry>(QStringLiteral("Registry"), scriptEngine);
     }

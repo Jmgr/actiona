@@ -72,7 +72,7 @@ public:
 	QString id() const override							{ return QStringLiteral("system"); }
 	QString name() const override						{ return tr("Actions dealing with the operating system"); }
 
-    void codeInit(QJSEngine &scriptEngine) const override
+    void codeInit(ActionTools::ScriptEngine &scriptEngine) const override
 	{
         Code::System::registerClass(scriptEngine);
         Code::MediaPlaylist::registerClass(scriptEngine);

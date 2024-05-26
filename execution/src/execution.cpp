@@ -132,17 +132,17 @@ namespace Execution
         Tools::HighResolutionTimer timer(QStringLiteral("Executer::startExecution"));
 	#endif
 
-        CodeActiona::registerClass(mScriptEngine->engine());
+        CodeActiona::registerClass(*mScriptEngine);
         CodeActiona::setActExec(mIsActExec);
         CodeActiona::setActionaVersion(mActionaVersion);
         CodeActiona::setScriptVersion(mScriptVersion);
 
         mScriptEngine->setContext(ActionTools::ScriptEngine::ActionInit);
-        CodeInitializer::initialize(mScriptEngine->engine(), mActionFactory, filename);
+        CodeInitializer::initialize(*mScriptEngine, mActionFactory, filename);
         mScriptEngine->setContext(ActionTools::ScriptEngine::Parameters);
 
-        CodeScript::registerClass(mScriptEngine->engine(), *this);
-        CodeConsole::registerClass(mScriptEngine->engine(), *this);
+        CodeScript::registerClass(*mScriptEngine, *this);
+        CodeConsole::registerClass(*mScriptEngine, *this);
 
 		mExecuteOnlySelection = onlySelection;
 		mCurrentActionIndex = 0;
@@ -166,7 +166,7 @@ namespace Execution
             {
             case ActionTools::Resource::BinaryType:
             case ActionTools::Resource::TypeCount:
-                    value = Code::CodeClass::construct<Code::RawData>(resource.data(), mScriptEngine->engine());
+                    value = Code::CodeClass::construct<Code::RawData>(resource.data(), *mScriptEngine);
                 break;
             case ActionTools::Resource::TextType:
 				value = QString::fromUtf8(resource.data());
@@ -182,7 +182,7 @@ namespace Execution
                         return false;
                     }
 
-                    value = Code::CodeClass::construct<Code::Image>(image, mScriptEngine->engine());
+                    value = Code::CodeClass::construct<Code::Image>(image, *mScriptEngine);
                 }
                 break;
             }
@@ -203,7 +203,7 @@ namespace Execution
                 it = mRuntimeStorage.emplace(key, std::move(storage)).first;
             }
 
-            actionInstance->setupExecution(&mScriptEngine->engine(), mScript, actionIndex, it->second.get());
+            actionInstance->setupExecution(mScriptEngine, mScript, actionIndex, it->second.get());
 			mActionEnabled.append(true);
 
 			qint64 currentActionRuntimeId = -1;

@@ -20,10 +20,11 @@
 
 #include "codeexecution.hpp"
 #include "actiontools/crossplatform.hpp"
+#include "actiontools/scriptengine.hpp"
 
 namespace Execution
 {
-    void CodeExecution::registerClass(QJSEngine &scriptEngine)
+    void CodeExecution::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClassWithStaticFunctions<CodeExecution, StaticCodeExecution>(
             QStringLiteral("Execution"),
@@ -48,7 +49,7 @@ namespace Execution
 	
     StaticCodeExecution *StaticCodeExecution::stop()
     {
-        qjsEngine(this)->setInterrupted(true);
+        ActionTools::ScriptEngine::current()->setInterrupted(true);
 
         return this;
 	}

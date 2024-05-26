@@ -21,10 +21,10 @@
 #pragma once
 
 #include "actiontools/actiontools_global.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #include <QObject>
 #include <QByteArray>
-#include <QJSEngine>
 
 class QJSValue;
 
@@ -40,9 +40,9 @@ namespace Code
         void throwError(const QString &errorType, const QString &message) const;
 
         template<class T, typename U>
-        static QJSValue construct(U &&param, QJSEngine &engine)
+        static QJSValue construct(U &&param, ActionTools::ScriptEngine &engine)
         {
-            return engine.newQObject(new T(param));
+            return engine.engine().newQObject(new T(param));
         }
 
 	protected:
@@ -58,21 +58,21 @@ namespace Code
 		~CodeClass() override = default;
 
         template<class T, class... Args>
-        static void registerStaticClass(const QString &name, QJSEngine &engine, Args&&... args)
+        static void registerStaticClass(const QString &name, ActionTools::ScriptEngine &engine, Args&&... args)
         {
-            engine.globalObject().setProperty(name, engine.newQObject(new T(&engine, std::forward<Args>(args)...)));
+            engine.globalObject().setProperty(name, engine.engine().newQObject(new T(&engine, std::forward<Args>(args)...)));
         }
         template<class T>
-        static void registerClass(const QString &name, QJSEngine &engine)
+        static void registerClass(const QString &name, ActionTools::ScriptEngine &engine)
         {
-            engine.globalObject().setProperty(name, engine.newQMetaObject(&T::staticMetaObject));
+            engine.globalObject().setProperty(name, engine.engine().newQMetaObject(&T::staticMetaObject));
         }
         template<class T, class ST>
-        static void registerClassWithStaticFunctions(const QString &name, const QStringList &staticFunctions, QJSEngine &engine)
+        static void registerClassWithStaticFunctions(const QString &name, const QStringList &staticFunctions, ActionTools::ScriptEngine &engine)
         {
             // Ugly hack to get static functions.
-            auto class_ = engine.newQMetaObject(&T::staticMetaObject);
-            auto staticClass_ = engine.newQObject(new ST(&engine));
+            auto class_ = engine.engine().newQMetaObject(&T::staticMetaObject);
+            auto staticClass_ = engine.engine().newQObject(new ST(&engine));
             for(const auto &staticFunction: staticFunctions)
             {
                 class_.setProperty(staticFunction, staticClass_.property(staticFunction));
@@ -83,12 +83,12 @@ namespace Code
         template<class T>
         QJSValue clone() const
         {
-            return qjsEngine(this)->newQObject(new T(*static_cast<const T*>(this)));
+            return ActionTools::ScriptEngine::current()->newQObject(new T(*static_cast<const T*>(this)));
         }
         template<class T, typename U>
         QJSValue construct(U &&param) const
         {
-            return qjsEngine(this)->newQObject(new T(param));
+            return ActionTools::ScriptEngine::current()->newQObject(new T(param));
         }
 
 		static QByteArray toEncoding(const QString &string, Encoding encoding);

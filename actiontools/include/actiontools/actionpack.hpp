@@ -24,11 +24,10 @@
 
 #include <QList>
 
-class QJSEngine;
-
 namespace ActionTools
 {
 	class ActionDefinition;
+    class ScriptEngine;
 
 	class ACTIONTOOLSSHARED_EXPORT ActionPack
 	{
@@ -39,7 +38,7 @@ namespace ActionTools
 		virtual void createDefinitions() = 0;
 		virtual QString id() const = 0;
 		virtual QString name() const = 0;
-        virtual void codeInit(QJSEngine &scriptEngine) const	{ Q_UNUSED(scriptEngine) }
+        virtual void codeInit(ActionTools::ScriptEngine &scriptEngine) const	{ Q_UNUSED(scriptEngine) }
 		
 		//Returns an instance of each plugin definition
         const QList<ActionDefinition *> &actionsDefinitions() const		{ return mActionDefinitions; }

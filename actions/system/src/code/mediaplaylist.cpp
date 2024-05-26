@@ -134,7 +134,7 @@ namespace Code
         return this;
 	}
 
-    void MediaPlaylist::registerClass(QJSEngine &scriptEngine)
+    void MediaPlaylist::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<MediaPlaylist>(QStringLiteral("MediaPlaylist"), scriptEngine);
     }

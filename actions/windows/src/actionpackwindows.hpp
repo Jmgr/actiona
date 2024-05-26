@@ -58,7 +58,7 @@ public:
 	QString id() const override							{ return QStringLiteral("windows"); }
 	QString name() const override						{ return tr("Actions dealing with windows"); }
 
-    void codeInit(QJSEngine &scriptEngine) const override
+    void codeInit(ActionTools::ScriptEngine &scriptEngine) const override
 	{
         Code::MessageBox::registerClass(scriptEngine);
         Code::InputDialog::registerClass(scriptEngine);

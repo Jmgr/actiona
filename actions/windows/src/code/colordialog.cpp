@@ -114,7 +114,7 @@ namespace Code
 		return mColorDialog->exec();
 	}
 
-    void ColorDialog::registerClass(QJSEngine &scriptEngine)
+    void ColorDialog::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<ColorDialog>(QStringLiteral("ColorDialog"), scriptEngine);
     }

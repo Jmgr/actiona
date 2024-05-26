@@ -36,7 +36,6 @@
 
 #include <typeindex>
 
-class QJSEngine;
 class QDataStream;
 
 namespace ActionTools
@@ -45,6 +44,7 @@ namespace ActionTools
 	class ActionFactory;
 	class ParameterDefinition;
 	class Script;
+    class ScriptEngine;
 
 	using ParametersData = QMap<QString, Parameter>;
 	using ExceptionActionInstancesHash = QMap<ActionException::Exception, ActionException::ExceptionActionInstance>;
@@ -106,7 +106,7 @@ namespace ActionTools
         int pauseAfter{0};
         int timeout{0};
         Script *script{nullptr};
-        QJSEngine *scriptEngine{nullptr};
+        ActionTools::ScriptEngine *scriptEngine{nullptr};
         int scriptLine{0};
 		QVariantHash runtimeParameters;
         int executionCounter{0};
@@ -197,7 +197,7 @@ namespace ActionTools
             return d->startTime.msecsTo(d->endTime);
         }
 
-        void setupExecution(QJSEngine *scriptEngine, Script *script, int scriptLine, RuntimeStorage *runtimeStorage)
+        void setupExecution(ActionTools::ScriptEngine *scriptEngine, Script *script, int scriptLine, RuntimeStorage *runtimeStorage)
 		{
 			d->scriptEngine = scriptEngine;
 			d->script = script;
@@ -229,7 +229,7 @@ namespace ActionTools
 		void consolePrintError(const QString &text);
 
 	protected:
-		QJSEngine *scriptEngine() const									{ return d->scriptEngine; }
+        ActionTools::ScriptEngine *scriptEngine() const						{ return d->scriptEngine; }
 		Script *script() const												{ return d->script; }
 		int scriptLine() const												{ return d->scriptLine; }
         RuntimeStorage *storage()                                       { return d->runtimeStorage; }

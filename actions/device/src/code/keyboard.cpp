@@ -59,7 +59,7 @@ namespace Code
         return this;
 	}
 
-    void Keyboard::registerClass(QJSEngine &scriptEngine)
+    void Keyboard::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Keyboard>(QStringLiteral("Keyboard"), scriptEngine);
     }

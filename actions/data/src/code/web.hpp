@@ -23,7 +23,6 @@
 #include "actiontools/code/codeclass.hpp"
 
 #include <QJSValue>
-#include <QJSEngine>
 
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -67,7 +66,7 @@ namespace Code
         Q_INVOKABLE QJSValue toRawData() const;
         Q_INVOKABLE Web *cancel();
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private slots:
 		void finished();

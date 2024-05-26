@@ -28,6 +28,7 @@
 #include "actiontools/opencvalgorithms.hpp"
 #include "actiontools/qtimagefilters/QtImageFilterFactory"
 #include "actiontools/screenshooter.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #include <QBuffer>
 #include <QJSValueIterator>
@@ -295,7 +296,7 @@ namespace Code
 
         QImage argbImage = mImage.convertToFormat(QImage::Format_ARGB32);
         int pixelCount = argbImage.width() * argbImage.height();
-        QJSValue pixelArray = qjsEngine(this)->newArray(pixelCount);
+        QJSValue pixelArray = ActionTools::ScriptEngine::current()->newArray(pixelCount);
         const QRgb *pixelData = reinterpret_cast<const QRgb *>(argbImage.constBits());
 
         for(int pixelIndex = 0; pixelIndex < pixelCount; ++pixelIndex)
@@ -311,7 +312,7 @@ namespace Code
 
         QImage argbImage = mImage.convertToFormat(QImage::Format_ARGB32);
         int pixelCount = argbImage.width() * argbImage.height();
-        QJSValue pixelArray = qjsEngine(this)->newArray(pixelCount * 4);
+        QJSValue pixelArray = ActionTools::ScriptEngine::current()->newArray(pixelCount * 4);
         const QRgb *pixelData = reinterpret_cast<const QRgb *>(argbImage.constBits());
 
         for(int pixelIndex = 0; pixelIndex < pixelCount; ++pixelIndex)
@@ -390,7 +391,7 @@ namespace Code
 				return QJSValue();
 
 			const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
-            QJSValue back = qjsEngine(this)->newObject();
+            QJSValue back = ActionTools::ScriptEngine::current()->newObject();
 
             back.setProperty(QStringLiteral("position"), CodeClass::construct<Point>(matchingPoint.position));
 			back.setProperty(QStringLiteral("confidence"), matchingPoint.confidence);
@@ -436,12 +437,12 @@ namespace Code
             std::sort(matchingPointList.begin(), matchingPointList.end(), matchingPointGreaterThan);
 
             ActionTools::MatchingPointList::ConstIterator matchingPointIt = matchingPointList.constBegin();
-            QJSValue back = qjsEngine(this)->newArray(matchingPointList.size());
+            QJSValue back = ActionTools::ScriptEngine::current()->newArray(matchingPointList.size());
 
 			int index = 0;
 			while(matchingPointIt != matchingPointList.constEnd())
 			{
-                QJSValue object = qjsEngine(this)->newObject();
+                QJSValue object = ActionTools::ScriptEngine::current()->newObject();
 
                 object.setProperty(QStringLiteral("position"), CodeClass::construct<Point>(matchingPointIt->position));
 				object.setProperty(QStringLiteral("confidence"), matchingPointIt->confidence);
@@ -536,7 +537,7 @@ namespace Code
 		}
 	}
 
-    void Image::registerClass(QJSEngine &scriptEngine)
+    void Image::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClassWithStaticFunctions<Image, StaticImage>(
             QStringLiteral("Image"),
@@ -560,7 +561,7 @@ namespace Code
         if(mFindSubImageSearchForOne)
         {
             const ActionTools::MatchingPoint &matchingPoint = matchingPointList.first();
-            QJSValue back = qjsEngine(this)->newObject();
+            QJSValue back = ActionTools::ScriptEngine::current()->newObject();
 
             back.setProperty(QStringLiteral("position"), CodeClass::construct<Point>(matchingPoint.position));
             back.setProperty(QStringLiteral("confidence"), matchingPoint.confidence);
@@ -573,12 +574,12 @@ namespace Code
             std::sort(matchingPointListCopy.begin(), matchingPointListCopy.end(), matchingPointGreaterThan);
 
             ActionTools::MatchingPointList::ConstIterator matchingPointIt = matchingPointListCopy.constBegin();
-            QJSValue back = qjsEngine(this)->newArray(matchingPointListCopy.size());
+            QJSValue back = ActionTools::ScriptEngine::current()->newArray(matchingPointListCopy.size());
 
             int index = 0;
             while(matchingPointIt != matchingPointListCopy.constEnd())
             {
-                QJSValue object = qjsEngine(this)->newObject();
+                QJSValue object = ActionTools::ScriptEngine::current()->newObject();
 
                 object.setProperty(QStringLiteral("position"), CodeClass::construct<Point>(matchingPointIt->position));
                 object.setProperty(QStringLiteral("confidence"), matchingPointIt->confidence);

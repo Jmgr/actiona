@@ -75,7 +75,7 @@ namespace Code
         Q_INVOKABLE Window *move(const Point *point);
         Q_INVOKABLE Window *resize(const Size *size, bool useBorders = true);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 		
 	private:
 		bool checkValidity() const;

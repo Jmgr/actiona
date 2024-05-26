@@ -48,7 +48,7 @@ namespace Code
         Q_INVOKABLE QString address() const;
         Q_INVOKABLE int port() const;
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private slots:
 		void newConnection();

@@ -21,6 +21,7 @@
 #include "process.hpp"
 #include "actiontools/code/processhandle.hpp"
 #include "actiontools/code/rawdata.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #include <QDir>
 #include <QJSValueIterator>
@@ -358,7 +359,7 @@ namespace Code
         return this;
 	}
 
-    void Process::registerClass(QJSEngine &scriptEngine)
+    void Process::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClassWithStaticFunctions<Process, StaticProcess>(QStringLiteral("Process"),
                                                                             {QStringLiteral("list"),
@@ -407,7 +408,7 @@ namespace Code
     {
         QList<int> processesList = ActionTools::CrossPlatform::runningProcesses();
 
-        QJSValue back = qjsEngine(this)->newArray(processesList.count());
+        QJSValue back = ActionTools::ScriptEngine::current()->newArray(processesList.count());
 
         for(int index = 0; index < processesList.count(); ++index)
             back.setProperty(index, CodeClass::construct<ProcessHandle>(processesList.at(index)));

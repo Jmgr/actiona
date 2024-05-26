@@ -144,7 +144,7 @@ namespace Code
         Q_INVOKABLE Process *kill();
         Q_INVOKABLE Process *terminate();
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private slots:
         void onError(QProcess::ProcessError processError);

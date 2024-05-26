@@ -283,7 +283,7 @@ namespace Code
         return CodeClass::construct<Size>(mRect.size());
 	}
 
-    void Rect::registerClass(QJSEngine &scriptEngine)
+    void Rect::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Rect>(QStringLiteral("Rect"), scriptEngine);
     }

@@ -68,7 +68,7 @@ namespace Code
         Q_INVOKABLE QJSValue fetchResult(IndexStyle indexStyle = IndexName);
         Q_INVOKABLE Sql *disconnect();
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 	
 	private:
 		static QString driverName(Driver driver);
@@ -88,7 +88,7 @@ namespace Code
         Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticSql"); }
         Q_INVOKABLE QJSValue drivers();
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
     };
 }
 

@@ -34,7 +34,7 @@ namespace Execution
 
         Q_INVOKABLE QString toString() const override { return QStringLiteral("Stdio"); }
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 	};
 
     class EXECUTIONSHARED_EXPORT StaticCodeStdio : public Code::CodeClass

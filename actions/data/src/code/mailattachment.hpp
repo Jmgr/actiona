@@ -54,7 +54,7 @@ namespace Code
         Q_INVOKABLE bool hasExtraHeader(const QString &name) const                          { return mAttachment.hasExtraHeader(name); }
         Q_INVOKABLE QString extraHeader(const QString &name) const                          { return mAttachment.extraHeader(name); }
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
     private:
         QxtMailAttachment mAttachment;

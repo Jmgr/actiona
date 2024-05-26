@@ -41,7 +41,7 @@ namespace Code
         Q_INVOKABLE QString toString() const override                                { return QStringLiteral("Notify"); }
         Q_INVOKABLE Notify *show(const QJSValue &parameters);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 		
 	private:
 		_NotifyNotification *mNotification{nullptr};

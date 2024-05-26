@@ -24,7 +24,7 @@
 
 namespace Execution
 {
-    void CodeScript::registerClass(QJSEngine &scriptEngine, Executer &executer)
+    void CodeScript::registerClass(ActionTools::ScriptEngine &scriptEngine, Executer &executer)
     {
         CodeClass::registerStaticClass<CodeScript>(QStringLiteral("Script"), scriptEngine, executer);
     }

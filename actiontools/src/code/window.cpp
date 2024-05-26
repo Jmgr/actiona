@@ -23,6 +23,7 @@
 #include "actiontools/code/size.hpp"
 #include "actiontools/code/point.hpp"
 #include "actiontools/code/processhandle.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #include <QJSValueIterator>
 #include <QDebug>
@@ -222,7 +223,7 @@ namespace Code
         return this;
 	}
 
-    void Window::registerClass(QJSEngine &scriptEngine)
+    void Window::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClassWithStaticFunctions<Window, StaticWindow>(
             QStringLiteral("Window"),
@@ -327,7 +328,7 @@ namespace Code
             foundWindows.append(windowHandle);
         }
 
-        QJSValue back = qjsEngine(this)->newArray(foundWindows.count());
+        QJSValue back = ActionTools::ScriptEngine::current()->newArray(foundWindows.count());
 
         for(int index = 0; index < foundWindows.count(); ++index)
             back.setProperty(index, CodeClass::construct<Window>(foundWindows.at(index)));
@@ -339,7 +340,7 @@ namespace Code
     {
         QList<ActionTools::WindowHandle> windowList = ActionTools::WindowHandle::windowList();
 
-        QJSValue back = qjsEngine(this)->newArray(windowList.count());
+        QJSValue back = ActionTools::ScriptEngine::current()->newArray(windowList.count());
 
         for(int index = 0; index < windowList.count(); ++index)
             back.setProperty(index, CodeClass::construct<Window>(windowList.at(index)));

@@ -41,7 +41,7 @@ namespace Execution
         Q_INVOKABLE CodeConsole *printError(const QString &text);
         Q_INVOKABLE CodeConsole *clear();
 
-        static void registerClass(QJSEngine &scriptEngine, Executer &executer);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine, Executer &executer);
 
     private:
         void printCall(const QString &text, ActionTools::ConsoleWidget::Type type);

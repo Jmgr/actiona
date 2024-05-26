@@ -93,7 +93,7 @@ namespace Code
 			return Text;
 	}
 
-    void Clipboard::registerClass(QJSEngine &scriptEngine)
+    void Clipboard::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Clipboard>(QStringLiteral("Clipboard"), scriptEngine);
     }

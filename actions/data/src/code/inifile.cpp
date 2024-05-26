@@ -236,7 +236,7 @@ namespace Code
         return static_cast<int>(mStructure->structure.get(mCurrentSectionName.constData()).size());
 	}
 
-    void IniFile::registerClass(QJSEngine &scriptEngine)
+    void IniFile::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<IniFile>(QStringLiteral("IniFile"), scriptEngine);
     }

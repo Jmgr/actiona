@@ -29,7 +29,6 @@
 #include "tools/languages.hpp"
 
 #include <QFile>
-#include <QJSEngine>
 #include <QMainWindow>
 #include <QTimer>
 #include <QTextStream>
@@ -56,11 +55,11 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
     device->close();
 
     mScriptEngine->setContext(ActionTools::ScriptEngine::ActionInit);
-    Execution::CodeInitializer::initialize(mScriptEngine->engine(), actionFactory(), filename);
+    Execution::CodeInitializer::initialize(*mScriptEngine, actionFactory(), filename);
 
-    Execution::CodeStdio::registerClass(mScriptEngine->engine());
+    Execution::CodeStdio::registerClass(*mScriptEngine);
 
-    Execution::CodeActiona::registerClass(mScriptEngine->engine());
+    Execution::CodeActiona::registerClass(*mScriptEngine);
     Execution::CodeActiona::setActExec(true);
     Execution::CodeActiona::setActionaVersion(Global::ACTIONA_VERSION);
     Execution::CodeActiona::setScriptVersion(Global::SCRIPT_VERSION);

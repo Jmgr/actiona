@@ -40,7 +40,7 @@ namespace Code
         Q_INVOKABLE Keyboard *triggerKey(const QString &key);
         Q_INVOKABLE Keyboard *writeText(const QString &text, int delay = 0, bool noUnicodeCharacters = false);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private:
 		KeyboardDevice mKeyboardDevice;

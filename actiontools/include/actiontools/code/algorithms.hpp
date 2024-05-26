@@ -24,7 +24,6 @@
 #include "actiontools/code/codeclass.hpp"
 
 class QJSValue;
-class QJSEngine;
 
 namespace Code
 {
@@ -46,7 +45,7 @@ namespace Code
         Q_INVOKABLE QString randomString(const QJSValue &parameters);
         Q_INVOKABLE QString toString() const override { return QStringLiteral("Algorithms"); }
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
     private:
         static int randomInteger_(int min, int max);

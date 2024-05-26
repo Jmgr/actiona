@@ -59,7 +59,7 @@ public:
 	QString id() const override							{ return QStringLiteral("device"); }
 	QString name() const override						{ return tr("Actions dealing with devices like the keyboard or the mouse"); }
 
-    void codeInit(QJSEngine &scriptEngine) const override
+    void codeInit(ActionTools::ScriptEngine &scriptEngine) const override
     {
         Code::Mouse::registerClass(scriptEngine);
         Code::Keyboard::registerClass(scriptEngine);

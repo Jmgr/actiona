@@ -111,7 +111,7 @@ namespace Code
         Q_INVOKABLE Mail *waitForFinished(int waitTime = 30000);
         Q_INVOKABLE Mail *waitForDisconnected(int waitTime = 30000);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
     private slots:
         void connected();

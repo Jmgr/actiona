@@ -324,7 +324,7 @@ namespace Code
         return this;
 	}
 
-    void System::registerClass(QJSEngine &scriptEngine)
+    void System::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<System>(QStringLiteral("System"), scriptEngine);
     }

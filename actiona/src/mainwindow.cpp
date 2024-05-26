@@ -43,9 +43,13 @@
 #include "changelogdialog.hpp"
 #include "tools/updater.hpp"
 #endif
+#ifdef Q_OS_WIN
 #include "tools/sevenziparchivewrite.hpp"
+#endif
 #include "actiontools/actionpack.hpp"
+#ifdef Q_OS_WIN
 #include "sfxscriptdialog.hpp"
+#endif
 #include "progresssplashscreen.hpp"
 #include "execution/codeinitializer.hpp"
 #include "scriptsettingsdialog.hpp"
@@ -329,7 +333,7 @@ void MainWindow::postInit()
         Tools::HighResolutionTimer timer(QStringLiteral("building completion model"));
 #endif
 
-		QJSEngine engine;
+        ActionTools::ScriptEngine engine;
         Execution::CodeInitializer::initialize(engine, mActionFactory, mCurrentFile);
 
 		mCompletionModel->appendRow(new QStandardItem(QIcon(QStringLiteral(":/icons/class.png")), QStringLiteral("include")));

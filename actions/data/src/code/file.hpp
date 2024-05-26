@@ -63,7 +63,7 @@ namespace Code
         Q_INVOKABLE File *rename(const QString &destination, const QJSValue &options = QJSValue());
         Q_INVOKABLE File *remove(const QJSValue &options = QJSValue());
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 	
     private:
         static std::tuple<bool, bool, bool, bool, bool> getParameters(const QJSValue &options);

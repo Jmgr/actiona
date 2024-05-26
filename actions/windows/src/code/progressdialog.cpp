@@ -129,7 +129,7 @@ namespace Code
 		return mProgressDialog->exec();
 	}
 
-    void ProgressDialog::registerClass(QJSEngine &scriptEngine)
+    void ProgressDialog::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<ProgressDialog>(QStringLiteral("ProgressDialog"), scriptEngine);
     }

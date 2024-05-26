@@ -61,7 +61,7 @@ namespace Code
         Q_INVOKABLE Registry *deleteKey();
         Q_INVOKABLE Registry *closeKey();
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private:
 	#ifdef Q_OS_WIN

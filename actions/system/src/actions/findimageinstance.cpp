@@ -251,8 +251,8 @@ namespace Actions
 		}
 		else
 		{
-			QJSValue arrayResult = scriptEngine()->newArray(matchingPointList.size());
-            QJSValue arrayConfidenceResult = scriptEngine()->newArray(matchingPointList.size());
+            QJSValue arrayResult = scriptEngine()->engine().newArray(matchingPointList.size());
+            QJSValue arrayConfidenceResult = scriptEngine()->engine().newArray(matchingPointList.size());
 
 			for(int i = 0; i < matchingPointList.size(); ++i)
             {

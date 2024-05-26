@@ -140,7 +140,7 @@ namespace Code
             mOnDisconnected.call();
 	}
 
-    void Udp::registerClass(QJSEngine &scriptEngine)
+    void Udp::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Udp>(QStringLiteral("Udp"), scriptEngine);
     }

@@ -31,10 +31,10 @@
 #include "actiontools/code/window.hpp"
 #include "actiontools/actionpack.hpp"
 #include "actiontools/actionfactory.hpp"
+#include "actiontools/scriptengine.hpp"
 #include "codeexecution.hpp"
 #include "codestdio.hpp"
 
-#include <QJSEngine>
 #include <QFile>
 #include <QUiLoader>
 #include <QDir>
@@ -71,7 +71,7 @@ namespace Execution
 {
     QJSValue CodeGlobal::includeFunction(const QString &filepath)
     {
-        QString filename = prefixFilenameWithCurrentPath(filepath, qjsEngine(this));
+        QString filename = prefixFilenameWithCurrentPath(filepath, ActionTools::ScriptEngine::current());
         QFile file(filename);
         if(!file.open(QIODevice::ReadOnly))
         {
@@ -82,16 +82,16 @@ namespace Execution
 		QString fileContent = QString::fromUtf8(file.readAll());
         file.close();
 
-        return qjsEngine(this)->evaluate(fileContent, filename);
+        return ActionTools::ScriptEngine::current()->evaluate(fileContent, filename);
 	}
 
-    void CodeGlobal::registerClass(QJSEngine &scriptEngine)
+    void CodeGlobal::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
-        auto class_ = scriptEngine.newQObject(new CodeGlobal(&scriptEngine));
+        auto class_ = scriptEngine.engine().newQObject(new CodeGlobal(&scriptEngine));
         scriptEngine.globalObject().setProperty(QStringLiteral("include"), class_.property(QStringLiteral("includeFunction")));
     }
 
-    void CodeInitializer::initialize(QJSEngine &scriptEngine, ActionTools::ActionFactory *actionFactory, const QString &filename)
+    void CodeInitializer::initialize(ActionTools::ScriptEngine &scriptEngine, ActionTools::ActionFactory *actionFactory, const QString &filename)
 	{
 		Code::Window::registerClass(scriptEngine);
 		Code::RawData::registerClass(scriptEngine);

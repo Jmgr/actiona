@@ -19,6 +19,7 @@
 */
 
 #include "filedialog.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #include <QJSValueIterator>
 #include <QUrl>
@@ -264,7 +265,7 @@ namespace Code
 	
 	QJSValue FileDialog::selectedFiles() const
 	{
-        return qjsEngine(this)->toScriptValue(mFileDialog->selectedFiles());
+        return ActionTools::ScriptEngine::current()->toScriptValue(mFileDialog->selectedFiles());
 	}
 	
 	QString FileDialog::selectedNameFilter() const
@@ -284,7 +285,7 @@ namespace Code
 		return mFileDialog->exec();
 	}
 
-    void FileDialog::registerClass(QJSEngine &scriptEngine)
+    void FileDialog::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<FileDialog>(QStringLiteral("FileDialog"), scriptEngine);
     }
@@ -316,7 +317,7 @@ namespace Code
 	void FileDialog::filesSelected(const QStringList &files)
 	{
         if(!mOnFilesSelected.isUndefined())
-            mOnFilesSelected.call(QJSValueList() << qjsEngine(this)->toScriptValue(files));
+            mOnFilesSelected.call(QJSValueList() << ActionTools::ScriptEngine::current()->toScriptValue(files));
 	}
 
 	void FileDialog::filterSelected(const QString &filter)

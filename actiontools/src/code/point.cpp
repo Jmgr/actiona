@@ -123,7 +123,7 @@ namespace Code
         return this;
 	}
 
-    void Point::registerClass(QJSEngine &scriptEngine)
+    void Point::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Point>(QStringLiteral("Point"), scriptEngine);
     }

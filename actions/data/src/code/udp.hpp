@@ -68,7 +68,7 @@ namespace Code
         Q_INVOKABLE QString readText(Encoding encoding = Native);
         Q_INVOKABLE Udp *disconnect();
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 		
 	private slots:
 		void connected();

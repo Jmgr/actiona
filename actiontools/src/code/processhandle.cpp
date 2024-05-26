@@ -244,7 +244,7 @@ namespace Code
 #endif
 	}
 
-    void ProcessHandle::registerClass(QJSEngine &scriptEngine)
+    void ProcessHandle::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<ProcessHandle>(QStringLiteral("ProcessHandle"), scriptEngine);
     }

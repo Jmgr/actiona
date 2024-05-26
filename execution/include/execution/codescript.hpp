@@ -49,7 +49,7 @@ namespace Execution
         Q_INVOKABLE QString toString() const override { return QStringLiteral("Script"); }
         Q_INVOKABLE CodeScript *callProcedure(const QString &procedure);
 
-        static void registerClass(QJSEngine &scriptEngine, Executer &executer);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine, Executer &executer);
 
     private:
         Executer &mExecuter;

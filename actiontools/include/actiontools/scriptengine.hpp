@@ -51,7 +51,10 @@ namespace ActionTools
         void setContext(Context context) { mContext = context; }
         Context context() const { return mContext; }
 
+        static QJSEngine *current() { return mCurrent; }
+
     private:
+        static QJSEngine *mCurrent;
         std::unique_ptr<QJSEngine> mEngine;
         bool mIsEvaluating{false};
         Context mContext{Unknown};

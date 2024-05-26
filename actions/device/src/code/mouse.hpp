@@ -70,7 +70,7 @@ namespace Code
         Q_INVOKABLE Mouse *click(Button button = LeftButton);
         Q_INVOKABLE Mouse *wheel(int intensity = 1);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private:
 		void mouseMotion(int x, int y);

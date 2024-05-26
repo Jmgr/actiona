@@ -93,7 +93,7 @@ namespace Code
         Q_INVOKABLE QJSValue center() const;
         Q_INVOKABLE QJSValue size() const;
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 		
 	private:
 		QRect mRect;

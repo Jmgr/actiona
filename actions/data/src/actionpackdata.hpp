@@ -83,7 +83,7 @@ public:
 	QString id() const override								{ return QStringLiteral("data"); }
 	QString name() const override							{ return tr("Data related actions"); }
 
-    void codeInit(QJSEngine &scriptEngine) const override
+    void codeInit(ActionTools::ScriptEngine &scriptEngine) const override
 	{
 		Code::File::registerClass(scriptEngine);
         Code::Clipboard::registerClass(scriptEngine);

@@ -10,7 +10,6 @@
 
 #include <QObject>
 #include <QJSValue>
-#include <QJSEngine>
 
 namespace Code
 {
@@ -59,7 +58,7 @@ namespace Code
         Q_INVOKABLE QString command() const;
         Q_INVOKABLE Priority priority() const;
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private:
 		int mProcessId;

@@ -158,7 +158,7 @@ namespace Code
         return this;
 	}
 
-    void Tcp::registerClass(QJSEngine &scriptEngine)
+    void Tcp::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Tcp>(QStringLiteral("Tcp"), scriptEngine);
     }

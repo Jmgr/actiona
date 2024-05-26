@@ -72,7 +72,7 @@ namespace Code
         Q_INVOKABLE QString convertToString(Encoding encoding = Native) const;
         Q_INVOKABLE RawData *truncate(int pos);
 
-        static void registerClass(QJSEngine &scriptEngine);
+        static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private:
 		QByteArray mByteArray;

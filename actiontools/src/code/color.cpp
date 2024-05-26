@@ -245,7 +245,7 @@ namespace Code
 		return mColor.name();
 	}
 
-    void Color::registerClass(QJSEngine &scriptEngine)
+    void Color::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
         CodeClass::registerClass<Color>(QStringLiteral("Color"), scriptEngine);
     }
