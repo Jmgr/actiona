@@ -47,7 +47,7 @@ namespace Code
 		Q_ENUM(Mode)
 
         Q_INVOKABLE Window();
-		Window(const Window &other);
+        Q_INVOKABLE Window(const Window &other);
 		Window(const ActionTools::WindowHandle &windowHandle);
 		
 		Window &operator=(Window other);

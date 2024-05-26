@@ -39,7 +39,7 @@ namespace Code
         Q_INVOKABLE Color();
         Q_INVOKABLE explicit Color(const QString &colorName);
         Q_INVOKABLE explicit Color(int red, int green, int blue, int alpha = 255);
-        Color(const Color &other);
+        Q_INVOKABLE Color(const Color &other);
 		Color(const QColor &color);
 		
 		Color &operator=(Color other);

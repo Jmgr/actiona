@@ -37,7 +37,7 @@ namespace Code
 	public:
         Q_INVOKABLE Size();
         Q_INVOKABLE Size(int width, int height);
-		Size(const Size &other);
+        Q_INVOKABLE Size(const Size &other);
 		Size(const QSize &size);
 		
 		Size &operator=(Size other);

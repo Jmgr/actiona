@@ -34,7 +34,7 @@ namespace Code
 	
 	public:
         Q_INVOKABLE RawData();
-		RawData(const RawData &other);
+        Q_INVOKABLE RawData(const RawData &other);
 		RawData(const QByteArray &byteArray);
 		
 		RawData &operator=(RawData other);

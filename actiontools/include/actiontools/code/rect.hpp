@@ -46,7 +46,7 @@ namespace Code
 	public:
         Q_INVOKABLE Rect();
         Q_INVOKABLE Rect(int left, int top, int width, int height);
-		Rect(const Rect &other);
+        Q_INVOKABLE Rect(const Rect &other);
 		Rect(const QRect &rect);
 		
 		Rect &operator=(Rect other);

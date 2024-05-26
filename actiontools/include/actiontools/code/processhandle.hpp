@@ -37,7 +37,7 @@ namespace Code
 		Q_ENUM(Priority)
 
         Q_INVOKABLE ProcessHandle();
-        explicit ProcessHandle(const ProcessHandle &other);
+        Q_INVOKABLE explicit ProcessHandle(const ProcessHandle &other);
         Q_INVOKABLE explicit ProcessHandle(int processId);
 
 		ProcessHandle &operator=(ProcessHandle other);

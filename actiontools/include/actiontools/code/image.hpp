@@ -78,7 +78,7 @@ namespace Code
         Q_ENUM(AlgorithmMethod)
 
         Q_INVOKABLE Image();
-		Image(const Image &other);
+        Q_INVOKABLE Image(const Image &other);
 		Image(const QImage &image);
         Q_INVOKABLE Image(const QString &filename);
 

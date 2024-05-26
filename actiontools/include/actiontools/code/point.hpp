@@ -37,7 +37,7 @@ namespace Code
     public:
         Q_INVOKABLE Point();
         Q_INVOKABLE Point(int x, int y);
-		Point(const Point &other);
+        Q_INVOKABLE Point(const Point &other);
 		Point(const QPoint &point);
 		
 		Point &operator=(Point other);
