@@ -19,9 +19,9 @@
 */
 
 #include "readregistryinstance.hpp"
+#include "actiontools/scriptengine.hpp"
 
 #ifdef Q_OS_WIN
-#include <QJSEngine>
 #include <Windows.h>
 #endif
 

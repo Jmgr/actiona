@@ -126,6 +126,8 @@ namespace Code
 
     void Size::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Size*>("const Size *");
+
         CodeClass::registerClass<Size>(QStringLiteral("Size"), scriptEngine);
     }
 }

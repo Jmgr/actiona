@@ -109,6 +109,8 @@ namespace Code
 
     void Mouse::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Mouse*>("const Mouse *");
+
         CodeClass::registerClass<Mouse>(QStringLiteral("Mouse"), scriptEngine);
     }
 

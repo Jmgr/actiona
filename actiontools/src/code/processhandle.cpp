@@ -246,6 +246,8 @@ namespace Code
 
     void ProcessHandle::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<ProcessHandle*>("const ProcessHandle *");
+
         CodeClass::registerClass<ProcessHandle>(QStringLiteral("ProcessHandle"), scriptEngine);
     }
 }

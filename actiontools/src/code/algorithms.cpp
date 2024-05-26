@@ -97,6 +97,8 @@ namespace Code
 
     void Algorithms::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Algorithms*>("const Algorithms *");
+
         CodeClass::registerStaticClass<Algorithms>(QStringLiteral("Algorithms"), scriptEngine);
     }
 

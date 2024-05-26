@@ -238,6 +238,8 @@ namespace Code
 
     void IniFile::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<IniFile*>("const IniFile *");
+
         CodeClass::registerClass<IniFile>(QStringLiteral("IniFile"), scriptEngine);
     }
 }

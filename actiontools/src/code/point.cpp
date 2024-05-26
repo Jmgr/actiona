@@ -125,6 +125,8 @@ namespace Code
 
     void Point::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Point*>("const Point *");
+
         CodeClass::registerClass<Point>(QStringLiteral("Point"), scriptEngine);
     }
 }

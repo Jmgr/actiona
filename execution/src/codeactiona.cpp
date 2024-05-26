@@ -30,6 +30,8 @@ namespace Execution
 
     void CodeActiona::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<CodeActiona*>("const Actiona *");
+
         CodeClass::registerClassWithStaticFunctions<CodeActiona, StaticCodeActiona>(
             QStringLiteral("Actiona"),
             {QStringLiteral("version"), QStringLiteral("scriptVersion"), QStringLiteral("isActExec"), QStringLiteral("isActiona")},

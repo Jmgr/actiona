@@ -361,6 +361,8 @@ namespace Code
 
     void Process::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Process*>("const Process *");
+
         CodeClass::registerClassWithStaticFunctions<Process, StaticProcess>(QStringLiteral("Process"),
                                                                             {QStringLiteral("list"),
                                                                              QStringLiteral("startDetached"),

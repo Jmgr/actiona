@@ -26,6 +26,8 @@ namespace Execution
 {
     void CodeScript::registerClass(ActionTools::ScriptEngine &scriptEngine, Executer &executer)
     {
+        qRegisterMetaType<CodeScript*>("const Script *");
+
         CodeClass::registerStaticClass<CodeScript>(QStringLiteral("Script"), scriptEngine, executer);
     }
 

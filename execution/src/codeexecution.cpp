@@ -26,6 +26,8 @@ namespace Execution
 {
     void CodeExecution::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<CodeExecution*>("const Execution *");
+
         CodeClass::registerClassWithStaticFunctions<CodeExecution, StaticCodeExecution>(
             QStringLiteral("Execution"),
             {QStringLiteral("pause"), QStringLiteral("sleep"), QStringLiteral("stop")},

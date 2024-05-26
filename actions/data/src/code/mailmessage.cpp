@@ -100,6 +100,8 @@ namespace Code
 
     void MailMessage::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<MailMessage*>("const MailMessage *");
+
         CodeClass::registerClass<MailMessage>(QStringLiteral("MailMessage"), scriptEngine);
     }
 }

@@ -217,6 +217,8 @@ namespace Code
 
     void Web::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Web*>("const Web *");
+
         CodeClass::registerClass<Web>(QStringLiteral("Web"), scriptEngine);
     }
 

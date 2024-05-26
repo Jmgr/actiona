@@ -225,6 +225,8 @@ namespace Code
 
     void InputDialog::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<InputDialog*>("const InputDialog *");
+
         CodeClass::registerClass<InputDialog>(QStringLiteral("InputDialog"), scriptEngine);
     }
 	

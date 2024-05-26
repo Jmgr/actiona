@@ -131,6 +131,8 @@ namespace Code
 
     void ProgressDialog::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<ProgressDialog*>("const ProgressDialog *");
+
         CodeClass::registerClass<ProgressDialog>(QStringLiteral("ProgressDialog"), scriptEngine);
     }
 	

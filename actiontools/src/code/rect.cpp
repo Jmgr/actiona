@@ -285,6 +285,8 @@ namespace Code
 
     void Rect::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Rect*>("const Rect *");
+
         CodeClass::registerClass<Rect>(QStringLiteral("Rect"), scriptEngine);
     }
 }

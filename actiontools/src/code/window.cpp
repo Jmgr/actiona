@@ -225,6 +225,8 @@ namespace Code
 
     void Window::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Window*>("const Window *");
+
         CodeClass::registerClassWithStaticFunctions<Window, StaticWindow>(
             QStringLiteral("Window"),
             {QStringLiteral("all"), QStringLiteral("find"), QStringLiteral("foreground")},

@@ -476,6 +476,8 @@ namespace Code
 
     void Registry::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Registry*>("const Registry *");
+
         CodeClass::registerClass<Registry>(QStringLiteral("Registry"), scriptEngine);
     }
 }

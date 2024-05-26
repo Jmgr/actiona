@@ -26,6 +26,8 @@ namespace Execution
 {
     void CodeStdio::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<CodeStdio*>("const Stdio *");
+
         CodeClass::registerClassWithStaticFunctions<CodeStdio, StaticCodeStdio>(
             QStringLiteral("Stdio"),
             {QStringLiteral("print"), QStringLiteral("println"), QStringLiteral("printWarning"), QStringLiteral("printlnWarning"),

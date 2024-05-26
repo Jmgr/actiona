@@ -116,6 +116,8 @@ namespace Code
 
     void ColorDialog::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<ColorDialog*>("const ColorDialog *");
+
         CodeClass::registerClass<ColorDialog>(QStringLiteral("ColorDialog"), scriptEngine);
     }
 	

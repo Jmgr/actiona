@@ -142,6 +142,8 @@ namespace Code
 
     void Udp::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Udp*>("const Udp *");
+
         CodeClass::registerClass<Udp>(QStringLiteral("Udp"), scriptEngine);
     }
 

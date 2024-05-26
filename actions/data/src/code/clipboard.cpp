@@ -95,6 +95,8 @@ namespace Code
 
     void Clipboard::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Clipboard*>("const Clipboard *");
+
         CodeClass::registerClass<Clipboard>(QStringLiteral("Clipboard"), scriptEngine);
     }
 	

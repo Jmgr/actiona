@@ -247,6 +247,8 @@ namespace Code
 
     void Color::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Color*>("const Color *");
+
         CodeClass::registerClass<Color>(QStringLiteral("Color"), scriptEngine);
     }
 }

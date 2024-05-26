@@ -61,6 +61,8 @@ namespace Code
 
     void Keyboard::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Keyboard*>("const Keyboard *");
+
         CodeClass::registerClass<Keyboard>(QStringLiteral("Keyboard"), scriptEngine);
     }
 }

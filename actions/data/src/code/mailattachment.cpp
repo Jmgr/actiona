@@ -88,6 +88,8 @@ namespace Code
 
     void MailAttachment::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<MailAttachment*>("const MailAttachment *");
+
         CodeClass::registerClass<MailAttachment>(QStringLiteral("MailAttachment"), scriptEngine);
     }
 }

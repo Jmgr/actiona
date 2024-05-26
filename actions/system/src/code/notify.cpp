@@ -122,6 +122,8 @@ namespace Code
 
     void Notify::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Notify*>("const Notify *");
+
         CodeClass::registerClass<Notify>(QStringLiteral("Notify"), scriptEngine);
     }
 }

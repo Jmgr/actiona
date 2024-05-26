@@ -169,6 +169,8 @@ namespace Code
 
     void Mail::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Mail*>("const Mail *");
+
         CodeClass::registerClass<Mail>(QStringLiteral("Mail"), scriptEngine);
     }
 

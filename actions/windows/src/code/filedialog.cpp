@@ -287,6 +287,8 @@ namespace Code
 
     void FileDialog::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<FileDialog*>("const FileDialog *");
+
         CodeClass::registerClass<FileDialog>(QStringLiteral("FileDialog"), scriptEngine);
     }
 

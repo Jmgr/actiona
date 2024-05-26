@@ -539,6 +539,8 @@ namespace Code
 
     void Image::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Image*>("const Image *");
+
         CodeClass::registerClassWithStaticFunctions<Image, StaticImage>(
             QStringLiteral("Image"),
             {QStringLiteral("takeScreenshot"), QStringLiteral("takeScreenshotUsingScreenIndex")},

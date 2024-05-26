@@ -160,6 +160,8 @@ namespace Code
 
     void Tcp::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Tcp*>("const Tcp *");
+
         CodeClass::registerClass<Tcp>(QStringLiteral("Tcp"), scriptEngine);
     }
 	

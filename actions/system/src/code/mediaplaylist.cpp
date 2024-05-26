@@ -136,6 +136,8 @@ namespace Code
 
     void MediaPlaylist::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<MediaPlaylist*>("const MediaPlaylist *");
+
         CodeClass::registerClass<MediaPlaylist>(QStringLiteral("MediaPlaylist"), scriptEngine);
     }
 }

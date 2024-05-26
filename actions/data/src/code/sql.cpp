@@ -224,6 +224,8 @@ namespace Code
 
     void Sql::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<Sql*>("const Sql *");
+
         CodeClass::registerClassWithStaticFunctions<Sql, StaticSql>(QStringLiteral("Sql"),  {QStringLiteral("drivers")}, scriptEngine);
     }
 

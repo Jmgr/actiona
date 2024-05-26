@@ -96,6 +96,8 @@ namespace Code
 
     void TcpServer::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<TcpServer*>("const TcpServer *");
+
         CodeClass::registerClass<TcpServer>(QStringLiteral("TcpServer"), scriptEngine);
     }
 	

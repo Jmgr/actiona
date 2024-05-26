@@ -326,6 +326,8 @@ namespace Code
 
     void System::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<System*>("const System *");
+
         CodeClass::registerClass<System>(QStringLiteral("System"), scriptEngine);
     }
 }

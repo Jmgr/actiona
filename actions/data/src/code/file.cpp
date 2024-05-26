@@ -127,6 +127,8 @@ namespace Code
 
     void File::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<File*>("const File *");
+
         CodeClass::registerClassWithStaticFunctions<File, StaticFile>(QStringLiteral("File"), {QStringLiteral("copy"), QStringLiteral("move"), QStringLiteral("rename"), QStringLiteral("remove"), QStringLiteral("exists")}, scriptEngine);
     }
 

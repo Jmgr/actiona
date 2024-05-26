@@ -225,6 +225,8 @@ namespace Code
 
     void RawData::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<RawData*>("const RawData *");
+
         CodeClass::registerClass<RawData>(QStringLiteral("RawData"), scriptEngine);
     }
 }

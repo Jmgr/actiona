@@ -178,6 +178,8 @@ namespace Code
 
     void MessageBox::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
+        qRegisterMetaType<MessageBox*>("const MessageBox *");
+
         CodeClass::registerClass<MessageBox>(QStringLiteral("MessageBox"), scriptEngine);
     }
 

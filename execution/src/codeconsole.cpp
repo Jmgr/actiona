@@ -30,6 +30,8 @@ namespace Execution
 {
     void CodeConsole::registerClass(ActionTools::ScriptEngine &scriptEngine, Executer &executer)
     {
+        qRegisterMetaType<CodeConsole*>("const Console *");
+
         CodeClass::registerStaticClass<CodeConsole>(QStringLiteral("Console"), scriptEngine, executer);
     }
 
