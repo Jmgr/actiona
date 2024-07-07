@@ -347,8 +347,8 @@ namespace ActionTools
         void validateParameterRange(bool &ok, int parameter, const QString &parameterName, const QString &parameterTranslatedName, int minimum, int maximum = std::numeric_limits<int>::max());
 
 		QString nextLine() const;
-        void setNextLine(const QString &nextLine, bool doNotResetPreviousActions = false);
-        void setNextLine(int nextLine, bool doNotResetPreviousActions = false);
+        void setNextLine(const QString &nextLine, bool doNotResetPreviousActions = false, bool overrideProcedureChecks = false);
+        void setNextLine(int nextLine, bool doNotResetPreviousActions = false, bool overrideProcedureChecks = false);
 
 		void setArray(const QString &name, const QStringList &stringList);
 		void setArrayKeyValue(const QString &name, const QHash<QString, QString> &hashKeyValue);

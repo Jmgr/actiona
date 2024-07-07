@@ -55,7 +55,7 @@ namespace ActionTools
         connect(mModel, SIGNAL(rowsInserted(QModelIndex,int,int)), ui->console, SLOT(scrollToBottom()));
 	}
 
-	void ConsoleWidget::addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type)
+    void ConsoleWidget::addScriptParameterLine(Type type, const QString &message, int parameter, int line, int column)
 	{
 		auto item = new QStandardItem();
 
@@ -66,7 +66,7 @@ namespace ActionTools
         addLine(message, item, Parameters, type);
     }
 
-    void ConsoleWidget::addResourceLine(const QString &message, const QString &resourceKey, ConsoleWidget::Type type)
+    void ConsoleWidget::addResourceLine(ConsoleWidget::Type type, const QString &message, const QString &resourceKey)
     {
         auto item = new QStandardItem();
 
@@ -75,7 +75,7 @@ namespace ActionTools
         addLine(message, item, Resources, type);
     }
 
-	void ConsoleWidget::addActionLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type)
+    void ConsoleWidget::addActionLine(Type type, const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column)
 	{
 		auto item = new QStandardItem();
 
@@ -88,7 +88,7 @@ namespace ActionTools
 		addLine(message, item, Action, type);
 	}
 
-    void ConsoleWidget::addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type)
+    void ConsoleWidget::addUserLine(Type type, const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column)
 	{
 		auto item = new QStandardItem();
 
@@ -101,7 +101,7 @@ namespace ActionTools
 		addLine(message, item, User, type);
 	}
 	
-	void ConsoleWidget::addExceptionLine(const QString &message, qint64 actionRuntimeId, int exception, Type type)
+    void ConsoleWidget::addExceptionLine(Type type, const QString &message, qint64 actionRuntimeId, int exception)
 	{
 		auto item = new QStandardItem();
 		
@@ -111,7 +111,7 @@ namespace ActionTools
 		addLine(message, item, Exception, type);
 	}
 	
-	void ConsoleWidget::addDesignErrorLine(const QString &message, Type type)
+    void ConsoleWidget::addDesignErrorLine(Type type, const QString &message)
 	{
 		auto item = new QStandardItem();
 

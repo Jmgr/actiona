@@ -107,7 +107,7 @@ namespace ActionTools
             return false;
         }
 
-        setNextLine(beginProcedureLine + 2);//Lines start at 1
+        setNextLine(beginProcedureLine + 2, false, true);//Lines start at 1
 
         script()->addProcedureCall(scriptLine());
 
@@ -722,16 +722,17 @@ namespace ActionTools
 		return d->scriptEngine->property("Script.nextLine").toString();
 	}
 
-    void ActionInstance::setNextLine(const QString &nextLine, bool doNotResetPreviousActions)
+    void ActionInstance::setNextLine(const QString &nextLine, bool doNotResetPreviousActions, bool overrideProcedureChecks)
 	{
 		QJSValue scriptValue = d->scriptEngine->globalObject().property(QStringLiteral("Script"));
         scriptValue.setProperty(QStringLiteral("nextLine"), d->scriptEngine->engine().toScriptValue(QVariant(nextLine)));
 		scriptValue.setProperty(QStringLiteral("doNotResetPreviousActions"), doNotResetPreviousActions);
+        scriptValue.setProperty(QStringLiteral("overrideProcedureChecks"), overrideProcedureChecks);
 	}
 
-    void ActionInstance::setNextLine(int nextLine, bool doNotResetPreviousActions)
+    void ActionInstance::setNextLine(int nextLine, bool doNotResetPreviousActions, bool overrideProcedureChecks)
 	{
-        setNextLine(QString::number(nextLine), doNotResetPreviousActions);
+        setNextLine(QString::number(nextLine), doNotResetPreviousActions, overrideProcedureChecks);
 	}
 
 	void ActionInstance::setArray(const QString &name, const QStringList &stringList)

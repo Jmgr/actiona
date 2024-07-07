@@ -29,6 +29,9 @@
 #include "actiontools/numberformat.hpp"
 #include "actiontools/code/image.hpp"
 #include "actiontools/code/rawdata.hpp"
+#include "actiontools/lineparameterdefinition.hpp"
+#include "actiontools/ifactionparameterdefinition.hpp"
+#include "actiontools/groupdefinition.hpp"
 #include "codeactiona.hpp"
 #include "codescript.hpp"
 #include "codeconsole.hpp"
@@ -178,7 +181,7 @@ namespace Execution
 
                     if(!image.loadFromData(resource.data()))
                     {
-                        mConsoleWidget->addResourceLine(tr("Invalid image resource"), key, ActionTools::ConsoleWidget::Error);
+                        mConsoleWidget->addResourceLine(ActionTools::ConsoleWidget::Error, tr("Invalid image resource"), key);
 
                         return false;
                     }
@@ -190,6 +193,8 @@ namespace Execution
 
             mScriptEngine->globalObject().setProperty(key, value);
         }
+
+        mProcedures.clear();
 
 		for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
 		{
@@ -219,7 +224,7 @@ namespace Execution
 				{
 					if(lastBeginProcedure != -1)
 					{
-						mConsoleWidget->addActionLine(tr("Invalid Begin procedure action, you have to end the previous procedure before starting another one"), currentActionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+                        mConsoleWidget->addActionLine(ActionTools::ConsoleWidget::Error, tr("Invalid Begin procedure action, you have to end the previous procedure before starting another one"), currentActionRuntimeId);
 
 						return false;
 					}
@@ -231,14 +236,14 @@ namespace Execution
 
 					if(procedureName.isEmpty())
 					{
-						mConsoleWidget->addActionLine(tr("A procedure name cannot be empty"), currentActionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+                        mConsoleWidget->addActionLine(ActionTools::ConsoleWidget::Error, tr("A procedure name cannot be empty"), currentActionRuntimeId);
 
 						return false;
 					}
 
 					if(mScript->findProcedure(procedureName) != -1)
 					{
-						mConsoleWidget->addActionLine(tr("A procedure with the name \"%1\" has already been declared").arg(procedureName), currentActionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+                        mConsoleWidget->addActionLine(ActionTools::ConsoleWidget::Error, tr("A procedure with the name \"%1\" has already been declared").arg(procedureName), currentActionRuntimeId);
 
 						return false;
 					}
@@ -249,7 +254,7 @@ namespace Execution
 				{
 					if(lastBeginProcedure == -1)
 					{
-						mConsoleWidget->addActionLine(tr("Invalid End procedure"), currentActionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+                        mConsoleWidget->addActionLine(ActionTools::ConsoleWidget::Error, tr("Invalid End procedure"), currentActionRuntimeId);
 
 						return false;
 					}
@@ -258,6 +263,8 @@ namespace Execution
 
 					actionInstance->setRuntimeParameter(QStringLiteral("procedureBeginLine"), lastBeginProcedure);
 					beginProcedureActionInstance->setRuntimeParameter(QStringLiteral("procedureEndLine"), actionIndex);
+
+                    mProcedures.emplace_back(lastBeginProcedure, actionIndex);
 
 					lastBeginProcedure = -1;
 				}
@@ -271,10 +278,13 @@ namespace Execution
 			if(actionInstance)
 				actionRuntimeId = actionInstance->runtimeId();
 
-			mConsoleWidget->addActionLine(tr("Begin procedure action without end procedure"), actionRuntimeId, QString(), QString(), -1, -1, ActionTools::ConsoleWidget::Error);
+            mConsoleWidget->addActionLine(ActionTools::ConsoleWidget::Error, tr("Begin procedure action without end procedure"), actionRuntimeId);
 
 			return false;
 		}
+
+        if(!jumpsSanityChecks(mProcedures))
+            return false;
 
 		for(int parameterIndex = 0; parameterIndex < mScript->parameterCount(); ++parameterIndex)
 		{
@@ -285,11 +295,8 @@ namespace Execution
 
             if(!nameRegExp.match(scriptParameter.name()).hasMatch())
 			{
-				mConsoleWidget->addScriptParameterLine(tr("Incorrect parameter name: \"%1\"").arg(scriptParameter.name()),
-													   parameterIndex,
-													   -1,
-													   -1,
-													   ActionTools::ConsoleWidget::Error);
+                mConsoleWidget->addScriptParameterLine(ActionTools::ConsoleWidget::Error, tr("Incorrect parameter name: \"%1\"").arg(scriptParameter.name()),
+                                                       parameterIndex);
 				initSucceeded = false;
 				continue;
 			}
@@ -300,13 +307,10 @@ namespace Execution
 				QJSValue result = mScriptEngine->evaluate(scriptParameter.value());
 				if(result.isError())
 				{
-					mConsoleWidget->addScriptParameterLine(tr(R"(Error while evaluating parameter "%1", error message: "%2")")
+                    mConsoleWidget->addScriptParameterLine(ActionTools::ConsoleWidget::Error, tr(R"(Error while evaluating parameter "%1", error message: "%2")")
 														   .arg(scriptParameter.name())
 														   .arg(result.toString()),
-														   parameterIndex,
-														   -1,
-														   -1,
-														   ActionTools::ConsoleWidget::Error);
+                                                           parameterIndex);
 					initSucceeded = false;
 					continue;
 				}
@@ -454,9 +458,10 @@ namespace Execution
 
 		if(!standardException && !customException)
 		{
-			mConsoleWidget->addDesignErrorLine(tr("Action design error: Invalid exception emitted (%1, line %2)")
+            mConsoleWidget->addDesignErrorLine(ActionTools::ConsoleWidget::Error,
+                                               tr("Action design error: Invalid exception emitted (%1, line %2)")
 											   .arg(actionInstance->definition()->name())
-											   .arg(mCurrentActionIndex+1), ActionTools::ConsoleWidget::Error);
+                                               .arg(mCurrentActionIndex+1));
 			stopExecution();
 			return;
 		}
@@ -483,10 +488,9 @@ namespace Execution
 					if(currentAction)
 						currentActionRuntimeId = currentAction->runtimeId();
 
-					mConsoleWidget->addExceptionLine(tr("Invalid exception line: %1").arg(exceptionActionInstance.line()),
+                    mConsoleWidget->addExceptionLine(ActionTools::ConsoleWidget::Error, tr("Invalid exception line: %1").arg(exceptionActionInstance.line()),
 													 currentActionRuntimeId,
-													 exception,
-													 ActionTools::ConsoleWidget::Error);
+                                                     exception);
 					shouldStopExecution = true;
 				}
 				else
@@ -515,13 +519,12 @@ namespace Execution
 
             auto [line, column] = mScriptEngine->currentLineAndColumn();
 
-			mConsoleWidget->addActionLine(finalMessage + message,
+            mConsoleWidget->addActionLine(exceptionType, finalMessage + message,
 										currentActionRuntimeId,
 										mScriptEngine->globalObject().property(QStringLiteral("currentParameter")).toString(),
 										mScriptEngine->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
                                         line,
-                                        column,
-										exceptionType);
+                                        column);
 
 			stopExecution();
 		}
@@ -607,9 +610,15 @@ namespace Execution
 			case UnselectedAction:
 			case CanExecute:
 				mCurrentActionIndex = nextLine;
-				break;
-			}
-		}
+                break;
+            case CannotJumpInsideProcedure:
+                executionException(ActionTools::ActionException::CodeErrorException, tr("Cannot jump inside procedure"));
+                return;
+            case CannotJumpOutsideProcedure:
+                executionException(ActionTools::ActionException::CodeErrorException, tr("Cannot jump outside procedure"));
+                return;
+            }
+        }
 
 		bool doNotResetPreviousActions = script.property(QStringLiteral("doNotResetPreviousActions")).toBool();
 
@@ -775,13 +784,12 @@ namespace Execution
 
         auto [line, column] = mScriptEngine->currentLineAndColumn();
 
-		consoleWidget()->addUserLine(text,
+        consoleWidget()->addUserLine(type, text,
 									   currentActionRuntimeId,
 									   mScriptEngine->globalObject().property(QStringLiteral("currentParameter")).toString(),
 									   mScriptEngine->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
                                        line,
-                                       column,
-									   type);
+                                       column);
 	}
 
 	void Executer::pauseOrDebug(bool debug)
@@ -826,6 +834,38 @@ namespace Execution
 
 		if(mExecuteOnlySelection && !actionInstance->isSelected())
 			return UnselectedAction;
+
+        QJSValue script = mScriptEngine->globalObject().property(QStringLiteral("Script"));
+        bool overrideProcedureChecks = script.property(QStringLiteral("overrideProcedureChecks")).toBool();
+        if(!overrideProcedureChecks)
+        {
+            bool isInProcedure = false;
+            for(auto [begin, end]: mProcedures)
+            {
+                if(mCurrentActionIndex >= begin && mCurrentActionIndex <= end)
+                {
+                    isInProcedure = true;
+                    break;
+                }
+            }
+            bool isTargetInProcedure = false;
+            for(auto [begin, end]: mProcedures)
+            {
+                if(index >= begin && index <= end)
+                {
+                    isTargetInProcedure = true;
+                    break;
+                }
+            }
+            if(isInProcedure && !isTargetInProcedure)
+            {
+                return CannotJumpOutsideProcedure;
+            }
+            if(!isInProcedure && isTargetInProcedure)
+            {
+                return CannotJumpInsideProcedure;
+            }
+        }
 
 		return CanExecute;
 	}
@@ -905,4 +945,164 @@ namespace Execution
 
         mExecutionEnded = false;
 	}
+
+    std::optional<int> Executer::lineToActionIndex(const QString &line) const
+    {
+        bool ok = false;
+        auto targetLine = line.toInt(&ok);
+
+        if(!ok)
+        {
+            targetLine = mScript->labelLine(line);
+            if(targetLine == -1)
+                return {};
+        }
+
+        if(targetLine < 0 || targetLine >= mScript->actionCount())
+            return {};
+
+        return {targetLine};
+    }
+
+    void Executer::detectJumpsInActionParameter(
+        ActionTools::ActionInstance *actionInstance,
+        int actionIndex,
+        ActionTools::ElementDefinition *elementDefinition,
+        QList<std::tuple<int, int>> &jumps) const
+    {
+        if(qobject_cast<ActionTools::LineParameterDefinition*>(elementDefinition))
+        {
+            auto parameter = actionInstance->parameter(elementDefinition->name().original());
+            auto value = parameter.subParameter(QStringLiteral("value"));
+
+            if(value.isCode())
+                return;
+
+            auto targetLine = lineToActionIndex(value.value());
+            if(!targetLine)
+                return;
+
+            jumps.emplace_back(actionIndex, targetLine.value());
+        }
+        else if(qobject_cast<ActionTools::IfActionParameterDefinition*>(elementDefinition))
+        {
+            auto parameter = actionInstance->parameter(elementDefinition->name().original());
+            auto action = parameter.subParameter(QStringLiteral("action"));
+            auto line = parameter.subParameter(QStringLiteral("line"));
+
+            if(action.isCode())
+                return;
+            if(line.isCode())
+                return;
+            if(action.value() != QLatin1String("goto"))
+                return;
+
+            auto targetLine = lineToActionIndex(line.value());
+            if(!targetLine)
+                return;
+
+            jumps.emplace_back(actionIndex, targetLine.value());
+        }
+        else if(auto group = qobject_cast<ActionTools::GroupDefinition*>(elementDefinition))
+        {
+            for(auto member: group->members())
+                detectJumpsInActionParameter(actionInstance, actionIndex, member, jumps);
+        }
+    }
+
+    bool Executer::jumpsSanityChecks(const QList<std::tuple<int, int>> &procedures) const
+    {
+        QList<std::tuple<int, int>> jumps;
+
+        // Detect all jumps we know of (excludes code-based jumps)
+        for(int actionIndex = 0; actionIndex < mScript->actionCount(); ++actionIndex)
+        {
+            if(canExecuteAction(actionIndex) != CanExecute)
+                continue;
+
+            auto actionInstance = mScript->actionAt(actionIndex);
+            if(!actionInstance)
+                continue;
+
+            // Detect jumps in action parameters
+            for(const auto &element: actionInstance->definition()->elements())
+                detectJumpsInActionParameter(actionInstance, actionIndex, element, jumps);
+
+            // Detect jumps in action exceptions
+            for(auto exception = 0; exception < ActionTools::ActionException::ExceptionCount; ++exception)
+            {
+                auto exceptionActionInstance = actionInstance->exceptionActionInstance(static_cast<ActionTools::ActionException::Exception>(exception));
+
+                if(exceptionActionInstance.action() != ActionTools::ActionException::GotoLineExceptionAction)
+                    continue;
+
+                auto line = exceptionActionInstance.line();
+                auto targetLine = lineToActionIndex(line);
+                if(!targetLine)
+                    continue;
+
+                jumps.emplace_back(actionIndex, targetLine.value());
+            }
+            for(const auto &actionException: actionInstance->definition()->exceptions())
+            {
+                auto exceptionActionInstance = actionInstance->exceptionActionInstance(static_cast<ActionTools::ActionException::Exception>(actionException->id()));
+
+                if(exceptionActionInstance.action() != ActionTools::ActionException::GotoLineExceptionAction)
+                    continue;
+
+                auto line = exceptionActionInstance.line();
+                auto targetLine = lineToActionIndex(line);
+                if(!targetLine)
+                    continue;
+
+                jumps.emplace_back(actionIndex, targetLine.value());
+            }
+        }
+
+        // Check if we have a jump from within a procedure
+        for(auto [begin, end]: procedures)
+        {
+            if(canExecuteAction(begin) != CanExecute || canExecuteAction(end) != CanExecute)
+                continue;
+
+            for(auto [jumpStart, jumpTarget]: jumps)
+            {
+                // Are we jumping from within the procedure
+                if(jumpStart > begin && jumpStart < end)
+                {
+                    // Are we jumping to outside the procedure
+                    if(jumpTarget <= begin || jumpTarget >= end)
+                    {
+                        auto actionInstance = mScript->actionAt(jumpStart);
+                        if(!actionInstance)
+                            continue;
+
+                        mConsoleWidget->addActionLine(ActionTools::ConsoleWidget::Error, tr("An action cannot transition from inside a procedure to outside of it"),
+                                                      actionInstance->runtimeId());
+
+                        return false;
+                    }
+                }
+
+                // Are we jumping from outside the procedure
+                if(jumpStart <= begin || jumpStart >= end)
+                {
+                    // Are we jumping to within the procedure
+                    if(jumpTarget > begin && jumpTarget < end)
+                    {
+                        auto actionInstance = mScript->actionAt(jumpStart);
+                        if(!actionInstance)
+                            continue;
+
+                        mConsoleWidget->addActionLine(ActionTools::ConsoleWidget::Error, tr("An action cannot transition from outside a procedure to inside of it"),
+                                                      actionInstance->runtimeId());
+
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 }

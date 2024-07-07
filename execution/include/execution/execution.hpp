@@ -35,6 +35,7 @@ namespace ActionTools
 	class ActionInstance;
     class ScriptEngine;
     class RuntimeStorage;
+    class ElementDefinition;
 }
 
 class QStandardItemModel;
@@ -117,7 +118,9 @@ namespace Execution
 			IncorrectLine,
 			InvalidAction,
 			DisabledAction,
-			UnselectedAction
+            UnselectedAction,
+            CannotJumpInsideProcedure,
+            CannotJumpOutsideProcedure,
 		};
 		enum ExecutionStatus
 		{
@@ -132,6 +135,13 @@ namespace Execution
 		ExecuteActionResult canExecuteAction(const QString &line) const;
 		ExecuteActionResult canExecuteAction(int index) const;
 		void executeCurrentAction();
+        std::optional<int> lineToActionIndex(const QString &line) const;
+        void detectJumpsInActionParameter(
+            ActionTools::ActionInstance *actionInstance,
+            int actionIndex,
+            ActionTools::ElementDefinition *elementDefinition,
+            QList<std::tuple<int, int>> &jumps) const;
+        bool jumpsSanityChecks(const QList<std::tuple<int, int>> &procedures) const;
 
 		ActionTools::Script *mScript;
 		ActionTools::ActionFactory *mActionFactory;
@@ -164,6 +174,7 @@ namespace Execution
         bool mShowDebuggerOnCodeError{true};
         int mCurrentParameter{0};
         std::unordered_map<QString, std::unique_ptr<ActionTools::RuntimeStorage>> mRuntimeStorage;
+        QList<std::tuple<int, int>> mProcedures;
 
 		Q_DISABLE_COPY(Executer)
 	};

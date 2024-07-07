@@ -78,12 +78,12 @@ namespace ActionTools
 		
         void setup(QStandardItemModel *model = nullptr, int maxEntries = 0);
 
-		void addScriptParameterLine(const QString &message, int parameter, int line, int column, Type type);
-        void addResourceLine(const QString &message, const QString &resourceKey, Type type);
-		void addActionLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type);
-        void addUserLine(const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column, Type type);
-		void addExceptionLine(const QString &message, qint64 actionRuntimeId, int exception, Type type);
-		void addDesignErrorLine(const QString &message, Type type);
+        void addScriptParameterLine(Type type, const QString &message, int parameter, int line = -1, int column = -1);
+        void addResourceLine(Type type, const QString &message, const QString &resourceKey);
+        void addActionLine(Type type, const QString &message, qint64 actionRuntimeId, const QString &field = {}, const QString &subField = {}, int line = -1, int column = -1);
+        void addUserLine(Type type, const QString &message, qint64 actionRuntimeId, const QString &field, const QString &subField, int line, int column);
+        void addExceptionLine(Type type, const QString &message, qint64 actionRuntimeId, int exception);
+        void addDesignErrorLine(Type type, const QString &message);
 		void addStartSeparator();
 		void addEndSeparator();
 		void clear();

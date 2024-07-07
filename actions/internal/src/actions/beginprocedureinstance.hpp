@@ -35,7 +35,7 @@ namespace Actions
 
 		void startExecution() override
 		{
-			setNextLine(runtimeParameter(QStringLiteral("procedureEndLine")).toInt() + 2);//Lines start at 1
+            setNextLine(runtimeParameter(QStringLiteral("procedureEndLine")).toInt() + 2, false, true);//Lines start at 1
 
 			executionEnded();
 		}

@@ -87,11 +87,10 @@ namespace Execution
         {
             auto [line, column] = mExecuter.scriptEngine().currentLineAndColumn();
 
-            mExecuter.consoleWidget()->addScriptParameterLine(text,
+            mExecuter.consoleWidget()->addScriptParameterLine(type, text,
                                                               mExecuter.currentParameter(),
                                                               line,
-                                                              column,
-                                                              type);
+                                                              column);
         }
         break;
         case ActionTools::ScriptEngine::Actions:
@@ -103,13 +102,12 @@ namespace Execution
 
             auto [line, column] = mExecuter.scriptEngine().currentLineAndColumn();
 
-            mExecuter.consoleWidget()->addUserLine(text,
+            mExecuter.consoleWidget()->addUserLine(type, text,
                                                    currentActionRuntimeId,
                                                    ActionTools::ScriptEngine::current()->globalObject().property(QStringLiteral("currentParameter")).toString(),
                                                    ActionTools::ScriptEngine::current()->globalObject().property(QStringLiteral("currentSubParameter")).toString(),
                                                    line,
-                                                   column,
-                                                   type);
+                                                   column);
         }
         break;
         default:
