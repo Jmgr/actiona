@@ -300,6 +300,7 @@ ExternalProject_Add(external_qtjsapi
     INSTALL_COMMAND cmake -E echo "Skipping install step."
     CMAKE_ARGS
             -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
+            -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 )
 
 target_link_directories(${PROJECT}
