@@ -68,6 +68,11 @@ target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKINTERNAL_LIBRARY)
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Qml Widgets REQUIRED)
 
+target_link_directories(${PROJECT}
+    PRIVATE
+        ${CMAKE_BINARY_DIR}/3rdparty/qtjsapi/out
+)
+
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src

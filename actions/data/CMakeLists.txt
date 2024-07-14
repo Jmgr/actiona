@@ -106,6 +106,11 @@ target_compile_definitions(${PROJECT} PRIVATE ACTIONPACKDATA_LIBRARY)
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Qml Network Sql Widgets Core5Compat REQUIRED)
 
+target_link_directories(${PROJECT}
+    PRIVATE
+        ${CMAKE_BINARY_DIR}/3rdparty/qtjsapi/out
+)
+
 target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src

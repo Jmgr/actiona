@@ -1,3 +1,5 @@
+include(ExternalProject)
+
 set(PROJECT actiontools)
 
 set(SOURCES_PREFIX src)
@@ -278,7 +280,7 @@ add_library(${PROJECT} SHARED
     ${QRC}
 )
 
-add_dependencies(${PROJECT} tools)
+add_dependencies(${PROJECT} tools external_qtjsapi)
 
 if(UNIX)
     include(FindPkgConfig)
@@ -292,6 +294,19 @@ setup_target(${PROJECT})
 find_package(OpenCV REQUIRED core imgproc)
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets Qml REQUIRED)
 
+ExternalProject_Add(external_qtjsapi
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/qtjsapi
+    BINARY_DIR ${CMAKE_BINARY_DIR}/3rdparty/qtjsapi
+    INSTALL_COMMAND cmake -E echo "Skipping install step."
+    CMAKE_ARGS
+            -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
+)
+
+target_link_directories(${PROJECT}
+    PRIVATE
+        ${CMAKE_BINARY_DIR}/3rdparty/qtjsapi/out
+)
+
 target_include_directories(${PROJECT}
     PUBLIC
         $<INSTALL_INTERFACE:include>
@@ -299,13 +314,16 @@ target_include_directories(${PROJECT}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/../tools/include
+    SYSTEM
         ${LIBXTST_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty
 )
 
 target_link_libraries(
     ${PROJECT}
     tools
+    qtjsapi
     Qt6::Widgets
     Qt6::Qml
     Qt6::QmlPrivate
@@ -315,3 +333,4 @@ target_link_libraries(
 )
 
 compile_translations(${PROJECT})
+

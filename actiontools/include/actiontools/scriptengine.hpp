@@ -24,6 +24,8 @@
 
 #include <QJSEngine>
 
+class RJSApi;
+
 namespace ActionTools
 {
     class ACTIONTOOLSSHARED_EXPORT ScriptEngine : public QObject
@@ -40,6 +42,7 @@ namespace ActionTools
         };
 
         explicit ScriptEngine(QObject *parent = nullptr);
+        virtual ~ScriptEngine();
 
         QJSValue evaluate(const QString &program, const QString &fileName = QString(), int lineNumber = 1, QStringList *exceptionStackTrace = nullptr);
         bool isEvaluating() const { return mIsEvaluating; }
@@ -56,6 +59,7 @@ namespace ActionTools
     private:
         static QJSEngine *mCurrent;
         std::unique_ptr<QJSEngine> mEngine;
+        std::unique_ptr<RJSApi> mQJsApi;
         bool mIsEvaluating{false};
         Context mContext{Unknown};
     };

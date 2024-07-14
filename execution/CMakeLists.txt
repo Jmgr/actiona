@@ -53,6 +53,11 @@ setup_target(${PROJECT})
 
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets UiTools Qml REQUIRED)
 
+target_link_directories(${PROJECT}
+    PRIVATE
+        ${CMAKE_BINARY_DIR}/3rdparty/qtjsapi/out
+)
+
 target_include_directories(${PROJECT}
     PUBLIC
         $<INSTALL_INTERFACE:include>

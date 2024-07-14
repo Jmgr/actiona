@@ -19,6 +19,7 @@
 */
 
 #include "actiontools/scriptengine.hpp"
+#include "qtjsapi/RJSApi.h"
 
 #include <private/qv4engine_p.h>
 
@@ -28,7 +29,13 @@ namespace ActionTools
 
     ScriptEngine::ScriptEngine(QObject *parent):
         QObject(parent),
-        mEngine(std::make_unique<QJSEngine>())
+        mEngine(std::make_unique<QJSEngine>()),
+        mQJsApi(new RJSApi(mEngine.get()))
+    {
+        mQJsApi->init();
+    }
+
+    ScriptEngine::~ScriptEngine()
     {
     }
 

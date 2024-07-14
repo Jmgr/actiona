@@ -10,3 +10,6 @@
 [submodule "actiona/3rdparty/QDarkStyleSheet"]
 	path = actiona/3rdparty/QDarkStyleSheet
 	url = https://github.com/ColinDuquesnoy/QDarkStyleSheet
+[submodule "actiontools/3rdparty/qtjsapi"]
+	path = actiontools/3rdparty/qtjsapi
+	url = https://github.com/Jmgr/qtjsapi.git
