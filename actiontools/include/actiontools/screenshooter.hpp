@@ -24,6 +24,7 @@
 
 #include <QList>
 #include <QPixmap>
+#include <QObject>
 
 #include <utility>
 
@@ -32,7 +33,7 @@ namespace ActionTools
     class WindowHandle;
 
     class ACTIONTOOLSSHARED_EXPORT ScreenShooter
-    {
+    {      
     public:
         static QPixmap captureScreen(int screenIndex);
         static QList<std::pair<QPixmap, QRect>> captureScreens();
@@ -42,6 +43,30 @@ namespace ActionTools
         static QPixmap captureRect(const QRect &rect);
 
         ScreenShooter() = delete;
+    };
+
+    class ACTIONTOOLSSHARED_EXPORT AsyncScreenShooter : public QObject
+    {
+        Q_OBJECT
+
+        const int CAPTURE_DELAY = 200;
+
+    public:
+        AsyncScreenShooter(QObject *parent = nullptr);
+
+        static QList<QWindow*> hideTopLevelWindows();
+        static void showTopLevelWindows(const QList<QWindow*> &windows);
+
+        void captureScreen(int screenIndex);
+        void captureScreens();
+        void captureWindows(const QList<WindowHandle> &windows);
+        void captureWindow(WindowHandle window);
+        void captureAllScreens();
+        void captureRect(const QRect &rect);
+
+    signals:
+        void finishedSingle(const QPixmap &result);
+        void finishedMultiple(const QList<std::pair<QPixmap, QRect>> &result);
     };
 }
 

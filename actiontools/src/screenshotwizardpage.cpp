@@ -32,7 +32,7 @@ namespace ActionTools
     ScreenshotWizardPage::ScreenshotWizardPage(QWidget *parent)
       : QWizardPage(parent),
         ui(new Ui::ScreenshotWizardPage)
-        
+
     {
         ui->setupUi(this);
 
@@ -47,7 +47,6 @@ namespace ActionTools
 
     ScreenshotWizardPage::~ScreenshotWizardPage()
     {
-        delete mTargetWindow;
         delete ui;
     }
 
@@ -67,54 +66,73 @@ namespace ActionTools
     void ScreenshotWizardPage::on_captureWholeScreenPushButton_clicked()
     {
         if(ui->screenComboBox->currentIndex() == 0)//All screens
-            setCapturePixmap(ActionTools::ScreenShooter::captureAllScreens());
+        {
+            auto screenShooter = new ActionTools::AsyncScreenShooter(this);
+            connect(screenShooter, &ActionTools::AsyncScreenShooter::finishedSingle, this, [this](const QPixmap &result){
+                setCapturePixmap(result);
+                ui->captureImageLabel->setPixmap(result);
+                ui->captureImageLabel->updateGeometry();
+                emit completeChanged();
+                sender()->deleteLater();
+            });
+            screenShooter->captureAllScreens();
+        }
         else
         {
             int screenIndex = ui->screenComboBox->currentIndex() - 1;
 
-            setCapturePixmap(ActionTools::ScreenShooter::captureScreen(screenIndex));
+            auto screenShooter = new ActionTools::AsyncScreenShooter(this);
+            connect(screenShooter, &ActionTools::AsyncScreenShooter::finishedSingle, this, [this](const QPixmap &result){
+                setCapturePixmap(result);
+                ui->captureImageLabel->setPixmap(result);
+                ui->captureImageLabel->updateGeometry();
+                emit completeChanged();
+                sender()->deleteLater();
+            });
+            screenShooter->captureScreen(screenIndex);
         }
-
-        ui->captureImageLabel->setPixmap(capturePixmap());
-
-        emit completeChanged();
     }
 
     void ScreenshotWizardPage::on_captureScreenPartPushButton_clicked()
     {
         mDisableEscape = true;
-        if(mTargetWindow)
-            delete mTargetWindow;
-        mTargetWindow = new ActionTools::TargetWindow;
-        connect(mTargetWindow, &ActionTools::TargetWindow::rectangleSelected, this, &ScreenshotWizardPage::onRectangleSelected);
-        mTargetWindow->show();
 
-        emit completeChanged();
+        auto shownWindows = ActionTools::AsyncScreenShooter::hideTopLevelWindows();
+        auto targetWindow = new ActionTools::TargetWindow;
+
+        connect(targetWindow, &ActionTools::TargetWindow::rectangleSelected, this, [this, shownWindows](const QRect &rect){
+            ActionTools::AsyncScreenShooter::showTopLevelWindows(shownWindows);
+
+            if(rect != QRect())
+            {
+                auto screenShooter = new ActionTools::AsyncScreenShooter(this);
+                connect(screenShooter, &ActionTools::AsyncScreenShooter::finishedSingle, this, [this](const QPixmap &result){
+                    setCapturePixmap(result);
+                    ui->captureImageLabel->setPixmap(result);
+                    ui->captureImageLabel->updateGeometry();
+                    emit completeChanged();
+                    sender()->deleteLater();
+                });
+                screenShooter->captureRect(rect);
+            }
+
+            sender()->deleteLater();
+        });
+
+        targetWindow->show();
     }
 
     void ScreenshotWizardPage::onWindowSearchEnded(const ActionTools::WindowHandle &handle)
     {
-        setCapturePixmap(ActionTools::ScreenShooter::captureWindow(handle));
-
-        ui->captureImageLabel->setPixmap(capturePixmap());
-
-        emit completeChanged();
-    }
-
-    void ScreenshotWizardPage::onRectangleSelected(QRect rect)
-    {
-        mDisableEscape = false;
-        mTargetWindow->deleteLater();
-        mTargetWindow = nullptr;
-
-        if(rect != QRect())
-        {
-            setCapturePixmap(ActionTools::ScreenShooter::captureRect(rect));
-
-            ui->captureImageLabel->setPixmap(capturePixmap());
-
+        auto screenShooter = new ActionTools::AsyncScreenShooter(this);
+        connect(screenShooter, &ActionTools::AsyncScreenShooter::finishedSingle, this, [this](const QPixmap &result){
+            setCapturePixmap(result);
+            ui->captureImageLabel->setPixmap(result);
+            ui->captureImageLabel->updateGeometry();
             emit completeChanged();
-        }
+            sender()->deleteLater();
+        });
+        screenShooter->captureWindow(handle);
     }
 
     void ScreenshotWizardPage::setCapturePixmap(const QPixmap &capturePixmap)

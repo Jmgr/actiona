@@ -25,6 +25,8 @@
 #include <QImage>
 #include <QPainter>
 #include <QScreen>
+#include <QWindow>
+#include <QTimer>
 
 #include <limits>
 
@@ -44,7 +46,7 @@ namespace ActionTools
 
     QList<std::pair<QPixmap, QRect>> ScreenShooter::captureScreens()
     {
-       auto screens = QGuiApplication::screens();
+        auto screens = QGuiApplication::screens();
         QList<std::pair<QPixmap, QRect>> result;
 
         for(int screenIndex = 0; screenIndex < screens.size(); ++screenIndex)
@@ -142,5 +144,118 @@ namespace ActionTools
         auto localY = rect.y() - geometry.y();
 
         return screen->grabWindow(0, localX, localY, rect.width(), rect.height());
+    }
+
+    AsyncScreenShooter::AsyncScreenShooter(QObject *parent): QObject(parent)
+    {
+    }
+
+    QList<QWindow*> AsyncScreenShooter::hideTopLevelWindows()
+    {
+        QList<QWindow*> shownWindows;
+
+        for(auto window: QGuiApplication::topLevelWindows())
+        {
+            if(!window->isVisible())
+                continue;
+
+            shownWindows.append(window);
+        }
+
+        for(auto window: shownWindows)
+        {
+            window->hide();
+            window->setOpacity(0);
+        }
+
+        return shownWindows;
+    }
+
+    void AsyncScreenShooter::showTopLevelWindows(const QList<QWindow*> &windows)
+    {
+        for(auto window: windows)
+        {
+            window->show();
+            window->setOpacity(1);
+            window->requestActivate();
+        }
+    }
+
+    void AsyncScreenShooter::captureScreen(int screenIndex)
+    {
+        auto shownWindows = hideTopLevelWindows();
+
+        QTimer::singleShot(CAPTURE_DELAY, this, [this, screenIndex, shownWindows](){
+            auto result = ScreenShooter::captureScreen(screenIndex);
+
+            showTopLevelWindows(shownWindows);
+
+            emit finishedSingle(result);
+        });
+    }
+
+    void AsyncScreenShooter::captureScreens()
+    {
+        auto shownWindows = hideTopLevelWindows();
+
+        QTimer::singleShot(CAPTURE_DELAY, this, [this, shownWindows](){
+            auto result = ScreenShooter::captureScreens();
+
+            showTopLevelWindows(shownWindows);
+
+            emit finishedMultiple(result);
+        });
+    }
+
+    void AsyncScreenShooter::captureWindows(const QList<WindowHandle> &windows)
+    {
+        auto shownWindows = hideTopLevelWindows();
+
+        QTimer::singleShot(CAPTURE_DELAY, this, [this, windows, shownWindows](){
+            auto result = ScreenShooter::captureWindows(windows);
+
+            showTopLevelWindows(shownWindows);
+
+            emit finishedMultiple(result);
+        });
+    }
+
+    void AsyncScreenShooter::captureWindow(WindowHandle window)
+    {
+        auto shownWindows = hideTopLevelWindows();
+
+        QTimer::singleShot(CAPTURE_DELAY, this, [this, window, shownWindows](){
+            auto result = ScreenShooter::captureWindow(window);
+
+            showTopLevelWindows(shownWindows);
+
+            emit finishedSingle(result);
+        });
+    }
+
+    void AsyncScreenShooter::captureAllScreens()
+    {
+        auto shownWindows = hideTopLevelWindows();
+
+        QTimer::singleShot(CAPTURE_DELAY, this, [this, shownWindows](){
+            auto result = ScreenShooter::captureAllScreens();
+
+            showTopLevelWindows(shownWindows);
+
+            emit finishedSingle(result);
+        });
+    }
+
+    void AsyncScreenShooter::captureRect(const QRect &rect)
+    {
+        auto shownWindows = hideTopLevelWindows();
+
+        QTimer::singleShot(CAPTURE_DELAY, this, [this, rect, shownWindows](){
+            auto result = ScreenShooter::captureRect(rect);
+
+            showTopLevelWindows(shownWindows);
+
+            emit finishedSingle(result);
+        });
     }
 }

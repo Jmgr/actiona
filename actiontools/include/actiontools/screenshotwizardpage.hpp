@@ -32,7 +32,6 @@ namespace Ui
 namespace ActionTools
 {
     class WindowHandle;
-    class TargetWindow;
 
     class ACTIONTOOLSSHARED_EXPORT ScreenshotWizardPage : public QWizardPage
     {
@@ -50,14 +49,12 @@ namespace ActionTools
         void on_captureWholeScreenPushButton_clicked();
         void on_captureScreenPartPushButton_clicked();
         void onWindowSearchEnded(const ActionTools::WindowHandle &handle);
-        void onRectangleSelected(QRect rect);
 
     private:
         void setCapturePixmap(const QPixmap &capturePixmap);
         QPixmap capturePixmap() const;
 
         Ui::ScreenshotWizardPage *ui;
-        ActionTools::TargetWindow *mTargetWindow{nullptr};
         bool mDisableEscape{false};
     };
 }
