@@ -35,10 +35,13 @@ namespace ActionTools
 		Q_OBJECT
 
 	public:
-		explicit ChooseWindowPushButton(QWidget *parent = nullptr);
+        explicit ChooseWindowPushButton(QWidget *parent = nullptr);
         ~ChooseWindowPushButton() override;
 
+        void setOpacityChangeOnWindows(bool value) { mOpacityChangeOnWindows = value; }
+
 	signals:
+        void searchStarted();
         void foundValidWindow(const ActionTools::WindowHandle &handle);
         void searchEnded(const ActionTools::WindowHandle &handle);
 
@@ -67,6 +70,7 @@ namespace ActionTools
         bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override;
 
 		QPixmap *mCrossIcon;
+        bool mOpacityChangeOnWindows{true};
 		WindowHandle mLastFoundWindow;
 		bool mSearching{false};
 		QMainWindow *mMainWindow{nullptr};

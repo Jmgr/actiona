@@ -65,7 +65,7 @@ inline POINT RectBottomRight(const RECT &rect)
 
 namespace ActionTools
 {
-	ChooseWindowPushButton::ChooseWindowPushButton(QWidget *parent)
+    ChooseWindowPushButton::ChooseWindowPushButton(QWidget *parent)
 		: QPushButton(parent),
         mCrossIcon(new QPixmap(QStringLiteral(":/images/cross.png")))
 #ifdef Q_OS_UNIX
@@ -150,9 +150,14 @@ namespace ActionTools
             mMainWindow->hide();
 #endif
 #ifdef Q_OS_WIN
-        for(QWidget *widget: qApp->topLevelWidgets())
-			widget->setWindowOpacity(0.0f);
+        if(mOpacityChangeOnWindows)
+        {
+            for(QWidget *widget: qApp->topLevelWidgets())
+                widget->setWindowOpacity(0.0f);
+        }
 #endif
+
+        emit searchStarted();
 
         QCoreApplication::instance()->installNativeEventFilter(this);
 
@@ -292,8 +297,11 @@ namespace ActionTools
 		if(mLastFoundWindow)
 			refreshWindow(mLastFoundWindow);
 
-        for(QWidget *widget: qApp->topLevelWidgets())
-			widget->setWindowOpacity(1.0f);
+        if(mOpacityChangeOnWindows)
+        {
+            for(QWidget *widget: qApp->topLevelWidgets())
+                widget->setWindowOpacity(1.0f);
+        }
 	#endif
     #ifdef Q_OS_UNIX
 		XUngrabPointer(X11Info::display(), CurrentTime);

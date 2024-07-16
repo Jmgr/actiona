@@ -56,6 +56,7 @@ namespace ActionTools
 
         Ui::ScreenshotWizardPage *ui;
         bool mDisableEscape{false};
+        QList<QWindow*> mShownWindows;
     };
 }
 

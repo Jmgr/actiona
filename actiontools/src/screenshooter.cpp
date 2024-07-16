@@ -146,7 +146,9 @@ namespace ActionTools
         return screen->grabWindow(0, localX, localY, rect.width(), rect.height());
     }
 
-    AsyncScreenShooter::AsyncScreenShooter(QObject *parent): QObject(parent)
+    AsyncScreenShooter::AsyncScreenShooter(int captureDelay, QObject *parent):
+        QObject(parent),
+        mCaptureDelay(captureDelay)
     {
     }
 
@@ -164,7 +166,9 @@ namespace ActionTools
 
         for(auto window: shownWindows)
         {
+#ifndef Q_OS_WIN
             window->hide();
+#endif
             window->setOpacity(0);
         }
 
@@ -175,9 +179,11 @@ namespace ActionTools
     {
         for(auto window: windows)
         {
+#ifndef Q_OS_WIN
             window->show();
-            window->setOpacity(1);
             window->requestActivate();
+#endif
+            window->setOpacity(1);        
         }
     }
 
@@ -185,7 +191,7 @@ namespace ActionTools
     {
         auto shownWindows = hideTopLevelWindows();
 
-        QTimer::singleShot(CAPTURE_DELAY, this, [this, screenIndex, shownWindows](){
+        QTimer::singleShot(mCaptureDelay, this, [this, screenIndex, shownWindows](){
             auto result = ScreenShooter::captureScreen(screenIndex);
 
             showTopLevelWindows(shownWindows);
@@ -198,7 +204,7 @@ namespace ActionTools
     {
         auto shownWindows = hideTopLevelWindows();
 
-        QTimer::singleShot(CAPTURE_DELAY, this, [this, shownWindows](){
+        QTimer::singleShot(mCaptureDelay, this, [this, shownWindows](){
             auto result = ScreenShooter::captureScreens();
 
             showTopLevelWindows(shownWindows);
@@ -211,7 +217,7 @@ namespace ActionTools
     {
         auto shownWindows = hideTopLevelWindows();
 
-        QTimer::singleShot(CAPTURE_DELAY, this, [this, windows, shownWindows](){
+        QTimer::singleShot(mCaptureDelay, this, [this, windows, shownWindows](){
             auto result = ScreenShooter::captureWindows(windows);
 
             showTopLevelWindows(shownWindows);
@@ -224,7 +230,7 @@ namespace ActionTools
     {
         auto shownWindows = hideTopLevelWindows();
 
-        QTimer::singleShot(CAPTURE_DELAY, this, [this, window, shownWindows](){
+        QTimer::singleShot(mCaptureDelay, this, [this, window, shownWindows](){
             auto result = ScreenShooter::captureWindow(window);
 
             showTopLevelWindows(shownWindows);
@@ -237,7 +243,7 @@ namespace ActionTools
     {
         auto shownWindows = hideTopLevelWindows();
 
-        QTimer::singleShot(CAPTURE_DELAY, this, [this, shownWindows](){
+        QTimer::singleShot(mCaptureDelay, this, [this, shownWindows](){
             auto result = ScreenShooter::captureAllScreens();
 
             showTopLevelWindows(shownWindows);
@@ -250,7 +256,7 @@ namespace ActionTools
     {
         auto shownWindows = hideTopLevelWindows();
 
-        QTimer::singleShot(CAPTURE_DELAY, this, [this, rect, shownWindows](){
+        QTimer::singleShot(mCaptureDelay, this, [this, rect, shownWindows](){
             auto result = ScreenShooter::captureRect(rect);
 
             showTopLevelWindows(shownWindows);

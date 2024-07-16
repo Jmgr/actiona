@@ -49,10 +49,8 @@ namespace ActionTools
     {
         Q_OBJECT
 
-        const int CAPTURE_DELAY = 200;
-
     public:
-        AsyncScreenShooter(QObject *parent = nullptr);
+        AsyncScreenShooter(int captureDelay, QObject *parent = nullptr);
 
         static QList<QWindow*> hideTopLevelWindows();
         static void showTopLevelWindows(const QList<QWindow*> &windows);
@@ -67,6 +65,9 @@ namespace ActionTools
     signals:
         void finishedSingle(const QPixmap &result);
         void finishedMultiple(const QList<std::pair<QPixmap, QRect>> &result);
+
+    private:
+        int mCaptureDelay;
     };
 }
 

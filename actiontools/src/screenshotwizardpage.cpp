@@ -27,6 +27,8 @@
 #include <QApplication>
 #include <QKeyEvent>
 
+const int CAPTURE_DELAY = 200;
+
 namespace ActionTools
 {
     ScreenshotWizardPage::ScreenshotWizardPage(QWidget *parent)
@@ -36,6 +38,11 @@ namespace ActionTools
     {
         ui->setupUi(this);
 
+        ui->captureWindowPushButton->setOpacityChangeOnWindows(false);
+
+        connect(ui->captureWindowPushButton, &ActionTools::ChooseWindowPushButton::searchStarted, this, [this](){
+            mShownWindows = ActionTools::AsyncScreenShooter::hideTopLevelWindows();
+        });
         connect(ui->captureWindowPushButton, &ActionTools::ChooseWindowPushButton::searchEnded, this, &ScreenshotWizardPage::onWindowSearchEnded);
 
         ui->screenComboBox->addItem(tr("All screens"));
@@ -67,7 +74,7 @@ namespace ActionTools
     {
         if(ui->screenComboBox->currentIndex() == 0)//All screens
         {
-            auto screenShooter = new ActionTools::AsyncScreenShooter(this);
+            auto screenShooter = new ActionTools::AsyncScreenShooter(CAPTURE_DELAY, this);
             connect(screenShooter, &ActionTools::AsyncScreenShooter::finishedSingle, this, [this](const QPixmap &result){
                 setCapturePixmap(result);
                 ui->captureImageLabel->setPixmap(result);
@@ -81,7 +88,7 @@ namespace ActionTools
         {
             int screenIndex = ui->screenComboBox->currentIndex() - 1;
 
-            auto screenShooter = new ActionTools::AsyncScreenShooter(this);
+            auto screenShooter = new ActionTools::AsyncScreenShooter(CAPTURE_DELAY, this);
             connect(screenShooter, &ActionTools::AsyncScreenShooter::finishedSingle, this, [this](const QPixmap &result){
                 setCapturePixmap(result);
                 ui->captureImageLabel->setPixmap(result);
@@ -101,19 +108,18 @@ namespace ActionTools
         auto targetWindow = new ActionTools::TargetWindow;
 
         connect(targetWindow, &ActionTools::TargetWindow::rectangleSelected, this, [this, shownWindows](const QRect &rect){
-            ActionTools::AsyncScreenShooter::showTopLevelWindows(shownWindows);
-
             if(rect != QRect())
             {
-                auto screenShooter = new ActionTools::AsyncScreenShooter(this);
-                connect(screenShooter, &ActionTools::AsyncScreenShooter::finishedSingle, this, [this](const QPixmap &result){
+                QTimer::singleShot(CAPTURE_DELAY, this, [this, rect, shownWindows](){
+                    auto result = ActionTools::ScreenShooter::captureRect(rect);
+
+                    ActionTools::AsyncScreenShooter::showTopLevelWindows(shownWindows);
+
                     setCapturePixmap(result);
                     ui->captureImageLabel->setPixmap(result);
                     ui->captureImageLabel->updateGeometry();
                     emit completeChanged();
-                    sender()->deleteLater();
                 });
-                screenShooter->captureRect(rect);
             }
 
             sender()->deleteLater();
@@ -124,15 +130,16 @@ namespace ActionTools
 
     void ScreenshotWizardPage::onWindowSearchEnded(const ActionTools::WindowHandle &handle)
     {
-        auto screenShooter = new ActionTools::AsyncScreenShooter(this);
-        connect(screenShooter, &ActionTools::AsyncScreenShooter::finishedSingle, this, [this](const QPixmap &result){
+        QTimer::singleShot(200, this, [this, handle](){
+            auto result = ActionTools::ScreenShooter::captureWindow(handle);
+
+            ActionTools::AsyncScreenShooter::showTopLevelWindows(mShownWindows);
+
             setCapturePixmap(result);
             ui->captureImageLabel->setPixmap(result);
             ui->captureImageLabel->updateGeometry();
             emit completeChanged();
-            sender()->deleteLater();
         });
-        screenShooter->captureWindow(handle);
     }
 
     void ScreenshotWizardPage::setCapturePixmap(const QPixmap &capturePixmap)
