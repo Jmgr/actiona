@@ -423,9 +423,9 @@ namespace ActionTools
         cv::mixChannels(&mat, 1, &back, 1, from_to, 3);
 
 #if CV_MAJOR_VERSION == 2
-                return back;
+        return back;
 #elif CV_MAJOR_VERSION >= 3
-                return back.getUMat(cv::ACCESS_RW);
+        return back.getUMat(cv::ACCESS_RW).clone();
 #endif
     }
 
