@@ -236,6 +236,7 @@ namespace Actions
             }
 
             executionEnded(stopScript);
+            return;
         }
 
 		if(mMaximumMatches == 1)
