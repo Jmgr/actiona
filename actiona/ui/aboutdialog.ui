@@ -130,6 +130,11 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="act3Donators">
             <item>
              <property name="text">
+              <string>IceLab</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>Armel François</string>
              </property>
             </item>
