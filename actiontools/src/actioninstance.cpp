@@ -864,7 +864,7 @@ namespace ActionTools
 			if(toEvaluate[position] == QLatin1Char('$'))
 			{
 				//find a variable name
-                auto match = VariableRegExp.match(toEvaluate);
+                auto match = VariableRegExp.match(toEvaluate, position);
                 if(match.hasMatch())
 				{
                     QString foundVariableName = match.captured(1);
