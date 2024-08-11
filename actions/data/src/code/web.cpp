@@ -139,6 +139,10 @@ namespace Code
 
                 postData = postDataParameters.toString(QUrl::FullyEncoded).toLatin1();
 			}
+            else if(it.name() == QLatin1String("rawData"))
+            {
+                postData = it.value().toString().toUtf8();
+            }
 			else if(it.name() == QLatin1String("query"))
 			{
 				QJSValueIterator queryIt(it.value());
