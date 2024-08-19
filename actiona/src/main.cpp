@@ -52,11 +52,14 @@
 #include <QSettings>
 
 #ifdef Q_OS_UNIX
+#include <QMessageBox>
+
 #undef signals
 #include <libnotify/notify.h>
 #define signals
 
 #include "actiontools/keysymhelper.hpp"
+#include "actiontools/x11info.hpp"
 #endif
 
 #ifdef Q_OS_WIN
@@ -77,6 +80,18 @@ int main(int argc, char **argv)
 #endif
 
 	QtSingleApplication app(QStringLiteral("actiona-gui"), argc, argv);
+
+#ifdef Q_OS_UNIX
+    if(!ActionTools::X11Info::display())
+    {
+        qCritical() << QObject::tr("X11 was not detected. Actiona only functions in X11 sessions (Wayland is not supported). Please refer to https://wiki.actiona.tools/doku.php?id=en:x11notdetected for more information.");
+
+        QMessageBox::critical(nullptr,
+                              QObject::tr("X11 not detected"),
+                              QObject::tr("X11 was not detected. Actiona only functions in X11 sessions (Wayland is not supported). Please refer to <a href=\"https://wiki.actiona.tools/doku.php?id=en:x11notdetected\">this wiki page</a> for more information."));
+        return 0;
+    }
+#endif
 
 	app.setQuitOnLastWindowClosed(false);
 
