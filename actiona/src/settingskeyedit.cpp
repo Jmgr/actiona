@@ -35,16 +35,27 @@ void SettingsKeyEdit::setKeySequence(QKeySequence keySequence)
 
 void SettingsKeyEdit::keyPressEvent(QKeyEvent *event)
 {
-	Qt::KeyboardModifiers modifier = event->modifiers();
-	if(modifier & Qt::KeypadModifier)
-		modifier = Qt::NoModifier;
+    Qt::KeyboardModifiers modifiers = event->modifiers();
+    if(modifiers & Qt::KeypadModifier)
+        modifiers &= ~Qt::KeypadModifier;
 
-	if(event->key() == Qt::Key_unknown || event->key() == 0 || event->text().isEmpty())
-	{
-		event->ignore();
-		return;
-	}
+    if(event->key() == Qt::Key_unknown || event->key() == 0)
+    {
+        event->ignore();
+        return;
+    }
 
-    setKeySequence(QKeySequence::fromString(QKeySequence(modifier).toString() + event->text()));
-	event->accept();
+    // Ignore modifier keys themselves
+    if (event->key() == Qt::Key_Control || event->key() == Qt::Key_Shift ||
+        event->key() == Qt::Key_Alt || event->key() == Qt::Key_Meta)
+    {
+        event->ignore();
+        return;
+    }
+
+    // Combine modifiers and key to create the key sequence
+    QKeySequence keySequence(modifiers | event->key());
+
+    setKeySequence(keySequence);
+    event->accept();
 }
