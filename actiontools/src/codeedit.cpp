@@ -56,11 +56,7 @@ namespace ActionTools
 		highlightCurrentLine();
         setTabStopDistance(30);
 
-		QFont font;
-		font.setFamily(QStringLiteral("Arial"));
-		font.setFixedPitch(true);
-		font.setPointSize(10);
-		setFont(font);
+        setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
 
         connect(mCompleter, static_cast<void (ScriptCompleter::*)(const QString &)>(&ScriptCompleter::activated), this, &CodeEdit::insertCompletion);
 	}
