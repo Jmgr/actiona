@@ -174,6 +174,7 @@ target_link_libraries(${PROJECT}
     $<$<PLATFORM_ID:Windows>:Ws2_32>
     $<$<PLATFORM_ID:Windows>:PowrProf>
     $<$<PLATFORM_ID:Windows>:Vfw32>
+    $<$<PLATFORM_ID:Windows>:setupapi>
 )
 
 if(UNIX)
