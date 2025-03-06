@@ -20,8 +20,6 @@
 
 #pragma once
 
-#include "themeselection.hpp"
-
 #include <QDialog>
 #include <QButtonGroup>
 
@@ -51,10 +49,8 @@ private slots:
 	void on_testConnectivity_clicked();
 	void proxyTestFinished();
 	void accept() override;
-    void reject() override;
 	void done(int result) override;
     void languageChanged();
-    void on_themeComboBox_currentIndexChanged(int index);
 
 private:
 	void setCustomProxyEnabled(bool enabled);
@@ -70,7 +66,6 @@ private:
 	bool mPreviousASCRAssociation;
 	bool mPreviousACODAssociation;
     bool mLocaleChangeWarning;
-    ThemeSelection::Theme mInitialTheme;
 
 	Q_DISABLE_COPY(SettingsDialog)
 };

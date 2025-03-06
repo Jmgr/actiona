@@ -64,6 +64,7 @@
 #include "actionpackinternal.hpp"
 #include "actionpacksystem.hpp"
 #include "actionpackwindows.hpp"
+#include "themeselection.hpp"
 
 #ifdef ACT_PROFILE
 #include "tools/highresolutiontimer.hpp"
@@ -841,6 +842,9 @@ void MainWindow::on_actionSettings_triggered()
             settings.value(QStringLiteral("heatmap/minColor")).value<QColor>(),
             settings.value(QStringLiteral("heatmap/maxColor")).value<QColor>()
         });
+
+        auto theme = static_cast<ThemeSelection::Theme>(settings.value(QStringLiteral("gui/theme"), QVariant(static_cast<int>(ThemeSelection::Theme::Default))).toInt());
+        ThemeSelection::selectTheme(theme);
 	}
 }
 

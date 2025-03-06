@@ -24,6 +24,7 @@
 #include "ui_settingsdialog.h"
 #include "global.hpp"
 #include "tools/languages.hpp"
+#include "themeselection.hpp"
 
 #ifdef Q_OS_WIN
 #include "actiontools/registry.hpp"
@@ -51,8 +52,7 @@ SettingsDialog::SettingsDialog(QSystemTrayIcon *systemTrayIcon, QWidget *parent)
 	mSystemTrayIcon(systemTrayIcon),
 	mPreviousASCRAssociation(false),
     mPreviousACODAssociation(false),
-    mLocaleChangeWarning(false),
-    mInitialTheme(ThemeSelection::currentTheme())
+    mLocaleChangeWarning(false)
 {
 	ui->setupUi(this);
 
@@ -367,13 +367,6 @@ void SettingsDialog::accept()
     QDialog::accept();
 }
 
-void SettingsDialog::reject()
-{
-    ThemeSelection::selectTheme(mInitialTheme);
-
-    QDialog::reject();
-}
-
 void SettingsDialog::done(int result)
 {
 	QSettings settings;
@@ -412,8 +405,4 @@ int SettingsDialog::proxyMode() const
 		return ActionTools::Settings::PROXY_CUSTOM;
 }
 
-void SettingsDialog::on_themeComboBox_currentIndexChanged(int index)
-{
-    ThemeSelection::selectTheme(static_cast<ThemeSelection::Theme>(index));
-}
 
