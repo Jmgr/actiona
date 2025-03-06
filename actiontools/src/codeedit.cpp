@@ -50,10 +50,8 @@ namespace ActionTools
 
         connect(this, &CodeEdit::blockCountChanged, this, &CodeEdit::updateLineNumberAreaWidth);
         connect(this, &CodeEdit::updateRequest, this, &CodeEdit::updateLineNumberArea);
-        connect(this, &CodeEdit::cursorPositionChanged, this, &CodeEdit::highlightCurrentLine);
 
 		updateLineNumberAreaWidth(0);
-		highlightCurrentLine();
         setTabStopDistance(30);
 
         setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
@@ -157,26 +155,6 @@ namespace ActionTools
 		Q_UNUSED(newBlockCount)
 
 		setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
-	}
-
-	void CodeEdit::highlightCurrentLine()
-	{
-		QList<QTextEdit::ExtraSelection> extraSelections;
-
-		if(!isReadOnly())
-		{
-			QTextEdit::ExtraSelection selection;
-
-			QColor lineColor = QColor(Qt::yellow).lighter(160);
-
-			selection.format.setBackground(lineColor);
-			selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-			selection.cursor = textCursor();
-			selection.cursor.clearSelection();
-			extraSelections.append(selection);
-		}
-
-		setExtraSelections(extraSelections);
 	}
 
 	void CodeEdit::updateLineNumberArea(const QRect &rect, int dy)

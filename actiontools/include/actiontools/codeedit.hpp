@@ -56,7 +56,6 @@ namespace ActionTools
 	private slots:
 		void insertCompletion(const QString &completion);
 		void updateLineNumberAreaWidth(int newBlockCount);
-		void highlightCurrentLine();
 		void updateLineNumberArea(const QRect &rect, int dy);
 
 	private:
