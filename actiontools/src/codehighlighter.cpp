@@ -33,13 +33,13 @@ namespace ActionTools
 	CodeHighlighter::CodeHighlighter(QTextDocument *parent)
 		: QSyntaxHighlighter(parent)
 	{
-		static const QColor keywordColor(177, 98, 134);
-		static const QColor reservedColor(214, 93, 93);
-		static const QColor codeObjectsColor(215, 153, 33);
-		static const QColor operatorColor(69, 133, 136);
-		static const QColor numberColor(211, 134, 155);
-		static const QColor commentColor(146, 131, 116);
-		static const QColor stringColor(104, 157, 106);
+        constexpr QColor keywordColor(177, 98, 134);
+        constexpr QColor reservedColor(214, 93, 93);
+        constexpr QColor codeObjectsColor(215, 153, 33);
+        constexpr QColor operatorColor(69, 133, 136);
+        constexpr QColor numberColor(211, 134, 155);
+        constexpr QColor commentColor(146, 131, 116);
+        constexpr QColor stringColor(104, 157, 106);
 		
 		mFormats[KeywordFormat].setFontWeight(QFont::Bold);
 		mFormats[KeywordFormat].setForeground(keywordColor);
