@@ -26,34 +26,40 @@
 
 #include <QFile>
 #include <QDebug>
+#include <QColor>
 
 namespace ActionTools
 {
 	CodeHighlighter::CodeHighlighter(QTextDocument *parent)
 		: QSyntaxHighlighter(parent)
 	{
-		mFormats[KeywordFormat].setForeground(Qt::darkBlue);
-		mFormats[KeywordFormat].setFontWeight(QFont::Bold);
-
-		mFormats[ReservedFormat].setForeground(Qt::red);
-		mFormats[ReservedFormat].setFontWeight(QFont::Bold);
-		mFormats[ReservedFormat].setFontStrikeOut(true);
-
-		mFormats[CodeObjectsFormat].setForeground(Qt::darkBlue);
-		mFormats[CodeObjectsFormat].setFontWeight(QFont::Bold);
-
-		mFormats[OperatorFormat].setForeground(Qt::red);
-
-		mFormats[NumberFormat].setForeground(Qt::darkMagenta);
-
-		mFormats[CommentFormat].setForeground(Qt::darkGreen);
-
-		mFormats[StringFormat].setForeground(Qt::darkRed);
-
-        for(const QString &keyword: usedKeywords)
+	        static const QColor keywordColor(177, 98, 134);
+	        static const QColor reservedColor(214, 93, 93);
+	        static const QColor codeObjectsColor(215, 153, 33);
+	        static const QColor operatorColor(69, 133, 136);
+	        static const QColor numberColor(211, 134, 155);
+	        static const QColor commentColor(146, 131, 116);
+	        static const QColor stringColor(104, 157, 106);
+	
+	        mFormats[KeywordFormat].setFontWeight(QFont::Bold);
+	        mFormats[KeywordFormat].setForeground(keywordColor);
+	
+	        mFormats[ReservedFormat].setFontWeight(QFont::Bold);
+	        mFormats[ReservedFormat].setForeground(reservedColor);
+	        mFormats[ReservedFormat].setFontStrikeOut(true);
+	
+	        mFormats[CodeObjectsFormat].setFontWeight(QFont::Bold);
+	        mFormats[CodeObjectsFormat].setForeground(codeObjectsColor);
+	
+	        mFormats[OperatorFormat].setForeground(operatorColor);
+	        mFormats[NumberFormat].setForeground(numberColor);
+	        mFormats[CommentFormat].setForeground(commentColor);
+	        mFormats[StringFormat].setForeground(stringColor);
+	
+	        for(const QString &keyword: usedKeywords)
 			mUsedKeywords.insert(keyword);
-
-        for(const QString &keyword: reservedKeywords)
+	
+	        for(const QString &keyword: reservedKeywords)
 			mReservedKeywords.insert(keyword);
 	}
 
