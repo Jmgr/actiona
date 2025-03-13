@@ -53,7 +53,21 @@ namespace ActionTools
         QStringLiteral("switch"),
         QStringLiteral("with"),
         QStringLiteral("finally"),
-        QStringLiteral("this")
+        QStringLiteral("this"),
+        QStringLiteral("let"),
+        QStringLiteral("const"),
+        QStringLiteral("yield"),
+        QStringLiteral("async"),
+        QStringLiteral("await"),
+        QStringLiteral("null"),
+        QStringLiteral("true"),
+        QStringLiteral("false"),
+        QStringLiteral("class"),
+        QStringLiteral("import"),
+        QStringLiteral("export"),
+        QStringLiteral("super"),
+        QStringLiteral("static"),
+        QStringLiteral("debugger"),
     };
 	
     const QStringList reservedKeywords =
@@ -69,14 +83,8 @@ namespace ActionTools
         QStringLiteral("short"),
         QStringLiteral("char"),
         QStringLiteral("implements"),
-        QStringLiteral("static"),
-        QStringLiteral("class"),
-        QStringLiteral("import"),
-        QStringLiteral("super"),
-        QStringLiteral("const"),
         QStringLiteral("int"),
         QStringLiteral("synchronized"),
-        QStringLiteral("debugger"),
         QStringLiteral("interface"),
         QStringLiteral("throws"),
         QStringLiteral("double"),
@@ -85,10 +93,9 @@ namespace ActionTools
         QStringLiteral("enum"),
         QStringLiteral("native"),
         QStringLiteral("volatile"),
-        QStringLiteral("export"),
         QStringLiteral("package"),
         QStringLiteral("extends"),
-        QStringLiteral("private")
+        QStringLiteral("private"),
     };
 	
 	void addEcmaScriptObjectsKeywords(QStandardItemModel *model)
