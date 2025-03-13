@@ -33,33 +33,33 @@ namespace ActionTools
 	CodeHighlighter::CodeHighlighter(QTextDocument *parent)
 		: QSyntaxHighlighter(parent)
 	{
-	        static const QColor keywordColor(177, 98, 134);
-	        static const QColor reservedColor(214, 93, 93);
-	        static const QColor codeObjectsColor(215, 153, 33);
-	        static const QColor operatorColor(69, 133, 136);
-	        static const QColor numberColor(211, 134, 155);
-	        static const QColor commentColor(146, 131, 116);
-	        static const QColor stringColor(104, 157, 106);
+		static const QColor keywordColor(177, 98, 134);
+		static const QColor reservedColor(214, 93, 93);
+		static const QColor codeObjectsColor(215, 153, 33);
+		static const QColor operatorColor(69, 133, 136);
+		static const QColor numberColor(211, 134, 155);
+		static const QColor commentColor(146, 131, 116);
+		static const QColor stringColor(104, 157, 106);
+		
+		mFormats[KeywordFormat].setFontWeight(QFont::Bold);
+		mFormats[KeywordFormat].setForeground(keywordColor);
+		
+		mFormats[ReservedFormat].setFontWeight(QFont::Bold);
+		mFormats[ReservedFormat].setForeground(reservedColor);
+		mFormats[ReservedFormat].setFontStrikeOut(true);
+		
+		mFormats[CodeObjectsFormat].setFontWeight(QFont::Bold);
+		mFormats[CodeObjectsFormat].setForeground(codeObjectsColor);
+		
+		mFormats[OperatorFormat].setForeground(operatorColor);
+		mFormats[NumberFormat].setForeground(numberColor);
+		mFormats[CommentFormat].setForeground(commentColor);
+		mFormats[StringFormat].setForeground(stringColor);
 	
-	        mFormats[KeywordFormat].setFontWeight(QFont::Bold);
-	        mFormats[KeywordFormat].setForeground(keywordColor);
-	
-	        mFormats[ReservedFormat].setFontWeight(QFont::Bold);
-	        mFormats[ReservedFormat].setForeground(reservedColor);
-	        mFormats[ReservedFormat].setFontStrikeOut(true);
-	
-	        mFormats[CodeObjectsFormat].setFontWeight(QFont::Bold);
-	        mFormats[CodeObjectsFormat].setForeground(codeObjectsColor);
-	
-	        mFormats[OperatorFormat].setForeground(operatorColor);
-	        mFormats[NumberFormat].setForeground(numberColor);
-	        mFormats[CommentFormat].setForeground(commentColor);
-	        mFormats[StringFormat].setForeground(stringColor);
-	
-	        for(const QString &keyword: usedKeywords)
+		for(const QString &keyword: usedKeywords)
 			mUsedKeywords.insert(keyword);
 	
-	        for(const QString &keyword: reservedKeywords)
+		for(const QString &keyword: reservedKeywords)
 			mReservedKeywords.insert(keyword);
 	}
 
