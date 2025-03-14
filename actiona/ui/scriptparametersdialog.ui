@@ -14,7 +14,7 @@
    <string>Script parameters</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="gui.qrc">
+   <iconset resource="actiona.qrc">
     <normaloff>:/icons/text.png</normaloff>:/icons/text.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -77,7 +77,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="gui.qrc"/>
+  <include location="actiona.qrc"/>
  </resources>
  <connections>
   <connection>

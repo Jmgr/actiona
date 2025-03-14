@@ -14,7 +14,7 @@
    <string>Script settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="gui.qrc">
+   <iconset resource="actiona.qrc">
     <normaloff>:/icons/options.png</normaloff>:/icons/options.png</iconset>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -62,7 +62,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="gui.qrc"/>
+  <include location="actiona.qrc"/>
  </resources>
  <connections>
   <connection>

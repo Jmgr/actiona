@@ -14,7 +14,7 @@
    <string>Script resources</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="gui.qrc">
+   <iconset resource="actiona.qrc">
     <normaloff>:/icons/resources.png</normaloff>:/icons/resources.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -121,7 +121,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="gui.qrc"/>
+  <include location="actiona.qrc"/>
  </resources>
  <connections>
   <connection>

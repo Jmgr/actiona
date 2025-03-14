@@ -14,7 +14,7 @@
    <string>Console</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../gui/gui.qrc">
+   <iconset resource="../actiona/actiona.qrc">
     <normaloff>:/icons/paste.png</normaloff>:/icons/paste.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -89,7 +89,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../gui/gui.qrc"/>
+  <include location="../actiona/actiona.qrc"/>
  </resources>
  <connections/>
 </ui>
