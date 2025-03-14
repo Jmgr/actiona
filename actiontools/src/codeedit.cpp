@@ -76,7 +76,7 @@ namespace ActionTools
 			++digits;
 		}
 
-        int space = 3 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
+        int space = 6 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
 
 		return space;
 	}
@@ -326,7 +326,7 @@ namespace ActionTools
 			{
 				QString number = QString::number(blockNumber + 1);
 				painter.setPen(Qt::black);
-				painter.drawText(0, top, mLineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
+                painter.drawText(0, top, mLineNumberArea->width() - 4, fontMetrics().height(), Qt::AlignRight, number);
 			}
 
 			block = block.next();
