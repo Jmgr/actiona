@@ -142,7 +142,7 @@ int main(int argc, char **argv)
     Tools::Languages::installTranslator(QStringLiteral("tools"), locale);
     Tools::Languages::installTranslator(QStringLiteral("actiontools"), locale);
     Tools::Languages::installTranslator(QStringLiteral("executer"), locale);
-    Tools::Languages::installTranslator(QStringLiteral("gui"), locale);
+    Tools::Languages::installTranslator(QStringLiteral("actiona"), locale);
 
 	optionsParser.addOptions(
 	{

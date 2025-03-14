@@ -53,15 +53,51 @@ endfunction()
 
 function(compile_translations TARGET)
     find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS LinguistTools REQUIRED)
+
     set(TS_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_fr_FR.ts
         ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_zh_CN.ts
         # Add other translations here
     )
-    set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_BINARY_DIR}/translations)
+
+    set(QM_OUTPUT_DIR ${CMAKE_BINARY_DIR}/translations)
+    file(MAKE_DIRECTORY ${QM_OUTPUT_DIR})
+
     qt6_add_translation(QM_FILES ${TS_FILES})
-    add_custom_target(${TARGET}_translations ALL DEPENDS ${QM_FILES})
+
+    set(QM_FILES_MOVED)
+
+        foreach(QM_FILE ${QM_FILES})
+            get_filename_component(QM_BASENAME ${QM_FILE} NAME)
+            set(QM_TARGET_FILE ${QM_OUTPUT_DIR}/${QM_BASENAME})
+
+            add_custom_command(
+                OUTPUT ${QM_TARGET_FILE}
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${QM_FILE} ${QM_TARGET_FILE}
+                DEPENDS ${QM_FILE}
+            )
+
+            list(APPEND QM_FILES_MOVED ${QM_TARGET_FILE})
+        endforeach()
+
+        # Ensure translation files are built and moved correctly
+        add_custom_target(${TARGET}_translations ALL DEPENDS ${QM_FILES_MOVED})
+    set(QM_FILES ${QM_FILES} PARENT_SCOPE)
+
+    add_custom_target(${TARGET}_update_translations
+        COMMAND Qt6::lupdate
+        -locations relative
+        -no-obsolete
+        ${CMAKE_CURRENT_SOURCE_DIR} # Source files directory
+        -ts ${TS_FILES}             # Update these .ts files
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
 endfunction()
+
+add_custom_target(update_all_translations)
+foreach(subdir IN ITEMS tools actiontools execution actexec actiona actionpackdata actionpackdevice actionpackinternal actionpacksystem actionpackwindows)
+    add_dependencies(update_all_translations ${subdir}_update_translations)
+endforeach()
 
 add_subdirectory(tools)
 add_subdirectory(actiontools)

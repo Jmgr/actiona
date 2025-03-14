@@ -4,7 +4,7 @@
 <context>
     <name>CodeExecuter</name>
     <message>
-        <location filename="../actexecuter/codeexecuter.cpp" line="111"/>
+        <location filename="../src/codeexecuter.cpp" line="+84"/>
         <source>Backtrace: </source>
         <translation>Pile d&apos;appels :</translation>
     </message>
@@ -12,216 +12,137 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../actexecuter/codeexecuter.cpp" line="110"/>
+        <location line="-1"/>
         <source>Uncaught exception: </source>
         <translation>Exception non gérée : </translation>
     </message>
     <message>
-        <source>switch to code mode, may not be used with -r</source>
-        <translation type="obsolete">passer en mode code, ne peut pas être utilisé avec -r</translation>
-    </message>
-    <message>
-        <source>switch to script mode, may not be used with -o</source>
-        <translation type="obsolete">passer en mode script, ne peut pas être utiliser avec -o</translation>
-    </message>
-    <message>
-        <source>switch to code mode, may not be used with -s</source>
-        <translation type="vanished">passer en mode code, ne peut pas être utilisé avec -s</translation>
-    </message>
-    <message>
-        <source>switch to script mode, may not be used with -c</source>
-        <translation type="vanished">passer en mode script, ne peut pas être utiliser avec -c</translation>
-    </message>
-    <message>
-        <source>do not include the Qt library into the code</source>
-        <translation type="vanished">ne pas inclure la bibliothèque Qt dans le code</translation>
-    </message>
-    <message>
-        <source>starts in portable mode, storing the settings in the executable folder</source>
-        <translation type="vanished">démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable</translation>
-    </message>
-    <message>
-        <source>sets the proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;</source>
-        <translation type="vanished">change le mode de proxy, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;</translation>
-    </message>
-    <message>
-        <source>sets the custom proxy type, values are &quot;http&quot; or &quot;socks&quot; (default)</source>
-        <translation type="vanished">change de type de proxy, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
-    </message>
-    <message>
-        <source>sets the custom proxy host</source>
-        <translation type="vanished">change l&apos;hôte du proxy</translation>
-    </message>
-    <message>
-        <source>sets the custom proxy port</source>
-        <translation type="vanished">change le port du proxy</translation>
-    </message>
-    <message>
-        <source>sets the custom proxy user</source>
-        <translation type="vanished">change le nom d&apos;utilisateur du proxy</translation>
-    </message>
-    <message>
-        <source>sets the custom proxy password</source>
-        <translation type="vanished">change le mot de passe du proxy</translation>
-    </message>
-    <message>
-        <source>create a console to see debug output</source>
-        <translation type="vanished">crée une console pour voir la sortie de débogage</translation>
-    </message>
-    <message>
-        <source>wait for user input at the end of the execution, used only with --console</source>
-        <translation type="vanished">attendre une action de la part de l&apos;utilisateur avant de fermer le programme, utilisé seulement avec --console</translation>
-    </message>
-    <message>
-        <source>show the program version</source>
-        <translation type="vanished">afficher la version du programme</translation>
-    </message>
-    <message>
-        <source>show this help text</source>
-        <translation type="vanished">afficher ce texte d&apos;aide</translation>
-    </message>
-    <message>
-        <source>usage: </source>
-        <translation type="vanished">utilisation : </translation>
-    </message>
-    <message>
-        <source>[parameters]</source>
-        <translation type="vanished">[paramètres]</translation>
-    </message>
-    <message>
-        <source>filename</source>
-        <translation type="vanished">nom de fichier</translation>
-    </message>
-    <message>
-        <source>Parameters are:</source>
-        <translation type="vanished">Les paramètres sont :</translation>
-    </message>
-    <message>
-        <location filename="../actexecuter/main.cpp" line="119"/>
+        <location filename="../src/main.cpp" line="+128"/>
         <source>Emulates clics, key presses and other actions.</source>
         <translation>Simule des clics de souris, des pressions de touche et d&apos;autres actions.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="123"/>
+        <location line="+4"/>
         <source>Starts in portable mode, storing the settings in the executable folder.</source>
         <translation>Démarre en mode portable, stocke les paramètres dans le dossier de l&apos;exécutable.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="149"/>
+        <location line="+26"/>
         <source>Switch to code mode, may not be used with -s.</source>
         <translation>Passer en mode code, ne peut pas être utilisé avec -s.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="150"/>
+        <location line="+1"/>
         <source>Switch to script mode, may not be used with -c.</source>
         <translation>Passer en mode script, ne peut pas être utiliser avec -c.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="151"/>
-        <source>Do not include the Qt library into the code.</source>
-        <translation>Ne pas inclure la bibliothèque Qt dans le code.</translation>
+        <location line="-49"/>
+        <source>X11 was not detected. Actiona only functions in X11 sessions (Wayland is not supported). Please refer to https://wiki.actiona.tools/doku.php?id=en:x11notdetected for more information.</source>
+        <translation>X11 n&apos;a pas été détecté. Actiona ne fonctionne que dans les sessions X11 (Wayland n&apos;est pas pris en charge). Veuillez consulter https://wiki.actiona.tools/doku.php?id=fr:x11notdetected pour plus d&apos;informations.</translation>
     </message>
     <message>
+        <location line="+3"/>
+        <source>X11 not detected</source>
+        <translation>X11 n&apos;a pas été détecté</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>X11 was not detected. Actiona only functions in X11 sessions (Wayland is not supported). Please refer to &lt;a href=&quot;https://wiki.actiona.tools/doku.php?id=en:x11notdetected&quot;&gt;this wiki page&lt;/a&gt; for more information.</source>
+        <translation>X11 n&apos;a pas été détecté. Actiona ne fonctionne que dans les sessions X11 (Wayland n&apos;est pas pris en charge). Veuillez consulter &lt;a href=&quot;https://wiki.actiona.tools/doku.php?id=fr:x11notdetected&quot;&gt;cette page du wiki&lt;/a&gt; pour plus d&apos;informations.</translation>
+    </message>
+    <message>
+        <location line="+46"/>
         <source>Sets the proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;.</source>
-        <translation type="vanished">Change le mode de proxy, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;.</translation>
+        <translation>Change le mode de proxy, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;.</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Sets the custom proxy type, values are &quot;http&quot; or &quot;socks&quot; (default).</source>
-        <translation type="vanished">Change de type de proxy, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut).</translation>
+        <translation>Change de type de proxy, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut).</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="154"/>
+        <location line="+1"/>
         <source>Sets the custom proxy host.</source>
         <translation>Change l&apos;hôte du proxy.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="155"/>
+        <location line="+1"/>
         <source>Sets the custom proxy port.</source>
         <translation>Change le port du proxy.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="156"/>
+        <location line="+1"/>
         <source>Sets the custom proxy user.</source>
         <translation>Change le nom d&apos;utilisateur du proxy.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="157"/>
+        <location line="+1"/>
         <source>Sets the custom proxy password.</source>
         <translation>Change le mot de passe du proxy.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="161"/>
+        <location line="+4"/>
         <source>create a console to see debug output.</source>
         <translation>crée une console pour voir la sortie de débogage.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="162"/>
+        <location line="+1"/>
         <source>wait for user input at the end of the execution, used only with --console.</source>
         <translation>attendre une action de la part de l&apos;utilisateur avant de fermer le programme, utilisé seulement avec --console.</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="165"/>
+        <location line="+3"/>
         <source>The filepath of a script/code file to execute.</source>
         <translation>Le chemin vers un fichier script/code à exécuter.</translation>
     </message>
     <message>
+        <location line="+44"/>
         <source>Unknown proxy mode, values are &quot;none&quot;, &quot;system&quot; (default) or &quot;custom&quot;</source>
-        <translation type="vanished">Mode de proxy inconnu, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;</translation>
+        <translation>Mode de proxy inconnu, les valeurs possibles sont &quot;none&quot;, &quot;system&quot; (par défaut) ou &quot;custom&quot;</translation>
     </message>
     <message>
+        <location line="+34"/>
         <source>Unknown proxy type, values are &quot;http&quot; or &quot;socks&quot; (default)</source>
-        <translation type="vanished">Type de proxy inconnu, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
+        <translation>Type de proxy inconnu, les valeurs possibles sont &quot;http&quot; ou &quot;socks&quot; (par défaut)</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="309"/>
+        <location line="+56"/>
         <source>Unknown execution mode, please specify mode=script or mode=code</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier mode=script ou mode=code</translation>
     </message>
     <message>
-        <location filename="../actexecuter/main.cpp" line="336"/>
+        <location line="+27"/>
         <source>Unknown execution mode, please specify -s (script) or -c (code)</source>
         <translation>Mode d&apos;exécution inconnu, merci de spécifier -s (script) ou -c (code)</translation>
     </message>
     <message>
-        <source>Unknown execution mode, please specify -o (script) or -r (code)</source>
-        <translation type="obsolete">Mode d&apos;exécution inconnu, merci de spécifier -o (script) ou -r (code)</translation>
-    </message>
-    <message>
-        <location filename="../actexecuter/main.cpp" line="347"/>
+        <location line="+11"/>
         <source>Unable to read input file</source>
         <translation>Impossible de lire le fichier d&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../actexecuter/scriptexecuter.cpp" line="51"/>
+        <location filename="../src/scriptexecuter.cpp" line="+50"/>
         <source>Reading script file failed due to an internal error</source>
         <translation>La lecture du script a échoué à cause d&apos;une erreur interne</translation>
     </message>
     <message>
-        <source>Input script file has a bad script schema</source>
-        <translation type="obsolete">Le fichier d&apos;entrée a un schéma incorrect</translation>
-    </message>
-    <message>
-        <location filename="../actexecuter/scriptexecuter.cpp" line="58"/>
-        <source>Input script file has an invalid script schema</source>
-        <translation>Le fichier d&apos;entrée a un schéma incorrect</translation>
-    </message>
-    <message>
-        <location filename="../actexecuter/scriptexecuter.cpp" line="65"/>
+        <location line="+7"/>
         <source>Input script file is too recent</source>
         <translation>Le fichier d&apos;entrée est trop récent</translation>
     </message>
     <message>
-        <location filename="../actexecuter/scriptexecuter.cpp" line="79"/>
+        <location line="+14"/>
         <source>Start execution failed</source>
         <translation>Impossible de démarrer l&apos;exécution</translation>
     </message>
     <message>
-        <location filename="../actexecuter/scriptexecuter.cpp" line="98"/>
+        <location line="+19"/>
         <source>Execution error: </source>
         <translation>Erreur d&apos;exécution : </translation>
     </message>
     <message>
-        <location filename="../actexecuter/mainclass.cpp" line="66"/>
+        <location filename="../src/mainclass.cpp" line="+66"/>
         <source>Unable to download the requested file, &quot;%1&quot;</source>
         <translation>Impossible de télécharger le fichier demandé, &quot;%1&quot;</translation>
     </message>
