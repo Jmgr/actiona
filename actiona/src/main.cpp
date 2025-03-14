@@ -84,11 +84,11 @@ int main(int argc, char **argv)
 #ifdef Q_OS_UNIX
     if(!ActionTools::X11Info::display())
     {
-        qCritical() << QObject::tr("X11 was not detected. Actiona only functions in X11 sessions (Wayland is not supported). Please refer to https://wiki.actiona.tools/doku.php?id=en:x11notdetected for more information.");
+        qCritical() << QObject::tr("X11 was not detected. Actiona only works in X11 sessions (Wayland is not supported). Please refer to https://wiki.actiona.tools/doku.php?id=en:x11notdetected for more information.");
 
         QMessageBox::critical(nullptr,
                               QObject::tr("X11 not detected"),
-                              QObject::tr("X11 was not detected. Actiona only functions in X11 sessions (Wayland is not supported). Please refer to <a href=\"https://wiki.actiona.tools/doku.php?id=en:x11notdetected\">this wiki page</a> for more information."));
+                              QObject::tr("X11 was not detected. Actiona only works in X11 sessions (Wayland is not supported). Please refer to <a href=\"https://wiki.actiona.tools/doku.php?id=en:x11notdetected\">this wiki page</a> for more information."));
         return 0;
     }
 #endif
