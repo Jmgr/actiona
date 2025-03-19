@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>tools.actiona.actiona</id>
+  
+  <name>Actiona</name>
+  <summary>Cross-platform desktop automation tool</summary>
+  
+  <metadata_license>MIT</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      Actiona is an automation tool that allows you to execute many actions on your computer such as emulating mouse clicks, key presses, showing message boxes, editing text files, etc. Tasks can be created using a simple editor or using the EcmaScript (JavaScript) programming language for more customization. Actiona is cross-platform.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">actiona.desktop</launchable>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://jmgr.net/images/actiona-screenshot.png</image>
+    </screenshot>
+  </screenshots>
+
+  <content_rating type="oars-1.1" />
+
+  <url type="homepage">https://actiona.tools</url>
+  <url type="help">https://wiki.actiona.tools</url>
+  <url type="bugtracker">https://github.com/Jmgr/actiona/issues</url>
+  <url type="contact">https://discord.gg/ubTjJu3dVZ</url>
+  <url type="vcs-browser">https://github.com/Jmgr/actiona</url>
+</component>
