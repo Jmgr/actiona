@@ -67,21 +67,22 @@ function(compile_translations TARGET)
 
     set(QM_FILES_MOVED)
 
-        foreach(QM_FILE ${QM_FILES})
-            get_filename_component(QM_BASENAME ${QM_FILE} NAME)
-            set(QM_TARGET_FILE ${QM_OUTPUT_DIR}/${QM_BASENAME})
+    foreach(QM_FILE ${QM_FILES})
+        get_filename_component(QM_BASENAME ${QM_FILE} NAME)
+        set(QM_TARGET_FILE ${QM_OUTPUT_DIR}/${QM_BASENAME})
 
-            add_custom_command(
-                OUTPUT ${QM_TARGET_FILE}
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${QM_FILE} ${QM_TARGET_FILE}
-                DEPENDS ${QM_FILE}
-            )
+        add_custom_command(
+            OUTPUT ${QM_TARGET_FILE}
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${QM_FILE} ${QM_TARGET_FILE}
+            DEPENDS ${QM_FILE}
+        )
 
-            list(APPEND QM_FILES_MOVED ${QM_TARGET_FILE})
-        endforeach()
+        list(APPEND QM_FILES_MOVED ${QM_TARGET_FILE})
+    endforeach()
 
-        # Ensure translation files are built and moved correctly
-        add_custom_target(${TARGET}_translations ALL DEPENDS ${QM_FILES_MOVED})
+    # Ensure translation files are built and moved correctly
+    add_custom_target(${TARGET}_translations ALL DEPENDS ${QM_FILES_MOVED})
+
     set(QM_FILES ${QM_FILES} PARENT_SCOPE)
 
     add_custom_target(${TARGET}_update_translations
@@ -98,6 +99,11 @@ add_custom_target(update_all_translations)
 foreach(subdir IN ITEMS tools actiontools execution actexec actiona actionpackdata actionpackdevice actionpackinternal actionpacksystem actionpackwindows)
     add_dependencies(update_all_translations ${subdir}_update_translations)
 endforeach()
+
+install(
+    DIRECTORY ${CMAKE_BINARY_DIR}/translations
+    DESTINATION share/actiona/
+)
 
 add_subdirectory(tools)
 add_subdirectory(actiontools)

@@ -185,3 +185,5 @@ if(UNIX)
 endif()
 
 compile_translations(${PROJECT})
+
+install(TARGETS ${PROJECT} DESTINATION lib/actiona/actions)

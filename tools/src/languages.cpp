@@ -79,20 +79,16 @@ namespace Tools
     void Languages::installTranslator(const QString &componentName, const QString &locale)
     {
         auto translator = new QTranslator(QCoreApplication::instance());
+        auto appDirPath = QCoreApplication::applicationDirPath();
 
-        if(!translator->load(QStringLiteral("%1/translations/%2_%3").arg(QCoreApplication::applicationDirPath()).arg(componentName).arg(locale)))
-        {
-            auto path = QStringLiteral("%1/translations/%2_%3").arg(QDir::currentPath()).arg(componentName).arg(locale);
-            if(!translator->load(path))
-            {
-                qDebug() << "Failed loading translation from" << path;
-    #ifndef Q_OS_WIN
-                // TODO: ACT_PREFIX
-                auto unused = translator->load(QStringLiteral("/usr/local/share/actiona/translations/%2_%3").arg(componentName).arg(locale));
-                Q_UNUSED(unused)
+    #ifdef Q_OS_WIN
+        auto path = QStringLiteral("%1/translations/%2_%3").arg(appDirPath, componentName, locale);
+    #else
+        auto path = QStringLiteral("%1/../share/actiona/translations/%2_%3").arg(appDirPath, componentName, locale);
     #endif
-            }
-        }
+
+        if(!translator->load(path))
+            qDebug() << "Failed loading translation from" << path;
 
         if(!translator->isEmpty())
             QCoreApplication::installTranslator(translator);

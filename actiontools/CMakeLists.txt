@@ -303,6 +303,11 @@ ExternalProject_Add(external_qtjsapi
             -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 )
 
+install(
+    DIRECTORY ${CMAKE_BINARY_DIR}/3rdparty/qtjsapi/out/
+    DESTINATION lib/actiona
+)
+
 target_link_directories(${PROJECT}
     PRIVATE
         ${CMAKE_BINARY_DIR}/3rdparty/qtjsapi/out
@@ -334,4 +339,11 @@ target_link_libraries(
 )
 
 compile_translations(${PROJECT})
+
+if(UNIX)
+    # We depend on the qtjsapi library
+    set_target_properties(${PROJECT} PROPERTIES INSTALL_RPATH "$ORIGIN")
+endif()
+
+install(TARGETS ${PROJECT} DESTINATION lib/actiona)
 

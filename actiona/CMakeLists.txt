@@ -169,3 +169,9 @@ target_link_libraries(
 )
 
 compile_translations(${PROJECT})
+
+if(UNIX)
+    set_target_properties(${PROJECT} PROPERTIES INSTALL_RPATH "$ORIGIN/../lib/actiona:$ORIGIN/../lib/actiona/actions")
+endif()
+
+install(TARGETS ${PROJECT} DESTINATION bin)

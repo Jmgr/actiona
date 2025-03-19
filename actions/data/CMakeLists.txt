@@ -122,3 +122,5 @@ target_include_directories(${PROJECT}
 target_link_libraries(${PROJECT} actiontools Qt6::Network Qt6::Sql Qt6::Widgets Qt6::Core5Compat)
 
 compile_translations(${PROJECT})
+
+install(TARGETS ${PROJECT} DESTINATION lib/actiona/actions)
