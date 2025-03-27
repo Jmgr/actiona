@@ -172,11 +172,11 @@ namespace Code
         StaticProcess(QObject *parent): CodeClass(parent) {}
 
         Q_INVOKABLE QString toString() const override { return QStringLiteral("StaticProcess"); }
-        QJSValue list();
-        QJSValue startDetached(const QString &filename);
-        QJSValue startDetached(const QString &filename, const QStringList &parameters);
-        QJSValue startDetached(const QString &filename, const QStringList &parameters, const QString &workingDirectory);
-        QJSValue thisProcess();
+        Q_INVOKABLE QJSValue list();
+        Q_INVOKABLE QJSValue startDetached(const QString &filename);
+        Q_INVOKABLE QJSValue startDetached(const QString &filename, const QStringList &parameters);
+        Q_INVOKABLE QJSValue startDetached(const QString &filename, const QStringList &parameters, const QString &workingDirectory);
+        Q_INVOKABLE QJSValue thisProcess();
     };
 }
 

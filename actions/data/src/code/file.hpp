@@ -47,7 +47,8 @@ namespace Code
 		};
         Q_ENUM(OpenMode)
 	
-        ~File() override                                                 { mFile.close(); }
+        Q_INVOKABLE File();
+        ~File();
 
         QFile *file()                                           { return &mFile; }
 	

@@ -33,6 +33,16 @@
 
 namespace Code
 {
+    File::File()
+        : CodeClass()
+    {
+    }
+
+    File::~File()
+    {
+        mFile.close();
+    }
+
     File *File::open(const QString &filename, OpenMode mode)
 	{
 		mFile.setFileName(filename);
