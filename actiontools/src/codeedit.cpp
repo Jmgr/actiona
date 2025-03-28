@@ -124,11 +124,7 @@ namespace ActionTools
 	{
 		if(mCode)
 		{
-            QString codeText = toPlainText();
-            if (!codeText.endsWith(QChar::fromLatin1('\n'))) {
-                codeText.append(QChar::fromLatin1('\n'));
-            }
-            auto [ok, message, line] = Code::checkSyntax(codeText);
+            auto [ok, message, line] = Code::checkSyntax(toPlainText());
             if(!ok)
             {
                 setCurrentLine(line);
@@ -169,7 +165,7 @@ namespace ActionTools
 			mLineNumberArea->update(0, rect.y(), mLineNumberArea->width(), rect.height());
 
 		if(rect.contains(viewport()->rect()))
-			updateLineNumberAreaWidth(0);
+            updateLineNumberAreaWidth(0);
 	}
 
 	int spacesLeftFromPosition(const QString &text, int position)
