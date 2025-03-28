@@ -93,7 +93,7 @@ namespace Code
     {
         QString prefix = QStringLiteral("function checkSyntax() { ");
         QJSEngine engine;
-        QJSValue result = engine.evaluate(QStringLiteral("%1%2 }").arg(prefix).arg(program));
+        QJSValue result = engine.evaluate(QStringLiteral("%1%2\n }").arg(prefix, program));
 
         if(!result.isError())
             return {true, {}, {}};
