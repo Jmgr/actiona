@@ -124,7 +124,11 @@ namespace ActionTools
 	{
 		if(mCode)
 		{
-            auto [ok, message, line] = Code::checkSyntax(toPlainText());
+            QString codeText = toPlainText();
+            if (!codeText.endsWith(QChar::fromLatin1('\n'))) {
+                codeText.append(QChar::fromLatin1('\n'));
+            }
+            auto [ok, message, line] = Code::checkSyntax(codeText);
             if(!ok)
             {
                 setCurrentLine(line);
