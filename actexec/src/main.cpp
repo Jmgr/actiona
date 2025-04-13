@@ -155,17 +155,15 @@ int main(int argc, char **argv)
     {
         AllocConsole();
 
+        // Redirect standard in/out streams
+        FILE* dummy;
+        freopen_s(&dummy, "CONOUT$", "w", stdout);
+        freopen_s(&dummy, "CONOUT$", "w", stderr);
+        freopen_s(&dummy, "CONIN$", "r", stdin);
+
         if(optionsParser.isSet(QStringLiteral("pause-at-end")))
             qAddPostRoutine(pause);
     }
-    else if(!GetConsoleWindow())
-        AttachConsole(ATTACH_PARENT_PROCESS);
-
-    // Redirect standard in/out streams
-    FILE* dummy;
-    freopen_s(&dummy, "CONOUT$", "w", stdout);
-    freopen_s(&dummy, "CONOUT$", "w", stderr);
-    freopen_s(&dummy, "CONIN$", "r", stdin);
 #endif
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
