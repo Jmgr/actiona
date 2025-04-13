@@ -105,6 +105,33 @@ install(
     DESTINATION share/actiona/
 )
 
+if(UNIX)
+  install(
+      FILES doc/tools.actiona.actiona.metainfo.xml
+      DESTINATION share/metainfo
+  )
+  install(
+      FILES doc/actiona.desktop
+      DESTINATION share/applications
+  )
+  install(
+      FILES doc/actiona.1
+      DESTINATION share/man/man1
+  )
+  install(
+      FILES doc/actiona.xml
+      DESTINATION share/mime/packages/
+  )
+  install(
+      FILES actiona/icons/actiona.png
+      DESTINATION share/icons/hicolor/48x48/apps
+  )
+  install(
+      FILES actiona/icons/actiona.png
+      DESTINATION share/pixmaps
+  )
+endif()
+
 add_subdirectory(tools)
 add_subdirectory(actiontools)
 add_subdirectory(execution)
