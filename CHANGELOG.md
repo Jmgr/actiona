@@ -1,3 +1,22 @@
+## 3.11.1 (13/04/25)
+### Global
+- Added support for "make install"
+- Windows: fixed stdout and stderr not being printed in the command prompt
+- Linux: added metainfo, fixed installation of file in standard places
+
+### Interface
+- Fixed issue in the code editor where validation would fail without reason - [@deoxify](https://github.com/deoxify)
+
+### Code
+- Fixed Console not being available when using actexec
+- Fixed missing constructor for File
+- Fixed inability to call static methods in Process
+
+### Contributors
+Thank you very much to all the beta testers: IceLab, MDLE46, The Poupouillou, Fredy123, J_Game, Pixfus and potdemiel2303.
+
+Thanks to [@deoxify](https://github.com/deoxify) for contributing to this release!
+
 ## 3.11.0 (14/03/25)
 ### Global
 - Improved loading times (migrated actions from plugins to libraries)
