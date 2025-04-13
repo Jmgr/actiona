@@ -59,6 +59,9 @@ bool CodeExecuter::start(QIODevice *device, const QString &filename)
 
     Execution::CodeStdio::registerClass(*mScriptEngine);
 
+    // Make Console an alias for Stdio
+    mScriptEngine->evaluate(QStringLiteral("Console = Stdio"));
+
     Execution::CodeActiona::registerClass(*mScriptEngine);
     Execution::CodeActiona::setActExec(true);
     Execution::CodeActiona::setActionaVersion(Global::ACTIONA_VERSION);
