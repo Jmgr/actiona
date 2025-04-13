@@ -74,30 +74,6 @@ static void pause()
 {
 	system("pause");
 }
-
-static void createConsole()
-{
-	AllocConsole();
-
-	HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	int conHandle = _open_osfhandle(reinterpret_cast<intptr_t>(stdHandle), _O_TEXT);
-
-	*stdout = *_fdopen(conHandle, "w");
-	setvbuf(stdout, NULL, _IONBF, 0);
-
-	stdHandle = GetStdHandle(STD_INPUT_HANDLE);
-	conHandle = _open_osfhandle(reinterpret_cast<intptr_t>(stdHandle), _O_TEXT);
-
-	*stdin = *_fdopen(conHandle, "r");
-	setvbuf(stdin, NULL, _IONBF, 0);
-
-	stdHandle = GetStdHandle(STD_ERROR_HANDLE);
-	conHandle = _open_osfhandle(reinterpret_cast<intptr_t>(stdHandle), _O_TEXT);
-
-	*stderr = *_fdopen(conHandle, "w");
-	setvbuf(stderr, NULL, _IONBF, 0);
-}
-
 #endif
 
 int main(int argc, char **argv)
@@ -177,11 +153,19 @@ int main(int argc, char **argv)
 #ifdef Q_OS_WIN
 	if(optionsParser.isSet(QStringLiteral("console")))
     {
-        createConsole();
+        AllocConsole();
 
-		if(optionsParser.isSet(QStringLiteral("pause-at-end")))
+        if(optionsParser.isSet(QStringLiteral("pause-at-end")))
             qAddPostRoutine(pause);
     }
+    else if(!GetConsoleWindow())
+        AttachConsole(ATTACH_PARENT_PROCESS);
+
+    // Redirect standard in/out streams
+    FILE* dummy;
+    freopen_s(&dummy, "CONOUT$", "w", stdout);
+    freopen_s(&dummy, "CONOUT$", "w", stderr);
+    freopen_s(&dummy, "CONIN$", "r", stdin);
 #endif
 
 	qRegisterMetaType<ActionTools::ActionInstance>("ActionInstance");
