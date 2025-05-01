@@ -68,7 +68,7 @@ Monetary contributions will be used to pay for the rental of the dedicated serve
 
 ## License
 
-Actiona is licensed under the GNU/GPLv3 license, but includes code and other resources licensed under other licenses:
+Actiona is licensed under the GNU GPL license, but includes code and other resources licensed under other licenses:
 * QDarkStyleSheet: [MIT License - Source Code, and Creative Commons Attribution International 4.0 - Images](https://github.com/ColinDuquesnoy/QDarkStyleSheet/blob/master/LICENSE.rst)
 * QHotkey: [BSD-3-Clause License](https://github.com/Skycoder42/QHotkey/blob/master/LICENSE)
 * breakpad: [BSD License](https://chromium.googlesource.com/breakpad/breakpad/+/master/LICENSE)
