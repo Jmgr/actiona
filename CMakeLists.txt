@@ -26,6 +26,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
 
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "mips64el")
+  add_compile_options(-mlong-calls)
+endif()
+
 function(setup_target TARGET)
     target_compile_definitions(${TARGET} PRIVATE
         QT_USE_QSTRINGBUILDER
