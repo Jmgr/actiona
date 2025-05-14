@@ -26,7 +26,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
 
-if(CMAKE_SYSTEM_PROCESSOR STREQUAL "mips64el")
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "mips64")
   add_compile_options(-mlong-calls)
 endif()
 
