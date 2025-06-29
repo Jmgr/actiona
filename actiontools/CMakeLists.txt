@@ -305,7 +305,7 @@ ExternalProject_Add(external_qtjsapi
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/3rdparty/qtjsapi/out/
-    DESTINATION lib/actiona
+    DESTINATION ${ACT_LIB_INSTALL_DIR}
 )
 
 target_link_directories(${PROJECT}
@@ -345,5 +345,5 @@ if(UNIX)
     set_target_properties(${PROJECT} PROPERTIES INSTALL_RPATH "$ORIGIN")
 endif()
 
-install(TARGETS ${PROJECT} DESTINATION lib/actiona)
+install(TARGETS ${PROJECT} DESTINATION ${ACT_LIB_INSTALL_DIR})
 

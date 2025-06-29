@@ -51,4 +51,4 @@ target_link_libraries(
 
 compile_translations(${PROJECT})
 
-install(TARGETS ${PROJECT} DESTINATION lib/actiona)
+install(TARGETS ${PROJECT} DESTINATION ${ACT_LIB_INSTALL_DIR})

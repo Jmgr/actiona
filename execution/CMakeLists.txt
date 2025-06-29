@@ -73,4 +73,4 @@ target_link_libraries(${PROJECT} actiontools Qt6::Widgets Qt6::UiTools Qt6::Qml)
 
 compile_translations(${PROJECT})
 
-install(TARGETS ${PROJECT} DESTINATION lib/actiona)
+install(TARGETS ${PROJECT} DESTINATION ${ACT_LIB_INSTALL_DIR})
