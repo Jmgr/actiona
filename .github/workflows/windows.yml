@@ -12,30 +12,30 @@ jobs:
       matrix:
         profile: [ON, OFF]
         updater: [ON, OFF]
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
+    - uses: actions/checkout@v4
+      with: { submodules: recursive, fetch-depth: 0 }
 
     - uses: suisei-cn/actions-download-file@v1
       id: downloadfile
       name: Download prebuilt OpenCV
       with:
-        url: "https://actiona.tools/files/opencv-4.5.1-x64-vc16.7z"
+        url: "https://actiona.tools/files/opencv-4.11.0-x64-vc17.7z"
 
     - name: Extract OpenCV
       run: 7z x -oopencv ${{ steps.downloadfile.outputs.filename }}
 
     - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v1
+      uses: microsoft/setup-msbuild@v2
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
-        version: 6.4.3
-        arch: win64_msvc2019_64
+        version: 6.8.3
+        arch: win64_msvc2022_64
         modules: 'qtspeech qtmultimedia qt5compat'
+        cache: true
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
@@ -43,9 +43,7 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{github.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DACT_PROFILE=${{ matrix.profile }} -DACT_UPDATER=${{ matrix.updater }} -G "Visual Studio 16 2019" -DOpenCV_DIR=$GITHUB_WORKSPACE/opencv/x64/vc16/lib
-      env:
-        BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+      run: cmake "$GITHUB_WORKSPACE" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DACT_PROFILE=${{ matrix.profile }} -DACT_UPDATER=${{ matrix.updater }} -G "Visual Studio 17 2022" -DOpenCV_DIR="$GITHUB_WORKSPACE/opencv/x64/vc17/lib"
 
     - name: Build
       working-directory: ${{github.workspace}}/build
