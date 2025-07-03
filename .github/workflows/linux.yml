@@ -14,16 +14,16 @@ jobs:
         updater: [ON, OFF]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
+    - uses: actions/checkout@v4
+      with: { submodules: recursive, fetch-depth: 0 }
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
-        version: 6.4.3
+        version: 6.8.3
         arch: gcc_64
         modules: 'qtspeech qtmultimedia qt5compat'
+        dir: ${{ github.workspace }}/Qt
 
     - name: Install packages
       run: sudo apt-get update && sudo apt-get install -y build-essential libnotify-dev libopencv-core-dev libopencv-imgproc-dev libxtst-dev libopencv-dev libxkbcommon-dev libbluetooth-dev libudev-dev
