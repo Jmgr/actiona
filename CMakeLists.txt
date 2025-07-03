@@ -21,6 +21,10 @@ else()
     set(ACT_ACTIONS_INSTALL_DIR lib/actiona/actions)
 endif()
 
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_definitions(-DQT_NO_DEBUG_OUTPUT)
+endif()
+
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result)
 if(result)

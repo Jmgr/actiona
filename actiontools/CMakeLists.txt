@@ -294,6 +294,11 @@ setup_target(${PROJECT})
 find_package(OpenCV REQUIRED core imgproc)
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets Qml REQUIRED)
 
+set(EXTRA_CXX_FLAGS "")
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set(EXTRA_CXX_FLAGS "-DQT_NO_DEBUG_OUTPUT")
+endif()
+
 ExternalProject_Add(external_qtjsapi
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/qtjsapi
     BINARY_DIR ${CMAKE_BINARY_DIR}/3rdparty/qtjsapi
@@ -301,6 +306,7 @@ ExternalProject_Add(external_qtjsapi
     CMAKE_ARGS
             -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
             -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+            -DCMAKE_CXX_FLAGS=${EXTRA_CXX_FLAGS}
 )
 
 install(
