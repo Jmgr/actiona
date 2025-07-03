@@ -1,0 +1,97 @@
+name: AppImage
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag of the release to run against'
+        required: true
+
+env:
+  APPIMAGE_EXTRACT_AND_RUN: 1
+  QT_VERSION: 6.6.3
+
+jobs:
+  build-appimage:
+    runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/catthehacker/ubuntu:full-20.04
+
+    steps:
+    - name: Get tag without v prefix
+      id: tag
+      shell: bash
+      run: |
+        raw_tag="${GITHUB_EVENT_INPUTS_TAG:-${GITHUB_EVENT_RELEASE_TAG_NAME}}"
+        clean_tag="${raw_tag#v}"
+        echo "clean_tag=$clean_tag" >> "$GITHUB_OUTPUT"
+
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        fetch-depth: 0
+        ref: ${{ github.event.inputs.tag || github.event.release.tag_name }}
+
+    - name: Fetch latest OpenSSL 3.x version
+      run: |
+        OPENSSL_VERSION=$(curl -s https://api.github.com/repos/openssl/openssl/releases \
+        | grep -oP '"tag_name":\s*"\Kopenssl-3\.[0-9]+\.[0-9]+' \
+        | sort -V \
+        | tail -n1)
+        echo "Detected latest OpenSSL version to be $OPENSSL_VERSION"
+        echo "OPENSSL_VERSION=$OPENSSL_VERSION" >> $GITHUB_ENV
+
+    - name: Build OpenSSL
+      run: wget -q https://github.com/openssl/openssl/releases/download/${OPENSSL_VERSION}/${OPENSSL_VERSION}.tar.gz &&
+        tar xf ${OPENSSL_VERSION}.tar.gz &&
+        cd ${OPENSSL_VERSION} &&
+        ./Configure linux-x86_64 --prefix=$HOME/opt/openssl no-tests &&
+        make -j$(nproc) > /dev/null &&
+        make install_sw > /dev/null &&
+        cd ..
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: ${QT_VERSION}
+        arch: gcc_64
+        modules: 'qtspeech qtmultimedia qt5compat'
+        dir: ${{github.workspace}}
+        setup-python: 'false'
+
+    - name: Install packages
+      run: sudo apt-get update -qq &&
+        DEBIAN_FRONTEND=noninteractive sudo apt-get install -y python3-pip cmake gcc libgl-dev build-essential libnotify-dev libopencv-core-dev libopencv-imgproc-dev libxtst-dev libopencv-dev libxkbcommon-dev libbluetooth-dev libudev-dev libglx-dev libgl1-mesa-dev libxcb-cursor0 libspeechd2
+
+    - name: Install linuxdeploy
+      run: wget -q https://github.com/linuxdeploy/linuxdeploy/releases/latest/download/linuxdeploy-x86_64.AppImage &&
+        wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/latest/download/linuxdeploy-plugin-qt-x86_64.AppImage &&
+        wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/latest/download/linuxdeploy-plugin-appimage-x86_64.AppImage &&
+        chmod +x linuxdeploy*.AppImage
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{github.workspace}}
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${{github.workspace}}/Qt/${QT_VERSION}/gcc_64" -DACT_FLAT_LIB_INSTALL=ON &&
+        cmake --build build --parallel 8 &&
+        cmake --install build --prefix AppDir/usr
+
+    - name: Run linuxdeploy
+      run: ./scripts/generate_appimage.sh "${{github.workspace}}/Qt/${QT_VERSION}/gcc_64" "${{steps.tag.outputs.clean_tag}}"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Actiona-AppImage
+        path: 'Actiona*.AppImage'
+
+    - name: Upload to GitHub Release
+      if: ${{ !env.ACT }}
+      uses: softprops/action-gh-release@v2
+      with:
+        files: 'Actiona*.AppImage'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
