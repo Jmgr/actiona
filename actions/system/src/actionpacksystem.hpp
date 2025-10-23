@@ -37,7 +37,7 @@
 #endif
 
 #include "code/system.hpp"
-#include "code/mediaplaylist.hpp"
+#include "code/mediaplayer.hpp"
 #include "code/notify.hpp"
 #include "code/process.hpp"
 
@@ -75,7 +75,7 @@ public:
     void codeInit(ActionTools::ScriptEngine &scriptEngine) const override
 	{
         Code::System::registerClass(scriptEngine);
-        Code::MediaPlaylist::registerClass(scriptEngine);
+        Code::MediaPlayer::registerClass(scriptEngine);
         Code::Notify::registerClass(scriptEngine);
         Code::Process::registerClass(scriptEngine);
 	}

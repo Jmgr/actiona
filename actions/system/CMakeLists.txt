@@ -10,7 +10,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/actions/pixelcolorinstance.cpp
     ${SOURCES_PREFIX}/actions/playsoundinstance.cpp
     ${SOURCES_PREFIX}/actions/systeminstance.cpp
-    ${SOURCES_PREFIX}/code/mediaplaylist.cpp
+    ${SOURCES_PREFIX}/code/mediaplayer.cpp
     ${SOURCES_PREFIX}/code/notify.cpp
     ${SOURCES_PREFIX}/code/process.cpp
     ${SOURCES_PREFIX}/code/system.cpp
@@ -69,7 +69,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/actions/systeminstance.hpp
     ${HEADERS_PREFIX}/actions/texttospeechdefinition.hpp
     ${HEADERS_PREFIX}/actions/texttospeechinstance.hpp
-    ${HEADERS_PREFIX}/code/mediaplaylist.hpp
+    ${HEADERS_PREFIX}/code/mediaplayer.hpp
     ${HEADERS_PREFIX}/code/notify.hpp
     ${HEADERS_PREFIX}/code/process.hpp
     ${HEADERS_PREFIX}/code/system.hpp

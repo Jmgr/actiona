@@ -18,7 +18,7 @@
 	Contact: jmgr@jmgr.info
 */
 
-#include "mediaplaylist.hpp"
+#include "mediaplayer.hpp"
 
 #include <QMediaPlayer>
 #include <QAudioOutput>
@@ -26,7 +26,7 @@
 
 namespace Code
 {
-	MediaPlaylist::MediaPlaylist()
+    MediaPlayer::MediaPlayer()
 		: CodeClass(),
 		mMediaPlayer(new QMediaPlayer(this)),
         mVideoWidget(new QVideoWidget()),
@@ -37,123 +37,123 @@ namespace Code
 		mVideoWidget->setVisible(false);
     }
 	
-	MediaPlaylist::~MediaPlaylist()
+    MediaPlayer::~MediaPlayer()
 	{
 		delete mVideoWidget;
 	}
 
-	qreal MediaPlaylist::playbackRate() const
+    qreal MediaPlayer::playbackRate() const
 	{
 		return mMediaPlayer->playbackRate();
 	}
 
-	qreal MediaPlaylist::volume() const
+    qreal MediaPlayer::volume() const
     {
         return mMediaPlayer->audioOutput()->volume();
 	}
 
-	qint64 MediaPlaylist::position() const
+    qint64 MediaPlayer::position() const
 	{
 		return mMediaPlayer->position();
 	}
 	
-    MediaPlaylist *MediaPlaylist::setPlaybackRate(qreal rate)
+    MediaPlayer *MediaPlayer::setPlaybackRate(qreal rate)
 	{
 		mMediaPlayer->setPlaybackRate(rate);
 		
         return this;
 	}
 	
-    MediaPlaylist *MediaPlaylist::setVolume(qreal volume)
+    MediaPlayer *MediaPlayer::setVolume(qreal volume)
 	{
         mMediaPlayer->audioOutput()->setVolume(volume);
 		
         return this;
 	}
 	
-    MediaPlaylist *MediaPlaylist::setPosition(qint64 position)
+    MediaPlayer *MediaPlayer::setPosition(qint64 position)
 	{
 		mMediaPlayer->setPosition(position);
 		
         return this;
 	}
 	
-    MediaPlaylist *MediaPlaylist::setMuted(bool muted)
+    MediaPlayer *MediaPlayer::setMuted(bool muted)
 	{
         mMediaPlayer->audioOutput()->setMuted(muted);
 		
         return this;
 	}
 
-	qint64 MediaPlaylist::duration() const
+    qint64 MediaPlayer::duration() const
 	{
 		return mMediaPlayer->duration();
 	}
 
-    bool MediaPlaylist::hasAudio() const
+    bool MediaPlayer::hasAudio() const
     {
         return mMediaPlayer->hasAudio();
     }
 
-    bool MediaPlaylist::hasVideo() const
+    bool MediaPlayer::hasVideo() const
     {
         return mMediaPlayer->hasVideo();
     }
 	
-	bool MediaPlaylist::isMuted() const
+    bool MediaPlayer::isMuted() const
 	{
         return mMediaPlayer->audioOutput()->isMuted();
 	}
 	
-	bool MediaPlaylist::isSeekable() const
+    bool MediaPlayer::isSeekable() const
 	{
 		return mMediaPlayer->isSeekable();
 	}
 	
-	int MediaPlaylist::bufferStatus() const
+    int MediaPlayer::bufferStatus() const
 	{
         return static_cast<int>(mMediaPlayer->bufferProgress() * 100.f);
 	}
 	
-    MediaPlaylist *MediaPlaylist::play()
+    MediaPlayer *MediaPlayer::play()
 	{
 		mMediaPlayer->play();
 		
         return this;
 	}
 	
-    MediaPlaylist *MediaPlaylist::pause()
+    MediaPlayer *MediaPlayer::pause()
 	{
 		mMediaPlayer->pause();
 		
         return this;
 	}
 	
-    MediaPlaylist *MediaPlaylist::stop()
+    MediaPlayer *MediaPlayer::stop()
 	{
 		mMediaPlayer->stop();
 		
         return this;
 	}
 
-    MediaPlaylist *MediaPlaylist::setLocalMedia(const QString &path)
+    MediaPlayer *MediaPlayer::setLocalMedia(const QString &path)
     {
         mMediaPlayer->setSource(QUrl::fromLocalFile(path));
 
         return this;
     }
 
-    MediaPlaylist *MediaPlaylist::setDistantMedia(const QString &url)
+    MediaPlayer *MediaPlayer::setDistantMedia(const QString &url)
     {
         mMediaPlayer->setSource(QUrl(url));
 
         return this;
     }
 
-    void MediaPlaylist::registerClass(ActionTools::ScriptEngine &scriptEngine)
+    void MediaPlayer::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
-        qRegisterMetaType<MediaPlaylist*>("const MediaPlaylist *");
+        qRegisterMetaType<MediaPlayer*>("const MediaPlayer *");
 
-        CodeClass::registerClass<MediaPlaylist>(QStringLiteral("MediaPlaylist"), scriptEngine);
+        CodeClass::registerClass<MediaPlayer>(QStringLiteral("MediaPlayer"), scriptEngine);
     }
 }
