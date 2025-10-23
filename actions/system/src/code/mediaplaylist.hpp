@@ -26,6 +26,7 @@
 
 class QMediaPlayer;
 class QVideoWidget;
+class QAudioOutput;
 
 namespace Code
 {
@@ -59,12 +60,15 @@ namespace Code
         Q_INVOKABLE MediaPlaylist *play();
         Q_INVOKABLE MediaPlaylist *pause();
         Q_INVOKABLE MediaPlaylist *stop();
+        Q_INVOKABLE MediaPlaylist *setLocalMedia(const QString &path);
+        Q_INVOKABLE MediaPlaylist *setDistantMedia(const QString &url);
 
         static void registerClass(ActionTools::ScriptEngine &scriptEngine);
 
 	private:
 		QMediaPlayer *mMediaPlayer;
 		QVideoWidget *mVideoWidget;
+        QAudioOutput *mAudioOutput;
 	};
 }
 

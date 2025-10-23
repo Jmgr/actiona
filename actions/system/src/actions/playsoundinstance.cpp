@@ -27,9 +27,12 @@ namespace Actions
 {
 	PlaySoundInstance::PlaySoundInstance(const ActionTools::ActionDefinition *definition, QObject *parent)
 		: ActionTools::ActionInstance(definition, parent),
-		  mMediaPlayer(new QMediaPlayer(this)),
-		  mBlocking(false)
+            mMediaPlayer(new QMediaPlayer(this)),
+            mAudioOutput(new QAudioOutput(this)),
+            mBlocking(false)
 	{
+        mMediaPlayer->setAudioOutput(mAudioOutput);
+
         connect(mMediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &PlaySoundInstance::mediaStatusChanged);
 	}
 
@@ -63,7 +66,7 @@ namespace Actions
         mMediaPlayer->setLoops(looping ? QMediaPlayer::Infinite : QMediaPlayer::Once);
 
         mMediaPlayer->setPlaybackRate(playbackRate / 100.0f);
-        mMediaPlayer->audioOutput()->setVolume(volume);
+        mMediaPlayer->audioOutput()->setVolume(volume / 100.0f);
 		mMediaPlayer->play();
 
 		if(mMediaPlayer->error() != QMediaPlayer::NoError)

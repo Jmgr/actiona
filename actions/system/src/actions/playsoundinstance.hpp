@@ -45,6 +45,7 @@ namespace Actions
 
 	private:
 		QMediaPlayer *mMediaPlayer;
+        QAudioOutput *mAudioOutput;
 		bool mBlocking;
 
 		Q_DISABLE_COPY(PlaySoundInstance)

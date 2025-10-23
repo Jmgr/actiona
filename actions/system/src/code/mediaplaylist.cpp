@@ -29,9 +29,11 @@ namespace Code
 	MediaPlaylist::MediaPlaylist()
 		: CodeClass(),
 		mMediaPlayer(new QMediaPlayer(this)),
-		mVideoWidget(new QVideoWidget())
+        mVideoWidget(new QVideoWidget()),
+        mAudioOutput(new QAudioOutput(this))
 	{
 		mMediaPlayer->setVideoOutput(mVideoWidget);
+        mMediaPlayer->setAudioOutput(mAudioOutput);
 		mVideoWidget->setVisible(false);
     }
 	
@@ -133,6 +135,20 @@ namespace Code
 		
         return this;
 	}
+
+    MediaPlaylist *MediaPlaylist::setLocalMedia(const QString &path)
+    {
+        mMediaPlayer->setSource(QUrl::fromLocalFile(path));
+
+        return this;
+    }
+
+    MediaPlaylist *MediaPlaylist::setDistantMedia(const QString &url)
+    {
+        mMediaPlayer->setSource(QUrl(url));
+
+        return this;
+    }
 
     void MediaPlaylist::registerClass(ActionTools::ScriptEngine &scriptEngine)
     {
