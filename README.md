@@ -62,7 +62,7 @@ Each action has parameters, and Javascript can be written in every field and wil
 
 ## Contributing
 
-Code contributions as PR are very welcome. Sponsoring is also possible either through [Liberapay](https://liberapay.com/Jmgr), GitHub [Sponsors](https://github.com/sponsors/Jmgr) or using the Ethereum (ETH) cryptocurrency: 0x58bb43Afd8Aead70A89F739c61568b62E0336094 -- thanks!
+Code contributions as PR are very welcome. Sponsoring is also possible either through [Liberapay](https://liberapay.com/Jmgr), GitHub [Sponsors](https://github.com/sponsors/Jmgr) -- thanks!
 
 Monetary contributions will be used to pay for the rental of the dedicated server hosting Actiona's updater and installers (~€37/month), and to pay for the required code signing certificates on Windows (a few hundred pounds at least).
 
