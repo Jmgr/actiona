@@ -244,6 +244,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
               <string>Asuka Minato</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Yuri Aguiar</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
