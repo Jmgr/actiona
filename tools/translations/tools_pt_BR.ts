@@ -28,7 +28,7 @@
     <name>languagesName</name>
     <message>
         <source>French (France)</source>
-        <translation>Português (Brasil)</translation>
+        <translation>Francês (França)</translation>
     </message>
     <message>
         <source>System language (if available)</source>
@@ -41,6 +41,10 @@
     <message>
         <source>English (US)</source>
         <translation>Inglês (EUA)</translation>
+    </message>
+    <message>
+        <source>Portuguese (Brazil)</source>
+        <translation>Português (Brasil)</translation>
     </message>
 </context>
 </TS>
