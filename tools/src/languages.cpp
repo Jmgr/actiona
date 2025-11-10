@@ -39,12 +39,14 @@ namespace Tools
             QStringLiteral("en_US"),
             QStringLiteral("fr_FR"),
             QStringLiteral("zh_CN"),
+            QStringLiteral("pt_BR"),
         },
         {
             QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "System language (if available)")),
             QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "English (US)")),
             QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "French (France)")),
-            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "Simplified Chinese (China)"))
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "Simplified Chinese (China)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "Portuguese (Brazil)"))
         }
     };
 
@@ -69,6 +71,8 @@ namespace Tools
                     locale = QStringLiteral("fr_FR");
                 else if(installerLanguage == QLatin1String("zh"))
                     locale = QStringLiteral("zh_CN");
+                else if(installerLanguage == QLatin1String("pt"))
+                    locale = QStringLiteral("pt_BR");
             }
     #endif
         }

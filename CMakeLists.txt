@@ -74,6 +74,7 @@ function(compile_translations TARGET)
     set(TS_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_fr_FR.ts
         ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_zh_CN.ts
+        ${CMAKE_CURRENT_SOURCE_DIR}/translations/${TARGET}_pt_BR.ts
         # Add other translations here
     )
 

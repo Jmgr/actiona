@@ -99,6 +99,7 @@ set(TS_PREFIX translations)
 set(TS_FILES
     ${TS_PREFIX}/actiona_fr_FR.ts
     ${TS_PREFIX}/actiona_zh_CN.ts
+    ${TS_PREFIX}/actiona_pt_BR.ts
 )
 
 set(QRC ${PROJECT}.qrc)
