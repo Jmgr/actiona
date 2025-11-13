@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>X11 was not detected. Actiona only functions in X11 sessions (Wayland is not supported). Please refer to https://wiki.actiona.tools/doku.php?id=en:x11notdetected for more information.</source>
-        <translation>X11 não foi detectado. O Actiona funciona apenas em sessões X11 (Wayland não é suportado). Consulte https://wiki.actiona.tools/doku.php?id=en:x11notdetected para mais informações.</translation>
+        <translation>X11 não foi detectado. O Actiona funciona apenas em sessões X11 (Wayland não é suportado). Por favor, consulte https://wiki.actiona.tools/doku.php?id=en:x11notdetected para mais informações.</translation>
     </message>
     <message>
         <source>Unknown execution mode, please specify mode=script or mode=code</source>
@@ -109,7 +109,7 @@
     </message>
     <message>
         <source>X11 was not detected. Actiona only functions in X11 sessions (Wayland is not supported). Please refer to &lt;a href=&quot;https://wiki.actiona.tools/doku.php?id=en:x11notdetected&quot;&gt;this wiki page&lt;/a&gt; for more information.</source>
-        <translation>X11 não foi detectado. O Actiona funciona apenas em sessões X11 (Wayland não é suportado). Consulte &lt;a href=&quot;https://wiki.actiona.tools/doku.php?id=en:x11notdetected&quot;&gt;esta página wiki&lt;/a&gt; para mais informações.</translation>
+        <translation>X11 não foi detectado. O Actiona funciona apenas em sessões X11 (Wayland não é suportado). Por favor, consulte &lt;a href=&quot;https://wiki.actiona.tools/doku.php?id=en:x11notdetected&quot;&gt;esta página wiki&lt;/a&gt; para mais informações.</translation>
     </message>
 </context>
 <context>

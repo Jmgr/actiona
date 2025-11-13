@@ -143,7 +143,7 @@
     </message>
     <message>
         <source>The title of the window to search in, you can use wildcards like * (any number of characters) or ? (one character) here</source>
-        <translation>Le titre de la fenêtre où chercher, vous pouvez utiliser des wildcards ici comme * (n&apos;importe quel nombre de caractères) ou ? (un caractère)</translation>
+        <translation>O título da janela onde procurar; você pode usar curingas aqui como * (qualquer número de caracteres) ou ? (um caractere) aqui</translation>
     </message>
     <message>
         <source>If not found</source>
@@ -196,8 +196,8 @@
     <message>
         <source>Image files (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)
 All files (*.*)</source>
-        <translation>Images (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)
-Tous les fichiers (*.*)</translation>
+        <translation>Arquivos de imagens (*.bmp *.gif *.jpg *.jpeg *.mng *.png *.pbm *.pgm *.ppm *.tiff *.xbm *.xpm *.svg)
+Todos os arquivos (*.*)</translation>
     </message>
     <message>
         <source>The image to search in</source>
