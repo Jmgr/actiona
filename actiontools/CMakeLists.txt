@@ -294,7 +294,9 @@ setup_target(${PROJECT})
 
 find_package(OpenCV REQUIRED core imgproc)
 find_package(Qt6 ${ACT_MINIMUM_QT_VERSION} COMPONENTS Widgets Qml REQUIRED)
-find_package(Qt6 COMPONENTS QmlPrivate REQUIRED)
+if(Qt6_VERSION VERSION_GREATER_EQUAL "6.10.0")
+    find_package(Qt6 COMPONENTS QmlPrivate REQUIRED)
+endif()
 
 set(EXTRA_CXX_FLAGS "")
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
