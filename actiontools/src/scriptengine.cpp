@@ -32,7 +32,6 @@ namespace ActionTools
         mEngine(std::make_unique<QJSEngine>()),
         mQJsApi(new RJSApi(mEngine.get()))
     {
-        mQJsApi->init();
     }
 
     ScriptEngine::~ScriptEngine()
