@@ -151,7 +151,9 @@ namespace ActionTools
 	{
 		QPushButton::mouseReleaseEvent(event);
 
-        emit positionChosen(event->globalPosition().toPoint());
+        POINT point;
+        GetCursorPos(&point);
+        emit positionChosen(QPointF(point.x, point.y));
 
         stopMouseCapture();
 	}

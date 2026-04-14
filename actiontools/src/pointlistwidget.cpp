@@ -24,6 +24,10 @@
 
 #include <QDebug>
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
 namespace ActionTools
 {
 	PointListWidget::PointListWidget(QWidget *parent)
@@ -140,7 +144,13 @@ namespace ActionTools
 
 	void PointListWidget::capture()
 	{
+#ifdef Q_OS_WIN
+		POINT point;
+		GetCursorPos(&point);
+		addPoint(QPoint(point.x, point.y));
+#else
 		addPoint(QCursor::pos());
+#endif
 	}
 
 	void PointListWidget::stopCapture()

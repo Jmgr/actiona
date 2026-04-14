@@ -98,12 +98,22 @@ bool MouseDevice::isButtonPressed(Button button) const
 
 QPoint MouseDevice::cursorPosition() const
 {
+#ifdef Q_OS_WIN
+	POINT point;
+	GetCursorPos(&point);
+	return QPoint(point.x, point.y);
+#else
 	return QCursor::pos();
+#endif
 }
 
 void MouseDevice::setCursorPosition(const QPoint &position) const
 {
+#ifdef Q_OS_WIN
+	SetCursorPos(position.x(), position.y());
+#else
 	QCursor::setPos(position);
+#endif
 }
 
 bool MouseDevice::buttonClick(Button button)
