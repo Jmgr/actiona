@@ -238,7 +238,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="act3Documentation_2">
+           <widget class="QComboBox" name="act3Translators">
             <item>
              <property name="text">
               <string>Asuka Minato</string>
