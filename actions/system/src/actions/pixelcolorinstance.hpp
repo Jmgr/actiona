@@ -196,7 +196,8 @@ namespace Actions
             QPixmap pixel = screen->grabWindow(0, localX, localY, 1, 1);
 			QColor pixelColor = pixel.toImage().pixel(0, 0);
 
-            setVariable(mVariable, Code::CodeClass::construct<Code::Color>(pixelColor, *scriptEngine()));
+            if (!mVariable.isEmpty())
+                setVariable(mVariable, Code::CodeClass::construct<Code::Color>(pixelColor, *scriptEngine()));
 
 			switch(mComparison)
 			{
