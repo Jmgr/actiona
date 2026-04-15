@@ -1680,7 +1680,7 @@ void MainWindow::editAction(const QModelIndex &index)
 	if(index.column() != ScriptModel::ColumnActionName)
 		return;
 
-	editAction(mScript->actionAt(index.row()));
+	editAction(mScript->actionAt(mScriptProxyModel->mapToSource(index).row()));
 }
 
 void MainWindow::wantToAddAction(const QString &actionId)
