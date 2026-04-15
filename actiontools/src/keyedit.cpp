@@ -31,8 +31,16 @@ namespace ActionTools
 		: CodeComboBox(parent)
 	{
 		installEventFilter(this);
+        codeLineEdit()->installEventFilter(this);
+        codeLineEdit()->setReadOnly(true);
+        codeLineEdit()->setAttribute(Qt::WA_InputMethodEnabled, false);
 
         connect(this, qOverload<int>(&QComboBox::currentIndexChanged), this, &KeyEdit::currentIndexChanged);
+        connect(this, &CodeComboBox::codeChanged, this, [this](bool code)
+        {
+            codeLineEdit()->setReadOnly(!code);
+            codeLineEdit()->setAttribute(Qt::WA_InputMethodEnabled, code);
+        });
 
 		QKeySequence keySequence(Qt::Key_Print);
 		addItem(keySequence.toString(QKeySequence::NativeText));
@@ -56,6 +64,9 @@ namespace ActionTools
 	{
 		if(isCode())
 			return QObject::eventFilter(object, event);
+
+        if(event->type() == QEvent::InputMethod)
+            return true;
 
 		if(event->type() == QEvent::KeyPress)
 		{

@@ -227,8 +227,15 @@ namespace ActionTools
 
 		if(mIsQtKey)
 		{
-			if(event->modifiers() != Qt::NoModifier)
-				return false;
+            const auto modifiers = event->modifiers() & ~Qt::KeypadModifier;
+            const auto text = event->text();
+            const bool isPrintableText = (text.length() == 1) && text.at(0).isPrint();
+
+            // The key action stores a single key and separate modifier flags.
+            // Accept printable keys that require Shift/AltGr on the active layout,
+            // but still reject shortcut-like combinations such as Ctrl+A.
+            if(modifiers != Qt::NoModifier && !isPrintableText)
+                return false;
 
 			mKey = event->key();
 

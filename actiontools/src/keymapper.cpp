@@ -20,6 +20,8 @@
 
 #include "actiontools/keymapper.hpp"
 
+#include <QChar>
+
 #ifdef Q_OS_UNIX
 #define XK_MISCELLANY
 #define XK_LATIN1
@@ -34,6 +36,41 @@
 
 namespace ActionTools
 {
+#ifdef Q_OS_UNIX
+    static int printableKeyToNativeKey(Qt::Key key)
+    {
+        const auto unicode = static_cast<uint>(key);
+        if(unicode < 0x20)
+            return 0;
+
+        if(unicode <= 0x00ff)
+            return static_cast<int>(unicode);
+
+        if(unicode <= 0x10ffff)
+            return static_cast<int>(0x01000000 | unicode);
+
+        return 0;
+    }
+#endif
+#ifdef Q_OS_WIN
+    static int printableKeyToNativeKey(Qt::Key key)
+    {
+        const auto unicode = static_cast<uint>(key);
+        if(unicode > 0xffff)
+            return 0;
+
+        const QChar character{static_cast<char16_t>(unicode)};
+        if(!character.isPrint())
+            return 0;
+
+        const SHORT virtualKey = VkKeyScanExW(static_cast<WCHAR>(character.unicode()), GetKeyboardLayout(0));
+        if(virtualKey == -1)
+            return 0;
+
+        return LOBYTE(virtualKey);
+    }
+#endif
+
 #ifdef Q_OS_UNIX
 	static const int KeyTbl[] = {
 		// misc keys
@@ -858,8 +895,8 @@ namespace ActionTools
 	int KeyMapper::toNativeKey(Qt::Key key)
 	{
 #ifdef Q_OS_UNIX
-		if(key >= Qt::Key_Space && key <= Qt::Key_AsciiTilde)//Ascii
-			return key;
+        if(const int nativeKey = printableKeyToNativeKey(key))
+            return nativeKey;
 
 		int i = 1;
 		while(KeyTbl[i])
@@ -870,6 +907,9 @@ namespace ActionTools
 		}
 #endif
 #ifdef Q_OS_WIN
+        if(const int nativeKey = printableKeyToNativeKey(key))
+            return nativeKey;
+
 		for(int i = 0; i < 255; ++i)
 		{
 			if(KeyTbl[i] == key)
@@ -879,5 +919,4 @@ namespace ActionTools
 		return 0;
 	}
 }
-
 
