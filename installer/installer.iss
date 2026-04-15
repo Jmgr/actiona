@@ -42,12 +42,13 @@ WizardImageFile=C:\actionaz\installer\start.bmp
 WizardSmallImageFile=C:\actionaz\installer\icon.bmp
 ChangesAssociations=yes
 MinVersion=0,5.1
+UsedUserAreasWarning=no
 #if int(MyAppBits) == 32
-ArchitecturesAllowed=x64 x86
+ArchitecturesAllowed=x64compatible x86
 #else
-ArchitecturesAllowed=x64
-ArchitecturesInstallIn64BitMode=x64
-#endif 
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+#endif
 
 [InstallDelete]
 Type: files; Name: "{app}\locale\*"
@@ -100,7 +101,6 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
 Source: "C:\act_ref{#MyAppBits}\actionaz.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -119,7 +119,6 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, "&", "&&")}}"; Flags: nowait postinstall skipifsilent
