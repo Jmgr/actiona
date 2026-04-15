@@ -1372,7 +1372,23 @@ ActionTools::Script::ReadResult MainWindow::readScript(QIODevice *device)
 
     ActionTools::Script::ReadResult result = mScript->read(device, Global::SCRIPT_VERSION, &progressCallback, &resetCallback, &addActionCallback);
     if(result == ActionTools::Script::ReadSuccess)
+    {
         scriptEdited();
+
+#ifdef Q_OS_WIN
+        const auto &programVersion = mScript->programVersion();
+        if(programVersion >= QVersionNumber(3, 11, 0) && programVersion <= QVersionNumber(3, 11, 1))
+        {
+            progressDialog->close();
+            QMessageBox::warning(this,
+                tr("HiDPI coordinate bug"),
+                tr("This script was created with Actiona %1, which had a HiDPI coordinate bug on Windows.\n\n"
+                   "If you use a screen with a scale factor other than 100%, positions recorded on that screen may be incorrect and need to be re-recorded.")
+                    .arg(programVersion.toString()));
+            return result;
+        }
+#endif
+    }
 
     progressDialog->close();
 
