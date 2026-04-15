@@ -32,6 +32,7 @@ namespace ActionTools
     {
         setWindowTitle(tr("Screenshot wizard"));
 		setWindowIcon(QIcon(QStringLiteral(":/images/capture.png")));
+        setWizardStyle(QWizard::ModernStyle);
 
         addPage(new ScreenshotWizardPage(this));
         addPage(new SaveScreenshotWizardPage(script, allowSaveToClipboard, this));
