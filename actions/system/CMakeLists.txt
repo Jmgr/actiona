@@ -171,6 +171,7 @@ target_link_libraries(${PROJECT}
     Qt6::TextToSpeech
     ${LIBNOTIFY_LIBRARIES}
     ${BLUEZ_LIBRARIES}
+    $<$<PLATFORM_ID:Windows>:Advapi32>
     $<$<PLATFORM_ID:Windows>:Bthprops>
     $<$<PLATFORM_ID:Windows>:Ws2_32>
     $<$<PLATFORM_ID:Windows>:PowrProf>

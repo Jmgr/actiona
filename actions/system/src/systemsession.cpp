@@ -24,6 +24,45 @@
 #include <Windows.h>
 #include <powrprof.h>
 #include <QMessageBox>
+
+namespace
+{
+	bool enableShutdownPrivilege()
+	{
+		HANDLE token = nullptr;
+		if(!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token))
+			return false;
+
+		TOKEN_PRIVILEGES privileges = {};
+		if(!LookupPrivilegeValue(nullptr, SE_SHUTDOWN_NAME, &privileges.Privileges[0].Luid))
+		{
+			CloseHandle(token);
+			return false;
+		}
+
+		privileges.PrivilegeCount = 1;
+		privileges.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+
+		if(!AdjustTokenPrivileges(token, FALSE, &privileges, 0, nullptr, nullptr))
+		{
+			CloseHandle(token);
+			return false;
+		}
+
+		const DWORD error = GetLastError();
+		CloseHandle(token);
+
+		return (error == ERROR_SUCCESS);
+	}
+
+	bool exitWindowsExWithPrivilege(unsigned int flags)
+	{
+		if((flags & (EWX_REBOOT | EWX_SHUTDOWN | EWX_POWEROFF)) && !enableShutdownPrivilege())
+			return false;
+
+		return ExitWindowsEx(flags, SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER);
+	}
+}
 #endif
 
 #ifdef Q_OS_UNIX
@@ -68,7 +107,7 @@ bool SystemSession::logout(bool force) const
 	return false;
 #endif
 #ifdef Q_OS_WIN
-	return ExitWindowsEx(EWX_LOGOFF | (force ? EWX_FORCE : 0), SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER);
+	return exitWindowsExWithPrivilege(EWX_LOGOFF | (force ? EWX_FORCE : 0));
 #endif
 }
 
@@ -119,7 +158,7 @@ bool SystemSession::restart(bool force) const
 	return false;
 #endif
 #ifdef Q_OS_WIN
-	return ExitWindowsEx(EWX_REBOOT | (force ? EWX_FORCE : 0), SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER);
+	return exitWindowsExWithPrivilege(EWX_REBOOT | (force ? EWX_FORCE : 0));
 #endif
 }
 
@@ -170,7 +209,7 @@ bool SystemSession::shutdown(bool force) const
 	return false;
 #endif
 #ifdef Q_OS_WIN
-	return ExitWindowsEx(EWX_POWEROFF | (force ? EWX_FORCE : 0), SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER);
+	return exitWindowsExWithPrivilege(EWX_POWEROFF | (force ? EWX_FORCE : 0));
 #endif
 }
 
