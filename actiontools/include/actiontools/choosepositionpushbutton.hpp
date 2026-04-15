@@ -22,7 +22,7 @@
 
 #include "actiontools_global.hpp"
 
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
 #include <QAbstractNativeEventFilter>
 #endif
 
@@ -34,7 +34,7 @@ class QMainWindow;
 namespace ActionTools
 {
     class ACTIONTOOLSSHARED_EXPORT ChoosePositionPushButton : public QPushButton
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
             , public QAbstractNativeEventFilter
 #endif
 	{
@@ -50,10 +50,7 @@ namespace ActionTools
 	private:
 		void paintEvent(QPaintEvent *event) override;
 		void mousePressEvent(QMouseEvent *event) override;
-#ifdef Q_OS_WIN
-		void mouseReleaseEvent(QMouseEvent *event);
-#endif
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
         bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override;
 #endif
 		void stopMouseCapture();
@@ -74,4 +71,3 @@ namespace ActionTools
 		Q_DISABLE_COPY(ChoosePositionPushButton)
 	};
 }
-

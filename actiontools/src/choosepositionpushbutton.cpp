@@ -19,6 +19,7 @@
 */
 
 #include "actiontools/choosepositionpushbutton.hpp"
+#include "actiontools/crossplatform.hpp"
 
 #include <QStylePainter>
 #include <QStyleOptionButton>
@@ -73,8 +74,10 @@ namespace ActionTools
 		if(mSearching)
 			stopMouseCapture();
 
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
         QCoreApplication::instance()->removeNativeEventFilter(this);
+#endif
+#ifdef Q_OS_UNIX
         XFreeCursor(X11Info::display(), mCrossCursor);
 #endif
 
@@ -128,6 +131,8 @@ namespace ActionTools
 #ifdef Q_OS_WIN
         for(QWidget *widget: qApp->topLevelWidgets())
 			widget->setWindowOpacity(0.0f);
+
+        QCoreApplication::instance()->installNativeEventFilter(this);
 #endif
 
 		emit chooseStarted();
@@ -146,19 +151,6 @@ namespace ActionTools
         }
 #endif
     }
-
-#ifdef Q_OS_WIN
-	void ChoosePositionPushButton::mouseReleaseEvent(QMouseEvent *event)
-	{
-		QPushButton::mouseReleaseEvent(event);
-
-        POINT point;
-        GetCursorPos(&point);
-        emit positionChosen(QPointF(point.x, point.y));
-
-        stopMouseCapture();
-	}
-#endif
 
 #ifdef Q_OS_UNIX
     bool ChoosePositionPushButton::nativeEventFilter(const QByteArray &eventType, void *message, qintptr *)
@@ -184,6 +176,27 @@ namespace ActionTools
     }
 #endif
 
+#ifdef Q_OS_WIN
+    bool ChoosePositionPushButton::nativeEventFilter(const QByteArray &, void *message, qintptr *)
+    {
+        auto *msg = static_cast<MSG *>(message);
+
+        if(!msg || !mSearching)
+            return false;
+
+        if(msg->message == WM_LBUTTONUP)
+        {
+            POINT point;
+            GetCursorPos(&point);
+            emit positionChosen(QPointF(point.x, point.y));
+
+            stopMouseCapture();
+        }
+
+        return false;
+    }
+#endif
+
 	void ChoosePositionPushButton::stopMouseCapture()
 	{
 		mSearching = false;
@@ -195,6 +208,16 @@ namespace ActionTools
 
         for(QWidget *widget: qApp->topLevelWidgets())
 			widget->setWindowOpacity(1.0f);
+
+        QCoreApplication::instance()->removeNativeEventFilter(this);
+
+        if(QWidget *topLevelWindow = window())
+        {
+            topLevelWindow->showNormal();
+            topLevelWindow->raise();
+            topLevelWindow->activateWindow();
+            ActionTools::CrossPlatform::setForegroundWindow(topLevelWindow);
+        }
 #endif
 #ifdef Q_OS_UNIX
         XUngrabPointer(X11Info::display(), CurrentTime);
