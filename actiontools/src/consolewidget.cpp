@@ -128,30 +128,25 @@ namespace ActionTools
 
 	void ConsoleWidget::addEndSeparator()
 	{
-		const QDateTime &currentDateTime = QDateTime::currentDateTime();
-		int days = mStartTime.daysTo(currentDateTime);
+		const QDateTime currentDateTime = QDateTime::currentDateTime();
+		qint64 totalMsec = mStartTime.msecsTo(currentDateTime);
+
+		qint64 msec = totalMsec % 1000;
+		qint64 totalSeconds = totalMsec / 1000;
+		qint64 seconds = totalSeconds % 60;
+		qint64 minutes = (totalSeconds / 60) % 60;
+		qint64 hours = (totalSeconds / 3600) % 24;
+		qint64 days = totalSeconds / 86400;
 
 		QString durationString;
 		if(days > 0)
 			durationString += tr("%n day(s) ", "", days);
-        mStartTime = mStartTime.addDays(-days);
-
-		int seconds = mStartTime.secsTo(currentDateTime);
-		int hours = seconds / 3600;
-		seconds = seconds % 3600;
-		int minutes = seconds / 60;
-		seconds = seconds % 60;
-
 		if(hours > 0)
 			durationString += tr("%n hour(s) ", "", hours);
 		if(minutes > 0)
 			durationString += tr("%n minute(s) ", "", minutes);
 		if(seconds > 0)
 			durationString += tr("%n second(s) ", "", seconds);
-		int startMSec = mStartTime.toString(QStringLiteral("z")).toInt();
-		int endMSec = currentDateTime.toString(QStringLiteral("z")).toInt();
-		int msec = (endMSec > startMSec) ? (endMSec - startMSec) : (1000 - (startMSec - endMSec));
-
 		durationString += tr("%n millisecond(s)", "", msec);
 
 		QStandardItem *item = new QStandardItem(tr("Execution ended at %1\n(%2)").arg(currentDateTime.toString(QStringLiteral("dd/MM/yyyy hh:mm:ss:zzz"))).arg(durationString));
