@@ -41,9 +41,6 @@ namespace ActionTools
             codeLineEdit()->setReadOnly(!code);
             codeLineEdit()->setAttribute(Qt::WA_InputMethodEnabled, code);
         });
-
-		QKeySequence keySequence(Qt::Key_Print);
-		addItem(keySequence.toString(QKeySequence::NativeText));
 	}
 
 	void KeyEdit::setKeyInput(const KeyInput &keyInput)
