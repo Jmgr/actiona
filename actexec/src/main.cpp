@@ -236,8 +236,6 @@ int main(int argc, char **argv)
 				optionsParser.showHelp(-1);
 			}
 
-			QNetworkProxy proxy;
-
 			if(type == ActionTools::Settings::PROXY_TYPE_HTTP)
 				proxy.setType(QNetworkProxy::HttpProxy);
 			else

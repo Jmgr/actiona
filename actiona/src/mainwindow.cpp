@@ -1292,7 +1292,6 @@ void MainWindow::updateProxySettings()
 	case ActionTools::Settings::PROXY_CUSTOM:
 		{
 			int type = settings.value(QStringLiteral("network/proxyType"), ActionTools::Settings::PROXY_TYPE_HTTP).toInt();
-			QNetworkProxy proxy;
 
 			if(type == ActionTools::Settings::PROXY_TYPE_HTTP)
 				proxy.setType(QNetworkProxy::HttpProxy);
