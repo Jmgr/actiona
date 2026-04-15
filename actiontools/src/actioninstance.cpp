@@ -31,6 +31,7 @@
 #include <QApplication>
 #include <QScreen>
 #include <QRegularExpression>
+#include <utility>
 
 namespace ActionTools
 {
@@ -611,7 +612,7 @@ namespace ActionTools
         QStringList pointStrings = result.split(QLatin1Char(';'), Qt::SkipEmptyParts);
 		QPolygon polygon;
 
-        for(const QString &pointString: qAsConst(pointStrings))
+        for(const QString &pointString: std::as_const(pointStrings))
 		{
             QStringList pointComponents = pointString.split(QLatin1Char(':'), Qt::SkipEmptyParts);
 			if(pointComponents.size() != 2)
@@ -916,7 +917,7 @@ namespace ActionTools
 						else
 							stringEvaluationResult = foundVariable.toString();
 					}
-					else if(foundVariable.isVariant())
+					else
 					{
 						QVariant variantEvaluationResult = foundVariable.toVariant();
                         if(variantEvaluationResult.metaType() == QMetaType::fromType<QStringList>())
@@ -926,8 +927,6 @@ namespace ActionTools
                         else
                             stringEvaluationResult = foundVariable.toString();
 					}
-					else
-						stringEvaluationResult = foundVariable.toString();
 
 					result.append(stringEvaluationResult);
 				}

@@ -38,14 +38,24 @@ void ScriptProxyModel::setFilterString(const QString &filterString)
 {
     mFilterString = filterString;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
+    beginFilterChange();
+    endFilterChange(Direction::Rows);
+#else
     invalidateFilter();
+#endif
 }
 
 void ScriptProxyModel::setFilteringFlags(ActionFilteringFlags filteringFlags)
 {
     mFilteringFlags = filteringFlags;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
+    beginFilterChange();
+    endFilterChange(Direction::Rows);
+#else
     invalidateFilter();
+#endif
 }
 
 bool ScriptProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const

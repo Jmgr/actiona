@@ -30,7 +30,12 @@ void NewActionProxyModel::setFilterString(const QString &filterString)
 {
     mFilterString = filterString;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
+    beginFilterChange();
+    endFilterChange(Direction::Rows);
+#else
     invalidateFilter();
+#endif
 }
 
 bool NewActionProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const

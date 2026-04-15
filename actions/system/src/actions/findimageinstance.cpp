@@ -26,6 +26,7 @@
 #include <QPixmap>
 #include <QApplication>
 #include <QRegularExpression>
+#include <utility>
 
 namespace Actions
 {
@@ -186,7 +187,7 @@ namespace Actions
         QList<QImage> sourceImages;
         sourceImages.reserve(mImagesToSearchIn.size());
 
-        for(const auto &imageToSearchIn: qAsConst(mImagesToSearchIn))
+        for(const auto &imageToSearchIn: std::as_const(mImagesToSearchIn))
             sourceImages.append(imageToSearchIn.first.toImage());
 
         if(!mOpenCVAlgorithms->findSubImageAsync(sourceImages,
@@ -300,4 +301,3 @@ namespace Actions
         executionEnded(stopScript);
     }
 }
-

@@ -33,6 +33,7 @@
 #include <QTimer>
 #include <QComboBox>
 #include <QMenu>
+#include <utility>
 
 #include <limits>
 #include <algorithm>
@@ -101,7 +102,7 @@ QMenu *ScriptParametersDialog::createVariablesMenu(QWidget *parent) const
 
     auto back = new QMenu(parent);
 
-    for(const QString &variable: qAsConst(variableList))
+    for(const QString &variable: std::as_const(variableList))
         back->addAction(variable);
 
     return back;

@@ -38,6 +38,7 @@
 #include <QXmlStreamReader>
 #include <QBuffer>
 #include <QRegularExpression>
+#include <utility>
 
 namespace ActionTools
 {
@@ -262,7 +263,7 @@ namespace ActionTools
 		stream.writeStartElement(QStringLiteral("parameters"));
 
         int parameterIndex = 0;
-        for(const ScriptParameter &parameter: qAsConst(mParameters))
+        for(const ScriptParameter &parameter: std::as_const(mParameters))
 		{
             if(progressCallback)
             {
@@ -309,7 +310,7 @@ namespace ActionTools
 		stream.writeAttribute(QStringLiteral("pauseAfter"), QString::number(pauseAfter()));
 
         int actionIndex = 0;
-        for(ActionInstance *actionInstance: qAsConst(mActionInstances))
+        for(ActionInstance *actionInstance: std::as_const(mActionInstances))
 		{
             if(progressCallback)
             {
@@ -692,7 +693,7 @@ namespace ActionTools
         const auto actionDefinitions = updatableActionDefinitions.keys();
         for(ActionDefinition *actionDefinition: actionDefinitions)
         {
-            for(ActionInstance *actionInstance: qAsConst(mActionInstances))
+            for(ActionInstance *actionInstance: std::as_const(mActionInstances))
             {
                 if(actionInstance->definition() == actionDefinition)
                     actionDefinition->updateAction(actionInstance, updatableActionDefinitions.value(actionDefinition));
@@ -781,13 +782,13 @@ namespace ActionTools
 
     void Script::executionStopped()
     {
-        for(auto actionInstance: qAsConst(mActionInstances))
+        for(auto actionInstance: std::as_const(mActionInstances))
             actionInstance->stopLongTermExecution();
 
         mMinMaxExecutionCounter = {std::numeric_limits<int>::max(), std::numeric_limits<int>::min()};
         mMinMaxExecutionDuration = {std::numeric_limits<qint64>::max(), std::numeric_limits<qint64>::min()};
 
-        for(auto actionInstance: qAsConst(mActionInstances))
+        for(auto actionInstance: std::as_const(mActionInstances))
         {
            if(!actionInstance->isEnabled())
                continue;

@@ -25,6 +25,7 @@
 #include <QElapsedTimer>
 #include <QDebug>
 #include <QDir>
+#include <utility>
 
 #ifdef Q_OS_UNIX
 #include "actiontools/x11info.hpp"
@@ -233,7 +234,7 @@ namespace ActionTools
 			return back;
 
 		QStringList processes = procDir.entryList(QDir::Dirs);
-        for(const QString &processId: qAsConst(processes))
+        for(const QString &processId: std::as_const(processes))
 		{
 			bool success;
 			int id = processId.toInt(&success);

@@ -31,10 +31,10 @@ namespace Code
     Color::Color(const QString &colorName)
                 : CodeClass()
     {
-        if(!QColor::isValidColor(colorName))
+        if(!QColor::isValidColorName(colorName))
             throwError(QStringLiteral("ColorNameError"), tr("Invalid color name"));
         else
-            mColor = {colorName};
+            mColor = QColor::fromString(colorName);
     }
 
     Color::Color(int red, int green, int blue, int alpha)
@@ -180,13 +180,13 @@ namespace Code
 
     Color *Color::setNamedColor(const QString &name)
 	{
-		if(!QColor::isValidColor(name))
+		if(!QColor::isValidColorName(name))
 		{
             throwError(QStringLiteral("ColorNameError"), tr("Invalid color name"));
             return this;
         }
 		
-        mColor.setNamedColor(name);
+        mColor = QColor::fromString(name);
 
         return this;
     }

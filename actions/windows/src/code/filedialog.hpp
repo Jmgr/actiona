@@ -81,7 +81,6 @@ namespace Code
 			Readable = QDir::Readable,
 			Writable = QDir::Writable,
 			Executable = QDir::Executable,
-			Modified = QDir::Modified,
 			Hidden = QDir::Hidden,
 			System = QDir::System,
 			CaseSensitive = QDir::CaseSensitive
@@ -151,4 +150,3 @@ namespace Code
 		QJSValue mOnFilterSelected;
 	};
 }
-

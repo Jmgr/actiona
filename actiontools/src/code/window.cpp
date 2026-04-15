@@ -27,6 +27,7 @@
 
 #include <QJSValueIterator>
 #include <QDebug>
+#include <utility>
 
 namespace Code
 {
@@ -313,7 +314,7 @@ namespace Code
         QRegularExpression classNameRegExp = windowModeToRegularExpression(classNameMode, classNamePatternString, classNameCaseSensitive);
         QList<ActionTools::WindowHandle> foundWindows;
 
-        for(const ActionTools::WindowHandle &windowHandle: qAsConst(windowList))
+        for(const ActionTools::WindowHandle &windowHandle: std::as_const(windowList))
         {
             if(!titlePattern.isUndefined() && !titleRegExp.match(windowHandle.title()).hasMatch())
                     continue;

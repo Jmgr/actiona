@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <QMainWindow>
 #include <QApplication>
+#include <utility>
 
 #ifdef Q_OS_UNIX
 #include "actiontools/x11info.hpp"
@@ -307,7 +308,7 @@ namespace ActionTools
 		XUngrabPointer(X11Info::display(), CurrentTime);
         XFlush(X11Info::display());
 
-        for(auto shownWindow: qAsConst(mShownWindows))
+        for(auto shownWindow: std::as_const(mShownWindows))
         {
             XMapWindow(X11Info::display(), shownWindow->winId());
         }

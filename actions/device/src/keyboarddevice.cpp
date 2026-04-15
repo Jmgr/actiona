@@ -22,6 +22,7 @@
 #include "actiontools/keymapper.hpp"
 #include "actiontools/keyinput.hpp"
 #include "actiontools/crossplatform.hpp"
+#include <utility>
 
 #ifdef Q_OS_UNIX
 #include "actiontools/keysymhelper.hpp"
@@ -71,7 +72,7 @@ KeyboardDevice::~KeyboardDevice()
 
 void KeyboardDevice::reset()
 {
-    for(int nativeKey: qAsConst(mPressedKeys))
+    for(int nativeKey: std::as_const(mPressedKeys))
         doKeyAction(Release, nativeKey, false);
 
     mPressedKeys.clear();

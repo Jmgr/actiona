@@ -25,6 +25,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QMenu>
+#include <utility>
 
 #include <algorithm>
 
@@ -134,7 +135,7 @@ namespace ActionTools
         {
             variablesMenu = new QMenu(tr("Insert variable"));
             connect(variablesMenu, &QMenu::triggered, this, static_cast<void (CodeEditorDialog::*)(QAction *action)>(&CodeEditorDialog::insertVariable));
-            for(const QString &variable: qAsConst(variableList))
+            for(const QString &variable: std::as_const(variableList))
                 variablesMenu->addAction(variable);
         }
 

@@ -2,6 +2,27 @@ cmake_minimum_required(VERSION 3.10)
 
 project(actiona VERSION 3.12.0 DESCRIPTION "Cross-platform automation tool" LANGUAGES CXX)
 
+# Silence CMake's FindOpenGL policy warning on newer CMake while remaining
+# compatible with the minimum supported CMake version.
+if(POLICY CMP0072)
+    cmake_policy(SET CMP0072 NEW)
+endif()
+
+# Qt Creator's generated CMake helper may trigger FindOpenGL before project
+# code fully executes. Cache the preference so subsequent configure runs have
+# an explicit value available from the start.
+if(UNIX AND NOT APPLE)
+    set(OpenGL_GL_PREFERENCE GLVND CACHE STRING "Preferred OpenGL provider")
+endif()
+
+# Qt 6.11 may auto-include optional QML plugin packages whose own transitive
+# dependencies are not installed in all distributions. This project uses QtQml
+# APIs directly and does not rely on that plugin auto-discovery path.
+set(QT_SKIP_AUTO_QML_PLUGIN_INCLUSION ON CACHE BOOL "Disable Qt's auto-inclusion of optional QML plugin packages" FORCE)
+
+# actiontools intentionally uses Qt's private QML headers.
+set(QT_NO_PRIVATE_MODULE_WARNING ON CACHE BOOL "Silence Qt private module warning for intentional QmlPrivate usage" FORCE)
+
 # Constants
 set(ACT_SCRIPT_VERSION 1.1.0)
 set(ACT_MINIMUM_QT_VERSION 6.4)

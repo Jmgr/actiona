@@ -21,6 +21,7 @@
 #include "actiontools/keyboardkeyedit.hpp"
 
 #include <QKeyEvent>
+#include <utility>
 
 namespace ActionTools
 {
@@ -107,7 +108,7 @@ namespace ActionTools
     {
         QString keys;
 
-        for(auto pressedKey: qAsConst(m_keys))
+        for(auto pressedKey: std::as_const(m_keys))
         {
             if(!keys.isEmpty())
                 keys += QStringLiteral(" + ");

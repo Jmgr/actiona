@@ -32,6 +32,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <utility>
 
 #include <algorithm>
 
@@ -146,7 +147,7 @@ void ResourceDialog::removeSelection()
         return (first.topRow() > second.topRow());
     });
 
-    for(const QTableWidgetSelectionRange &selectionRange: qAsConst(selectionRanges))
+    for(const QTableWidgetSelectionRange &selectionRange: std::as_const(selectionRanges))
     {
         for(int row = selectionRange.bottomRow(); row >= selectionRange.topRow(); --row)
             ui->resourcesTableWidget->removeRow(row);

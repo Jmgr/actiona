@@ -26,6 +26,7 @@
 #include <QTimer>
 #include <QDesktopServices>
 #include <QUrl>
+#include <utility>
 
 AboutDialog::AboutDialog(QWidget *parent)
 	: QDialog(parent),
@@ -89,7 +90,7 @@ AboutDialog::~AboutDialog()
 
 void AboutDialog::animate()
 {
-	for(QComboBox *comboBox: qAsConst(mComboBoxes))
+	for(QComboBox *comboBox: std::as_const(mComboBoxes))
 	{
 		int count = comboBox->count();
 		int current = comboBox->currentIndex();

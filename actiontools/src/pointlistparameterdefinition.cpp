@@ -22,6 +22,7 @@
 #include "actiontools/subparameter.hpp"
 #include "actiontools/pointlistwidget.hpp"
 #include "actiontools/actioninstance.hpp"
+#include <utility>
 
 namespace ActionTools
 {
@@ -46,7 +47,7 @@ namespace ActionTools
 		QPolygon polygon;
         QStringList pointStrings = pointBuffer.split(QLatin1Char(';'), Qt::SkipEmptyParts);
 
-		for(const QString &pointString: qAsConst(pointStrings))
+		for(const QString &pointString: std::as_const(pointStrings))
 		{
             QStringList pointComponents = pointString.split(QLatin1Char(':'), Qt::SkipEmptyParts);
 			if(pointComponents.size() != 2)

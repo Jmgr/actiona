@@ -46,6 +46,7 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QMenu>
+#include <utility>
 
 #include <limits>
 #include <algorithm>
@@ -101,7 +102,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
     }
 
     int tabIndex = 0;
-    for(const QString &tab: qAsConst(tabs))
+    for(const QString &tab: std::as_const(tabs))
     {
         QWidget *widget = new QWidget;
         auto layout = new QVBoxLayout(widget);
@@ -281,7 +282,7 @@ QMenu *ActionDialog::createVariablesMenu(QWidget *parent) const
 
     auto back = new QMenu(parent);
 
-    for(const QString &variable: qAsConst(variableList))
+    for(const QString &variable: std::as_const(variableList))
         back->addAction(variable);
 
     return back;
@@ -293,7 +294,7 @@ void ActionDialog::accept()
     Tools::HighResolutionTimer timer(QStringLiteral("ActionDialog accept"));
 #endif
 	
-	for(ActionTools::ParameterDefinition *parameter: qAsConst(mParameters))
+	for(ActionTools::ParameterDefinition *parameter: std::as_const(mParameters))
 		parameter->save(mActionInstance);
 	
 	if(!mParameters.empty())
@@ -353,7 +354,7 @@ void ActionDialog::postInit()
 #endif
     mOtherActionsVariables = mScript->findVariables(nullptr, mActionInstance);//Find in all actions except this one
 
-	for(ActionTools::ParameterDefinition *parameter: qAsConst(mParameters))
+	for(ActionTools::ParameterDefinition *parameter: std::as_const(mParameters))
 	{
         parameter->actionUpdate(mScript);
 		parameter->load(mActionInstance);
@@ -399,7 +400,7 @@ void ActionDialog::postInit()
 	
 	if(!mCurrentField.isEmpty())
 	{
-		for(ActionTools::ParameterDefinition *parameterDefinition: qAsConst(mParameters))
+		for(ActionTools::ParameterDefinition *parameterDefinition: std::as_const(mParameters))
 		{
 			if(parameterDefinition->name().original() == mCurrentField && parameterDefinition->editors().count() > 0)
 			{
@@ -503,4 +504,3 @@ void ActionDialog::addParameter(ActionTools::ParameterDefinition *parameter, int
 	QFormLayout *parameterLayout = mParameterLayouts[parameterType][tab];
 	parameterLayout->addRow(parameter->name().translated() + tr(":"), parentWidget);
 }
-

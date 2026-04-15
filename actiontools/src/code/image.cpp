@@ -330,7 +330,17 @@ namespace Code
 	
     Image *Image::mirror(MirrorOrientation mirrorOrientation)
 	{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+		Qt::Orientations orientations;
+		if(mirrorOrientation & Horizontal)
+			orientations |= Qt::Horizontal;
+		if(mirrorOrientation & Vertical)
+			orientations |= Qt::Vertical;
+
+		mImage = mImage.flipped(orientations);
+#else
 		mImage = mImage.mirrored(mirrorOrientation & Horizontal, mirrorOrientation & Vertical);
+#endif
 		
         return this;
 	}

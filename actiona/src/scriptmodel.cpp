@@ -38,6 +38,7 @@
 #include <QIODevice>
 
 #include <algorithm>
+#include <utility>
 
 ScriptModel::ScriptModel(ActionTools::Script *script, ActionTools::ActionFactory *actionFactory, QObject *parent)
 	: QAbstractTableModel(parent),
@@ -482,7 +483,7 @@ QMimeData* ScriptModel::mimeData(const QModelIndexList &indexes) const
 
     std::sort(rowIdList.begin(), rowIdList.end(), std::greater<int>());
 
-	for(int row: qAsConst(rowIdList))
+	for(int row: std::as_const(rowIdList))
 	{
 		ActionTools::ActionInstance *actionInstance = mScript->actionAt(row);
 
@@ -670,4 +671,3 @@ QColor ScriptModel::computeHeatmapColor(const ActionTools::ActionInstance &actio
                 minColor.valueF() * (1 - ratio) + maxColor.valueF() * ratio)
                 .toRgb();
 }
-

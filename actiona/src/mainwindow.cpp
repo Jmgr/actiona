@@ -58,6 +58,7 @@
 #include "newactionmodel.hpp"
 #include "newactionproxymodel.hpp"
 #include "scriptproxymodel.hpp"
+#include <utility>
 #include "tools/languages.hpp"
 #include "actionpackdata.hpp"
 #include "actionpackdevice.hpp"
@@ -453,7 +454,7 @@ void MainWindow::postInit()
 		QString message = tr("<b>Unable to load %n action(s):</b>\n", "", mPackLoadErrors.count());
 		message += QStringLiteral("<ul>");
 
-		for(const QString &error: qAsConst(mPackLoadErrors))
+		for(const QString &error: std::as_const(mPackLoadErrors))
 		{
 			message += QStringLiteral("<li>") + error + QStringLiteral("</li>");
 		}
@@ -2148,7 +2149,7 @@ QList<int> MainWindow::selectedRows() const
 
 	QList<int> selectedRows;
 
-	for(const QModelIndex &index: qAsConst(selectedIndexes))
+	for(const QModelIndex &index: std::as_const(selectedIndexes))
 	{
 		if(index.column() == ScriptModel::ColumnLabel)
 			selectedRows << index.row();

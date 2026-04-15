@@ -22,6 +22,7 @@
 #include "actiontools/subparameter.hpp"
 #include "actiontools/codecombobox.hpp"
 #include "actiontools/actioninstance.hpp"
+#include <utility>
 
 namespace ActionTools
 {
@@ -36,7 +37,7 @@ namespace ActionTools
 
 		mComboBox = new CodeComboBox(parent);
 
-        for(const QLocale &locale: qAsConst(mLocales))
+        for(const QLocale &locale: std::as_const(mLocales))
         {
             if(locale == QLocale::C)
                 continue;
@@ -45,7 +46,7 @@ namespace ActionTools
             QIcon icon{QStringLiteral(":/images/flags/%1.png").arg(countryName)};
             QString label = QStringLiteral("%1 (%2)")
                                     .arg(QLocale::languageToString(locale.language()))
-                                    .arg(QLocale::countryToString(locale.country()));
+                                    .arg(QLocale::territoryToString(locale.territory()));
 
             mComboBox->addItem(icon, label, locale.name());
         }
