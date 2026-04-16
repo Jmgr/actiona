@@ -28,6 +28,7 @@
 #include "global.hpp"
 #include "progresssplashscreen.hpp"
 #include "tools/languages.hpp"
+#include "actiontools/sessionguard.hpp"
 #include "actiontools/qtsingleapplication/QtSingleApplication"
 
 #ifdef Q_OS_WIN
@@ -144,6 +145,11 @@ int main(int argc, char **argv)
 
 	if(optionsParser.isSet(QStringLiteral("exitatend")) && !optionsParser.isSet(QStringLiteral("execute")))
 		optionsParser.showHelp(-1);
+
+#ifdef Q_OS_UNIX
+	if(ActionTools::isWaylandSession())
+		return ActionTools::showUnsupportedSessionMessage(QObject::tr("Actiona"));
+#endif
 
 	QString startScript;
 	const QStringList &positionalArguments = optionsParser.positionalArguments();

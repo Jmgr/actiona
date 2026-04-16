@@ -23,6 +23,7 @@
 #include "actiontools/qtsingleapplication/QtSingleApplication"
 #include "global.hpp"
 #include "actiontools/settings.hpp"
+#include "actiontools/sessionguard.hpp"
 #include "tools/languages.hpp"
 
 #ifdef ACT_PROFILE
@@ -158,6 +159,14 @@ int main(int argc, char **argv)
 	optionsParser.addPositionalArgument(QStringLiteral("filepath"), QObject::tr("The filepath of a script/code file to execute."));
 
 	optionsParser.process(app);
+
+#ifdef Q_OS_UNIX
+	if(ActionTools::isWaylandSession())
+	{
+		QTextStream stream(stderr);
+		return ActionTools::showUnsupportedSessionMessage(QObject::tr("Actiona executer"), &stream);
+	}
+#endif
 
 #ifdef Q_OS_WIN
 	if(optionsParser.isSet(QStringLiteral("console")))

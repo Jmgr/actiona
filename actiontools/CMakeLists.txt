@@ -83,6 +83,7 @@ set(SOURCES
     ${SOURCES_PREFIX}/scriptcompleter.cpp
     ${SOURCES_PREFIX}/script.cpp
     ${SOURCES_PREFIX}/scriptlinemodel.cpp
+    ${SOURCES_PREFIX}/sessionguard.cpp
     ${SOURCES_PREFIX}/subparameter.cpp
     ${SOURCES_PREFIX}/switchtextmodepushbutton.cpp
     ${SOURCES_PREFIX}/targetwindow.cpp
@@ -209,6 +210,7 @@ set(HEADERS
     ${HEADERS_PREFIX}/script.hpp
     ${HEADERS_PREFIX}/scriptlinemodel.hpp
     ${HEADERS_PREFIX}/scriptparameter.hpp
+    ${HEADERS_PREFIX}/sessionguard.hpp
     ${HEADERS_PREFIX}/settings.hpp
     ${HEADERS_PREFIX}/subparameter.hpp
     ${HEADERS_PREFIX}/swappairs.hpp
