@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(actiona VERSION 3.12.0 DESCRIPTION "Cross-platform automation tool" LANGUAGES CXX)
+project(actiona VERSION 3.11.2 DESCRIPTION "Cross-platform automation tool" LANGUAGES CXX)
 
 # Silence CMake's FindOpenGL policy warning on newer CMake while remaining
 # compatible with the minimum supported CMake version.

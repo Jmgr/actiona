@@ -1,3 +1,37 @@
+## 3.11.2 (19/04/25)
+This is a bugfix release.
+
+### Global
+- Fixed a crash at startup with recent Qt versions
+- Windows: fixed mouse cursor positions on HiDPI screens (regression)
+- Fixed custom proxy settings not being applied
+- Windows: fixed forceful shutdown not working
+- Windows: added a warning when opening scripts created with 3.11.0 or 3.11.1 that may contain incorrect HiDPI coordinates
+- Windows: Fixed installer warnings
+- Fixed a build failure with Qt 6.10 caused by a missing Qt6::QmlPrivate dependency - [@Meik1982](https://github.com/Meik1982)
+- Fixed compilation on mips64 and mips64el
+
+### Interface
+- Windows: reduced the risk of Actiona staying invisible after choosing a position
+- Fixed wrong action being opened when using a filter
+- Windows: fixed the screenshot wizard window displaying invisible widgets
+- Fixed key inputs accepting invalid keys or the same key multiple times
+- Fixed console times being displayed incorrectly after running longer than a day
+- Removed the non-working Print key from key inputs
+- Added Brazilian Portuguese translation - [@YuriGo1793](https://github.com/YuriGo1793)
+- About dialog: fixed the translators combobox animation
+
+### Code
+- Fixed a crash when using the PlaySound action or the media playback class
+- PixelColor: reduced memory usage when waiting for a pixel to change color
+
+### Contributors
+Thanks to [@Meik1982](https://github.com/Meik1982) and [@YuriGo1793](https://github.com/YuriGo1793) for contributing to this release!
+
+## 3.10.3 (16/04/26)
+### Global:
+- Unix-like systems: when started under Wayland, Actiona now shows a message and exits cleanly instead of crashing
+
 ## 3.11.1 (13/04/25)
 ### Global
 - Added support for "make install"
