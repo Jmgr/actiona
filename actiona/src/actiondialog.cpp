@@ -63,7 +63,7 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 	  mCompletionModel(completionModel),
 	  mExceptionsLayout(new QGridLayout),
 	  mTabWidget(new QTabWidget(this)),
-	  mExceptionsTabWidget(new QWidget(mTabWidget)),
+      mExceptionsTabWidget(nullptr),
 	  mCommonTabWidget(new QWidget(mTabWidget)),
 	  mPauseBeforeSpinBox(new QSpinBox(this)),
 	  mPauseAfterSpinBox(new QSpinBox(this)),
@@ -166,6 +166,8 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 
 	if(!elements.empty())
 	{
+        mExceptionsTabWidget = new QWidget(mTabWidget);
+
 		QStringList exceptionActionsNames;
         for(const auto &exceptionActionName: ActionTools::ActionException::ExceptionActionName)
             exceptionActionsNames << QApplication::translate("ActionException::ExceptionActionName", exceptionActionName.toLatin1().constData());
@@ -217,7 +219,10 @@ ActionDialog::ActionDialog(QAbstractItemModel *completionModel, ActionTools::Scr
 		mTabWidget->addTab(mExceptionsTabWidget, tr("Exceptions"));
 	}
     else
+    {
         delete mExceptionsLayout;
+        mExceptionsLayout = nullptr;
+    }
 
 	//Init of parameters
 	for(ActionTools::ElementDefinition *element: elements)
@@ -297,7 +302,7 @@ void ActionDialog::accept()
 	for(ActionTools::ParameterDefinition *parameter: std::as_const(mParameters))
 		parameter->save(mActionInstance);
 	
-	if(!mParameters.empty())
+    if(mExceptionsLayout)
 	{
 		for(int i = 0; i < mExceptionsLayout->rowCount(); ++i)
 		{
@@ -362,7 +367,7 @@ void ActionDialog::postInit()
 
     mScript->updateLineModel();
 
-	if(!mParameters.empty())
+    if(mExceptionsLayout)
 	{
 		const ActionTools::ExceptionActionInstancesHash exceptionActionInstances = mActionInstance->exceptionActionInstances();
 		QList<ActionTools::ActionException *> actionExceptions = mActionInstance->definition()->exceptions();
@@ -426,7 +431,7 @@ void ActionDialog::postInit()
 		}
 	}
 
-	if(!mParameters.empty())
+    if(mExceptionsLayout)
 	{
 		for(int i = 0; i < mExceptionsLayout->rowCount(); ++i)
 		{
@@ -452,6 +457,9 @@ void ActionDialog::currentExceptionActionChanged(int index)
 
 	auto exceptionAction = static_cast<ActionTools::ActionException::ExceptionAction>(index);
 	int row = comboBox->property("row").toInt();
+    if(!mExceptionsLayout)
+        return;
+
 	QLayoutItem *item = mExceptionsLayout->itemAtPosition(row, 2);
 	if(!item)
 		return;
