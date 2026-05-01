@@ -24,6 +24,7 @@
 
 #include <QComboBox>
 #include <QApplication>
+#include <QCursor>
 #include <QScreen>
 
 namespace ActionTools
@@ -67,12 +68,17 @@ namespace ActionTools
     {
         if(mPositionUnitComboBox->currentIndex() == 1)//Percents
         {
+            // position is in physical pixels; QCursor::pos() gives the logical equivalent
+            // and is reliable here since this slot fires synchronously at mouse release.
+            Q_UNUSED(position)
+            const auto logicalPos = QCursor::pos();
+
             QRect virtualScreenGeometry;
             for(auto screen: QGuiApplication::screens())
                 virtualScreenGeometry = virtualScreenGeometry.united(screen->geometry());
 
-            mPositionEdit->setPosition(QPointF((position.x() * 100) / virtualScreenGeometry.width(),
-                                              (position.y() * 100) / virtualScreenGeometry.height()));
+            mPositionEdit->setPosition(QPointF((logicalPos.x() * 100) / virtualScreenGeometry.width(),
+                                              (logicalPos.y() * 100) / virtualScreenGeometry.height()));
         }
     }
 }

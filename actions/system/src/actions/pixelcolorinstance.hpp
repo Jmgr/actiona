@@ -32,6 +32,10 @@
 #include <QTimer>
 #include <QScreen>
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
 namespace Actions
 {
 	class PixelColorInstance : public ActionTools::ActionInstance
@@ -185,16 +189,25 @@ namespace Actions
 
 		bool testPixel()
 		{
+            QColor pixelColor;
+
+#ifdef Q_OS_WIN
+            HDC hdc = GetDC(NULL);
+            COLORREF colorRef = GetPixel(hdc, mPixelPosition.x(), mPixelPosition.y());
+            ReleaseDC(NULL, hdc);
+            if(colorRef == CLR_INVALID)
+                return false;
+            pixelColor = QColor(GetRValue(colorRef), GetGValue(colorRef), GetBValue(colorRef));
+#else
             auto screen = QGuiApplication::screenAt(mPixelPosition);
             if(!screen)
                 return false;
-
             auto geometry = screen->geometry();
             auto localX = mPixelPosition.x() - geometry.x();
             auto localY = mPixelPosition.y() - geometry.y();
-
             QPixmap pixel = screen->grabWindow(0, localX, localY, 1, 1);
-			QColor pixelColor = pixel.toImage().pixel(0, 0);
+            pixelColor = pixel.toImage().pixel(0, 0);
+#endif
 
             if (!mVariable.isEmpty())
                 setVariable(mVariable, Code::CodeClass::construct<Code::Color>(pixelColor, *scriptEngine()));

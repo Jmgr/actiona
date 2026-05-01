@@ -26,6 +26,10 @@
 #include <QApplication>
 #include <QScreen>
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
 namespace ActionTools
 {
 	ColorEdit::ColorEdit(QWidget *parent)
@@ -101,16 +105,26 @@ namespace ActionTools
 	
     void ColorEdit::setPosition(QPointF position)
 	{
+        QColor pixelColor;
+
+#ifdef Q_OS_WIN
+        HDC hdc = GetDC(NULL);
+        COLORREF colorRef = GetPixel(hdc, (int)position.x(), (int)position.y());
+        ReleaseDC(NULL, hdc);
+        if(colorRef == CLR_INVALID)
+            return;
+        pixelColor = QColor(GetRValue(colorRef), GetGValue(colorRef), GetBValue(colorRef));
+#else
         auto screen = QGuiApplication::screenAt(position.toPoint());
         if(!screen)
             return;
-
         auto geometry = screen->geometry();
         auto localX = position.x() - geometry.x();
         auto localY = position.y() - geometry.y();
-
         QPixmap pixel = screen->grabWindow(0, localX, localY, 1, 1);
-		QColor pixelColor = pixel.toImage().pixel(0, 0);
+        pixelColor = pixel.toImage().pixel(0, 0);
+#endif
+
 		mColorDialog->setCurrentColor(pixelColor);
 		onColorSelected();
 		on_colorLineEdit_textChanged(QString());
