@@ -150,17 +150,16 @@ namespace ActionTools
 		if(ui->colorLineEdit->isCode())
 			return;
 
-		QPalette palette = ui->colorLineEdit->palette();
 		QColor color = currentColor();
-
-		palette.setColor(QPalette::Base, color);
-
 		QColor inverseColor(255 - color.red(),
 			255 - color.green(),
 			255 - color.blue());
 
-		palette.setColor(QPalette::Text, inverseColor);
-		ui->colorLineEdit->setPalette(palette);
+		ui->colorLineEdit->setStyleSheet(
+			QStringLiteral("QLineEdit { background-color: %1; color: %2; }")
+				.arg(color.name())
+				.arg(inverseColor.name())
+		);
 	}
 
 	void ColorEdit::on_colorLineEdit_codeChanged(bool code)
@@ -170,7 +169,7 @@ namespace ActionTools
 			QString oldText = ui->colorLineEdit->text();
             ui->colorLineEdit->setValidator(nullptr);
 			ui->colorLineEdit->setText(oldText);
-			ui->colorLineEdit->setPalette(palette());
+			ui->colorLineEdit->setStyleSheet(QString());
 		}
 		else
 		{
