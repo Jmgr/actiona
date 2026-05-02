@@ -1,4 +1,12 @@
-## 3.11.2 (19/04/25)
+## 3.11.3 (02/05/26)
+This is a bugfix release.
+
+### Interface
+- Fixed color edit's background (used in PixelColor) not changing color when dark/light modes are used
+- Windows: fixed a bug when choosing a pixel in the PixelColor editor would set color values to 0
+- Editor: fixed a bug where the parameters tab would not be selectable in actions without parameters
+
+## 3.11.2 (19/04/26)
 This is a bugfix release.
 
 ### Global
