@@ -23,6 +23,9 @@
 #include "actiontools/actioninstance.hpp"
 
 #include <QMediaPlayer>
+#include <QString>
+
+class QAudioOutput;
 
 namespace Actions
 {
@@ -42,13 +45,18 @@ namespace Actions
 
 	private slots:
         void mediaStatusChanged(QMediaPlayer::MediaStatus status);
+        void mediaErrorOccurred(QMediaPlayer::Error error, const QString &errorString);
 
 	private:
+        void finishPlayback();
+        void failPlayback(const QString &message);
+
 		QMediaPlayer *mMediaPlayer;
         QAudioOutput *mAudioOutput;
 		bool mBlocking;
+        bool mFinished;
+        QString mCurrentFile;
 
 		Q_DISABLE_COPY(PlaySoundInstance)
 	};
 }
-

@@ -29,11 +29,13 @@ namespace Actions
 		: ActionTools::ActionInstance(definition, parent),
             mMediaPlayer(new QMediaPlayer(this)),
             mAudioOutput(new QAudioOutput(this)),
-            mBlocking(false)
+            mBlocking(false),
+            mFinished(false)
 	{
         mMediaPlayer->setAudioOutput(mAudioOutput);
 
         connect(mMediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &PlaySoundInstance::mediaStatusChanged);
+        connect(mMediaPlayer, &QMediaPlayer::errorOccurred, this, &PlaySoundInstance::mediaErrorOccurred);
 	}
 
     PlaySoundInstance::~PlaySoundInstance() = default;
@@ -51,6 +53,9 @@ namespace Actions
 
 		if(!ok)
 			return;
+
+        mCurrentFile = file;
+        mFinished = false;
 
         mMediaPlayer->stop();
 
@@ -71,12 +76,12 @@ namespace Actions
 
 		if(mMediaPlayer->error() != QMediaPlayer::NoError)
 		{
-			emit executionException(ActionTools::ActionException::InvalidParameterException, tr("Unable to play file %1: %2").arg(file).arg(mMediaPlayer->errorString()));
+            mediaErrorOccurred(mMediaPlayer->error(), mMediaPlayer->errorString());
 			return;
 		}
 
 		if(!mBlocking)
-			executionEnded();
+            finishPlayback();
 	}
 
 	void PlaySoundInstance::pauseExecution()
@@ -102,6 +107,44 @@ namespace Actions
     void PlaySoundInstance::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 	{
         if(status == QMediaPlayer::EndOfMedia)
-			executionEnded();
+            finishPlayback();
+        else if(status == QMediaPlayer::InvalidMedia)
+        {
+            const QString errorString = mMediaPlayer->errorString();
+            failPlayback(tr("Unable to play file %1: %2")
+                             .arg(mCurrentFile,
+                                  errorString.isEmpty() ? tr("Invalid media") : errorString));
+        }
 	}
+
+    void PlaySoundInstance::mediaErrorOccurred(QMediaPlayer::Error error, const QString &errorString)
+    {
+        if(error == QMediaPlayer::NoError)
+            return;
+
+        failPlayback(tr("Unable to play file %1: %2")
+                         .arg(mCurrentFile,
+                              errorString.isEmpty() ? tr("Unknown media error") : errorString));
+    }
+
+    void PlaySoundInstance::finishPlayback()
+    {
+        if(mFinished)
+            return;
+
+        mFinished = true;
+
+        executionEnded();
+    }
+
+    void PlaySoundInstance::failPlayback(const QString &message)
+    {
+        if(mFinished)
+            return;
+
+        mFinished = true;
+        mMediaPlayer->stop();
+
+        emit executionException(ActionTools::ActionException::InvalidParameterException, message);
+    }
 }

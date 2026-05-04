@@ -35,6 +35,10 @@ namespace Code
 		mMediaPlayer->setVideoOutput(mVideoWidget);
         mMediaPlayer->setAudioOutput(mAudioOutput);
 		mVideoWidget->setVisible(false);
+
+        connect(mMediaPlayer, &QMediaPlayer::errorOccurred, this, &MediaPlayer::mediaErrorOccurred);
+        connect(mMediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MediaPlayer::mediaStatusChanged);
+        connect(mMediaPlayer, &QMediaPlayer::playbackStateChanged, this, &MediaPlayer::playbackStateChanged);
     }
 	
     MediaPlayer::~MediaPlayer()
@@ -114,6 +118,26 @@ namespace Code
 	{
         return static_cast<int>(mMediaPlayer->bufferProgress() * 100.f);
 	}
+
+    MediaPlayer::Error MediaPlayer::error() const
+    {
+        return static_cast<Error>(mMediaPlayer->error());
+    }
+
+    QString MediaPlayer::errorString() const
+    {
+        return mMediaPlayer->errorString();
+    }
+
+    MediaPlayer::MediaStatus MediaPlayer::mediaStatus() const
+    {
+        return static_cast<MediaStatus>(mMediaPlayer->mediaStatus());
+    }
+
+    MediaPlayer::PlaybackState MediaPlayer::playbackState() const
+    {
+        return static_cast<PlaybackState>(mMediaPlayer->playbackState());
+    }
 	
     MediaPlayer *MediaPlayer::play()
 	{
@@ -155,5 +179,43 @@ namespace Code
         qRegisterMetaType<MediaPlayer*>("const MediaPlayer *");
 
         CodeClass::registerClass<MediaPlayer>(QStringLiteral("MediaPlayer"), scriptEngine);
+    }
+
+    void MediaPlayer::mediaErrorOccurred(QMediaPlayer::Error error, const QString &errorString)
+    {
+        if(!mOnError.isUndefined())
+            mOnError.call(QJSValueList() << static_cast<Error>(error) << playbackErrorString(errorString));
+    }
+
+    void MediaPlayer::mediaStatusChanged(QMediaPlayer::MediaStatus status)
+    {
+        if(!mOnMediaStatusChanged.isUndefined())
+            mOnMediaStatusChanged.call(QJSValueList() << static_cast<MediaStatus>(status));
+
+        if(status == QMediaPlayer::EndOfMedia && !mOnFinished.isUndefined())
+            mOnFinished.call();
+
+        if(status == QMediaPlayer::InvalidMedia && !mOnError.isUndefined())
+            mOnError.call(QJSValueList() << error() << playbackErrorString(mMediaPlayer->errorString()));
+    }
+
+    void MediaPlayer::playbackStateChanged(QMediaPlayer::PlaybackState state)
+    {
+        if(!mOnPlaybackStateChanged.isUndefined())
+            mOnPlaybackStateChanged.call(QJSValueList() << static_cast<PlaybackState>(state));
+    }
+
+    QString MediaPlayer::playbackErrorString(const QString &errorString) const
+    {
+        if(!errorString.isEmpty())
+            return errorString;
+
+        if(mMediaPlayer->mediaStatus() == QMediaPlayer::InvalidMedia)
+            return tr("Invalid media");
+
+        if(mMediaPlayer->mediaStatus() == QMediaPlayer::NoMedia)
+            return tr("No media has been set");
+
+        return tr("Unknown media error");
     }
 }
