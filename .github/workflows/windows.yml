@@ -12,45 +12,45 @@ jobs:
       matrix:
         profile: [ON, OFF]
         updater: [ON, OFF]
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
-    - uses: actions/checkout@v4
-      with: { submodules: recursive, fetch-depth: 0 }
+      - uses: actions/checkout@v4
+        with: { submodules: recursive, fetch-depth: 0 }
 
-    - uses: suisei-cn/actions-download-file@v1
-      id: downloadfile
-      name: Download prebuilt OpenCV
-      with:
-        url: "https://actiona.tools/files/opencv-4.11.0-x64-vc17.7z"
+      - uses: suisei-cn/actions-download-file@v1
+        id: downloadfile
+        name: Download prebuilt OpenCV
+        with:
+          url: "https://actiona.tools/files/opencv-4.11.0-x64-vc17.7z"
 
-    - name: Extract OpenCV
-      run: 7z x -oopencv ${{ steps.downloadfile.outputs.filename }}
+      - name: Extract OpenCV
+        run: 7z x -oopencv ${{ steps.downloadfile.outputs.filename }}
 
-    - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v2
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v2
 
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: 6.8.3
-        arch: win64_msvc2022_64
-        modules: 'qtspeech qtmultimedia qt5compat'
-        cache: true
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: 6.8.3
+          arch: win64_msvc2022_64
+          modules: "qtspeech qtmultimedia qt5compat"
+          cache: true
 
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{github.workspace}}/build
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{github.workspace}}/build
 
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{github.workspace}}/build
-      run: cmake "$GITHUB_WORKSPACE" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DACT_PROFILE=${{ matrix.profile }} -DACT_UPDATER=${{ matrix.updater }} -G "Visual Studio 17 2022" -DOpenCV_DIR="$GITHUB_WORKSPACE/opencv/x64/vc17/lib"
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{github.workspace}}/build
+        run: cmake "$GITHUB_WORKSPACE" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DACT_PROFILE=${{ matrix.profile }} -DACT_UPDATER=${{ matrix.updater }} -G "Visual Studio 17 2022" -DOpenCV_DIR="$GITHUB_WORKSPACE/opencv/x64/vc17/lib"
 
-    - name: Build
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      run: cmake --build . --config $BUILD_TYPE --parallel 2
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        shell: bash
+        run: cmake --build . --config $BUILD_TYPE --parallel 2
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      run: ctest -C $BUILD_TYPE
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        shell: bash
+        run: ctest -C $BUILD_TYPE
