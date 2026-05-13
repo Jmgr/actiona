@@ -1,3 +1,9 @@
+## 3.11.4 (13/05/26)
+This is a bugfix release.
+
+### Code
+- Fixed MediaPlayer and the PlaySound action not playing any audio
+
 ## 3.11.3 (02/05/26)
 This is a bugfix release.
 
