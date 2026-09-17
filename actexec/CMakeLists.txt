@@ -22,6 +22,7 @@ set(TS_FILES
     ${TS_PREFIX}/actexec_fr_FR.ts
     ${TS_PREFIX}/actexec_zh_CN.ts
     ${TS_PREFIX}/actexec_pt_BR.ts
+    ${TS_PREFIX}/actexec_de_DE.ts
 )
 
 add_executable(${PROJECT}

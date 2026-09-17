@@ -34,6 +34,7 @@ set(TS_FILES
     ${TS_PREFIX}/execution_fr_FR.ts
     ${TS_PREFIX}/execution_zh_CN.ts
     ${TS_PREFIX}/execution_pt_BR.ts
+    ${TS_PREFIX}/execution_de_DE.ts
 )
 
 set(QRC ${PROJECT}.qrc)

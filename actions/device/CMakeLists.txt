@@ -42,6 +42,7 @@ set(TS_FILES
     ${TS_PREFIX}/actionpackdevice_fr_FR.ts
     ${TS_PREFIX}/actionpackdevice_zh_CN.ts
     ${TS_PREFIX}/actionpackdevice_pt_BR.ts
+    ${TS_PREFIX}/actionpackdevice_de_DE.ts
 )
 
 set(QRC ${PROJECT}.qrc)
