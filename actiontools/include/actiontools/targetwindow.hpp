@@ -50,7 +50,7 @@ namespace ActionTools
         void update();
 
     private:
-        void mouseButtonReleased();
+        void mouseButtonReleased(const QPoint &releasePosition);
 
         QTimer mUpdateTimer;
         QPoint mMouseClickPosition;

@@ -71,11 +71,9 @@ namespace ActionTools
 
     void TargetWindow::mouseReleaseEvent(QMouseEvent *event)
     {
-        Q_UNUSED(event)
-
         mMousePressed = false;
 
-        mouseButtonReleased();
+        mouseButtonReleased(event->globalPosition().toPoint());
         close();
     }
 
@@ -168,12 +166,14 @@ namespace ActionTools
             move(QCursor::pos() - QPoint(width() / 2, height() / 2));
     }
 
-    void TargetWindow::mouseButtonReleased()
+    void TargetWindow::mouseButtonReleased(const QPoint &releasePosition)
     {
-        if(width() < 1 || height() < 1)
-            return;
-
-        mResult = QRect(pos(), size());
+        // The update timer may not have run since the last mouse movement.
+        const QPoint topLeft(qMin(mMouseClickPosition.x(), releasePosition.x()),
+                             qMin(mMouseClickPosition.y(), releasePosition.y()));
+        const QSize size(qAbs(releasePosition.x() - mMouseClickPosition.x()),
+                         qAbs(releasePosition.y() - mMouseClickPosition.y()));
+        mResult = QRect(topLeft, size);
 
 #ifdef Q_OS_UNIX
         mResult = mResult.marginsRemoved(QMargins(2, 2, 2, 2));

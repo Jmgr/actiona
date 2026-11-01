@@ -107,13 +107,21 @@ namespace ActionTools
         auto shownWindows = ActionTools::AsyncScreenShooter::hideTopLevelWindows();
         auto targetWindow = new ActionTools::TargetWindow;
 
-        connect(targetWindow, &ActionTools::TargetWindow::rectangleSelected, this, [this, shownWindows](const QRect &rect){
-            if(rect != QRect())
+        connect(targetWindow, &ActionTools::TargetWindow::rectangleSelected, this, [this, shownWindows, targetWindow](const QRect &rect){
+            targetWindow->deleteLater();
+
+            if(rect.isEmpty())
+            {
+                ActionTools::AsyncScreenShooter::showTopLevelWindows(shownWindows);
+                mDisableEscape = false;
+            }
+            else
             {
                 QTimer::singleShot(CAPTURE_DELAY, this, [this, rect, shownWindows](){
                     auto result = ActionTools::ScreenShooter::captureRect(rect);
 
                     ActionTools::AsyncScreenShooter::showTopLevelWindows(shownWindows);
+                    mDisableEscape = false;
 
                     setCapturePixmap(result);
                     ui->captureImageLabel->setPixmap(result);
@@ -121,8 +129,6 @@ namespace ActionTools
                     emit completeChanged();
                 });
             }
-
-            sender()->deleteLater();
         });
 
         targetWindow->show();
