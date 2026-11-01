@@ -41,6 +41,9 @@ rm ${APPDIR}/usr/lib/libQt6Quick.so.6
 rm ${APPDIR}/usr/plugins/tls/libqcertonlybackend.so
 
 # Generate the AppImage
+export LDAI_OUTPUT="actiona-${ACTIONA_VERSION}-x86_64.AppImage"
+export LDAI_UPDATE_INFORMATION='gh-releases-zsync|Jmgr|actiona|latest|actiona-*-x86_64.AppImage.zsync'
+
 ./linuxdeploy-x86_64.AppImage \
         --appdir        ${APPDIR} \
         --executable    ${EXECUTABLE} \
@@ -49,5 +52,6 @@ rm ${APPDIR}/usr/plugins/tls/libqcertonlybackend.so
         --library       ${OPENSSL_LIBSSL} \
         --library       ${OPENSSL_LIBCRYPTO} \
         --output        appimage
- 
- mv *.AppImage actiona-${ACTIONA_VERSION}-x86_64.AppImage
+
+test -s "${LDAI_OUTPUT}"
+test -s "${LDAI_OUTPUT}.zsync"
