@@ -75,6 +75,12 @@ target_include_directories(${PROJECT}
 
 target_link_libraries(${PROJECT} actiontools Qt6::Widgets)
 
+if(UNIX)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(LIBX11 REQUIRED IMPORTED_TARGET x11)
+    target_link_libraries(${PROJECT} PkgConfig::LIBX11)
+endif()
+
 compile_translations(${PROJECT})
 
 install(TARGETS ${PROJECT} DESTINATION ${ACT_ACTIONS_INSTALL_DIR})
