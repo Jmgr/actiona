@@ -288,7 +288,7 @@
     <message>
         <location filename="../src/actions/readregistrydefinition.hpp" line="+45"/>
         <source>Key</source>
-        <translation>Taste</translation>
+        <translation>Schlüssel</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1011,7 +1011,7 @@ Sollte eine Kopfzeile pro Zeile enthalten</translation>
     <message>
         <location filename="../src/actions/writeregistrydefinition.hpp" line="+45"/>
         <source>Key</source>
-        <translation>Taste</translation>
+        <translation>Schlüssel</translation>
     </message>
     <message>
         <location line="+1"/>

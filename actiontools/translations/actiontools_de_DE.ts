@@ -983,7 +983,7 @@ Zum Anzeigen doppelklicken</translation>
     <message>
         <location line="+1"/>
         <source>Next</source>
-        <translation>Weiter</translation>
+        <translation>Bild ab</translation>
     </message>
     <message>
         <location line="+1"/>

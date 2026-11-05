@@ -52,5 +52,15 @@
         <source>Simplified Chinese (China)</source>
         <translation>Vereinfachtes Chinesisch (China)</translation>
     </message>
+    <message>
+        <location line="+1"/>
+        <source>Portuguese (Brazil)</source>
+        <translation>Portugiesisch (Brasilien)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>German (Germany)</source>
+        <translation>Deutsch (Deutschland)</translation>
+    </message>
 </context>
 </TS>
