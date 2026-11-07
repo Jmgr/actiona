@@ -88,6 +88,7 @@ set(TS_FILES
     ${TS_PREFIX}/actionpackdata_fr_FR.ts
     ${TS_PREFIX}/actionpackdata_zh_CN.ts
     ${TS_PREFIX}/actionpackdata_pt_BR.ts
+    ${TS_PREFIX}/actionpackdata_de_DE.ts
 )
 
 set(QRC ${PROJECT}.qrc)

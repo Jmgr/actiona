@@ -22,6 +22,7 @@ set(TS_FILES
     ${TS_PREFIX}/tools_fr_FR.ts
     ${TS_PREFIX}/tools_zh_CN.ts
     ${TS_PREFIX}/tools_pt_BR.ts
+    ${TS_PREFIX}/tools_de_DE.ts
 )
 
 add_library(${PROJECT} SHARED
