@@ -287,6 +287,7 @@ add_dependencies(${PROJECT} tools external_qtjsapi)
 if(UNIX)
     include(FindPkgConfig)
     pkg_search_module(LIBXTST REQUIRED xtst)
+    pkg_check_modules(LIBX11 REQUIRED IMPORTED_TARGET x11)
 endif()
 
 target_compile_definitions(${PROJECT} PRIVATE ACTIONTOOLS_LIBRARY)
@@ -349,6 +350,10 @@ target_link_libraries(
     $<$<PLATFORM_ID:Windows>:Psapi>
     ${OpenCV_LIBS}
 )
+
+if(UNIX)
+    target_link_libraries(${PROJECT} PkgConfig::LIBX11)
+endif()
 
 compile_translations(${PROJECT})
 

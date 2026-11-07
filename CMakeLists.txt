@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(actiona VERSION 3.11.4 DESCRIPTION "Cross-platform automation tool" LANGUAGES CXX)
+project(actiona VERSION 3.11.5 DESCRIPTION "Cross-platform automation tool" LANGUAGES CXX)
 
 # Silence CMake's FindOpenGL policy warning on newer CMake while remaining
 # compatible with the minimum supported CMake version.
@@ -32,6 +32,7 @@ set(ACT_MINIMUM_QT_VERSION_HEX 0x060400)
 set(ACT_BUILD_NAME "" CACHE STRING "Build name")
 option(ACT_UPDATER "Build the Updater" ON)
 option(ACT_PROFILE "Enable profiling" OFF)
+option(ACT_BUILD_TESTS "Build regression tests" OFF)
 option(ACT_FLAT_LIB_INSTALL "Install all libraries into lib/ and not in lib/actiona/" OFF)
 
 if(ACT_FLAT_LIB_INSTALL)
@@ -178,3 +179,8 @@ add_subdirectory(execution)
 add_subdirectory(actexec)
 add_subdirectory(actiona)
 add_subdirectory(actions)
+
+if(ACT_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

@@ -1120,7 +1120,7 @@ void MainWindow::on_scriptView_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::on_actionHelp_triggered()
 {
-	QDesktopServices::openUrl(QUrl(QStringLiteral("http://wiki.actiona.tools/")));
+	QDesktopServices::openUrl(QUrl(QStringLiteral("https://wiki.actiona.tools")));
 }
 
 void MainWindow::on_actionTake_screenshot_triggered()

@@ -28,6 +28,10 @@
 #include <QWindow>
 #include <QTimer>
 
+#ifdef Q_OS_UNIX
+#include "actiontools/x11info.hpp"
+#endif
+
 #include <limits>
 
 namespace ActionTools
@@ -167,7 +171,17 @@ namespace ActionTools
         for(auto window: shownWindows)
         {
 #ifndef Q_OS_WIN
-            window->hide();
+#ifdef Q_OS_UNIX
+            // Hiding a QWindow also hides its QWidget and ends QDialog::exec().
+            // Keep Qt's visibility state while temporarily unmapping X11 windows.
+            if(auto display = X11Info::display())
+            {
+                XUnmapWindow(display, window->winId());
+                XFlush(display);
+            }
+            else
+#endif
+                window->hide();
 #endif
             window->setOpacity(0);
         }
@@ -180,7 +194,15 @@ namespace ActionTools
         for(auto window: windows)
         {
 #ifndef Q_OS_WIN
-            window->show();
+#ifdef Q_OS_UNIX
+            if(auto display = X11Info::display())
+            {
+                XMapWindow(display, window->winId());
+                XFlush(display);
+            }
+            else
+#endif
+                window->show();
             window->requestActivate();
 #endif
             window->setOpacity(1);        

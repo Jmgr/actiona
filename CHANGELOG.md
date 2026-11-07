@@ -1,3 +1,18 @@
+## 3.11.5 (02/11/26)
+This is a bugfix release.
+
+### Global
+- Linux: fixed build failures caused by missing X11 linking parameters
+- Windows: fixed continuous integration builds
+
+### Interface
+- Linux: fixed the screenshot wizard closing prematurely and leaving Actiona invisible when taking a screenshot
+- Fixed screenshot area selection issues: Actiona staying hidden after canceled or empty selections, incorrect capture areas when releasing the mouse quickly, and the Escape key not working after capturing or canceling a selection
+- Fixed the Help menu link to the wiki
+
+### Installer/Packages
+- Linux: embedded AppImage update information and added zsync files for incremental updates
+
 ## 3.11.4 (13/05/26)
 This is a bugfix release.
 
