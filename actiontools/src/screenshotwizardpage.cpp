@@ -105,6 +105,50 @@ namespace ActionTools
         mDisableEscape = true;
 
         auto shownWindows = ActionTools::AsyncScreenShooter::hideTopLevelWindows();
+#ifdef Q_OS_WIN
+        QTimer::singleShot(CAPTURE_DELAY, this, [this, shownWindows](){
+            // Wait for our windows to disappear, then capture before selection.
+            // Closing the selector exposes the underlying application to mouseover
+            // events, so capturing afterwards can include an unwanted hover state.
+            const auto screens = ActionTools::ScreenShooter::captureScreens();
+            auto targetWindow = new ActionTools::TargetWindow;
+
+            connect(targetWindow, &ActionTools::TargetWindow::rectangleSelected, this,
+                    [this, shownWindows, targetWindow, screens](const QRect &rect){
+                targetWindow->deleteLater();
+
+                if(!rect.isEmpty())
+                {
+                    QPixmap result;
+                    for(const auto &screen : screens)
+                    {
+                        if(!screen.second.contains(rect.center()))
+                            continue;
+
+                        // Selection coordinates are logical; pixmap pixels may be
+                        // scaled on high-DPI displays, including secondary screens.
+                        const auto localRect = rect.translated(-screen.second.topLeft());
+                        const auto ratio = screen.first.devicePixelRatio();
+                        result = screen.first.copy(QRect(qRound(localRect.x() * ratio),
+                                                         qRound(localRect.y() * ratio),
+                                                         qRound(localRect.width() * ratio),
+                                                         qRound(localRect.height() * ratio)));
+                        break;
+                    }
+
+                    setCapturePixmap(result);
+                    ui->captureImageLabel->setPixmap(result);
+                    ui->captureImageLabel->updateGeometry();
+                    emit completeChanged();
+                }
+
+                ActionTools::AsyncScreenShooter::showTopLevelWindows(shownWindows);
+                mDisableEscape = false;
+            });
+
+            targetWindow->show();
+        });
+#else
         auto targetWindow = new ActionTools::TargetWindow;
 
         connect(targetWindow, &ActionTools::TargetWindow::rectangleSelected, this, [this, shownWindows, targetWindow](const QRect &rect){
@@ -132,6 +176,7 @@ namespace ActionTools
         });
 
         targetWindow->show();
+#endif
     }
 
     void ScreenshotWizardPage::onWindowSearchEnded(const ActionTools::WindowHandle &handle)
