@@ -40,13 +40,15 @@ namespace Tools
             QStringLiteral("fr_FR"),
             QStringLiteral("zh_CN"),
             QStringLiteral("pt_BR"),
+            QStringLiteral("de_DE"),
         },
         {
             QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "System language (if available)")),
             QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "English (US)")),
             QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "French (France)")),
             QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "Simplified Chinese (China)")),
-            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "Portuguese (Brazil)"))
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "Portuguese (Brazil)")),
+            QStringLiteral(QT_TRANSLATE_NOOP("languagesName", "German (Germany)"))
         }
     };
 

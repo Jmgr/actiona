@@ -42,6 +42,7 @@ set(TS_FILES
     ${TS_PREFIX}/actionpackwindows_fr_FR.ts
     ${TS_PREFIX}/actionpackwindows_zh_CN.ts
     ${TS_PREFIX}/actionpackwindows_pt_BR.ts
+    ${TS_PREFIX}/actionpackwindows_de_DE.ts
 )
 
 set(QRC ${PROJECT}.qrc)
